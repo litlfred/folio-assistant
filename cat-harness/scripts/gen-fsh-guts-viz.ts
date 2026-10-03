@@ -55,7 +55,7 @@ import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { fshGutsDirectory } from "../schemas/fsh-guts.js";
-import { docsLayers } from "./compose-docs.js";
+import { baseDocsDir } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
@@ -127,7 +127,7 @@ export function pageRelPath(repo = REPO): string | undefined {
     for (const one of Array.isArray(v) ? v : [v]) {
       const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
       if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
+      const rel = relative(baseDocsDir(repo), resolve(repo, ref));
       // Outside the base docs layer is not a page this generator may write.
       if (rel.startsWith("..") || rel === "") return undefined;
       return rel;
@@ -311,11 +311,6 @@ export function page(files: GutsFile[], blobBase: string): string {
  * declaration and marks which is which, so asking it is the one answer —
  * and it is the same one the composer withholds against.
  */
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
@@ -340,7 +335,7 @@ if (import.meta.main) {
     console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const out = join(baseDocs(REPO), PAGE);
+  const out = join(baseDocsDir(REPO), PAGE);
 
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
