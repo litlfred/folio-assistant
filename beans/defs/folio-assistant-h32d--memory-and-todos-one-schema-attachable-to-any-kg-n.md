@@ -1,11 +1,11 @@
 ---
 # folio-assistant-h32d
 title: 'Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:58:13Z
-updated_at: 2026-09-29T21:43:11Z
+updated_at: 2026-10-02T23:41:36Z
 parent: folio-assistant-8jt6
 ---
 
@@ -221,3 +221,5 @@ unit of this bean.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+_2026-10-02T23:41:36Z_ — Claimed by claude/todos-jsonld — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

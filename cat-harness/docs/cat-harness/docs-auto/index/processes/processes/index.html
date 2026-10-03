@@ -148,7 +148,7 @@
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">59</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">60</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -284,7 +284,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-signoff.bpmn"><code>CRDM Phase 5 — beans and sign-off</code></a><br><span class="p">cat-harness/processes/process/crdm-signoff.bpmn</span></td>
-  <td>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, decision-audit, kg-contribution-offer, placement, todo-manager</div></td>
+  <td>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> coordinate, crdm-requirements-workflow, decision-audit, kg-contribution-offer, placement, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/render-kg-to-cdn.bpmn"><code>Render a Knowledge Graph to a CDN</code></a><br><span class="p">cat-harness/processes/process/render-kg-to-cdn.bpmn</span></td>
@@ -373,6 +373,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/sdlc/repository-health-watch.bpmn</span></td>
   <td>THE SAME SHAPE AS <a href="../../../../../reference/skill-instructions/ci-health.html"><code>ci-health</code></a>, ONE LEVEL OUT.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, deletion-requires-confirmation</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/stalled-agent-triage.bpmn"><code>Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route</code></a><br><span class="p">cat-harness/processes/sdlc/stalled-agent-triage.bpmn</span></td>
+  <td>When agents stall (context exhausted, container lost, session timed out) their work is spread over PRs, branches, beans and process runs.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Triage agent · Merge steward · User</div><div class="f"><span class="k">skills</span> bean-coordination, coordinate, handover-report, stalled-agent-triage</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/upstream-pin-watch.bpmn"><code>Watching a pinned upstream dependency</code></a><br><span class="p">cat-harness/processes/sdlc/upstream-pin-watch.bpmn</span></td>

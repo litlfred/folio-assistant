@@ -197,6 +197,11 @@ classDiagram
       decls [0..*] Decl[]
       edges [0..*] Edge[]
     }
+    class cat_harness_docs_folio_library_index_v1_Link["Link"] {
+      <<json: LibraryIndexSchema>>
+      label [1] string
+      href [1] string~uri~ | string
+    }
     class cat_harness_docs_folio_library_index_v1_ReferencedBy["ReferencedBy"] {
       <<json: LibraryIndexSchema>>
       kind [1] string
@@ -228,6 +233,8 @@ classDiagram
       hasStructure [1] boolean
       hasImagesJson [1] boolean
       readme [0..1] string~uri~
+      links [0..*] Link[]
+      view [0..1] string
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer
@@ -391,6 +398,7 @@ classDiagram
   cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
   cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Edge : edges
+  cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_Link : links
   cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_ReferencedBy : referencedBy
   cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Entry : entries
   cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Upload : uploads
@@ -420,6 +428,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_schema_graph_v1_Decl" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_Edge" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_library_index_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_index_v1_ReferencedBy" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_index_v1_Entry" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_index_v1_Upload" fa_uml_kind_docs

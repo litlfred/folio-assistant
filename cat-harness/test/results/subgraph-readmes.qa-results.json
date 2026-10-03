@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 83,
+      "count": 84,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -77,6 +77,11 @@
           "instance": "cat-harness",
           "directory": "external-schemas",
           "path": "cat-harness/external-schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "subscriptions",
+          "path": "cat-harness/subscriptions"
         },
         {
           "instance": "cat-harness",
@@ -395,16 +400,6 @@
         },
         {
           "instance": "who-iris",
-          "directory": "who-iris-skills",
-          "path": "who-iris/skills"
-        },
-        {
-          "instance": "who-iris",
-          "directory": "glossary",
-          "path": "who-iris/glossary"
-        },
-        {
-          "instance": "who-iris",
           "directory": "who-iris-docs",
           "path": "who-iris/docs"
         },
@@ -429,9 +424,19 @@
           "path": "who-iris/test/results"
         },
         {
-          "instance": "who-iris",
+          "instance": "who-style-guide",
+          "directory": "glossary",
+          "path": "who-style-guide/glossary"
+        },
+        {
+          "instance": "who-style-guide",
+          "directory": "qa",
+          "path": "who-style-guide/test/results"
+        },
+        {
+          "instance": "who-style-guide",
           "directory": "voices",
-          "path": "who-iris/skills/voices"
+          "path": "who-style-guide/skills/voices"
         }
       ]
     },
@@ -453,7 +458,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 104,
+      "count": 105,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -937,11 +942,6 @@
         },
         {
           "instance": "who-iris",
-          "directory": "glossary",
-          "path": "who-iris/glossary"
-        },
-        {
-          "instance": "who-iris",
           "directory": "who-iris-themes",
           "path": "who-iris/themes"
         },
@@ -971,9 +971,19 @@
           "path": "who-iris/test/results"
         },
         {
-          "instance": "who-iris",
+          "instance": "who-style-guide",
+          "directory": "glossary",
+          "path": "who-style-guide/glossary"
+        },
+        {
+          "instance": "who-style-guide",
+          "directory": "qa",
+          "path": "who-style-guide/test/results"
+        },
+        {
+          "instance": "who-style-guide",
           "directory": "voices",
-          "path": "who-iris/skills/voices"
+          "path": "who-style-guide/skills/voices"
         }
       ]
     },
@@ -999,5 +1009,5 @@
       "entries": []
     }
   },
-  "total": 191
+  "total": 193
 }

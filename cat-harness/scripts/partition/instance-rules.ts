@@ -811,7 +811,8 @@ export const RULES: Rule[] = [
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/lib/library-withheld-view.ts", // that viewer's withheld rows + banner (#1794), embedded verbatim
-      "scripts/gen-uploads-viz.ts",          // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
+      "scripts/lib/library-address.ts",    // that viewer's entry-IRI path parser (#1881), embedded verbatim
+      "scripts/gen-uploads-viz.ts",         // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-document-kinds-viz.ts",   // every harness's document kinds → a viewer (stage D5, #1767)
@@ -849,7 +850,7 @@ export const RULES: Rule[] = [
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
-      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, and what each instance subscribed to and chose (issue #1719)
+      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -1086,6 +1087,14 @@ export const RULES: Rule[] = [
       "scripts/merge-train.ts",
       "scripts/merge-overlap.ts",
       "scripts/merge-leftover.ts",
+      // `bean-rollover` joins them, and by the same test rather than by
+      // adjacency: what it reads is THIS repository's open pull requests and
+      // its `beans/` store, to answer a question only this repository has —
+      // which bean edits must land before `beans/` can leave `main` (issue
+      // #1850 step 2). It reuses `merge-pipeline-paths`'s classifiers for
+      // exactly that reason. A folio has no bean store of its own to roll
+      // over, so swapping the content could not make it answer differently.
+      "scripts/bean-rollover.ts",
       // Their two shared modules, classified with them rather than beside
       // the generic path helpers: `merge-pipeline-paths` reads path classes
       // out of this repository's `PATTERNS` declaration, and
