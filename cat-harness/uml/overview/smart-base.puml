@@ -130,6 +130,7 @@ package "smart-base/smart-base-artifact-index" as pkg_smart_base_smart_base_arti
     canonical [0..1] : string
     version [0..1] : string
     category [0..1] : string
+    listedAt [0..1] : integer
     published [1] : object
     sidecars [0..1] : object
     materialization [1] : object
@@ -147,9 +148,50 @@ package "smart-base/smart-base-artifact-index" as pkg_smart_base_smart_base_arti
     provenance [1] : object
     sidecarApi [1] : unknown | absent | present
     contexts [0..*] : Context[]
+    igApiHub [0..1] : object
+    package [0..1] : object
     sidecarsUnbound [0..*] : SidecarsUnbound[]
     count [1] : integer
     artifacts [0..*] : Artifact[]
+  }
+  class "Item" as smart_base_smart_base_artifact_index_folio_ig_menu_v1_Item <<json: IgMenuSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string
+  }
+  class "Group" as smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group <<json: IgMenuSchema>> #f4f4f1 {
+    label [1] : string
+    href [0..1] : string
+    items [0..*] : Item[]
+  }
+  class "folio-ig-menu/v1" as smart_base_smart_base_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 <<json: IgMenuSchema>> #f4f4f1 {
+    $schema [1] : 'folio-ig-menu/v1'
+    id [1] : string
+    canonical [1] : string<uri>
+    version [0..1] : string
+    source [1] : object
+    groups [0..*] : Group[]
+  }
+  class "Asset" as smart_base_smart_base_artifact_index_ig_releases_v1_Asset <<json: IgReleasesSchema>> #f4f4f1 {
+    name [1] : string
+    url [1] : string<uri>
+    bytes [1] : integer
+    digest [0..1] : string
+    contentType [0..1] : string
+  }
+  class "Release" as smart_base_smart_base_artifact_index_ig_releases_v1_Release <<json: IgReleasesSchema>> #f4f4f1 {
+    tag [1] : string
+    name [0..1] : string
+    url [1] : string<uri>
+    publishedAt [1] : string
+    prerelease [1] : boolean
+    commitish [0..1] : string
+    assets [0..*] : Asset[]
+  }
+  class "ig-releases/v1" as smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1 <<json: IgReleasesSchema>> #f4f4f1 {
+    $schema [1] : 'ig-releases/v1'
+    repository [1] : string
+    readAt [1] : string
+    releases [0..*] : Release[]
   }
   class "Business Process Workflow (DAK)" as smart_base_smart_base_artifact_index_dak_StructureDefinition_BusinessProcessWorkflow_schema_json_Business_Process_Workflow__DAK_ <<schema: dak/StructureDefinition-BusinessProcessWorkflow.schema.json>> #f4f4f1 {
     resourceType [1] : 'BusinessProcessWorkflow'
@@ -531,6 +573,13 @@ package "smart-base/qa" as pkg_smart_base_qa <<qa>> {
     $schema [1] : 'kg-qa-manifest/v1'
     auditor [1] : object
   }
+  class "qa-results/v1" as smart_base_qa_qa_results_v1 <<ts: QaResult>> #f4e6e6 {
+    $schema [1] : 'qa-results/v1'
+    producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }
+    subject [1] : { kind: string; id: string }
+    families [1] : Record<string, QaResultFamily>
+    total [1] : number
+  }
 }
 package "smart-base/smart-base-themes" as pkg_smart_base_smart_base_themes <<themes>> {
   class "Override" as smart_base_smart_base_themes_Override <<json: ThemeSchema>> #f4f4f1 {
@@ -686,6 +735,10 @@ smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0.
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
+smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_menu_v1_Item : items
+smart_base_smart_base_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group : groups
+smart_base_smart_base_artifact_index_ig_releases_v1_Release *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Asset : assets
+smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Release : releases
 smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
 smart_base_smart_base_themes_Theme *-- "0..*" smart_base_smart_base_themes_Override : overrides
 smart_base_smart_base_document_kinds_folio_document_kind_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
