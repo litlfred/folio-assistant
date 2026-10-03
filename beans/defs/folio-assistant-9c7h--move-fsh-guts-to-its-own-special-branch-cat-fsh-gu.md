@@ -3,8 +3,9 @@
 title: Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-03T00:50:36Z
+updated_at: 2026-10-03T08:34:43Z
 parent: folio-assistant-7x5n
 ---
 
@@ -41,3 +42,13 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special branch), `wggr` (non-instance stores), `oi3h` (fsh-guts visualiser).
 
 _2026-10-03T00:50:36Z_ — Claimed by claude/lucid-shannon-o8zop1-fsh-guts — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-10-03: the last unknown writer, traced (no hidden code writer)
+
+The step-3 inventory had marked `board-relocate.bpmn`'s relocate handler as unclear. Traced on main@d089aca961:
+- `A_MoveContent` ("Relocate the content to the trashcan") is an AGENT task carrying skills (`board-diagram-interchange`, `deletion-requires-confirmation`). No service task and no code handler.
+- No server route, script or tool writes into fsh-guts for a relocation. The grep hits are unrelated: kg-audit relocates QA sidecars, and `routes/branches.ts` "discard" is a git discard.
+- The UI only READS. The dead-fish viewer fetches the published `fsh-guts.json` export. #1926's "discard to fsh-guts" is browser-local ("stickies you discarded in this browser") and never writes to the repository.
+
+**So the complete writer list for the cutover is:** `sample-import-run.ts` (already resolved through `fshGutsDirectory`, #1945); the log writer (local scratch, stays in the working tree by design); and AGENTS following the `fsh-guts`, `deletion-requires-confirmation` and `board-diagram-interchange` skills, plus the relocate steps of `activity-log.bpmn`, `code-change-review.bpmn` and `sample-import.bpmn`. For those, step 3 is an INSTRUCTION change ("mount, move into the mount, `branch-store push`" instead of `git mv` into fsh-guts/), made once the content-source resolver from the 2026-10-03 subgraph-source ruling lands.
