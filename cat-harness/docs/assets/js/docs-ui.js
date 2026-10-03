@@ -11213,7 +11213,9 @@
     if (!node) return null;
     try {
       var parsed = JSON.parse((node.textContent || "").trim());
-      if (parsed && typeof parsed === "object" && typeof parsed.href === "string" && typeof parsed.name === "string") {
+      // Read, never rendered: the href is compared against page links below.
+      var at = parsed && typeof parsed === "object" && parsed.href;
+      if (typeof at === "string" && typeof parsed.name === "string") {
         railScopeValue = parsed;
       }
     } catch (_e) {
