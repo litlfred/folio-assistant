@@ -42,6 +42,7 @@ import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
 import { siteDirectories, withViewers } from "./viewer-declarations.js";
+import { harnessTitle } from "./lib/nav-label.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -290,8 +291,8 @@ function navbarRow(
     title?: string;
     navbarIcons?: string[];
     href?: string;
-    hrefKind?: "folio" | "viewer" | "handled";
-    visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+    hrefKind?: "folio" | "section" | "viewer" | "handled";
+    visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
@@ -387,21 +388,25 @@ function navbarRow(
   // only the page knows which deploy it is on.
   // `within` RIDES ALONG TOO (issue #1164): a sub-graph is drawn inside its
   // parent's row, folded, by every client — one answer to where it sits.
+  // `label` RIDES ALONG as `harness-tiles.ts` set it (bean `ob3m` finding 6):
+  // FOLDERS printed the bare kind word, and the glass named the same page
+  // otherwise. The client renders this and composes nothing.
   const folders = foldersOf(mine.visualisations);
   return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
 
-type NavFolder = { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true };
+type NavFolder = { kind: string; label?: string; within?: string; path?: string; note?: string; stagingOnly?: true };
 
 /** One instance's visualisations as folder rows — see the note in `navbarRow`. */
 function foldersOf(
-  vis: readonly { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[] | undefined,
+  vis: readonly { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[] | undefined,
 ): NavFolder[] {
-  return (vis ?? []).map((v) => {
+  return (vis ?? []).filter((v) => v.sameAs === undefined).map((v) => {
     const within = v.within ? { within: v.within } : {};
+    const label = v.label ? { label: v.label } : {};
     return v.path
-      ? { kind: v.kind, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
-      : { kind: v.kind, ...within, ...(v.note ? { note: v.note } : {}) };
+      ? { kind: v.kind, ...label, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
+      : { kind: v.kind, ...label, ...within, ...(v.note ? { note: v.note } : {}) };
   });
 }
 
@@ -416,6 +421,7 @@ function foldersOf(
  * (`hrefKind: "folio"`) at a path of its own. Two kinds of href are not a
  * scope and are left out, each for a reason a reader could check:
  *
+ * - `section` — an anchor on the landing page (bean `ob3m` 6), not a root.
  * - `viewer` / `handled` — the href is a page some OTHER thing publishes
  *   (`/processes/` is bootstrap's tile and the whole site's process viewer),
  *   so "every page under it belongs to this instance" would be false.
@@ -439,8 +445,8 @@ function railScopes(
     name: string;
     title?: string;
     href?: string;
-    hrefKind?: "folio" | "viewer" | "handled";
-    visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+    hrefKind?: "folio" | "section" | "viewer" | "handled";
+    visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
 ): RailScope[] {
   return harnesses
@@ -450,10 +456,23 @@ function railScopes(
 }
 
 /* The tiles, computed once: the payload carries them and the glass strip's
- * pins are resolved against them. */
+ * pins are resolved against them.
+ *
+ * THE QUALIFIER is the declaring harness's title (bean `ob3m` finding 6):
+ * a `repository`-scoped entry is the checkout root's, every other one this
+ * instance's own. Two "Docs" tiles are then "Docs · C@T Harness" and
+ * "Docs · Folio Assistant", one base name each. */
 const tileDirs = siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT);
 const tiles = withTileCounts(
-  graphTiles(withViewers(tileDirs, ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+  graphTiles(
+    withViewers(tileDirs, ROOT),
+    relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT))),
+    (d) => {
+      const owner = d.scope === "repository" ? readDeclaration(REPO_ROOT) : decl;
+      return owner ? harnessTitle(owner) : undefined;
+    },
+    allHarnesses.map((h) => h.name),
+  ),
   scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
 );
 const glassStrip = (() => {

@@ -100,6 +100,8 @@ import {
 import { checkoutDirectories } from "../schemas/harness-config.ts";
 import { gitFiles } from "../schemas/git-corpus.ts";
 import { withViewerNav } from "./viewer-page.ts";
+import { railNames } from "./mount-instance-docs.ts";
+import { harnessTitle, kindTitle } from "./lib/nav-label.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
@@ -1030,7 +1032,7 @@ export function autoDocPage(
   items: AutoDocItem[],
   scope: string,
   scopePath: string | undefined,
-  siblings: Array<{ id: string; path: string; count: number }>,
+  siblings: Array<{ id: string; path: string; count: number; qualifier?: string }>,
   refs?: CodeRefs,
 ): string {
   // A description naming ANOTHER artefact on this page links to its row (bean
@@ -1071,10 +1073,16 @@ export function autoDocPage(
     })
     .join("\n");
 
+  // RELATIVE TO WHERE THIS PAGE IS. The type's own page sits one level ABOVE
+  // its sub-graph pages, so a sibling is `<id>/` from there and `../<id>/`
+  // from a sibling. Both were `../<id>/`, which from the type's page pointed
+  // one level too high: `/index/root-docs/` (a 404), and `../docs/` back at
+  // the page itself. Found by `check:nav-names` reading the rail.
+  const up = scope === "" ? "" : "../";
   const nav = siblings
     .map(
       (s) =>
-        `<li>${s.id === scope ? "<strong>" : `<a href="../${esc(s.id)}/">`}${esc(s.id)}${s.id === scope ? "</strong>" : "</a>"}` +
+        `<li>${s.id === scope ? "<strong>" : `<a href="${up}${esc(s.id)}/">`}${esc(s.id)}${s.id === scope ? "</strong>" : "</a>"}` +
         ` <span class="p">${esc(s.path)}</span> <span class="n">${s.count}</span></li>`,
     )
     .join("\n");
@@ -1089,9 +1097,15 @@ export function autoDocPage(
       const kids = isHere && items.length <= RAIL_ITEMS_MAX
         ? items.filter((i) => keyOf(i)).map((i) => ({ label: i.name, href: `#${rowId(i)}` }))
         : [];
+      // ONE NAME PER DESTINATION (bean `ob3m` finding 6): a sub-graph page is
+      // the same destination the Graphs group and the landing call by its
+      // graph kind's name ("Docs", "Swimlane glossary"), so its row says that, with the harness that
+      // declares the directory as the qualifier. The directory id stays in
+      // the page's own list above, where it is a path rather than a name.
       return {
-        label: s.id,
-        ...(isHere ? {} : { href: `../${s.id}/` }),
+        label: kindTitle(type.graph),
+        ...(s.qualifier ? { qualifier: s.qualifier } : {}),
+        ...(isHere ? {} : { href: `${up}${s.id}/` }),
         ...(kids.length ? { items: kids } : {}),
       };
     }),
@@ -1224,6 +1238,22 @@ var SCOPE = "${esc(prefix === "" ? "docs-auto" : prefix.split("/").pop()!)}";
 }
 
 let stale = 0;
+
+/**
+ * The name of the harness that declares the directory at `absPath`: the
+ * deepest instance root above it, called what `_data/harness.json` calls it
+ * (bean `ob3m` finding 6). `undefined` when no instance root holds it.
+ */
+function ownerName(absPath: string): string | undefined {
+  const root = instanceRootsIn(REPO_ROOT)
+    .filter((r) => absPath === r || absPath.startsWith(`${r}/`))
+    .sort((a, b) => b.length - a.length)[0];
+  if (root === undefined) return undefined;
+  const decl = readDeclaration(root);
+  if (!decl) return undefined;
+  return railNames(basename(ROOT), decl.name).harness ?? harnessTitle(decl);
+}
+
 /**
  * THE NAVBAR IS APPLIED HERE — bean `edx7`, at this generator's single write.
  *
@@ -1343,11 +1373,11 @@ if (import.meta.main) {
       (byDir.get(owner.id) ?? byDir.set(owner.id, []).get(owner.id)!).push(i);
     }
     const populated = [...byDir.keys()].sort((a, b) => a.localeCompare(b, "en"));
-    const siblings = populated.map((id) => ({
-      id,
-      path: dirs.find((d) => d.id === id)?.path ?? "",
-      count: byDir.get(id)!.length,
-    }));
+    const siblings = populated.map((id) => {
+      const d = dirs.find((x) => x.id === id);
+      const qualifier = d ? ownerName(d.absPath) : undefined;
+      return { id, path: d?.path ?? "", count: byDir.get(id)!.length, ...(qualifier ? { qualifier } : {}) };
+    });
 
     // Each page says which directories it draws (#1168 B7a-2): every
     // populated sub-graph on the type's page, its own on a sub-graph page.

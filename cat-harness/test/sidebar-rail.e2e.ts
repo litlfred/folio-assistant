@@ -50,7 +50,7 @@ const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
 const BASEURL = "/folio-assistant";
 
-type Folder = { kind: string; path?: string; note?: string };
+type Folder = { kind: string; label?: string; path?: string; note?: string };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   navbar: { folders?: Folder[] } | null;
   railScopes?: { name: string; title: string; href: string; folders: Folder[] }[];
@@ -356,7 +356,9 @@ test.describe("the rail is scoped to the instance being viewed (#1902)", () => {
     const kinds = await folders
       .locator(":scope > .fa-nav-folders__list > .fa-nav-folders__item")
       .evaluateAll((ls) => ls.map((l) => (l.firstElementChild?.firstChild?.textContent ?? "").trim()));
-    expect(kinds.sort()).toEqual(SCOPE!.folders.map((f) => f.kind).sort());
+    // The row prints the label `harness-tiles.ts` set, falling back to the kind
+    // word (bean `ob3m` finding 6) -- the same rule as `docs-ui.js`.
+    expect(kinds.sort()).toEqual(SCOPE!.folders.map((f) => f.label || f.kind).sort());
   });
 
   test("PAGES comes before FOLDERS", async ({ page }) => {
