@@ -1,0 +1,65 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/theming/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "@type": "cat-harness:SkillPackage",
+      "name": "theming"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/create-sticky-note",
+      "@type": "bootstrap:Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/site-presentation-assets",
+      "@type": "bootstrap:Skill",
+      "name": "site-presentation-assets",
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-art-intake",
+      "@type": "bootstrap:Skill",
+      "name": "theme-art-intake",
+      "title": "Theme art intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-artefacts",
+      "@type": "bootstrap:Skill",
+      "name": "theme-artefacts",
+      "title": "Per-artefact specialisation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-contrast",
+      "@type": "bootstrap:Skill",
+      "name": "theme-contrast",
+      "title": "Contrast: measured over the darkest thing that could be there"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-declaration",
+      "@type": "bootstrap:Skill",
+      "name": "theme-declaration",
+      "title": "Declaring a theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-generation",
+      "@type": "bootstrap:Skill",
+      "name": "theme-generation",
+      "title": "Generating a theme's CSS"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theming",
+      "@type": "bootstrap:Skill",
+      "name": "theming",
+      "title": "Theming, split on the stage it fails at"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/ui/theming",
+  "path": "skills/ui/theming/"
+}

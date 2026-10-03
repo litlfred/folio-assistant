@@ -191,7 +191,7 @@ function findBpmnDirs(root: string = ROOT): string[] {
 
 /** The namespace a declared graph kind's nodes belong in. */
 /** A kind's individual, `<layer ns>graphKind/<name>` — the registry's one answer. */
-function graphKindId(kindName: string): string {
+export function graphKindId(kindName: string): string {
   return graphKindIri(kindName, defaultGraphKinds.get(kindName));
 }
 

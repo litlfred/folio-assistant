@@ -304,6 +304,18 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "folded into a default.",
     replacedBy: "dcterms:isPartOf",
   },
+  hasMember: {
+    gloss:
+      "A node a named subgraph DIRECTLY contains: the deepest subgraph directory holding the " +
+      "node's source path, or its `partOf` parent's subgraph when it has no path. Transitive " +
+      "membership is not a second property — it is this one, followed through `hasSubgraph` " +
+      "(bean `c1m4`).",
+  },
+  hasSubgraph: {
+    gloss:
+      "A child named subgraph: a directory directly inside this one. The index names it by " +
+      "IRI; the hydrated file nests it, members and all.",
+  },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },

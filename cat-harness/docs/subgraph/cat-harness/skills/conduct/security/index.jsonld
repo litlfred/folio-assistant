@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/security/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+      "@type": "cat-harness:SkillPackage",
+      "name": "security"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
+      "@type": "bootstrap:Skill",
+      "name": "injection-boundaries",
+      "title": "Injection — the value became program"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
+      "@type": "bootstrap:Skill",
+      "name": "path-containment",
+      "title": "Path containment — two questions that look like one"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security",
+      "@type": "bootstrap:Skill",
+      "name": "security",
+      "title": "Security — one question, asked at every boundary"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/conduct/security",
+  "path": "skills/conduct/security/"
+}

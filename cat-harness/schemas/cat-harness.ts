@@ -922,7 +922,7 @@ function acceptLegacyGraphsKey(v: unknown): unknown {
   return { ...rest, graphKinds: graphs };
 }
 
-const GraphNodeDirectoryShape = z.object({
+export const GraphNodeDirectoryShape = z.object({
   id: z.string().min(1),
   path: z.string().min(1),
   ...scopeShape,

@@ -1,0 +1,119 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/ui-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "ui-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange",
+      "@type": "bootstrap:Skill",
+      "name": "board-diagram-interchange",
+      "title": "Relationship first, visualisation later"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-windows",
+      "@type": "bootstrap:Skill",
+      "name": "board-windows",
+      "title": "Start in the avatar, open into a window"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
+      "@type": "bootstrap:Skill",
+      "name": "docs-auto",
+      "title": "docs-auto — the index is generated, the meaning is authored"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
+      "@type": "bootstrap:Skill",
+      "name": "docs-generation",
+      "title": "Documentation Generation Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles",
+      "@type": "bootstrap:Skill",
+      "name": "harness-tiles",
+      "title": "A tile is the harness's, not the node's"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/html-rendering-qc",
+      "@type": "bootstrap:Skill",
+      "name": "html-rendering-qc",
+      "title": "HTML Rendering QC"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/incremental-render",
+      "@type": "bootstrap:Skill",
+      "name": "incremental-render",
+      "title": "Incremental render — the cache is easy, the cascade is the work"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-viewer",
+      "@type": "bootstrap:Skill",
+      "name": "kg-viewer",
+      "title": "Rendering the knowledge graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/liquid-templates",
+      "@type": "bootstrap:Skill",
+      "name": "liquid-templates",
+      "title": "Liquid templates — layout only, every fact from the graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/markdown-render-check",
+      "@type": "bootstrap:Skill",
+      "name": "markdown-render-check",
+      "title": "Markdown Render Check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections",
+      "@type": "bootstrap:Skill",
+      "name": "readme-sections",
+      "title": "A folio's README — the folio owns the file, the platform owns the markers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-logging",
+      "@type": "bootstrap:Skill",
+      "name": "render-logging",
+      "title": "Render logging — the publish branch keeps its own history"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-order",
+      "@type": "bootstrap:Skill",
+      "name": "render-order",
+      "title": "Render order — flattening a dependency hierarchy, and the two stages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/serving-renderings",
+      "@type": "bootstrap:Skill",
+      "name": "serving-renderings",
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-ui-review",
+      "@type": "bootstrap:Skill",
+      "name": "theme-ui-review",
+      "title": "At ingestion, and only at ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
+      "@type": "bootstrap:Skill",
+      "name": "ui-accessibility",
+      "title": "All UI must follow accessibility guidelines"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",
+      "@type": "bootstrap:Skill",
+      "name": "wireframe-design-review",
+      "title": "Wireframe design review"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/ui/ui-core",
+  "path": "skills/ui/ui-core/"
+}

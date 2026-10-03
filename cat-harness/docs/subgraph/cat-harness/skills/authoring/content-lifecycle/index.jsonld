@@ -1,0 +1,71 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/authoring/content-lifecycle/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle",
+      "@type": "cat-harness:SkillPackage",
+      "name": "content-lifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-author",
+      "@type": "bootstrap:Skill",
+      "name": "content-author",
+      "title": "Content Authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-feedback",
+      "@type": "bootstrap:Skill",
+      "name": "content-feedback",
+      "title": "Content Feedback Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-plan",
+      "@type": "bootstrap:Skill",
+      "name": "content-plan",
+      "title": "Content Planning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
+      "@type": "bootstrap:Skill",
+      "name": "content-publish",
+      "title": "Content Publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-retire",
+      "@type": "bootstrap:Skill",
+      "name": "content-retire",
+      "title": "Content Retirement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
+      "@type": "bootstrap:Skill",
+      "name": "content-review",
+      "title": "Content Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
+      "@type": "bootstrap:Skill",
+      "name": "content-test",
+      "title": "Content Testing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
+      "@type": "bootstrap:Skill",
+      "name": "content-validate",
+      "title": "Content Validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
+      "@type": "bootstrap:Skill",
+      "name": "evidence-appraisal",
+      "title": "Evidence Appraisal"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/authoring/content-lifecycle",
+  "path": "skills/authoring/content-lifecycle/"
+}

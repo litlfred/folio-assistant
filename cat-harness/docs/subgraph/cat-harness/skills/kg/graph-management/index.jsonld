@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/kg/graph-management/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "@type": "cat-harness:SkillPackage",
+      "name": "graph-management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing",
+      "@type": "bootstrap:Skill",
+      "name": "domain-fencing",
+      "title": "Domain fencing — keeping one folio's rules out of everybody's platform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
+      "@type": "bootstrap:Skill",
+      "name": "edge-kinds-and-blast-radius",
+      "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
+      "@type": "bootstrap:Skill",
+      "name": "graph-detanglement",
+      "title": "Graph detanglement — the practice, not the migration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
+      "@type": "bootstrap:Skill",
+      "name": "graph-rendering",
+      "title": "Graph rendering: one set of rules for every drawn graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
+      "@type": "bootstrap:Skill",
+      "name": "kg-separation",
+      "title": "Knowledge Graph separation — the method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing",
+      "@type": "bootstrap:Skill",
+      "name": "lsi-indexing",
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/kg/graph-management",
+  "path": "skills/kg/graph-management/"
+}

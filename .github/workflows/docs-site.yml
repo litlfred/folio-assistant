@@ -534,6 +534,10 @@ jobs:
           # defect bean `blv9` records and the cheapest one to have fixed.
           mkdir -p "./_site/ns/content"
           cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          # The named-subgraph context (bean `c1m4`): every
+          # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
+          mkdir -p "./_site/ns/subgraph"
+          cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
