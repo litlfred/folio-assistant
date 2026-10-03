@@ -6,7 +6,7 @@ type: feature
 priority: normal
 created_at: 2026-10-01T06:57:14Z
 updated_at: 2026-10-03T00:34:24Z
-parent: folio-assistant-1xhc
+parent: folio-assistant-hfag
 ---
 
 Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for each common churn/conflict pattern' and 'put in merge process bpmn'. Settles 520m's open question (may a resolver cover every generated artefact?) as: yes, one declared pattern at a time.
@@ -94,6 +94,8 @@ a bot commit on somebody's in-flight branch is a coordination event.
 ## 2026-10-01 late — part B approved
 
 Owner approved CI merge:main (this bean's part B) as speed-up 3 of 4 for the merge treadmill (session_01ToWZR4RgTRCWeSsgxsSQfT). Siblings created alongside it under `0mf0`: input-hash skip, parallel checks, CI sharding + BPMN cache + shallow checkout.
+
+Re-parented 2026-10-02 from `1xhc` to the merge-pipeline epic `hfag` on the owner's ruling (the merge pipeline is its own epic, blocking `7x5n`).
 
 ## Field case for the qa-sidecar pattern (measured 2026-10-03)
 
