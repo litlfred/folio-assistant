@@ -15,10 +15,15 @@ Queued, not started: stage D (#1795) was in flight; this belongs to D5 (L1 kind,
 
 ## Done when
 - [ ] the three new handbooks ingested into smart-base/library via the ingest pipeline (bean tyo0), licence read from each
-- [ ] a DTH voice in smart-base (voices graph), derived from the handbooks' own register, as the WHO digital-health voice was from its corpus
-- [ ] DTH declared as a subtype of the L1 document kind (qvxh), whose required structure names the Reference Architecture and DIIG concepts it uses — read from the handbooks, not assumed
-- [ ] methodologies, processes (BPMN) and glossary terms the handbooks define, each extracted with a citation to its handbook section; owner reviews the list before they are authored
+- [x] a DTH voice in smart-base (voices graph), derived from the handbooks' own register, as the WHO digital-health voice was from its corpus
+- [x] DTH declared as a subtype of the L1 document kind (qvxh), whose required structure names the Reference Architecture and DIIG concepts it uses — read from the handbooks, not assumed
+- [x] methodologies, processes (BPMN) and glossary terms the handbooks define, each extracted with a citation to its handbook section; owner reviews the list before they are authored
 - [ ] no empirical claim from a handbook enters a formal statement
+- [x] (owner 2026-10-03) contradictions recorded as ALTERNATIVES, none chosen — smart-base/findings/dth-term-alternatives.json + generated dth-terms.md, gated by smart-base:dth-terms:check (#1984, PR #1985)
+- [x] (owner 2026-10-03) one DIIG seven-phase figure as source: DIIG §1.1 Fig. 1.1.1; dth.json cites it first and names PHC Fig. 6 / SC Fig 5 / PC Fig. 4 as reproductions
+- [ ] (owner 2026-10-03) SVG rendering of DIIG Fig. 1.1.1 — bean 70zt
+- [x] (owner 2026-10-03) RA "Actor" explained against F-A and SG, with one PROPOSED change per layer (not applied)
+- [ ] owner decides on the three Actor proposals (RA comment / F-A closeMatch / SG description)
 
 *2026-10-01* — Owner, two placement rules for the DTH kind: (1) "DTH should fit in somewhere in DIIG process ideally and utlized the Ref Arch" — so dth.json is placed as a step/output of the DIIG process (Digital Implementation Investment Guide, smart-base/library/9789240010567-eng) and draws its architecture sections from the Reference Architecture for DPI-H; (2) "some DTHs written befroe draft Ref Arch, but should really have been refernces" — the Reference Architecture is the normative reference a DTH cites, and the earlier DTHs (primary health care 9789240093362, supply chain 9789240101197, product catalogue 9789240116191) are read as instances that should have referenced it. The Ref Arch draft is ingested by bean tyo0 (PR #1826) as who-dpi-h-reference-architecture-draft-v1, licence CC BY-NC-SA 3.0 IGO on the owner's statement. Propose the design to the owner before authoring dth.json.
 
