@@ -46,6 +46,76 @@ to the trust boundary of a page whose entire job is to display *this
 repository's own data*. The graph is the thing being made trustworthy; loading
 it through someone else's script tag is at odds with that.
 
+"No CDN" means no THIRD party's. A script or stylesheet this site publishes
+itself, shared by many of its own pages, is the opposite case and is what the
+next section requires.
+
+## Every asset has its own IRI — a materialized path, loading published JSON-LD
+
+Owner, 2026-10-02 (#1881), in order: *"404 githubpages is a hack. does not work
+according to stanrds"*; *"each link/page needs to be materialized on the CDN
+(gh-pagees), just load the content from the KG json(ld) assets already
+published"*; *"no query strings... each asset gets its own IRI"*. It started
+with `/cat-harness/library/smart-base/smart-trust` returning 404.
+
+Four rules, for every viewer that shows addressable things:
+
+1. **Every addressable asset has its own IRI, and it is a PATH** —
+   `<viewer>/<instance>/<id>/`. Never a query string (`?entry=`, `?id=`) and
+   never a fragment (`#<id>`) as the asset's address. A fragment may still
+   point INSIDE a page; it is not an asset's name.
+2. **The IRI is a real file on gh-pages**, returning 200, written by the
+   viewer's generator and compared by its `--check`. No `404.html` routing,
+   no SPA fallback: a URL that works only because a not-found page rewrote it
+   is a 404 to every crawler, cache and standards-following client.
+3. **The page at that IRI is a thin shell**: identity only (a small JSON
+   config block naming the published data and the asset's id), a
+   `rel=canonical`, a `rel=alternate type=application/ld+json` to the asset's
+   published JSON-LD where there is one, a `<noscript>` link to that data, and
+   the viewer's SHARED stylesheet and script by reference. No content of the
+   asset is written into it; the script loads it from the KG JSON / JSON-LD
+   the site already publishes. If the asset's own serialisation is not yet
+   published, publish the KG's existing one — do not invent a format. A shell
+   is a few KB; inlining chrome into each one is how an IG mirror reached
+   ~230 KB a page.
+4. **An old `#<id>` link is legacy**: the shell normalises it ONCE to the path
+   IRI with `history.replaceState` (or navigates, when the asset belongs to
+   another page), and nothing new emits it.
+
+### The asset and its rendering are two resources with two IRIs
+
+Owner, 2026-10-02 (#1881): *"each asset should have one IRI, but the view page
+is a rendering of that asset, a different page. fix IRIs"*; and, against
+putting `schema:subjectOf` on the asset, *"hard to maintain? asset doesnt know
+about its renderings"*. **This is the one place the rule is stated**; other
+skills point here.
+
+- **The asset's IRI is the address of its published JSON-LD**, and its `@id`
+  says so: absolute, instance-qualified, under the site root the docs are
+  served at, and it dereferences to that file. A library entry's is
+  `<site>/assets/library/jsonld/<instance>/<id>/manifest.jsonld`, minted by
+  ONE function (`schemas/library-iri.ts`) that both the `@id`'s writer and
+  the file's publisher call, so the two cannot drift.
+- **The rendering has its own IRI** — the viewer page — and it **points to the
+  asset**: `rel=alternate type=application/ld+json`, and if the page ever
+  carries JSON-LD of its own, `about`/`mainEntity` naming the asset's `@id`.
+- **The asset never references its renderings** — no `subjectOf`, no
+  `foaf:page`, no viewer URL in its JSON-LD. Renderings change with every
+  visualiser; the asset would have to be rewritten each time.
+- **A rendering's IRI is DERIVED from the declared visualiser** for the graph
+  kind (`coverage.visualiser` in the instance declaration), never authored into
+  the asset. If an index of renderings is useful, generate it; never store it in
+  the asset. The library does exactly this: each entry in the GENERATED
+  projection (`assets/library/index.json`) carries `view` — the site-root path
+  of the page that renders it (another instance's declared root route for an
+  entry that instance renders, e.g. smart-trust's `/smart-trust/`; else the
+  entry's own library page) — and the row's slug links there. Owner,
+  2026-10-02: *"click on "smart-trust" slug and open up the visualizer"*.
+
+Reference implementation: `gen-library-viz.ts` (`viewerHtml`, `VIEWER_JS`,
+`VIEWER_CSS`) and `scripts/lib/library-address.ts`; browser check
+`test/library-entry-iri.e2e.ts`.
+
 ## Do not draw the whole graph
 
 **The instinct is a force-directed node-link diagram of everything. Resist it.**

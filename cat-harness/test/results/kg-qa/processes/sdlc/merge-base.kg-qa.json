@@ -32,21 +32,8 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Classify",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Resolve",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Abort",
-          "detail": "names skill \"merge-conflict-patterns\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -72,20 +59,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Merge",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
           "where": "Task_Classify",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Resolve",
           "detail": "needs skill \"merge-conflict-patterns\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Regen",
-          "detail": "needs skill \"prepare-merge\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
           "where": "Task_Commit",
@@ -161,8 +140,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 4,
+    "pass": 14,
+    "fail": 3,
     "n/a": 8,
     "unknown": 0
   },

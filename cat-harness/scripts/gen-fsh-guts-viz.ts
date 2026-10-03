@@ -54,6 +54,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
+import { fshGutsDirectory } from "../schemas/fsh-guts.js";
 import { docsLayers } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -82,21 +83,15 @@ export interface GutsFile {
  * generator that keeps working after the directory moves, over nothing.
  */
 export function gutsDir(repo = REPO): string | undefined {
-  // The CHECKOUT's root instance declares it since placement PR0a (bean
-  // `ejye`); cat-harness's own declaration is still read after it, so a
-  // checkout that has not moved the entry keeps resolving.
-  for (const root of declarers(repo)) {
-    const declPath = declarationPathIn(root);
-    if (!declPath || !existsSync(declPath)) continue;
-    const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-      directories?: { id?: string; path?: string; scope?: string; graphKinds?: string[] }[];
-    };
-    for (const e of d.directories ?? []) {
-      if (!e.path || !(e.graphKinds ?? []).includes(KIND)) continue;
-      return join(e.scope === "repository" ? repo : root, e.path);
-    }
+  // The shared resolution (bean 9c7h): the checkout's root instance declares
+  // it since placement PR0a, and `fshGutsDirectories` reads cat-harness's own
+  // declaration after it, as this function did. More than one declared
+  // trashcan is no single answer, so it is `undefined`, never "the first".
+  try {
+    return fshGutsDirectory(repo);
+  } catch {
+    return undefined;
   }
-  return undefined;
 }
 
 /** The declarations that may hold the trashcan: the checkout's root instance, then the platform. */

@@ -483,6 +483,76 @@
       "status": "candidate"
     },
     {
+      "id": "kg-materialization.kgdecisionsschema.decidedby",
+      "prefLabel": "KgDecisionsSchema.decidedBy",
+      "definition": "Who decided, applied to every gate that does not name its own `decidedBy`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.decidedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgdecisionsschema.expiresat",
+      "prefLabel": "KgDecisionsSchema.expiresAt",
+      "definition": "When the copy expires; recorded as `expiresAt`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.expiresAt",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgdecisionsschema.maxbytes",
+      "prefLabel": "KgDecisionsSchema.maxBytes",
+      "definition": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.maxBytes",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgfilerecordschema.name",
+      "prefLabel": "KgFileRecordSchema.name",
+      "definition": "Path relative to the part's `tree/` (or the licence's own name).",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.files",
+      "prefLabel": "KgMaterializationRecordSchema.files",
+      "definition": "A held SUBGRAPH: one record per file under `tree/`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.files",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.licence",
+      "prefLabel": "KgMaterializationRecordSchema.licence",
+      "definition": "The upstream licence, copied beside the tree so its notice travels with the copy.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.licence",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.ref",
+      "prefLabel": "KgMaterializationRecordSchema.ref",
+      "definition": "The pin the part was asked at — the subscription's `ref` when it was written.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.refusal",
+      "prefLabel": "KgMaterializationRecordSchema.refusal",
+      "definition": "Present iff the part stayed referenced.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.refusal",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.subscription",
+      "prefLabel": "KgMaterializationRecordSchema.subscription",
+      "definition": "The `subscriptions[].id` this part belongs to.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.subscription",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgrefusalschema.purposemissing",
+      "prefLabel": "KgRefusalSchema.purposeMissing",
+      "definition": "A purpose is asked FIRST; a part with none cannot have its gates judged.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema.purposeMissing",
+      "status": "candidate"
+    },
+    {
       "id": "library-ref.libraryref.instance",
       "prefLabel": "LibraryRef.instance",
       "definition": "The DECLARED NAME of the instance holding the corpus — not a path.",

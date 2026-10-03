@@ -1,11 +1,11 @@
 ---
 # folio-assistant-atlf
 title: 'BEANS PAGE LIGHT MODE: the selected type chip rendered black on black — it read an undefined --fa-wp-bg'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-02T10:45:39Z
-updated_at: 2026-10-02T11:00:18Z
+updated_at: 2026-10-02T20:43:21Z
 parent: folio-assistant-o3xy
 ---
 
@@ -18,3 +18,7 @@ work-plan.css .fa-workplan-type-btn.is-active set color: var(--fa-wp-bg, #0d0d0d
 - [x] use --fa-wp-surface (defined in both schemes)
 - [x] regenerate visualiser pages (they inline the CSS)
 - [x] rendered and looked at in light mode
+
+## Summary of Changes
+
+Landed in #1851 (`9eecdc6`). Selected type chip uses --fa-wp-surface; readable in light mode.

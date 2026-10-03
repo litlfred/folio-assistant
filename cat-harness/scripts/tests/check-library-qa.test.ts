@@ -48,7 +48,10 @@ function realStructure(variant: "pdf" | "text", edit: (raw: Record<string, unkno
   throw new Error(`no ${variant} structure in the corpus to build a fixture from`);
 }
 const withMeta = (meta: Record<string, unknown>, file: string) => (raw: Record<string, unknown>) => {
-  raw.metadata = { ...(raw.metadata as object), ...meta };
+  // The borrowed entry's own title verdicts (bean `w6fu`) would otherwise
+  // leak into the fixture as an `editorial` or `corroborated` candidate.
+  const { title_verified: _v, title_correction: _c, ...borrowed } = (raw.metadata ?? {}) as Record<string, unknown>;
+  raw.metadata = { ...borrowed, ...meta };
   raw.source = { ...(raw.source as object), file };
 };
 
@@ -164,15 +167,71 @@ describe("reading an entry", () => {
     expect(u[0]!.why).toContain("will not parse");
   });
 
-  test("a non-PDF source with no record is title-source-absent, said aloud", () => {
+  test("a text source's declared title is a source title, tagged text-heading", () => {
     const root = instance();
-    const dir = entry(root, "readme", { title: "beans", meta: { source_file: "README.md" } }, {
-      [STRUCTURE_FILENAME]: realStructure("text", withMeta({}, "README.md")),
+    const dir = entry(root, "readme", { title: "beans", meta: { source_file: "README.md", title_source: "text-heading" } }, {
+      [STRUCTURE_FILENAME]: realStructure("text", withMeta({ title: "beans" }, "README.md")),
     });
     const f = readEntryFacts(dir, "readme", "fixture");
     expect(f.unreadable).toEqual([]);
+    expect(f.sourceTitles.map((s) => s.source)).toEqual(["text-heading"]);
+    expect(f.expected).toEqual({ title: "beans", source: "text-heading" });
+  });
+
+  test("the page-1 parse of a PDF is never offered as a source title", () => {
+    const root = instance();
+    const dir = entry(root, "abies", { title: "abies", meta: { source_file: "a.pdf", title_source: "slug" } }, {
+      [STRUCTURE_FILENAME]: realStructure("pdf", withMeta({ title: "Abies", docinfo: { Producer: "Pixel" } }, "a.pdf")),
+    });
+    const f = readEntryFacts(dir, "abies", "fixture");
     expect(f.sourceTitles).toEqual([]);
-    expect(f.noSourceTitleBecause).toContain("not a PDF");
+    expect(f.expected).toEqual({ title: "abies", source: "slug" });
+  });
+});
+
+describe("judge — titles against their provenance (owner ruling 2026-10-01)", () => {
+  const asEntry = (slug: string): LibraryEntry => ({ id: slug, instance: "fixture", dir: join("library", slug), words: 0 }) as LibraryEntry;
+  const fam = (j: ReturnType<typeof judge>, k: string) => j.families[k]!.entries as Record<string, unknown>[];
+
+  test("a slug-sourced title is title-missing", () => {
+    const root = instance();
+    entry(root, "s", { title: "s", meta: { source_file: "s.pdf", title_source: "slug" } }, {
+      [STRUCTURE_FILENAME]: realStructure("pdf", withMeta({ title: null, docinfo: {} }, "s.pdf")),
+    });
+    const j = judge([asEntry("s")], root);
+    expect(fam(j, "title-missing").map((e) => e.entry)).toEqual(["s"]);
+    expect(fam(j, "title-missing")[0]!.field).toBe("manifest.jsonld meta.title_source");
+  });
+
+  test("a PDF /Title over a Dublin Core record is title-implausible — the record outranks it", () => {
+    const root = instance();
+    write(join(root, "catalogue", "nodes", "item-x.json"), { id: "item/x", libraryId: "x", metadataRef: "catalogue/records/x.dc.json" });
+    write(join(root, "catalogue", "records", "x.dc.json"), { fields: [{ element: "title", values: [{ value: "WHO editorial style manual" }] }] });
+    entry(root, "x", { title: "Some PDF Title Here", meta: { source_file: "x.pdf", title_source: "pdf-info" } }, {
+      [STRUCTURE_FILENAME]: realStructure("pdf", withMeta({ docinfo: { Title: "Some PDF Title Here" } }, "x.pdf")),
+    });
+    const whys = fam(judge([asEntry("x")], root), "title-implausible").map((e) => String(e.why));
+    expect(whys.some((w) => w.includes("from dc-record"))).toBe(true);
+  });
+
+  test("the resolver's own output is clean, and a pdf-info title is listed as self-declared", () => {
+    const root = instance();
+    entry(root, "p", { title: "A Real PDF Title", meta: { source_file: "p.pdf", title_source: "pdf-info" } }, {
+      [STRUCTURE_FILENAME]: realStructure("pdf", withMeta({ docinfo: { Title: "A Real PDF Title" } }, "p.pdf")),
+    });
+    const j = judge([asEntry("p")], root);
+    expect(fam(j, "title-missing")).toEqual([]);
+    expect(fam(j, "title-implausible")).toEqual([]);
+    expect(fam(j, "title-self-declared").map((e) => e.source)).toEqual(["pdf-info"]);
+  });
+
+  test("a manifest recording no title_source is title-implausible", () => {
+    const root = instance();
+    entry(root, "q", { title: "A Real PDF Title", meta: { source_file: "q.pdf" } }, {
+      [STRUCTURE_FILENAME]: realStructure("pdf", withMeta({ docinfo: { Title: "A Real PDF Title" } }, "q.pdf")),
+    });
+    const whys = fam(judge([asEntry("q")], root), "title-implausible").map((e) => String(e.why));
+    expect(whys.some((w) => w.includes("no meta.title_source"))).toBe(true);
   });
 });
 

@@ -96,6 +96,7 @@ import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -222,6 +223,34 @@ export interface LibraryEntry {
    * Absent means nobody counted — never "nothing to summarise".
    */
   summaries?: SummaryTally;
+  /**
+   * The site-root path of the page that RENDERS this entry — attached by the
+   * caller (`gen-library-viz` `entryView`), derived from the declarations and
+   * never read from the asset (#1881). Absent when nobody derived it.
+   */
+  view?: string;
+  /**
+   * Where else a reader can go for this entry — read from a `referenced`
+   * entry's own `links` (`schemas/referenced-source.ts`). Owner, 2026-10-02:
+   * the smart-trust IG is in smart-base's library as an EXTERNAL reference,
+   * so the row has nothing of its own to open and must say where the thing is.
+   *
+   * `href` is an absolute URL, or SITE-ROOT-relative with a leading `/` and no
+   * base — the avatar's convention, composed by the viewer against wherever
+   * the site is served. Absent when the entry records none.
+   */
+  links?: { label: string; href: string }[];
+}
+
+/**
+ * An entry's recorded links, or `undefined` — only a `referenced.json` that
+ * validates contributes any, so a malformed record adds nothing to a page
+ * rather than a half-checked URL. `check:l1-complete` reports the malformation.
+ */
+export function referencedLinksOf(dir: string): { label: string; href: string }[] | undefined {
+  const r = ReferencedSourceSchema.safeParse(readJson<unknown>(join(dir, "referenced.json")));
+  if (!r.success || !r.data.links?.length) return undefined;
+  return r.data.links.map((l) => ("url" in l ? { label: l.label, href: l.url } : { label: l.label, href: `/${l.site_path}` }));
 }
 
 /** Where an entry's picture came from, where it lives, and where it is published. */
@@ -845,6 +874,10 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         ...(existsSync(join(dir, "README.md"))
           ? { readme: sourceLinks(REPO_URL(repoRoot), `${relative(repoRoot, dir).split("\\").join("/")}/README.md`, "main")?.viewHref }
           : {}),
+        ...(() => {
+          const links = has("referenced.json") ? referencedLinksOf(dir) : undefined;
+          return links ? { links } : {};
+        })(),
         ...(() => {
           const w = withheldEntryFor(dir);
           if (w) {
