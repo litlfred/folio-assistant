@@ -3,9 +3,10 @@
 title: 'WORK PLAN: two bean files declare the same id folio-assistant-t3n8 — every id-keyed reader sees one and silently loses the other'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-03T12:05:24Z
-updated_at: 2026-10-03T12:05:24Z
-parent: folio-assistant-whlc
+updated_at: 2026-10-03T12:05:37Z
+parent: folio-assistant-ahvw
 ---
 
 Found 2026-10-03 by the q8ar SQLite slice builder (its manifest lists t3n8 under duplicateIds). Files: `folio-assistant-t3n8--harness-display-names-every-instance-declares-a-hu.md` (parent yj32) and `folio-assistant-t3n8--the-archive-rung-stages-but-can-never-promote-and.md` (parent ahvw). Any reader keyed by id (beans CLI, claim-bean, the dashboard index, roadmap) resolves one and drops the other, and a commit or issue citing `t3n8` is ambiguous.
