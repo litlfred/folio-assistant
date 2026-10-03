@@ -1,7 +1,7 @@
 ---
 # folio-assistant-4pla
 title: 'JSON-LD VOICE, MECHANICAL HALF: publish:verify checks object properties are links and no document leans on a remote @base'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T07:23:50Z
@@ -22,7 +22,7 @@ Object properties come from the HELD contexts (every term coerced to @id/@vocab)
 - [x] verifier jsonld-object-links: a bare value under an object property that expands to a literal is a finding; an explicit {"@value"} is counted as a declared literal, not a finding
 - [x] verifier jsonld-own-base: a document referencing a held remote context that carries @base must state its own @base inline
 - [x] tests: both fire on a planted defect and pass on the real corpus
-- [ ] green on CI, PR ready
+- [x] green on CI, PR ready — 12 of 12 check runs success or intended skip on `dd8357926` (Code-quality gates, feature-staging `stage` running both verifiers on the built site, jsonld-sibling sync)
 
 _2026-10-03T07:24:00Z_ — Claimed by claude/zealous-thompson-y8dcf1-jsonld (session https://claude.ai/code/session_01Jf39Vh4B8EQT6TBYzTtMCA). Claimed on the branch only, NOT pushed to main: the owner's standing rule for this session is no writes to main, and the bean is new, so no sibling can be holding it.
 
@@ -36,3 +36,23 @@ and 6 PROV-JSONLD terms (`agent`, `activity`, `entity`, `role`, …) object
 properties. A planted `{"@value"}` under `uses` in a copy of a real library
 block is counted as declared, so the walk reaches content-context documents and
 not only the PROV reports.
+
+## Summary of Changes
+
+`cat-harness/scripts/publish-verify.ts` gains two verifiers, run wherever
+publish:verify already runs (docs-site deploy, every PR's staging build):
+
+- **`jsonld-object-links`** — expands each document with the held contexts and
+  flags a literal under any property a held context coerces to `@id`/`@vocab`.
+  An explicit `{"@value"}` is a *declared* literal: counted in the result's new
+  `note` field, not a finding. A compact-IRI key (`prov:agent`) that bypasses
+  the term's coercion is named as the cause.
+- **`jsonld-own-base`** — a document naming a held remote context that carries
+  `@base` must state its own `@base` inline (bh4q's two-part context).
+
+Object properties are read from the held contexts, never listed by hand.
+Tests plant each defect and run both verifiers over the real PROV reports,
+located via `siteDirFor()`. Real corpus: 7,059 documents, both pass, one
+declared literal (the `costateixeira` association).
+
+Not done here: the other five linked-data-voice rules stay judgementOnly.
