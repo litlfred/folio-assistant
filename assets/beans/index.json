@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 714,
+      "count": 715,
       "unit": "beans"
     }
   },
@@ -1637,14 +1637,14 @@
     {
       "id": "folio-assistant-5blc",
       "title": "Digital Transformation Handbook (DTH): a voice, an L1 document subtype on Reference Architecture + DIIG concepts, and a source of methodologies / processes / glossary",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-qvxh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T18:16:53Z",
-      "updatedAt": "2026-10-01T20:00:15Z",
+      "updatedAt": "2026-10-03T10:52:39Z",
       "preview": "Owner, 2026-10-01 (during stage D, #1767), attaching 9789240116191-eng.pdf (DTH for health product catalogue): 'use for one voice for \"Digital Transformation Handbook\" a specific type of a L1 document that uses the Reference Architecture and DIIG concepts', then 'also as source of methodologies / processes / glossary'. Same session: commit 27078551 on main uploaded four WHO DTHs to uploads/ (prima",
       "file": "beans/defs/folio-assistant-5blc--digital-transformation-handbook-dth-a-voice-an-l1.md"
     },
@@ -2558,7 +2558,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:55:15Z",
-      "updatedAt": "2026-10-03T09:17:35Z",
+      "updatedAt": "2026-10-03T09:17:38Z",
       "preview": "Found 2026-10-03 while measuring PR #1888's merge with `main` for session\n`folio-assistant-a8`: of its 55 conflicts, 53 classified to a declared pattern\nand **2 refused**, and both were the same page in its two forms —\n`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`\n(authored source) and `cat-harness/docs/publication-workflow.md` (its generated\nmirror). The mirror's o",
       "file": "beans/defs/folio-assistant-8c6v--merge-patterns-gap-the-17-generated-docsmd-pages-h.md"
     },
@@ -6013,6 +6013,20 @@
       "updatedAt": "2026-10-02T13:13:34Z",
       "preview": "`beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md` is appended to by many sibling PRs (findings 1, 3, 6, 7/8, 10, 12 …). Each time one merges, every other open PR conflicts on that file, and the merge-main bot refuses bean conflicts on purpose (`beans: refuse` in `merge-conflict-patterns.ts`), so each PR needs a hand-merge. On 2026-10-02 this forced hand-merges of #1798,",
       "file": "beans/defs/folio-assistant-m61r--bean-notes-per-pr-files-so-sibling-prs-stop-confli.md"
+    },
+    {
+      "id": "folio-assistant-m7mn",
+      "title": "SEARCH SCOPES: split the site index per harness and per locale, with a manifest (#1972 A1)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T09:50:04Z",
+      "updatedAt": "2026-10-03T09:50:04Z",
+      "preview": "Issue #1972 step A, first half (A1). The owner chose \"Both, lazy first\" on\n2026-10-03; lazy is bean `2tfy` (#1975), and #1972's plan makes step A — one\nindex per harness and per locale — the \"shrink\" half.\n\n## Measured (local build, 2026-10-03)\n\n`search-split.ts` over the built site's `search-data.json` (12,040 entries,\n13.74 MB) in 0.5 s: 11 scopes — `_platform` 4,822 entries / 7.73 MB,\n`smart-im",
+      "file": "beans/defs/folio-assistant-m7mn--search-scopes-split-the-site-index-per-harness-and.md"
     },
     {
       "id": "folio-assistant-m8gz",

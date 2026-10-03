@@ -299,10 +299,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T10:51:37.740Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e8bbbceaf6debd6091a0fb6caec7841aebce571a",
-  "sourceCommitSha": "e8bbbceaf6debd6091a0fb6caec7841aebce571a",
-  "sourceCommitAt": "2026-10-03T12:45:46+02:00",
+  "generatedAt": "2026-10-03T11:22:19.146Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/76cdd687a2011846eb1a4366aeff74a790653682",
+  "sourceCommitSha": "76cdd687a2011846eb1a4366aeff74a790653682",
+  "sourceCommitAt": "2026-10-03T13:14:37+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -315,7 +315,7 @@
     "SequenceFlow": 1040,
     "Lane": 208,
     "ProcessNode": 980,
-    "Tool": 117,
+    "Tool": 118,
     "Schema": 160,
     "ExternalSchema": 21,
     "GraphKind": 27,
@@ -3003,7 +3003,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 310,
+      "instructionLines": 374,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -42022,6 +42022,45 @@
         "runtime": [
           "bun",
           "ruby"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-search-scopes",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "site-search-scopes",
+      "title": "Site search scopes",
+      "description": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/search-split.ts --dir _site"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "index",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "scopes",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
         ],
         "network": false
       },
