@@ -1606,41 +1606,12 @@ export interface KgQaReport {
   /** Criterion id → entry. Criteria not applying to this kind are omitted. */
   criteria: Record<string, KgCriterionEntry>;
   totals: Record<KgResult, number>;
-  /**
-   * Declared prose ↔ code pairs and the state each was last accepted in —
-   * carried ACROSS runs, unlike everything above, because it is the baseline
-   * `prose-reviewed-since-code-changed` compares against. Written by
-   * `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.
-   */
-  pair_attestations?: KgPairAttestation[];
-  /**
-   * An agent's or a person's rule-by-rule review of a skill against a voice
-   * that judges skills — carried across runs like `pair_attestations`, and
-   * written by `voice:review`; see `scripts/skill-voice-review.ts`.
-   */
-  voice_reviews?: KgVoiceReview[];
-}
-
-/** One review of a skill against one voice. Hashes pin what was reviewed. */
-export interface KgVoiceReview {
-  voice: string;
-  instance: string;
-  skill_hash: string;
-  voice_hash: string;
-  by: "agent" | "human";
-  at: string;
-  verdicts: Array<{ rule: string; result: "pass" | "fail" | "n/a"; note?: string }>;
-}
-
-/** One declared pair's accepted state. Paths are repo-relative. */
-export interface KgPairAttestation {
-  kind: "implements" | "co-located";
-  prose: string;
-  code: string;
-  prose_hash: string;
-  code_hash: string;
-  by: "baseline" | "agent" | "human";
-  reason?: string;
+  // NO judgements here. `pair_attestations` and `voice_reviews` lived in this
+  // report until bean `2gst` (2026-10-01): they are what an earlier run or a
+  // reviewer recorded, so they cannot be regenerated, and owner ruling D2 (a)
+  // keeps them on main while this derived report moves to the `qa-reports`
+  // branch. They are in the attestation store now —
+  // `schemas/qa-attestations.ts`, `test/attestations/kg-qa/`.
 }
 
 export const KgFindingSchema = z.object({
@@ -1663,38 +1634,11 @@ export const KgQaReportSchema = z.object({
   source_hash: z.string().nullable(),
   criteria: z.record(z.string(), KgCriterionEntrySchema),
   totals: z.record(z.enum(KG_RESULTS), z.number()),
-  pair_attestations: z
-    .array(
-      z.object({
-        kind: z.enum(["implements", "co-located"]),
-        prose: z.string().min(1),
-        code: z.string().min(1),
-        prose_hash: z.string().min(1),
-        code_hash: z.string().min(1),
-        by: z.enum(["baseline", "agent", "human"]),
-        reason: z.string().min(1).optional(),
-      }),
-    )
-    .optional(),
-  voice_reviews: z
-    .array(
-      z.object({
-        voice: z.string().min(1),
-        instance: z.string().min(1),
-        skill_hash: z.string().min(1),
-        voice_hash: z.string().min(1),
-        by: z.enum(["agent", "human"]),
-        at: z.string().min(1),
-        verdicts: z.array(
-          z.object({
-            rule: z.string().min(1),
-            result: z.enum(["pass", "fail", "n/a"]),
-            note: z.string().min(1).optional(),
-          }),
-        ),
-      }),
-    )
-    .optional(),
+  // Refused, not merely dropped: a sidecar carrying a judgement is the mixed
+  // file D2 split, and parsing it as clean would hide that it was written by
+  // a writer that never learned about the store. See `schemas/qa-attestations.ts`.
+  pair_attestations: z.never({ error: "pair_attestations belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
+  voice_reviews: z.never({ error: "voice_reviews belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
 });
 
 export const KgQaManifestSchema = z.object({

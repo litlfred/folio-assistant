@@ -17,7 +17,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { gutsFiles } from "../gen-fsh-guts-viz.ts";
+import { gutsDir, gutsFiles } from "../gen-fsh-guts-viz.ts";
 
 const TAG = "$schema: folio-fsh-guts/v1";
 const sidecar = (title: string) => `---\n${TAG}\ntitle: "${title}"\nkind: source\n---\n\n# ${title}\n`;
@@ -104,7 +104,7 @@ describe("a title is read from markdown only", () => {
 
 describe("corpus — the real directory, so a regression cannot pass on fixtures", () => {
   test("no archived source reads as undeclared, and no title is binary", () => {
-    const files = gutsFiles(join(import.meta.dir, "../../../fsh-guts"));
+    const files = gutsFiles(gutsDir(join(import.meta.dir, "../../.."))!);
     const uploads = files.filter((f) => f.group === "uploads");
     expect(uploads.length).toBeGreaterThan(0);
     expect(uploads.filter((f) => f.state === "undeclared")).toEqual([]);
