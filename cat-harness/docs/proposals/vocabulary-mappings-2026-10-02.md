@@ -139,7 +139,7 @@ which predicate.
 | # | source type | source field | target | relation | site |
 |---|---|---|---|---|---|
 | 46 | library item: structure, tabular record or `referenced.json` | `metadata.title`, `shape.title` or `identity.title`, falling back to the doc id | `dcterms:title` (via `jsonld.ts:599`) | copy with fallback, three times | `gen-library-jsonld.ts:344`, `:568`, `:588` |
-| 47 | library item | licence file | `meta.licence` inside an `@json` literal, so it is **not** `dcterms:license` | copy into an opaque literal | `:573`, `:600`; `cat-harness/schemas/jsonld.ts:643` |
+| 47 | library item | licence file | `meta.licence` inside an `@json` literal, so it is **not** `dcterms:license` (as inventoried; since D4, 2026-10-03, it is `dcterms:license` by the `licence-naming` table) | copy into an opaque literal | `:573`, `:600`; `cat-harness/schemas/jsonld.ts:643` |
 
 ### Knowledge graph: `cat-harness/scripts/kg-export.ts`, `fsh-guts-export.ts`, `cat-harness/schemas/vocabulary.ts`
 
@@ -182,7 +182,7 @@ These are reported, not fixed: fixing them is what the chosen shape is for.
 | **D1** | The `sl9u` rule is *"a concept scheme that is also a document carries a derived `dcterms:title`"*. Two emitters apply it (15, 22). Two do not (24, 30), and that is **correct**: their scheme IRIs (`<doc>#<list>`, `<ns>glossary/<id>`) are not documents. But the condition that decides it is written down nowhere, so each new emitter has to rediscover it. | 15, 22, 24, 30 |
 | **D2** | `fsh-guts-export.ts:226` says it maps `name` and `description` *"exactly as the main export maps them"*. It does not. kg-export moved `description` to `dcterms:description` (bean `xsqm`), while fsh-guts still writes `rdfs:comment`. The comment went stale when kg-export changed. | 48, 53 |
 | **D3** | **The same IRI gets two naming predicates from two generators.** kg-export and glossary-export both mint a role as `makeIri(doc, "role", id)`. kg-export names it `dcterms:title` with `rdfs:label` = the id. glossary-export names it `skos:prefLabel` with `skos:notation` = the id. In a merged graph one node has `rdfs:label "reviewer"` and `skos:prefLabel "Reviewer"`, and `skos:prefLabel` is a sub-property of `rdfs:label`. That is the `sl9u` overlap again, on every role node rather than one, with nothing saying which is authoritative. | 1, 5, 49 |
-| **D4** | A licence is `dcterms:license` on a glossary (32) but an opaque `@json` literal on a library item (47), so an RDF reader can see one and not the other. Licence is one of the "other metadata" the owner named. | 32, 47 |
+| **D4** | A licence is `dcterms:license` on a glossary (32) but an opaque `@json` literal on a library item (47), so an RDF reader can see one and not the other. Licence is one of the "other metadata" the owner named. **Ruled 2026-10-03 (owner): move it. Done** (bean `gzkt`): one table, `vocab-mappings/licence-naming.json`, drives both. A library item's manifest now carries the licence as `license` → `dcterms:license`, outside `meta`, written only for a `stated` record. An `unknown` record names no licence. An absent one writes nothing. The authored record stays whole as `licenceRecord` (`@json`), which is what `check:source-licence` reads. | 32, 47 |
 | **D5** | A schema module's `summary` goes to `dcterms:title` (51), while every other node type sends `summary` to `rdfs:comment` (48). This may be deliberate, but no comment says so. **Ruled 2026-10-02 (owner): "Make it like the others"** — `summary` → `rdfs:comment`, title = module stem (bean `lodp`). | 48, 51 |
 
 ## 2. What to reuse, and what not to
@@ -477,3 +477,6 @@ D3 decision goes (fix the role IRI's naming, or declare `skos:prefLabel`
 authoritative across both generators), whether D4's licence moves out of
 `meta`, and the order in which the other generators migrate. Each is a
 separate decision once the shape exists.
+
+**Since decided.** D4 was ruled 2026-10-03 by the owner ("move it") and is
+done (bean `gzkt`). See the D4 row in §1.

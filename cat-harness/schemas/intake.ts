@@ -80,7 +80,7 @@ export const IntakeSchema = z
     files: z.array(IntakeFileSchema),
     /**
      * The licence the uploader established, as the SAME record a library
-     * manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean
+     * manifest carries as `licenceRecord` (`schemas/source-licence.ts`, bean
      * `7bg9`). Read by the EARLY licence step of document ingestion, before
      * any derivation. Absent means nobody recorded one — reported as
      * undetermined, never as cleared.
