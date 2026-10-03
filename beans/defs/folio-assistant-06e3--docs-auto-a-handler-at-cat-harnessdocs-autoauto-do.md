@@ -774,6 +774,18 @@ After: `populated` — process `Adjudication`, role `Activity log`, task
 `Authorise the extraction`, three distinct names, 1445 words of prose.
 `docs:pages:check`, `check:anchor-names` and `docs:auto:check` all pass.
 
+**Verified by LOOKING at it, and that caught a defect no gate did.** The first
+draft put the two new index links on consecutive markdown lines, so kramdown
+joined them into ONE paragraph and they rendered run together —
+*"Every role, with the skills its lane carries → Every task, by the process that
+draws it →"* — unlike the single link above them. Every gate was green across
+it. Separated into two paragraphs, rebuilt, re-shot.
+
+The build also confirmed both new links resolve to real pages
+(`cat-harness/docs-auto/index/{roles,tasks}/index.html` present in the output)
+and that every heading anchor on the page is unique, which is the `gjli` rule.
+Screenshots at 1280 and 390 px; phone width has no horizontal overflow.
+
 ### Two things reported rather than fixed
 
 1. **The check still names `methodologies/index.md` as cat-harness's subject
@@ -786,6 +798,18 @@ After: `populated` — process `Adjudication`, role `Activity log`, task
    satisfies** — and it was already settled against: `platform.md`'s own header
    records that it lived at `/cat-harness/` until 2026-09-21, when the owner
    ruled **the handler wins** that namespace (bean `8h42`), so every route under
-   it is generator output. `<base>/cat-harness/` consequently has **no index at
-   all** while all seven of its children do. That is a real gap and it needs a
-   writer, not a page: left for the owner rather than decided here.
+   it is generator output.
+
+   **WITHDRAWN, same day, and the mistake is worth keeping.** This paragraph
+   first said `<base>/cat-harness/` has *"no index at all"* and called it a real
+   gap for the owner. It is wrong. `<base>/cat-harness/` **is** served —
+   `docs/cat-harness/published-graphs.md` carries `permalink: /cat-harness/`,
+   and a local site build emits `cat-harness/index.html` at 241568 bytes,
+   titled "Published graphs".
+
+   The error was method, not typing: absence was inferred from
+   `find -name 'index.*'`, a FILENAME pattern, when the question was about a
+   published ROUTE — and a page may claim a route with `permalink` while being
+   named anything at all. A filename is evidence about a file; only the build is
+   evidence about a URL. Caught by running `preview:site`, which is the whole
+   reason that script exists: *"a green gate set is not a rendered page."*

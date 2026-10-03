@@ -139,6 +139,7 @@ as console output — a printed verdict is gone, which makes "unbound since it
 was drawn" and "broken in the commit under review" indistinguishable.
 
 **[Every role, with the skills its lane carries →]({{ '/cat-harness/docs-auto/index/roles/' | relative_url }})**
+
 **[Every task, by the process that draws it →]({{ '/cat-harness/docs-auto/index/tasks/' | relative_url }})**
 
 What the two indexes do not tell you is how differently sized their entries
