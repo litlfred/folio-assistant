@@ -83,7 +83,12 @@ describe("the gates come from the workflow, not from a list", () => {
     // Order matters: `bun test` before the slower graph audits is what makes
     // the runner usable, and it is the workflow's order rather than a sort.
     const cmds = gates.map((g) => g.command);
-    expect(cmds.indexOf("bun test")).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
+    // Found by prefix, never by exact string: the step became
+    // `bun test --parallel` (bean `dlqu`), and an exact `indexOf` would then
+    // return -1, which is less than any index — a vacuous pass.
+    const test = cmds.findIndex((c) => /^bun test\b/.test(c));
+    expect(test).toBeGreaterThanOrEqual(0);
+    expect(test).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
   });
 
   test("each gate carries the step name the Actions UI shows", () => {
@@ -117,9 +122,17 @@ describe("the gates come from the workflow, not from a list", () => {
     // shrinkage fails.
     const gates = loadGates(ROOT);
     const jobs = new Set(gates.map((g) => g.job));
-    expect(jobs.has("typescript")).toBe(true);
+    // Bean `dlqu` split `typescript` into `typescript-static` (lint, types)
+    // and `typescript-test` (sharded `bun test`) under an aggregate that runs
+    // no `bun` line, and moved the browser steps into `e2e-shard` the same
+    // way. So the jobs named here are the ones that CARRY commands; naming the
+    // aggregates would assert membership of jobs that contribute nothing, and
+    // `e2e` would pass the browser exclusion for the wrong reason.
+    expect(jobs.has("typescript-static")).toBe(true);
+    expect(jobs.has("typescript-test")).toBe(true);
     expect(jobs.has("gates")).toBe(true);
-    expect(jobs.has("e2e")).toBe(false);
+    expect(jobs.has("gates-unrun")).toBe(true);
+    expect(jobs.has("e2e-shard")).toBe(false);
     expect(gates.length).toBeGreaterThan(100);
   });
 });
