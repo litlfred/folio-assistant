@@ -26,6 +26,8 @@
  *   the other, because they all contend for a single ref.
  * - **A job that REPLACES the whole publish branch without carrying the open
  *   PRs' `STAGING/` previews across.** Bean `plj1`.
+ * - **A push to `qa-reports` that does not go through `qa-store.ts`.** Bean
+ *   `16ei`: `qa-reports-unretried`.
  *
  * @module scripts/check-workflows
  * @covers none — .github/workflows/ is not a declared graph kind
@@ -66,7 +68,8 @@ export interface WorkflowFinding {
     | "unparseable"
     | "interpolated-untrusted"
     | "gh-pages-ungrouped"
-    | "gh-pages-wipes-staging";
+    | "gh-pages-wipes-staging"
+    | "qa-reports-unretried";
   detail: string;
 }
 
@@ -358,6 +361,53 @@ export function ghPagesWipesStaging(text: string, file: string): WorkflowFinding
   return out;
 }
 
+/** The branch the QA results are published to (owner ruling D1). */
+export const QA_REPORTS_BRANCH = "qa-reports";
+
+/**
+ * Every write to `qa-reports` must go through `qa-store.ts` — bean `16ei`.
+ *
+ * ## Why the gh-pages rule does not generalise
+ *
+ * {@link ghPagesUngrouped} accepts a QUEUE or a retry, because a gh-pages
+ * writer may replace what it finds. `qa-reports` writers own DISJOINT paths
+ * (`main/<sha>/`, `pr/<n>/<sha>/`) and run concurrently by design: one job per
+ * push and one per PR, so a shared concurrency group would serialise every
+ * run in the repository behind one ref, and GitHub would cancel the pending
+ * ones — losing entries, which is #300's failure again. The only protection
+ * that keeps a sibling's entry is the one spike `3ds9` measured: fetch the
+ * tip, splice, `commit-tree -p tip`, push WITHOUT `-f`, and rebuild on
+ * rejection. That loop lives in `qa-store.ts` and nowhere else, so the rule
+ * here is narrower than "has a retry": a raw `git push` naming the branch is a
+ * finding even inside a loop, because a hand-written loop is a second policy
+ * free to forget the splice or to reach for `-f`.
+ *
+ * Detected per line of a run body, comments skipped: `git push` together with
+ * the branch name. `qa:publish` / `qa:prune` / `qa-store.ts` are the
+ * sanctioned writers and contain no `git push` in the workflow text.
+ */
+export function qaReportsUnretried(text: string, file: string): WorkflowFinding[] {
+  const out: WorkflowFinding[] = [];
+  const lines = text.split("\n");
+  const branch = new RegExp(`(^|[\\s:/'"])${QA_REPORTS_BRANCH}(?![\\w-])`);
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i]!;
+    if (l.trimStart().startsWith("#")) continue;
+    if (!/\bgit\b[^\n]*\bpush\b/.test(l) || !branch.test(l)) continue;
+    out.push({
+      file,
+      line: i + 1,
+      kind: "qa-reports-unretried" as const,
+      detail:
+        `a raw push to \`${QA_REPORTS_BRANCH}\`. Every write to that branch goes through ` +
+        "`bun run qa:publish` / `qa:prune` (`cat-harness/scripts/qa-store.ts`): fetch the tip, splice, " +
+        "`commit-tree -p`, push without `-f`, three attempts with `backoff-sleep.ts`. A hand-rolled push " +
+        "loses a concurrent writer's entry or force-pushes over it.",
+    });
+  }
+  return out;
+}
+
 export function checkWorkflows(): WorkflowFinding[] {
   const out: WorkflowFinding[] = [];
   for (const f of readdirSync(DIR)) {
@@ -369,6 +419,7 @@ export function checkWorkflows(): WorkflowFinding[] {
       ...interpolatedUntrusted(text, f),
       ...ghPagesUngrouped(text, f),
       ...ghPagesWipesStaging(text, f),
+      ...qaReportsUnretried(text, f),
     );
   }
   return out;
@@ -382,7 +433,8 @@ if (import.meta.main) {
     console.log(
       "✓ all parse; no duplicate keys; no attacker-controlled expression in a run body; " +
         `every gh-pages push is protected by the \`${GH_PAGES_GROUP}\` queue or a retry; ` +
-        `no full-replace publish drops the open PRs' \`${STAGING_PREFIX}/\` previews`,
+        `no full-replace publish drops the open PRs' \`${STAGING_PREFIX}/\` previews; ` +
+        `every write to \`${QA_REPORTS_BRANCH}\` goes through qa-store`,
     );
   } else {
     for (const f of findings) console.error(`  ✗ ${f.file}:${f.line}  [${f.kind}] ${f.detail}`);
