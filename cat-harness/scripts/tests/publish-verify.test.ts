@@ -19,6 +19,7 @@ import { buildVocabulary } from "../ns-export";
 import { codeListDirs, loadCodeLists } from "../../schemas/code-list";
 import { buildCodeListsDoc } from "../code-lists";
 import { PROV_JSONLD_CONTEXT_URL } from "../../schemas/prov-jsonld.ts";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { HTML_UNIQUE_IDS, JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, SEARCH_INDEX, SEARCH_INDEX_PATH, VERIFIERS, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
 
 const site = (files: Record<string, unknown>): string => {
@@ -259,7 +260,10 @@ describe("object properties are links — ld-object-property-is-a-link", () => {
 
   test("the real PROV-O reports carry no undeclared literal under an object property", async () => {
     // The corpus 9y9j measured: 100 activities, every agent/role/plan a string.
-    const dir = join(import.meta.dir, "..", "..", "docs", "assets", "prov");
+    // The site root is asked of the declaration, never spelled here
+    // (`site-dir-single-answer.test.ts`).
+    const instance = join(import.meta.dir, "..", "..");
+    const dir = join(instance, siteDirFor(instance), "assets", "prov");
     const { results } = await verify(dir, LINKS);
     expect(results[0]!.checked).toBeGreaterThan(0);
     expect(results[0]!.findings).toEqual([]);
