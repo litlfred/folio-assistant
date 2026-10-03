@@ -1371,7 +1371,7 @@ md-authoring <span class="fa-gloss-status">candidate, extracted</span>
 merge-conflict-patterns <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for &quot;merge main&quot;, &quot;resolve the conflicts&quot;, &quot;the PR is conflicted again&quot;, &quot;auto-resolve&quot;, and when adding a pattern for a new kind of churn.</p>
+<p>Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for &quot;merge main&quot;, &quot;resolve the conflicts&quot;, &quot;the PR is conflicted again&quot;, &quot;auto-resolve&quot;, and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md"><code>cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--merge-queue" data-fa-state="extracted" data-fa-gloss="">

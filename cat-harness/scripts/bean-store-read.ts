@@ -24,7 +24,9 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 export { beanDefsDir } from "./check-bean-parents.ts";
-import { resolveBeanDefs } from "./beans.ts";
+import { DEFAULT_BEAN_GRAPH_ROOT } from "../schemas/bean-graph.ts";
+import { resolveBeanDefsAt } from "./beans.ts";
+import { graphReadPath } from "./graph-read.ts";
 
 /** One bean, as it sits on disk. */
 export interface BeanFile {
@@ -91,8 +93,22 @@ export function isFoldedTitle(fm: string): boolean {
  * the absences, or see the files this drops, wants {@link readBeanStore} —
  * this one flattens both back into `null` and silence.
  */
+/**
+ * {@link readBeanStore}'s beans, or `null` for no store.
+ *
+ * `null` deliberately does NOT cover {@link BeanStore}'s `unreachable`: five
+ * gates read through this function, and handing them `null` for a store this
+ * checkout could not reach would have every one of them report *nothing to
+ * check*, exit 0 — `dh4f`, five times over, on the first session after the
+ * cutover where the mount did not happen. So that case THROWS, carrying the
+ * remedy (bean `9ofm` row D). A crash beats a clean run over nothing.
+ *
+ * It cannot fire before the cutover: while `main` still tracks the files,
+ * `graphReadPath` resolves to the checkout.
+ */
 export function readBeanFiles(root: string): BeanFile[] | null {
   const store = readBeanStore(root);
+  if (store.state === "unreachable") throw new Error(`cannot read the bean store: ${store.reason}`);
   return store.state === "read" ? store.beans : null;
 }
 
@@ -151,10 +167,37 @@ export type BeanStore =
   | { state: "absent"; dir: string | null }
   /** A declaration names this directory and it is not there. `dh4f`. */
   | { state: "declared-but-absent"; dir: string }
+  /**
+   * The GRAPH is kept on a branch and this checkout cannot reach it — cut
+   * over and not mounted. Bean `9ofm` row D.
+   *
+   * A FOURTH state rather than a second spelling of `declared-but-absent`,
+   * and the difference is the remedy. `declared-but-absent` says *a
+   * declaration names this directory and it is not there* — create it, or fix
+   * the declaration. This says *the store is on `cat/cat-harness/beans` and
+   * nothing is mounted here* — `bun run state:mount`. Folding them would
+   * print the wrong remedy for the state the cutover actually produces, and a
+   * person acting on it would "fix" the declaration that is correct.
+   */
+  | { state: "unreachable"; dir: null; reason: string }
   | { state: "read"; dir: string; beans: BeanFile[]; skipped: SkippedFile[]; filesSeen: number };
 
 export function readBeanStore(root: string): BeanStore {
-  const { dir, declared } = resolveBeanDefs(root);
+  // WHERE THE GRAPH IS (row D), then where `defs` is within it. Two questions:
+  // the mount is keyed on the `beans` entry in the root instance's
+  // declaration, while `beans/beans.json` declares `defs` relative to the
+  // graph — and `beans/` is not an instance root, so the nested declaration is
+  // invisible to the mount.
+  const where = graphReadPath("beans", root);
+  if (where.state === "refused") {
+    // Never a path that merely happens not to exist: that reads as
+    // `declared-but-absent` and sends the reader to fix a correct declaration.
+    return { state: "unreachable", dir: null, reason: where.reason };
+  }
+  // `undeclared` keeps the convention, which is what an unmigrated folio has:
+  // no `beans` entry at all is "no store", not "wrong".
+  const graphRoot = where.state === "ok" ? where.at : join(root, DEFAULT_BEAN_GRAPH_ROOT);
+  const { dir, declared } = resolveBeanDefsAt(graphRoot);
   // The graph declares no `bean-defs` node at all.
   if (dir === null) return { state: "absent", dir: null };
   if (!existsSync(dir)) {
