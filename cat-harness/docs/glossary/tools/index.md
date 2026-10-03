@@ -12,9 +12,9 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 121 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 22 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 120 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 154 terms and is 108 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 154 terms and is 107 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -257,6 +257,13 @@ Fetch a skill <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Load one skill's instruction body for the agent to follow, from the local packages or an external bundle.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#skill-fetch</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-tools--ig-cache" data-fa-state="extracted" data-fa-gloss="">
+FHIR AST cache <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try <code>restore</code> first: a full AST build via AstExportCli is expensive, a restore is fast.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-cache</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--folio-block-qa-summary" data-fa-state="extracted" data-fa-gloss="">
 Folio block QA summary <span class="fa-gloss-status">candidate, extracted</span>
@@ -696,13 +703,6 @@ PDF page raster <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-cover</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--slice-sqlite" data-fa-state="extracted" data-fa-gloss="">
-Per-slice SQLite builder <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. <code>--check</code> builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#slice-sqlite</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-ast-plan" data-fa-state="extracted" data-fa-gloss="">
 Plan an incremental IG build from a delta of changed files <span class="fa-gloss-status">candidate, extracted</span>
