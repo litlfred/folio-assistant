@@ -8,6 +8,10 @@
  * covered a third of the page with the glass CLOSED and sat over the tile
  * strip; on a tablet the layout was already the laptop one but a FINGER could
  * not drag a card, because `wireMove` listened for mouse events only.
+ *
+ * Since #1925 a pinned sticky IS a folio-glass card (owner, 2026-10-02: *"pin
+ * to glass should pin to folio glass"*), so both things this page puts on the
+ * glass are `.fa-glass-asset` cards with the same tools, on every device.
  */
 import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -46,11 +50,11 @@ const setup = async (page: Page, size: { width: number; height: number }) => {
   await page.goto("http://dev.test/p.html");
   await page.waitForSelector(".fa-glass-handle", { state: "attached" });
   // One of each thing the glass holds: a pinned sticky and a library asset.
-  await page.locator('[data-fa-home-slot="a"] .fa-home-pin').click();
+  await page.locator('[data-fa-home-slot="a"] .fa-sticky-act-pin').click();
   await page.locator('[data-fa-library-item="i/book"] .fa-pullout').click();
 };
 
-const pin = '.fa-sticky-layer [data-fa-pin="landing/a"]';
+const pin = '.fa-sticky-layer .fa-glass-asset[data-fa-asset="landing/a"]';
 const asset = '.fa-glass-asset[data-fa-asset="i/book"]';
 const openGlass = async (page: Page) => {
   await page.click(".fa-glass-handle");
@@ -71,7 +75,7 @@ test.describe("a PHONE gets one column", () => {
     await openGlass(page);
     const a = (await page.locator(asset).boundingBox())!;
     const p = (await page.locator(pin).boundingBox())!;
-    // Shelf first, then pinned stickies, one under the other.
+    // One column, in the shelf's key order: the book, then the pinned sticky.
     expect(p.y).toBeGreaterThanOrEqual(a.y + a.height);
     // Each nearly the whole width, and the same width: a column, not a grid.
     expect(a.width).toBeGreaterThan(PHONE.width - 40);
@@ -79,27 +83,27 @@ test.describe("a PHONE gets one column", () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(PHONE.width);
   });
 
-  test("move and resize are gone; close and Return stay", async ({ page }) => {
+  test("move and resize are gone; close stays, on the sticky too", async ({ page }) => {
     await setup(page, PHONE);
     await openGlass(page);
     await expect(page.locator(`${asset} [data-fa-control="move"]`)).toBeHidden();
     await expect(page.locator(`${asset} button[aria-label^="Make "]`).first()).toBeHidden();
     await expect(page.locator(`${pin} [data-fa-control="move"]`)).toBeHidden();
     await expect(page.locator(`${asset} .fa-glass-asset-close`)).toBeVisible();
-    await expect(page.locator(`${pin} .fa-sticky-sendhome`)).toBeVisible();
+    await expect(page.locator(`${pin} .fa-glass-asset-close`)).toBeVisible();
   });
 
   test("a place saved on a laptop is left alone, not overwritten by the column", async ({ page }) => {
     await setup(page, PHONE);
     await page.evaluate(() => {
-      const m = JSON.parse(localStorage.getItem("fa-pinned-stickies") || "{}");
+      const m = JSON.parse(localStorage.getItem("fa-folio-assets") || "{}");
       m["landing/a"].geom = { left: 40, top: 50, width: 300, height: 200 };
-      localStorage.setItem("fa-pinned-stickies", JSON.stringify(m));
+      localStorage.setItem("fa-folio-assets", JSON.stringify(m));
     });
     await page.reload();
     await page.waitForSelector(".fa-glass-handle", { state: "attached" });
     await openGlass(page);
-    const geom = await page.evaluate(() => JSON.parse(localStorage.getItem("fa-pinned-stickies") || "{}")["landing/a"].geom);
+    const geom = await page.evaluate(() => JSON.parse(localStorage.getItem("fa-folio-assets") || "{}")["landing/a"].geom);
     expect(geom).toEqual({ left: 40, top: 50, width: 300, height: 200 });
   });
 });
@@ -107,8 +111,10 @@ test.describe("a PHONE gets one column", () => {
 test.describe("a TABLET is a laptop, and a finger can drag", () => {
   test("the free-positioning surface is kept, with its move controls", async ({ page }) => {
     await setup(page, TABLET);
-    await expect(page.locator(pin)).toBeVisible();              // floats with the glass closed
     await openGlass(page);
+    await expect(page.locator(pin)).toBeVisible();
+    expect(await page.locator(pin).evaluate((n) => getComputedStyle(n).position)).toBe("absolute");
+    await expect(page.locator(`${pin} [data-fa-control="move"]`)).toBeVisible();
     expect(await page.locator(asset).evaluate((n) => getComputedStyle(n).position)).toBe("absolute");
     await expect(page.locator(`${asset} [data-fa-control="move"]`)).toBeVisible();
   });
@@ -169,7 +175,8 @@ test.describe("the count is SPOKEN, not only drawn", () => {
 
   test("it follows the count — one item is singular", async ({ page }) => {
     await setup(page, PHONE);
-    await page.locator('[data-fa-home-slot="a"] .fa-sticky-recall').click();
+    // Un-pin: the pin is a toggle, and the sticky is shelved off the glass.
+    await page.locator('[data-fa-home-slot="a"] .fa-sticky-act-pin').click();
     await expect(page.locator(".fa-glass-handle")).toHaveAttribute("aria-label", "Pull down your folio — 1 item on it");
   });
 
