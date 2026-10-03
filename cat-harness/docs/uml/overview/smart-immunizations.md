@@ -77,6 +77,7 @@ classDiagram
       canonical [0..1] string
       version [0..1] string
       category [0..1] string
+      listedAt [0..1] integer
       published [1] object
       sidecars [0..1] object
       materialization [1] object
@@ -95,6 +96,8 @@ classDiagram
       provenance [1] object
       sidecarApi [1] unknown | absent | present
       contexts [0..*] Context[]
+      igApiHub [0..1] object
+      package [0..1] object
       sidecarsUnbound [0..*] SidecarsUnbound[]
       count [1] integer
       artifacts [0..*] Artifact[]

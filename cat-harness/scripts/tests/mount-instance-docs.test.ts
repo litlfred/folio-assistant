@@ -19,6 +19,7 @@ import { tmpdir } from "os";
 import { join } from "path";
 
 import {
+  servedDirectories,
   WITHHELD_FILE,
   publishedAsset,
   redirectHtml,
@@ -325,5 +326,30 @@ describe("a kind route whose directory is not mounted is a one-file redirect —
     expect(html).toContain(`<link rel="canonical" href="${target}">`);
     expect(html).toContain(`<a href="${target}">`);
     expect(html).toContain('content="noindex"');
+  });
+});
+
+describe("a served directory's bytes publish at /<instance>/<path> — bean 680p", () => {
+  const entry = (path: string, served?: boolean) => ({
+    name: "smart-trust",
+    abs: `/repo/smart-trust/${path}`,
+    entry: { path, graphKinds: ["fhir-artifact-index"], ...(served === undefined ? {} : { served }) },
+  });
+
+  it("is opt-in: only a directory declaring `served: true` is served", () => {
+    expect(servedDirectories([entry("fhir-artifact-index/"), entry("docs/", false)])).toEqual([]);
+  });
+
+  it("routes under the instance, with no leading or trailing slash", () => {
+    expect(servedDirectories([entry("fhir-artifact-index/", true)])).toEqual([
+      { name: "smart-trust", dir: "/repo/smart-trust/fhir-artifact-index/", route: "smart-trust/fhir-artifact-index" },
+    ]);
+  });
+
+  it("the real declarations serve smart-trust's and smart-base's artefact indexes and smart-trust's OpenAPI graph, and nothing else", () => {
+    const routes = servedDirectories().map((s) => s.route).sort();
+    // `smart-trust/openapi` added 2026-10-03 (bean `s4ta`): the cat-openapi
+    // harness's graph, whose thin pages fetch the document beside them.
+    expect(routes).toEqual(["smart-base/fhir-artifact-index", "smart-trust/fhir-artifact-index", "smart-trust/openapi"]);
   });
 });
