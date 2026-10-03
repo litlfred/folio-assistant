@@ -177,11 +177,85 @@ per-checkout `git config`.
    rest re-run without it. The owning session fixes and re-signals ready; it
    is never merged on its behalf.
 
+## A PR lands only through `merge:guard` (STRICT)
+
+**Every merge a steward makes goes through `bun run merge:guard <pr> --merge
+--session <your session id>`.** Never `gh api -X PUT …/pulls/<n>/merge`,
+never the web button, never `merge_pull_request` from an MCP tool, and never
+by marking a PR ready or labelling it yourself first. The script
+(`cat-harness/scripts/merge-guard.ts`, bean `uoob`, child (f) of `nok9`) is
+the merge: it evaluates seven checks over GitHub's live facts, and performs
+the PUT, pinned to the head it evaluated, only when every one passes.
+
+Owner ruling 2026-10-03, after three PRs were landed unfinished by a steward
+calling the PUT directly on the same day:
+
+| PR | landed with | check that refuses it |
+|---|---|---|
+| #1937 | base = #1764's head branch, after #1764 had merged; head newer than its `ready:` (a hand merge and two claim commits since); an unsigned `ready:`; `needs-merge-human` on; its own `pull_request` runs failed, only a dispatch green | 1, 2, 3, 4, 5 |
+| #1960 | no `ready-to-merge`, no `ready:` comment, `- [ ] CI green` in the body | 3, 4, 6 |
+| #1957 | the steward itself called `ready_for_review` and added `ready-to-merge` 75 s before merging; no `ready:` comment | 2, 3 |
+
+The seven checks, each named in a refusal by number and id:
+
+1. **`base`** — open, based on `main`, and the base is not the head branch of
+   a merged PR. A stacked PR is retargeted by its owning session first.
+2. **`ready-for-review`** — not a draft, and the latest `ready_for_review`
+   event is attributable to the PR's **own** session, never to yours.
+3. **`ready-marker`** — a `ready: <sha>` comment **signed with the PR's own
+   session link** (the one in its body), naming the head, or with only
+   merge-main bot merges after it.
+4. **`labels`** — `ready-to-merge` present, `needs-merge-human` absent.
+5. **`ci`** — every `pull_request` run on the head is `success` or `skipped`,
+   and every workflow owed for that event ran. A `workflow_dispatch` green is
+   reported and **not** counted.
+6. **`checklist`** — no unticked `- [ ]` in the body.
+7. **`open-question`** — no comment after the marker asks the owner or the
+   Merge Manager a question (a heuristic; its limits are on `openQuestions`
+   in the script — a fresh `ready:` after the answer moves the window).
+
+Exit 0 is pass (or merged), 1 refused, **2 could not determine — never a
+pass.** A refusal is handed back to the owning session through
+`merge-refusal.bpmn` with the check's text; the steward does not fix the PR
+to make it pass, which is the move all three incidents made.
+
+**What the OWNING session does, so a finished PR passes:** mark it ready,
+then post `ready: <head sha>` signed with its session link —
+`https://claude.ai/code/session_…` in the footer — within ten minutes of
+each other, and apply `ready-to-merge`. Every session acts with the owner's
+token, so the timeline's actor is always the owner and cannot tell sessions
+apart; **the signature is the only thing that can**. An unsigned marker,
+like #1937's, is refused.
+
+**The status has four states, and red means wrong, not unfinished.** A PR
+that is merely not ready yet (a draft, no marker, no label, an unticked box,
+CI still running, an open question) posts `pending`. Only a defect posts
+`failure`: a base that is not `main` or is dead, `needs-merge-human`, red CI
+on the head, or a marker or ready-flip by a session other than the PR's own.
+`success` is pass and `error` is could-not-determine. The status is posted on
+every open PR, and red on every draft would teach readers to ignore red. A
+required check blocks the merge in every state but `success`.
+
+**The status is the backstop, not the gate.** `.github/workflows/merge-guard.yml`
+runs the evaluate mode on label, draft, body, comment and CI-completion
+events and posts a `merge-guard` commit status on the head. Making that
+context REQUIRED is a ruleset the owner adds; this skill does not, and no
+agent changes repository settings.
+
+`Rule_NotReady` in
+[`merge-priority.dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-priority.dmn)
+applies the cheap half of checks 1-3 at placement (`readiness`, from
+`LivePr.draft`, `baseRef`, `readySha`, `readyBy`), so an unfinished PR is
+handed back before it is put in a train rather than at the PUT.
+
 ## Landing
 
 Only with the owner's release (`Task_Release`): explicit, or a standing ruling
-quoted verbatim with its date. What lands is exactly the SHA CI tested; if
-`main` moved after the train's CI started, re-run rather than land.
+quoted verbatim with its date, and **only through `bun run merge:guard <pr>
+--merge --session <id>`** (section above). What lands is exactly the SHA CI
+tested — the guard pins the PUT to the head it evaluated, so GitHub refuses it
+if the head moved; if `main` moved after the train's CI started, re-run
+rather than land.
 
 ## Your merge cadence is an input to the bot's throughput
 
