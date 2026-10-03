@@ -1464,6 +1464,205 @@
       "name": "Resolve each by its declared strategy"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal",
+      "@type": "bootstrap:Process",
+      "name": "A refused merge-train member"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r12",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r13",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r16",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "landed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r17",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "refused again"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r18",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "closed unmerged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r19",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r20",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r4",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r5",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r9",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched",
+      "@type": "cat-harness:Lane",
+      "name": "Dispatched agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Owner",
+      "@type": "cat-harness:Lane",
+      "name": "Owning session"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "@type": "cat-harness:Lane",
+      "name": "Merge steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/End_AwaitOwner",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Waiting on the owner's ruling"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Closed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Landed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Scrapped",
+      "@type": "bootstrap:ProcessNode",
+      "name": "PR closed unmerged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Authored",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Needs an authored choice?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_FailCond",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fixed before the fail condition?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "The PR's fate?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Owner",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Owning session live?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Start_Refused",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Member dropped from a train"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AgentFix",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge main in, regenerate, fix mechanical gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AskOwner",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Ask the owner on the PR, both sides quoted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Close",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the bean, merge commit as evidence"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Comment",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Comment on the PR once, linking the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Dispatch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Dispatch one agent, recorded on the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Fix",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fix the PR, report on the PR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_HandBack",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Hand back, with a fail condition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Record",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record the refusal on the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Retrain",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Re-enter a train on the new head"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Scrap",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Scrap the bean, with the reason"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeTrain",
       "@type": "bootstrap:Process",
       "name": "A merge train"

@@ -674,18 +674,18 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/merge-conflict-patterns",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+          "description": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 430,
+          "instructionLines": 588,
           "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
           "name": "merge-conflict-patterns",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8050b44e5e24807fd338d81e91cb4ef40897fb67ee688b49758e3bd7d384ba64",
-            "bytes": 22283,
-            "sha256": "8050b44e5e24807fd338d81e91cb4ef40897fb67ee688b49758e3bd7d384ba64"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/771aefdc15550bb6e0982e9101017b06449ea9f2552de9d52797352d4e14c4a4",
+            "bytes": 30575,
+            "sha256": "771aefdc15550bb6e0982e9101017b06449ea9f2552de9d52797352d4e14c4a4"
           },
           "title": "Merge-conflict patterns — what a merge may resolve on its own"
         },
