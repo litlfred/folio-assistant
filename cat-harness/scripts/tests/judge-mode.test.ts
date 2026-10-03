@@ -283,7 +283,7 @@ describe("check:source-licence", () => {
     mkdirSync(join(root, "library", "a-source"), { recursive: true });
     writeFileSync(
       join(root, "library", "a-source", "manifest.jsonld"),
-      JSON.stringify({ meta: licence === undefined ? {} : { licence } }),
+      JSON.stringify(licence === undefined ? {} : { licenceRecord: licence }),
     );
     return root;
   }
