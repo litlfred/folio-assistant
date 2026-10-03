@@ -38,6 +38,30 @@ committed store, computing each open bean's ancestor chain to an open
 Current placement of the 390: `vuip` 93, `p5wm` 51, `yg29` 1, **unplaced 242**,
 plus the three milestones themselves.
 
+### Reconciliation with the earlier count, including the part that does not reconcile
+
+The brief this bean was commissioned from gave **241 of 389 (62 %)** and **229**
+open descendants under the orphans, and **18 of 30** epics with no milestone
+ancestor.
+
+- **229 reproduces exactly.** 241/389 and 242/390 are the same figure one bean
+  later. Neither needs explaining.
+- **30 → 33 epics and 18 → 17 open orphans do NOT reconcile**, and this bean
+  does not pretend otherwise. The three most recently created epics are `iirv`
+  (2026-10-01), `fs43` and `whlc` (both 2026-10-02), so 33 − 3 = 30 *fits* if
+  the earlier count predates them — but the brief is dated 2026-10-03, so that
+  is a coincidence that fits, not a cause that was checked. Four orphan epics
+  are `completed` (21 orphans in all, 17 open), so a count that included or
+  excluded closed ones lands at a different number again.
+
+**The basis of the count above is stated so the next one can be compared rather
+than guessed:** an epic is `type: epic` in `beans/defs/` (non-recursive, so the
+631-bean archive is excluded); an *orphan* epic has no `type: milestone`
+ancestor whose status is `todo` or `in-progress`, following `parent` upward; and
+*open* is `todo` or `in-progress`. On that basis: 33 epics, 21 orphans, 17 of
+them open, 229 open descendants. The finding — most of the work plan is under no
+goal, because most of the big epics are — is unaffected either way.
+
 **The missing milestone is not a gap in the goals; it is a category the goals
 do not have.** Every one of the three states an *outcome a reader can see* — a
 separated repo that instantiates, a navbar with folios and stickies, who-iris
