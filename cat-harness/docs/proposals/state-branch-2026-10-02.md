@@ -11,7 +11,9 @@ summary: >-
 # State graphs on a declared branch
 {: .no_toc }
 
-**Status:** proposal; D1–D4 ruled 2026-10-02, all defaults (§6). **Nothing has moved yet.** Epic bean
+**Status:** proposal; D1–D4 ruled 2026-10-02, all defaults (§6), **and D4 amended
+2026-10-03 to option (b), a branch per graph** — see the amendment under the D4
+row. **Nothing has moved yet.** Epic bean
 `folio-assistant-fs43`. Generalises arc `3fva` (issue
 [#1763](https://github.com/litlfred/folio-assistant/issues/1763), PRs
 [#1764](https://github.com/litlfred/folio-assistant/pull/1764) and
@@ -340,6 +342,28 @@ work proceeds on it.**
   directories inside it (recommended)** — one fetch, one mount, one gate
   workflow; (b) one branch per graph (`state/beans`, `state/todos`) — finer
   retention, more mounts. *Default: (a).*
+
+  > **Amended by the owner, 2026-10-03 — D4 is now option (b).** *"Keep
+  > per-graph branches"*, and the principle behind it: *"i dont think we need
+  > a speciifc "state" branch or mount, several potnential subgraphs can be a
+  > part of state"*.
+  >
+  > This reverses the 2026-10-02 ruling on **D4 only**. D1, D2 and D3 are
+  > unchanged — beans, workflow instances, todos, issue-marks and health
+  > results all still move; only their DESTINATION changed, from directories
+  > inside one `state` branch to a `cat/<harness>/<name>` branch each. The
+  > "more mounts" cost named in option (b) is what bean `2h76`'s fan-out pays:
+  > `state:mount` and `state:push` iterate the declared tip-keyed directories
+  > and mount or splice each from the branch its own declaration names, so
+  > "one mount" was never load-bearing — "one fetch" is still true per graph.
+  >
+  > `cat/cat-harness/state`, seeded under option (a), is **superseded rather
+  > than deleted**: retiring that name is bean `oycs`, and nothing here
+  > removes it (`deletion-requires-confirmation`).
+  >
+  > The ruling, with its measurements, is the bean note
+  > `beans/notes/folio-assistant-2h76--2026-10-03--claude-festive-galileo-s7ibx0.md`.
+  > The options above are kept as the record of what was weighed.
 
 ## 7. What would falsify this
 
