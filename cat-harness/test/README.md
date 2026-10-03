@@ -16,6 +16,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`board-move-filter.e2e.ts`](board-move-filter.e2e.ts) | a file |  |
 | [`board-windows.e2e.ts`](board-windows.e2e.ts) | a file |  |
 | [`discarded-items.e2e.ts`](discarded-items.e2e.ts) | a file |  |
+| [`e2e-global-setup.ts`](e2e-global-setup.ts) | a file |  |
 | [`figure-export.e2e.ts`](figure-export.e2e.ts) | a file |  |
 | [`first-paint-scheme.e2e.ts`](first-paint-scheme.e2e.ts) | a file |  |
 | [`fishbone-relocate.e2e.ts`](fishbone-relocate.e2e.ts) | a file |  |
