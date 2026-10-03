@@ -2410,7 +2410,7 @@
     {
       "id": "cat-harness.contentdirectory.storage",
       "prefLabel": "ContentDirectory.storage",
-      "definition": "This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}.",
+      "definition": "This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.storage",
       "status": "candidate"
     },
@@ -2536,7 +2536,7 @@
     {
       "id": "cat-harness.directorystorageschema.keyedby",
       "prefLabel": "DirectoryStorageSchema.keyedBy",
-      "definition": "How entries are keyed on the branch. Only `commit` exists.",
+      "definition": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`.",
       "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
       "status": "candidate"
     },
