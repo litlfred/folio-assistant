@@ -58,7 +58,7 @@ gets a `.json` copy with the same bytes beside it, because many hosts serve
 
 The documents get to their addresses by the Pages site
 ([`publish-site`](publish-site.md)): its workflow stages each one where its
-IRI says, and lists them all under "Published documents" on the index page.
+IRI says, and lists them all under "Published documents" on the README page (`README.html`).
 When `schemas:published` is not done, the site steps are how it gets done.
 The site is not the goal: a site that answers while one schema address does
 not has not finished initializing the harness.

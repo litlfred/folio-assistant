@@ -14,25 +14,25 @@
     "library/codata-2022/blocks/table-001"
   ],
   "provenance": "ingested",
+  "licenceRecord": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "https://physics.nist.gov/cuu/Constants/ (NIST, the publisher)",
+        "result": "not reachable: physics.nist.gov is blocked by this session's network egress policy",
+        "on": "2026-09-30"
+      },
+      {
+        "where": "SciPy 1.17.1, scipy/constants/_codata.py (the copy actually used)",
+        "result": "SciPy's code is BSD-3-Clause; the module states its source is NIST (https://physics.nist.gov/cuu/Constants/) and states no licence for the data itself",
+        "on": "2026-09-30"
+      }
+    ],
+    "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
+  },
   "meta": {
     "title_source": "slug",
     "tabular_record": "folio-tabular-records/v1",
-    "licence": {
-      "status": "unknown",
-      "searched": [
-        {
-          "where": "https://physics.nist.gov/cuu/Constants/ (NIST, the publisher)",
-          "result": "not reachable: physics.nist.gov is blocked by this session's network egress policy",
-          "on": "2026-09-30"
-        },
-        {
-          "where": "SciPy 1.17.1, scipy/constants/_codata.py (the copy actually used)",
-          "result": "SciPy's code is BSD-3-Clause; the module states its source is NIST (https://physics.nist.gov/cuu/Constants/) and states no licence for the data itself",
-          "on": "2026-09-30"
-        }
-      ],
-      "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
-    },
     "tabular_depth": "table"
   }
 }

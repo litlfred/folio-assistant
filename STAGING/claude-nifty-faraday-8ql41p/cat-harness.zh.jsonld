@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T09:12:01.972Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/aeffd455cfd4a0aa7448621f8eeab4b2bca06124",
-  "sourceCommitSha": "aeffd455cfd4a0aa7448621f8eeab4b2bca06124",
-  "sourceCommitAt": "2026-10-03T09:08:24Z",
+  "generatedAt": "2026-10-03T09:40:28.844Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4f86fe76104a88a858bd04b23e02c04c0091912f",
+  "sourceCommitSha": "4f86fe76104a88a858bd04b23e02c04c0091912f",
+  "sourceCommitAt": "2026-10-03T09:37:35Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -316,15 +316,15 @@
     "SkillPackage": 35,
     "Decision": 10,
     "Process": 78,
-    "SequenceFlow": 1038,
+    "SequenceFlow": 1040,
     "Lane": 208,
-    "ProcessNode": 978,
+    "ProcessNode": 980,
     "Tool": 117,
-    "Schema": 157,
+    "Schema": 160,
     "ExternalSchema": 21,
-    "GraphKind": 26,
+    "GraphKind": 27,
     "Role": 49,
-    "Subgraph": 26,
+    "Subgraph": 27,
     "Asset": 3
   },
   "@graph": [
@@ -1731,7 +1731,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1308,
+      "instructionLines": 1311,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2853,7 +2853,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 652,
+      "instructionLines": 656,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3208,7 +3208,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 247,
+      "instructionLines": 310,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -28160,8 +28160,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 15,
-      "flowCount": 22,
+      "nodeCount": 17,
+      "flowCount": 24,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -28368,6 +28368,24 @@
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
@@ -28582,7 +28600,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates"
@@ -28721,6 +28740,48 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Fail"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Publish QA results to qa-reports (NOT A GATE)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_22"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "QA results published (or skipped, with a reason)",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_23"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -48365,6 +48426,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/python-deps"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/qa-attestations",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "qa-attestations",
+      "title": "qa-attestations",
+      "summary": "QA ATTESTATIONS — the judgement half of a QA verdict, kept on `main` where a",
+      "module": "schemas/qa-attestations.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/qa-attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/qa-report",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "qa-report",
@@ -48695,6 +48766,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-mapping"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/test-plan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "test-plan",
+      "title": "test-plan",
+      "summary": "A TEST PLAN — what a system under test must do, case by case, and the rule",
+      "module": "schemas/test-plan.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-plan"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/test-preload",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "test-preload",
@@ -48703,6 +48784,16 @@
       "module": "schemas/test-preload.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/test-report",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "test-report",
+      "title": "test-report",
+      "summary": "A TEST REPORT — the verdicts one run of one plan reached against one system",
+      "module": "schemas/test-report.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-report"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/test-run",
@@ -49628,6 +49719,14 @@
       "renderable": false,
       "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
       "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/health-report"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/attestations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "attestations",
+      "renderable": false,
+      "summary": "QA attestations — the judgements a QA family carries across runs (pair attestations, voice reviews, agent and human verdicts), one `qa-attestations/v1` file per subject, mirroring the derived family's tree. Kept on main where deleting derived results cannot reach them; each entry pins the hash it attested, so a stale one is detectable.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#schema/qa-attestations"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code",
@@ -50908,6 +51007,19 @@
       "readmePath": "test/results/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/attestations",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "attestations",
+      "path": "test/attestations/",
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/attestations"
+      ],
+      "description": "The JUDGEMENT half of every QA verdict this instance carries across runs, split out of `test/results/` by owner ruling D2 (a), 2026-10-01 (bean `2gst`, arc `3fva`): derived script verdicts move to the `qa-reports` branch; anything a reviewer judged stays HERE, on main, where a `git rm` of derived results cannot reach it. One `qa-attestations/v1` file per subject at `<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa` today; `block-qa` and `translation-qa` from bean `8wj1`) and the mirror is exactly that family's own, so a subject's attestation is found by swapping the tree root and the suffix. Today: the `pair_attestations` that were carried inside `kg-qa/v1` sidecars, ALL of them, the `by: baseline` entries with the `by: agent` ones; the owner ruled on 2026-10-01 that a baseline is a judgement, because a regenerated one forgets the drift it recorded (defect C4). `voice_reviews` live here too when one is recorded. Schema and the four read states (hit / miss / corrupt / unknown; an absent family tree is `unknown`, never \"never attested\"): `schemas/qa-attestations.ts`. Hosted instances (bootstrap) would sit under `<stub>/`, as their `qa` verdicts do. Declared WITH its files, per bean dh4f.",
+      "readmePath": "test/attestations/README.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/attestations"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-nifty-faraday-8ql41p/cat-harness.jsonld#directory/health",
