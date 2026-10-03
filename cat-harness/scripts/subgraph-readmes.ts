@@ -43,11 +43,63 @@ import {
   plan,
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
+
+/**
+ * What each SUBDIRECTORY of `abs` is, by name — read from the directory's own
+ * declaration file, the one its graph kinds name as `declarationFile` (the
+ * owner's rule, 2026-09-20: each type declares its own filename, so
+ * relocating `beans/` to `work/` renames nothing inside it).
+ *
+ * Only entries WITHOUT `"subgraph": true`. Those are parts of this
+ * directory's graph (`beans.json`'s `defs`), and they are what the README's
+ * table names; a `subgraph: true` entry is promoted to an instance directory
+ * of its own (`skills.json`'s `voices`) and describes itself under its own
+ * heading. The two partition, so a promoted directory's row keeps the count.
+ *
+ * Only a single-segment `path` names a row — `defs/archive` is a directory
+ * inside a row, not one. A missing, unparseable or description-less
+ * declaration supplies nothing and the row falls back to the file count:
+ * absent stays absent rather than being invented. An unparseable file is
+ * `check:harness-dirs`'s finding, not this one's.
+ */
+export function subdirDescriptions(
+  abs: string,
+  graphKinds: readonly string[],
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  const files = graphKinds.map((g) => registry.get(g)?.declarationFile).filter((f): f is string => typeof f === "string");
+  for (const f of [...new Set(files)]) {
+    const p = join(abs, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: unknown; topics?: unknown };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue;
+    }
+    // `topics` is `skills.json`'s name for the same thing — it predates the
+    // concern-group code list (see `declaredGroupsIn`), and each topic declares
+    // its directory with a `path` and a `description` as a directory entry
+    // does. A `concern-groups/v1` file declares only CODES, so it describes
+    // nothing and supplies nothing here.
+    const entries = [nested.directories, nested.topics].flatMap((a) => (Array.isArray(a) ? a : []));
+    for (const nd of entries as Array<Record<string, unknown>>) {
+      if (nd.subgraph === true || typeof nd.path !== "string" || typeof nd.description !== "string") continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      const description = nd.description.trim();
+      if (sub === "" || sub.includes("/") || description === "" || sub in out) continue;
+      out[sub] = description;
+    }
+  }
+  return out;
+}
 
 /**
  * Every instance under `repo`, with this harness's Extensions resolved: the
@@ -85,6 +137,7 @@ export function harnessInstances(repo: string): InstanceInput[] {
         // rather than a gap. A declared name resolving to no diagram still
         // gets a view, because the section has to say *could not determine*.
         const declared = (d as { coverage?: { process?: string } }).coverage?.process;
+        const subdirs = subdirDescriptions(abs, d.graphKinds as string[]);
         return {
           id: d.id,
           path: d.path,
@@ -93,6 +146,7 @@ export function harnessInstances(repo: string): InstanceInput[] {
           description: (d as { description?: string }).description,
           graphKinds: d.graphKinds as string[],
           mayBeAbsent: Boolean((d as { absent?: unknown }).absent),
+          ...(Object.keys(subdirs).length > 0 ? { subdirs } : {}),
           ...(declared !== undefined
             ? { process: forDirectory(resolveProcess(index(), declared), repo, abs) }
             : {}),
