@@ -48,6 +48,7 @@
  * index, say): counted and reported, never silently passed, and never able to
  * block our release. The same scoping the owner approved for bean `2j09`.
  */
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
@@ -58,6 +59,7 @@ import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
 import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.ts";
 import { duplicateIds } from "./check-duplicate-ids";
+import { SCOPES_DIR, type SearchManifest } from "./search-split.ts";
 
 export interface Finding {
   verifier: string;
@@ -566,8 +568,77 @@ export const SEARCH_INDEX: Verifier = {
   },
 };
 
+/**
+ * The per-scope search indices `search-split.ts` cuts from the site index
+ * (bean `m7mn`, issue #1972). A reader's search loads ONE scope instead of
+ * the whole, so a scope that is missing, stale or overlapping is a search
+ * that silently finds less — or finds pages twice — and nothing else would
+ * notice.
+ *
+ * Asks, in order: when the site index is present, the manifest is too; its
+ * `source.sha256` is the hash of the index actually in this tree (a stale
+ * split of an older index is the failure this exists for — staging borrows
+ * the published index, and must split THAT one); every scope file it names
+ * parses to the stated number of entries; and the scopes PARTITION the index
+ * — their counts sum to the source's and no entry key appears in two.
+ *
+ * A tree with no site index is out of scope here: `search-index` reports it.
+ */
+export const SEARCH_SCOPES: Verifier = {
+  id: "search-scopes",
+  tool: "site-search-scopes",
+  asks:
+    "Does the per-scope search manifest match the site index in this tree, and do its scope indices parse and " +
+    "partition that index exactly?",
+  async run(dir) {
+    const id = "search-scopes";
+    const source = join(dir, SEARCH_INDEX_PATH);
+    if (!existsSync(source)) return { checked: 0, outOfScope: 1, findings: [] };
+    const manifestAt = `${SCOPES_DIR}/manifest.json`;
+    const mp = join(dir, manifestAt);
+    if (!existsSync(mp)) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: manifestAt, detail: "missing — the site index was never split, so scoped search loads nothing" }] };
+    }
+    let manifest: SearchManifest;
+    try {
+      manifest = JSON.parse(readFileSync(mp, "utf-8")) as SearchManifest;
+    } catch (e) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: manifestAt, detail: `not JSON: ${(e as Error).message}` }] };
+    }
+    const findings: Finding[] = [];
+    const text = readFileSync(source, "utf-8");
+    const hash = createHash("sha256").update(text).digest("hex");
+    if (manifest.source?.sha256 !== hash) {
+      findings.push({ verifier: id, file: manifestAt, detail: `split from a different index (manifest ${String(manifest.source?.sha256).slice(0, 12)}, tree ${hash.slice(0, 12)}) — re-run search-split on this tree` });
+    }
+    const sourceKeys = Object.keys(JSON.parse(text) as Record<string, unknown>);
+    const seen = new Map<string, string>();
+    let total = 0;
+    for (const s of manifest.scopes ?? []) {
+      let keys: string[];
+      try {
+        keys = Object.keys(JSON.parse(readFileSync(join(dir, s.path), "utf-8")) as Record<string, unknown>);
+      } catch (e) {
+        findings.push({ verifier: id, file: s.path, detail: `scope ${s.id} unreadable: ${(e as Error).message.slice(0, 120)}` });
+        continue;
+      }
+      if (keys.length !== s.entries) findings.push({ verifier: id, file: s.path, detail: `scope ${s.id} holds ${keys.length} entries, the manifest says ${s.entries}` });
+      total += keys.length;
+      for (const k of keys) {
+        const other = seen.get(k);
+        if (other !== undefined) findings.push({ verifier: id, file: s.path, detail: `entry ${k} is in both ${other} and ${s.id}` });
+        else seen.set(k, s.id);
+      }
+    }
+    if (total !== sourceKeys.length) {
+      findings.push({ verifier: id, file: manifestAt, detail: `scopes hold ${total} entries, the site index ${sourceKeys.length} — they do not partition it` });
+    }
+    return { checked: (manifest.scopes ?? []).length + 1, outOfScope: 0, findings: findings.slice(0, 40) };
+  },
+};
+
 /** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, HTML_UNIQUE_IDS, SEARCH_INDEX];
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, HTML_UNIQUE_IDS, SEARCH_INDEX, SEARCH_SCOPES];
 
 export async function verify(
   dir: string,
