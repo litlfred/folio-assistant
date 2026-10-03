@@ -22,6 +22,27 @@ const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = repoRootFor(INSTANCE);
 
 /**
+ * The leading `---`-delimited front matter of a markdown file, or `""` when it
+ * has none.
+ *
+ * **Front matter ONLY, and that is not fussiness.** The first cut of
+ * `generatedDocsPages` tested the WHOLE file for `generated:
+ * scripts/gen-docs-pages.ts`, and the very first merge after it was written
+ * found an 18th subject: `docs/reference/skill-instructions/
+ * merge-conflict-patterns.md`, the generated body of the skill that DOCUMENTS
+ * this pattern, which quotes that front-matter line in a fenced code block. A
+ * detector that reads a quotation as a declaration finds its own
+ * documentation — *"a docblock that documents a tag necessarily contains the
+ * tag"* (`audit-coverage`). That page's own front matter names
+ * `gen-skill-docs.ts` and the `skill-instructions` pattern already owns it.
+ */
+function frontMatter(text: string): string {
+  if (!text.startsWith("---\n")) return "";
+  const end = text.indexOf("\n---", 3);
+  return end === -1 ? "" : text.slice(4, end + 1);
+}
+
+/**
  * Every `.md` under this instance's site directory whose own front matter names
  * `gen-docs-pages.ts` as its writer, repo-relative. Read from the TREE rather
  * than listed, so a page added to `content/docs/` makes the `docs-pages` test
@@ -39,7 +60,7 @@ function generatedDocsPages(): string[] {
         continue;
       }
       if (!e.isFile() || !e.name.endsWith(".md")) continue;
-      if (/^generated:\s*scripts\/gen-docs-pages\.ts/m.test(readFileSync(p, "utf8"))) {
+      if (/^generated:\s*scripts\/gen-docs-pages\.ts/m.test(frontMatter(readFileSync(p, "utf8")))) {
         out.push(relative(REPO, p));
       }
     }
@@ -130,6 +151,18 @@ describe("classify", () => {
     // Nothing under `content/` may be claimed by it, at any depth.
     const claimed = generatedDocsPages().filter((p) => p.includes("/content/"));
     expect(claimed).toEqual([]);
+  });
+
+  test("a page that QUOTES the generated marker is not a subject of it", () => {
+    // Found on this branch's first merge of `main`: the generated body of the
+    // skill documenting `docs-pages` quotes `generated: scripts/gen-docs-pages.ts`
+    // in a code fence, so a whole-file detector counted an 18th page. Its OWN
+    // front matter names gen-skill-docs.ts, and `skill-instructions` — declared
+    // BEFORE `docs-pages`, so it wins the first match — already owns it.
+    const quoting = "cat-harness/docs/reference/skill-instructions/merge-conflict-patterns.md";
+    expect(readFileSync(join(REPO, quoting), "utf8")).toContain("generated: scripts/gen-docs-pages.ts");
+    expect(generatedDocsPages()).not.toContain(quoting);
+    expect(classify(quoting).pattern?.id).toBe("skill-instructions");
   });
 
   test("site-data still owns docs/assets JSON: the new SKOS entry did not widen it", () => {

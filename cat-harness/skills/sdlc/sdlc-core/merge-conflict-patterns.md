@@ -241,6 +241,18 @@ page added to `content/docs/` is **refused until its slug is declared here**,
 which is the safe direction to be wrong in, and a test reads the pages' own
 front matter from the TREE so the enumeration cannot go quietly stale.
 
+**That test must read the front matter, not the file**, and it earned the
+distinction immediately. Its first cut tested the whole file for the marker
+and the very next merge of `main` turned up an 18th subject: the generated
+body of **this skill**, `docs/reference/skill-instructions/merge-conflict-patterns.md`,
+which quotes the marker in the code fence three paragraphs above. A detector
+that reads a quotation as a declaration finds its own documentation — *"a
+docblock that documents a tag necessarily contains the tag"*, from
+[`audit-coverage`](../../kg/kg-core/audit-coverage.md). That page's own front
+matter names `gen-skill-docs.ts`, and `skill-instructions` is declared before
+`docs-pages`, so the first match already gives it the right owner. A test pins
+all three facts.
+
 **The authored neighbour is the source, and it stays refused.**
 `cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
 is the hand-written INPUT for `docs/publication-workflow.md`; on #1888 both

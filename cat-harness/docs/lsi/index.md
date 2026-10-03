@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.77 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
+| 1 | 44.78 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
 | 2 | 21.61 | watcher, sibling, slot, queue, prs, backlog, commits, block | harness, instance, declaration, node, directory, directories, graph, asset |
 | 3 | 18.01 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, branch, epic, goals, window, store, sessions |
 | 4 | 16.79 | page, text, pdf, block, manifest, blocks, chapter, slide | sibling, ledger, subdirectory, plan, sessions, items, window, session |
 | 5 | 15.22 | rung, queue, archive, withheld, arm, sniff, zip, archived | preview, feature, staging, role, build, requirements, phase, folio |
 | 6 | 14.94 | lane, actor, role, edge, edges, process, task, graph | page, sha, locale, staging, preview, pages, translated, main |
 | 7 | 14.52 | edges, forward, edge, backward, cross-chapter, energy, logical, preview | actor, lane, role, task, requirement, backlog, user, login |
-| 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, analysis, post | claim, avatar, locale, translated, adjudicator, tile, slot, translation |
+| 8 | 14.25 | feature, phase, preview, feedback, impact, stakeholders, analysis, post | claim, locale, translated, avatar, adjudicator, slot, tile, translation |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
