@@ -297,7 +297,7 @@ export function tokenCount(entries: Readonly<Record<string, SearchEntry>>): numb
  * The lunr index the theme's `buildSearchIndex` would build from these
  * entries — same ref, fields, boosts, separator and metadata whitelist, docs
  * added in the same order (`for (var i in docs)`) — serialized. Keep the two
- * in step: the theme's copy is in `docs/assets/js/just-the-docs.js`.
+ * in step: the theme's copy is the site's `assets/js/just-the-docs.js`.
  */
 export function buildIndex(entries: Readonly<Record<string, SearchEntry>>): unknown {
   L.tokenizer.separator = TOKENIZER_SEPARATOR;
