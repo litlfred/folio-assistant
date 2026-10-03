@@ -1,0 +1,24 @@
+{
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fhir-harness-exclusions-clear/skills/crdm-detect/input.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRDM Detect Input",
+  "description": "One user request to classify: is it a feature request (a platform capability change, which enters the CRDM requirements workflow) or a content request?",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The request as the user wrote it — an issue title and body, or a chat turn."
+    }
+  },
+  "additionalProperties": false,
+  "staging": {
+    "branch": "claude/fhir-harness-exclusions-clear",
+    "sha": "0a86787e722c233d1ecd321f1e3bbe4b15b1403f",
+    "pr": "1964/merge",
+    "run": "37116037552"
+  }
+}

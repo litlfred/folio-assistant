@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fhir-harness-exclusions-clear/skills/content-plan/input.schema.json",
+  "title": "Content Plan Input",
+  "description": "Input schema for content planning — scope, team, timeline, governance.",
+  "type": "object",
+  "required": [
+    "projectName"
+  ],
+  "properties": {
+    "projectName": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Description of the content scope."
+    },
+    "targetDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "teamSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sprintDuration": {
+      "type": "string",
+      "enum": [
+        "1w",
+        "2w",
+        "3w",
+        "4w"
+      ],
+      "default": "2w"
+    }
+  },
+  "staging": {
+    "branch": "claude/fhir-harness-exclusions-clear",
+    "sha": "0a86787e722c233d1ecd321f1e3bbe4b15b1403f",
+    "pr": "1964/merge",
+    "run": "37116037552"
+  }
+}

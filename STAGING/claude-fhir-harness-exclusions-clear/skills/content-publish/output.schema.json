@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fhir-harness-exclusions-clear/skills/content-publish/output.schema.json",
+  "title": "Content Publish Output",
+  "description": "Output schema for content publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "status"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "published",
+        "failed"
+      ]
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    }
+  },
+  "staging": {
+    "branch": "claude/fhir-harness-exclusions-clear",
+    "sha": "0a86787e722c233d1ecd321f1e3bbe4b15b1403f",
+    "pr": "1964/merge",
+    "run": "37116037552"
+  }
+}
