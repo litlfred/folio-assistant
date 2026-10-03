@@ -188,3 +188,25 @@ describe("propertyValues populates a control from the corpus", () => {
     expect(propertyValues(NODES, "nonexistent")).toEqual([]);
   });
 });
+
+describe("a multi-valued property — a todo's assignees and beans (todos.jsonld)", () => {
+  const MULTI = [
+    { kind: "todo", properties: { person: ["github:a", "github:b"] } },
+    { kind: "todo", properties: { person: ["github:c"] } },
+    { kind: "todo", properties: { person: [] as string[] } },
+  ];
+
+  test("a node matches when ANY of its values is selected", () => {
+    const f = { properties: { person: ["github:b"] } };
+    expect(MULTI.map((n) => readerShows(f, n))).toEqual([true, false, false]);
+  });
+
+  test("an empty list cannot answer, so a filter on it excludes the node", () => {
+    expect(readerShows({ properties: { person: ["github:a"] } }, MULTI[2]!)).toBe(false);
+    expect(readerShows(NO_READER_FILTER, MULTI[2]!)).toBe(true);
+  });
+
+  test("every value of every node populates the control, once", () => {
+    expect(propertyValues(MULTI, "person")).toEqual(["github:a", "github:b", "github:c"]);
+  });
+});
