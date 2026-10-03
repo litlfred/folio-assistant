@@ -308,10 +308,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T18:16:01.438Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8e8d6fe7464e77f676a22ceee05668f739fe0604",
-  "sourceCommitSha": "8e8d6fe7464e77f676a22ceee05668f739fe0604",
-  "sourceCommitAt": "2026-10-03T20:10:21+02:00",
+  "generatedAt": "2026-10-03T18:30:15.004Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/061b00f705f4cf2c77ad23df74ffe853e3676285",
+  "sourceCommitSha": "061b00f705f4cf2c77ad23df74ffe853e3676285",
+  "sourceCommitAt": "2026-10-03T20:22:39+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -327,7 +327,7 @@
     "Tool": 120,
     "Schema": 166,
     "ExternalSchema": 22,
-    "GraphKind": 27,
+    "GraphKind": 28,
     "Role": 49,
     "Subgraph": 27,
     "Asset": 3
@@ -1654,7 +1654,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1400,
+      "instructionLines": 1401,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -47426,6 +47426,14 @@
       "renderable": false,
       "summary": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`.",
       "validatorNotApplicable": "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a JSON node, so one here would be a category error. `check:requirements` extracts the front matter and parses it against the Requirement schema instead, and requires the id to match the file name."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs-auto",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "docs-auto",
+      "renderable": false,
+      "summary": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "validatorNotApplicable": "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry validator would be a category error, as on `proposals`. What is checked mechanically is the derivation instead: `docs:auto:check` fails on a stale page, and refuses outright when a type collects nothing while its graph's directories hold files, which is a moved source rather than an empty graph (bean `06e3`)."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema",
