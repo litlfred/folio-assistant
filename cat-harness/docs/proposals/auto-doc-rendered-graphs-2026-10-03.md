@@ -143,6 +143,56 @@ honest answer, and that is a question rather than a recommendation, because the
 rule as stated routes it to `auto-docs/` where a regeneration would overwrite
 hand-written code.
 
+### Why `assets/` is its own directory, and whether it can split
+
+Asked 2026-10-03: *"why is assets/ its own sub-dir? can it be under auto-docs?
+split there and docs?"*
+
+**It is not a content category. It is a Jekyll URL namespace.** The theme
+fetches `assets/css/…`, `assets/js/…` and `assets/<graph>/index.json` by URL,
+and those URLs are hardcoded **27 times** in files this repo controls —
+`docs/_includes/head_custom.html` alone carries 24, plus `_config.yml` (2) and
+`footer_custom.html` (1). CSS and JS have no front matter, so `permalink:`
+cannot hold their URL the way it holds the glossary pages'; Jekyll serves a
+static file at its path.
+
+**So yes, it can split, and splitting it is better than the third home floated
+above** — the six authored chrome files go with `docs/`, the ~600 derived ones
+with `auto-docs/`, and no new prefix is needed. The 27 references are ours to
+update and a gate resolves them.
+
+**With one exception, and it is large enough to decide the shape.**
+
+| | |
+|---|---|
+| absolute `https://litlfred.github.io/…/assets/…` URLs cited **inside the corpus** | **13,214** |
+| files carrying one | **6,861** |
+| asset families they point at | **one** — `assets/library/` |
+
+Every one is `assets/library/`. That family is a **published linked-data
+interface**, not merely a file path: the library JSON-LD manifests are cited by
+absolute URL (`…/assets/library/jsonld/cat-harness/<slug>/manifest.jsonld`), and
+`.jsonld` has no front matter, so nothing can preserve the URL while the file
+moves.
+
+So the honest split is three ways, not two:
+
+- `assets/css/{narrow-viewport,uml,work-plan}.css`, `assets/js/{docs-ui,kg-render,work-plan}.js`, `assets/js/vendor/` → **authored, with `docs/`**
+- `assets/img/`, `assets/glossary/`, `assets/prov/`, and the `*/index.json`
+  site-data (≈200 files) → **derived, to `auto-docs/`**. Checked: the SKOS
+  exports do **not** cite their own URL (`skos:notation` and `dcterms:source`
+  are repo-relative), so these move freely.
+- `assets/library/` → **derived, but URL-frozen.** Either it stays where it is,
+  or the move is a 13,214-citation rewrite that also 404s any external
+  resolver. **That is a decision, not a detail**, and it is the one place where
+  "what is not user content goes to auto-docs" has a cost worth naming before
+  it is applied.
+
+A fourth option exists and is cheaper than either: move the file and serve the
+old URL, which for a static path means a redirect or a published alias rather
+than a `permalink`. Whether this site can do that is unmeasured, and it would
+settle the `library/` case without the rewrite.
+
 ### There are already two `classify()`s, and one knows what the other guesses
 
 Found 2026-10-03 by this proposal's own PR going red — the surest kind of
