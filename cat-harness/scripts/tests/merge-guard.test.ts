@@ -335,3 +335,75 @@ describe("every check passes only when every fact is in hand", () => {
     expect(evaluate(s, { mergingSession: STEWARD }).exitCode).toBe(1);
   });
 });
+
+/**
+ * The status STATE: `pending` for a PR that is merely unfinished, `failure`
+ * only for a defect. Coordinator, 2026-10-03: the status is posted on every
+ * open PR, and red on every draft trains people to ignore red. Both states
+ * still refuse (exit 1), so this changes what a reader sees, never what may
+ * merge.
+ */
+describe("the commit-status state: pending for unfinished, failure for a defect", () => {
+  test("#1960 was only unfinished — no marker, no label, an unticked box — so `pending`, exit 1", () => {
+    const v = evaluate(real(1960));
+    expect(v.checks.filter((c) => c.status === "refuse").map((c) => [c.id, c.kind])).toEqual([
+      ["ready-marker", "not-ready"],
+      ["labels", "not-ready"],
+      ["checklist", "not-ready"],
+    ]);
+    expect([v.state, v.exitCode]).toEqual(["pending", 1]);
+  });
+
+  test("#1937 had defects — a dead base, needs-merge-human, red CI — so `failure`", () => {
+    const v = evaluate(real(1937));
+    const kinds = Object.fromEntries(v.checks.filter((c) => c.kind).map((c) => [c.id, c.kind]));
+    expect(kinds.base).toBe("defect");
+    expect(kinds.labels).toBe("defect");
+    expect(kinds.ci).toBe("defect");
+    expect(v.state).toBe("failure");
+  });
+
+  test("a draft alone is `pending`", () => {
+    const s = real(1960);
+    s.pr.draft = true;
+    expect(status(s, "ready-for-review").kind).toBe("not-ready");
+  });
+
+  test("CI still running is `not-ready`; the same run failed is a `defect`; a run that never executed is `not-ready`", () => {
+    const at = (conclusion: string | null, st: string) => {
+      const s = real(1957);
+      if (s.runs.state !== "has-run") throw new Error("fixture");
+      const r = s.runs.runs.find((x) => x.name === "Code-quality gates" && x.event === "pull_request")!;
+      r.status = st;
+      r.conclusion = conclusion;
+      return status(s, "ci").kind;
+    };
+    expect(at(null, "in_progress")).toBe("not-ready");
+    expect(at("failure", "completed")).toBe("defect");
+    expect(at("action_required", "completed")).toBe("not-ready");
+  });
+
+  test("a marker signed by ANOTHER session is a defect; an unsigned one is merely not ready", () => {
+    expect(status(real(1937), "ready-marker").kind).toBe("not-ready");
+    const s = real(1960);
+    s.comments.push(signed(9, "2026-10-03T10:30:00Z", STEWARD, `ready: ${s.pr.head.sha}`));
+    expect(status(s, "ready-marker").kind).toBe("defect");
+  });
+
+  test("the merging session beside the ready flip is a defect", () => {
+    const s = real(1957);
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(10, shift(ev.created_at!, 60_000), STEWARD, "Marking ready."));
+    expect(status(s, "ready-for-review", { mergingSession: STEWARD }).kind).toBe("defect");
+  });
+
+  test("pass is `success`, unknown is `error`", () => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(11, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
+    expect(evaluate(s).state).toBe("success");
+    s.runs = { state: "cannot-ask", reason: "HTTP 502" };
+    expect(evaluate(s).state).toBe("error");
+  });
+});

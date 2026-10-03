@@ -65,6 +65,20 @@
  * | 1 | refused: at least one check failed, and every check could be asked |
  * | 2 | could not determine: a fact could not be read, or bad usage |
  *
+ * ## The commit status (`--status`)
+ *
+ * | verdict | status | when |
+ * |---|---|---|
+ * | pass | `success` | every check passes |
+ * | refused, every refusal `not-ready` | `pending` | a draft, no marker, no label, an unticked box, CI still running, an open question |
+ * | refused, any refusal a `defect` | `failure` | a base that is not `main` or is dead, `needs-merge-human`, red CI, a marker or ready-flip by another session |
+ * | unknown | `error` | a fact could not be read |
+ *
+ * `pending` exists so that every unfinished PR is not painted red, which
+ * would teach readers to ignore red ({@link RefusalKind}). A required check
+ * blocks the merge in every state but `success`, and the exit code is 1 for
+ * both kinds of refusal.
+ *
  * **Unknown is never a pass.** A check that could not ask returns `unknown`,
  * and an unknown anywhere makes the whole verdict `unknown` even when another
  * check refused. A guard blind on one check has not cleared the others.
@@ -89,7 +103,7 @@
  */
 import { resolve } from "node:path";
 
-import { coverageFor, runsForHead, type HeadRunVerdict, type RunRow } from "./check-head-has-run.ts";
+import { coverageFor, runsForHead, NOT_EXECUTED, type HeadRunVerdict, type RunRow } from "./check-head-has-run.ts";
 import { classifyResponse, withBackoff } from "../src/core/retry.js";
 import { scanTriggers, type TriggerScan } from "../src/core/workflow-events.js";
 import { detectRepoUrl, ownerRepo } from "../src/core/git-refs.js";
@@ -191,16 +205,44 @@ export interface GuardOptions {
 }
 
 export type CheckStatus = "pass" | "refuse" | "unknown" | "skip";
+
+/**
+ * What KIND of refusal — and so which commit-status state it posts.
+ *
+ * `not-ready` is the ordinary state of a PR nobody has finished yet: a draft,
+ * no `ready:` marker, no label, an unticked box, CI still running, a question
+ * still open. `defect` is something WRONG: a base that is not `main` or is a
+ * dead branch, `needs-merge-human`, red CI on the head, a marker or a
+ * ready-flip by a session that is not the PR's own, a marker naming a commit
+ * the PR does not have.
+ *
+ * The split exists because the status is posted on EVERY open PR. Painting
+ * every draft red is noise that trains people to ignore red (coordinator,
+ * 2026-10-03), so a PR that is merely unfinished posts `pending` and only a
+ * defect posts `failure`. A required check blocks the merge in both states,
+ * and the exit code is 1 in both: this changes what a reader SEES, never what
+ * may merge.
+ */
+export type RefusalKind = "not-ready" | "defect";
+
 export interface CheckResult {
   n: number;
   id: CheckId;
   status: CheckStatus;
   detail: string;
+  /** Present on a refusal only. */
+  kind?: RefusalKind;
 }
+
+/** The commit-status state a verdict posts. */
+export type StatusState = "success" | "pending" | "failure" | "error";
+
 export interface GuardVerdict {
   pr: number;
   head: string;
   verdict: "pass" | "refused" | "unknown";
+  /** `pending` when every refusal is `not-ready`; `failure` when any is a `defect`. */
+  state: StatusState;
   exitCode: 0 | 1 | 2;
   checks: CheckResult[];
 }
@@ -356,14 +398,15 @@ export function openQuestions(
 
 // ─── the seven checks ──────────────────────────────────────────────────────
 
-const R = (n: number, id: CheckId, status: CheckStatus, detail: string): CheckResult => ({ n, id, status, detail });
+const R = (n: number, id: CheckId, status: CheckStatus, detail: string, kind?: RefusalKind): CheckResult =>
+  status === "refuse" ? { n, id, status, detail, kind: kind ?? "not-ready" } : { n, id, status, detail };
 
 function checkBase(s: GuardSnapshot): CheckResult {
   const problems: string[] = [];
   if (s.pr.state !== "open" || s.pr.merged) problems.push(`the PR is ${s.pr.merged ? "already merged" : s.pr.state}`);
   if (s.pr.base.ref !== BASE) problems.push(`base is \`${s.pr.base.ref}\`, not \`${BASE}\``);
   if (!Array.isArray(s.baseMergedAsHeadOf)) {
-    if (problems.length) return R(1, "base", "refuse", problems.join("; "));
+    if (problems.length) return R(1, "base", "refuse", problems.join("; "), "defect");
     return R(1, "base", "unknown", `could not ask whether \`${s.pr.base.ref}\` is a merged PR's head: ${s.baseMergedAsHeadOf.unknown}`);
   }
   if (s.baseMergedAsHeadOf.length > 0) {
@@ -371,7 +414,7 @@ function checkBase(s: GuardSnapshot): CheckResult {
       `base \`${s.pr.base.ref}\` is the head branch of merged PR ${s.baseMergedAsHeadOf.map((n) => `#${n}`).join(", ")}: a merge into it lands nowhere anyone reads`,
     );
   }
-  return problems.length ? R(1, "base", "refuse", problems.join("; ")) : R(1, "base", "pass", `base is \`${BASE}\``);
+  return problems.length ? R(1, "base", "refuse", problems.join("; "), "defect") : R(1, "base", "pass", `base is \`${BASE}\``);
 }
 
 function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
@@ -385,7 +428,7 @@ function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
   const window = o.readyWindowMs ?? READY_WINDOW_MS;
 
   if (o.mergingActor && actor === o.mergingActor && actor !== s.pr.user?.login) {
-    return R(2, "ready-for-review", "refuse", `marked ready at ${last.created_at} by \`${actor}\`, the merging actor`);
+    return R(2, "ready-for-review", "refuse", `marked ready at ${last.created_at} by \`${actor}\`, the merging actor`, "defect");
   }
   const near = s.comments
     .map((c) => ({ c, session: signingSession(c.body), dt: Math.abs(Date.parse(c.created_at) - at) }))
@@ -397,10 +440,13 @@ function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
       "ready-for-review",
       "refuse",
       `marked ready at ${last.created_at} (actor \`${actor}\`) beside a comment signed by the MERGING session \`${o.mergingSession}\`: the steward may not mark a PR ready and then merge it`,
+      "defect",
     );
   }
   const attributed = near[0]?.session;
   if (!own || attributed !== own) {
+    // Signed by somebody ELSE is a defect; signed by nobody is merely unfinished.
+    const kind: RefusalKind = attributed && own ? "defect" : "not-ready";
     return R(
       2,
       "ready-for-review",
@@ -408,6 +454,7 @@ function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
       `marked ready at ${last.created_at} (actor \`${actor}\`), and that cannot be attributed to the PR's own session ` +
         `(${own ? `\`${own}\`` : "its body names none"}): the nearest session-signed comment within ${Math.round(window / 60000)} min ` +
         `${attributed ? `is signed \`${attributed}\`` : "does not exist"}. The owning session marks the PR ready and posts its \`ready: <sha>\` together`,
+      kind,
     );
   }
   return R(2, "ready-for-review", "pass", `marked ready at ${last.created_at} by the PR's own session \`${own}\``);
@@ -428,7 +475,8 @@ function checkReadyMarker(s: GuardSnapshot): CheckResult {
   if (!marker) {
     if (all.length === 0) return R(3, "ready-marker", "refuse", "no `ready: <sha>` comment");
     const seen = all.map((m) => `\`${short(m.sha)}\` signed ${m.session ? `\`${m.session}\`` : "by no session"}`).join(", ");
-    return R(3, "ready-marker", "refuse", `no \`ready:\` comment is signed by the PR's own session \`${own}\` (found: ${seen})`);
+    const kind: RefusalKind = all.some((m) => m.session && m.session !== own) ? "defect" : "not-ready";
+    return R(3, "ready-marker", "refuse", `no \`ready:\` comment is signed by the PR's own session \`${own}\` (found: ${seen})`, kind);
   }
   const head = s.pr.head.sha.toLowerCase();
   if (head.startsWith(marker.sha)) return R(3, "ready-marker", "pass", `\`ready: ${short(marker.sha)}\` names the head`);
@@ -437,7 +485,7 @@ function checkReadyMarker(s: GuardSnapshot): CheckResult {
     if (s.commits.length >= COMMITS_API_CAP) {
       return R(3, "ready-marker", "unknown", `ready sha \`${short(marker.sha)}\` is not among the first ${COMMITS_API_CAP} commits, which is all the API returns`);
     }
-    return R(3, "ready-marker", "refuse", `ready sha \`${short(marker.sha)}\` is not a commit on this PR (head \`${short(head)}\`)`);
+    return R(3, "ready-marker", "refuse", `ready sha \`${short(marker.sha)}\` is not a commit on this PR (head \`${short(head)}\`)`, "defect");
   }
   const named = botPushedShas(s.comments);
   const after = s.commits.slice(i + 1);
@@ -461,7 +509,8 @@ function checkLabels(s: GuardSnapshot): CheckResult {
   const problems: string[] = [];
   if (!labels.includes(READY_LABEL)) problems.push(`\`${READY_LABEL}\` is absent`);
   if (labels.includes(HUMAN_LABEL)) problems.push(`\`${HUMAN_LABEL}\` is present`);
-  return problems.length ? R(4, "labels", "refuse", problems.join("; ")) : R(4, "labels", "pass", `\`${READY_LABEL}\`, no \`${HUMAN_LABEL}\``);
+  const kind: RefusalKind = labels.includes(HUMAN_LABEL) ? "defect" : "not-ready";
+  return problems.length ? R(4, "labels", "refuse", problems.join("; "), kind) : R(4, "labels", "pass", `\`${READY_LABEL}\`, no \`${HUMAN_LABEL}\``);
 }
 
 function runOrder(r: GuardRun): number {
@@ -489,12 +538,18 @@ function checkCi(s: GuardSnapshot): CheckResult {
     const prev = latest.get(r.name);
     if (!prev || runOrder(r) > runOrder(prev)) latest.set(r.name, r);
   }
+  let red = false;
   for (const [name, r] of latest) {
     if (r.status !== "completed") problems.push(`${name}: ${r.status}`);
-    else if (!PASSING.has(r.conclusion ?? "")) problems.push(`${name}: ${r.conclusion}`);
+    else if (!PASSING.has(r.conclusion ?? "")) {
+      problems.push(`${name}: ${r.conclusion}`);
+      // A run that never executed (action_required, startup_failure) is
+      // not a verdict on the tree, so it is not red either.
+      if (!NOT_EXECUTED.has(r.conclusion ?? "")) red = true;
+    }
   }
   return problems.length
-    ? R(5, "ci", "refuse", `\`pull_request\` CI on the head is not green: ${problems.join("; ")}${note}`)
+    ? R(5, "ci", "refuse", `\`pull_request\` CI on the head is not green: ${problems.join("; ")}${note}`, red ? "defect" : "not-ready")
     : R(5, "ci", "pass", `${latest.size} \`pull_request\` workflow(s) on the head, all success or skipped`);
 }
 
@@ -534,7 +589,9 @@ export function evaluate(s: GuardSnapshot, o: GuardOptions = {}): GuardVerdict {
   const unknown = checks.some((c) => c.status === "unknown");
   const refused = checks.some((c) => c.status === "refuse");
   const verdict = unknown ? "unknown" : refused ? "refused" : "pass";
-  return { pr: s.pr.number, head: s.pr.head.sha, verdict, exitCode: unknown ? 2 : refused ? 1 : 0, checks };
+  const defect = checks.some((c) => c.kind === "defect");
+  const state: StatusState = unknown ? "error" : defect ? "failure" : refused ? "pending" : "success";
+  return { pr: s.pr.number, head: s.pr.head.sha, verdict, state, exitCode: unknown ? 2 : refused ? 1 : 0, checks };
 }
 
 // ─── GitHub ────────────────────────────────────────────────────────────────
@@ -631,10 +688,11 @@ export async function mergePinned(repo: string, n: number, sha: string): Promise
 
 /** Post the verdict as the `merge-guard` commit status on the head. */
 export async function postStatus(repo: string, v: GuardVerdict): Promise<void> {
-  const state = v.verdict === "pass" ? "success" : v.verdict === "refused" ? "failure" : "error";
+  const state = v.state;
   const failed = v.checks.filter((c) => c.status === "refuse" || c.status === "unknown");
+  const label = v.state === "pending" ? "not ready" : v.verdict;
   const description = (
-    v.verdict === "pass" ? "all seven checks pass" : `${v.verdict}: ${failed.map((c) => `${c.n} ${c.id}`).join(", ")}`
+    v.verdict === "pass" ? "all seven checks pass" : `${label}: ${failed.map((c) => `${c.n} ${c.id}`).join(", ")}`
   ).slice(0, 140);
   const runUrl = process.env.GITHUB_RUN_ID
     ? `${process.env.GITHUB_SERVER_URL ?? "https://github.com"}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`
@@ -651,8 +709,8 @@ export async function postStatus(repo: string, v: GuardVerdict): Promise<void> {
 const MARK: Record<CheckStatus, string> = { pass: "✓", refuse: "✗", unknown: "?", skip: "–" };
 
 export function render(v: GuardVerdict): string {
-  const lines = [`merge-guard #${v.pr} @ ${short(v.head)}: ${v.verdict.toUpperCase()}`];
-  for (const c of v.checks) lines.push(`  ${MARK[c.status]} ${c.n} ${c.id.padEnd(16)} ${c.detail}`);
+  const lines = [`merge-guard #${v.pr} @ ${short(v.head)}: ${v.verdict.toUpperCase()} (status: ${v.state})`];
+  for (const c of v.checks) lines.push(`  ${MARK[c.status]} ${c.n} ${c.id.padEnd(16)} ${c.kind ? `[${c.kind}] ` : ""}${c.detail}`);
   return lines.join("\n");
 }
 
