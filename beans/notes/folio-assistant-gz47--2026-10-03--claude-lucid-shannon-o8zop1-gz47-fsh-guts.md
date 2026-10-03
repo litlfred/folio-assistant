@@ -64,3 +64,23 @@ All 28 hits are legitimate:
 - The merge-pattern globs, and prose in health-check descriptions.
 
 **Found for the uploads batch:** `bib-qa.ts` and `source-ledger-index.ts` use `directoryForGraph(…, "uploads") ?? join(REPO_ROOT, "uploads")`. That fallback quietly reads a spelled path when nothing is declared, which is the dh4f shape.
+
+## Batch 4 (uploads): three composed strings reported the wrong place; the convention fallbacks stay
+
+## Batch 4 (uploads): three composed strings reported the wrong place; the convention fallbacks stay
+
+Done 2026-10-03 by the Parcel B session (owner: "go").
+
+**Real defects: a path REPORTED or RECORDED that was not where the file is.** Each site resolved the upload directory correctly, then composed `uploads/<file>` as if the root's queue were the only one. who-iris declares its own `who-iris/uploads/`.
+
+| site | was | now |
+|---|---|---|
+| `cat-harness-tools/adapters/mcp-server/server.ts` (import and arXiv-fetch handlers) | wrote into `join(UPLOADS_DIR(), id)`, then RETURNED and LOGGED `uploads/${id}` | `relative(REPO_ROOT, uploadDir)`: the place it actually wrote |
+| `content/pipeline/bib-qa.ts` | found the file in the resolved directory, returned `uploads/${f}` | `relative(REPO_ROOT, join(uploads, f))` |
+| `content/pipeline/source-ledger-index.ts` | read `UPLOADS_DIR()`, RECORDED `source.file: uploads/${f}` in the ledger | `relative(REPO_ROOT, join(UPLOADS_DIR(), f))` |
+
+**Unchanged, as policy rather than oversight:** `directoryForGraph(…, "uploads") ?? join(root, "uploads")` in bib-qa, source-ledger-index and the document adapter. AGENTS.md: *"Absent declaration is fine (an unmigrated instance falls back to today's conventions)."* Two of the three already carry a `declared-path-literal` marker naming that choice. Whether the fallback should distinguish "no declaration at all" from "a declaration without uploads" is a policy question for the dh4f owners, not a batch fix.
+
+**Not tested by a new fixture:** both pipeline modules fix their repo root at import, so a fixture with a non-root uploads directory would need that module restructured. Typecheck, eslint, and the existing tests that cover these files (server-path-sinks, references-registry-di, check-command-paths) pass.
+
+**Remaining batch:** `docs` (the largest, about 136 hits, and not state). Proposed next: widen `check:declared-paths` to the whole checkout as a ratchet first, so the count cannot grow while docs is worked through.
