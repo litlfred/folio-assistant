@@ -38,10 +38,9 @@ import { join } from "node:path";
 
 import { z } from "zod";
 
-import { resolveDirectories } from "./cat-harness.ts";
 import { BeanIdSchema } from "./tool-types.ts";
 import { ProcessElementIdSchema } from "./process-element-id.ts";
-import { corpusDirectoriesForGraph } from "./harness-config";
+import { fshGutsDirectories } from "./fsh-guts.ts";
 
 /** The `$schema` tag every log entry carries, per the declare-yourself rule. */
 export const LOG_ENTRY_SCHEMA_ID = "folio-log/v1";
@@ -63,18 +62,10 @@ export const LOG_NODE = "logs";
  * nothing rather than a guess.
  */
 export function logDirs(root: string): string[] {
-  try {
-    // Own declaration first; then the checkout's — since placement PR0a the
-    // repository's `fsh-guts/` is declared by the ROOT instance, not by the
-    // platform whose tools write the log.
-    const own = resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphKinds.includes("fsh-guts"))
-      .map((d) => d.absPath);
-    const dirs = own.length > 0 ? own : corpusDirectoriesForGraph(root, "fsh-guts");
-    return dirs.map((d) => join(d, LOG_NODE));
-  } catch {
-    return [];
-  }
+  // The shared resolution (bean 9c7h). Logs are git-ignored local scratch,
+  // so they stay in the WORKING TREE's trashcan when the committed contents
+  // move to `cat/cat-harness/fsh-guts`.
+  return fshGutsDirectories(root).map((d) => join(d.absPath, LOG_NODE));
 }
 
 /**

@@ -149,6 +149,24 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "the handler's index of every published graph and declared viewer, written whole by gen-handler-index.ts (handler:index:check in CI). Any new graph or viewer anywhere rewrites it; found 2026-10-01 on #1754.",
   },
   {
+    id: "skos-glossary-export",
+    globs: ["**/docs/assets/glossary/*.skos.jsonld"],
+    strategy: "take-base",
+    why: "the published SKOS export, written whole by `glossary:export` (glossary-export.ts, `glossary:check`). Bean `8rff` measured 54 pair-path hits on it across 32 open PRs: every instance's export restamps when any declared role, skill or term moves. Deliberately NOT the ledger, which is the carry-forward artefact and stays refused — see the `glossary-ledger` note in the skill.",
+  },
+  {
+    id: "glossary-generated",
+    globs: ["**/glossary/generated/**"],
+    strategy: "take-base",
+    why: "the per-instance generated glossary JSON under `<instance>/glossary/generated/**`, same writer as `skos-glossary-export` and the same check. 50 pair-path hits (`8rff`). The glob stops at `generated/`, so the sibling `glossary-ledger.json` one level up is untouched.",
+  },
+  {
+    id: "skill-instructions",
+    globs: ["**/docs/reference/skill-instructions/**"],
+    strategy: "take-base",
+    why: "skill instruction bodies, written whole by `skills:docs` (gen-skill-docs.ts `OUT_DIR`, `skills:docs:check`). 30 pair-path hits (`8rff`), and AGENTS.md says never hand-edit the directory. Its `emit()` is compare-or-write with no merge, so nothing is carried forward. The SKILL SOURCE under `skills/**` is the authored neighbour and stays refused.",
+  },
+  {
     id: "health-report",
     globs: ["**/test/health/results/*.health-report.json"],
     strategy: "take-base",
