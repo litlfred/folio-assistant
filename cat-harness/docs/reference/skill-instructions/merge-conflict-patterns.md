@@ -273,4 +273,5 @@ review rather than on its author; leave it off a branch somebody is pushing to.
 | process | step(s) that name it |
 |---|---|
 | [Merge the base branch in](../../processes/merge-base.html) | Classify every conflicted path against the declared patterns; Resolve each by its declared strategy; Abort, restore the tree, list what was refused |
+| [A merge train](../../processes/merge-train.html) | Hand it back (calls a sub-process); Hand the culprit back (calls a sub-process) |
 
