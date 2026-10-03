@@ -17,10 +17,10 @@ _470 files directly here, too many to list: 341 .ts, 45 .sh, 34 .bat, 31 .py, 16
 | [`eval/`](eval/) | 2 files | |
 | [`git-hooks/`](git-hooks/) | 5 files | |
 | [`knot-plots/`](knot-plots/) | 10 files | |
-| [`lib/`](lib/) | 13 files | |
+| [`lib/`](lib/) | 14 files | |
 | [`partition/`](partition/) | 2 files | |
 | [`render-tex/`](render-tex/) | 2 files | |
 | [`templates/`](templates/) | 1 file | |
-| [`tests/`](tests/) | 555 files | |
+| [`tests/`](tests/) | 556 files | |
 | [`translation/`](translation/README.md) | 14 files | |
 <!-- kg:subgraph:end -->

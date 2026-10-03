@@ -1874,6 +1874,11 @@ jobs:
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
           bun run smart-base:pages:check
           bun run smart-immunizations:pages:check
+          # The OpenAPI harness (cat-openapi, bean s4ta): every document an
+          # instance's cat-openapi.config.json names is held verbatim and matches
+          # its provenance, and its per-operation pages and IRIs are current.
+          bun run smart-trust:openapi:check
+          bun run smart-trust:openapi:pages:check
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
           bun run smart-base:document-kinds:check
@@ -1885,6 +1890,16 @@ jobs:
           # quote no longer matches the section it cites.
           bun run smart-base:dth-terms:check
           bun run document-kinds:viz:check
+          # P2's refusal record (bean ntyj): every published XML/Turtle
+          # representation this pipeline does not render, per IG, generated
+          # from the artefact index -- so it goes stale the moment the index
+          # is re-ingested, and a stale record misstates what was refused.
+          bun run p2:refusals:check
+          # The IG AST's JSON Schemas and JSON-LD context are generated from
+          # the Zod declaration readAst validates through (bean l0lq), so a
+          # field added to the Zod without regenerating leaves downstream
+          # consumers validating against a stale contract.
+          bun run ig-ast:schema:check
           # The fsh-guts index is generated from the graph, so it goes stale the
           # moment a file is relocated there -- which is the ONE operation that
           # graph exists for. Gated here rather than trusted, same as every

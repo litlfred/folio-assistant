@@ -1769,6 +1769,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // A FOURTH family in this directory because status is a fact about one
       // IG, and the chrome it used to ride in is shared by many.
       "folio-ig-identity/v1": { validator: "fhir-harness:schemas/ig-identity.ts#IgIdentitySchema" },
+      // The IG's GitHub RELEASES, as pointers to their binary assets — a
+      // fourth source (the GitHub API) and so a fourth document. Pointers,
+      // never bytes: previews carry no binaries, releases do (owner,
+      // 2026-10-02; bean `b8ip`).
+      "ig-releases/v1": { validator: "fhir-harness:schemas/ig-releases.ts#IgReleasesSchema" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:
@@ -1843,6 +1848,29 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `IG_METADATA_UNREACHED_TYPES` and `dependencyReach`, so an empty edge
   // list over the decision-logic core reads as uninformative rather than
   // clean).
+  openapi: {
+    renderable: false,
+    // `derived`, on `library`'s reasoning (bean `hqku`): the documents are
+    // INGESTED from an upstream source that still exists, and a change is made
+    // by re-running the ingest, never by editing the copy — a QA finding
+    // against one is a finding against its source or its ingest. Not
+    // `content`: this repository did not author the API. Bean `s4ta`.
+    holds: "derived",
+    // Not renderable for the reason `fhir-artifact-index` gives: the site
+    // build does not read this directory. Its pages — one per OPERATION, each
+    // with its own IRI (owner, 2026-10-03: "need page + IRI for each
+    // operation") — are written into the instance's `docs` by
+    // `cat-openapi/scripts/gen-openapi-pages.ts`, and their loader fetches the
+    // document from here, which is why a directory of this kind is `served`.
+    nodeSchemas: {
+      // The ingest's provenance node, one per document.
+      "folio-openapi-source/v1": { validator: "cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema" },
+    },
+    summary:
+      "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the " +
+      "repository, path and commit it was ingested from (the cat-openapi harness). Every operation " +
+      "in a document is a node of its own: a page and an IRI under the instance's docs.",
+  },
   "ig-metadata-index": {
     renderable: false,
     holds: "derived",
