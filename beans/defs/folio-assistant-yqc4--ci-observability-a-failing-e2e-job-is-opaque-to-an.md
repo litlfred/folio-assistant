@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T13:56:51Z
-updated_at: 2026-10-03T13:58:46Z
+updated_at: 2026-10-03T14:14:54Z
 parent: folio-assistant-1xhc
 ---
 
@@ -61,3 +61,36 @@ host. Not done here; that is a decision about every job, not this one.
 - [x] it is uploaded on failure, per shard, and absent files do not add a second failure
 - [x] proven by a forced failure that the artifact names the test and the error
 - [ ] owner's call on whether failing steps should also write `$GITHUB_STEP_SUMMARY`
+
+
+## The general case, now MEASURED on a job that is not Playwright
+
+2026-10-03 14:14 UTC, same PR, a different gate: `Skill-registration chain,
+unmasked (hard)` went red at 9505d0204. Asked from inside this container, the
+check run gives:
+
+    output.title    null
+    output.summary  null
+    annotations     failure: "Process completed with exit code 1."
+                    notice:  (an unrelated ubuntu-latest deprecation notice)
+
+and the log itself:
+
+    GET productionresultssa12.blob.core.windows.net/.../job-logs.txt
+    -> Forbidden
+
+So the opacity is NOT Playwright-specific and not hypothetical. A gate whose
+whole purpose is to name WHICH derived artefact went stale reported a bare exit
+code, and the one place the name existed was a host this network policy denies.
+AGENTS.md already says of this chain that "each stale artefact names a GENERATED
+file rather than your skill, so the cause is invisible from the symptom" — and
+here even that naming never arrived.
+
+This is evidence for the open box below rather than a decision about it.
+`$GITHUB_STEP_SUMMARY` would have carried the stale artefact's name into
+`output.summary`, which is an API field and readable where the log is not. Still
+the owner's call, because it is a change to every job in the workflow.
+
+Worth saying plainly: the artifact upload this bean shipped would NOT have helped
+here either. It is scoped to the e2e job, and a skill-registration failure writes
+no Playwright report.
