@@ -537,7 +537,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     // "generated". Those say how the page was made; the reader of a tile wants
     // to know what it IS. `docs` does not depict a writer either.
     glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h.01M11.5 12h5M9 15h.01M11.5 15h5M9 18h.01M11.5 18h3",
-    tone: 164,
+    // 340, and the first choice of 164 was WRONG — found by rendering it beside
+    // its siblings rather than by reading the table. 164 is green, and so is
+    // `requirements` at 148, with 156 and 168 also taken: two page-shaped
+    // glyphs in near-identical greens, told apart only by bullets against
+    // ticks, which is not a distinction that survives tile size.
+    //
+    // 340 is the largest clearance left in the table — 20° from both 320 and
+    // 0, where every other gap is 16° or less. Measured over the 45 distinct
+    // tones in use, not estimated.
+    tone: 340,
     reads: "a page of bulleted entries — an index of what another graph holds",
   },
   proposals: {
