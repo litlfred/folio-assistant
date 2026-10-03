@@ -403,9 +403,7 @@ Three states, not two. `loadProcessModel` reads an undeclared policy as `strict`
 
 ## Findings
 
-**1 diagram(s) have no rendered SVG.** `bun run render:bpmn`.
-
-- `cat-harness/processes/kg/mount-subgraph.bpmn`
+Every one of the **85** diagrams has a rendered SVG.
 
 ### Activities carrying no `<bootstrap.processes:skill ref>` — a census, not a gap list
 

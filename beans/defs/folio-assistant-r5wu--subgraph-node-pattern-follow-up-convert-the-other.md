@@ -3,8 +3,10 @@
 title: 'SUBGRAPH NODE PATTERN, follow-up: convert the other publishers of a declared subgraph''s contents to the declared Subgraph node + inSubgraph'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-03T08:58:19Z
-updated_at: 2026-10-03T08:58:19Z
+updated_at: 2026-10-03T10:06:52Z
+parent: folio-assistant-fs43
 ---
 
 Follow-up to bean l4ay (PR #1960), which built the pattern (scripts/subgraph-node.ts: subgraphContainer, memberOf, subgraphPublicationFindings; declaredSubgraphNode in kg-export.ts) and applied it to todos.jsonld only. Owner ruling 2026-10-03: "todos = subgraph node + todo content nodes", "and make pattern for declared repo branches (and declared dir subgraphs)".

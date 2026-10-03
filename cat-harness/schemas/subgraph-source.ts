@@ -2,6 +2,7 @@
  * WHERE A DECLARED SUBGRAPH GETS ITS CONTENT — one concept, several kinds.
  *
  * @module schemas/subgraph-source
+ * @graphNode schema
  *
  * The owner, 2026-10-03, verbatim:
  *
@@ -27,11 +28,13 @@
  * ## How the older fields map onto it
  *
  * `storage: { branch, keyedBy }` (arc `3fva`, #1764; `keyedBy: "tip"` added by
- * #1937) is EXACTLY `source: { kind: "branch", branch, keyedBy }`. Neither PR
- * is on `main` when this lands, so the resolver reads a `storage` key if a
- * declaration carries one and reports the answer as `declaredIn: "storage"`;
- * an entry carrying both is refused, because two answers to one question is
- * the defect this module exists to remove. `special-branches.json` stays the
+ * #1937) is EXACTLY `source: { kind: "branch", branch, keyedBy }`. It stays
+ * as the LEGACY spelling: the resolver reads it and reports the answer as
+ * `declaredIn: "storage"`, the presence checks ask {@link contentIsOffCheckout}
+ * (which honours both), and an entry carrying both is refused, because two
+ * answers to one question is the defect this module exists to remove.
+ * `qa-store.ts` still reads `storage` directly; moving it onto the resolver
+ * is #1937's file to change, not this module's. `special-branches.json` stays the
  * one declaration of branch NAMES (and their legacy spellings): a branch
  * source names its branch, and the resolver attaches the matching row.
  *
@@ -172,6 +175,20 @@ export interface SourcedEntry {
   source?: SubgraphSource;
   /** #1764's field, if a declaration carries it. Read only to map it. */
   storage?: unknown;
+}
+
+/**
+ * Does this entry's DECLARATION put its content somewhere other than the
+ * checkout? The presence checks ask this (`materialiseDirectories`,
+ * `check:declared-dirs`, `audit:coverage`): a subgraph whose content is on a
+ * branch is not "missing" when its directory is absent, and must not be
+ * created empty. Asked of the declaration alone, so it never throws and needs
+ * no IO; the instance config's override is the resolver's to apply.
+ * `storage` (#1764) counts — it is the legacy spelling of a branch source.
+ */
+export function contentIsOffCheckout(entry: { source?: SubgraphSource; storage?: unknown }): boolean {
+  if (entry.source !== undefined) return entry.source.kind !== "directory";
+  return entry.storage !== undefined && entry.storage !== null;
 }
 
 /**

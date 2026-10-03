@@ -17,7 +17,7 @@ You are in this process whenever a step is about to read or write the contents o
 
 The gateway is on the source KIND, and its flows are the only places the kinds differ. A `directory` subgraph is already where its path says, and writing it is an ordinary commit. A `branch` subgraph is mounted from the declared branch's tip into its path, and written back by splicing onto the tip without force. A kind with no flow here is refused.
 
-_No rendered diagram — run `bun run render:bpmn`._
+<img src="../assets/img/workflows/mount-subgraph.svg" alt="BPMN diagram: Mount a declared subgraph" style="max-width:100%">
 
 ## How it connects
 

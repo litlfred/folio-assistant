@@ -80,7 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
-import { SubgraphSourceSchema, type SubgraphSource } from "./subgraph-source";
+import { SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -5131,7 +5131,8 @@ export function materialiseDirectories(
     // Creating it empty here would manufacture the `dh4f` shape — a reader
     // scanning an empty directory and reporting a clean run — and its absence
     // is not "missing", so `--check` does not list it either.
-    if (dir.storage?.branch) continue;
+    // Any source off the checkout, not only `storage` (bean `l4ay`).
+    if (contentIsOffCheckout(dir)) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);

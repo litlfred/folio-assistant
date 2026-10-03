@@ -10,6 +10,7 @@ import { ContentDirectorySchema } from "./cat-harness";
 import { HarnessConfigSchema, checkoutDirectories, declaredSubgraph } from "./harness-config";
 import {
   SubgraphSourceSchema,
+  contentIsOffCheckout,
   contentSourceJsonLd,
   forgeTreeUrl,
   resolveSubgraphSource,
@@ -63,6 +64,15 @@ describe("precedence — config, then source, then legacy storage, then director
   });
   test("a qa subgraph keyed by tip is refused (#1937's rule, whichever field says it)", () => {
     expect(() => resolveSubgraphSource({ id: "qa", path: "qa/", graphKinds: ["qa"], source: { ...BRANCH, branch: "cat/cat-harness/qa-reports" } })).toThrow(/qa/);
+  });
+});
+
+describe("the presence checks ask one question of either spelling", () => {
+  test("a branch source, or a legacy storage, is off the checkout; a directory source or none is not", () => {
+    expect(contentIsOffCheckout({ source: BRANCH })).toBe(true);
+    expect(contentIsOffCheckout({ storage: { branch: "x", keyedBy: "commit" } })).toBe(true);
+    expect(contentIsOffCheckout({ source: { kind: "directory" } })).toBe(false);
+    expect(contentIsOffCheckout({})).toBe(false);
   });
 });
 

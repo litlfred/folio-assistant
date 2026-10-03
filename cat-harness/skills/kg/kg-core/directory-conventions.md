@@ -804,6 +804,9 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
   keyedBy }` is `source: { kind: "branch", branch, keyedBy }`. The resolver
   reads either and refuses an entry carrying both — two answers to one
   question. A `qa` subgraph keyed by `tip` is refused whichever field says it.
+  `storage` is the LEGACY spelling: write `source` in a new entry. The
+  presence checks (`materialiseDirectories`, `check:declared-dirs`,
+  `audit:coverage`) ask `contentIsOffCheckout`, which honours both.
 - **Mounting dispatches on the kind**, and the process is
   `processes/kg/mount-subgraph.bpmn`: `directory` is the checkout path in place
   (a write is a commit); `branch` + `tip` is mounted from the tip and spliced
