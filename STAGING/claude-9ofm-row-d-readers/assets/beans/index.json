@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 760,
+      "count": 761,
       "unit": "beans"
     }
   },
@@ -6535,6 +6535,20 @@
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
     },
     {
+      "id": "folio-assistant-mjl3",
+      "title": "artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T17:41:35Z",
+      "updatedAt": "2026-10-03T17:41:53Z",
+      "preview": "A **preventive** record, not a defect: this bean exists so the next agent that\nmeets this refusal twice does not \"fix\" it by widening a glob — which is the\nmistake `merge-conflict-patterns` names in its own opening and which I came within\none step of making.\n\n## Where it came from\n\nSwept the merge-main bot's refusals across all 13 open `merge-main` PRs on\n2026-10-03, while #2029 added the one real",
+      "file": "beans/defs/folio-assistant-mjl3--artefact-verificationjson-merges-are-correctly-ref.md"
+    },
+    {
       "id": "folio-assistant-mkao",
       "title": "LIBRARY VIEWER LEAK: withheld who-iris entries still published verbatim text and covers via /assets/library/",
       "status": "completed",
@@ -10040,7 +10054,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-03T13:29:11Z",
+      "updatedAt": "2026-10-03T17:52:50Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
