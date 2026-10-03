@@ -32,3 +32,35 @@ Done 2026-10-03 by the Parcel B session (owner: option 1, "gz47 batch: fsh-guts"
 Local: typecheck clean; regen 101 current, 0 regenerated; `bun run gates` 216 of 216.
 
 **Lesson for the next batches:** classify a hit by what it READS (the real tree, or a fixture), not by its spelling. The measurement counts spelling.
+
+## Batches 2–3 (todos, beans): todos had no real read; beans had four, one of them a live bug
+
+## Batches 2–3 (todos, beans): todos had no real read; beans had four, one of them a live bug
+
+Done 2026-10-03 by the Parcel B session, continuing the batch order (owner: "go").
+
+**The measurement's second blind spot.** It counted only literals containing a `/`. The classic form of this defect is the bare segment, `join(root, "beans", "defs")`, which it never saw. So each batch is now searched both ways: literal paths, and `join(…)` with a declared directory's name as a segment.
+
+### todos: no real read
+All 28 hits are legitimate:
+- `DEFAULT_DIRECTORIES`, which *is* the declaration;
+- `todos.test.ts` asserting the declaration's own value;
+- fixtures (state-store, branch-store, probes, todo-graph, review-comment-move);
+- pure string inputs (subgraph-readmes);
+- rendered site URLs (e2e `todos/index.html`);
+- `init-folio.ts`, the scaffolder that CREATES the layout.
+
+### beans: four real reads
+| site | was | now |
+|---|---|---|
+| `src/tools/beans-prime.ts` (the no-CLI fallback of `work_plan_prime`) | `primeFromDir(join(repoRoot, "beans"))`, which reads `beans/*.md` | `beanDefsDir(repoRoot)`. **This was a live bug:** the only top-level Markdown in `beans/` is the README, so an agent without the `beans` CLI was primed with ONE "bean", the README. Regression test included |
+| `scripts/mvp-status.ts` | `join(ROOT, "beans", "defs")` ×4, plus `ls-tree … beans/defs/` | `beanDefsDir(ROOT)`; undeclared → could-not-determine, never an empty store |
+| `scripts/bean-rollover.ts` | `SUBGRAPH = "beans/"` | `directoryForGraph(ROOT, "beans")`; undeclared → usage error |
+| `folio-assistant-core/scripts/sample-import-run.ts` | `join(root, "beans", "workflows", …)` | `WORKFLOW_DIR`, the store's own constant |
+
+### Deliberately unchanged
+- `src/workflow/store.ts` `WORKFLOW_DIR` (AGENTS.md: a hot-path duplicate that `check:harness-dirs` guards).
+- The bean graph's root (`DEFAULT_BEAN_GRAPH_ROOT`; the third-party CLI fixes it).
+- The merge-pattern globs, and prose in health-check descriptions.
+
+**Found for the uploads batch:** `bib-qa.ts` and `source-ledger-index.ts` use `directoryForGraph(…, "uploads") ?? join(REPO_ROOT, "uploads")`. That fallback quietly reads a spelled path when nothing is declared, which is the dh4f shape.
