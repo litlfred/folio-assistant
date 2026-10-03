@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-03T09:51:16Z
+updated_at: 2026-10-03T11:41:35Z
 parent: folio-assistant-0lmb
 ---
 
@@ -59,17 +59,17 @@ it, and refuses rather than rendering an empty table when the source moves.
 
 ## Done when
 
-- [ ] the handler exists and is declared, with the `auto-doc-type` set above and
+- [x] the handler exists and is declared, with the `auto-doc-type` set above and
       **no** `toc`
 - [ ] **`who-iris/docs` is the first real exercise, end to end** — owner,
       2026-09-20: *"try it out fully w/ who-iris docs, auto-docs."* Not a
       fixture and not a smoke test: the instance that already has a hand-built
       `docs/` is the one that will show whether a derived index and an authored
       summary can sit in the same directory without fighting.
-- [ ] the authoring rule lives in a skill with the reuse-not-restate clause
+- [x] the authoring rule lives in a skill with the reuse-not-restate clause
 - [ ] `<harness>/docs` carries a per-process summary that references the derived
       index rather than duplicating it
-- [ ] a stale or moved source makes the derivation FAIL, never render empty
+- [x] a stale or moved source makes the derivation FAIL, never render empty
 
 ## Not started — and the order is the owner's
 
@@ -648,3 +648,86 @@ remains the discriminator — is the SOURCE a graph, or prose a person wrote?
   13,214 absolute citations across 6,861 files
 - `toc` stays out; the authoring rule is a skill; `who-iris/docs` is the first
   exercise
+
+
+## `index/bpmn` — RULED satisfied, 2026-10-03
+
+Owner, asked with the measurement in front of them and both alternatives
+costed: **`index/processes` IS `index/bpmn` under a different name.** The item
+is closed, not dropped.
+
+What was measured before asking:
+
+| | |
+|---|---|
+| git-tracked `.bpmn` files | **78** |
+| `index/processes` items | **78** — *"every BPMN process, with its own documentation, its lanes, and the skills its activities name"* |
+| `index/tasks` items (added same day) | **584** named activities inside those files |
+
+So both granularities a reader could want — the process, and the work inside it
+— were already covered before a type called `index/bpmn` existed. A third index
+over the same 78 files is the defect `AutoDocType.graph` exists to prevent, and
+`gen-docs-auto.ts`'s own docblock records its cost: walking every declared
+directory reported **1,522** skills where `knownSkills()` finds ~136, *"because
+a RENDERING of an artefact is not the artefact"*.
+
+**The alternative was offered and declined**, so it does not need rediscovering:
+a type over BPMN *elements* beyond activities — gateways, events, lanes,
+sequence flows — is genuinely uncovered, but it is ~2,000+ rows of which most
+carry no `name`, and it would need the same unnamed-element rule `index/tasks`
+uses (skip rather than list under an id, because a row reading
+`Gateway_0a1b2c` makes an index look populated while telling a reader nothing).
+
+**Status, against the canonical `## Done when` above — which is now ticked
+there rather than restated here.** `check:bean-bodies` rejected the first
+version of this paragraph for exactly that: it carried a second, ticked copy of
+two items while the canonical list still showed them open, and the gate's words
+are the reason — *"the section a reader and every tool consult says this is not
+done"*. One fact, one place.
+
+Ticked above today: **the handler and its type set** (with `toc` verified
+ABSENT, not merely unmentioned), and **the authoring rule in a skill** — which
+needed no work, because `skills/ui/ui-core/docs-auto.md` already carried the
+obligation, the owner's *"reuse assets in explain"* quote, the `id`-not-path
+rule and empty-gets-no-page. I nearly wrote a second one.
+
+Still open above, and the only substantive item left: **`who-iris/docs` as the
+first real exercise, end to end.** That directory holds **1** markdown file, so
+it is untouched rather than partly done. The per-process summary item is its
+authored half.
+
+The type set as it now stands: `glossary`, `index`, `index/docs`,
+`index/skills`, `index/processes`, `index/schemas`, `index/tools`,
+`index/roles`, `index/dmn`, `index/tasks`, `uml`, `lsi`. Count it from `TYPES`
+rather than from this list.
+
+
+## The refuse item is done — PR #1991, merged 2026-10-03
+
+*"a stale or moved source makes the derivation FAIL, never render empty"* is
+implemented and on `main`. Ticked in the canonical list above rather than
+restated here, which is what `check:bean-bodies` rejected a shadow copy for
+earlier today.
+
+`gen-docs-auto.ts` now refuses when a type collects **nothing** while its
+graph's declared directories **hold files**. The three-way discrimination is
+`dh4f`'s, and it is what keeps the guard from becoming a nuisance:
+
+| state | behaviour |
+|---|---|
+| no declared directory for the graph | silent — a fresh folio with no `processes/` must not fail `index/dmn` |
+| declared directories, all empty | silent — "not there" and "empty" are different facts, neither a defect |
+| declared directories **with files**, type collects nothing | **refuse** |
+
+**It was written after shipping the failure twice in one session**, which is
+why it exists rather than being argued for: `index/tools` filtered `.json` on
+`AGENTS.md`'s "Tool definitions" wording when the directory holds `.ts`, and
+`index/roles` passed `dirname()` where `readRoleGraph` wants the directory
+itself. Both emitted **0 items and printed `✓`**; both were caught by a human
+reading the count.
+
+And the guard runs **before** the orphan prune, because the first draft had it
+after and a buggy run then deleted four sub-graph pages before reporting a
+defect against the tree it had emptied — `deletion-requires-confirmation`
+broken by sequencing. Measured both ways: 1 page surviving with the guard
+after, 5 with it before.

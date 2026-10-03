@@ -611,6 +611,13 @@ jobs:
             echo "search-data.json: EMPTY — the page's banner says search is unavailable on this preview"
           fi
 
+      # Split the index THIS preview serves — the published one, or `{}` —
+      # never one built here: a preview's scopes must be cut from the same
+      # index its pages search, or `search-scopes` reports the split stale
+      # (issue #1972, bean `m7mn`).
+      - name: Split the served search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+
       # Mount every OTHER instance's rendered content under the built site.
       #
       # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
