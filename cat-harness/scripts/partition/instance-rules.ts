@@ -1982,6 +1982,17 @@ export const RULES: Rule[] = [
       // reader gets when JavaScript never runs. `gen-docs-pages.ts` calling it
       // is core calling core; nothing about it is instance machinery.
       "scripts/todo-listing.ts",
+      // Issue #1908: the todo graph's JSON-LD builder, a todo's thin page, the
+      // ONE seam that says where published todos are read from, and the
+      // generic thin-page shell they render with. CORE for the reason
+      // `todo-listing.ts` gives: renderers of a folio's own notes, called by
+      // `gen-docs-pages.ts` (core). They import `schemas/jsonld.ts`,
+      // `schemas/todo-index.ts`, `scripts/todos.ts` and `viewer-page.ts`, all
+      // core, so harness here would be four wrong-direction edges.
+      "scripts/todo-graph.ts",
+      "scripts/todo-page.ts",
+      "scripts/todo-source.ts",
+      "scripts/thin-page.ts",
       // The state visualiser, and it is core for the reason `gen-landing-data.ts`
       // records about itself: it is a RENDERER, and rendering is core's.
       //
