@@ -108,7 +108,13 @@ AGENTS.md line 353 fails the check with exit 1; removing it passes. 18 unit
 tests, each one a false positive the first draft produced over this corpus.
 
 - [x] A check reads every fenced command in the entry documents (AGENTS.md, README.md, the onboarding guide) and fails when a path in it does not resolve
-- [ ] The nine occurrences are confirmed repointed on main — #579 is not merged yet
+- [ ] The nine occurrences are confirmed repointed on main
+  — **the "#579 is not merged yet" that stood here was FALSE when read on
+  2026-10-03**: #579 merged 2026-09-20T18:29:35Z, merge commit `3a9557b14b`, and
+  its head was clean (12 check runs, 8 success, 4 skipped, 0 failure). Corrected
+  rather than ticked: this box has two clauses and only the second is settled.
+  Whether the nine occurrences are repointed on main is still UNVERIFIED, and a
+  stale premise is worse than an open box because the next agent believes it.
 
 _2026-09-20T20:40Z_ — **A third class — `printed-command` — found by CI going red.** The count is
 now nine plus **thirteen**.
