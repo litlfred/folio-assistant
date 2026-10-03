@@ -1501,12 +1501,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
@@ -1515,6 +1515,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "library",
           "path": "/cat-harness/library/fhir-harness/"
@@ -1562,6 +1566,14 @@
           "path": "fhir-harness/tools/"
         },
         {
+          "id": "fhir-ig-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "fhir-harness/scripts/"
+        },
+        {
           "id": "fhir-harness-processes",
           "kinds": [
             "processes"
@@ -1579,7 +1591,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — code, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
@@ -3550,7 +3562,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: library, fhir-ig-skills, fhir-ig-tools, fhir-harness-processes, qa"
+            "summary": "6: library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, fhir-harness-processes, qa"
           },
           {
             "key": "needs",
