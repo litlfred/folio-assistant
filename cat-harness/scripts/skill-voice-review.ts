@@ -25,10 +25,13 @@
  *
  * ## Where a review lives
  *
- * In the skill's own kg-qa sidecar, as `voice_reviews`, carried across
- * `kg:audit` runs exactly as `pair_attestations` is: an existing family, not a
- * new store. Each review pins the skill's content hash and the hash of the
- * voice's skill-scoped rules, so either moving makes it stale.
+ * In the attestation store (`schemas/qa-attestations.ts`), as `voice_reviews`
+ * in the skill's `test/attestations/kg-qa/…attestations.json`, beside its
+ * `pair_attestations`. It sat in the kg-qa sidecar until bean `2gst`
+ * (2026-10-01): a review is a judgement, and owner ruling D2 (a) keeps
+ * judgements on main while derived sidecars move to the `qa-reports` branch.
+ * Each review pins the skill's content hash and the hash of the voice's
+ * skill-scoped rules, so either moving makes it stale.
  *
  * ## What fails
  *
@@ -40,12 +43,19 @@
  */
 
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { relative, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, relative, resolve } from "node:path";
 
 import { loadVoices, readActiveVoices, resolveVoice, voiceKey, type ResolvedVoice, type VoiceProfile, type VoiceRef } from "../schemas/voices.ts";
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
 import type { KgCriterionEntry, KgFinding, KgQaReport } from "../schemas/kg-qa.ts";
+import {
+  kgAttestationFor,
+  QA_ATTESTATIONS_SCHEMA,
+  readAttestationFile,
+  serialiseAttestations,
+  type KgAttestations,
+} from "../schemas/qa-attestations.ts";
 
 export const VOICE_REVIEW_CRITERION = "skill-voice-review-current";
 
@@ -127,15 +137,42 @@ export function skillVoices(
   return out;
 }
 
-/** Reviews recorded in an existing sidecar, or none. */
-export function readVoiceReviews(sidecar: string): VoiceReview[] {
-  if (!existsSync(sidecar)) return [];
-  try {
-    const json = JSON.parse(readFileSync(sidecar, "utf-8")) as { voice_reviews?: VoiceReview[] };
-    return Array.isArray(json.voice_reviews) ? json.voice_reviews : [];
-  } catch {
-    return [];
+/**
+ * The recorded reviews, in the four states of `readAttestationFile`. As with
+ * `readAttestations` in `prose-code-pairs.ts`, a `corrupt` or `unknown` read
+ * carries NO list: it used to answer `[]`, which reads as "never reviewed"
+ * (the `de9k` leftover).
+ */
+export type VoiceReviewsRead =
+  | { state: "hit" | "miss"; reviews: VoiceReview[] }
+  | { state: "corrupt" | "unknown"; reason: string };
+
+/** Reviews recorded in the store file for one skill. */
+export function readVoiceReviews(storeFile: string, storeRoot: string): VoiceReviewsRead {
+  const r = readAttestationFile(storeFile, storeRoot);
+  if (r.state === "hit") return { state: "hit", reviews: ((r.file as KgAttestations).voice_reviews ?? []) as VoiceReview[] };
+  if (r.state === "miss") return { state: "miss", reviews: [] };
+  return { state: r.state, reason: r.reason };
+}
+
+/**
+ * {@link evaluateVoiceReviews} over a read that may not have answered: a
+ * `corrupt` or `unknown` store is an `unknown` criterion and `reviews` is
+ * `undefined`, so the caller writes nothing back.
+ */
+export function evaluateVoiceReviewsFrom(
+  skillAbs: string,
+  read: VoiceReviewsRead,
+  voices: SkillVoice[] | undefined,
+): { entry: KgCriterionEntry; reviews: VoiceReview[] | undefined } {
+  if (voices !== undefined && voices.length === 0) return { entry: { result: "n/a", findings: [] }, reviews: "reviews" in read ? read.reviews : undefined };
+  if (!("reviews" in read)) {
+    return {
+      entry: { result: "unknown", findings: [{ where: "attestations", detail: `recorded voice reviews are ${read.state}: ${read.reason}` }] },
+      reviews: undefined,
+    };
   }
+  return evaluateVoiceReviews(skillAbs, read.reviews, voices);
 }
 
 /**
@@ -193,13 +230,31 @@ export function verdictProblems(voice: SkillVoice, verdicts: VoiceRuleVerdict[])
   return problems;
 }
 
-/** Record a review in a sidecar, replacing any earlier one for the same voice. */
-export function recordReview(sidecar: string, review: VoiceReview): void {
-  const json = JSON.parse(readFileSync(sidecar, "utf-8")) as KgQaReport & { voice_reviews?: VoiceReview[] };
-  json.voice_reviews = [...(json.voice_reviews ?? []).filter((r) => r.voice !== review.voice), review].sort((a, b) =>
+/**
+ * Record a review in the store, replacing any earlier one for the same voice.
+ *
+ * A missing file is created for `subject`; a corrupt or unreadable one is
+ * REFUSED rather than overwritten, since it may hold reviews nobody has read.
+ */
+export function recordReview(
+  storeFile: string,
+  storeRoot: string,
+  subject: KgAttestations["subject"],
+  review: VoiceReview,
+): void {
+  const r = readAttestationFile(storeFile, storeRoot);
+  let json: KgAttestations;
+  if (r.state === "hit") json = r.file as KgAttestations;
+  else if (r.state === "miss" || (r.state === "unknown" && !existsSync(storeRoot))) {
+    // A missing family tree is `unknown` to a READER; a writer recording a
+    // NEW review creates it, because nothing it could overwrite is there.
+    json = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject };
+  } else throw new Error(`cannot record a review in ${storeFile}: ${r.state} (${r.reason})`);
+  json.voice_reviews = [...(json.voice_reviews ?? []).filter((x) => x.voice !== review.voice), review].sort((a, b) =>
     a.voice.localeCompare(b.voice),
   );
-  writeFileSync(sidecar, `${JSON.stringify(json, null, 2)}\n`);
+  mkdirSync(dirname(storeFile), { recursive: true });
+  writeFileSync(storeFile, serialiseAttestations(json));
 }
 
 if (import.meta.main) {
@@ -244,6 +299,11 @@ if (import.meta.main) {
     process.exit(2);
   }
   const report = JSON.parse(readFileSync(abs, "utf-8")) as KgQaReport;
+  const where = kgAttestationFor(abs, repoRoot, resolve(import.meta.dir, ".."));
+  if (where === undefined) {
+    console.error(`${sidecar} is under no instance's kg-qa tree`);
+    process.exit(2);
+  }
   if (report.subject.kind !== "skill" || !report.subject.path) {
     console.error(`${sidecar} is not a skill's sidecar`);
     process.exit(2);
@@ -267,7 +327,7 @@ if (import.meta.main) {
     console.error(`the skill ${report.subject.path} is not there to hash`);
     process.exit(2);
   }
-  recordReview(abs, {
+  recordReview(where.file, where.storeRoot, report.subject, {
     voice: v.id,
     instance: v.instance,
     skill_hash: skillHash,
@@ -280,6 +340,6 @@ if (import.meta.main) {
   console.log(
     `recorded ${verdicts.length} verdict(s) for ${report.subject.path} against ${v.id}` +
       (failed.length ? ` — ${failed.length} rule(s) judged fail, recorded and not gated` : "") +
-      ` in ${relative(repoRoot, abs)} — now run \`bun run kg:audit\``,
+      ` in ${relative(repoRoot, where.file)} — now run \`bun run kg:audit\``,
   );
 }

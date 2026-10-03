@@ -527,6 +527,12 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * `analyst`.
    */
   theme?: ThemeRef;
+
+  /**
+   * This directory's contents are STORED on a branch, keyed by commit, and the
+   * checkout holds at most a working copy. See {@link DirectoryStorageSchema}.
+   */
+  storage?: DirectoryStorage;
 }
 
 /** An instance's root declaration. */
@@ -1368,6 +1374,57 @@ export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
 export const TileSchema = VisualisationSchema.omit({ ref: true });
 export type Tile = z.infer<typeof TileSchema>;
 
+/**
+ * A directory whose contents live on a BRANCH, one tree per commit, with the
+ * checkout holding at most a working copy.
+ *
+ * Bean `16ei`, arc `3fva`, proposal
+ * `docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §2.4. The
+ * owner, 2026-10-01: *"do not pollute main with the QA subgraph; publish it on
+ * a dedicated branch, as caching is"* — ruling D1 (a), an orphan `qa-reports`
+ * branch keyed `main/<sha>/` and `pr/<n>/<head-sha>/`.
+ *
+ * ## What it changes, and for whom
+ *
+ * - **Writers** still write the declared path. It is the working copy, and
+ *   `qa:publish` (`scripts/qa-store.ts`) carries it to the branch.
+ * - **Readers** go through `qa-store`'s `readQa` / `readQaTree`, which answer
+ *   hit / miss / corrupt / unknown — never "the directory is empty, so clean".
+ * - **Presence checks** stop expecting the files in the checkout:
+ *   `check:declared-dirs` and `harness:dirs --check` do not report the
+ *   directory missing, `harness:dirs` does not create it empty (an empty
+ *   working copy is the `dh4f` shape, a scan of nothing reading as clean),
+ *   and `audit:coverage` reports the kind as `stored` rather than counting a
+ *   working copy whose size depends on whether somebody ran `qa:fetch`.
+ *
+ * ## `keyedBy` has one value, on purpose
+ *
+ * `commit` is the only keying the branch layout implements. The field exists
+ * so that a second keying is a schema change somebody has to make, rather
+ * than a reinterpretation of an unkeyed declaration.
+ *
+ * ## Not yet set on any declaration
+ *
+ * Flipping a real `qa` directory to `storage` is a later bean, after every
+ * reader has migrated (proposal §4 Phase 3). Setting it earlier would tell the
+ * presence checks to stop looking while the readers still read the checkout.
+ */
+export const DirectoryStorageSchema = z
+  .object({
+    /** The branch, e.g. `qa-reports`. A plain branch name: no `refs/`, no `..`, no leading `-`. */
+    branch: z
+      .string()
+      .regex(/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+$/, "a plain branch name, e.g. qa-reports")
+      .refine(
+        (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
+        "not a valid branch name",
+      ),
+    /** How entries are keyed on the branch. Only `commit` exists. */
+    keyedBy: z.literal("commit"),
+  })
+  .strict();
+export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
@@ -1533,6 +1590,11 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * nowhere).
    */
   kindRouteRedirect: z.boolean().optional(),
+  /**
+   * Where this directory's contents are KEPT, when that is not the checkout.
+   * See {@link DirectoryStorageSchema} — bean `16ei`, arc `3fva`.
+   */
+  storage: DirectoryStorageSchema.optional(),
   /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
@@ -5043,6 +5105,12 @@ export function materialiseDirectories(
     // the inherited subgraph exactly where it already exists, never created
     // empty (the `dh4f` rule); a repository-scoped entry has one location.
     if (dir.own !== true && (dir.scope === "repository" || !isPerInstance(dir))) continue;
+    // A STORED directory (`storage`, bean `16ei`) lives on its branch; the
+    // checkout holds at most a working copy that `qa:fetch` or a writer makes.
+    // Creating it empty here would manufacture the `dh4f` shape — a reader
+    // scanning an empty directory and reporting a clean run — and its absence
+    // is not "missing", so `--check` does not list it either.
+    if (dir.storage?.branch) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
