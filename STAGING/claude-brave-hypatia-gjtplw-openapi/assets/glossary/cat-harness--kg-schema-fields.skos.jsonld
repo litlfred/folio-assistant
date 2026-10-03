@@ -6524,7 +6524,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}."
+          "@value": "This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.storage",
@@ -6680,6 +6680,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.served",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.served"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This directory's BYTES are published verbatim, at `/<instance>/<path>`, for the site's own pages to fetch."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.served",
       "skos:note": "candidate"
     },
     {
@@ -6847,7 +6866,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How entries are keyed on the branch. Only `commit` exists."
+          "@value": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",

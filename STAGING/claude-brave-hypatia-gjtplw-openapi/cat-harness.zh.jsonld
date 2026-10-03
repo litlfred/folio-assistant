@@ -303,14 +303,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T09:55:59.954Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/815072e3c8f887603b7a368b9c12455398b3e312",
-  "sourceCommitSha": "815072e3c8f887603b7a368b9c12455398b3e312",
-  "sourceCommitAt": "2026-10-03T09:52:26Z",
+  "generatedAt": "2026-10-03T11:53:50.131Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2126442c3ef7c1dd73849f1900e88d11a432f2a4",
+  "sourceCommitSha": "2126442c3ef7c1dd73849f1900e88d11a432f2a4",
+  "sourceCommitAt": "2026-10-03T11:36:23Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 300,
+    "Skill": 303,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -320,7 +320,7 @@
     "Lane": 208,
     "ProcessNode": 980,
     "Tool": 117,
-    "Schema": 160,
+    "Schema": 163,
     "ExternalSchema": 21,
     "GraphKind": 27,
     "Role": 49,
@@ -1443,7 +1443,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 257,
+      "instructionLines": 293,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1731,7 +1731,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1311,
+      "instructionLines": 1312,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2718,7 +2718,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 192,
+      "instructionLines": 225,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3757,6 +3757,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-order"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/visualizer-loading",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "visualizer-loading",
+      "title": "Visualizer loading — the page is layout, the graph is fetched",
+      "description": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/visualizer-loading.md",
+      "instructionLines": 155,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/docs-generation",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "docs-generation",
@@ -3867,7 +3884,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/board-windows.md",
-      "instructionLines": 269,
+      "instructionLines": 335,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3985,7 +4002,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 439,
+      "instructionLines": 448,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4250,7 +4267,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 271,
+      "instructionLines": 277,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4289,6 +4306,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-fork"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/ig-binary-artefacts",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-binary-artefacts",
+      "title": "ig-binary-artefacts",
+      "description": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/fhir-ig-base"
+      ],
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-binary-artefacts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/ig-build-pipeline",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-build-pipeline",
@@ -4305,6 +4338,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-build-pipeline"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/ig-site-theme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-site-theme",
+      "title": "ig-site-theme",
+      "description": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/fhir-ig-base"
+      ],
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-site-theme.md",
+      "instructionLines": 88,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-site-theme"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/ig-ast-delta",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-ast-delta",
@@ -4314,7 +4363,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 160,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5203,7 +5252,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "../smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 157,
+      "instructionLines": 202,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -7059,6 +7108,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/visualizer-loading",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "providesCapability": [],
@@ -49089,6 +49139,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/withheld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#schema/openapi",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "openapi",
+      "title": "openapi",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "module": "../cat-openapi/schemas/openapi.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#schema/adjudication",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "adjudication",
@@ -49197,6 +49256,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#schema/ig-ast",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-ast",
+      "title": "ig-ast",
+      "summary": "ig-ast.ts — the IG AST's file formats, declared once (bean `l0lq`).",
+      "module": "../fhir-harness/schemas/ig-ast.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-ast"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#schema/ig-chrome",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-chrome",
@@ -49231,6 +49299,15 @@
       "summary": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
       "module": "../fhir-harness/schemas/ig-metadata-index.ts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#schema/ig-releases",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-releases",
+      "title": "ig-releases",
+      "summary": "ig-releases.ts — an IG's GitHub releases, recorded as POINTERS to their",
+      "module": "../fhir-harness/schemas/ig-releases.ts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-releases"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-openapi/cat-harness.jsonld#schema/dak-blocks",
