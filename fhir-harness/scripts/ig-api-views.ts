@@ -146,6 +146,7 @@ export function igApiServed(instanceRoot: string): { ok: true } | { ok: false; w
   }
   const dirs = d.directories ?? [];
   const index = dirs.find((x) => x.graphKinds?.includes("fhir-artifact-index"));
+  // declared-path-literal: matches an entry in the STAGED instance's own declaration by its path; no folio-assistant directory is read
   const docs = dirs.find((x) => x.path === "docs/");
   if (!index?.served) return { ok: false, why: "its fhir-artifact-index directory is not declared `served`" };
   if (!(docs?.instanceRoot && docs.composed)) return { ok: false, why: "its docs/ is not the composed instance root, so `../` does not reach the served data" };
