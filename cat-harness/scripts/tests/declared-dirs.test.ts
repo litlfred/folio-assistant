@@ -159,6 +159,27 @@ describe("an entry declared FROM WITHIN is checked too", () => {
     expect(f[0]!.detail).toContain("processes/processes.json");
   });
 
+  test("an off-checkout nested entry gets the SAME answer as a top-level one", () => {
+    // The divergence this test exists to stop, and the reason
+    // `offCheckoutFindings` is a function: the first version of `auditNested`
+    // wrote `if (contentIsOffCheckout(e)) continue`, so a nested stored
+    // directory got a silent skip while an identical top-level one got the
+    // three states from `tipPresence`. Two answers to one question, decided by
+    // where the entry happened to be declared.
+    //
+    // A `tip`-keyed entry is the one the keyings differ on, so it is the one
+    // worth pinning. `walkNested` carries `storage` through, which is what
+    // makes the nested side able to answer at all.
+    const stored = { id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } };
+    const nestedF = auditNested(withNested([stored]), REPO, decl);
+    const topF = auditInstance(instance([{ id: "nested", path: "proposals", graphKinds: ["proposals"], storage: { branch: "cat/x", keyedBy: "tip" } }]), REPO);
+    // Same KINDS, whichever side declared it. Not the same ids or paths — those
+    // differ by construction — and not necessarily empty: what matters is that
+    // neither side silently returns nothing while the other reports.
+    expect(nestedF.map((f) => f.kind)).toEqual(topF.map((f) => f.kind));
+    expect(nestedF.length).toBeGreaterThan(0);
+  });
+
   test("auditInstance now reaches nested entries, so the sweep cannot miss them", () => {
     // The wiring, separately from the logic: a caller that only ever calls
     // `auditInstance` must still see a nested finding.
