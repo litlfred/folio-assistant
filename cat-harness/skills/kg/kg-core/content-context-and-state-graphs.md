@@ -277,6 +277,27 @@ kept because the rule it illustrates is not: **a directory of one kind may
 contain a node of another, and the containing declaration is not a claim about
 its contents.**
 
+## The layer is not the source — a branch is not "where state lives"
+
+A declared subgraph also says where its content COMES FROM — the checkout's
+directory or a declared repository branch, overridable by the instance config
+(`source`, [`directory-conventions`](directory-conventions.md) §"Where a
+subgraph gets its content"; bean `l4ay`). **That is a different axis from this
+one, and neither is derived from the other.**
+
+The temptation runs one way: beans and todos are `state` and are moving to
+their own branches, so "state lives on a branch" reads like a rule. It is not.
+`todos` is `state` while its source is `directory` on `main`, and stays `state`
+when the config mounts it from `cat/cat-harness/todos`. `qa` is `state` and is
+keyed by commit on its branch, never by tip. A `context` graph mounted from a
+branch is still read-only to every process, because what a step may do is
+`processMayWrite(kind)` — asked of the KIND, never of where the bytes came from.
+
+So: **ask `processMayWrite` for whether to write, and the resolved source for
+HOW to write** — a commit for `directory`, a spliced push for `branch`
+(`processes/kg/mount-subgraph.bpmn`). A consumer that branches on one to answer
+the other has merged two questions this repository keeps apart.
+
 ## A declared ASSET carries a layer too
 
 The axis is not only about directories. `instance-readme` and

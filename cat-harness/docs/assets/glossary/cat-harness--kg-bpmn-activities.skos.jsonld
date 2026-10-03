@@ -5549,6 +5549,86 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_mountbranchtip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mount the branch tip at the declared path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted."
+        }
+      ],
+      "skos:notation": "Task_MountBranchTip",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_refuseunknownkind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refuse: no flow for this source kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the `dh4f` defect."
+        }
+      ],
+      "skos:notation": "Task_RefuseUnknownKind",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_RefuseUnknownKind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_resolvesource",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve the subgraph's content source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`declaredSubgraph(start, id)`: the declaring instance, the entry, and the resolved source with `declaredIn` saying which layer answered. Never read `source` off the declaration directly — the config override and the legacy `storage` field are folded in by the resolver and nowhere else. A contradiction (both `source` and `storage`; a `qa` subgraph keyed by tip) throws here, before anything is mounted."
+        }
+      ],
+      "skos:notation": "Task_ResolveSource",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_ResolveSource",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_usecheckoutpath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Use the checkout path in place"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A `directory` source IS its declared path. Nothing is mounted; a write is an ordinary commit on the working branch, which is why `branch-store push` answers \"commit through git\" for it rather than pushing anything."
+        }
+      ],
+      "skos:notation": "Task_UseCheckoutPath",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_UseCheckoutPath",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_narrativecodereview.a_attest",
       "@type": "skos:Concept",
       "skos:inScheme": {
