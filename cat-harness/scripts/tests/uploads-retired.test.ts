@@ -93,6 +93,10 @@ function instance(f: Fixture): string {
       directories: [
         { id: "library", path: "library/", graphKinds: ["library"], dependents: "reproduce" },
         { id: "uploads", path: "uploads/", graphKinds: ["uploads"], dependents: "reproduce" },
+        // The archive is found through this declaration, never by spelling
+        // `fsh-guts/uploads` (bean `gz47`); a fixture that only MADE the
+        // directory passed because the reader hardcoded the same spelling.
+        { id: "fsh-guts", path: "fsh-guts/", graphKinds: ["fsh-guts"] },
       ],
     }),
   );

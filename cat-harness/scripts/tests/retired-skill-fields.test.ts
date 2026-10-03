@@ -27,9 +27,10 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
+import { fshGutsDirectory } from "../../schemas/fsh-guts.js";
 import { kgRoots } from "../known-skills.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -45,7 +46,9 @@ const ROOT = resolve(import.meta.dir, "../..");
  * pointed at an `fsh-guts/retired/schema-refs.md` that was never written.
  */
 const RETIRED: Record<string, string> = {
-  roles: "fsh-guts/retired/skill-definition-roles.md",
+  // Inside the DECLARED trashcan, never a spelled `fsh-guts/` (bean `gz47`):
+  // the trashcan is moving to its own branch (`9c7h`).
+  roles: join(relative(resolve(ROOT, ".."), fshGutsDirectory(resolve(ROOT, ".."))), "retired", "skill-definition-roles.md"),
   schemaRefs: "cat-harness/schemas/assistant-types.ts",
 };
 
