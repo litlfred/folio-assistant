@@ -398,8 +398,19 @@ that is behind `main`, one live run per PR (a newer run cancels an older one).
 - **It pushes only a proved merge**, as a fast-forward of the branch it checked
   out; if the author pushed meanwhile the push is rejected and nothing is
   overwritten.
-- **A refusal pushes nothing**, labels the PR `needs-merge-human`, and lists
-  the ✗ paths. Adding a pattern stays a person's change, made here.
+- **A refusal pushes nothing** and lists the ✗ paths in its comment. Adding a
+  pattern stays a person's change, made here. It does NOT label the PR: owner
+  ruling 2026-10-03, *"stop using `needs-merge-human`, it's confusing
+  things"*, and the measurement behind it is that **a label asserting "a
+  person is needed" outlives the condition that set it**. Measured the same
+  day: of ten PRs carrying it, **six were stale** — clean against `main` AND
+  pushable by the bot, because the workflow change that had blocked them was
+  already in their merge-base. A stale hold is indistinguishable from a live
+  one without re-deriving why the push failed, which is the
+  `merge-queue` skill's own §"A hold has an EXPIRY and a trigger, or it
+  outlives its reason" at the scale of a whole queue.
+  **The reason lives in the comment, which is dated and names the run; a
+  label is a claim with no timestamp.**
 - **One comment per PR, edited in place** on every run — except a run that
   was **cancelled** (a newer push to `main` superseded it) or whose merge step
   reported no status, which leaves the comment untouched. Before #1854 such a

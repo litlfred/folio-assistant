@@ -5,7 +5,7 @@
     "id": "merge-conflict-patterns",
     "path": "skills/sdlc/sdlc-core/merge-conflict-patterns.md"
   },
-  "source_hash": "8638df8a9d3e",
+  "source_hash": "2e5e198de8e9",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -16,13 +16,18 @@
       "findings": [
         {
           "where": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-          "detail": "381 lines; p75 of the skill corpus is 279."
+          "detail": "422 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+          "detail": "422 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -47,8 +52,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 2,
+    "pass": 2,
+    "fail": 3,
     "n/a": 2,
     "unknown": 0
   }

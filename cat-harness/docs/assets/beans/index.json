@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 737,
+      "count": 738,
       "unit": "beans"
     }
   },
@@ -595,6 +595,20 @@
       "updatedAt": "2026-09-19T10:24:03Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"make sure\nSTAGING knows where rendering happes (ghpages, local server) so can tell user\ncorrectly\".\n\n## The defect, stated as what goes wrong\n\nAn agent finishing a change tells the author where to look. Today that sentence\nis composed on the assumption that rendering went to GitHub Pages. On a private\nrepository there is no Page",
       "file": "beans/defs/folio-assistant-1lfx--deploy-staging-must-report-which-host-rendered-it.md"
+    },
+    {
+      "id": "folio-assistant-1qrr",
+      "title": "FEATURE-STAGING: the workflow definition comes from the BASE but the checkout is the PR HEAD, so a newly-added step fails every branch that predates it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T15:33:32Z",
+      "updatedAt": "2026-10-03T15:33:32Z",
+      "preview": "## The split\n\n`.github/workflows/feature-staging.yml:190` checks out the PR **head**:\n\n```yaml\nref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}\n```\n\nBut for a `pull_request` event GitHub takes the workflow **definition** from the\nBASE branch. So the steps that run are `main`'s, while the tree they run\nagainst is the PR's head. Those two disagree the moment a step is ad",
+      "file": "beans/defs/folio-assistant-1qrr--feature-staging-the-workflow-definition-comes-from.md"
     },
     {
       "id": "folio-assistant-1r0p",
@@ -10456,8 +10470,8 @@
         "share": 0.8888888888888888
       }
     ],
-    "orphanOpen": 283,
-    "openTotal": 435,
+    "orphanOpen": 284,
+    "openTotal": 436,
     "coveredOpen": 148,
     "duplicateIds": 1
   }
