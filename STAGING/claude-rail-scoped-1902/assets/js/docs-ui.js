@@ -11213,7 +11213,9 @@
     if (!node) return null;
     try {
       var parsed = JSON.parse((node.textContent || "").trim());
-      if (parsed && typeof parsed === "object" && typeof parsed.href === "string" && typeof parsed.name === "string") {
+      // Read, never rendered: the href is compared against page links below.
+      var at = parsed && typeof parsed === "object" && parsed.href;
+      if (typeof at === "string" && typeof parsed.name === "string") {
         railScopeValue = parsed;
       }
     } catch (_e) {
@@ -11250,6 +11252,10 @@
     var links = nav.querySelectorAll("a.nav-list-link");
     var root = null;
     for (var i = 0; i < links.length; i++) {
+      // An in-page anchor resolves to THIS page's path, which on the
+      // instance's root is the root's path too -- a row that is not the
+      // instance's would be taken for it. Only a link to a page counts.
+      if ((links[i].getAttribute("href") || "").charAt(0) === "#") continue;
       if (railPath(links[i].pathname) === want) { root = links[i].closest(".nav-list-item"); break; }
     }
     if (!root) {
