@@ -120,8 +120,9 @@
       "prose": "cat-harness/processes/sdlc/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
       "prose_hash": "89fcfcc1d6c8",
-      "code_hash": "e703a01378c4",
-      "by": "baseline"
+      "code_hash": "c8332e663888",
+      "by": "agent",
+      "reason": "Added one step (check:cat-harness-standalone) inside the 'Repository gates' job; the diagram is drawn at job level and its 'Repository gates (HARD)' task already covers it, so the prose still holds."
     }
   ]
 }

@@ -653,14 +653,30 @@ export function closureOf(decls: LayerDecl[], name: string): LayerDecl[] {
   return [...out.values()];
 }
 
-/** `N fail` from `bun test`'s summary, and the `(fail)` lines above it. */
+/**
+ * `N fail` from `bun test`'s summary, and the `(fail)` lines above it.
+ *
+ * Each name is keyed `<test file> > <test>` and has its `[1.2ms]` timing
+ * removed: a name is compared across runs by `check:standalone`, and neither
+ * a timing nor a describe path shared by two files may make one failure look
+ * like another. The file is the last `<path>.test.ts:` header bun printed.
+ */
 export function parseBunTest(output: string): { failed: number; names: string[] } | undefined {
   const m = /^\s*(\d+)\s+fail\b/m.exec(output);
   if (!m) return undefined;
-  const names = output
-    .split("\n")
-    .filter((l) => l.trimStart().startsWith("(fail)"))
-    .map((l) => l.trim().replace(/^\(fail\)\s*/, ""));
+  const names: string[] = [];
+  let file: string | undefined;
+  for (const raw of output.split("\n")) {
+    const header = /^(\S.*\.test\.[cm]?[jt]sx?):$/.exec(raw);
+    if (header) {
+      file = header[1];
+      continue;
+    }
+    const l = raw.trim();
+    if (!l.startsWith("(fail)")) continue;
+    const name = l.replace(/^\(fail\)\s*/, "").replace(/\s*\[[\d.]+\s*m?s\]$/, "");
+    names.push(file ? `${file} > ${name}` : name);
+  }
   return { failed: Number(m[1]), names: [...new Set(names)] };
 }
 
@@ -669,7 +685,8 @@ export function parseBunTest(output: string): { failed: number; names: string[] 
  *
  * Copies the TRACKED files of the layer and of everything it needs into a
  * scratch workspace as sibling directories — no aggregate declaration at the
- * root — links the checkout's `node_modules` beside them, and runs `bun test`
+ * root — makes each one a git repository, as a clone is, links the
+ * checkout's `node_modules` beside them, and runs `bun test`
  * in the layer's directory. The root `package.json`, `tsconfig.json` and
  * `bunfig.toml` are copied too, standing in for the ones each seeded
  * repository will carry; none of them is a declaration, so discovery still
@@ -716,6 +733,21 @@ export function probeStandalone(
         mkdirSync(dirname(dst), { recursive: true });
         copyFileSync(src, dst);
       }
+      // A clone IS a git repository, and tests that ask git for the corpus
+      // would otherwise fail as an artefact of the rehearsal (bean `ho66`:
+      // worth 6 of 469 on cat-harness, 2026-10-03).
+      const at = join(ws, rel);
+      mkdirSync(at, { recursive: true });
+      const git = (args: string[]): void => {
+        execFileSync("git", ["-c", "user.name=rehearsal", "-c", "user.email=rehearsal@invalid", "-c", "commit.gpgsign=false", ...args], {
+          cwd: at,
+          stdio: "ignore",
+          maxBuffer: 256 * 1024 * 1024,
+        });
+      };
+      git(["init", "-q"]);
+      git(["add", "-A"]);
+      git(["commit", "-q", "--allow-empty", "-m", "rehearsal"]);
     }
     for (const f of ["package.json", "tsconfig.json", "bunfig.toml"]) {
       if (existsSync(join(repoRoot, f))) copyFileSync(join(repoRoot, f), join(ws, f));
