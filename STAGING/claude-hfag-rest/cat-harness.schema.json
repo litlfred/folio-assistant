@@ -560,6 +560,24 @@
               "kindRouteRedirect": {
                 "type": "boolean"
               },
+              "storage": {
+                "type": "object",
+                "properties": {
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "const": "commit"
+                  }
+                },
+                "required": [
+                  "branch",
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
               "composed": {
                 "type": "boolean"
               },
@@ -1030,8 +1048,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-hfag-rest/cat-harness.jsonld",
   "staging": {
     "branch": "claude/hfag-rest",
-    "sha": "3792aaf4ac7d86a28b07217875656e33a6ce296b",
+    "sha": "d347a51a799fc408825dbcd1d91092ce92189499",
     "pr": "1949/merge",
-    "run": "37107700753"
+    "run": "37114140348"
   }
 }
