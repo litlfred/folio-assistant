@@ -1,0 +1,291 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "hl7-2023-fhir-r5-testplan",
+  "blocks": [
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s001-source-testplan-testplan-introduction-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/testplan-introduction.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s001-source-testplan-testplan-introduction-xml.md",
+      "narrative": null,
+      "content": "```xml\n<div xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/1999/xhtml ../../schema/fhir-xhtml.xsd\" xmlns=\"http://www.w3.org/1999/xhtml\">\n\n<div>\n<a name=\"bnc\"></a>\n<h2>Scope and Usage</h2>\n<p>\nThe TestPlan is a canonical resource that defines how an system or specifications (which can be represented by FHIR artifacts or by narrative) are to be tested. It contains the business- and planning-language aspects of test planning, around the TestScript, which handles part of the test execution.\n</p>\n<p>A TestPlan describes the purpose, the dependencies, sco",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s002-source-testplan-testplan-notes-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/testplan-notes.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s002-source-testplan-testplan-notes-xml.md",
+      "narrative": null,
+      "content": "```xml\n<div xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/1999/xhtml ../../schema/fhir-xhtml.xsd\" xmlns=\"http://www.w3.org/1999/xhtml\">\n\n<!-- insert xhtml content here -->\n\t[%stu-note dstu2%]\n\t\tTestPlan is a draft resource. Implementation is needed to assess its viability and implementer feedback is welcome. If no implementation feedback is available, the resource may be removed in future releases of FHIR.\n\t\t</p>\n\t\t<p>\n\t\tFeedback is welcome <a href=\"http://hl7.org/fhir-issues\">here</a>.\n\t[%end-note%]\n\n\n</div>\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s003-source-testplan-structuredefinition-testplan-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/structuredefinition-TestPlan.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s003-source-testplan-structuredefinition-testplan-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<StructureDefinition xmlns=\"http://hl7.org/fhir\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://hl7.org/fhir ../../schema/fhir-single.xsd\">\n\t<id value=\"TestPlan\"/>\n\t<meta>\n\t\t<lastUpdated value=\"2021-01-02T08:58:31.578+11:00\"/>\n\t</meta>\n\t<extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-category\">\n\t\t<valueString value=\"Clinical.Request &amp;amp; Response\"/>\n\t</extension>\n\t<extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">\n\t\t<valueCode value=\"draft",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s004-source-testplan-bundle-testplan-search-params-xm",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/bundle-TestPlan-search-params.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s004-source-testplan-bundle-testplan-search-params-xm.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Bundle xmlns=\"http://hl7.org/fhir\">\n  <id value=\"TestPlan-search-params\"/>\n  <entry>\n    <resource>\n      <SearchParameter>\n        <id value=\"TestPlan-scope\"/>\n        <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">\n          <valueCode value=\"draft\"/>\n        </extension>\n        <extension url=\"http://hl7.org/fhir/build/StructureDefinition/path\">\n          <valueString value=\"TestPlan.scope\"/>\n        </extension>\n        <url value=\"http://hl7.org/fhir/build/SearchParameter/TestPlan-scope\"/>",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s005-source-testplan-codesystem-testplan-counttype-xm",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/codesystem-testplan-counttype.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s005-source-testplan-codesystem-testplan-counttype-xm.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><CodeSystem xmlns=\"http://hl7.org/fhir\">\n  <id value=\"testplan-counttype\"/>\n  <meta>\n    <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablecodesystem\"/>\n  </meta>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\">\n    <valueCode value=\"oo\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">\n    <valueCode value=\"trial-use\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm\">\n    <valueInteger va",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s006-source-testplan-codesystem-testplan-status-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/codesystem-testplan-status.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s006-source-testplan-codesystem-testplan-status-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><CodeSystem xmlns=\"http://hl7.org/fhir\">\n  <id value=\"testplan-status\"/>\n  <meta>\n    <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablecodesystem\"/>\n  </meta>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\">\n    <valueCode value=\"oo\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">\n    <valueCode value=\"trial-use\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm\">\n    <valueInteger value",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s007-source-testplan-list-testplan-examples-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/list-TestPlan-examples.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s007-source-testplan-list-testplan-examples-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<List xmlns=\"http://hl7.org/fhir\">\n  <id value=\"TestPlan-examples\"/>\n  <status value=\"current\"/>\n  <mode value=\"working\"/>\n  <entry>\n    <extension url=\"http://hl7.org/fhir/build/StructureDefinition/description\">\n      <valueString value=\"Example of testplan\"/>\n    </extension>\n    <extension url=\"http://hl7.org/fhir/build/StructureDefinition/title\">\n      <valueString value=\"testplan-example\"/>\n    </extension>\n    <item>\n      <reference value=\"TestPlan/example\"/>\n      <display value=\"General\"/>\n    </item>\n  </entry>\n</List>\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s008-source-testplan-list-testplan-operations-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/list-TestPlan-operations.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s008-source-testplan-list-testplan-operations-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<List xmlns=\"http://hl7.org/fhir\">\n  <id value=\"TestPlan-operations\"/>\n  <status value=\"current\"/>\n  <mode value=\"working\"/>\n</List>\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s009-source-testplan-list-testplan-packs-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/list-TestPlan-packs.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s009-source-testplan-list-testplan-packs-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<List xmlns=\"http://hl7.org/fhir\">\n  <id value=\"TestPlan-packs\"/>\n  <status value=\"current\"/>\n  <mode value=\"working\"/>\n</List>\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s010-source-testplan-testplan-definition-mapping-exce",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/testplan-definition-mapping-exceptions.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s010-source-testplan-testplan-definition-mapping-exce.md",
+      "narrative": null,
+      "content": "```xml\n<mappingExceptions pattern=\"Definition\" resource=\"TestPlan\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"../../tools/schema/mappingExceptions.xsd\">\n    <!--For information on the contents of this file and how to properly update it, see https://confluence.hl7.org/display/FHIR/Mapping+to+Patterns.-->\n    <divergentElement patternPath=\"Definition.url\" resourcePath=\"TestPlan.url\">\n        <shortUnmatched reason=\"Unknown\">\n            <_pattern value=\"Canonical identifier for this test plan, represented as an absolute URI (globally unique)\"/>",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s011-source-testplan-testplan-example-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/testplan-example.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s011-source-testplan-testplan-example-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TestPlan xmlns=\"http://hl7.org/fhir\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://hl7.org/fhir ../../schema/[name].xsd\">\n    <id value=\"example\" />\n\n    <status value=\"draft\" />\n\n  <!-- insert contents here -->\n  \n</TestPlan>\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s012-source-testplan-testplan-examples-header-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/testplan-examples-header.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s012-source-testplan-testplan-examples-header-xml.md",
+      "narrative": null,
+      "content": "```xml\n﻿<div xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/1999/xhtml ../../schema/fhir-xhtml.xsd\" xmlns=\"http://www.w3.org/1999/xhtml\">\n<!-- content goes here -->\n\n</div>\n```",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s013-source-testplan-testplan-fivews-mapping-exceptio",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/testplan-fivews-mapping-exceptions.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s013-source-testplan-testplan-fivews-mapping-exceptio.md",
+      "narrative": null,
+      "content": "```xml\n<mappingExceptions pattern=\"FiveWs\" resource=\"TestPlan\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"../../tools/schema/mappingExceptions.xsd\">\n    <!--For information on the contents of this file and how to properly update it, see https://confluence.hl7.org/display/FHIR/Mapping+to+Patterns.-->\n    <unmappedElement patternPath=\"FiveWs.what\" reason=\"Unknown\"/>\n    <unmappedElement patternPath=\"FiveWs.author\" reason=\"Unknown\"/>\n    <unmappedElement patternPath=\"FiveWs.actor\" reason=\"Unknown\"/>\n    <unmappedElement patternPath=\"FiveWs.cause\" reas",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s014-source-testplan-valueset-testplan-counttype-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/valueset-testplan-counttype.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s014-source-testplan-valueset-testplan-counttype-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><ValueSet xmlns=\"http://hl7.org/fhir\">\n  <id value=\"testplan-counttype\"/>\n  <meta>\n    <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablevalueset\"/>\n  </meta>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\">\n    <valueCode value=\"oo\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">\n    <valueCode value=\"trial-use\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm\">\n    <valueInteger value=",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s015-source-testplan-valueset-testplan-status-xml",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "source/testplan/valueset-testplan-status.xml",
+      "pageStart": null,
+      "pageEnd": null,
+      "target": "../sections/s015-source-testplan-valueset-testplan-status-xml.md",
+      "narrative": null,
+      "content": "```xml\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><ValueSet xmlns=\"http://hl7.org/fhir\">\n  <id value=\"testplan-status\"/>\n  <meta>\n    <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablevalueset\"/>\n  </meta>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\">\n    <valueCode value=\"oo\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">\n    <valueCode value=\"trial-use\"/>\n  </extension>\n  <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm\">\n    <valueInteger value=\"0\"",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
