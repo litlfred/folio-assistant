@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-10-03T09:39:07Z
 parent: folio-assistant-0lmb
 ---
 
@@ -459,3 +459,110 @@ neither the check nor anything else could have known.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## Migration plan, 2026-10-03 — the owner re-ruled and chose THIS bean's layout
+
+Owner today: *"reserve `docs/` for user generated content, auto-docs/ for
+glossary and such"*, *"one declared subgraph, with declared sub-sub-graphs per
+writer"*, *"`derived-content` graph kind"*, *"go ahead w/ move … clean break"* —
+then, shown that this bean already specified a different keying, **ruled for
+this bean**: key by `<auto-doc-type>/<sub-graph>`, not per writer.
+
+### The name collision dissolves — no new name is needed
+
+`docs-auto` looked overloaded, because `cat-harness/docs/cat-harness/docs-auto/`
+already exists. Measured: its 28 files are already emitted as
+
+```
+glossary/index.html            glossary/swimlane-glossary/index.html
+index/docs/<sub-graph>/         index/processes/<sub-graph>/
+index/skills/<sub-graph>/
+```
+
+**That IS this bean's `<auto-doc-type>/<sub-graph>` keying.** `gen-docs-auto.ts`
+already implements the handler; it is merely rooted three levels too deep. So
+the first slice is a promotion, not a redesign, and `docs-auto` stays the name.
+
+### Proposed mapping (913 rendered pages; ~704 generated)
+
+| current | files | → `docs-auto/<type>/<sub-graph>` |
+|---|---|---|
+| `docs/cat-harness/docs-auto/**` | 28 | **as-is, promoted to the instance root** |
+| `docs/reference/skill-instructions/**` | 305 | `index/skills/<package>` |
+| `docs/reference/skills/**` | 24 | `index/schemas/<schema>` |
+| `docs/reference/upload-step/` | 1 | `index/tools/upload-step` |
+| `docs/uml/**` | 126 | `uml/<instance>` |
+| `docs/glossary/**` | 10 | `glossary/<ledger>` |
+| `docs/{ar,es,fr,ru,zh}/glossary/` | 5 | `glossary/<ledger>/<lang>` |
+| `docs/lsi/` | 1 | `lsi/<graph>` |
+| `docs/processes/**` | 85 | `index/processes/<package>` |
+| viewer pages (`docs/{qa,beans,todos,health,…}/index.html`) | ~127 | `index/<graph>` |
+
+### The 17 `gen-docs-pages.ts` pages STAY in `docs/` — and this is the one place the owner's rule misfires
+
+They carry `generated: scripts/gen-docs-pages.ts`, so "what is not user content
+goes to auto-docs" would move them. **Measured: they are assembled AUTHORED
+prose.** `content/docs/knowledge-graph/` holds 444 lines of hand-written `.md`
+blocks; `docs/knowledge-graph.md` is the 507-line assembled page. The marker
+means *built by a template*, not *derived from a graph*.
+
+And §2 of this bean already says where they belong: *"when authoring
+`<harness>/docs` the author should make use of auto-doc references and provide a
+summary / overview"*. **These 17 are exactly those authored summary pages.**
+So: `docs/` keeps them, and the `generated:` marker is not the discriminator —
+**is the SOURCE a graph, or prose a person wrote?** is.
+
+### The seam — why this is not a path rewrite across 16 scripts
+
+Paths here are **composed from declarations**, not written as literals
+(`check:declared-paths` refuses literals), which is why grepping for
+`docs/processes` finds no writer.
+
+- `docsLayers()` — `cat-harness/scripts/compose-docs.ts:147` — is the single
+  resolver. **17 modules call it.**
+- `baseDocs(repo)`, the five-line helper that picks the instance-scoped docs
+  layer, is **copy-pasted identically into 6 files**:
+  `gen-external-schemas-viz.ts`, `gen-fsh-guts-viz.ts`, `gen-processes-viz.ts`,
+  `gen-tools-viz.ts`, `gen-methodologies-viz.ts`, `lib/skill-pages.ts`.
+
+So "fix all producers/consumers/references" is: declare the layer, export **one**
+`baseDocs`/`autoDocsDir`, delete the 6 copies, and have each writer ask for the
+layer it owns.
+
+### The guard, captured BEFORE anything moves
+
+A verdict snapshot of all 913 rendered pages under `docs/`
+(`generated|authored` × merge strategy × pattern id), taken at `c4036a79af`:
+
+| | pages |
+|---|---|
+| generated + `take-base` | 448 |
+| authored + `take-base` | 216 |
+| authored + `refuse` | 206 |
+| generated + `refuse` | 42 |
+| authored + `generated-regions` | 1 |
+
+**The 216 are not an authored-data-loss defect** — checked rather than reported:
+127 are `.html` viewer pages and 85 are `docs/processes/*.md`, all generated
+without a Jekyll `generated:` line, so the front-matter detector missed them,
+not the globs. Worth recording because the first reading looked like
+`take-base` silently discarding authors' edits, and it is not.
+
+### Costs already measured
+
+- `assets/` is a **Jekyll URL namespace**, 27 hardcoded refs in
+  `_includes`/`_config.yml`. It splits: 6 authored css/js stay with `docs/`.
+- **`assets/library/` is URL-frozen**: 13,214 absolute
+  `https://litlfred.github.io/…/assets/library/…` citations across 6,861 files.
+  Clean break accepted by the owner today, so these are rewritten rather than
+  redirected — but the number is the number.
+- ~184 authored in-repo references to the moving paths, concentrated in
+  `docs/reference/` (92), all gate-resolved by `readme:audit`,
+  `check:anchor-names`, `check-workflow-refs`, `check:reference-direction`.
+
+### Still open
+
+- [ ] `toc` stays OUT (this bean is the only record of that withdrawal)
+- [ ] the authoring-rule half is a SKILL, untouched by the move
+- [ ] `who-iris/docs` is the named first exercise, end to end
