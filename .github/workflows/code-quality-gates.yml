@@ -251,9 +251,16 @@ jobs:
           done
           exit $rc
 
-  typescript:
+  typescript-static:
     # bpmn-node: Task_TypeScript
-    name: TypeScript — tests, lint, types (hard)
+    name: TypeScript — lint and types (hard)
+    #
+    # Lint and typecheck, in a job of their own since bean `dlqu`. They used to
+    # share a job with `bun test`, which forced an ordering rule on that job:
+    # Actions stops at the first failing step, so `bun test` — red on `main` by
+    # the owner's decision while the `t8g3` drift stood — had to run LAST or it
+    # masked lint and typecheck (bean `om30`). In separate jobs nothing can mask
+    # anything, so the rule is no longer something an author has to remember.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -266,20 +273,6 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
-
-      # ## Order matters here, and it is not stylistic
-      #
-      # Actions stops a job at its first failing step, so ANYTHING after a red
-      # step does not run. `bun test` is red on `main` by the owner's decision
-      # (the `t8g3` drift), and while it sat FIRST in this job, lint and
-      # typecheck were masked behind it — `main` had not been linted or
-      # typechecked in CI for as long as that test had been failing. Bean
-      # `om30`, whose split moved the 43 repository gates into their own job;
-      # this reordering is the same defect inside what remains.
-      #
-      # So the two checks that cannot fail for a reason outside their own
-      # subject go FIRST, and `bun test` goes LAST, with nothing behind it to
-      # mask. Adding a step to this job means adding it ABOVE `bun test`.
 
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
@@ -297,23 +290,69 @@ jobs:
       - name: tsc --noEmit
         run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
-      # Each step is a separate gate so the Actions UI names the one that
-      # broke, rather than a single opaque "quality" failure. LAST on purpose —
-      # see the ordering note above.
-      #
-      # `--parallel` (bean `dlqu`): this step was 7m30s-7m45s of an 8m14s-8m33s
-      # job, the workflow's critical path, measured over three `main` runs on
-      # 2026-10-02. Bun runs test files across one worker per core, each file
-      # isolated (`--parallel` implies `--isolate`), so the `bunfig.toml`
-      # preload runs per worker and no file inherits another's module state.
-      # In-job rather than a matrix of `--shard=i/N` jobs for two reasons:
-      # the check keeps its one name, which branch protection and dozens of
-      # beans cite; and `gatesFrom` runs a `bun` line with no shell, so a
-      # `${{ matrix.* }}` here would reach the local gate run as literal text.
+  typescript-test:
+    # bpmn-node: Task_TypeScript
+    name: TypeScript — bun test, shard ${{ matrix.shard }}/2
+    #
+    # Bean `dlqu`. `bun test` was 7m30s-7m45s sequential (three `main` runs,
+    # 2026-10-02); `--parallel` (one isolated worker per core) took it to
+    # 3m28s-5m01s, which still made this the workflow's slowest job once e2e
+    # was sharded. So the suite is split across two jobs, each still parallel
+    # inside.
+    #
+    # THE SHARD TRAVELS IN `BUN_OPTIONS`, which Bun prepends to every
+    # invocation, and NOT as `--shard=${{ matrix.shard }}/2` on the command
+    # line: `gatesFrom` runs a `bun` line locally with no shell, so an
+    # interpolation there would reach the local gate run as literal text (bean
+    # `9zok`). The command stays `bun test --parallel`, which locally — with no
+    # `BUN_OPTIONS` — is the whole suite, as it should be. Measured before
+    # relying on it: the two shards of a 4-file sample ran 50 + 54 tests, the
+    # unsharded run 104; and a plain `bun run` ignores `--shard`, so the
+    # scripts the tests spawn are unaffected. Nothing under test spawns
+    # `bun test` itself, which is the one place the flag would be inherited
+    # and halve a run silently — keep it that way.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
       - name: bun test
+        env:
+          BUN_OPTIONS: --shard=${{ matrix.shard }}/2
         run: bun test --parallel
 
-
+  typescript:
+    # bpmn-node: Task_TypeScript
+    name: TypeScript — tests, lint, types (hard)
+    #
+    # The check NAME that branch protection and the beans cite, kept on a job
+    # that is green only when the static job and EVERY test shard succeeded.
+    # `if: always()` so a failed or cancelled part turns this red rather than
+    # SKIPPING it: a skipped required check reads as neither red nor green,
+    # the vacuous pass bean `0qjq` measured.
+    needs: [typescript-static, typescript-test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: lint, types and every test shard succeeded
+        env:
+          STATIC: ${{ needs.typescript-static.result }}
+          TESTS: ${{ needs.typescript-test.result }}
+        run: |
+          echo "lint+types: $STATIC   tests: $TESTS"
+          test "$STATIC" = "success" && test "$TESTS" = "success"
 
   gates:
     # bpmn-node: Task_RepositoryGates

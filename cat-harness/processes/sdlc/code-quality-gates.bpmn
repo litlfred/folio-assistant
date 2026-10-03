@@ -82,7 +82,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_TypeScript" name="TypeScript: lint, types&#10;and tests (HARD)">
-      <bpmn:documentation>Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all.</bpmn:documentation>
+      <bpmn:documentation>Three checks: `bun run lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is three jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test --parallel` as two shards, the shard passed in `BUN_OPTIONS` so the command stays the one `bun run gates` runs locally) and `typescript`, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
