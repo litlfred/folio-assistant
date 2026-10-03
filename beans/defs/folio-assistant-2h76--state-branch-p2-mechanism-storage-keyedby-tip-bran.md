@@ -4,7 +4,7 @@ title: 'STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-
 status: in-progress
 type: task
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-02T22:42:36Z
+updated_at: 2026-10-02T22:42:40Z
 parent: folio-assistant-fs43
 ---
 
@@ -52,5 +52,3 @@ git hash-object -w manifest.json README.md; git update-index --add --cacheinfo �
 git write-tree; git commit-tree <tree>                        # no parent
 git push origin <commit>:refs/heads/state                     # create; never -f
 ```
-
-_2026-10-02T22:42:36Z_ — Claimed by claude/state-branch-store — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
