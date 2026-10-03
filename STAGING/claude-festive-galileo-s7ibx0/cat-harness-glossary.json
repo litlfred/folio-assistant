@@ -76,6 +76,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User"
       ]
@@ -178,6 +179,15 @@
       "label": "Human actor",
       "scopeNote": "The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.",
       "source": "cat-harness/processes/sdlc/feature-staging.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#process/Process_MergeTrain",
+      "label": "Owner",
+      "scopeNote": "Releases a merge to `main` (or has released it by a standing ruling, which the steward quotes), and may override a placement, always with a reason.",
+      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
@@ -1313,7 +1323,8 @@
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Sibling"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Sibling",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling"
       ]
     },
     {
@@ -1324,6 +1335,36 @@
       "label": "Sibling session or human (not yours to close)",
       "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
       "source": "cat-harness/processes/sdlc/bean-lifecycle.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#role/sibling-session",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#process/Process_MergeTrain",
+      "label": "Sibling session",
+      "scopeNote": "The session that owns a handed-back PR. Fixes it on its own branch and re-signals ready; never merged on its behalf.",
+      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#role/merge-steward",
+      "@type": "skos:Concept",
+      "prefLabel": "Merge steward",
+      "title": "Merge steward",
+      "notation": "merge-steward",
+      "definition": "Composes a merge train from the queue, attributes and ejects on red, and lands at the tested SHA. Decides nothing the reprioritisation table or the owner has not: placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries, never GitHub's facts.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#role/merge-steward",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#process/Process_MergeTrain",
+      "label": "Merge steward",
+      "scopeNote": "Composes the train from the queue, decides nothing the placement table or the owner has not, attributes and ejects on red, and lands at the tested SHA.",
+      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#role/build-pipeline",
@@ -1356,6 +1397,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
@@ -1481,6 +1523,15 @@
       "label": "merge:main command",
       "scopeNote": "Mechanical. Decides nothing a declaration has not decided: a path no pattern names is refused, and the gate set, not this lane, judges the result.",
       "source": "cat-harness/processes/sdlc/merge-base.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#process/Process_MergeTrain",
+      "label": "Build pipeline",
+      "scopeNote": "Mechanical: merges, regenerates and runs the gates, and reports. Judges nothing a declaration has not decided.",
+      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-festive-galileo-s7ibx0/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
