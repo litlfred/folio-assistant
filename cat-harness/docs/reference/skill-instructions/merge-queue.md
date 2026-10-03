@@ -340,6 +340,42 @@ Two rules follow:
   `1xhc` failure — a check that cannot see the defect is not evidence of its
   absence.
 
+## A local gate run in a contended container is not evidence — and here is the ratio
+
+**Measured 2026-10-03.** A full `bun test` shard in this container: **14,625
+tests across 715 files in 1438.88 s**. The workflow's own comment puts the same
+shard at **2 m 07 s – 2 m 21 s** on a dedicated runner. That is roughly **ten
+times slower**, at load average **11** with three concurrent `bun test` runs and
+a `regen` belonging to other sessions.
+
+At that ratio the default 5 s per-test budget stops measuring the code:
+
+```
+14554 pass · 57 skip · 14 fail
+grep -c "timed out after 5000ms"                    -> 14
+grep -cE "^error:|Expected:|Received:|toBe|toEqual" ->  0
+```
+
+**Fourteen failures, every one a timeout, not one assertion failure**, at real
+durations of 5.0–10.9 s. The same shard was green on the dedicated runner.
+
+So the signature is cheap to check and worth checking before you believe a red
+local run: **all failures are `timed out after Nms` and the assertion-failure
+count is zero.** That is contention. Report it as *inconclusive under
+contention* — never as green, and never as a defect — and let CI on the exact
+sha be the authority. What you must not do is "fix" a test that is not broken,
+and `never skip, disable or quarantine a test to get green` applies with full
+force here, because the temptation is strongest when the failure is not real.
+
+**Two ways this measurement was nearly got wrong, both bean `0s6w`:**
+
+- The agent first reported "exactly one failure" from a partial log, then the
+  run finished at 14. A count read before the run ends is not a count.
+- It read the run's exit code as 0 — but `echo` and `tail` were chained after
+  the test command in the same invocation, so **the 0 was `tail`'s**. A
+  compound command's exit status is the last command's, and a test runner's
+  status has to be captured before anything else runs.
+
 ## What this does not do yet
 
 The train's size is a fixed cap. Sizing it by risk waits for this process's
