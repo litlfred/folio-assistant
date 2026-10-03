@@ -4,7 +4,7 @@
 
 # who-iris-skills
 
-Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.
+Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).
 
 Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-skills`, holding `skills`.
 
@@ -12,4 +12,6 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-skills`, holding `
 |---|---|---|
 | [`iris-dspace.md`](iris-dspace.md) | How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. |  |
 | [`package-manifest.json`](package-manifest.json) | What a consumer of the WHO Institutional Repository for Information Sharing needs to know about how it is built — DSpace, and qualified Dublin Core. |  |
+| [`skills.json`](skills.json) | data |  |
+| [`voices/`](voices/README.md) | 7 files | |
 <!-- kg:subgraph:end -->

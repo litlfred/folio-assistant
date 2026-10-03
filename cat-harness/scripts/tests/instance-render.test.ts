@@ -207,7 +207,8 @@ describe("this repository's own instances", () => {
       "smart-immunizations",
       "smart-trust",
       "who-iris",
-      "who-style-guide",
+      // `who-style-guide` was listed here until 2026-10-01, when the owner
+      // folded it into who-iris as a subgraph (bean qsx4). It fired as designed.
     ]);
     // Named individually rather than only as a list: these two are the ones
     // the old literal omitted, so if a future edit narrows the set again, the

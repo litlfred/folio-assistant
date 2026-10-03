@@ -105,7 +105,7 @@ be a term this corpus is right to coin.</p>
 - `bootstrap--terms` — bootstrap/schemas/graph.schema.json
 - `cat-harness--platform` — folio-assistant-core/glossary/cat-harness.glossary.json
 - `folio-assistant-core--platform` — folio-assistant-core/glossary/folio-assistant-core.glossary.json
-- `who-style-guide--who-terms` — who-style-guide/glossary/who-style-guide.glossary.json
+- `who-iris--who-terms` — who-iris/glossary/who-iris.glossary.json
 
 ### مستخرَجة من أصول الرسم البياني المعرفي
 
