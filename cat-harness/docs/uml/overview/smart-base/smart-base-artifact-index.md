@@ -87,7 +87,7 @@ classDiagram
       provenance [1] object
       sidecarApi [1] unknown | absent | present
       contexts [0..*] Context[]
-      dakApiHub [0..1] object
+      igApiHub [0..1] object
       package [0..1] object
       sidecarsUnbound [0..*] SidecarsUnbound[]
       count [1] integer

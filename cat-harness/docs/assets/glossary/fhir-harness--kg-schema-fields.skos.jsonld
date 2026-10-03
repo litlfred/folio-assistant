@@ -52,25 +52,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.dakapihub",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "FhirArtifactIndexSchema.dakApiHub"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The DAK API hub: the region of the IG's `dak-api.html` between its `DAK_API_HUB_START` and `DAK_API_HUB_END` markers, which smart-base's `generate_dak_api_hub.py` writes after the Publisher has run. `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised."
-        }
-      ],
-      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.dakApiHub",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -87,6 +68,25 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.igapihub",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.igApiHub"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG API hub: the region of the IG's hub page between the two markers its post-processing writes after the Publisher has run (for WHO's DAK overlay, `dak-api.html` between `DAK_API_HUB_START` and `DAK_API_HUB_END`, written by smart-base's `generate_dak_api_hub.py`). `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.igApiHub",
       "skos:note": "candidate"
     },
     {
