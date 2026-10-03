@@ -193,7 +193,7 @@
       <bpmn:documentation>Publication requires authorisation by the programme manager or designated authority.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:policy relaxable="false" />
-              <bootstrap.processes:skill ref="content-publish" />
+        <bootstrap.processes:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>G16</bpmn:incoming>
       <bpmn:outgoing>G18</bpmn:outgoing>
@@ -203,8 +203,7 @@
       <bpmn:extensionElements>
         <cat-harness.processes:fulfilment kinds="person system" reason="the release runs unattended once Task_AuthorizeRelease has been given: version bump, tag, build, deploy. It sits in the publication manager’s lane because that role is ACCOUNTABLE for what goes live, not because a person performs each step — and a publication manager may still tag and push by hand." />
         <cat-harness.processes:policy relaxable="false" />
-              <bootstrap.processes:skill ref="content-publish" />
-        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="content-publish" />
         <bootstrap.processes:skill ref="render-kg-to-cdn" />
         <cat-harness.processes:no-call reason="Versions, tags and builds as well as deploying: the deploy is one part of this step, performed through render-kg-to-cdn as content-publish says, and drawing it as a call would split one release action into a call nobody can enter without the version and tag that precede it." />
       </bpmn:extensionElements>
