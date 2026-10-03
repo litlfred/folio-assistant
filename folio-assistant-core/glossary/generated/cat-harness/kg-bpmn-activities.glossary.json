@@ -2156,6 +2156,38 @@
       "status": "candidate"
     },
     {
+      "id": "process_mountsubgraph.task_mountbranchtip",
+      "prefLabel": "Mount the branch tip at the declared path",
+      "definition": "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted.",
+      "notation": "Task_MountBranchTip",
+      "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountsubgraph.task_refuseunknownkind",
+      "prefLabel": "Refuse: no flow for this source kind",
+      "definition": "A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the `dh4f` defect.",
+      "notation": "Task_RefuseUnknownKind",
+      "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_RefuseUnknownKind",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountsubgraph.task_resolvesource",
+      "prefLabel": "Resolve the subgraph's content source",
+      "definition": "`declaredSubgraph(start, id)`: the declaring instance, the entry, and the resolved source with `declaredIn` saying which layer answered. Never read `source` off the declaration directly — the config override and the legacy `storage` field are folded in by the resolver and nowhere else. A contradiction (both `source` and `storage`; a `qa` subgraph keyed by tip) throws here, before anything is mounted.",
+      "notation": "Task_ResolveSource",
+      "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_ResolveSource",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mountsubgraph.task_usecheckoutpath",
+      "prefLabel": "Use the checkout path in place",
+      "definition": "A `directory` source IS its declared path. Nothing is mounted; a write is an ordinary commit on the working branch, which is why `branch-store push` answers \"commit through git\" for it rather than pushing anything.",
+      "notation": "Task_UseCheckoutPath",
+      "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_UseCheckoutPath",
+      "status": "candidate"
+    },
+    {
       "id": "process_narrativecodereview.a_attest",
       "prefLabel": "Attest the pair, with a reason",
       "definition": "The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent|human --reason \"…\"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.",
