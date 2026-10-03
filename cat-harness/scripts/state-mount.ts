@@ -109,30 +109,47 @@ const MANIFEST_SCHEMA = "state-manifest/v1";
  * readable. Separating them is what lets a session with edits in flight exit
  * 0 without that silence also covering a graph that is simply not there.
  */
-export interface GraphMount {
+interface GraphMountBase {
   id: string;
   /** Repository-relative, as declared — where the files were put. */
   path: string;
   branch: string;
-  state: "mounted" | "stale" | "refused" | "miss" | "corrupt" | "unknown";
   reason: string;
-  tip?: string;
-  files?: number;
 }
+
+/**
+ * A mounted graph ALWAYS has the tip it was read at, and a graph that is not
+ * mounted never pretends to one. That is why this is a union rather than one
+ * interface with `tip?: string`: an optional tip makes "mounted" and "has a
+ * tip" two facts that can disagree, and every reader then has to handle a
+ * state the mount cannot actually be in.
+ */
+export type GraphMount =
+  | (GraphMountBase & { state: "mounted"; tip: string; files?: number })
+  | (GraphMountBase & { state: "stale" | "refused" | "miss" | "corrupt" | "unknown" });
 
 /** A graph whose files are on disk and readable, whether or not it just moved. */
 export function isPresent(g: GraphMount): boolean {
   return g.state === "mounted" || g.state === "stale";
 }
 
+/**
+ * Which shape produced the result. There is no top-level `tip` on a mounted
+ * result for either: with several graphs mounted there is no single tip, so a
+ * required one would be a lie and an optional one would be the defect above
+ * one level up. **A caller that wants a tip reads it off the graph**, where it
+ * is required.
+ */
+export type MountMode = "fan-out" | "single-worktree";
+
 export type MountResult =
-  | { state: "not-enabled"; reason: string; locations: TipLocation[]; graphs: GraphMount[] }
-  /** Every graph the declarations named is present. `path`/`branch`/`tip` are set only by the single-branch `--force` path. */
-  | { state: "mounted"; reason: string; locations: TipLocation[]; graphs: GraphMount[]; path?: string; branch?: string; tip?: string }
+  | { state: "not-enabled"; reason: string; locations: TipLocation[]; graphs: GraphMount[]; mode?: undefined }
+  /** Every graph that was asked for is present. */
+  | { state: "mounted"; reason: string; locations: TipLocation[]; graphs: GraphMount[]; mode: MountMode }
   /** SOME graphs are present and at least one is not. Exits non-zero: the ones that failed are named. */
-  | { state: "partial"; reason: string; locations: TipLocation[]; graphs: GraphMount[] }
-  | { state: "dirty"; reason: string; path: string; locations: TipLocation[]; graphs: GraphMount[] }
-  | { state: "failed"; reason: string; locations: TipLocation[]; graphs: GraphMount[] };
+  | { state: "partial"; reason: string; locations: TipLocation[]; graphs: GraphMount[]; mode: MountMode }
+  | { state: "dirty"; reason: string; path: string; locations: TipLocation[]; graphs: GraphMount[]; mode?: MountMode }
+  | { state: "failed"; reason: string; locations: TipLocation[]; graphs: GraphMount[]; mode?: MountMode };
 
 export interface MountOptions {
   repoRoot?: string;
@@ -223,13 +240,14 @@ function fanOut(root: string, locations: TipLocation[]): MountResult {
   const failed = graphs.filter((g) => !isPresent(g));
   const n = graphs.length;
   if (failed.length === 0) {
-    return { state: "mounted", reason: `${n} declared graph(s), all present`, locations, graphs };
+    return { state: "mounted", mode: "fan-out", reason: `${n} declared graph(s), all present`, locations, graphs };
   }
   if (present.length === 0) {
-    return { state: "failed", reason: `none of the ${n} declared graph(s) could be mounted`, locations, graphs };
+    return { state: "failed", mode: "fan-out", reason: `none of the ${n} declared graph(s) could be mounted`, locations, graphs };
   }
   return {
     state: "partial",
+    mode: "fan-out",
     reason: `${present.length} of ${n} declared graph(s) mounted; ${failed.map((g) => g.id).join(", ")} did not`,
     locations,
     graphs,
@@ -246,6 +264,22 @@ function fanOut(root: string, locations: TipLocation[]): MountResult {
  * two mount implementations on `main` onto {@link mountTip}, at which point
  * this function is a clean subtraction rather than a merge.
  */
+/**
+ * The single-worktree mount's result. Its one entry carries the tip, so
+ * "mounted" and "has a tip" cannot come apart here either. The synthetic id is
+ * {@link MOUNT_DIR}, because this path runs precisely when NO declaration
+ * names the directory and there is therefore no declared id to use.
+ */
+function mountedSingle(branch: string, tip: string, reason: string, locations: TipLocation[]): MountResult {
+  return {
+    state: "mounted",
+    mode: "single-worktree",
+    reason,
+    locations,
+    graphs: [{ id: MOUNT_DIR, path: MOUNT_DIR, branch, state: "mounted", reason, tip }],
+  };
+}
+
 function mountSingleWorktree(root: string, branch: string, locations: TipLocation[]): MountResult {
   const graphs: GraphMount[] = [];
   const path = join(root, MOUNT_DIR);
@@ -291,21 +325,21 @@ function mountSingleWorktree(root: string, branch: string, locations: TipLocatio
   if (existsSync(path)) {
     const at = git(path, ["rev-parse", "HEAD"]);
     if (at.status === 0 && at.stdout.trim() === tip) {
-      return { state: "mounted", reason: `already at ${tip.slice(0, 12)}`, path, branch, tip, locations, graphs };
+      return mountedSingle(branch, tip, `already at ${tip.slice(0, 12)}`, locations);
     }
     // Clean and behind: move it forward. Detached, so there is no branch to push from.
     const moved = git(path, ["checkout", "-q", "--detach", tip]);
     if (moved.status !== 0) {
       return { state: "failed", reason: `could not move ${MOUNT_DIR}/ to ${tip.slice(0, 12)}: ${moved.stderr.trim()}`, locations, graphs };
     }
-    return { state: "mounted", reason: `moved to ${tip.slice(0, 12)}`, path, branch, tip, locations, graphs };
+    return mountedSingle(branch, tip, `moved to ${tip.slice(0, 12)}`, locations);
   }
 
   const added = git(root, ["worktree", "add", "--detach", "-q", MOUNT_DIR, tip]);
   if (added.status !== 0) {
     return { state: "failed", reason: `could not add the worktree at ${MOUNT_DIR}/: ${added.stderr.trim()}`, locations, graphs };
   }
-  return { state: "mounted", reason: `mounted at ${tip.slice(0, 12)}`, path, branch, tip, locations, graphs };
+  return mountedSingle(branch, tip, `mounted at ${tip.slice(0, 12)}`, locations);
 }
 
 /**
@@ -329,8 +363,15 @@ export function report(r: MountResult): string {
     L.push(`Not enabled — ${r.reason}.`, "", "Beans and todos are read from the checkout, as usual.");
     return L.join("\n");
   }
+  if (r.state === "mounted" && r.mode === "single-worktree") {
+    const g = r.graphs[0]!;
+    L.push(`Mounted \`${MOUNT_DIR}/\` from \`${g.branch}\` — ${r.reason}.`, "");
+    L.push(`Declared tip-keyed: ${r.locations.map((l) => `\`${l.id}\``).join(", ") || "(none)"}.`, "");
+    L.push("It is DETACHED on purpose: write through `bun run state:push`, never `git push` from `" + MOUNT_DIR + "/`.");
+    return L.join("\n");
+  }
   // The fan-out: a branch per graph.
-  if (r.graphs.length && (r.state === "mounted" || r.state === "partial" || r.state === "failed")) {
+  if (r.mode === "fan-out" && (r.state === "mounted" || r.state === "partial" || r.state === "failed")) {
     const present = r.graphs.filter(isPresent);
     const failed = r.graphs.filter((g) => !isPresent(g));
     const undetermined = failed.filter((g) => g.state === "unknown");
@@ -367,12 +408,6 @@ export function report(r: MountResult): string {
       );
     }
     L.push("", "Fix the mount (`bun run state:mount`) or read the work-plan from the checkout before deciding there is none.");
-    return L.join("\n");
-  }
-  if (r.state === "mounted") {
-    L.push(`Mounted \`${MOUNT_DIR}/\` from \`${r.branch}\` — ${r.reason}.`, "");
-    L.push(`Declared tip-keyed: ${r.locations.map((l) => `\`${l.id}\``).join(", ") || "(none)"}.`, "");
-    L.push("It is DETACHED on purpose: write through `bun run state:push`, never `git push` from `" + MOUNT_DIR + "/`.");
     return L.join("\n");
   }
   if (r.state === "dirty") {
