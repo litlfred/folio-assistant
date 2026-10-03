@@ -6,6 +6,7 @@ import { createRequire } from "node:module";
 import { Liquid } from "liquidjs";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { buildIndex } from "../scripts/search-split.ts";
 
 /**
  * A PAGE SEARCHES ITS OWN SCOPE, AND CAN ALWAYS WIDEN TO THE WHOLE SITE —
@@ -68,7 +69,12 @@ const MANIFEST = {
 
 interface Load { fetched: (suffix: string) => number }
 
-async function load(page: Page, path: string, withManifest = true): Promise<Load> {
+async function load(
+  page: Page,
+  path: string,
+  withManifest = true,
+  extra: { manifest?: unknown; serve?: Record<string, unknown> } = {},
+): Promise<Load> {
   const JTD = await renderedJtd();
   const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>p</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,14 +93,15 @@ async function load(page: Page, path: string, withManifest = true): Promise<Load
     "/assets/js/search/smart-trust.json": TRUST,
     "/assets/js/search/section-reference.json": REFERENCE,
   };
-  if (withManifest) serve["/assets/js/search/manifest.json"] = MANIFEST;
+  if (withManifest) serve["/assets/js/search/manifest.json"] = extra.manifest ?? MANIFEST;
+  Object.assign(serve, extra.serve ?? {});
   await page.route("http://replica.test/**", (route) => {
     const p = new URL(route.request().url()).pathname;
     if (p === `/folio-assistant${path}`) return route.fulfill({ contentType: "text/html", body: PAGE });
     for (const [suffix, body] of Object.entries(serve)) {
       if (p === `/folio-assistant${suffix}`) {
         counts.set(suffix, (counts.get(suffix) ?? 0) + 1);
-        return route.fulfill({ contentType: "application/json", body: JSON.stringify(body) });
+        return route.fulfill({ contentType: "application/json", body: typeof body === "string" ? body : JSON.stringify(body) });
       }
     }
     return route.fulfill({ status: 404, body: "not found" });
@@ -185,4 +192,39 @@ test("no remote in the manifest, no link", async ({ page }) => {
   await search(page, "gate");
   await expect(results(page)).not.toHaveCount(0); // the search has run, so the box is built
   await expect(page.locator(".search-remote-link")).toHaveCount(0);
+});
+
+// Bean `lrzn`: a scope the manifest publishes with a prebuilt index is LOADED.
+// The index here is built from a version of the entry that also says "zebra",
+// which the served entries do not — so "zebra" is found only if the page used
+// the prebuilt index rather than building its own from the entries.
+const IDX_PATH = "/assets/js/search/smart-trust.idx.json";
+const PREBUILT_MANIFEST = {
+  ...MANIFEST,
+  scopes: MANIFEST.scopes.map((s) => (s.id === "smart-trust" ? { ...s, index: { path: IDX_PATH.slice(1), bytes: 1 } } : s)),
+};
+const ZEBRA = buildIndex({ 1: { ...TRUST[1], content: `${TRUST[1].content} zebra` } });
+
+test("a prebuilt scope index is loaded, not built — and it is the scope's only index fetch", async ({ page }) => {
+  const { fetched } = await load(page, "/smart-trust/page.html", true, { manifest: PREBUILT_MANIFEST, serve: { [IDX_PATH]: ZEBRA } });
+  await search(page, "zebra");
+  await expect(results(page)).toHaveCount(1);
+  expect(fetched(IDX_PATH)).toBe(1);
+  expect(fetched("/assets/js/search/smart-trust.json")).toBe(1); // results are rendered from the entries
+  expect(fetched("/assets/js/search-data.json")).toBe(0);
+  await expect(page.locator(".search-everywhere")).toHaveCount(1);
+  // The load path sets the site's separator too: it splits the reader's query
+  // on "/", which lunr's own default does not, so "zebra/lists" is two terms.
+  await page.fill("#search-input", "");
+  await page.keyboard.type("zebra/lists");
+  await expect(results(page)).toHaveCount(1);
+});
+
+test("a prebuilt index that will not load falls back to building from the entries", async ({ page }) => {
+  await load(page, "/smart-trust/page.html", true, { manifest: PREBUILT_MANIFEST, serve: { [IDX_PATH]: "{\"version\":\"2.3.9\"}" } });
+  await search(page, "trust");
+  await expect(results(page)).not.toHaveCount(0);
+  await page.fill("#search-input", "");
+  await page.keyboard.type("zebra");
+  await expect(page.locator("#search-results")).toContainText("No results");
 });
