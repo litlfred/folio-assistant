@@ -64,6 +64,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |
+| [`sticky-one-component.e2e.ts`](sticky-one-component.e2e.ts) | a file |  |
 | [`sticky-shape.e2e.ts`](sticky-shape.e2e.ts) | a file |  |
 | [`sticky-todos.e2e.ts`](sticky-todos.e2e.ts) | a file |  |
 | [`subprocess-links.e2e.ts`](subprocess-links.e2e.ts) | a file |  |
@@ -75,6 +76,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | 19 files | |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 977 files | |
+| [`results/`](results/README.md) | 993 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->
