@@ -119,9 +119,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // is the VIEWER of uploads/, not an upload: it must match here, before
       // the `uploads` refusal below catches it. Found 2026-10-01 on #1764.
       "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads}/index.html",
+      // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
+      // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
+      "cat-harness/docs/fsh-guts/index.md",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
   },
   {
     id: "viewer-namespace",

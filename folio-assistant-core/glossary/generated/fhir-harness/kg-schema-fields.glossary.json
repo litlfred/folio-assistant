@@ -28,6 +28,20 @@
       "status": "candidate"
     },
     {
+      "id": "fhir-artifact-index.fhirartifactindexschema.igapihub",
+      "prefLabel": "FhirArtifactIndexSchema.igApiHub",
+      "definition": "The IG API hub: the region of the IG's hub page between the two markers its post-processing writes after the Publisher has run (for WHO's DAK overlay, `dak-api.html` between `DAK_API_HUB_START` and `DAK_API_HUB_END`, written by smart-base's `generate_dak_api_hub.py`). `url` is the page it was read from; `localPath` is the fragment, held so a page can fetch it (bean `680p`) rather than retype its prose — as a JSON node (`{ from, between, html }`), because an `.html` fragment published in the served graph would be a page with no <body>. Absent means the IG publishes no hub, or it was not materialised.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.igApiHub",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactindexschema.package",
+      "prefLabel": "FhirArtifactIndexSchema.package",
+      "definition": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.package",
+      "status": "candidate"
+    },
+    {
       "id": "fhir-artifact-index.fhirartifactindexschema.packageid",
       "prefLabel": "FhirArtifactIndexSchema.packageId",
       "definition": "NPM-style package id, e.g. `smart.who.int.trust`.",
@@ -60,6 +74,13 @@
       "prefLabel": "FhirArtifactSchema.key",
       "definition": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not.",
       "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.key",
+      "status": "candidate"
+    },
+    {
+      "id": "fhir-artifact-index.fhirartifactschema.listedat",
+      "prefLabel": "FhirArtifactSchema.listedAt",
+      "definition": "Position on the Publisher's `artifacts.html`, 0-based, first appearance. The category's order and the artefact's order within it are both read off this — a renderer that must match the Publisher's page (owner, 2026-10-01: every phase renders equivalent to the standard IG render) has no other source for either. Absent exactly when `category` is.",
+      "source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema.listedAt",
       "status": "candidate"
     },
     {
@@ -200,6 +221,41 @@
       "prefLabel": "UnboundSidecarSchema.title",
       "definition": "Its title, as the enumeration gives it — usually the only human handle on what was missed.",
       "source": "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astmanifestschema.inputs",
+      "prefLabel": "AstManifestSchema.inputs",
+      "definition": "What the AST is valid for, in `CompiledInputsSchema`'s shape.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astmanifestschema.provisional",
+      "prefLabel": "AstManifestSchema.provisional",
+      "definition": "What stays provisional until a full Publisher run.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astresourceschema.builtat",
+      "prefLabel": "AstResourceSchema.builtAt",
+      "definition": "On a merged (mixed-provenance) AST: the revision that built this resource.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astresourceschema.file",
+      "prefLabel": "AstResourceSchema.file",
+      "definition": "The resource's JSON file, relative to the AST directory.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast.astresourceschema.source",
+      "prefLabel": "AstResourceSchema.source",
+      "definition": "The IG source file it was built from, where known.",
+      "source": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source",
       "status": "candidate"
     },
     {
@@ -424,6 +480,55 @@
       "prefLabel": "IgMetadataSourceSchema.runUrl",
       "definition": "A URL for the harvest run, if one exists.",
       "source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleaseschema.commitish",
+      "prefLabel": "IgReleaseSchema.commitish",
+      "definition": "The commit the tag points at, where GitHub reports it.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.commitish",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleaseschema.url",
+      "prefLabel": "IgReleaseSchema.url",
+      "definition": "The release's page on GitHub.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.url",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleasesschema.readat",
+      "prefLabel": "IgReleasesSchema.readAt",
+      "definition": "When they were read (UTC date). A release made later is not here until the next read.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.readAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleasesschema.releases",
+      "prefLabel": "IgReleasesSchema.releases",
+      "definition": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.releases",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.igreleasesschema.repository",
+      "prefLabel": "IgReleasesSchema.repository",
+      "definition": "`owner/repo` the releases were read from.",
+      "source": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.releaseassetschema.digest",
+      "prefLabel": "ReleaseAssetSchema.digest",
+      "definition": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests.",
+      "source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.digest",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-releases.releaseassetschema.url",
+      "prefLabel": "ReleaseAssetSchema.url",
+      "definition": "Where to fetch the bytes: GitHub's `browser_download_url`.",
+      "source": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.url",
       "status": "candidate"
     }
   ]
