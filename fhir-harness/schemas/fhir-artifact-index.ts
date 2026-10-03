@@ -238,6 +238,14 @@ export const FhirArtifactSchema = z
     version: z.string().min(1).optional(),
     /** Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page. */
     category: z.string().min(1).optional(),
+    /**
+     * Position on the Publisher's `artifacts.html`, 0-based, first appearance.
+     * The category's order and the artefact's order within it are both read
+     * off this — a renderer that must match the Publisher's page (owner,
+     * 2026-10-01: every phase renders equivalent to the standard IG render)
+     * has no other source for either. Absent exactly when `category` is.
+     */
+    listedAt: z.number().int().nonnegative().optional(),
     published: PublishedFormatsSchema,
     sidecars: SidecarOverlaySchema.optional(),
     materialization: MaterializationSchema,
@@ -320,6 +328,33 @@ export const FhirArtifactIndexSchema = z
     sidecarApi: z.enum(SIDECAR_API_STATES),
     contexts: z.array(JsonLdContextSchema).optional(),
     /**
+     * The IG API hub: the region of the IG's hub page between the two markers
+     * its post-processing writes after the Publisher has run (for WHO's DAK
+     * overlay, `dak-api.html` between `DAK_API_HUB_START` and
+     * `DAK_API_HUB_END`, written by smart-base's `generate_dak_api_hub.py`).
+     * `url` is the page it was read from; `localPath` is the fragment, held so
+     * a page can fetch it (bean `680p`) rather than retype its prose — as a
+     * JSON node (`{ from, between, html }`), because an `.html` fragment
+     * published in the served graph would be a page with no <body>. Absent
+     * means the IG publishes no hub, or it was not materialised.
+     *
+     * `placeholder` is the comment the hub page's SOURCE holds where the
+     * post-processing writes the hub, so an IG site rendered from that source
+     * knows where to put it back. Recorded per IG at ingest because the
+     * layer that stages every IG's site at once has no other per-IG place to
+     * read it from, and names no post-processor's marker itself (bean `d313`;
+     * this field was `dakApiHub` until then).
+     */
+    igApiHub: RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional(),
+    /**
+     * The IG's own `package.tgz` — every resource's JSON in one file, as the
+     * Publisher packaged it. Held (`--materialize-package`) so a page can
+     * fetch the one archive and read a resource out of it in the browser,
+     * rather than this graph copying hundreds of resource files (bean `680p`,
+     * `visualizer-loading`). Absent means not held.
+     */
+    package: RepresentationSchema.optional(),
+    /**
      * Sidecars an enumeration listed that bound to no artefact. Absent means
      * none; an empty array is not written. See {@link UnboundSidecarSchema}
      * for why these are recorded rather than warned about and forgotten.
@@ -383,6 +418,26 @@ export function sidecarCensus(artifacts: FhirArtifact[]): Record<string, number>
  * and inventing a second one with the same name would make "Other" mean two
  * different things in one index.
  */
+/**
+ * The file stem of an artefact's page on a site rendered from this index:
+ * `<ResourceType>-<id>`, with anything outside `[A-Za-z0-9._-]` made `_`.
+ *
+ * One rule, read by every generator that writes or links such a page —
+ * `gen-smart-trust-pages.ts` writes them, `build-ig-site.ts` links to them
+ * from an IG's `artifacts` page (bean `jut3`). Two copies of the rule would be
+ * two answers to "what is this artefact's URL", free to disagree silently.
+ */
+export function artifactPageName(a: { resourceType: string; id: string }): string {
+  return `${a.resourceType}-${a.id}`.replace(/[^A-Za-z0-9._-]/g, "_");
+}
+
+/**
+ * In the Publisher's order, read off `listedAt` rather than restated (#1901):
+ * categories by their first artefact's position on `artifacts.html`, artefacts
+ * within one by their own, the uncategorised bucket last. An alphabetical sort
+ * put Terminology: Code Systems ahead of Requirements on smart-trust, which is
+ * the opposite of the page it mirrors. Ties (no `listedAt`) keep input order.
+ */
 export function byCategory(artifacts: FhirArtifact[]): Map<string | undefined, FhirArtifact[]> {
   const out = new Map<string | undefined, FhirArtifact[]>();
   for (const a of artifacts) {
@@ -390,5 +445,12 @@ export function byCategory(artifacts: FhirArtifact[]): Map<string | undefined, F
     bucket.push(a);
     out.set(a.category, bucket);
   }
-  return out;
+  const at = (a: FhirArtifact) => a.listedAt ?? Number.POSITIVE_INFINITY;
+  const first = (list: FhirArtifact[]) => Math.min(...list.map(at));
+  for (const list of out.values()) list.sort((x, y) => at(x) - at(y));
+  return new Map(
+    [...out.entries()].sort(([ka, a], [kb, b]) =>
+      ka === undefined ? (kb === undefined ? 0 : 1) : kb === undefined ? -1 : first(a) - first(b),
+    ),
+  );
 }
