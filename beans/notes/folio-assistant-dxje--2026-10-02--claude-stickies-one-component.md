@@ -53,3 +53,11 @@ The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,
   - Verified: navbar-row e2e passes (47), and the unit tests, lint, typecheck, `skill:register:check` and `readme:subgraphs:check` pass.
 - **Still open** (unchanged from above): the sticky e2e specs (about 10 files on old selectors), the new specs, the `board-windows` skill (zoom glass-only, pin toggle, confirmation), the window bar's text buttons, and the full `bun run gates`.
 - **Merge `origin/main` once #1907 has landed.** The Visualisations strip in the screenshots disappears then. The owner said: *"looking good. dont need visualization tiels"*. Do not remove the strip here.
+
+### Update, 2026-10-03 (resumed after the container restart)
+
+- **WIP `74f42c0` reviewed and kept.** Pin writes a `fa-folio-assets` entry (`landing/<slot>` or `todo/<id>`, `shown: true`), drawn by `buildGlassCard` + `dressGlassSticky`. Unpin is `shelveFromGlass`. The old `fa-pinned-stickies` store is migrated once and then removed. `todo/` and not `todos/` is deliberate: it is the key the glass's own Todos panel already uses, so the two ways onto the glass name the same asset.
+- **Merged `origin/main` twice** (`7c986f4`, `588edd3`), bringing in #1907 and #1909. `docs-ui.js` merged cleanly, and the Visualisations row stays removed as main has it. The conflicts were generated artefacts only, so they were regenerated.
+- **Fixed:** `pinTodo`'s href now goes through `safeHref`, which `href-safety` requires.
+- **Verified:** 291 of 291 pass across `sticky-home`, `sticky-todos`, `sticky-one-component`, `sticky-shape`, `board-windows`, `a11y`, `glass-devices`, `glass-filter`, `glass-zoom-steady`, `discarded-items`, `fishbone-relocate`, `panel-chrome`, `board-move-filter` and `navbar-row`. The four specs this note listed as not done needed no change. `bun run gates`: 211 of 212 pass. The one failure is `audit-coverage.test.ts` "the report is a fixpoint", which runs over bun's 5s default in this container (5.7s) and is not touched by this branch.
+- **Screenshots:** `cat-harness/test/results/screenshots/stickies-pin-1925/pin-{before,after}-{1280,390}.png`.
