@@ -101,21 +101,32 @@ def is_capture_print(producer: str | None, creator: str | None) -> bool:
     return "Skia/PDF" in (producer or "") and (creator or "").startswith("Mozilla/")
 
 
-def role_for(coverage: float, images_on_page: int, capture: bool = False) -> str:
+def role_for(
+    coverage: float, images_on_page: int, capture: bool = False, role_threshold: float | None = None
+) -> str:
     """The role a computable basis implies. Mirrors `roleFor` in document-image.ts.
 
     `page-scan` is tried FIRST, in both rungs: a browser print can still place a
     full-bleed image alone on a page, and that image is the page. The capture
     being a web page does not change what full-bleed means.
+
+    `role_threshold` is the CALLER's optional cutoff -- bean `ay3x`, owner
+    2026-10-03: "an optional one can be set, default none". `None`, the
+    default, thresholds nothing. When given, an image that would otherwise be a
+    `figure` and covers less than it is filed `furniture`, and the caller
+    records a `threshold` basis naming the value. It is tried LAST, so it never
+    overrides a page scan or a capture's chrome, which have their own evidence.
     """
     if coverage >= PAGE_COVERAGE_THRESHOLD and images_on_page == 1:
         return "page-scan"
     if capture and coverage < CAPTURE_CHROME_THRESHOLD:
         return "chrome"
+    if role_threshold is not None and coverage < role_threshold:
+        return "furniture"
     return "figure"
 
 
-def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
+def extract(pdf: Path, outdir: Path, dry_run: bool, role_threshold: float | None = None) -> dict:
     """The sidecar body. Returns `images: None` rather than lying about absence."""
     try:
         import pymupdf
@@ -236,10 +247,24 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                     "page": index + 1,
                 }
             )
+            role = role_for(coverage, len(placed), capture, role_threshold)
+            if role == "furniture":
+                # The cutoff decided this one, so the cutoff is the basis: the
+                # value and that the CALLER supplied it. Never geometry, and
+                # never inspection -- a thresholded call must not pass for
+                # either (`library-ingestion`, bean `ay3x`).
+                basis = {
+                    "method": "threshold",
+                    "value": role_threshold,
+                    "suppliedBy": "caller",
+                    "coverage": round(coverage, 6),
+                    "imagesOnPage": len(placed),
+                    "page": index + 1,
+                }
             entry = {
                 "id": image_id,
                 "file": rel,
-                "role": role_for(coverage, len(placed), capture),
+                "role": role,
                 "basis": basis,
             }
             # Only a figure gets a narrative slot. The 140 scans get none --
@@ -346,13 +371,24 @@ def main() -> int:
                     help="classify and report, writing nothing")
     ap.add_argument("--json", action="store_true",
                     help="emit the sidecar to stdout, for a consumer to validate")
+    # NO DEFAULT, and none may be added -- owner 2026-10-03, "an optional one
+    # can be set, default none". The evidence against any particular number is
+    # in bean `m4xy`; a value chosen after seeing a corpus fits that corpus.
+    ap.add_argument("--role-threshold", type=float, default=None, metavar="COVERAGE",
+                    help="OPTIONAL caller-supplied coverage cutoff: an image that would be a "
+                         "figure and covers less of its page than this is filed `furniture`, "
+                         "with a basis recording the value. Unset by default, and no value "
+                         "is recommended")
     args = ap.parse_args()
+    if args.role_threshold is not None and args.role_threshold <= 0:
+        print("--role-threshold must be positive", file=sys.stderr)
+        return 1
 
     if not args.pdf.exists():
         print(f"{args.pdf}: no such file", file=sys.stderr)
         return 1
 
-    sidecar = extract(args.pdf, args.out, args.dry_run)
+    sidecar = extract(args.pdf, args.out, args.dry_run, args.role_threshold)
     # The human line goes to stderr when `--json` is on, so stdout carries the
     # payload and nothing else. Mixing the two is how a deprecation warning
     # from `fitz` once broke `ingest-document.ts`'s probe (bean 68dt): a tool

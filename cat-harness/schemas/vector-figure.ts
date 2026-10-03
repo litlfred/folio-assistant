@@ -168,6 +168,11 @@ export const VectorFigureSchema = z
     } else if (f.role === "undetermined") {
       issue(["role"], "an inspection that decided nothing should not replace the assembly basis");
     }
+    if (f.role === "furniture") {
+      // No threshold reaches a render: the vector arm takes no cutoff, and an
+      // inspector who finds furniture says `decorative` with the reason.
+      issue(["role"], "`furniture` comes only from a caller-supplied raster threshold");
+    }
     if (f.basis.method === "inspection" && f.file === null) {
       issue(["file"], "nothing was rendered, so nothing could have been inspected");
     }

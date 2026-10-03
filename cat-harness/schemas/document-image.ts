@@ -76,6 +76,7 @@ export const IMAGE_ROLES = [
   "chrome",
   "logo",
   "decorative",
+  "furniture",
   "undetermined",
 ] as const;
 export type ImageRole = (typeof IMAGE_ROLES)[number];
@@ -240,7 +241,7 @@ export const CAPTURE_ONLY_ROLES: readonly ImageRole[] = ["chrome"];
  * `undetermined` is deliberately NOT here: nothing is known about it, which
  * is the opposite of settled.
  */
-export const SETTLED_BY_COMPUTATION: readonly ImageRole[] = ["page-scan", "chrome"];
+export const SETTLED_BY_COMPUTATION: readonly ImageRole[] = ["page-scan", "chrome", "furniture"];
 
 /**
  * Is this document a captured web page?
@@ -252,10 +253,47 @@ export function isCapturePrint(producer: string | undefined, creator: string | u
   return (producer ?? "").includes("Skia/PDF") && (creator ?? "").startsWith("Mozilla/");
 }
 
+/**
+ * A role decided by a coverage CUTOFF THE CALLER SUPPLIED — bean `ay3x`.
+ *
+ * Owner, 2026-10-03, verbatim: *"an optional one can be set, default none"*
+ * (`library-ingestion` §"A role threshold is OPTIONAL, and its default is
+ * NONE"). So a cutoff may sort images into roles, but ONLY when somebody
+ * passes one, and every image it decides must say so: the value, and that it
+ * came from the caller rather than from anybody looking.
+ *
+ * **There is no default and no recommended value, and none may be added
+ * here.** `m4xy` and `j820` measured why (29 documents, 5 libraries):
+ * per-image coverage does not separate figure from furniture, and the one
+ * empty stretch in the WHO corpus is specific to it — 29 images in other
+ * libraries sit inside it. A number chosen after seeing a corpus is a number
+ * chosen to fit the answer.
+ *
+ * A different shape from {@link InspectionBasisSchema} on purpose, and it
+ * reaches a different role (`furniture`), so a thresholded call can never be
+ * read as an inspected one — the `d5f1` rule.
+ */
+export const ThresholdBasisSchema = z.object({
+  method: z.literal("threshold"),
+  /** The cutoff, exactly as supplied. Images below it were filed `furniture`. */
+  value: z.number().positive(),
+  /** Always the caller. Recorded so the provenance is read, not inferred. */
+  suppliedBy: z.literal("caller"),
+  /** Placed area over page area — the number compared against `value`. */
+  coverage: z.number().min(0),
+  imagesOnPage: z.number().int().min(1),
+  page: z.number().int().min(1),
+});
+export type ThresholdBasis = z.infer<typeof ThresholdBasisSchema>;
+
+/** Roles reachable only from a caller-supplied {@link ThresholdBasisSchema}. */
+export const THRESHOLD_ONLY_ROLES: readonly ImageRole[] = ["furniture"];
+
 export const ImageBasisSchema = z.discriminatedUnion("method", [
   GeometryBasisSchema,
   InspectionBasisSchema,
   CaptureBasisSchema,
+  ThresholdBasisSchema,
 ]);
 export type ImageBasis = z.infer<typeof ImageBasisSchema>;
 export type GeometryBasis = z.infer<typeof GeometryBasisSchema>;
@@ -399,6 +437,15 @@ export const DocumentImageSchema = z
       "`chrome` can only be assigned from a capture basis — it is a claim " +
       "about where the image CAME FROM, and no measurement of a placed " +
       "rectangle establishes that a browser printed the page",
+    path: ["basis", "method"],
+  })
+  // `furniture` is the CALLER's cutoff speaking, and only that basis may say
+  // it; equally, a threshold basis decides nothing but `furniture` — an image
+  // above the cutoff keeps the geometry verdict it would have had anyway.
+  .refine((i) => (i.role === "furniture") === (i.basis?.method === "threshold"), {
+    message:
+      "`furniture` is assigned only by a caller-supplied threshold, and a threshold basis " +
+      "assigns only `furniture` — a cutoff's call must never read as anything else (bean ay3x)",
     path: ["basis", "method"],
   })
   // `logo` and `decorative` are unreachable from a rectangle. Claiming one on

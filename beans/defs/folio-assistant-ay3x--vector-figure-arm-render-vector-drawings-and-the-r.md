@@ -63,10 +63,14 @@ this bean should be measured against.
 
 ## Done when
 
-- [ ] the owner says on what basis a role threshold may be set, or that one may
+- [x] the owner says on what basis a role threshold may be set, or that one may
   not be — a number chosen from this corpus is refused by `m4xy` and that
-  refusal stands. **Still open, deliberately**: the arm was built so it needs
-  none (see 2026-10-03 below)
+  refusal stands. **Ruled 2026-10-03**, verbatim: *"an optional one can be
+  set, default none"* (it supersedes an earlier *"no cutoff"*). Relayed by
+  the parent session https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7.
+  Implemented as `pdf-images.py --role-threshold`, which has no default and
+  writes role `furniture` on a `{method: threshold, value, suppliedBy: caller}`
+  basis. The vector arm takes no cutoff
 - [x] the arm is measured against the BARE figures specifically, not against
   every declared label — 47 of 49 shown, the other 2 correctly not (below)
 - [x] a rendered figure carries an inspection basis naming who or what looked,

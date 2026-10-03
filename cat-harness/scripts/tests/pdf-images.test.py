@@ -261,6 +261,32 @@ def main() -> int:
                   os.path.exists(os.path.join(root, i["file"])))
     print(f"  ...checked {figure_files} figure file(s) across the committed corpus")
 
+    # The OPTIONAL role threshold -- bean `ay3x`, owner 2026-10-03: "an
+    # optional one can be set, default none". The value below is ARBITRARY: it
+    # is the midpoint of two of the CASES coverages above, chosen only so the
+    # comparison has something on each side. It is not a recommendation, and
+    # no number may become one (see `library-ingestion`).
+    import inspect
+    sig = inspect.signature(images.role_for)
+    check("role_threshold defaults to None -- nothing is thresholded unless a caller asks",
+          sig.parameters["role_threshold"].default is None)
+    src = open(os.path.join(SCRIPTS, "pdf-images.py"), encoding="utf-8").read()
+    check("the CLI flag ships no default value",
+          re.search(r'"--role-threshold",[^)]*default=None', src, re.S) is not None)
+    arbitrary = (0.013 + 0.008) / 2
+    check("without a threshold, a small image stays a figure",
+          images.role_for(0.008, 1) == "figure")
+    check("with one, an image below it is filed furniture",
+          images.role_for(0.008, 1, False, arbitrary) == "furniture")
+    check("with one, an image at or above it keeps its geometry role",
+          images.role_for(0.013, 3, False, arbitrary) == "figure")
+    check("a threshold never overrides a page scan",
+          images.role_for(0.998, 1, False, 1.0) == "page-scan")
+    check("a threshold never overrides a capture's chrome",
+          images.role_for(cap_py / 2, 2, True, cap_py) == "chrome")
+    check("the TypeScript schema knows the role the cutoff writes",
+          '"furniture"' in open(os.path.join(ROOT, "schemas", "document-image.ts"), encoding="utf-8").read())
+
     print()
     print("  all checks passed" if rc == 0 else "  FAILURES above")
     return rc

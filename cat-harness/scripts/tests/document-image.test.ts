@@ -20,6 +20,7 @@ import {
   ImagesSidecarSchema,
   PAGE_COVERAGE_THRESHOLD,
   roleFor,
+  SETTLED_BY_COMPUTATION,
   withEmptyNarrative,
   type DocumentImage,
 } from "../../schemas/document-image.ts";
@@ -476,5 +477,41 @@ describe("blockRefIn — only a reference that names a block is one", () => {
   });
   test("a bare id, with no directory to judge by, yields nothing", () => {
     expect(blockRefIn("table-001")).toBeUndefined();
+  });
+});
+
+/**
+ * The OPTIONAL role threshold — bean `ay3x`. Owner, 2026-10-03, verbatim: "an
+ * optional one can be set, default none". The value used here is arbitrary
+ * and recommends nothing; `library-ingestion` forbids shipping one that does.
+ */
+describe("a caller-supplied threshold reaches `furniture`, and only it does", () => {
+  const thresholdBasis = { method: "threshold", value: 0.5, suppliedBy: "caller", coverage: 0.1, imagesOnPage: 2, page: 4 };
+
+  test("`furniture` on a threshold basis is accepted", () => {
+    expect(DocumentImageSchema.safeParse({ id: "i", file: "f.png", role: "furniture", basis: thresholdBasis }).success).toBe(true);
+  });
+
+  test("`furniture` on any other basis is refused — the cutoff's call cannot be forged", () => {
+    for (const basis of [
+      { method: "geometry", coverage: 0.1, imagesOnPage: 2, page: 4 },
+      { method: "inspection", by: { kind: "human", id: "x" }, at: "2026-10-03", saw: "s", page: 4 },
+    ]) {
+      expect(DocumentImageSchema.safeParse({ id: "i", file: "f.png", role: "furniture", basis }).success).toBe(false);
+    }
+  });
+
+  test("a threshold basis decides nothing but `furniture`", () => {
+    expect(DocumentImageSchema.safeParse({ id: "i", file: "f.png", role: "figure", basis: thresholdBasis }).success).toBe(false);
+  });
+
+  test("the basis must say the CALLER supplied it", () => {
+    const forged = { ...thresholdBasis, suppliedBy: "inspector" };
+    expect(DocumentImageSchema.safeParse({ id: "i", file: "f.png", role: "furniture", basis: forged }).success).toBe(false);
+  });
+
+  test("`furniture` is settled and owes no narrative", () => {
+    expect(SETTLED_BY_COMPUTATION).toContain("furniture");
+    expect(DESCRIBABLE_ROLES).not.toContain("furniture");
   });
 });
