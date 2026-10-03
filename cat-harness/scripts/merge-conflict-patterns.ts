@@ -95,6 +95,21 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "generated overview diagrams and their SVGs (201). Recomputed from the declarations; any new node redraws them.",
   },
   {
+    id: "prov-qaqc",
+    // Instance-agnostic, like `derived-results` and unlike `glossary`: a
+    // dependent folio runs `prov:qaqc` over its own workflow instances and
+    // writes the same two shapes under its own root.
+    globs: ["**/docs/prov-qaqc/**", "**/docs/assets/prov/**"],
+    strategy: "take-base",
+    why:
+      "the PROV-O QA/QC report and its per-instance logs. Generated WHOLE from the workflow instances under " +
+      "`beans/workflows/` by `scripts/prov-qaqc.ts`, so any branch that records an instance — which every " +
+      "branch doing process work does — rewrites the index page and adds a `.prov.jsonld`. Added 2026-10-03 " +
+      "after it refused #1892 as the single unclassified path among 32 resolved by pattern: a file nobody " +
+      "authors, blocking a merge nobody can usefully resolve by hand. `take-base` then `regen`, which runs " +
+      "`prov:qaqc` because `check:prov-qaqc` is a workflow gate — so the pattern names no check of its own.",
+  },
+  {
     id: "glossary",
     globs: ["cat-harness/docs/glossary/**", "cat-harness/docs/lsi/**"],
     strategy: "take-base",

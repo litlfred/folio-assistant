@@ -95,6 +95,27 @@ per directory, so a new file anywhere changes one.
 
 Generated overview diagrams and their SVGs.
 
+### `prov-qaqc` — take the base, regenerate
+
+The PROV-O QA/QC report (`docs/prov-qaqc/`) and its per-instance logs
+(`docs/assets/prov/`). Generated WHOLE from the workflow instances under
+`beans/workflows/`, so any branch that records an instance — which every branch
+doing process work does — rewrites the index page and adds a `.prov.jsonld`.
+
+**Added 2026-10-03, and the occasion is the reason.** The runner refused #1892
+with `docs/prov-qaqc/index.md` as the SINGLE unclassified path among **32**
+resolved by pattern. One file nobody authors, blocking a merge nobody can
+usefully resolve by hand — which is this catalogue's whole purpose, missing one
+entry.
+
+The globs are instance-agnostic (`**/docs/prov-qaqc/**`), like
+`derived-results` and unlike `glossary`: a dependent folio runs `prov:qaqc`
+over its own instances and writes the same two shapes under its own root.
+
+It names no check of its own, per rule 2: `regen` runs `prov:qaqc` because
+`check:prov-qaqc` is a workflow gate, and a pattern that named its own check
+would be a hand-kept list able to drift from the workflow.
+
 ### `glossary` — take the base, regenerate (207)
 
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
