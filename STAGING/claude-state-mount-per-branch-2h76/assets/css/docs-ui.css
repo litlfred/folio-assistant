@@ -7114,6 +7114,9 @@ a.fa-harness-tab__body:focus-visible {
 .fa-board-filter-select {
   /* Low-dexterity profile: a select is a target like any other. */
   min-height: 2.25rem;
+  /* A node label is long (`sec:publication-workflow-…`) and a select sizes
+   * to its widest option, which pushed the node filter off a phone screen. */
+  max-width: 100%;
   padding: 0 0.375rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.45));
   border-radius: var(--fa-folio-radius, 0.25rem);
@@ -7125,6 +7128,19 @@ a.fa-harness-tab__body:focus-visible {
   font-size: 0.8125rem;
   opacity: 0.8;
 }
+
+/* A group heading when the reader groups the board (node, status, person,
+ * bean). It spans the whole grid row, so the stickies under it start a fresh
+ * row and every tile keeps its size. */
+.fa-sticky-group-head {
+  grid-column: 1 / -1;
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.fa-sticky-group-head:first-child { margin-top: 0; }
+.fa-sticky-group-head[hidden] { display: none; }
 
 /* ── No tile strip on the sticky board (issue #1905, bean `t6ht`) ─────────
  *
@@ -8207,7 +8223,11 @@ a.fa-harness-tab__body:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.25rem;
+  /* No fixed gap: `space-between` spaces them. A todo carries FIVE controls
+   * (page, view, edit, pin, fsh-guts — #1941), and 5 × 1.75rem plus four
+   * 0.25rem gaps is wider than the 9rem tile, which pushed fsh-guts under
+   * the next tile and below the 24px target size (axe `target-size`). */
+  gap: 0;
   width: var(--fa-sticky-tile-size);
   margin: 0.25rem 0 0;
 }
