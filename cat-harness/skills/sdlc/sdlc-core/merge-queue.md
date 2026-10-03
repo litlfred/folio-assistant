@@ -272,6 +272,39 @@ Only with the owner's release (`Task_Release`): explicit, or a standing ruling
 quoted verbatim with its date. What lands is exactly the SHA CI tested; if
 `main` moved after the train's CI started, re-run rather than land.
 
+## Your merge cadence is an input to the bot's throughput
+
+**Pacing and concurrency are one question, not two.** `merge-main.yml` sweeps
+the `merge-main`-labelled PRs on every push to `main`, so each merge you land
+starts a sweep — and the per-PR `merge` job's concurrency group decides what
+happens to the sweep already running.
+
+Measured 2026-10-03 over the last 100 runs of that workflow (bean `o8s9`):
+
+| trigger | success | cancelled |
+|---|---|---|
+| `push` | 20 | **21** |
+| `pull_request_target` | 14 | 2 |
+| `workflow_dispatch` | 0 | 2 |
+
+Half of every push-triggered sweep was discarded. Run `37111610566` is the
+worked case: twelve per-PR jobs, six cancelled inside ten seconds of each
+other by the next sweep, and five of those six PRs still conflicted when
+re-probed minutes later. Sweep wall time is 1-15 min while a steward draining
+the queue lands a merge every 5-10, so under `cancel-in-progress: true` a
+sweep rarely survived to finish.
+
+The rule, now that `cancel-in-progress` is trigger-dependent and a push sweep
+QUEUES rather than kills:
+
+- **A sweep in flight is work in progress — do not count a PR as unmergeable
+  while its merge job is queued behind your last landing.** Re-read it after
+  the sweep settles.
+- **When you are landing faster than the sweep completes, you are the reason
+  the behind-PRs are not catching up.** The concurrency fix bounds the loss at
+  zero rather than half, but a merge still carries only `main@T(n-1) -> T(n)`
+  per sweep; a burst of landings leaves a backlog of steps to carry.
+
 ## What this does not do yet
 
 The train's size is a fixed cap. Sizing it by risk waits for this process's

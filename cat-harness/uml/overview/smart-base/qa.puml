@@ -9,37 +9,14 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "smart-base/qa" as pkg_smart_base_qa <<qa>> {
-  class "Pair_attestation" as smart_base_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
-    kind [1] : implements | co-located
-    prose [1] : string
-    code [1] : string
-    prose_hash [1] : string
-    code_hash [1] : string
-    by [1] : baseline | agent | human
-    reason [0..1] : string
-  }
-  class "Verdict" as smart_base_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
-    rule [1] : string
-    result [1] : pass | fail | n/a
-    note [0..1] : string
-  }
-  class "Voice_review" as smart_base_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
-    voice [1] : string
-    instance [1] : string
-    skill_hash [1] : string
-    voice_hash [1] : string
-    by [1] : agent | human
-    at [1] : string
-    verdicts [0..*] : Verdict[]
-  }
   class "kg-qa/v1" as smart_base_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
-    pair_attestations [0..*] : Pair_attestation[]
-    voice_reviews [0..*] : Voice_review[]
+    pair_attestations [0..1] : any
+    voice_reviews [0..1] : any
   }
   class "kg-qa-manifest/v1" as smart_base_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
@@ -47,7 +24,4 @@ package "smart-base/qa" as pkg_smart_base_qa <<qa>> {
   }
 }
 
-smart_base_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" smart_base_qa_kg_qa_v1_Pair_attestation : pair_attestations
-smart_base_qa_kg_qa_v1_Voice_review *-- "0..*" smart_base_qa_kg_qa_v1_Verdict : verdicts
-smart_base_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" smart_base_qa_kg_qa_v1_Voice_review : voice_reviews
 @enduml
