@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 665,
+      "count": 667,
       "unit": "beans"
     }
   },
@@ -4483,14 +4483,14 @@
     {
       "id": "folio-assistant-h32d",
       "title": "Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:58:13Z",
-      "updatedAt": "2026-09-29T21:43:11Z",
+      "updatedAt": "2026-10-02T23:41:36Z",
       "preview": "**Requirements capture, 2026-09-19.** Stated by the author; recorded verbatim in\nsubstance before any design, because it arrived as one long message and the\nauthor types with difficulty. Nothing here is my synthesis unless marked so.\n\nSupersedes the framing of `folio-assistant-7sf1` (move MEMORY.md into the kg\ngraph), which is now the narrow first slice of this.\n\n## 1. The model\n\n**Memory workflow",
       "file": "beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md"
     },
@@ -5293,6 +5293,20 @@
       "updatedAt": "2026-10-02T21:37:45Z",
       "preview": "Follow-up to folio-assistant-k74z (PR #1873). Findings D1-D3 of cat-harness/docs/proposals/vocabulary-mappings-2026-10-02.md, 'What the inventory found'.\n\n## D3 ruling (owner default applied)\nOwner default applied, option 1, 2026-10-02: the owner was asked and gave no answer, so the stated default holds. Following the owner's bean sl9u precedent, ONE mapping-table row drives role naming in BOTH ge",
       "file": "beans/defs/folio-assistant-lodp--vocabulary-drift-d1d3-role-naming-fsh-guts-descrip.md"
+    },
+    {
+      "id": "folio-assistant-lptq",
+      "title": "DELETED 2026-10-02: qa-reports-spike and qa-reports-spike-b, with the SHAs to restore them",
+      "status": "todo",
+      "type": "task",
+      "priority": "low",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:24:30Z",
+      "updatedAt": "2026-10-03T00:05:00Z",
+      "preview": "Owner, 2026-10-02, asked for the state of these two branches and then ruled:\n*\"qa-reports-spike branches: delete both\"*. **The owner deleted them, not the agent**\n— see §\"Who deleted them\" below, because the agent could not. This bean exists so the\ndeletion is reversible, because a deleted branch's commit is unreachable and\nunrecoverable once nothing names it.\n\n## To restore\n\n    git branch qa-rep",
+      "file": "beans/defs/folio-assistant-lptq--deleted-2026-10-02-qa-reports-spike-and-qa-reports.md"
     },
     {
       "id": "folio-assistant-lqo9",
@@ -9003,6 +9017,20 @@
       "updatedAt": "2026-10-02T16:25:26Z",
       "preview": "PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:\n\n- paper / formal-math (`folio-paper-adapter`, `authoring-math`) and the three `claude-scientific-skills` packages -> `folio-ass",
       "file": "beans/defs/folio-assistant-ybwt--placement-pr1-content-type-skill-packages-move-up.md"
+    },
+    {
+      "id": "folio-assistant-yc74",
+      "title": "arXiv licence vocabulary: ingest arXiv's licence pages and make archiving-arxiv able to fill a licence.json",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:38:48Z",
+      "updatedAt": "2026-10-02T23:42:50Z",
+      "preview": "## Brief\n\nOwner, 2026-10-02: *\"ingest docs and add to doc ingestion skills for arxiv papers\"*,\nwith arXiv's two licence pages attached. Queued beside the train-6 rebuild rather\nthan pivoting, per the standing instruction.\n\n## Why it was worth doing\n\n`archiving-arxiv` already said the right thing — *\"arXiv hosting does not imply a\nredistributable licence\"* — and then stopped, naming no licence, no ",
+      "file": "beans/defs/folio-assistant-yc74--arxiv-licence-vocabulary-ingest-arxivs-licence-pag.md"
     },
     {
       "id": "folio-assistant-yg29",
