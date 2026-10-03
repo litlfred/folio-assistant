@@ -103,3 +103,113 @@ addressed by the commit it judges, so `route` is the wrong keying for it and
 file-COUNT row inside an otherwise authored README. That is a file both authored
 and derived, which neither `route` nor `main` cleanly owns — flagged here because
 it will not fall out of the mechanism and needs a person's ruling.
+
+## HOW the first Done-when is implemented — the mechanism already exists (2026-10-03)
+
+The first box says the `docs-auto` declaration is *"still unimplemented"*. It is
+— but **nothing has to be designed for it.** Read before building, and the
+registry already carries the exact relation the owner's ruling describes.
+
+`schemas/graph-kind-registry.ts` gives a graph kind three relevant fields:
+
+| field | what it does | precedent already using it |
+|---|---|---|
+| `within` | *"the kind this one is a SUB-GRAPH of"* | declared general by the owner 2026-09-23 (#1164), for `docs/proposals/` |
+| `declarationFile` | the kind's own nested declaration, naming its groups **from within** | `skills` → `skills.json`, `processes` → `processes.json` |
+| `storage` (on the directory) | `{ branch, keyedBy: "route" }` | this arc |
+
+So the owner's *"auto-docs is one declared subgraph, with declared sub-sub-graphs
+per writer"* is:
+
+- a `docs-auto` kind with **`within: "docs"`** — one declared subgraph, sitting
+  inside `docs` rather than beside it;
+- **`declarationFile: "docs-auto.json"`** — the sub-sub-graphs named from within,
+  one per writer;
+- `storage` on that directory, `keyedBy: "route"`.
+
+`check:graph-kind-within` already holds the relation and forbids a cycle, so the
+invariant is gated the day the entry lands.
+
+### This does NOT contradict the correction above, and the distinction matters
+
+§"CORRECTION, 2026-10-03" on `06e3` records that `docs-auto` is deliberately
+**not** a graph kind. Read in full, what it rejects is a kind *handled by
+`state-visualizer.ts`* — a **one-axis viewer generator**, where docs-auto is
+two-axis (TYPE × SUB-GRAPH) and *"there is nowhere to put the second axis
+without it becoming this file anyway"*.
+
+That is a claim about **which generator renders it**. `within` /
+`declarationFile` are about **how the graph is declared and navigated**. A kind
+can be registered, related and declared from within while still being rendered
+by its own generator — `gen-docs-auto.ts` stays exactly as it is, and the
+correction's reasoning is untouched.
+
+**Stated explicitly because the two readings are one word apart**, and taking the
+broader one would mean inventing a parallel mechanism beside a general relation
+the owner already ruled for.
+
+### The one trap, for whoever implements it
+
+`gen-docs-auto.ts` already holds the 11 types in `TYPES`, with `collect()`
+functions that cannot live in JSON. So `docs-auto.json` must be **generated from
+`TYPES`** with a `:check`, never hand-written — a hand-kept copy would be a
+second answer to "what auto-doc types exist", which is the failure this
+repository has paid for most often. The derivable fields are there: a type's
+`id` gives the path segment, `title` the description, and `graph` names the
+source graph it indexes.
+
+**Falsifier, stated before building:** if a sub-sub-graph needs a field that
+cannot be derived from `TYPES`, the manifest needs hand-authored content and the
+one-source claim fails — at which point the right shape is `TYPES` reading the
+manifest rather than the reverse.
+
+## The eventual scope is ALREADY ENUMERATED — `merge-conflict-patterns.ts` (2026-10-03)
+
+The §"eventual set is wider" note above lists six writers I happened to hit on
+#1996. That was the wrong source: `scripts/merge-conflict-patterns.ts` is a
+**maintained catalogue of 24 patterns**, each a family whose merge conflicts
+somebody has already declared mechanically resolvable — and `merge-main.yml`'s
+own header says the resolution is *"mechanical BY DECLARATION"*, so the patterns
+ARE that declaration. Observed live on #1935 the same day: one bot push resolved
+`docs-auto` ×1, `readme-generated-regions` ×1 and `site-data` ×3.
+
+**And the catalogue carries its own discriminator.** `strategy` separates exactly
+what `route` separates:
+
+| `strategy` | n | what it means | keying |
+|---|---|---|---|
+| `take-base` | **20** | the newer generation is right; nothing to settle | **`route`** |
+| `refuse` | **2** | a person must settle it — `beans`, `uploads` | `tip`, or stays on `main` |
+| `qa-sidecar` | 1 | `kg-qa-sidecar`, merged by its own rule | `commit` (arc `3fva`) |
+| `generated-regions` | 1 | `readme-generated-regions` — generated regions inside AUTHORED prose | **neither, and see below** |
+
+That is not a coincidence. `take-base` and `route` are the same assertion made in
+two places: *the content is a pure function of its source, so the newer one wins.*
+`refuse` and `tip` are the other same assertion: *somebody decided this, so a
+collision is theirs to settle.* The catalogue reached it from merge behaviour and
+this arc reached it from storage; they agree, which is the strongest evidence
+either is right.
+
+### What this changes for this bean
+
+- **The family list is not mine to invent.** `docs/uml/` stays first (one
+  generator, one gate, bisectable), and the eventual set is the `take-base`
+  twenty — read from that file, not restated here, because a list in a bean is a
+  second answer that drifts.
+- **`beans` and `uploads` are explicitly OUT**, with reasons already written:
+  bean defs are *"authored work-plan state, so it is resolved by a person"*;
+  uploads are *"provenance-bearing input, never regenerated"*.
+- **`readme-generated-regions` is the genuinely hard one**, and the catalogue
+  says why better than my earlier note did: *"their generated regions carry file
+  counts and listings that every concurrent addition changes; the prose around
+  them is authored, so only a hunk INSIDE a region resolves."* A file that is
+  authored and derived at different offsets cannot be keyed as a whole by either
+  mechanism. Still a person's ruling; now with the precise reason.
+
+### A measurement this suggests, not yet taken
+
+If route-keying removes the `take-base` twenty from `main`, those twenty patterns
+have nothing left to resolve. **Whether the patterns should then be retired is
+NOT this bean's call** — they would become harmless no-ops rather than wrong, and
+a pattern that fires on nothing is the `xom7` shape this arc keeps meeting. Worth
+asking the owner at cutover rather than deciding here.
