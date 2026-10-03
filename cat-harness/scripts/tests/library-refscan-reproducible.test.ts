@@ -18,10 +18,15 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
-const REPO = join(import.meta.dir, "..", "..", "..");
-const INDEX = join(REPO, "cat-harness", "docs", "assets", "library", "index.json");
+// The site root is `siteDirFor`'s ANSWER, never the literal `docs` —
+// `site-dir-single-answer` refuses a hardcoded one, and it caught this file
+// doing it. It is right to: a test naming the output root by hand is one more
+// place the answer can disagree with the declaration.
+const HARNESS = resolve(import.meta.dir, "..", "..");
+const INDEX = join(HARNESS, siteDirFor(HARNESS), "assets", "library", "index.json");
 
 type Projection = { refScan?: Record<string, unknown> };
 
