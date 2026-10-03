@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-auto-doc-rendered-graphs/skills/content-publish/input.schema.json",
+  "title": "Content Publish Input",
+  "description": "Input schema for content publication.",
+  "type": "object",
+  "required": [
+    "versionIncrement"
+  ],
+  "properties": {
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ]
+    },
+    "releaseNotes": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string",
+      "enum": [
+        "github-release",
+        "npm",
+        "fhir-registry",
+        "arxiv"
+      ],
+      "description": "Publication target."
+    }
+  },
+  "staging": {
+    "branch": "claude/auto-doc-rendered-graphs",
+    "sha": "7b20502ce50c60ec0170ccc3f3881b5622bec4ae",
+    "pr": "1966/merge",
+    "run": "37112251811"
+  }
+}

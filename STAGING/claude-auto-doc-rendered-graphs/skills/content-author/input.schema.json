@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-auto-doc-rendered-graphs/skills/content-author/input.schema.json",
+  "title": "Content Author Input",
+  "description": "Input schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "contentType"
+  ],
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "enum": [
+        "document",
+        "fhir-ig",
+        "lean-proof",
+        "bpmn",
+        "data-dictionary"
+      ],
+      "description": "Type of content to author."
+    },
+    "sourceRef": {
+      "type": "string",
+      "description": "Reference to source material."
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Output directory for authored content."
+    }
+  },
+  "staging": {
+    "branch": "claude/auto-doc-rendered-graphs",
+    "sha": "7b20502ce50c60ec0170ccc3f3881b5622bec4ae",
+    "pr": "1966/merge",
+    "run": "37112251811"
+  }
+}
