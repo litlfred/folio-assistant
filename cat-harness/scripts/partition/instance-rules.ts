@@ -187,6 +187,10 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
+      // Its subject is every instance's declarations and source, read; it
+      // reads no folio material.
+      "scripts/check-foreign-paths.ts",
       // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
       // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
       // symlinked root makes a tool answer a question about the repository from
