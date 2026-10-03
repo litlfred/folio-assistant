@@ -308,10 +308,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T17:36:57.855Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f3b6168ff2640538d43c83a87241a4da88ff5d53",
-  "sourceCommitSha": "f3b6168ff2640538d43c83a87241a4da88ff5d53",
-  "sourceCommitAt": "2026-10-03T19:31:42+02:00",
+  "generatedAt": "2026-10-03T17:57:04.122Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a01782be2d12e6430b20a3d0a6d1c8aeb9fe7e8f",
+  "sourceCommitSha": "a01782be2d12e6430b20a3d0a6d1c8aeb9fe7e8f",
+  "sourceCommitAt": "2026-10-03T19:49:13+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -325,7 +325,7 @@
     "Lane": 209,
     "ProcessNode": 989,
     "Tool": 120,
-    "Schema": 165,
+    "Schema": 166,
     "ExternalSchema": 22,
     "GraphKind": 27,
     "Role": 49,
@@ -46851,6 +46851,15 @@
       "title": "user-story",
       "summary": "User stories — what a reader acting in a role is trying to do.",
       "module": "schemas/user-story.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vector-figure",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "vector-figure",
+      "title": "vector-figure",
+      "summary": "A DRAWN figure, assembled and rendered — bean `ay3x`, under `m4xy`. The step",
+      "module": "schemas/vector-figure.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
