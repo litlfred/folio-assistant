@@ -29,6 +29,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { codeWithoutComments } from "../repo-files.js";
+import { fshGutsDirectory } from "../../schemas/fsh-guts.js";
 
 const ROOT = join(import.meta.dir, "../..");
 /**
@@ -45,7 +46,7 @@ const ROOT = join(import.meta.dir, "../..");
  * script revives whatever it says — so the honesty property has to survive
  * the move, or the fix silently un-fixes on the day it matters.
  */
-const GEN = readFileSync(join(ROOT, "../fsh-guts/scripts/generate-docs.ts"), "utf8");
+const GEN = readFileSync(join(fshGutsDirectory(join(ROOT, "..")), "scripts/generate-docs.ts"), "utf8");
 
 /**
  * What the generator EMITS for the Remote Packages page — the `L.push(...)`
