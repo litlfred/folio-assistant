@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**225** units · **5984** terms · k = **100** · retains **78.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**225** units · **5985** terms · k = **100** · retains **78.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.08 | instance, harness, kind, graph, directory, page, session, block | *(none)* |
-| 2 | 21.70 | watcher, sibling, queue, prs, slot, commits, backlog, block | harness, instance, declaration, node, iri, directory, directories, graph |
+| 1 | 45.10 | instance, harness, kind, graph, directory, page, session, block | *(none)* |
+| 2 | 21.71 | watcher, sibling, queue, prs, slot, commits, backlog, block | harness, instance, declaration, node, iri, directory, directories, graph |
 | 3 | 18.09 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, push, branch, window, minutes, epic, goals |
 | 4 | 16.81 | page, block, text, pdf, blocks, manifest, chapter, section | sibling, ledger, subdirectory, plan, sessions, session, coordination, items |
 | 5 | 15.29 | rung, archive, archived, arm, sniff, withheld, ingest, zip | preview, tile, theme, staging, navbar, board, avatar, card |
-| 6 | 15.00 | lane, role, actor, task, edge, requirements, process, analysis | sha, queue, slide, bytes, idle, backlog, main, rebase |
-| 7 | 14.64 | preview, staging, feature, forward, url, edges, merge, chapter | tile, avatar, card, glass, sticky, board, art, theme |
-| 8 | 14.47 | edges, forward, edge, backward, logical, cross-chapter, energy, tile | actor, lane, role, requirements, requirement, feedback, pdf, sign-off |
+| 6 | 14.99 | lane, actor, role, task, edge, requirements, process, analysis | sha, queue, bytes, slide, idle, backlog, main, rebase |
+| 7 | 14.64 | preview, staging, feature, forward, edges, url, merge, chapter | tile, avatar, card, glass, sticky, board, art, theme |
+| 8 | 14.47 | edges, forward, edge, backward, logical, cross-chapter, energy, tile | actor, lane, role, requirements, requirement, feedback, pdf, github |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
