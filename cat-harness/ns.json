@@ -627,6 +627,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/openapi",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "openapi",
+      "comment": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "prefLabel": "openapi",
+      "definition": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "notation": "cat-harness:graphKind/openapi",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/policies",
       "@type": [
         "bootstrap:GraphKind",

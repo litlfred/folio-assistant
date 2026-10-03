@@ -308,14 +308,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T17:04:41.771Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1609f5c3ecf9707e90c5118b8eb5f895cc113d0d",
-  "sourceCommitSha": "1609f5c3ecf9707e90c5118b8eb5f895cc113d0d",
-  "sourceCommitAt": "2026-10-03T18:55:49+02:00",
+  "generatedAt": "2026-10-03T17:36:57.855Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f3b6168ff2640538d43c83a87241a4da88ff5d53",
+  "sourceCommitSha": "f3b6168ff2640538d43c83a87241a4da88ff5d53",
+  "sourceCommitAt": "2026-10-03T19:31:42+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 300,
+    "Skill": 303,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -325,7 +325,7 @@
     "Lane": 209,
     "ProcessNode": 989,
     "Tool": 120,
-    "Schema": 162,
+    "Schema": 165,
     "ExternalSchema": 22,
     "GraphKind": 27,
     "Role": 49,
@@ -1015,7 +1015,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
-      "instructionLines": 106,
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1654,7 +1654,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1399,
+      "instructionLines": 1400,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3012,7 +3012,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 374,
+      "instructionLines": 381,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3560,6 +3560,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "visualizer-loading",
+      "title": "Visualizer loading — the page is layout, the graph is fetched",
+      "description": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/visualizer-loading.md",
+      "instructionLines": 155,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "docs-generation",
@@ -4023,7 +4039,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 271,
+      "instructionLines": 277,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4059,6 +4075,21 @@
       "ambiguous": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-binary-artefacts",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-binary-artefacts",
+      "title": "ig-binary-artefacts",
+      "description": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
+      ],
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-build-pipeline",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ig-build-pipeline",
@@ -4068,7 +4099,22 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 127,
+      "instructionLines": 133,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-site-theme",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "ig-site-theme",
+      "title": "ig-site-theme",
+      "description": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
+      ],
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-site-theme.md",
+      "instructionLines": 88,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4083,7 +4129,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 160,
+      "instructionLines": 179,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4916,7 +4962,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "../smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 157,
+      "instructionLines": 202,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -6666,6 +6712,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "providesCapability": [],
@@ -46562,6 +46609,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/openapi",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "openapi",
+      "title": "openapi",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "module": "../cat-openapi/schemas/openapi.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adjudication",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "adjudication",
@@ -46658,6 +46713,14 @@
       "module": "../fhir-harness/schemas/fhir-artifact-index.ts"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-ast",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-ast",
+      "title": "ig-ast",
+      "summary": "ig-ast.ts — the IG AST's file formats, declared once (bean `l0lq`).",
+      "module": "../fhir-harness/schemas/ig-ast.ts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-chrome",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "ig-chrome",
@@ -46688,6 +46751,14 @@
       "title": "ig-metadata-index",
       "summary": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
       "module": "../fhir-harness/schemas/ig-metadata-index.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-releases",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "ig-releases",
+      "title": "ig-releases",
+      "summary": "ig-releases.ts — an IG's GitHub releases, recorded as POINTERS to their",
+      "module": "../fhir-harness/schemas/ig-releases.ts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak-blocks",
