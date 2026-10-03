@@ -33,8 +33,9 @@
  * `declaredIn: "storage"`, the presence checks ask {@link contentIsOffCheckout}
  * (which honours both), and an entry carrying both is refused, because two
  * answers to one question is the defect this module exists to remove.
- * `qa-store.ts` still reads `storage` directly; moving it onto the resolver
- * is #1937's file to change, not this module's. `special-branches.json` stays the
+ * `qa-store.ts` and `branch-store.ts` still read `storage` directly; moving
+ * them onto the resolver is their owners' change (#1957 takes `branch-store`'s
+ * `mount`/`push` onto it), not this module's. `special-branches.json` stays the
  * one declaration of branch NAMES (and their legacy spellings): a branch
  * source names its branch, and the resolver attaches the matching row.
  *
