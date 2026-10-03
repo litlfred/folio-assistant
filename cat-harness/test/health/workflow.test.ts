@@ -17,7 +17,7 @@
  * @module test/health/workflow.test
  */
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { describe, expect, it } from "bun:test";
 import { parse } from "yaml";
@@ -25,6 +25,7 @@ import { parse } from "yaml";
 import { buildReport, gates, render } from "./run.ts";
 import { runHealthChecks, type HealthContext } from "./checks.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { healthReportPath } from "../../schemas/health-report.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW = resolve(repoRootFor(ROOT), ".github/workflows/health-check.yml");
@@ -119,7 +120,17 @@ describe("the tracking issue", () => {
   it("keeps the machine-readable report whatever the verdict, including when it went blind", () => {
     const upload = steps.find((s) => (s.uses ?? "").startsWith("actions/upload-artifact"));
     expect(upload?.if).toBe("always()");
-    expect(String(upload?.with?.path)).toContain("repository.health-report.json");
+    // The EXACT path the producer writes, relative to the repository root the
+    // step runs in. `toContain(filename)` passed over the pre-#437 path for
+    // as long as it was wrong, and the artifact was never kept (bean r7v6, C3).
+    expect(String(upload?.with?.path)).toBe(relative(repoRootFor(ROOT), healthReportPath(ROOT)));
+    // A missing report is an error, not a warning: `warn` is what let a wrong
+    // path stay green.
+    expect(upload?.with?.["if-no-files-found"]).toBe("error");
+  });
+
+  it("runs every step from the repository root, so the upload path is resolved there", () => {
+    for (const s of steps) expect((s as { "working-directory"?: string })["working-directory"]).toBeUndefined();
   });
 
   it("treats an exit 1 with no report as unchecked rather than as a finding", () => {

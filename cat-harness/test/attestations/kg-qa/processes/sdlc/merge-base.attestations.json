@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_MergeBase",
+    "path": "processes/sdlc/merge-base.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/merge-base.bpmn",
+      "code": ".github/workflows/merge-main.yml",
+      "prose_hash": "6315b7a2a250",
+      "code_hash": "41a46d747379",
+      "by": "baseline"
+    }
+  ]
+}
