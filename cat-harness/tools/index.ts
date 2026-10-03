@@ -1862,7 +1862,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Build twice and verify instead of writing: one sha256, the row digest against the source, an FTS5 phrase query, the payload audit." },
         ],
         outputs: [
-          { name: "slices", schema: t("RepoPath"), description: "`<slice>.sqlite3` and `<slice>.sqlite3.json` per slice, and `index.json` listing them." },
+          { name: "slices", schema: t("RepoPath"), description: "`<slice>.<sha256>.sqlite3` (content-addressed) and its fixed-name `<slice>.sqlite3.json` manifest per slice, and `index.json` listing them." },
           { name: "report", schema: t("Text"), description: "One line per slice: bytes, row counts, payloads, and any source findings; with `--check`, one verdict line per slice. Exit 1 on a red slice or an unreadable source." },
         ],
       },

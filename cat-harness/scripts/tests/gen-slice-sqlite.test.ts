@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, test } from "bun:test";
 import { Database } from "bun:sqlite";
 import { createHash } from "node:crypto";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
@@ -26,13 +26,17 @@ import {
   kgData,
   libraryData,
   todosData,
+  manifestFileName,
+  rotateSliceFiles,
+  sliceFileName,
+  SLICE_FILE,
   writePayloads,
   type SliceData,
   type SliceDef,
 } from "../gen-slice-sqlite.ts";
 
 const BASE = "https://example.org/site";
-const buildBeansSlice = (beans: BeanNode[], out: string, root: string) => buildSlice(BEANS_SLICE, beansData(beans, root, BASE), out);
+const buildBeansSlice = (beans: BeanNode[], outDir: string, root: string) => buildSlice(BEANS_SLICE, beansData(beans, root, BASE), outDir);
 
 const bean = (id: string, over: Partial<BeanNode> = {}): BeanNode => ({
   id,
@@ -85,7 +89,7 @@ describe("gen-slice-sqlite — fixture", () => {
 
   test("every bean is a row, both declarations of an edge are kept, and a duplicate id is reported rather than dropped", () =>
     withDir((dir) => {
-      const m = buildBeansSlice(fixture, join(dir, "s.sqlite3"), root);
+      const m = buildBeansSlice(fixture, dir, root);
       expect(m.rows.beans).toBe(5);
       expect(m.duplicateIds).toEqual(["p-dddd"]);
       // bbbb→cccc is declared on BOTH sides: two rows, one edge in each view.
@@ -93,7 +97,7 @@ describe("gen-slice-sqlite — fixture", () => {
       expect(m.rows.bean_block).toBe(3);
       expect(m.rows.blocked_by).toBe(2);
       expect(m.rows.bean_tags).toBe(2);
-      const db = new Database(join(dir, "s.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, m.file), { readonly: true });
       expect(db.query(`SELECT blocker FROM blocked_by WHERE id = 'p-cccc' ORDER BY blocker`).all()).toEqual([
         { blocker: "p-aaaa" },
         { blocker: "p-bbbb" },
@@ -103,8 +107,8 @@ describe("gen-slice-sqlite — fixture", () => {
 
   test("bodies are NOT stored — the slice carries the payload sha256 — yet FTS5 finds a phrase in a body", () =>
     withDir((dir) => {
-      buildBeansSlice(fixture, join(dir, "s.sqlite3"), root);
-      const db = new Database(join(dir, "s.sqlite3"), { readonly: true });
+      const m = buildBeansSlice(fixture, dir, root);
+      const db = new Database(join(dir, m.file), { readonly: true });
       const cols = (db.query(`PRAGMA table_info(beans)`).all() as { name: string }[]).map((c) => c.name);
       expect(cols).not.toContain("body");
       const row = db.query(`SELECT payload_sha256, payload_bytes FROM beans WHERE id = 'p-aaaa'`).get() as { payload_sha256: string; payload_bytes: number };
@@ -123,19 +127,51 @@ describe("gen-slice-sqlite — fixture", () => {
 
   test("two builds are byte-identical, and the row digest read back equals the one computed from the beans", () =>
     withDir((dir) => {
-      const a = buildBeansSlice(fixture, join(dir, "a.sqlite3"), root);
-      const b = buildBeansSlice([...fixture].reverse(), join(dir, "b.sqlite3"), root);
+      const a = buildBeansSlice(fixture, join(dir, "a"), root);
+      const b = buildBeansSlice([...fixture].reverse(), join(dir, "b"), root);
       expect(b.sha256).toBe(a.sha256);
-      expect(readFileSync(join(dir, "a.sqlite3")).equals(readFileSync(join(dir, "b.sqlite3")))).toBe(true);
+      expect(b.file).toBe(a.file);
+      expect(readFileSync(join(dir, "a", a.file)).equals(readFileSync(join(dir, "b", b.file)))).toBe(true);
       expect(a.contentDigest).toBe(expectedContentDigest(BEANS_SLICE, beansData(fixture, root, BASE)));
-      const db = new Database(join(dir, "a.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, "a", a.file), { readonly: true });
       expect(databaseContentDigest(db, BEANS_SLICE)).toBe(a.contentDigest);
       db.close();
     }));
 
+  test("the database is published under its own sha256, and the manifest names that file (bean `wixl`)", () =>
+    withDir((dir) => {
+      const m = buildBeansSlice(fixture, dir, root);
+      const bytes = readFileSync(join(dir, m.file));
+      const hex = createHash("sha256").update(bytes).digest("hex");
+      expect(m.sha256).toBe(hex);
+      expect(m.file).toBe(`beans.${hex}.sqlite3`);
+      expect(m.file).toBe(sliceFileName("beans", hex));
+      expect(SLICE_FILE.exec(m.file)?.slice(1)).toEqual(["beans", hex]);
+      expect(m.bytes).toBe(bytes.length);
+      // Exactly ONE file is written: no fixed-path `beans.sqlite3`, no leftover temp file.
+      expect(readdirSync(dir)).toEqual([m.file]);
+      // A different source is a different name, so a cache holding the old one cannot answer for the new one.
+      const other = buildBeansSlice(fixture.slice(1), dir, root);
+      expect(other.file).not.toBe(m.file);
+      expect(other.file).toBe(sliceFileName("beans", other.sha256));
+    }));
+
+  test("rotation removes this slice's earlier builds and the legacy fixed path, and nothing else", () =>
+    withDir((dir) => {
+      const old = buildBeansSlice(fixture.slice(1), dir, root);
+      const cur = buildBeansSlice(fixture, dir, root);
+      writeFileSync(join(dir, "beans.sqlite3"), "legacy");
+      writeFileSync(join(dir, manifestFileName("beans")), "{}");
+      const otherSlice = sliceFileName("todos", "0".repeat(64));
+      writeFileSync(join(dir, otherSlice), "x");
+      writeFileSync(join(dir, "index.json"), "{}");
+      expect(rotateSliceFiles(dir, "beans", cur.file)).toEqual(["beans.sqlite3", old.file].sort());
+      expect(readdirSync(dir).sort()).toEqual([cur.file, "beans.sqlite3.json", "index.json", otherSlice].sort());
+    }));
+
   test("a slice that lost a row does not match the store's digest", () =>
     withDir((dir) => {
-      const m = buildBeansSlice(fixture.slice(1), join(dir, "s.sqlite3"), root);
+      const m = buildBeansSlice(fixture.slice(1), dir, root);
       expect(m.contentDigest).not.toBe(expectedContentDigest(BEANS_SLICE, beansData(fixture, root, BASE)));
     }));
 
@@ -158,11 +194,11 @@ describe("gen-slice-sqlite — the real bean store", () => {
   test("rows equal the bean count, and a known bean is queryable by id and by FTS", () =>
     withDir((dir) => {
       expect(beans.length).toBeGreaterThan(100);
-      const m = buildSlice(BEANS_SLICE, beansData(beans), join(dir, "beans.sqlite3"));
+      const m = buildSlice(BEANS_SLICE, beansData(beans), dir);
       expect(m.rows.beans).toBe(beans.length);
       const known = beans.find((b) => b.id === "folio-assistant-q8ar")!;
       expect(known).toBeDefined();
-      const db = new Database(join(dir, "beans.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, m.file), { readonly: true });
       expect(db.query(`SELECT title, status FROM beans WHERE id = ?`).get(known.id)).toEqual({ title: known.title, status: known.status });
       const ids = (db
         .query(`SELECT b.id FROM beans_fts JOIN beans b ON b.rowid = beans_fts.rowid WHERE beans_fts MATCH ?`)
@@ -216,10 +252,10 @@ describe("gen-slice-sqlite — todos", () => {
   test("every published todo is a row; a todo with no source file keeps its row, has no payload, and is a finding", () =>
     withDir((dir) => {
       const d = data();
-      const m = buildSlice(TODOS_SLICE, d, join(dir, "t.sqlite3"));
+      const m = buildSlice(TODOS_SLICE, d, dir);
       expect(m.rows.todos).toBe(2);
       expect(m.findings).toEqual(["todo t-bbbb: the index publishes it but no source file was found — row kept, no payload"]);
-      const db = new Database(join(dir, "t.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, m.file), { readonly: true });
       const rows = db.query(`SELECT id, payload_sha256 FROM todos ORDER BY rowid`).all() as { id: string; payload_sha256: string | null }[];
       expect(rows.map((r) => r.id)).toEqual(["t-aaaa", "t-bbbb"]);
       expect(rows[0]!.payload_sha256).toBe(createHash("sha256").update(readFileSync(join(root, "todos/items/t-aaaa.md"))).digest("hex"));
@@ -235,7 +271,7 @@ describe("gen-slice-sqlite — todos", () => {
     expect(checkSlice(TODOS_SLICE, data())).toEqual([]);
     const d = data();
     const lost: SliceData = { ...d, rows: { ...d.rows, todos: d.rows.todos!.slice(1) }, fts: d.fts.slice(1) };
-    withDir((dir) => expect(buildSlice(TODOS_SLICE, lost, join(dir, "x.sqlite3")).contentDigest).not.toBe(expectedContentDigest(TODOS_SLICE, d)));
+    withDir((dir) => expect(buildSlice(TODOS_SLICE, lost, dir).contentDigest).not.toBe(expectedContentDigest(TODOS_SLICE, d)));
   });
 
   test("the real index slices green, every todo with its source file", async () => {
@@ -275,13 +311,13 @@ describe("gen-slice-sqlite — library", () => {
   test("entries and blocks are rows; a block's payload is its PUBLISHED entry file; gaps are findings, not drops", () =>
     withDir((dir) => {
       const d = data();
-      const m = buildSlice(LIBRARY_SLICE, d, join(dir, "l.sqlite3"));
+      const m = buildSlice(LIBRARY_SLICE, d, dir);
       expect(m.rows).toEqual({ entries: 3, blocks: 3, entry_ref: 3 * (e0.referencedBy?.length ?? 0) });
       expect(m.findings).toEqual([
         "entries/lib-x.json is not in the library index — not sliced",
         "library entry lib-c: no entries/lib-c.json — entry row kept, no blocks, no payload",
       ]);
-      const db = new Database(join(dir, "l.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, m.file), { readonly: true });
       const hex = createHash("sha256").update(files.get("lib-a")!).digest("hex");
       expect(db.query(`SELECT DISTINCT payload_sha256 AS p FROM blocks WHERE entry = 'lib-a'`).all()).toEqual([{ p: hex }]);
       expect(db.query(`SELECT payload_sha256 AS p FROM entries WHERE id = 'lib-a'`).get()).toEqual({ p: hex });
@@ -327,9 +363,9 @@ describe("gen-slice-sqlite — kg", () => {
       const plan = emptyPlan();
       plan.links.set(`${DOC}#skill/a`, { "@id": `${BASE}/payload/sha256/${"a".repeat(64)}`, sha256: "a".repeat(64), bytes: 9 });
       const d = kgData(doc, plan);
-      const m = buildSlice(KG_SLICE, d, join(dir, "k.sqlite3"));
+      const m = buildSlice(KG_SLICE, d, dir);
       expect(m.rows).toEqual({ nodes: 3, edges: 4, dangling: 1 });
-      const db = new Database(join(dir, "k.sqlite3"), { readonly: true });
+      const db = new Database(join(dir, m.file), { readonly: true });
       expect(db.query(`SELECT iri, type, payload_sha256 AS p FROM nodes ORDER BY rowid`).all()).toEqual([
         { iri: "pkg/p", type: "ex:Package", p: null },
         { iri: "skill/a", type: "ex:Skill", p: "a".repeat(64) },
@@ -358,6 +394,6 @@ describe("gen-slice-sqlite — kg", () => {
     expect(d.rows.nodes!.length).toBeGreaterThan(1000);
     expect(d.payloads.links.size).toBeGreaterThan(100);
     expect(checkSlice(KG_SLICE, d)).toEqual([]);
-    withDir((dir) => expect(buildSlice(KG_SLICE, d, join(dir, "kg.sqlite3")).overBudget).toBe(false));
+    withDir((dir) => expect(buildSlice(KG_SLICE, d, dir).overBudget).toBe(false));
   }, 60_000);
 });

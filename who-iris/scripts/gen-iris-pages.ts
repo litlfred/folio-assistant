@@ -2285,8 +2285,9 @@ materialization</strong>. The graph is published as three things:</p>
       decide whether to fetch before it fetches.</li>
   <li><strong>Per-slice SQLite.</strong> CI flattens one slice into a relational schema:
       one table per node type, one table per relation, and a contentless FTS5 index. It
-      publishes the result as <code>&lt;slice&gt;.sqlite3</code>, with a
-      <code>&lt;slice&gt;.sqlite3.json</code> manifest beside it. A row holds only the payload
+      publishes the result as <code>&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, named by the
+      hash of its bytes, with a <code>&lt;slice&gt;.sqlite3.json</code> manifest at a fixed path
+      beside it that names the file. A row holds only the payload
       pointer, never the payload. The browser downloads the file, checks its sha256 against the
       manifest, imports it into the Origin Private File System, and opens it with the official
       SQLite WASM build. Nothing is parsed.</li>
@@ -2354,25 +2355,33 @@ then open the one slice that has the rows. That is the skeleton pattern again, o
   <tbody>
     <tr><th class="rid">payload</th><td>named by its sha256, so its bytes never change</td><td class="why">cache forever (<code>immutable</code>); a new body is a new URL</td></tr>
     <tr><th class="rid">subgraph JSON-LD</th><td>a stable IRI whose content changes when the graph does</td><td class="why">short TTL; a long one serves an old skeleton whose payload links may have been removed as orphans since</td></tr>
-    <tr><th class="rid">slice manifest</th><td><code>&lt;slice&gt;.sqlite3.json</code>; the client fetches it with <code>no-store</code></td><td class="why">short TTL or none; it is the one file that says which build is current</td></tr>
-    <tr><th class="rid">slice file</th><td><code>&lt;slice&gt;.sqlite3</code> at a <strong>fixed</strong> path; OPFS keys its copy by sha256</td><td class="why">see below</td></tr>
+    <tr><th class="rid">slice manifest</th><td><code>&lt;slice&gt;.sqlite3.json</code> at a <strong>fixed</strong> path; it names the slice file; the client fetches it with <code>no-store</code></td><td class="why">short TTL or none; it is the one file that says which build is current</td></tr>
+    <tr><th class="rid">slice file</th><td><code>&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, named by its sha256, so its bytes never change; OPFS keys its copy by the same sha256</td><td class="why">cache forever (<code>immutable</code>); a new build is a new URL</td></tr>
   </tbody>
 </table>
 
 <div class="caveat">
-  <p><strong>This corrects an earlier version of this section.</strong> It said that only the
-  manifest needs a short TTL, because the client keys its copy by sha256. That holds for the
-  browser&rsquo;s OPFS copy, not for a CDN. The slice file is published at the same path every
-  build. A CDN that caches it longer than the manifest will serve the old bytes against the new
-  manifest. The client then <strong>refuses</strong> them, because they fail the sha256 check.
-  The failure is safe, but search is down until the cache expires.</p>
-  <p><strong>Recommended, not built:</strong> version the slice file the way a payload is
-  versioned. Either publish it under its sha256, for example
-  <code>&lt;slice&gt;-&lt;sha256&gt;.sqlite3</code>, with the manifest&rsquo;s <code>file</code>
-  naming that path, or publish it as a payload. Then the slice file can be cached forever, and
-  only the manifest and the slice index need a short TTL. The client already resolves
-  <code>file</code> relative to the manifest, so the client would need no change. The builder
-  would.</p>
+  <p><strong>This section has been corrected twice.</strong> It first said that only the
+  manifest needs a short TTL, because the client keys its copy by sha256. That held for the
+  browser&rsquo;s OPFS copy, not for a CDN: the slice file was then published at the same path
+  every build, so a CDN could serve old bytes against a new manifest, the client would refuse
+  them on the sha256 check, and search was down until the cache expired. That is now fixed
+  (bean <code>wixl</code>). The slice file is published at
+  <code>assets/slices/&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, and the manifest&rsquo;s
+  <code>file</code> names it. A fresh manifest names a file no cache has seen. A stale one names
+  an older file that still matches it.</p>
+  <p><strong>Why not under <code>/payload/sha256/</code>:</strong> a payload is a node&rsquo;s
+  body, linked from that node and removed once nothing links to it. A slice file is linked from
+  no node, so the payload tree would treat it as an orphan. It takes the payload rule that
+  matters, immutable bytes at a hash-named address, without joining that tree.</p>
+  <p><strong>What a CDN can still hold, as built:</strong> for one manifest TTL, a stale
+  manifest together with the older file it names, which is a consistent pair. It can also hold
+  an older file that nothing names until that file expires, or a stale manifest whose file the
+  origin has stopped serving. The page reports that last case as a 404 and asks for a reload. A
+  manifest that names a file with a different sha256 is <strong>refused</strong> with a visible
+  message, never opened. Each deploy writes only the current file. Old ones do not pile up on
+  the host. GitHub Pages sends <code>max-age=600</code> for every file and cannot be told to send
+  anything else, so on Pages the manifest&rsquo;s short TTL is ten minutes.</p>
 </div>
 
 <p>No CDN layer has been chosen (bean <code>l9v6</code>, still <em>proposed</em>). Whichever

@@ -672,8 +672,8 @@ there is the whole change to make a field heavy.
 **Contract (bean `q8ar`; owner ruling 2026-10-03: the official SQLite WASM
 build with an OPFS VFS, pilot slice `beans`).** A large graph needs search on
 the client, and a static host cannot run a query. So CI flattens one slice into
-a relational schema and publishes it as `<slice>.sqlite3`, and the browser
-opens that file as it is. There is nothing to parse, because SQLite reads its
+a relational schema and publishes it as `<slice>.<sha256>.sqlite3`, and the
+browser opens that file as it is. There is nothing to parse, because SQLite reads its
 B-tree pages on demand. This is the **skeleton** of `f233` in a second
 encoding. It never replaces the JSON-LD files above; it sits beside them for
 the consumer that has to search.
@@ -751,6 +751,8 @@ budget means stop and report (the process's budget gateway), not ship.
 
 `<slice>.sqlite3.json`, `$schema: folio-slice-sqlite/v1`, carries:
 
+- `file`, the database's content-addressed name (§"Content-addressed file,
+  fixed-name manifest");
 - `sha256` and `bytes` of the file;
 - `contentDigest`, a sha256 over the canonical row dump;
 - the row count of each table;
@@ -773,6 +775,54 @@ these are the bytes that were promised; it is what the client verifies a
 download against and keys its cache by. `contentDigest` asks whether this is
 the same data, and it stays equal across a SQLite upgrade that changes the
 file's bytes. The header records the writing library's version at offset 96.
+
+### Content-addressed file, fixed-name manifest
+
+**Bean `wixl`, 2026-10-03.** The database was published at `<slice>.sqlite3`,
+one path across builds. Behind a CDN with any TTL a client could fetch a fresh
+manifest and a stale database, fail the sha256 check, and fall back: safe for
+correctness, unsafe for availability. So the database is now
+**`assets/slices/<slice>.<sha256>.sqlite3`**, the full lower-case hex of its
+bytes, and the manifest's `file` names it. A fresh manifest names a file no
+cache has seen. A stale manifest names an older file whose bytes still hash to
+what that manifest promises, so the worst case is an older but
+self-consistent database, or a 404 the page reports.
+
+**Why not `payload/sha256/<hex>`.** §"Payloads" is the muscle: a node's body,
+the source file verbatim, linked from a node's `payload` and kept only while
+something links to it. A slice file is the skeleton in a second encoding. It
+is derived and SQLite-version dependent, and no node links to it, so under the
+payload tree's own orphan rule it would be an orphan. It would also need a
+`<hex>.json` sidecar for a media type that its extension already gives. What
+the scheme does take from §"Payloads" is the property that matters,
+**immutable, not kept forever**. It also takes the full hex rather than a
+prefix, so the name's hash segment is `sha256` by construction and can be
+checked against it. Beside its manifest, `file` stays a sibling name that the
+client resolves against the manifest's URL.
+
+**The manifest stays at the fixed `<slice>.sqlite3.json`** because it is the
+one file that says which build is current, and the page finds it by slice
+name. It needs a **short TTL**. The client's `no-store` bypasses only the
+browser cache; a CDN keeps the manifest for the host's TTL, and GitHub Pages
+sends `max-age=600`, which a repository cannot change. With content addressing
+that TTL bounds availability, not correctness.
+
+**Rotation.** A build writes only the current file and removes any other
+`<slice>.<hex>.sqlite3` of the same slice from `--out`, along with the legacy
+`<slice>.sqlite3` (`rotateSliceFiles`). Nothing else in the directory is
+touched. On `gh-pages` nothing piles up. `docs-site.yml` publishes as a full
+replace and restores each `STAGING/` preview as it was. `feature-staging.yml`
+empties `STAGING/<slug>/` before copying the build in, and
+`staging-rotate.ts` caps the number of previews. **What a CDN can still
+hold:**
+
+- for one TTL, a stale manifest together with the older file it names;
+- an older file that nothing now names, until it expires;
+- a stale manifest whose file the origin no longer serves. The client reports
+  this case as a 404 with "reload", never as an empty result.
+
+The branch's git history keeps old blobs, as it always did when one path
+changed bytes.
 
 ### Deterministic, proved
 
@@ -816,7 +866,9 @@ therefore checks, for every slice:
 - an FTS5 phrase query finds a known row, and a slice with no row to probe is
   red rather than an empty green;
 - the payloads pass `auditPayloadTree`; for `kg`, every pointer names a
-  payload the committed tree holds.
+  payload the committed tree holds;
+- the manifest's `file` is the content-addressed name of the file the build
+  wrote.
 
 ### The client — download, OPFS, mount, with a fallback
 
@@ -827,10 +879,14 @@ therefore checks, for every slice:
 2. Look in OPFS for `/<slice>-<sha256>.sqlite3`. A hit opens with **no
    download**. A new build has a new name, which is the whole invalidation
    story.
-3. On a miss, download the file as an ArrayBuffer. **Refuse** it if its sha256
-   is not the manifest's. Import it into the pool and unlink older builds of
-   that slice.
-4. Open it.
+3. On a miss, download the file **by the manifest's `file`** as an
+   ArrayBuffer. **Refuse** it if its sha256 is not the manifest's. That is a
+   `SliceIntegrityError`, which no fallback retries: the same URL would give
+   the same answer. The page shows it ("the manifest and the database
+   disagree … Refused") and marks `data-slice-error="integrity"`. Import it
+   into the pool and unlink older builds of that slice.
+4. Open it. `info.contentAddressed` is false only for a pre-`wixl` manifest
+   that names a fixed path.
 
 **The VFS is `opfs-sahpool`, in a Worker** (`slice-sqlite-worker.js`), not the
 `opfs` VFS. That one needs SharedArrayBuffer, which needs COOP/COEP headers,

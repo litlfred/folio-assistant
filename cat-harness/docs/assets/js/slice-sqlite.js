@@ -8,15 +8,22 @@
  * ## What it does, in order
  *
  * 1. Fetches the MANIFEST (`no-store`, because it is small and is what says
- *    whether the database changed).
+ *    whether the database changed). The manifest is at a FIXED path; the
+ *    database is not.
  * 2. Looks in OPFS for `/<slice>-<sha256>.sqlite3`. A hit opens with no
  *    download at all, because a new build has a new sha256 and so a new name.
  *    That is the whole cache-invalidation story.
- * 3. On a miss, it downloads the database as an ArrayBuffer and verifies its
- *    sha256 against the manifest. A mismatch is REFUSED rather than opened, so
- *    a reader never searches bytes nobody vouched for. It then imports the
- *    file into the `opfs-sahpool` VFS and unlinks older builds of the same
- *    slice.
+ * 3. On a miss, it downloads the database BY THE NAME THE MANIFEST GIVES
+ *    (`file`, published as `<slice>.<sha256>.sqlite3` — bean `wixl`) and
+ *    verifies its sha256 against the manifest. Because the name is the hash,
+ *    a CDN cannot pair a fresh manifest with a stale database under one URL;
+ *    a stale manifest at worst names an older, self-consistent build. A
+ *    mismatch is still REFUSED rather than opened, so a reader never searches
+ *    bytes nobody vouched for, and it is a {@link SliceIntegrityError}: every
+ *    fallback below re-throws it instead of downloading again, because the
+ *    same URL would give the same answer and the page must say so. The file is
+ *    then imported into the `opfs-sahpool` VFS and older builds of the same
+ *    slice are unlinked.
  * 4. Opens the database. SQLite reads B-tree pages on demand, so there is no
  *    parse step.
  *
@@ -47,13 +54,39 @@ async function sha256Hex(buf) {
   return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
+/**
+ * The manifest and the database it names disagree. Not an OPFS failure, so no
+ * fallback retries it: it is reported, never silently accepted.
+ */
+export class SliceIntegrityError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "SliceIntegrityError";
+  }
+}
+
+/** True for an integrity failure, including one that crossed the Worker boundary as text. */
+const isIntegrity = (e) => !!e && (e.name === "SliceIntegrityError" || e.integrity === true);
+
+/** `<slice>.<sha256>.sqlite3` — the name a content-addressed build is published under. */
+const contentAddressed = (manifest) => manifest.file === `${manifest.slice}.${manifest.sha256}.sqlite3`;
+
 async function fetchVerified(dbUrl, manifest) {
+  // A content-addressed name is immutable, so the HTTP cache may answer it.
   const r = await fetch(dbUrl);
-  if (!r.ok) throw new Error(`slice ${manifest.slice}: ${dbUrl} answered ${r.status}`);
+  if (!r.ok) {
+    throw new Error(`slice ${manifest.slice}: ${manifest.file} answered ${r.status}` +
+      (r.status === 404 && contentAddressed(manifest)
+        ? " — the manifest names a build no longer published; reload to fetch the current manifest"
+        : ""));
+  }
   const buf = await r.arrayBuffer();
   const got = await sha256Hex(buf);
   if (got !== manifest.sha256) {
-    throw new Error(`slice ${manifest.slice}: downloaded bytes hash to ${got}, the manifest promises ${manifest.sha256} — refused`);
+    throw new SliceIntegrityError(
+      `slice ${manifest.slice}: the manifest and the database disagree — ${manifest.file} hashes to ${got}, ` +
+      `the manifest promises ${manifest.sha256}. Refused, not opened.`,
+    );
   }
   return new Uint8Array(buf);
 }
@@ -92,6 +125,7 @@ export async function openInScope(manifestUrl, { allowOpfs }) {
       db = new pool.OpfsSAHPoolDb(name, "r");
       mode = "opfs-sahpool";
     } catch (e) {
+      if (isIntegrity(e)) throw e;
       opfsError = String(e && e.message ? e.message : e);
       db = null;
     }
@@ -113,6 +147,9 @@ export async function openInScope(manifestUrl, { allowOpfs }) {
     info: {
       mode,
       downloaded,
+      // False only for a manifest written before bean `wixl` (a fixed `file`):
+      // still verified by sha256, but a CDN can pair it with stale bytes.
+      contentAddressed: contentAddressed(manifest),
       opfsError,
       ms: Math.round(performance.now() - t0),
       manifest,
@@ -137,12 +174,12 @@ export async function openSlice(manifestUrl) {
       let seq = 0;
       const pending = new Map();
       worker.onmessage = (ev) => {
-        const { id, ok, result, error } = ev.data;
+        const { id, ok, result, error, integrity } = ev.data;
         const p = pending.get(id);
         if (!p) return;
         pending.delete(id);
         if (ok) p.resolve(result);
-        else p.reject(new Error(error));
+        else p.reject(integrity ? new SliceIntegrityError(error) : new Error(error));
       };
       // A Worker that fails to LOAD sends no message, only an error event. Without
       // this the open would hang forever instead of falling back.
@@ -160,6 +197,8 @@ export async function openSlice(manifestUrl) {
       const info = await call("open", { manifestUrl: abs });
       return { mode: info.mode, info, query: (sql, params = []) => call("query", { sql, params }) };
     } catch (e) {
+      // A manifest/database mismatch is the answer, not a Worker problem.
+      if (isIntegrity(e)) throw e;
       // A Worker that cannot start or cannot open falls through to the main
       // thread. The reason is kept, so the page can say why it is in memory.
       const { db, info } = await openInScope(abs, { allowOpfs: false });
