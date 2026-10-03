@@ -65,6 +65,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`table-filter.e2e.ts`](table-filter.e2e.ts) | a file |  |
 | [`test-server.e2e.ts`](test-server.e2e.ts) | a file |  |
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
+| [`todo-page.e2e.ts`](todo-page.e2e.ts) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
