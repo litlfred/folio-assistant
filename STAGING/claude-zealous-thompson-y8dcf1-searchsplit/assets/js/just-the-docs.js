@@ -1,3 +1,18 @@
+// just-the-docs 0.12.0's own `assets/js/just-the-docs.js`, copied VERBATIM from
+// the gem so this site's copy takes precedence over the theme's, with ONE
+// change: the search index is built on the reader's first focus of the search
+// box instead of on every page load. Bean `2tfy`.
+//
+// Why. Measured 2026-10-03 on a local build in headless Chromium: the theme
+// fetched `search-data.json` (12,040 entries, 13.7 MB raw, 2.8 MB gzip) and
+// built the lunr index on EVERY page view, costing ~4.7 s of main-thread script
+// and ~315 MB of JS heap before anybody searched; with the index withheld the
+// same page used 42 ms and 1 MB. A reader who never searches now pays nothing;
+// one who does pays once, on that page, when they reach for it.
+//
+// Keeping it in step. `remote_theme` in `_config.yml` pins v0.12.0; when that
+// pin moves, re-copy the new version's file and re-apply the two marked hunks
+// (search for `2tfy`). Everything else must stay byte-identical to the gem.
 (function (jtd, undefined) {
 
 // Event handling
@@ -104,6 +119,13 @@ function initSearch() {
       });
 
       searchLoaded(index, docs);
+      // 2tfy: the reader focused the box (and may have typed) BEFORE
+      // `searchLoaded` attached its handlers; its focus handler runs the
+      // search on whatever is in the box, so replay it once.
+      var lazyInput = document.getElementById('search-input');
+      if (lazyInput && (document.activeElement === lazyInput || lazyInput.value)) {
+        lazyInput.dispatchEvent(new Event('focus'));
+      }
     } else {
       console.log('Error loading ajax request. Request status:' + request.status);
     }
@@ -543,7 +565,16 @@ jtd.onReady(function(){
     activateNav();
     scrollNav();
   }
-  initSearch();
+  // 2tfy: build the index on first focus of the search box, not on load.
+  var lazySearchInput = document.getElementById('search-input');
+  if (lazySearchInput) {
+    var lazySearchStarted = false;
+    jtd.addEvent(lazySearchInput, 'focus', function(){
+      if (lazySearchStarted) return;
+      lazySearchStarted = true;
+      initSearch();
+    });
+  }
 });
 
 // Accessibility: set tabindex=0 on each code highlight block, so screenreaders
