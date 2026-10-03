@@ -648,6 +648,14 @@ jobs:
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
+      # One search index per scope — each instance, each target locale, the
+      # platform — cut from the index Jekyll just wrote, plus the manifest a
+      # page reads to load only its own (issue #1972, bean `m7mn`). Before the
+      # verify step, whose `search-scopes` verifier checks the split matches
+      # THIS index and partitions it exactly.
+      - name: Split the search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+
       # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
       # triggers an alert to the publisher manager ... before deployment".

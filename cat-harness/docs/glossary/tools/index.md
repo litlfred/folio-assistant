@@ -856,6 +856,13 @@ Site search index <span class="fa-gloss-status">candidate, extracted</span>
 <p>The just-the-docs search index, <code>assets/js/search-data.json</code>, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-search-index</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--site-search-scopes" data-fa-state="extracted" data-fa-gloss="">
+Site search scopes <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus <code>assets/js/search/manifest.json</code> naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean <code>m7mn</code>). Run on the assembled site after the index is written or borrowed.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-search-scopes</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--schema-docs" data-fa-state="extracted" data-fa-gloss="">
 Skill contract reference <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

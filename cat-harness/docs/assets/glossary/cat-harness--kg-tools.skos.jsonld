@@ -1554,6 +1554,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/site-search-scopes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Site search scopes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed."
+        }
+      ],
+      "skos:notation": "site-search-scopes",
+      "dcterms:source": "cat-harness/tools/index.ts#site-search-scopes",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/skill-docs",
       "@type": "skos:Concept",
       "skos:inScheme": {

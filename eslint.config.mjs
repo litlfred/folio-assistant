@@ -73,6 +73,15 @@ export default tseslint.config(
       // gitignored here, so nothing else in the repo had ever put hand-written
       // JavaScript in front of eslint.
       "**/vendor/**",
+      // The theme's own `assets/js/just-the-docs.js`, copied verbatim from the
+      // just-the-docs 0.12.0 gem with two hunks marked `2tfy` (lazy search).
+      // Ignored for both reasons above at once: it is upstream code whose
+      // value is matching its upstream, and it is a Liquid template — Jekyll
+      // front matter and `{% %}` tags — that eslint cannot parse at all
+      // ("Parsing error: Expression expected" at 1:2). Its behaviour is pinned
+      // by `cat-harness/test/search-lazy.e2e.ts`, which renders it through
+      // Liquid and runs it.
+      "cat-harness/docs/assets/js/just-the-docs.js",
     ],
   },
   ...tseslint.configs.recommended,
