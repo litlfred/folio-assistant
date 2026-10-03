@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T07:52:09.063Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0e8082db9506dcbac1bd9b9c7661df837c3e6209",
-  "sourceCommitSha": "0e8082db9506dcbac1bd9b9c7661df837c3e6209",
-  "sourceCommitAt": "2026-10-03T07:49:19Z",
+  "generatedAt": "2026-10-03T08:15:04.701Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ac5703e00a6bf9c47b4383e01d7ebdf28dec94ec",
+  "sourceCommitSha": "ac5703e00a6bf9c47b4383e01d7ebdf28dec94ec",
+  "sourceCommitAt": "2026-10-03T07:57:05Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -316,9 +316,9 @@
     "SkillPackage": 35,
     "Decision": 10,
     "Process": 78,
-    "SequenceFlow": 1036,
+    "SequenceFlow": 1038,
     "Lane": 208,
-    "ProcessNode": 977,
+    "ProcessNode": 978,
     "Tool": 117,
     "Schema": 157,
     "ExternalSchema": 20,
@@ -28160,8 +28160,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 14,
-      "flowCount": 20,
+      "nodeCount": 15,
+      "flowCount": 22,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -28352,6 +28352,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_UnrunGates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_UnrunGates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
       "name": "CI/CD Pipeline",
@@ -28382,7 +28400,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "All eight, in parallel",
+      "name": "Every job, in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -28402,7 +28420,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -28569,6 +28588,29 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_UnrunGates",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Registered gates that never run (HARD)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_UnrunGates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Skill-registration chain (UNMASKED)",
@@ -28611,7 +28653,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agentic-se-literature/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
