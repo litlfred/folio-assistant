@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/fhir-client/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-client",
+      "@type": "cat-harness:SkillPackage",
+      "name": "fhir-client"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/fhir-client-operations",
+      "@type": "bootstrap:Skill",
+      "name": "fhir-client-operations",
+      "title": "fhir-client-operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/smart-launch",
+      "@type": "bootstrap:Skill",
+      "name": "smart-launch",
+      "title": "smart-launch"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/fhir-client",
+  "path": "skills/fhir-client/"
+}

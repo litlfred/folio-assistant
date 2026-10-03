@@ -176,6 +176,26 @@ describe("gen-subgraph-jsonld", () => {
     expect(SubgraphIndexSchema.safeParse({ ...doc, "@context": { x: "http://x/" } }).success).toBe(false);
   });
 
+  test("an overlaid instance heads its own tree, and the repository index lists every root (bean ax6r)", () => {
+    const repo = JSON.parse(files.get(join(outDir, SUBGRAPH_INDEX_FILE))!) as Record<string, unknown>;
+    expect(repo["@id"]).toBe(plan.repoIri);
+    expect(SubgraphIndexSchema.safeParse(repo).success).toBe(true);
+    expect(repo.hasSubgraph).toEqual(plan.harnessRoots);
+    expect(plan.harnessRoots[0]).toBe(plan.rootIri);
+    // folio-assistant-core's processes are nodes of THIS graph (kg-export's
+    // corpus), and they sit in that instance's tree — not in this root.
+    const core = `${plan.repoIri}folio-assistant-core/`;
+    expect(plan.harnessRoots).toContain(core);
+    const hyd = JSON.parse(files.get(join(outDir, "folio-assistant-core", "processes", SUBGRAPH_HYDRATED_FILE))!) as Record<string, unknown>;
+    const members = hydratedMembers(hyd);
+    const lifecycle = [...plan.nodes.values()].find((n) => String(n.sourcePath ?? "").endsWith("content-lifecycle.bpmn"))!;
+    expect(members.has(lifecycle["@id"])).toBe(true);
+    const root = read("", SUBGRAPH_INDEX_FILE);
+    expect(((root.hasMember ?? []) as Array<{ "@id": string }>).some((m) => m["@id"] === lifecycle["@id"])).toBe(false);
+    // No tree for bootstrap: pve3 keeps its processes out of this graph.
+    expect(plan.harnessRoots.some((r) => /\/subgraph\/bootstrap(-tools)?\/$/.test(r))).toBe(false);
+  });
+
   test("an unplaceable node is a problem, never silently dropped", () => {
     const p = planSubgraphs(
       [

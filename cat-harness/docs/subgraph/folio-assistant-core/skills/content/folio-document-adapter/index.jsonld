@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/folio-document-adapter/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+      "@type": "cat-harness:SkillPackage",
+      "name": "folio-document-adapter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "document-authoring",
+      "title": "document-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing",
+      "@type": "bootstrap:Skill",
+      "name": "document-publishing",
+      "title": "document-publishing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-structure",
+      "@type": "bootstrap:Skill",
+      "name": "document-structure",
+      "title": "document-structure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/normative-statements",
+      "@type": "bootstrap:Skill",
+      "name": "normative-statements",
+      "title": "normative-statements"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/content/folio-document-adapter",
+  "path": "skills/content/folio-document-adapter/"
+}

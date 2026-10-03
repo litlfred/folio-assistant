@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
+      "@type": "cat-harness:SkillPackage",
+      "name": "skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deep-document-research",
+      "@type": "bootstrap:Skill",
+      "name": "deep-document-research",
+      "title": "Deep document research"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/skill-definitions/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/voices/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}

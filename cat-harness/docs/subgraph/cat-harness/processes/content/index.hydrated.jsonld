@@ -10,13 +10,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-delta-review.svg",
+      "description": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: \"list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering\").\n\nWHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §\"Where this sits in a process\" states the placement until it is.\n\nWHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling rather than as a curiosity.\n\nWHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4).",
       "enforcement": "advisory",
       "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Is the incremental IG AST what a full build would have produced?",
       "nodeCount": 10,
       "sourcePath": "processes/content/ig-ast-delta-review.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/ig-ast-delta-review.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready",
+      "summary": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1",
@@ -282,13 +286,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/review-narrative.svg",
+      "description": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.\n\nYou are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative.\n\nEverything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`. The separation is why a review can be thorough without being a veto.",
       "enforcement": "strict",
       "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Narrative review",
       "nodeCount": 9,
       "sourcePath": "processes/content/review-narrative.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview/node/Start_ProseChanged"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/review-narrative.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview/node/Start_ProseChanged",
+      "summary": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview/flow/F_N1",
@@ -376,6 +384,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview/node/Call_VoiceOverlay",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-overlay-review",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -456,6 +465,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview/node/Task_AdjudicateVoice",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-editorial-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"
@@ -526,13 +536,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/review-task.svg",
+      "description": "The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.\n\nYou are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both — prose and the code it describes — takes a branch of its own, which reviews the two against each other; the gateway is exclusive and takes exactly one branch, so the earlier wording, that such a change goes through both, described a route the diagram could not take (issue #1042).\n\nThe accept-or-send-back decision lives here and nowhere beneath it. The subprocesses produce findings; this is the only lane entitled to turn findings into an outcome, and keeping that single makes \"who decided\" answerable.",
       "enforcement": "strict",
       "flowCount": 11,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Review task",
       "nodeCount": 10,
       "sourcePath": "processes/content/review-task.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/node/Start_ChangeToReview"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/review-task.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/node/Start_ChangeToReview",
+      "summary": "The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/flow/F_R1",
@@ -645,6 +659,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/node/Call_CodeReview",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/lane/Lane_Reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/flow/F_R4",
@@ -660,6 +675,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/node/Call_NarrativeCodeReview",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeCodeReview",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/lane/Lane_Reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/flow/F_R10",
@@ -675,6 +691,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/node/Call_NarrativeReview",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/lane/Lane_Reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review/flow/F_R3",
@@ -807,13 +824,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/voice-review.svg",
+      "description": "The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception.\n\nYou are in this process after the base voice has been adjudicated, and only if a voice is active at all: the first gateway ends the process honestly when none is, rather than reporting a clean review of nothing.\n\nThree outcomes, all legitimate, and the third is the one that needs recording: an exception without a reviewer entry is indistinguishable from a rule nobody ran. There is also a fourth path the diagram draws deliberately — if the rule's own citation does not support it, the RULE is the defect, and that becomes a bean rather than a finding against the prose.",
       "enforcement": "strict",
       "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Voice overlay review",
       "nodeCount": 12,
       "sourcePath": "processes/content/voice-review.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview/node/Start_BaseVoiceDone"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/voice-review.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview/node/Start_BaseVoiceDone",
+      "summary": "The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview/flow/F_V1",
@@ -1036,6 +1057,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview/node/Task_Adjudicate",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-overlay-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"

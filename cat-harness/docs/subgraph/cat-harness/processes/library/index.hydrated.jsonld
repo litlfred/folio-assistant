@@ -10,13 +10,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-build-l1-kg.svg",
+      "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "flowCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Ingestion subprocess — build the L1 knowledge graph",
       "nodeCount": 7,
       "sourcePath": "processes/library/ingest-build-l1-kg.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg/node/StartEvent_Derived2"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg/node/StartEvent_Derived2",
+      "summary": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg/flow/Flow_k1",
@@ -197,13 +201,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/content-acquisition.svg",
+      "description": "How a resource gets into the graph in the first place. `document-ingestion.bpmn` begins at \"a file lands in uploads/\" and calls that its only entry point — true of ingestion, and silent on how the file got there. This is the step before it. The channels are plural and the set is open: uploads/ is one, the conversation is another.",
       "enforcement": "strict",
       "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Content acquisition",
       "nodeCount": 9,
       "sourcePath": "processes/library/content-acquisition.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentAcquisition/node/Start_Acquire"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/content-acquisition.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentAcquisition/node/Start_Acquire",
+      "summary": "How a resource gets into the graph in the first place."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentAcquisition/flow/SF_CA_1",
@@ -448,13 +456,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/copy-out-materialized.svg",
+      "description": "Somebody wants to change content this repository holds a read-only materialized copy of: copy it into their own `folio/`, recording which original it came out of. Materialized content is read-only. The owner, 2026-09-21: \"if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it.\" And 2026-09-22, choosing between advising and enforcing: enforce from the start.\n\nSTRICT, and the reason is narrow. Only one step here is a gate, and it is Gateway_Frozen: whether the target is read-only at all. Everything after it is mechanical. What makes the process strict is that skipping it does not fail loudly — an edit in place succeeds, and is only caught later by check:materialized-fixity hashing bytes against the digest their record carries. A process whose omission looks exactly like compliance is the vlhk shape, and advisory would not hold it.\n\nThe copy-out re-opens NONE of the five materialisation gates. Those were answered when this repository decided it may hold these bytes at all (materialize-remote.bpmn); copying something already held is not a second acquisition. What the copy does inherit is the restrictions and copyright verdicts — the copy is a new artefact in the copier's folio, and publishing it is that folio's decision.\n\nThe three states, the five gates and the provenance pair are folio-assistant-core/schemas/materialization.ts. Nothing here restates them.",
       "enforcement": "strict",
       "flowCount": 8,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Copy out materialized content — to work on somebody else's bytes",
       "nodeCount": 9,
       "sourcePath": "processes/library/copy-out-materialized.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/copy-out-materialized.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/node/StartEvent_WantToEdit",
+      "summary": "Somebody wants to change content this repository holds a read-only materialized copy of: copy it into their own `folio/`, recording which original it came out of."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized/flow/Flow_1",
@@ -702,13 +714,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-derive-content.svg",
+      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Ingestion subprocess — derive content from the assets",
       "nodeCount": 10,
       "sourcePath": "processes/library/ingest-derive-content.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeriveContent/node/StartEvent_Assets"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeriveContent/node/StartEvent_Assets",
+      "summary": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeriveContent/flow/Flow_d1",
@@ -995,13 +1011,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-extract-structure.svg",
+      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "flowCount": 8,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Ingestion subprocess — extract structure",
       "nodeCount": 8,
       "sourcePath": "processes/library/ingest-extract-structure.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ExtractStructure/node/StartEvent_Binary"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ExtractStructure/node/StartEvent_Binary",
+      "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ExtractStructure/flow/Flow_e1",
@@ -1213,13 +1233,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/human-translation-workflow.svg",
+      "description": "The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.\n\nYou are in this process when a person is doing the translating. `translation-workflow` is the machine half — extraction, injection, staleness — and it hands off to this one at exactly the point a judgement is needed. The two are separate because completeness is mechanical and accuracy is not: the coordinator's gate asks whether enough strings are filled, the reviewer's asks whether they are right, and no amount of the first substitutes for the second.\n\nWhat makes a translation OFFICIAL is the reviewer's sign-off, never the file being complete.",
       "enforcement": "strict",
       "flowCount": 21,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Human Translation Workflow",
       "nodeCount": 20,
       "sourcePath": "processes/library/human-translation-workflow.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/node/Start_TranslationNeeded"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/human-translation-workflow.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/node/Start_TranslationNeeded",
+      "summary": "The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/flow/F01",
@@ -1757,13 +1781,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/document-ingestion.svg",
+      "description": "The whole path from a file landing in `uploads/` to a citeable L1 source knowledge graph, calling the ingestion subprocesses in turn. folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Document ingestion — uploads/ to the L1 source knowledge graph",
       "nodeCount": 16,
       "sourcePath": "processes/library/document-ingestion.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped",
+      "summary": "The whole path from a file landing in `uploads/` to a citeable L1 source knowledge graph, calling the ingestion subprocesses in turn."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1",
@@ -1941,6 +1969,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -1960,6 +1989,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Derive",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeriveContent",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -1979,6 +2009,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ExtractStructure",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -1995,6 +2026,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Gate",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -2011,6 +2043,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IngestTheme",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-art-intake",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -2208,13 +2241,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-l1-completeness-gate.svg",
+      "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
       "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Ingestion subprocess — the L1 completeness gate",
       "nodeCount": 8,
       "sourcePath": "processes/library/ingest-l1-completeness-gate.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/node/StartEvent_KgBuilt"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-l1-completeness-gate.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/node/StartEvent_KgBuilt",
+      "summary": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftReal",
@@ -2402,6 +2439,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/node/Task_FlagDrift",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"
@@ -2462,13 +2500,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/materialize-remote.svg",
+      "description": "One process, called wherever remote content is landed locally. The owner, 2026-09-20: \"so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess.\"\n\nTwo callers today and they are genuinely the same shape: sample-import.bpmn landing three items out of an ~0.7 TB catalogue, and bootstrap fetching a harness. upstream-pins.json is half of the second one's refresh and names itself neither.\n\nSTRICT, and the five gates are why. Each is a decision a person makes and none is answerable from a file, so a gate that only warned would be a gate nobody fails — the xom7 shape, a workflow that failed all thirty times it ran with nothing in the repository saying so.\n\nThe three states (referenced / materialized / unknown) and the five gates are schemas/materialization.ts in folio-assist-core. Nothing here restates them.",
       "enforcement": "strict",
       "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Materialize remote content — the shared subprocess",
       "nodeCount": 14,
       "sourcePath": "processes/library/materialize-remote.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote/node/StartEvent_Asked"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/materialize-remote.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote/node/StartEvent_Asked",
+      "summary": "One process, called wherever remote content is landed locally."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote/flow/Flow_1",
@@ -2829,13 +2871,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/methodology-from-source.svg",
+      "description": "Adopt the method of a shared paper, book or standard: origin and licence, ingestion, what is adopted and refused, placement by ownership, integration by calling existing processes, and the owner's review. The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refused, place it by ownership, integrate it into the processes that already exist by calling them rather than copying them, make every skill and tool it uses a declared Tool, relate it to existing beans and issues, and put the adoption to the owner. Written 2026-09-23 while adopting WireGen (arXiv:2312.07755) as the worked case. Operating skill: adopt-methodology-from-source; the adoption rules themselves are folio-assistant's methodology-adoption.",
       "enforcement": "strict",
       "flowCount": 12,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Adopt a methodology from a source document",
       "nodeCount": 12,
       "sourcePath": "processes/library/methodology-from-source.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/node/Start_MFS"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/methodology-from-source.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/node/Start_MFS",
+      "summary": "Adopt the method of a shared paper, book or standard: origin and licence, ingestion, what is adopted and refused, placement by ownership, integration by calling existing processes, and the owner's review."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/flow/SF_Process_MethodologyFromSource_1",
@@ -3039,6 +3085,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/node/Call_Ingest",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/flow/SF_Process_MethodologyFromSource_2",
@@ -3054,6 +3101,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/node/Call_RelatedWork",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource/flow/SF_Process_MethodologyFromSource_3",
@@ -3148,13 +3196,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/refresh-materialized.svg",
+      "description": "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead. Owner, 2026-09-20: \"also need to know about refreshing amterialed remote content. general process used everywhere.\"\n\nREFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere.\n\nAn ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy.",
       "enforcement": "strict",
       "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Refresh materialized remote content",
       "nodeCount": 14,
       "sourcePath": "processes/library/refresh-materialized.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/StartEvent_Due"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/refresh-materialized.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/StartEvent_Due",
+      "summary": "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_1",
@@ -3432,6 +3484,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Adjudicate",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"
@@ -3573,16 +3626,19 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/sample-import.svg",
       "enforcement": "strict",
       "flowCount": 15,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Sample import into a structured data store",
       "nodeCount": 16,
       "sourcePath": "processes/library/sample-import.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/sample-import.bpmn",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Proposed",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/StartEvent_Upstream"
-      ]
+      ],
+      "summary": "The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/flow/Flow_1",
@@ -3738,6 +3794,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Materialize",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote"
@@ -3757,6 +3814,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport/node/Call_Refresh",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote"
@@ -4003,13 +4061,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/subscribe-kg.svg",
+      "description": "Subscribe a folio or harness to an external knowledge graph pinned to a full commit SHA, then take each chosen part from referenced to materialized through `materialize-remote` and instantiate each chosen harness once its needs are held. Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8.\n\nA SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time.\n\nA SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository.\n\nWHERE IT LIVES: cat-harness/processes/, beside Process_MaterializeRemote and Process_RefreshMaterialized, which it calls, and naming the kg-subscription and materialize-remote skills in cat-harness/skills/library/large-datasets/. It was written in large-datasets (proposal decision #3), because those subprocesses and skills lived there and a diagram in cat-harness would have run every edge against the dependency arrow (bean cjvs). The owner's 2026-10-01 ruling dissolved large-datasets into cat-harness's concern groups (bean j7ql), so the callees came with it: the calls are siblings again and every ref stays inside the harness.\n\nSTRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned.",
       "enforcement": "strict",
       "flowCount": 24,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Subscribe to an external knowledge graph",
       "nodeCount": 20,
       "sourcePath": "processes/library/subscribe-kg.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/node/StartEvent_Wanted"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/subscribe-kg.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/node/StartEvent_Wanted",
+      "summary": "Subscribe a folio or harness to an external knowledge graph pinned to a full commit SHA, then take each chosen part from referenced to materialized through `materialize-remote` and instantiate each chosen harness once its needs are held."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/flow/Flow_1",
@@ -4243,6 +4305,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/node/Call_Materialize",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -4259,6 +4322,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/node/Call_Refresh",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubscribeKg/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
@@ -4593,13 +4657,17 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/translation-workflow.svg",
+      "description": "The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.\n\nYou are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. `human-translation-workflow` is what happens when a person is doing the translating rather than checking it.\n\nStaleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation's accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.",
       "enforcement": "strict",
       "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Translation Workflow",
       "nodeCount": 16,
       "sourcePath": "processes/library/translation-workflow.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/node/Start_ContentAuthored"
+      "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/translation-workflow.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/node/Start_ContentAuthored",
+      "summary": "The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/flow/Flow_Adjudicated",
@@ -4877,6 +4945,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/node/Task_Adjudicate",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"

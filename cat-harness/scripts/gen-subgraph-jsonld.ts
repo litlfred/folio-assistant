@@ -23,8 +23,17 @@
  * - A node with no path is a member of whatever subgraph its `partOf` parent
  *   is in — a ProcessNode is part of a diagram, not a file. The same rule
  *   `stampSubgraph` uses for `inSubgraph`, to a fixed point.
- * - Everything else — schemas, tools, roles, graph kinds, and nodes the export
- *   overlays from other instances — is a direct member of the ROOT.
+ * - A node the export OVERLAYS from an instance stacked on this one lands in
+ *   that instance's own tree, `<BASE_URL>/subgraph/<ITS NAME>/…`, by the same
+ *   containment rule over its declared directories (bean `ax6r`) — a path
+ *   outside them falls to that instance's root.
+ * - Everything else — schemas, tools, roles, graph kinds — is a direct member
+ *   of this harness's ROOT.
+ *
+ * Above every root is the REPOSITORY's index, `<BASE_URL>/subgraph/`, whose
+ * `hasSubgraph` are the roots framed here. `bootstrap` and `bootstrap-tools`
+ * are not among them: they sit below this instance and publish through their
+ * own graph (`pve3`).
  *
  * Transitive membership is not a second property. It is `hasMember` followed
  * through `hasSubgraph`, which is exactly what the hydrated file nests.
@@ -82,11 +91,11 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, extname, join, relative, resolve, sep } from "node:path";
+import { basename, dirname, extname, join, relative, resolve, sep } from "node:path";
 import jsonld from "jsonld";
 import { buildContext, buildExport, graphKindId } from "./kg-export.js";
-import { kgDirectories } from "./known-skills.js";
-import { readDeclaration } from "../schemas/cat-harness.js";
+import { corpusScopeFor, kgDirectories } from "./known-skills.js";
+import { findInstanceRoot, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
 import { gitCorpus } from "../schemas/git-corpus.js";
 import { propertyIri, termIri } from "../schemas/namespaces.js";
 import {
@@ -306,6 +315,8 @@ function linkTerms(ctx: Record<string, unknown>): string[] {
 
 export interface SubgraphEntry {
   iri: string;
+  /** Name of the instance whose tree this subgraph is in — `<HARNESS>` in its IRI. */
+  harness: string;
   /** Instance-relative directory with a trailing `/`; `""` for the root. */
   rel: string;
   kinds: string[];
@@ -316,6 +327,15 @@ export interface SubgraphEntry {
 
 export interface SubgraphPlan {
   rootIri: string;
+  /**
+   * `<BASE_URL>/subgraph/` — the REPOSITORY's level, above every harness root
+   * this build frames. Index only, and its children are those roots.
+   */
+  repoIri: string;
+  /** The repository's name, the label of {@link repoIri}. */
+  repoName: string;
+  /** Every harness root this build frames: this instance's first, then each overlaid one by name. */
+  harnessRoots: string[];
   contextUrl: string;
   subgraphs: Map<string, SubgraphEntry>;
   nodes: Map<string, Node>;
@@ -362,47 +382,106 @@ export function planSubgraphs(
   const rootIri = `${base}/subgraph/${opts.harness}/`;
   const problems: string[] = [];
   const subgraphs = new Map<string, SubgraphEntry>();
-  const byRel = new Map<string, SubgraphEntry>();
-  const root: SubgraphEntry = { iri: rootIri, rel: "", kinds: [], title: opts.title, members: [], children: [] };
+  /** Absolute directory (trailing separator) → its subgraph. */
+  const byDir = new Map<string, SubgraphEntry>();
+  const slash = (abs: string): string => (abs.endsWith(sep) ? abs : abs + sep);
+  const ownRoot = resolve(opts.root);
+  const root: SubgraphEntry = { iri: rootIri, harness: opts.harness, rel: "", kinds: [], title: opts.title, members: [], children: [] };
   subgraphs.set(rootIri, root);
-  byRel.set("", root);
+  /** Instance root (absolute) → that instance's root subgraph. */
+  const harnessRoots = new Map<string, SubgraphEntry>([[ownRoot, root]]);
 
-  // `kgDirectories` answers WHERE; the declaration answers what kind and what
-  // title, looked up by the entry's id — ids are stable, paths are not.
-  const declared = new Map((readDeclaration(opts.root)?.directories ?? []).map((d) => [d.id, d]));
-  const kgDirs = kgDirectories(opts.root, "instance").map((d) => ({
-    ...d,
-    graphKinds: declared.get(d.id)?.graphKinds ?? [],
-    title: declared.get(d.id)?.title,
-  }));
-  const kgRels: string[] = [];
+  // WHICH DIRECTORIES — the same corpus kg-export read, not this instance's
+  // alone. kg-export overlays every instance the checkout stacks on this one
+  // (`corpusScopeFor`), so its graph holds `folio-assistant-core`'s processes
+  // and skills too, and until bean `ax6r` every one of them fell to the ROOT,
+  // which has no hydrated file: "every process of this graph" was not one
+  // fetch, nor any number of them. An overlaid instance's directory now
+  // heads its OWN tree, `<BASE_URL>/subgraph/<ITS NAME>/`, because a
+  // subgraph is a directory of the instance that declares it — and this
+  // build frames it because this is the graph that publishes those nodes.
+  //
+  // `bootstrap` and `bootstrap-tools` are NOT in that corpus: they sit BELOW
+  // this instance, and the owner's `pve3` ruling (2026-09-21) keeps their
+  // processes out of this graph (#432's isolation). So no tree is framed for
+  // them here, and none is invented.
+  //
+  // `kgDirectories` answers WHERE; each instance's own declaration answers
+  // what kind and what title, looked up by the entry's id — ids are stable,
+  // paths are not, and two instances may reuse an id.
+  const declOf = new Map<string, ReturnType<typeof readDeclaration>>();
+  const declarationOf = (inst: string): ReturnType<typeof readDeclaration> => {
+    if (!declOf.has(inst)) {
+      try {
+        declOf.set(inst, readDeclaration(inst));
+      } catch {
+        declOf.set(inst, undefined);
+      }
+    }
+    return declOf.get(inst);
+  };
+  const kgDirs = kgDirectories(opts.root, corpusScopeFor(opts.root)).flatMap((d) => {
+    const inst = findInstanceRoot(d.absPath);
+    if (inst === undefined) {
+      problems.push(`${d.absPath}: no instance declaration above this knowledge-graph directory`);
+      return [];
+    }
+    const decl = declarationOf(inst);
+    const entry = decl?.directories.find((x) => x.id === d.id);
+    return [{ ...d, inst: resolve(inst), harness: decl?.name ?? basename(inst), graphKinds: entry?.graphKinds ?? [], title: entry?.title, instTitle: decl?.title }];
+  });
+  // De-duplicated by directory: one directory reached twice is one subgraph.
+  const seenDir = new Set<string>();
+  const kgTops: Array<{ abs: string; entry: SubgraphEntry }> = [];
   for (const d of kgDirs) {
-    const top = relative(opts.root, d.absPath).replace(/\\/g, "/").replace(/\/?$/, "/");
-    if (top.startsWith("../")) continue; // another instance's directory — not this harness's subgraph
-    kgRels.push(top);
+    const abs = slash(resolve(d.absPath));
+    if (seenDir.has(abs)) continue;
+    seenDir.add(abs);
+    let hroot = harnessRoots.get(d.inst);
+    if (hroot === undefined) {
+      hroot = { iri: `${base}/subgraph/${d.harness}/`, harness: d.harness, rel: "", kinds: [], title: d.instTitle, members: [], children: [] };
+      if (subgraphs.has(hroot.iri)) {
+        problems.push(`two instances are both named ${d.harness} — their subgraph roots would collide`);
+        continue;
+      }
+      subgraphs.set(hroot.iri, hroot);
+      harnessRoots.set(d.inst, hroot);
+    }
+    const top = relative(d.inst, d.absPath).replace(/\\/g, "/").replace(/\/?$/, "/");
     const rels = gitDirs(d.absPath, top);
-    if (rels === undefined) { problems.push(`${top}: git could not list its files — subgraphs not determined`); continue; }
+    if (rels === undefined) { problems.push(`${d.harness}/${top}: git could not list its files — subgraphs not determined`); continue; }
+    const kinds = [...d.graphKinds].sort();
+    hroot.kinds = [...new Set([...hroot.kinds, ...kinds])].sort();
     for (const rel of rels) {
       const parentRel = rel === top ? "" : rel.replace(/[^/]+\/$/, "");
       const e: SubgraphEntry = {
-        iri: `${rootIri}${rel}`,
+        iri: `${hroot.iri}${rel}`,
+        harness: d.harness,
         rel,
-        kinds: [...d.graphKinds].sort(),
+        kinds,
         title: rel === top ? d.title : undefined,
         members: [],
         children: [],
       };
       subgraphs.set(e.iri, e);
-      byRel.set(rel, e);
-      const parent = byRel.get(parentRel);
+      byDir.set(slash(join(d.inst, rel)), e);
+      const parent = parentRel === "" ? hroot : byDir.get(slash(join(d.inst, parentRel)));
       if (parent) parent.children.push(e.iri);
-      else problems.push(`subgraph ${rel}: parent ${parentRel || "(root)"} was not walked`);
+      else problems.push(`subgraph ${d.harness}/${rel}: parent ${parentRel || "(root)"} was not walked`);
     }
+    kgTops.push({ abs, entry: byDir.get(abs)! });
   }
-  root.kinds = [...new Set(kgDirs.flatMap((d) => d.graphKinds))].sort();
+  // Deepest first, so a nested top-level directory wins over its ancestor.
+  kgTops.sort((a, b) => b.abs.length - a.abs.length);
 
   const nodes = new Map<string, Node>();
   for (const n of graph) nodes.set(String(n["@id"]), n);
+
+  /** The harness root a path outside every kg directory falls to: its own instance's tree, else this one's. */
+  const rootFor = (abs: string): SubgraphEntry => {
+    const inst = findInstanceRoot(abs);
+    return (inst !== undefined && harnessRoots.get(resolve(inst))) || root;
+  };
 
   // Place by path.
   const placed = new Map<string, SubgraphEntry>();
@@ -410,13 +489,13 @@ export function planSubgraphs(
     const id = String(n["@id"]);
     const p = pathOf(n);
     if (p === undefined) continue;
-    const top = kgRels.find((r) => `${p}/`.startsWith(r));
-    if (top === undefined) { placed.set(id, root); continue; }
-    const abs = join(opts.root, p);
-    if (!existsSync(abs)) { problems.push(`${id}: source path ${p} is inside ${top} but not on disk`); continue; }
-    let dir = statSync(abs).isDirectory() ? `${p}/` : `${dirname(p)}/`;
-    while (!byRel.has(dir) && dir.length > top.length) dir = dir.replace(/[^/]+\/$/, "");
-    const e = byRel.get(dir);
+    const abs = resolve(opts.root, p);
+    const top = kgTops.find((t) => slash(abs).startsWith(t.abs));
+    if (top === undefined) { placed.set(id, rootFor(abs)); continue; }
+    if (!existsSync(abs)) { problems.push(`${id}: source path ${p} is inside ${top.entry.harness}/${top.entry.rel} but not on disk`); continue; }
+    let dir = statSync(abs).isDirectory() ? slash(abs) : slash(dirname(abs));
+    while (!byDir.has(dir) && dir.length > top.abs.length) dir = slash(dirname(dir));
+    const e = byDir.get(dir);
     if (e === undefined) { problems.push(`${id}: no walked subgraph contains ${p}`); continue; }
     placed.set(id, e);
   }
@@ -454,14 +533,35 @@ export function planSubgraphs(
     }
   }
 
-  return { rootIri, contextUrl: `${base}/${SUBGRAPH_CONTEXT_PATH}`, subgraphs, nodes, problems };
+  // The REPOSITORY's level: the contract's "the repo KG is the level above"
+  // a harness, given the one file a reader needs to find every harness root
+  // this build frames. Index only — a hydrated file here would be the whole
+  // graph in one document, the monolith `f233` forbids.
+  const repoRoot = repoRootFor(opts.root);
+  let repoName = basename(repoRoot);
+  try {
+    repoName = readDeclaration(repoRoot)?.repository?.split("/").pop() ?? repoName;
+  } catch {
+    // An unreadable root declaration is `check:harness-dirs`'s finding; the directory still names it.
+  }
+  const roots = [root.iri, ...[...harnessRoots.values()].filter((e) => e !== root).map((e) => e.iri).sort()];
+  return {
+    rootIri,
+    repoIri: `${base}/subgraph/`,
+    repoName,
+    harnessRoots: roots,
+    contextUrl: `${base}/${SUBGRAPH_CONTEXT_PATH}`,
+    subgraphs,
+    nodes,
+    problems,
+  };
 }
 
-function subgraphNode(e: SubgraphEntry, harness: string): Node {
+function subgraphNode(e: SubgraphEntry): Node {
   return {
     "@id": e.iri,
     "@type": termIri("Subgraph"),
-    name: e.rel === "" ? harness : e.rel.replace(/\/$/, ""),
+    name: e.rel === "" ? e.harness : e.rel.replace(/\/$/, ""),
     path: e.rel === "" ? "./" : e.rel,
     ...(e.title ? { title: e.title } : {}),
     ...(e.kinds.length > 0 ? { holdsGraph: e.kinds.map(graphKindId) } : {}),
@@ -497,7 +597,8 @@ const NULL_LOADER = async (url: string): Promise<never> => {
 /** Render every file: instance-relative output path → bytes. */
 export async function renderSubgraphFiles(
   plan: SubgraphPlan,
-  harness: string,
+  /** Kept for callers; each subgraph now carries its own harness (an overlaid instance's tree is not this one's). */
+  _harness: string,
   outDir: string,
 ): Promise<Map<string, string>> {
   const ctx = subgraphContext();
@@ -526,12 +627,12 @@ export async function renderSubgraphFiles(
   };
 
   for (const e of [...plan.subgraphs.values()].sort((a, b) => a.iri.localeCompare(b.iri))) {
-    const dir = join(outDir, harness, e.rel);
+    const dir = join(outDir, e.harness, e.rel);
     const subtree = descendants(plan, e);
     const input = {
       "@context": ctx,
       "@graph": [
-        ...subtree.map((s) => subgraphNode(s, harness)),
+        ...subtree.map((s) => subgraphNode(s)),
         ...subtree.flatMap((s) => s.members.map((m) => plan.nodes.get(m)!)),
       ],
     };
@@ -570,10 +671,33 @@ export async function renderSubgraphFiles(
   for (const e of plan.subgraphs.values()) {
     for (const c of e.children) {
       const child = plan.subgraphs.get(c);
-      if (!child || !out.has(join(outDir, harness, child.rel, SUBGRAPH_INDEX_FILE))) {
+      if (!child || !out.has(join(outDir, child.harness, child.rel, SUBGRAPH_INDEX_FILE))) {
         plan.problems.push(`${e.iri}: child ${c} has no ${SUBGRAPH_INDEX_FILE}`);
       }
     }
+  }
+
+  // The repository's index: one pointer per harness root, nothing hydrated.
+  {
+    const repoNode: Node = {
+      "@id": plan.repoIri,
+      "@type": termIri("Subgraph"),
+      name: plan.repoName,
+      path: "./",
+      hasSubgraph: plan.harnessRoots,
+    };
+    const framed = (await jsonld.frame(
+      { "@context": ctx, "@graph": [repoNode] } as never,
+      { "@context": ctx, "@id": plan.repoIri, "@embed": "@never" } as never,
+      { documentLoader: NULL_LOADER, embed: "@never", omitDefault: true, omitGraph: true } as unknown as jsonld.Options.Frame,
+    )) as Record<string, unknown>;
+    const text = finish(framed);
+    const parsed = SubgraphIndexSchema.safeParse(JSON.parse(text));
+    if (!parsed.success) plan.problems.push(`${plan.repoIri}${SUBGRAPH_INDEX_FILE}: ${parsed.error.message}`);
+    for (const r of plan.harnessRoots) {
+      if (!out.has(join(outDir, plan.subgraphs.get(r)!.harness, SUBGRAPH_INDEX_FILE))) plan.problems.push(`${plan.repoIri}: harness root ${r} has no ${SUBGRAPH_INDEX_FILE}`);
+    }
+    out.set(join(outDir, SUBGRAPH_INDEX_FILE), text);
   }
 
   out.set(SUBGRAPH_CONTEXT_PATH, `${JSON.stringify({ "@context": canonical(ctx) }, null, 2)}\n`);
@@ -632,7 +756,7 @@ function listFiles(abs: string): string[] {
 
 async function main(): Promise<number> {
   const check = process.argv.includes("--check");
-  const { plan, files, harness, outDir, payloadPlan, payloadFiles, payloadDir } = await generateSubgraphs();
+  const { plan, files, outDir, payloadPlan, payloadFiles, payloadDir } = await generateSubgraphs();
 
   if (plan.problems.length > 0) {
     console.error(`gen-subgraph-jsonld: ${plan.problems.length} problem(s) — nothing written:`);
@@ -640,8 +764,12 @@ async function main(): Promise<number> {
     return 1;
   }
 
+  // The WHOLE subgraph directory, not this harness's tree alone: an overlaid
+  // instance's tree is written here too, and one that stops being overlaid
+  // must not leave its files behind looking current. Payloads (f233) live in
+  // their own directory and are checked the same way.
   const all = new Map<string, Buffer | string>([...files, ...payloadFiles]);
-  const treeAbs = join(ROOT, outDir, harness);
+  const treeAbs = join(ROOT, outDir);
   const payloadAbs = join(ROOT, payloadDir);
   const expected = new Set([...all.keys()].map((p) => join(ROOT, p)));
   const strays = [...listFiles(treeAbs), ...listFiles(payloadAbs)].filter((p) => !expected.has(p)).sort();

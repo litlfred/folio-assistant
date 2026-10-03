@@ -1,0 +1,108 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/",
+  "@type": "bootstrap:Subgraph",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle-ext",
+          "@type": "cat-harness:SkillPackage",
+          "hasManifest": true,
+          "name": "content-lifecycle-ext",
+          "path": "../folio-assistant-core/skills/content/content-lifecycle-ext"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/quality-control",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle-ext",
+          "instructionLines": 70,
+          "instructionsPath": "../folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+          "name": "quality-control",
+          "title": "quality-control"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphKind/skills"
+      ],
+      "name": "skills/content/content-lifecycle-ext",
+      "path": "skills/content/content-lifecycle-ext/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/folio-document-adapter/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+          "@type": "cat-harness:SkillPackage",
+          "hasManifest": true,
+          "name": "folio-document-adapter",
+          "path": "../folio-assistant-core/skills/content/folio-document-adapter"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-authoring",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+          "instructionLines": 92,
+          "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md",
+          "name": "document-authoring",
+          "title": "document-authoring"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+          "instructionLines": 82,
+          "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-publishing.md",
+          "name": "document-publishing",
+          "title": "document-publishing"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-structure",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+          "instructionLines": 64,
+          "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/document-structure.md",
+          "name": "document-structure",
+          "title": "document-structure"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/normative-statements",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-document-adapter",
+          "instructionLines": 85,
+          "instructionsPath": "../folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md",
+          "name": "normative-statements",
+          "title": "normative-statements"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphKind/skills"
+      ],
+      "name": "skills/content/folio-document-adapter",
+      "path": "skills/content/folio-document-adapter/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/content",
+  "path": "skills/content/"
+}

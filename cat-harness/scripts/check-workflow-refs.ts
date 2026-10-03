@@ -310,8 +310,8 @@ if (missingDeclared.length) {
  * Every diagram is reachable from the index page — that half MOVED to
  * `check:process-index` (bean `ax6r`). It used to scan this page's markdown
  * for each diagram's basename, because the table was hand-written; the table
- * is now drawn at runtime from `assets/processes/index.json`, so the page names
- * no diagram and the question is whether the published data covers every
+ * is now drawn at runtime from the published named-subgraph JSON-LD, so the
+ * page names no diagram and the question is whether that graph covers every
  * declared `.bpmn`. One gate per question: a second scan here would be a
  * second answer to "which diagrams are listed".
  */

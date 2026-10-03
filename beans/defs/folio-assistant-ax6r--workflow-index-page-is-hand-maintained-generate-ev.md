@@ -52,3 +52,9 @@ _2026-10-03T09:38:41Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to 
 
 ## Owner ruling 2026-10-03 — format
 Selected 'Move to JSON-LD': the KG export carries each process's `bpmn:documentation` (first sentence and full), and the workflow-index page reads the published JSON-LD rather than the plain-JSON `folio-process-index/v1`. The plain JSON goes once the page reads JSON-LD (no second store).
+
+## JSON-LD move (2026-10-03, after the owner ruling)
+- kg-export: a Process carries `summary` (first sentence of its own `bpmn:documentation`) and `description` (whole), `sourceUrl` and `depiction`; a call activity carries `calledElement` (bpmn:calledElement) as a link, only when the target Process is in the graph. Text naming an unpublished kind (`fsh-guts`) is not carried.
+- gen-subgraph-jsonld: an instance kg-export overlays (folio-assistant-core, fhir-harness, folio-assistant-sci, smart-base, ...) heads its own tree `subgraph/<instance>/`; `subgraph/index.jsonld` is the repository's level, listing every root. Before this, overlaid processes fell to the root, which has no hydrated file.
+- The page walks `subgraph/index.jsonld` down to each `processes/index.hydrated.jsonld`; `assets/processes/index.json`, its schema and writer are gone. `check:process-index` reads the JSON-LD.
+- Coverage: 78 of 84 declared diagrams. Bootstrap's 5 and bootstrap-tools' 1 are listed as not covered: `pve3`/#432 keeps them out of this graph, and bootstrap's own graph frames no subgraphs and carries no documentation. Closing that needs bootstrap-tools' `export-graph.ts` to publish subgraph files with documentation (upstream).
