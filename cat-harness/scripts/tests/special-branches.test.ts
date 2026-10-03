@@ -51,8 +51,12 @@ describe("special-branches — the declaration", () => {
     expect(byId("gh-pages").legacy).toEqual([]);
   });
 
-  test("every other special branch carries the cat- prefix", () => {
-    for (const b of DECL.branches.filter((x) => x.id !== "gh-pages")) expect(b.name.startsWith("cat-")).toBe(true);
+  test("every other special branch carries the cat/ prefix", () => {
+    // `cat/<harness>/<name>`, not the flat `cat-`. The owner ruled the flat
+    // form first — it is quoted verbatim in the declaration's $comment — and
+    // then replaced it. Measured 2026-10-03 across all 713 heads of this
+    // repository: 4 branches on `cat/cat-harness/...`, 0 on any flat `cat-`.
+    for (const b of DECL.branches.filter((x) => x.id !== "gh-pages")) expect(b.name.startsWith("cat/")).toBe(true);
   });
 
   test("a family's names end in '/', a single branch's never do", () => {
@@ -73,8 +77,8 @@ describe("special-branches — the declaration", () => {
 
 describe("special-branches — resolution (new name first, then legacy)", () => {
   test("neither exists: the new name", () => {
-    expect(resolveBranch("qa-reports", new Set())).toBe("cat-qa-reports");
-    expect(resolveBranch("lake-cache", new Set(), "qou-v4-24-0")).toBe("cat-lake-cache/qou-v4-24-0");
+    expect(resolveBranch("qa-reports", new Set())).toBe("cat/cat-harness/qa-reports");
+    expect(resolveBranch("lake-cache", new Set(), "qou-v4-24-0")).toBe("cat/folio-assistant-sci/lake-cache/qou-v4-24-0");
   });
 
   test("only the legacy name exists: the legacy name, for writers too", () => {
@@ -83,7 +87,7 @@ describe("special-branches — resolution (new name first, then legacy)", () => 
   });
 
   test("both exist: the new name", () => {
-    expect(resolveBranch("state", new Set(["state", "cat-state"]))).toBe("cat-state");
+    expect(resolveBranch("state", new Set(["state", "cat/cat-harness/state"]))).toBe("cat/cat-harness/state");
   });
 
   test("a family needs a key and a single branch refuses one", () => {

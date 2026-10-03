@@ -5,7 +5,7 @@ Implements the design at
 docs/audits/2026-06-07-lake-cache-only-new-content-design.md:
 
   - Walk `lake-manifest.json` to discover dependency packages
-  - For each package: create the orphan branch `cat-lake-cache/<pkg>-<toolchain>`
+  - For each package: create the orphan branch `cat/folio-assistant-sci/lake-cache/<pkg>-<toolchain>`
     (or keep writing the legacy `lake-cache/<pkg>-<toolchain>` where only that
     exists, until the remotes are renamed — bean folio-assistant-32f6)
     containing ONLY that package's `.olean` files + a `cache-index.json`
@@ -19,7 +19,7 @@ Usage:
     ./scripts/lake-cache-produce.py                 # all packages, dry-run by default
     ./scripts/lake-cache-produce.py --push          # actually push
     ./scripts/lake-cache-produce.py --packages mathlib,aesop --push
-    ./scripts/lake-cache-produce.py --branch-suffix test  # use cat-lake-cache/<pkg>-<tc>-test
+    ./scripts/lake-cache-produce.py --branch-suffix test  # use cat/folio-assistant-sci/lake-cache/<pkg>-<tc>-test
 
 Exit codes:
   0 = success (or dry-run completed)
@@ -71,7 +71,7 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True,
 # `lake-cache`) and checked against this copy by
 # tests/special-branches.test.ts. New name first, then the legacy one, until
 # bean folio-assistant-oycs removes the fallback.
-CACHE_PREFIXES = ("cat-lake-cache/", "lake-cache/")
+CACHE_PREFIXES = ("cat/folio-assistant-sci/lake-cache/", "lake-cache/")
 
 
 def resolve_branch(key: str) -> str:

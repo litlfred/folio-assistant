@@ -125,7 +125,7 @@ SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
 # Resolve new-name-first, then legacy, for the WRITE too: publishing a `cat-`
 # branch beside a live legacy one would block the owner's rename (bean
 # folio-assistant-32f6). The fallback goes with bean folio-assistant-oycs.
-PROD_BRANCH="cat-lake-cache/$PACKAGE-$SLUG"
+PROD_BRANCH="cat/folio-assistant-sci/lake-cache/$PACKAGE-$SLUG"
 if ! git -C "$REPO" ls-remote --exit-code --heads origin "refs/heads/$PROD_BRANCH" >/dev/null 2>&1 \
    && git -C "$REPO" ls-remote --exit-code --heads origin "refs/heads/lake-cache/$PACKAGE-$SLUG" >/dev/null 2>&1; then
   PROD_BRANCH="lake-cache/$PACKAGE-$SLUG"
