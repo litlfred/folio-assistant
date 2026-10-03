@@ -95,17 +95,21 @@ export const PANEL_CONTROLS: Readonly<Record<string, PanelControl>> = {
   },
   pin: {
     id: "pin",
-    label: "Pin to the page",
+    label: "Pin to your folio glass",
     needs: "none",
-    because: "lifts the card out of the board and beside the thing it is about.",
+    because:
+      "puts the card on the reader's folio glass, as a folio asset with the glass's own " +
+      "tools. A toggle: pressed again it shelves the card, which stays in the folio. " +
+      "Owner, 2026-10-02: \"pin to glass should pin to folio glass\" (#1925).",
   },
   discard: {
     id: "discard",
-    label: "Discard",
+    label: "Send to fsh-guts",
     needs: "none",
     because:
-      "takes the card off this reader's board. Reversible by construction — it goes " +
-      "somewhere with a way back rather than being deleted (`d1r6`).",
+      "takes the card off this reader's board, after a confirmation that names where it " +
+      "is restored from. Reversible by construction — it goes to fsh-guts, the trashcan " +
+      "that is kept, rather than being deleted (`d1r6`, #1925).",
   },
   move: {
     id: "move",
