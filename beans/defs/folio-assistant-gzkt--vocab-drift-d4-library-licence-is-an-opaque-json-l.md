@@ -1,12 +1,11 @@
 ---
 # folio-assistant-gzkt
 title: 'VOCAB DRIFT D4: library licence is an opaque @json literal, glossary licence is dcterms:license — one mapping row for both'
-status: in-progress
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-zzmr
 created_at: 2026-10-03T08:07:15Z
-updated_at: 2026-10-03T08:11:59Z
+updated_at: 2026-10-03T09:01:01Z
 parent: folio-assistant-zzmr
 ---
 
@@ -16,7 +15,7 @@ Issue #1910 D4. Owner ruling 2026-10-03 (this session, selected option 'Yes, mov
 - [x] a library item's JSON-LD carries dcterms:license (IRI or literal as the glossary does), read from the vocab-mappings table
 - [x] the @json meta no longer carries the licence
 - [x] regenerated outputs committed; gates green
-- [ ] round summary on #1910
+- [x] round summary on #1910 (comment 5967454581)
 
 ## Summary of Changes
 
