@@ -347,10 +347,37 @@
     // A blocked bean says so here rather than only in the findings panel: the
     // reader who opened this epic is asking what is in it, and "blocked" is
     // the first thing that changes what they do about it.
+    //
+    // And it names WHAT holds it (bean `vhqq`): `blockedBy` is now the union
+    // of both front-matter declarations, so each blocker is listed as its own
+    // link. One that names no bean in the store is shown as plain text rather
+    // than dropped — the generator reports it as a finding too.
     if (b.blockedBy && b.blockedBy.length) {
-      li.appendChild(el("span", { class: "fa-workplan-bean-blocked" }, "blocked"));
+      var badge = el("span", { class: "fa-workplan-bean-blocked" }, "blocked by ");
+      for (var i = 0; i < b.blockedBy.length; i++) {
+        if (i > 0) badge.appendChild(document.createTextNode(", "));
+        badge.appendChild(blockerRef(b.blockedBy[i]));
+      }
+      li.appendChild(badge);
     }
     return li;
+  }
+
+  /** One blocker inside a "blocked by" badge: its short id, linked. */
+  function blockerRef(id) {
+    var short = id.replace(/^.*-/, "");
+    var blocker = null;
+    for (var i = 0; i < ALL_BEANS.length; i++) {
+      if (ALL_BEANS[i].id === id) { blocker = ALL_BEANS[i]; break; }
+    }
+    var href = blocker ? viewHref(blocker.file) : null;
+    if (!blocker) {
+      return el("span", { class: "fa-workplan-block-edge is-dangling", title: id + " — not a bean in this store" },
+                short + " (unknown)");
+    }
+    return href
+      ? el("a", { class: "fa-workplan-block-edge", href: href, title: id + " — " + blocker.title }, short)
+      : el("span", { class: "fa-workplan-block-edge", title: id + " — " + blocker.title }, short);
   }
 
   /** The bar chart: one row per epic, label and value as text on every row. */
