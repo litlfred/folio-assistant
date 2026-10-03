@@ -6904,7 +6904,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+          "@value": "How entries are keyed on the branch: one entry per `commit`, one live copy at the `tip`, or one entry per published `route`. See {@link DirectoryStorageSchema}'s docblock for why `route` is not a synonym for `tip`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",

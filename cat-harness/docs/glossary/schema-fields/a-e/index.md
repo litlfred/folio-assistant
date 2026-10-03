@@ -3421,7 +3421,7 @@ DirectoryStorageSchema.branch <span class="fa-gloss-status">candidate, extracted
 DirectoryStorageSchema.keyedBy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How entries are keyed on the branch: one entry per <code>commit</code>, or one live copy at the <code>tip</code>.</p>
+<p>How entries are keyed on the branch: one entry per <code>commit</code>, one live copy at the <code>tip</code>, or one entry per published <code>route</code>. See &#123;@link DirectoryStorageSchema}'s docblock for why <code>route</code> is not a synonym for <code>tip</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.basis" data-fa-state="extracted" data-fa-gloss="">

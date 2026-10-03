@@ -1400,7 +1400,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — two keyings, and a third is a schema change
+ * ## `keyedBy` — three keyings, and a fourth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1410,8 +1410,28 @@ export type Tile = z.infer<typeof TileSchema>;
  *   (`cat/cat-harness/beans`, `cat/cat-harness/todos`; owner ruling
  *   2026-10-02). Read and written through `scripts/branch-store.ts`, whose
  *   writes splice onto the tip and never force-push.
+ * - `route` — one entry per published SITE ROUTE, each replaced wholesale by
+ *   the single generator that owns it. For REGENERABLE rendered output: the
+ *   auto-doc page families, whose content is a pure function of the source
+ *   tree. Bean `1j3q`, owner 2026-10-03 (*"Add route-keyed storage, then move
+ *   it off main"*).
  *
- * The field is an enum, not a string, so a third keying is a schema change
+ *   **It is not a synonym for `tip`, and the difference is the write.** A
+ *   tip-keyed change carries `expect` (the blob id its author read), so two
+ *   sessions editing one bean is a `conflict` the caller must settle — a bean
+ *   is somebody's decision and a lost write is lost work. A generated page
+ *   authored by nobody has nothing to settle: the newer generation wins, the
+ *   unit replaced is the route, and a lost write costs a rerun. So a
+ *   route-keyed write carries NO `expect`, deliberately, and
+ *   `scripts/branch-store.ts` refuses one that does rather than honouring it
+ *   — an `expect` here would mean a page has two writers, which is the premise
+ *   failing rather than a collision to resolve.
+ *
+ *   The layer is `derived`, not `state`: the distinction §3.1 of
+ *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
+ *   and it is exactly what separates these two keyings.
+ *
+ * The field is an enum, not a string, so a fourth keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
@@ -1432,8 +1452,13 @@ export const DirectoryStorageSchema = z
         (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
         "not a valid branch name",
       ),
-    /** How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`. */
-    keyedBy: z.enum(["commit", "tip"]),
+    /**
+     * How entries are keyed on the branch: one entry per `commit`, one live
+     * copy at the `tip`, or one entry per published `route`. See
+     * {@link DirectoryStorageSchema}'s docblock for why `route` is not a
+     * synonym for `tip`.
+     */
+    keyedBy: z.enum(["commit", "tip", "route"]),
   })
   .strict();
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
@@ -1713,9 +1738,24 @@ export const ContentDirectorySchema = z.preprocess(
   // commit's verdicts against a baseline, and `qa-store.ts` implements only
   // that layout. A tip-keyed `qa` store would be read as if it were keyed by
   // commit, so it is refused here rather than at its first read (bean `2h76`).
+  //
+  // `route` is refused on the same directory for the same reason and a second
+  // one (bean `1j3q`): a QA verdict is addressed by the commit it judges, and
+  // there is no route to key it by. Checking the two values together rather
+  // than only `tip` is the point — a guard that named one keying would have
+  // admitted every keying added after it, which is how the next third value
+  // passes a test written for the second.
   ContentDirectoryShape.refine(
-    (d) => !(d.storage?.keyedBy === "tip" && (d.graphKinds as readonly string[] | undefined)?.includes("qa")),
-    { message: 'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos)', path: ["storage", "keyedBy"] },
+    (d) =>
+      !(
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.graphKinds as readonly string[] | undefined)?.includes("qa")
+      ),
+    {
+      message:
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+      path: ["storage", "keyedBy"],
+    },
   ),
 );
 

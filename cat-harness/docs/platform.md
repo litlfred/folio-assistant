@@ -90,6 +90,21 @@ a step inside that larger one, and entering it directly means starting in the
 middle of something. Nothing marks this in the file; it falls out of who calls
 whom, which is why it stays true as diagrams are added.
 
+Worked, because the abstract version misleads. **Content acquisition** is an
+entry point: nothing calls it, so reaching for it is how acquisition starts.
+**Adjudication** reads like one and is not — it is called from the
+**Translation Workflow**, from the **Ingestion subprocess — the L1 completeness
+gate**, and from **Refresh materialized remote content**. So "run Adjudication"
+is not a thing anybody does on its own; it is what one of those three reaches
+when it needs a decision, and starting there means starting in the middle of
+whichever one you were actually in. **Criterion adjudication** is a level
+further in again, called by **Wireframe design review** and **Voice overlay
+review**.
+
+The lesson generalises past those names: a process whose title sounds like a
+verb you would type is not evidence that you may enter it. Ask the index who
+calls it — that is the one question the diagram answers and a name does not.
+
 Three things worth knowing before you open one:
 
 - **A lane is an accountability boundary.** When a token crosses into another
@@ -122,6 +137,26 @@ do cross-cuts the lanes they act in. `bun run kg:audit` checks one criterion
 per join between them and writes its findings as committed sidecars rather than
 as console output — a printed verdict is gone, which makes "unbound since it
 was drawn" and "broken in the commit under review" indistinguishable.
+
+**[Every role, with the skills its lane carries →]({{ '/cat-harness/docs-auto/index/roles/' | relative_url }})**
+
+**[Every task, by the process that draws it →]({{ '/cat-harness/docs-auto/index/tasks/' | relative_url }})**
+
+What the two indexes do not tell you is how differently sized their entries
+are, so: a role here is as likely to be **mechanical** as human. **Adjudicator**
+and **Business analyst** are personas a person or an agent takes on; **Build
+pipeline**, **Attestation service** and **Activity log** are lanes held by
+something that is not a person at all, and they appear in the same list because
+a swimlane does not care. That is why nothing *is* a reviewer — somebody **acts
+as** one for the length of a lane.
+
+Tasks are finer than either. They are the individual steps inside a diagram —
+**Read the sidecar findings**, **Classify what changed**, **Accept, or send
+back**, **Authorise the extraction** — and there are an order of magnitude more
+of them than there are processes, which is the honest reason the task index is
+a reference rather than a reading list. Open it when you want to know which
+diagram a step you have been asked to perform belongs to; the lane it sits in is
+what says who is answerable for it.
 
 ## What the handler publishes, and why it is not here
 
