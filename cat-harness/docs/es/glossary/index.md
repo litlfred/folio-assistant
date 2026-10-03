@@ -105,7 +105,7 @@ Los candidatos extraídos no se traducen: se toman literalmente de los recursos 
 - `bootstrap--terms` — bootstrap/schemas/graph.schema.json
 - `cat-harness--platform` — folio-assistant-core/glossary/cat-harness.glossary.json
 - `folio-assistant-core--platform` — folio-assistant-core/glossary/folio-assistant-core.glossary.json
-- `who-style-guide--who-terms` — who-style-guide/glossary/who-style-guide.glossary.json
+- `who-iris--who-terms` — who-iris/glossary/who-iris.glossary.json
 
 ### Extraídos de recursos del grafo de conocimiento
 
