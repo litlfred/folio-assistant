@@ -1,0 +1,255 @@
+{
+  "id": "dth-term-alternatives",
+  "title": "DTH terms: alternatives, one phase figure, and what \"actor\" means",
+  "ruling": {
+    "date": "2026-10-03",
+    "quote": "go on DRK voices. contradictions -> alternative approaches/definitions. use one DIIG seven phase figure as source. need SVG rendering maybe as bean. RA Actor - give bigger explanation. explain changes to RA and/or F-A and/or SG. make a docs page under smart-base showing the glossary/terms differences findings",
+    "issue": "https://github.com/litlfred/folio-assistant/issues/1984",
+    "bean": "folio-assistant-5blc"
+  },
+  "candidates": "cat-harness/docs/proposals/dth-candidates-2026-10-02.json",
+  "figure": {
+    "title": "Planning and implementing a digital health enterprise: seven phases",
+    "svgBean": "folio-assistant-70zt",
+    "canonical": [
+      {
+        "libraryId": "9789240010567-eng",
+        "sectionId": "page-016",
+        "locator": "DIIG §1.1, PDF p.16 (printed p.4)",
+        "quote": "The process of planning and implementing an appropriate digital health enterprise within the broader ecosystem includes several phases:"
+      },
+      {
+        "libraryId": "9789240010567-eng",
+        "sectionId": "page-016",
+        "locator": "DIIG §1.1, Fig. 1.1.1, drawn on PDF p.17 (printed p.5)",
+        "quote": "Fig. 1.1.1 outlines these steps as well as supporting resources"
+      }
+    ],
+    "phases": [
+      "assessing the current state and enabling environment",
+      "establishing a shared understanding and strategic planning",
+      "defining the future state",
+      "planning enterprise architecture",
+      "determining health content requirements",
+      "monitoring and evaluation (M&E) and fostering data use",
+      "implementing, maintaining and scaling"
+    ],
+    "reproductions": [
+      {
+        "relation": "reproduces",
+        "libraryId": "9789240093362-eng",
+        "sectionId": "sec-009-23-before-using-this-resource",
+        "locator": "PHC §2.3, Fig. 6, PDF pp.24-26",
+        "quote": "Planning and implementing a digital health enterprise: phases, steps and resources"
+      },
+      {
+        "relation": "reproduces",
+        "libraryId": "9789240101197-eng",
+        "sectionId": "page-015",
+        "locator": "SC Introduction > Alignment with the DIIG, Fig 5, PDF p.15",
+        "quote": "Fig 5. DIIG process for planning and implementing a digital health enterprise"
+      },
+      {
+        "relation": "reproduces",
+        "libraryId": "9789240116191-eng",
+        "sectionId": "page-013",
+        "locator": "PC Introduction, Fig. 4, PDF p.13",
+        "quote": "Fig. 4: Planning and implementing a digital health enterprise: phases, steps and resources"
+      },
+      {
+        "relation": "adapts",
+        "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+        "sectionId": "sec-front-matter",
+        "locator": "RA DRAFT V1.0, Executive Summary, Figure 1, PDF p.12",
+        "quote": "The Reference Architecture within planning and implementing a digital health enterprise",
+        "note": "Not a copy: the draft overlays its own place on the DIIG phases (Phases 1-4), so it is an adaptation that cites the figure, not a second source for it."
+      }
+    ]
+  },
+  "approaches": [
+    {
+      "id": "bottleneck-prioritization",
+      "title": "Prioritizing bottlenecks: three criteria, with or without a summed score",
+      "summary": "DIIG Chapter 3 and the supply chain handbook's Annex 3 ask the same three questions of each bottleneck (impact on the process, likelihood of overcoming it, importance to a wide range of stakeholders) and differ from this platform's DIIG methodology only in what they do with the answers. Both are on record; neither replaces the other.",
+      "alternatives": [
+        {
+          "id": "summed-score",
+          "label": "Score each criterion 1-3, add the scores, rank by total",
+          "sources": [
+            {
+              "libraryId": "9789240010567-eng",
+              "sectionId": "page-050",
+              "locator": "DIIG Table 3.3.1, PDF p.50 (printed p.38)",
+              "quote": "Formula for scoring and ranking bottlenecks, with examples."
+            },
+            {
+              "libraryId": "9789240101197-eng",
+              "sectionId": "page-068",
+              "locator": "SC Annex 3, Template for prioritizing DHSC challenges, PDF p.68",
+              "quote": "Adding the scores yields the prioritized ranking."
+            }
+          ]
+        },
+        {
+          "id": "criteria-with-reasons",
+          "label": "Answer each criterion with its reason, and order by argument; print no score",
+          "sources": [
+            {
+              "path": "smart-base/methodologies/diig.md",
+              "locator": "§\"Never quantify a judgement to make it look measured — and here is where\"",
+              "quote": "adopts the three criteria and refuses the arithmetic"
+            }
+          ]
+        }
+      ],
+      "note": "diig.md's refusal stands as written. The summed score is recorded beside it as the sources' own alternative, not adopted and not rejected here."
+    }
+  ],
+  "actor": {
+    "summary": "Three bodies of work use \"actor\", and they do not mean the same thing. The Reference Architecture itself uses it in two senses. Read against folio-assistant's role model, the RA's conformance actor (§3.7.2) and SMART's generic persona are ROLES (something a participant plays), while folio-assistant's actor is the PARTICIPANT that plays one. The RA's §4.3.2 sense sits between the two: it names human and system participants together with \"the roles they play\", which is folio-assistant's split, under one word.",
+    "meanings": [
+      {
+        "layer": "RA",
+        "id": "ra-conformance-actor",
+        "label": "Reference Architecture, conformance model (§3.7.2, §3.7.6)",
+        "meaning": "An abstract information-processing role, in the IHE sense: a named set of responsibilities, independent of any product. It is modelled as an ArchiMate Application Component; a concrete system is a separate Application Component that realises it. One system may realise several actors, and one actor may be realised by many systems. Conformance is claimed by a system for an actor.",
+        "sources": [
+          {
+            "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+            "sectionId": "sec-048-372-the-model",
+            "locator": "RA §3.7.2 The model, PDF pp.90-94",
+            "quote": "An actor is an abstract information-processing role"
+          },
+          {
+            "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+            "sectionId": "sec-048-372-the-model",
+            "locator": "RA §3.7.2 The model, PDF pp.90-94",
+            "quote": "the system realises the actor"
+          },
+          {
+            "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+            "sectionId": "sec-052-376-constructs-and-their-counterparts",
+            "locator": "RA §3.7.6, Table 3.7.2, PDF pp.97-99",
+            "quote": "Application Component (system in an actor role)"
+          }
+        ]
+      },
+      {
+        "layer": "RA",
+        "id": "ra-participant-actor",
+        "label": "Reference Architecture, implementation guidance (§4.3.2)",
+        "meaning": "The human and system participants in a transaction, named together with the roles they play, and governed as a reusable role schema per DPI-H component (for a registry: the registrant, the verifying authority, the consuming system). This section cites the SMART Guidelines' generic personas and actor definitions as its worked example.",
+        "sources": [
+          {
+            "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+            "sectionId": "sec-063-432-actors-and-roles-defining-who-participates",
+            "locator": "RA §4.3.2 Actors and roles: defining who participates, PDF pp.106-107",
+            "quote": "the actors — both human and system — that participate in each transaction, and the roles they play"
+          },
+          {
+            "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+            "sectionId": "sec-063-432-actors-and-roles-defining-who-participates",
+            "locator": "RA §4.3.2, PDF pp.106-107",
+            "quote": "WHO SMART Guidelines offer a worked example of this practice."
+          }
+        ]
+      },
+      {
+        "layer": "SG",
+        "id": "sg-persona-actor-definition",
+        "label": "SMART Guidelines / DAK (generic personas, ActorDefinition)",
+        "meaning": "A DAK's generic persona is a depersonalised, context-free description of a human or system actor; the L3 implementation guide expresses each persona as a FHIR ActorDefinition, constrained by SMART Base's SGActor profile. Both are role descriptions: no persona is a particular person or deployed system.",
+        "sources": [
+          {
+            "path": "smart-base/fhir-artifact-index/index.json",
+            "locator": "StructureDefinition/GenericPersona, description",
+            "quote": "Depiction of the human and system actors."
+          },
+          {
+            "path": "smart-base/fhir-artifact-index/index.json",
+            "locator": "StructureDefinition/SGActor, description",
+            "quote": "Structure and constraints for ActorDefinition resources used in SMART Guidelines"
+          },
+          {
+            "libraryId": "who-dpi-h-reference-architecture-draft-v1",
+            "sectionId": "sec-063-432-actors-and-roles-defining-who-participates",
+            "locator": "RA §4.3.2, PDF pp.106-107, describing the DAK",
+            "quote": "depersonalised, context-free descriptions of the human and system actors"
+          }
+        ]
+      },
+      {
+        "layer": "F-A",
+        "id": "fa-concrete-actor",
+        "label": "folio-assistant role model",
+        "meaning": "A concrete participant, human, agentic or mechanical, that persists across every process. It takes on a Role, which is the BPMN swimlane; the role carries the skills. The RA's conformance actor and a DAK persona correspond to folio-assistant's ROLE; the RA's \"system realising an actor\", and the participants of RA §4.3.2, correspond to folio-assistant's ACTOR (a mechanical one, for a system) taking on that role.",
+        "sources": [
+          {
+            "path": "folio-assistant-core/glossary/cat-harness.glossary.json",
+            "locator": "term \"actor\"",
+            "quote": "A concrete participant, human, agentic or mechanical, that persists across every process and takes on roles."
+          },
+          {
+            "path": "cat-harness/skills/process/process-core/role-model.md",
+            "locator": "§\"Roles are swimlanes\", the objects table",
+            "quote": "a persona an actor *takes on* because of the lane it is acting in"
+          }
+        ]
+      }
+    ],
+    "correspondence": [
+      {
+        "concept": "a named set of responsibilities, independent of who fulfils it",
+        "RA": "actor (§3.7.2); role (§4.3.2)",
+        "SG": "generic persona; ActorDefinition",
+        "F-A": "role (swimlane)"
+      },
+      {
+        "concept": "the concrete thing that fulfils it",
+        "RA": "system realising an actor (§3.7.6); human or system participant (§4.3.2)",
+        "SG": "not modelled (a DAK stays depersonalised)",
+        "F-A": "actor (human, agentic or mechanical)"
+      },
+      {
+        "concept": "the binding between the two",
+        "RA": "Realisation (system → actor)",
+        "SG": "none in the DAK; an implementation's own deployment",
+        "F-A": "an actor takes on a role for the duration of a lane"
+      }
+    ],
+    "proposalsRuling": {
+      "date": "2026-10-03",
+      "quote": "1. F-A mapping, 2. Draft RA comment, 3. SMART Base proposal"
+    },
+    "proposals": [
+      {
+        "layer": "RA",
+        "status": "drafted",
+        "change": "Qualify the two senses. §3.7.2 and Table 3.7.2 already say \"abstract role\"; §4.3.2 uses \"actor\" for the participant and pairs it with \"role\". A glossary entry for actor (the draft's glossary has none; the term is defined only in the body) naming the conformance sense as primary, and §4.3.2 saying \"participants\" where it means the human and system parties, would remove the ambiguity. This is a comment on a public-comment DRAFT, for WHO to take or leave.",
+        "outcome": "A public comment on the DRAFT is written, citing its line and page numbers. The owner sends it; nothing has been posted.",
+        "artefacts": [
+          "smart-base/findings/ra-actor-comment.md"
+        ]
+      },
+      {
+        "layer": "F-A",
+        "status": "applied",
+        "change": "Keep folio-assistant's \"actor\" as settled by role-model, and record the mapping rather than the WHO wording: when an RA or SMART term is ingested, an RA actor or a DAK persona maps to a folio-assistant ROLE (closeMatch), never to an actor, and the RA's realising system maps to a mechanical actor. Concretely: a closeMatch from the glossary's role entry to the RA's conformance actor and to SMART's GenericPersona, and a sentence in role-model saying so.",
+        "outcome": "The glossary's role entry now carries a closeMatch to the RA §3.7.2 section and to SMART Base's GenericPersona, and role-model says an RA actor or a DAK persona maps to a Role, never an Actor.",
+        "artefacts": [
+          "folio-assistant-core/glossary/cat-harness.glossary.json",
+          "cat-harness/skills/process/process-core/role-model.md"
+        ]
+      },
+      {
+        "layer": "SG",
+        "status": "drafted",
+        "change": "State, in SMART Base's GenericPersona or SGActor description, that a persona is a role and that a system persona (DAK.Persona.System.*) is realised by the systems an implementation deploys: the RA §3.7.2 realisation relationship. That ties the DAK's personas to the RA's conformance model, which §4.3.2 already points at, without renaming anything. A proposal for the upstream IG, not an edit to the ingested copy, which is read-only here.",
+        "outcome": "An issue for the upstream SMART Base IG is written. The owner files it; nothing has been filed, and the read-only ingested copy is unchanged.",
+        "artefacts": [
+          "smart-base/findings/smart-base-persona-issue.md"
+        ]
+      }
+    ]
+  }
+}
