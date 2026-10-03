@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T07:25:27Z
-updated_at: 2026-10-03T07:25:36Z
+updated_at: 2026-10-03T14:42:55Z
 parent: folio-assistant-hfag
 ---
 
@@ -82,3 +82,43 @@ an undeclared key.
 - [x] the queue surfaced in the bean store's own index
 - [ ] the harness tile — blocked on the first real queue entry, above
 - [ ] `TrainMemberEvidenceSchema` given a home on `InstanceState`, or a stated reason not to
+
+
+## Incoming insight from an open PR, 2026-10-03 — #2000 `merge-guard`
+
+Watching the other open PRs while this one's CI ran turned up one adjacency worth
+recording, and the measured part is small, so it is separated from the inference.
+
+**Measured.** #2000 (`merge-guard`: "`merge:guard` is the single way a steward lands
+a PR", bean `dqir`) currently contains exactly ONE file, its own bean, and that
+bean's checklist carries:
+
+    - [ ] merge-queue skill: merges go only through merge:guard; skill:register
+
+So #2000 will edit the same `merge-queue` skill this PR registered. That is a known
+future conflict in a known place, not a surprise to be discovered at merge time.
+
+**Inferred, and flagged as inference.** #2000 looks like the natural site of the
+FIRST REAL QUEUE ENTRY, because a tool that is the single way a steward lands a PR
+is a tool that makes steward decisions. If so it unblocks this bean's one open box
+on its own. But #2000 has no code yet, so this is read off its framing rather than
+demonstrated by it, and nothing here should be planned on it.
+
+**Why it matters to the open box.** The tile is blocked on
+`check:kind-validators` refusing an instance-declared `beans/queue/` with
+"EXAMINED NOTHING — merge-queue declares nodeSchemas and no node was found". The
+second main merge of this PR regenerated `audit-coverage` and it now reports the
+same gap from the other direction, independently:
+
+    {"kind": "merge-queue", "state": "no-directory",
+     "directories": [], "criteria": [], "subjectKinds": [], "gates": [],
+     "typed": true, "hasFiles": false}
+
+Typed, and judged by nothing: zero kg-audit criteria, zero declaring gates. By the
+audit-coverage skill's own rule `typed-only` is ALREADY a finding, and
+`no-directory` is weaker still. Two independent instruments, one gap — which is
+what makes it a real finding rather than one gate's opinion.
+
+Not fixed here. Giving `merge-queue` criteria and a declaring gate is new work with
+its own decisions, and the box stays open and honest per the owner's 2026-10-03
+ruling.
