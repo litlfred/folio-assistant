@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>24</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>21</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>25</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>22</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -71,6 +71,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Skill-pipeline subject indexing — one policy-grounded stage per cognitive step, each output inspectable](#skill-pipeline-subject-indexing)**<br>`skill-pipeline-subject-indexing` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[SPDX 3 — a bill of materials as a graph of elements, for what crosses a trust boundary](#spdx-3)**<br>`spdx-3` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
@@ -387,6 +388,21 @@ these.
 - [`library/arxiv-2605.03537v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2605.03537v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2605.03537v1/README.md) · [source](https://arxiv.org/abs/2605.03537v1)
 - [`library/arxiv-2504.19675v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.19675v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.19675v2/README.md) · [source](https://arxiv.org/abs/2504.19675v2)
 - [`library/arxiv-2504.21474v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.21474v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.21474v1/README.md) · [source](https://arxiv.org/abs/2504.21474v1)
+
+### SPDX 3 — a bill of materials as a graph of elements, for what crosses a trust boundary
+
+<a id="spdx-3"></a>
+
+`spdx-3` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Describing an artefact that LEAVES this repository so that a party who does not run our tooling can check what is in it, what it depends on, under which licences, and that it arrived intact** — a release, a signed package, a published instance's dependency set, the licences of what we redistribute. It answers *what is this, what is it made of, who supplied it, under what licence, with what known vulnerabilities*. It does NOT answer what happened inside the repository or who answers for it (`prov-o-provenance`), what an actor may do (`odrl-policies`), how a node is serialised internally (`json-ld-serialisation`), or whether a block passed its QA criteria (the house QA schemas; see §"What it refuses").
+
+**Origin.** The Linux Foundation and its Contributors, with SPDX Model contributions from OMG, "System Package Data Exchange (SPDX) Specification Version 3.0", OMG formal/24-11-01, March 2025 (https://www.omg.org/spec/SPDX); its model is the SPDX 3.0.1 model (Annex A points at https://spdx.org/rdf/3.0.1/spdx-model.ttl). Licensed Community-Spec-1.0, with pre-existing portions CC-BY-3.0. SPDX® is a registered trademark of The Linux Foundation. SPDX 3.1, a release candidate since 2026-01-26, is held only as a secondary source (a 2025 conference deck, CC-BY-SA-3.0) and as its RC1 machine-readable schema queued in uploads/, NOT as a specification.
+
+**Ingested sources:**
+
+- `library/omg-2024-spdx-3-0`
+- `library/strauch-carbno-2025-spdx-3-1-supply-chain`
 
 ### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
 

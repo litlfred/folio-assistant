@@ -503,6 +503,14 @@
       "status": "candidate"
     },
     {
+      "id": "pin-spdx-license-list",
+      "prefLabel": "Snapshot the SPDX License List at its pinned version",
+      "definition": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
+      "notation": "pin-spdx-license-list",
+      "source": "cat-harness/tools/index.ts#pin-spdx-license-list",
+      "status": "candidate"
+    },
+    {
       "id": "processes-viewer",
       "prefLabel": "Processes viewer",
       "definition": "Render the declared BPMN processes as an index page and one page per diagram.",

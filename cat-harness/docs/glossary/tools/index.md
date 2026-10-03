@@ -884,6 +884,13 @@ Snapshot a published IG's terminology at its pinned version <span class="fa-glos
 <p>Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a <code>folio-pinned-terminology/v1</code> snapshot: the offline, version-fixed answer <code>check:term-mapping</code> resolves its <code>fhir</code> target against. Which IG, which pin record and which snapshot path are the caller's (<code>--pin</code>, <code>--out</code>, <code>--source</code>); this layer names none (#1767, stage B′).</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#pin-ig-terminology</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--pin-spdx-license-list" data-fa-state="extracted" data-fa-gloss="">
+Snapshot the SPDX License List at its pinned version <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Read <code>json/licenses.json</code> and <code>json/exceptions.json</code> from a copy of github.com/spdx/license-list-data at the pinned tag and write <code>cat-harness/external-schemas/spdx-license-list.terminology.json</code> (<code>folio-pinned-terminology/v1</code>): every licence and exception id with its name and deprecated flag — the offline, version-fixed list <code>check:source-licence</code> validates a <code>licence.json</code> id against.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pin-spdx-license-list</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--tabular-xlsx" data-fa-state="extracted" data-fa-gloss="">
 Spreadsheet tabular metadata (STUB) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

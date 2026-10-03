@@ -660,6 +660,10 @@ export const RULES: Rule[] = [
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.
       "scripts/check-source-licence.ts",
+      // Snapshots the SPDX License List ids that check validates against (bean
+      // `sd5v`): the same subject — every declared library's licences — and
+      // no folio's content.
+      "scripts/pin-spdx-license-list.ts",
       "scripts/check-wireframes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
