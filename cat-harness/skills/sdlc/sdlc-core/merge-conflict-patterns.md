@@ -12,7 +12,7 @@ user_invocable: false
 
 # Merge-conflict patterns — what a merge may resolve on its own
 
-`bun run merge:main` is the command; `processes/merge-base.bpmn` is the
+`bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the
 process it executes, called from `Task_PrepareMerge` in
 `code-change-review.bpmn`. The patterns themselves are data in
 `cat-harness/scripts/merge-conflict-patterns.ts`. This page says what each one
@@ -155,6 +155,48 @@ graph and declared viewer, written whole by `gen-handler-index.ts`
 (`handler:index:check`). Any new graph or viewer rewrites it. Found on #1754's
 third merge, 2026-10-01.
 
+### `skos-glossary-export` — take the base, regenerate (54)
+
+`**/docs/assets/glossary/*.skos.jsonld`: the published SKOS export, written
+whole by `glossary:export` (`glossary-export.ts`, gated by `glossary:check`).
+Bean `8rff` measured **54** pair-path hits across 32 open PRs — every
+instance's export restamps whenever any declared role, skill or term moves, so
+two PRs that touch unrelated skills still collide here.
+
+**It is not the ledger, and that distinction is the whole safety argument.**
+`glossary-ledger.json` carries forward: `glossary-export.ts` reads the prior
+ledger and preserves a concept's earlier names as `skos:hiddenLabel` (#1168
+B10b), so taking one side would drop a term's history. The ledger sits one
+level up from `generated/` and matches no glob here — verified, and pinned by
+a test. This is `.gitattributes`'s rule applied to a resolver: the test is not
+*is it generated* but **does its producer carry anything forward**.
+
+`.skos.jsonld` does not match `site-data`'s `cat-harness/docs/assets/**/*.json`
+— `.jsonld` is not `.json` — which is why it needed its own entry rather than
+falling through.
+
+### `glossary-generated` — take the base, regenerate (50)
+
+`**/glossary/generated/**`: the per-instance generated glossary JSON, same
+writer and same check as `skos-glossary-export`. **50** pair-path hits
+(`8rff`). The glob stops at `generated/`, so the sibling ledger is untouched.
+
+### `skill-instructions` — take the base, regenerate (30)
+
+`**/docs/reference/skill-instructions/**`: skill instruction bodies, written
+whole by `skills:docs` (`gen-skill-docs.ts`'s `OUT_DIR`, gated by
+`skills:docs:check`). **30** pair-path hits (`8rff`), and `AGENTS.md` says of
+this directory: *"Never hand-edit either generated dir."*
+
+Safe because `emit()` is compare-or-write with no merge — under `--check` it
+compares and records drift, otherwise it writes the content whole — so nothing
+is carried forward from the file on disk.
+
+**The authored neighbour is the skill itself.** `skills/**/*.md` is the SOURCE
+these pages are generated from and stays `refuse`; a test pins that pair,
+because resolving the generated copy while taking a side on the source is the
+mistake this entry would otherwise invite.
+
 ### `health-report` — take the base's measurement
 
 `test/health/results/*.health-report.json`. Not a derivation of the tree but a
@@ -195,6 +237,29 @@ or one that moves a region boundary, **refuses**. The file-count churn
 the README shows — the owner kept the exact counts (#1707).
 
 ### `beans` — refused, by declaration (44)
+
+**Before you go looking for the other session, check whether there is one.**
+A `beans/defs/**` conflict has two causes and they need different handling:
+
+| cause | how to tell | what to do |
+|---|---|---|
+| two sessions edited one bean | the default branch's claim note names a branch that is not yours | a coordination question — talk to them |
+| **one session**: the claim landed on the default branch, the completion stayed on the branch | the note names **your own** branch | no coordination needed; keep the completing value and the note |
+
+The second is `beans:claim`'s **normal path**, not an edge case: it pushes the
+claim to the default branch so a sibling sees it before your PR exists (bean
+`35nj`), and your branch then edits the same bean to finish it. Bean `24fa`
+measured it, and the refusal text used to assert the first cause for both —
+sending an agent to hunt a sibling that does not exist.
+
+`claim-bean.ts` now mirrors the claim note onto the branch as well as the
+status, byte-identically (`mirrorClaimNote`), which removes the BODY half of
+that conflict. What remains is `status` and `updated_at`, and that remainder is
+**correct**: `in-progress` on the default branch against `completed` on yours
+is a real divergence from a merge base that predates the claim. Resolve it by
+keeping the completing branch's value and the note — and **never by unioning
+the front matter**, since a duplicated `updated_at` is
+`check-bean-front-matter`'s recorded defect.
 
 Bean definitions are authored work-plan state. Two sessions editing one bean
 is a coordination question (`bean-coordination`), and a duplicated

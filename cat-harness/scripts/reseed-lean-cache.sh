@@ -120,7 +120,21 @@ ABS_LAKE="$REPO/$LAKE_ROOT"
 TOOLCHAIN=$(cat "$ABS_LAKE/lean-toolchain" 2>/dev/null || cat "$REPO/lean-toolchain")
 TOOLCHAIN="$(printf '%s' "$TOOLCHAIN" | tr -d '[:space:]')"
 SLUG="$(printf '%s' "${TOOLCHAIN##*:}" | tr . -)"
-PROD_BRANCH="lake-cache/$PACKAGE-$SLUG"
+# Family names: declared in cat-harness/scripts/special-branches.json (id
+# `lake-cache`), checked against this copy by tests/special-branches.test.ts.
+# Resolve new-name-first, then each legacy name, newest first, for the WRITE
+# too: publishing a new-name branch beside a live legacy one would block the
+# owner's rename (beans folio-assistant-32f6, folio-assistant-9io2). Each
+# probe names the FULL ref, so `lake-cache/` cannot match inside a newer
+# name. The fallback goes with bean folio-assistant-oycs.
+PROD_BRANCH="cat/folio-assistant-sci/lake-cache/$PACKAGE-$SLUG"
+for _cand in "cat/folio-assistant-sci/lake-cache" "cat-lake-cache" "lake-cache"; do
+  if git -C "$REPO" ls-remote --exit-code --heads origin "refs/heads/$_cand/$PACKAGE-$SLUG" >/dev/null 2>&1; then
+    PROD_BRANCH="$_cand/$PACKAGE-$SLUG"
+    break
+  fi
+done
+unset _cand
 TEST_BRANCH="$PROD_BRANCH-test"
 
 # elan's on-disk name for a pin: `/` -> `--`, `:` -> `---`, giving

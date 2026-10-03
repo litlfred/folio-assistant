@@ -101,6 +101,7 @@
     "translation-sources",
     "uml",
     "uploads",
+    "vocab-mapping",
     "waiver"
   ],
   "links": [
@@ -133,7 +134,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 669,
+      "count": 672,
       "unit": "beans"
     },
     {
@@ -251,7 +252,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1024,
+      "count": 976,
       "unit": "documents"
     },
     {
@@ -280,7 +281,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 201,
+      "count": 205,
       "unit": "modules"
     },
     {
@@ -368,7 +369,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 16,
+      "count": 24,
       "unit": "waiting"
     }
   ],
@@ -1345,17 +1346,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 4
+          "value": 5
         }
       ],
       "visualisations": [
@@ -1374,6 +1375,10 @@
         {
           "kind": "methodology",
           "path": "/methodologies/"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -1424,6 +1429,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-sci/sources/"
+        },
+        {
+          "id": "sci-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/processes/"
         },
         {
           "id": "qa",
@@ -1501,23 +1514,27 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
         {
           "kind": "library",
           "path": "/cat-harness/library/fhir-harness/"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -1556,6 +1573,14 @@
           ],
           "where": "local",
           "path": "fhir-harness/tools/"
+        },
+        {
+          "id": "fhir-harness-processes",
+          "kinds": [
+            "processes"
+          ],
+          "where": "local",
+          "path": "fhir-harness/processes/"
         },
         {
           "id": "qa",
@@ -1968,12 +1993,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 29
+          "value": 30
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 26
         },
         {
           "id": "views",
@@ -2082,6 +2107,10 @@
           "path": "/uploads/"
         },
         {
+          "kind": "vocab-mapping",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/cat-harness/"
         }
@@ -2118,6 +2147,14 @@
           ],
           "where": "local",
           "path": "cat-harness/code-lists/"
+        },
+        {
+          "id": "vocab-mappings",
+          "kinds": [
+            "vocab-mapping"
+          ],
+          "where": "local",
+          "path": "cat-harness/vocab-mappings/"
         },
         {
           "id": "schemas",
@@ -2322,7 +2359,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 7 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2701,6 +2738,10 @@
       {
         "kind": "uploads",
         "path": "/uploads/"
+      },
+      {
+        "kind": "vocab-mapping",
+        "note": "no viewer yet"
       },
       {
         "kind": "voices",
@@ -3484,7 +3525,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, sci-methodologies, sci-adapters, sci-sources, qa, attestations"
+            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
           },
           {
             "key": "needs",
@@ -3538,7 +3579,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, fhir-ig-skills, fhir-ig-tools, qa"
+            "summary": "5: library, fhir-ig-skills, fhir-ig-tools, fhir-harness-processes, qa"
           },
           {
             "key": "needs",
@@ -3732,7 +3773,7 @@
           },
           {
             "key": "directories",
-            "summary": "26: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
+            "summary": "27: tools, external-schemas, subscriptions, code-lists, vocab-mappings, schemas, uml, skills,…"
           },
           {
             "key": "associatedHarnesses",

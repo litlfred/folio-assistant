@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_QaPublish",
+    "path": "processes/sdlc/qa-publish.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/qa-publish.bpmn",
+      "code": ".github/workflows/qa-reports-prune.yml",
+      "prose_hash": "fe364e6a5f24",
+      "code_hash": "7986d3b44ecb",
+      "by": "baseline"
+    }
+  ]
+}

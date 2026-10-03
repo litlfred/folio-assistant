@@ -82,7 +82,7 @@ import { basename, dirname, join, relative, sep } from "node:path";
 import type { CompanionRole, QaCriterionEntry, QaFieldHash, QaReviewer, UntaintedDispatch } from "../../schemas/block-qa.ts";
 import { parsePo, parsePoEntries } from "./po-inject.ts";
 import { directoryForGraph } from "../../schemas/cat-harness.js";
-import { resolvePoSources } from "./po-resolve.ts";
+import { poResolveContext, resolvePoSources, type PoResolveContext } from "./po-resolve.ts";
 import { extractMarkdown } from "./pot-extract.ts";
 import { gitFileCommitSha, gitHeadSha, hashFile, sweepActor, walkBlocks } from "./qa-utils.ts";
 import { existingTranslationQaPath, translationQaPath } from "./qa-paths.ts";
@@ -902,6 +902,11 @@ function sweepSubject(
    * by its stem and lives beside its siblings rather than under a site.
    */
   catalogueStem?: string,
+  /**
+   * The folio-level half of PO resolution, built ONCE by the sweep. Rebuilding
+   * it per (subject, locale) was 98% of this script's run time (bean `ksg3`).
+   */
+  poContext?: PoResolveContext,
 ): void {
   const stem = catalogueStem ?? basename(md).replace(/\.md$/, "");
   const chapterSlug = basename(join(md, ".."));
@@ -912,7 +917,7 @@ function sweepSubject(
       locale,
       blockStem: stem,
       chapterSlug,
-    }).map((s) => s.path);
+    }, poContext).map((s) => s.path);
     const doc = buildReport(md, label, locale, sources);
     // READ wherever it is, WRITE only to the results tree — `qa-paths.ts`.
     const existing = existingTranslationQaPath(INSTANCE_ROOT, subjectRoot, locale);
@@ -988,11 +993,12 @@ if (import.meta.main) {
     .filter(Boolean);
 
   const tally: SweepTally = { written: 0, stale: 0, skipped: 0, refused: 0, fresh: [] };
+  const poContext = poResolveContext(INSTANCE_ROOT);
 
   for (const block of walkBlocks(root, { includeUnlabelled: true, verify: false })) {
     if (!block.md || !existsSync(block.md)) continue;
     const stem = basename(block.md).replace(/\.md$/, "");
-    sweepSubject(block.md, block.label ?? stem, locales, check, tally);
+    sweepSubject(block.md, block.label ?? stem, locales, check, tally, undefined, poContext);
   }
 
   // The docs site, unless the caller pointed `--root` somewhere else.
@@ -1004,7 +1010,7 @@ if (import.meta.main) {
         // mirrors. `relative` rather than a manual strip so a page nested any
         // number of levels deep composes correctly.
         const stem = relative(siteDir, page.md).replace(/\.md$/, "").split(sep).join("/");
-        sweepSubject(page.md, page.title, locales, check, tally, stem);
+        sweepSubject(page.md, page.title, locales, check, tally, stem, poContext);
       }
     }
   }

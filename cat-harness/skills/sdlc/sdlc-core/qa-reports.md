@@ -89,7 +89,7 @@ file lands goes red naming the unclaimed path.
 concluded (the evidence of a red commit is evidence too). It is the only job
 holding `contents: write`, and `bun run gates` never runs it locally. Its red
 means the record was not stored, never that the commit is bad
-([`ci-health`](ci-health.md)). Diagram: `processes/qa-publish.bpmn`, called
+([`ci-health`](ci-health.md)). Diagram: `processes/sdlc/qa-publish.bpmn`, called
 from `Task_QaPublish` in `code-quality-gates.bpmn`.
 
 ## Gates compute and judge

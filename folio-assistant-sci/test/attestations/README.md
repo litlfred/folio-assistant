@@ -10,5 +10,5 @@ Part of [folio-assistant-sci](../../README.md) 0.1.0, declared as `attestations`
 
 | file | what it is | used by |
 |---|---|---|
-| [`kg-qa/`](kg-qa/) | 14 files | |
+| [`kg-qa/`](kg-qa/) | 15 files | |
 <!-- kg:subgraph:end -->

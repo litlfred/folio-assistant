@@ -12,7 +12,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `beans`, holding `bea
 |---|---|---|
 | [`beans.json`](beans.json) | data |  |
 | [`defs/`](defs/) | Work items — one Markdown file each, in the layout the `beans` CLI reads. | |
-| [`notes/`](notes/) | 1 file | |
+| [`notes/`](notes/README.md) | One pull request's addendum to a bean, in a file of its own: `<bean>--<date>--<branch>.md`, so two pull requests adding to one bean never write one path. `README.md` is the generated index (`bun run beans:notes`). Bean `m61r`, issue #1853. | |
 | [`surveys/`](surveys/README.md) | Published surveys of commit windows. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each file records the window's TWO EDGE COMMITS, so a later session computes the uncovered delta rather than re-deriving the whole range — staleness decidable, not guessed. | |
 | [`workflows/`](workflows/) | Running BPMN instances — one JSON file each, carrying `"$schema": "folio-workflow-instance/v1"`. | |
 <!-- kg:subgraph:end -->

@@ -40,7 +40,7 @@ import { auditTestPlans, dmnRefResolves, type SutActor } from "../test-plan-audi
 import { KG_CRITERIA_BY_ID } from "../../schemas/kg-qa";
 
 const ROOT = resolve(import.meta.dir, "../..");
-const WF = join(ROOT, "processes");
+const WF = join(ROOT, "processes", "sdlc");
 const DMN = join(WF, "decisions/test-certification.dmn");
 const FIXTURE = join(import.meta.dir, "fixtures/test-plan-execution/tiny.test-plan.json");
 
@@ -329,7 +329,7 @@ describe("kg-audit: the four test-plan criteria", () => {
 
   test("the plan's exit DMN resolves from the instance root", () => {
     expect(dmnRefResolves(plan.exitCriteria.decision, [ROOT])).toBe(true);
-    expect(dmnRefResolves("processes/decisions/test-certification.dmn#Decision_Nope", [ROOT])).toBe(false);
+    expect(dmnRefResolves("processes/sdlc/decisions/test-certification.dmn#Decision_Nope", [ROOT])).toBe(false);
   });
 
   test("test-plan-resolves: a dangling plan, an undeclared SUT, and a kind mismatch", () => {

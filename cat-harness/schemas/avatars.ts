@@ -243,6 +243,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
+  // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
+  "bean-notes": {
+    glyph: "M8 5c4 0 6 3 6 7s-2 7-6 7c2-3 2-4 2-7s0-4-2-7zM16 8h4v8h-4zM17 11h2M17 13h2",
+    tone: 40,
+    reads: "a bean with a slip of paper beside it — an addendum, not a second item",
+  },
   // A SURVEY of a commit window. Two endpoint marks with a span between them,
   // because the two edge commits ARE the artefact: a survey whose window
   // cannot be pinned tells a reader nothing about today (bean `6ptx`).
@@ -356,6 +363,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
     tone: 180,
     reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
+  },
+  // A CROSSWALK — a column of source rows, lines crossing to a column of
+  // target rows. Bean `k74z`: one value carried into several vocabularies.
+  // `tone: 120` was unused, and is far from `code-list`'s 180 so the two
+  // "tables of codes" kinds are not confused at a glance.
+  "vocab-mapping": {
+    glyph: "M3 6h4M3 12h4M3 18h4M8 6l8 6M8 12l8-6M8 18h8M17 6h4M17 12h4M17 18h4",
+    tone: 120,
+    reads: "a crosswalk — source rows on the left, lines crossing to target rows on the right — one value carried into another vocabulary",
   },
   // A CLASS BOX — a title compartment over an attribute compartment, with an
   // association line leaving it. The one glyph that says "a diagram of shapes"

@@ -10,5 +10,5 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `smart-base-house-processe
 
 | file | what it is | used by |
 |---|---|---|
-| [`l2-dak-authoring.bpmn`](l2-dak-authoring.bpmn) | a [Process](https://litlfred.github.io/bootstrap/schemas/#process): L2 DAK authoring |  |
+| [`content/`](content/) | 1 file | |
 <!-- kg:subgraph:end -->

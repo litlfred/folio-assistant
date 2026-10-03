@@ -7,8 +7,8 @@
  * Bean `vigi`, owner 2026-09-23: *"a set of post processing tools for
  * verification that a failure triggers an alert to the publisher manager …
  * new sub-process"*, run **before deployment**, blocking. The process is
- * `processes/publish-verification.bpmn`; the alert is
- * `processes/publish-alert.bpmn`, which every failing step after the publish
+ * `processes/sdlc/publish-verification.bpmn`; the alert is
+ * `processes/sdlc/publish-alert.bpmn`, which every failing step after the publish
  * button shares.
  *
  *   bun run cat-harness/scripts/publish-verify.ts --dir ./_site [--report out.md] [--base <url>]... [--instance <dir>] [--search-index borrowed]
@@ -28,7 +28,11 @@
  * in built HTML (bean `uknu`) — a defect the source cannot show. The third is
  * the site search index (bean `fq5u`), a downstream output Jekyll writes and
  * nothing had checked — `--search-index borrowed` on a staging preview, which
- * serves the published index or a declared-empty one.
+ * serves the published index or a declared-empty one. The fourth and fifth are
+ * the mechanical half of the `linked-data` voice (bean `4pla`):
+ * `jsonld-object-links` (a value under an object property expands to a link, or
+ * is a literal the author declared) and `jsonld-own-base` (no document leans on
+ * a remote context's `@base`).
  *
  * ## What is in scope
  *
@@ -69,6 +73,12 @@ export interface VerifierResult {
   findings: Finding[];
   /** Set when the verifier could not run at all — never read as a pass. */
   couldNotTell?: string;
+  /**
+   * Something counted that is neither a pass nor a finding — said in the
+   * report so a sanctioned exception stays visible instead of vanishing into
+   * "pass". `jsonld-object-links`' declared literals are the first.
+   */
+  note?: string;
 }
 
 /** What a verifier knows about the site beyond its files. */
@@ -217,6 +227,235 @@ export const JSONLD_EXPAND: Verifier = {
   },
 };
 
+/** The remote context URLs a document's `@context` names, in order. */
+function remoteContexts(doc: Record<string, unknown>): string[] {
+  const c = doc["@context"];
+  return (Array.isArray(c) ? c : [c]).filter((x): x is string => typeof x === "string");
+}
+
+/** Whether a document's own `@context` carries an inline `@base`. */
+function inlineBase(doc: Record<string, unknown>): boolean {
+  const c = doc["@context"];
+  return (Array.isArray(c) ? c : [c]).some((x) => x !== null && typeof x === "object" && "@base" in (x as object));
+}
+
+/**
+ * The properties a held context makes OBJECT properties — every term it
+ * coerces to `"@type": "@id"` or `"@vocab"`, expanded to its full IRI.
+ *
+ * Read from the contexts themselves, never from a list written here: the
+ * `linked-data` voice's `ld-know-which-properties-are-object-properties` says
+ * the vocabulary decides, and a held context IS that decision in the form a
+ * processor applies. PROV-JSONLD's context coerces exactly PROV-O's object
+ * properties (`agent`, `hadRole`, `hadPlan`, `used`, …); ours coerces the
+ * terms whose value is a node.
+ */
+async function objectProperties(
+  contextDoc: unknown,
+  loader: ReturnType<typeof localLoader>,
+): Promise<Set<string>> {
+  const ctx = (contextDoc as { "@context"?: Record<string, unknown> })?.["@context"];
+  const out = new Set<string>();
+  if (!ctx || typeof ctx !== "object" || Array.isArray(ctx)) return out;
+  for (const [term, def] of Object.entries(ctx)) {
+    if (term.startsWith("@") || def === null || typeof def !== "object") continue;
+    const t = (def as { "@type"?: unknown })["@type"];
+    if (t !== "@id" && t !== "@vocab") continue;
+    const probe = await jsonld.expand({ "@context": ctx, [term]: "urn:probe" } as object, {
+      documentLoader: loader,
+    } as unknown as jsonld.Options.Expand);
+    for (const k of Object.keys((probe[0] ?? {}) as object)) if (!k.startsWith("@")) out.add(k);
+  }
+  return out;
+}
+
+/**
+ * A marker no real value carries, prefixed to every EXPLICIT `{"@value": …}`
+ * before expansion so that a literal the author declared can be told from one
+ * a missing coercion produced. Expansion keeps a string value intact, so the
+ * prefix survives into the expanded form and nowhere else.
+ */
+const DECLARED = "\u0000declared-literal\u0000";
+
+/** A copy of `node` with every explicit `{"@value": string}` marked {@link DECLARED}. */
+function markDeclared(node: unknown): unknown {
+  if (Array.isArray(node)) return node.map(markDeclared);
+  if (node === null || typeof node !== "object") return node;
+  const o = node as Record<string, unknown>;
+  if (typeof o["@value"] === "string" && Object.keys(o).every((k) => k === "@value" || k === "@language" || k === "@type")) {
+    return { ...o, "@value": DECLARED + o["@value"] };
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(o)) out[k] = k === "@context" ? v : markDeclared(v);
+  return out;
+}
+
+/**
+ * The `linked-data` voice, mechanical half: a value under an OBJECT property
+ * must expand to a link (`ld-object-property-is-a-link`), and a compact-IRI key
+ * that misses its term's coercion (`ld-coercion-belongs-to-the-term`) is the
+ * same defect seen from the source — both expand to `{"@value": …}` where a
+ * node was meant, so one walk over the expanded graph catches both, and the
+ * finding names the source key when it was a compact IRI.
+ *
+ * **Three states, as the voice requires.** A link passes. A literal the author
+ * DECLARED — an explicit `{"@value": …}`, which is how `prov-jsonld.ts` writes
+ * a value with no release address while its report carries the reason
+ * (`ld-link-is-the-node-release-address`) — is counted, never a finding. A
+ * literal nobody declared is a finding: that is the PROV-O report defect bean
+ * `9y9j` measured in all 100 activities.
+ *
+ * Which properties are object properties is read from the held contexts each
+ * document names (see {@link objectProperties}); a document naming no held
+ * context has nothing to check against and is counted, not passed silently.
+ */
+export const JSONLD_OBJECT_LINKS: Verifier = {
+  id: "jsonld-object-links",
+  asks:
+    "Does every value under an object property of ours expand to a link — or is it a literal the " +
+    "author declared explicitly, because the node has no release address?",
+  async run(dir, ctx) {
+    const loader = localLoader(dir);
+    const byContext = new Map<string, Set<string>>();
+    const findings: Finding[] = [];
+    let checked = 0;
+    let outOfScope = 0;
+    let declared = 0;
+    for (const f of treeFiles(dir, ".jsonld")) {
+      let doc: Record<string, unknown>;
+      try {
+        doc = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
+      } catch {
+        continue; // `jsonld-expand` reports it; one defect, one finding
+      }
+      if (!isOurs(doc, ctx.bases)) {
+        outOfScope += 1;
+        continue;
+      }
+      if (contextOnly(doc)) continue;
+      const objProps = new Set<string>();
+      for (const url of remoteContexts(doc)) {
+        if (!byContext.has(url)) {
+          let props = new Set<string>();
+          try {
+            props = await objectProperties((await loader(url)).document, loader);
+          } catch {
+            // an unheld context is `jsonld-expand`'s finding, not this one's
+          }
+          byContext.set(url, props);
+        }
+        for (const p of byContext.get(url)!) objProps.add(p);
+      }
+      checked += 1;
+      if (objProps.size === 0) continue;
+      let expanded: unknown;
+      try {
+        expanded = await jsonld.expand(markDeclared(doc) as object, {
+          documentLoader: loader,
+        } as unknown as jsonld.Options.Expand);
+      } catch {
+        continue; // does not expand: `jsonld-expand` says so
+      }
+      const compactKeys = new Set(JSON.stringify(doc).match(/"[A-Za-z][\w-]*:[A-Za-z][\w-]*"(?=\s*:)/g) ?? []);
+      const walk = (node: unknown): void => {
+        if (Array.isArray(node)) return node.forEach(walk);
+        if (node === null || typeof node !== "object") return;
+        for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+          if (k.startsWith("@")) {
+            if (k === "@graph" || k === "@list" || k === "@set" || k === "@reverse") walk(v);
+            continue;
+          }
+          for (const x of Array.isArray(v) ? v : [v]) {
+            const lit = x !== null && typeof x === "object" ? (x as Record<string, unknown>)["@value"] : undefined;
+            if (objProps.has(k) && lit !== undefined) {
+              if (typeof lit === "string" && lit.startsWith(DECLARED)) declared += 1;
+              else {
+                const local = k.replace(/^.*[#/]/, "");
+                const viaCompact = [...compactKeys].some((c) => c.endsWith(`:${local}"`));
+                findings.push({
+                  verifier: "jsonld-object-links",
+                  file: relative(dir, f),
+                  detail:
+                    `${k} is an object property but its value ${JSON.stringify(lit).slice(0, 60)} expands to a ` +
+                    `literal` +
+                    (viaCompact
+                      ? " — the source key is a compact IRI, which does not inherit the term's coercion (ld-coercion-belongs-to-the-term)"
+                      : " (ld-object-property-is-a-link); write the node's address, or an explicit {\"@value\"} with its reason recorded"),
+                });
+              }
+            }
+            walk(x);
+          }
+        }
+      };
+      walk(expanded);
+    }
+    return {
+      checked,
+      outOfScope,
+      findings,
+      ...(declared > 0 ? { note: `${declared} declared literal(s) under object properties — nodes with no release address, reasons carried by their reports` } : {}),
+    };
+  },
+};
+
+/**
+ * `ld-no-base-in-a-remote-context`: JSON-LD 1.1 ignores `@base` in a context
+ * referenced by URL, and jsonld.js applies it anyway — so a document of ours
+ * that names a HELD remote context carrying `@base` and states none of its own
+ * resolves its relative `@id`s only under that one processor. Bean `bh4q` gave
+ * our documents a two-part context (the URL, then an inline `@base`); this is
+ * what keeps a new emitter from dropping the second part.
+ */
+export const JSONLD_OWN_BASE: Verifier = {
+  id: "jsonld-own-base",
+  asks:
+    "Does every document of ours that names a remote context carrying @base state its own @base " +
+    "inline, rather than lean on one a conforming processor ignores?",
+  async run(dir, ctx) {
+    const loader = localLoader(dir);
+    const carriesBase = new Map<string, boolean>();
+    const findings: Finding[] = [];
+    let checked = 0;
+    let outOfScope = 0;
+    for (const f of treeFiles(dir, ".jsonld")) {
+      let doc: Record<string, unknown>;
+      try {
+        doc = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
+      } catch {
+        continue;
+      }
+      if (!isOurs(doc, ctx.bases)) {
+        outOfScope += 1;
+        continue;
+      }
+      if (contextOnly(doc)) continue;
+      checked += 1;
+      if (inlineBase(doc)) continue;
+      for (const url of remoteContexts(doc)) {
+        if (!carriesBase.has(url)) {
+          let has = false;
+          try {
+            const c = ((await loader(url)).document as { "@context"?: unknown })["@context"];
+            has = c !== null && typeof c === "object" && !Array.isArray(c) && "@base" in (c as object);
+          } catch {
+            // unheld: `jsonld-expand`'s finding
+          }
+          carriesBase.set(url, has);
+        }
+        if (carriesBase.get(url)) {
+          findings.push({
+            verifier: "jsonld-own-base",
+            file: relative(dir, f),
+            detail: `names ${url}, whose @base JSON-LD 1.1 ignores in a remote context, and states no @base of its own`,
+          });
+        }
+      }
+    }
+    return { checked, outOfScope, findings };
+  },
+};
+
 /**
  * Bean `uknu`: the theme renders `nav_footer_custom.html` twice, so 1,222
  * published pages carried `id="fa-nav-open"` twice while the source was
@@ -328,7 +567,7 @@ export const SEARCH_INDEX: Verifier = {
 };
 
 /** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, HTML_UNIQUE_IDS, SEARCH_INDEX];
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, HTML_UNIQUE_IDS, SEARCH_INDEX];
 
 export async function verify(
   dir: string,
@@ -358,6 +597,7 @@ export function reportMarkdown(dir: string, results: readonly VerifierResult[], 
   for (const r of results) {
     const state = r.couldNotTell ? `could not tell — ${r.couldNotTell}` : r.findings.length ? `${r.findings.length} finding(s)` : "pass";
     lines.push(`- **${r.id}**: ${state} — ${r.checked} document(s) checked, ${r.outOfScope} out of scope (not ours)`);
+    if (r.note) lines.push(`  - note: ${r.note}`);
     for (const f of r.findings.slice(0, 20)) lines.push(`  - \`${f.file}\`: ${f.detail}`);
     if (r.findings.length > 20) lines.push(`  - …and ${r.findings.length - 20} more`);
   }

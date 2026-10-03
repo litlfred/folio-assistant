@@ -16,8 +16,8 @@ graph-kinds:
 # Running a test plan — from a request to a signed certification
 
 > Skill id: `test-plan-execution` · Package: `sdlc-core` · Process:
-> [`test-plan-execution.bpmn`](../../../processes/test-plan-execution.bpmn) ·
-> Decision: [`test-certification.dmn`](../../../processes/decisions/test-certification.dmn)
+> [`test-plan-execution.bpmn`](../../../processes/sdlc/test-plan-execution.bpmn) ·
+> Decision: [`test-certification.dmn`](../../../processes/sdlc/decisions/test-certification.dmn)
 
 **A system is tested against a plan, by somebody who is not the system, and
 certified by somebody who did not run the test.** Everything below is that

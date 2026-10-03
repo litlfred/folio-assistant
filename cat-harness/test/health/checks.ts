@@ -352,8 +352,14 @@ export function formatAge(minutes: number): string {
  *     of ONE branch, so each re-push adds ~27.5 MB of new blobs permanently;
  *  2. `baseurl`-prefixed hrefs, ~235 per page (Jekyll's `relative_url`
  *     prepends `baseurl`; it is not document-relative);
- *  3. the `fa-translation-index` JSON island, which publishes `site.baseurl`
- *     to `docs-ui.js` because the language switcher rebuilds nav hrefs from it;
+ *  3. the `fa-translation-index` JSON island, which published `site.baseurl`
+ *     to `docs-ui.js` because the language switcher rebuilds nav hrefs from it
+ *     — **removed** 2026-10-02: it was 9.3 KB in every page's `<head>` and the
+ *     SAME 9.3 KB on all 1571 of them (14.26 MB, ONE distinct payload), and it
+ *     is now fetched once from `assets/harness/site.json`. This paragraph
+ *     named the remedy — *"derive the per-preview facts in the browser instead
+ *     of baking them into 390 pages"* — and `R4`'s relaxation to "reachable
+ *     without XSS" is what made it available;
  *  4. the three SEO identity claims — **removed** as of
  *     `scripts/strip-preview-seo.ts`, on correctness grounds rather than size.
  *

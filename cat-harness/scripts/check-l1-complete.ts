@@ -888,6 +888,21 @@ function derivableRequirements(dir: string): Requirement[] {
         state: "unmet",
         detail: "no `source` block — re-run the ingest rung",
       });
+    } else if (src.kind === "published") {
+      // A PUBLICATION recorded by reference (a FHIR IG — owner, 2026-10-02):
+      // there are no bytes, so no sha256 to ask for. Its identity is the
+      // publisher's own canonical + version, and `ReferencedSourceSchema`
+      // (the referenced-record requirement above) holds it to that shape.
+      // Met, and the detail says what stands in for the hash rather than
+      // letting a missing one read as an older ingest that never sniffed.
+      const ok = typeof src.canonical === "string" && typeof src.version === "string";
+      out.push({
+        name: "technical-metadata",
+        state: ok ? "met" : "unmet",
+        detail: ok
+          ? `published resource, no bytes held or hashed — ${String(src.canonical)} ${String(src.version)}`
+          : "published `source` missing canonical or version",
+      });
     } else {
       const want = ["file", "sha256", "bytes", "mtime", "mimetype_source"];
       const missing = want.filter((k) => !(k in src));

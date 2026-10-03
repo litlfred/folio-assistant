@@ -15,7 +15,7 @@ description: >-
 # Knowledge Graph separation — the method
 
 > Skill id: `kg-separation` · Package: `graph-management`
-> Process: [`kg-separation.bpmn`](../../../processes/kg-separation.bpmn)
+> Process: [`kg-separation.bpmn`](../../../processes/kg/kg-separation.bpmn)
 
 Owner, 2026-09-29: *"need replicable process for when KG gets too large to
 handle and skills"*, and on cat-harness: *"follow same methodology/house

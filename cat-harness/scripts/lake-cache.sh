@@ -23,6 +23,12 @@
 #   scripts/lake-cache.sh contribute [--lake-root DIR] [--package NAME] [--force]
 #   scripts/lake-cache.sh list
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
+#   scripts/lake-cache.sh resolve-branch --key <pkg>-<slug>
+#
+# Cache branches are `cat/folio-assistant-sci/lake-cache/<pkg>-<slug>`;
+# the legacy `cat-lake-cache/<pkg>-<slug>` and `lake-cache/<pkg>-<slug>`
+# are still read AND written where one of them is what exists, until the
+# remotes are renamed (beans folio-assistant-32f6, folio-assistant-9io2).
 #
 # The package and branch are derived automatically from
 # `.github/lake-packages.json` + `lean-toolchain`; pass them only to
@@ -57,6 +63,24 @@ set -uo pipefail
 PROG="${0##*/}"
 PRIVATE_REF="refs/lake-cache-restore"
 
+# ── Branch family names ─────────────────────────────────────────────
+#
+# Declared in cat-harness/scripts/special-branches.json (id `lake-cache`);
+# copied here because a folio may restore a cache with no `bun` on the
+# path. tests/special-branches.test.ts fails if the copy disagrees.
+#
+# The family is `cat/folio-assistant-sci/lake-cache/` (owner, 2026-10-02:
+# special branches are `cat/<harness>/<name>`; bean folio-assistant-9io2).
+# It was `lake-cache/`, then the interim `cat-lake-cache/` (bean
+# folio-assistant-32f6). Until every remote is renamed, a branch is
+# resolved new-name-first, then each legacy name in order, newest first —
+# for WRITES as well as reads, so nothing creates a new-name branch beside
+# a legacy one and blocks the rename. LEGACY_CACHE_PREFIXES is a
+# space-separated list (no prefix contains a space) and empties when bean
+# folio-assistant-oycs says.
+CACHE_PREFIX="cat/folio-assistant-sci/lake-cache"
+LEGACY_CACHE_PREFIXES="cat-lake-cache lake-cache"
+
 die()  { printf '%s: %s\n' "$PROG" "$*" >&2; exit 2; }
 info() { printf '  %s\n' "$*"; }
 warn() { printf '  ! %s\n' "$*" >&2; }
@@ -71,6 +95,7 @@ CMD="${1:-}"; shift || true
 LAKE_ROOT=""
 PACKAGE=""
 BRANCH=""
+KEY=""
 PUSH=0
 TOOLCHAIN=""
 FORCE=0
@@ -79,6 +104,7 @@ while [ $# -gt 0 ]; do
     --lake-root) LAKE_ROOT="${2:-}"; shift 2 ;;
     --package)   PACKAGE="${2:-}";   shift 2 ;;
     --branch)    BRANCH="${2:-}";    shift 2 ;;
+    --key)       KEY="${2:-}";       shift 2 ;;
     --toolchain) TOOLCHAIN="${2:-}"; shift 2 ;;
     --push)      PUSH=1; shift ;;
     --force)     FORCE=1; shift ;;
@@ -193,10 +219,15 @@ PY
   # Without this exclusion a single-package repo has two exact matches and
   # inference declines for no good reason.
   local slug; slug=$(toolchain_slug "$root") || return 1
-  local cands
+  # Every prefix is matched ANCHORED at `^`, so `lake-cache/` cannot match
+  # inside `cat-lake-cache/…` or `cat/folio-assistant-sci/lake-cache/…`.
+  local cands p sed_args=()
+  for p in "$CACHE_PREFIX" $LEGACY_CACHE_PREFIXES; do
+    sed_args+=(-e "s#^${p}/\(.*\)-${slug}\$#\1#p")
+  done
   cands=$(cmd_list_names \
-    | sed -n "s#^lake-cache/\(.*\)-${slug}\$#\1#p" \
-    | grep -vx 'toolchain')
+    | sed -n "${sed_args[@]}" \
+    | sort -u | grep -vx 'toolchain')
   [ "$(printf '%s\n' "$cands" | grep -c .)" -eq 1 ] && printf '%s\n' "$cands"
 }
 
@@ -338,7 +369,7 @@ cmd_status() {
   info "lake root:  $root"
   info "package:    $pkg"
   info "toolchain:  $slug"
-  info "branch:     lake-cache/$pkg-$slug"
+  info "branch:     $(cache_branch "$pkg-$slug")"
   local own; own=$(count_own_oleans "$root")
   local tr cov; tr=$(count_paired_traces "$root"); cov=$(trace_coverage_pct "$root")
   info "oleans:     $n  (deps + own)"
@@ -384,7 +415,7 @@ cmd_restore() {
   [ -z "$pkg" ] && die "could not resolve the package for lake-root '$root'.
 Add it to .github/lake-packages.json, or pass --package NAME.
 Known packages: $(cmd_list_names | tr '\n' ' ')"
-  local br="${BRANCH:-lake-cache/$pkg-$slug}"
+  local br="${BRANCH:-$(cache_branch "$pkg-$slug")}"
 
   local have; have=$(count_oleans "$root")
   if is_gutted "$root" "$have"; then
@@ -547,7 +578,7 @@ cmd_seed() {
   local slug pkg
   slug=$(toolchain_slug "$root") || die "no lean-toolchain"
   pkg=$(resolve_package "$root"); [ -z "$pkg" ] && die "pass --package NAME"
-  local br="${BRANCH:-lake-cache/$pkg-$slug}"
+  local br="${BRANCH:-$(cache_branch "$pkg-$slug")}"
 
   local n; n=$(count_oleans "$root")
   [ "$n" -eq 0 ] && die "no oleans under $root/.lake — build before seeding.
@@ -701,7 +732,7 @@ having none and skip the anti-shrink guard entirely.
 cmd_restore_toolchain() {
   local root; root=$(resolve_lake_root)
   local slug; slug=$(toolchain_slug "$root") || die "no lean-toolchain"
-  local br="${BRANCH:-lake-cache/toolchain-$slug}"
+  local br="${BRANCH:-$(cache_branch "toolchain-$slug")}"
   local dest="${ELAN_HOME:-$HOME/.elan}"
 
   if command -v lean >/dev/null 2>&1; then
@@ -939,10 +970,10 @@ cmd_contribute() {
   slug=$(toolchain_slug "$root") || die "no lean-toolchain"
   pkg=$(resolve_package "$root"); [ -z "$pkg" ] && die "pass --package NAME"
 
-  printf 'contributing this build to lake-cache/%s-%s\n' "$pkg" "$slug"
+  BRANCH="${BRANCH:-$(cache_branch "$pkg-$slug")}"
+  printf 'contributing this build to %s\n' "$BRANCH"
   info "oleans: $(count_oleans "$root")   own: $(count_own_oleans "$root")   traces: $(trace_coverage_pct "$root")%"
   PUSH=1
-  BRANCH="${BRANCH:-lake-cache/$pkg-$slug}"
   cmd_seed
 }
 
@@ -959,10 +990,36 @@ _LIST_DONE=0
 cmd_list_names() {
   if [ "$_LIST_DONE" -eq 0 ]; then
     _LIST_DONE=1
-    _LIST_CACHE=$(timeout 30 git ls-remote --heads origin 'refs/heads/lake-cache/*' 2>/dev/null \
+    local p pats=()
+    for p in "$CACHE_PREFIX" $LEGACY_CACHE_PREFIXES; do pats+=("refs/heads/${p}/*"); done
+    _LIST_CACHE=$(timeout 30 git ls-remote --heads origin "${pats[@]}" 2>/dev/null \
       | sed 's#.*refs/heads/##' | sort)
   fi
   printf '%s\n' "$_LIST_CACHE"
+}
+
+# cache_branch KEY -> the branch for `<pkg>-<slug>` (or `toolchain-<slug>`):
+# the new name if it exists on origin, else the first legacy name that
+# exists (newest first), else the new name. Readers and writers both use
+# it — see the family-names note at the top of this file. `grep -x` is a
+# whole-line match, so a legacy name never matches inside a newer one.
+cache_branch() {
+  local key="$1" names p; names=$(cmd_list_names)
+  for p in "$CACHE_PREFIX" $LEGACY_CACHE_PREFIXES; do
+    if printf '%s\n' "$names" | grep -qxF "$p/$key"; then
+      printf '%s/%s\n' "$p" "$key"
+      return
+    fi
+  done
+  printf '%s/%s\n' "$CACHE_PREFIX" "$key"
+}
+
+# `resolve-branch --key <pkg>-<slug>`: print cache_branch, so the restore
+# action and the refresh job resolve exactly as this script does instead of
+# carrying their own copy of the rule.
+cmd_resolve_branch() {
+  [ -n "$KEY" ] || die "resolve-branch needs --key <package>-<toolchain-slug>"
+  cache_branch "$KEY"
 }
 
 cmd_list() {
@@ -1009,7 +1066,7 @@ cmd_doctor() {
 }
 
 usage() {
-  sed -n '2,40p' "$0" | sed 's/^# \{0,1\}//'
+  sed -n '2,45p' "$0" | sed 's/^# \{0,1\}//'
 }
 
 case "$CMD" in
@@ -1021,6 +1078,7 @@ case "$CMD" in
   contribute) cmd_contribute ;;
   list)    cmd_list ;;
   doctor)  cmd_doctor ;;
+  resolve-branch) cmd_resolve_branch ;;
   ""|help|-h|--help) usage ;;
   *) die "unknown command: $CMD (try: status restore restore-toolchain install-toolchain contribute seed list doctor)" ;;
 esac

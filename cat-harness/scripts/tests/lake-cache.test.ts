@@ -535,3 +535,87 @@ describe("lake-cache.sh — contribute (agentic loop)", () => {
     rmSync(bare, { recursive: true, force: true });
   });
 });
+
+describe("lake-cache.sh — cat/folio-assistant-sci/lake-cache/ rename (beans 32f6, 9io2)", () => {
+  // The family is `cat/folio-assistant-sci/lake-cache/`; it was
+  // `lake-cache/`, then the interim `cat-lake-cache/`. Until the remotes are
+  // renamed a key resolves new-name-first, then each legacy name, newest
+  // first — for writes as well as reads, so nothing creates a new-name
+  // branch beside a legacy one and blocks the owner's rename. The fixture
+  // branch above is the OLDEST legacy name, so every earlier test in this
+  // file is the legacy-read case.
+  const NEW = "cat/folio-assistant-sci/lake-cache";
+  const INTERIM = "cat-lake-cache";
+  const OLDEST = "lake-cache";
+  const cacheWt = () => join(root, "cachewt");
+  const KEY = `otherpkg-${SLUG}`;
+  const push = (...prefixes: string[]) =>
+    git(["push", "-q", "origin", ...prefixes.map((p) => `HEAD:refs/heads/${p}/${KEY}`)], cacheWt());
+  const drop = (...prefixes: string[]) =>
+    git(["push", "-q", "origin", "--delete", ...prefixes.map((p) => `${p}/${KEY}`)], cacheWt());
+  const resolveKey = () => run(["resolve-branch", "--key", KEY], lakeRoot).out.trim();
+
+  test("a key that exists only under the oldest legacy name resolves to it", () => {
+    const r = run(["resolve-branch", "--key", `${PKG}-${SLUG}`], lakeRoot);
+    expect(r.code).toBe(0);
+    expect(r.out.trim()).toBe(BRANCH);
+  });
+
+  test("a key that exists nowhere resolves to the new name", () => {
+    const r = run(["resolve-branch", "--key", "nope-v9-9-9"], lakeRoot);
+    expect(r.out.trim()).toBe(`${NEW}/nope-v9-9-9`);
+  });
+
+  test("a key that exists only under the interim cat- name resolves to it, not to the new name", () => {
+    push(INTERIM);
+    try {
+      expect(resolveKey()).toBe(`${INTERIM}/${KEY}`);
+    } finally {
+      drop(INTERIM);
+    }
+  });
+
+  // `lake-cache/` is a substring of both newer prefixes; a resolver that
+  // matched it unanchored, or tried the names in the wrong order, fails here.
+  test("both legacy names exist: the interim cat- name wins over the oldest", () => {
+    push(OLDEST, INTERIM);
+    try {
+      expect(resolveKey()).toBe(`${INTERIM}/${KEY}`);
+    } finally {
+      drop(OLDEST, INTERIM);
+    }
+  });
+
+  test("all three exist: the new name wins, and status reports it", () => {
+    push(OLDEST, INTERIM, NEW);
+    try {
+      expect(resolveKey()).toBe(`${NEW}/${KEY}`);
+      const s = run(["status", "--package", "otherpkg"], lakeRoot);
+      expect(s.out).toContain(`${NEW}/${KEY}`);
+    } finally {
+      // Fixture cleanup in the test's own temporary remote: a second
+      // package would make package inference ambiguous for later tests.
+      drop(OLDEST, INTERIM, NEW);
+    }
+  });
+
+  for (const prefix of [NEW, INTERIM]) {
+    test(`restore reads a cache that exists only under ${prefix}/`, () => {
+      push(prefix);
+      const fresh = mkdtempSync(join(tmpdir(), "lakecache-cat-"));
+      try {
+        execFileSync("bash", ["-c", `cp '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${fresh}/'`], { stdio: "pipe" });
+        const r = run(["restore", "--package", "otherpkg", "--lake-root", fresh], lakeRoot);
+        expect(r.code).toBe(0);
+        expect(existsSync(join(fresh, ".lake"))).toBe(true);
+      } finally {
+        drop(prefix);
+        rmSync(fresh, { recursive: true, force: true });
+      }
+    });
+  }
+
+  test("resolve-branch without --key is a usage error", () => {
+    expect(run(["resolve-branch"], lakeRoot).code).toBe(2);
+  });
+});

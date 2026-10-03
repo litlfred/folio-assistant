@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "2cc41103bbc9"
+    "script_hash": "8ef39e10c6c3"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 72,
+      "count": 86,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -80,8 +80,18 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "subscriptions",
+          "path": "cat-harness/subscriptions"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "code-lists",
           "path": "cat-harness/code-lists"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
         },
         {
           "instance": "cat-harness",
@@ -112,6 +122,11 @@
           "instance": "cat-harness",
           "directory": "methodologies",
           "path": "cat-harness/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "qa",
+          "path": "cat-harness/test/results"
         },
         {
           "instance": "cat-harness",
@@ -189,6 +204,16 @@
           "path": "fhir-harness/tools"
         },
         {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-processes",
+          "path": "fhir-harness/processes"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "qa",
+          "path": "fhir-harness/test/results"
+        },
+        {
           "instance": "folio-assistant-core",
           "directory": "folios",
           "path": "folio-assistant-core/folios"
@@ -225,6 +250,11 @@
         },
         {
           "instance": "folio-assistant-core",
+          "directory": "qa",
+          "path": "folio-assistant-core/test/results"
+        },
+        {
+          "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
         },
@@ -247,6 +277,16 @@
           "instance": "folio-assistant-sci",
           "directory": "sci-sources",
           "path": "folio-assistant-sci/sources"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-processes",
+          "path": "folio-assistant-sci/processes"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "qa",
+          "path": "folio-assistant-sci/test/results"
         },
         {
           "instance": "folio-assistant-sci",
@@ -300,8 +340,18 @@
         },
         {
           "instance": "smart-base",
+          "directory": "qa",
+          "path": "smart-base/test/results"
+        },
+        {
+          "instance": "smart-base",
           "directory": "voices",
           "path": "smart-base/skills/voices"
+        },
+        {
+          "instance": "smart-ig",
+          "directory": "qa",
+          "path": "smart-ig/test/results"
         },
         {
           "instance": "smart-immunizations",
@@ -312,6 +362,11 @@
           "instance": "smart-immunizations",
           "directory": "smart-immunizations-artifact-index",
           "path": "smart-immunizations/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "qa",
+          "path": "smart-immunizations/test/results"
         },
         {
           "instance": "smart-trust",
@@ -327,6 +382,11 @@
           "instance": "smart-trust",
           "directory": "smart-trust-scripts",
           "path": "smart-trust/scripts"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "qa",
+          "path": "smart-trust/test/results"
         },
         {
           "instance": "who-iris",
@@ -369,9 +429,19 @@
           "path": "who-iris/id-lookup"
         },
         {
+          "instance": "who-iris",
+          "directory": "qa",
+          "path": "who-iris/test/results"
+        },
+        {
           "instance": "who-style-guide",
           "directory": "glossary",
           "path": "who-style-guide/glossary"
+        },
+        {
+          "instance": "who-style-guide",
+          "directory": "qa",
+          "path": "who-style-guide/test/results"
         },
         {
           "instance": "who-style-guide",
@@ -398,7 +468,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 94,
+      "count": 107,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -487,6 +557,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "schemas",
           "path": "cat-harness/schemas"
         },
@@ -519,6 +594,11 @@
           "instance": "cat-harness",
           "directory": "methodologies",
           "path": "cat-harness/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "qa",
+          "path": "cat-harness/test/results"
         },
         {
           "instance": "cat-harness",
@@ -636,6 +716,16 @@
           "path": "fhir-harness/tools"
         },
         {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-processes",
+          "path": "fhir-harness/processes"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "qa",
+          "path": "fhir-harness/test/results"
+        },
+        {
           "instance": "folio-assistant-core",
           "directory": "core-schemas",
           "path": "folio-assistant-core/schemas"
@@ -687,6 +777,11 @@
         },
         {
           "instance": "folio-assistant-core",
+          "directory": "qa",
+          "path": "folio-assistant-core/test/results"
+        },
+        {
+          "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
         },
@@ -709,6 +804,16 @@
           "instance": "folio-assistant-sci",
           "directory": "sci-sources",
           "path": "folio-assistant-sci/sources"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-processes",
+          "path": "folio-assistant-sci/processes"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "qa",
+          "path": "folio-assistant-sci/test/results"
         },
         {
           "instance": "folio-assistant-sci",
@@ -767,6 +872,11 @@
         },
         {
           "instance": "smart-base",
+          "directory": "qa",
+          "path": "smart-base/test/results"
+        },
+        {
+          "instance": "smart-base",
           "directory": "smart-base-themes",
           "path": "smart-base/themes"
         },
@@ -786,6 +896,11 @@
           "path": "smart-base/skills/voices"
         },
         {
+          "instance": "smart-ig",
+          "directory": "qa",
+          "path": "smart-ig/test/results"
+        },
+        {
           "instance": "smart-immunizations",
           "directory": "smart-immunizations-docs",
           "path": "smart-immunizations/docs"
@@ -794,6 +909,11 @@
           "instance": "smart-immunizations",
           "directory": "smart-immunizations-artifact-index",
           "path": "smart-immunizations/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "qa",
+          "path": "smart-immunizations/test/results"
         },
         {
           "instance": "smart-trust",
@@ -809,6 +929,11 @@
           "instance": "smart-trust",
           "directory": "smart-trust-scripts",
           "path": "smart-trust/scripts"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "qa",
+          "path": "smart-trust/test/results"
         },
         {
           "instance": "who-iris",
@@ -861,9 +986,19 @@
           "path": "who-iris/id-lookup"
         },
         {
+          "instance": "who-iris",
+          "directory": "qa",
+          "path": "who-iris/test/results"
+        },
+        {
           "instance": "who-style-guide",
           "directory": "glossary",
           "path": "who-style-guide/glossary"
+        },
+        {
+          "instance": "who-style-guide",
+          "directory": "qa",
+          "path": "who-style-guide/test/results"
         },
         {
           "instance": "who-style-guide",
@@ -894,5 +1029,5 @@
       "entries": []
     }
   },
-  "total": 170
+  "total": 197
 }

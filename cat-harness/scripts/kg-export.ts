@@ -75,7 +75,8 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
-import { DCTERMS_NS } from "../schemas/jsonld.js";
+import { applyVocabMapping, contextBindings, vocabMapping, type VocabMapping } from "../schemas/vocab-mapping.js";
+import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
 import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
@@ -234,6 +235,19 @@ const SCHEMA = "https://schema.org/";
 const XSD = "http://www.w3.org/2001/XMLSchema#";
 
 /**
+ * A vocabulary-mapping table of THIS instance (the platform's), read once.
+ * Own rather than the exported instance's: a table belongs to the `vocab-map`
+ * Tool that applies it, which lives here, so `--instance ./bootstrap` names
+ * its roles with the same rows (`vocabMappingDirs`).
+ */
+const namingTables = new Map<string, VocabMapping>();
+function namingTable(id: string): VocabMapping {
+  let m = namingTables.get(id);
+  if (m === undefined) namingTables.set(id, (m = vocabMapping(ROOT, id)));
+  return m;
+}
+
+/**
  * The active context, following `WorldHealthOrganization/smart-base`'s
  * `generate_jsonld_vocabularies.py`.
  *
@@ -260,29 +274,32 @@ const XSD = "http://www.w3.org/2001/XMLSchema#";
  */
 export function buildContext(): Record<string, unknown> {
   const link = { "@type": "@id" } as const;
+  const prefixes = { ...NS_PREFIXES, prov: PROV, rdfs: RDFS, schema: SCHEMA, xsd: XSD };
   return {
     "@version": 1.1,
-    ...NS_PREFIXES,
-    prov: PROV,
-    rdfs: RDFS,
-    schema: SCHEMA,
-    xsd: XSD,
+    ...prefixes,
 
     id: "@id",
     type: "@type",
     graph: "@graph",
 
-    name: "rdfs:label",
-    // Dublin Core, not a second `rdfs:label`/`rdfs:comment` (owner,
-    // 2026-09-30, bean `xsqm`: "emphasize preexisting standards … now
-    // align"). The edges below that restate a standard — `partOf`,
-    // `holdsGraph`, `from`/`to`, `implementedBy`, … — resolve through
-    // `propertyIri`, which reads each retired term's `replacedBy` in the
-    // vocabulary; the JSON keys are unchanged, so a plain-JSON reader sees
-    // no difference and an RDF reader sees the standard property.
-    title: `${DCTERMS_NS}title`,
-    description: `${DCTERMS_NS}description`,
-    summary: "rdfs:comment",
+    // `name`, `title`, `description` and `summary`, then a role's
+    // `prefLabel` and `notation`: DERIVED from the vocabulary-mapping tables
+    // rather than restated here (bean `lodp`). `kg-node-naming` is the row
+    // fsh-guts reads too, so "exactly as the main export" is structural
+    // (finding D2); `role-naming` is the row glossary-export reads too, so
+    // one role node is not named two ways (D3). Dublin Core, not a second
+    // `rdfs:label`/`rdfs:comment` (owner, 2026-09-30, bean `xsqm`:
+    // "emphasize preexisting standards … now align"). The edges below that
+    // restate a standard — `partOf`, `holdsGraph`, `from`/`to`,
+    // `implementedBy`, … — resolve through `propertyIri`, which reads each
+    // retired term's `replacedBy` in the vocabulary; the JSON keys are
+    // unchanged, so a plain-JSON reader sees no difference and an RDF reader
+    // sees the standard property.
+    ...contextBindings([namingTable("kg-node-naming"), namingTable("role-naming")], {
+      inContext: prefixes,
+      prefixes: { ...STANDARD_PREFIXES, ...NS_PREFIXES },
+    }),
     generatedAt: { "@id": `${PROV}generatedAtTime`, "@type": `${XSD}dateTime` },
     // Provenance of the SOURCE, as against provenance of the run above.
     sourceCommit: { "@id": `${PROV}wasDerivedFrom`, "@type": "@id" },
@@ -1644,9 +1661,10 @@ async function collectProcesses(
     continue;
   }
   await collectDecisions(dir);
-  for (const f of readdirSync(dir)) {
-    if (!f.endsWith(".bpmn")) continue;
-    const path = join(dir, f);
+  // At any depth: since placement PR3 (bean `63wl`) the diagrams sit in
+  // `processes/<group>/`, and a top-level read exported none of them.
+  for (const path of diagramFiles(dir)) {
+    if (!path.endsWith(".bpmn")) continue;
     try {
       const m = await loadProcessModel(path);
       nodes.push({
@@ -1728,7 +1746,7 @@ async function collectProcesses(
         });
       }
     } catch (e) {
-      problems.push(`unloadable process ${rel}/${f}: ${e instanceof Error ? e.message : String(e)}`);
+      problems.push(`unloadable process ${relative(root, path)}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
   }
@@ -1896,7 +1914,11 @@ function collectSchemas(doc: string, base: string): Node[] {
     "@id": makeIri(doc, "schema", m.name),
     "@type": termIri("Schema"),
     name: m.name,
-    title: m.summary,
+    // Finding D5 (bean `lodp`), owner 2026-10-02: "Make it like the
+    // others". The docblock's first line is a `summary` (rdfs:comment) as on
+    // every other node type; the title is the module's stem.
+    title: m.name,
+    summary: m.summary,
     module: m.module,
     maintainedBy: keeper.get(m.module),
   }));
@@ -2062,11 +2084,17 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
       roles.push(r);
     }
   }
+  // NAMED by the table glossary-export applies to the same IRI (bean `lodp`,
+  // finding D3; owner default applied, option 1, 2026-10-02): the display
+  // name is `skos:prefLabel` and, derived from it, `dcterms:title`; the id is
+  // `skos:notation`. The id was written as `rdfs:label` until then, so a
+  // merged graph gave one role node `rdfs:label "reviewer"` beside
+  // `skos:prefLabel "Reviewer"`.
+  const naming = namingTable("role-naming");
   return roles.map((r) => ({
     "@id": makeIri(doc, "role", r.id),
     "@type": termIri("Role"),
-    name: r.id,
-    title: r.title,
+    ...applyVocabMapping(naming, { title: r.title, id: r.id }),
     description: r.description,
     sourceKind: "role-registry",
     actorKinds: r.actorKinds,

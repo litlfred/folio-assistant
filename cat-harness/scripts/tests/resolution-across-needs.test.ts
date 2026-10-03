@@ -23,7 +23,8 @@
  *
  * The auditor's own run already disagreed, in a committed artefact:
  * `cat-harness/test/results/kg-qa/_external/smart-base/…/diig-investment-path.kg-qa.json`
- * records `skill-ref-resolves` **pass (0)** for that same file, because from
+ * recorded `skill-ref-resolves` **pass (0)** for that same file (deleted 2026-10-01
+ * as a duplicate of the owner's own verdict, Q-A PR 4), because from
  * the auditor's root the skill is local. **Two runs, one diagram, two answers**
  * — and the instance-scoped one was wrong.
  *
@@ -51,7 +52,7 @@
  */
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { availableParallelism, tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../../schemas/cat-harness.js";
@@ -77,6 +78,74 @@ const REPO = resolve(import.meta.dir, "../../..");
  * `no-silent-first-directory.test.ts` made, for the same reason.
  */
 const WRITE_FREE = ["--check", "--json"] as const;
+
+/**
+ * Each audit this file reads is run ONCE, and they run side by side.
+ *
+ * The skill half and the role half judge the SAME report — `kg-audit
+ * --instance X --check --json` — for overlapping sets of instances, and each
+ * spawned it again, one instance after another. Measured 2026-10-03: one pass
+ * over the 14 instances is 54 s locally (`./cat-harness` alone 16 s), the file
+ * made two of them plus a default run, 123 s in all, and in CI it was 92 s of
+ * the 223 s `bun test` shard 2/4 — the longest job in the workflow, and one no
+ * shard split can shorten because a file is the unit a shard moves (bean `fmdl`).
+ *
+ * Memoised by argument list, so each test still reads exactly the output it
+ * read before; and every instance's audit is STARTED on first use, under a
+ * limit of one per core, rather than when its turn in a loop comes. Each spawn
+ * is a separate process, `--check` writes nothing, and `bun test` runs this
+ * file's tests one at a time, so the only contention is for cores — which is
+ * what the limit is for.
+ */
+interface AuditRun { out: string; err: string }
+
+const AUDITS = new Map<string, Promise<AuditRun>>();
+const LIMIT = Math.max(1, availableParallelism());
+let running = 0;
+const waiting: (() => void)[] = [];
+
+async function slot<T>(work: () => Promise<T>): Promise<T> {
+  if (running >= LIMIT) await new Promise<void>((go) => waiting.push(go));
+  running++;
+  try {
+    return await work();
+  } finally {
+    running--;
+    waiting.shift()?.();
+  }
+}
+
+/** The audit's stdout and stderr for these arguments, spawned at most once. */
+function audit(args: readonly string[]): Promise<AuditRun> {
+  const key = args.join("\0");
+  let run = AUDITS.get(key);
+  if (!run) {
+    run = slot(async () => {
+      const p = Bun.spawn(["bun", "run", "cat-harness/scripts/kg-audit.ts", ...args], {
+        cwd: REPO,
+        stdout: "pipe",
+        stderr: "pipe",
+      });
+      const [out, err] = await Promise.all([new Response(p.stdout).text(), new Response(p.stderr).text()]);
+      await p.exited;
+      return { out, err };
+    });
+    AUDITS.set(key, run);
+  }
+  return run;
+}
+
+/** `kg-audit --instance <rel>`, write-free. */
+const auditInstance = (rel: string) => audit(["--instance", rel, ...WRITE_FREE]);
+
+/**
+ * Start every audit this file reads — each instance's and the default run's —
+ * so they overlap; the tests then await the ones they judge.
+ */
+function startAudits(): void {
+  for (const inst of INSTANCES) void auditInstance(`./${relative(REPO, inst)}`);
+  void audit(WRITE_FREE);
+}
 
 /**
  * The skills a ref in `root` may resolve to — own plus every declared `needs`.
@@ -135,18 +204,13 @@ describe("skill refs resolve across the `needs` chain", () => {
 
   test("a skill held anywhere in an instance's `needs` closure is not reported dangling", async () => {
     const offences: string[] = [];
+    startAudits();
 
     for (const inst of REACHES_DOWN) {
       const rel = `./${relative(REPO, inst)}`;
       const reachable = closureSkills(inst);
 
-      const p = Bun.spawn(
-        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, ...WRITE_FREE],
-        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
-      );
-      const out = await new Response(p.stdout).text();
-      const err = await new Response(p.stderr).text();
-      await p.exited;
+      const { out, err } = await auditInstance(rel);
 
       // A run that did not report cannot clear the instance — "could not
       // determine" is never a pass, so it is recorded as an offence of its own
@@ -207,12 +271,7 @@ describe("skill refs resolve across the `needs` chain", () => {
     const offences: string[] = [];
     for (const inst of undeclared) {
       const rel = `./${relative(REPO, inst)}`;
-      const p = Bun.spawn(
-        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, ...WRITE_FREE],
-        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
-      );
-      const out = await new Response(p.stdout).text();
-      await p.exited;
+      const { out } = await auditInstance(rel);
 
       let reports: { subject?: { id?: string }; criteria?: Record<string, { result?: string }> }[];
       try {
@@ -447,17 +506,13 @@ describe("role refs resolve across the `needs` chain", () => {
    */
   test("a role held anywhere in the `needs` closure is not reported dangling", async () => {
     const offences: string[] = [];
+    startAudits();
     for (const inst of INSTANCES) {
       const rel = `./${relative(REPO, inst)}`;
       const reachable = closureRoleIds(inst);
       if (reachable.size === 0) continue; // nothing to resolve against
 
-      const p = Bun.spawn(
-        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, ...WRITE_FREE],
-        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
-      );
-      const out = await new Response(p.stdout).text();
-      await p.exited;
+      const { out } = await auditInstance(rel);
       let reports: { subject?: { id?: string }; criteria?: Record<string, { findings?: { detail?: string }[] }> }[];
       try {
         reports = (JSON.parse(out) as { reports?: typeof reports }).reports ?? [];
@@ -518,13 +573,7 @@ describe("role refs resolve across the `needs` chain", () => {
       "cat-harness's closure adds no roles — this guard cannot distinguish the two designs",
     ).toBeGreaterThan(own.size);
 
-    const p = Bun.spawn(["bun", "run", "cat-harness/scripts/kg-audit.ts", ...WRITE_FREE], {
-      cwd: REPO,
-      stdout: "pipe",
-      stderr: "pipe",
-    });
-    const out = await new Response(p.stdout).text();
-    await p.exited;
+    const { out } = await audit(WRITE_FREE);
     const reports = (JSON.parse(out) as { reports?: { subject?: { kind?: string } }[] }).reports ?? [];
     const roleSubjects = reports.filter((r) => r.subject?.kind === "role").length;
     expect(
