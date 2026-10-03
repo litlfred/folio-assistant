@@ -146,7 +146,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "site.ts --root <instance> --out <dir> [--subgraph <id>]…: every JSON Schema and JSON-LD document at the IRI it names, the files as they sit, the README page as index.md."
+          "@value": "site.ts --root <instance> --out <dir> [--subgraph <id>]…: every JSON Schema and JSON-LD document at the IRI it names, the files as they sit, the README page as README.md (served as README.html), and index.html as a redirect to it — the default landing page, which an index.html or index.md at the instance root replaces. Generated pages carry the generated-by notice at their top, and a footer that links their generator and source, never an edit page."
         }
       ],
       "skos:notation": "A_Stage",

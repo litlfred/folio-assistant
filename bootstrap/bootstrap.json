@@ -76,8 +76,8 @@
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "versionInfo": "0.1.0",
-  "generatedAtTime": "2026-10-03T09:05:08.836Z",
-  "wasDerivedFrom": "git:7a91356e990005a79cd84f6dde74dcaee73c62df",
+  "generatedAtTime": "2026-10-03T09:18:45.336Z",
+  "wasDerivedFrom": "git:ebfa4065254aa508fee298b92ca534be85f79f1e",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions",
@@ -467,10 +467,10 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Harnesses",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Where",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_DetermineWhere",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
@@ -481,12 +481,27 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Where_Harnesses",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_DetermineWhere",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
       "@type": "bootstrap:ProcessNode",
       "label": "Ask the Requestor: which harness, and where?",
       "type": "bpmn:callActivity",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_DetermineWhere",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine where you are: process, roles, context",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
@@ -559,7 +574,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_1",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/Start_HumanAgentDiscussion",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineContext",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
@@ -598,7 +613,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_14",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Answered",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
@@ -674,6 +689,66 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P1",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineContext",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P2",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P3",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P4",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P5",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P6",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P7",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "the caller's",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/End_Answered",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/flow/SF_HAD_P8",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "a precondition: determine again",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_Answer",
       "@type": "bootstrap:ProcessNode",
       "label": "Answer, decline, or say nothing",
@@ -684,6 +759,38 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
       "@type": "bootstrap:ProcessNode",
       "label": "Apply the stated default, and say so",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask first about what could not be determined",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineContext",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine the context: what is known, and already decided",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine the process and task, or that you are idle",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine the roles: which you act as, and the person's",
       "type": "bpmn:task",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
       "skill": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/human-agent-discussion"
@@ -773,9 +880,23 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Context, roles and process all determined?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
       "@type": "bootstrap:ProcessNode",
       "label": "What came back?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Was that the caller's question, or a precondition?",
       "type": "bpmn:exclusiveGateway",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion"
     },
@@ -1129,6 +1250,7 @@
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/GW_StepState",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization/node/Start_CompleteInitialization",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_AskRequestor",
+        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_DetermineWhere",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListHarnesses",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_ListLocations",
         "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
@@ -1235,7 +1357,7 @@
       "@type": "bootstrap:Skill",
       "label": "human-agent-discussion",
       "title": "Asking a person, in one reusable way",
-      "description": "Ask a person (or a sibling agent) for what no file holds: context, then the options, then a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.",
+      "description": "Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.",
       "source": "skills/human-agent-discussion.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
     },
@@ -1292,9 +1414,9 @@
   "counts": {
     "bootstrap:Asset": 3,
     "bootstrap:Process": 5,
-    "bootstrap:ProcessNode": 59,
+    "bootstrap:ProcessNode": 66,
     "bootstrap:Role": 4,
-    "bootstrap:SequenceFlow": 63,
+    "bootstrap:SequenceFlow": 72,
     "bootstrap:Skill": 11,
     "bootstrap:Subgraph": 5
   },

@@ -560,6 +560,24 @@
               "kindRouteRedirect": {
                 "type": "boolean"
               },
+              "storage": {
+                "type": "object",
+                "properties": {
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "const": "commit"
+                  }
+                },
+                "required": [
+                  "branch",
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
               "composed": {
                 "type": "boolean"
               },
@@ -1030,8 +1048,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "f239953db633aab565743eb91266961e95d11136",
+    "sha": "1aaa669f9980b4c26f2560d8b1c7541226033d6c",
     "pr": "main",
-    "run": "37111610601"
+    "run": "37112346455"
   }
 }

@@ -13,6 +13,10 @@
   <bpmn:process id="Process_HumanAgentDiscussion" name="Human–agent discussion" isExecutable="false">
     <bpmn:documentation>A REUSABLE SUB-PROCESS, never an entry point. Every diagram in bootstrap that needs something only a person can supply — a choice, a judgement, a step only they have the rights to perform — reaches it through a call activity with calledElement="Process_HumanAgentDiscussion", rather than drawing its own asking. One way of asking, drawn once: a caller that draws its own has a second answer to "how do I ask", free to drift from this one.
 
+BEFORE ANY QUESTION, THE ASKER DETERMINES WHERE IT IS (owner, 2026-10-01: "i wanted to see more about determining context / role / process as part of precondition.. and that needs to be clarified as part of discussion/interaction"). Three things, each drawn as a task and declared below as a precondition of the first question: (1) the CONTEXT — what is already known, which declaration governs it, and what has already been decided, so a settled question is not reopened; (2) the ROLES — which Role the asker is acting as, and which Role the person answering holds, because an Actor performs a task in a Process AS a Role and the same Actor is a different Role in another diagram; (3) the PROCESS and TASK the question belongs to — or that there is none, and the agent is idle, classifying a request. A question asked without these is asked on behalf of nobody in particular: its context step has nothing to say, and its answer cannot be recorded against a step.
+
+WHAT CANNOT BE DETERMINED IS ASKED FIRST. When any of the three cannot be determined from what the agent can read, that becomes the first question of this same discussion, in the same order (context, options, recommendation, one question), and the caller's own question waits, counted. Its answer is recorded and the three are determined again before the caller's question is put. No default is allowed for it: an agent that assumes which process or role it is in is asserting an authority nobody gave it.
+
 THE ORDER IS THE PROCESS: context, then options, then a recommendation, then the question. Never the question first with the explanation available on request. The test a question must pass before it is put: can the reader answer it without opening anything? If answering needs them to open a file, an issue or the scrollback, the question is not ready.
 
 WHAT HAPPENS IF NOBODY ANSWERS is said before the question is put, not decided after. A default may be applied only when the CALLER allows one (the decision is reversible and the caller's own instructions name the default), and it is then recorded as assumed, with the default named — never as the person's answer. Where the caller allows none (which harness a repository becomes is the standing example: a wrong answer succeeds at being the wrong thing), silence ends as unsettled.
@@ -20,14 +24,34 @@ WHAT HAPPENS IF NOBODY ANSWERS is said before the question is put, not decided a
 SYMMETRIC IN ITS PARTICIPANTS. The answering lane is a person or a sibling agent that already holds the answer; the record says which, because the two are evidence of different weight.
 
 NO work-plan element, and isExecutable is false, for the reasons initialize-harness gives.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- Preconditions of the FIRST QUESTION (before="A_GiveContext"), not of
+           the start: the start is only "something a person must supply is
+           needed". Each is established by the task named in its text, and
+           checked at GW_Determined. Stated, because nothing in a checkout can
+           observe what an agent has determined; the drawn tasks are where the
+           agent says so in its message. -->
+      <bootstrap.processes:precondition id="context-determined" kind="stated" before="A_GiveContext"
+        text="The asker can say what is already known, which declaration governs it, and what has already been decided (A_DetermineContext) — or knows that it cannot."/>
+      <bootstrap.processes:precondition id="roles-determined" kind="stated" before="A_GiveContext"
+        text="The asker can say which Role it is acting as, and which Role the person it asks holds (A_DetermineRoles) — or knows that it cannot."/>
+      <bootstrap.processes:precondition id="process-determined" kind="stated" before="A_GiveContext"
+        text="The asker can say which Process and task the question belongs to, or that it is in none and is classifying a request (A_DetermineProcess) — or knows that it cannot."/>
+    </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_HumanAgentDiscussion">
       <bpmn:lane id="Lane_Agent" name="Agent">
         <!-- NO ROLE, DECLARED rather than merely absent, as in log-message:
              the asker is whoever called this sub-process — a Bootstrapping
-             Agent here, an agent of any harness above. -->
-        <bpmn:documentation>Whichever agent called this sub-process. It prepares the question, rules on whether an answer settles it, and records the outcome in the form its caller asked for. It never supplies the answer itself.</bpmn:documentation>
+             Agent here, an agent of any harness above. Which Role it is
+             acting as is the thing A_DetermineRoles makes it say. -->
+        <bpmn:documentation>Whichever agent called this sub-process. It determines where it is, prepares the question, rules on whether an answer settles it, and records the outcome in the form its caller asked for. It never supplies the answer itself.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role variable="true"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_HumanAgentDiscussion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_DetermineContext</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_DetermineRoles</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_DetermineProcess</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_AskUndeterminedFirst</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_GiveContext</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_LayOutOptions</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Recommend</bpmn:flowNodeRef>
@@ -36,6 +60,7 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
         <bpmn:flowNodeRef>A_FollowUp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_DefaultAllowed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_RecordAnswer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_WhichQuestion</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ApplyDefault</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_RecordUnsettled</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Answered</bpmn:flowNodeRef>
@@ -51,8 +76,32 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
 
     <bpmn:startEvent id="Start_HumanAgentDiscussion" name="Something only a person can supply is needed"/>
 
+    <bpmn:task id="A_DetermineContext" name="Determine the context: what is known, and already decided">
+      <bpmn:documentation>Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the instance's `&lt;name&gt;.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person earlier in the conversation, or in a declaration that quotes their ruling. A settled question is not asked again: asking it reopens a decision and spends the person's attention twice. Read it, do not remember it: cite what you read. What the caller handed in is checked here, not re-derived.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="A_DetermineRoles" name="Determine the roles: which you act as, and the person's">
+      <bpmn:documentation>An Actor performs a task in a Process AS a Role. Nothing is a Role by nature: the same agent is the Bootstrapping Agent in one diagram and another Role in the next, and which one it is depends on the lane of the task it is performing now. So say which Role you are acting as — the lane of the CALLING task, since this lane is variable — and which Role the person you ask holds (the Requestor, or whoever the calling lane names). It decides what you may ask them for: only the Requestor chooses a harness, and a question put to somebody who does not hold the decision gets an answer that settles nothing.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="A_DetermineProcess" name="Determine the process and task, or that you are idle">
+      <bpmn:documentation>Name the Process, the lane and the task the question belongs to, and say so in the message: "Process: Initialize a harness, at Determine the harness and repositories, as the Bootstrapping Agent". A reader who does not know which process you are in will assume the last one's rules still hold. If you are in no Process, that is an answer too: you are IDLE, and what you are doing is classifying a request to find the Process it belongs to — say that, rather than presenting a question as though a step had asked for it. You are OUT of process, and it is undetermined, when you cannot name the instance, when two candidates fit, when the step you believed was next is not the one the diagram enables, or when the work in hand was not what you said you would do. Do not infer your way back in.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_Determined" name="Context, roles and process all determined?">
+      <bpmn:documentation>Judgement. "Determined" means the agent can state each in its message with where it came from; "I think so" about a Process or a Role is not determined.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="A_AskUndeterminedFirst" name="Ask first about what could not be determined">
+      <bpmn:documentation>The caller's question waits, and is counted ("one more question after this"). What is put first is the undetermined one: the context you could not establish, the Role you are not sure you hold, or the Process you cannot place this in. It goes through the same order as any question — say what you determined and what you could not, the candidates you see, the one you would pick and why — and it allows NO default: a Process or Role assumed rather than confirmed is an authority nobody gave. With more than one undetermined, ask about the outermost first (the Process before the Role before the context), since the outer answer usually settles the inner.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
+    </bpmn:task>
+
     <bpmn:task id="A_GiveContext" name="Say what is being decided, and why it matters now">
-      <bpmn:documentation>First, and in the message itself: what the decision is, what depends on it, and what is already known — each fact with where it came from. A link is where somebody goes for more; it is never where the terms are defined.</bpmn:documentation>
+      <bpmn:documentation>First, and in the message itself: where you are (the Process and task, as which Role, asking whom — from the three determinations), what the decision is, what depends on it, and what is already known — each fact with where it came from. A link is where somebody goes for more; it is never where the terms are defined.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -84,12 +133,18 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
       <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_DefaultAllowed" name="Did the caller allow a default?"/>
+    <bpmn:exclusiveGateway id="GW_DefaultAllowed" name="Did the caller allow a default?">
+      <bpmn:documentation>Never for a question about the context, the Role or the Process (A_AskUndeterminedFirst): those allow none.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_RecordAnswer" name="Record the answer, and who gave it">
-      <bpmn:documentation>In the form the caller asked for — for bootstrap's harness question, a document conforming to discussion.output.schema.json with determinedBy asked. Who answered (a person or an agent) is part of the record.</bpmn:documentation>
+      <bpmn:documentation>In the form the caller asked for — for bootstrap's harness question, a document conforming to discussion.output.schema.json with determinedBy asked. Who answered (a person or an agent) is part of the record. An answer about the context, the Role or the Process is recorded the same way, as the person's word.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
     </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_WhichQuestion" name="Was that the caller's question, or a precondition?">
+      <bpmn:documentation>An answer to A_AskUndeterminedFirst settles where the agent is, not what the caller needed: determine the three again with it, then put the caller's question. An answer to the caller's question ends the discussion.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_ApplyDefault" name="Apply the stated default, and say so">
       <bpmn:documentation>Only the default stated in A_Recommend, only where the caller allows one, and recorded as assumed with the default named — never as the person's answer. The next message to the person says it was applied, so they can reverse it.</bpmn:documentation>
@@ -97,7 +152,7 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
     </bpmn:task>
 
     <bpmn:task id="A_RecordUnsettled" name="Record what is still open">
-      <bpmn:documentation>Declined, or silent where no default is allowed. The record says what was asked and what is still open, so the next actor resumes rather than restarts. Never a guess.</bpmn:documentation>
+      <bpmn:documentation>Declined, or silent where no default is allowed. The record says what was asked and what is still open, so the next actor resumes rather than restarts. Never a guess. When it is the context, the Role or the Process that is still open, say so and stop: a step completed in the wrong Process records an authority that was never given.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -105,7 +160,13 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
     <bpmn:endEvent id="End_Defaulted" name="Default applied, and said so"/>
     <bpmn:endEvent id="End_Unsettled" name="Still open, and said so"/>
 
-    <bpmn:sequenceFlow id="SF_HAD_1" sourceRef="Start_HumanAgentDiscussion" targetRef="A_GiveContext"/>
+    <bpmn:sequenceFlow id="SF_HAD_1" sourceRef="Start_HumanAgentDiscussion" targetRef="A_DetermineContext"/>
+    <bpmn:sequenceFlow id="SF_HAD_P1" sourceRef="A_DetermineContext" targetRef="A_DetermineRoles"/>
+    <bpmn:sequenceFlow id="SF_HAD_P2" sourceRef="A_DetermineRoles" targetRef="A_DetermineProcess"/>
+    <bpmn:sequenceFlow id="SF_HAD_P3" sourceRef="A_DetermineProcess" targetRef="GW_Determined"/>
+    <bpmn:sequenceFlow id="SF_HAD_P4" name="yes" sourceRef="GW_Determined" targetRef="A_GiveContext"/>
+    <bpmn:sequenceFlow id="SF_HAD_P5" name="no" sourceRef="GW_Determined" targetRef="A_AskUndeterminedFirst"/>
+    <bpmn:sequenceFlow id="SF_HAD_P6" sourceRef="A_AskUndeterminedFirst" targetRef="A_GiveContext"/>
     <bpmn:sequenceFlow id="SF_HAD_2" sourceRef="A_GiveContext" targetRef="A_LayOutOptions"/>
     <bpmn:sequenceFlow id="SF_HAD_3" sourceRef="A_LayOutOptions" targetRef="A_Recommend"/>
     <bpmn:sequenceFlow id="SF_HAD_4" sourceRef="A_Recommend" targetRef="A_PutQuestion"/>
@@ -118,136 +179,193 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
     <bpmn:sequenceFlow id="SF_HAD_11" name="yes" sourceRef="GW_DefaultAllowed" targetRef="A_ApplyDefault"/>
     <bpmn:sequenceFlow id="SF_HAD_12" name="no" sourceRef="GW_DefaultAllowed" targetRef="A_RecordUnsettled"/>
     <bpmn:sequenceFlow id="SF_HAD_13" name="declined" sourceRef="GW_WhatCameBack" targetRef="A_RecordUnsettled"/>
-    <bpmn:sequenceFlow id="SF_HAD_14" sourceRef="A_RecordAnswer" targetRef="End_Answered"/>
+    <bpmn:sequenceFlow id="SF_HAD_14" sourceRef="A_RecordAnswer" targetRef="GW_WhichQuestion"/>
+    <bpmn:sequenceFlow id="SF_HAD_P7" name="the caller's" sourceRef="GW_WhichQuestion" targetRef="End_Answered"/>
+    <bpmn:sequenceFlow id="SF_HAD_P8" name="a precondition: determine again" sourceRef="GW_WhichQuestion" targetRef="A_DetermineContext"/>
     <bpmn:sequenceFlow id="SF_HAD_15" sourceRef="A_ApplyDefault" targetRef="End_Defaulted"/>
     <bpmn:sequenceFlow id="SF_HAD_16" sourceRef="A_RecordUnsettled" targetRef="End_Unsettled"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_HumanAgentDiscussion">
     <bpmndi:BPMNPlane id="Plane_Process_HumanAgentDiscussion" bpmnElement="Collaboration_Process_HumanAgentDiscussion">
       <bpmndi:BPMNShape id="Shape_Participant_Process_HumanAgentDiscussion" bpmnElement="Participant_Process_HumanAgentDiscussion" isHorizontal="true">
-        <dc:Bounds x="140" y="80" width="1980" height="560"/>
+        <dc:Bounds x="140" y="80" width="2640" height="560"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="170" y="80" width="1950" height="360"/>
+        <dc:Bounds x="170" y="80" width="2610" height="360"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Requestor" bpmnElement="Lane_Requestor" isHorizontal="true">
-        <dc:Bounds x="170" y="440" width="1950" height="200"/>
+        <dc:Bounds x="170" y="440" width="2610" height="200"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_HumanAgentDiscussion" bpmnElement="Start_HumanAgentDiscussion">
         <dc:Bounds x="232" y="242" width="36" height="36"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_DetermineContext" bpmnElement="A_DetermineContext">
+        <dc:Bounds x="320" y="220" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_DetermineRoles" bpmnElement="A_DetermineRoles">
+        <dc:Bounds x="510" y="220" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_DetermineProcess" bpmnElement="A_DetermineProcess">
+        <dc:Bounds x="700" y="220" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Determined" bpmnElement="GW_Determined" isMarkerVisible="true">
+        <dc:Bounds x="890" y="235" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="855" y="180" width="120" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_AskUndeterminedFirst" bpmnElement="A_AskUndeterminedFirst">
+        <dc:Bounds x="840" y="330" width="150" height="80"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_GiveContext" bpmnElement="A_GiveContext">
-        <dc:Bounds x="365" y="220" width="150" height="80"/>
+        <dc:Bounds x="1030" y="220" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_LayOutOptions" bpmnElement="A_LayOutOptions">
-        <dc:Bounds x="555" y="220" width="150" height="80"/>
+        <dc:Bounds x="1220" y="220" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Recommend" bpmnElement="A_Recommend">
-        <dc:Bounds x="745" y="220" width="150" height="80"/>
+        <dc:Bounds x="1410" y="220" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_PutQuestion" bpmnElement="A_PutQuestion">
-        <dc:Bounds x="935" y="220" width="150" height="80"/>
+        <dc:Bounds x="1600" y="220" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Answer" bpmnElement="A_Answer">
-        <dc:Bounds x="1125" y="500" width="150" height="80"/>
+        <dc:Bounds x="1790" y="500" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_WhatCameBack" bpmnElement="GW_WhatCameBack" isMarkerVisible="true">
-        <dc:Bounds x="1365" y="235" width="50" height="50"/>
+        <dc:Bounds x="2030" y="235" width="50" height="50"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_FollowUp" bpmnElement="A_FollowUp">
-        <dc:Bounds x="1315" y="330" width="150" height="80"/>
+        <dc:Bounds x="1980" y="330" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_DefaultAllowed" bpmnElement="GW_DefaultAllowed" isMarkerVisible="true">
-        <dc:Bounds x="1555" y="125" width="50" height="50"/>
+        <dc:Bounds x="2220" y="125" width="50" height="50"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordAnswer" bpmnElement="A_RecordAnswer">
-        <dc:Bounds x="1695" y="220" width="150" height="80"/>
+        <dc:Bounds x="2360" y="220" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_WhichQuestion" bpmnElement="GW_WhichQuestion" isMarkerVisible="true">
+        <dc:Bounds x="2560" y="235" width="50" height="50"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ApplyDefault" bpmnElement="A_ApplyDefault">
-        <dc:Bounds x="1695" y="110" width="150" height="80"/>
+        <dc:Bounds x="2360" y="110" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordUnsettled" bpmnElement="A_RecordUnsettled">
-        <dc:Bounds x="1695" y="330" width="150" height="80"/>
+        <dc:Bounds x="2360" y="330" width="150" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Answered" bpmnElement="End_Answered">
-        <dc:Bounds x="1942" y="242" width="36" height="36"/>
+        <dc:Bounds x="2682" y="242" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Defaulted" bpmnElement="End_Defaulted">
-        <dc:Bounds x="1942" y="132" width="36" height="36"/>
+        <dc:Bounds x="2682" y="132" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Unsettled" bpmnElement="End_Unsettled">
-        <dc:Bounds x="1942" y="352" width="36" height="36"/>
+        <dc:Bounds x="2682" y="352" width="36" height="36"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_1" bpmnElement="SF_HAD_1">
         <di:waypoint x="268" y="260"/>
-        <di:waypoint x="365" y="260"/>
+        <di:waypoint x="320" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P1" bpmnElement="SF_HAD_P1">
+        <di:waypoint x="470" y="260"/>
+        <di:waypoint x="510" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P2" bpmnElement="SF_HAD_P2">
+        <di:waypoint x="660" y="260"/>
+        <di:waypoint x="700" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P3" bpmnElement="SF_HAD_P3">
+        <di:waypoint x="850" y="260"/>
+        <di:waypoint x="890" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P4" bpmnElement="SF_HAD_P4">
+        <di:waypoint x="940" y="260"/>
+        <di:waypoint x="1030" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P5" bpmnElement="SF_HAD_P5">
+        <di:waypoint x="915" y="285"/>
+        <di:waypoint x="915" y="330"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P6" bpmnElement="SF_HAD_P6">
+        <di:waypoint x="990" y="370"/>
+        <di:waypoint x="1105" y="370"/>
+        <di:waypoint x="1105" y="300"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_2" bpmnElement="SF_HAD_2">
-        <di:waypoint x="515" y="260"/>
-        <di:waypoint x="555" y="260"/>
+        <di:waypoint x="1180" y="260"/>
+        <di:waypoint x="1220" y="260"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_3" bpmnElement="SF_HAD_3">
-        <di:waypoint x="705" y="260"/>
-        <di:waypoint x="745" y="260"/>
+        <di:waypoint x="1370" y="260"/>
+        <di:waypoint x="1410" y="260"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_4" bpmnElement="SF_HAD_4">
-        <di:waypoint x="895" y="260"/>
-        <di:waypoint x="935" y="260"/>
+        <di:waypoint x="1560" y="260"/>
+        <di:waypoint x="1600" y="260"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_5" bpmnElement="SF_HAD_5">
-        <di:waypoint x="1010" y="300"/>
-        <di:waypoint x="1010" y="540"/>
-        <di:waypoint x="1125" y="540"/>
+        <di:waypoint x="1675" y="300"/>
+        <di:waypoint x="1675" y="540"/>
+        <di:waypoint x="1790" y="540"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_6" bpmnElement="SF_HAD_6">
-        <di:waypoint x="1200" y="500"/>
-        <di:waypoint x="1200" y="260"/>
-        <di:waypoint x="1365" y="260"/>
+        <di:waypoint x="1865" y="500"/>
+        <di:waypoint x="1865" y="260"/>
+        <di:waypoint x="2030" y="260"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_7" bpmnElement="SF_HAD_7">
-        <di:waypoint x="1415" y="260"/>
-        <di:waypoint x="1695" y="260"/>
+        <di:waypoint x="2080" y="260"/>
+        <di:waypoint x="2360" y="260"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_8" bpmnElement="SF_HAD_8">
-        <di:waypoint x="1390" y="285"/>
-        <di:waypoint x="1390" y="330"/>
+        <di:waypoint x="2055" y="285"/>
+        <di:waypoint x="2055" y="330"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_9" bpmnElement="SF_HAD_9">
-        <di:waypoint x="1390" y="410"/>
-        <di:waypoint x="1390" y="540"/>
-        <di:waypoint x="1275" y="540"/>
+        <di:waypoint x="2055" y="410"/>
+        <di:waypoint x="2055" y="540"/>
+        <di:waypoint x="1940" y="540"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_10" bpmnElement="SF_HAD_10">
-        <di:waypoint x="1390" y="235"/>
-        <di:waypoint x="1390" y="150"/>
-        <di:waypoint x="1555" y="150"/>
+        <di:waypoint x="2055" y="235"/>
+        <di:waypoint x="2055" y="150"/>
+        <di:waypoint x="2220" y="150"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_11" bpmnElement="SF_HAD_11">
-        <di:waypoint x="1605" y="150"/>
-        <di:waypoint x="1695" y="150"/>
+        <di:waypoint x="2270" y="150"/>
+        <di:waypoint x="2360" y="150"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_12" bpmnElement="SF_HAD_12">
-        <di:waypoint x="1580" y="175"/>
-        <di:waypoint x="1580" y="370"/>
-        <di:waypoint x="1695" y="370"/>
+        <di:waypoint x="2245" y="175"/>
+        <di:waypoint x="2245" y="370"/>
+        <di:waypoint x="2360" y="370"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_13" bpmnElement="SF_HAD_13">
-        <di:waypoint x="1415" y="260"/>
-        <di:waypoint x="1480" y="260"/>
-        <di:waypoint x="1480" y="370"/>
-        <di:waypoint x="1695" y="370"/>
+        <di:waypoint x="2080" y="260"/>
+        <di:waypoint x="2145" y="260"/>
+        <di:waypoint x="2145" y="370"/>
+        <di:waypoint x="2360" y="370"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_14" bpmnElement="SF_HAD_14">
-        <di:waypoint x="1845" y="260"/>
-        <di:waypoint x="1942" y="260"/>
+        <di:waypoint x="2510" y="260"/>
+        <di:waypoint x="2560" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P7" bpmnElement="SF_HAD_P7">
+        <di:waypoint x="2610" y="260"/>
+        <di:waypoint x="2682" y="260"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_HAD_P8" bpmnElement="SF_HAD_P8">
+        <di:waypoint x="2585" y="235"/>
+        <di:waypoint x="2585" y="96"/>
+        <di:waypoint x="395" y="96"/>
+        <di:waypoint x="395" y="220"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="1400" y="100" width="200" height="14"/></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_15" bpmnElement="SF_HAD_15">
-        <di:waypoint x="1845" y="150"/>
-        <di:waypoint x="1942" y="150"/>
+        <di:waypoint x="2510" y="150"/>
+        <di:waypoint x="2682" y="150"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_16" bpmnElement="SF_HAD_16">
-        <di:waypoint x="1845" y="370"/>
-        <di:waypoint x="1942" y="370"/>
+        <di:waypoint x="2510" y="370"/>
+        <di:waypoint x="2682" y="370"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

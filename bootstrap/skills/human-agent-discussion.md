@@ -1,9 +1,11 @@
 ---
 name: human-agent-discussion
 description: >
-  Ask a person (or a sibling agent) for what no file holds: context, then the
-  options, then a recommendation and what happens with no answer, then ONE
-  question. The reusable discussion every bootstrap diagram calls when it
+  Ask a person (or a sibling agent) for what no file holds. First determine
+  where you are — the context, the Role you act as and theirs, the Process
+  and task (or that you are idle) — and ask about whichever you cannot
+  determine before anything else. Then context, the options, a
+  recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it
   needs a person; it records the answer, an applied default, or what is still
   open, and never a guess.
 ---
@@ -17,10 +19,54 @@ diagram in bootstrap that needs one calls
 as a call activity rather than drawing its own asking. A caller that draws
 its own has a second answer to "how do I ask", free to drift from this one.
 
+## Before you ask: determine where you are
+
+Owner, 2026-10-01: *"i wanted to see more about determining context / role /
+process as part of precondition.. and that needs to be clarified as part of
+discussion/interaction."* So the diagram's first three tasks come before any
+question, and each is declared as a precondition of the first one
+(`bootstrap.processes:precondition … before="A_GiveContext"`):
+
+| determine | what you must be able to say | why it comes first |
+|---|---|---|
+| **the context** (`A_DetermineContext`) | what is already known, each fact with where it came from; which declaration governs it (the instance's `<name>.json`, the diagram you are in, the Skill its task names); and whether the question has **already been decided** — earlier in the conversation, or in a declaration that quotes the person's ruling | a settled question asked again reopens a decision and spends the person's attention twice. Cite what you read, not what you remember |
+| **the Roles** (`A_DetermineRoles`) | which Role you are acting as — the lane of the task that called this discussion — and which Role the person you ask holds | an Actor performs a task in a Process **as** a Role; nothing is a Role by nature. Who holds the decision decides whom you may ask: only the Requestor chooses a harness |
+| **the Process and task** (`A_DetermineProcess`) | the Process, the lane and the task the question belongs to — *"Process: Initialize a harness, at Determine the harness and repositories, as the Bootstrapping Agent"* — **or** that you are in none: you are **idle**, classifying a request to find the Process it belongs to | a reader who does not know which Process you are in assumes the last one's rules still hold |
+
+Say all three in the message, as the first part of the context. A caller that
+already determined them hands them in; you check them rather than re-derive
+them.
+
+**You are out of process — the Process is undetermined — when** you cannot
+name it, when two candidates fit, when the step you believed was next is not
+the one the diagram enables, or when the work in hand is not what you said
+you would do. Do not infer your way back in.
+
+### What cannot be determined is asked first
+
+When any of the three cannot be determined, that becomes **the first
+question of this same discussion** (`A_AskUndeterminedFirst`), and the
+caller's question waits, counted. Ask about the outermost first — the
+Process, then the Role, then the context — since the outer answer usually
+settles the inner. It goes through the same order as every question below,
+and it allows **no default**: a Process or a Role assumed rather than
+confirmed is an authority nobody gave you. Its answer is recorded, the three
+are determined again, and only then is the caller's question put. If it is
+declined or met with silence, record what is still open and stop: a step
+completed in the wrong Process records an authority that was never given.
+
+> I am in **Initialize a harness**, at *Determine the harness and
+> repositories*, acting as the Bootstrapping Agent. I cannot tell whether you
+> are the person who wants this repository set up, or relaying for someone:
+> the request came from another agent's message. If you are, I will ask you
+> which harness next; if not, I will stop and record that the Requestor is
+> unknown, since only the Requestor chooses. **Are you the person who wants
+> it set up?** (One more question after this one.)
+
 ## The order is the rule
 
-1. **Context.** What is being decided, what depends on it, and what you
-   already know, each fact with where it came from. In the message itself:
+1. **Context.** Where you are (the three determinations above), what is
+   being decided, what depends on it, and what you already know, each fact with where it came from. In the message itself:
    a link is where somebody goes for *more*, never where the terms are
    defined.
 2. **Options.** Every option still open after you narrowed from context,
@@ -40,7 +86,7 @@ anything?** If not, the question is not ready.
 
 | what came back | what you do | end |
 |---|---|---|
-| an answer that settles it | record it, and who gave it (a person or an agent) | *Answered* |
+| an answer that settles it | record it, and who gave it (a person or an agent) | *Answered* — or, when it answered a question about where you are, determine again and put the caller's question |
 | an answer that does not settle it (a kind instead of an option; two options) | follow up **once**, narrower, naming what is still open | back to the answer |
 | a refusal | record what was asked and what is still open | *Still open* |
 | nothing | apply the default **only if the caller allows one**, and say so; otherwise record what is still open | *Default applied* or *Still open* |
