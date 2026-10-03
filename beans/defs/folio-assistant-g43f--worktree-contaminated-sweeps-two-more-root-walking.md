@@ -307,7 +307,12 @@ before). A declared submodule whose parent holds no `.git` THROWS rather than
 guessing (`dh4f`). Read from the filesystem, not `git rev-parse
 --show-toplevel`: `rootForScope` is on the hot path of every declared-directory
 resolution, and a fixture built under a checkout would get the ENCLOSING
-toplevel. `repoRootFor` itself is not changed — ~60 callers, most fed a nested
+toplevel. **It absorbs, rather than duplicates, the `checkoutRootFor` that
+`schemas/harness-config.ts` already exported** (the container rule alone, i.e.
+`siblingScopeFor`): the container rule is kept for git-less trees and that
+export now delegates here, so `kg-audit`, `kg-export` and `qa-witness` get the
+git-aware answer too — a root checkout that aggregates nothing no longer
+returns its parent. `repoRootFor` itself is not changed — ~60 callers, most fed a nested
 instance, and its tests pin `dirname`.
 
 Classes: **(a)** reads a sibling INSTANCE → `siblingScopeFor`; **(b)** reads a
