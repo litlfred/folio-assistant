@@ -2,9 +2,10 @@
 # folio-assistant-w8jq
 title: 'MERGE GATE (a): adversarial agentic code review is a required check on any agent-touched PR, with a committed verdict'
 status: todo
-type: feature
+type: task
+priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-02T16:29:16Z
+updated_at: 2026-10-03T08:11:58Z
 parent: folio-assistant-nok9
 ---
 

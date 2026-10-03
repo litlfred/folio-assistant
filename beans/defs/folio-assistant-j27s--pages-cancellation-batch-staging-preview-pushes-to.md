@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T08:07:15Z
-updated_at: 2026-10-03T08:08:01Z
+updated_at: 2026-10-03T08:11:59Z
+parent: folio-assistant-1xhc
 ---
 
 Issue #1868, second problem (comment 2026-10-02T18:10Z): GitHub's pages-build keeps only the newest run and staging pushes land every few minutes, so main-site deploys are cancelled. Owner ruling 2026-10-03 (this session): option 1, push staging previews to gh-pages less often (batch / rate-limit).

@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T08:07:15Z
-updated_at: 2026-10-03T08:08:01Z
+updated_at: 2026-10-03T08:11:59Z
+parent: folio-assistant-zzmr
 ---
 
 Issue #1910 D4. Owner ruling 2026-10-03 (this session, selected option 'Yes, move it'): a library item's licence moves out of the opaque `@json` meta into `dcterms:license`, driven by the same vocab-mappings row the glossary uses. Unblocked: #1899 merged 2026-10-02T23:35Z.
