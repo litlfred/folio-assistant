@@ -126,14 +126,18 @@ jobs:
         if: steps.prs.outputs.list != ''
         env:
           LIST: ${{ steps.prs.outputs.list }}
+        # `|| code=$?`, NOT a bare call followed by `code=$?`: Actions runs
+        # this with `bash -e`, so a refusal (exit 1) ended the step before
+        # `code` was read, and the job went red on every PR not yet ready —
+        # measured on #2000's run 37134160848.
         run: |
           set -uo pipefail
           for pr in $LIST; do
-            bun run cat-harness/scripts/merge-guard.ts "$pr" --status --repo "$GITHUB_REPOSITORY"
-            code=$?
+            code=0
+            bun run cat-harness/scripts/merge-guard.ts "$pr" --status --repo "$GITHUB_REPOSITORY" || code=$?
             case "$code" in
               0) echo "#$pr: pass" ;;
-              1) echo "#$pr: refused (status: failure)" ;;
+              1) echo "#$pr: refused (status: pending or failure, by kind)" ;;
               *) echo "::warning::#$pr: merge-guard could not determine (exit $code)" ;;
             esac
           done
