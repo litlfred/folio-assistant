@@ -33,15 +33,18 @@
  * A todo is an iCalendar `VTODO` (RFC 5545, as RDF at
  * `http://www.w3.org/2002/12/cal/ical#`): `summary`, `description`, `status`,
  * `priority` and `created` are that vocabulary's own properties. The edges are
- * schema.org and Dublin Core terms. Nothing here is minted in this project's
- * namespaces, so `ns:check` owes no new definition and a consumer needs no
- * document of ours to read a todo.
+ * schema.org and Dublin Core terms. The one term of ours is the CONTAINER's
+ * class, `Subgraph` — the declared subgraph node the KG export already
+ * publishes, so a todo graph names the same node rather than minting a
+ * collection beside it (bean `l4ay`). Its member edge, `inSubgraph`, expands
+ * to `dcterms:isPartOf`.
  *
  * | edge | term | object |
  * |---|---|---|
  * | `target` | `schema:about` | the content node the todo is attached to — its `site/…` IRI |
  * | `assignee` | `schema:agent` | the person (a `schema:Person`; a GitHub identity is its profile URL) |
  * | `bean` | `dcterms:isPartOf` | the bean whose work this todo is part of |
+ * | `inSubgraph` | `dcterms:isPartOf` | the declared `todos` Subgraph node this todo is published as a member of |
  * | `pullRequest`, `issue` | `dcterms:references` | the PR or issue it refers to |
  * | `process` | `dcterms:subject` | a BPMN process id (a literal: no process has a published IRI yet) |
  * | `source` | `dcterms:source` | the file the todo is authored in |
@@ -55,6 +58,9 @@
  */
 import type { TodoIndexItem } from "../schemas/todo-index.js";
 import { DOCS_SITE_BASE, siteNodeIri } from "../schemas/jsonld.ts";
+import { propertyIri, termIri } from "../schemas/namespaces.ts";
+import { contentSourceContext } from "../schemas/subgraph-source.ts";
+import { memberOf, subgraphContainer } from "./subgraph-node.ts";
 
 /**
  * A todo id as one path segment. `encodeURIComponent` plus the quote it leaves
@@ -83,8 +89,16 @@ export function todoPageSitePath(id: string): string {
   return `todos/${segment(id)}/`;
 }
 
-/** The graph's own IRI. */
-export const TODO_GRAPH_IRI = `${DOCS_SITE_BASE}${TODO_GRAPH_SITE_PATH}`;
+/**
+ * The declared `todos` Subgraph node a todo graph is published as — its IRI
+ * and resolved content source, from `kg-export`'s `declaredSubgraphNode`.
+ * There is no `TODO_GRAPH_IRI` any more: the container is the DECLARED node,
+ * not one this module mints (bean `l4ay`, `scripts/subgraph-node.ts`).
+ */
+export interface TodoSubgraph {
+  iri: string;
+  contentSource?: Record<string, unknown>;
+}
 
 /**
  * The inline `@context`. Inline rather than published at a URL of its own:
@@ -99,7 +113,13 @@ export const TODO_CONTEXT = {
   dcterms: "http://purl.org/dc/terms/",
   xsd: "http://www.w3.org/2001/XMLSchema#",
   Todo: "ical:Vtodo",
-  TodoGraph: "schema:Collection",
+  // The CONTAINER is the declared Subgraph node (bootstrap's class), and each
+  // todo's edge to it is `inSubgraph` — the term `kg-export` uses for the same
+  // edge, which IS `dcterms:isPartOf`. `TodoGraph` → `schema:Collection` was
+  // here: a second node for one subgraph (bean `l4ay`).
+  Subgraph: termIri("Subgraph"),
+  inSubgraph: { "@id": propertyIri("inSubgraph"), "@type": "@id" },
+  contentSource: contentSourceContext(),
   Person: "schema:Person",
   identifier: "schema:identifier",
   name: "schema:name",
@@ -171,27 +191,50 @@ export function todoNode(item: TodoIndexItem): Record<string, unknown> {
   return node;
 }
 
-/** One todo's own document: `<site>/todos/<id>.jsonld`. */
-export function todoDocument(item: TodoIndexItem): Record<string, unknown> {
-  return { "@context": TODO_CONTEXT, ...todoNode(item) };
+/** A todo as a member of its declared subgraph: the node plus `inSubgraph`. */
+function memberNode(item: TodoIndexItem, subgraph: TodoSubgraph | undefined): Record<string, unknown> {
+  return { ...todoNode(item), ...(subgraph ? memberOf(subgraph.iri) : {}) };
+}
+
+/**
+ * One todo's own document: `<site>/todos/<id>.jsonld`. With the subgraph, the
+ * todo says which declared subgraph it is part of — the same node, with the
+ * same edges, as inside the whole graph.
+ */
+export function todoDocument(item: TodoIndexItem, subgraph?: TodoSubgraph): Record<string, unknown> {
+  return { "@context": TODO_CONTEXT, ...memberNode(item, subgraph) };
 }
 
 /**
  * The whole graph: `<site>/todos.jsonld`.
  *
- * A NAMED graph — `@id` plus `@graph` — so "the todos" is one resource a
- * consumer can address, and each todo inside it is the same node, with the
- * same `@id`, as its own document. Order is the input's, which
+ * A NAMED graph — `@id` plus `@graph` — whose name is the DECLARED `todos`
+ * Subgraph node (`<instance>.jsonld#directory/todos`), with `hasPart` to each
+ * todo and each todo `inSubgraph` back to it. The `@graph` array and every
+ * todo's `@id` are as before, so a reader that walks `@graph` (the board's
+ * `fetchTodoGraph`, #1953) sees the same todos. Order is the input's, which
  * `readTodoFiles` makes deterministic.
+ *
+ * Without a subgraph — an instance that declares no `todos` — the document is
+ * the bare `@graph`: no container is invented to stand in for the missing
+ * declaration.
  */
-export function todoGraphDocument(items: readonly TodoIndexItem[]): Record<string, unknown> {
+export function todoGraphDocument(items: readonly TodoIndexItem[], subgraph?: TodoSubgraph): Record<string, unknown> {
   return {
     "@context": TODO_CONTEXT,
-    "@id": TODO_GRAPH_IRI,
-    "@type": "TodoGraph",
-    name: "Todos",
-    hasPart: items.map((i) => todoIri(i.id)),
-    "@graph": items.map(todoNode),
+    ...(subgraph
+      ? subgraphContainer({
+          iri: subgraph.iri,
+          // NO `name`. The node's name is the declaration's, published by
+          // kg-export; restating it here as `"todos"` made `docs/todos.json`
+          // a file whose `name` equals its stem — which `findDeclarationFile`
+          // reads as an INSTANCE declaration, turning the site directory into
+          // an instance root and hiding the checkout from every resolver.
+          members: items.map((i) => todoIri(i.id)),
+          ...(subgraph.contentSource ? { contentSource: subgraph.contentSource } : {}),
+        })
+      : {}),
+    "@graph": items.map((i) => memberNode(i, subgraph)),
   };
 }
 

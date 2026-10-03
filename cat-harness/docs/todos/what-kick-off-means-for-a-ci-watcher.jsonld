@@ -6,7 +6,20 @@
     "dcterms": "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "Todo": "ical:Vtodo",
-    "TodoGraph": "schema:Collection",
+    "Subgraph": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+    "inSubgraph": {
+      "@id": "http://purl.org/dc/terms/isPartOf",
+      "@type": "@id"
+    },
+    "contentSource": {
+      "@id": "http://purl.org/dc/terms/source",
+      "@context": {
+        "kind": "http://purl.org/dc/terms/type",
+        "branch": "http://purl.org/dc/terms/identifier",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn"
+      }
+    },
     "Person": "schema:Person",
     "identifier": "schema:identifier",
     "name": "schema:name",
@@ -79,5 +92,6 @@
     "Process_CodeReview",
     "Process_Publication"
   ],
-  "source": "https://github.com/litlfred/folio-assistant/blob/main/todos/items/what-kick-off-means-for-a-ci-watcher.md"
+  "source": "https://github.com/litlfred/folio-assistant/blob/main/todos/items/what-kick-off-means-for-a-ci-watcher.md",
+  "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/todos"
 }

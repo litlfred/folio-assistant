@@ -16,8 +16,10 @@ import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { DOCS_SITE_BASE, SITE_DOCUMENT_CONTEXT, ContentContextSchema, siteIri, siteNodeIri } from "../../schemas/jsonld.ts";
 import { TodoIndexSchema, type TodoIndexItem } from "../../schemas/todo-index.ts";
 import { thinPageConfigOf, thinPageHtml } from "../thin-page.ts";
+import { termIri } from "../../schemas/namespaces.ts";
+import { declaredSubgraphNode } from "../kg-export.ts";
+import { subgraphPublicationFindings } from "../subgraph-node.ts";
 import {
-  TODO_GRAPH_IRI,
   segment,
   todoDocument,
   todoGraphDocument,
@@ -94,10 +96,34 @@ describe("the JSON-LD", () => {
     expect(doc["label"]).toBe("sec:p-n");
   });
 
-  test("the graph is one named graph naming every todo", () => {
-    const g = todoGraphDocument([ITEM]);
-    expect(g["@id"]).toBe(TODO_GRAPH_IRI);
+  const SUBGRAPH = { iri: "https://example.org/x/x.jsonld#directory/todos", contentSource: { kind: "directory", declaredIn: "default" } };
+
+  test("the graph is the DECLARED Subgraph node, naming every todo, and each todo points back", () => {
+    const g = todoGraphDocument([ITEM], SUBGRAPH);
+    expect(g["@id"]).toBe(SUBGRAPH.iri);
+    expect(g["@type"]).toBe("Subgraph");
     expect(g["hasPart"]).toEqual([todoIri("a-todo")]);
+    expect((g["@graph"] as Array<Record<string, unknown>>)[0]!["@id"]).toBe(todoIri("a-todo"));
+    expect(subgraphPublicationFindings(g, { iri: SUBGRAPH.iri })).toEqual([]);
+  });
+
+  test("a member's subgraph edge expands to dcterms:isPartOf, beside its bean", async () => {
+    const [node] = (await jsonld.expand(todoDocument(ITEM, SUBGRAPH) as jsonld.JsonLdDocument)) as Array<Record<string, unknown>>;
+    const partOf = (node!["http://purl.org/dc/terms/isPartOf"] as Array<Record<string, unknown>>).map((b) => b["@id"]);
+    expect(partOf).toContain(SUBGRAPH.iri);
+    expect(partOf).toContain("https://example.org/bean");
+  });
+
+  test("the container's own node expands to the bootstrap Subgraph class", async () => {
+    const expanded = (await jsonld.expand(todoGraphDocument([ITEM], SUBGRAPH) as jsonld.JsonLdDocument)) as Array<Record<string, unknown>>;
+    const container = expanded.find((n) => n["@id"] === SUBGRAPH.iri)!;
+    expect(container["@type"]).toEqual([termIri("Subgraph")]);
+  });
+
+  test("without a declared subgraph, no container is invented", () => {
+    const g = todoGraphDocument([ITEM]);
+    expect(g["@id"]).toBeUndefined();
+    expect(g["@type"]).toBeUndefined();
     expect((g["@graph"] as unknown[]).length).toBe(1);
   });
 });
@@ -132,6 +158,13 @@ describe("what is published", () => {
   test("the graph, as .jsonld and .json, names every todo in the index", () => {
     expect(readFileSync(join(SITE, "todos.json"), "utf8")).toBe(readFileSync(join(SITE, "todos.jsonld"), "utf8"));
     expect(graph["hasPart"]).toEqual(INDEX.items.map((i) => todoIri(i.id)));
+  });
+
+  test("its container is the declared todos Subgraph node, and every todo is a member of it", () => {
+    const declared = declaredSubgraphNode(ROOT, "todos");
+    expect(declared).toBeDefined();
+    expect(subgraphPublicationFindings(graph, { iri: declared!.iri })).toEqual([]);
+    expect(graph["contentSource"]).toEqual(declared!.contentSource);
   });
 
   for (const item of INDEX.items) {
