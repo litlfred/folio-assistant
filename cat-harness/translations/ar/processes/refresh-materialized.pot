@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: refresh-materialized\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.791Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.331Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -94,6 +94,11 @@ msgstr ""
 msgid "Is this copy kept as a working copy or as an archive? `archival` only verifies fixity and never re-fetches; `working` asks what changed upstream."
 msgstr ""
 
+#: processes/library/refresh-materialized.bpmn:27
+#. Diagram element documentation
+msgid "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead. Owner, 2026-09-20: \"also need to know about refreshing amterialed remote content. general process used everywhere.\" REFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere. An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy."
+msgstr ""
+
 #: processes/library/refresh-materialized.bpmn:156
 #. Diagram label
 msgid "Keep the local edit, and re-pin so it stops being asked"
@@ -122,11 +127,6 @@ msgstr ""
 #: processes/library/refresh-materialized.bpmn:205
 #. Diagram label
 msgid "not decidable today"
-msgstr ""
-
-#: processes/library/refresh-materialized.bpmn:27
-#. Diagram element documentation
-msgid "Owner, 2026-09-20: \"also need to know about refreshing amterialed remote content. general process used everywhere.\" REFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere. An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy."
 msgstr ""
 
 #: processes/library/refresh-materialized.bpmn:77

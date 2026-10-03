@@ -546,6 +546,14 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
+      # The workflow page's process table is drawn at runtime from
+      # assets/processes/index.json (bean `ax6r`), so "is every diagram on the
+      # page" became "does the published data cover every declared .bpmn".
+      # Recomputed from each instance's declaration, so the projection cannot
+      # vouch for itself; staleness is docs:auto:check's.
+      - name: process index covers every declared diagram
+        run: bun run check:process-index
+
       # A task's containing swimlane must DEFINE itself -- bean `sqtq`, issue
       # #596. Measured 2026-09-21: 157 task-containing lanes, every one named
       # and NONE documented, so the defined-terms index #596 asks for would

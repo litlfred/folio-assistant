@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: publish-alert\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.863Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.402Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -59,6 +59,11 @@ msgstr ""
 msgid "no"
 msgstr ""
 
+#: processes/sdlc/publish-alert.bpmn:14
+#. Diagram element documentation
+msgid "One alert for every failure after the publish button — an incomplete export, a failed verification, a failed deploy, a lost preview — kept as a single tracking issue for the publication manager and closed by the next clean publish. Owner, 2026-09-23: \"there is another alert needed for deployment failure. every step post 'push the publish button' should be same\". So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager."
+msgstr ""
+
 #: processes/sdlc/publish-alert.bpmn:49
 #. Diagram element documentation
 msgid "Open the issue with the step that failed, the run link and — for a verification failure — the verifier report."
@@ -67,11 +72,6 @@ msgstr ""
 #: processes/sdlc/publish-alert.bpmn:48
 #. Diagram label
 msgid "Open the tracking issue, naming the failed step"
-msgstr ""
-
-#: processes/sdlc/publish-alert.bpmn:14
-#. Diagram element documentation
-msgid "Owner, 2026-09-23: \"there is another alert needed for deployment failure. every step post 'push the publish button' should be same\". So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager."
 msgstr ""
 
 #: processes/sdlc/publish-alert.bpmn:26

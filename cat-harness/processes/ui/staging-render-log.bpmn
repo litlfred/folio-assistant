@@ -12,7 +12,7 @@
   <bpmn:process id="Process_RenderLog" name="Render log — the publish branch keeps its own history" isExecutable="false">
     <bpmn:documentation>Every change to the publish branch appends an entry to `_render-log/&lt;day&gt;.jsonl`. A removal is a NEW entry, never the erasure of the `rendered` one before it — the pair is the history. The lane is the build pipeline because every writer is a workflow job; no agent decides what goes in this log. A system lane runs a fixed program and exercises no judgement, which is exactly what an append-only log wants.
 
-The question it exists to answer: what happened to STAGING/&lt;slug&gt;, and why. Bean `plj1` is why it is needed — a full-replace deploy silently deleted every open PR's preview, for months, and the publish branch kept no record of its own changes.</bpmn:documentation>
+The question it exists to answer: what happened to STAGING/&lt;slug&gt;, and why. Bean `plj1` is why it is needed — a full-replace deploy silently deleted every open PR's preview, for months, and the publish branch kept no record of its own changes. The publish branch has several publishers and one of them replaces the whole branch, which is why a removed preview needs a record of its own.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_RenderLog">
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
         <bpmn:documentation>Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it.</bpmn:documentation>

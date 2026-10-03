@@ -454,3 +454,32 @@ export const QaIndexSchema = z
     badges: z.record(z.string().min(1), QaIndexBadgeSchema),
   })
   .strict();
+
+// ── folio-process-index/v1 — scripts/gen-docs-auto.ts → assets/processes/index.json ──
+
+/** One BPMN process, as the workflow page's runtime view draws it (bean `ax6r`). */
+export const ProcessIndexRowSchema = z
+  .object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    /** First sentence of the process's own `bpmn:documentation`; absent when it has none. */
+    summary: z.string().min(1).optional(),
+    path: z.string().min(1),
+    source: z.string().url(),
+    /** Site-root path of the rendered SVG; absent when none was drawn. */
+    svg: z.string().startsWith("/").optional(),
+    /** `""` for a diagram at the top of its `processes/` directory. */
+    group: z.string(),
+    instance: z.string().min(1),
+    /** `calledElement` of each call activity — process ids, not files. */
+    calls: StringList,
+  })
+  .strict();
+
+export const ProcessIndexSchema = z
+  .object({
+    ...envelope("folio-process-index/v1"),
+    instances: z.array(z.object({ name: z.string().min(1), path: z.string().min(1), processes: Count }).strict()),
+    processes: z.array(ProcessIndexRowSchema),
+  })
+  .strict();

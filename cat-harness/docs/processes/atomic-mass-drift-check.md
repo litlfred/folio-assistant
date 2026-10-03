@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_AtomicMassDrift` · strict · 1 step(s)
 
-THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.
+Check that `AtomicMass.lean` is still in sync with the data table it is generated from. THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.
 
 THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that "a diagram that is drawn once and then drifts is worse than none, because it is consulted", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do — a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.
 

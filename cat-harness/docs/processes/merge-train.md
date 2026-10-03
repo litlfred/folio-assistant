@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_MergeTrain` · strict · 16 step(s)
 
-A TRAIN OF PULL REQUESTS, landed together. Bean `hfag` (merge-pipeline epic), owner's ruling 2026-10-02. One instance per train run, committed under `beans/workflows/` like every other instance, so a sibling steward sees the same position and the run's record is what T4 will later be tuned from (R10).
+Land the ready pull requests as one train: place each by the merge-priority decision table, merge the members with `merge-base`, run the gate set on the combination, and on red eject the culprit rather than reject the train. A TRAIN OF PULL REQUESTS, landed together. Bean `hfag` (merge-pipeline epic), owner's ruling 2026-10-02. One instance per train run, committed under `beans/workflows/` like every other instance, so a sibling steward sees the same position and the run's record is what T4 will later be tuned from (R10).
 
 IT LINKS THE EXISTING PROCESSES AND DUPLICATES NONE. Each member is merged by `merge-base.bpmn` (`Process_MergeBase`); the train is gated by `code-quality-gates.bpmn` and `pr-checks-present.bpmn`; a refused or ejected member is handed back by `merge-refusal.bpmn` (`Process_MergeRefusal`, draft PR #1888 — until it lands the call stays opaque, which the engine permits). The ORDER is computed by `decisions/merge-priority.dmn`, whose inputs come from the ordering processes: `graph-detanglement.bpmn` (a PR that removes tangle edges unblocks others, input b) and `kg-separation.bpmn` (a PR that seeds the staging repos, input a; `seed:ready` on branch `claude/seed-ready` reports which). A landed member's preview is taken down by `feature-staging.bpmn`, which this process does not repeat.
 

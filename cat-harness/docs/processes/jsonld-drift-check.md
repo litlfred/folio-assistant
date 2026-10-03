@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_JsonLdDrift` · strict · 1 step(s)
 
-A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. Five `--check` runs in one job: the JSON-LD context, the block siblings, the library nodes, the site graph, and the label-resolution tests. Each regenerates from the `.ts` manifest that owns it and fails on any difference.
+Check that the committed `.jsonld` siblings are still in sync with the `.ts` manifests they are generated from. A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. Five `--check` runs in one job: the JSON-LD context, the block siblings, the library nodes, the site graph, and the label-resolution tests. Each regenerates from the `.ts` manifest that owns it and fails on any difference.
 
 They are drawn as ONE task rather than five, because they are independent of each other and sequential only because a single job runs them. Five boxes would assert an ordering the workflow does not have.
 

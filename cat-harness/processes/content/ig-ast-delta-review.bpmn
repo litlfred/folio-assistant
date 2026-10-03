@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_IgAstDeltaReview" name="Is the incremental IG AST what a full build would have produced?" processRef="Process_IgAstDeltaReview"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_IgAstDeltaReview" name="Is the incremental IG AST what a full build would have produced?" isExecutable="false">
-    <bpmn:documentation>THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: "list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering").
+    <bpmn:documentation>The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: "list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering").
 
 WHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §"Where this sits in a process" states the placement until it is.
 

@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_CopyOutMaterialized` · strict · 5 step(s)
 
-Materialized content is read-only. The owner, 2026-09-21: "if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it." And 2026-09-22, choosing between advising and enforcing: enforce from the start.
+Somebody wants to change content this repository holds a read-only materialized copy of: copy it into their own `folio/`, recording which original it came out of. Materialized content is read-only. The owner, 2026-09-21: "if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it." And 2026-09-22, choosing between advising and enforcing: enforce from the start.
 
 STRICT, and the reason is narrow. Only one step here is a gate, and it is Gateway_Frozen: whether the target is read-only at all. Everything after it is mechanical. What makes the process strict is that skipping it does not fail loudly — an edit in place succeeds, and is only caught later by check:materialized-fixity hashing bytes against the digest their record carries. A process whose omission looks exactly like compliance is the vlhk shape, and advisory would not hold it.
 

@@ -104,6 +104,7 @@ import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 import { visualiserNavDeclaration } from "./lib/navbar.ts";
+import { collectProcessIndex, processDocumentation } from "./lib/process-index.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "docs-auto-viewer";
@@ -490,17 +491,9 @@ export const TYPES: AutoDocType[] = [
           // lane's instead. A generated index, compared by a check against its
           // own generator, so nothing went red — the defect arrived with the
           // fix to a different one.
-          const procOpen = /<(?:bpmn:)?process\b[^>]*>/.exec(xml);
-          const doc = ((): string | undefined => {
-            if (procOpen === null) return undefined;
-            const after = xml.slice(procOpen.index + procOpen[0].length);
-            const d = /<(?:bpmn:)?documentation>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(after);
-            if (d === null) return undefined;
-            // Only whitespace and comments may sit between: anything else
-            // means this documentation belongs to a child element.
-            const between = after.slice(0, d.index).replace(/<!--[\s\S]*?-->/g, "").trim();
-            return between === "" ? d[1] : undefined;
-          })();
+          // The extraction itself lives in `lib/process-index.ts` now, so this
+          // index and the workflow page's projection are one answer (bean `ax6r`).
+          const doc = processDocumentation(xml);
           const lanes = [...xml.matchAll(/<(?:bpmn:)?lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
           const skills = [...new Set([...xml.matchAll(ownElementPattern(xml, "skill", String.raw`\s+ref="([^"]+)"`))].map((m) => m[1]!))];
           const acts = (xml.match(/<(?:bpmn:)?(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
@@ -510,7 +503,7 @@ export const TYPES: AutoDocType[] = [
           items.push({
             path: relative(REPO, f).split("\\").join("/"),
             name: name ?? basename(f, ".bpmn"),
-            summary: doc ? firstSentence(decodeEntities(doc)) : undefined,
+            summary: doc ? firstSentence(doc) : undefined,
             facts,
           });
         }
@@ -617,13 +610,6 @@ export const TYPES: AutoDocType[] = [
     },
   },
 ];
-
-function decodeEntities(s: string): string {
-  return s
-    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"').replace(/&#10;/g, " ")
-    .replace(/&amp;/g, "&");
-}
 
 /**
  * One item per path.
@@ -1020,6 +1006,19 @@ function emit(path: string, content: string): void {
   writeFileSync(path, content);
 }
 
+/** {@link emit} for a DATA file: compared the same way, never given a navbar. */
+function emitData(path: string, content: string): void {
+  if (check) {
+    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
+    if (current === content) return;
+    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
+    stale++;
+    return;
+  }
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, content);
+}
+
 if (import.meta.main) {
   const handler = readDeclaration(ROOT)?.name;
   if (!handler) {
@@ -1137,6 +1136,20 @@ if (import.meta.main) {
       emit(join(at.pageDir, "index.html"), levelPage(prefix, kids));
       if (!check) console.log(`  ✓ level ${prefix || "docs-auto"}: ${kids.length} child(ren)`);
     }
+  }
+
+  // ── The process projection the workflow page loads — bean `ax6r` ──
+  //
+  // "Every workflow in the repo" was a hand-written table; it is now a thin
+  // container that `assets/js/process-index.js` fills from this file. Written
+  // here because this generator already owns the process index and its
+  // `--check`; a second generator would be a second answer to which diagrams
+  // exist. DATA, so it goes through `emitData` and never gets a navbar.
+  {
+    const out = join(site, "assets", "processes", "index.json");
+    const projection = collectProcessIndex(REPO_ROOT, ROOT);
+    emitData(out, JSON.stringify(projection, null, 2) + "\n");
+    if (!check) console.log(`  ✓ process projection: ${projection.processes.length} process(es) across ${projection.instances.filter((i) => i.processes > 0).length} instance(s)`);
   }
 
   if (stale > 0) {

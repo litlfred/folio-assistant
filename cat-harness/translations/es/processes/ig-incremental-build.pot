@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ig-incremental-build\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.892Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.429Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -17,6 +17,11 @@ msgstr ""
 #: ../fhir-harness/processes/content/ig-incremental-build.bpmn:286
 #. Diagram element documentation
 msgid "A preview never seeds the shared cache."
+msgstr ""
+
+#: ../fhir-harness/processes/content/ig-incremental-build.bpmn:35
+#. Diagram element documentation
+msgid "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build proposed in issue #199: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm validator, re-render the cone's records, rebuild the meta-index, assemble the site, gate on QA, then deploy — and, on main or a release only, seed the cache from the green build. A cache miss or a moved toolchain falls back to today's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the package that owns the content owns what adequate means."
 msgstr ""
 
 #: ../fhir-harness/processes/content/ig-incremental-build.bpmn:103
@@ -197,11 +202,6 @@ msgstr ""
 #: ../fhir-harness/processes/content/ig-incremental-build.bpmn:131
 #. Diagram element documentation
 msgid "Nothing was built. The author (or whoever maintains the runner) fixes the environment and re-runs; a re-run with a readable cache takes `yes` or `no` as usual."
-msgstr ""
-
-#: ../fhir-harness/processes/content/ig-incremental-build.bpmn:35
-#. Diagram element documentation
-msgid "One change — a PR push or a push to main — through the incremental IG build proposed in issue #199: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm validator, re-render the cone's records, rebuild the meta-index, assemble the site, gate on QA, then deploy — and, on main or a release only, seed the cache from the green build. A cache miss or a moved toolchain falls back to today's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the package that owns the content owns what adequate means."
 msgstr ""
 
 #: ../fhir-harness/processes/content/ig-incremental-build.bpmn:308

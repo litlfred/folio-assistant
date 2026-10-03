@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: docs-site-publish\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.845Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.382Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -129,14 +129,14 @@ msgstr ""
 msgid "Process_PublishVerification: the verifier set over the built tree, before anything is deployed. Owner, 2026-09-23: before deployment, blocking."
 msgstr ""
 
+#: processes/sdlc/docs-site-publish.bpmn:14
+#. Diagram element documentation
+msgid "Publish the docs site to `gh-pages`, verify the export before the deploy, and keep the open pull requests' previews alive across a deploy that replaces the whole branch. PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back. That is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted. BOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean. `Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have. Mechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one. VERIFIED AND ALERTED (bean vigi, owner 2026-09-23): the export is verified BEFORE the deploy and blocks it on anything but a pass; and every step after the publish button that fails — an incomplete export, a verification failure, a failed deploy, a lost preview — goes through one alert to the publication manager. A clean publish closes that alert."
+msgstr ""
+
 #: processes/sdlc/docs-site-publish.bpmn:11
 #. Diagram label
 msgid "Publishing the docs site, and keeping the previews alive"
-msgstr ""
-
-#: processes/sdlc/docs-site-publish.bpmn:14
-#. Diagram element documentation
-msgid "PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back. That is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted. BOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean. `Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have. Mechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one. VERIFIED AND ALERTED (bean vigi, owner 2026-09-23): the export is verified BEFORE the deploy and blocks it on anything but a pass; and every step after the publish button that fails — an incomplete export, a verification failure, a failed deploy, a lost preview — goes through one alert to the publication manager. A clean publish closes that alert."
 msgstr ""
 
 #: processes/sdlc/docs-site-publish.bpmn:53

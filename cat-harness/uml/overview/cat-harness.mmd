@@ -1140,6 +1140,31 @@ classDiagram
       voices [0..*] Voice[]
       totals [1] object
     }
+    class cat_harness_docs_folio_process_index_v1_Instance["Instance"] {
+      <<json: ProcessIndexSchema>>
+      name [1] string
+      path [1] string
+      processes [1] integer
+    }
+    class cat_harness_docs_folio_process_index_v1_Processe["Processe"] {
+      <<json: ProcessIndexSchema>>
+      id [1] string
+      name [1] string
+      summary [0..1] string
+      path [1] string
+      source [1] string~uri~
+      svg [0..1] string~starts_with~
+      group [1] string
+      instance [1] string
+      calls [0..*] string[]
+    }
+    class cat_harness_docs_folio_process_index_v1_folio_process_index_v1["folio-process-index/v1"] {
+      <<json: ProcessIndexSchema>>
+      $schema [1] 'folio-process-index/v1'
+      tile [0..1] map~object~
+      instances [0..*] Instance[]
+      processes [0..*] Processe[]
+    }
     class cat_harness_docs_folio_graph_projection_v1_Directory["Directory"] {
       <<json: FolioGraphProjectionSchema>>
       dir [1] string
@@ -1413,6 +1438,8 @@ classDiagram
   cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_ProvenanceFlag : provenanceFlags
   cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_Rule : rules
   cat_harness_docs_folio_voices_index_v1_folio_voices_index_v1 *-- "0..*" cat_harness_docs_folio_voices_index_v1_Voice : voices
+  cat_harness_docs_folio_process_index_v1_folio_process_index_v1 *-- "0..*" cat_harness_docs_folio_process_index_v1_Instance : instances
+  cat_harness_docs_folio_process_index_v1_folio_process_index_v1 *-- "0..*" cat_harness_docs_folio_process_index_v1_Processe : processes
   cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Directory : directories
   cat_harness_docs_folio_graph_projection_v1_Node *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Link : links
   cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Node : nodes
@@ -1446,6 +1473,9 @@ classDiagram
   cssClass "cat_harness_docs_folio_voices_index_v1_Rule" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_Voice" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_folio_voices_index_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_process_index_v1_Instance" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_process_index_v1_Processe" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_process_index_v1_folio_process_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Directory" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: merge-train\n"
-"POT-Creation-Date: 2026-10-02T23:05:25.297Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.396Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -47,11 +47,6 @@ msgstr ""
 #: processes/sdlc/merge-train.bpmn:11
 #. Diagram label
 msgid "A merge train"
-msgstr ""
-
-#: processes/sdlc/merge-train.bpmn:14
-#. Diagram element documentation
-msgid "A TRAIN OF PULL REQUESTS, landed together. Bean `hfag` (merge-pipeline epic), owner's ruling 2026-10-02. One instance per train run, committed under `beans/workflows/` like every other instance, so a sibling steward sees the same position and the run's record is what T4 will later be tuned from (R10). IT LINKS THE EXISTING PROCESSES AND DUPLICATES NONE. Each member is merged by `merge-base.bpmn` (`Process_MergeBase`); the train is gated by `code-quality-gates.bpmn` and `pr-checks-present.bpmn`; a refused or ejected member is handed back by `merge-refusal.bpmn` (`Process_MergeRefusal`, draft PR #1888 — until it lands the call stays opaque, which the engine permits). The ORDER is computed by `decisions/merge-priority.dmn`, whose inputs come from the ordering processes: `graph-detanglement.bpmn` (a PR that removes tangle edges unblocks others, input b) and `kg-separation.bpmn` (a PR that seeds the staging repos, input a; `seed:ready` on branch `claude/seed-ready` reports which). A landed member's preview is taken down by `feature-staging.bpmn`, which this process does not repeat. THE QUEUE STORES DECISIONS, NEVER GITHUB'S FACTS. CI status, mergeability, labels and head SHA are read live at each step (`schemas/merge-queue.ts`). What this instance records is what the steward decided and the dated evidence it acted on. FROM THE LITERATURE (requirements note `cat-harness/docs/proposals/merge-pipeline-requirements.md`, branch `claude/merge-pipeline-library`): T3 cheap conflict prediction on authored paths (R6, R7; SQ19 §5.2 pp. 7-8) feeds the placement table; T7 retries a declared-flaky gate once (R11; TAP17 Table II p. 5); T2 attributes a red train from each member's own CI before bisecting (SQ19 §2.1 pp. 2-3); T1 ejects the culprit and re-runs the rest rather than rejecting the whole train (R3; SQ19 §2.2 p. 3), handing it back with the reason (R4; SQ19 §3.2 p. 4). The tools behind the steps are `merge:overlap`, `merge:train` and `merge:leftover`, on branch `claude/merge-pipeline-tools`."
 msgstr ""
 
 #: processes/sdlc/merge-train.bpmn:296
@@ -182,6 +177,11 @@ msgstr ""
 #: processes/sdlc/merge-train.bpmn:244
 #. Diagram label
 msgid "Hand the culprit back [merge-refusal]"
+msgstr ""
+
+#: processes/sdlc/merge-train.bpmn:14
+#. Diagram element documentation
+msgid "Land the ready pull requests as one train: place each by the merge-priority decision table, merge the members with `merge-base`, run the gate set on the combination, and on red eject the culprit rather than reject the train. A TRAIN OF PULL REQUESTS, landed together. Bean `hfag` (merge-pipeline epic), owner's ruling 2026-10-02. One instance per train run, committed under `beans/workflows/` like every other instance, so a sibling steward sees the same position and the run's record is what T4 will later be tuned from (R10). IT LINKS THE EXISTING PROCESSES AND DUPLICATES NONE. Each member is merged by `merge-base.bpmn` (`Process_MergeBase`); the train is gated by `code-quality-gates.bpmn` and `pr-checks-present.bpmn`; a refused or ejected member is handed back by `merge-refusal.bpmn` (`Process_MergeRefusal`, draft PR #1888 — until it lands the call stays opaque, which the engine permits). The ORDER is computed by `decisions/merge-priority.dmn`, whose inputs come from the ordering processes: `graph-detanglement.bpmn` (a PR that removes tangle edges unblocks others, input b) and `kg-separation.bpmn` (a PR that seeds the staging repos, input a; `seed:ready` on branch `claude/seed-ready` reports which). A landed member's preview is taken down by `feature-staging.bpmn`, which this process does not repeat. THE QUEUE STORES DECISIONS, NEVER GITHUB'S FACTS. CI status, mergeability, labels and head SHA are read live at each step (`schemas/merge-queue.ts`). What this instance records is what the steward decided and the dated evidence it acted on. FROM THE LITERATURE (requirements note `cat-harness/docs/proposals/merge-pipeline-requirements.md`, branch `claude/merge-pipeline-library`): T3 cheap conflict prediction on authored paths (R6, R7; SQ19 §5.2 pp. 7-8) feeds the placement table; T7 retries a declared-flaky gate once (R11; TAP17 Table II p. 5); T2 attributes a red train from each member's own CI before bisecting (SQ19 §2.1 pp. 2-3); T1 ejects the culprit and re-runs the rest rather than rejecting the whole train (R3; SQ19 §2.2 p. 3), handing it back with the reason (R4; SQ19 §3.2 p. 4). The tools behind the steps are `merge:overlap`, `merge:train` and `merge:leftover`, on branch `claude/merge-pipeline-tools`."
 msgstr ""
 
 #: processes/sdlc/merge-train.bpmn:264
