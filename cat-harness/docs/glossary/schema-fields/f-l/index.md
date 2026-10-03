@@ -1559,7 +1559,7 @@ IntakeSchema.item <span class="fa-gloss-status">candidate, extracted</span>
 IntakeSchema.licence <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The licence the uploader established, as the SAME record a library manifest carries in <code>meta.licence</code> (<code>schemas/source-licence.ts</code>, bean <code>7bg9</code>). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.</p>
+<p>The licence the uploader established, as the SAME record a library manifest carries as <code>licenceRecord</code> (<code>schemas/source-licence.ts</code>, bean <code>7bg9</code>). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSchema.licence</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--intake.intakeschema.record" data-fa-state="extracted" data-fa-gloss="">

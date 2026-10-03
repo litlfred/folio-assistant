@@ -7,7 +7,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { GlossarySchema, schemeIri, termIri, toSkos, type Glossary } from "./glossary.ts";
+import { GlossarySchema, licenceTerms, schemeIri, termIri, toSkos, type Glossary } from "./glossary.ts";
 import {
   LETTER_PARTS,
   PAGE_KEYS,
@@ -607,5 +607,15 @@ describe("a description naming another term links to it (bean qgjh)", () => {
     expect(linkTermCodes(s, "a", "<code>a</code> <code>b</code> <code>c</code>")).toBe(
       '<code>a</code> <a href="#i--g--b"><code>b</code></a> <code>c</code>',
     );
+  });
+});
+
+describe("D4: a glossary's licence comes from the licence-naming row (bean gzkt)", () => {
+  test("written as dcterms:license, the row a library item's licence uses too", () => {
+    expect(licenceTerms("CC0-1.0")).toEqual({ "dcterms:license": "CC0-1.0" });
+  });
+
+  test("no licence: nothing written", () => {
+    expect(licenceTerms(undefined)).toEqual({});
   });
 });

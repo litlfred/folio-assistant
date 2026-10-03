@@ -27,8 +27,14 @@ import {
   RUNG_INPUT,
   buildEntryNodes,
   readLicence,
+  licenceProperties,
   LICENCE_FILENAME,
 } from "../../content/pipeline/gen-library-jsonld";
+import { CONTENT_CONTEXT } from "../../schemas/jsonld";
+import { NS_PREFIXES } from "../../schemas/namespaces";
+import { STANDARD_PREFIXES } from "../../schemas/vocab-mapping-fhir";
+import { contextBindings, vocabMapping } from "../../schemas/vocab-mapping";
+import { manifestLicence } from "../../schemas/source-licence";
 
 const DIR = mkdtempSync(join(tmpdir(), "gen-library-"));
 afterAll(() => {
@@ -457,16 +463,21 @@ describe("a figure on a section boundary — bean `imen`", () => {
 });
 
 describe("the licence record survives regeneration (folio-assistant#1492)", () => {
-  const meta = (fs: Array<{ path: string; content: string }>) =>
-    (JSON.parse(fs.find((f) => f.path === "manifest.jsonld")!.content) as { meta: Record<string, unknown> }).meta;
+  const manifest = (fs: Array<{ path: string; content: string }>) =>
+    JSON.parse(fs.find((f) => f.path === "manifest.jsonld")!.content) as Record<string, unknown> & { meta: Record<string, unknown> };
   const record = { status: "unknown", searched: [{ where: "the PDF", result: "no statement" }] };
 
-  test("an authored licence is carried verbatim into meta.licence", () => {
-    expect(meta(buildDocumentNodes("d", structure, candidates, () => true, undefined, record)).licence).toEqual(record);
+  test("an authored licence is carried verbatim as licenceRecord, and read back by the checker's accessor", () => {
+    const m = manifest(buildDocumentNodes("d", structure, candidates, () => true, undefined, record));
+    expect(m.licenceRecord).toEqual(record);
+    expect(manifestLicence(m)).toEqual(record);
   });
 
-  test("no sidecar: no meta.licence at all, so the checker reports 'not recorded'", () => {
-    expect("licence" in meta(buildDocumentNodes("d", structure, candidates, () => true))).toBe(false);
+  test("no sidecar: no licence anywhere, so the checker reports 'not recorded'", () => {
+    const m = manifest(buildDocumentNodes("d", structure, candidates, () => true));
+    expect("licenceRecord" in m).toBe(false);
+    expect("license" in m).toBe(false);
+    expect("licence" in m.meta).toBe(false);
   });
 
   test("the whole entry path reads licence.json", () => {
@@ -477,7 +488,7 @@ describe("the licence record survives regeneration (folio-assistant#1492)", () =
       writeFileSync(join(dir, LICENCE_FILENAME), JSON.stringify(record));
       const out = buildEntryNodes("d", dir);
       expect(out.state).toBe("built");
-      expect(meta((out as { files: Array<{ path: string; content: string }> }).files).licence).toEqual(record);
+      expect(manifest((out as { files: Array<{ path: string; content: string }> }).files).licenceRecord).toEqual(record);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -492,5 +503,50 @@ describe("the licence record survives regeneration (folio-assistant#1492)", () =
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
+  });
+});
+
+describe("D4: a library item's licence is dcterms:license, by the row a glossary uses (bean gzkt)", () => {
+  const manifest = (fs: Array<{ path: string; content: string }>) =>
+    JSON.parse(fs.find((f) => f.path === "manifest.jsonld")!.content) as Record<string, unknown> & { meta: Record<string, unknown> };
+  const stated = { status: "stated", id: "CC-BY-NC-SA-3.0-IGO", basis: "the copyright page" };
+  const unknown = { status: "unknown", searched: [{ where: "the PDF", result: "no statement" }] };
+
+  test("a stated licence is written as `license`, outside meta", () => {
+    const m = manifest(buildDocumentNodes("d", structure, candidates, () => true, undefined, stated));
+    expect(m.license).toBe("CC-BY-NC-SA-3.0-IGO");
+    expect(m.licenceRecord).toEqual(stated);
+    expect("licence" in m.meta).toBe(false);
+  });
+
+  test("an unknown licence is recorded as unknown and never named", () => {
+    const p = licenceProperties(unknown);
+    expect("license" in p).toBe(false);
+    expect(p.licenceRecord).toEqual(unknown);
+  });
+
+  test("a stated record with no id names nothing (the checker reports it malformed)", () => {
+    expect("license" in licenceProperties({ status: "stated", basis: "x" })).toBe(false);
+  });
+
+  test("an unparseable sidecar names no licence", () => {
+    expect("license" in licenceProperties({ status: "unparseable", note: "x" })).toBe(false);
+  });
+
+  test("no record: nothing at all", () => {
+    expect(licenceProperties(undefined)).toEqual({});
+  });
+
+  test("the published context binds both keys as the licence-naming table does", () => {
+    const table = vocabMapping(join(import.meta.dir, "..", ".."), "licence-naming");
+    const bound = contextBindings([table], { inContext: {}, prefixes: { ...STANDARD_PREFIXES, ...NS_PREFIXES } });
+    const ctx = CONTENT_CONTEXT as unknown as Record<string, { "@id": string }>;
+    const expand = (c: string) => {
+      const [pfx, local] = c.split(":") as [string, string];
+      return `${(CONTENT_CONTEXT as unknown as Record<string, string>)[pfx]}${local}`;
+    };
+    expect(expand(ctx.license!["@id"])).toBe(bound.license!);
+    expect(bound.license).toBe("http://purl.org/dc/terms/license");
+    expect(expand(ctx.licenceRecord!["@id"])).toBe(bound.licenceRecord!);
   });
 });

@@ -127,6 +127,12 @@ export interface TabularNodeOpts {
   /** `docIri(docId, rest)` from the caller, so IRI minting stays in one place. */
   iri: (rest: string) => string;
   meta?: Record<string, unknown>;
+  /**
+   * Properties of the manifest node itself, outside `meta` — the ones a graph
+   * reader must be able to see, such as the licence (`licence-naming`,
+   * finding D4). Written as given, before `meta`.
+   */
+  properties?: Record<string, unknown>;
 }
 
 /**
@@ -201,6 +207,7 @@ export function buildTabularNodes(
       title: opts.title,
       contains: containedByManifest,
       provenance: "ingested",
+      ...opts.properties,
       meta: {
         ...opts.meta,
         // Recorded so a consumer need not infer the depth from the shape it

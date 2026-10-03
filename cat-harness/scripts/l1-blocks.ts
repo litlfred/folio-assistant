@@ -46,7 +46,8 @@ import { basename, join, resolve } from "node:path";
 // through both writers therefore carried a second, unreferenced, byte-identical
 // copy of every prose block: 91 of them across four documents when measured
 // (2026-09-23). Two naming rules for one block is one rule too many.
-import { blockId, libraryInstanceOf, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
+import { blockId, libraryInstanceOf, licenceProperties, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
+import { manifestLicence } from "../schemas/source-licence.ts";
 import { libraryAssetIri } from "../schemas/library-iri.ts";
 import { STRUCTURE_FILENAME, pagesOf, readStructure } from "../schemas/document-structure.ts";
 
@@ -142,7 +143,7 @@ export function buildL1(dir: string, write = true): BuildResult {
   let licence: unknown;
   if (existsSync(manifestPath)) {
     try {
-      licence = (JSON.parse(readFileSync(manifestPath, "utf-8")) as { meta?: { licence?: unknown } }).meta?.licence;
+      licence = manifestLicence(JSON.parse(readFileSync(manifestPath, "utf-8")));
     } catch {
       licence = undefined;
     }
@@ -156,13 +157,14 @@ export function buildL1(dir: string, write = true): BuildResult {
     // full section id names the `.md` file beside it, which is not a node.
     contains: declared.map((s) => `${base}/sections/${sectionKey(s.id)}`),
     provenance: "ingested",
+    // Out of `meta`, by the `licence-naming` row (finding D4, bean `gzkt`).
+    ...licenceProperties(licence),
     meta: {
       doc_id: st.doc_id,
       source_file: st.source?.file ?? null,
       source_sha256: st.source?.sha256 ?? null,
       granularity: st.granularity ?? null,
       disposition: "ingested source material — attributed to its document, not folio content",
-      ...(licence !== undefined ? { licence } : {}),
     },
   };
   if (write) writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);

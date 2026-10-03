@@ -5,7 +5,8 @@
  * @graphNode schema
  *
  * The record `check:source-licence` has read from a library entry's
- * `manifest.jsonld` (`meta.licence`) since issue #1023, moved here unchanged so
+ * `manifest.jsonld` since issue #1023 — as `licenceRecord` since finding D4
+ * (bean `gzkt`, 2026-10-03), `meta.licence` before — moved here unchanged so
  * that an upload's `intake.json` can carry the SAME record rather than a second
  * licence vocabulary (the bean's own rule: read the existing vocabulary before
  * designing a field).
@@ -40,6 +41,16 @@ export function licenceProblem(l: SourceLicence): string | undefined {
     return bad ? "a `searched` entry lacks `where` or `result`" : undefined;
   }
   return `status ${JSON.stringify(l.status)} is neither \`stated\` nor \`unknown\``;
+}
+
+/**
+ * A library manifest's licence record, or `undefined` when it carries none.
+ * Top-level `licenceRecord`, beside the `dcterms:license` it backs, and no
+ * longer inside the `@json` `meta` (finding D4, bean `gzkt`).
+ */
+export function manifestLicence(manifest: unknown): SourceLicence | undefined {
+  if (manifest === null || typeof manifest !== "object") return undefined;
+  return (manifest as { licenceRecord?: SourceLicence }).licenceRecord;
 }
 
 /** The record as a schema: its shape, then {@link licenceProblem} as the one rule set. */

@@ -16651,7 +16651,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared."
+          "@value": "The licence the uploader established, as the SAME record a library manifest carries as `licenceRecord` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared."
         }
       ],
       "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
