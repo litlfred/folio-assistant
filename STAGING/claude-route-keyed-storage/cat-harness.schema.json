@@ -217,6 +217,43 @@
             ]
           }
         },
+        "glassStrip": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "chrome": {
+                    "type": "string",
+                    "enum": [
+                      "todos",
+                      "filter",
+                      "settings"
+                    ]
+                  }
+                },
+                "required": [
+                  "chrome"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
         "repository": {
           "type": "string",
           "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
@@ -1053,8 +1090,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-route-keyed-storage/cat-harness.jsonld",
   "staging": {
     "branch": "claude/route-keyed-storage",
-    "sha": "05ff19f18e333413995fda85c9c439e67b56260e",
+    "sha": "956b0b5aef434d872975308aa478dc16d0581a7a",
     "pr": "1996/merge",
-    "run": "37127465494"
+    "run": "37128437105"
   }
 }
