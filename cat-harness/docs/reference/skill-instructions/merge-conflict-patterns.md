@@ -96,6 +96,27 @@ per directory, so a new file anywhere changes one.
 
 Generated overview diagrams and their SVGs.
 
+### `prov-qaqc` — take the base, regenerate
+
+The PROV-O QA/QC report (`docs/prov-qaqc/`) and its per-instance logs
+(`docs/assets/prov/`). Generated WHOLE from the workflow instances under
+`beans/workflows/`, so any branch that records an instance — which every branch
+doing process work does — rewrites the index page and adds a `.prov.jsonld`.
+
+**Added 2026-10-03, and the occasion is the reason.** The runner refused #1892
+with `docs/prov-qaqc/index.md` as the SINGLE unclassified path among **32**
+resolved by pattern. One file nobody authors, blocking a merge nobody can
+usefully resolve by hand — which is this catalogue's whole purpose, missing one
+entry.
+
+The globs are instance-agnostic (`**/docs/prov-qaqc/**`), like
+`derived-results` and unlike `glossary`: a dependent folio runs `prov:qaqc`
+over its own instances and writes the same two shapes under its own root.
+
+It names no check of its own, per rule 2: `regen` runs `prov:qaqc` because
+`check:prov-qaqc` is a workflow gate, and a pattern that named its own check
+would be a hand-kept list able to drift from the workflow.
+
 ### `glossary` — take the base, regenerate (207)
 
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
@@ -337,6 +358,34 @@ Bean definitions are authored work-plan state. Two sessions editing one bean
 is a coordination question (`bean-coordination`), and a duplicated
 `updated_at` from a careless resolution is `check-bean-front-matter`'s
 recorded defect.
+
+### `artefact-verification` — refused, by declaration
+
+`scripts/artefact-verification.json`, the per-check consumer-verification
+declaration. **This is the entry that exists to stop a sweep, not to resolve
+one** — and the one most likely to be globed by mistake, because it reads like a
+generated sidecar (under `scripts/`, a `.json`, its key set derived from
+`package.json`) and because it is the only path that refused on **two** open PRs
+at once (#1958, #1955, swept 2026-10-03).
+
+Two facts, either one sufficient:
+
+- `task-io.ts` classifies `check:artefact-verification` as `READ_ONLY`. **No
+  script writes the file**, so `regen` has no writer to run and `take-base` is a
+  silent *discard* rather than a resolution.
+- Its own `_comment` requires every `none` entry to carry **a reason, in prose**,
+  and says the file *"may only SHRINK"*. A branch that adds a gated check adds
+  an authored sentence — precisely what taking base would drop.
+
+So a conflict here is a genuine editorial merge: both reasons are wanted, and
+which survives is a judgement. Human merge is the cost of the file's shape, not
+a hole in this catalogue.
+
+**The falsifier is recorded** (bean `mjl3`): if a `--write` is ever added that
+composes the derived key set and carries existing reasons forward, the file
+becomes regenerable and this entry becomes `take-base`. Nothing today wants such
+a writer, and adding one to make merges cheaper would be building a mechanism to
+serve the merge tool rather than the gate.
 
 ### `uploads` — refused, by declaration (30)
 

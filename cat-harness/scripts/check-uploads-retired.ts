@@ -76,6 +76,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
+import { fshGutsDirectories } from "../schemas/fsh-guts.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -109,8 +110,21 @@ export const DEFAULT_ROOTS: readonly string[] = [ROOT, resolve(import.meta.dir, 
 // It is the owner's ruling of 2026-09-29 — *"archival … should be moved to
 // fsh-guts"* — with the sub-directory chosen on 2026-09-30 and recorded in
 // `library-ingestion` §"What happens to the upload after it is ingested".
-/** Where an archived upload lives. One place, named by the owner's ruling. */
-const ARCHIVE = "fsh-guts/uploads";
+/**
+ * Where an archived upload lives: `uploads/` inside the DECLARED trashcan, one
+ * place, named by the owner's ruling. Resolved through the `fsh-guts`
+ * declaration rather than spelled (bean `gz47`): fsh-guts is moving to its own
+ * branch (bean `9c7h`), and a spelled path keeps "finding" an empty directory
+ * after the move. `undefined` when no trashcan is declared, which means nothing
+ * can have been archived; two declared trashcans are a declaration defect and
+ * throw.
+ */
+export function archiveDir(base: string): string | undefined {
+  const all = fshGutsDirectories(base);
+  if (all.length > 1) throw new Error(`the \`fsh-guts\` graph is declared ${all.length} times under ${base}`);
+  return all[0] ? join(all[0].absPath, ARCHIVE_SUBDIR) : undefined;
+}
+const ARCHIVE_SUBDIR = "uploads";
 
 export type QueueState = "queued" | "retired" | "duplicated" | "orphaned-companion";
 
@@ -205,8 +219,8 @@ export function ingestedSources(roots: readonly string[] = DEFAULT_ROOTS): Map<s
 export function archivedSources(roots: readonly string[] = DEFAULT_ROOTS): Map<string, string> {
   const out = new Map<string, string>();
   const base = roots[0] ?? ROOT;
-  const dir = join(base, ARCHIVE);
-  if (!existsSync(dir)) return out;
+  const dir = archiveDir(base);
+  if (dir === undefined || !existsSync(dir)) return out;
   for (const f of readdirSync(dir)) {
     const abs = join(dir, f);
     // The sidecar describes the artefact; it is not one.
@@ -270,7 +284,8 @@ export function queueState(roots: readonly string[] = DEFAULT_ROOTS): QueueFile[
     if (!existsSync(q)) continue;
     // The archive lives under a declared directory too; it is the destination,
     // not a queue.
-    if (relative(base, q).replace(/\\/g, "/") === ARCHIVE) continue;
+    const archive = archiveDir(base);
+    if (archive !== undefined && resolve(q) === resolve(archive)) continue;
     // A queue may hold a DIRECTORY per source — `who-iris/uploads/` keeps
     // `9789241548960-eng/` and three siblings that way. Listing only the top
     // level would report those four queues as empty, which is the same
@@ -348,8 +363,8 @@ export function withCompanions(files: QueueFile[], archivedNames: ReadonlySet<st
 export function archivedBasenames(roots: readonly string[] = DEFAULT_ROOTS): Set<string> {
   const out = new Set<string>();
   for (const r of roots) {
-    const dir = join(r, ARCHIVE);
-    if (!existsSync(dir)) continue;
+    const dir = archiveDir(r);
+    if (dir === undefined || !existsSync(dir)) continue;
     for (const e of readdirSync(dir)) out.add(e);
   }
   return out;
@@ -406,12 +421,14 @@ if (import.meta.main) {
   const structured = bad.filter((f) => f.shape === "structured-intake");
   const queued = files.length - bad.length;
 
+  const archive = archiveDir(ROOT);
+  const archiveRel = archive === undefined ? "<no `fsh-guts` directory is declared: declare one first>" : relative(ROOT, archive);
   const remedy = (f: QueueFile): string =>
     f.state === "duplicated"
       ? `git rm "${f.rel}"  (identical bytes already at ${String(f.archived)})`
       : f.state === "orphaned-companion"
-        ? `git mv "${f.rel}" "${ARCHIVE}/${basename(f.rel)}"  (its source ${String(f.archived)} already retired; no sidecar — the source's covers it)`
-        : `git mv "${f.rel}" "${ARCHIVE}/${basename(f.rel)}"  + a same-basename .md sidecar`;
+        ? `git mv "${f.rel}" "${archiveRel}/${basename(f.rel)}"  (its source ${String(f.archived)} already retired; no sidecar — the source's covers it)`
+        : `git mv "${f.rel}" "${archiveRel}/${basename(f.rel)}"  + a same-basename .md sidecar`;
 
   console.log(
     `Queue retirement — ${String(files.length)} file(s) across ${String(new Set(files.map((f) => dirname(f.rel))).size)} director(y/ies),` +
