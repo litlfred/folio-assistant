@@ -346,6 +346,13 @@ classDiagram
       directories [0..*] Directory[]
       nodes [0..*] Node[]
     }
+    class cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1["cat-harness-payload/v1"] {
+      <<json: PayloadSidecarSchema>>
+      $schema [1] 'cat-harness-payload/v1'
+      sha256 [1] string
+      bytes [1] integer
+      mediaType [1] string
+    }
   }
   cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
   cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
@@ -404,3 +411,4 @@ classDiagram
   cssClass "cat_harness_docs_folio_graph_projection_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1" fa_uml_kind_docs

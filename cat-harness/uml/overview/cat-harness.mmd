@@ -1169,6 +1169,13 @@ classDiagram
       directories [0..*] Directory[]
       nodes [0..*] Node[]
     }
+    class cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1["cat-harness-payload/v1"] {
+      <<json: PayloadSidecarSchema>>
+      $schema [1] 'cat-harness-payload/v1'
+      sha256 [1] string
+      bytes [1] integer
+      mediaType [1] string
+    }
   }
   namespace cat_harness__swimlane_glossary {
     class cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
@@ -1450,6 +1457,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_graph_projection_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1" fa_uml_kind_docs
   cssClass "cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_undetermined

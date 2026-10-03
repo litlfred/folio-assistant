@@ -320,6 +320,12 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     directories [0..*] : Directory[]
     nodes [0..*] : Node[]
   }
+  class "cat-harness-payload/v1" as cat_harness_docs_cat_harness_payload_v1_cat_harness_payload_v1 <<json: PayloadSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'cat-harness-payload/v1'
+    sha256 [1] : string
+    bytes [1] : integer
+    mediaType [1] : string
+  }
 }
 
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
