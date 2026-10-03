@@ -23,7 +23,11 @@
 # (`pull_request`); the `ready:` marker and later questions (`issue_comment`);
 # and the head's CI, which FINISHES after the push that started it
 # (`workflow_run`). Without the last, a status computed while CI was still
-# running would stay red until somebody touched a label.
+# running would stay red until somebody touched a label. Feature Staging is
+# NOT listed: it has no `push` trigger, and `workflow-triggers.test.ts`
+# refuses a `workflow_run` on such a workflow (#1725). Check 5 still judges
+# its run; a status computed before it finishes is refreshed by the next
+# label, comment or gating-workflow completion, or by a dispatch.
 #
 # THE SCRIPT COMES FROM MAIN, NOT FROM THE PR, as in `merge-main.yml`: a PR
 # that edits `merge-guard.ts` must not judge itself with its own copy. The
@@ -39,7 +43,7 @@ on:
   issue_comment:
     types: [created, edited]
   workflow_run:
-    workflows: ["Code-quality gates", "JSON-LD generated-file drift", "Feature Staging (GitHub Pages)"]
+    workflows: ["Code-quality gates", "JSON-LD generated-file drift"]
     types: [completed]
   workflow_dispatch:
     inputs:
