@@ -45,6 +45,40 @@ rides alone.
 - **Ties go to the oldest PR** (`orderQueue`): overrides at their positions,
   then rank, then PR number.
 
+## A refusal LABEL is not current state
+
+`merge-main.yml` adds `needs-merge-human` when `merge:main` refuses a PR, and
+**nothing anywhere removes it.** There is no `--remove-label` in any workflow
+or script — measured 2026-10-03. So the label records that a refusal happened
+ONCE, not that one holds now, and it accumulates for the life of the PR.
+
+That makes it actively misleading rather than merely stale. Measured the same
+day, over the eight open PRs carrying it, classified against `main`'s own
+patterns:
+
+| authored conflicts | PRs |
+|---|---|
+| **0 — no person needed** | #1935, #1934, #1816, #1808, #1804 |
+| 1–2 | #1892, #1764 |
+| 2 | #1888 |
+
+**Five of eight were flagged for a human who had nothing to do.** Two of those
+five were simultaneously clean against `main` and green on their gates.
+
+It does not deadlock the bot — candidate selection reads the `merge-main`
+label, not this one — so the cost is paid entirely in triage. A steward
+reading the label picks the wrong PRs to work and leaves mechanical ones
+sitting; a sibling session reading it starts on work the bot would have done.
+Both happened in that window.
+
+**So: never read `needs-merge-human` as the question's answer. Re-derive it.**
+`git merge-tree --write-tree origin/<base> <sha>` plus `pathClass` against the
+BASE's patterns (see `merge-conflict-patterns` rule 3) is the only current
+answer. Clearing the label by hand is not the fix either — the bot re-adds it
+on the next genuine refusal, and hand-clearing a signal whose writer never
+clears it just resets a clock nobody reads. The fix is a removal on the
+success path, which is why the label is reported here rather than groomed.
+
 ## Admission asks which runs are OWED, never whether anything is red
 
 **A member is admitted on `ownCi == "green"` and `green` means every workflow
