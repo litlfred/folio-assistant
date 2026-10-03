@@ -80,6 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
+import { SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -529,8 +530,19 @@ export interface ContentDirectory extends GraphNodeDirectory {
   theme?: ThemeRef;
 
   /**
+   * Where this subgraph gets its content. Absent is `{ kind: "directory" }`.
+   * Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`),
+   * which applies the instance config's override by id.
+   */
+  source?: SubgraphSource;
+
+  /**
    * This directory's contents are STORED on a branch, keyed by commit or tip, and the
    * checkout holds at most a working copy. See {@link DirectoryStorageSchema}.
+   *
+   * The LEGACY spelling of `source: { kind: "branch", branch, keyedBy }`
+   * (bean `l4ay`): `resolveSubgraphSource` reads either and refuses both on
+   * one entry. New declarations use `source`.
    */
   storage?: DirectoryStorage;
 }
@@ -1713,6 +1725,15 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * cross-instance theme now says whose theme it is.
    */
   theme: ThemeRefSchema.optional(),
+  /**
+   * Where this subgraph gets its CONTENT — the checkout's own directory (the
+   * default, so absent means `{ kind: "directory" }`) or a declared repository
+   * branch, with room for a later kind. The instance config may override it
+   * by id. Resolve it with `resolveSubgraphSource`, never by reading this
+   * field: the override and #1764's `storage` are folded in there, once.
+   * See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.
+   */
+  source: SubgraphSourceSchema.optional(),
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
@@ -5254,7 +5275,8 @@ export function materialiseDirectories(
     // Creating it empty here would manufacture the `dh4f` shape — a reader
     // scanning an empty directory and reporting a clean run — and its absence
     // is not "missing", so `--check` does not list it either.
-    if (dir.storage?.branch) continue;
+    // Any source off the checkout, not only `storage` (bean `l4ay`).
+    if (contentIsOffCheckout(dir)) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
