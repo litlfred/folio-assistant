@@ -32,8 +32,8 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 5. **Update the skills.** Update `kg/kg-core/fsh-guts` ("where it lives") and the special-branches section of the skill that documents them.
 
 ## Done when
-- [ ] `fsh-guts` declared in `special-branches.json`, with the test green
-- [ ] `cat/cat-harness/fsh-guts` exists with the contents of `fsh-guts/` (owner confirmed the push)
+- [x] `fsh-guts` declared in `special-branches.json`, with the test green (2026-10-03, branch claude/lucid-shannon-o8zop1-fsh-guts)
+- [x] `cat/cat-harness/fsh-guts` exists with the contents of `fsh-guts/` (owner confirmed the push 2026-10-03; seeded 9c8828be, verified cold)
 - [ ] every tool listed above reads and writes through the declaration; `bun run gates` green
 - [ ] relocation ("delete means relocate") writes to the branch, and an end-to-end test proves it
 - [ ] `fsh-guts/` removed from `main` after the owner confirms
@@ -43,6 +43,45 @@ Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special b
 
 _2026-10-03T00:50:36Z_ — Claimed by claude/lucid-shannon-o8zop1-fsh-guts — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
+## 2026-10-03: step 1, and why it was larger than one row (session https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd)
+
+**Sibling survey first, on the owner's instruction ("check siblings for related tooling on todos/ and beans/ move").** fsh-guts is the same shape as beans and todos: one live copy at a branch tip. Arc fs43 already builds that mechanism, so 9c7h REUSES it and builds no store of its own:
+- #1764 (arc 3fva) ships `DirectoryStorageSchema` (the `storage` field on a directory declaration);
+- #1937 (bean 2h76, stacked on #1764) widens `keyedBy` to `commit | tip` and adds `scripts/branch-store.ts` (tip-keyed read, splice-write, never force-push; `resolveTipLocation(id)` is what a reader asks).
+- Step 3 (retarget the tools) therefore stacks on #1937, and fsh-guts becomes a declaration: `storage: { branch: "cat/cat-harness/fsh-guts", keyedBy: "tip" }` on its directory entry.
+
+**Step 1 was blocked by stale data, not by this bean.** `special-branches.json` still declared the interim `cat-<name>` names, though bean tlk2 had already renamed `state` to `cat/cat-harness/state` and `fhir-ast` to `cat/fhir-harness/fhir-ast/`. Neither declared name existed, so `resolveBranch('state')` answered `cat-state` and a writer would have created an empty branch beside the real one. The follow-up the fs43 rename note assigned to #1928 ("update special-branches.json and its mirrors to the new names") had not happened. Done here:
+- qa-reports, fhir-ast and state now carry `cat/<harness>/<name>`, with the interim `cat-<name>` kept as the first legacy name;
+- beans and todos are declared (their branches existed but were undeclared: the inverse of dh4f);
+- fsh-guts is declared, NOT CREATED YET;
+- lake-cache keeps its name with `pendingRename`, split out to bean folio-assistant-9io2 (8 mirrors run inside folios);
+- special-branches.test.ts now requires `cat/<declared harness>/`, and a pending rename must name a bean that exists. Both were mutation-checked.
+
+**Survey re-run 2026-10-03:** 101 files mention fsh-guts, against about 30 listed above. Classification (writer, reader, excluder, declaration, test) to follow.
+
+
+## Step 3 inventory, classified 2026-10-03 (101 files that mention fsh-guts)
+
+| category | n | after the move |
+|---|---|---|
+| WRITER | 7 | `folio-assistant-core/scripts/sample-import-run.ts` `runSampleImport` (a HARD-CODED `join(root, 'fsh-guts', 'samples')`, so it must go through the declaration and then splice-write); `processes/library/sample-import.bpmn`, `processes/sdlc/activity-log.bpmn`, `folio-assistant-core/processes/ui/board-relocate.bpmn` (its relocate handler is not found by name; it probably resolves through the graph kind, so trace it); logs: `schemas/log-entry.ts` `logDirs`, `src/logging/log-writer.ts`, `log-sweep.ts` |
+| READER | 6 | `scripts/fsh-guts-export.ts` (`fshGutsDirs`, `walk`, `buildFshGutsExport`; docs-site.yml:503), `scripts/gen-fsh-guts-viz.ts` (`gutsDir`, `gutsFiles`; CI `fsh-guts:viz:check`), `check-uploads-retired.ts` (`ARCHIVE`, `archivedSources`), `check-retired-front-matter.ts` (`scan`, record existence) |
+| DECLARATION | 15 | `folio-assistant.json`'s `fsh-guts` directory entry is what every resolver-based reader and writer keys on, so it changes FIRST (it gains `storage`) |
+| EXCLUDER | 3 | `.gitignore`, `bunfig.toml`, qa-utils comments: dead after the move, and harmless |
+| TEST reading the real dir | 11 | fsh-guts-bean-refs, -not-rendered, -viz, -export (part), staging-only-publish, publish-verify, vocab-mapping-apply, check-retired-front-matter, retired-skill-fields, remote-packages-honest-docs, activity-log: each needs a fixture or a branch read, or it goes vacuous |
+| MENTION, fixture tests, e2e ids | 59 | no change (`wireframes/fsh-guts` in derive-po and pot-extract is a DIFFERENT directory) |
+
+**Design default, stated so it can be overruled:** `fsh-guts/logs/` is git-ignored local scratch, never committed, so it does NOT move to the branch. `logDirs` keeps resolving a local working-tree directory. Only committed content (retired/, samples/, scripts/, uploads/) moves.
+
+
+## Step 2 done 2026-10-03: branch seeded (owner: "1", that is, create it now)
+
+- `cat/cat-harness/fsh-guts` = **9c8828be799b**, an orphan commit by folio-state-bot, seeded from main@53ba9f5547a7.
+- The layout is the same as `cat/cat-harness/beans`: root `manifest.json` (`state-manifest/v1`, `status: seed`, `authoritative: false`, `keyedBy: tip`, source SHA, tree id and file count), `README.md`, and `fsh-guts/**` mirroring the checkout.
+- **Verified twice:** the branch's `fsh-guts` tree id equals main's (929703e0c852, 140 files), first locally before the push, then again from a cold `git init` reader (`fetch --depth=1 --filter=blob:none`, 0.84 s).
+- Pushed without `-f`; the branch did not exist beforehand.
+- **History:** not rewritten onto the branch. The clone was shallow, and the sibling beans and todos branches are orphan seeds too. The history stays on main, reachable from `source.sha`.
+- **main is still the store.** Until the cutover, a write to main's fsh-guts/ makes the branch stale, so re-seed or splice at cutover, as the beans branch will.
 
 ## 2026-10-03: the last unknown writer, traced (no hidden code writer)
 
