@@ -2,16 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://smart.who.int/trust/ValueSet-Participants.displays.json",
   "title": "WHO GDHCN Trust Network Participant Display Values",
-  "description": "Display values for WHO GDHCN Trust Network Participant ValueSet codes. Generated from FHIR expansions.",
+  "description": "Display values for WHO GDHCN Trust Network Participant ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
   "type": "object",
   "properties": {
     "fhir:displays": {
       "type": "object",
-      "description": "Multilingual display values for ValueSet codes using IRI format to match JSON schema enum values",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
       "patternProperties": {
-        "^https?://.*": {
+        "^.+$": {
           "type": "object",
-          "description": "Display values for a specific IRI-formatted code by language",
+          "description": "Display values for a specific code fragment by language",
           "properties": {
             "en": {
               "type": "string",
@@ -35,110 +35,113 @@
   ],
   "additionalProperties": true,
   "fhir:displays": {
-    "http://smart.who.int/trust/CodeSystem/Participants#WHO": {
+    "WHO": {
       "en": "WHO"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ALB": {
-      "en": "ALB"
+    "ALB": {
+      "en": "Albania"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#AND": {
-      "en": "AND"
+    "AND": {
+      "en": "Andorra"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ARM": {
-      "en": "ARM"
+    "ARM": {
+      "en": "Armenia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BEL": {
-      "en": "BEL"
+    "BEL": {
+      "en": "Belgium"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BRA": {
-      "en": "BRA"
+    "BRA": {
+      "en": "Brazil"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CYP": {
-      "en": "CYP"
+    "CYP": {
+      "en": "Cyprus"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CZE": {
-      "en": "CZE"
+    "CZE": {
+      "en": "Czechia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BEN": {
-      "en": "BEN"
+    "BEN": {
+      "en": "Benin"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#EST": {
-      "en": "EST"
+    "EST": {
+      "en": "Estonia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#FRO": {
-      "en": "FRO"
+    "FRO": {
+      "en": "Faroe Islands"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#FIN": {
-      "en": "FIN"
+    "FIN": {
+      "en": "Finland"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#FRA": {
-      "en": "FRA"
+    "FRA": {
+      "en": "France"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ISL": {
-      "en": "ISL"
+    "ISL": {
+      "en": "Iceland"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#IDN": {
-      "en": "IDN"
+    "IDN": {
+      "en": "Indonesia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#LVA": {
-      "en": "LVA"
+    "IRL": {
+      "en": "Ireland"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#LTU": {
-      "en": "LTU"
+    "LVA": {
+      "en": "Latvia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#MYS": {
-      "en": "MYS"
+    "LTU": {
+      "en": "Lithuania"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#MLT": {
-      "en": "MLT"
+    "MYS": {
+      "en": "Malaysia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#MCO": {
-      "en": "MCO"
+    "MLT": {
+      "en": "Malta"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#OMN": {
-      "en": "OMN"
+    "MCO": {
+      "en": "Monaco"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#NLD": {
-      "en": "NLD"
+    "OMN": {
+      "en": "Oman"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#NZL": {
-      "en": "NZL"
+    "NLD": {
+      "en": "Netherlands (Kingdom of the)"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#POL": {
-      "en": "POL"
+    "NZL": {
+      "en": "New Zealand"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PRT": {
-      "en": "PRT"
+    "POL": {
+      "en": "Poland"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SMR": {
-      "en": "SMR"
+    "PRT": {
+      "en": "Portugal"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SGP": {
-      "en": "SGP"
+    "SMR": {
+      "en": "San Marino"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SVK": {
-      "en": "SVK"
+    "SGP": {
+      "en": "Singapore"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SVN": {
-      "en": "SVN"
+    "SVK": {
+      "en": "Slovakia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ESP": {
-      "en": "ESP"
+    "SVN": {
+      "en": "Slovenia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SWE": {
-      "en": "SWE"
+    "ESP": {
+      "en": "Spain"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#THA": {
-      "en": "THA"
+    "SWE": {
+      "en": "Sweden"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#TGO": {
-      "en": "TGO"
+    "THA": {
+      "en": "Thailand"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#TUR": {
-      "en": "TUR"
+    "TGO": {
+      "en": "Togo"
+    },
+    "TUR": {
+      "en": "Türkiye"
     }
   },
   "fhir:valueSet": "http://smart.who.int/trust/ValueSet/Participants",
   "fhir:version": "1.8.0",
-  "fhir:expansionTimestamp": "2026-09-07T14:05:57.486497"
+  "fhir:expansionTimestamp": "2026-10-01T11:51:29+00:00"
 }
