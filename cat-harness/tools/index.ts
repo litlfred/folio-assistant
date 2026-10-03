@@ -1956,6 +1956,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
     }),
 
+    defineTool({
+      id: "site-search-scopes",
+      title: "Site search scopes",
+      description:
+        "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
+      io: {
+        inputs: [
+          { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
+        ],
+        outputs: [
+          { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+      downstream: {
+        output: "assets/js/search/manifest.json",
+        inputs: ["the site search index (`assets/js/search-data.json`)", "the declared instances and target locales"],
+        judgedAt: "published",
+        verifier: "search-scopes",
+      },
+    }),
+
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
