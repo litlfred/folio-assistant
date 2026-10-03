@@ -554,8 +554,17 @@ Rules for the pair:
 
 ### Consumers
 
-- **Remote materialization reads these same files.** It does not do a second
-  sparse checkout of the directory.
+- **Remote materialization reads these same files.**
+  `bun run kg:materialize --nodes <subscription> <subgraph-path>` fetches one
+  subgraph's `index.hydrated.jsonld` at the subscription's pin. It never does
+  a sparse checkout of the subgraph's directory. The file is validated against
+  `SubgraphHydratedSchema`, its root `@id` must be the subgraph asked for, and
+  it is held with a sha256 record. A request for the root is refused, with a
+  pointer to `index.jsonld`. This is a metadata mode (owner ruling
+  2026-10-03). The byte copy (`kg:materialize <subscription> <subgraph>`) is
+  unchanged and keeps its five gates. See
+  [`kg-subscription`](kg-subscription.md)
+  §"metadata mode".
 - A subgraph manifest that lists a child IRI but whose child file is missing is
   a dangling link. It is reported, never skipped.
 

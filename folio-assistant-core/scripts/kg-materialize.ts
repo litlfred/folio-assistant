@@ -66,18 +66,74 @@
  * bytes land in a temporary directory first: measuring is not materialising,
  * and nothing under the instance changes unless all five gates pass.
  *
+ * ## Metadata mode — `--nodes <subscription> <subgraph-path>` (bean `c1m4`)
+ *
+ * Owner ruling 2026-10-03: *"add a metadata mode"*. It fetches ONE file, the
+ * subgraph's published `index.hydrated.jsonld` (`kg-export.md` §"Named
+ * subgraphs"), so "every node of `skills/sdlc`" arrives as graph metadata
+ * without a byte of the subgraph itself. The byte copy above and its five
+ * gates are unchanged; this is a second verb beside it, not a branch inside it.
+ *
+ * - **Where.** `<docs>/subgraph/<HARNESS>/<path>/index.hydrated.jsonld` in the
+ *   subscribed repository, at the pin. `<docs>` is the snapshot's declared
+ *   `docs` directory and `<HARNESS>` the snapshot's declaration name — read
+ *   from the cached declaration, the way `gen-subgraph-jsonld` reads its own,
+ *   never spelled. Fetched through the same injectable {@link PartFetcher}, so
+ *   the pin check (`FETCH_HEAD` must be the pinned SHA) is the same code.
+ * - **The root is refused, by design.** A harness root publishes
+ *   `index.jsonld` only: a deep hydrated file there is the monolith `f233`
+ *   forbids. A root request is REFUSED with a pointer at `index.jsonld`; it is
+ *   never read as an empty subgraph.
+ * - **Validated before it lands.** `SubgraphHydratedSchema`, and the root
+ *   `@id` must be the subgraph asked for (`…/subgraph/<HARNESS>/<path>/`), so a
+ *   file published under the wrong path cannot be held as the right one.
+ * - **Held** at `<snapshot dir>/<subscription>/nodes/<path>/` (`nodesDirOf`),
+ *   the file plus a `nodes.json` record (`KgNodesRecordSchema`) carrying its
+ *   sha256, which `--check` re-hashes offline.
+ * - **The same four outcomes.** `materialized`; `stayed-referenced` when the
+ *   size cap stops it (a record saying so, no file); `refused` for a request
+ *   or a file that is not valid — no record; `could-not-determine` when the
+ *   fetch failed — NOTHING written.
+ *
+ * **The gates, decided: only `size` applies, and it applies as a cap.** The
+ * four person gates exist because a copy of somebody else's CONTENT can carry
+ * a licence, a restriction, a retention duty, or be the last copy there is.
+ * This file is none of those. It is a description of content — node ids,
+ * types, labels, links — that the substrate itself PUBLISHES on its site for
+ * anyone to read, and every heavy body in it is a pointer
+ * (`gen-subgraph-jsonld` refuses a literal over 16 KiB). Holding it moves no
+ * licensed bytes, so there is no copyright or restriction question; it is
+ * re-fetchable from the pin at any time, so there is no source-loss or
+ * retention question. Asking a person four questions whose answer is fixed
+ * would train them to answer without reading. `size` stays, MEASURED against
+ * `maxBytes` (`--max-bytes`, default {@link DEFAULT_MAX_BYTES}) and checked
+ * BEFORE the bytes are parsed, because a hydrated file is generated and a
+ * generator can be wrong. The record is therefore not a
+ * `MaterializationSchema` record: that schema demands all five gates, and
+ * filling four with answers nobody gave is the fabrication it forbids.
+ *
+ * Choosing (`subscriptions[].subgraphs`) is NOT required in metadata mode: a
+ * subscription already holds the substrate's root declaration as metadata,
+ * and this is more of the same layer. The path must lie under a directory the
+ * snapshot declares.
+ *
  * Usage:
  *   bun run kg:materialize <subscription> <subgraph> [--decisions <file.json>] [--instance <dir>] [--dry-run]
  *   bun run kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]
+ *   bun run kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]
  *   bun run kg:materialize:check
  */
+import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn, repoRootFor, type Subscription } from "../../cat-harness/schemas/cat-harness.ts";
+import { SUBGRAPH_HYDRATED_FILE, SUBGRAPH_INDEX_FILE, SubgraphHydratedSchema, type SubgraphHydratedNode } from "../../cat-harness/schemas/subgraph-manifest.ts";
 import { SubstrateSnapshotSchema, type SubstrateSnapshot } from "../../cat-harness/schemas/substrate-snapshot.ts";
 import {
+  NODES_RECORD_FILE,
+  nodesDirOf,
   PART_RECORD_FILE,
   PART_TREE,
   partDirOf,
@@ -92,11 +148,14 @@ import {
 import { LICENCE_NAMES, git, shallowFetch, upstreamLicence } from "../../cat-harness/scripts/sync-remote-skills.ts";
 import {
   DEFAULT_MAX_BYTES,
+  KG_NODES_RECORD_SCHEMA,
   KG_PART_RECORD_SCHEMA,
   KgDecisionsSchema,
   KgMaterializationRecordSchema,
+  KgNodesRecordSchema,
   type KgDecisions,
   type KgMaterializationRecord,
+  type KgNodesRecord,
   type KgPartRecord,
 } from "../schemas/kg-materialization.ts";
 import type { Gate, Gates } from "../schemas/materialization.ts";
@@ -195,7 +254,12 @@ function readSnapshot(snapshotDir: string, sub: Subscription): { ok: true; snap:
   return { ok: true, snap: parsed.data };
 }
 
-export function resolveRequest(opts: { instance?: string; subscription: string; subgraph?: string; asset?: string }): Resolution {
+type SubscriptionResolution =
+  | { ok: true; instanceRoot: string; snapshotDir: string; sub: Subscription; snap: SubstrateSnapshot }
+  | { ok: false; reason: string };
+
+/** The subscription, its snapshot directory and its snapshot AT THE PIN — the prefix both modes share. */
+function resolveSubscription(opts: { instance?: string; subscription: string }): SubscriptionResolution {
   const instanceRoot = resolve(opts.instance ?? DEFAULT_INSTANCE);
   const declName = findDeclarationFile(instanceRoot);
   if (!declName) return { ok: false, reason: `${instanceRoot} carries no instance declaration` };
@@ -206,7 +270,13 @@ export function resolveRequest(opts: { instance?: string; subscription: string; 
   if (!snapshotDir) return { ok: false, reason: `${declName} declares no \`substrate-snapshot\` directory to hold materialised parts in` };
   const s = readSnapshot(snapshotDir, sub);
   if (!s.ok) return s;
-  const snap = s.snap;
+  return { ok: true, instanceRoot, snapshotDir, sub, snap: s.snap };
+}
+
+export function resolveRequest(opts: { instance?: string; subscription: string; subgraph?: string; asset?: string }): Resolution {
+  const rs = resolveSubscription(opts);
+  if (!rs.ok) return rs;
+  const { instanceRoot, snapshotDir, sub, snap } = rs;
   const dirs = declaredDirectories(snap);
 
   if ((opts.subgraph === undefined) === (opts.asset === undefined)) {
@@ -482,6 +552,247 @@ export async function materialize(opts: MaterializeOptions): Promise<Materialize
   }
 }
 
+// ── Metadata mode: `--nodes <subscription> <subgraph-path>` ──────────────────
+
+/**
+ * Where the substrate publishes one subgraph's hydrated file, repo-relative,
+ * and the IRI suffix the file must declare — or why the request is not one.
+ * Read from the SNAPSHOT's declaration (its `docs` directory and its name),
+ * the way `subgraphOutDir` reads this instance's: the path is the unstable
+ * half, so it is looked up rather than spelled. The snapshot's declaration is
+ * the substrate's root `<name>.json` (`SubstrateSnapshotSchema.file`), so its
+ * instance root IS the repository root and a declared path is repo-relative.
+ */
+export function nodesLocation(
+  snap: SubstrateSnapshot,
+  subgraphPath: string,
+): { ok: true; path: string; upstreamPath: string; iriSuffix: string; harness: string } | { ok: false; reason: string } {
+  const harness = snap.summary.name;
+  const dirs = declaredDirectories(snap);
+  const docs = dirs.find((d) => d.id === "docs");
+  const indexHint = docs ? `\`${docs.path}/subgraph/${harness}/${SUBGRAPH_INDEX_FILE}\`` : `\`${SUBGRAPH_INDEX_FILE}\``;
+  const trimmed = subgraphPath.trim().replace(/^\/+|\/+$/g, "");
+  if (trimmed === "" || trimmed === ".") {
+    return {
+      ok: false,
+      reason:
+        `the root of \`${harness}\` publishes ${indexHint} only, by design: a hydrated file at the root would be the whole graph in one document, ` +
+        `the monolith \`f233\` forbids. Read the root's \`${SUBGRAPH_INDEX_FILE}\` for its direct members and its child subgraph IRIs, then ask \`--nodes\` for one of those`,
+    };
+  }
+  const p = safeRelPath(trimmed);
+  if (!p.ok) return { ok: false, reason: `subgraph path ${p.why}` };
+  if (!dirs.some((d) => p.path === d.path || p.path.startsWith(`${d.path}/`))) {
+    return {
+      ok: false,
+      reason: `\`${p.path}\` lies outside every directory the snapshot declares (${dirs.map((d) => `\`${d.path}/\``).join(", ") || "none"}), so it is no subgraph of the substrate's graph`,
+    };
+  }
+  if (!docs) {
+    return { ok: false, reason: `the snapshot of ${snap.repository}@${snap.ref.slice(0, 12)} declares no \`docs\` directory, so the substrate publishes no subgraph files to fetch` };
+  }
+  const up = safeRelPath(`${docs.path}/subgraph/${harness}/${p.path}/${SUBGRAPH_HYDRATED_FILE}`);
+  if (!up.ok) return { ok: false, reason: `the hydrated file's upstream path ${up.why}` };
+  return { ok: true, path: p.path, upstreamPath: up.path, iriSuffix: `/subgraph/${harness}/${p.path}/`, harness };
+}
+
+export type NodesResult =
+  | { state: "materialized"; record: KgNodesRecord; recordFile: string; file: string; changed: boolean }
+  | { state: "stayed-referenced"; record: KgNodesRecord; recordFile: string; reason: string }
+  | { state: "refused"; reason: string }
+  | { state: "could-not-determine"; reason: string };
+
+export interface NodesOptions {
+  subscription: string;
+  /** Instance-relative subgraph path in the substrate, e.g. `skills/sdlc`. */
+  path: string;
+  instance?: string;
+  /** The size cap. Absent: {@link DEFAULT_MAX_BYTES}. */
+  maxBytes?: number;
+  fetch?: PartFetcher;
+  now?: Date;
+  dryRun?: boolean;
+}
+
+function readNodesRecord(dir: string): KgNodesRecord | undefined {
+  const f = join(dir, NODES_RECORD_FILE);
+  if (!existsSync(f)) return undefined;
+  try {
+    const p = KgNodesRecordSchema.safeParse(JSON.parse(readFileSync(f, "utf8")));
+    return p.success ? p.data : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Write beside the final name, then rename: a crash leaves the old file or the new one. */
+function writeAtomic(file: string, content: string | Uint8Array): void {
+  const landing = `${file}.landing-${process.pid}`;
+  writeFileSync(landing, content);
+  renameSync(landing, file);
+}
+
+/** Nodes in a hydrated subgraph's transitive membership, and subgraphs under it. */
+function countHydrated(h: { hasMember?: unknown[]; hasSubgraph?: SubgraphHydratedNode[] }): { members: number; subgraphs: number } {
+  let members = h.hasMember?.length ?? 0;
+  let subgraphs = 0;
+  for (const c of h.hasSubgraph ?? []) {
+    const n = countHydrated(c);
+    members += n.members;
+    subgraphs += 1 + n.subgraphs;
+  }
+  return { members, subgraphs };
+}
+
+/**
+ * METADATA MODE: fetch one subgraph's `index.hydrated.jsonld` at the pin,
+ * validate it, and hold it with a sha256 record. See the module header,
+ * §"Metadata mode", for why the person gates do not apply and `size` does.
+ */
+export async function materializeNodes(opts: NodesOptions): Promise<NodesResult> {
+  const rs = resolveSubscription(opts);
+  if (!rs.ok) return { state: "refused", reason: rs.reason };
+  const { instanceRoot, snapshotDir, sub, snap } = rs;
+  const loc = nodesLocation(snap, opts.path);
+  if (!loc.ok) return { state: "refused", reason: loc.reason };
+  const dir = nodesDirOf(snapshotDir, sub.id, loc.path);
+  const recordFile = join(dir, NODES_RECORD_FILE);
+  const heldFile = join(dir, SUBGRAPH_HYDRATED_FILE);
+  const label = `the nodes of subgraph \`${loc.path}\``;
+  const at = (opts.now ?? new Date()).toISOString();
+
+  const existing = readNodesRecord(dir);
+  if (existing?.state === "materialized" && existing.ref !== sub.ref) {
+    return {
+      state: "refused",
+      reason: `${label} are held at ${existing.ref.slice(0, 12)} and the subscription now pins ${sub.ref.slice(0, 12)}: moving a held copy is \`refresh-materialized\`, not a re-fetch`,
+    };
+  }
+
+  let fetched: FetchedPart | undefined;
+  try {
+    fetched = await (opts.fetch ?? gitPartFetcher)(sub.repository, sub.ref, loc.upstreamPath);
+  } catch (e) {
+    return { state: "could-not-determine", reason: `\`${loc.upstreamPath}\` of ${sub.repository} at ${sub.ref.slice(0, 12)} was not read: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  if (!fetched) {
+    return {
+      state: "refused",
+      reason:
+        `${sub.repository} at ${sub.ref.slice(0, 12)} publishes no \`${loc.upstreamPath}\`: either \`${loc.path}\` is not a subgraph there, ` +
+        `or the substrate did not publish its subgraph files at that commit (\`bun run subgraph:jsonld\`)`,
+    };
+  }
+  try {
+    if (fetched.kind !== "blob") {
+      return { state: "refused", reason: `\`${loc.upstreamPath}\` is a ${fetched.kind === "submodule" ? "submodule" : "directory"} at the pin, not one file` };
+    }
+    const src = join(fetched.part, SUBGRAPH_HYDRATED_FILE);
+    if (!existsSync(src)) return { state: "could-not-determine", reason: `the fetcher reported \`${loc.upstreamPath}\` and left no \`${SUBGRAPH_HYDRATED_FILE}\` to read` };
+    const bytes = readFileSync(src);
+    const upstream = `https://github.com/${sub.repository}/blob/${sub.ref}/${loc.upstreamPath}`;
+    const base = { $schema: KG_NODES_RECORD_SCHEMA, subscription: sub.id, repository: sub.repository, ref: sub.ref } as const;
+
+    // The safety cap is measured BEFORE the bytes are parsed.
+    const size = sizeGate(bytes.length, 1, opts.maxBytes ?? DEFAULT_MAX_BYTES, fetched.collectionFiles, at);
+    if (size.verdict !== "permitted") {
+      const why = `${label} stayed referenced: \`size\` is refused — ${size.basis}`;
+      const record = KgNodesRecordSchema.parse({ ...base, subgraph: { path: loc.path }, state: "referenced", size, note: why });
+      if (!opts.dryRun) {
+        mkdirSync(dir, { recursive: true });
+        rmSync(heldFile, { force: true });
+        writeAtomic(recordFile, `${JSON.stringify(record, null, 2)}\n`);
+      }
+      return { state: "stayed-referenced", record, recordFile, reason: why };
+    }
+
+    let json: unknown;
+    try {
+      json = JSON.parse(bytes.toString("utf8"));
+    } catch (e) {
+      return { state: "refused", reason: `\`${loc.upstreamPath}\` at ${sub.ref.slice(0, 12)} is not JSON: ${e instanceof Error ? e.message : String(e)}` };
+    }
+    const parsed = SubgraphHydratedSchema.safeParse(json);
+    if (!parsed.success) {
+      const i = parsed.error.issues[0];
+      return { state: "refused", reason: `\`${loc.upstreamPath}\` at ${sub.ref.slice(0, 12)} is not a valid hydrated subgraph file: ${i?.path.join(".") || "(root)"}: ${i?.message}` };
+    }
+    const h = parsed.data;
+    if (!h["@id"].endsWith(loc.iriSuffix)) {
+      return { state: "refused", reason: `\`${loc.upstreamPath}\` declares itself \`${h["@id"]}\`, which is not the subgraph \`…${loc.iriSuffix}\` it was fetched for` };
+    }
+    const digest = createHash("sha256").update(bytes).digest("hex");
+    const { members, subgraphs } = countHydrated(h);
+    const local = relative(instanceRoot, heldFile).split("\\").join("/");
+    const record = KgNodesRecordSchema.parse({
+      ...base,
+      subgraph: { path: loc.path, iri: h["@id"] },
+      state: "materialized",
+      size,
+      file: { name: SUBGRAPH_HYDRATED_FILE, upstream, localPath: local, bytes: bytes.length, fetchedAt: at, fixity: { algorithm: "sha256", digest } },
+      members,
+      subgraphs,
+      note: "Graph metadata only, somebody else's, pinned. Do not edit in place: re-run `bun run kg:materialize --nodes` at the pin.",
+    });
+    if (existing?.state === "materialized" && existing.file?.fixity.digest === digest && existsSync(heldFile) && sha256File(heldFile) === digest) {
+      return { state: "materialized", record: existing, recordFile, file: heldFile, changed: false };
+    }
+    if (!opts.dryRun) {
+      mkdirSync(dir, { recursive: true });
+      // The file first and the record last: a crash between them leaves a
+      // file no record accounts for, which `--check` reports as a stray.
+      writeAtomic(heldFile, bytes);
+      writeAtomic(recordFile, `${JSON.stringify(record, null, 2)}\n`);
+    }
+    return { state: "materialized", record, recordFile, file: heldFile, changed: true };
+  } finally {
+    rmSync(fetched.root, { recursive: true, force: true });
+  }
+}
+
+/** Offline judgement of one metadata-mode record: parses, belongs, at the pin, hashes. */
+function checkNodesRecord(
+  dir: string,
+  sub: Subscription,
+  snapshotDir: string,
+  snap: SubstrateSnapshot | undefined,
+  instanceRoot: string,
+): { findings: string[]; held: boolean } {
+  const where = relative(snapshotDir, dir).split("\\").join("/");
+  const out: string[] = [];
+  let json: unknown;
+  try {
+    json = JSON.parse(readFileSync(join(dir, NODES_RECORD_FILE), "utf8"));
+  } catch (err) {
+    return { findings: [`${where}: the nodes record is not readable JSON: ${err instanceof Error ? err.message : String(err)}`], held: false };
+  }
+  const parsed = KgNodesRecordSchema.safeParse(json);
+  if (!parsed.success) {
+    const i = parsed.error.issues[0];
+    return { findings: [`${where}: the nodes record does not parse: ${i?.path.join(".") || "(root)"}: ${i?.message}`], held: false };
+  }
+  const r = parsed.data;
+  const held = r.state === "materialized";
+  if (r.subscription !== sub.id || r.repository !== sub.repository) out.push(`${where}: the nodes record says it belongs to \`${r.subscription}\` (${r.repository})`);
+  if (r.ref !== sub.ref) out.push(`${where}: ${held ? "held" : "decided"} at ${r.ref.slice(0, 12)}, and the subscription pins ${sub.ref.slice(0, 12)} — refresh it (\`refresh-materialized\`)`);
+  if (resolve(nodesDirOf(snapshotDir, sub.id, r.subgraph.path)) !== resolve(dir)) out.push(`${where}: the nodes record describes subgraph \`${r.subgraph.path}\`, which the layout puts elsewhere`);
+  if (snap) {
+    const loc = nodesLocation(snap, r.subgraph.path);
+    if (!loc.ok) out.push(`${where}: ${loc.reason}`);
+    else if (r.subgraph.iri && !r.subgraph.iri.endsWith(loc.iriSuffix)) out.push(`${where}: the record names \`${r.subgraph.iri}\`, not the subgraph \`…${loc.iriSuffix}\``);
+  }
+  const file = join(dir, SUBGRAPH_HYDRATED_FILE);
+  if (!held) {
+    if (existsSync(file)) out.push(`${where}: \`${SUBGRAPH_HYDRATED_FILE}\` sits beside a record that says it stayed referenced`);
+    return { findings: out, held };
+  }
+  const local = relative(instanceRoot, file).split("\\").join("/");
+  if (r.file!.localPath !== local) out.push(`${where}: \`file.localPath\` is \`${r.file!.localPath}\`, not where the file is`);
+  if (!existsSync(file)) out.push(`${where}: \`${SUBGRAPH_HYDRATED_FILE}\` is recorded and absent`);
+  else if (sha256File(file) !== r.file!.fixity.digest) out.push(`${where}: \`${SUBGRAPH_HYDRATED_FILE}\` does not hash to its record — somebody else's metadata was edited in place`);
+  return { findings: out, held };
+}
+
 // ── --check: offline, every held part still is what its record says ──────────
 
 export interface CheckReport {
@@ -490,6 +801,8 @@ export interface CheckReport {
   stayedReferenced: number;
   /** Chosen subgraphs with no record: "chosen, not yet held" — a state, not a finding. */
   chosenNotHeld: number;
+  /** Subgraphs held in metadata mode (`--nodes`): an `index.hydrated.jsonld` and its record. */
+  nodesHeld: number;
 }
 
 /**
@@ -507,7 +820,7 @@ export interface CheckReport {
  *   directory belongs to no subscription.
  */
 export function checkMaterializations(instanceRoot: string): CheckReport {
-  const report: CheckReport = { findings: [], held: 0, stayedReferenced: 0, chosenNotHeld: 0 };
+  const report: CheckReport = { findings: [], held: 0, stayedReferenced: 0, chosenNotHeld: 0, nodesHeld: 0 };
   const declName = findDeclarationFile(instanceRoot);
   if (!declName) return report;
   const raw = JSON.parse(readFileSync(join(instanceRoot, declName), "utf8")) as Record<string, unknown>;
@@ -524,10 +837,16 @@ export function checkMaterializations(instanceRoot: string): CheckReport {
   }
   const local = (p: string): string => relative(instanceRoot, p).split("\\").join("/");
   for (const s of subs) {
-    const { parts, strays } = partRecordsIn(snapshotDir, s.id);
+    const { parts, strays, nodes } = partRecordsIn(snapshotDir, s.id);
     for (const st of strays) out.push(`${s.id}: \`${st}\` is in the subscription's directory with no record — bytes nobody accounts for`);
     const snapRes = readSnapshot(snapshotDir, s);
     const dirs = snapRes.ok ? declaredDirectories(snapRes.snap) : undefined;
+    for (const nd of nodes) {
+      const n = checkNodesRecord(nd, s, snapshotDir, snapRes.ok ? snapRes.snap : undefined, instanceRoot);
+      out.push(...n.findings);
+      if (n.held) report.nodesHeld++;
+      if (!snapRes.ok) out.push(`${relative(snapshotDir, nd).split("\\").join("/")}: cannot be judged against the substrate: ${snapRes.reason}`);
+    }
     const heldSubgraphs = new Set<string>();
     for (const p of parts) {
       const where = relative(snapshotDir, p.dir).split("\\").join("/");
@@ -605,35 +924,68 @@ if (import.meta.main) {
   const argv = process.argv.slice(2);
   if (argv.includes("--check")) {
     const roots = [...new Set([resolve(DEFAULT_INSTANCE), ...instanceRootsIn(REPO).map((r) => resolve(r))])];
-    const total: CheckReport = { findings: [], held: 0, stayedReferenced: 0, chosenNotHeld: 0 };
+    const total: CheckReport = { findings: [], held: 0, stayedReferenced: 0, chosenNotHeld: 0, nodesHeld: 0 };
     for (const r of roots) {
       const rep = checkMaterializations(r);
       total.held += rep.held;
       total.stayedReferenced += rep.stayedReferenced;
       total.chosenNotHeld += rep.chosenNotHeld;
+      total.nodesHeld += rep.nodesHeld;
       total.findings.push(...rep.findings.map((f) => `${relative(repoRootFor(DEFAULT_INSTANCE), r) || "."}: ${f}`));
     }
     console.log(
       `KG materialised parts — ${total.held} held, ${total.stayedReferenced} stayed referenced, ` +
-        `${total.chosenNotHeld} chosen subgraph(s) not yet held, across ${roots.length} instance(s)`,
+        `${total.chosenNotHeld} chosen subgraph(s) not yet held, ${total.nodesHeld} subgraph(s) held as metadata, across ${roots.length} instance(s)`,
     );
     for (const f of total.findings) console.error(`  ✗ ${f}`);
     if (total.findings.length) process.exit(1);
     console.log(
-      total.held + total.stayedReferenced
+      total.held + total.stayedReferenced + total.nodesHeld
         ? "  ✓ every held part hashes to its record, is still chosen and declared, and nothing sits unrecorded"
         : "  ✓ nothing materialised — every declaration and subscription directory was read, and no bytes sit unrecorded",
     );
     process.exit(0);
   }
-  const valued = new Set(["--asset", "--decisions", "--instance"]);
+  const valued = new Set(["--asset", "--decisions", "--instance", "--max-bytes"]);
   const positional = argv.filter((a, i) => !a.startsWith("--") && !valued.has(argv[i - 1] ?? ""));
+  const rel = (f: string): string => relative(process.cwd(), f);
+  if (argv.includes("--nodes")) {
+    const [subscription, path] = positional;
+    const maxRaw = flag(argv, "--max-bytes");
+    const maxBytes = maxRaw === undefined ? undefined : Number(maxRaw);
+    if (!subscription || path === undefined || positional.length > 2 || (maxBytes !== undefined && !(Number.isInteger(maxBytes) && maxBytes > 0))) {
+      console.error("usage: bun run kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]");
+      process.exit(2);
+    }
+    const dryRun = argv.includes("--dry-run");
+    const r = await materializeNodes({ subscription, path, instance: flag(argv, "--instance"), ...(maxBytes ? { maxBytes } : {}), dryRun });
+    switch (r.state) {
+      case "materialized":
+        console.log(`  ⬇ nodes: ${r.record.members} node(s) in ${(r.record.subgraphs ?? 0) + 1} subgraph(s), ${r.record.file!.bytes} bytes of metadata, at ${r.record.ref.slice(0, 12)}`);
+        console.log(r.changed ? `  ${dryRun ? "would write" : "wrote"} ${rel(r.file)} and ${rel(r.recordFile)}` : "  ✓ already held at this pin, byte for byte — nothing to write");
+        process.exit(0);
+        break;
+      case "stayed-referenced":
+        console.error(`  ✗ ${r.reason}`);
+        console.error(`  ${dryRun ? "would record" : "recorded"} why in ${rel(r.recordFile)}`);
+        process.exit(1);
+        break;
+      case "refused":
+        console.error(`  ✗ refused: ${r.reason}`);
+        process.exit(1);
+        break;
+      case "could-not-determine":
+        console.error(`  ? could-not-determine: ${r.reason}`);
+        process.exit(3);
+    }
+  }
   const [subscription, subgraph] = positional;
   const asset = flag(argv, "--asset");
   if (!subscription || (subgraph === undefined) === (asset === undefined)) {
     console.error(
       "usage: bun run kg:materialize <subscription> <subgraph> [--decisions <file.json>] [--instance <dir>] [--dry-run]\n" +
-        "       bun run kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]",
+        "       bun run kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]\n" +
+        "       bun run kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]",
     );
     process.exit(2);
   }
@@ -641,7 +993,6 @@ if (import.meta.main) {
   const decisions = decisionsFile ? (JSON.parse(readFileSync(decisionsFile, "utf8")) as KgDecisions) : undefined;
   const dryRun = argv.includes("--dry-run");
   const r = await materialize({ subscription, subgraph, asset, instance: flag(argv, "--instance"), decisions, dryRun });
-  const rel = (f: string): string => relative(process.cwd(), f);
   switch (r.state) {
     case "materialized": {
       const m = r.record.materialization;

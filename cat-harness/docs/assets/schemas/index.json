@@ -47143,6 +47143,114 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecord",
+      "name": "KgNodesRecord",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema",
+      "name": "KgNodesRecordSchema",
+      "module": "folio-assistant-core/schemas/kg-materialization.ts",
+      "kind": "zod-object",
+      "doc": "The record of ONE subgraph fetched in METADATA mode — `kg:materialize",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(KG_NODES_RECORD_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subscription",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The pin the file was fetched at — the subscription's `ref` when it was written."
+        },
+        {
+          "name": "subgraph",
+          "type": "z .object({ /** Instance-relative, as the substrate's own subgraph tree names it: `skills/sdlc`. */ path: RelPathSchema…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.enum([\"materialized\", \"referenced\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so."
+        },
+        {
+          "name": "size",
+          "type": "GateSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The one gate that applies: MEASURED bytes against `maxBytes`."
+        },
+        {
+          "name": "file",
+          "type": "z .object({ name: z.literal(SUBGRAPH_HYDRATED_FILE), /** Where upstream publishes it, at the pin. */ upstream: z.string…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "members",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file."
+        },
+        {
+          "name": "subgraphs",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/kg-materialization.ts#RelPathSchema",
+        "folio-assistant-core/schemas/materialization.ts#GateSchema"
+      ],
+      "unresolved": [
+        "FixitySchema"
+      ],
+      "external": [
+        "KG_NODES_RECORD_SCHEMA",
+        "RepoFullNameSchema",
+        "SUBGRAPH_HYDRATED_FILE",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/kg-materialization.ts#KgPartRecord",
       "name": "KgPartRecord",
       "module": "folio-assistant-core/schemas/kg-materialization.ts",
@@ -56420,6 +56528,22 @@
       "from": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "via": "materialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema",
+      "to": "folio-assistant-core/schemas/kg-materialization.ts#RelPathSchema",
+      "via": "subgraph",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#GateSchema",
+      "via": "size",
       "kind": "field",
       "optional": false,
       "array": false
