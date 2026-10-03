@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-09-30T14:35:43Z
+updated_at: 2026-10-03T13:53:19Z
 parent: folio-assistant-1xhc
 ---
 
@@ -215,3 +215,8 @@ That residue is why the box below stays open rather than being ticked.
       **55 of 69 enumerating scripts do not ask git** — and deliberately does
       not presume the answer, because most of those 55 are walking a directory
       they own, where a walk is fine.
+
+
+
+## Seen again 2026-10-03 (session_01AxhsSvodhTgaioG1nUBWkh)
+A `bun run gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
