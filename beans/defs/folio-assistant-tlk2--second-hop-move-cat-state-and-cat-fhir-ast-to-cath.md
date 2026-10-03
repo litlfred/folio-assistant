@@ -1,13 +1,11 @@
 ---
 # folio-assistant-tlk2
 title: 'Second hop: move cat-state and cat-fhir-ast/* to cat/<harness>/<name> (handoff to local agy agent)'
-status: in-progress
+status: completed
 type: task
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-10-02T21:33:58Z
-updated_at: 2026-10-02T21:41:29Z
+updated_at: 2026-10-03T00:13:49Z
 parent: folio-assistant-fs43
 ---
 
@@ -93,7 +91,7 @@ The family dry runs (2 and 3) must list exactly ONE branch each.
 - [x] `cat/cat-harness/state` at `d913ea45b8eb`, and no `cat-state`
 - [x] `cat/fhir-harness/fhir-ast/smart.who.int.trust` at `f254e5bb6f6b`, and no `cat-fhir-ast/smart.who.int.trust`
 - [x] `cat/fhir-harness/fhir-ast/smart.who.int.base` at `eb7bed8395af`, and no `cat-fhir-ast/smart.who.int.base`
-- [ ] the coordinator has verified and closed it
+- [x] the coordinator has verified and closed it
 
 ## Evidence
 
@@ -137,3 +135,39 @@ Now on litlfred/smart-base:
     cat/fhir-harness/fhir-ast/smart.who.int.base
 DONE
 ```
+
+## Close — verified 2026-10-03
+
+Closed on the owner's explicit instruction in session
+`01GgRQnL9LTo1Hf6QWSB7w9n` ("close tlk2"), which is the authorisation
+`check:ready-to-close` requires. Recorded here because the gate's rule is that
+a close is the owner's call or a named waiver — never a session's own judgement.
+
+**Verified first-hand against the live repositories, not read off the `## Evidence`
+block above.** The rule is evidence, not authorship, and a bean's own report of
+its work is authorship. Each pinned commit in `## Pins` was re-queried:
+
+| step | expected | found | old name |
+|---|---|---|---|
+| 1 | `cat/cat-harness/state` @ `d913ea45b8eb` | `d913ea45b8eb` ✓ | `cat-state` → HTTP 404, gone ✓ |
+| 2 | `cat/fhir-harness/fhir-ast/smart.who.int.trust` @ `f254e5bb6f6b` | `f254e5bb6f6b` ✓ | absent ✓ |
+| 3 | `cat/fhir-harness/fhir-ast/smart.who.int.base` @ `eb7bed8395af` | `eb7bed8395af` ✓ | absent ✓ |
+
+Step 1 via the GitHub API on `litlfred/folio-assistant`; steps 2 and 3 via
+`git ls-remote --heads` on `litlfred/smart-trust` and `litlfred/smart-base`,
+which are not attached to this session. Each `ls-remote` queried
+`refs/heads/cat/*` **and** `refs/heads/cat-fhir-ast/*` in one call, so the
+"and no `cat-fhir-ast/…`" half of each row is a measured absence rather than an
+untested assumption: only the new names came back.
+
+Every `## Done when` box therefore holds on the branches themselves. Nothing was
+renamed, pushed or deleted to reach this verdict — it is read-only.
+
+### One earlier correction to this file, recorded so it is not mistaken for drift
+
+On 2026-10-02 the `## Evidence` heading read `## Evidence (2026-10-02 21:36–21:40 UTC)`.
+`check:ready-to-close` matches `/^#{2,6}[ \t]+Evidence[ \t]*$/`, so it reported this
+bean as tagged `ready-to-close` **with no evidence at all** — turning a fully
+evidenced bean into a red gate on merge train 6. The timestamp moved to a line
+below the heading. **No evidence was added, removed or reworded**; only the gate's
+verdict was false.
