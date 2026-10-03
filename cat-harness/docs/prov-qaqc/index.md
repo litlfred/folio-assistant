@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-10 instance(s), 105 step(s) checked, 105 `prov:Activity` emitted, 93 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+11 instance(s), 117 step(s) checked, 117 `prov:Activity` emitted, 105 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -26,7 +26,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
 | `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
 | `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 67 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `unknown` | 79 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
@@ -176,6 +176,25 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/process/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
+
+### merge-train--train-6
+
+12 step(s) checked, 12 `prov:Activity` emitted, 12 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/merge-train--train-6.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `merge-train--train-6` | 1 | `Task_ReadLive` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_ReadLive as merge-steward |
+| `merge-train--train-6` | 2 | `Task_TakeNext` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_TakeNext as merge-steward |
+| `merge-train--train-6` | 3 | `GW_Placement` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Placement as merge-steward |
+| `merge-train--train-6` | 4 | `Task_Admit` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Admit as merge-steward |
+| `merge-train--train-6` | 5 | `Call_MergeMembers` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_MergeMembers as build-pipeline |
+| `merge-train--train-6` | 6 | `GW_AllMerged` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_AllMerged as build-pipeline |
+| `merge-train--train-6` | 7 | `Call_Gates` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_Gates as build-pipeline |
+| `merge-train--train-6` | 8 | `Task_Attribute` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Attribute as merge-steward |
+| `merge-train--train-6` | 9 | `Call_ChecksPresent` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_ChecksPresent as build-pipeline |
+| `merge-train--train-6` | 10 | `GW_Green` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Green as build-pipeline |
+| `merge-train--train-6` | 11 | `Task_Release` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Release as user |
+| `merge-train--train-6` | 12 | `Task_Land` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Land as merge-steward |
 
 ### sampleimport--xlg2-wpro-trial
 

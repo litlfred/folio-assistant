@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpmo
 title: 'SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T09:06:44Z
-updated_at: 2026-10-03T14:16:53Z
+updated_at: 2026-10-03T15:59:20Z
 parent: folio-assistant-2yyh
 ---
 
@@ -64,3 +64,10 @@ Upstream draft: `smart-base/fhir-artifact-index/upstream-report-CDHIv1toCDHIv2.m
 The nine-health-system-challenges note stays unfiled, as the 2026-09-22 text says. The ruling covered the ConceptMap finding only.
 
 Done-when 2 is answered (do not materialize). Done-when 3 is answered (report it, as a draft for the owner). Close when this draft is merged.
+
+## Summary of Changes
+
+Closed 2026-10-03 by https://claude.ai/code/session_013Pdniq3SSCRvxhsN4E5aFi. Evidence: #2005 merged to main (PR head `68e18e0` is an ancestor of main `f10ad6d`). It carries `smart-base/fhir-artifact-index/upstream-report-CDHIv1toCDHIv2.md`, the upstream issue draft for WorldHealthOrganization/smart-base, pinned to `5891a22`.
+
+- Ruling "Keep by reference, report upstream" applied: the four crosswalks stay `referenced`, and `materialize-remote.bpmn` was not run.
+- The upstream report is a **draft for the owner to file**. It was not posted. Filing it is the owner's step, and the file says how.
