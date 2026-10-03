@@ -37,6 +37,14 @@ A kind listed as **declared, not published** is one an instance declared and
 nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 "this does not exist" are different answers, and a gap says neither.
 
+### `attestations`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/attestations/' | relative_url }})
+- folio-assistant-sci — *declared, not published*
+
 ### `beans`
 
 1 of 1 published.

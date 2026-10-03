@@ -6512,6 +6512,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.storage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.storage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.storage",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.summaries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6683,6 +6702,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.storage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.storage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this directory's contents are KEPT, when that is not the checkout. See {@link DirectoryStorageSchema} — bean `16ei`, arc `3fva`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.storage",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.summaries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6794,6 +6832,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#DeclaredGraph.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.branch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DirectoryStorageSchema.branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The branch, e.g. `qa-reports`. A plain branch name: no `refs/`, no `..`, no leading `-`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.branch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.directorystorageschema.keyedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DirectoryStorageSchema.keyedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
       "skos:note": "candidate"
     },
     {
@@ -17418,25 +17494,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.pair_attestations",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "KgQaReport.pair_attestations"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Declared prose ↔ code pairs and the state each was last accepted in — carried ACROSS runs, unlike everything above, because it is the baseline `prose-reviewed-since-code-changed` compares against. Written by `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.pair_attestations",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.source_hash",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -17453,25 +17510,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.source_hash",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.voice_reviews",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "KgQaReport.voice_reviews"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like `pair_attestations`, and written by `voice:review`; see `scripts/skill-voice-review.ts`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews",
       "skos:note": "candidate"
     },
     {
@@ -19714,6 +19752,101 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/python-deps.ts#PythonDepSchema.why",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.atthome",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.attHome"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absolute attestations home (the `<family>` directory goes under it)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.attHome",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.instance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.instance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repo-relative instance root, `.` for the checkout root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.instance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.kgtree",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.kgTree"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absolute `<qa home>/kg-qa`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.kgTree",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.storeroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgAttestationTree.storeRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared directory whose absence is \"store absent\" — see `attestationsHomeFor`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#KgAttestationTree.storeRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.pairattestationschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PairAttestationSchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`baseline` counts as a judgement (owner, 2026-10-01): it records the state the drift is measured from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema.by",
       "skos:note": "candidate"
     },
     {
@@ -24695,6 +24828,462 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.fixedtestdataschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FixedTestDataSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repo-relative path to the committed set."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#FixedTestDataSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.generatedtestdataschema.generator",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GeneratedTestDataSchema.generator"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The generator, when it is not implied by the template — `synthea`, `fsh`. FHIR `testData.type`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.generator",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.generatedtestdataschema.params",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GeneratedTestDataSchema.params"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The generator's parameters. Hashed with the template into the run's data basis."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.params",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.generatedtestdataschema.seed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GeneratedTestDataSchema.seed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Required: without a fixed seed, regenerating does not give the bytes that were hashed (`zz0a`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.seed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.generatedtestdataschema.template",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GeneratedTestDataSchema.template"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repo-relative path to the template (a FHIR template, a Synthea module, …)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#GeneratedTestDataSchema.template",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testassertionschema.expectation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestAssertionSchema.expectation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What is expected, for a reader who has only the plan."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestAssertionSchema.expectation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testassertionschema.type",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestAssertionSchema.type"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "FHIR `TestPlan.testCase.assertion.type`: does a failure fail the case?"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestAssertionSchema.type",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplancaseschema.assertions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanCaseSchema.assertions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A case with no assertion asserts nothing, and would pass vacuously."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.assertions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplancaseschema.dependson",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanCaseSchema.dependsOn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sibling cases that must run first. FHIR `testCase.dependency`, resolved."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.dependsOn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplancaseschema.feature",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanCaseSchema.feature"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional Gherkin `.feature` file the case is written in."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.feature",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplancaseschema.testdata",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanCaseSchema.testData"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "May be empty: a case can test behaviour on no input. Absent and empty are the same here."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanCaseSchema.testData",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplanexitcriteriaschema.decision",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanExitCriteriaSchema.decision"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The certification rule, executable."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema.decision",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplanexitcriteriaschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanExitCriteriaSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A reader's summary of it. Never the rule itself — the DMN is."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanExitCriteriaSchema.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplanschema.requirements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanSchema.requirements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the plan is evidence FOR. At least one: a plan tied to no requirement certifies nothing."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanSchema.requirements",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplanschema.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanSchema.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PLAN's version — a run records which one it executed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanSchema.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplanscopeschema.target",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanScopeSchema.target"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The specific system, when the plan is for one: a skill name, a tool name, an IG canonical. Absent means the plan applies to any system of `kind` (a conformance plan any implementer may run)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema.target",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-plan.testplanscopeschema.versionrange",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanScopeSchema.versionRange"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The versions the plan applies to, as a semver range (`>=1.2 <2`, `*`). Required: `*` is a statement; absence would be an omission that reads the same."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-plan.ts#TestPlanScopeSchema.versionRange",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testcaseverdictschema.assertions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestCaseVerdictSchema.assertions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per-assertion results, keyed by the assertion's criterion id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.assertions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testcaseverdictschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestCaseVerdictSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why the case was skipped. Required when `result` is `skipped`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testcaseverdictschema.reviewed_at",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestCaseVerdictSchema.reviewed_at"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ISO-8601 UTC."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestCaseVerdictSchema.reviewed_at",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testreportschema.cases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestReportSchema.cases"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Case id → reviewer entries, oldest first. The last is current."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReportSchema.cases",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testreportschema.plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestReportSchema.plan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ONE plan. There is no field for a second — see the module note."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReportSchema.plan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testreviewerschema.actor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestReviewerSchema.actor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On whose authority — an id under `scenarios/actors/`. Absent is unresolved, not permitted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReviewerSchema.actor",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-report.testreviewerschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestReviewerSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What ran: a script path, an agent name, a GitHub login."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-report.ts#TestReviewerSchema.id",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-run.hashbasisschema.hash",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24752,6 +25341,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-run.testplanrefschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanRefSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The plan's `id` (`test-plan/v1`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-run.ts#TestPlanRefSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-run.testplanrefschema.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestPlanRefSchema.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The plan's `version` at execution time."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-run.ts#TestPlanRefSchema.version",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-run.testrunschema.cases",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24806,6 +25433,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/test-run.ts#TestRunSchema.outcome",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-run.testrunschema.plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestRunSchema.plan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The plan this run executed (bean `ygzh`). Optional: a run recorded before plans existed — `crdm-detect-eval` — tested a skill directly, and still parses."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-run.ts#TestRunSchema.plan",
       "skos:note": "candidate"
     },
     {
@@ -24882,6 +25528,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/test-run.ts#TestRunSchema.subject",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/test-run.testrunschema.sut",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestRunSchema.sut"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The system under test (bean `ygzh`). Required whenever `plan` is set."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-run.ts#TestRunSchema.sut",
       "skos:note": "candidate"
     },
     {

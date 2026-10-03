@@ -22,7 +22,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
 import { BEGIN, END, plan, TEMPLATES } from "../../../bootstrap-tools/scripts/subgraph-readmes.ts";
-import { harnessInstances, harnessPlan } from "../subgraph-readmes.ts";
+import { harnessInstances, harnessPlan, subdirDescriptions } from "../subgraph-readmes.ts";
 import { siteDir } from "../../schemas/cat-harness.ts";
 import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
@@ -207,4 +207,64 @@ test("a link destination is percent-encoded per segment, parentheses included", 
   expect(linkTarget("a b/c(d.md")).toBe("a%20b/c%28d.md");
   expect(linkTarget("plain.md")).toBe("plain.md");
   expect(decodeURIComponent(linkTarget("x (1) y.pdf"))).toBe("x (1) y.pdf");
+});
+
+/**
+ * Subdirectory rows (`SubgraphInput.subdirs`): what a row says is read from
+ * the directory's own declaration file — the one its kind names as
+ * `declarationFile` — and only from entries that are NOT `subgraph: true`.
+ * Anything undeclared keeps the file count: absent stays absent.
+ */
+describe("subdirectory rows — described from the declaration, or counted", async () => {
+  const r = mkdtempSync(join(tmpdir(), "subgraph-subdirs-"));
+  const inst = join(r, "demo");
+  const work = join(inst, "work");
+  for (const d of ["parts/deep", "promoted", "nodesc", "undeclared"]) mkdirSync(join(work, d), { recursive: true });
+  for (const d of ["parts", "parts/deep", "promoted", "nodesc", "undeclared"]) writeFileSync(join(work, d, "x.txt"), "x\n");
+  writeFileSync(
+    join(inst, "demo.json"),
+    JSON.stringify({
+      name: "demo",
+      title: "Demo",
+      directories: [{ id: "work", path: "work/", graphKinds: ["beans"], title: "Work", description: "The work plan." }],
+    }),
+  );
+  writeFileSync(join(inst, "README.md"), "# demo\n");
+  writeFileSync(
+    join(work, "beans.json"),
+    JSON.stringify({
+      name: "demo",
+      directories: [
+        { id: "parts", path: "parts", graphKinds: ["bean-defs"], description: "The parts of the plan." },
+        { id: "deep", path: "parts/deep", graphKinds: ["bean-defs"], description: "Not a row of work/." },
+        { id: "promoted", path: "promoted", graphKinds: ["beans"], subgraph: true, description: "Its own subgraph." },
+        { id: "nodesc", path: "nodesc", graphKinds: ["bean-defs"] },
+      ],
+    }),
+  );
+  const instances = harnessInstances(r);
+  const p = await plan(r, instances, TEMPLATES);
+  const readme = p.writes.get(join(work, "README.md"))!;
+
+  test("a declared part's row names it with its description", () => {
+    expect(subdirDescriptions(work, ["beans"])).toEqual({ parts: "The parts of the plan." });
+    expect(readme).toContain("| [`parts/`](parts/) | The parts of the plan. | |");
+  });
+
+  test("a promoted (`subgraph: true`) directory describes itself elsewhere; its row keeps the count", () => {
+    expect(readme).toMatch(/\| \[`promoted\/`\]\([^)]*\) \| 1 file \|/);
+    expect(readme).not.toContain("Its own subgraph.");
+  });
+
+  test("no description, or no declaration at all, stays a count — nothing is invented", () => {
+    expect(readme).toContain("| [`nodesc/`](nodesc/) | 1 file | |");
+    expect(readme).toContain("| [`undeclared/`](undeclared/) | 1 file | |");
+    expect(readme).not.toContain("Not a row of work/.");
+  });
+
+  test("a directory whose kind names no declaration file supplies nothing", () => {
+    expect(subdirDescriptions(work, ["no-such-kind"])).toEqual({});
+    expect(subdirDescriptions(join(work, "undeclared"), ["beans"])).toEqual({});
+    rmSync(r, { recursive: true, force: true });
+  });
 });
