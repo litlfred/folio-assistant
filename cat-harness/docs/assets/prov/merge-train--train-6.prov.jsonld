@@ -22,7 +22,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#1",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Task_ReadLive",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#merge-steward"
     },
@@ -38,7 +38,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#2",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Task_TakeNext",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#merge-steward"
     },
@@ -54,7 +54,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#3",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#GW_Placement",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#merge-steward"
     },
@@ -70,7 +70,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#4",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Task_Admit",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#merge-steward"
     },
@@ -86,7 +86,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#5",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/ci-pipeline",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Call_MergeMembers",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#build-pipeline"
     },
@@ -102,7 +102,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#6",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/ci-pipeline",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#GW_AllMerged",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#build-pipeline"
     },
@@ -118,7 +118,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#7",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/ci-pipeline",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Call_Gates",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#build-pipeline"
     },
@@ -134,7 +134,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#8",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Task_Attribute",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#merge-steward"
     },
@@ -150,7 +150,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#9",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/ci-pipeline",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Call_ChecksPresent",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#build-pipeline"
     },
@@ -166,7 +166,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#10",
-      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/claude",
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/ci-pipeline",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#GW_Green",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#build-pipeline"
     },
@@ -182,9 +182,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#11",
-      "agent": {
-        "@value": "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)"
-      },
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/end-user",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Task_Release",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#user"
     },
@@ -200,9 +198,7 @@
     {
       "@type": "Association",
       "activity": "merge-train--train-6#12",
-      "agent": {
-        "@value": "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)"
-      },
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/actors/authoring-agent",
       "plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/merge-train#Task_Land",
       "role": "https://litlfred.github.io/cat-harness/0.1.0/scenarios/roles#merge-steward"
     }

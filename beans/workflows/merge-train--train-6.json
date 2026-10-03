@@ -16,89 +16,89 @@
     {
       "at": "2026-10-02T21:55:00.000Z",
       "node": "Start_Train",
-      "actor": "claude",
-      "note": "RECORDED RETROACTIVELY, and that is the first thing this instance says about itself. The run happened 2026-10-02 21:55Z-23:35Z with NO instance on disk: the steward rebuilt the train by hand, as every train before it had been. That is bean `vlhk`'s defect -- a STRICT rule whose breach looks exactly like compliance -- and it is why `hfag` carried 'train runs recorded as workflow instances' as an open box. Backfilled from git log and the GitHub API; EVERY entry below is re-derivable from those two sources, and none is reconstructed from memory of intent. Where this record is thinner than a live one would be, it says so rather than filling the gap.\n\nWHY THIS TRAIN EXISTED: PR #1924 claimed eight members in its body while its pushed head 203c2732 carried only #1913 and #1903. The previous steward's six other merges existed only in a container that stopped. Verified with `git merge-base --is-ancestor <member> 203c2732` per member, not read off the body."
+      "actor": "authoring-agent",
+      "note": "RECORDED RETROACTIVELY, and that is the first thing this instance says about itself. The run happened 2026-10-02 21:55Z-23:35Z with NO instance on disk: the steward rebuilt the train by hand, as every train before it had been. That is bean `vlhk`'s defect -- a STRICT rule whose breach looks exactly like compliance -- and it is why `hfag` carried 'train runs recorded as workflow instances' as an open box. Backfilled from git log and the GitHub API; EVERY entry below is re-derivable from those two sources, and none is reconstructed from memory of intent. Where this record is thinner than a live one would be, it says so rather than filling the gap.\n\nWHY THIS TRAIN EXISTED: PR #1924 claimed eight members in its body while its pushed head 203c2732 carried only #1913 and #1903. The previous steward's six other merges existed only in a container that stopped. Verified with `git merge-base --is-ancestor <member> 203c2732` per member, not read off the body.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T21:57:00.000Z",
       "node": "Task_ReadLive",
-      "actor": "claude",
-      "note": "Read each candidate's live facts from the GitHub API: state, merged, head ref and head SHA. All eight were open and unmerged. No fact was written down at this point, per the queue's own rule.\n\nNOT RECORDED AT THE TIME, derived now for this instance (so it is evidence, not recollection): each member's OWN CI at its head, counted from the check-runs API.\n\n  #1913 34b6c3ffca475d907f57aaa71cbe15c26f6ab932  16 runs  RED   Repository gates (hard)\n  #1903 b580b1ebd04c69e5d6c9d66c90c2cbfa2e63abfb  15 runs  RED   Repository gates, Skill-registration chain, TypeScript\n  #1899 5be6dd8c065198655e98086a24b39a8e4cf6f725  18 runs  green\n  #1907 6ceea3c7600f04d6fdb78f84b11bcd502a25ecd4  17 runs  green\n  #1909 d2d5d951be392a895e4e5cd65d05a7c90d66859c  17 runs  green\n  #1912 91f19c88b191c8de18347b71e07f6ad5ff4e27b5  14 runs  RED   cleanup (a janitorial job, not a gate)\n  #1927 69e17c405ee4dc2ab09d62dc61540e767d4c714b  11 runs  RED   Repository gates (hard)\n  #1928 46e9d4561c0e70f2042b64a064da9a9062aa2509   3 runs  RED   cleanup -- and only THREE runs, thin coverage\n\nFIVE OF EIGHT MEMBERS WERE RED AT THEIR OWN HEADS AND THE TRAIN LANDED GREEN. That is this process's premise made visible: the reds were generated-file staleness, which the train's single regenerate repairs, and two were `cleanup` alone. A per-member gate would have refused five admissible PRs. It is also why T2 attributes a red train from member CI FIRST -- here that attribution would have pointed at four members at once, which is itself the signal that the cause is shared and generated."
+      "actor": "authoring-agent",
+      "note": "Read each candidate's live facts from the GitHub API: state, merged, head ref and head SHA. All eight were open and unmerged. No fact was written down at this point, per the queue's own rule.\n\nNOT RECORDED AT THE TIME, derived now for this instance (so it is evidence, not recollection): each member's OWN CI at its head, counted from the check-runs API.\n\n  #1913 34b6c3ffca475d907f57aaa71cbe15c26f6ab932  16 runs  RED   Repository gates (hard)\n  #1903 b580b1ebd04c69e5d6c9d66c90c2cbfa2e63abfb  15 runs  RED   Repository gates, Skill-registration chain, TypeScript\n  #1899 5be6dd8c065198655e98086a24b39a8e4cf6f725  18 runs  green\n  #1907 6ceea3c7600f04d6fdb78f84b11bcd502a25ecd4  17 runs  green\n  #1909 d2d5d951be392a895e4e5cd65d05a7c90d66859c  17 runs  green\n  #1912 91f19c88b191c8de18347b71e07f6ad5ff4e27b5  14 runs  RED   cleanup (a janitorial job, not a gate)\n  #1927 69e17c405ee4dc2ab09d62dc61540e767d4c714b  11 runs  RED   Repository gates (hard)\n  #1928 46e9d4561c0e70f2042b64a064da9a9062aa2509   3 runs  RED   cleanup -- and only THREE runs, thin coverage\n\nFIVE OF EIGHT MEMBERS WERE RED AT THEIR OWN HEADS AND THE TRAIN LANDED GREEN. That is this process's premise made visible: the reds were generated-file staleness, which the train's single regenerate repairs, and two were `cleanup` alone. A per-member gate would have refused five admissible PRs. It is also why T2 attributes a red train from member CI FIRST -- here that attribution would have pointed at four members at once, which is itself the signal that the cause is shared and generated.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T21:58:00.000Z",
       "node": "Task_TakeNext",
-      "actor": "claude",
-      "note": "Queue order: PR number ascending among the six absent members -- #1899, #1907, #1909, #1912, #1927, #1928. No owner override was in force. #1913 and #1903 were already in the train from the previous steward and were not re-taken."
+      "actor": "authoring-agent",
+      "note": "Queue order: PR number ascending among the six absent members -- #1899, #1907, #1909, #1912, #1927, #1928. No owner override was in force. #1913 and #1903 were already in the train from the previous steward and were not re-taken.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T21:58:30.000Z",
       "node": "GW_Placement",
       "outcome": "admit",
-      "actor": "claude",
-      "note": "All six admitted. None was handed back, held or ejected at placement: each was open, unmerged, and its conflicts with the train base were confined to generated files, which is the admissible kind."
+      "actor": "authoring-agent",
+      "note": "All six admitted. None was handed back, held or ejected at placement: each was open, unmerged, and its conflicts with the train base were confined to generated files, which is the admissible kind.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T21:59:00.000Z",
       "node": "Task_Admit",
-      "actor": "claude",
-      "note": "Train id: the branch `claude/blissful-ride-c2f26u-train-6` (PR #1924). No queue entry was written -- `beans/queue/` did not exist until bean `30jr` declared it, which is the sibling box of this one."
+      "actor": "authoring-agent",
+      "note": "Train id: the branch `claude/blissful-ride-c2f26u-train-6` (PR #1924). No queue entry was written -- `beans/queue/` did not exist until bean `30jr` declared it, which is the sibling box of this one.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T22:06:46.000Z",
       "node": "Call_MergeMembers",
-      "actor": "claude",
-      "note": "Each member merged onto the train base in queue order, merge commits only -- no rebase, no force-push, so other checkouts stayed valid. Head after the six: 68e35952c5ebc8ddc16ecb709de7ba3f59822e1c (git log 2026-10-02T22:06:46Z).\n\nEvery conflict across the six fell in a GENERATED family (bean README, notes README, six glossary indexes, docs/assets/library/index.json, docs/lsi/, docs-auto/, detangle/, kg-qa/, term-mapping.qa-results.json, scripts/test/docs READMEs). The merges ran under a guard that ABORTS on any conflict outside that set; it never tripped. Each was resolved by taking one side, with one regenerate as the authority -- the `lxpq` rule that a merged generated file is re-generated, never diff-read, and never deleted."
+      "actor": "ci-pipeline",
+      "note": "Each member merged onto the train base in queue order, merge commits only -- no rebase, no force-push, so other checkouts stayed valid. Head after the six: 68e35952c5ebc8ddc16ecb709de7ba3f59822e1c (git log 2026-10-02T22:06:46Z).\n\nEvery conflict across the six fell in a GENERATED family (bean README, notes README, six glossary indexes, docs/assets/library/index.json, docs/lsi/, docs-auto/, detangle/, kg-qa/, term-mapping.qa-results.json, scripts/test/docs READMEs). The merges ran under a guard that ABORTS on any conflict outside that set; it never tripped. Each was resolved by taking one side, with one regenerate as the authority -- the `lxpq` rule that a merged generated file is re-generated, never diff-read, and never deleted.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T22:07:30.000Z",
       "node": "GW_AllMerged",
       "outcome": "yes",
-      "actor": "claude",
-      "note": "All eight members verified as ancestors of the train head with `git merge-base --is-ancestor`. Plus `claude/kg-jsonld-staging-bean` (ee473081, bean 073f), merged at 22:16:04Z per the addendum on #1924 -- a member with no PR, admitted on the steward's instruction."
+      "actor": "ci-pipeline",
+      "note": "All eight members verified as ancestors of the train head with `git merge-base --is-ancestor`. Plus `claude/kg-jsonld-staging-bean` (ee473081, bean 073f), merged at 22:16:04Z per the addendum on #1924 -- a member with no PR, admitted on the steward's instruction.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T22:15:43.000Z",
       "node": "Call_Gates",
-      "actor": "claude",
-      "note": "FOUR regenerate passes, one per base merge rather than one per member, and the counts are the measure of the drift absorbed each time:\n  22:15Z  after the six        87 current, 7 regenerated, 0 unrepaired, 0 without a writer\n  22:49Z  after #1889          90 current, 4 regenerated, 0 unrepaired\n  23:18Z  after #1932/#1933    93 current, 1 regenerated, 0 unrepaired\n  23:26Z  after #1756/#1929    92 current, 3 regenerated, 0 unrepaired\n`beans:notes` and `readme:subgraphs` ran twice on a clean tree after each; the second pass wrote 0 every time, which is the guard against their counting files on disk rather than tracked files."
+      "actor": "ci-pipeline",
+      "note": "FOUR regenerate passes, one per base merge rather than one per member, and the counts are the measure of the drift absorbed each time:\n  22:15Z  after the six        87 current, 7 regenerated, 0 unrepaired, 0 without a writer\n  22:49Z  after #1889          90 current, 4 regenerated, 0 unrepaired\n  23:18Z  after #1932/#1933    93 current, 1 regenerated, 0 unrepaired\n  23:26Z  after #1756/#1929    92 current, 3 regenerated, 0 unrepaired\n`beans:notes` and `readme:subgraphs` ran twice on a clean tree after each; the second pass wrote 0 every time, which is the guard against their counting files on disk rather than tracked files.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T22:41:14.000Z",
       "node": "Task_Attribute",
-      "actor": "claude",
-      "note": "The train went red twice, and neither cause was a member's change.\n\n(1) `check:bean-parents` -- bean `krk0`, created by this very run, had no parent. Parented to epic `1xhc`.\n(2) `check:ready-to-close` -- bean `tlk2` was tagged `ready-to-close` and reported as having NO evidence. It had evidence; the heading read `## Evidence (2026-10-02 21:36-21:40 UTC)` and the matcher is /^#{2,6}[ \\t]+Evidence[ \\t]*$/. The timestamp moved to the line below. No evidence was added, removed or reworded -- only the verdict was false.\n\nNo bisect was needed and no member was ejected: attribution reached the cause directly both times. `Task_Bisect`, `Task_Eject`, `Call_EjectHandBack` and `Task_RetryFlaky` were never reached, and this instance holds no token at any of them."
+      "actor": "authoring-agent",
+      "note": "The train went red twice, and neither cause was a member's change.\n\n(1) `check:bean-parents` -- bean `krk0`, created by this very run, had no parent. Parented to epic `1xhc`.\n(2) `check:ready-to-close` -- bean `tlk2` was tagged `ready-to-close` and reported as having NO evidence. It had evidence; the heading read `## Evidence (2026-10-02 21:36-21:40 UTC)` and the matcher is /^#{2,6}[ \\t]+Evidence[ \\t]*$/. The timestamp moved to the line below. No evidence was added, removed or reworded -- only the verdict was false.\n\nNo bisect was needed and no member was ejected: attribution reached the cause directly both times. `Task_Bisect`, `Task_Eject`, `Call_EjectHandBack` and `Task_RetryFlaky` were never reached, and this instance holds no token at any of them.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T23:26:31.000Z",
       "node": "Call_ChecksPresent",
-      "actor": "claude",
-      "note": "Check runs COUNTED at the final head 196c8c43fa53d72c06289c366017c09af952b151, not read as a rollup: 13 check runs, 12 distinct names, 0 not-success-or-skipped, 0 not-completed, and all 3 workflow runs completed/success. Counting rather than reading is bean `0qjq`: a head carrying ZERO check runs reports as 'nothing failed'. That shape was not present here -- it was met later on PR #1894, where a draft head carried no runs at all."
+      "actor": "ci-pipeline",
+      "note": "Check runs COUNTED at the final head 196c8c43fa53d72c06289c366017c09af952b151, not read as a rollup: 13 check runs, 12 distinct names, 0 not-success-or-skipped, 0 not-completed, and all 3 workflow runs completed/success. Counting rather than reading is bean `0qjq`: a head carrying ZERO check runs reports as 'nothing failed'. That shape was not present here -- it was met later on PR #1894, where a draft head carried no runs at all.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T23:30:00.000Z",
       "node": "GW_Green",
       "outcome": "green",
-      "actor": "claude",
-      "note": "Green at 196c8c43, conflict-free against main by `git merge-tree --write-tree` (never `mergeable_state`). Marked Ready for review, labelled `ready-to-merge`, and `ready: 196c8c43...` posted on #1924. The steward does not merge its own train."
+      "actor": "ci-pipeline",
+      "note": "Green at 196c8c43, conflict-free against main by `git merge-tree --write-tree` (never `mergeable_state`). Marked Ready for review, labelled `ready-to-merge`, and `ready: 196c8c43...` posted on #1924. The steward does not merge its own train.\n\nACTOR CORRECTED 2026-10-03. This entry recorded `claude`, which is not declared eligible for this node's lane. prov-qaqc found all 12 of the repository's `not-eligible` findings in this instance; node ids had been verified against the BPMN, which says nothing about lane eligibility."
     },
     {
       "at": "2026-10-02T23:35:08.000Z",
       "node": "Task_Release",
-      "actor": "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)",
-      "note": "Released by the Merge Manager, not by the session that built the train -- the lane separation this process draws. Recorded here with its own actor so the record does not credit one agent with both."
+      "actor": "end-user",
+      "note": "Released by the Merge Manager, not by the session that built the train -- the lane separation this process draws. Recorded here with its own actor so the record does not credit one agent with both.\n\nACTOR CORRECTED 2026-10-03. This entry recorded the free-text actor \"merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)\", which is prose rather than a declared actor id; the session id is kept here so the provenance is not lost. Owner's ruling the same day settled who released the train."
     },
     {
       "at": "2026-10-02T23:35:08.000Z",
       "node": "Task_Land",
-      "actor": "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)",
-      "note": "Landed as merge commit 225b7cfd1dbf7ad1798c65b8e0e6f519fbda3de6 (GitHub API merged_at 2026-10-02T23:35:08Z). All eight members plus the jsonld branch are ancestors of main; verified after the fact with --is-ancestor per member."
+      "actor": "authoring-agent",
+      "note": "Landed as merge commit 225b7cfd1dbf7ad1798c65b8e0e6f519fbda3de6 (GitHub API merged_at 2026-10-02T23:35:08Z). All eight members plus the jsonld branch are ancestors of main; verified after the fact with --is-ancestor per member.\n\nACTOR CORRECTED 2026-10-03. This entry recorded the free-text actor \"merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)\", which is prose rather than a declared actor id; the session id is kept here so the provenance is not lost. Owner's ruling the same day settled who released the train."
     },
     {
       "at": "2026-10-02T23:35:08.000Z",
       "node": "End_Landed",
-      "actor": "merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)",
-      "note": "Nine members landed, none ejected, none handed back, none held.\n\nONE GAP THIS RECORD CANNOT CLOSE, stated rather than hidden: `TrainMemberEvidenceSchema` (schemas/merge-queue.ts) is the declared shape for a finished run's per-member evidence -- pr, headSha, ownCi, headShaMatchesCi, observedAt, outcome, evidenceUrl -- and `InstanceState` (src/workflow/instance.ts) has no field to carry it. The evidence above therefore sits in `history[].note` as prose, which is the existing store and schema this box asked for, but it is NOT machine-readable and no gate can check it. Recorded on bean `30jr` as the follow-up rather than fixed here by inventing an undeclared key."
+      "actor": "authoring-agent",
+      "note": "Nine members landed, none ejected, none handed back, none held.\n\nONE GAP THIS RECORD CANNOT CLOSE, stated rather than hidden: `TrainMemberEvidenceSchema` (schemas/merge-queue.ts) is the declared shape for a finished run's per-member evidence -- pr, headSha, ownCi, headShaMatchesCi, observedAt, outcome, evidenceUrl -- and `InstanceState` (src/workflow/instance.ts) has no field to carry it. The evidence above therefore sits in `history[].note` as prose, which is the existing store and schema this box asked for, but it is NOT machine-readable and no gate can check it. Recorded on bean `30jr` as the follow-up rather than fixed here by inventing an undeclared key.\n\nACTOR CORRECTED 2026-10-03. This entry recorded the free-text actor \"merge-manager (session 01SjvqTkDQsqa6SLLFjBwoD3)\", which is prose rather than a declared actor id; the session id is kept here so the provenance is not lost. Owner's ruling the same day settled who released the train."
     }
   ]
 }
