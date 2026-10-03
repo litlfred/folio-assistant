@@ -11,7 +11,19 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { MOUNT_DIR, mountState, report } from "../state-mount.js";
+import { MOUNT_DIR, mountState, report, type MountResult } from "../state-mount.js";
+
+/**
+ * The tip of a single-worktree mount. The narrowing is explicit because the
+ * result type only carries a tip on a graph whose own state is `mounted` —
+ * which is the point: nothing can read a tip off a graph that has none.
+ */
+function soleTip(r: MountResult): string {
+  if (r.state !== "mounted") throw new Error(`not mounted: ${r.reason}`);
+  const g = r.graphs[0];
+  if (!g || g.state !== "mounted") throw new Error(`the sole graph is not mounted: ${g?.reason ?? "(no graph)"}`);
+  return g.tip;
+}
 
 const NOGPG = ["-c", "commit.gpgsign=false", "-c", "user.name=t", "-c", "user.email=t@t"];
 const BRANCH = "cat/cat-harness/state";
@@ -77,7 +89,9 @@ describe("mounting", () => {
     expect(readFileSync(join(path, "beans/defs/a.md"), "utf-8")).toBe("A\n");
     // Detached: no symbolic HEAD.
     expect(spawnSync("git", ["symbolic-ref", "-q", "HEAD"], { cwd: path }).status).not.toBe(0);
-    if (r.state === "mounted") expect(git(path, "rev-parse", "HEAD").trim()).toBe(r.tip);
+    // The tip is reported PER GRAPH, where it is required — there is no
+    // top-level one, because a fan-out over several branches has no single tip.
+    expect(git(path, "rev-parse", "HEAD").trim()).toBe(soleTip(r));
   });
 
   test("a second mount at the same tip is a no-op", () => {
@@ -103,7 +117,7 @@ describe("mounting", () => {
 
     const moved = mountState({ repoRoot: f.work, force: true, branch: BRANCH });
     expect(moved.state).toBe("mounted");
-    if (moved.state === "mounted") expect(moved.tip).not.toBe(first.tip);
+    expect(soleTip(moved)).not.toBe(soleTip(first));
     expect(existsSync(join(f.work, MOUNT_DIR, "beans/defs/b.md"))).toBe(true);
   });
 });
