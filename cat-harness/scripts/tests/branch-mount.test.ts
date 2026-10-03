@@ -22,7 +22,7 @@ import { gitBlobId, MANIFEST_SCHEMA, markerPath, mountTip, pushMount, readMarker
 
 const NOGPG = ["-c", "commit.gpgsign=false", "-c", "user.name=t", "-c", "user.email=t@t"];
 const BRANCH = "cat/cat-harness/fsh-guts";
-const LOC: TipLocation = { id: "fsh-guts", path: "fsh-guts", branch: BRANCH };
+const LOC: TipLocation = { id: "fsh-guts", path: "fsh-guts", branch: BRANCH, keyedBy: "tip" };
 /** Not valid UTF-8: a text round-trip would change these bytes. */
 const PDF = Buffer.from([0x25, 0x50, 0x44, 0x46, 0x00, 0xff, 0xfe, 0x80, 0x0a]);
 

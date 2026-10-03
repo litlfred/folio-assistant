@@ -17,7 +17,7 @@ import { StateStore } from "../state-store.js";
 
 const NOGPG = ["-c", "commit.gpgsign=false", "-c", "user.name=t", "-c", "user.email=t@t"];
 const BRANCH = "cat/cat-harness/state";
-const LOCATION: TipLocation = { id: "beans-defs", path: "beans/defs", branch: BRANCH };
+const LOCATION: TipLocation = { id: "beans-defs", path: "beans/defs", branch: BRANCH, keyedBy: "tip" };
 const MANIFEST = JSON.stringify({ $schema: MANIFEST_SCHEMA, status: "seed", authoritative: false, subgraph: "beans", keyedBy: "tip" });
 
 function git(cwd: string, ...args: string[]): string {
@@ -97,7 +97,7 @@ describe("paths are relative to the DECLARED directory", () => {
     const s = StateStore.at(LOCATION, f.container("a"));
     expect(() => s.branchPath("../../todos/t.md")).toThrow(BranchStoreUsageError);
     // ...and the file it was reaching for IS there, so the refusal is the only thing stopping it.
-    expect(StateStore.at({ id: "todos", path: "todos", branch: BRANCH }, f.container("b")).readFile("t.md").state).toBe("hit");
+    expect(StateStore.at({ id: "todos", path: "todos", branch: BRANCH, keyedBy: "tip" }, f.container("b")).readFile("t.md").state).toBe("hit");
   });
 
   test("listDir and readTree are scoped to the directory", () => {

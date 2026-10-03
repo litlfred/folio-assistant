@@ -259,3 +259,104 @@ describe("writing", () => {
     }
   });
 });
+
+// ── Route keying (bean 1j3q) ──────────────────────────────────────────────
+//
+// `route` is the same branch mechanism as `tip` and differs in exactly one
+// thing: a write may not carry `expect`, because a rendered page has one
+// writer and the newer generation wins. These tests pin that difference from
+// both sides — a route store must refuse `expect`, and must still accept a
+// same-path overwrite that a tip store would have called a `conflict`.
+
+const ROUTE_BRANCH = "cat/cat-harness/docs-auto";
+const ROUTE_MANIFEST = JSON.stringify({
+  $schema: MANIFEST_SCHEMA,
+  status: "seed",
+  authoritative: false,
+  subgraph: "docs-auto",
+  keyedBy: "route",
+});
+
+function seededRoute(f: Fixture): string {
+  return f.seed(ROUTE_BRANCH, {
+    "README.md": "# docs-auto\n",
+    "manifest.json": ROUTE_MANIFEST,
+    "uml/overview/index.html": "<p>old</p>\n",
+  });
+}
+
+describe("route keying", () => {
+  test("a route-keyed store reads its own branch", () => {
+    const f = fixture();
+    seededRoute(f);
+    const s = BranchStore.open(ROUTE_BRANCH, f.container("route-read", { keyedBy: "route" }));
+    const r = s.readFile("uml/overview/index.html");
+    expect(r.state).toBe("hit");
+    if (r.state === "hit") expect(r.text).toBe("<p>old</p>\n");
+  });
+
+  test("the manifest must agree with the keying the caller opened for, BOTH ways", () => {
+    const f = fixture();
+    seededRoute(f); // keyedBy: route on the branch
+    seeded(f); // keyedBy: tip on BRANCH
+
+    // route branch read as tip → corrupt, and the reason names both values.
+    const asTip = BranchStore.open(ROUTE_BRANCH, f.container("rk-1")).readFile("uml/overview/index.html");
+    expect(asTip.state).toBe("corrupt");
+    if (asTip.state === "corrupt") expect(asTip.reason).toMatch(/keyed by route, not tip/);
+
+    // tip branch read as route → corrupt too. A one-way check would let a
+    // state branch be written with last-write-wins semantics.
+    const asRoute = BranchStore.open(BRANCH, f.container("rk-2", { keyedBy: "route" })).readFile("beans/defs/a.md");
+    expect(asRoute.state).toBe("corrupt");
+    if (asRoute.state === "corrupt") expect(asRoute.reason).toMatch(/keyed by tip, not route/);
+  });
+
+  test("a route-keyed write REFUSES `expect`, naming the paths", () => {
+    const f = fixture();
+    seededRoute(f);
+    const s = BranchStore.open(ROUTE_BRANCH, f.container("route-expect", { keyedBy: "route" }));
+    expect(() =>
+      s.write([{ path: "uml/overview/index.html", content: Buffer.from("<p>new</p>\n"), expect: null }], "m"),
+    ).toThrow(BranchStoreUsageError);
+    try {
+      s.write([{ path: "uml/overview/index.html", content: Buffer.from("x"), expect: "deadbeef" }], "m");
+      throw new Error("expected a refusal");
+    } catch (e) {
+      expect((e as Error).message).toMatch(/uml\/overview\/index\.html/);
+      expect((e as Error).message).toMatch(/one writer/);
+    }
+    // Refused BEFORE anything is pushed: the tip is untouched.
+    expect(s.readFile("uml/overview/index.html").state).toBe("hit");
+  });
+
+  test("the same overwrite that is a tip `conflict` is a plain push when route-keyed", () => {
+    const f = fixture();
+    seededRoute(f);
+    const route = BranchStore.open(ROUTE_BRANCH, f.container("route-w", { keyedBy: "route" }));
+    const before = f.tip(ROUTE_BRANCH);
+
+    // No `expect`: last generation wins, and the old blob is simply replaced.
+    const w = route.write([{ path: "uml/overview/index.html", content: Buffer.from("<p>new</p>\n") }], "regen");
+    expect(w.state).toBe("pushed");
+    expect(f.tip(ROUTE_BRANCH)).not.toBe(before);
+    const after = BranchStore.open(ROUTE_BRANCH, f.container("route-r2", { keyedBy: "route" })).readFile("uml/overview/index.html");
+    expect(after.state).toBe("hit");
+    if (after.state === "hit") expect(after.text).toBe("<p>new</p>\n");
+
+    // The contrast, on the tip-keyed branch, with a stale `expect`: conflict.
+    seeded(f);
+    const tip = BranchStore.open(BRANCH, f.container("tip-w"));
+    const c = tip.write([{ path: "beans/defs/a.md", content: Buffer.from("z"), expect: "0".repeat(40) }], "m");
+    expect(c.state).toBe("conflict");
+  });
+
+  test("route-keyed writes are still not allowed to touch the manifest or README", () => {
+    const f = fixture();
+    seededRoute(f);
+    const s = BranchStore.open(ROUTE_BRANCH, f.container("route-reserved", { keyedBy: "route" }));
+    for (const p of ["manifest.json", "README.md"]) {
+      expect(() => s.write([{ path: p, content: Buffer.from("x") }], "m")).toThrow(BranchStoreUsageError);
+    }
+  });
+});
