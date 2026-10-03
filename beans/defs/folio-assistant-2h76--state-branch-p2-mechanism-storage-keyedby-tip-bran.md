@@ -3,8 +3,9 @@
 title: 'STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan ''state'' branch, session-start mount at state/'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-02T22:42:40Z
+updated_at: 2026-10-03T08:11:12Z
 parent: folio-assistant-fs43
 ---
 
@@ -17,6 +18,8 @@ Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, c
 - [x] session-start hook mounts state/ and fails LOUDLY when it cannot
 - [x] bun run state:push
 - [x] measured: two sessions editing the SAME bean concurrently — no lost edit
+- [x] generic `branch-store mount --id <dir-id> [--into]` (replaces the single `state/` mount, owner ruling 2026-10-03): refuses loudly on corrupt or unknown, a miss is never an empty mount; wiring it into the session-start hook is left to each directory's cutover
+- [x] generic `branch-store push --id <dir-id>` (replaces `state:push`): splices the mount's edits with `expect` from the mounted tip, so a concurrent edit to the same file is a `conflict`
 
 Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
 
@@ -84,3 +87,18 @@ sibling is a `conflict` with the tip unmoved and the edit still on disk.
 `keyedBy: "tip"`, and `.beans.yml` still points at `beans/defs` on `main`.
 Doing either now would redirect every session's work-plan before the seed is
 re-verified, which is `9ofm`'s job.
+
+
+## Owner ruling 2026-10-03: ONE generic mount/push pair (asked by the 9c7h fsh-guts move, relayed by session 01CbYZTA; owner answered "1")
+
+- **Shape:** `branch-store mount --id <dir-id> [--into <path>]` and `branch-store push --id <dir-id>`, keyed by DIRECTORY ID, so beans, todos and fsh-guts share one mechanism. A tip-SHA marker records what was mounted. Corrupt or unknown is refused loudly, and a miss is not an empty mount. `expect` comes from the recorded tip's blob ids, so concurrent edits produce a conflict, never an overwrite. A `storage.keyedBy: "tip"` directory resolves to its mount path, so readers stay unchanged. **This replaces this bean's single `state/` mount and `state:push`.**
+- **Who:** built by the Parcel B session (session_01SmeBn6QZsDFaNQ4GtuC2sd) on a branch stacked on #1937, as its own PR into main that merges after #1937.
+
+As built (`cat-harness/scripts/branch-store.ts`, tests `branch-mount.test.ts`, 11 on real git):
+- the mount defaults to the declared path, so a reader finds the directory where it used to be;
+- it is byte-safe (binary files and the executable mode survive);
+- the marker is kept at `<git-common-dir>/branch-mounts/<id>.json`, outside the mount, so a reader walking the directory never sees it;
+- it refuses a directory the checkout still tracks (no cutover yet), a non-empty non-mount, and a re-mount over unpushed edits;
+- `push` honours the checkout's ignore rules for new files (fsh-guts/logs/ is never pushed), but not a rule that ignores the whole mount root;
+- exit codes: mount refused 5; push conflict or refused 5, failed 6.
+Mutation-checked: removing `expect`, the ignore filter or the byte-safety each turns a named test red.

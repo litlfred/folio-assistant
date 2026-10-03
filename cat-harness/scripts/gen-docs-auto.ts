@@ -1301,6 +1301,60 @@ if (import.meta.main) {
       );
     }
 
+    // ── A TYPE THAT FINDS NOTHING WHERE ITS GRAPH HOLDS FILES IS A DEFECT ──
+    //
+    // Bean `06e3`: *"a stale or moved source makes the derivation FAIL, never
+    // render empty."* This is that guard, and it is not speculative — it was
+    // written after shipping the failure TWICE in one session, 2026-10-03:
+    //
+    //   - `index/tools` filtered `.json` on the strength of `AGENTS.md`
+    //     calling them "Tool definitions"; `tools/` holds `.ts`. It emitted
+    //     **0 items across 0 sub-graphs and printed `✓`**.
+    //   - `index/roles` passed `dirname()` where `readRoleGraph` wants the
+    //     scenarios directory itself. Same symptom, same `✓`.
+    //
+    // Both were caught by a human reading the count, which is exactly the
+    // check a gate is supposed to make unnecessary.
+    //
+    // The DISCRIMINATION is `dh4f`'s, and getting it right is the whole
+    // difference between a guard and a nuisance:
+    //
+    //   - no declared directory for the graph  → nothing to index. Silent.
+    //     A fresh folio declaring no `processes/` must not fail `index/dmn`.
+    //   - declared directories, all EMPTY      → nothing to index. Silent.
+    //     "the directory is not there" and "the directory is empty" are
+    //     different facts, and neither is a defect.
+    //   - declared directories WITH FILES, and the type collects nothing
+    //     → the reader is wrong, or its source moved. **Refuse.**
+    //
+    // So this cannot fire on an instance that simply does not have the
+    // material; it fires when the material is there and the type cannot see
+    // it. `check` mode counts it as stale rather than throwing, so one run
+    // reports every type rather than dying on the first.
+    if (items.length === 0 && dirs.length > 0) {
+      const holdsFiles = dirs.some(
+        (d) => existsSync(d.absPath) && gitFiles(d.absPath, () => true).files.length > 0,
+      );
+      if (holdsFiles) {
+        const where = dirs.map((d) => d.id).join(", ");
+        console.error(
+          `  ✗ ${type.id}: collected NOTHING, but its \`${type.graph}\` directories hold files (${where}) — ` +
+            `a moved source or a wrong filter, not an empty graph`,
+        );
+        stale++;
+        continue;
+      }
+    }
+
+    // The guard above runs BEFORE the orphan prune on purpose. With the
+    // order reversed — as the first draft had it — a wrong filter made the
+    // prune DELETE every sub-graph page first and the guard then reported a
+    // defect against a tree it had already emptied. Measured: reintroducing
+    // the `index/tools` `.json` bug pruned four pages before complaining.
+    // `deletion-requires-confirmation` is the rule that forbids it — an agent
+    // does not remove a durable artefact on its own initiative, least of all
+    // because its own reader is broken.
+
     // Orphans — bean `ankg`'s helper, unchanged. A sub-graph that stops
     // contributing items keeps its page otherwise, indexing a set that no
     // longer exists.
@@ -1318,6 +1372,7 @@ if (import.meta.main) {
       rmSync(dir, { recursive: true });
       console.log(`  ✗ pruned ${dir}`);
     }
+
 
     built.set(type.id, items.length);
     if (!check) {
