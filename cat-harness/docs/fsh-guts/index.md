@@ -25,7 +25,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**144 file(s)** across 5 group(s). Each links to the file itself —
+**146 file(s)** across 5 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -38,8 +38,8 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 79 | carries the tag itself |
-| <span class="fg-tag fg-side">via sidecar</span> | 57 | a script, described by a tagged `.md` sibling |
+| <span class="fg-tag fg-ok">declared</span> | 80 | carries the tag itself |
+| <span class="fg-tag fg-side">via sidecar</span> | 58 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 8 | **neither** — a gap, not a format limit |
 
 The 8 undeclared are listed below with the rest rather than in a
@@ -116,7 +116,7 @@ summary count is the failure this table exists to avoid.
 
 ## uploads
 
-104 file(s).
+106 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
@@ -172,6 +172,8 @@ summary count is the failure this table exists to avoid.
 | [Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md) | `Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json` | <span class="fg-tag fg-ok">declared</span> |
+| [Home-_-folio-assistant.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Home-_-folio-assistant.md) | `Home-_-folio-assistant.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [Home-_-folio-assistant.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Home-_-folio-assistant.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [PIIS2589750021000388-2.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/PIIS2589750021000388-2.md) | `PIIS2589750021000388-2.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [PIIS2589750021000388-2.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/PIIS2589750021000388-2.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [Skill-authoring-best-practices-Claude-Platform-Docs.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md) | `Skill authoring best practices - Claude Platform Docs.pdf` | <span class="fg-tag fg-ok">declared</span> |
