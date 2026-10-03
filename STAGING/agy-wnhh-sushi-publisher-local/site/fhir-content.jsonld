@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio-assistant/"
+    }
+  ],
+  "@id": "site/fhir-content.jsonld",
+  "@type": [
+    "folio-assistant-core:WebPage",
+    "doco:Section"
+  ],
+  "label": "fhir-content",
+  "title": "FHIR content",
+  "contains": [
+    "site/fhir-content/nodes/overview.jsonld",
+    "site/fhir-content/nodes/the-three-layers.jsonld",
+    "site/fhir-content/nodes/representations.jsonld",
+    "site/fhir-content/nodes/the-artefact-index.jsonld",
+    "site/fhir-content/nodes/the-dak-surface.jsonld",
+    "site/fhir-content/nodes/where-the-rules-live.jsonld"
+  ],
+  "provenance": "authored",
+  "meta": {
+    "publishedAt": "fhir-content.html",
+    "sourceDir": "content/docs/fhir-content",
+    "navOrder": 13
+  }
+}

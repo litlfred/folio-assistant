@@ -1,0 +1,40 @@
+{
+  "ast": 678,
+  "published": 674,
+  "onlyInAst": [
+    "Endpoint/GDHCNParticipantDID-IRL-All",
+    "Endpoint/GDHCNParticipantDID-IRL-DSC",
+    "Endpoint/GDHCNParticipantDID-IRL-SCA",
+    "Organization/GDHCNParticipant-IRL"
+  ],
+  "onlyInPublished": [],
+  "differs": [
+    {
+      "key": "Endpoint/GDHCNParticipantDID-XXV-DEV-All",
+      "field": "description",
+      "ast": "TEST CITY Trustlist (DID v2) - DEV - All keys did:web:tng-cdn.who.int:v2:trustlist:-:XXV resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/XXV/did.json",
+      "published": "test city Trustlist (DID v2) - DEV - All keys did:web:tng-cdn.who.int:v2:trustlist:-:XXV resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/XXV/did.json"
+    }
+  ],
+  "equivalent": [
+    {
+      "field": "description",
+      "count": 10
+    },
+    {
+      "field": "title",
+      "count": 3
+    }
+  ],
+  "astRicher": [
+    {
+      "field": "description",
+      "count": 455
+    },
+    {
+      "field": "title",
+      "count": 1
+    }
+  ],
+  "identical": 673
+}
