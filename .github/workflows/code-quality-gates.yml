@@ -1845,6 +1845,12 @@ jobs:
           # reason the check exists rather than a file-exists test.
           bun run check:docs-populated
           bun run check:declared-paths
+          # Its cross-instance half (bean `gz47`): no instance's source spells a
+          # path into a directory ANOTHER instance declares (the root's beans/,
+          # todos/, fsh-guts/, uploads/ — the ones moving to branches). A one-way
+          # ratchet over scripts/foreign-path-baseline.json: a rise is red, a
+          # fall is reported and never red.
+          bun run check:foreign-paths
           bun run check:fallback-roles
           # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
           # is meant to be closed" and could NEVER have passed: all seven kinds it
