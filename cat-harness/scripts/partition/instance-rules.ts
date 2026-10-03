@@ -409,6 +409,11 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
+      // Its generalisation (bean `2h76`): the same branch-kept store for ANY
+      // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
+      // same reason as `qa-store` — it reads the declaration and git, and no
+      // folio's subject matter could make it answer differently.
+      "scripts/branch-store.ts",             // a `keyedBy: "tip"` directory's own branch: one live copy
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
