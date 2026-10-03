@@ -374,7 +374,13 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "a later kind — as resolved after the instance config's override.",
     replacedBy: "dcterms:source",
   },
-  contentSourceKind: { gloss: "Which kind of content source: `directory` or `branch`.", replacedBy: "dcterms:type" },
+  contentSourceKind: {
+    gloss:
+      "Which kind of content source: `directory` or `branch`, as a plain value. Its own term, NOT " +
+      "`dcterms:type`: that property's range is a class, and the published subgraph files use it as a " +
+      "link (`holdsGraph`), so a literal under it failed publish-verify's object-link check " +
+      "(ld-object-property-is-a-link, 2026-10-03).",
+  },
   contentSourceBranch: { gloss: "The repository branch a subgraph's content is read from.", replacedBy: "dcterms:identifier" },
   keyedBy: {
     gloss:
