@@ -123,12 +123,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.40 | kind, instance, harness, directory, page, graph, session, branch | *(none)* |
+| 1 | 45.43 | kind, instance, harness, page, directory, graph, session, branch | *(none)* |
 | 2 | 21.72 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, iri, subgraph |
-| 3 | 18.03 | chapter, slot, block, edges, formal, project, proof, watcher | session, beans, epic, branch, window, goals, store, minutes |
+| 3 | 18.04 | chapter, slot, block, edges, formal, project, proof, watcher | session, beans, epic, branch, window, goals, store, minutes |
 | 4 | 17.20 | page, text, pdf, block, blocks, manifest, tile, chapter | sibling, ledger, subgraph, subdirectory, plan, session, sessions, coordination |
 | 5 | 15.60 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, pdf, archive, arxiv, licence, upload, sniff, archived |
-| 6 | 15.12 | lane, actor, role, requirements, task, process, edge, analysis | sha, queue, bytes, backlog, slide, withheld, library, board |
+| 6 | 15.12 | lane, actor, role, requirements, task, process, edge, diagram | sha, queue, bytes, slide, backlog, withheld, library, board |
 | 7 | 14.75 | preview, staging, translation, url, locale, feature, pages, translated | tile, glass, slot, avatar, card, sticky, referee, claim |
 | 8 | 14.52 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, user, task, requirement, login, backlog |
 

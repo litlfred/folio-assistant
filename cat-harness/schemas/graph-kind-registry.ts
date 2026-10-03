@@ -830,6 +830,50 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +
       "at these statements by `req:<slug>#<key>`.",
   },
+  "docs-auto": {
+    // NOT a site of its own: its pages are built by `docs`, which it is
+    // `within`. The harness still owns exactly one renderable kind — the same
+    // reason `proposals` and `requirements` are false above.
+    renderable: false,
+    within: "docs",
+    // THE FROM-WITHIN NODE, one level further down. `docs/docs.json` names
+    // this kind as a sub-graph of `docs`; this file names ITS sub-sub-graphs,
+    // one per auto-doc TYPE. The owner, 2026-10-03: *"auto-docs is one
+    // declared subgraph, with declared sub-sub-graphs per writer."* Bean
+    // `xsrv`.
+    //
+    // It is GENERATED, and that is load-bearing rather than incidental:
+    // `gen-docs-auto.ts` already holds the types in `TYPES`, whose `collect()`
+    // functions cannot live in JSON. A hand-kept copy would be a second answer
+    // to "what auto-doc types exist", free to disagree the moment either
+    // moves.
+    declarationFile: "docs-auto.json",
+    // `derived`, by the three questions `content-context-and-state-graphs`
+    // asks. Does a process write it? YES — `gen-docs-auto.ts`, every build.
+    // Does it stand on its own? NO — every page is an index OF another graph,
+    // and detached from that graph it lists nothing. Regenerate or re-author?
+    // REGENERATE, purely: there is no authored byte in any of these pages, and
+    // deleting one costs a command rather than a decision.
+    //
+    // That last answer is what separates it from its parent. `docs` is
+    // `content` because you would RE-AUTHOR a docs page; you would never
+    // re-author an index, and an index somebody hand-edited is a defect rather
+    // than a contribution — which is why the subject check refuses a generated
+    // page (`check:docs-populated`) and why this arc keys the family by
+    // `route` rather than by `tip`.
+    holds: "derived",
+    validatorNotApplicable:
+      "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry " +
+      "validator would be a category error, as on `proposals`. What is checked mechanically is the " +
+      "derivation instead: `docs:auto:check` fails on a stale page, and refuses outright when a type " +
+      "collects nothing while its graph's directories hold files, which is a moved source rather than an " +
+      "empty graph (bean `06e3`).",
+    summary:
+      "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH " +
+      "that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. " +
+      "Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, " +
+      "an index is regenerated.",
+  },
   "external-schema": {
     perInstance: true,
     renderable: false,
@@ -1647,6 +1691,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
       // so `role` and `basis` would each mean two things.
       "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
+      // The vector figures ASSEMBLED and RENDERED — bean `ay3x`. Every entry
+      // carries a basis naming who or what looked; the extractor's assigns no
+      // role, and the role arrives by inspection through `image-verdicts.json`.
+      "folio-vector-figures/v1": { validator: "schemas/vector-figure.ts#VectorFiguresSidecarSchema" },
       // The JUDGEMENT half of the vector arm — bean `a8wy`. Stands to
       // `folio-vector-labels` as `folio-image-verdicts` stands to
       // `folio-document-images`: the measurement says where every text line
