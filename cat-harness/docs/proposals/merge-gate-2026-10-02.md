@@ -4,22 +4,29 @@ kind: proposal
 summary: >-
   Proposed 2026-10-02: what a merge to main must PROVE, beyond green CI. An
   independent agentic adversarial review of any agent-touched change with a
-  committed verdict, a closed RED FLAG taxonomy that blocks until resolved or
-  overridden on the record, content-type compile gates (Lean, SUSHI/IG AST,
-  JSON-LD + schema) scoped by changed path, and the same review run per content
-  block so the corpus can be backfilled. Research, design and a reading list;
-  nothing is built.
+  committed verdict, a closed RED FLAG taxonomy, content-type compile gates
+  (Lean, SUSHI/IG AST, JSON-LD + schema) scoped by changed path, and the same
+  review run per content block so the corpus can be backfilled. AMENDED
+  2026-10-03 — the owner ruled the agentic review WARN-ONLY, so its findings
+  are reported and never hold a merge; the compile gates are unchanged.
+  Research, design and a reading list; nothing is built.
 ---
 
 # Merge gate: adversarial review and compile gates
 {: .no_toc }
 
-**Status:** proposal. **Nothing is built and no workflow is changed.** Epic bean
+**Status:** proposal, **amended 2026-10-03: the adversarial review is
+WARN-ONLY.** **Nothing is built and no workflow is changed.** Epic bean
 `folio-assistant-nok9`, with children `w8jq` (the review gate), `xqdi`
 (compile gates), `abmq` (RED FLAG taxonomy and verdict shape), `lvlv`
 (per-block backfill) and `u7be` (merge-steward gaps measured today). Reading
 list: [merge-gate-reading-list](merge-gate-reading-list.html); the numbers in
 square brackets below, such as [R5], refer to its items.
+
+> **Read §1.1 before §4 or §5.** This document was written to the ask quoted
+> in §1 and the owner then ruled differently, so its first draft specified a
+> blocking review throughout. §1.1 carries the ruling, and §4.2 and §5.1 have
+> been changed to match. Bean `5ge1`.
 
 1. TOC
 {:toc}
@@ -39,6 +46,61 @@ Owner, 2026-10-02:
 > list of links to open access lit for uploading. similarly we need these QA
 > reviews at the level of content blocks (e.g. tools, but also schemas,
 > guidance etc.) so that we can backfill.
+
+### 1.1 Superseded, same day: the review WARNS, it does not block
+
+**The ask above is kept verbatim because it is what was asked.** It is no
+longer what the design does. Later on 2026-10-02 the owner was asked how to
+handle agentic code review before merge and answered:
+
+> do ingesion and analsysi. then propose. **dont want hard gate (at least not
+> for now, lots of backlog on content nodes) but do want warn.**
+
+Confirmed 2026-10-03, when the conflict between the two was put to the owner
+with both dates: *"warn only. proposal predates ruling, update it."* So this is
+a **stale document corrected**, not two live positions — the ask came first and
+the ruling supersedes it.
+
+**The reason is load-bearing and is not "reviews are unreliable".** A hard gate
+over a backlog of unreviewed content nodes blocks work that was already queued:
+the gate would fire on the corpus's existing state rather than on what a PR
+changed, so the first PR after it landed would inherit every unresolved finding
+in the paths it touches. §7's backfill is the thing that has to happen first,
+and a blocking gate inverts the order.
+
+**What changed, and what did not:**
+
+| | |
+|---|---|
+| **G3, G4** — the adversarial review verdict and its RED FLAGs | **warn.** Reported on the PR, never holding a merge |
+| **G1, G2, G8, H** — CI green per job, the head HAS a run, `regen` on the train result, the owner's "merge it" | **unchanged, still blocking.** These are deterministic and already enforced; the ruling was about agentic review, not about whether CI ran |
+| **G5, G6, G7** — Lean builds, SUSHI compiles, JSON-LD renders | **unchanged, and CONFIRMED by the owner 2026-10-03: "g5-g7 blocking is right, leave it".** These are deterministic compile checks, the original ask named them separately from the review, and the backlog reason does not reach whether Lean compiles. This row was written as an interpretation to be corrected; it is now a ruling in its own right |
+
+**So the ruling has a boundary, and the boundary is deterministic-vs-judged,
+not blocking-vs-warning.** A compile gate answers a question with one right
+answer that a machine settles: the module builds or it does not. An adversarial
+review answers a question whose error rate is unknown — §1.1's closing
+paragraph is about exactly that unknown — so the two cannot carry the same
+enforcement on the same evidence. Reading the warn-only ruling as "soften the
+merge gate" would have demoted G5–G7 along with G3/G4 and lost the distinction
+the owner was drawing.
+
+**A warn is not a weaker block; it is a different instrument, and it is the
+only one that can produce the number this decision needs.** No paper in the
+2026-10-02 reading sweep reports a false-positive rate for any LLM judge —
+checked across five (arXiv 2402.02172v5, 2404.04834v4, 2507.23348v1,
+2601.04544v1, 2607.00053v1). CodeAgent's own annotation leaves **49% of GPT-4's
+flags unconfirmed**. So promoting warn to block later is a decision that needs a
+measured false-positive rate on THIS corpus, and only a warn-only phase
+produces one. §5.1 therefore records a blocking-weight finding as **"would have
+blocked"** rather than discarding it: that is the data the promotion decision
+reads.
+
+**The pattern to copy is already here.** `dependency-advisories` in
+`.github/workflows/code-quality-gates.yml` is warn-only and exits 0 in every
+state while keeping *found-nothing*, *found-something* and *could-not-determine*
+distinct in its output. **Do not use `continue-on-error`** — that file records
+it as already reversed once.
 
 ## 2. What exists today, measured 2026-10-02
 
@@ -169,9 +231,16 @@ separate check from well-formedness.
    committed record. The merge reads the record. This is the `kg-qa` rule: a
    printed verdict is gone, so "never reviewed" and "reviewed clean" become one
    state.
-2. **`unknown` blocks.** A review that could not cover the diff, a toolchain
-   that was absent, or a cache that timed out is never green ([R23]; the
-   `dh4f` shape).
+2. **`unknown` is never green — and under the warn-only ruling (§1.1) it is
+   never a pass either.** A review that could not cover the diff, a toolchain
+   that was absent, or a cache that timed out reports `unknown` ([R23]; the
+   `dh4f` shape). The first draft of this principle read "**`unknown`
+   blocks**", which the ruling changed; what it must NOT change is the third
+   state. A warn-only gate that collapses *could-not-determine* into
+   *found-nothing* is the defect this repository keeps paying for — measured
+   twice more on 2026-10-02 alone, in a vacuous CI pass (bean `0qjq`, answered
+   by `Rule_HeadNotGreen`) and a vacuous `clean` verdict (bean `zjm1`). Exit 0
+   with `unknown` on the record; never exit 0 with silence.
 3. **Independence is recorded, not assumed.** The reviewer is not the author's
    session. It is a different model where one is available ([R16], [R21], [R22]),
    and it is scored like a trusted monitor ([R20]).
@@ -192,8 +261,8 @@ separate check from well-formedness.
 |---|---|---|---|---|
 | G1 | required CI green, read per job | always | **yes** | yes |
 | G2 | the head SHA **has** a completed CI run | always | **yes** | no. `pr-checks-present` finds missing runs hourly, but the train does not ask (`u7be` item 3) |
-| G3 | adversarial review verdict present, bound to the head SHA, full coverage | agent provenance (§5.2) | **yes** | no (`w8jq`) |
-| G4 | no open RED FLAG in any review on this head | G3 applies | **yes** | no (`abmq`) |
+| G3 | adversarial review verdict present, bound to the head SHA, full coverage | agent provenance (§5.2) | **no — warn** (§1.1). Absence or partial coverage is reported as `unknown`, never as a pass | no (`w8jq`) |
+| G4 | no open RED FLAG in any review on this head | G3 applies | **no — warn** (§1.1). A `blocking`-weight finding is posted as **"would have blocked"**, so the promotion decision has data | no (`abmq`) |
 | G5 | Lean: every **touched** module builds by name; no new `sorry`; no axiom beyond the declared list | `.lean` changed (folio repos) | **yes** | partly: a bare-import gate only |
 | G6 | FHIR: SUSHI 0 errors; IG AST extracts | `input/fsh/**`, `sushi-config.yaml`, IG AST paths | **yes** | no |
 | G7 | KG: JSON-LD expands and compacts with no dropped term; each node validates against its schema; `kg:audit:check` | any KG node, `.jsonld` or schema | **yes** | mostly: `gen:jsonld:check`, `kg:audit:check`, `kg:audit:all:check` |
@@ -205,6 +274,21 @@ separate check from well-formedness.
 
 The path → gate map (G5–G7) is declared **as data** and read by `gates.ts`,
 not listed in prose.
+
+**The `blocks?` column had `yes` for G3 and G4 until 2026-10-03.** The ruling
+in §1.1 changed those two rows and no others. Two consequences worth stating,
+because a warn-only gate is easy to build wrongly:
+
+- **A warn still fails loudly when it cannot run.** G3 reporting `unknown`
+  because the diff did not fit, or the reviewer never ran, is a visible
+  `unknown` — not an omitted comment. Silence and a clean review must not
+  render alike, which is principle 4.1 and the whole reason the verdict is
+  committed rather than printed.
+- **The promotion criterion is a number, not a feeling.** Warn → block needs a
+  measured false-positive rate over this corpus's own defects. The candidates
+  named in §3.3 are the real ones already recorded here (`plj1`, `dh4f`,
+  `w4tq`, `7u3g`), which is a better test set than any published benchmark
+  because it cannot have leaked into a model's training data.
 
 ### 5.2 Detecting "≥ 1 agent touched it"
 
@@ -452,4 +536,11 @@ to be confirmed at upload. **U** means unverified. Totals: 29 S, 1 U, none paywa
   child bean's work.
 - It does not retire `agent-review.yml`. That falls to `w8jq`, once its replacement
   exists.
-- It does not decide Q1–Q7.
+- It does not decide Q1–Q7. **Q1 is now partly settled by §1.1**: a warn-only
+  review has no reason to run inside CI with an API key on a workflow that
+  executes PR code, which was option A's cost. Option B — the merge steward's
+  own session, committing a verdict CI then reads deterministically and without
+  secrets — is what warn-only implies. Recorded as an implication, not as the
+  owner's answer; Q1 stays open.
+- It does not change `nok9`, `w8jq` or `abmq`. Their bodies still describe a
+  blocking G3/G4 and are reconciled under bean `5ge1`.
