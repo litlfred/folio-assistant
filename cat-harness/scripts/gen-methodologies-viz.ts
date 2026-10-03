@@ -59,7 +59,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { docsLayers } from "./compose-docs.js";
+import { baseDocsDir } from "./compose-docs.js";
 import {
   checkMethodologyEvidence,
   methodologyNodes,
@@ -172,11 +172,6 @@ export function pageRelPath(repo = REPO): string | undefined {
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 const CSS = `
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
@@ -421,7 +416,7 @@ if (import.meta.main) {
     handledDirectories(REPO, INSTANCE_ROOT, KIND, "corpus"),
     VIEWER_TOOL,
   );
-  const out = join(baseDocs(REPO), PAGE);
+  const out = join(baseDocsDir(REPO), PAGE);
 
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
