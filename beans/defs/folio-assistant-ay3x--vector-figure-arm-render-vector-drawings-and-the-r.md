@@ -1,11 +1,12 @@
 ---
 # folio-assistant-ay3x
 title: 'VECTOR FIGURE ARM: render vector drawings, and the role threshold nobody may pick from this corpus'
-status: in-progress
+status: completed
 type: task
-parent: folio-assistant-2yyh
+priority: normal
 created_at: 2026-09-23T07:19:35Z
-updated_at: 2026-10-03T09:52:39Z
+updated_at: 2026-10-03T17:46:33Z
+parent: folio-assistant-2yyh
 ---
 
 
@@ -156,3 +157,7 @@ handle's lower bound is very low on this corpus. That is a finding for
    already have captions. They are reported by `apply-image-verdicts` and by
    the gate's detail, and they block nothing.
 
+
+## Closed 2026-10-03
+
+Landed in PR #1990 (merge 8d977ac5a), issue #1980. Every Done-when item was checked on that branch with its evidence; the follow-up SVG render of DIIG Fig 1.1.1 is bean folio-assistant-70zt (issue #1984). Session: https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ
