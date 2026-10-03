@@ -7207,115 +7207,12 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
-/* ── The folio's tile strip (beans `v0jv`, refined by #796) ────────────
+/* ── No tile strip on the sticky board (issue #1905, bean `t6ht`) ─────────
  *
- * Owner, 2026-09-21: *"lets have the square tiles lined up on the top of the
- * folio-sicky-board-landingpanel whole slides up if user doesnt want"*, and
- * in the same breath *"i dont want sub-panels of the folio, just one open
- * (miro-like) board … drop all the rounded corners… too much dead space."*
- *
- * TWO CORRECTIONS TO WHAT THIS WAS, both before it shipped. `v0jv` put the
- * tiles in a `<details>` at the BOTTOM, CLOSED. Wrong edge, and wrong
- * default: tiles a reader must open before they can see what a folio offers
- * read as absent, which is the very complaint that opened `v0jv` about the
- * in-flow row. Open is the initial state; sliding it up is the reader's act.
- *
- * CHROME ALONG THE BOARD, NOT A PANEL WITHIN IT. It carries no card, no
- * content and no second surface — that is what *"no sub-panels"* means, and
- * it is why this is a strip rather than a dock.
- *
- * SQUARE, and the same `.fa-tile` the launcher uses: *"i meant to use same
- * SQUARE TILES taht are in the expanding menu of LHS navbar."* The template
- * was already shared; what was not square was the tile itself, a flex item of
- * flexible width in a wrap row. `aspect-ratio` makes it square without
- * hardcoding a size, so it still tracks the theme's own steps.
- *
- * NO ROUNDED CORNERS on this surface. Stated as a rule here rather than swept
- * across all 57 `border-radius` declarations in this file: the folio
- * visualisation is the surface the owner is specifying, and a blanket sweep
- * would change the QA panel, the translation badges and the search field —
- * none of which was asked for and each of which is somebody else's bean. */
-.fa-board-strip {
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  border-bottom: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
-  /* Opaque: board content scrolls UNDER it. */
-  background: var(--sidebar-color, #27262b);
-}
-:root[data-fa-scheme="light"] .fa-board-strip {
-  background: #e8eaed;
-  border-bottom-color: #767d88;        /* 3.44:1 as a boundary, SC 1.4.11 */
-  color: #1f2933;                      /* 12.24:1 */
-}
-
-.fa-board-strip-summary {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  /* SC 2.5.8's 24px floor. This instance's declared interaction profile is
-     low-dexterity, so the floor is the point rather than a minimum to argue
-     down from. */
-  min-height: 24px;
-  padding: 0.2rem 0.5rem;
-  cursor: pointer;
-  font-size: 0.75rem;
-  list-style: none;
-}
-.fa-board-strip-summary::-webkit-details-marker { display: none; }
-.fa-board-strip-summary::marker { content: ""; }
-.fa-board-strip-summary:hover { background: rgba(128, 128, 128, 0.16); }
-
-/* The declared visualisations, lined up along the top. The navbar's copies
- * live in the launcher's own grid and take its rules; this is the second
- * surface of the same declaration, so it reuses `.fa-tile` rather than
- * styling a new thing — the template is `1le7`'s and is not duplicated. */
-.fa-board-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  /* CONDENSED — *"to much padding between panels, condense"*. Was 0.5rem on
-     both; the gap carries the separation and the padding was dead space. */
-  gap: 0.25rem;
-  padding: 0.25rem;
-  /* NOT the default `stretch`. A flex line stretches its items to the tallest
-     one, which silently un-squares every tile on the row the moment one
-     caption wraps — measured at 64 x 68.8px, and invisible in a screenshot. */
-  align-items: flex-start;
-}
-
-/* SQUARE, and cornerless, on this surface only.
- *
- * AN EXPLICIT HEIGHT rather than `aspect-ratio: 1 / 1`, and the difference is
- * that one of them is a promise and the other is a constraint. `aspect-ratio`
- * supplies a height only while the content fits inside it; a two-line caption
- * grows the box past the ratio and the tile is quietly oblong again. The
- * padding drops with it so the caption has the room not to wrap in the first
- * place — that is the actual fix, and the clip below is only the backstop for
- * a caption longer than any declared today. */
-.fa-board-tiles .fa-tile {
-  flex: 0 0 auto;
-  width: 4rem;
-  height: 4rem;
-  min-height: 0;
-  padding: 0.25rem;
-  overflow: hidden;
-  border-radius: 0;
-}
-
-/* An EMPTY strip is no strip. A row that opens on nothing is the `pb04`
-   failure again — an affordance that promises and delivers nothing — and
-   `:has()` lets the container answer for its contents rather than the mount
-   having to tell it. */
-.fa-board-strip:not(:has(.fa-tile)) { display: none; }
-
-/* A tile whose name another tile shares shows its harness on a second line
-   (bean `ob3m` finding 6), so it may grow past the square rather than clip
-   the line that tells the two apart. */
-.fa-board-tiles .fa-tile:has(.fa-tile-qualifier) { height: auto; min-height: 4rem; }
-
-.fa-board-tiles:empty {
-  display: none;
-}
+ * Owner, 2026-10-02: *"stickies panel shouldnt have all those icons"* —
+ * reversing the 2026-09-21 ruling (`v0jv`) that put a `.fa-board-strip` of
+ * square tiles along the top of every sticky board. Its rules went with it;
+ * the tiles stay on the navbar and the glass strip. */
 
 /* ── The sticky panel, slid away ──────────────────────────────────────────
  *
