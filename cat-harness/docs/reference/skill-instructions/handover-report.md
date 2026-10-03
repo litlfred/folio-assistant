@@ -92,6 +92,10 @@ the prose is what a person reads.
 ### Unpushed or at-risk state
 - <scratchpad files, local commits, running jobs, and whether each is reproducible>
 
+### Dispatch lines (copy-paste, one per unstarted item)
+Do bean folio-assistant-<id> on branch <branch-to-create> of repo <owner>/<repo>.
+Do bean folio-assistant-<id> on branch <branch-to-create> of repo <owner>/<repo>.
+
 ### How to resume
 <the first three things the next agent should do, in order>
 ```
@@ -111,6 +115,44 @@ the prose is what a person reads.
    one.
 6. **Update in place.** Re-run `beans:note` on the same branch and bean, which
    gives the same file. Do not append a second report.
+7. **Every unstarted item gets a DISPATCH LINE, in one fixed sentence.**
+
+   ```
+   Do bean folio-assistant-<id> on branch <branch-to-create> of repo <owner>/<repo>.
+   ```
+
+   The owner asked for exactly this shape, twice, 2026-10-03: *"for the agent,
+   i mean something like \"Do bean folio-assistant-tlk2 on branch
+   claude/blissful-ride-c2f26u-rename-script of repo litlfred/folio-assistant.\""*
+   — and then *"make sure those short dispatch is part of the handover skills,
+   so it is used again"*. It is a format, not a suggestion: write it verbatim
+   with the three slots filled.
+
+   **Why one sentence, and why these three slots.** A dispatch is read by
+   somebody with no context — the owner pasting it into a new session, or a
+   steward handing out work. The three slots are the minimum that makes it
+   actionable alone: the BEAN says what and carries its own Done-when, the
+   BRANCH stops two agents landing on one ref, and the REPO is required because
+   an agent's session may be scoped to a different one. Drop any slot and the
+   recipient has to come back and ask.
+
+   Three rules measured the same day:
+
+   - **Name a branch that does not exist yet**, and say so. A line naming a
+     branch that was already finished sent an agent to a dead ref, which it
+     reported back as "that branch does not exist and the bean is already
+     completed" — a whole round lost to a stale line.
+   - **One bean per line.** Not a theme, not "the three remaining X". The bean
+     is what carries the Done-when, and a line that names a theme hands over a
+     judgement instead of a task.
+   - **Order them, and say what is ordered.** If a line must follow another,
+     write that above the block — not inside the sentence, which stays fixed.
+     A handover that lists four dispatchable beans with a hidden prerequisite
+     is worse than one that lists the one that is ready.
+
+   `dispatch-agent` governs what happens AFTER the line is sent — the progress
+   contract and the heartbeat. This rule is only about writing the line so the
+   work can be handed on at all.
 {% endraw %}
 
 ## Processes that run this skill

@@ -93,6 +93,13 @@ give the branch, its head SHA as pushed in step 2, and its PR. A report that
 says "the branch" without a SHA cannot be checked against reality by the
 triage that reads it.
 
+**And write a DISPATCH LINE for every unstarted item** — the fixed one-sentence
+form in [`handover-report`](handover-report.md) rule 7, one line per bean,
+naming a branch that does not exist yet. The report is not finished without
+them: a handover that describes work but hands nobody a way to pick it up makes
+the next reader re-derive the dispatch, which is the step this whole skill
+exists to remove.
+
 ## 5. Tell whoever coordinates
 
 One short message to the steward or the parent session: the bean-note path,
