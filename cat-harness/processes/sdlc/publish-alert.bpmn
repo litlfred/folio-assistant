@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_PublishAlert" name="Alert the publication manager" processRef="Process_PublishAlert"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_PublishAlert" name="Alert the publication manager" isExecutable="false">
-    <bpmn:documentation>Owner, 2026-09-23: &quot;there is another alert needed for deployment failure. every step post 'push the publish button' should be same&quot;. So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager.</bpmn:documentation>
+    <bpmn:documentation>One alert for every failure after the publish button — an incomplete export, a failed verification, a failed deploy, a lost preview — kept as a single tracking issue for the publication manager and closed by the next clean publish. Owner, 2026-09-23: &quot;there is another alert needed for deployment failure. every step post 'push the publish button' should be same&quot;. So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager.</bpmn:documentation>
     <bpmn:extensionElements><cat-harness.processes:policy enforcement="strict"/></bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_PublishAlert">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">

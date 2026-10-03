@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_Publication` · strict · 11 step(s)
 
-folio-assistant — corpus to draft publication to officially published.
+How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.

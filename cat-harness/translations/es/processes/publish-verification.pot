@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: publish-verification\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.866Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.403Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -27,11 +27,6 @@ msgstr ""
 #: processes/sdlc/publish-verification.bpmn:39
 #. Diagram element documentation
 msgid "Answered by the verifier set's exit code. `no` (exit 2 — nothing to verify, or a verifier could not run) ends as could-not-verify, which the caller treats as a failure: an unverified release is not a verified one. `yes` asks whether everything passed."
-msgstr ""
-
-#: processes/sdlc/publish-verification.bpmn:14
-#. Diagram element documentation
-msgid "Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — \"a failure triggers an alert to the publisher manager\". This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares."
 msgstr ""
 
 #: processes/sdlc/publish-verification.bpmn:17
@@ -72,6 +67,11 @@ msgstr ""
 #: processes/sdlc/publish-verification.bpmn:33
 #. Diagram element documentation
 msgid "Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir <site>`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block."
+msgstr ""
+
+#: processes/sdlc/publish-verification.bpmn:14
+#. Diagram element documentation
+msgid "Run the verifier set over the built tree between the export and the deploy, blocking it: pass, fail or could-not-tell, and the caller deploys only on a pass. Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — \"a failure triggers an alert to the publisher manager\". This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares."
 msgstr ""
 
 #: processes/sdlc/publish-verification.bpmn:18

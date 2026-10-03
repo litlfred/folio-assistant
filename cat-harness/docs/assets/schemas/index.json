@@ -28086,6 +28086,114 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema",
+      "name": "ProcessIndexRowSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "One BPMN process, as the workflow page's runtime view draws it (bean `ax6r`).",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "First sentence of the process's own `bpmn:documentation`; absent when it has none."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "svg",
+          "type": "z.string().startsWith(\"/\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Site-root path of the rendered SVG; absent when none was drawn."
+        },
+        {
+          "name": "group",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "`\"\"` for a diagram at the top of its `processes/` directory."
+        },
+        {
+          "name": "instance",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "calls",
+          "type": "StringList",
+          "optional": false,
+          "array": false,
+          "doc": "`calledElement` of each call activity — process ids, not files."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#ProcessIndexSchema",
+      "name": "ProcessIndexSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "instances",
+          "type": "z.array(z.object({ name: z.string().min(1), path: z.string().min(1), processes: Count }).strict())",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "processes",
+          "type": "z.array(ProcessIndexRowSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",
       "name": "QaIndexBadgeSchema",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -52903,6 +53011,30 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "calls",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#ProcessIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "instances",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#ProcessIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema",
+      "via": "processes",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",

@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_PublishAlert` · strict · 4 step(s)
 
-Owner, 2026-09-23: "there is another alert needed for deployment failure. every step post 'push the publish button' should be same". So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager.
+One alert for every failure after the publish button — an incomplete export, a failed verification, a failed deploy, a lost preview — kept as a single tracking issue for the publication manager and closed by the next clean publish. Owner, 2026-09-23: "there is another alert needed for deployment failure. every step post 'push the publish button' should be same". So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager.
 
 <img src="../assets/img/workflows/publish-alert.svg" alt="BPMN diagram: Alert the publication manager" style="max-width:100%">
 

@@ -23,7 +23,7 @@
     <bpmn:participant id="Participant_BuildL1Kg" name="Ingestion subprocess — build the L1 knowledge graph" processRef="Process_BuildL1Kg" />
   </bpmn:collaboration>
   <bpmn:process id="Process_BuildL1Kg" name="Ingestion subprocess — build the L1 knowledge graph" isExecutable="false">
-    <bpmn:documentation>folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
+    <bpmn:documentation>Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

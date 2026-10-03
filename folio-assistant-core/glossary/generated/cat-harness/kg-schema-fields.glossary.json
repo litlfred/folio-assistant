@@ -8372,6 +8372,34 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.processindexrowschema.calls",
+      "prefLabel": "ProcessIndexRowSchema.calls",
+      "definition": "`calledElement` of each call activity — process ids, not files.",
+      "source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.calls",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.processindexrowschema.group",
+      "prefLabel": "ProcessIndexRowSchema.group",
+      "definition": "`\"\"` for a diagram at the top of its `processes/` directory.",
+      "source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.group",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.processindexrowschema.summary",
+      "prefLabel": "ProcessIndexRowSchema.summary",
+      "definition": "First sentence of the process's own `bpmn:documentation`; absent when it has none.",
+      "source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.summary",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.processindexrowschema.svg",
+      "prefLabel": "ProcessIndexRowSchema.svg",
+      "definition": "Site-root path of the rendered SVG; absent when none was drawn.",
+      "source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.svg",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.qaindexschema.badges",
       "prefLabel": "QaIndexSchema.badges",
       "definition": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty.",

@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_DocumentAuthoring` · advisory · 9 step(s)
 
-folio-assistant — authoring a document end to end (no Lean, no required TeX).
+How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end. folio-assistant — authoring a document end to end (no Lean, no required TeX).
 Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated
 from it by `bun run render:bpmn` — never hand-edit the SVG.
 The shape is the paper process minus the Lean lane and plus one step, the profile

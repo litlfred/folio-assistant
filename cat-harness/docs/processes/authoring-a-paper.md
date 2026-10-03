@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_PaperAuthoring` · advisory · 9 step(s)
 
-folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).
+How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting. folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.

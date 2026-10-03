@@ -500,6 +500,12 @@
 -->
 <meta name="fa-beans-src" content="{{ '/assets/beans/index.json' | relative_url }}">
 <!--
+  The process index — every declared BPMN process, written by `bun run
+  docs:auto`. Read by assets/js/process-index.js on the page carrying
+  `[data-fa-process-index]` (the publication-workflow page).
+-->
+<meta name="fa-processes-src" content="{{ '/assets/processes/index.json' | relative_url }}">
+<!--
   The deploy's stamp — when it was built and from which commit — which the
   work-plan dashboard turns into "generated … · N commits behind main".
   `build.json` on the main site, `staging.json` on a preview; written by the
@@ -602,6 +608,11 @@
   inlined verbatim into the generated state-visualiser pages.
 -->
 <script src="{{ '/assets/js/work-plan.js' | relative_url }}" defer></script>
+<!--
+  The process index, self-mounting on `[data-fa-process-index]` the same way.
+  Its rows are the diagrams' own documentation, from assets/processes/index.json.
+-->
+<script src="{{ '/assets/js/process-index.js' | relative_url }}" defer></script>
 
 <!--
   The landing panel — the instance's declared description drawn inside the

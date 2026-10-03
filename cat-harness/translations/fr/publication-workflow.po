@@ -53,473 +53,9 @@ msgstr "Chaque flux de travail du dépôt"
 msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
 msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
 
-#: docs/publication-workflow.md:40
-msgid "How many BPMN 2.0 files are there? This page no longer says, and that is the fix rather than an evasion."
-msgstr "Combien y a-t-il de fichiers BPMN 2.0 ? Cette page ne l'indique plus, et c'est là une correction plutôt qu'une dérobade."
-
-#: docs/publication-workflow.md:43
-msgid "The sentence that used to open here carried a count, and it was wrong five times in a row — \"six\", then \"nineteen\", then \"thirty\", then \"thirty-two, all under \", then \"thirty-nine\" — each for long enough to be wrong, and each time discovered by somebody who happened to run . The last of those was wrong by sixteen when it was finally checked: it claimed thirty-nine against fifty-five."
-msgstr "La phrase qui ouvrait cette section comportait un décompte, et elle a été fausse cinq fois de suite — « six », puis « dix-neuf », puis « trente », puis « trente-deux, tous sous  », puis « trente-neuf » — chacune assez longtemps pour être erronée, et découverte à chaque fois par quelqu'un qui a exécuté  par hasard. La dernière de ces affirmations comportait une erreur de seize lorsqu'elle a enfin été vérifiée : elle en annonçait trente-neuf alors qu'il y en avait cinquante-cinq."
-
-#: docs/publication-workflow.md:50
-msgid "A count in prose is a claim; a derived index is evidence. So the number lives in the derived process index, which is generated from the declaration by , gated in CI, and cannot drift from the diagrams it counts. This page's job is the half that cannot be generated — what each process is for, when you would be in it, and which neighbouring one you actually want."
-msgstr "Un décompte en prose est une affirmation ; un index dérivé est une preuve. Le nombre réside donc dans l'index dérivé des processus, qui est généré à partir de la déclaration par , contrôlé en CI, et ne peut pas diverger des diagrammes qu'il dénombre. Le rôle de cette page est la moitié qui ne peut pas être générée — à quoi sert chaque processus, dans quel cas vous vous y trouveriez, et quel processus voisin vous recherchez réellement."
-
-#: docs/publication-workflow.md:57
-msgid "That division is the  skill's rule, and this page is the worked example of it: the index says what exists and what each diagram declares about itself; everything below says what the index structurally cannot."
-msgstr "Cette séparation est la règle de la compétence , et cette page en est l'exemple concret : l'index indique ce qui existe et ce que chaque diagramme déclare à propos de lui-même ; tout ce qui suit détaille ce que l'index ne peut structurellement pas exprimer."
-
-#: docs/publication-workflow.md:61
-msgid "Bootstrap's diagrams are deliberately outside that index, and their absence is a fact rather than a gap.  is declared by  and not by the root, because declaring it there re-carries bootstrap's process into the root's published graph — which  removed on purpose and a test still guards. Bean  holds that choice: both halves of bootstrap, or neither. So the derived index covers what the root declares, and the three bootstrap diagrams are named in the table below instead."
-msgstr "Les diagrammes d'amorçage (bootstrap) sont délibérément exclus de cet index, et leur absence est un choix délibéré plutôt qu'une omission.  est déclaré par  et non par la racine, car le déclarer à cet endroit réintroduirait le processus d'amorçage dans le graphe publié de la racine — ce que  a délibérément supprimé et qu'un test protège toujours. Le bean  conserve ce choix : les deux moitiés de bootstrap, ou aucune des deux. Ainsi, l'index dérivé couvre ce que la racine déclare, et les trois diagrammes d'amorçage sont nommés à la place dans le tableau ci-dessous."
-
-#: docs/publication-workflow.md:70
-msgid "Each is a real BPMN 2.0 document with diagram interchange — open it in bpmn.io, Camunda Modeler, or any BPMN tool. The SVGs throughout the docs are generated from these files by ; never hand-edit an SVG."
-msgstr "Chacun est un véritable document BPMN 2.0 avec interchange de diagrammes (BPMN DI) — ouvrez-le dans bpmn.io, Camunda Modeler ou tout autre outil BPMN. Les SVG présents dans la documentation sont générés à partir de ces fichiers par  ; ne modifiez jamais un SVG à la main."
-
-#: docs/publication-workflow.md:75
-msgid "Before any of the rest — the process a person meets first, and the only one that runs when there is no folio yet."
-msgstr "Avant tout le reste — le processus qu'une personne rencontre en premier, et le seul qui s'exécute lorsqu'aucun folio n'existe encore."
-
-#: docs/publication-workflow.md:78
-msgid "This table named  until 2026-09-20 — a file that does not exist, renamed to  long before — while all three real diagrams went unnamed. A dangling reference hiding behind a directory nothing scanned, which is exactly what the not-indexed check exists to catch and could not, because it could not see the directory either (bean )."
-msgstr "Ce tableau mentionnait  jusqu'au 2026-09-20 — un fichier qui n'existe pas, renommé en  bien avant — tandis que les trois véritables diagrammes n'étaient pas nommés. Une référence orpheline cachée derrière un répertoire que rien n'analysait, ce qui est précisément ce que la vérification des éléments non indexés a pour vocation de détecter et n'a pas pu faire, car elle ne pouvait pas non plus voir ce répertoire (bean )."
-
-#: docs/publication-workflow.md:84
-msgid "The rows are correct now. The diagrams are still invisible to the tooling, and deliberately so pending a decision:  is declared by  but not by the root, and declaring it there re-carries bootstrap's process into the root's published graph — which  removed on purpose and a test still guards. Bean  holds that choice: both halves of bootstrap, or neither."
-msgstr "Les lignes sont désormais correctes. Les diagrammes demeurent invisibles pour les outils, et ce délibérément en attente d'une décision :  est déclaré par  mais pas par la racine, et le déclarer là-bas réintroduirait le processus d'amorçage dans le graphe publié de la racine — ce que  a délibérément supprimé et qu'un test protège toujours. Le bean  consigne ce choix : les deux moitiés de bootstrap, ou aucune des deux."
-
 #: docs/publication-workflow.md:91
 msgid "Diagram"
 msgstr "Diagramme"
-
-#: docs/publication-workflow.md:91
-msgid "Answers"
-msgstr "Questions traitées"
-
-#: docs/publication-workflow.md:93
-msgid "An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an instance reference; the harness type, the knowledge graph and the voice are read from that instance's declaration. See  and the proposal"
-msgstr "Un agent a été orienté vers un dépôt et ne sait rien. Est-ce déjà une instance — la charger — ou non, auquel cas que doit-elle devenir ? La seule entrée est une référence d'instance ; le type de harness, le graphe de connaissances et la voix sont lus depuis la déclaration de cette instance. Voir  et la proposition"
-
-#: docs/publication-workflow.md:94
-msgid "An agent has been pointed at a repository and knows nothing. The only process in bootstrap an actor STARTS — a Bootstrapping Agent that has read  is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See  and the proposal"
-msgstr "Un agent a été orienté vers un dépôt et ne sait rien. Le seul processus d'amorçage qu'un acteur DÉMARRE — un agent d'amorçage (Bootstrapping Agent) ayant lu  se trouve à son événement de début et n'a nulle part ailleurs où commencer. Trois couloirs : Bootstrapping Agent, Requestor, et Knowledge Graph Data Store. Voir  et la proposition"
-
-#: docs/publication-workflow.md:95
-msgid "Two facts have no answer in any file a Bootstrapping Agent can reach — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within  when such a fact is needed, which is why bootstrap holds a second process at all: it is presupposed by every task rather than indicated by one"
-msgstr "Deux faits n'ont aucune réponse dans un fichier accessible à un agent d'amorçage — quel harness ce dépôt doit devenir, et quels dépôts sont lus et écrits. Ce sont des jugements portés par la personne qui a demandé le harness, donc aucun corps d'instruction ne les produit. On y entre depuis  lorsqu'un tel fait est requis, ce qui explique pourquoi bootstrap contient un second processus : il est présupposé par chaque tâche plutôt qu'indiqué par une seule"
-
-#: docs/publication-workflow.md:96
-msgid "A sub-process, never an entry point — reached by a call activity, never started, which is why bootstrap's README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing"
-msgstr "Un sous-processus, jamais un point d'entrée — atteint par une activité d'appel, jamais démarré, raison pour laquelle le README de bootstrap peut continuer d'affirmer qu'il n'y a qu'un seul processus que vous commencez. Appelable facultativement depuis n'importe quelle tâche (un acteur consignant ce qu'il fait n'a besoin d'aucune autorisation) ou requis par un diagramme qui dessine l'appel explicitement ; même sous-processus dans les deux cas, la seule différence étant si l'appelant l'a représenté ou non. Il réside dans bootstrap plutôt que dans le harness car bootstrap ne peut pas importer le harness, de sorte qu'un enregistreur défini en amont serait inutilisable par l'acteur ayant le plus besoin d'indiquer ce qu'il fait"
-
-#: docs/publication-workflow.md:97
-msgid "Somebody said \"create a folio\". Which of the five things did they mean, and what has to be true before anything is written?"
-msgstr "Quelqu'un a dit « créer un folio ». Laquelle des cinq choses voulait-il dire, et que faut-il vérifier avant d'écrire quoi que ce soit ?"
-
-#: docs/publication-workflow.md:99
-msgid "Its intent gateway is computed, not chosen:  returns the branch, and  is one of the outcomes it can return — which is what makes the question obligatory rather than a courtesy. See Getting started."
-msgstr "Sa passerelle d'intention est calculée, non choisie :  renvoie la branche, et  fait partie des résultats possibles — ce qui rend la question obligatoire plutôt que de simple courtoisie. Voir Premiers pas."
-
-#: docs/publication-workflow.md:104
-msgid "Content-agnostic — these three apply to every folio, and the outer ones reference the inner ones as call activities, so each process is described once and reused:"
-msgstr "Indépendant du contenu — ces trois processus s'appliquent à chaque folio, et les processus extérieurs référencent les intérieurs sous forme d'activités d'appel, de sorte que chaque processus n'est décrit qu'une fois et réutilisé :"
-
-#: docs/publication-workflow.md:108
-msgid "Level"
-msgstr "Niveau"
-
-#: docs/publication-workflow.md:110
-msgid "Content lifecycle —"
-msgstr "Cycle de vie du contenu —"
-
-#: docs/publication-workflow.md:110
-msgid "One cycle of a folio, plan → retire"
-msgstr "Un cycle d'un folio, planification → retrait"
-
-#: docs/publication-workflow.md:111
-msgid "Draft → publication —"
-msgstr "Brouillon → publication —"
-
-#: docs/publication-workflow.md:111
-msgid "How the corpus becomes an officially published folio"
-msgstr "Comment le corpus devient un folio officiellement publié"
-
-#: docs/publication-workflow.md:112
-msgid "Editing & HCI validation —"
-msgstr "Édition et validation IHM —"
-
-#: docs/publication-workflow.md:112
-msgid "What happens to one proposed change to one content block"
-msgstr "Ce qui arrive à une modification proposée pour un bloc de contenu"
-
-#: docs/publication-workflow.md:114
-msgid "Content-type specific — how a particular kind of folio is authored. These sit inside level 3's , and live with their guides:"
-msgstr "Spécifique au type de contenu — comment un type particulier de folio est rédigé. Ceux-ci se situent au sein de  du niveau 3, et résident avec leurs guides :"
-
-#: docs/publication-workflow.md:117
-msgid "Content type"
-msgstr "Type de contenu"
-
-#: docs/publication-workflow.md:117
-msgid "Where it is shown"
-msgstr "Emplacement"
-
-#: docs/publication-workflow.md:119
-msgid "Documents & policy guidance"
-msgstr "Documents et directives politiques"
-
-#: docs/publication-workflow.md:119
-msgid "Writing a document"
-msgstr "Rédiger un document"
-
-#: docs/publication-workflow.md:120
-msgid "Scientific papers & books"
-msgstr "Articles scientifiques et livres"
-
-#: docs/publication-workflow.md:120
-msgid "Writing a paper"
-msgstr "Rédiger un article"
-
-#: docs/publication-workflow.md:121
-msgid "Authoring a WHO SMART DAK"
-msgstr "Rédiger un DAK SMART de l'OMS"
-
-#: docs/publication-workflow.md:122
-msgid "WHO SMART Implementation Guide (L3)"
-msgstr "Guide d'implémentation SMART de l'OMS (L3)"
-
-#: docs/publication-workflow.md:122
-msgid "Authoring a WHO SMART IG"
-msgstr "Rédiger un IG SMART de l'OMS"
-
-#: docs/publication-workflow.md:123
-msgid "WHO SMART IG (L3) — the build lane, incremental by dependency cone (proposed)"
-msgstr "IG SMART de l'OMS (L3) — couloir de compilation, incrémentiel par cône de dépendances (proposé)"
-
-#: docs/publication-workflow.md:123
-msgid "Making the build incremental · the overview"
-msgstr "Rendre la compilation incrémentielle · vue d'ensemble"
-
-#: docs/publication-workflow.md:125
-msgid "Agent process — how an agent works, rather than how content is authored. These run alongside the content processes rather than inside them:"
-msgstr "Processus d'agent — fonctionnement d'un agent, plutôt que rédaction du contenu. Ceux-ci s'exécutent en parallèle des processus de contenu plutôt qu'à l'intérieur :"
-
-#: docs/publication-workflow.md:130
-msgid "A feature request arrived. How is it turned into agreed requirements, and who signs off? The outer process; its six phases are the call activities below. See CRDM methodology"
-msgstr "Une demande de fonctionnalité est arrivée. Comment est-elle transformée en exigences validées, et qui signe l'approbation ? Le processus externe ; ses six phases sont les activités d'appel ci-dessous. Voir Méthodologie CRDM"
-
-#: docs/publication-workflow.md:131
-msgid "Scan for a matching issue, then link or ask — an issue is never created without the BA's permission"
-msgstr "Rechercher un ticket correspondant, puis lier ou demander — un ticket n'est jamais créé sans l'autorisation du BA"
-
-#: docs/publication-workflow.md:132
-msgid "Phase 1: identify stakeholders, synthesise the needs statement, loop until it is recognised"
-msgstr "Phase 1 : identifier les parties prenantes, synthétiser l'énoncé des besoins, boucler jusqu'à ce qu'il soit reconnu"
-
-#: docs/publication-workflow.md:133
-msgid "Phases 2–4: map the current workflow, define requirements and their impact, loop until approved"
-msgstr "Phases 2–4 : cartographier le flux actuel, définir les exigences et leur impact, boucler jusqu'à approbation"
-
-#: docs/publication-workflow.md:134
-msgid "Between requirements and sign-off: entities from the BPA and the requirements, cardinalities stated both ways, looping until the BA recognises the entities AND the stakeholders have answered every cardinality"
-msgstr "Entre les exigences et l'approbation : entités issues du BPA et des exigences, cardinalités indiquées dans les deux sens, en bouclant jusqu'à ce que le BA reconnaisse les entités ET que les parties prenantes aient répondu à chaque cardinalité"
-
-#: docs/publication-workflow.md:135
-msgid "Phase 5: requirements become beans, the BA signs off, the branch is announced on the issue"
-msgstr "Phase 5 : les exigences deviennent des beans, le BA signe l'approbation, la branche est annoncée sur le ticket"
-
-#: docs/publication-workflow.md:136
-msgid "Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation"
-msgstr "Phase 6 : implémenter, examiner l'incrément, partager le MVP, recueillir les retours des parties prenantes. Une seule phase, car les trois boucles reviennent vers l'implémentation"
-
-#: docs/publication-workflow.md:137
-msgid "Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion"
-msgstr "Validation des parties prenantes, confirmation du BA, et clôture seulement ensuite — un agent ne présume jamais de l'achèvement"
-
-#: docs/publication-workflow.md:138
-msgid "WHO's Digital Implementation Investment Guide as a process: nine chapters from forming the team to the value proposition, with the Guide's OWN progress checks at 4.5 and 8.5 as gateways rather than gates added here. Chapter 3 builds on CRDM, which is why it sits beside the diagrams above. Lives in , because a domain method belongs to the repository that owns the domain"
-msgstr "Le Guide d'investissement dans la mise en œuvre des interventions numériques (DIIG) de l'OMS sous forme de processus : neuf chapitres allant de la constitution de l'équipe à la proposition de valeur, avec les PROPRES points d'étape du Guide à 4.5 et 8.5 sous forme de passerelles plutôt que de points de contrôle ajoutés ici. Le chapitre 3 s'appuie sur le CRDM, raison pour laquelle il figure à côté des diagrammes ci-dessus. Réside dans , car une méthode métier appartient au dépôt propriétaire du domaine"
-
-#: docs/publication-workflow.md:139
-msgid "When does an agent create, edit or scrap a bean — and why is one never deleted? See Beans and todos"
-msgstr "Quand un agent crée-t-il, modifie-t-il ou abandonne-t-il un bean — et pourquoi un bean n'est-il jamais supprimé ? Voir Beans et tâches"
-
-#: docs/publication-workflow.md:140
-msgid "An agent playing a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is which enabled branch the agent takes. Both gateways carry , the marker added with this diagram so that \"no table because this is somebody's call\" stops being indistinguishable from \"no table yet\". The machine records that a bean was claimed; it never claims one"
-msgstr "Un agent déroulant une machine à états, maintenant le contexte d'une session à jour tout au long d'une discussion. La structure est stricte — l'interpréteur prend en charge neuf types d'éléments et lève une exception sur les autres — et ce qui varie est la branche active choisie par l'agent. Les deux passerelles portent l'annotation , marqueur introduit avec ce diagramme pour que « pas de tableau car il s'agit d'une décision humaine » cesse d'être indiscernable de « pas encore de tableau ». La machine enregistre qu'un bean a été pris en charge ; elle n'en prend jamais un d'elle-même"
-
-#: docs/publication-workflow.md:141
-msgid "When does an agent write a log entry, and when is one kept? Persistence is off by default, and the gateway reads a three-valued setting — , ,  — rather than assuming. Emptying the log is the one exception to the never-delete rule that governs the rest of"
-msgstr "Quand un agent écrit-il une entrée de journal, et quand est-elle conservée ? La persistance est désactivée par défaut, et la passerelle lit un paramètre à trois états — , ,  — au lieu de deviner. Vider le journal est la seule exception à la règle de non-suppression qui régit le reste de"
-
-#: docs/publication-workflow.md:142
-msgid "One author's change, from description through staging to review-committee approval"
-msgstr "La modification d'un auteur, de sa description à son approbation par le comité de relecture en passant par la mise en préproduction (staging)"
-
-#: docs/publication-workflow.md:143
-msgid "The same loop for a change to the platform rather than to content: claim, branch, run the gates, open the PR at the first commit, drive CI green, answer review, merge. Drawn for bean  after an audit found INTEGRATION and VERIFICATION unowned — not for want of vocabulary, but because the diagram above takes a content change as its subject. No deployment lane: that is the one part whose activities differ per topology"
-msgstr "La même boucle pour une modification de la plateforme plutôt que du contenu : prise en charge, branche, passage des portes de validation, ouverture de la PR dès le premier commit, passage de la CI au vert, traitement des retours de relecture, fusion. Dessiné pour le bean  après qu'un audit a constaté qu'INTEGRATION et VERIFICATION n'avaient pas de propriétaire — non par manque de vocabulaire, mais parce que le diagramme ci-dessus prend pour objet une modification de contenu. Aucun couloir de déploiement : c'est la seule partie dont les activités diffèrent selon chaque topologie"
-
-#: docs/publication-workflow.md:144
-msgid "Attesting a QA report, by one of two routes chosen from declared facts: an API signer where the performing actor can reach out, a human release authority where it cannot. Bean , for the case the owner raised — \"an API wouldnt wokr and a human actor is needed\". The branch is computed by , which reads the actor's reach and whether an endpoint is configured; undeclared reach is  and routes to the person, because a gateway that guessed \"connected\" would produce an unsigned report that looks signed"
-msgstr "Attestation d'un rapport QA, selon l'une des deux voies choisies à partir des faits déclarés : un signataire API lorsque l'acteur exécutant dispose de la connectivité réseau requise, une autorité humaine de publication sinon. Bean , pour le cas soulevé par le responsable — « une API ne marcherait pas et un acteur humain est nécessaire ». La branche est calculée par , qui lit la portée d'accès (reach) de l'acteur et la configuration d'un point de terminaison ; une portée non déclarée vaut  et achemine vers la personne, car une passerelle qui supposerait « connecté » produirait un rapport non signé ayant l'apparence d'un rapport signé"
-
-#: docs/publication-workflow.md:145
-msgid "Changing who can do what: add an actor and declare its kind, open or close a role, grant or revoke a permission, retire an actor without deleting it — then audit. Bean : the join is clean (31 of 31 roles bind a lane, no dangling reference), so this was a missing process, not a broken one. It calls  for the branch, gates and review rather than restating them, and adds the three things specific to editing the substrate every other diagram binds to. The  role waited for the owner to say administration is a swimlane — a role is never invented to make a diagram drawable"
-msgstr "Modifier qui peut faire quoi : ajouter un acteur et déclarer son type, ouvrir ou fermer un rôle, accorder ou révoquer une permission, retirer un acteur sans le supprimer — puis auditer. Bean  : la jointure est propre (31 rôles sur 31 lient un couloir, aucune référence orpheline), il s'agissait donc d'un processus manquant, et non d'un processus défectueux. Il appelle  pour la branche, les portes et la relecture plutôt que de les redéfinir, et ajoute les trois éléments spécifiques à l'édition du socle auquel chaque autre diagramme se rattache. Le rôle  a attendu que le responsable indique que l'administration constitue un couloir — un rôle n'est jamais inventé pour rendre un diagramme traçable"
-
-#: docs/publication-workflow.md:146
-msgid "Part of a repository wants to leave — size, or a semantic reason. The four stages are gates rather than advice, and that is the whole reason this is a diagram:  says \"nothing moves until the stage before it measures zero\" in prose, and prose is what an agent under pressure talks itself past. All three gateways are DMN-backed, so completion refuses a hand-supplied outcome and the branch is computed from counts a tool already produced. The sharpest is , and it is sharp because of its RULE ORDER —  returns  before the cross-edge rule is ever reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. Every gate has a third state and none of them renders it as clean: both  paths are a REFUSAL to advance rather than a warning.  sits in the Administrator lane because moving durable artefacts out of a repository is a person's decision — the agent reports what would move and waits, per"
-msgstr "Une partie d'un dépôt doit être détachée — pour des raisons de taille ou sémantiques. Les quatre étapes sont des portes infranchissables plutôt que de simples recommandations, et c'est la raison même d'être de ce diagramme :  indique en prose que « rien ne bouge tant que l'étape précédente n'est pas mesurée à zéro », et la prose est précisément ce qu'un agent sous pression contourne par le discours. Les trois passerelles s'appuient sur DMN, de sorte que l'achèvement refuse tout résultat fourni manuellement et que la branche est calculée à partir de décomptes déjà générés par un outil. La plus stricte est , et elle l'est en raison de son ORDRE DE RÈGLES —  renvoie  avant même que la règle des arêtes croisées ne soit évaluée, si bien qu'un décompte d'arêtes croisées nul sur un corpus non évalué ne peut être interprété comme un succès. Chaque porte dispose d'un troisième état et aucune ne le considère comme réussi : les deux chemins  sont un REFUS d'avancer plutôt qu'un avertissement.  se trouve dans le couloir Administrator car déplacer des artefacts durables hors d'un dépôt relève de la décision d'une personne — l'agent signale ce qui serait déplacé et attend, conformément à"
-
-#: docs/publication-workflow.md:148
-msgid "Review — the generic entry and the two specialisms it descends into. They are separate processes rather than extra skills on the reviewer, because the subprocess stack is SCOPED: an actor takes on the inner lane's role for that call path only, where  would carry both specialisms everywhere."
-msgstr "Relecture — l'entrée générique et les deux spécialisations dans lesquelles elle descend. Ce sont des processus distincts plutôt que des compétences supplémentaires portées par le relecteur, car la pile de sous-processus a une PORTÉE DÉLIMITÉE : un acteur n'endosse le rôle du couloir intérieur que pour ce chemin d'appel précis, alors qu' propagerait les deux spécialisations partout."
-
-#: docs/publication-workflow.md:155
-msgid "What kind of thing changed, and which review does it descend into?"
-msgstr "Quel type d'élément a été modifié, et vers quelle relecture descend-on ?"
-
-#: docs/publication-workflow.md:156
-msgid "Prose: register and voice, the editorial dependencies a reader needs, translation"
-msgstr "Prose : registre et voix, dépendances éditoriales requises pour le lecteur, traduction"
-
-#: docs/publication-workflow.md:157
-msgid "The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs?"
-msgstr "Nœuds de code du graphe : définitions d'outils et nœuds de définition de schéma — le nœud déclare-t-il ce qu'il est, ses références sont-elles résolues, le mécanisme qu'il annonce est-il celui qui s'exécute ?"
-
-#: docs/publication-workflow.md:158
-msgid "A decision with alternatives: which adopted methodology applies here, what were the options, and why did the rejected ones lose? Called as a subprocess, and its trigger is 's — irreversibility and surprise, not size — so a reversible choice leaves at the first task and an irreversible one cannot skip it. It does not decide: it produces the options and a recommendation, and the authorisation belongs to the calling step."
-msgstr "Une décision comportant des alternatives : quelle méthodologie adoptée s'applique ici, quelles étaient les options, et pourquoi les options rejetées ont-elles été écartées ? Appelé sous forme de sous-processus, son déclencheur est celui d' — l'irréversibilité et la surprise, non la taille — de sorte qu'un choix réversible s'arrête dès la première tâche et qu'un choix irréversible ne peut pas l'ignorer. Il ne tranche pas : il produit les options et une recommandation, l'autorisation appartenant à l'étape appelante."
-
-#: docs/publication-workflow.md:159
-msgid "Situation analysis before a decision: what is true about a subject's own attributes (strengths, weaknesses) and about its environment (opportunities, threats), crossed into the SO/WO/ST/WT candidate strategies. No path through it decides anything — that is the  methodology's own stated refusal, drawn so it cannot be skipped, and every completed run either records a situation or hands the unranked candidates to . External is scanned before internal, per Weihrich as the ingested source reports him. It does not rank what it finds, because the method has no way to."
-msgstr "Analyse de situation avant une décision : ce qui caractérise les attributs propres d'un sujet (forces, faiblesses) et son environnement (opportunités, menaces), croisés dans les stratégies candidates SO/WO/ST/WT. Aucun chemin ne prend de décision — c'est le refus explicite de la méthode , représenté afin de ne pas pouvoir être ignoré, et chaque exécution terminée enregistre une situation ou transmet les candidats non classés à . L'externe est analysé avant l'interne, selon Weihrich tel que la source ingérée le rapporte. Il ne classe pas ce qu'il trouve, la méthode n'ayant aucun moyen de le faire."
-
-#: docs/publication-workflow.md:160
-msgid "Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from , and it leaves immediately when no voice is active — the default, and this instance's case."
-msgstr "Quelles voix éditoriales nommées ce folio a-t-il ACTIVÉES, et la citation propre à chaque règle étaye-t-elle le constat émis ? Appelé depuis , il se termine immédiatement lorsqu'aucune voix n'est active — ce qui est le comportement par défaut et le cas de cette instance."
-
-#: docs/publication-workflow.md:161
-msgid "The review reached no mechanical or consensus agreement, so a judgement is needed — and what it must leave behind. Entered only when a criterion's reviewer entries DISAGREE, which  makes computable, so the first gateway leaves rather than guessing: one reviewer and no checker is a review, one checker and no reviewer is a gate. Drawn for bean  after the shape was found implemented seven times — five adjudicate activities across , plus  and , which share no code with the diagrams and reached the same rule anyway. Advisory, because a judgement cannot be gated;  and  are not relaxable, because a judgement nobody wrote down is indistinguishable from a checker that was never run"
-msgstr "La relecture n'a abouti à aucun accord mécanique ni consensus, un jugement est donc nécessaire — ainsi que les traces qu'il doit laisser. Déclenché uniquement lorsque les évaluations des relecteurs sur un critère SONT EN DÉSACCORD, ce que  rend calculable, de sorte que la première passerelle quitte le processus plutôt que de deviner : un relecteur sans vérificateur constitue une relecture, un vérificateur sans relecteur constitue une porte de contrôle. Conçu pour le bean  après que cette structure a été trouvée implémentée sept fois — cinq activités d'arbitrage à travers , plus  et , qui ne partagent aucun code avec les diagrammes et ont abouti à la même règle. Consultatif, car un jugement ne peut faire l'objet d'une porte automatisée ;  et  ne sont pas assouplissables, car un jugement non consigné par écrit est indiscernable d'un vérificateur qui n'a jamais été exécuté"
-
-#: docs/publication-workflow.md:162
-msgid "A change touched both sides of a declared prose ↔ code pair — a diagram and the workflow it implements, a skill and the code beside it — so  sends it here, the only branch that reads the two against each other. The machine has already run ( and  on the sidecar); the reviewer settles only what those left open, one of three ways: attest with a reason, raise a finding against the wrong side, or — on a disagreement with a checker — call . Drawn for issue #1042, stage C; the Lean case is , not this diagram"
-msgstr "Une modification a touché les deux côtés d'une paire prose ↔ code déclarée — un diagramme et le flux de travail qu'il implémente, une compétence et le code adjacent —  l'envoie donc ici, la seule branche qui confronte les deux volets l'un à l'autre. La machine a déjà tourné ( et  sur le sidecar) ; le relecteur ne tranche que ce que celles-ci ont laissé en suspens, selon l'une des trois voies : attester avec un motif, émettre un constat contre le mauvais côté, ou — en cas de désaccord avec un vérificateur — appeler . Conçu pour le ticket #1042, étape C ; le cas Lean relève de , non de ce diagramme"
-
-#: docs/publication-workflow.md:163
-msgid "Answer a question from a corpus this folio ALREADY holds, iteratively, and stop on a stated condition. Renders Doc-Researcher (arXiv:2510.21603v1, Dong et al.) as a process: filter the corpus and choose the granularity, search, refine, then judge sufficiency. Two ways out and both are load-bearing — a threshold alone never terminates on a question the corpus cannot answer, a cap alone stops an answerable one early and returns something that looks complete — and which one fired is carried to the report. ONE lane, not the paper's four agents: they are four questions under one accountability, and this repo's role model makes a swimlane an accountability.  is not relaxable, because a search that ended quietly looks exactly like one that succeeded"
-msgstr "Répondre à une question à partir d'un corpus que ce folio détient DÉJÀ, de manière itérative, et s'arrêter sur une condition explicite. Restitue Doc-Researcher (arXiv:2510.21603v1, Dong et al.) sous forme de processus : filtrer le corpus et choisir la granularité, chercher, affiner, puis évaluer la suffisance. Deux voies de sortie, toutes deux capitales — un seuil seul ne se termine jamais sur une question à laquelle le corpus ne peut répondre, un plafond seul interrompt prématurément une question soluble et renvoie un résultat d'apparence complète — et la condition déclenchée est transmise au rapport. UN seul couloir, non les quatre agents de l'article : il s'agit de quatre questions relevant d'une même responsabilité, et le modèle de rôles de ce dépôt fait d'un couloir une responsabilité.  n'est pas assouplissable, car une recherche terminée en silence ressemble trait pour trait à une recherche réussie"
-
-#: docs/publication-workflow.md:164
-msgid "The QA-criterion specialisation of the adjudication: ask the shared judgement, then do the one of three things a criterion disagreement admits — the finding stands, the criterion is scoped so it stops applying here, or it applies and a dispensation records why. Split out of  for bean  (#1073), because six diagrams called that process and only two asked a question these three answer:  asks which side wins a conflict and  asks whether a drift is real, and a  ran the outcome half for both. Handing each caller its own codes could not fix it — the codes selected three different TASKS — so the branches moved rather than the enum.  and  are not relaxable and live here now, with the caller that records"
-msgstr "La spécialisation critère-QA de l'arbitrage : solliciter le jugement partagé, puis exécuter l'une des trois actions admises par un désaccord sur un critère — le constat est maintenu, le critère est restreint afin de cesser de s'appliquer ici, ou il s'applique et une dérogation en consigne la raison. Extrait de  pour le bean  (#1073), car six diagrammes appelaient ce processus et deux seulement posaient une question à laquelle ces trois voies répondent :  demande quel côté l'emporte lors d'un conflit et  demande si une dérive est réelle, une  exécutant la partie résultat pour les deux. Attribuer à chaque appelant ses propres codes ne pouvait pas résoudre le problème — les codes sélectionnaient trois TÂCHES différentes — ce sont donc les branches qui ont été déplacées plutôt que l'énumération.  et  ne sont pas assouplissables et résident ici désormais, avec l'appelant qui enregistre"
-
-#: docs/publication-workflow.md:165
-msgid "What should this user interface look like, and which candidate wins? The  methodology made executable (#1023): a written design intent, at least two mid-fidelity candidates each with a web and a mobile layout, mechanical checks at both viewports (), a blind per-criterion review, then  where reviewers disagree and  for the choice. The same checks back the as-is wireframe every declared visualiser owes ()"
-msgstr "À quoi doit ressembler cette interface utilisateur, et quel candidat l'emporte ? La méthodologie  rendue exécutable (#1023) : une intention de conception écrite, au moins deux candidats de moyenne fidélité comportant chacun une disposition web et mobile, des vérifications mécaniques aux deux résolutions (), une relecture à l'aveugle par critère, puis  en cas de désaccord des relecteurs et  pour le choix final. Les mêmes contrôles étayent le wireframe existant (as-is) que chaque visualiseur déclaré doit fournir ()"
-
-#: docs/publication-workflow.md:166
-msgid "Before new work takes shape, what does it touch? Search beans, issues and open PRs; categorize and summarize every hit; ask the user whether and how to coordinate. Judgement sorts the hits and the user decides (#1023). Called from  when a requirement is initiated or updated in chat, and from"
-msgstr "Avant qu'un nouveau travail ne prenne forme, à quoi touche-t-il ? Rechercher dans les beans, les tickets et les PR ouvertes ; catégoriser et résumer chaque résultat ; demander à l'utilisateur si et comment coordonner. Le discernement trie les résultats et l'utilisateur tranche (#1023). Appelé depuis  lorsqu'une exigence est initiée ou mise à jour en cours d'échange, et depuis"
-
-#: docs/publication-workflow.md:167
-msgid "Somebody shared a paper or standard and wants its method used: origin and licence, ingestion (), related work (), the method rendered with its adopted and refused parts, placement by ownership, integration by calling existing processes, a Tool for every tool it uses, and the owner's review. Written while adopting WireGen (#1023)"
-msgstr "Quelqu'un a partagé un article ou une norme et souhaite que sa méthode soit utilisée : origine et licence, ingestion (), travaux connexes (), méthode représentée avec ses composantes adoptées et refusées, affectation par responsabilité, intégration par appel aux processus existants, un outil (Tool) pour chaque outil utilisé, et relecture par le propriétaire. Rédigé lors de l'adoption de WireGen (#1023)"
-
-#: docs/publication-workflow.md:169
-msgid "Boards — a board is a diagram of a folio, in the OMG sense: the folio carries what is true,  carries where it was drawn, and the arrow runs one way. All three exist because the discipline is a property a future edit breaks silently — two mechanisms that look like one, a control that looks like a delete, and two writes that look like one."
-msgstr "Tableaux (Boards) — un tableau est un diagramme d'un folio, au sens de l'OMG : le folio porte ce qui est vrai,  porte l'endroit où il a été dessiné, et la flèche est unidirectionnelle. Les trois processus existent parce que cette rigueur est une propriété qu'une modification ultérieure romprait silencieusement — deux mécanismes qui ressemblent à un seul, une commande qui ressemble à une suppression, et deux écritures qui ressemblent à une seule."
-
-#: docs/publication-workflow.md:177
-msgid "A reader opens a card and closes it again. Two mechanisms the diagram exists to keep apart: semantic zoom is automatic and driven by SIZE, while open and close are a person's, so an open window survives a zoom-out and only  closes it.  is a task rather than a courtesy — bean , an action whose inverse is not reachable is not a toggle. Advisory: refusing a step here would refuse a click"
-msgstr "Un lecteur ouvre une carte puis la referme. Deux mécanismes que le diagramme vise à distinguer : le zoom sémantique est automatique et régi par la TAILLE, tandis que l'ouverture et la fermeture relèvent de la personne ; ainsi, une fenêtre ouverte persiste lors d'un dézoom et seul  la ferme.  est une tâche plutôt qu'une courtoisie — bean , une action dont l'inverse n'est pas accessible n'est pas une bascule. Consultatif : refuser une étape ici reviendrait à refuser un clic"
-
-#: docs/publication-workflow.md:178
-msgid "The fishbone. It looks like a delete and is not one: the content MOVES into , keeping its identity, so every reference still resolves and the reader who hit the wrong control lost a location rather than a node. Strict, unlike the two above, because it edits the folio — the reader is asked first, and the question names what will move and where it lands, per"
-msgstr "L'arête de poisson (fishbone). Elle ressemble à une suppression sans en être une : le contenu est DÉPLACÉ dans , en conservant son identité, de sorte que chaque référence continue d'être résolue et que le lecteur ayant cliqué sur la mauvaise commande perd un emplacement plutôt qu'un nœud. Strict, contrairement aux deux ci-dessus, car il modifie le folio — le lecteur est interrogé au préalable, et la question précise ce qui sera déplacé et où cela sera placé, conformément à"
-
-#: docs/publication-workflow.md:179
-msgid "Creating a sticky and placing one are two writes to two graphs, and the common bug is to make them one. The note goes into the folio carrying no coordinate; the coordinate goes into the layout layer, keyed by board and then by note — which is why one note may sit on several boards without arbitrating between them. The gateway exists because a dragged existing card takes only the second path"
-msgstr "Créer un pense-bête et le positionner constituent deux écritures dans deux graphes distincts, et l'erreur classique consiste à les confondre en une seule. La note rejoint le folio sans coordonnées ; les coordonnées rejoignent la couche de mise en page, indexées par tableau puis par note — c'est pourquoi une même note peut figurer sur plusieurs tableaux sans arbitrage entre eux. La passerelle existe car une carte existante déplacée n'emprunte que le second chemin"
-
-#: docs/publication-workflow.md:181
-msgid "Acquisition — how a resource reaches the queue at all.  begins at \"a file lands in \" and calls that its only entry point, which is true of ingestion and silent on everything before it:"
-msgstr "Acquisition — comment une ressource parvient dans la file d'attente.  commence à « un fichier arrive dans  » et en fait son unique point d'entrée, ce qui est vrai pour l'ingestion mais omet tout ce qui précède :"
-
-#: docs/publication-workflow.md:187
-msgid "Something is offered unprompted, or is needed and has to be asked for — and through which channel:  is one, the conversation is another, and the set is open"
-msgstr "Quelque chose est proposé spontanément, ou est requis et doit être demandé — et par quel canal :  en est un, la conversation en est un autre, et la liste reste ouverte"
-
-#: docs/publication-workflow.md:189
-msgid "Ingestion — turning an uploaded source document into corpus. The first is the outer process; the rest are its call activities — except , which is conditional and not yet wired in, for the reason given under the table:"
-msgstr "Ingestion — transformer un document source téléversé en corpus. Le premier est le processus englobant ; les suivants sont ses activités d'appel — à l'exception d', qui est conditionnel et pas encore raccordé, pour la raison détaillée sous le tableau :"
-
-#: docs/publication-workflow.md:196
-msgid "The whole path from  to a citeable L1 knowledge graph"
-msgstr "L'ensemble du parcours depuis  jusqu'à un graphe de connaissances L1 citable"
-
-#: docs/publication-workflow.md:197
-msgid "Text layer, OCR, sections, structure, claim candidates"
-msgstr "Couche de texte, OCR, sections, structure, candidats aux affirmations"
-
-#: docs/publication-workflow.md:198
-msgid "Archive, technical metadata, images, audio, tabular data, provenance"
-msgstr "Archive, métadonnées techniques, images, audio, données tabulaires, provenance"
-
-#: docs/publication-workflow.md:199
-msgid "Dublin Core, manifest, assets, binding, linking"
-msgstr "Dublin Core, manifeste, ressources (assets), liaison, interconnexion"
-
-#: docs/publication-workflow.md:200
-msgid "Is the derived content complete enough to promote, and who says so?"
-msgstr "Le contenu dérivé est-il suffisamment complet pour être promu, et qui l'atteste ?"
-
-#: docs/publication-workflow.md:201
-msgid "Does this artefact carry a theme, and what are its palette roles and layouts?"
-msgstr "Cet artefact comporte-t-il un thème, et quels sont ses rôles de palette et ses mises en page ?"
-
-#: docs/publication-workflow.md:203
-msgid "is not a call activity of  today, and that is a stated gap rather than an oversight (bean , whose \"Done when\" asks for the link). Most ingested documents carry no theme. Making theme ingestion an unconditional step in the chain would assert that every one does, and a step that no-ops for almost every document is a step a reader stops believing. The honest wiring is a gateway — is this artefact a theme source? — and which artefacts answer yes is a judgement nobody has made yet: a captured site obviously qualifies, a style guide qualifies because it states rules, and whether an arbitrary branded PDF does is exactly the open question."
-msgstr "n'est pas une activité d'appel de  à ce jour, et il s'agit d'un écart assumé plutôt que d'un oubli (bean , dont le critère d'achèvement demande ce lien). La plupart des documents ingérés ne comportent aucun thème. Faire de l'ingestion de thème une étape inconditionnelle de la chaîne reviendrait à affirmer que chacun en possède un, et une étape sans effet pour la quasi-totalité des documents est une étape à laquelle le lecteur ne croit plus. Le raccordement intègre consiste en une passerelle — cet artefact est-il une source de thème ? — et déterminer quels artefacts répondent par l'affirmative est un arbitrage que nul n'a encore rendu : un site aspiré est à l'évidence qualifié, une charte graphique l'est parce qu'elle énonce des règles, et savoir si un PDF quelconque sous charte l'est constitue précisément la question ouverte."
-
-#: docs/publication-workflow.md:213
-msgid "Remote content — landing something that lives somewhere else, and keeping it current. Named on 2026-09-20 after this repository had been running the process twice without a word for it:  taking three items out of a 361.55 GB catalogue, and  fetching a harness and landing it locally, with  as half of that second one's refresh."
-msgstr "Contenu distant — importer un élément résidant ailleurs et le maintenir à jour. Nommé le 2026-09-20 après que ce dépôt a exécuté ce processus à deux reprises sans lui donner de nom :  extrayant trois éléments d'un catalogue de 361,55 Go, et  récupérant un harness pour le déposer localement, avec  constituant la moitié de l'actualisation de ce second processus."
-
-#: docs/publication-workflow.md:221
-msgid "May we hold a local copy, what does holding it cost, and for what purpose —  or ? Five gates, three states, and a refusal leaves the node  rather than failing"
-msgstr "Pouvons-nous détenir une copie locale, quel en est le coût de détention, et dans quel but —  ou  ? Cinq portes, trois états, et un refus laisse le nœud au statut  plutôt que d'échouer"
-
-#: docs/publication-workflow.md:222
-msgid "What changed upstream, what changed locally, and what to do when both. An archival copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead"
-msgstr "Qu'est-ce qui a changé en amont, qu'est-ce qui a changé localement, et que faire en cas de modifications des deux côtés. Une copie archivistique n'est jamais actualisée — une nouvelle récupération détruirait l'état qu'elle est censée conserver — elle fait donc l'objet d'un contrôle d'intégrité (fixity check) à la place"
-
-#: docs/publication-workflow.md:223
-msgid "Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own  that records, in , which original it came out of — the edge nothing downstream can reconstruct once it is missing"
-msgstr "Quelqu'un souhaite modifier un contenu dont ce dépôt détient une copie. Le contenu matérialisé étant en lecture seule, la solution consiste en une copie vers son propre  consignant, dans , de quel original il est issu — le lien qu'aucun processus en aval ne peut reconstituer une fois perdu"
-
-#: docs/publication-workflow.md:224
-msgid "Try a sample of a remote source before committing to it: scope it (which items, which store, permanent or trial?), let  gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls  for permanent samples only"
-msgstr "Tester un échantillon d'une source distante avant de s'engager : définir son périmètre (quels éléments, quel entrepôt, permanent ou d'essai ?), laisser  filtrer — appelé, jamais copié — le déposer dans la bibliothèque ou, pour un essai, dans la corbeille conservée non publiée, puis l'importer et tester l'importation. Une vérification qui n'a pas pu s'exécuter constitue un échec. Sa seconde entrée appelle  pour les échantillons permanents uniquement"
-
-#: docs/publication-workflow.md:226
-msgid "Theme and UI review — at ingestion only — what the arriving graphical assets will look like in the website or app design they are for, decided while it is still cheap:"
-msgstr "Revue de thème et d'IHM — à l'ingestion uniquement — ce à quoi ressembleront les ressources graphiques entrantes dans la conception du site web ou de l'application à laquelle elles sont destinées, évalué tant que le coût reste minime :"
-
-#: docs/publication-workflow.md:232
-msgid "Will these ingested graphical assets read legibly, consistently and in every declared language, in the design they are for? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out, at a web and a mobile width. Called from  — at ingestion only, by owner ruling (bean , 2026-09-24). It was post-MVP and called from  until then; that call is gone, and the cost — no post-build look at what shipped — is recorded in the skill as accepted rather than missed"
-msgstr "Ces ressources graphiques ingérées seront-elles lisibles, cohérentes et disponibles dans chaque langue déclarée, au sein du design auquel elles sont destinées ? L'accessibilité est mesurée plutôt qu'affirmée, l'image de marque est confrontée à la propre déclaration de l'instance, les langues sont extraites et mises en page, aux largeurs web et mobile. Appelé depuis  — à l'ingestion uniquement, sur décision du responsable (bean , 2026-09-24). C'était une étape post-MVP appelée depuis  jusqu'alors ; cet appel a été retiré, et le coût — l'absence d'examen post-compilation de ce qui a été livré — est consigné dans la compétence comme accepté plutôt qu'omis"
-
-#: docs/publication-workflow.md:234
-msgid "Upstream dependencies — what happens when somebody else's release changes what we ship. The first is the watcher and the second is the reusable subprocess it calls; any pinned dependency enters the second the same way, so a new tenant is a row in  rather than a third diagram:"
-msgstr "Dépendances en amont — que se passe-t-il lorsque la version d'un tiers modifie ce que nous livrons. Le premier est le surveillant (watcher) et le second est le sous-processus réutilisable qu'il appelle ; toute dépendance verrouillée pénètre dans le second de la même façon, de sorte qu'un nouvel ayant droit correspond à une ligne dans  plutôt qu'à un troisième diagramme :"
-
-#: docs/publication-workflow.md:241
-msgid "Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads"
-msgstr "Une dépendance verrouillée a-t-elle pris du retard par rapport à une version publiée, et que se passe-t-il lorsque la vérification ne peut se prononcer ? Mécanique de bout en bout, et maintient UN seul ticket de suivi plutôt que d'envoyer des courriels que personne ne lit"
-
-#: docs/publication-workflow.md:242
-msgid "A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a  in a person-only lane, and no package may relax it"
-msgstr "Une version candidate existe. Quels éléments parmi les nôtres y sont liés, que démontre la compilation MVP, et qui a l'autorité nécessaire pour donner son accord ? L'acceptation est une  dans un couloir réservé aux humains, et aucun paquet ne peut l'assouplir"
-
-#: docs/publication-workflow.md:244
-msgid "The CI workflows themselves —  are processes too, with triggers, gateways and compensation paths, and until 2026-09-20 none was drawn.  measures how many are, in three states; a workflow names the diagram it implements with a  line rather than being matched on its filename, because a mention is not coverage. The pointer is on the workflow because the workflow depends on the process it carries out, and the dependent holds the pointer (bean ; the diagram carried it until 2026-09-24)."
-msgstr "Les flux CI eux-mêmes —  sont également des processus, dotés de déclencheurs, de passerelles et de chemins de compensation, et jusqu'au 2026-09-20 aucun n'était représenté.  mesure combien le sont, selon trois états ; un flux de travail désigne le diagramme qu'il implémente via une ligne  plutôt que par correspondance sur son nom de fichier, car une simple mention ne vaut pas couverture. Le pointeur figure sur le flux de travail car le flux dépend du processus qu'il exécute, et c'est le dépendant qui détient le pointeur (bean  ; le diagramme l'a porté jusqu'au 2026-09-24)."
-
-#: docs/publication-workflow.md:253
-msgid "Coverage alone would not have been worth having. Bean : \"a diagram that is drawn once and then drifts is worse than none, because it is consulted.\" So each job names the node it stands for —  inside the job — and the same check compares the two in both directions: a job with no node is a diagram that has gone stale, a node the diagram does not have is one that was stale already. Both exit 1, in the same tier as a  line naming a diagram that is not there, because both mislead a reader who follows them."
-msgstr "La couverture seule n'aurait eu aucune valeur. Bean  : « un diagramme dessiné une fois puis laissé à la dérive est pire que pas de diagramme du tout, car on s'y réfère. » Chaque tâche (job) nomme donc le nœud qu'elle représente —  à l'intérieur du job — et la même vérification confronte les deux dans les deux sens : un job sans nœud signale un diagramme devenu obsolète, un nœud absent du diagramme en signale un qui l'était déjà. Les deux renvoient un code de sortie 1, au même titre qu'une ligne  désignant un diagramme introuvable, car tous deux induisent en erreur le lecteur qui s'y fie."
-
-#: docs/publication-workflow.md:262
-msgid "Declaring is opt-in per workflow, and a covered workflow none of whose jobs names a node is reported as undeclared rather than as fully drifted: \"nobody has said yet\" and \"said, and wrong\" are different answers, and only the second is a finding. What is never allowed is a diagram declaring some of a workflow's jobs and reading as complete."
-msgstr "La déclaration se fait sur adhésion volontaire par flux de travail, et un flux couvert dont aucun job ne nomme de nœud est signalé comme non déclaré plutôt qu'en dérive complète : « personne ne s'est encore prononcé » et « déclaré, mais erroné » sont deux réponses distinctes, et seule la seconde constitue une anomalie. Ce qui n'est en aucun cas permis, c'est qu'un diagramme déclare certains des jobs d'un flux et apparaisse pourtant comme complet."
-
-#: docs/publication-workflow.md:270
-msgid "The lifecycle of a review preview: staged on a push, taken down on a close, or removed by an explicit dispatch. Both gateways are three-state — a merge confirms a removal on its own while a close without one still needs the label (bean ), and the dispatch preflight refuses on a live signal AND on could-not-tell. Every path that changes  writes to the render log, and the two removal paths write the record in the SAME commit as the removal"
-msgstr "Le cycle de vie d'une prévisualisation de relecture : déployée en staging sur un push, retirée lors d'une fermeture, ou supprimée par un déclenchement explicite (dispatch). Les deux passerelles sont à trois états — une fusion confirme une suppression d'elle-même tandis qu'une fermeture sans fusion requiert toujours l'étiquette (bean ), et le contrôle préalable du dispatch refuse en cas de signal actif AINSI qu'en cas d'impossibilité de trancher. Chaque chemin modifiant  écrit dans le journal de rendu, et les deux chemins de suppression consignent l'enregistrement dans le MÊME commit que la suppression"
-
-#: docs/publication-workflow.md:271
-msgid "Also  — see Upstream dependencies below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step"
-msgstr "Également  — voir Dépendances en amont ci-dessus. La déclaration a été ajoutée lors de l'écriture du contrôle de couverture ; le diagramme documentait déjà ce flux étape par étape"
-
-#: docs/publication-workflow.md:272
-msgid "Publishing  is a full replace, so anything on that branch this build did not produce is gone unless something puts it back — bean , every open PR's preview deleted by an unrelated merge, silently, for months. The restore and the after-the-fact verification are a pair: a restore nobody checks is one that can quietly stop working, which is how the original defect lasted. Both gateways refuse rather than warn, and the second is three-state — and, since bean , the export is verified before the deploy and every failing step after the publish button goes through one alert to the publication manager"
-msgstr "La publication de  est un remplacement complet, donc tout élément présent sur cette branche que cette compilation n'a pas produit disparaît à moins que quelque chose ne le réintroduise — bean , la prévisualisation de chaque PR ouverte supprimée silencieusement par une fusion sans rapport, pendant des mois. La restauration et la vérification a posteriori forment une paire indissociable : une restauration que personne ne vérifie est une restauration qui peut cesser de fonctionner sans bruit, et c'est ainsi que l'anomalie initiale a perduré. Les deux passerelles refusent plutôt que d'avertir, et la seconde est à trois états — et, depuis le bean , l'exportation est vérifiée avant le déploiement et chaque étape en échec après le déclenchement de la publication passe par une alerte unique adressée au responsable de publication"
-
-#: docs/publication-workflow.md:273
-msgid "Is what the build produced fit to deploy? The verifier set over the built tree, run between the export and the deploy and blocking it: pass, fail, or could-not-tell, and the caller deploys only on a pass. A set, so a verifier is one entry; the first expands every JSON-LD document of ours under a real processor, which found two documents silently dropping a property on its first run. Bean , owner 2026-09-23"
-msgstr "Ce que la compilation a produit est-il apte au déploiement ? L'ensemble des vérificateurs sur l'arborescence générée, exécuté entre l'exportation et le déploiement et bloquant celui-ci : succès, échec ou indéterminé, l'appelant ne déployant qu'en cas de succès. Un ensemble, de sorte qu'un vérificateur correspond à une entrée unique ; le premier développe chacun de nos documents JSON-LD avec un véritable processeur, ce qui a permis de découvrir deux documents omettant silencieusement une propriété dès sa première exécution. Bean , responsable 2026-09-23"
-
-#: docs/publication-workflow.md:274
-msgid "Something after the publish button failed — one alert, the same for every step: an incomplete export, a verification failure, a failed deploy, a lost preview. A tracking issue labelled for the publication manager, commented on for each new failure and closed by the next clean publish; the publication manager triages it. Bean , owner 2026-09-23"
-msgstr "Un élément postérieur au déclenchement de la publication a échoué — une alerte unique, identique pour chaque étape : exportation incomplète, échec de vérification, échec de déploiement, prévisualisation perdue. Un ticket de suivi étiqueté pour le responsable de publication, commenté à chaque nouvel échec et fermé par la publication saine suivante ; le responsable de publication le prend en charge. Bean , responsable 2026-09-23"
-
-#: docs/publication-workflow.md:275
-msgid "Five independent jobs, and nothing in the YAML says so in one place. No job declares , so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one () is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on"
-msgstr "Cinq jobs indépendants, et rien dans le YAML ne l'indique en un lieu unique. Aucun job ne déclare de clause , de sorte que la durée d'exécution réelle du flux correspond au job le plus lent plutôt qu'à la somme — l'information la plus utile à connaître avant d'ajouter une porte de contrôle. Quatre sont stricts et un () est un simple avertissement, si bien que la passerelle après la jonction porte spécifiquement sur les contrôles STRICTS ; dessiner cinq boîtes équivalentes constituerait un mensonge sur lequel le lecteur s'appuierait"
-
-#: docs/publication-workflow.md:276
-msgid "Is CI actually working on ? Only  fails the job — a red  records the issue and this workflow stays green, which is invisible from the run list.  is not simply the exit code:  exits 1 on a crash too, so the REPORT FILE separates \"found something red\" from \"crashed\""
-msgstr "La CI fonctionne-t-elle réellement sur  ? Seul  met le job en échec — un statut rouge sur  enregistre le problème et ce flux reste vert, ce qui est invisible depuis la liste des exécutions.  ne se résume pas au simple code de sortie :  renvoie également un code 1 en cas de crash, de sorte que le FICHIER DE RAPPORT distingue « détection d'un élément rouge » de « crash »"
-
-#: docs/publication-workflow.md:277
-msgid "The same shape one level out — the repository rather than the workflows. It reports and never acts: there is no removal task on the diagram, and its absence is  being followed rather than an omission"
-msgstr "La même structure un cran au-dessus — le dépôt plutôt que les flux de travail. Il rend compte et n'agit jamais : aucune tâche de suppression ne figure sur le diagramme, et son absence découle du respect de  plutôt que d'une omission"
-
-#: docs/publication-workflow.md:278
-msgid "Are the  siblings still in sync with their  manifests? Deliberately small, and says so: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one its job names no node, so a job added here would tell nobody — not for exposition"
-msgstr "Les fichiers jumeaux  sont-ils toujours synchronisés avec leurs manifestes  ? Volontairement concis, et l'affirme : un seul job, aucun embranchement, rien que le YAML ne montre déjà. Il justifie un diagramme pour la détection de dérive — sans cela, son job ne nommerait aucun nœud, de sorte qu'un job ajouté ici ne préviendrait personne — et non à des fins didactiques"
-
-#: docs/publication-workflow.md:279
-msgid "Is  still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above"
-msgstr "Le fichier  est-il toujours synchronisé avec sa table de données ? Le plus petit flux de travail présenté ici et celui dont le résultat conditionne une preuve : séparez-les, et un fichier Lean qui compile portera des nombres que rien n'a produits. Même remarque de minimalisme délibéré que ci-dessus"
-
-#: docs/publication-workflow.md:280
-msgid "Which open pull requests have no CI run on their head — bean . Measured 2026-09-20: two of six had none. The 15-minute age gate is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only  fails the job; a finding records itself and the workflow stays green. Two channels: the issue edited in place, the PR comment once per (PR, head sha)"
-msgstr "Quelles demandes d'extraction (pull requests) ouvertes ne disposent d'aucune exécution de CI sur leur commit de tête — bean . Mesuré le 2026-09-20 : deux sur six n'en avaient aucune. La porte d'ancienneté de 15 minutes fait toute la différence entre un outil utile et un outil ignoré, dans la mesure où un commit poussé il y a quelques instants n'a légitimement aucune exécution et que signaler de tels cas conduit à ignorer les alertes. Seul l'état  fait échouer le job ; une anomalie s'enregistre d'elle-même et le flux de travail reste vert. Deux canaux : le ticket modifié sur place, le commentaire de PR une seule fois par (PR, sha de tête)"
-
-#: docs/publication-workflow.md:282
-msgid "Out to a public portal — the stage after publishing, and the one this repository had built twice without naming. A portal that is not this repository — a Moodle site, a ministry intranet, a department page — needs the graph's contents, and the path there is six stages rather than a deploy:"
-msgstr "Vers un portail public — l'étape postérieure à la publication, et celle que ce dépôt avait construite à deux reprises sans lui donner de nom. Un portail distinct de ce dépôt — un site Moodle, un intranet ministériel, une page de département — a besoin du contenu du graphe, et le chemin pour y parvenir comprend six étapes plutôt qu'un simple déploiement :"
-
-#: docs/publication-workflow.md:289
-msgid "How a knowledge graph reaches readers the repository never hears about: select → serialize → package → sign → distribute → verify.  has no default branch on purpose — the owner stated the ingestion method as undetermined, so the diagram reaches a decision and stops; drawing one branch as the obvious one would record a decision nobody made. A CDN is not a lane: it is what  may put in front of the origin, because modelling a cache as a participant makes its URL look like the published one, and a published URL is a promise (bean , \"EXTREME care in URL handling\"). Two gateways refuse rather than warn — over budget is an end event, not a warning, and a failed verification serves the previous version rather than nothing, since a portal that goes blank has turned an integrity problem into an outage"
-msgstr "Comment un graphe de connaissances atteint des lecteurs dont le dépôt n'entend jamais parler : sélectionner → sérialiser → packager → signer → distribuer → vérifier.  n'a volontairement aucune branche par défaut — le responsable ayant indiqué que la méthode d'ingestion était indéterminée, le diagramme aboutit à une décision et s'arrête ; dessiner une branche comme évidente enregistrerait une décision que personne n'a prise. Un CDN n'est pas un couloir : c'est ce que  peut placer devant l'origine, car modéliser un cache comme participant fait ressembler son URL à l'URL publiée, et une URL publiée est un engagement contractuel (bean , « soin EXTRÊME dans la gestion des URL »). Deux passerelles refusent plutôt que d'avertir — un dépassement de budget est un événement de fin, non un avertissement, et une vérification en échec diffuse la version précédente plutôt que rien du tout, un portail devenu blanc transformant un problème d'intégrité en panne de service"
-
-#: docs/publication-workflow.md:291
-msgid "The verify stage is the one that gets dropped, and the reason is structural: every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. Where the portal cannot verify,  is the answer — a portal nobody asked is not a portal that checked."
-msgstr "L'étape de vérification est celle qui est systématiquement délaissée, pour une raison structurelle : chaque autre étape produit un résultat visible, alors que celle-ci ne produit rien lorsqu'elle réussit. Un paquet signé et jamais vérifié est un paquet dont la signature n'est qu'un ornement. Lorsque le portail ne peut pas vérifier,  est la réponse — un portail que personne n'a sollicité n'est pas un portail qui a vérifié."
-
-#: docs/publication-workflow.md:297
-msgid "The publish branch — what is on , and what happened to it. The branch has six publishers and one of them is a full replace, so \"the preview is gone\" has never had an answer a reader could look up:"
-msgstr "La branche de publication — ce qui se trouve sur  et ce qui lui est arrivé. La branche compte six entités émettrices et l'une d'elles effectue un remplacement complet, si bien que « la prévisualisation a disparu » n'a jamais eu d'explication qu'un lecteur pouvait consulter :"
-
-#: docs/publication-workflow.md:303
-msgid "A preview was published, removed, carried across a full-replace deploy, or considered for removal and kept — which of those happened, and why? Append-only: a  entry never erases the  one before it, and  exists so a preview still standing because a liveness signal fired leaves a trace. Bean  is the case it answers — every open PR's preview deleted by an unrelated merge, silently, for months"
-msgstr "Une prévisualisation a été publiée, supprimée, transférée lors d'un déploiement à remplacement complet, ou envisagée pour suppression puis conservée — laquelle de ces situations s'est produite, et pourquoi ? Ajout uniquement (append-only) : une entrée  n'efface jamais l'entrée  qui la précède, et  existe afin qu'une prévisualisation toujours présente grâce à un signal d'activité laisse une trace. Le bean  est le cas auquel il répond — la prévisualisation de chaque PR ouverte supprimée silencieusement par une fusion sans rapport, pendant des mois"
-
-#: docs/publication-workflow.md:305
-msgid "Translation and evidence:"
-msgstr "Traduction et preuves :"
-
-#: docs/publication-workflow.md:309
-msgid "POT extraction → translation → PO injection → round-trip QA → sign-off → staleness watch"
-msgstr "Extraction POT → traduction → injection PO → QA aller-retour → approbation finale → surveillance de l'obsolescence"
-
-#: docs/publication-workflow.md:310
-msgid "The same cycle when a human translator and an SME reviewer are in it"
-msgstr "Le même cycle lorsqu'un traducteur humain et un relecteur expert métier y participent"
-
-#: docs/publication-workflow.md:311
-msgid "Framing a question, searching trusted sources, appraising what comes back"
-msgstr "Formuler une question, rechercher des sources fiables, évaluer les résultats obtenus"
-
-#: docs/publication-workflow.md:313
-msgid "This list is checked, not maintained by hand.  fails when a  under  is absent from this page. It was added because the page opened by counting nineteen files and then listed eight — the eleven above were present in the repository and invisible here, which is the same defect as a table of contents that stops halfway."
-msgstr "Cette liste est vérifiée, non maintenue à la main.  échoue lorsqu'un fichier  situé sous  est absent de cette page. Ce contrôle a été ajouté car la page débutait en dénombrant dix-neuf fichiers pour n'en lister ensuite que huit — les onze mentionnés ci-dessus étaient présents dans le dépôt mais invisibles ici, ce qui constitue le même défaut qu'une table des matières s'interrompant à mi-chemin."
 
 #: docs/publication-workflow.md:319
 msgid "They also run"
@@ -1256,3 +792,351 @@ msgstr "Intégration d'un agent — orientation pour un agent introduit dans un 
 
 #~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/content-lifecycle.bpmn\" } QA… TR KG…"
 #~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/content-lifecycle.bpmn\" } QA… TR KG…"
+
+#~ msgid "How many BPMN 2.0 files are there? This page no longer says, and that is the fix rather than an evasion."
+#~ msgstr "Combien y a-t-il de fichiers BPMN 2.0 ? Cette page ne l'indique plus, et c'est là une correction plutôt qu'une dérobade."
+
+#~ msgid "The sentence that used to open here carried a count, and it was wrong five times in a row — \"six\", then \"nineteen\", then \"thirty\", then \"thirty-two, all under \", then \"thirty-nine\" — each for long enough to be wrong, and each time discovered by somebody who happened to run . The last of those was wrong by sixteen when it was finally checked: it claimed thirty-nine against fifty-five."
+#~ msgstr "La phrase qui ouvrait cette section comportait un décompte, et elle a été fausse cinq fois de suite — « six », puis « dix-neuf », puis « trente », puis « trente-deux, tous sous  », puis « trente-neuf » — chacune assez longtemps pour être erronée, et découverte à chaque fois par quelqu'un qui a exécuté  par hasard. La dernière de ces affirmations comportait une erreur de seize lorsqu'elle a enfin été vérifiée : elle en annonçait trente-neuf alors qu'il y en avait cinquante-cinq."
+
+#~ msgid "A count in prose is a claim; a derived index is evidence. So the number lives in the derived process index, which is generated from the declaration by , gated in CI, and cannot drift from the diagrams it counts. This page's job is the half that cannot be generated — what each process is for, when you would be in it, and which neighbouring one you actually want."
+#~ msgstr "Un décompte en prose est une affirmation ; un index dérivé est une preuve. Le nombre réside donc dans l'index dérivé des processus, qui est généré à partir de la déclaration par , contrôlé en CI, et ne peut pas diverger des diagrammes qu'il dénombre. Le rôle de cette page est la moitié qui ne peut pas être générée — à quoi sert chaque processus, dans quel cas vous vous y trouveriez, et quel processus voisin vous recherchez réellement."
+
+#~ msgid "That division is the  skill's rule, and this page is the worked example of it: the index says what exists and what each diagram declares about itself; everything below says what the index structurally cannot."
+#~ msgstr "Cette séparation est la règle de la compétence , et cette page en est l'exemple concret : l'index indique ce qui existe et ce que chaque diagramme déclare à propos de lui-même ; tout ce qui suit détaille ce que l'index ne peut structurellement pas exprimer."
+
+#~ msgid "Bootstrap's diagrams are deliberately outside that index, and their absence is a fact rather than a gap.  is declared by  and not by the root, because declaring it there re-carries bootstrap's process into the root's published graph — which  removed on purpose and a test still guards. Bean  holds that choice: both halves of bootstrap, or neither. So the derived index covers what the root declares, and the three bootstrap diagrams are named in the table below instead."
+#~ msgstr "Les diagrammes d'amorçage (bootstrap) sont délibérément exclus de cet index, et leur absence est un choix délibéré plutôt qu'une omission.  est déclaré par  et non par la racine, car le déclarer à cet endroit réintroduirait le processus d'amorçage dans le graphe publié de la racine — ce que  a délibérément supprimé et qu'un test protège toujours. Le bean  conserve ce choix : les deux moitiés de bootstrap, ou aucune des deux. Ainsi, l'index dérivé couvre ce que la racine déclare, et les trois diagrammes d'amorçage sont nommés à la place dans le tableau ci-dessous."
+
+#~ msgid "Each is a real BPMN 2.0 document with diagram interchange — open it in bpmn.io, Camunda Modeler, or any BPMN tool. The SVGs throughout the docs are generated from these files by ; never hand-edit an SVG."
+#~ msgstr "Chacun est un véritable document BPMN 2.0 avec interchange de diagrammes (BPMN DI) — ouvrez-le dans bpmn.io, Camunda Modeler ou tout autre outil BPMN. Les SVG présents dans la documentation sont générés à partir de ces fichiers par  ; ne modifiez jamais un SVG à la main."
+
+#~ msgid "Before any of the rest — the process a person meets first, and the only one that runs when there is no folio yet."
+#~ msgstr "Avant tout le reste — le processus qu'une personne rencontre en premier, et le seul qui s'exécute lorsqu'aucun folio n'existe encore."
+
+#~ msgid "This table named  until 2026-09-20 — a file that does not exist, renamed to  long before — while all three real diagrams went unnamed. A dangling reference hiding behind a directory nothing scanned, which is exactly what the not-indexed check exists to catch and could not, because it could not see the directory either (bean )."
+#~ msgstr "Ce tableau mentionnait  jusqu'au 2026-09-20 — un fichier qui n'existe pas, renommé en  bien avant — tandis que les trois véritables diagrammes n'étaient pas nommés. Une référence orpheline cachée derrière un répertoire que rien n'analysait, ce qui est précisément ce que la vérification des éléments non indexés a pour vocation de détecter et n'a pas pu faire, car elle ne pouvait pas non plus voir ce répertoire (bean )."
+
+#~ msgid "The rows are correct now. The diagrams are still invisible to the tooling, and deliberately so pending a decision:  is declared by  but not by the root, and declaring it there re-carries bootstrap's process into the root's published graph — which  removed on purpose and a test still guards. Bean  holds that choice: both halves of bootstrap, or neither."
+#~ msgstr "Les lignes sont désormais correctes. Les diagrammes demeurent invisibles pour les outils, et ce délibérément en attente d'une décision :  est déclaré par  mais pas par la racine, et le déclarer là-bas réintroduirait le processus d'amorçage dans le graphe publié de la racine — ce que  a délibérément supprimé et qu'un test protège toujours. Le bean  consigne ce choix : les deux moitiés de bootstrap, ou aucune des deux."
+
+#~ msgid "Answers"
+#~ msgstr "Questions traitées"
+
+#~ msgid "An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an instance reference; the harness type, the knowledge graph and the voice are read from that instance's declaration. See  and the proposal"
+#~ msgstr "Un agent a été orienté vers un dépôt et ne sait rien. Est-ce déjà une instance — la charger — ou non, auquel cas que doit-elle devenir ? La seule entrée est une référence d'instance ; le type de harness, le graphe de connaissances et la voix sont lus depuis la déclaration de cette instance. Voir  et la proposition"
+
+#~ msgid "An agent has been pointed at a repository and knows nothing. The only process in bootstrap an actor STARTS — a Bootstrapping Agent that has read  is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See  and the proposal"
+#~ msgstr "Un agent a été orienté vers un dépôt et ne sait rien. Le seul processus d'amorçage qu'un acteur DÉMARRE — un agent d'amorçage (Bootstrapping Agent) ayant lu  se trouve à son événement de début et n'a nulle part ailleurs où commencer. Trois couloirs : Bootstrapping Agent, Requestor, et Knowledge Graph Data Store. Voir  et la proposition"
+
+#~ msgid "Two facts have no answer in any file a Bootstrapping Agent can reach — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within  when such a fact is needed, which is why bootstrap holds a second process at all: it is presupposed by every task rather than indicated by one"
+#~ msgstr "Deux faits n'ont aucune réponse dans un fichier accessible à un agent d'amorçage — quel harness ce dépôt doit devenir, et quels dépôts sont lus et écrits. Ce sont des jugements portés par la personne qui a demandé le harness, donc aucun corps d'instruction ne les produit. On y entre depuis  lorsqu'un tel fait est requis, ce qui explique pourquoi bootstrap contient un second processus : il est présupposé par chaque tâche plutôt qu'indiqué par une seule"
+
+#~ msgid "A sub-process, never an entry point — reached by a call activity, never started, which is why bootstrap's README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing"
+#~ msgstr "Un sous-processus, jamais un point d'entrée — atteint par une activité d'appel, jamais démarré, raison pour laquelle le README de bootstrap peut continuer d'affirmer qu'il n'y a qu'un seul processus que vous commencez. Appelable facultativement depuis n'importe quelle tâche (un acteur consignant ce qu'il fait n'a besoin d'aucune autorisation) ou requis par un diagramme qui dessine l'appel explicitement ; même sous-processus dans les deux cas, la seule différence étant si l'appelant l'a représenté ou non. Il réside dans bootstrap plutôt que dans le harness car bootstrap ne peut pas importer le harness, de sorte qu'un enregistreur défini en amont serait inutilisable par l'acteur ayant le plus besoin d'indiquer ce qu'il fait"
+
+#~ msgid "Somebody said \"create a folio\". Which of the five things did they mean, and what has to be true before anything is written?"
+#~ msgstr "Quelqu'un a dit « créer un folio ». Laquelle des cinq choses voulait-il dire, et que faut-il vérifier avant d'écrire quoi que ce soit ?"
+
+#~ msgid "Its intent gateway is computed, not chosen:  returns the branch, and  is one of the outcomes it can return — which is what makes the question obligatory rather than a courtesy. See Getting started."
+#~ msgstr "Sa passerelle d'intention est calculée, non choisie :  renvoie la branche, et  fait partie des résultats possibles — ce qui rend la question obligatoire plutôt que de simple courtoisie. Voir Premiers pas."
+
+#~ msgid "Content-agnostic — these three apply to every folio, and the outer ones reference the inner ones as call activities, so each process is described once and reused:"
+#~ msgstr "Indépendant du contenu — ces trois processus s'appliquent à chaque folio, et les processus extérieurs référencent les intérieurs sous forme d'activités d'appel, de sorte que chaque processus n'est décrit qu'une fois et réutilisé :"
+
+#~ msgid "Level"
+#~ msgstr "Niveau"
+
+#~ msgid "Content lifecycle —"
+#~ msgstr "Cycle de vie du contenu —"
+
+#~ msgid "One cycle of a folio, plan → retire"
+#~ msgstr "Un cycle d'un folio, planification → retrait"
+
+#~ msgid "Draft → publication —"
+#~ msgstr "Brouillon → publication —"
+
+#~ msgid "How the corpus becomes an officially published folio"
+#~ msgstr "Comment le corpus devient un folio officiellement publié"
+
+#~ msgid "Editing & HCI validation —"
+#~ msgstr "Édition et validation IHM —"
+
+#~ msgid "What happens to one proposed change to one content block"
+#~ msgstr "Ce qui arrive à une modification proposée pour un bloc de contenu"
+
+#~ msgid "Content-type specific — how a particular kind of folio is authored. These sit inside level 3's , and live with their guides:"
+#~ msgstr "Spécifique au type de contenu — comment un type particulier de folio est rédigé. Ceux-ci se situent au sein de  du niveau 3, et résident avec leurs guides :"
+
+#~ msgid "Content type"
+#~ msgstr "Type de contenu"
+
+#~ msgid "Where it is shown"
+#~ msgstr "Emplacement"
+
+#~ msgid "Documents & policy guidance"
+#~ msgstr "Documents et directives politiques"
+
+#~ msgid "Writing a document"
+#~ msgstr "Rédiger un document"
+
+#~ msgid "Scientific papers & books"
+#~ msgstr "Articles scientifiques et livres"
+
+#~ msgid "Writing a paper"
+#~ msgstr "Rédiger un article"
+
+#~ msgid "Authoring a WHO SMART DAK"
+#~ msgstr "Rédiger un DAK SMART de l'OMS"
+
+#~ msgid "WHO SMART Implementation Guide (L3)"
+#~ msgstr "Guide d'implémentation SMART de l'OMS (L3)"
+
+#~ msgid "Authoring a WHO SMART IG"
+#~ msgstr "Rédiger un IG SMART de l'OMS"
+
+#~ msgid "WHO SMART IG (L3) — the build lane, incremental by dependency cone (proposed)"
+#~ msgstr "IG SMART de l'OMS (L3) — couloir de compilation, incrémentiel par cône de dépendances (proposé)"
+
+#~ msgid "Making the build incremental · the overview"
+#~ msgstr "Rendre la compilation incrémentielle · vue d'ensemble"
+
+#~ msgid "Agent process — how an agent works, rather than how content is authored. These run alongside the content processes rather than inside them:"
+#~ msgstr "Processus d'agent — fonctionnement d'un agent, plutôt que rédaction du contenu. Ceux-ci s'exécutent en parallèle des processus de contenu plutôt qu'à l'intérieur :"
+
+#~ msgid "A feature request arrived. How is it turned into agreed requirements, and who signs off? The outer process; its six phases are the call activities below. See CRDM methodology"
+#~ msgstr "Une demande de fonctionnalité est arrivée. Comment est-elle transformée en exigences validées, et qui signe l'approbation ? Le processus externe ; ses six phases sont les activités d'appel ci-dessous. Voir Méthodologie CRDM"
+
+#~ msgid "Scan for a matching issue, then link or ask — an issue is never created without the BA's permission"
+#~ msgstr "Rechercher un ticket correspondant, puis lier ou demander — un ticket n'est jamais créé sans l'autorisation du BA"
+
+#~ msgid "Phase 1: identify stakeholders, synthesise the needs statement, loop until it is recognised"
+#~ msgstr "Phase 1 : identifier les parties prenantes, synthétiser l'énoncé des besoins, boucler jusqu'à ce qu'il soit reconnu"
+
+#~ msgid "Phases 2–4: map the current workflow, define requirements and their impact, loop until approved"
+#~ msgstr "Phases 2–4 : cartographier le flux actuel, définir les exigences et leur impact, boucler jusqu'à approbation"
+
+#~ msgid "Between requirements and sign-off: entities from the BPA and the requirements, cardinalities stated both ways, looping until the BA recognises the entities AND the stakeholders have answered every cardinality"
+#~ msgstr "Entre les exigences et l'approbation : entités issues du BPA et des exigences, cardinalités indiquées dans les deux sens, en bouclant jusqu'à ce que le BA reconnaisse les entités ET que les parties prenantes aient répondu à chaque cardinalité"
+
+#~ msgid "Phase 5: requirements become beans, the BA signs off, the branch is announced on the issue"
+#~ msgstr "Phase 5 : les exigences deviennent des beans, le BA signe l'approbation, la branche est annoncée sur le ticket"
+
+#~ msgid "Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation"
+#~ msgstr "Phase 6 : implémenter, examiner l'incrément, partager le MVP, recueillir les retours des parties prenantes. Une seule phase, car les trois boucles reviennent vers l'implémentation"
+
+#~ msgid "Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion"
+#~ msgstr "Validation des parties prenantes, confirmation du BA, et clôture seulement ensuite — un agent ne présume jamais de l'achèvement"
+
+#~ msgid "WHO's Digital Implementation Investment Guide as a process: nine chapters from forming the team to the value proposition, with the Guide's OWN progress checks at 4.5 and 8.5 as gateways rather than gates added here. Chapter 3 builds on CRDM, which is why it sits beside the diagrams above. Lives in , because a domain method belongs to the repository that owns the domain"
+#~ msgstr "Le Guide d'investissement dans la mise en œuvre des interventions numériques (DIIG) de l'OMS sous forme de processus : neuf chapitres allant de la constitution de l'équipe à la proposition de valeur, avec les PROPRES points d'étape du Guide à 4.5 et 8.5 sous forme de passerelles plutôt que de points de contrôle ajoutés ici. Le chapitre 3 s'appuie sur le CRDM, raison pour laquelle il figure à côté des diagrammes ci-dessus. Réside dans , car une méthode métier appartient au dépôt propriétaire du domaine"
+
+#~ msgid "When does an agent create, edit or scrap a bean — and why is one never deleted? See Beans and todos"
+#~ msgstr "Quand un agent crée-t-il, modifie-t-il ou abandonne-t-il un bean — et pourquoi un bean n'est-il jamais supprimé ? Voir Beans et tâches"
+
+#~ msgid "An agent playing a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is which enabled branch the agent takes. Both gateways carry , the marker added with this diagram so that \"no table because this is somebody's call\" stops being indistinguishable from \"no table yet\". The machine records that a bean was claimed; it never claims one"
+#~ msgstr "Un agent déroulant une machine à états, maintenant le contexte d'une session à jour tout au long d'une discussion. La structure est stricte — l'interpréteur prend en charge neuf types d'éléments et lève une exception sur les autres — et ce qui varie est la branche active choisie par l'agent. Les deux passerelles portent l'annotation , marqueur introduit avec ce diagramme pour que « pas de tableau car il s'agit d'une décision humaine » cesse d'être indiscernable de « pas encore de tableau ». La machine enregistre qu'un bean a été pris en charge ; elle n'en prend jamais un d'elle-même"
+
+#~ msgid "When does an agent write a log entry, and when is one kept? Persistence is off by default, and the gateway reads a three-valued setting — , ,  — rather than assuming. Emptying the log is the one exception to the never-delete rule that governs the rest of"
+#~ msgstr "Quand un agent écrit-il une entrée de journal, et quand est-elle conservée ? La persistance est désactivée par défaut, et la passerelle lit un paramètre à trois états — , ,  — au lieu de deviner. Vider le journal est la seule exception à la règle de non-suppression qui régit le reste de"
+
+#~ msgid "One author's change, from description through staging to review-committee approval"
+#~ msgstr "La modification d'un auteur, de sa description à son approbation par le comité de relecture en passant par la mise en préproduction (staging)"
+
+#~ msgid "The same loop for a change to the platform rather than to content: claim, branch, run the gates, open the PR at the first commit, drive CI green, answer review, merge. Drawn for bean  after an audit found INTEGRATION and VERIFICATION unowned — not for want of vocabulary, but because the diagram above takes a content change as its subject. No deployment lane: that is the one part whose activities differ per topology"
+#~ msgstr "La même boucle pour une modification de la plateforme plutôt que du contenu : prise en charge, branche, passage des portes de validation, ouverture de la PR dès le premier commit, passage de la CI au vert, traitement des retours de relecture, fusion. Dessiné pour le bean  après qu'un audit a constaté qu'INTEGRATION et VERIFICATION n'avaient pas de propriétaire — non par manque de vocabulaire, mais parce que le diagramme ci-dessus prend pour objet une modification de contenu. Aucun couloir de déploiement : c'est la seule partie dont les activités diffèrent selon chaque topologie"
+
+#~ msgid "Attesting a QA report, by one of two routes chosen from declared facts: an API signer where the performing actor can reach out, a human release authority where it cannot. Bean , for the case the owner raised — \"an API wouldnt wokr and a human actor is needed\". The branch is computed by , which reads the actor's reach and whether an endpoint is configured; undeclared reach is  and routes to the person, because a gateway that guessed \"connected\" would produce an unsigned report that looks signed"
+#~ msgstr "Attestation d'un rapport QA, selon l'une des deux voies choisies à partir des faits déclarés : un signataire API lorsque l'acteur exécutant dispose de la connectivité réseau requise, une autorité humaine de publication sinon. Bean , pour le cas soulevé par le responsable — « une API ne marcherait pas et un acteur humain est nécessaire ». La branche est calculée par , qui lit la portée d'accès (reach) de l'acteur et la configuration d'un point de terminaison ; une portée non déclarée vaut  et achemine vers la personne, car une passerelle qui supposerait « connecté » produirait un rapport non signé ayant l'apparence d'un rapport signé"
+
+#~ msgid "Changing who can do what: add an actor and declare its kind, open or close a role, grant or revoke a permission, retire an actor without deleting it — then audit. Bean : the join is clean (31 of 31 roles bind a lane, no dangling reference), so this was a missing process, not a broken one. It calls  for the branch, gates and review rather than restating them, and adds the three things specific to editing the substrate every other diagram binds to. The  role waited for the owner to say administration is a swimlane — a role is never invented to make a diagram drawable"
+#~ msgstr "Modifier qui peut faire quoi : ajouter un acteur et déclarer son type, ouvrir ou fermer un rôle, accorder ou révoquer une permission, retirer un acteur sans le supprimer — puis auditer. Bean  : la jointure est propre (31 rôles sur 31 lient un couloir, aucune référence orpheline), il s'agissait donc d'un processus manquant, et non d'un processus défectueux. Il appelle  pour la branche, les portes et la relecture plutôt que de les redéfinir, et ajoute les trois éléments spécifiques à l'édition du socle auquel chaque autre diagramme se rattache. Le rôle  a attendu que le responsable indique que l'administration constitue un couloir — un rôle n'est jamais inventé pour rendre un diagramme traçable"
+
+#~ msgid "Part of a repository wants to leave — size, or a semantic reason. The four stages are gates rather than advice, and that is the whole reason this is a diagram:  says \"nothing moves until the stage before it measures zero\" in prose, and prose is what an agent under pressure talks itself past. All three gateways are DMN-backed, so completion refuses a hand-supplied outcome and the branch is computed from counts a tool already produced. The sharpest is , and it is sharp because of its RULE ORDER —  returns  before the cross-edge rule is ever reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. Every gate has a third state and none of them renders it as clean: both  paths are a REFUSAL to advance rather than a warning.  sits in the Administrator lane because moving durable artefacts out of a repository is a person's decision — the agent reports what would move and waits, per"
+#~ msgstr "Une partie d'un dépôt doit être détachée — pour des raisons de taille ou sémantiques. Les quatre étapes sont des portes infranchissables plutôt que de simples recommandations, et c'est la raison même d'être de ce diagramme :  indique en prose que « rien ne bouge tant que l'étape précédente n'est pas mesurée à zéro », et la prose est précisément ce qu'un agent sous pression contourne par le discours. Les trois passerelles s'appuient sur DMN, de sorte que l'achèvement refuse tout résultat fourni manuellement et que la branche est calculée à partir de décomptes déjà générés par un outil. La plus stricte est , et elle l'est en raison de son ORDRE DE RÈGLES —  renvoie  avant même que la règle des arêtes croisées ne soit évaluée, si bien qu'un décompte d'arêtes croisées nul sur un corpus non évalué ne peut être interprété comme un succès. Chaque porte dispose d'un troisième état et aucune ne le considère comme réussi : les deux chemins  sont un REFUS d'avancer plutôt qu'un avertissement.  se trouve dans le couloir Administrator car déplacer des artefacts durables hors d'un dépôt relève de la décision d'une personne — l'agent signale ce qui serait déplacé et attend, conformément à"
+
+#~ msgid "Review — the generic entry and the two specialisms it descends into. They are separate processes rather than extra skills on the reviewer, because the subprocess stack is SCOPED: an actor takes on the inner lane's role for that call path only, where  would carry both specialisms everywhere."
+#~ msgstr "Relecture — l'entrée générique et les deux spécialisations dans lesquelles elle descend. Ce sont des processus distincts plutôt que des compétences supplémentaires portées par le relecteur, car la pile de sous-processus a une PORTÉE DÉLIMITÉE : un acteur n'endosse le rôle du couloir intérieur que pour ce chemin d'appel précis, alors qu' propagerait les deux spécialisations partout."
+
+#~ msgid "What kind of thing changed, and which review does it descend into?"
+#~ msgstr "Quel type d'élément a été modifié, et vers quelle relecture descend-on ?"
+
+#~ msgid "Prose: register and voice, the editorial dependencies a reader needs, translation"
+#~ msgstr "Prose : registre et voix, dépendances éditoriales requises pour le lecteur, traduction"
+
+#~ msgid "The graph's code nodes: Tool definitions and schema definition nodes — does the node declare what it is, do its references resolve, is the mechanism it advertises the one that runs?"
+#~ msgstr "Nœuds de code du graphe : définitions d'outils et nœuds de définition de schéma — le nœud déclare-t-il ce qu'il est, ses références sont-elles résolues, le mécanisme qu'il annonce est-il celui qui s'exécute ?"
+
+#~ msgid "A decision with alternatives: which adopted methodology applies here, what were the options, and why did the rejected ones lose? Called as a subprocess, and its trigger is 's — irreversibility and surprise, not size — so a reversible choice leaves at the first task and an irreversible one cannot skip it. It does not decide: it produces the options and a recommendation, and the authorisation belongs to the calling step."
+#~ msgstr "Une décision comportant des alternatives : quelle méthodologie adoptée s'applique ici, quelles étaient les options, et pourquoi les options rejetées ont-elles été écartées ? Appelé sous forme de sous-processus, son déclencheur est celui d' — l'irréversibilité et la surprise, non la taille — de sorte qu'un choix réversible s'arrête dès la première tâche et qu'un choix irréversible ne peut pas l'ignorer. Il ne tranche pas : il produit les options et une recommandation, l'autorisation appartenant à l'étape appelante."
+
+#~ msgid "Situation analysis before a decision: what is true about a subject's own attributes (strengths, weaknesses) and about its environment (opportunities, threats), crossed into the SO/WO/ST/WT candidate strategies. No path through it decides anything — that is the  methodology's own stated refusal, drawn so it cannot be skipped, and every completed run either records a situation or hands the unranked candidates to . External is scanned before internal, per Weihrich as the ingested source reports him. It does not rank what it finds, because the method has no way to."
+#~ msgstr "Analyse de situation avant une décision : ce qui caractérise les attributs propres d'un sujet (forces, faiblesses) et son environnement (opportunités, menaces), croisés dans les stratégies candidates SO/WO/ST/WT. Aucun chemin ne prend de décision — c'est le refus explicite de la méthode , représenté afin de ne pas pouvoir être ignoré, et chaque exécution terminée enregistre une situation ou transmet les candidats non classés à . L'externe est analysé avant l'interne, selon Weihrich tel que la source ingérée le rapporte. Il ne classe pas ce qu'il trouve, la méthode n'ayant aucun moyen de le faire."
+
+#~ msgid "Which named editorial voices has this folio ACTIVATED, and does each rule's own citation support the finding it raised? Called from , and it leaves immediately when no voice is active — the default, and this instance's case."
+#~ msgstr "Quelles voix éditoriales nommées ce folio a-t-il ACTIVÉES, et la citation propre à chaque règle étaye-t-elle le constat émis ? Appelé depuis , il se termine immédiatement lorsqu'aucune voix n'est active — ce qui est le comportement par défaut et le cas de cette instance."
+
+#~ msgid "The review reached no mechanical or consensus agreement, so a judgement is needed — and what it must leave behind. Entered only when a criterion's reviewer entries DISAGREE, which  makes computable, so the first gateway leaves rather than guessing: one reviewer and no checker is a review, one checker and no reviewer is a gate. Drawn for bean  after the shape was found implemented seven times — five adjudicate activities across , plus  and , which share no code with the diagrams and reached the same rule anyway. Advisory, because a judgement cannot be gated;  and  are not relaxable, because a judgement nobody wrote down is indistinguishable from a checker that was never run"
+#~ msgstr "La relecture n'a abouti à aucun accord mécanique ni consensus, un jugement est donc nécessaire — ainsi que les traces qu'il doit laisser. Déclenché uniquement lorsque les évaluations des relecteurs sur un critère SONT EN DÉSACCORD, ce que  rend calculable, de sorte que la première passerelle quitte le processus plutôt que de deviner : un relecteur sans vérificateur constitue une relecture, un vérificateur sans relecteur constitue une porte de contrôle. Conçu pour le bean  après que cette structure a été trouvée implémentée sept fois — cinq activités d'arbitrage à travers , plus  et , qui ne partagent aucun code avec les diagrammes et ont abouti à la même règle. Consultatif, car un jugement ne peut faire l'objet d'une porte automatisée ;  et  ne sont pas assouplissables, car un jugement non consigné par écrit est indiscernable d'un vérificateur qui n'a jamais été exécuté"
+
+#~ msgid "A change touched both sides of a declared prose ↔ code pair — a diagram and the workflow it implements, a skill and the code beside it — so  sends it here, the only branch that reads the two against each other. The machine has already run ( and  on the sidecar); the reviewer settles only what those left open, one of three ways: attest with a reason, raise a finding against the wrong side, or — on a disagreement with a checker — call . Drawn for issue #1042, stage C; the Lean case is , not this diagram"
+#~ msgstr "Une modification a touché les deux côtés d'une paire prose ↔ code déclarée — un diagramme et le flux de travail qu'il implémente, une compétence et le code adjacent —  l'envoie donc ici, la seule branche qui confronte les deux volets l'un à l'autre. La machine a déjà tourné ( et  sur le sidecar) ; le relecteur ne tranche que ce que celles-ci ont laissé en suspens, selon l'une des trois voies : attester avec un motif, émettre un constat contre le mauvais côté, ou — en cas de désaccord avec un vérificateur — appeler . Conçu pour le ticket #1042, étape C ; le cas Lean relève de , non de ce diagramme"
+
+#~ msgid "Answer a question from a corpus this folio ALREADY holds, iteratively, and stop on a stated condition. Renders Doc-Researcher (arXiv:2510.21603v1, Dong et al.) as a process: filter the corpus and choose the granularity, search, refine, then judge sufficiency. Two ways out and both are load-bearing — a threshold alone never terminates on a question the corpus cannot answer, a cap alone stops an answerable one early and returns something that looks complete — and which one fired is carried to the report. ONE lane, not the paper's four agents: they are four questions under one accountability, and this repo's role model makes a swimlane an accountability.  is not relaxable, because a search that ended quietly looks exactly like one that succeeded"
+#~ msgstr "Répondre à une question à partir d'un corpus que ce folio détient DÉJÀ, de manière itérative, et s'arrêter sur une condition explicite. Restitue Doc-Researcher (arXiv:2510.21603v1, Dong et al.) sous forme de processus : filtrer le corpus et choisir la granularité, chercher, affiner, puis évaluer la suffisance. Deux voies de sortie, toutes deux capitales — un seuil seul ne se termine jamais sur une question à laquelle le corpus ne peut répondre, un plafond seul interrompt prématurément une question soluble et renvoie un résultat d'apparence complète — et la condition déclenchée est transmise au rapport. UN seul couloir, non les quatre agents de l'article : il s'agit de quatre questions relevant d'une même responsabilité, et le modèle de rôles de ce dépôt fait d'un couloir une responsabilité.  n'est pas assouplissable, car une recherche terminée en silence ressemble trait pour trait à une recherche réussie"
+
+#~ msgid "The QA-criterion specialisation of the adjudication: ask the shared judgement, then do the one of three things a criterion disagreement admits — the finding stands, the criterion is scoped so it stops applying here, or it applies and a dispensation records why. Split out of  for bean  (#1073), because six diagrams called that process and only two asked a question these three answer:  asks which side wins a conflict and  asks whether a drift is real, and a  ran the outcome half for both. Handing each caller its own codes could not fix it — the codes selected three different TASKS — so the branches moved rather than the enum.  and  are not relaxable and live here now, with the caller that records"
+#~ msgstr "La spécialisation critère-QA de l'arbitrage : solliciter le jugement partagé, puis exécuter l'une des trois actions admises par un désaccord sur un critère — le constat est maintenu, le critère est restreint afin de cesser de s'appliquer ici, ou il s'applique et une dérogation en consigne la raison. Extrait de  pour le bean  (#1073), car six diagrammes appelaient ce processus et deux seulement posaient une question à laquelle ces trois voies répondent :  demande quel côté l'emporte lors d'un conflit et  demande si une dérive est réelle, une  exécutant la partie résultat pour les deux. Attribuer à chaque appelant ses propres codes ne pouvait pas résoudre le problème — les codes sélectionnaient trois TÂCHES différentes — ce sont donc les branches qui ont été déplacées plutôt que l'énumération.  et  ne sont pas assouplissables et résident ici désormais, avec l'appelant qui enregistre"
+
+#~ msgid "What should this user interface look like, and which candidate wins? The  methodology made executable (#1023): a written design intent, at least two mid-fidelity candidates each with a web and a mobile layout, mechanical checks at both viewports (), a blind per-criterion review, then  where reviewers disagree and  for the choice. The same checks back the as-is wireframe every declared visualiser owes ()"
+#~ msgstr "À quoi doit ressembler cette interface utilisateur, et quel candidat l'emporte ? La méthodologie  rendue exécutable (#1023) : une intention de conception écrite, au moins deux candidats de moyenne fidélité comportant chacun une disposition web et mobile, des vérifications mécaniques aux deux résolutions (), une relecture à l'aveugle par critère, puis  en cas de désaccord des relecteurs et  pour le choix final. Les mêmes contrôles étayent le wireframe existant (as-is) que chaque visualiseur déclaré doit fournir ()"
+
+#~ msgid "Before new work takes shape, what does it touch? Search beans, issues and open PRs; categorize and summarize every hit; ask the user whether and how to coordinate. Judgement sorts the hits and the user decides (#1023). Called from  when a requirement is initiated or updated in chat, and from"
+#~ msgstr "Avant qu'un nouveau travail ne prenne forme, à quoi touche-t-il ? Rechercher dans les beans, les tickets et les PR ouvertes ; catégoriser et résumer chaque résultat ; demander à l'utilisateur si et comment coordonner. Le discernement trie les résultats et l'utilisateur tranche (#1023). Appelé depuis  lorsqu'une exigence est initiée ou mise à jour en cours d'échange, et depuis"
+
+#~ msgid "Somebody shared a paper or standard and wants its method used: origin and licence, ingestion (), related work (), the method rendered with its adopted and refused parts, placement by ownership, integration by calling existing processes, a Tool for every tool it uses, and the owner's review. Written while adopting WireGen (#1023)"
+#~ msgstr "Quelqu'un a partagé un article ou une norme et souhaite que sa méthode soit utilisée : origine et licence, ingestion (), travaux connexes (), méthode représentée avec ses composantes adoptées et refusées, affectation par responsabilité, intégration par appel aux processus existants, un outil (Tool) pour chaque outil utilisé, et relecture par le propriétaire. Rédigé lors de l'adoption de WireGen (#1023)"
+
+#~ msgid "Boards — a board is a diagram of a folio, in the OMG sense: the folio carries what is true,  carries where it was drawn, and the arrow runs one way. All three exist because the discipline is a property a future edit breaks silently — two mechanisms that look like one, a control that looks like a delete, and two writes that look like one."
+#~ msgstr "Tableaux (Boards) — un tableau est un diagramme d'un folio, au sens de l'OMG : le folio porte ce qui est vrai,  porte l'endroit où il a été dessiné, et la flèche est unidirectionnelle. Les trois processus existent parce que cette rigueur est une propriété qu'une modification ultérieure romprait silencieusement — deux mécanismes qui ressemblent à un seul, une commande qui ressemble à une suppression, et deux écritures qui ressemblent à une seule."
+
+#~ msgid "A reader opens a card and closes it again. Two mechanisms the diagram exists to keep apart: semantic zoom is automatic and driven by SIZE, while open and close are a person's, so an open window survives a zoom-out and only  closes it.  is a task rather than a courtesy — bean , an action whose inverse is not reachable is not a toggle. Advisory: refusing a step here would refuse a click"
+#~ msgstr "Un lecteur ouvre une carte puis la referme. Deux mécanismes que le diagramme vise à distinguer : le zoom sémantique est automatique et régi par la TAILLE, tandis que l'ouverture et la fermeture relèvent de la personne ; ainsi, une fenêtre ouverte persiste lors d'un dézoom et seul  la ferme.  est une tâche plutôt qu'une courtoisie — bean , une action dont l'inverse n'est pas accessible n'est pas une bascule. Consultatif : refuser une étape ici reviendrait à refuser un clic"
+
+#~ msgid "The fishbone. It looks like a delete and is not one: the content MOVES into , keeping its identity, so every reference still resolves and the reader who hit the wrong control lost a location rather than a node. Strict, unlike the two above, because it edits the folio — the reader is asked first, and the question names what will move and where it lands, per"
+#~ msgstr "L'arête de poisson (fishbone). Elle ressemble à une suppression sans en être une : le contenu est DÉPLACÉ dans , en conservant son identité, de sorte que chaque référence continue d'être résolue et que le lecteur ayant cliqué sur la mauvaise commande perd un emplacement plutôt qu'un nœud. Strict, contrairement aux deux ci-dessus, car il modifie le folio — le lecteur est interrogé au préalable, et la question précise ce qui sera déplacé et où cela sera placé, conformément à"
+
+#~ msgid "Creating a sticky and placing one are two writes to two graphs, and the common bug is to make them one. The note goes into the folio carrying no coordinate; the coordinate goes into the layout layer, keyed by board and then by note — which is why one note may sit on several boards without arbitrating between them. The gateway exists because a dragged existing card takes only the second path"
+#~ msgstr "Créer un pense-bête et le positionner constituent deux écritures dans deux graphes distincts, et l'erreur classique consiste à les confondre en une seule. La note rejoint le folio sans coordonnées ; les coordonnées rejoignent la couche de mise en page, indexées par tableau puis par note — c'est pourquoi une même note peut figurer sur plusieurs tableaux sans arbitrage entre eux. La passerelle existe car une carte existante déplacée n'emprunte que le second chemin"
+
+#~ msgid "Acquisition — how a resource reaches the queue at all.  begins at \"a file lands in \" and calls that its only entry point, which is true of ingestion and silent on everything before it:"
+#~ msgstr "Acquisition — comment une ressource parvient dans la file d'attente.  commence à « un fichier arrive dans  » et en fait son unique point d'entrée, ce qui est vrai pour l'ingestion mais omet tout ce qui précède :"
+
+#~ msgid "Something is offered unprompted, or is needed and has to be asked for — and through which channel:  is one, the conversation is another, and the set is open"
+#~ msgstr "Quelque chose est proposé spontanément, ou est requis et doit être demandé — et par quel canal :  en est un, la conversation en est un autre, et la liste reste ouverte"
+
+#~ msgid "Ingestion — turning an uploaded source document into corpus. The first is the outer process; the rest are its call activities — except , which is conditional and not yet wired in, for the reason given under the table:"
+#~ msgstr "Ingestion — transformer un document source téléversé en corpus. Le premier est le processus englobant ; les suivants sont ses activités d'appel — à l'exception d', qui est conditionnel et pas encore raccordé, pour la raison détaillée sous le tableau :"
+
+#~ msgid "The whole path from  to a citeable L1 knowledge graph"
+#~ msgstr "L'ensemble du parcours depuis  jusqu'à un graphe de connaissances L1 citable"
+
+#~ msgid "Text layer, OCR, sections, structure, claim candidates"
+#~ msgstr "Couche de texte, OCR, sections, structure, candidats aux affirmations"
+
+#~ msgid "Archive, technical metadata, images, audio, tabular data, provenance"
+#~ msgstr "Archive, métadonnées techniques, images, audio, données tabulaires, provenance"
+
+#~ msgid "Dublin Core, manifest, assets, binding, linking"
+#~ msgstr "Dublin Core, manifeste, ressources (assets), liaison, interconnexion"
+
+#~ msgid "Is the derived content complete enough to promote, and who says so?"
+#~ msgstr "Le contenu dérivé est-il suffisamment complet pour être promu, et qui l'atteste ?"
+
+#~ msgid "Does this artefact carry a theme, and what are its palette roles and layouts?"
+#~ msgstr "Cet artefact comporte-t-il un thème, et quels sont ses rôles de palette et ses mises en page ?"
+
+#~ msgid "is not a call activity of  today, and that is a stated gap rather than an oversight (bean , whose \"Done when\" asks for the link). Most ingested documents carry no theme. Making theme ingestion an unconditional step in the chain would assert that every one does, and a step that no-ops for almost every document is a step a reader stops believing. The honest wiring is a gateway — is this artefact a theme source? — and which artefacts answer yes is a judgement nobody has made yet: a captured site obviously qualifies, a style guide qualifies because it states rules, and whether an arbitrary branded PDF does is exactly the open question."
+#~ msgstr "n'est pas une activité d'appel de  à ce jour, et il s'agit d'un écart assumé plutôt que d'un oubli (bean , dont le critère d'achèvement demande ce lien). La plupart des documents ingérés ne comportent aucun thème. Faire de l'ingestion de thème une étape inconditionnelle de la chaîne reviendrait à affirmer que chacun en possède un, et une étape sans effet pour la quasi-totalité des documents est une étape à laquelle le lecteur ne croit plus. Le raccordement intègre consiste en une passerelle — cet artefact est-il une source de thème ? — et déterminer quels artefacts répondent par l'affirmative est un arbitrage que nul n'a encore rendu : un site aspiré est à l'évidence qualifié, une charte graphique l'est parce qu'elle énonce des règles, et savoir si un PDF quelconque sous charte l'est constitue précisément la question ouverte."
+
+#~ msgid "Remote content — landing something that lives somewhere else, and keeping it current. Named on 2026-09-20 after this repository had been running the process twice without a word for it:  taking three items out of a 361.55 GB catalogue, and  fetching a harness and landing it locally, with  as half of that second one's refresh."
+#~ msgstr "Contenu distant — importer un élément résidant ailleurs et le maintenir à jour. Nommé le 2026-09-20 après que ce dépôt a exécuté ce processus à deux reprises sans lui donner de nom :  extrayant trois éléments d'un catalogue de 361,55 Go, et  récupérant un harness pour le déposer localement, avec  constituant la moitié de l'actualisation de ce second processus."
+
+#~ msgid "May we hold a local copy, what does holding it cost, and for what purpose —  or ? Five gates, three states, and a refusal leaves the node  rather than failing"
+#~ msgstr "Pouvons-nous détenir une copie locale, quel en est le coût de détention, et dans quel but —  ou  ? Cinq portes, trois états, et un refus laisse le nœud au statut  plutôt que d'échouer"
+
+#~ msgid "What changed upstream, what changed locally, and what to do when both. An archival copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead"
+#~ msgstr "Qu'est-ce qui a changé en amont, qu'est-ce qui a changé localement, et que faire en cas de modifications des deux côtés. Une copie archivistique n'est jamais actualisée — une nouvelle récupération détruirait l'état qu'elle est censée conserver — elle fait donc l'objet d'un contrôle d'intégrité (fixity check) à la place"
+
+#~ msgid "Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own  that records, in , which original it came out of — the edge nothing downstream can reconstruct once it is missing"
+#~ msgstr "Quelqu'un souhaite modifier un contenu dont ce dépôt détient une copie. Le contenu matérialisé étant en lecture seule, la solution consiste en une copie vers son propre  consignant, dans , de quel original il est issu — le lien qu'aucun processus en aval ne peut reconstituer une fois perdu"
+
+#~ msgid "Try a sample of a remote source before committing to it: scope it (which items, which store, permanent or trial?), let  gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls  for permanent samples only"
+#~ msgstr "Tester un échantillon d'une source distante avant de s'engager : définir son périmètre (quels éléments, quel entrepôt, permanent ou d'essai ?), laisser  filtrer — appelé, jamais copié — le déposer dans la bibliothèque ou, pour un essai, dans la corbeille conservée non publiée, puis l'importer et tester l'importation. Une vérification qui n'a pas pu s'exécuter constitue un échec. Sa seconde entrée appelle  pour les échantillons permanents uniquement"
+
+#~ msgid "Theme and UI review — at ingestion only — what the arriving graphical assets will look like in the website or app design they are for, decided while it is still cheap:"
+#~ msgstr "Revue de thème et d'IHM — à l'ingestion uniquement — ce à quoi ressembleront les ressources graphiques entrantes dans la conception du site web ou de l'application à laquelle elles sont destinées, évalué tant que le coût reste minime :"
+
+#~ msgid "Will these ingested graphical assets read legibly, consistently and in every declared language, in the design they are for? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out, at a web and a mobile width. Called from  — at ingestion only, by owner ruling (bean , 2026-09-24). It was post-MVP and called from  until then; that call is gone, and the cost — no post-build look at what shipped — is recorded in the skill as accepted rather than missed"
+#~ msgstr "Ces ressources graphiques ingérées seront-elles lisibles, cohérentes et disponibles dans chaque langue déclarée, au sein du design auquel elles sont destinées ? L'accessibilité est mesurée plutôt qu'affirmée, l'image de marque est confrontée à la propre déclaration de l'instance, les langues sont extraites et mises en page, aux largeurs web et mobile. Appelé depuis  — à l'ingestion uniquement, sur décision du responsable (bean , 2026-09-24). C'était une étape post-MVP appelée depuis  jusqu'alors ; cet appel a été retiré, et le coût — l'absence d'examen post-compilation de ce qui a été livré — est consigné dans la compétence comme accepté plutôt qu'omis"
+
+#~ msgid "Upstream dependencies — what happens when somebody else's release changes what we ship. The first is the watcher and the second is the reusable subprocess it calls; any pinned dependency enters the second the same way, so a new tenant is a row in  rather than a third diagram:"
+#~ msgstr "Dépendances en amont — que se passe-t-il lorsque la version d'un tiers modifie ce que nous livrons. Le premier est le surveillant (watcher) et le second est le sous-processus réutilisable qu'il appelle ; toute dépendance verrouillée pénètre dans le second de la même façon, de sorte qu'un nouvel ayant droit correspond à une ligne dans  plutôt qu'à un troisième diagramme :"
+
+#~ msgid "Has a pinned dependency fallen behind a release, and what happens when the check cannot tell? Mechanical throughout, and it maintains ONE tracking issue rather than sending mail nobody reads"
+#~ msgstr "Une dépendance verrouillée a-t-elle pris du retard par rapport à une version publiée, et que se passe-t-il lorsque la vérification ne peut se prononcer ? Mécanique de bout en bout, et maintient UN seul ticket de suivi plutôt que d'envoyer des courriels que personne ne lit"
+
+#~ msgid "A candidate version exists. What of ours binds it, what does the MVP build prove, and who is allowed to say yes? The accept is a  in a person-only lane, and no package may relax it"
+#~ msgstr "Une version candidate existe. Quels éléments parmi les nôtres y sont liés, que démontre la compilation MVP, et qui a l'autorité nécessaire pour donner son accord ? L'acceptation est une  dans un couloir réservé aux humains, et aucun paquet ne peut l'assouplir"
+
+#~ msgid "The CI workflows themselves —  are processes too, with triggers, gateways and compensation paths, and until 2026-09-20 none was drawn.  measures how many are, in three states; a workflow names the diagram it implements with a  line rather than being matched on its filename, because a mention is not coverage. The pointer is on the workflow because the workflow depends on the process it carries out, and the dependent holds the pointer (bean ; the diagram carried it until 2026-09-24)."
+#~ msgstr "Les flux CI eux-mêmes —  sont également des processus, dotés de déclencheurs, de passerelles et de chemins de compensation, et jusqu'au 2026-09-20 aucun n'était représenté.  mesure combien le sont, selon trois états ; un flux de travail désigne le diagramme qu'il implémente via une ligne  plutôt que par correspondance sur son nom de fichier, car une simple mention ne vaut pas couverture. Le pointeur figure sur le flux de travail car le flux dépend du processus qu'il exécute, et c'est le dépendant qui détient le pointeur (bean  ; le diagramme l'a porté jusqu'au 2026-09-24)."
+
+#~ msgid "Coverage alone would not have been worth having. Bean : \"a diagram that is drawn once and then drifts is worse than none, because it is consulted.\" So each job names the node it stands for —  inside the job — and the same check compares the two in both directions: a job with no node is a diagram that has gone stale, a node the diagram does not have is one that was stale already. Both exit 1, in the same tier as a  line naming a diagram that is not there, because both mislead a reader who follows them."
+#~ msgstr "La couverture seule n'aurait eu aucune valeur. Bean  : « un diagramme dessiné une fois puis laissé à la dérive est pire que pas de diagramme du tout, car on s'y réfère. » Chaque tâche (job) nomme donc le nœud qu'elle représente —  à l'intérieur du job — et la même vérification confronte les deux dans les deux sens : un job sans nœud signale un diagramme devenu obsolète, un nœud absent du diagramme en signale un qui l'était déjà. Les deux renvoient un code de sortie 1, au même titre qu'une ligne  désignant un diagramme introuvable, car tous deux induisent en erreur le lecteur qui s'y fie."
+
+#~ msgid "Declaring is opt-in per workflow, and a covered workflow none of whose jobs names a node is reported as undeclared rather than as fully drifted: \"nobody has said yet\" and \"said, and wrong\" are different answers, and only the second is a finding. What is never allowed is a diagram declaring some of a workflow's jobs and reading as complete."
+#~ msgstr "La déclaration se fait sur adhésion volontaire par flux de travail, et un flux couvert dont aucun job ne nomme de nœud est signalé comme non déclaré plutôt qu'en dérive complète : « personne ne s'est encore prononcé » et « déclaré, mais erroné » sont deux réponses distinctes, et seule la seconde constitue une anomalie. Ce qui n'est en aucun cas permis, c'est qu'un diagramme déclare certains des jobs d'un flux et apparaisse pourtant comme complet."
+
+#~ msgid "The lifecycle of a review preview: staged on a push, taken down on a close, or removed by an explicit dispatch. Both gateways are three-state — a merge confirms a removal on its own while a close without one still needs the label (bean ), and the dispatch preflight refuses on a live signal AND on could-not-tell. Every path that changes  writes to the render log, and the two removal paths write the record in the SAME commit as the removal"
+#~ msgstr "Le cycle de vie d'une prévisualisation de relecture : déployée en staging sur un push, retirée lors d'une fermeture, ou supprimée par un déclenchement explicite (dispatch). Les deux passerelles sont à trois états — une fusion confirme une suppression d'elle-même tandis qu'une fermeture sans fusion requiert toujours l'étiquette (bean ), et le contrôle préalable du dispatch refuse en cas de signal actif AINSI qu'en cas d'impossibilité de trancher. Chaque chemin modifiant  écrit dans le journal de rendu, et les deux chemins de suppression consignent l'enregistrement dans le MÊME commit que la suppression"
+
+#~ msgid "Also  — see Upstream dependencies below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step"
+#~ msgstr "Également  — voir Dépendances en amont ci-dessus. La déclaration a été ajoutée lors de l'écriture du contrôle de couverture ; le diagramme documentait déjà ce flux étape par étape"
+
+#~ msgid "Publishing  is a full replace, so anything on that branch this build did not produce is gone unless something puts it back — bean , every open PR's preview deleted by an unrelated merge, silently, for months. The restore and the after-the-fact verification are a pair: a restore nobody checks is one that can quietly stop working, which is how the original defect lasted. Both gateways refuse rather than warn, and the second is three-state — and, since bean , the export is verified before the deploy and every failing step after the publish button goes through one alert to the publication manager"
+#~ msgstr "La publication de  est un remplacement complet, donc tout élément présent sur cette branche que cette compilation n'a pas produit disparaît à moins que quelque chose ne le réintroduise — bean , la prévisualisation de chaque PR ouverte supprimée silencieusement par une fusion sans rapport, pendant des mois. La restauration et la vérification a posteriori forment une paire indissociable : une restauration que personne ne vérifie est une restauration qui peut cesser de fonctionner sans bruit, et c'est ainsi que l'anomalie initiale a perduré. Les deux passerelles refusent plutôt que d'avertir, et la seconde est à trois états — et, depuis le bean , l'exportation est vérifiée avant le déploiement et chaque étape en échec après le déclenchement de la publication passe par une alerte unique adressée au responsable de publication"
+
+#~ msgid "Is what the build produced fit to deploy? The verifier set over the built tree, run between the export and the deploy and blocking it: pass, fail, or could-not-tell, and the caller deploys only on a pass. A set, so a verifier is one entry; the first expands every JSON-LD document of ours under a real processor, which found two documents silently dropping a property on its first run. Bean , owner 2026-09-23"
+#~ msgstr "Ce que la compilation a produit est-il apte au déploiement ? L'ensemble des vérificateurs sur l'arborescence générée, exécuté entre l'exportation et le déploiement et bloquant celui-ci : succès, échec ou indéterminé, l'appelant ne déployant qu'en cas de succès. Un ensemble, de sorte qu'un vérificateur correspond à une entrée unique ; le premier développe chacun de nos documents JSON-LD avec un véritable processeur, ce qui a permis de découvrir deux documents omettant silencieusement une propriété dès sa première exécution. Bean , responsable 2026-09-23"
+
+#~ msgid "Something after the publish button failed — one alert, the same for every step: an incomplete export, a verification failure, a failed deploy, a lost preview. A tracking issue labelled for the publication manager, commented on for each new failure and closed by the next clean publish; the publication manager triages it. Bean , owner 2026-09-23"
+#~ msgstr "Un élément postérieur au déclenchement de la publication a échoué — une alerte unique, identique pour chaque étape : exportation incomplète, échec de vérification, échec de déploiement, prévisualisation perdue. Un ticket de suivi étiqueté pour le responsable de publication, commenté à chaque nouvel échec et fermé par la publication saine suivante ; le responsable de publication le prend en charge. Bean , responsable 2026-09-23"
+
+#~ msgid "Five independent jobs, and nothing in the YAML says so in one place. No job declares , so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one () is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on"
+#~ msgstr "Cinq jobs indépendants, et rien dans le YAML ne l'indique en un lieu unique. Aucun job ne déclare de clause , de sorte que la durée d'exécution réelle du flux correspond au job le plus lent plutôt qu'à la somme — l'information la plus utile à connaître avant d'ajouter une porte de contrôle. Quatre sont stricts et un () est un simple avertissement, si bien que la passerelle après la jonction porte spécifiquement sur les contrôles STRICTS ; dessiner cinq boîtes équivalentes constituerait un mensonge sur lequel le lecteur s'appuierait"
+
+#~ msgid "Is CI actually working on ? Only  fails the job — a red  records the issue and this workflow stays green, which is invisible from the run list.  is not simply the exit code:  exits 1 on a crash too, so the REPORT FILE separates \"found something red\" from \"crashed\""
+#~ msgstr "La CI fonctionne-t-elle réellement sur  ? Seul  met le job en échec — un statut rouge sur  enregistre le problème et ce flux reste vert, ce qui est invisible depuis la liste des exécutions.  ne se résume pas au simple code de sortie :  renvoie également un code 1 en cas de crash, de sorte que le FICHIER DE RAPPORT distingue « détection d'un élément rouge » de « crash »"
+
+#~ msgid "The same shape one level out — the repository rather than the workflows. It reports and never acts: there is no removal task on the diagram, and its absence is  being followed rather than an omission"
+#~ msgstr "La même structure un cran au-dessus — le dépôt plutôt que les flux de travail. Il rend compte et n'agit jamais : aucune tâche de suppression ne figure sur le diagramme, et son absence découle du respect de  plutôt que d'une omission"
+
+#~ msgid "Are the  siblings still in sync with their  manifests? Deliberately small, and says so: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one its job names no node, so a job added here would tell nobody — not for exposition"
+#~ msgstr "Les fichiers jumeaux  sont-ils toujours synchronisés avec leurs manifestes  ? Volontairement concis, et l'affirme : un seul job, aucun embranchement, rien que le YAML ne montre déjà. Il justifie un diagramme pour la détection de dérive — sans cela, son job ne nommerait aucun nœud, de sorte qu'un job ajouté ici ne préviendrait personne — et non à des fins didactiques"
+
+#~ msgid "Is  still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above"
+#~ msgstr "Le fichier  est-il toujours synchronisé avec sa table de données ? Le plus petit flux de travail présenté ici et celui dont le résultat conditionne une preuve : séparez-les, et un fichier Lean qui compile portera des nombres que rien n'a produits. Même remarque de minimalisme délibéré que ci-dessus"
+
+#~ msgid "Which open pull requests have no CI run on their head — bean . Measured 2026-09-20: two of six had none. The 15-minute age gate is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only  fails the job; a finding records itself and the workflow stays green. Two channels: the issue edited in place, the PR comment once per (PR, head sha)"
+#~ msgstr "Quelles demandes d'extraction (pull requests) ouvertes ne disposent d'aucune exécution de CI sur leur commit de tête — bean . Mesuré le 2026-09-20 : deux sur six n'en avaient aucune. La porte d'ancienneté de 15 minutes fait toute la différence entre un outil utile et un outil ignoré, dans la mesure où un commit poussé il y a quelques instants n'a légitimement aucune exécution et que signaler de tels cas conduit à ignorer les alertes. Seul l'état  fait échouer le job ; une anomalie s'enregistre d'elle-même et le flux de travail reste vert. Deux canaux : le ticket modifié sur place, le commentaire de PR une seule fois par (PR, sha de tête)"
+
+#~ msgid "Out to a public portal — the stage after publishing, and the one this repository had built twice without naming. A portal that is not this repository — a Moodle site, a ministry intranet, a department page — needs the graph's contents, and the path there is six stages rather than a deploy:"
+#~ msgstr "Vers un portail public — l'étape postérieure à la publication, et celle que ce dépôt avait construite à deux reprises sans lui donner de nom. Un portail distinct de ce dépôt — un site Moodle, un intranet ministériel, une page de département — a besoin du contenu du graphe, et le chemin pour y parvenir comprend six étapes plutôt qu'un simple déploiement :"
+
+#~ msgid "How a knowledge graph reaches readers the repository never hears about: select → serialize → package → sign → distribute → verify.  has no default branch on purpose — the owner stated the ingestion method as undetermined, so the diagram reaches a decision and stops; drawing one branch as the obvious one would record a decision nobody made. A CDN is not a lane: it is what  may put in front of the origin, because modelling a cache as a participant makes its URL look like the published one, and a published URL is a promise (bean , \"EXTREME care in URL handling\"). Two gateways refuse rather than warn — over budget is an end event, not a warning, and a failed verification serves the previous version rather than nothing, since a portal that goes blank has turned an integrity problem into an outage"
+#~ msgstr "Comment un graphe de connaissances atteint des lecteurs dont le dépôt n'entend jamais parler : sélectionner → sérialiser → packager → signer → distribuer → vérifier.  n'a volontairement aucune branche par défaut — le responsable ayant indiqué que la méthode d'ingestion était indéterminée, le diagramme aboutit à une décision et s'arrête ; dessiner une branche comme évidente enregistrerait une décision que personne n'a prise. Un CDN n'est pas un couloir : c'est ce que  peut placer devant l'origine, car modéliser un cache comme participant fait ressembler son URL à l'URL publiée, et une URL publiée est un engagement contractuel (bean , « soin EXTRÊME dans la gestion des URL »). Deux passerelles refusent plutôt que d'avertir — un dépassement de budget est un événement de fin, non un avertissement, et une vérification en échec diffuse la version précédente plutôt que rien du tout, un portail devenu blanc transformant un problème d'intégrité en panne de service"
+
+#~ msgid "The verify stage is the one that gets dropped, and the reason is structural: every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. Where the portal cannot verify,  is the answer — a portal nobody asked is not a portal that checked."
+#~ msgstr "L'étape de vérification est celle qui est systématiquement délaissée, pour une raison structurelle : chaque autre étape produit un résultat visible, alors que celle-ci ne produit rien lorsqu'elle réussit. Un paquet signé et jamais vérifié est un paquet dont la signature n'est qu'un ornement. Lorsque le portail ne peut pas vérifier,  est la réponse — un portail que personne n'a sollicité n'est pas un portail qui a vérifié."
+
+#~ msgid "The publish branch — what is on , and what happened to it. The branch has six publishers and one of them is a full replace, so \"the preview is gone\" has never had an answer a reader could look up:"
+#~ msgstr "La branche de publication — ce qui se trouve sur  et ce qui lui est arrivé. La branche compte six entités émettrices et l'une d'elles effectue un remplacement complet, si bien que « la prévisualisation a disparu » n'a jamais eu d'explication qu'un lecteur pouvait consulter :"
+
+#~ msgid "A preview was published, removed, carried across a full-replace deploy, or considered for removal and kept — which of those happened, and why? Append-only: a  entry never erases the  one before it, and  exists so a preview still standing because a liveness signal fired leaves a trace. Bean  is the case it answers — every open PR's preview deleted by an unrelated merge, silently, for months"
+#~ msgstr "Une prévisualisation a été publiée, supprimée, transférée lors d'un déploiement à remplacement complet, ou envisagée pour suppression puis conservée — laquelle de ces situations s'est produite, et pourquoi ? Ajout uniquement (append-only) : une entrée  n'efface jamais l'entrée  qui la précède, et  existe afin qu'une prévisualisation toujours présente grâce à un signal d'activité laisse une trace. Le bean  est le cas auquel il répond — la prévisualisation de chaque PR ouverte supprimée silencieusement par une fusion sans rapport, pendant des mois"
+
+#~ msgid "Translation and evidence:"
+#~ msgstr "Traduction et preuves :"
+
+#~ msgid "POT extraction → translation → PO injection → round-trip QA → sign-off → staleness watch"
+#~ msgstr "Extraction POT → traduction → injection PO → QA aller-retour → approbation finale → surveillance de l'obsolescence"
+
+#~ msgid "The same cycle when a human translator and an SME reviewer are in it"
+#~ msgstr "Le même cycle lorsqu'un traducteur humain et un relecteur expert métier y participent"
+
+#~ msgid "Framing a question, searching trusted sources, appraising what comes back"
+#~ msgstr "Formuler une question, rechercher des sources fiables, évaluer les résultats obtenus"
+
+#~ msgid "This list is checked, not maintained by hand.  fails when a  under  is absent from this page. It was added because the page opened by counting nineteen files and then listed eight — the eleven above were present in the repository and invisible here, which is the same defect as a table of contents that stops halfway."
+#~ msgstr "Cette liste est vérifiée, non maintenue à la main.  échoue lorsqu'un fichier  situé sous  est absent de cette page. Ce contrôle a été ajouté car la page débutait en dénombrant dix-neuf fichiers pour n'en lister ensuite que huit — les onze mentionnés ci-dessus étaient présents dans le dépôt mais invisibles ici, ce qui constitue le même défaut qu'une table des matières s'interrompant à mi-chemin."

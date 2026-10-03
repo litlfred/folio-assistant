@@ -22719,6 +22719,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.processindexrowschema.calls",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProcessIndexRowSchema.calls"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`calledElement` of each call activity — process ids, not files."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.calls",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.processindexrowschema.group",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProcessIndexRowSchema.group"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`\"\"` for a diagram at the top of its `processes/` directory."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.group",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.processindexrowschema.summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProcessIndexRowSchema.summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "First sentence of the process's own `bpmn:documentation`; absent when it has none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.summary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.processindexrowschema.svg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ProcessIndexRowSchema.svg"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Site-root path of the rendered SVG; absent when none was drawn."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#ProcessIndexRowSchema.svg",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.badges",
       "@type": "skos:Concept",
       "skos:inScheme": {

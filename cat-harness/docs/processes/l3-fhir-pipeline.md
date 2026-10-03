@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_L3Fhir` · advisory · 8 step(s)
 
-folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.
+How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published. folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.

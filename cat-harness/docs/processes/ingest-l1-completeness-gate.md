@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_L1Gate` · advisory · 4 step(s)
 
-folio-assistant — Ingestion subprocess — the L1 completeness gate.
+Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

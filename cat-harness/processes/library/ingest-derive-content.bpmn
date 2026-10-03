@@ -23,7 +23,7 @@
     <bpmn:participant id="Participant_DeriveContent" name="Ingestion subprocess — derive content from the assets" processRef="Process_DeriveContent" />
   </bpmn:collaboration>
   <bpmn:process id="Process_DeriveContent" name="Ingestion subprocess — derive content from the assets" isExecutable="false">
-    <bpmn:documentation>folio-assistant — Ingestion subprocess — derive content from the assets.
+    <bpmn:documentation>Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

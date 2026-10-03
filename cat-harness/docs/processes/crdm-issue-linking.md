@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_CRDM_Issue` · strict (defaulted) · 4 step(s)
 
-Feature work must be linked to a GitHub issue. First find the related work (beans, issues, open PRs) and ask whether to coordinate; then scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.
+Scan for a GitHub issue matching the feature work, then link it or ask — an issue is never created without the BA's permission. Feature work must be linked to a GitHub issue. First find the related work (beans, issues, open PRs) and ask whether to coordinate; then scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.
 
 <img src="../assets/img/workflows/crdm-issue-linking.svg" alt="BPMN diagram: CRDM — link the work to an issue" style="max-width:100%">
 

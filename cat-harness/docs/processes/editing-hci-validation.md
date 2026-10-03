@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_Editing` · strict · 17 step(s)
 
-folio-assistant — editing a content block and its HCI validation gate.
+What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted. folio-assistant — editing a content block and its HCI validation gate.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.

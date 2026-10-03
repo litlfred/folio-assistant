@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_SubscribeKg` · strict · 11 step(s)
 
-Owner, 2026-09-30 (issue #1719): "a way for a folio instance (or cat-harness in general) to "subscribe" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar." Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8.
+Subscribe a folio or harness to an external knowledge graph pinned to a full commit SHA, then take each chosen part from referenced to materialized through `materialize-remote` and instantiate each chosen harness once its needs are held. Owner, 2026-09-30 (issue #1719): "a way for a folio instance (or cat-harness in general) to "subscribe" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar." Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8.
 
 A SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time.
 

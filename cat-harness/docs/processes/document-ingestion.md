@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_Ingestion` · advisory · 12 step(s)
 
-folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.
+The whole path from a file landing in `uploads/` to a citeable L1 source knowledge graph, calling the ingestion subprocesses in turn. folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

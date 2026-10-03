@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: evidence-retrieval\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.934Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.464Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -97,6 +97,11 @@ msgstr ""
 #: ../folio-assistant-core/processes/content/evidence-retrieval.bpmn:30
 #. Diagram label
 msgid "Evidence for a recommendation"
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/evidence-retrieval.bpmn:31
+#. Diagram element documentation
+msgid "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/evidence-retrieval.bpmn:78
@@ -192,11 +197,6 @@ msgstr ""
 #: ../folio-assistant-core/processes/content/evidence-retrieval.bpmn:71
 #. Diagram element documentation
 msgid "The author reads what the document, DAK or IG ALREADY says on this question, before looking outward. A recommendation that contradicts a sibling recommendation in the same artefact is a defect no external evidence will reveal."
-msgstr ""
-
-#: ../folio-assistant-core/processes/content/evidence-retrieval.bpmn:31
-#. Diagram element documentation
-msgid "The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/evidence-retrieval.bpmn:180

@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_IngestTheme` · advisory · 5 step(s)
 
-folio-assistant — Ingestion subprocess — ingest a theme.
+Decide whether an ingested artefact is a theme source and, when it is, extract its palette roles and layouts and send them to theme and UI review. folio-assistant — Ingestion subprocess — ingest a theme.
 
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

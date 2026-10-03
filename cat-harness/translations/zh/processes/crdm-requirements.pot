@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-requirements\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.817Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.355Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -13,6 +13,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: processes/process/crdm-requirements.bpmn:14
+#. Diagram element documentation
+msgid "A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out. The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its \"not a feature\" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer."
+msgstr ""
 
 #: processes/process/crdm-requirements.bpmn:30
 #. Diagram label
@@ -147,11 +152,6 @@ msgstr ""
 #: processes/process/crdm-requirements.bpmn:49
 #. Diagram element documentation
 msgid "The BA describes the capability gap in their own words. They do not need to know it is called CRDM."
-msgstr ""
-
-#: processes/process/crdm-requirements.bpmn:14
-#. Diagram element documentation
-msgid "The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its \"not a feature\" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer."
 msgstr ""
 
 #: processes/process/crdm-requirements.bpmn:25

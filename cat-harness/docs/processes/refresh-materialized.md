@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_RefreshMaterialized` · strict · 8 step(s)
 
-Owner, 2026-09-20: "also need to know about refreshing amterialed remote content. general process used everywhere."
+Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead. Owner, 2026-09-20: "also need to know about refreshing amterialed remote content. general process used everywhere."
 
 REFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere.
 
