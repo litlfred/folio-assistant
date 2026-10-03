@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T08:14:52.661Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/12ae9dc75ab2e88604306422fb6e056938b7fdba",
-  "sourceCommitSha": "12ae9dc75ab2e88604306422fb6e056938b7fdba",
-  "sourceCommitAt": "2026-10-03T08:07:14Z",
+  "generatedAt": "2026-10-03T08:56:09.281Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/59c8eceefd29675ac86775a398a18d7d78545c4e",
+  "sourceCommitSha": "59c8eceefd29675ac86775a398a18d7d78545c4e",
+  "sourceCommitAt": "2026-10-03T08:52:59Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -321,7 +321,7 @@
     "ProcessNode": 978,
     "Tool": 117,
     "Schema": 157,
-    "ExternalSchema": 20,
+    "ExternalSchema": 21,
     "GraphKind": 26,
     "Role": 49,
     "Subgraph": 26,
@@ -3174,7 +3174,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-thompson-y8dcf1-jsonld/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 287,
+      "instructionLines": 310,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3444,7 +3444,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-thompson-y8dcf1-jsonld/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/rendered-verification.md",
-      "instructionLines": 351,
+      "instructionLines": 352,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -49359,6 +49359,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-prov-o"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-thompson-y8dcf1-jsonld/cat-harness.jsonld#externalSchema/w3c-rdf-calendar",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-rdf-calendar",
+      "title": "RDF Calendar — an application of the Resource Description Framework to iCalendar Data",
+      "authority": "W3C",
+      "specVersion": "2005-09-29",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/rdfcal/",
+      "namespace": [
+        "http://www.w3.org/2002/12/cal/ical#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf-calendar"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-thompson-y8dcf1-jsonld/cat-harness.jsonld#externalSchema/w3c-rdf",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
       "name": "w3c-rdf",
@@ -51080,8 +51094,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-thompson-y8dcf1-jsonld",
-    "sha": "25b566fa82dd1c22378051536cb794223025770f",
+    "sha": "c9b76d52b0c481ec7ff3275343dc2d4c87ec58cc",
     "pr": "1950/merge",
-    "run": "37108629535"
+    "run": "37111182566"
   }
 }
