@@ -126,7 +126,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 1 | 45.00 | kind, instance, harness, page, directory, session, graph, block | *(none)* |
 | 2 | 21.61 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, asset, graph |
 | 3 | 18.04 | chapter, slot, block, edges, formal, project, proof, glossary | session, beans, branch, window, epic, goals, push, sessions |
-| 4 | 16.91 | page, tile, text, block, avatar, card, blocks, glass | sibling, subdirectory, ledger, plan, session, sessions, actor, coordination |
+| 4 | 16.91 | page, tile, text, block, avatar, card, glass, blocks | sibling, subdirectory, ledger, plan, session, sessions, actor, coordination |
 | 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, archived, ingest, zip, pdf, arxiv |
 | 6 | 15.07 | lane, actor, role, requirements, analysis, task, edge, impact | queue, sha, backlog, bytes, withheld, tile, board, arm |
 | 7 | 14.71 | preview, staging, translation, locale, url, translated, pages, language | tile, glass, avatar, card, slot, sticky, fit, referee |

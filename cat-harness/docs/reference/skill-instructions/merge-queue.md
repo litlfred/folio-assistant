@@ -227,6 +227,15 @@ token, so the timeline's actor is always the owner and cannot tell sessions
 apart; **the signature is the only thing that can**. An unsigned marker,
 like #1937's, is refused.
 
+**The status has four states, and red means wrong, not unfinished.** A PR
+that is merely not ready yet (a draft, no marker, no label, an unticked box,
+CI still running, an open question) posts `pending`. Only a defect posts
+`failure`: a base that is not `main` or is dead, `needs-merge-human`, red CI
+on the head, or a marker or ready-flip by a session other than the PR's own.
+`success` is pass and `error` is could-not-determine. The status is posted on
+every open PR, and red on every draft would teach readers to ignore red. A
+required check blocks the merge in every state but `success`.
+
 **The status is the backstop, not the gate.** `.github/workflows/merge-guard.yml`
 runs the evaluate mode on label, draft, body, comment and CI-completion
 events and posts a `merge-guard` commit status on the head. Making that
