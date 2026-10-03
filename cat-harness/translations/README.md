@@ -10,9 +10,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `translation-sources`, ho
 
 | file | what it is | used by |
 |---|---|---|
-| [`ar/`](ar/) | 123 files | |
-| [`es/`](es/) | 125 files | |
-| [`fr/`](fr/) | 133 files | |
-| [`ru/`](ru/) | 126 files | |
-| [`zh/`](zh/) | 122 files | |
+| [`ar/`](ar/) | 124 files | |
+| [`es/`](es/) | 126 files | |
+| [`fr/`](fr/) | 134 files | |
+| [`ru/`](ru/) | 127 files | |
+| [`zh/`](zh/) | 123 files | |
 <!-- kg:subgraph:end -->

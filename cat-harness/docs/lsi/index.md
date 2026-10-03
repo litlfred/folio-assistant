@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>3100</b><span>units indexed</span></div>
+<div class="lv-stat"><b>3101</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -63,11 +63,11 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/smart-base-findings` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
+| `who-iris/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
 | `who-iris/who-iris-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-site` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `who-style-guide/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 
 ## cat-harness / library
 
@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**228** units · **6019** terms · k = **100** · retains **78.1 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**229** units · **6032** terms · k = **100** · retains **77.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,16 +123,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.63 | kind, instance, directory, harness, page, session, graph, branch | *(none)* |
-| 2 | 21.76 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, subgraph, iri |
-| 3 | 18.06 | slot, chapter, block, edges, formal, project, watcher, proof | session, beans, page, epic, green, goals, conflict, branch |
-| 4 | 17.17 | page, block, text, tile, chapter, blocks, manifest, avatar | sibling, session, ledger, sessions, plan, subdirectory, subgraph, coordination |
-| 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, ingest, archived, zip, pdf, arxiv |
-| 6 | 15.13 | lane, actor, role, requirements, task, process, analysis, diagram | sha, queue, bytes, slide, withheld, backlog, library, rung |
-| 7 | 14.74 | preview, staging, translation, url, locale, pages, translated, page | tile, glass, avatar, card, slot, sticky, fit, settings |
-| 8 | 14.53 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, requirements, task, pipeline |
+| 1 | 45.60 | kind, instance, directory, harness, page, session, graph, block | *(none)* |
+| 2 | 21.72 | watcher, sibling, queue, prs, slot, backlog, block, commits | harness, instance, declaration, node, directory, directories, subgraph, iri |
+| 3 | 18.05 | slot, chapter, block, edges, formal, project, proof, watcher | session, beans, epic, conflict, page, green, goals, minutes |
+| 4 | 17.16 | page, block, text, tile, chapter, avatar, blocks, manifest | sibling, ledger, session, sessions, subdirectory, subgraph, plan, coordination |
+| 5 | 15.51 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, ingest, zip, archived, pdf, arxiv |
+| 6 | 15.11 | lane, actor, role, requirements, task, process, analysis, impact | queue, sha, backlog, withheld, bytes, slide, library, tile |
+| 7 | 14.73 | preview, staging, translation, locale, url, pages, translated, page | tile, glass, avatar, card, sticky, fit, slot, role |
+| 8 | 14.53 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | actor, lane, user, role, feedback, requirement, requirements, pdf |
 
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
+
+*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
+
+- 0.951 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
 
 ## smart-base / library
 

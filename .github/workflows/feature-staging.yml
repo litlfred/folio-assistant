@@ -602,6 +602,38 @@ jobs:
             bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
           fi
 
+      # THE FULL IG PUBLISHER AST PIPELINE, rendered (bean wnhh, owner
+      # 2026-10-02: "build an updated web interface for smart trust testing
+      # full ast pipeline"). For each IG instance whose source repository
+      # carries a seeded `fhir-ast/*` cache, restore it, check it, derive its
+      # artefact index and draw the SAME pages the published-output index
+      # gets, at `/<instance>/ast/`, with the parity and validity reports
+      # beside them. Which IGs is DATA (`stage-ast-sites.ts`), so this names
+      # none. Best effort: the preview never fails on it, and every skip is
+      # printed by the lister.
+      - name: Render each IG from its IG Publisher AST cache
+        continue-on-error: true
+        run: |
+          bun run fhir-harness/scripts/stage-ast-sites.ts > ./_ast-list.txt
+          while IFS=$'\t' read -r INSTANCE URL LABEL CHROME; do
+            [ -n "$INSTANCE" ] || continue
+            SRC="./_ast-src/${INSTANCE}"
+            OUT="./_ast-out/${INSTANCE}"
+            rm -rf "$SRC" "$OUT"
+            GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 "$URL" "$SRC" || { echo "clone failed: $URL"; continue; }
+            CHROME_ARGS=()
+            [ "$CHROME" != "-" ] && CHROME_ARGS=(--chrome-owner "$CHROME")
+            bash fhir-harness/scripts/ig-ast-site.sh --ig-root "$SRC" --instance "$INSTANCE" \
+              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
+            mkdir -p "./_docs/${INSTANCE}/ast"
+            cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
+            # The resources the pages load in the browser, beside the pages.
+            rm -rf "./_docs/${INSTANCE}/ast-data" && cp -R "$OUT/ast-data" "./_docs/${INSTANCE}/ast-data"
+            cp "$OUT/validity.json" "./_docs/${INSTANCE}/ast/validity.json"
+            [ -f "$OUT/parity.json" ] && cp "$OUT/parity.json" "./_docs/${INSTANCE}/ast/parity.json"
+            echo "rendered ${INSTANCE} from its AST -> /${INSTANCE}/ast/"
+          done < ./_ast-list.txt
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
