@@ -187,6 +187,10 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
+      // Its subject is every instance's declarations and source, read; it
+      // reads no folio material.
+      "scripts/check-foreign-paths.ts",
       // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
       // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
       // symlinked root makes a tool answer a question about the repository from
@@ -873,6 +877,9 @@ export const RULES: Rule[] = [
       // tools and processes visualisers link a skill only where one is, so the
       // module sits beside the two viewers that read it.
       "scripts/lib/skill-pages.ts",
+      // The raw-block wrapper both of those visualisers emit authored text through
+      // (bean `kjbb`): a closing tag inside the text must not end the block early.
+      "scripts/lib/liquid-raw.ts",
       // Its library twin (bean `qgjh`): where a library reference links — the
       // viewer, the item README, the upstream record — read, never composed.
       "scripts/lib/library-links.ts",
