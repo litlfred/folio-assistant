@@ -149,6 +149,11 @@ a:hover { text-decoration-thickness: 2px; }
   --fa-wp-warning: #fab219;
   --fa-wp-serious: #ec835a;
   --fa-wp-critical: #d03b3b;
+  /* Critical as TEXT: #d03b3b on the dark surface is 3.62:1, under WCAG's
+     4.5:1 for the badge's 11.5px label (axe, beans dashboard, 2026-10-03, the
+     first time a critical finding was shown). The reserved status hue stays
+     for fills; text takes this shade (5.07:1). Light keeps #d03b3b (4.68:1). */
+  --fa-wp-critical-text: #e85c5c;
   margin: 1.5rem 0;
 }
 
@@ -159,6 +164,7 @@ a:hover { text-decoration-thickness: 2px; }
   --fa-wp-border: rgba(11, 11, 11, 0.10);
   --fa-wp-track: #e1e0d9;
   --fa-wp-series: #2a78d6;
+  --fa-wp-critical-text: #d03b3b;
 }
 
 .fa-workplan-board {
@@ -300,7 +306,10 @@ a:hover { text-decoration-thickness: 2px; }
 
 .fa-workplan-finding {
   display: grid;
-  grid-template-columns: auto 1fr;
+  /* minmax(0, …): a bare `1fr` track will not shrink below its longest word,
+     so a long bean title pushed the beans dashboard to 401px at a 390px
+     viewport once vhqq surfaced 59 blocked-without-expiry rows. */
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 0.55rem;
   align-items: start;
   font-size: 0.82rem;
@@ -323,11 +332,11 @@ a:hover { text-decoration-thickness: 2px; }
 .fa-workplan-finding.is-good .fa-workplan-finding-badge { color: var(--fa-wp-good); }
 .fa-workplan-finding.is-warning .fa-workplan-finding-badge { color: var(--fa-wp-warning); }
 .fa-workplan-finding.is-serious .fa-workplan-finding-badge { color: var(--fa-wp-serious); }
-.fa-workplan-finding.is-critical .fa-workplan-finding-badge { color: var(--fa-wp-critical); }
+.fa-workplan-finding.is-critical .fa-workplan-finding-badge { color: var(--fa-wp-critical-text); }
 
 /* The sentence stays in text ink. A finding's words are read; its colour is
    glanced at, and a paragraph in status colour is neither. */
-.fa-workplan-finding-text { color: var(--fa-wp-ink-2); }
+.fa-workplan-finding-text { color: var(--fa-wp-ink-2); overflow-wrap: anywhere; }
 
 /* ── Links ──────────────────────────────────────────────────────────────
    Identity by UNDERLINE, in text ink, never by hue.
