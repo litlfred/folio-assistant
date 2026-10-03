@@ -487,9 +487,17 @@ function citedBeans(): Record<string, CitedBean> {
   // citation "unknown" whenever the script ran from a subdirectory.
   const store = readBeanStore(repoRootFor(resolve(import.meta.dir, "..")));
   if (store.state !== "read") {
-    const why = store.state === "declared-but-absent"
-      ? `the declared bean store at ${store.dir} is not there`
-      : "no bean store in this instance";
+    // Three states, three messages. The two-way form here said "no bean store
+    // in this instance" for a store that is on its branch and merely not
+    // mounted (bean `9ofm` row D) — true of neither the repository nor the
+    // remedy, and it would send a reader looking for a declaration that is
+    // correct.
+    const why =
+      store.state === "declared-but-absent"
+        ? `the declared bean store at ${store.dir} is not there`
+        : store.state === "unreachable"
+          ? `the bean store is on its branch and not mounted here: ${store.reason}`
+          : "no bean store in this instance";
     return Object.fromEntries(PAGES_CITES.map((id) => [id, { state: "unreadable", why }]));
   }
   return Object.fromEntries(

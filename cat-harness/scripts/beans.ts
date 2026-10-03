@@ -196,7 +196,24 @@ export interface BeanDefsResolution {
  * keeps its signature and delegates, so the other four readers are untouched.
  */
 export function resolveBeanDefs(root: string): BeanDefsResolution {
-  const graphRoot = join(root, DEFAULT_BEAN_GRAPH_ROOT);
+  return resolveBeanDefsAt(join(root, DEFAULT_BEAN_GRAPH_ROOT));
+}
+
+/**
+ * {@link resolveBeanDefs}, parameterised on WHERE THE GRAPH IS.
+ *
+ * Bean `9ofm` row D. `beans/beans.json` declares `defs` relative to its own
+ * directory, so the nested declaration keeps answering "where is `defs` within
+ * the graph" unchanged — what moves is the graph. Once `beans` is cut over to
+ * its branch the graph root is a mount, which `graphReadPath` resolves and
+ * this takes as given.
+ *
+ * Two questions, deliberately not merged into one resolver: the mount is keyed
+ * on the `beans` entry in `folio-assistant.json`, and `beans/` is not an
+ * instance root, so `beans/beans.json`'s nodes are invisible to it. A single
+ * resolver would have to know both and would be wrong about one.
+ */
+export function resolveBeanDefsAt(graphRoot: string): BeanDefsResolution {
   const file = join(graphRoot, BEAN_GRAPH_FILE);
   const declared = existsSync(file);
   const graph = declared
