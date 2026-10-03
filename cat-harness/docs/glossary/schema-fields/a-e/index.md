@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1666 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1685 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 523 terms and is 295 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 530 terms and is 298 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1890</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1890</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1909</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1909</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">523</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">530</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -3498,6 +3498,20 @@ DublinCoreRef.source <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-E">E</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-schema-fields--merge-queue.ejectionschema.evidenceurl" data-fa-state="extracted" data-fa-gloss="">
+EjectionSchema.evidenceUrl <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The run, comment or log that shows it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EjectionSchema.evidenceUrl</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.ejectionschema.reason" data-fa-state="extracted" data-fa-gloss="">
+EjectionSchema.reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the steward concluded, e.g. &quot;own CI red on <code>docs:harness:check</code>&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EjectionSchema.reason</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--vocab-mapping.elementschema.code" data-fa-state="extracted" data-fa-gloss="">
 ElementSchema.code <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3511,6 +3525,41 @@ ElementSchema.noMap <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Deliberately unmapped: an absence that is a statement, not a gap (R5 <code>noMap</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts"><code>cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.beans" data-fa-state="extracted" data-fa-gloss="">
+EntryObjectSchema.beans <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Beans and epics this PR serves. Epics are beans, so one list.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.beans</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.decidedby" data-fa-state="extracted" data-fa-gloss="">
+EntryObjectSchema.decidedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Who decided — a session URL, <code>owner</code>, or an actor id.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.decidedBy</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.reason" data-fa-state="extracted" data-fa-gloss="">
+EntryObjectSchema.reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why this placement, in a sentence. For <code>computed</code>, the rule's description will do.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.repository" data-fa-state="extracted" data-fa-gloss="">
+EntryObjectSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>owner/name</code> — a PR number means nothing without its repository.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--merge-queue.entryobjectschema.trainid" data-fa-state="extracted" data-fa-gloss="">
+EntryObjectSchema.trainId <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Assigned once the PR is taken into a train; the train-run instance's id.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/merge-queue.ts"><code>cat-harness/schemas/merge-queue.ts#EntryObjectSchema.trainId</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.equationblock.label" data-fa-state="extracted" data-fa-gloss="">
 EquationBlock.label <span class="fa-gloss-status">candidate, extracted</span>
