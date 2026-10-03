@@ -4824,6 +4824,196 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_agentfix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge main in, regenerate, fix mechanical gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge commits only; never a force-push."
+        }
+      ],
+      "skos:notation": "Task_AgentFix",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AgentFix",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_askowner",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ask the owner on the PR, both sides quoted"
+        }
+      ],
+      "skos:notation": "Task_AskOwner",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AskOwner",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_close",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean, merge commit as evidence"
+        }
+      ],
+      "skos:notation": "Task_Close",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Close",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Comment on the PR once, linking the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One comment per refused PR, edited in place on every later event."
+        }
+      ],
+      "skos:notation": "Task_Comment",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_dispatch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Dispatch one agent, recorded on the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before the agent starts: the date, why the fail condition fired, the agent's id, its budget. Never while the first writer may still be live. Two failed attempts with the same cause go to the owner instead."
+        }
+      ],
+      "skos:notation": "Task_Dispatch",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Dispatch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_fix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fix the PR, report on the PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Claims the refusal bean, brings main in with `merge:main`, settles what it refused, pushes. Completed with the outcome `fail condition` by the steward when the condition fires first."
+        }
+      ],
+      "skos:notation": "Task_Fix",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Fix",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_handback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand back, with a fail condition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `agent-handoff` format (#1884): Roles, Report to (the PR), Done when, Fails if. The fail condition: no `started` line within 4 h, no push within 24 h, the session gone, or `blocked` on something it cannot settle. One line to the session; the instructions are in the bean."
+        }
+      ],
+      "skos:notation": "Task_HandBack",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_HandBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the refusal on the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PR, the head sha the train used, the train and its other members, each refused path or failing gate and why. A repeat refusal goes under `## Attempts` with `--body-append`."
+        }
+      ],
+      "skos:notation": "Task_Record",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_retrain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-enter a train on the new head"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The next train is the verifier: the executor's own log is evidence, not the close."
+        }
+      ],
+      "skos:notation": "Task_Retrain",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Retrain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_scrap",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Scrap the bean, with the reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent's own `beans update --status scrapped`; never deleted."
+        }
+      ],
+      "skos:notation": "Task_Scrap",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Scrap",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_checkspresent",
       "@type": "skos:Concept",
       "skos:inScheme": {
