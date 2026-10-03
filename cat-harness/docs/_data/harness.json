@@ -373,6 +373,17 @@
       "unit": "waiting"
     }
   ],
+  "glassStrip": {
+    "pinned": [
+      "glass-todos",
+      "glass-settings",
+      "library",
+      "processes",
+      "tools",
+      "skills"
+    ],
+    "unmatched": []
+  },
   "harnesses": [
     {
       "name": "folio-assistant",
@@ -581,6 +592,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -714,6 +726,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -803,6 +816,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -864,6 +878,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -952,6 +967,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1145,6 +1161,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1322,6 +1339,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1490,6 +1508,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1603,6 +1622,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1832,6 +1852,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -1926,6 +1947,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -2367,6 +2389,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -2479,6 +2502,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     },
@@ -2620,6 +2644,7 @@
         "beans",
         "processes",
         "kg",
+        "fsh-guts",
         "launcher"
       ]
     }
@@ -2631,13 +2656,15 @@
       "beans",
       "processes",
       "kg",
+      "fsh-guts",
       "launcher"
     ],
     "hrefs": {
       "todos": "/todos/",
       "beans": "/beans/",
       "processes": "/processes/",
-      "kg": "/cat-harness/"
+      "kg": "/cat-harness/",
+      "fsh-guts": "/fsh-guts/"
     },
     "notes": {},
     "folders": [
@@ -2923,6 +2950,15 @@
       },
       {
         "key": "navbarIcons",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "glassStrip",
         "skills": [
           {
             "name": "harness-tiles",
@@ -3745,7 +3781,11 @@
           },
           {
             "key": "navbarIcons",
-            "summary": "close, todos, beans, processes, kg, launcher"
+            "summary": "close, todos, beans, processes, kg, fsh-guts, launcher"
+          },
+          {
+            "key": "glassStrip",
+            "summary": "6 entries"
           },
           {
             "key": "repository",
