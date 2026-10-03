@@ -1033,7 +1033,7 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  *
  * A visualisation that states only where it is rendered is **complete rather
  * than invalid** — the same rule `semantic-zoom.ts` encodes and for the same
- * reason. `title` falls back to the directory's id, `surfaces` to both, `theme`
+ * reason. `title` falls back to the directory's id, `surfaces` to every surface, `theme`
  * to the directory's, `hidden` to false. Requiring any of them would make every
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
@@ -1047,6 +1047,12 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * glass"*, and it is a SURFACE on the one declaration rather than a second
  * list of glass tiles — `harness-tiles`: one declaration, per-surface
  * visibility, never two registries.
+ *
+ * `board` is still a legal value and NOTHING RENDERS IT. Owner, 2026-10-02
+ * (issue #1905, bean `t6ht`): *"stickies panel shouldnt have all those
+ * icons"* — the sticky board's tile strip is gone. The value stays so no
+ * existing declaration naming it turns invalid; a declaration whose only
+ * surface is `board` parses and yields no tile.
  */
 export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
 export type TileSurface = (typeof TILE_SURFACES)[number];

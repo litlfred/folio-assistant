@@ -8024,65 +8024,22 @@
     });
     board.appendChild(filterRow);
 
-    /* THE OTHER SURFACE for the same declarations. Q11: declared once,
-     * per-surface visibility. This filters the same array the navbar reads, so
-     * a tile cannot be one thing in the sidebar and another here. */
-    /* AN EDGE DOCK, NOT A ROW IN FLOW — bean `v0jv`, the owner: *"folios have
-     * tiles do not go to the window. they are stacked around (bottom?) of
-     * folio, slid away, open to tiles to things like fsh-gts, todos, docs."*
+    /* NO TILE STRIP ON THE STICKY BOARD — owner, 2026-10-02, issue #1905,
+     * bean `t6ht`: *"stickies panel shouldnt have all those icons"*.
      *
-     * It was `display: flex; flex-wrap: wrap` appended after the sticky grid,
-     * so on the landing board it landed below every full-bleed card and read
-     * as absent. The DECLARATION side was already right and is untouched:
-     * `harness-tiles` — *"declared once, per-surface visibility, never two
-     * registries free to disagree about what a tile is"* — and the call below
-     * still filters the same array the navbar reads. Only the placement was
-     * wrong.
+     * That REVERSES the 2026-09-21 ruling this spot used to cite (bean
+     * `v0jv`: *"lets have the square tiles lined up on the top of the
+     * folio-sicky-board-landingpanel whole slides up if user doesnt want"*),
+     * which put a "\u25A6 Visualisations" `<details>` strip along the top of
+     * every sticky board. It is gone from EVERY board, not only the landing
+     * one: the ruling names the stickies panel, not a page.
      *
-     * FOLIO CHROME, NOT BOARD CONTENT, which is the distinction the bean
-     * records: *"the tiles must NOT be projected onto the glass — they are
-     * folio chrome, where a window is content."* So the dock is a SIBLING of
-     * the board's content, at its edge, and never a layer over it. Same arrow
-     * as `board-diagram-interchange`: chrome frames content, never the
-     * reverse.
-     *
-     * A `<details>` for the same reason the sticky drawer is one — the
-     * disclosure, the keyboard path, Escape and the expanded state are the
-     * browser's, and it degrades to everything-visible with no JavaScript,
-     * which is R4's floor rather than a convenience. */
-    var boardStrip = el("details", { class: "fa-board-strip", open: "" });
-    boardStrip.appendChild(el("summary", {
-      class: "fa-board-strip-summary",
-      // NAMES WHAT IS INSIDE. "Tiles" is the shape; a reader deciding whether
-      // to spend a keystroke needs the subject.
-      "aria-label": "Visualisations for this folio",
-      title: "Visualisations for this folio",
-    }, "\u25A6 Visualisations"));
-    var boardTiles = el("div", {
-      class: "fa-board-tiles",
-      role: "group",
-      "aria-label": "Visualisations",
-    });
-    boardStrip.appendChild(boardTiles);
+     * Nothing becomes unreachable. A tile is one declaration with per-surface
+     * visibility (`harness-tiles`), and the navbar and the glass strip still
+     * render it; the `board` surface value stays legal in `TILE_SURFACES` so
+     * no existing declaration turns invalid, but no code mounts it. */
 
     var grid = el("div", { class: "fa-sticky-grid" });
-    /* THE STRIP IS ALONG THE TOP, and OPEN by default — owner, 2026-09-21:
-     * *"lets have the square tiles lined up on the top of the
-     * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
-     *
-     * It was a `<details>` dock at the BOTTOM, closed, which got two things
-     * wrong at once: the edge, and the default. Tiles a reader has to open
-     * before they can see what a folio offers are tiles that read as absent —
-     * which is the same complaint that opened `v0jv` about the in-flow row.
-     * So `open` is the initial state and sliding it UP is the reader's act,
-     * not the other way round.
-     *
-     * NOT A SUB-PANEL, which the owner ruled in the same breath: *"i dont
-     * want sub-panels of the folio, just one open (miro-like) board.
-     * everything lives on fa-sticky-board, fa-landing-board."* The strip is
-     * chrome ALONG the board rather than a panel within it — it carries no
-     * card, no content and no second surface. */
-    board.appendChild(boardStrip);
     board.appendChild(grid);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
@@ -8346,11 +8303,6 @@
     });
     applyReaderFilter();
 
-    // THE SAME TILES, on the board — the other surface of one declaration.
-    // Mounted after the grid so the board's own content leads and the
-    // visualisations follow: the same argument the landing board uses for
-    // putting the harness cards before the todos.
-    mountGraphTiles("board", boardTiles, readerShownTiles());
 
     /* ── Windows, projected ON TO the board ───────────────────────────────
      *

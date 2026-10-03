@@ -613,19 +613,6 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     inputFingerprint [1] : string
     detail [0..1] : string
   }
-  class "Page" as cat_harness_qa_viewer_nav_qa_v1_Page <<json: ViewerNavQaSchema>> #f4e6e6 {
-    path [1] : string
-    source [1] : string
-    verdict [1] : railed | declined | missing
-    reason [0..1] : string
-    flags [0..*] : enum(7)[]
-  }
-  class "viewer-nav-qa/v1" as cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 <<json: ViewerNavQaSchema>> #f4e6e6 {
-    $schema [1] : 'viewer-nav-qa/v1'
-    root [1] : string
-    totals [1] : object
-    pages [0..*] : Page[]
-  }
 }
 package "cat-harness/health" as pkg_cat_harness_health <<health>> {
   class "Threshold" as cat_harness_health_Threshold <<json: HealthReportSchema>> #f4e6e6 {
@@ -735,6 +722,7 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     outline_source [1] : embedded | none
     materialization [1] : object
     withheld [1] : object
+    links [0..*] : object[]
   }
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
@@ -888,6 +876,10 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     decls [0..*] : Decl[]
     edges [0..*] : Edge[]
   }
+  class "Link" as cat_harness_docs_folio_library_index_v1_Link <<json: LibraryIndexSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string<uri> | string
+  }
   class "ReferencedBy" as cat_harness_docs_folio_library_index_v1_ReferencedBy <<json: LibraryIndexSchema>> #f4f4f1 {
     kind [1] : string
     instance [1] : string
@@ -917,6 +909,8 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     hasStructure [1] : boolean
     hasImagesJson [1] : boolean
     readme [0..1] : string<uri>
+    links [0..*] : Link[]
+    view [0..1] : string
     pageStart [1] : integer | null
     pageEnd [1] : integer | null
     words [1] : integer
@@ -1159,7 +1153,6 @@ cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attesta
 cat_harness_qa_kg_qa_v1_Voice_review *-- "0..*" cat_harness_qa_kg_qa_v1_Verdict : verdicts
 cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Voice_review : voice_reviews
 cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
-cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
 cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
@@ -1176,6 +1169,7 @@ cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harn
 cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Edge : edges
+cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_Link : links
 cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_ReferencedBy : referencedBy
 cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Entry : entries
 cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Upload : uploads
