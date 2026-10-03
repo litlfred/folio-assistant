@@ -25090,7 +25090,7 @@
         },
         {
           "name": "properties",
-          "type": "Readonly<Record<string, string>>",
+          "type": "Readonly<Record<string, string | readonly string[]>>",
           "optional": true,
           "array": false,
           "doc": "The node's own properties, e.g. `{ status: \"open\", priority: \"high\" }`."
