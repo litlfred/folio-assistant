@@ -3,9 +3,10 @@
 title: 'MERGE GATE (d): per-content-block adversarial QA for tools, schemas, skills and processes, and the backfill'
 status: todo
 type: feature
+priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-02T16:29:16Z
-parent: folio-assistant-nok9
+updated_at: 2026-10-02T22:27:13Z
+parent: folio-assistant-9v5a
 ---
 
 Child (d) of the merge-gate epic. Design: `cat-harness/docs/proposals/merge-gate-2026-10-02.md` §7.

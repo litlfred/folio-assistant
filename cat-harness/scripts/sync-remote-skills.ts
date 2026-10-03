@@ -188,7 +188,7 @@ export function buildRecord(
   };
 }
 
-const LICENCE_NAMES = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "COPYING"];
+export const LICENCE_NAMES = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "COPYING"];
 
 /** The licence governing a skill: its own, else the upstream root's. */
 export function upstreamLicence(clone: string, skillDir: string): { path: string; inSkill: boolean } | undefined {

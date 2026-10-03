@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 633,
+      "count": 636,
       "unit": "beans"
     }
   },
@@ -2106,7 +2106,9 @@
       "priority": "high",
       "parent": "folio-assistant-vuip",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-hfag"
+      ],
       "createdAt": "2026-10-01T08:14:10Z",
       "updatedAt": "2026-10-01T08:31:09Z",
       "preview": "Consolidates the handovers of five stalled sessions (iirv, w2gr/9umr, cjvs/vke6, fnx4/eayu, d33q) into one arc. Plan, status bars, gap analysis (G1–G14), migration checklist and delegation rules: cat-harness/docs/proposals/separation-arc-2026-10-01.md. Stories S0–S8 are children; each story points at the existing beans it absorbs and owns no new code of its own.\n\nStrategy adopted from sibling bean",
@@ -3448,11 +3450,11 @@
       "status": "in-progress",
       "type": "feature",
       "priority": "normal",
-      "parent": "folio-assistant-1xhc",
+      "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:57:14Z",
-      "updatedAt": "2026-10-01T17:42:08Z",
+      "updatedAt": "2026-10-02T17:17:41Z",
       "preview": "Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for each common churn/conflict pattern' and 'put in merge process bpmn'. Settles 520m's open question (may a resolver cover every generated artefact?) as: yes, one declared pattern at a time.\n\n## Measured (y7b3)\n300 main-into-branch merges: 235 conflicted, 147 (63%) only on generated files.\n\n## Built\n- cat-harness/scripts",
       "file": "beans/defs/folio-assistant-d33q--merge-auto-resolve-mergemain-resolves-only-declare.md"
     },
@@ -3547,12 +3549,12 @@
       "title": "SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout",
       "status": "todo",
       "type": "task",
-      "priority": "",
-      "parent": "folio-assistant-7x5n",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:24Z",
-      "updatedAt": "2026-10-01T17:42:24Z",
+      "updatedAt": "2026-10-02T17:17:41Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 4 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, parallel checks, CI merge:main (`d33q` part B).\n\n## What\nThree CI changes to `.github/workflows/code-quality-gates.yml` (and the other gate workflows):\n1. **Sharding** — split the long `gates` job (and `bun test`) into parallel sh",
       "file": "beans/defs/folio-assistant-dlqu--speed-up-4-ci-sharding-bpmn-render-cache-and-shall.md"
     },
@@ -4159,6 +4161,20 @@
       "file": "beans/defs/folio-assistant-gnqa--library-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-gp2f",
+      "title": "PAGE WEIGHT: move per-page nav, harness bar, icons, scripts and IG chrome CSS into shared cached assets (#1885)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:39:55Z",
+      "updatedAt": "2026-10-02T16:39:55Z",
+      "preview": "Issue #1885.\n\nOwner rulings, 2026-10-02:\n- \"~230KB per IG page mostly navigation/styling overhead... can we condense into common styling/libraries? so page size is small?\"\n- \"1 do all.\"\n- \"first document workplan and /coordinate in case active work on pages happening\"\n- \"(in genreal update agent-agent coorindation/hadover skills - if you are working on a refactor of the platform, review active age",
+      "file": "beans/defs/folio-assistant-gp2f--page-weight-move-per-page-nav-harness-bar-icons-sc.md"
+    },
+    {
       "id": "folio-assistant-gpdo",
       "title": "COMPILED-ARTEFACT CACHING: .olean for mathlib, and the same shape for sushi/FHIR -> AST",
       "status": "completed",
@@ -4283,6 +4299,22 @@
       "updatedAt": "2026-09-26T03:57:20Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
+    },
+    {
+      "id": "folio-assistant-hfag",
+      "title": "Merge pipeline: train process, queue state, reprioritisation, gates",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [
+        "folio-assistant-7x5n"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:17:27Z",
+      "updatedAt": "2026-10-02T17:17:27Z",
+      "preview": "Owner, 2026-10-02: the merge pipeline gets its own top-level epic, marked as blocking the separation epic `7x5n`. Running the queue is NOT part of this epic; this epic is the finite build list below.\n\nUntil now the steward's ordering lived in prose (#1802's merge-manager SOP step 2, \"oldest first, unless the owner names an order\"), so nothing recorded WHY one PR jumped ahead of another, and a seco",
+      "file": "beans/defs/folio-assistant-hfag--merge-pipeline-train-process-queue-state-repriorit.md"
     },
     {
       "id": "folio-assistant-hh7g",
@@ -7871,6 +7903,20 @@
       "file": "beans/defs/folio-assistant-w91p--b7a-1168-the-10-gen-viz-scripts-become-tools-rende.md"
     },
     {
+      "id": "folio-assistant-wczm",
+      "title": "Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main's side on a fast-forwardable gitlink; merge-main bot doesn't clear needs-merge-human",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:19:31Z",
+      "updatedAt": "2026-10-02T17:19:31Z",
+      "preview": "Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-pipeline epic `hfag` for these regenerate and merge-bot gaps.\n\n## Overlap with `u7be` (read this first)\n\n`u7be` (\"MERGE GATE (e): four merge-steward gaps\"), filed on PR #1887's branch and NOT on `main` when this bean was created, lists items (1), (2) and (4) below as its own (1), (2) and (4). Checked with `beans list` ",
+      "file": "beans/defs/folio-assistant-wczm--regenerate-gaps-no-writer-for-checkl1-complete-or.md"
+    },
+    {
       "id": "folio-assistant-wekz",
       "title": "ARCHIVE: moving a bean one level deeper breaks its relative links, and the CLI reports a path it did not write to",
       "status": "completed",
@@ -8896,6 +8942,12 @@
     }
   ],
   "findings": [
+    {
+      "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-hfag",
+      "blocks": "folio-assistant-7x5n",
+      "detail": "blocks `folio-assistant-7x5n` and states no expiry, so the block cannot be told from abandoned work"
+    },
     {
       "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
