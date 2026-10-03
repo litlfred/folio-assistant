@@ -69,12 +69,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 8 published.
+0 of 10 published.
 {: .fa-hx-dim }
 
 - Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - C@T Harness Tools — *declared, not published*
+- C@T OpenAPI — *declared, not published*
+- FHIR IG Harness — *declared, not published*
 - Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
@@ -99,6 +101,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [smart-immunizations]({{ '/cat-harness/docs-auto/index/docs/smart-immunizations-docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
+
+### `docs-auto`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
 
 ### `document-kinds`
 
@@ -204,6 +213,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Bootstrap — *declared, not published*
 
+### `openapi`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- smart-trust — *declared, not published*
+
 ### `policies`
 
 0 of 1 published.
@@ -265,12 +281,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-4 of 6 published.
+5 of 7 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
+- [C@T OpenAPI]({{ '/cat-harness/schemas/cat-openapi/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/schemas/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/schemas/' | relative_url }})
