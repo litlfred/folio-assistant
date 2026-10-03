@@ -684,6 +684,56 @@ export function parseBunTest(output: string): { failed: number; names: string[] 
 }
 
 /**
+ * The failing tests in a `bun test --reporter=junit` report, keyed
+ * `<test file> > <describe…> > <test>`.
+ *
+ * Why the report and not the console: bun's console layout depends on where
+ * it runs. Under CI it wraps or drops the `<file>:` headers the console
+ * parser keys on, so #1977's first two CI runs keyed every failure wrongly:
+ * first with a `::group::` prefix, then all under one file. The report carries
+ * each test's file and describe path as data, in every environment.
+ *
+ * A small tag walk rather than an XML library: the report is bun's own,
+ * flat-attributed, and this reads three element names from it. `undefined`
+ * when the text is not a report, which the caller turns into an error.
+ */
+export function parseJunitFailures(xml: string): string[] | undefined {
+  if (!/<testsuites\b/.test(xml)) return undefined;
+  const decode = (v: string): string =>
+    v.replace(/&(lt|gt|quot|apos|amp|#(\d+));/g, (_, e: string, n?: string) =>
+      n ? String.fromCodePoint(Number(n)) : ({ lt: "<", gt: ">", quot: '"', apos: "'", amp: "&" } as Record<string, string>)[e]!,
+    );
+  const attr = (tag: string, name: string): string | undefined => {
+    const m = new RegExp(`\\s${name}="([^"]*)"`).exec(tag);
+    return m ? decode(m[1]!) : undefined;
+  };
+  const suites: string[] = [];
+  const out = new Set<string>();
+  let current: { key: string; failed: boolean } | undefined;
+  for (const m of xml.matchAll(/<(\/?)(testsuite|testcase|failure|error)\b[^>]*?(\/?)>/g)) {
+    const [tag, closing, name, selfClosing] = m as unknown as [string, string, string, string];
+    if (name === "testsuite") {
+      if (closing) suites.pop();
+      else if (!selfClosing) suites.push(attr(tag, "name") ?? "");
+    } else if (name === "testcase") {
+      if (closing) {
+        if (current?.failed) out.add(current.key);
+        current = undefined;
+        continue;
+      }
+      // The outermost suite is the file; the rest is the describe path.
+      const file = attr(tag, "file") ?? suites[0] ?? "";
+      const key = [file, ...suites.slice(1), attr(tag, "name") ?? ""].join(" > ");
+      if (selfClosing) continue; // no child, so no failure
+      current = { key, failed: false };
+    } else if (!closing && current) {
+      current.failed = true;
+    }
+  }
+  return [...out];
+}
+
+/**
  * The standalone rehearsal, run only with `--rehearse` (owner, 2026-10-02).
  *
  * Copies the TRACKED files of the layer and of everything it needs into a
@@ -764,7 +814,8 @@ export function probeStandalone(
     // run). The rehearsal's output is parsed, not shown, so it runs plain.
     const env = { ...process.env };
     for (const k of ["GITHUB_ACTIONS", "CI", "TEAMCITY_VERSION", "BUILDKITE"]) delete env[k];
-    const run = spawnSync("bun", ["test"], {
+    const report = join(ws, ".standalone-junit.xml");
+    const run = spawnSync("bun", ["test", "--reporter=junit", `--reporter-outfile=${report}`], {
       cwd,
       env,
       encoding: "utf-8",
@@ -774,10 +825,12 @@ export function probeStandalone(
     if (run.error) return { state: "error", note: `bun test could not run: ${message(run.error)}` };
     const parsed = parseBunTest(`${run.stdout}\n${run.stderr}`);
     if (!parsed) return { state: "error", note: `bun test exited ${run.status} with no summary to read` };
+    const names = existsSync(report) ? parseJunitFailures(readFileSync(report, "utf-8")) : undefined;
+    if (!names) return { state: "error", note: `bun test wrote no readable JUnit report at ${report}` };
     return {
       state: "measured",
       count: parsed.failed,
-      findings: parsed.names,
+      findings: names,
       note: `${members.map((m) => m.name).join(", ")} laid out as siblings`,
     };
   } catch (e) {
