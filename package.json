@@ -401,6 +401,8 @@
     "smart-base:document-kinds:check": "bun run smart-base/scripts/gen-document-kinds.ts --check",
     "smart-base:smart-kg-l1": "bun run smart-base/scripts/extract-smart-kg-l1.ts",
     "smart-base:smart-kg-l1:check": "bun run smart-base/scripts/extract-smart-kg-l1.ts --check",
+    "smart-base:dth-terms": "bun run smart-base/scripts/gen-dth-term-findings.ts",
+    "smart-base:dth-terms:check": "bun run smart-base/scripts/gen-dth-term-findings.ts --check",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
     "smart-immunizations:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary",
     "smart-immunizations:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-immunizations --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Immunizations\" --chrome-owner smart-base --summary --check",
