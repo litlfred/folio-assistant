@@ -555,7 +555,7 @@ jobs:
       # UNDETERMINED rather than counted as passing, and zero diagrams is a
       # finding rather than a clean run (`6tkl`).
       - name: swimlane definitions
-        run: bun run check:lane-documentation
+        run: bun run check:lane-documentation:check
 
       # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
       # level up. `gen-docs-auto`'s index took the first `<documentation>`
@@ -692,7 +692,7 @@ jobs:
       # consequence. Known counts are baselined; a NEW file, or a baselined file
       # GAINING a label, fails.
       - name: no rendered label shows a character reference as literal text
-        run: bun run check:rendered-labels
+        run: bun run check:rendered-labels:check
 
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
@@ -1982,6 +1982,11 @@ jobs:
           # computed and read by nobody, so `folio-assistant` rendered a
           # question mark until the owner saw it. Bean `zc7m`.
           bun run check:avatar-instances
+          # ...and the KIND axis, which no package script or CI step ran until
+          # bean `bo44` (2026-10-01): `check-avatar-coverage --check` existed,
+          # still wrote its sidecar, and nothing called it. The `:check` form
+          # judges and writes nothing.
+          bun run check:avatar-coverage:check
           # A reader's folio must be the SAME folio in every library they
           # browse (F8/F9). A page that forgets the mount is a folio that
           # silently disappears when they follow a link — the page renders,
@@ -2105,7 +2110,7 @@ jobs:
           # or whose `evidence` points at a bib-slug no library holds —
           # a citation that claims to resolve and does not is worse than
           # none, because every listing reads it as backed.
-          bun run check:methodology-evidence
+          bun run check:methodology-evidence:check
           # The layout norm, ENFORCED AS A RATCHET rather than as a gate
           # on the whole corpus: no declared directory sits inside another
           # declared directory, with the four `skills/voices` nestings that
@@ -2113,7 +2118,7 @@ jobs:
           # `cat-harness` — which reached zero on 2026-09-22 and has no
           # baseline entry — cannot regress. Owner: "follow established
           # norms on layout. qa to enforce."
-          bun run check:layout-norms
+          bun run check:layout-norms:check
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
@@ -2125,7 +2130,21 @@ jobs:
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added
           # without a wireframe, or a wireframe checked at one width, fails.
-          bun run check:wireframes
+          bun run check:wireframes:check
+          # The four above run in their JUDGE form (`:check`, bean `bo44`):
+          # compute, judge, write nothing. Their bare forms rewrite their own
+          # QA sidecar on every run, so the gate CI ran was also the writer of
+          # the record it reported into — a gate that cannot fail on its
+          # sidecar's content, and that leaves the tree dirty. Exit 2 is
+          # could-not-determine and is never a pass.
+          #
+          # The KG export, judged in memory: a root field or term outside the
+          # `@context`, or a keyword/alias collision, fails; an unread source
+          # is exit 2. Until `bo44` only the deploy ran the exporter, so a
+          # fatal export finding surfaced at publish time rather than on the PR.
+          # `kg:export:judge`, not `:check`: `kg:export:check` is the sidecar
+          # currency gate above (bean `v556`); the owner kept both (2026-10-02).
+          bun run kg:export:judge
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
@@ -2484,3 +2503,64 @@ jobs:
       # `node_modules/` counted as graph nodes, pinned in a committed sidecar.
       - name: the registration chain is current, read unmasked
         run: bun run skill:register:check
+
+  qa-publish:
+    # bpmn-node: Task_QaPublish
+    name: Publish QA results to qa-reports (not a gate)
+    #
+    # Bean `16ei`, arc `3fva`, owner rulings D1 and D3: each run's QA results
+    # go to the orphan `qa-reports` branch, keyed `main/<sha>/` on a push to
+    # main and `pr/<n>/<head-sha>/` on a same-repository PR.
+    #
+    # ## A SEPARATE job, after the gates, whatever they concluded
+    #
+    # `needs: gates` orders it after the gates; `always()` runs it even when
+    # they are red, because the evidence of a red commit is evidence too, and
+    # the manifest records the gates' result beside it. Being its own job is
+    # what keeps a red publish from masking a gate: it fails in its own lane
+    # and the gates' verdict is untouched.
+    #
+    # ## It is not a gate, and `gates.ts` knows it
+    #
+    # This is the only job here with `contents: write`, and `gates.ts` skips a
+    # job holding it (`publishes`), so `bun run gates` never pushes from a
+    # contributor's machine.
+    #
+    # ## Fork PRs
+    #
+    # A fork PR's token is read-only (spike `3ds9`). `qa:publish --github`
+    # decides that itself and exits 0 with a `::notice` naming the reason, so
+    # the skip is stated, never silent and never a red run.
+    #
+    # It publishes what the checkout holds under every declared `qa` directory.
+    # While `test/results/` is still committed, that is the committed content;
+    # once a directory declares `storage`, the gates job must hand its working
+    # copy over (an artifact) before this publishes anything the run produced.
+    needs: [gates]
+    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: qa-publish-${{ github.event.pull_request.number || github.sha }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
+      # splice, `commit-tree -p`, push without `-f`, three attempts with the
+      # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
+      # (`qa-reports-unretried`).
+      - name: Publish this run's QA results (skips fork PRs with a notice)
+        env:
+          GATES_RESULT: ${{ needs.gates.result }}
+        run: bun run qa:publish --github --gates-result "$GATES_RESULT"
