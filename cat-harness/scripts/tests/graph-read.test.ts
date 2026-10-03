@@ -14,6 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { MOUNT_MARKER_SCHEMA, markerPath } from "../branch-store.ts";
+import { readBeanFiles, readBeanStore } from "../bean-store-read.ts";
 import { graphReadPath, mustReadGraph } from "../graph-read.ts";
 
 const made: string[] = [];
@@ -150,5 +151,75 @@ describe("mustReadGraph", () => {
   test("throws carrying the remedy — a crash beats a clean run over an empty directory", () => {
     const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
     expect(() => mustReadGraph("beans", root)).toThrow(/cannot read graph "beans".*state:mount/s);
+  });
+});
+
+// ── The bean store through `graphReadPath` (bean `9ofm` row D) ──────────────
+//
+// `bean-store-read.ts` is where eight gates reach the work plan, so the states
+// it can report are what each of them acts on. Asserted against a real
+// repository and a real marker.
+describe("readBeanStore relocates, and refuses", () => {
+  /** A repository whose root instance declares `beans`, with a bean graph in it. */
+  function beansRepo(storage?: Record<string, unknown>): string {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    mkdirSync(join(root, "beans", "defs"), { recursive: true });
+    writeFileSync(
+      join(root, "beans", "beans.json"),
+      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }),
+    );
+    writeFileSync(join(root, "beans", "defs", "x.md"), "---\n# fx-1\ntitle: one\nstatus: todo\ntype: task\n---\nbody\n");
+    return root;
+  }
+
+  test("not moved: reads the checkout, and finds the bean", () => {
+    const root = beansRepo();
+    const s = readBeanStore(root);
+    expect(s.state).toBe("read");
+    if (s.state !== "read") throw new Error("unreachable");
+    expect(s.beans.map((b) => b.id)).toEqual(["fx-1"]);
+  });
+
+  test("declaration flipped, files still tracked: still reads the checkout", () => {
+    const root = beansRepo(TIP);
+    git(root, "add", "-A");
+    const s = readBeanStore(root);
+    expect(s.state).toBe("read");
+    if (s.state !== "read") throw new Error("unreachable");
+    expect(s.beans.map((b) => b.id)).toEqual(["fx-1"]);
+  });
+
+  test("cut over and mounted: reads the MOUNT, and `defs` resolves within it", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const into = join(root, "mounted-beans");
+    mkdirSync(join(into, "defs"), { recursive: true });
+    writeFileSync(
+      join(into, "beans.json"),
+      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }),
+    );
+    writeFileSync(join(into, "defs", "y.md"), "---\n# fx-2\ntitle: two\nstatus: todo\ntype: task\n---\nbody\n");
+    mount(root, "beans", into);
+
+    const s = readBeanStore(root);
+    expect(s.state).toBe("read");
+    if (s.state !== "read") throw new Error("unreachable");
+    expect(s.dir).toBe(join(into, "defs"));
+    expect(s.beans.map((b) => b.id)).toEqual(["fx-2"]);
+  });
+
+  test("cut over and NOT mounted: `unreachable`, which is NOT `declared-but-absent`", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const s = readBeanStore(root);
+    expect(s.state).toBe("unreachable");
+    if (s.state !== "unreachable") throw new Error("unreachable");
+    // The remedy is the difference between the two states.
+    expect(s.reason).toContain("state:mount");
+  });
+
+  test("readBeanFiles THROWS on `unreachable` — five gates read through it and `null` is a pass", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    expect(() => readBeanFiles(root)).toThrow(/cannot read the bean store.*state:mount/s);
+    // ...while a repository that genuinely has no store still gets `null`.
+    expect(readBeanFiles(repo([]))).toBeNull();
   });
 });
