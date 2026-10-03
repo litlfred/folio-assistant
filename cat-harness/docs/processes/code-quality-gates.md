@@ -27,7 +27,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [A merge train](merge-train.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 
