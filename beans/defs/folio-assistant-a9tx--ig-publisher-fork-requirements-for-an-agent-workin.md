@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-01T07:10:00Z
+updated_at: 2026-10-01T12:35:15Z
 parent: folio-assistant-uhkv
 ---
 
@@ -358,3 +358,10 @@ must return `valid`. The Java and TypeScript digests share a golden vector in th
 - An upstream PR adding `who.template.root` to `FHIR/ig-registry/templates.json`.
 - Phases P0 to P4 in `ig-publisher-reduction` beyond the AST work.
 
+## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
+
+In the owner's words: *"each phase needs to render equivalent to existing IG standard render"*.
+
+This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
+
+**Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.
