@@ -67,8 +67,9 @@ it, and refuses rather than rendering an empty table when the source moves.
       `docs/` is the one that will show whether a derived index and an authored
       summary can sit in the same directory without fighting.
 - [x] the authoring rule lives in a skill with the reuse-not-restate clause
-- [ ] `<harness>/docs` carries a per-process summary that references the derived
-      index rather than duplicating it
+- [x] `<harness>/docs` carries a per-process summary that references the derived
+      index rather than duplicating it — `docs/platform.md`, 2026-10-03; see
+      §"The per-process summary, 2026-10-03" below
 - [x] a stale or moved source makes the derivation FAIL, never render empty
 
 ## Not started — and the order is the owner's
@@ -731,3 +732,60 @@ after and a buggy run then deleted four sub-graph pages before reporting a
 defect against the tree it had emptied — `deletion-requires-confirmation`
 broken by sequencing. Measured both ways: 1 page surviving with the guard
 after, 5 with it before.
+
+## The per-process summary, 2026-10-03 — `docs/platform.md`, not a new page
+
+**The page already existed and was the right page.** `docs/platform.md` is
+titled *"The platform — actors, roles, processes, skills"*, is authored (no
+`generated:` front matter, no `content/docs/platform/` source), and already
+linked the derived process and skill indexes. A second page would have been a
+second answer to the same question.
+
+**What it did not do was name anything.** Measured against the §4(b) check that
+landed the same day (bean `akjg`), `platform.md` came out **`thin`**: it named
+one declared role and **none** of the 61 declared processes and **none** of the
+403 declared tasks. A page about the *shape* of processes, linking an index of
+them, saying nothing about any one of them. The section headed "Roles, tasks and
+skills" linked only **skills** — neither the roles index nor the tasks index,
+both of which exist.
+
+So the gap was concrete and the fix was an edit:
+
+| added | why it is not index-duplication |
+|---|---|
+| a worked entry-point-vs-called pair | the abstract rule was already stated; what was missing was that it SURPRISES — **Adjudication** reads like an entry point and is not |
+| the roles and tasks index links | the section's own title promised them |
+| real roles and tasks, with the mechanical/human point | a role here is as likely to be **Build pipeline** as **Adjudicator**, which the flat index does not convey |
+
+**Every claim was measured before it was written, not recalled.** `Adjudication`
+(`Process_Adjudication`) is called from `Translation Workflow`, from
+`Ingestion subprocess — the L1 completeness gate` and from
+`Refresh materialized remote content`; `Criterion adjudication` is called from
+`Wireframe design review` and `Voice overlay review`; `Content acquisition` is
+called by nothing. Verified by reading `calledElement` across every `.bpmn` under
+the declared `processes` directories.
+
+**No count went into the prose**, deliberately — `bpmn-processes` says to count
+the directory rather than quote a number from a paragraph, and the entry/called
+split is exactly the kind of number that rots. The page names examples and tells
+the reader to ask the index who calls what.
+
+After: `populated` — process `Adjudication`, role `Activity log`, task
+`Authorise the extraction`, three distinct names, 1445 words of prose.
+`docs:pages:check`, `check:anchor-names` and `docs:auto:check` all pass.
+
+### Two things reported rather than fixed
+
+1. **The check still names `methodologies/index.md` as cat-harness's subject
+   page**, because it ranks by (score, then prose length) and that page has 6910
+   words against `platform.md`'s 1445. The ranking is behaving as designed — it
+   names the strongest page, not the most *appropriate* one — and there is no
+   declared "this is the landing page" signal for it to prefer. Inventing one is
+   a separate decision, not a bug to patch here.
+2. **§4(a)'s literal URL, `<base-url>/<harness>/docs`, is not what this
+   satisfies** — and it was already settled against: `platform.md`'s own header
+   records that it lived at `/cat-harness/` until 2026-09-21, when the owner
+   ruled **the handler wins** that namespace (bean `8h42`), so every route under
+   it is generator output. `<base>/cat-harness/` consequently has **no index at
+   all** while all seven of its children do. That is a real gap and it needs a
+   writer, not a page: left for the owner rather than decided here.
