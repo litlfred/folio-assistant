@@ -72,6 +72,12 @@ const ZOOM = { belowPx: 220, byKind: { todo: { belowPx: 300, because: "a todo ne
 
 async function serveGlass(page: Page, height: number) {
   await page.setViewportSize({ width: 1280, height });
+  // The strip starts HIDDEN on a first open (owner, 2026-10-01, bean `ob3m`
+  // finding 10). These specs click a strip tile, so they arrive as a reader
+  // who has shown it; `glass-strip-default-hidden.e2e.ts` holds the default.
+  await page.addInitScript(() => {
+    try { if (localStorage.getItem("fa-glass-strip-hidden") === null) localStorage.setItem("fa-glass-strip-hidden", "0"); } catch { /* no storage */ }
+  });
   await page.route("http://replica.test/**", (route) => {
     const url = new URL(route.request().url());
     if (url.pathname === "/page.html") return route.fulfill({ contentType: "text/html", body: GLASS });

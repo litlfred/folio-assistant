@@ -2,9 +2,14 @@
 layout: null
 ---
 // just-the-docs 0.12.0's own `assets/js/just-the-docs.js`, copied VERBATIM from
-// the gem so this site's copy takes precedence over the theme's, with ONE
-// change: the search index is built on the reader's first focus of the search
-// box instead of on every page load. Bean `2tfy`.
+// the gem so this site's copy takes precedence over the theme's, with TWO
+// changes, both bean `2tfy`: the search index is built on the reader's first
+// focus of the search box instead of on every page load; and it is the index
+// of the page's own SCOPE (issue #1972 — `search-split.ts`'s manifest), with a
+// "Search everywhere" button that widens to the whole site, and a link to
+// each identifier lookup the manifest names (bean `1br0`). A scope the
+// manifest publishes with a PREBUILT index is loaded rather than built (bean
+// `lrzn`).
 //
 // Why. Measured 2026-10-03 on a local build in headless Chromium: the theme
 // fetched `search-data.json` (12,040 entries, 13.7 MB raw, 2.8 MB gzip) and
@@ -14,8 +19,10 @@ layout: null
 // one who does pays once, on that page, when they reach for it.
 //
 // Keeping it in step. `remote_theme` in `_config.yml` pins v0.12.0; when that
-// pin moves, re-copy the new version's file and re-apply the two marked hunks
-// (search for `2tfy`). Everything else must stay byte-identical to the gem.
+// pin moves, re-copy the new version's file and re-apply every hunk marked
+// `2tfy`, `mm2n`, `1br0` or `lrzn` — `initSearch` and the helpers above it, the setter at the top of
+// `searchLoaded`, and the focus trigger in `jtd.onReady`. Everything else must
+// stay byte-identical to the gem.
 (function (jtd, undefined) {
 
 // Event handling
@@ -107,61 +114,186 @@ function disableHeadStyleSheets() {
 {%- if site.search_enabled != false %}
 // Site search
 
-function initSearch() {
-  var request = new XMLHttpRequest();
-  request.open('GET', '{{ "assets/js/search-data.json" | relative_url }}', true);
+// 2tfy (#1972 step A): load the page's SCOPE of the index, not the whole site.
+// `search-split.ts` writes `assets/js/search/manifest.json` and one index per
+// scope after the build; this reads it, picks the scope the page lives in by
+// the same rule (instance, `<kind>/<instance>`, target locale, a platform
+// section over the split's budget — bean `mm2n` — else platform), and loads
+// only that. No manifest, or one that cannot be read:
+// the whole index, exactly as the theme always did.
+function searchUrl(path) {
+  return '{{ "/" | relative_url }}'.replace(/\/?$/, '/') + String(path).replace(/^\//, '');
+}
 
+function scopeForPage(manifest) {
+  var base = '{{ "/" | relative_url }}'.replace(/\/?$/, '/');
+  var path = window.location.pathname;
+  if (path.indexOf(base) === 0) path = path.slice(base.length);
+  var seg = path.split('/').filter(function(s){ return s.length > 0; });
+  var byId = {}, platform = null;
+  (manifest.scopes || []).forEach(function(s){ byId[s.id] = s; if (s.kind === 'platform') platform = s; });
+  var isInstance = function(id){ return byId[id] && byId[id].kind === 'instance'; };
+  if (seg[0] && isInstance(seg[0])) return byId[seg[0]];
+  if (seg[0] && byId['locale-' + seg[0]]) return byId['locale-' + seg[0]];
+  if (seg[1] && isInstance(seg[1])) return byId[seg[1]];
+  // mm2n: a platform section over the split's budget has a scope of its own.
+  // Same rule as `sectionOfPath` in search-split.ts: below the section, or its
+  // index (a path ending in `/`).
+  var section = seg[0] && (seg.length > 1 || /\/$/.test(path)) ? byId['section-' + seg[0]] : null;
+  if (section && section.kind === 'section') return section;
+  return platform;
+}
+
+function getJson(url, done) {
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
   request.onload = function(){
     if (request.status >= 200 && request.status < 400) {
-      var docs = JSON.parse(request.responseText);
-
-      lunr.tokenizer.separator = {{ site.search.tokenizer_separator | default: site.search_tokenizer_separator | default: "/[\s\-/]+/" }}
-
-      var index = lunr(function(){
-        this.ref('id');
-        this.field('title', { boost: 200 });
-        this.field('content', { boost: 2 });
-        {%- if site.search.rel_url != false %}
-        this.field('relUrl');
-        {%- endif %}
-        this.metadataWhitelist = ['position']
-
-        for (var i in docs) {
-          {% include lunr/custom-index.js %}
-          this.add({
-            id: i,
-            title: docs[i].title,
-            content: docs[i].content,
-            {%- if site.search.rel_url != false %}
-            relUrl: docs[i].relUrl
-            {%- endif %}
-          });
-        }
-      });
-
-      searchLoaded(index, docs);
-      // 2tfy: the reader focused the box (and may have typed) BEFORE
-      // `searchLoaded` attached its handlers; its focus handler runs the
-      // search on whatever is in the box, so replay it once.
-      var lazyInput = document.getElementById('search-input');
-      if (lazyInput && (document.activeElement === lazyInput || lazyInput.value)) {
-        lazyInput.dispatchEvent(new Event('focus'));
-      }
+      try { done(JSON.parse(request.responseText)); } catch (e) { done(null); }
     } else {
       console.log('Error loading ajax request. Request status:' + request.status);
+      done(null);
     }
   };
-
   request.onerror = function(){
     console.log('There was a connection error');
+    done(null);
   };
-
   request.send();
+}
+
+function setSearchSeparator() {
+  lunr.tokenizer.separator = {{ site.search.tokenizer_separator | default: site.search_tokenizer_separator | default: "/[\s\-/]+/" }}
+}
+
+// lrzn: a scope the manifest publishes with a prebuilt index is LOADED, not
+// built — 5–8× less script on first search. `search-split.ts`'s `buildIndex`
+// is the server's copy of `buildSearchIndex` below; keep the two in step.
+// The separator still has to be set: it tokenizes the reader's query.
+function loadSearchIndex(serialized) {
+  setSearchSeparator();
+  return lunr.Index.load(serialized);
+}
+
+function buildSearchIndex(docs) {
+  setSearchSeparator();
+
+  return lunr(function(){
+    this.ref('id');
+    this.field('title', { boost: 200 });
+    this.field('content', { boost: 2 });
+    {%- if site.search.rel_url != false %}
+    this.field('relUrl');
+    {%- endif %}
+    this.metadataWhitelist = ['position']
+
+    for (var i in docs) {
+      {% include lunr/custom-index.js %}
+      this.add({
+        id: i,
+        title: docs[i].title,
+        content: docs[i].content,
+        {%- if site.search.rel_url != false %}
+        relUrl: docs[i].relUrl
+        {%- endif %}
+      });
+    }
+  });
+}
+
+// 2tfy: the reader focused the box (and may have typed) BEFORE the index was
+// ready; the theme's focus handler runs the search on whatever is in the box,
+// so replay it once.
+function replaySearch() {
+  var input = document.getElementById('search-input');
+  if (input && (document.activeElement === input || input.value)) {
+    input.dispatchEvent(new Event('focus'));
+  }
+}
+
+// 2tfy: a scoped search can always be widened to the whole site — nothing that
+// was findable before the split becomes unfindable. One button under the
+// results; pressing it loads the whole index once and re-runs the query.
+function offerEverywhere(manifest, scope) {
+  var results = document.getElementById('search-results');
+  if (!results || !manifest.source) return;
+  var button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'search-everywhere btn btn-outline';
+  var mb = (manifest.source.bytes / 1e6).toFixed(1);
+  button.textContent = 'Search everywhere (' + manifest.source.entries + ' entries, ' + mb + ' MB) — now searching ' + scope.id;
+  button.addEventListener('click', function(){
+    button.disabled = true;
+    button.textContent = 'Loading the whole site index…';
+    getJson(searchUrl(manifest.source.path), function(docs){
+      if (!docs) { button.disabled = false; button.textContent = 'Search everywhere — could not load, try again'; return; }
+      jtd.replaceSearchIndex(buildSearchIndex(docs), docs);
+      button.remove();
+      document.getElementById('search-input').focus();
+      replaySearch();
+    });
+  });
+  results.parentNode.insertBefore(button, results.nextSibling);
+}
+
+// 1br0 (#1972 step 3): an identifier lookup is a page of its own, never
+// loaded here (the owner's ruling on bean `4pm8`). Each one the manifest
+// names gets one link under the results, carrying the reader's query so the
+// lookup opens with it already run.
+function offerRemote(manifest) {
+  var results = document.getElementById('search-results');
+  var input = document.getElementById('search-input');
+  if (!results || !input || !manifest.remote || !manifest.remote.length) return;
+  var box = document.createElement('div');
+  box.className = 'search-remote';
+  var links = manifest.remote.map(function(r){
+    var a = document.createElement('a');
+    a.className = 'search-remote-link';
+    a.textContent = 'Look up an identifier in ' + r.id + ' (' + r.entries + ' referenced entries) →';
+    a.setAttribute('data-base', searchUrl(r.href));
+    box.appendChild(a);
+    return a;
+  });
+  var refresh = function(){
+    var q = input.value.trim();
+    links.forEach(function(a){ a.href = a.getAttribute('data-base') + (q ? '&q=' + encodeURIComponent(q) : ''); });
+  };
+  input.addEventListener('input', refresh);
+  refresh();
+  results.parentNode.appendChild(box);
+}
+
+function initSearch() {
+  getJson(searchUrl('assets/js/search/manifest.json'), function(manifest){
+    var scope = manifest ? scopeForPage(manifest) : null;
+    var url = scope ? searchUrl(scope.path) : '{{ "assets/js/search-data.json" | relative_url }}';
+    var ready = function(index, docs){
+      searchLoaded(index, docs);
+      replaySearch();
+      if (scope && scope.entries < manifest.source.entries) offerEverywhere(manifest, scope);
+      if (manifest) offerRemote(manifest);
+    };
+    getJson(url, function(docs){
+      if (!docs) return;
+      if (!scope || !scope.index) return ready(buildSearchIndex(docs), docs);
+      // lrzn: an index that fails to load is rebuilt from the entries in hand.
+      getJson(searchUrl(scope.index.path), function(serialized){
+        var index = null;
+        if (serialized) { try { index = loadSearchIndex(serialized); } catch (e) { index = null; } }
+        ready(index || buildSearchIndex(docs), docs);
+      });
+    });
+  });
 }
 
 function searchLoaded(index, docs) {
   var index = index;
   var docs = docs;
+  // 2tfy: let "Search everywhere" swap in the whole index without binding the
+  // handlers below a second time — they read `index` and `docs` from here.
+  // `currentInput` is cleared too: `update` skips a query equal to the last
+  // one, and the point of widening is to run the SAME query on more pages.
+  jtd.replaceSearchIndex = function(newIndex, newDocs) { index = newIndex; docs = newDocs; currentInput = undefined; };
   var searchInput = document.getElementById('search-input');
   var searchResults = document.getElementById('search-results');
   var mainHeader = document.getElementById('main-header');

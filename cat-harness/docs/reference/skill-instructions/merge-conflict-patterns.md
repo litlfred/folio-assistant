@@ -164,6 +164,13 @@ scripts/state-visualizer.ts". **`docs/uploads/index.html` is the viewer OF
 `**/uploads/**` caught it, and #1764 refused on it. First match wins, so the
 viewer entries sit above the refusal.
 
+And `docs/fsh-guts/index.md`, written whole by `fsh-guts:viz`
+(`gen-fsh-guts-viz.ts`, checked by `fsh-guts:viz:check`) from everything under
+`fsh-guts/`. Any PR that archives an upload rewrites it, so two such PRs always
+collide; #1766 refused on it alone on 2026-10-03. Only that one page is
+declared: the archive it renders (`fsh-guts/**`) is kept content and stays
+refused.
+
 ### `viewer-namespace` — take the base, regenerate
 
 `docs/cat-harness/{catalogue,folio,library,schemas,uploads,voices}/**`: the
@@ -234,6 +241,70 @@ is carried forward from the file on disk.
 these pages are generated from and stays `refuse`; a test pins that pair,
 because resolving the generated copy while taking a side on the source is the
 mistake this entry would otherwise invite.
+
+### `docs-pages` — take the base, regenerate (17)
+
+The 17 `cat-harness/docs/**.md` pages `gen-docs-pages.ts` writes whole from the
+authored blocks under `cat-harness/content/docs/<slug>/` (`docs:pages`, gated
+by `docs:pages:check`). Each one says so in its own front matter:
+
+```
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+```
+
+Bean `8c6v`: **none** of the 17 was named by a pattern, so `classify()`
+returned `refuse / — none —` and the merge handed back for hand-editing the
+files that forbid it. `docs/publication-workflow.md` was one of the **2**
+refusals on #1888 after **53** of its 55 conflicts had resolved by pattern —
+one undeclared family holding up a 53-file resolution is the all-or-nothing
+rule working as designed, and the gap it exposed.
+
+**Safe because nothing is carried forward.** `emit()` is compare-or-write: the
+only read of a prior page is inside its `--check` branch, for the comparison,
+and every other read in the script is of an INPUT (`readBlock` over
+`content/docs/`, BPMN XML, manifests). Its one walk of the output directory
+skips files carrying the generated marker. This is bean `8rff`'s discipline —
+**confirm the writer by reading the script, not by how whole-file it looks** —
+applied again, and here it comes out the other way than it did for the
+glossary ledger.
+
+**Gated on EXACT content, which is why `take-base` is verifiable rather than
+merely convenient.** The generator's own docblock says a difference in a `page`
+is "somebody who added a node, renamed a block, ran a first sweep, or moved a
+sidecar, and did not regenerate". So after `take-base`, `docs:pages:check`
+proves the regenerated page is right — the resolution is not trusted, it is
+checked.
+
+**The 17 slugs are ENUMERATED, not globbed, and that is deliberate.**
+`cat-harness/docs/*.md` is a **mix**: measured 2026-10-03, the directory holds
+31 `.md` pages of which 13 are generated, so 18 authored ones sit beside them
+(`architecture.md`, `index.md`, `getting-started.md`, `platform.md`, …), and
+`guides/` holds 9 of which 4 are generated, leaving `agent-onboarding.md`,
+`voices.md` and 3 more. A directory glob would take a side on
+authored prose — the one thing a resolver must never do. The cost is that a
+page added to `content/docs/` is **refused until its slug is declared here**,
+which is the safe direction to be wrong in, and a test reads the pages' own
+front matter from the TREE so the enumeration cannot go quietly stale.
+
+**That test must read the front matter, not the file**, and it earned the
+distinction immediately. Its first cut tested the whole file for the marker
+and the very next merge of `main` turned up an 18th subject: the generated
+body of **this skill**, `docs/reference/skill-instructions/merge-conflict-patterns.md`,
+which quotes the marker in the code fence three paragraphs above. A detector
+that reads a quotation as a declaration finds its own documentation — *"a
+docblock that documents a tag necessarily contains the tag"*, from
+[`audit-coverage`](audit-coverage.md). That page's own front
+matter names `gen-skill-docs.ts`, and `skill-instructions` is declared before
+`docs-pages`, so the first match already gives it the right owner. A test pins
+all three facts.
+
+**The authored neighbour is the source, and it stays refused.**
+`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
+is the hand-written INPUT for `docs/publication-workflow.md`; on #1888 both
+sides had only *added* rows to it, but a union of additions is a property of
+that instance and not of the path, so the next conflict there could be a
+contested edit. A test pins the pair, and pins that nothing under `content/`
+is claimed at any depth.
 
 ### `health-report` — take the base's measurement
 

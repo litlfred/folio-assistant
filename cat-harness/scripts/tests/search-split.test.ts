@@ -18,11 +18,20 @@ import {
   SCOPES_DIR,
   SOURCE_PATH,
   declaredInstanceNames,
+  ID_LOOKUP_DIR,
+  PREBUILT_TOKEN_BUDGET,
+  SECTION_BUDGET_BYTES,
+  TOKENIZER_SEPARATOR,
+  buildIndex,
+  publishedLookups,
   render,
   scopeOf,
+  sectionOfPath,
   split,
+  tokenCount,
   type SearchManifest,
 } from "../search-split.ts";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const INSTANCES = new Set(["smart-trust", "who-iris"]);
 const LOCALES = new Set(["fr", "ar"]);
@@ -128,4 +137,154 @@ describe("the CLI", () => {
 test("this checkout's declared instances include the ones the site mounts", () => {
   const names = declaredInstanceNames(resolve(import.meta.dir, "..", "..", ".."));
   for (const n of ["smart-trust", "smart-base", "bootstrap"]) expect(names.has(n)).toBe(true);
+});
+
+describe("platform sections over the budget — bean mm2n", () => {
+  test("sectionOfPath: below a section, or its index; never a page at the root", () => {
+    expect(sectionOfPath("/reference/skills.html")).toBe("reference");
+    expect(sectionOfPath("/reference/")).toBe("reference");
+    expect(sectionOfPath("/reference/a/b.html")).toBe("reference");
+    expect(sectionOfPath("/getting-started.html")).toBeUndefined();
+    expect(sectionOfPath("/")).toBeUndefined();
+  });
+
+  const big = "x".repeat(400);
+  const idx = {
+    0: { relUrl: "/", content: "home" },
+    1: { relUrl: "/reference/", content: big },
+    2: { relUrl: "/reference/a.html", content: big },
+    3: { relUrl: "/guides/g.html", content: "small" },
+    4: { relUrl: "/smart-trust/t.html", content: big },
+    5: { relUrl: "/getting-started.html", content: big },
+  };
+  // A budget the reference section (two ~430-byte entries) crosses and the
+  // others do not — the real 512 KiB is tested by what it is, not by size.
+  const parts = split(idx, INSTANCES, LOCALES, 600);
+
+  test("a section over the budget becomes its own scope, index page included", () => {
+    expect(parts.get("section-reference")?.scope).toEqual({ id: "section-reference", kind: "section" });
+    expect(Object.keys(parts.get("section-reference")!.entries)).toEqual(["1", "2"]);
+  });
+
+  test("a section under it, and pages at the root, stay in the platform", () => {
+    expect(Object.keys(parts.get(PLATFORM)!.entries)).toEqual(["0", "3", "5"]);
+    expect(parts.has("section-guides")).toBe(false);
+  });
+
+  test("instances are never cut into sections, and the partition stays exact", () => {
+    expect(Object.keys(parts.get("smart-trust")!.entries)).toEqual(["4"]);
+    const all = [...parts.values()].flatMap((p) => Object.keys(p.entries)).sort();
+    expect(all).toEqual(Object.keys(idx).sort());
+  });
+
+  test("the default budget is 512 KiB, and render threads a given one through to the manifest", () => {
+    expect(SECTION_BUDGET_BYTES).toBe(512 * 1024);
+    const m = JSON.parse(render(JSON.stringify(idx), INSTANCES, LOCALES, 600).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect(m.scopes.filter((s) => s.kind === "section").map((s) => s.id)).toEqual(["section-reference"]);
+    const none = JSON.parse(render(JSON.stringify(idx), INSTANCES, LOCALES).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect(none.scopes.some((s) => s.kind === "section")).toBe(false);
+  });
+});
+
+describe("remote identifier lookups — bean 1br0", () => {
+  const tree = (pageToo: boolean, indexes: Record<string, unknown>) => {
+    const site = mkdtempSync(join(tmpdir(), "search-split-remote-"));
+    mkdirSync(join(site, ID_LOOKUP_DIR), { recursive: true });
+    if (pageToo) writeFileSync(join(site, ID_LOOKUP_DIR, "index.html"), "<p>lookup</p>");
+    for (const [name, manifest] of Object.entries(indexes)) {
+      mkdirSync(join(site, ID_LOOKUP_DIR, name), { recursive: true });
+      writeFileSync(join(site, ID_LOOKUP_DIR, name, "manifest.json"), typeof manifest === "string" ? manifest : JSON.stringify(manifest));
+    }
+    return site;
+  };
+
+  test("every published index is named, with its entry count and a link that opens it", () => {
+    const site = tree(true, { "who-iris": { entryCount: 10 }, "b-other": { entryCount: 3 } });
+    try {
+      expect(publishedLookups(site)).toEqual([
+        { id: "b-other", kind: "id-lookup", href: "id-lookup/?index=b-other/", entries: 3 },
+        { id: "who-iris", kind: "id-lookup", href: "id-lookup/?index=who-iris/", entries: 10 },
+      ]);
+    } finally {
+      rmSync(site, { recursive: true, force: true });
+    }
+  });
+
+  test("no lookup page, or an unreadable index, is nothing to link to", () => {
+    const noPage = tree(false, { "who-iris": { entryCount: 10 } });
+    const bad = tree(true, { "who-iris": "not json" });
+    try {
+      expect(publishedLookups(noPage)).toEqual([]);
+      expect(publishedLookups(bad)).toEqual([]);
+    } finally {
+      rmSync(noPage, { recursive: true, force: true });
+      rmSync(bad, { recursive: true, force: true });
+    }
+  });
+
+  test("render puts them in the manifest, and leaves the key out when there are none", () => {
+    const r = [{ id: "who-iris", kind: "id-lookup" as const, href: "id-lookup/?index=who-iris/", entries: 10 }];
+    const withRemote = JSON.parse(render(JSON.stringify(INDEX), INSTANCES, LOCALES, SECTION_BUDGET_BYTES, r).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect(withRemote.remote).toEqual(r);
+    const without = JSON.parse(render(JSON.stringify(INDEX), INSTANCES, LOCALES).get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+    expect("remote" in without).toBe(false);
+  });
+});
+
+describe("prebuilt indexes for scopes over the token budget — bean lrzn", () => {
+  const DOCS = {
+    0: { title: "Gates", content: "Every gate CI runs.", relUrl: "/gates/" },
+    1: { title: "Trust lists", content: "Trust lists of the network, a long page about trust.", relUrl: "/smart-trust/lists.html" },
+    2: { title: "Trust", content: "x", relUrl: "/smart-trust/x.html" },
+  };
+  const text = JSON.stringify(DOCS);
+  const manifestOf = (files: Map<string, string>) => JSON.parse(files.get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
+
+  test("the default budget is 128 Ki tokens, and tokens are counted over the theme's three fields", () => {
+    expect(PREBUILT_TOKEN_BUDGET).toBe(128 * 1024);
+    // "Gates" + "Every gate CI runs." + "/gates/" → gates | every gate ci runs. | gates
+    expect(tokenCount({ 0: DOCS[0] })).toBe(1 + 4 + 1);
+  });
+
+  test("only a scope OVER the budget is prebuilt, and the manifest names its index", () => {
+    const st = tokenCount({ 1: DOCS[1], 2: DOCS[2] });
+    const pl = tokenCount({ 0: DOCS[0] });
+    expect(st).toBeGreaterThan(pl);
+    const files = render(text, INSTANCES, LOCALES, SECTION_BUDGET_BYTES, [], pl); // platform AT the budget: not over
+    const m = manifestOf(files);
+    const byId = Object.fromEntries(m.scopes.map((s) => [s.id, s]));
+    expect(byId[PLATFORM]!.index).toBeUndefined();
+    expect(byId["smart-trust"]!.index).toEqual({ path: `${SCOPES_DIR}/smart-trust.idx.json`, bytes: Buffer.byteLength(files.get(`${SCOPES_DIR}/smart-trust.idx.json`)!) });
+    expect(files.has(`${SCOPES_DIR}/${PLATFORM}.idx.json`)).toBe(false);
+  });
+
+  test("the default budget prebuilds nothing small, and the output is the same bytes every time", () => {
+    expect(manifestOf(render(text, INSTANCES, LOCALES)).scopes.some((s) => s.index)).toBe(false);
+    const a = render(text, INSTANCES, LOCALES, SECTION_BUDGET_BYTES, [], 0);
+    const b = render(text, INSTANCES, LOCALES, SECTION_BUDGET_BYTES, [], 0);
+    expect([...a.entries()]).toEqual([...b.entries()]);
+  });
+
+  test("the index is the one the theme's own buildSearchIndex builds, and loads to the same answers", async () => {
+    // Render the site's theme override as Jekyll would, and run its builder.
+    const { Liquid } = await import("liquidjs");
+    const root = resolve(import.meta.dir, "..", "..");
+    const src = readFileSync(join(root, siteDirFor(root), "assets/js/just-the-docs.js"), "utf8").replace(/^---[\s\S]*?---\n/, "");
+    const liquid = new Liquid({ dynamicPartials: false, templates: { "lunr/custom-index.js": "", "js/custom.js": "" } });
+    liquid.registerFilter("relative_url", (p: string) => p);
+    // As Jekyll renders the theme's default (liquidjs drops its backslashes).
+    const js = await liquid.parseAndRender(src, { site: { search_enabled: true, search: { tokenizer_separator: TOKENIZER_SEPARATOR.toString() } } });
+    expect(src).toContain(`default: "${TOKENIZER_SEPARATOR.toString()}"`); // our separator IS the theme's default
+    const body = js.slice(js.indexOf("function setSearchSeparator()"), js.indexOf("// 2tfy: the reader focused"));
+    // @ts-expect-error -- lunr ships no types (see search-split.ts).
+    const lunr = (await import("lunr")).default;
+    const theme = new Function("lunr", `${body}; return { build: buildSearchIndex, load: loadSearchIndex };`)(lunr) as {
+      build(d: unknown): { toJSON(): unknown; search(q: string): { ref: string }[] };
+      load(s: unknown): { search(q: string): { ref: string }[] };
+    };
+    const built = theme.build(DOCS);
+    expect(JSON.stringify(buildIndex(DOCS))).toBe(JSON.stringify(built.toJSON()));
+    const loaded = theme.load(JSON.parse(JSON.stringify(buildIndex(DOCS))));
+    for (const q of ["trust", "gate", "lists network", "smart"]) expect(loaded.search(q)).toEqual(built.search(q));
+  });
 });

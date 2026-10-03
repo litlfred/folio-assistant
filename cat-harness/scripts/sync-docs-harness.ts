@@ -32,10 +32,10 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, resolve } from "node:path";
 
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
-import { instanceDeclarationFilename, instanceRootsIn, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { instanceDeclarationFilename, instanceRootsIn, readDeclaration, resolveInherited, siteDirFor } from "../schemas/cat-harness.js";
 import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
-import { graphTiles, withTileCounts } from "./graph-tiles.js";
+import { graphTiles, resolveGlassStrip, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
 import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
@@ -287,7 +287,10 @@ const config = harnessPanel(
 function navbarRow(
   harnesses: readonly {
     name: string;
+    title?: string;
     navbarIcons?: string[];
+    href?: string;
+    hrefKind?: "folio" | "viewer" | "handled";
     visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
@@ -298,7 +301,7 @@ function navbarRow(
   hrefs: Record<string, string>;
   /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
   notes: Record<string, string>;
-  folders: { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
+  folders: NavFolder[];
 } | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
@@ -384,14 +387,95 @@ function navbarRow(
   // only the page knows which deploy it is on.
   // `within` RIDES ALONG TOO (issue #1164): a sub-graph is drawn inside its
   // parent's row, folded, by every client — one answer to where it sits.
-  const folders = (mine.visualisations ?? []).map((v) => {
+  const folders = foldersOf(mine.visualisations);
+  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
+}
+
+type NavFolder = { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true };
+
+/** One instance's visualisations as folder rows — see the note in `navbarRow`. */
+function foldersOf(
+  vis: readonly { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[] | undefined,
+): NavFolder[] {
+  return (vis ?? []).map((v) => {
     const within = v.within ? { within: v.within } : {};
     return v.path
       ? { kind: v.kind, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
       : { kind: v.kind, ...within, ...(v.note ? { note: v.note } : {}) };
   });
-  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
+
+/**
+ * THE INSTANCES A PAGE CAN BE INSIDE, for the rail's PAGES and FOLDERS
+ * (issue #1902). Owner, viewing `/smart-trust/`: *"there are also 101 pages
+ * under .../smart-trust/, which I would have expected only those in the IG
+ * TOC. i think it is showing all the folio pages, not the harnessed
+ * smart-trust's pages ... same for 'folders'."*
+ *
+ * A scope is an instance whose tile goes to its OWN THEMED ROOT
+ * (`hrefKind: "folio"`) at a path of its own. Two kinds of href are not a
+ * scope and are left out, each for a reason a reader could check:
+ *
+ * - `viewer` / `handled` — the href is a page some OTHER thing publishes
+ *   (`/processes/` is bootstrap's tile and the whole site's process viewer),
+ *   so "every page under it belongs to this instance" would be false.
+ * - an anchor (`/#harness-…`) or `/` — the instance's root IS the site's
+ *   landing, so every page would be inside it, which is the unscoped answer
+ *   the client already gives.
+ *
+ * SORTED LONGEST HREF FIRST, so `head_custom.html` can take the first prefix
+ * of `page.url` that matches and stop: a nested instance wins over the one
+ * that holds it. Nothing here names an instance.
+ *
+ * NOT IN `navbar`, and that is a byte budget rather than tidiness: `navbar` is
+ * inlined into every page's head, and the whole list is ~1.8 KB that only the
+ * pages inside one instance need ~250 B of. Liquid resolves `page.url` --
+ * which carries no baseurl, so a staging prefix cannot make it miss -- and
+ * emits the ONE matching scope as `#fa-rail-scope`, or nothing.
+ */
+type RailScope = { name: string; title: string; href: string; folders: NavFolder[] };
+function railScopes(
+  harnesses: readonly {
+    name: string;
+    title?: string;
+    href?: string;
+    hrefKind?: "folio" | "viewer" | "handled";
+    visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+  }[],
+): RailScope[] {
+  return harnesses
+    .filter((h) => h.hrefKind === "folio" && typeof h.href === "string" && h.href.startsWith("/") && h.href !== "/" && !h.href.includes("#"))
+    .map((h) => ({ name: h.name, title: h.title ?? h.name, href: h.href!, folders: foldersOf(h.visualisations) }))
+    .sort((a, b) => b.href.length - a.href.length || a.name.localeCompare(b.name));
+}
+
+/* The tiles, computed once: the payload carries them and the glass strip's
+ * pins are resolved against them. */
+const tileDirs = siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT);
+const tiles = withTileCounts(
+  graphTiles(withViewers(tileDirs, ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+  scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
+);
+const glassStrip = (() => {
+  const decls = instanceRootsIn(REPO_ROOT).flatMap((root) => {
+    const d = readDeclaration(root);
+    return d ? [d] : [];
+  });
+  if (decl && !decls.some((d) => d.name === decl.name)) decls.push(decl);
+  const pins = decl
+    ? resolveInherited(
+        decl.name,
+        new Map(decls.map((d) => [d.name, d.glassStrip])),
+        new Map(decls.map((d) => [d.name, d.needs])),
+      )
+    : undefined;
+  if (pins === undefined) return undefined;
+  const resolved = resolveGlassStrip(pins, tiles, new Map(tileDirs.map((d) => [d.id, d.graphKinds])));
+  for (const k of resolved.unmatched) {
+    console.warn(`glassStrip pins the kind "${k}", and no glass tile on this site holds it.`);
+  }
+  return resolved;
+})();
 
 const payload = {
   // The SOURCE is the declaration, not `_data/harness.json` -- which is
@@ -445,10 +529,17 @@ const payload = {
    * second list. One array for BOTH surfaces — Q11: a tile is declared once
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
-  tiles: withTileCounts(
-    graphTiles(withViewers(siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT), ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
-    scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
-  ),
+  tiles,
+  /**
+   * THE GLASS STRIP'S PINS, resolved to tile ids — owner, 2026-10-01, bean
+   * `ob3m` finding 10: *"Pinned tiles first, plus '+N more'"*. Declared as
+   * `glassStrip` on the instance and inherited along `needs`, like
+   * `navbarIcons`; resolved HERE so the page reads ids and never re-derives
+   * which tile a kind means. Absent when nothing in the stack declared one —
+   * the page then pins only its own chrome, which is not the same as an
+   * instance that declared `[]`.
+   */
+  ...(glassStrip === undefined ? {} : { glassStrip }),
   harnesses: allHarnesses,
   /**
    * THE NAVBAR ICON ROW for THIS instance — which icons, and where each goes.
@@ -471,6 +562,8 @@ const payload = {
    * look like navigation.
    */
   navbar: navbarRow(allHarnesses, decl?.name, links, readDeclaration(REPO_ROOT)?.name),
+  /** The instances a page can be inside, for the rail's PAGES and FOLDERS (#1902). See {@link railScopes}. */
+  railScopes: railScopes(allHarnesses),
   /**
    * EVERY INSTANCE'S VERSION, and its release addresses where it declares an
    * `iriBase` — so a page writes `{{ site.data.harness.releases.bootstrap.version }}`

@@ -420,6 +420,53 @@ derived, so no tile can be authored legible in one mode and invisible in the
 other. A per-instance palette would be a second colour vocabulary beside
 `theme.ts` — the drift that file exists to have ended.
 
+## The glass strip — pinned first, and "+N more" counts the rest
+
+**No tile may be silently off-screen.** That is the rule, and the owner's
+ruling on bean `ob3m` finding 10 (2026-10-01, option 1 of 4, *"Pinned tiles
+first, plus '+N more'"*) is how the glass's bottom strip keeps it. The strip
+once held 25 tiles in one row and scrolled them sideways with no arrow, count
+or fade: 11 were visible at 1280 px and about 2½ at 390, and on a phone
+library, processes and tools were all off it. A reader cannot tell a tile
+scrolled out of view from a tile that does not exist.
+
+- **The pinned set is DECLARED, never written into a surface.** `glassStrip`
+  on the instance's declaration lists the pins in order: `{ "chrome": … }` for
+  the glass's own controls (`todos`, `filter`, `settings`) and
+  `{ "kind": … }` for a graph kind. It is inherited along `needs` like
+  `navbarIcons`, so absent inherits and `[]` pins nothing.
+  `sync-docs-harness.ts` resolves each kind to ONE tile (`resolveGlassStrip`):
+  the directory named for the kind, else the first glass tile that holds it.
+  A kind several harnesses publish gets one slot, and the others wait in More,
+  where their qualifiers tell them apart. A pinned kind that no tile holds is
+  reported in `glassStrip.unmatched` and never skipped silently.
+- **Fit, not scroll.** The strip shows as many pins as fit at the current
+  width, in declared order, and refits whenever its box changes. It never
+  scrolls sideways (`scrollWidth <= clientWidth` is asserted at 1280×800 and
+  390×844).
+- **The last tile says "+N more", and N is exact.** N counts every tile not on
+  screen: pins with no room at this width, plus everything the reader keeps in
+  More. Shown + N is always the total. The tile is a button named "N more
+  tiles"; it opens More and moves focus into it. Pins that did not fit come
+  first in More, marked as pinned, so a narrow screen loses their place on the
+  strip but never the tiles themselves.
+- **The reader may still arrange.** A strip the reader has arranged, by
+  dragging or with the Strip and More buttons, overrides the declared default
+  in that browser. The fit and the count apply to their arrangement too.
+
+- **It starts HIDDEN** (owner, 2026-10-01: *"have folio bottom strip tiles
+  default to hidden away when folio first opened"*). With no stored choice,
+  the folio opens with the strip slid away. Only its tab shows, and it says
+  "Show tiles (N)" so the reader knows what is behind it. The tab is the one
+  control both ways (`l4zi`, [`board-windows`](board-windows.md)) and carries
+  `aria-expanded`. The reader's choice is remembered in this browser as `1`
+  or `0`, and storage that cannot be read counts as no choice: hidden. This
+  is the glass's own strip. The BOARD's tile strip, above, still starts open.
+
+`glass-strip-fit.e2e.ts` holds the four fit assertions and
+`glass-strip-default-hidden.e2e.ts` the default. Both fail against the strip
+as it was before the ruling.
+
 ## `summary` and `alsoWritten` — what a reader sees, kept apart from why it was named
 
 A harness section on the landing page shows the declaration's `summary`, a

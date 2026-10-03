@@ -57,6 +57,7 @@ import {
 } from "../content/pipeline/qa-witness.ts";
 import { todoDefaultTheme } from "./todos.js";
 import { publishedTodoFiles } from "./todo-source.js";
+import { declaredSubgraphNode } from "./kg-export.ts";
 import { TODO_GRAPH_SITE_PATH, serialiseJsonld, todoDocument, todoGraphDocument, todoPageSitePath, todoSitePath } from "./todo-graph.ts";
 import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
@@ -1362,13 +1363,21 @@ function processHierarchy(): Record<string, string[]> {
   //   todos/<id>.jsonld (+ .json)   one todo, at the address its @id names
   //   todos/<id>/index.html         its RENDERING — a thin page, not the asset
   {
-    const graph = serialiseJsonld(todoGraphDocument(items));
+    // The container is the DECLARED `todos` Subgraph node — the one the KG
+    // export publishes in the declaring instance's document — never a
+    // collection minted here (bean `l4ay`, `subgraph-node.ts`).
+    const declared = declaredSubgraphNode(INSTANCE_ROOT, "todos");
+    if (declared === undefined) {
+      console.warn("gen-docs-pages: no instance in this checkout declares a `todos` subgraph — todos.jsonld is published without its container node");
+    }
+    const subgraph = declared && { iri: declared.iri, contentSource: declared.contentSource };
+    const graph = serialiseJsonld(todoGraphDocument(items, subgraph));
     for (const ext of [".jsonld", ".json"]) {
       emit(join(OUT_DIR, TODO_GRAPH_SITE_PATH.replace(/\.jsonld$/, ext)), graph, "data");
     }
     const wanted = new Set<string>();
     for (const item of items) {
-      const doc = serialiseJsonld(todoDocument(item));
+      const doc = serialiseJsonld(todoDocument(item, subgraph));
       const asset = join(OUT_DIR, todoSitePath(item.id));
       if (!check) mkdirSync(dirname(asset), { recursive: true });
       for (const ext of [".jsonld", ".json"]) {

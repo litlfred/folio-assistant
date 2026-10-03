@@ -119,9 +119,12 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // is the VIEWER of uploads/, not an upload: it must match here, before
       // the `uploads` refusal below catches it. Found 2026-10-01 on #1764.
       "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads}/index.html",
+      // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
+      // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
+      "cat-harness/docs/fsh-guts/index.md",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
   },
   {
     id: "viewer-namespace",
@@ -165,6 +168,23 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["**/docs/reference/skill-instructions/**"],
     strategy: "take-base",
     why: "skill instruction bodies, written whole by `skills:docs` (gen-skill-docs.ts `OUT_DIR`, `skills:docs:check`). 30 pair-path hits (`8rff`), and AGENTS.md says never hand-edit the directory. Its `emit()` is compare-or-write with no merge, so nothing is carried forward. The SKILL SOURCE under `skills/**` is the authored neighbour and stays refused.",
+  },
+  {
+    id: "docs-pages",
+    // declared-path-literal: a GLOB matched against conflicted paths, not a
+    // directory read. The 17 slugs are ENUMERATED rather than globbed because
+    // `cat-harness/docs/*.md` is a MIX — measured 2026-10-03, 13 of its 31
+    // `.md` pages are generated and 18 are authored (`architecture.md`,
+    // `index.md`, `getting-started.md`, …), and `guides/` is 4 of 9 — so a
+    // directory glob such as `docs/*.md` would take a side on
+    // authored prose. A page added to `content/docs/` is refused until it is
+    // named here, which is the safe direction to be wrong in.
+    globs: [
+      "cat-harness/docs/{agentic-harness,beans-and-todos,content-types,crdm-methodology,document-ingestion,evidence,fhir-content,harness,harnessed-kg-overview,ig-publisher,knowledge-graph,managing-agent-context,publication-workflow}.md",
+      "cat-harness/docs/guides/{who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+    ],
+    strategy: "take-base",
+    why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",
   },
   {
     id: "health-report",

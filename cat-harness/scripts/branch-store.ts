@@ -1,9 +1,26 @@
 #!/usr/bin/env bun
 /**
- * branch-store — a generic store for a directory whose `storage.keyedBy` is
- * `"tip"`: ONE live copy, kept on its own branch, whose tip IS the current
- * state. Bean `2h76`, arc `fs43` (issue #1850), proposal
- * `docs/proposals/state-branch-2026-10-02.md` §3.2 / §3.4.
+ * branch-store — a generic store for a directory whose contents live at a
+ * BRANCH TIP rather than on `main`. Two keyings reach it, and they differ in
+ * exactly one thing, the write:
+ *
+ * - `storage.keyedBy: "tip"` — ONE live copy whose tip IS the current state.
+ *   Beans, todos, fsh-guts. A write carries `expect`, so two sessions editing
+ *   one file is a `conflict` the caller settles. Bean `2h76`, arc `fs43`
+ *   (issue #1850), proposal `docs/proposals/state-branch-2026-10-02.md`
+ *   §3.2 / §3.4.
+ * - `storage.keyedBy: "route"` — one entry per published SITE ROUTE, each
+ *   replaced wholesale by the single generator that owns it. Regenerable
+ *   rendered pages. A write may NOT carry `expect` and is refused if it does:
+ *   nobody authored either side, so the newer generation wins and a
+ *   `conflict` would block a push over content no one disagrees about. Bean
+ *   `1j3q`, owner 2026-10-03.
+ *
+ * The keying is PASSED to {@link BranchStore.open}, not read off the branch,
+ * and a manifest that disagrees is `corrupt`. A store that adopted whatever
+ * keying the branch claimed would read a route-keyed branch as state the
+ * moment somebody pushed the wrong manifest — the caller states what it came
+ * for.
  *
  * The owner, 2026-10-02: *"go with cat/cat-harness/todos and
  * cat/cat-harness/beans as their own named sub-graph branches"* — and *"(not
@@ -64,22 +81,27 @@
  * ## Not wired to anything yet
  *
  * No reader or writer of `beans/` or `todos/` uses this module, and no
- * declaration sets `keyedBy: "tip"`: `main` stays authoritative until the
- * steward-run flip on #1850. {@link resolveTipLocation} is what the flip will
- * read.
+ * declaration sets `keyedBy: "tip"` or `"route"`: `main` stays authoritative
+ * until the steward-run flip on #1850. {@link resolveTipLocation} is what the
+ * flip will read. No generator writes a route-keyed branch either — the first
+ * family (`docs/uml/`) is a follow-on bean to `1j3q`, deliberately separate so
+ * the mechanism lands before 49 gated checks move.
  *
  * Usage:
  *   bun run cat-harness/scripts/branch-store.ts read --branch B <path>
  *   bun run cat-harness/scripts/branch-store.ts ls   --branch B [<dir>]
  *   bun run cat-harness/scripts/branch-store.ts where --id <directory-id>
+ *   bun run cat-harness/scripts/branch-store.ts mount --id <directory-id> [--into <path>]
+ *   bun run cat-harness/scripts/branch-store.ts push  --id <directory-id> [--message <m>]
  *
  * @module scripts/branch-store
  * @covers beans
  * @covers todos
  */
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { createHash } from "node:crypto";
+import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
 // `readDeclaration` throws on the `folio` kind unless core has registered it —
@@ -113,6 +135,7 @@ export type FileRead = (Hit & { path: string; blob: string; text: string }) | No
 export type JsonRead<T = unknown> = (Hit & { path: string; blob: string; value: T }) | NotHit;
 export type DirRead = (Hit & { path: string; entries: Array<{ name: string; type: "blob" | "tree"; sha: string }> }) | NotHit;
 export type TreeRead = (Hit & { prefix: string; files: Map<string, string> }) | NotHit;
+export type TreeEntriesRead = (Hit & { prefix: string; files: Map<string, { blob: string; mode: string; bytes: Buffer }> }) | NotHit;
 
 /**
  * One change to splice onto the tip. `content: null` removes the path.
@@ -121,8 +144,11 @@ export type TreeRead = (Hit & { prefix: string; files: Map<string, string> }) | 
  */
 export interface Change {
   path: string;
-  content: string | null;
+  /** Text or BYTES: a tip store may hold binary files (fsh-guts keeps archived PDFs). */
+  content: string | Buffer | null;
   expect?: string | null;
+  /** `100755` keeps an executable executable, `120000` a symlink (content = its target); default `100644`. */
+  mode?: "100644" | "100755" | "120000";
 }
 
 export type WriteState = "pushed" | "unchanged" | "conflict" | "absent" | "failed";
@@ -135,6 +161,14 @@ export interface WriteResult {
   /** For `conflict`: each path whose tip blob differed from `expect`. */
   conflicts?: Array<{ path: string; expected: string | null; actual: string | null }>;
 }
+
+/**
+ * The keyings {@link BranchStore} implements — the subset of
+ * `DirectoryStorage.keyedBy` that lives on a branch tip rather than under a
+ * per-commit prefix. `commit` is `qa-store.ts`'s and is deliberately absent.
+ */
+export const BRANCH_KEYINGS = ["tip", "route"] as const;
+export type BranchKeying = (typeof BRANCH_KEYINGS)[number];
 
 export interface BranchStoreOptions {
   /** The checkout root. Default: `git rev-parse --show-toplevel` from cwd. */
@@ -149,6 +183,17 @@ export interface BranchStoreOptions {
   beforePush?: (attempt: number) => void;
   /** Progress lines; default stderr. */
   log?: (line: string) => void;
+  /**
+   * Which keying this store is opened for — the value the branch's root
+   * manifest must agree with, and what decides whether a write may carry
+   * `expect`. Default `"tip"`, the only keying before bean `1j3q`.
+   *
+   * It is passed rather than sniffed from the manifest on purpose: a reader
+   * that adopted whatever keying the branch claimed would read a route-keyed
+   * branch as state the moment somebody pushed the wrong manifest. The caller
+   * states what it came for and a disagreement is `corrupt`.
+   */
+  keyedBy?: BranchKeying;
 }
 
 /** A malformed question — never folded into miss. */
@@ -166,6 +211,8 @@ export interface TipLocation {
   /** Repository-relative, no trailing slash — the path on the branch too. */
   path: string;
   branch: string;
+  /** The declared keying this location was resolved for. */
+  keyedBy: BranchKeying;
 }
 
 /**
@@ -187,26 +234,39 @@ export interface TipLocation {
  *
  * Returns them sorted by id so a caller's output is stable.
  */
-export function tipLocations(repoRoot: string = gitTopLevel()): TipLocation[] {
+export function tipLocations(repoRoot: string = gitTopLevel(), keyedBy: BranchKeying | "any" = "tip"): TipLocation[] {
   const out: TipLocation[] = [];
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
-      if (d.storage?.keyedBy !== "tip") continue;
+      const k = d.storage?.keyedBy;
+      if (k !== "tip" && k !== "route") continue;
+      if (keyedBy !== "any" && k !== keyedBy) continue;
       const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path, branch: d.storage.branch });
+      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path, branch: d.storage!.branch, keyedBy: k });
     }
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
 
-export function resolveTipLocation(id: string, repoRoot: string = gitTopLevel()): TipLocation {
+export function resolveTipLocation(
+  id: string,
+  repoRoot: string = gitTopLevel(),
+  keyedBy: BranchKeying | "any" = "any",
+): TipLocation {
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
       if (d.id !== id) continue;
       if (!d.storage) throw new BranchStoreUsageError(`directory ${id} declares no storage; it lives on main`);
-      if (d.storage.keyedBy !== "tip") throw new BranchStoreUsageError(`directory ${id} is keyed by ${d.storage.keyedBy}, not tip`);
+      const k = d.storage.keyedBy;
+      // `commit` is qa-store's layout, not a branch tip at all; `route` and
+      // `tip` are both tips but differ in how a write settles, so a caller
+      // that came for one is refused the other rather than served it.
+      if (k !== "tip" && k !== "route") {
+        throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, which this store does not implement`);
+      }
+      if (keyedBy !== "any" && k !== keyedBy) throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, not ${keyedBy}`);
       const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-      return { id, path, branch: d.storage.branch };
+      return { id, path, branch: d.storage.branch, keyedBy: k };
     }
   }
   throw new BranchStoreUsageError(`no declared directory has id ${id}`);
@@ -530,6 +590,8 @@ export class TreeStore {
 export class BranchStore extends TreeStore {
   private readonly sleep: (ms: number) => void;
   private readonly beforePush?: (attempt: number) => void;
+  /** The keying this store was opened for; the manifest must agree. */
+  readonly keyedBy: BranchKeying;
 
   private constructor(
     dir: string,
@@ -542,6 +604,7 @@ export class BranchStore extends TreeStore {
     super(dir, remote, branches, authEnv, { identity: STATE_BOT, refNamespace: "branch-store", log: opts.log });
     this.sleep = opts.sleep ?? ((ms) => Bun.sleepSync(ms));
     this.beforePush = opts.beforePush;
+    this.keyedBy = opts.keyedBy ?? "tip";
   }
 
   /**
@@ -586,7 +649,19 @@ export class BranchStore extends TreeStore {
 
   // ── Reading ────────────────────────────────────────────────────────────
 
-  /** The tip, verified as a state branch: a root manifest, `state-manifest/v1`, `keyedBy: "tip"`. */
+  /**
+   * The tip, verified as a branch store: a root manifest, `state-manifest/v1`,
+   * whose `keyedBy` is the one this store was OPENED for.
+   *
+   * The `$schema` string stays `state-manifest/v1` for a route-keyed branch
+   * too, and that is a choice rather than an oversight. The two seeded
+   * branches (`cat/cat-harness/beans`, `cat/cat-harness/todos`) already carry
+   * it, so a second value would turn them `corrupt`; the format is identical
+   * in every field; and `keyedBy` INSIDE the manifest is already the
+   * discriminator, which is this repository's own rule that the file declares
+   * what it is. The name is historical and the bean (`1j3q`) records it as
+   * such.
+   */
   private verifiedTip(): (Hit & { tree: string }) | NotHit {
     let t: Tip;
     try {
@@ -608,7 +683,9 @@ export class BranchStore extends TreeStore {
         return { state: "corrupt", reason: `${t.branch}:${MANIFEST_FILE} does not parse: ${(e as Error).message}` };
       }
       if (manifest?.$schema !== MANIFEST_SCHEMA) return { state: "corrupt", reason: `${t.branch}:${MANIFEST_FILE} is ${String(manifest?.$schema)}, not ${MANIFEST_SCHEMA}` };
-      if (manifest.keyedBy !== "tip") return { state: "corrupt", reason: `${t.branch} is keyed by ${String(manifest.keyedBy)}, not tip` };
+      if (manifest.keyedBy !== this.keyedBy) {
+        return { state: "corrupt", reason: `${t.branch} is keyed by ${String(manifest.keyedBy)}, not ${this.keyedBy}` };
+      }
       return { state: "hit", branch: t.branch, tip: t.tip, tree };
     } catch (e) {
       return { state: "unknown", reason: String(e) };
@@ -654,24 +731,36 @@ export class BranchStore extends TreeStore {
     return { state: "hit", branch: v.branch, tip: v.tip, path: segs.join("/"), entries };
   }
 
-  /** Every file under `prefix` at the tip, fetched in one batch. Paths are branch-relative. */
+  /** Every file under `prefix` at the tip, fetched in one batch. Paths are branch-relative. Text only; see {@link readTreeEntries} for bytes. */
   readTree(prefix: string): TreeRead {
+    const r = this.readTreeEntries(prefix);
+    if (r.state !== "hit") return r;
+    const files = new Map([...r.files].map(([p, f]) => [p, f.bytes.toString("utf-8")]));
+    return { state: "hit", branch: r.branch, tip: r.tip, prefix: r.prefix, files };
+  }
+
+  /**
+   * Every file under `prefix` at the tip as BYTES, with its blob id and mode.
+   * What a mount needs: a binary file must arrive unchanged, and its blob id
+   * is the `expect` a later push compares against.
+   */
+  readTreeEntries(prefix: string): TreeEntriesRead {
     const segs = segments(prefix);
     const v = this.verifiedTip();
     if (v.state !== "hit") return v;
     const e = segs.length ? this.lookup(v.tree, segs) : { mode: "040000", type: "tree", sha: v.tree, name: "" };
     if (!e) return { state: "miss", reason: `${prefix} is not on ${v.branch} at ${v.tip.slice(0, 12)}` };
     if (e.type !== "tree") return { state: "corrupt", reason: `${prefix} on ${v.branch} is a ${e.type}, not a directory` };
-    const blobs = new Map<string, string>();
+    const blobs = new Map<string, { sha: string; mode: string }>();
     for (const l of this.must(["ls-tree", "-r", "-z", e.sha]).split("\0").filter(Boolean)) {
       const tab = l.indexOf("\t");
-      const [, type, sha] = l.slice(0, tab).split(" ");
-      if (type === "blob") blobs.set([...segs, l.slice(tab + 1)].join("/"), sha!);
+      const [mode, type, sha] = l.slice(0, tab).split(" ");
+      if (type === "blob") blobs.set([...segs, l.slice(tab + 1)].join("/"), { sha: sha!, mode: mode! });
     }
-    const shas = [...new Set(blobs.values())];
+    const shas = [...new Set([...blobs.values()].map((b) => b.sha))];
     if (!this.ensureBlobs(e.sha, shas)) return { state: "unknown", reason: `some blobs under ${prefix} could not be fetched` };
     const bytes = this.catBlobs(shas);
-    const files = new Map([...blobs].map(([p, s]) => [p, bytes.get(s)!.toString("utf-8")]));
+    const files = new Map([...blobs].map(([p, b]) => [p, { blob: b.sha, mode: b.mode, bytes: bytes.get(b.sha)! }]));
     return { state: "hit", branch: v.branch, tip: v.tip, prefix: segs.join("/"), files };
   }
 
@@ -684,11 +773,35 @@ export class BranchStore extends TreeStore {
    * - `absent` — the branch does not exist. Seeding one is a steward act
    *   (it carries the manifest), so this store never creates it.
    * - `unchanged` — the tip already holds exactly this content; nothing pushed.
-   * - `conflict` — an `expect` disagreed with the tip; nothing pushed.
+   * - `conflict` — an `expect` disagreed with the tip; nothing pushed. A
+   *   route-keyed store never returns this, because it refuses `expect`.
    * - `failed` — gave up after {@link WRITE_ATTEMPTS}, or the tip is not a state branch.
+   *
+   * ## A route-keyed write may not carry `expect` (bean `1j3q`)
+   *
+   * `expect` exists so that two authors editing one file is a `conflict` the
+   * caller settles. A route-keyed entry has no author: it is a rendering of
+   * the source tree, its one declared generator replaces it wholesale, and the
+   * newer generation is simply right. Honouring an `expect` here would turn a
+   * stale read into a blocked push over content nobody disagrees about.
+   *
+   * So it is REFUSED rather than ignored. Ignoring it would let a caller
+   * believe it had the tip-keyed guarantee while getting last-write-wins,
+   * which is the vacuous-pass shape — and an `expect` arriving here means the
+   * caller thinks the page has two writers, i.e. the premise of route-keying
+   * failing, which is worth a loud stop rather than a silent one.
    */
   write(changes: Change[], message: string): WriteResult {
     if (changes.length === 0) throw new BranchStoreUsageError("no changes to write");
+    if (this.keyedBy === "route") {
+      const withExpect = changes.filter((c) => c.expect !== undefined).map((c) => c.path);
+      if (withExpect.length > 0) {
+        throw new BranchStoreUsageError(
+          `a route-keyed write may not carry \`expect\` (${withExpect.join(", ")}): a rendered page has one writer and the newer generation wins. ` +
+            `An \`expect\` here means the page has two writers — fix that rather than resolving a conflict.`,
+        );
+      }
+    }
     const parsed = changes.map((c) => {
       const segs = segments(c.path);
       if (segs.length === 0) throw new BranchStoreUsageError("cannot write the branch root");
@@ -719,7 +832,7 @@ export class BranchStore extends TreeStore {
           const actual = cur ? cur.sha : null;
           if (c.expect !== undefined && c.expect !== actual) conflicts.push({ path: c.segs.join("/"), expected: c.expect, actual });
           const blob = blobs[i];
-          tree = this.setPath(tree, c.segs, blob ? { mode: "100644", type: "blob", sha: blob, name: "" } : undefined) ?? this.mktree([]);
+          tree = this.setPath(tree, c.segs, blob ? { mode: c.mode ?? "100644", type: "blob", sha: blob, name: "" } : undefined) ?? this.mktree([]);
         });
         if (conflicts.length) {
           return { state: "conflict", reason: `${conflicts.length} path(s) changed on ${v.branch} since they were read`, branch: v.branch, attempts: attempt, conflicts };
@@ -748,10 +861,259 @@ export class BranchStore extends TreeStore {
   }
 }
 
+// ── Mounts: one live copy at a local path, and the push back ─────────────
+//
+// Owner ruling 2026-10-03 (bean 2h76, relayed for 9c7h): ONE generic pair,
+// keyed by directory id, for beans, todos and fsh-guts alike. A mount puts the
+// tip's files where readers look, so a reader that walks a directory keeps
+// working unchanged; a push splices the local edits back with `expect` taken
+// from the mounted tip, so a sibling's edit to the same file is a `conflict`
+// and never an overwrite. This replaces 2h76's single `state/` mount.
+//
+// The marker lives in the GIT directory, not the mount: a reader that walks
+// the mount (gen-fsh-guts-viz walks every file) must not find it.
+
+export const MOUNT_MARKER_SCHEMA = "branch-mount/v1";
+
+/**
+ * The blob id git gives `bytes`: SHA-1 of `"blob <len>\0" + bytes`. Computed
+ * in-process, because a beans mount is ~1,240 files and one `git hash-object`
+ * per file is that many process spawns per push (review on #1957). A
+ * SHA-256 object-format repository is not supported here, which is also true
+ * of every other tool in this harness.
+ */
+export function gitBlobId(bytes: Buffer): string {
+  return createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+}
+
+export interface MountMarker {
+  $schema: typeof MOUNT_MARKER_SCHEMA;
+  id: string;
+  branch: string;
+  /** The directory's path on the branch (= its declared, repository-relative path). */
+  path: string;
+  /** The absolute local mount. */
+  into: string;
+  /**
+   * The tip the files on disk were read at. A push does NOT move it: a push
+   * that retried over a moved tip lands on top of siblings' changes to other
+   * files, which this mount has not read. A re-mount is how to catch up.
+   */
+  tip: string;
+  /** The commit the last successful push created, for the record. */
+  lastPush?: string;
+  /** Mount-relative path → the blob id and mode it had at `tip`. */
+  files: Record<string, { blob: string; mode: string }>;
+}
+
+export interface MountOptions {
+  /** The checkout root. Default: `git rev-parse --show-toplevel`. */
+  repoRoot?: string;
+  /** Where to mount. Default: the declared path, so readers find it where the directory used to be. */
+  into?: string;
+  /** Passed to {@link BranchStore.open}. */
+  store?: BranchStoreOptions;
+}
+
+export type MountResult =
+  | { state: "mounted"; into: string; tip: string; branch: string; files: number }
+  | { state: "refused"; reason: string }
+  | NotHit;
+
+export type PushResult = WriteResult | { state: "refused"; reason: string };
+
+/**
+ * The PER-WORKTREE git directory. Not `--git-common-dir`: that one is shared
+ * by every linked worktree of a checkout, so two worktrees mounting the same
+ * id would overwrite each other's marker, and one could push the other's
+ * edits (review on #1957). Agents here work in worktrees all the time.
+ */
+function worktreeGitDir(repoRoot: string): string {
+  const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-dir"], { cwd: repoRoot, encoding: "utf-8" });
+  if (c.status !== 0) throw new BranchStoreUsageError(`cannot find the git directory of ${repoRoot}`);
+  return c.stdout.trim();
+}
+
+/** Where `id`'s mount marker lives: `<this worktree's git-dir>/branch-mounts/<id>.json`. */
+export function markerPath(repoRoot: string, id: string): string {
+  if (!/^[A-Za-z0-9._-]+$/.test(id)) throw new BranchStoreUsageError(`not a directory id: ${id}`);
+  return join(worktreeGitDir(repoRoot), "branch-mounts", `${id}.json`);
+}
+
+export function readMarker(repoRoot: string, id: string): MountMarker | undefined {
+  const p = markerPath(repoRoot, id);
+  if (!existsSync(p)) return undefined;
+  const m = JSON.parse(readFileSync(p, "utf-8")) as MountMarker;
+  if (m.$schema !== MOUNT_MARKER_SCHEMA) throw new BranchStoreUsageError(`${p} is not a ${MOUNT_MARKER_SCHEMA} marker`);
+  return m;
+}
+
+function writeMarker(repoRoot: string, m: MountMarker): void {
+  const p = markerPath(repoRoot, m.id);
+  mkdirSync(dirname(p), { recursive: true });
+  writeFileSync(p, JSON.stringify(m, null, 2) + "\n");
+}
+
+/**
+ * Every file AND symlink under `dir`, mount-relative with `/` separators.
+ * Symlinks are leaves, never followed (`lstat`): a link to a directory is
+ * not walked twice or outside the mount, and it round-trips as a link.
+ */
+function walkFiles(dir: string, base = dir, out: string[] = []): string[] {
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir)) {
+    const abs = join(dir, name);
+    const st = lstatSync(abs);
+    if (st.isSymbolicLink() || st.isFile()) out.push(relative(base, abs).split(sep).join("/"));
+    else if (st.isDirectory()) walkFiles(abs, base, out);
+  }
+  return out.sort();
+}
+
+/** A local file's git content and mode: a symlink is its target, mode 120000. */
+function localEntry(abs: string): { bytes: Buffer; mode: "100644" | "100755" | "120000" } {
+  const st = lstatSync(abs);
+  if (st.isSymbolicLink()) return { bytes: Buffer.from(readlinkSync(abs)), mode: "120000" };
+  return { bytes: readFileSync(abs), mode: (st.mode & 0o111) !== 0 ? "100755" : "100644" };
+}
+
+/** The local edits since the mount: what a push would send. */
+function localChanges(m: MountMarker, repoRoot: string): Change[] {
+  const local = new Set(walkFiles(m.into));
+  const changes: Change[] = [];
+  const fresh = [...local].filter((r) => !m.files[r]);
+  const ignored = ignoredByCheckout(repoRoot, m.into, fresh);
+  for (const rel of local) {
+    if (!m.files[rel] && ignored.has(rel)) continue;
+    const { bytes, mode } = localEntry(join(m.into, rel));
+    const prev = m.files[rel];
+    if (prev && prev.blob === gitBlobId(bytes) && prev.mode === mode) continue;
+    changes.push({ path: `${m.path}/${rel}`, content: bytes, expect: prev ? prev.blob : null, mode });
+  }
+  for (const [rel, prev] of Object.entries(m.files)) {
+    if (!local.has(rel)) changes.push({ path: `${m.path}/${rel}`, content: null, expect: prev.blob });
+  }
+  return changes;
+}
+
+/**
+ * Mount-relative paths among `rels` that the CHECKOUT ignores by a rule
+ * other than one ignoring the mount root itself. A mount honours the
+ * checkout's ignore rules for its contents (fsh-guts/logs/ is local scratch
+ * and must never be pushed), while the rule that hides the whole mount from
+ * `main` after the cutover does not make every file in it unpushable.
+ */
+function ignoredByCheckout(repoRoot: string, into: string, rels: string[]): Set<string> {
+  const out = new Set<string>();
+  const root = relative(repoRoot, into).split(sep).join("/");
+  if (!rels.length || root.startsWith("..")) return out;
+  const input = rels.map((r) => `${root}/${r}`).join("\n") + "\n";
+  const r = spawnSync("git", ["check-ignore", "-v", "--no-index", "--stdin"], { cwd: repoRoot, input, encoding: "utf-8" });
+  for (const line of (r.stdout ?? "").split("\n").filter(Boolean)) {
+    const tab = line.indexOf("\t");
+    const pattern = line.slice(0, tab).split(":").slice(2).join(":").replace(/^\/+|\/+$/g, "");
+    const path = line.slice(tab + 1);
+    if (pattern === root || pattern === `${root}/*` || pattern === `${root}/**`) continue;
+    out.add(path.slice(root.length + 1));
+  }
+  return out;
+}
+
+/**
+ * Put the tip's copy of `loc` at a local path. Refuses rather than clobbers:
+ * a directory `main` still tracks (the cutover has not happened), a non-empty
+ * directory that is not a mount, and a mount with unpushed edits. A miss is
+ * reported as a miss, never as an empty mount.
+ */
+export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const into = resolve(repoRoot, opts.into ?? loc.path);
+  const relInto = relative(repoRoot, into);
+  if (!relInto.startsWith("..")) {
+    const tracked = spawnSync("git", ["ls-files", "--", relInto || "."], { cwd: repoRoot, encoding: "utf-8" });
+    if (tracked.status === 0 && tracked.stdout.trim()) {
+      return { state: "refused", reason: `${relInto} is still tracked on this checkout's branch, so ${loc.id} has not been cut over to ${loc.branch}; mount it elsewhere with --into` };
+    }
+  }
+  const store = BranchStore.open(loc.branch, { repoRoot, ...opts.store });
+  const prior = readMarker(repoRoot, loc.id);
+  if (prior) {
+    const pending = localChanges(prior, repoRoot);
+    if (pending.length) return { state: "refused", reason: `${prior.into} has ${pending.length} unpushed change(s); push or discard them before re-mounting` };
+  } else if (existsSync(into) && walkFiles(into).length) {
+    return { state: "refused", reason: `${into} holds files and is not a mount of ${loc.id}` };
+  }
+  const r = store.readTreeEntries(loc.path);
+  if (r.state !== "hit") return r;
+  if (prior) for (const rel of Object.keys(prior.files)) rmSync(join(prior.into, rel), { force: true });
+  const unsupported = [...r.files].filter(([, f]) => !["100644", "100755", "120000"].includes(f.mode));
+  if (unsupported.length) return { state: "corrupt", reason: `${unsupported[0]![0]} has mode ${unsupported[0]![1].mode}, which a mount cannot hold` };
+  const files: MountMarker["files"] = {};
+  for (const [p, f] of r.files) {
+    const rel = p.slice(loc.path.length + 1);
+    const abs = join(into, rel);
+    mkdirSync(dirname(abs), { recursive: true });
+    if (f.mode === "120000") {
+      symlinkSync(f.bytes.toString("utf-8"), abs);
+    } else {
+      writeFileSync(abs, f.bytes);
+      chmodSync(abs, f.mode === "100755" ? 0o755 : 0o644);
+    }
+    files[rel] = { blob: f.blob, mode: f.mode };
+  }
+  writeMarker(repoRoot, { $schema: MOUNT_MARKER_SCHEMA, id: loc.id, branch: r.branch, path: loc.path, into, tip: r.tip, files });
+  return { state: "mounted", into, tip: r.tip, branch: r.branch, files: r.files.size };
+}
+
+/**
+ * What a push of `id` would send, without sending it — {@link localChanges}
+ * for a mounted directory, or `undefined` when `id` is not mounted here.
+ *
+ * Exported for the `--dry-run` of a caller that fans out over several
+ * mounts (`state-push.ts`): the alternative is each such caller re-deriving
+ * the diff from the marker, and a second implementation of "what changed"
+ * is how a dry run comes to disagree with the push it is previewing.
+ */
+export function pendingMountChanges(id: string, opts: MountOptions = {}): Change[] | undefined {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const m = readMarker(repoRoot, id);
+  return m ? localChanges(m, repoRoot) : undefined;
+}
+
+/**
+ * Splice the mount's local edits onto the tip. Every change carries `expect`
+ * from the mounted tip, so an edit a sibling made to the same file since is a
+ * `conflict` and nothing is pushed. On `pushed`, the marker moves to the new
+ * tip, so the next push compares against what landed.
+ */
+export function pushMount(id: string, message: string, opts: MountOptions = {}): PushResult {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const m = readMarker(repoRoot, id);
+  if (!m) return { state: "refused", reason: `${id} is not mounted in ${repoRoot}` };
+  const store = BranchStore.open(m.branch, { repoRoot, ...opts.store });
+  const changes = localChanges(m, repoRoot);
+  if (!changes.length) return { state: "unchanged", reason: `no local edits under ${m.into}`, branch: m.branch, attempts: 0 };
+  const w = store.write(changes, message);
+  if (w.state === "pushed" && w.commit) {
+    for (const c of changes) {
+      const rel = c.path.slice(m.path.length + 1);
+      if (c.content === null) delete m.files[rel];
+      else m.files[rel] = { blob: gitBlobId(Buffer.from(c.content)), mode: c.mode ?? "100644" };
+    }
+    // `tip` stays the MOUNTED tip: see MountMarker.tip.
+    writeMarker(repoRoot, { ...m, lastPush: w.commit });
+  }
+  return w;
+}
+
 // ── CLI ──────────────────────────────────────────────────────────────────
 
 /** hit 0, miss 1, usage 2, corrupt 3, unknown 4 — qa-store's and lake-cache's numbers. */
 export const EXIT = { hit: 0, miss: 1, usage: 2, corrupt: 3, unknown: 4 } as const;
+/** `mount`: the read codes above, plus `refused` (it would clobber, or the directory is not cut over). */
+export const MOUNT_EXIT = { refused: 5 } as const;
+/** `push`: success is 0 either way; `conflict` and `refused` never read as success. */
+export const PUSH_EXIT = { pushed: 0, unchanged: 0, absent: 1, conflict: 5, refused: 5, failed: 6 } as const;
 
 export function main(argv: string[]): number {
   const [cmd, ...rest] = argv;
@@ -769,6 +1131,27 @@ export function main(argv: string[]): number {
       console.log(JSON.stringify(resolveTipLocation(id), null, 2));
       return 0;
     }
+    if (cmd === "mount") {
+      const id = named.get("id");
+      if (!id) throw new BranchStoreUsageError("mount needs --id <directory-id>");
+      const r = mountTip(resolveTipLocation(id), { into: named.get("into") });
+      if (r.state === "mounted") {
+        console.log(`branch-store: mounted ${id} (${r.files} file(s)) from ${r.branch}@${r.tip.slice(0, 12)} at ${r.into}`);
+        return 0;
+      }
+      console.error(`branch-store: mount ${id}: ${r.state}: ${r.reason}`);
+      return r.state === "refused" ? MOUNT_EXIT.refused : EXIT[r.state];
+    }
+    if (cmd === "push") {
+      const id = named.get("id");
+      if (!id) throw new BranchStoreUsageError("push needs --id <directory-id>");
+      const r = pushMount(id, named.get("message") ?? `${id}: push the local mount`);
+      const line = `branch-store: push ${id}: ${r.state}: ${r.reason}`;
+      if (r.state === "pushed" || r.state === "unchanged") console.log(line);
+      else console.error(line);
+      if ("conflicts" in r && r.conflicts) for (const c of r.conflicts) console.error(`  ${c.path}: mounted ${c.expected ?? "(absent)"}, tip ${c.actual ?? "(absent)"}`);
+      return PUSH_EXIT[r.state];
+    }
     const branch = named.get("branch");
     if (!branch) throw new BranchStoreUsageError(`${cmd ?? "(none)"} needs --branch B`);
     const store = BranchStore.open(branch.split(","));
@@ -784,7 +1167,7 @@ export function main(argv: string[]): number {
       else console.error(`branch-store: ${r.state}: ${r.reason}`);
       return EXIT[r.state];
     }
-    throw new BranchStoreUsageError(`unknown command ${cmd ?? "(none)"}; expected read | ls | where`);
+    throw new BranchStoreUsageError(`unknown command ${cmd ?? "(none)"}; expected read | ls | where | mount | push`);
   } catch (e) {
     if (e instanceof BranchStoreUsageError) {
       console.error(`branch-store: ${e.message}`);

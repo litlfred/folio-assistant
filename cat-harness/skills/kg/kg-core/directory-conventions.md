@@ -132,6 +132,7 @@ decides it.
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
 | `bean-notes` | **harness** | one pull request's addendum to a bean — one Markdown file per branch per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path; `README.md` beside them is the generated index. Bean `m61r`: `ob3m` cost five hand-merges in one afternoon while every finding was appended to the bean. `state`, and `recordsWork: false` because a note is a record about a bean, whose work is counted on the bean. Convention: [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md) §"Adding to a bean — a note, not an append". | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
+| `merge-queue` | **harness** | a merge steward's DECISIONS about an open pull request — one JSON each, `"$schema": "folio-merge-queue-entry/v1"`: priority class, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. **Never a fact GitHub owns** — CI, mergeability, labels and the head SHA are read live at decision time and refused BY NAME by the schema, because a stored copy is a second answer that goes stale on the next push. The one exception is an evidence snapshot on a FINISHED train run, which is history rather than a claim about now. Declared at `beans/queue/`, beside `workflow-state`: this holds the decisions, a finished run next door holds the evidence they met. `state` because a steward writes it as the train proceeds; `recordsWork: true` because a held entry is open work. Shape in `schemas/merge-queue.ts`; read with [`merge-queue`](../../sdlc/sdlc-core/merge-queue.md). Bean `hfag`. | no |
 | `session-survey` | **harness** | published surveys of a commit window — one JSON each, `"$schema": "folio-session-survey/v1"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through. | no |
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
 | `boards` | **harness** | boards — one file each, `"$schema": "folio-board/v1"`. A board is a **diagram OF** a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — *"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter."* | no |
@@ -766,6 +767,90 @@ declaration several sessions are editing at once:
    reconcile — main added entries, this branch added a field — and the result
    was still unparseable. Verify the merged tree, never the merge.
 
+## Where a subgraph gets its content — `source` (owner, 2026-10-03)
+
+> *"It's the same pattern. One of them is mounting the directory while one of
+> them is mounting a branch. Another mount type could come in the future. A sub
+> graph declares where it's getting its content.. It could also be a graph
+> database in the future. That same information can be overwritten by the
+> harness instance config."*
+
+A "directory subgraph" and a "branch subgraph" are **one thing with two
+sources**, so there is one field and one resolver, never a branch concept
+beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
+
+- **`source`** on a `directories[]` entry is a discriminated union on `kind`.
+  `{ "kind": "directory" }` — the default, so absent means it — says the
+  content IS the checkout at `path`. `{ "kind": "branch", "branch":
+  "cat/cat-harness/todos", "keyedBy": "tip" }` says the content lives on a
+  declared repository branch and `path` is where a mount of it lands. A later
+  kind (a graph database) is a new member of the union: additive, and a
+  compile error at every consumer that has not decided what to do with it.
+- **The branch NAME is declared once**, in `cat-harness/scripts/special-branches.json`
+  (with its legacy spellings and its mirrors). A branch source names its
+  branch; the resolver attaches the matching row, and a branch no row
+  declares is a finding (`subgraph-source.test.ts`), never a guess at what to
+  fetch.
+- **The instance config overrides it, by id.** `<instance>.config.json` →
+  `"subgraphSources": { "<dir-id>": <source> }`. The declaration says what the
+  subgraph IS; the config says how THIS instantiation is set up, and where
+  content is mounted from is that kind of fact. Matched on `id`, never `path`
+  — §"Inheritance". The checkout root's config has the last word.
+- **One resolver, and every consumer asks it**: `declaredSubgraph(start, id)`
+  in `schemas/harness-config.ts`, through `resolveSubgraphSource`. Precedence:
+  config override → `source` → a legacy `storage` → `directory`. The answer
+  carries `declaredIn`, so an override is never silent. Never read `source`
+  off the declaration yourself — that skips the override.
+- **`storage` (arc `3fva`, #1764/#1937) maps exactly**: `storage: { branch,
+  keyedBy }` is `source: { kind: "branch", branch, keyedBy }`. The resolver
+  reads either and refuses an entry carrying both — two answers to one
+  question. A `qa` subgraph keyed by `tip` is refused whichever field says it.
+  `storage` is the LEGACY spelling: write `source` in a new entry. The
+  presence checks (`materialiseDirectories`, `check:declared-dirs`,
+  `audit:coverage`) ask `contentIsOffCheckout`, which honours both.
+- **Mounting dispatches on the kind**, and the process is
+  `processes/kg/mount-subgraph.bpmn`: `directory` is the checkout path in place
+  (a write is a commit); `branch` + `tip` is mounted from the tip and spliced
+  back without force (`branch-store mount`/`push`); a kind with no flow is
+  refused with its own exit code rather than read as an empty directory.
+- **The KG export publishes the resolved source** on the Subgraph node, as
+  `contentSource` — `dcterms:source`, with `kind` (`dcterms:type`), `branch`
+  (`dcterms:identifier`), `keyedBy` and `declaredIn` scoped inside it. A
+  GitHub-hosted branch gets an `@id` that is its tree URL.
+
+**Which layer a kind is in does not follow from its source.** `todos` is
+`state` on `main` and still `state` on `cat/cat-harness/todos`; a `context`
+graph could be mounted from a branch and stays read-only. See
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md).
+
+### Publishing a subgraph's contents — the declared Subgraph node is the container (STRICT)
+
+Owner, 2026-10-03: *"todos = subgraph node + todo content nodes"*. A generator
+that publishes the contents of a declared subgraph (a `todos.jsonld`, a beans
+graph, a library index) does NOT mint its own collection node for them. It:
+
+1. uses the **declared Subgraph node's IRI** as the container `@id` —
+   `<declaring instance>.jsonld#directory/<id>`, from `declaredSubgraphNode`
+   in `kg-export.ts`, which is the same function the node itself is minted by
+   — typed `Subgraph`, with `hasPart` to each member;
+2. gives **every member `inSubgraph`** → that IRI (`dcterms:isPartOf`, the
+   same term the KG export uses for the same edge);
+3. carries the subgraph's resolved **`contentSource`**, so a branch-sourced
+   subgraph names its branch;
+4. **mints nothing parallel** — no `schema:Collection`, no `<Kind>Graph`.
+
+The helpers are `subgraphContainer` and `memberOf` in `scripts/subgraph-node.ts`,
+and `subgraphPublicationFindings` is the check: `subgraph-node.test.ts` runs it
+over every adopting publisher. **Converting a publisher adds its row there.**
+The declaring instance's document must be published for the `@id` to
+dereference — `docs-site.yml` exports the checkout root's graph for exactly
+that reason.
+
+One trap, measured while building it: do not restate the subgraph's `name` on
+a container written to `<dir>/<id>.json`. A file whose `name` equals its stem
+is what `findDeclarationFile` reads as an INSTANCE declaration, and the site
+directory became an instance root that hid the checkout from every resolver.
+
 ## Three states, as everywhere else here
 
 - **No declaration** → `readDeclaration` returns `undefined`. An
@@ -817,6 +902,9 @@ one is argued.
    the entries already use) — `_` keys are annotations every loader drops
    (§"Node schemas, one per `$schema` family").
 4. **Declare only what exists**, or say why not with `absent: { reason }`.
+   **Where its content comes from** is `source` — omit it for the checkout
+   directory; a branch source names a branch declared in
+   `special-branches.json` (§"Where a subgraph gets its content").
 5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
    for, the `visualiser` that renders it; an opt-out carries its reason
    (`SubgraphCoverageSchema`). Without a skill the directory is unreachable

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "a056c5ff7f44"
+    "script_hash": "b4164d449e9e"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 55 of 55 declared kind(s), 215 gate(s), 73 criteria.",
-      "count": 55,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 56 of 56 declared kind(s), 216 gate(s), 73 criteria.",
+      "count": 56,
       "entries": [
         {
           "kind": "attestations",
@@ -293,6 +293,7 @@
             "cat-harness/docs",
             "docs",
             "smart-base/docs",
+            "smart-base/findings",
             "smart-immunizations/docs",
             "smart-trust/docs",
             "who-iris/docs",
@@ -332,6 +333,7 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
+            "bun run smart-base:dth-terms:check",
             "bun run subscriptions:viz:check",
             "bun run translated-links:check"
           ],
@@ -538,6 +540,16 @@
           ],
           "typed": true,
           "hasFiles": true
+        },
+        {
+          "kind": "merge-queue",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
         },
         {
           "kind": "methodology",
@@ -1157,7 +1169,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 18,
+      "count": 19,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1202,6 +1214,11 @@
         },
         {
           "kind": "ig-metadata-index",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "merge-queue",
           "criteria": 0,
           "gates": []
         },
@@ -1279,10 +1296,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 215 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 216 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 73
+  "total": 75
 }
