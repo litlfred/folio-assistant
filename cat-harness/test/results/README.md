@@ -40,5 +40,6 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`lsi/`](lsi/) | 4 files | |
 | [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
+| [`viewer-nav/`](viewer-nav/) | 1 file | |
 | [`witnesses/`](witnesses/) | 163 files | |
 <!-- kg:subgraph:end -->
