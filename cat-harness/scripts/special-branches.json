@@ -31,9 +31,8 @@
     {
       "id": "lake-cache",
       "shape": "family",
-      "name": "cat-lake-cache/",
-      "legacy": ["lake-cache/"],
-      "pendingRename": "cat/folio-assistant-sci/lake-cache/ — bean folio-assistant-9io2 (8 mirrors run inside folios, and the branches live in the folio repos)",
+      "name": "cat/folio-assistant-sci/lake-cache/",
+      "legacy": ["cat-lake-cache/", "lake-cache/"],
       "holds": "Lean .lake build caches, one branch per <package>-<toolchain-slug> (or toolchain-<slug>)",
       "writers": [".github/workflows/lake-cache-refresh.yml", "cat-harness/scripts/lake-cache.sh seed --push / contribute", "cat-harness/scripts/lake-cache-produce.py", "cat-harness/scripts/reseed-lean-cache.sh"],
       "repos": "folio repositories with Lean (e.g. litlfred/qou); none in this repository"
