@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-quality-gates\n"
-"POT-Creation-Date: 2026-10-03T01:48:06.836Z\n"
+"POT-Creation-Date: 2026-10-03T02:09:25.183Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -151,7 +151,7 @@ msgstr ""
 
 #: processes/sdlc/code-quality-gates.bpmn:85
 #. Diagram element documentation
-msgid "Three checks: `bun run lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is three jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test --parallel=2` as three shards — two workers each because three or more hung, measured — the shard passed in `BUN_OPTIONS` so the command stays the one `bun run gates` runs locally) and `typescript`, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job."
+msgid "Three checks: `bun run lint`, `tsc --noEmit` and `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Since bean `dlqu` it is three jobs: `typescript-static` (lint, then typecheck), `typescript-test` (`bun test` as four SEQUENTIAL shards on separate machines — Bun's in-process `--parallel` worker pool hung at both 4 and 2 workers, measured — the shard passed in `BUN_OPTIONS` so the command stays the one `bun run gates` runs locally) and `typescript`, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — `bun test` LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three `main` runs before the change: `bun test` alone was 7m30s-7m45s of an 8m14s-8m33s job."
 msgstr ""
 
 #: processes/sdlc/code-quality-gates.bpmn:84

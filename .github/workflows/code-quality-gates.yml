@@ -292,16 +292,16 @@ jobs:
 
   typescript-test:
     # bpmn-node: Task_TypeScript
-    name: TypeScript — bun test, shard ${{ matrix.shard }}/3
+    name: TypeScript — bun test, shard ${{ matrix.shard }}/4
     #
     # Bean `dlqu`. `bun test` was 7m30s-7m45s sequential (three `main` runs,
     # 2026-10-02); `--parallel` (one isolated worker per core) took it to
     # 3m28s-5m01s, which still made this the workflow's slowest job once e2e
-    # was sharded. So the suite is split across three jobs, each still parallel
-    # inside (two workers each — see the step).
+    # was sharded. So the suite is split across four jobs on separate machines,
+    # each SEQUENTIAL inside (see the step for why not `--parallel`).
     #
     # THE SHARD TRAVELS IN `BUN_OPTIONS`, which Bun prepends to every
-    # invocation, and NOT as `--shard=${{ matrix.shard }}/3` on the command
+    # invocation, and NOT as `--shard=${{ matrix.shard }}/4` on the command
     # line: `gatesFrom` runs a `bun` line locally with no shell, so an
     # interpolation there would reach the local gate run as literal text (bean
     # `9zok`). The command stays `bun test --parallel`, which locally — with no
@@ -314,7 +314,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3]
+        shard: [1, 2, 3, 4]
     # A cap, because a parallel worker that spins (measured once locally:
     # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
     # not stopped by a per-test timeout, and the Actions default is six hours.
@@ -333,19 +333,20 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # `--parallel=2`, NOT the default of one worker per core — measured, and
-      # it is a hang, not a slowdown. On 2026-10-03 shard 1 of a `--parallel`
-      # run sat at 97 % CPU until the job cap. Reproduced locally on nine
-      # files: at 3 workers 8 runs in 20 hung, at 4 workers 7 in 32, at 2
-      # workers 0 in 72. Dropping any one file left it hanging except
-      # `uses-hygiene-remedy.test.ts`, whose tests are all skipped here and
-      # whose imports do no visible looping, so the trigger is a 3+-worker
-      # interaction not yet root-caused (bean `dlqu`). Three shards of two
-      # workers keep the wall-clock of two shards of four.
+      # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
+      # Bun's in-process worker pool (1.3.14) left one worker spinning at
+      # ~97 % CPU until the job cap: on 2026-10-03 shard 1/2 of a 4-worker run
+      # (`ca3468d19`) and shard 2/3 of a 2-WORKER run (`ff9d8ebb4`, run 2, after
+      # 0/72 on a nine-file local sample had made 2 workers look safe). A plain
+      # sequential `bun test` has never hung here (three `main` runs, a 903 s
+      # local run). So the parallelism comes from SHARDING ACROSS MACHINES
+      # instead: four jobs, each a sequential `bun test` over a quarter of the
+      # files. Separate machines also share no working tree, so the in-tree
+      # write races `--parallel` exposed cannot recur (bean `dlqu`).
       - name: bun test
         env:
-          BUN_OPTIONS: --shard=${{ matrix.shard }}/3
-        run: bun test --parallel=2
+          BUN_OPTIONS: --shard=${{ matrix.shard }}/4
+        run: bun test
 
   typescript:
     # bpmn-node: Task_TypeScript

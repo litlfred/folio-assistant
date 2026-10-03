@@ -138,3 +138,16 @@ root-caused. **Mitigation:** `bun test --parallel=2` across THREE shards
 (6 workers in all, vs 2 × 4), so the wall-clock holds. Open question for a
 follow-up: what in that import graph spins, and does it reproduce on a newer
 Bun.
+
+### Update — 2 workers hung too; `--parallel` dropped
+
+CI run 2 on `ff9d8ebb4` (3 shards × `--parallel=2`): shard 2/3's `bun test`
+sat 8+ minutes against 1m14s–2m34s for its siblings — the same hang, at TWO
+workers. The 0 / 72 above was a nine-file sample; the full suite reaches it.
+So `--parallel` is out entirely: `bun test` runs SEQUENTIALLY in four shards on
+four machines (`BUN_OPTIONS=--shard=i/4`). Sequential `bun test` has never hung
+here, and separate machines share no working tree, so the in-tree races
+cannot recur either. Expected per shard ≈ 7.6 min / 4 ≈ 2 min plus imbalance.
+The Bun hang itself remains open (trigger set includes
+`uses-hygiene-remedy.test.ts`; worth reporting upstream with the nine-file
+reproduction).
