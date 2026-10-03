@@ -57,8 +57,8 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [A sub-graph wants to leave](graph-detanglement.html) | 8 | — |
 | [A knowledge graph leaves for its own repositories](kg-separation.html) | 17 | — |
 | [KG to public portal](kg-to-portal.html) | 10 | — |
+| [Mount a declared subgraph](mount-subgraph.html) | 4 | — |
 | [Code node review](review-code.html) | 4 | — |
-| [Build and publish a per-slice SQLite file](slice-sqlite-publish.html) | 7 | — |
 | [Content acquisition](content-acquisition.html) | 6 | — |
 | [Copy out materialized content — to work on somebody else's bytes](copy-out-materialized.html) | 5 | — |
 | [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 12 | — |
@@ -134,7 +134,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**119** distinct skill(s) are named by an activity.
+**120** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -153,6 +153,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | `confirm-harness` | [`discussion.bpmn`](discussion.html), [`initialize-harness.bpmn`](initialize-harness.html) |
 | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html) | [`content-acquisition.bpmn`](content-acquisition.html) |
 | [`content-author`](../reference/skill-instructions/content-author.html) | [`content-change-review.bpmn`](content-change-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`evidence-retrieval.bpmn`](evidence-retrieval.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html) |
+| [`content-context-and-state-graphs`](../reference/skill-instructions/content-context-and-state-graphs.html) | [`mount-subgraph.bpmn`](mount-subgraph.html) |
 | [`content-feedback`](../reference/skill-instructions/content-feedback.html) | [`review-narrative.bpmn`](review-narrative.html), [`adjudication.bpmn`](adjudication.html), [`narrative-code-review.bpmn`](narrative-code-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html) |
 | [`content-graph`](../reference/skill-instructions/content-graph.html) | [`content-change-review.bpmn`](content-change-review.html) |
 | [`content-plan`](../reference/skill-instructions/content-plan.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
@@ -174,6 +175,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`deep-document-research`](../reference/skill-instructions/deep-document-research.html) | [`deep-document-research.bpmn`](deep-document-research.html) |
 | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html), [`actor-role-administration.bpmn`](actor-role-administration.html), [`feature-staging.bpmn`](feature-staging.html), [`repository-health-watch.bpmn`](repository-health-watch.html), [`board-relocate.bpmn`](board-relocate.html) |
 | [`delivery-summary`](../reference/skill-instructions/delivery-summary.html) | [`crdm-deliver.bpmn`](crdm-deliver.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`directory-conventions`](../reference/skill-instructions/directory-conventions.html) | [`mount-subgraph.bpmn`](mount-subgraph.html) |
 | `discussion` | [`discussion.bpmn`](discussion.html) |
 | [`dispatch-agent`](../reference/skill-instructions/dispatch-agent.html) | [`getting-started.bpmn`](getting-started.html) |
 | [`dmn-authoring`](../reference/skill-instructions/dmn-authoring.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
@@ -195,7 +197,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`interaction-modality`](../reference/skill-instructions/interaction-modality.html) | [`session-state-machine.bpmn`](session-state-machine.html), [`merge-train.bpmn`](merge-train.html), [`getting-started.bpmn`](getting-started.html) |
 | [`issue-working`](../reference/skill-instructions/issue-working.html) | [`code-change-review.bpmn`](code-change-review.html), [`pr-checks-present.bpmn`](pr-checks-present.html) |
 | [`kg-contribution-offer`](../reference/skill-instructions/kg-contribution-offer.html) | [`crdm-signoff.bpmn`](crdm-signoff.html) |
-| [`kg-export`](../reference/skill-instructions/kg-export.html) | [`kg-to-portal.bpmn`](kg-to-portal.html), [`slice-sqlite-publish.bpmn`](slice-sqlite-publish.html) |
+| [`kg-export`](../reference/skill-instructions/kg-export.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
 | [`kg-separation`](../reference/skill-instructions/kg-separation.html) | [`kg-separation.bpmn`](kg-separation.html) |
 | [`kg-subscription`](../reference/skill-instructions/kg-subscription.html) | [`subscribe-kg.bpmn`](subscribe-kg.html) |
 | [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
@@ -228,7 +230,6 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`render-kg-to-cdn`](../reference/skill-instructions/render-kg-to-cdn.html) | [`render-kg-to-cdn.bpmn`](render-kg-to-cdn.html), [`docs-site-publish.bpmn`](docs-site-publish.html), [`feature-staging.bpmn`](feature-staging.html), [`draft-to-publication.bpmn`](draft-to-publication.html) |
 | `render-kg-to-github-pages` | [`render-kg-to-github-pages.bpmn`](render-kg-to-github-pages.html) |
 | [`render-logging`](../reference/skill-instructions/render-logging.html) | [`feature-staging.bpmn`](feature-staging.html), [`staging-render-log.bpmn`](staging-render-log.html) |
-| [`rendered-verification`](../reference/skill-instructions/rendered-verification.html) | [`slice-sqlite-publish.bpmn`](slice-sqlite-publish.html) |
 | [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) | [`getting-started.bpmn`](getting-started.html) |
 | [`review-comments`](../reference/skill-instructions/review-comments.html) | [`content-change-review.bpmn`](content-change-review.html) |
 | [`review-heatmap`](../reference/skill-instructions/review-heatmap.html) | [`content-change-review.bpmn`](content-change-review.html) |
@@ -267,15 +268,15 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | lane | in |
 |---|---|
 | Agent | 15 |
-| CI/CD Pipeline | 12 |
+| CI/CD Pipeline | 11 |
 | Ingestion Engine (agent, runs unattended) | 10 |
 | Work plan — beans (shared by humans and agents) | 10 |
 | BA / Feature Requestor | 7 |
 | Publication manager | 6 |
+| Build pipeline | 5 |
 | Corpus — L1 source knowledge graph | 5 |
 | Stakeholders | 5 |
 | Authoring agent | 4 |
-| Build pipeline | 4 |
 | Business analyst | 4 |
 | Contributor (human or agent) | 4 |
 | Scheduled log sweep | 4 |
@@ -296,7 +297,6 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | Merge steward | 2 |
 | Narrative reviewer | 2 |
 | Owner | 2 |
-| Platform authoring agent | 2 |
 | Programme manager | 2 |
 | QC reviewer | 2 |
 | Reader | 2 |
@@ -348,6 +348,7 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 | merge:main command | 1 |
 | Non-mechanical validation (review agent or SME) | 1 |
 | Onboarding agent (system) | 1 |
+| Platform authoring agent | 1 |
 | Portal (external consumer) | 1 |
 | PR reviewer / QC reviewer | 1 |
 | Programme manager (release authority) | 1 |
@@ -387,17 +388,17 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 
 | op | diagrams |
 |---|---|
-| `note` | 28 |
-| `claim` | 20 |
+| `note` | 27 |
+| `claim` | 19 |
 | `resolve` | 9 |
 
 ## Strict, advisory — and nobody said
 
-Three states, not two. `loadProcessModel` reads an undeclared policy as `strict`, which is right for the engine — *"a process that forgot to say is governed, not exempt"* — and hides a fact a reader wants. **Somebody chose strict** and **nobody said, so the engine assumed strict** are different, and the second is **32** of 85 here.
+Three states, not two. `loadProcessModel` reads an undeclared policy as `strict`, which is right for the engine — *"a process that forgot to say is governed, not exempt"* — and hides a fact a reader wants. **Somebody chose strict** and **nobody said, so the engine assumed strict** are different, and the second is **33** of 85 here.
 
 | enforcement | declared | defaulted |
 |---|---|---|
-| `strict` | 31 | 32 |
+| `strict` | 30 | 33 |
 | `advisory` | 22 | 0 |
 
 ## Findings

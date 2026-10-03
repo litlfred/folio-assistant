@@ -1734,6 +1734,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/subgraph-resolve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve a declared subgraph's content source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on."
+        }
+      ],
+      "skos:notation": "subgraph-resolve",
+      "dcterms:source": "cat-harness/tools/index.ts#subgraph-resolve",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/tabular-csv",
       "@type": "skos:Concept",
       "skos:inScheme": {

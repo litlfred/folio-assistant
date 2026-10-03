@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 419 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 27 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 416 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 27 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 636 terms and is 514 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 633 terms and is 512 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>636</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>636</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>633</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>633</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,9 +29,9 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">636</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">633</span> shown</p>
 
-<nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
+<nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
 <h2 id="letter-0-9">0–9</h2>
 <dl class="fa-gloss">
@@ -742,20 +742,6 @@ Build and QA gates [content-test] <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn"><code>folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_BuildGates</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_deploy" data-fa-state="extracted" data-fa-gloss="">
-Build each slice into _site at deploy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p><code>gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice &lt;name&gt;</code>, once per slice, from the tree being published: the file, its manifest, the slice index, and the deploy payloads beside the committed KG payloads. Never into the committed <code>docs/payload/</code>, whose orphan audit admits KG nodes only.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Deploy</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_measure" data-fa-state="extracted" data-fa-gloss="">
-Build it locally and measure the file <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Run <code>bun run slice:sqlite -- --slice &lt;name&gt; --out &lt;scratch&gt;</code> and read the manifest: <code>bytes</code>, the row counts, the payload count and bytes, <code>overBudget</code>, <code>duplicateIds</code> and <code>findings</code>. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Measure</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_contentchangereview.task_buildstaging" data-fa-state="extracted" data-fa-gloss="">
 Build staging site <span class="fa-gloss-status">candidate, extracted</span>
@@ -1848,13 +1834,6 @@ Full publisher build [ig-publication] <span class="fa-gloss-status">candidate, e
 
 <h2 id="letter-G">G</h2>
 <dl class="fa-gloss">
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_check" data-fa-state="extracted" data-fa-gloss="">
-Gate every slice: slice:sqlite:check <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>For every slice: build twice and require one sha256; read the row digest back from the file and require it to equal the digest computed from the source without SQLite; run an FTS5 phrase query for a known row; and audit the payloads with <code>auditPayloadTree</code> (deploy payloads as written, the kg slice's pointers against the committed payload tree). A slice whose rows do not match its source fails; it never passes as whole.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Check</code></a></p>
-</dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_editing.callactivity_evidence" data-fa-state="extracted" data-fa-gloss="">
 Gather and verify the evidence [evidence-retrieval] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2410,6 +2389,13 @@ Monitor, and use data effectively <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, <code>9789241511766-eng</code>, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_MonitorAndUseData</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_mountbranchtip" data-fa-state="extracted" data-fa-gloss="">
+Mount the branch tip at the declared path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A <code>branch</code> source keyed by <code>tip</code>: <code>branch-store mount --id &lt;dir-id&gt;</code> writes the tip's files at the declared path, so every reader finds the directory where it always was; <code>push</code> splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A <code>commit</code>-keyed branch is read per commit through its own store (<code>qa-store</code>), not mounted.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_ingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
 Move into library/&lt;bib-slug&gt;/ <span class="fa-gloss-status">candidate, extracted</span>
@@ -3348,6 +3334,13 @@ Refresh the held part [refresh-materialized] <span class="fa-gloss-status">candi
 <p>The shared refresh, called, not re-described: what changed upstream, what changed locally, and what to do when both did. An archival copy is fixity-checked and never re-fetched. Whatever that process decides — refreshed, kept divergent, or deferred — is the part's new state; this loop only moves to the next part.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/subscribe-kg.bpmn"><code>cat-harness/processes/library/subscribe-kg.bpmn#Call_Refresh</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_refuseunknownkind" data-fa-state="extracted" data-fa-gloss="">
+Refuse: no flow for this source kind <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the <code>dh4f</code> defect.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_RefuseUnknownKind</code></a></p>
+</dd>
 <dt id="folio-assistant-sci--kg-bpmn-activities--process_atomicmassdrift.task_check" data-fa-state="extracted" data-fa-gloss="">
 Regenerate AtomicMass.lean from the data table — and diff <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3488,13 +3481,6 @@ Report the capture state <span class="fa-gloss-status">candidate, extracted</spa
 <p>Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/activity-log.bpmn"><code>cat-harness/processes/sdlc/activity-log.bpmn#A_ReportCaptureState</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_report" data-fa-state="extracted" data-fa-gloss="">
-Report the measurement; ship nothing <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Write the measurement and what was tried onto the bean, and ask the owner whether the slice should ship at that size, be cut further, or not exist. Nothing is wired: no manifest is published, no gate added, no deploy line written.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Report</code></a></p>
-</dd>
 <dt id="bootstrap-tools--kg-bpmn-activities--process_renderkgtogithubpages.a_report" data-fa-state="extracted" data-fa-gloss="">
 Report the push: status and message <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3585,6 +3571,13 @@ Resolve the performer's reach [effectiveReach + signing-api probe] <span class="
 <dd>
 <p>Compute the two facts the gateway reads: effectiveReach(deployment, actor) from schemas/actor-reach.ts, and whether the signing-api capability is configured. Undeclared reach resolves to &quot;unknown&quot; rather than to the deployment's value — an aggregate does not determine a member.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/qa-report-signing.bpmn"><code>cat-harness/processes/sdlc/qa-report-signing.bpmn#Task_ResolveReach</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_resolvesource" data-fa-state="extracted" data-fa-gloss="">
+Resolve the subgraph's content source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>declaredSubgraph(start, id)</code>: the declaring instance, the entry, and the resolved source with <code>declaredIn</code> saying which layer answered. Never read <code>source</code> off the declaration directly — the config override and the legacy <code>storage</code> field are folded in by the resolver and nowhere else. A contradiction (both <code>source</code> and <code>storage</code>; a <code>qa</code> subgraph keyed by tip) throws here, before anything is mounted.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_ResolveSource</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-bpmn-activities--process_renderkgtogithubpages.a_resolveinputs" data-fa-state="extracted" data-fa-gloss="">
 Resolve the Subgraphs and the root URL <span class="fa-gloss-status">candidate, extracted</span>
@@ -4052,13 +4045,6 @@ Search issues and open PRs <span class="fa-gloss-status">candidate, extracted</s
 <p>The repository's issues (open and closed) and its open pull requests. An open PR touching the same files is the collision most worth finding early.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/related-work.bpmn"><code>cat-harness/processes/sdlc/related-work.bpmn#A_SearchIssues</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_verify" data-fa-state="extracted" data-fa-gloss="">
-Search the published slice in a browser <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Open <code>slices/search.html?slice=&lt;name&gt;</code> on the deployed site, run a phrase search for a known row, open it so its payload is fetched, and look at the result; send the screenshot rather than a description of it. Report the mode the page says it used (OPFS or in memory), never an assumed one.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Verify</code></a></p>
-</dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_evidenceretrieval.task_l2l3content" data-fa-state="extracted" data-fa-gloss="">
 Search trusted CONTENT — L2 DAKs, L3 IGs <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4387,6 +4373,17 @@ TypeScript: lint, types and tests (HARD) <span class="fa-gloss-status">candidate
 </dd>
 </dl>
 
+<h2 id="letter-U">U</h2>
+<dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_usecheckoutpath" data-fa-state="extracted" data-fa-gloss="">
+Use the checkout path in place <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A <code>directory</code> source IS its declared path. Nothing is mounted; a write is an ordinary commit on the working branch, which is why <code>branch-store push</code> answers &quot;commit through git&quot; for it rather than pushing anything.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_UseCheckoutPath</code></a></p>
+</dd>
+</dl>
+
 <h2 id="letter-V">V</h2>
 <dl class="fa-gloss">
 <dt id="fhir-harness--kg-bpmn-activities--process_l3fhir.task_validate" data-fa-state="extracted" data-fa-gloss="">
@@ -4455,13 +4452,6 @@ What changed LOCALLY since <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>The half nothing answers today. A materialized copy that was edited in place is not a copy any more, and overwriting it silently destroys work whose existence the process never established.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/refresh-materialized.bpmn"><code>cat-harness/processes/library/refresh-materialized.bpmn#Task_Local</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_wire" data-fa-state="extracted" data-fa-gloss="">
-Wire it: gate, deploy line, search, tests <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Give the slice everything a slice owes: its manifest (written by the builder from the definition), its <code>--check</code> (covered by <code>slice:sqlite:check</code>), one deploy line in <code>docs-site.yml</code> and in <code>feature-staging.yml</code>, its search (the generic page needs no code, only the definition's <code>search</code> block), a unit test over a fixture and over the real source, and a search in <code>slice-sqlite.e2e.ts</code>.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Wire</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_contentchangereview.task_withdrawcomment" data-fa-state="extracted" data-fa-gloss="">
 Withdraw a review comment [folio-review-comment-move] <span class="fa-gloss-status">candidate, extracted</span>
@@ -4560,13 +4550,6 @@ Write the root README, if it is not there <span class="fa-gloss-status">candidat
 <dd>
 <p>The repository now IS an instance of something, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. WRITING IT IS NOT A PROCESS WRITE. <code>instance-readme</code> declares <code>layer: context</code>, and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_WriteRootReadme</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_slicesqlitepublish.a_define" data-fa-state="extracted" data-fa-gloss="">
-Write the slice definition <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Add one <code>SliceDef</code> to the builder's slice table: the DDL (one table per node type, edge tables, one CONTENTLESS full-detail FTS5), the order each table's rows go in, the <code>load</code> that turns the source into rows, where the payloads live (written at deploy, or already published), and the <code>search</code> block the generic page reads. Choose the heavy fields by <code>kg-export</code> §&quot;What is heavy&quot;: a heavy field is a <code>payload_sha256</code> pointer, never a stored column. Never copy the builder.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Define</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sessionstatemachine.a_updatesession" data-fa-state="extracted" data-fa-gloss="">
 Write what changed <span class="fa-gloss-status">candidate, extracted</span>

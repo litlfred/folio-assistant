@@ -65,7 +65,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`sidebar-panels.e2e.ts`](sidebar-panels.e2e.ts) | a file |  |
 | [`sidebar-rail.e2e.ts`](sidebar-rail.e2e.ts) | a file |  |
 | [`site-index.e2e.ts`](site-index.e2e.ts) | a file |  |
-| [`slice-sqlite.e2e.ts`](slice-sqlite.e2e.ts) | a file |  |
 | [`staging-banner.e2e.ts`](staging-banner.e2e.ts) | a file |  |
 | [`state-dashboards.e2e.ts`](state-dashboards.e2e.ts) | a file |  |
 | [`sticky-home.e2e.ts`](sticky-home.e2e.ts) | a file |  |
@@ -82,6 +81,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | 19 files | |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 1003 files | |
+| [`results/`](results/README.md) | 1004 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->

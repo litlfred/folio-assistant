@@ -695,6 +695,14 @@
       "status": "candidate"
     },
     {
+      "id": "subgraph-resolve",
+      "prefLabel": "Resolve a declared subgraph's content source",
+      "definition": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "notation": "subgraph-resolve",
+      "source": "cat-harness/tools/index.ts#subgraph-resolve",
+      "status": "candidate"
+    },
+    {
       "id": "tabular-csv",
       "prefLabel": "CSV tabular metadata (STUB)",
       "definition": "STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`).",

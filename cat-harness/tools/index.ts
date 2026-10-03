@@ -171,6 +171,29 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       requires: { runtime: ["bun"], network: true },
     }),
+    // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
+    // its content". The ONE resolver, from a shell — `branch-store
+    // mount`/`push` call the same function and dispatch on its `kind`.
+    defineTool({
+      id: "subgraph-resolve",
+      title: "Resolve a declared subgraph's content source",
+      description:
+        "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      install: { none: true },
+      invoke: { shell: "bun run subgraph:resolve" },
+      io: {
+        inputs: [
+          { name: "id", schema: t("Slug"), required: false, description: "A declared directory id. Repeatable; absent with `--all`." },
+          { name: "all", schema: t("Flag"), required: false, arg: { flag: "--all" }, description: "Every subgraph the checkout declares." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Machine-readable output." },
+        ],
+        outputs: [
+          { name: "source", schema: t("Text"), description: "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no instance declares the id, 2 when the declaration contradicts itself or names an undeclared branch." },
+        ],
+      },
+      satisfies: ["directory-conventions"],
+      requires: { runtime: ["bun"], network: false },
+    }),
     defineTool({
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",

@@ -810,6 +810,13 @@ Replace inline Library content with URL references <span class="fa-gloss-status"
 <p>Replace inline CQL/ELM in <code>Library</code> resources with a URL reference to the published copy.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#strip-library-content</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--subgraph-resolve" data-fa-state="extracted" data-fa-gloss="">
+Resolve a declared subgraph's content source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its <code>special-branches.json</code> row) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-resolve</code></a></p>
+</dd>
 </dl>
 
 <h2 id="letter-S">S</h2>
