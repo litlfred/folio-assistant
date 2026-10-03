@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ay3x
 title: 'VECTOR FIGURE ARM: render vector drawings, and the role threshold nobody may pick from this corpus'
-status: todo
+status: in-progress
 type: task
 parent: folio-assistant-2yyh
 created_at: 2026-09-23T07:19:35Z
-updated_at: 2026-09-23T07:19:35Z
+updated_at: 2026-10-03T09:52:37Z
 ---
 
 
@@ -73,3 +73,5 @@ this bean should be measured against.
   closed
 - [ ] `image-descriptions` still reports `not-derivable` where neither a
   caption nor the arm reaches, rather than passing on a count
+
+_2026-10-03T09:52:37Z_ — Claimed by claude/vector-figure-arm-ay3x — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
