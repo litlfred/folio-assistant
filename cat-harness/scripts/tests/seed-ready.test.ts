@@ -183,7 +183,9 @@ describe("the gateway", () => {
 describe("the probes", () => {
   test("bun test's summary is read for the failure count and names", () => {
     const out = "(pass) a\n(fail) b > c [1.2ms]\n\n 10 pass\n 1 fail\n 22 expect() calls\n";
-    expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c [1.2ms]"] });
+    expect(parseBunTest(out)).toEqual({ failed: 1, names: ["b > c"] });
+    const two = "x/a.test.ts:\n(fail) d > e [3.00ms]\n\ny/b.test.ts:\n(fail) d > e [10.1ms]\n 2 fail\n";
+    expect(parseBunTest(two)).toEqual({ failed: 2, names: ["x/a.test.ts > d > e", "y/b.test.ts > d > e"] });
     expect(parseBunTest("Killed")).toBeUndefined();
   });
 

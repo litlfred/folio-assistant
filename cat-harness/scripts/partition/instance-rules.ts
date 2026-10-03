@@ -191,6 +191,10 @@ export const RULES: Rule[] = [
       // forge's open PRs and this checkout's instance declarations, judged by
       // a `kg-separation` decision table. It reads no folio material.
       "scripts/seed-ready.ts",
+      // HARNESS with seed-ready, whose probe it judges: the subject is this
+      // checkout's own layer declarations and a layer's tests run standing
+      // alone (bean `ho66`). It reads no folio material.
+      "scripts/check-standalone.ts",
       // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
       // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
       // symlinked root makes a tool answer a question about the repository from
