@@ -6,7 +6,10 @@ layout: null
 // changes, both bean `2tfy`: the search index is built on the reader's first
 // focus of the search box instead of on every page load; and it is the index
 // of the page's own SCOPE (issue #1972 — `search-split.ts`'s manifest), with a
-// "Search everywhere" button that widens to the whole site.
+// "Search everywhere" button that widens to the whole site, and a link to
+// each identifier lookup the manifest names (bean `1br0`). A scope the
+// manifest publishes with a PREBUILT index is loaded rather than built (bean
+// `lrzn`).
 //
 // Why. Measured 2026-10-03 on a local build in headless Chromium: the theme
 // fetched `search-data.json` (12,040 entries, 13.7 MB raw, 2.8 MB gzip) and
@@ -17,7 +20,7 @@ layout: null
 //
 // Keeping it in step. `remote_theme` in `_config.yml` pins v0.12.0; when that
 // pin moves, re-copy the new version's file and re-apply every hunk marked
-// `2tfy` — `initSearch` and the helpers above it, the setter at the top of
+// `2tfy`, `mm2n`, `1br0` or `lrzn` — `initSearch` and the helpers above it, the setter at the top of
 // `searchLoaded`, and the focus trigger in `jtd.onReady`. Everything else must
 // stay byte-identical to the gem.
 (function (jtd, undefined) {
@@ -159,8 +162,21 @@ function getJson(url, done) {
   request.send();
 }
 
-function buildSearchIndex(docs) {
+function setSearchSeparator() {
   lunr.tokenizer.separator = {{ site.search.tokenizer_separator | default: site.search_tokenizer_separator | default: "/[\s\-/]+/" }}
+}
+
+// lrzn: a scope the manifest publishes with a prebuilt index is LOADED, not
+// built — 5–8× less script on first search. `search-split.ts`'s `buildIndex`
+// is the server's copy of `buildSearchIndex` below; keep the two in step.
+// The separator still has to be set: it tokenizes the reader's query.
+function loadSearchIndex(serialized) {
+  setSearchSeparator();
+  return lunr.Index.load(serialized);
+}
+
+function buildSearchIndex(docs) {
+  setSearchSeparator();
 
   return lunr(function(){
     this.ref('id');
@@ -220,15 +236,52 @@ function offerEverywhere(manifest, scope) {
   results.parentNode.insertBefore(button, results.nextSibling);
 }
 
+// 1br0 (#1972 step 3): an identifier lookup is a page of its own, never
+// loaded here (the owner's ruling on bean `4pm8`). Each one the manifest
+// names gets one link under the results, carrying the reader's query so the
+// lookup opens with it already run.
+function offerRemote(manifest) {
+  var results = document.getElementById('search-results');
+  var input = document.getElementById('search-input');
+  if (!results || !input || !manifest.remote || !manifest.remote.length) return;
+  var box = document.createElement('div');
+  box.className = 'search-remote';
+  var links = manifest.remote.map(function(r){
+    var a = document.createElement('a');
+    a.className = 'search-remote-link';
+    a.textContent = 'Look up an identifier in ' + r.id + ' (' + r.entries + ' referenced entries) →';
+    a.setAttribute('data-base', searchUrl(r.href));
+    box.appendChild(a);
+    return a;
+  });
+  var refresh = function(){
+    var q = input.value.trim();
+    links.forEach(function(a){ a.href = a.getAttribute('data-base') + (q ? '&q=' + encodeURIComponent(q) : ''); });
+  };
+  input.addEventListener('input', refresh);
+  refresh();
+  results.parentNode.appendChild(box);
+}
+
 function initSearch() {
   getJson(searchUrl('assets/js/search/manifest.json'), function(manifest){
     var scope = manifest ? scopeForPage(manifest) : null;
     var url = scope ? searchUrl(scope.path) : '{{ "assets/js/search-data.json" | relative_url }}';
-    getJson(url, function(docs){
-      if (!docs) return;
-      searchLoaded(buildSearchIndex(docs), docs);
+    var ready = function(index, docs){
+      searchLoaded(index, docs);
       replaySearch();
       if (scope && scope.entries < manifest.source.entries) offerEverywhere(manifest, scope);
+      if (manifest) offerRemote(manifest);
+    };
+    getJson(url, function(docs){
+      if (!docs) return;
+      if (!scope || !scope.index) return ready(buildSearchIndex(docs), docs);
+      // lrzn: an index that fails to load is rebuilt from the entries in hand.
+      getJson(searchUrl(scope.index.path), function(serialized){
+        var index = null;
+        if (serialized) { try { index = loadSearchIndex(serialized); } catch (e) { index = null; } }
+        ready(index || buildSearchIndex(docs), docs);
+      });
     });
   });
 }

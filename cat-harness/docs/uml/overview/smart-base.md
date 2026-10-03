@@ -756,6 +756,7 @@ classDiagram
       system [1] string
       code [1] string
       display [1] string
+      deprecated [0..1] boolean
     }
     class smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1["folio-pinned-terminology/v1"] {
       <<json: PinnedTerminologySchema>>

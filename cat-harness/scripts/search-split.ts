@@ -42,6 +42,15 @@
  * of them unchanged. Entry keys are kept from the source, so an entry's id is
  * the same in its scope as in the whole.
  *
+ * ## Prebuilt indexes — bean `lrzn`
+ *
+ * A scope over {@link PREBUILT_TOKEN_BUDGET} also gets `<scope>.idx.json`:
+ * the lunr index the theme would build from it, serialized, and named in the
+ * manifest's `index`. The client LOADS it instead of building one. Measured
+ * 2026-10-03 in Chromium on a local build, first search: `section-reference`
+ * 1,747 → 342 ms of script, smart-trust 484 → 95 ms — paid for with the
+ * index's bytes, downloaded on top of the entries (0.4–2.9 MB gzipped).
+ *
  * Usage:
  *   bun run cat-harness/scripts/search-split.ts --dir <built site>          # write
  *   bun run cat-harness/scripts/search-split.ts --dir <built site> --check  # verify only
@@ -49,8 +58,11 @@
  * @module scripts/search-split
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
+
+// @ts-expect-error -- lunr ships no types; only `lunr()`, `tokenizer` and `Index.load` are used.
+import lunr from "lunr";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 import { targetLocales } from "../content/pipeline/translation-index.ts";
@@ -79,6 +91,27 @@ export interface ManifestScope extends Scope {
   path: string;
   entries: number;
   bytes: number;
+  /**
+   * A lunr index already built from this scope's entries (bean `lrzn`),
+   * present only when the scope is over {@link PREBUILT_TOKEN_BUDGET}. The
+   * client loads it with `lunr.Index.load` instead of building one.
+   */
+  index?: { path: string; bytes: number };
+}
+
+/**
+ * A searchable thing that is NOT a lunr scope: the identifier lookup an
+ * instance publishes under `<site>/id-lookup/<id>/` (bean `1br0`, issue
+ * #1972 step 3). The search box links to it rather than loading it — the
+ * owner's ruling on `4pm8` keeps it a page of its own.
+ */
+export interface RemoteScope {
+  id: string;
+  kind: "id-lookup";
+  /** Site-relative URL of the lookup page, opened on this index. */
+  href: string;
+  /** The index's own `entryCount`. */
+  entries: number;
 }
 
 export interface SearchManifest {
@@ -86,6 +119,36 @@ export interface SearchManifest {
   /** The whole index the scopes were cut from — what "search everywhere" loads. */
   source: { path: string; sha256: string; entries: number; bytes: number };
   scopes: ManifestScope[];
+  /** Absent when the tree publishes no identifier lookup. */
+  remote?: RemoteScope[];
+}
+
+/** Where `publish-id-lookup.ts` puts the lookup client and its indexes, under the site root. */
+export const ID_LOOKUP_DIR = "id-lookup";
+
+/**
+ * Every identifier-lookup index PUBLISHED in a built site: a directory under
+ * `id-lookup/` holding a `manifest.json`, beside the client page. Read from
+ * the tree rather than from the declarations, so the manifest names exactly
+ * what a reader can open — a declared index the build did not publish would
+ * be a link to "could not be read".
+ */
+export function publishedLookups(site: string): RemoteScope[] {
+  const root = join(site, ID_LOOKUP_DIR);
+  if (!existsSync(join(root, "index.html"))) return [];
+  const out: RemoteScope[] = [];
+  for (const name of readdirSync(root).sort()) {
+    const m = join(root, name, "manifest.json");
+    if (!existsSync(m)) continue;
+    let entries = 0;
+    try {
+      entries = Number((JSON.parse(readFileSync(m, "utf-8")) as { entryCount?: unknown }).entryCount) || 0;
+    } catch {
+      continue; // unreadable: not something to link a reader to
+    }
+    out.push({ id: name, kind: "id-lookup", href: `${ID_LOOKUP_DIR}/?index=${encodeURIComponent(name)}/`, entries });
+  }
+  return out;
 }
 
 /** The id the platform scope uses. Not a possible instance or locale name, so it cannot collide. */
@@ -178,6 +241,78 @@ export function split(
   return out;
 }
 
+/**
+ * A scope whose entries tokenize to more than this many tokens is published
+ * with its lunr index PREBUILT (bean `lrzn`, issue #1972): `<scope>.idx.json`
+ * beside `<scope>.json`, named in the manifest.
+ *
+ * **Basis: measured, 2026-10-03, Node, lunr 2.3.9 on the built site.**
+ * Building costs ~3–5 µs per token; loading a serialized index is 5–8×
+ * faster (`section-reference` 2,593 ms → 546 ms, `smart-trust` 683 → 82) —
+ * but the index is 2–3× the entries' gzipped size and is downloaded ON TOP
+ * of them, since results are rendered from the entries. Under ~128 Ki tokens
+ * the build is ~0.4–0.6 s, comparable to fetching the extra bytes on a slow
+ * link, so a small scope builds as before. On that build the budget prebuilt
+ * five scopes — `section-reference`, `smart-immunizations`, `_platform`,
+ * `smart-trust`, `section-glossary` — and the owner chose "big scopes only".
+ *
+ * TOKENS rather than milliseconds because the output must be the same bytes
+ * for the same index (`--check`, and the hash `search-scopes` verifies); a
+ * timing is not. Which scopes cross it is a fact about the content: read the
+ * manifest, never this list.
+ */
+export const PREBUILT_TOKEN_BUDGET = 128 * 1024;
+
+/**
+ * The theme's tokenizer separator — just-the-docs' default, which this site
+ * does not override (`_config.yml` sets no `search.tokenizer_separator`). The
+ * prebuilt index must tokenize exactly as the browser would, or a term the
+ * reader types is not the term the index holds.
+ */
+export const TOKENIZER_SEPARATOR = /[\s\-/]+/;
+
+interface Lunr {
+  (config: (this: LunrBuilder) => void): { toJSON(): unknown };
+  tokenizer: ((s: unknown) => unknown[]) & { separator: RegExp };
+}
+interface LunrBuilder {
+  ref(f: string): void;
+  field(f: string, attrs?: { boost: number }): void;
+  metadataWhitelist: string[];
+  add(doc: Record<string, unknown>): void;
+}
+const L = lunr as Lunr;
+
+/** How many tokens the theme's index would hold for these entries. */
+export function tokenCount(entries: Readonly<Record<string, SearchEntry>>): number {
+  L.tokenizer.separator = TOKENIZER_SEPARATOR;
+  let n = 0;
+  for (const e of Object.values(entries)) {
+    for (const f of ["title", "content", "relUrl"] as const) n += L.tokenizer(e[f]).length;
+  }
+  return n;
+}
+
+/**
+ * The lunr index the theme's `buildSearchIndex` would build from these
+ * entries — same ref, fields, boosts, separator and metadata whitelist, docs
+ * added in the same order (`for (var i in docs)`) — serialized. Keep the two
+ * in step: the theme's copy is the site's `assets/js/just-the-docs.js`.
+ */
+export function buildIndex(entries: Readonly<Record<string, SearchEntry>>): unknown {
+  L.tokenizer.separator = TOKENIZER_SEPARATOR;
+  return L(function () {
+    this.ref("id");
+    this.field("title", { boost: 200 });
+    this.field("content", { boost: 2 });
+    this.field("relUrl");
+    this.metadataWhitelist = ["position"];
+    for (const [id, e] of Object.entries(entries)) {
+      this.add({ id, title: e.title, content: e.content, relUrl: e.relUrl });
+    }
+  }).toJSON();
+}
+
 const sha256 = (s: string) => createHash("sha256").update(s).digest("hex");
 
 /**
@@ -190,6 +325,8 @@ export function render(
   instances: ReadonlySet<string>,
   locales: ReadonlySet<string>,
   sectionBudget: number = SECTION_BUDGET_BYTES,
+  remote: readonly RemoteScope[] = [],
+  prebuiltBudget: number = PREBUILT_TOKEN_BUDGET,
 ): Map<string, string> {
   const index = JSON.parse(sourceText) as Record<string, SearchEntry>;
   const files = new Map<string, string>();
@@ -199,7 +336,14 @@ export function render(
     const path = `${SCOPES_DIR}/${scope.id}.json`;
     const body = JSON.stringify(entries);
     files.set(path, body);
-    scopes.push({ ...scope, path, entries: Object.keys(entries).length, bytes: Buffer.byteLength(body) });
+    const m: ManifestScope = { ...scope, path, entries: Object.keys(entries).length, bytes: Buffer.byteLength(body) };
+    if (tokenCount(entries) > prebuiltBudget) {
+      const idxPath = `${SCOPES_DIR}/${scope.id}.idx.json`;
+      const idxBody = JSON.stringify(buildIndex(entries));
+      files.set(idxPath, idxBody);
+      m.index = { path: idxPath, bytes: Buffer.byteLength(idxBody) };
+    }
+    scopes.push(m);
   }
   const manifest: SearchManifest = {
     $schema: MANIFEST_SCHEMA,
@@ -210,6 +354,7 @@ export function render(
       bytes: Buffer.byteLength(sourceText),
     },
     scopes,
+    ...(remote.length > 0 ? { remote: [...remote] } : {}),
   };
   files.set(`${SCOPES_DIR}/manifest.json`, JSON.stringify(manifest, null, 2) + "\n");
   return files;
@@ -248,7 +393,13 @@ if (import.meta.main) {
   }
   const instanceRoot = resolve(import.meta.dir, "..");
   const repo = resolve(instanceRoot, "..");
-  const files = render(readFileSync(source, "utf-8"), declaredInstanceNames(repo), new Set(targetLocales(instanceRoot)));
+  const files = render(
+    readFileSync(source, "utf-8"),
+    declaredInstanceNames(repo),
+    new Set(targetLocales(instanceRoot)),
+    SECTION_BUDGET_BYTES,
+    publishedLookups(dir),
+  );
   let stale = 0;
   for (const [rel, body] of files) {
     const p = join(dir, rel);
@@ -264,7 +415,11 @@ if (import.meta.main) {
   }
   const manifest = JSON.parse(files.get(`${SCOPES_DIR}/manifest.json`)!) as SearchManifest;
   for (const s of manifest.scopes) {
-    console.log(`  ${s.kind.padEnd(8)} ${s.id.padEnd(24)} ${String(s.entries).padStart(6)} entries  ${(s.bytes / 1e6).toFixed(2)} MB`);
+    const idx = s.index ? `  + prebuilt index ${(s.index.bytes / 1e6).toFixed(2)} MB` : "";
+    console.log(`  ${s.kind.padEnd(8)} ${s.id.padEnd(24)} ${String(s.entries).padStart(6)} entries  ${(s.bytes / 1e6).toFixed(2)} MB${idx}`);
+  }
+  for (const r of manifest.remote ?? []) {
+    console.log(`  remote   ${r.id.padEnd(24)} ${String(r.entries).padStart(6)} entries  → ${r.href}`);
   }
   console.log(
     `${manifest.scopes.length} scope(s) from ${manifest.source.entries} entries (${(manifest.source.bytes / 1e6).toFixed(2)} MB)` +

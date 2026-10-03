@@ -42,13 +42,13 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 | [`ChatGPT-Image-Sep-20-2026-11_58_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_58_08-AM.png) | a file |  |
 | [`Home-_-folio-assistant.pdf`](Home-_-folio-assistant.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
-| [`formal-24-11-01.pdf`](formal-24-11-01.pdf) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`9789240101197-eng/`](9789240101197-eng/) | 2 files | |
 | [`9789240116191-eng/`](9789240116191-eng/) | 2 files | |
 | [`arxiv-licence-assumed-1991-2003/`](arxiv-licence-assumed-1991-2003/) | 2 files | |
 | [`arxiv-license-information/`](arxiv-license-information/) | 2 files | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
+| [`spdx-3-1-rc1-machine-readable/`](spdx-3-1-rc1-machine-readable/) | 3 files | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/) | 2 files | |
 <!-- kg:subgraph:end -->
 
