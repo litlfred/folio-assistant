@@ -168,11 +168,12 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
-    // Bean `q8ar`. The deploy-time BUILD of the beans SQLite slice and its
-    // bean-body payloads, written straight into `./_site`. It is not
-    // committed, because every session writes `beans/`. The fast set runs its
-    // verdict as `slice:sqlite:check` (determinism, the row digest against the
-    // store, FTS5, the payload audit), so this line only writes.
+    // Bean `q8ar`. The deploy-time BUILD of each SQLite slice (beans, todos,
+    // library, kg; one line per slice) and its payloads, written straight into
+    // `./_site`. None is committed, because their sources move on most merges.
+    // The fast set runs their verdict as `slice:sqlite:check` (determinism,
+    // the row digest against the source, FTS5, the payload audit, for every
+    // slice), so these lines only write.
     match: "gen-slice-sqlite.ts --out ./_site",
     kind: "covered-by",
     reason:

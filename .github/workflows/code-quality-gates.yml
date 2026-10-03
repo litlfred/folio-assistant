@@ -921,15 +921,18 @@ jobs:
       - name: named-subgraph JSON-LD is current
         run: bun run subgraph:jsonld:check
 
-      # The per-slice SQLite file (bean `q8ar`). The binary is NOT committed:
-      # it is built at deploy from the tree being published, in the same way
-      # as `assets/beans/index.json` and for the same reason. So this gate does
-      # not compare against a committed copy. It builds the beans slice twice
-      # and fails unless the two builds are byte-identical, unless the row
-      # digest read back from the file equals the one computed from the bean
-      # store, unless an FTS5 phrase query finds a known bean, or unless the
-      # bean-body payloads pass gen-subgraph-jsonld's orphan audit.
-      - name: beans SQLite slice builds deterministically and matches the store
+      # The per-slice SQLite files (bean `q8ar`): beans, todos, library and the
+      # whole-repo kg. No binary is committed: each is built at deploy from the
+      # tree being published, in the same way as `assets/beans/index.json` and
+      # for the same reason. So this gate does not compare against a committed
+      # copy. For EACH slice it builds twice and fails unless the two builds
+      # are byte-identical, unless the row digest read back from the file
+      # equals the one computed from the source, unless an FTS5 phrase query
+      # finds a known row, or unless the payloads pass gen-subgraph-jsonld's
+      # orphan audit (the kg slice's against the committed payload tree). One
+      # step for the four, each reported on its own line, because they are one
+      # builder over one table of definitions; `--check --slice <name>` runs one.
+      - name: SQLite slices build deterministically and match their sources
         run: bun run slice:sqlite:check
 
       # The vendored SQLite WASM build the slice client loads (jsDelivr is not
