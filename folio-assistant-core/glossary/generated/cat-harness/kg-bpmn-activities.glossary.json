@@ -865,7 +865,7 @@
     {
       "id": "process_crdm_signoff.a_announcebranch",
       "prefLabel": "Announce the branch on the issue",
-      "definition": "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created.",
+      "definition": "On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created. Before announcing, run the collision review that starts any new unit of work (coordinate, \"Starting new work\"): open PRs and in-progress beans checked against the branch's files and subject, scaled to the blast radius, and the result recorded in the bean before the first edit.",
       "notation": "A_AnnounceBranch",
       "source": "cat-harness/processes/process/crdm-signoff.bpmn#A_AnnounceBranch",
       "status": "candidate"
@@ -2736,6 +2736,53 @@
       "definition": "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.",
       "notation": "A_UpdateSession",
       "source": "cat-harness/processes/process/session-state-machine.bpmn#A_UpdateSession",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_collect",
+      "prefLabel": "Collect or reconstruct a handover report per agent",
+      "definition": "Use the agent's own report and check it against live state; if none, ask the agent if it is still reachable, else reconstruct with the handover-report template and mark it reconstructed. Unpushed state is unknown, never empty.",
+      "notation": "A_Collect",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Collect",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_consolidate",
+      "prefLabel": "Consolidate into 2-4 themes, with a recommendation each",
+      "definition": "Group by what the work delivers, not by agent. Each theme gets its epic, members, dependencies, risk, and one of: continue, fold in, new epic, park, scrap (owner only).",
+      "notation": "A_Consolidate",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Consolidate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_footprint",
+      "prefLabel": "Find the footprint",
+      "definition": "handover notes (beans/notes, title 'handover:'), open PRs and branches by session or time window, in-progress beans, workflow instances, last PR and issue comments. REST, one batched pass.",
+      "notation": "A_Footprint",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Footprint",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.a_record",
+      "prefLabel": "Record the triage and claim the picked-up work",
+      "definition": "A 'triage: <date>' bean note on each theme's epic; new or re-parented beans; claims via beans:claim. Owning sessions still alive are notified before their branches are touched.",
+      "notation": "A_Record",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Record",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.s_reroute",
+      "prefLabel": "Re-route open PRs that lost their driver",
+      "definition": "Green, up-to-date PRs join the queue; mid-merge branches are re-driven from the PR head, never guessed at; red PRs go back to the new driver.",
+      "notation": "S_Reroute",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#S_Reroute",
+      "status": "candidate"
+    },
+    {
+      "id": "process_stalledagenttriage.u_decide",
+      "prefLabel": "Decide each theme",
+      "notation": "U_Decide",
+      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn#U_Decide",
       "status": "candidate"
     },
     {

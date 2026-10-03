@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dlqu
 title: 'SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-02T17:17:41Z
+updated_at: 2026-10-02T22:08:54Z
 parent: folio-assistant-hfag
 ---
 
@@ -30,3 +30,5 @@ Another agent is editing `code-quality-gates.yml` for this; other PRs keep their
 - [ ] measured: CI wall-clock before/after over ≥3 runs
 
 Re-parented 2026-10-02 from `7x5n` to the merge-pipeline epic `hfag` on the owner's ruling; `hfag` blocks `7x5n`, so the arc still waits on this.
+
+_2026-10-02T22:08:54Z_ — Claimed by claude/zealous-thompson-y8dcf1 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -18,6 +18,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, 
 | [`dublin-core.ts`](dublin-core.ts) | a file |  |
 | [`glossary.test.ts`](glossary.test.ts) | a file |  |
 | [`glossary.ts`](glossary.ts) | a file |  |
+| [`kg-materialization.ts`](kg-materialization.ts) | a file |  |
 | [`library-ref.test.ts`](library-ref.test.ts) | a file |  |
 | [`library-ref.ts`](library-ref.ts) | a file |  |
 | [`masked-region.test.ts`](masked-region.test.ts) | a file |  |
