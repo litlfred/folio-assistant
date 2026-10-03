@@ -364,6 +364,7 @@ import {
   instanceRootsIn,
   readDeclaration,
   siblingScopeFor,
+  checkoutRootFor as checkoutRootForInstance,
   resolveDirectories,
   type MaterialisedDirectory,
   type ResolvedDirectory,
@@ -901,9 +902,14 @@ export function declarationChain(
  * nested instance (`cat-harness/`) it is the repository root; for the
  * instance declared AT the repository root it is that root itself, not its
  * parent — the case `repoRootFor` gets wrong by construction.
+ *
+ * Delegates to `checkoutRootFor` in `schemas/cat-harness.ts` (bean `g43f`),
+ * which adds git's own marker to the container rule: a root instance that
+ * holds its own `.git` is its checkout even when it aggregates nothing, where
+ * the container rule alone returned its parent. One answer, two import paths.
  */
 export function checkoutRootFor(start: string): string {
-  return siblingScopeFor(resolve(start));
+  return checkoutRootForInstance(start);
 }
 
 /**

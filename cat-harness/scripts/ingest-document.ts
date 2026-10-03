@@ -250,7 +250,7 @@ export function earlyLicence(upload: string): EarlyLicence {
  * Carry the upload's licence into the staged entry (bean `7bg9`, the step
  * after the early verdict). The early step READ the licence from the upload;
  * this writes it as the entry's `licence.json` — the AUTHORED sidecar
- * `gen-library-jsonld` carries verbatim into `manifest.jsonld`'s `meta.licence`
+ * `gen-library-jsonld` carries into `manifest.jsonld` (`licenceRecord`, and `dcterms:license` when stated)
  * (folio-assistant#1530), which is what `check:source-licence` reads. Not into
  * the manifest itself: the manifest is generated, and a record written there
  * is erased by the next `gen:jsonld`.
@@ -1020,7 +1020,7 @@ if (import.meta.main) {
   // rather than a single command.
   if (ingestMode(argv) === "stage") {
     // The licence the upload recorded becomes the entry's licence.json, which
-    // gen-library-jsonld carries into meta.licence — never overwriting one
+    // gen-library-jsonld carries into the manifest's licence — never overwriting one
     // already there (bean 7bg9).
     const carried = carryIntakeLicence(pdf, staging);
     if (carried.outcome === "carried") console.log(`  licence: carried into the staged entry as licence.json (${carried.status})`);

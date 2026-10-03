@@ -191,7 +191,7 @@ export const ENTRY_SIDECARS: readonly string[] = [
   "manifest.jsonld",
   SUMMARIES_FILE,
   // Authored, not produced by an arm: the licence record gen-library-jsonld
-  // carries into manifest.jsonld as meta.licence (folio-assistant#1492).
+  // carries into manifest.jsonld as dcterms:license + licenceRecord (#1492, D4).
   LICENCE_FILENAME,
   // A dataset's addressable values, written by an ingest tool beside its
   // tabular.jsonld (e.g. codata-ingest, bean uyp8; resolved by liquid-values).

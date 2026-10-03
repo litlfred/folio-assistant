@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-build-l1-kg\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.779Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.320Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -29,6 +29,11 @@ msgstr ""
 msgid "Bind the folder name to the document's bibliography slug, so library/<bib-slug>/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them."
 msgstr ""
 
+#: processes/library/ingest-build-l1-kg.bpmn:26
+#. Diagram element documentation
+msgid "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
+msgstr ""
+
 #: processes/library/ingest-build-l1-kg.bpmn:48
 #. Diagram label
 msgid "Corpus — L1 source knowledge graph"
@@ -37,11 +42,6 @@ msgstr ""
 #: processes/library/ingest-build-l1-kg.bpmn:55
 #. Diagram label
 msgid "Derived content ready"
-msgstr ""
-
-#: processes/library/ingest-build-l1-kg.bpmn:26
-#. Diagram element documentation
-msgid "folio-assistant — Ingestion subprocess — build the L1 knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
 #: processes/library/ingest-build-l1-kg.bpmn:39

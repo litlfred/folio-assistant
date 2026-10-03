@@ -23,7 +23,7 @@
     <bpmn:participant id="Participant_ExtractStructure" name="Ingestion subprocess — extract structure" processRef="Process_ExtractStructure" />
   </bpmn:collaboration>
   <bpmn:process id="Process_ExtractStructure" name="Ingestion subprocess — extract structure" isExecutable="false">
-    <bpmn:documentation>folio-assistant — Ingestion subprocess — extract structure.
+    <bpmn:documentation>Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

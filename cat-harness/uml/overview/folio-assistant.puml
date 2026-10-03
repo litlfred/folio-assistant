@@ -140,7 +140,7 @@ package "folio-assistant/issue-marks" as pkg_folio_assistant_issue_marks <<issue
   }
 }
 package "folio-assistant/root-docs" as pkg_folio_assistant_root_docs <<docs>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (11 named): could not determine)" as n_folio_assistant_root_docs_docs
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (12 named): could not determine)" as n_folio_assistant_root_docs_docs
 }
 
 folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files

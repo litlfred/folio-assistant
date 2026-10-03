@@ -528,6 +528,15 @@
 -->
 <meta name="fa-beans-src" content="{{ '/assets/beans/index.json' | relative_url }}">
 <!--
+  The process index's entry point — the REPOSITORY's named-subgraph index,
+  whose children are the harness roots this site frames (`bun run
+  subgraph:jsonld`; bean `ax6r`, owner 2026-10-03: "Move to JSON-LD").
+  Read by assets/js/process-index.js on the page carrying
+  `[data-fa-process-index]` (the publication-workflow page), which walks it
+  down to every `processes` subgraph's `index.hydrated.jsonld`.
+-->
+<meta name="fa-processes-src" content="{{ '/subgraph/index.jsonld' | relative_url }}">
+<!--
   The deploy's stamp — when it was built and from which commit — which the
   work-plan dashboard turns into "generated … · N commits behind main".
   `build.json` on the main site, `staging.json` on a preview; written by the
@@ -630,6 +639,11 @@
   inlined verbatim into the generated state-visualiser pages.
 -->
 <script src="{{ '/assets/js/work-plan.js' | relative_url }}" defer></script>
+<!--
+  The process index, self-mounting on `[data-fa-process-index]` the same way.
+  Its rows are the diagrams' own documentation, from the published subgraph JSON-LD.
+-->
+<script src="{{ '/assets/js/process-index.js' | relative_url }}" defer></script>
 
 <!--
   The landing panel — the instance's declared description drawn inside the

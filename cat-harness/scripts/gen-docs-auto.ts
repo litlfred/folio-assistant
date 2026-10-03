@@ -106,6 +106,35 @@ import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 import { visualiserNavDeclaration } from "./lib/navbar.ts";
 
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+    .replace(/&#10;/g, " ").replace(/&#(\d+);/g, (_m, n: string) => String.fromCodePoint(Number(n)))
+    .replace(/&amp;/g, "&");
+}
+
+/**
+ * The process's OWN documentation — a DIRECT child of `bpmn:process`, never
+ * the first `<documentation>` anywhere after it opens. A process with none of
+ * its own would otherwise borrow its first lane's (measured 2026-09-22: 16 of
+ * 61 diagrams did). `(?:bpmn:)?` everywhere: the prefix is a document's choice.
+ *
+ * The workflow page reads the same fact from the knowledge graph instead —
+ * `kg-export` puts the process's documentation on its `Process` node as
+ * `summary` and `description` (bean `ax6r`) — so this is the derived HTML
+ * index's own reading, not a second store.
+ */
+export function processDocumentation(xml: string): string | undefined {
+  const procOpen = /<(?:bpmn:)?process\b[^>]*>/.exec(xml);
+  if (procOpen === null) return undefined;
+  const after = xml.slice(procOpen.index + procOpen[0].length);
+  const d = /<(?:bpmn:)?documentation\b[^>]*>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(after);
+  if (d === null) return undefined;
+  const between = after.slice(0, d.index).replace(/<!--[\s\S]*?-->/g, "").trim();
+  return between === "" ? decodeEntities(d[1]!) : undefined;
+}
+
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "docs-auto-viewer";
 
@@ -716,17 +745,7 @@ export const TYPES: AutoDocType[] = [
           // lane's instead. A generated index, compared by a check against its
           // own generator, so nothing went red — the defect arrived with the
           // fix to a different one.
-          const procOpen = /<(?:bpmn:)?process\b[^>]*>/.exec(xml);
-          const doc = ((): string | undefined => {
-            if (procOpen === null) return undefined;
-            const after = xml.slice(procOpen.index + procOpen[0].length);
-            const d = /<(?:bpmn:)?documentation>([\s\S]*?)<\/(?:bpmn:)?documentation>/.exec(after);
-            if (d === null) return undefined;
-            // Only whitespace and comments may sit between: anything else
-            // means this documentation belongs to a child element.
-            const between = after.slice(0, d.index).replace(/<!--[\s\S]*?-->/g, "").trim();
-            return between === "" ? d[1] : undefined;
-          })();
+          const doc = processDocumentation(xml);
           const lanes = [...xml.matchAll(/<(?:bpmn:)?lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
           const skills = [...new Set([...xml.matchAll(ownElementPattern(xml, "skill", String.raw`\s+ref="([^"]+)"`))].map((m) => m[1]!))];
           const acts = (xml.match(/<(?:bpmn:)?(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
@@ -736,7 +755,7 @@ export const TYPES: AutoDocType[] = [
           items.push({
             path: relative(REPO, f).split("\\").join("/"),
             name: name ?? basename(f, ".bpmn"),
-            summary: doc ? firstSentence(decodeEntities(doc)) : undefined,
+            summary: doc ? firstSentence(doc) : undefined,
             facts,
           });
         }
@@ -843,13 +862,6 @@ export const TYPES: AutoDocType[] = [
     },
   },
 ];
-
-function decodeEntities(s: string): string {
-  return s
-    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"').replace(/&#10;/g, " ")
-    .replace(/&amp;/g, "&");
-}
 
 /**
  * One item per path.

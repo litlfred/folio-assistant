@@ -27,7 +27,7 @@
     <bpmn:participant id="Participant_Ingestion" name="Document ingestion — uploads/ to the L1 source knowledge graph" processRef="Process_Ingestion" />
   </bpmn:collaboration>
   <bpmn:process id="Process_Ingestion" name="Document ingestion — uploads/ to the L1 source knowledge graph" isExecutable="false">
-    <bpmn:documentation>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.
+    <bpmn:documentation>The whole path from a file landing in `uploads/` to a citeable L1 source knowledge graph, calling the ingestion subprocesses in turn. folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it

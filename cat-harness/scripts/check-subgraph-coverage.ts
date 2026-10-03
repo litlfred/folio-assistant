@@ -70,6 +70,7 @@ import {
   isExemptFrom,
   readDeclaration,
   siteDirFor,
+  checkoutRootFor,
   repoRootFor,
   instanceRootFor,
   owesVisualiser,
@@ -437,7 +438,7 @@ function dependencyRoots(root: string): string[] {
   }
 }
 
-export function auditInstance(root: string, repoRoot: string = repoRootFor(root)): InstanceCoverage {
+export function auditInstance(root: string, repoRoot: string = checkoutRootFor(root)): InstanceCoverage {
   const instance = root.split("/").pop() ?? root;
   let decl: CatHarnessDeclaration | undefined;
   try {

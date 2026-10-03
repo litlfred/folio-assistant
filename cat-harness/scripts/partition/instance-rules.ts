@@ -370,6 +370,11 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
+      "scripts/gen-subgraph-jsonld.ts",      // that graph framed per named subgraph (bean `c1m4`)
+      // Harness by subject: the slice is the platform's own work plan, and the
+      // per-slice SQLite contract is a kg-export one (bean `q8ar`).
+      "scripts/gen-slice-sqlite.ts",         // a named slice → one SQLite file a browser mounts
+      "scripts/vendor-sqlite-wasm.ts",       // ...and the SQLite WASM build that mounts it, vendored
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
@@ -909,6 +914,7 @@ export const RULES: Rule[] = [
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
       "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
+      "scripts/check-process-index.ts",      // the published subgraph JSON-LD covers every declared BPMN, for the workflow page (bean `ax6r`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
@@ -1234,6 +1240,8 @@ export const RULES: Rule[] = [
       // (`restore-staging`, `render-log`, `staging-record`,
       // `staging-cleanup-preflight`, `staging-preview`), all harness.
       "scripts/staging-rotate.ts",
+      // The staging rate limit (issue #1956) — same family, harness.
+      "scripts/staging-push-gate.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       // Beside `capabilities.ts` and for the same reason: it joins a skill's

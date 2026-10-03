@@ -150,6 +150,11 @@ a:hover { text-decoration-thickness: 2px; }
   --fa-wp-warning: #fab219;
   --fa-wp-serious: #ec835a;
   --fa-wp-critical: #d03b3b;
+  /* Critical as TEXT: #d03b3b on the dark surface is 3.62:1, under WCAG's
+     4.5:1 for the badge's 11.5px label (axe, beans dashboard, 2026-10-03, the
+     first time a critical finding was shown). The reserved status hue stays
+     for fills; text takes this shade (5.07:1). Light keeps #d03b3b (4.68:1). */
+  --fa-wp-critical-text: #e85c5c;
   margin: 1.5rem 0;
 }
 
@@ -160,6 +165,7 @@ a:hover { text-decoration-thickness: 2px; }
   --fa-wp-border: rgba(11, 11, 11, 0.10);
   --fa-wp-track: #e1e0d9;
   --fa-wp-series: #2a78d6;
+  --fa-wp-critical-text: #d03b3b;
 }
 
 .fa-workplan-board {
@@ -301,7 +307,10 @@ a:hover { text-decoration-thickness: 2px; }
 
 .fa-workplan-finding {
   display: grid;
-  grid-template-columns: auto 1fr;
+  /* minmax(0, …): a bare `1fr` track will not shrink below its longest word,
+     so a long bean title pushed the beans dashboard to 401px at a 390px
+     viewport once vhqq surfaced 59 blocked-without-expiry rows. */
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 0.55rem;
   align-items: start;
   font-size: 0.82rem;
@@ -324,11 +333,11 @@ a:hover { text-decoration-thickness: 2px; }
 .fa-workplan-finding.is-good .fa-workplan-finding-badge { color: var(--fa-wp-good); }
 .fa-workplan-finding.is-warning .fa-workplan-finding-badge { color: var(--fa-wp-warning); }
 .fa-workplan-finding.is-serious .fa-workplan-finding-badge { color: var(--fa-wp-serious); }
-.fa-workplan-finding.is-critical .fa-workplan-finding-badge { color: var(--fa-wp-critical); }
+.fa-workplan-finding.is-critical .fa-workplan-finding-badge { color: var(--fa-wp-critical-text); }
 
 /* The sentence stays in text ink. A finding's words are read; its colour is
    glanced at, and a paragraph in status colour is neither. */
-.fa-workplan-finding-text { color: var(--fa-wp-ink-2); }
+.fa-workplan-finding-text { color: var(--fa-wp-ink-2); overflow-wrap: anywhere; }
 
 /* ── Links ──────────────────────────────────────────────────────────────
    Identity by UNDERLINE, in text ink, never by hue.
@@ -462,6 +471,15 @@ a:hover { text-decoration-thickness: 2px; }
   letter-spacing: 0.03em;
   color: var(--fa-wp-warning);
 }
+/* A blocker's id inside the badge (bean `vhqq`): ids are case-sensitive, so
+   the badge's uppercase does not apply to them. */
+.fa-workplan-block-edge {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--fa-font-mono, ui-monospace, monospace);
+}
+a.fa-workplan-block-edge { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.fa-workplan-block-edge.is-dangling { font-style: italic; }
 .fa-workplan-bean-link { color: var(--fa-wp-ink); }
 a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.15em; }
 .fa-workplan-bean-empty { margin: 0; font-size: 0.8rem; color: var(--fa-wp-ink-2); }
@@ -1394,10 +1412,37 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
     // A blocked bean says so here rather than only in the findings panel: the
     // reader who opened this epic is asking what is in it, and "blocked" is
     // the first thing that changes what they do about it.
+    //
+    // And it names WHAT holds it (bean `vhqq`): `blockedBy` is now the union
+    // of both front-matter declarations, so each blocker is listed as its own
+    // link. One that names no bean in the store is shown as plain text rather
+    // than dropped — the generator reports it as a finding too.
     if (b.blockedBy && b.blockedBy.length) {
-      li.appendChild(el("span", { class: "fa-workplan-bean-blocked" }, "blocked"));
+      var badge = el("span", { class: "fa-workplan-bean-blocked" }, "blocked by ");
+      for (var i = 0; i < b.blockedBy.length; i++) {
+        if (i > 0) badge.appendChild(document.createTextNode(", "));
+        badge.appendChild(blockerRef(b.blockedBy[i]));
+      }
+      li.appendChild(badge);
     }
     return li;
+  }
+
+  /** One blocker inside a "blocked by" badge: its short id, linked. */
+  function blockerRef(id) {
+    var short = id.replace(/^.*-/, "");
+    var blocker = null;
+    for (var i = 0; i < ALL_BEANS.length; i++) {
+      if (ALL_BEANS[i].id === id) { blocker = ALL_BEANS[i]; break; }
+    }
+    var href = blocker ? viewHref(blocker.file) : null;
+    if (!blocker) {
+      return el("span", { class: "fa-workplan-block-edge is-dangling", title: id + " — not a bean in this store" },
+                short + " (unknown)");
+    }
+    return href
+      ? el("a", { class: "fa-workplan-block-edge", href: href, title: id + " — " + blocker.title }, short)
+      : el("span", { class: "fa-workplan-block-edge", title: id + " — " + blocker.title }, short);
   }
 
   /** The bar chart: one row per epic, label and value as text on every row. */

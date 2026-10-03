@@ -17,5 +17,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `vocab-mappings`, holding
 | [`glossary-role-concept.json`](glossary-role-concept.json) | [Role](https://litlfred.github.io/bootstrap/schemas/#role) → SKOS concept (swimlane glossary) |  |
 | [`glossary-variable-lane-concept.json`](glossary-variable-lane-concept.json) | Lane whose performer varies → SKOS concept (swimlane glossary) |  |
 | [`kg-node-naming.json`](kg-node-naming.json) | Knowledge-graph node → name, title, description and summary (kg-export, fsh-guts-export) |  |
+| [`licence-naming.json`](licence-naming.json) | Licensed resource → its licence (glossary and library item alike) |  |
 | [`role-naming.json`](role-naming.json) | [Role](https://litlfred.github.io/bootstrap/schemas/#role) → its name and identifier (kg-export and glossary-export alike) |  |
 <!-- kg:subgraph:end -->

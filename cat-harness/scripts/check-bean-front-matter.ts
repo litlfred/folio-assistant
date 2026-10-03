@@ -80,6 +80,15 @@
  * it."* Both belong to other sessions, and one of them (`7u3g`) is `scrapped`,
  * where changing anything risks reading as resolving a sibling's bean.
  *
+ * ## A third condition that is not about any one file: `duplicate-id`
+ *
+ * Bean `4vg7`. Two files declared `folio-assistant-t3n8` from 2026-09-22 to
+ * 2026-10-03 and every gate was green, because every check over the store —
+ * this one included — judged each file ALONE, and both files were valid.
+ * The id-keyed readers build `Map`s by id, so the collision was resolved by
+ * overwrite rather than reported. Checked here because this is the gate that
+ * already sees every file in `defs/` and `archive/` exactly once.
+ *
  * Exit: 0 every bean parses (or no store), 1 one does not, 2 could not check.
  *
  * @module folio-assistant/scripts/check-bean-front-matter
@@ -118,6 +127,18 @@ import {
 // and choosing between them is an editorial act nobody else can make.
 const DUPLICATE_KEY_BASELINE = new Set(["folio-assistant-1hvo"]);
 
+/**
+ * Ids already declared by more than one file when the `duplicate-id` check
+ * landed (bean `4vg7`, 2026-10-03), other than the one that bean repaired.
+ *
+ * Empty since 2026-10-03: the one entry, `yt7j` (one bean in two divergent
+ * files), was repaired by the owner's ruling "keep archive, drop stale" — the
+ * completed archive copy keeps the bean, the stale `defs/` copy was removed.
+ * A new entry needs the same: a reason, and an owner to choose which file is
+ * the bean.
+ */
+const DUPLICATE_ID_BASELINE = new Set<string>([]);
+
 /** What a loader objected to, and how much it costs. */
 export type DefectKind =
   /** Even a tolerant parse refuses it: the store is down for everybody. */
@@ -134,9 +155,21 @@ export type DefectKind =
    * file moved `beans list` 626 -> 627 and left this gate's count at 629, `no
    * NEW defect`, exit 0.
    */
-  | "unfenced";
+  | "unfenced"
+  /**
+   * Two or more files declare the same `# <id>` line.
+   *
+   * Bean `4vg7`, found 2026-10-03 by the `q8ar` SQLite slice builder: two
+   * files both declared `folio-assistant-t3n8` for eleven days. Every file
+   * parsed, so every per-file check here passed — the defect is a property
+   * of the STORE, not of any one file. Every id-keyed reader (`beans`,
+   * `claim-bean`, `check-bean-parents`' `byId` map, the dashboard index)
+   * resolves one and drops the other without a word, and every commit or
+   * issue citing the id is ambiguous. Baselined only at what the store held
+   * when this landed ({@link DUPLICATE_ID_BASELINE}), so a NEW one fails.
+   */
+  | "duplicate-id";
 
-/** One bean whose front matter a YAML loader objected to. */
 /**
  * Which duplicated keys have an answer that is NOT the owner's to give.
  *
@@ -218,6 +251,26 @@ export function duplicatedKeys(frontMatter: string): Array<{ key: string; values
   return [...seen.entries()].filter(([, v]) => v.length > 1).map(([key, values]) => ({ key, values }));
 }
 
+/**
+ * Every id declared by more than one bean file, with the files declaring it.
+ *
+ * Keyed on the `# <id>` line `readBeanStore` already extracts — the id
+ * `beans` itself loads by — and spanning `defs/` AND `archive/`, because an
+ * archived bean is still resolved by id and archiving one does not free its id.
+ * Paths are archive-qualified so the two files can be told apart.
+ */
+export function duplicateBeanIds(
+  beans: ReadonlyArray<{ id: string; file: string; archived: boolean }>,
+): Map<string, string[]> {
+  const byId = new Map<string, string[]>();
+  for (const b of beans) {
+    const where = b.archived ? join("archive", b.file) : b.file;
+    byId.set(b.id, [...(byId.get(b.id) ?? []), where]);
+  }
+  return new Map([...byId].filter(([, files]) => files.length > 1));
+}
+
+/** One bean whose front matter is defective, or whose id another file also declares. */
 export interface FrontMatterDefect {
   readonly kind: DefectKind;
   /** The bean's id, as its `# <id>` line gives it. */
@@ -386,7 +439,27 @@ export function checkBeanFrontMatter(root: string): FrontMatterReport {
     }
   }
 
-  const staleBaseline = [...DUPLICATE_KEY_BASELINE].filter((id) => !seen.has(id)).sort();
+  // ACROSS files, after the per-file pass: every file can parse cleanly and the
+  // store still be wrong. One defect per file, each naming the others, so the
+  // report says which files collide without choosing which one is re-id'd.
+  const dupIds = duplicateBeanIds(files);
+  for (const [id, where] of dupIds) {
+    for (const file of where) {
+      defects.push({
+        kind: "duplicate-id",
+        id,
+        file,
+        line: null,
+        message: `id also declared by ${where.filter((f) => f !== file).join(", ")}`,
+        baselined: DUPLICATE_ID_BASELINE.has(id),
+      });
+    }
+  }
+
+  const staleBaseline = [
+    ...[...DUPLICATE_KEY_BASELINE].filter((id) => !seen.has(id)),
+    ...[...DUPLICATE_ID_BASELINE].filter((id) => !dupIds.has(id)),
+  ].sort();
   return {
     beans: files.length,
     defects,
@@ -476,10 +549,14 @@ function main(): void {
   const unparseable = report.defects.filter((d) => d.kind === "unparseable");
   const newDuplicates = report.defects.filter((d) => d.kind === "duplicate-key" && !d.baselined);
   const outstanding = report.defects.filter((d) => d.kind === "duplicate-key" && d.baselined);
+  const duplicateIds = report.defects.filter((d) => d.kind === "duplicate-id" && !d.baselined);
+  const outstandingIds = report.defects.filter((d) => d.kind === "duplicate-id" && d.baselined);
 
   const at = (d: FrontMatterDefect): string => (d.line === null ? "" : `:${d.line}`);
 
-  if (unparseable.length === 0 && newDuplicates.length === 0 && unfenced.length === 0) {
+  const failing =
+    unparseable.length > 0 || newDuplicates.length > 0 || unfenced.length > 0 || duplicateIds.length > 0;
+  if (!failing) {
     console.log(
       "  ✓ no NEW defect — every bean's front matter loads, so `beans list`, `roadmap` " +
         "and `prime` can read the store",
@@ -494,6 +571,12 @@ function main(): void {
   }
   for (const d of unparseable) {
     console.error(`  ✗ ${d.file}${at(d)} [${d.id}] UNPARSEABLE: ${d.message}`);
+  }
+  for (const d of duplicateIds) {
+    console.error(`  ✗ ${d.file} [${d.id}] DUPLICATE ID: ${d.message}`);
+  }
+  for (const d of outstandingIds) {
+    console.log(`  · outstanding ${d.id} [duplicate-id]: ${d.file} — ${d.message}`);
   }
   for (const d of newDuplicates) {
     console.error(`  ✗ ${d.file}${at(d)} [${d.id}] duplicate key: ${d.message}`);
@@ -539,7 +622,7 @@ function main(): void {
   for (const id of report.staleBaseline) {
     console.log(
       `  · baseline entry ${id} no longer matches — repaired; remove it from ` +
-        "DUPLICATE_KEY_BASELINE in this file",
+        "DUPLICATE_KEY_BASELINE or DUPLICATE_ID_BASELINE in this file",
     );
   }
 
@@ -576,7 +659,17 @@ function main(): void {
     );
   }
 
-  process.exit(unparseable.length > 0 || newDuplicates.length > 0 || unfenced.length > 0 ? 1 : 0);
+  if (duplicateIds.length > 0) {
+    console.error(
+      `\n${new Set(duplicateIds.map((d) => d.id)).size} id(s) declared by more than one file. ` +
+        "Every id-keyed reader (`beans`, `beans:claim`, `check-bean-parents`, the dashboard " +
+        "index) resolves ONE and silently drops the rest. Give one of them a fresh id by " +
+        "renaming its file and `# <id>` line, and update the references that mean it " +
+        "(bean `4vg7`). Never delete either.",
+    );
+  }
+
+  process.exit(failing ? 1 : 0);
 }
 
 if (import.meta.main) main();

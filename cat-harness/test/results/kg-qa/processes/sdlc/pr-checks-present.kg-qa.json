@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/sdlc/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:2f6986165c506f60c2a41c4cbe8f07bdc38666917220449e233d791313458805",
+  "source_hash": "sha256:523b7482e77b6c77c9767ee8a68b0583c63a7fc4248d50152c9160c66967340a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -110,13 +110,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/pr-checks-present.yml",
-          "detail": ".github/workflows/pr-checks-present.yml changed since cat-harness/processes/sdlc/pr-checks-present.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -124,8 +119,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 3,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }
