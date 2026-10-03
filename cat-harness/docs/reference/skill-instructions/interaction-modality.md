@@ -155,6 +155,8 @@ Six parts, in order:
 explicit question tool: the end-of-turn "next" line, a bean's `## Done when`, a
 PR body asking the author to choose, a comment on an issue. Those are where it
 is most often broken, because they feel like reporting rather than asking.
+A PR body as a whole, not only its question, is governed by
+[`pr-description`](pr-description.md).
 
 **Feature work breaks this more than content work, and for a specific reason:
 the agent has just finished an impact analysis, and the vocabulary it built
@@ -579,5 +581,6 @@ reader's font choice silently reconfiguring how an agent talks to the author.
 | process | step(s) that name it |
 |---|---|
 | [Session state machine](../../processes/session-state-machine.html) | Ask who is acting |
+| [A merge train](../../processes/merge-train.html) | Release the merge to main; Place it by hand, with a reason |
 | [Getting started](../../processes/getting-started.html) | Detect the interaction modality; Choose from the offered options |
 

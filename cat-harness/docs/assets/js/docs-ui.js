@@ -51,6 +51,160 @@
   var ZOOM_STEPS = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 3, 4];
   var DEFAULT_STEP = 3; // index of 1.0
 
+  /* ═══ The site index ═════════════════════════════════════════════════════
+   *
+   * The translation index used to be inlined into the `<head>` of every page
+   * as `<script type="application/json" id="fa-translation-index">`. Measured
+   * 2026-10-02 over 1571 pages of one preview: **9.3 KB per page, 14.26 MB in
+   * total, and ONE distinct payload** — the largest duplicated payload in a
+   * published preview, by a wide margin. It is now published once at
+   * `assets/harness/site.json` and fetched here.
+   *
+   * It was never reader-facing. `mountNavLocale` was its only consumer, so
+   * nothing a reader sees moves behind a fetch, and nothing a link checker or
+   * the site search index reads moves at all — a `<script>` body is not
+   * indexed, and the nav hrefs this rewrites were ALREADY rewritten in the
+   * browser before this change.
+   *
+   * The two obligations that come with building a rendering client-side are in
+   * `skills/ui/ui-core/ui-accessibility.md` §"A rendering built client-side
+   * owes two things the static one gave for free": print and PDF must wait for
+   * load and render, and a load that FAILS must say so. `assets/js/kg-render.js`
+   * carries both, and this file reports into it through {@link siteIndexRegion}.
+   *
+   * ## The island still wins where there is one
+   *
+   * `getTranslationIndex` reads its island FIRST and falls back to this
+   * document. That is not a migration artefact, it is the contract
+   * `assets/harness/tiles.json` already states for the tile list: one
+   * declaration, two ways it reaches a page. A page Jekyll did not build
+   * carries neither the island nor the `<meta>`; an e2e fixture carries the
+   * island and has no server to fetch from. Both must work.
+   *
+   * ## Only `mountNavLocale` waits, and that is deliberate
+   *
+   * `init()` is a strictly ordered sequence and its own comments say why —
+   * `mountActionTiles` before `mountNavIconRow` because the row proxies that
+   * panel's button, and `mountDocumentIndex` before `mountInstanceGraphs`
+   * because the second MOVES the node the first inserts against. Gating the
+   * whole of it on a fetch would put every mount on this page — the figures,
+   * the QA panels, the glass — behind one request, which is a far worse
+   * failure than a navbar that is not localised.
+   *
+   * So the fetch gates exactly the one function that needs it.
+   * `mountNavLocale` only sets attributes on `.site-nav` and rewrites nav
+   * hrefs in place; nothing later in `init()` reads what it wrote.
+   *
+   * Started at script evaluation rather than at `DOMContentLoaded`: this file
+   * is `defer`red, so evaluation happens before that event and the request is
+   * usually resolved by the time anything wants it.
+   *
+   * `SITE_INDEX_WAIT_MS` is the cap. On timeout the index settles as `null`,
+   * which `getTranslationIndex` already handles — it is the same answer as a
+   * missing island, which is the state that function was written for, and it
+   * leaves the navbar exactly as built rather than claiming the folio has no
+   * translations.
+   */
+  var SITE_INDEX_WAIT_MS = 2500;
+
+  /**
+   * The fetched document, or `null` once we know we are not getting one.
+   *
+   * THREE states while loading and they are kept apart: `undefined` means the
+   * request has not settled, `null` means it settled with no document (no
+   * `<meta>`, a 404, a parse error or the timeout), and an object means it was
+   * read. Nothing reads this until {@link withSiteIndex} has called back, so
+   * `undefined` can never be mistaken for `null`.
+   */
+  var SITE_INDEX;
+
+  var SITE_INDEX_WAITERS = [];
+  var SITE_INDEX_SRC = (function () {
+    var m = document.querySelector('meta[name="fa-site-index-src"]');
+    return (m && m.getAttribute("content")) || "";
+  })();
+
+  /**
+   * Tell `kg-render.js` how this region ended, so the PAGE can say whether it
+   * finished rendering.
+   *
+   * A no-op where `kg-render.js` did not load — a generated dashboard that
+   * writes its own `<head>`. Absent is a real answer there rather than a
+   * failure to report: such a page declares no regions, so it carries no
+   * `data-fa-render` either, and the two agree.
+   */
+  function siteIndexRegion() {
+    return (window.faRender && window.faRender.region)
+      ? window.faRender.region("site-index")
+      : { ready: function () {}, empty: function () {}, failed: function () {} };
+  }
+
+  /**
+   * Record how the site index turned out, and tell the page.
+   *
+   * THE REGION REPORTS ON EVERY PATH, including the one where there was
+   * nothing to fetch. The three states of the DATA — never asked, asked and
+   * failed, read — are not the same question as the three states of the PAGE,
+   * and conflating them was a real defect caught by
+   * `test/site-index.e2e.ts`: a page carrying no `fa-site-index-src` left the
+   * region unregistered, so `kg-render.js` saw a declared region that never
+   * registered and reported the whole page as `failed`. "This page never asked
+   * for a site index" is a COMPLETE rendering — there is nothing pending and
+   * nothing broken — so it is `ready`.
+   *
+   * Only the middle case is `failed`, and it is `failed` in the DOM as well as
+   * in the console: `ui-accessibility` is explicit that a `console.warn` alone
+   * reaches a developer with the console open and no reader ever. Both happen
+   * rather than one replacing the other, because they reach different people.
+   */
+  function siteIndexSettled(doc, failure) {
+    if (SITE_INDEX !== undefined) return;         // first answer wins
+    SITE_INDEX = doc == null ? null : doc;
+    if (SITE_INDEX === null && SITE_INDEX_SRC) {
+      siteIndexRegion().failed();
+      console.warn("docs-ui: could not read the site index at " + SITE_INDEX_SRC +
+                   " (" + (failure || "no reason reported") + "); the navbar is left " +
+                   "exactly as built. This is NOT a claim that the folio has no " +
+                   "translations. Run: bun run translation:index");
+    } else {
+      // Read, or never asked. A document with `translations: null` lands here
+      // too and belongs here: the build DETERMINED that there is no
+      // translation data, which is an answer rather than a failure, and
+      // `getTranslationIndex` turns it into the same `null` a missing island
+      // gives. The navbar says `unknown`; the page is `ready`.
+      siteIndexRegion().ready();
+    }
+    var waiting = SITE_INDEX_WAITERS;
+    SITE_INDEX_WAITERS = [];
+    for (var i = 0; i < waiting.length; i++) waiting[i]();
+  }
+
+  /** Call `done` once the site index has settled, or the cap has elapsed. */
+  function withSiteIndex(done) {
+    if (SITE_INDEX !== undefined) return done();
+    SITE_INDEX_WAITERS.push(done);
+  }
+
+  (function startSiteIndex() {
+    if (!SITE_INDEX_SRC) {
+      // No `<meta>`: this page never asked for a site index, so the island is
+      // the only source and this is exactly the pre-2026-10-02 path. NOT a
+      // failure, and not reported as one.
+      return siteIndexSettled(undefined, undefined);
+    }
+    var fetchJson = window.faRender && window.faRender.fetchJson;
+    if (!fetchJson) {
+      // `kg-render.js` did not load. Said rather than worked around: a second
+      // copy of the three-state fetch would be a second answer to what a
+      // failed load means.
+      return siteIndexSettled(null, "kg-render.js did not load");
+    }
+    fetchJson(SITE_INDEX_SRC, siteIndexSettled);
+    window.setTimeout(function () {
+      siteIndexSettled(null, "the request did not settle within " + SITE_INDEX_WAIT_MS + " ms");
+    }, SITE_INDEX_WAIT_MS);
+  })();
+
   function el(tag, attrs, text) {
     var node = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -3421,9 +3575,11 @@
    * `gen-docs-pages.ts` cannot write the baseurl in: the SAME index file is
    * served from the canonical prefix and from every staging prefix, so a
    * baked-in prefix is wrong on all but one. Liquid could pass it, and
-   * `#fa-translation-index` does carry `site.baseurl` — but that island is
-   * about translations and may legitimately be absent, which would make the
-   * art depend on an unrelated feature being switched on.
+   * the site index does carry `site.baseurl` — but that document is about
+   * translations and may legitimately be absent, which would make the art
+   * depend on an unrelated feature being switched on. It is now FETCHED as
+   * well (2026-10-02), so reading it here would also make the art wait on a
+   * request: a second reason for the same answer.
    *
    * `meta[name="fa-todo-src"]` is the honest source: it is emitted through
    * `relative_url`, so the SERVER has already resolved the prefix, and the
@@ -7708,65 +7864,22 @@
     });
     board.appendChild(filterRow);
 
-    /* THE OTHER SURFACE for the same declarations. Q11: declared once,
-     * per-surface visibility. This filters the same array the navbar reads, so
-     * a tile cannot be one thing in the sidebar and another here. */
-    /* AN EDGE DOCK, NOT A ROW IN FLOW — bean `v0jv`, the owner: *"folios have
-     * tiles do not go to the window. they are stacked around (bottom?) of
-     * folio, slid away, open to tiles to things like fsh-gts, todos, docs."*
+    /* NO TILE STRIP ON THE STICKY BOARD — owner, 2026-10-02, issue #1905,
+     * bean `t6ht`: *"stickies panel shouldnt have all those icons"*.
      *
-     * It was `display: flex; flex-wrap: wrap` appended after the sticky grid,
-     * so on the landing board it landed below every full-bleed card and read
-     * as absent. The DECLARATION side was already right and is untouched:
-     * `harness-tiles` — *"declared once, per-surface visibility, never two
-     * registries free to disagree about what a tile is"* — and the call below
-     * still filters the same array the navbar reads. Only the placement was
-     * wrong.
+     * That REVERSES the 2026-09-21 ruling this spot used to cite (bean
+     * `v0jv`: *"lets have the square tiles lined up on the top of the
+     * folio-sicky-board-landingpanel whole slides up if user doesnt want"*),
+     * which put a "\u25A6 Visualisations" `<details>` strip along the top of
+     * every sticky board. It is gone from EVERY board, not only the landing
+     * one: the ruling names the stickies panel, not a page.
      *
-     * FOLIO CHROME, NOT BOARD CONTENT, which is the distinction the bean
-     * records: *"the tiles must NOT be projected onto the glass — they are
-     * folio chrome, where a window is content."* So the dock is a SIBLING of
-     * the board's content, at its edge, and never a layer over it. Same arrow
-     * as `board-diagram-interchange`: chrome frames content, never the
-     * reverse.
-     *
-     * A `<details>` for the same reason the sticky drawer is one — the
-     * disclosure, the keyboard path, Escape and the expanded state are the
-     * browser's, and it degrades to everything-visible with no JavaScript,
-     * which is R4's floor rather than a convenience. */
-    var boardStrip = el("details", { class: "fa-board-strip", open: "" });
-    boardStrip.appendChild(el("summary", {
-      class: "fa-board-strip-summary",
-      // NAMES WHAT IS INSIDE. "Tiles" is the shape; a reader deciding whether
-      // to spend a keystroke needs the subject.
-      "aria-label": "Visualisations for this folio",
-      title: "Visualisations for this folio",
-    }, "\u25A6 Visualisations"));
-    var boardTiles = el("div", {
-      class: "fa-board-tiles",
-      role: "group",
-      "aria-label": "Visualisations",
-    });
-    boardStrip.appendChild(boardTiles);
+     * Nothing becomes unreachable. A tile is one declaration with per-surface
+     * visibility (`harness-tiles`), and the navbar and the glass strip still
+     * render it; the `board` surface value stays legal in `TILE_SURFACES` so
+     * no existing declaration turns invalid, but no code mounts it. */
 
     var grid = el("div", { class: "fa-sticky-grid" });
-    /* THE STRIP IS ALONG THE TOP, and OPEN by default — owner, 2026-09-21:
-     * *"lets have the square tiles lined up on the top of the
-     * folio-sicky-board-landingpanel whole slides up if user doesnt want."*
-     *
-     * It was a `<details>` dock at the BOTTOM, closed, which got two things
-     * wrong at once: the edge, and the default. Tiles a reader has to open
-     * before they can see what a folio offers are tiles that read as absent —
-     * which is the same complaint that opened `v0jv` about the in-flow row.
-     * So `open` is the initial state and sliding it UP is the reader's act,
-     * not the other way round.
-     *
-     * NOT A SUB-PANEL, which the owner ruled in the same breath: *"i dont
-     * want sub-panels of the folio, just one open (miro-like) board.
-     * everything lives on fa-sticky-board, fa-landing-board."* The strip is
-     * chrome ALONG the board rather than a panel within it — it carries no
-     * card, no content and no second surface. */
-    board.appendChild(boardStrip);
     board.appendChild(grid);
     // APPEND on the landing board, insert-first everywhere else. The harness
     // cards are the page's first statement -- what this repository is, and
@@ -8030,11 +8143,6 @@
     });
     applyReaderFilter();
 
-    // THE SAME TILES, on the board — the other surface of one declaration.
-    // Mounted after the grid so the board's own content leads and the
-    // visualisations follow: the same argument the landing board uses for
-    // putting the harness cards before the todos.
-    mountGraphTiles("board", boardTiles, readerShownTiles());
 
     /* ── Windows, projected ON TO the board ───────────────────────────────
      *
@@ -9117,13 +9225,33 @@
     return path.replace(/^\/+|\/+$/g, "");
   }
 
-  /** The published index, or null when this build could not determine one. */
+  /**
+   * The published index, or null when this build could not determine one.
+   *
+   * ISLAND FIRST, then the site index, where the same two fields are
+   * `baseurl` and `translations`. The island was 9.3 KB in every page's
+   * `<head>` and the SAME 9.3 KB in all 1571 of them — 14.26 MB of one
+   * answer, the largest duplicated payload in a published preview.
+   *
+   * `null` keeps meaning exactly what it meant: this build could not
+   * determine an index. It covers `translations: null` (the data file was not
+   * there when the site was built) and now also a site index that could not
+   * be fetched. Those are different facts and `data-fa-render` is where they
+   * are told apart — here they have the same consequence, which is to leave
+   * the navbar exactly as built.
+   */
   function getTranslationIndex() {
     var node = document.getElementById("fa-translation-index");
-    if (!node) return null;
     var parsed;
-    try { parsed = JSON.parse(node.textContent); } catch (_e) { return null; }
-    if (!parsed || typeof parsed !== "object") return null;
+    if (node) {
+      try { parsed = JSON.parse(node.textContent); } catch (_e) { return null; }
+      if (!parsed || typeof parsed !== "object") return null;
+      parsed = { baseurl: parsed.baseurl, index: parsed.index };
+    } else if (SITE_INDEX) {
+      parsed = { baseurl: SITE_INDEX.baseurl, index: SITE_INDEX.translations };
+    } else {
+      return null;
+    }
     // `index: null` is the deliberate signal that `docs/_data/translations.json`
     // was not there when the site was built. It is NOT an empty index.
     if (!parsed.index || typeof parsed.index !== "object") return null;
@@ -9174,7 +9302,8 @@
       nav.setAttribute("data-fa-nav-index", "unknown");
       if (window.console && console.warn) {
         console.warn(
-          "docs-ui: no readable translation index (#fa-translation-index). " +
+          "docs-ui: no readable translation index (#fa-translation-index, or " +
+          "assets/harness/site.json). " +
           "The navbar is left exactly as built -- this is NOT a claim that " +
           "the folio has no translations. Run: bun run translation:index"
         );
@@ -10201,6 +10330,16 @@
     // nothing" and "never declared". See `navbarRow` in `sync-docs-harness.ts`.
     var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
 
+    /* EVERY CONTROL IN THIS ROW CARRIES `data-fa-tip`, and it is the SAME
+     * string as its `aria-label` — owner's ruling on `ob3m` finding 1,
+     * 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard
+     * focus."* The row is glyphs with no words, so a sighted reader had no
+     * name at all until now; `title` names it for a pointer after a delay and
+     * never for a keyboard. The stylesheet paints the attribute beside the
+     * strip (`[data-fa-tip]::after` in docs-ui.css) with an EMPTY alternative
+     * text, so a screen reader still hears the `aria-label` once and the
+     * tooltip not at all. `check-navbar-consistency.ts` fails a row control
+     * built without it. */
     var host = el("div", { class: "fa-nav-icons", role: "group", "aria-label": "Harness actions" });
 
     var LABELS = {
@@ -10236,7 +10375,7 @@
         // clicks that button rather than minting a rival with its own idea of
         // whether the panel is open. Two toggles over one state is the `l4zi`
         // defect from the other direction.
-        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher });
+        var proxy = el("button", { type: "button", class: "fa-nav-icon", "aria-label": LABELS.launcher, "data-fa-tip": LABELS.launcher });
         proxy.innerHTML = rowGlyph("launcher");
         proxy.addEventListener("click", function () {
           var real = document.querySelector(".fa-tiles-toggle");
@@ -10273,7 +10412,7 @@
       // turn into something else.
       var at = safeHref(withBase(hrefs[id]));
       if (at) {
-        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label });
+        var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
         a.innerHTML = rowGlyph(id);
         host.appendChild(a);
       } else {
@@ -10297,7 +10436,8 @@
         var dead = el("span", {
           class: "fa-nav-icon fa-nav-icon--dead",
           "aria-label": label + " — " + why,
-          title: label + " — " + why
+          title: label + " — " + why,
+          "data-fa-tip": label + " — " + why
         });
         dead.innerHTML = rowGlyph(id);
         host.appendChild(dead);
@@ -10314,31 +10454,65 @@
       scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
       var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
       scheme.setAttribute("aria-label", said);
+      scheme.setAttribute("data-fa-tip", said);
       scheme.title = said;
       scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
     });
     scheme.addEventListener("click", toggleScheme);
     host.appendChild(scheme);
 
-    /* THE [x] IN THE ROW, as its last item — owner, 2026-09-27: *"make close
-     * navigation in line with the rest of icons"*. It was PAINTED over the
-     * row's end from `.site-footer` (absolute, with its own box), and never
-     * quite sat on the row's line. It is a `<label for="fa-nav-open">`, and a
-     * label drives its checkbox from anywhere, so moving it keeps the no-script
-     * behaviour; it is moved only when `mountNavPreference` has run (the
-     * `.fa-nav-js` mark), because that handler is what makes the hover-case
-     * click mean "close" rather than "pin". Without script it stays where the
-     * stylesheet already places it. */
-    var closeCtl = bar.querySelector(".fa-nav-close");
-    if (closeCtl && bar.classList.contains("fa-nav-js")) {
-      closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
-      host.appendChild(closeCtl);
-    }
-
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
     else bar.appendChild(host);
+
+    holdStripForTips(bar, host);
+  }
+
+  /* ARRIVING ON AN ICON DOES NOT OPEN THE STRIP — bean `ob3m` finding 1.
+   *
+   * Hover widens the strip, and widening re-flows this column into a row, so
+   * the icon a pointer arrived on moved out from under it before its tooltip
+   * could name it. The stylesheet holds the strip at rest while the bar
+   * carries `.fa-nav-tip-hold`; this decides when it does.
+   *
+   * WHY A REMEMBERED BOX, not `:hover` on the column. The column's place is
+   * only true AT REST — once the strip peeks it is a row somewhere else — so
+   * "is the pointer on the column" has to be asked of where the column WAS.
+   * `.fa-nav-icons:hover` alone held the strip shut under a pointer moving
+   * into the open row and made the row's icons unreachable.
+   *
+   * Set on ENTERING the bar only, so a reader already peeking keeps the open
+   * bar; cleared the moment the pointer leaves the box, so moving down the
+   * strip peeks exactly as before. Touch has no hover and is left alone. */
+  function holdStripForTips(bar, host) {
+    var rest = null;
+    function measure() {
+      if (bar.classList.contains("fa-nav-tip-hold")) return;
+      if (bar.matches(":hover") || bar.matches(":focus-within")) return;
+      if (bar.querySelector(".fa-nav-open:checked")) return;
+      var r = host.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rest = { l: r.left, r: r.right, t: r.top, b: r.bottom };
+    }
+    function inside(e) {
+      return !!rest && e.clientX >= rest.l && e.clientX < rest.r && e.clientY >= rest.t && e.clientY < rest.b;
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    bar.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return;
+      measure();
+      if (inside(e)) bar.classList.add("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointermove", function (e) {
+      if (bar.classList.contains("fa-nav-tip-hold") && !inside(e)) bar.classList.remove("fa-nav-tip-hold");
+    });
+    bar.addEventListener("pointerleave", function () {
+      bar.classList.remove("fa-nav-tip-hold");
+      // Re-measured once the bar is back at rest, so a box first measured
+      // while the pointer happened to be on the bar at load is not missing.
+      requestAnimationFrame(measure);
+    });
   }
 
   /* ── THE MIDDLE: this instance's controlled folders, then its navigation ──
@@ -10561,6 +10735,114 @@
     nav.parentNode.insertBefore(btn, nav);
   }
 
+  /* ── THE RAIL'S LAYOUT, ON A THEME PAGE ──────────────────────────────────
+   *
+   * Owner ruling on bean ob3m finding 7, 2026-10-01, option 1 of 4: *"Use the
+   * viewer-rail layout on Jekyll pages."* The generated viewer rail
+   * (`lib/navbar.ts`, #1762) has ONE scroller holding the page's own section
+   * first and a folded "Graphs" group after it. This sidebar had three
+   * regions that each capped and scrolled on their own, and the measurement
+   * that settled it was taken on the built landing page at 1280x800 with
+   * every group unfolded: the middle at its 128px floor, 0 of the 430 page
+   * links visible because FOLDERS (789px) sat above them, the harness group
+   * scrolling inside the footer, and `.side-bar` clipping 2108px of content
+   * into 800. Two nested scrollers and a column that hid what it could not fit.
+   *
+   * So, inside the one middle region and in this order:
+   *
+   *   1. "On this page" -- first, as the ruling says, and still folded on
+   *      arrival (*"any indices/toc should be closed"*, 2026-09-23).
+   *   2. The page list -- the only group open on arrival, so it gets the
+   *      height. The rail's `single-open` rule, applied to this surface.
+   *   3. "Graphs" -- FOLDERS, in a disclosure that starts folded and keeps
+   *      FOLDERS' own fold inside it.
+   *   4. "▦ Harnesses" -- the harness group, moved out of the footer, folded,
+   *      LAST and BESIDE Graphs rather than inside it. That is where the
+   *      viewer rail keeps it too (`navbarHtml`: graphs in the middle,
+   *      harnesses below them), and it is what keeps the owner's ruling on
+   *      finding 1 (#1805): *"Make ▦ Harnesses visible on the landing page
+   *      too"* -- ▦ is a mark in the 56px strip at rest and ONE click shows
+   *      the harnesses. Folded inside Graphs it would be invisible at rest and
+   *      two clicks away, which is the state that ruling removed. Both folded
+   *      headings are pinned to the scroller's bottom edge, ▦ lowest, so the
+   *      one-scroller property of this ruling is unchanged.
+   *
+   * MOVED, never re-rendered: the folder rows and the harness rows are the
+   * nodes the generators already wrote, so their labels, notes and tooltips
+   * are exactly what those generators say. This changes WHERE, not WHAT --
+   * which is why the harness rows' `data-fa-tip` (#1805) still names their ⚙
+   * after the move: `.side-bar [data-fa-tip]::after` is `position: fixed`, so
+   * the scroller's `overflow` does not clip it.
+   *
+   * The footer keeps home, which is the one destination `navbar.ts` pins below
+   * everything (*"keep home at bottom"*). Only the sidebar's own footer is
+   * touched: just-the-docs renders the same include a second time for the
+   * phone layout, outside `.side-bar`, and that copy is not this region.
+   */
+  function mountSidebarRail() {
+    var bar = document.querySelector(".side-bar");
+    var nav = bar && bar.querySelector(".site-nav");
+    if (!bar || !nav) return;
+    if (bar.querySelector(".fa-nav-graphs-group, .fa-nav-harness-group")) return;
+
+    // THE ONE SCROLLER. `mountInstanceGraphs` builds it when the folder row
+    // could be read; when it could not, the nav still needs a region to share
+    // with the page index, or the index keeps a scroll box of its own.
+    var middle = bar.querySelector(":scope > .fa-nav-middle");
+    if (!middle) {
+      middle = el("div", { class: "fa-nav-middle" });
+      var first = bar.querySelector(":scope > .fa-nav-pages") || nav;
+      if (first.parentNode !== bar) return;
+      bar.insertBefore(middle, first);
+      if (first !== nav) middle.appendChild(first);
+      middle.appendChild(nav);
+    }
+
+    var index = bar.querySelector(".fa-doc-index");
+    if (index) middle.insertBefore(index, middle.firstChild);
+
+    var folders = middle.querySelector(":scope > .fa-nav-folders");
+    var foot = bar.querySelector(":scope > .site-footer .fa-nav-bottom");
+    var harnesses = foot && foot.querySelector(":scope > details.fa-nav-group");
+    if (!folders && !harnesses) return;
+
+    // OPENED FROM THE BOTTOM EDGE, a heading is pinned there while folded
+    // (docs-ui.css), so what it reveals lands below the fold. Bring the group
+    // to the top of the one scroller so opening it visibly does something.
+    function toTopOnOpen(d) {
+      d.addEventListener("toggle", function () {
+        if (!d.open) return;
+        var by = d.getBoundingClientRect().top - middle.getBoundingClientRect().top;
+        if (by > 0) middle.scrollTop += by;
+      });
+    }
+
+    if (folders) {
+      var group = el("details", { class: "fa-nav-graphs-group" });
+      group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
+      group.appendChild(folders);
+      middle.appendChild(group);
+      toTopOnOpen(group);
+    }
+
+    if (harnesses) {
+      harnesses.classList.add("fa-nav-harness-group");
+      middle.appendChild(harnesses);
+      toTopOnOpen(harnesses);
+      // THE FOLDED GRAPHS HEADING SITS ON TOP OF ▦, not under it: both are
+      // pinned to the bottom edge, so Graphs is offset by ▦'s height. That
+      // height changes between the strip and the open bar, so it is measured
+      // rather than restated (`--fa-nav-harness-rest`, read by docs-ui.css).
+      // The FOLDED box is what sits under Graphs, so it is read only while
+      // folded; the stylesheet stops reading it once ▦ is opened.
+      var setRest = function () {
+        if (!harnesses.open) middle.style.setProperty("--fa-nav-harness-rest", harnesses.offsetHeight + "px");
+      };
+      setRest();
+      if (typeof ResizeObserver === "function") new ResizeObserver(setRest).observe(harnesses);
+    }
+  }
+
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
    *
    * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
@@ -10626,33 +10908,10 @@
     applyNavPref(readNavPref());
 
     var box = document.getElementById("fa-nav-open");
-    var close = document.querySelector(".fa-nav-close");
-    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
-    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
-    // this handler never attached and a stay-closed bar could not be lifted by
-    // the ☰ (found 2026-09-27).
-    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
-
-    if (close) {
-      close.addEventListener("click", function (e) {
-        // Pinned: let the label do its own work — that is the no-script path
-        // and it is already correct. Not pinned: the label would CHECK the box
-        // and pin the bar open, so the default is refused.
-        if (box && !box.checked) e.preventDefault();
-        writeNavPref("closed");
-        applyNavPref("closed");
-      });
-    }
-
-    if (open) {
-      // `☰` is how the preference is LIFTED. A control whose inverse is not
-      // reachable is not a toggle (`l4zi`), and without this the bar could be
-      // closed and never peek again.
-      open.addEventListener("click", function () {
-        writeNavPref(null);
-        applyNavPref(null);
-      });
-    }
+    // NO ☰ AND NO [x] (#1757 on the rail, ob3m finding 8 here). The avatar
+    // below is the one control: it pins the bar open, lifting stay-closed, and
+    // closes it, setting stay-closed -- so the preference keeps both of its
+    // directions (`l4zi`) with one control instead of three.
 
     /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
      * starts hidden, click avatar opens for a split second then returns to
@@ -10796,9 +11055,22 @@
     mountInstanceGraphs();
     // AFTER the wrapper exists, so the heading lands beside the nav inside it.
     mountNavPagesHeading();
-    // Before the badges: both read the same translation metadata, and the nav
-    // is the thing a reader sees first.
-    mountNavLocale();
+    // LAST of the sidebar mounts: it MOVES the index, the folders and the
+    // harness group into the one middle, so all three must already exist.
+    mountSidebarRail();
+    // AFTER THE SITE INDEX, which is fetched rather than inlined since
+    // 2026-10-02 — see the site-index block at the top of this file. It is the
+    // ONE deferred call in this sequence: `mountNavLocale` sets attributes on
+    // `.site-nav` and rewrites nav hrefs in place, and nothing below reads
+    // what it wrote. `withSiteIndex` calls back synchronously once the fetch
+    // has settled, so on a page carrying the island (every e2e fixture) or no
+    // `<meta>` at all this runs exactly where it used to.
+    //
+    // It used to be ordered "before the badges: both read the same translation
+    // metadata, and the nav is the thing a reader sees first". The badges read
+    // `fa-translation-meta`, which is per-page and still inline, so that order
+    // was a preference about paint rather than a dependency.
+    withSiteIndex(mountNavLocale);
     mountTranslationBadges();
     mountQaPanels();
     paintQaBadges();

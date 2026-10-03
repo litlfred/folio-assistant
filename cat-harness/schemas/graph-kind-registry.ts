@@ -889,6 +889,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
       "per list, every code carrying its definition and source, published as SKOS.",
   },
+  // Vocabulary mappings — one value carried into several target vocabularies,
+  // declared as data rather than as a line in a generator
+  // (schemas/vocab-mapping.ts). Bean `k74z`, owner 2026-10-02: option 1 of
+  // `docs/proposals/vocabulary-mappings-2026-10-02.md`. `content`, by the
+  // `code-list` argument: which predicate a field becomes, and which of two
+  // is authoritative, is a DECISION somebody makes. Generators read these
+  // through the `vocab-map` Tool; nothing writes them.
+  "vocab-mapping": {
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/vocab-mapping.ts#VocabMappingSchema",
+    summary:
+      "Vocabulary mappings — which source field becomes which target predicate, with its stated " +
+      "relationship, one ConceptMap-shaped table per source and target; representable from and " +
+      "producible as a FHIR ConceptMap.",
+  },
   schemas: {
     // Grouped by concern from within (`schemas/schemas.json`), PR0c.
     declarationFile: "schemas.json",
@@ -1241,6 +1258,28 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
+  },
+  // Bean `m61r`, issue #1853: one pull request's addendum to a bean, in a file
+  // of its own, so sibling pull requests stop conflicting on one bean they all
+  // append to (`ob3m` cost five hand-merges in one afternoon, 2026-10-02).
+  "bean-notes": {
+    renderable: false,
+    // Written by a session as it works, like the beans it adds to. Not
+    // `context`: a process writes it.
+    holds: "state",
+    // A note is a RECORD about a bean, not a second work item. The work it
+    // describes is the bean's, and is counted there; an agent told this graph
+    // is active would look for work to pick up and find a log.
+    recordsWork: false,
+    schema: "schemas/bean-note.ts",
+    validatorNotApplicable:
+      "no instance declares a directory of this kind — it is nested inside `beans/`, declared by " +
+      "`beans/beans.json`, and its nodes are Markdown with YAML front matter. `beans:notes:check` " +
+      "parses each against `BeanNoteFrontMatterSchema` and re-derives its file name.",
+    summary:
+      "Bean notes — one Markdown file per pull request per bean, `$schema: folio-bean-note/v1` in " +
+      "its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one " +
+      "path. Indexed by a generated README.",
   },
   "session-survey": {
     renderable: false,
@@ -2093,10 +2132,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // subscription, which this tree deliberately does not carry. Every node is
     // tagged `folio-substrate-snapshot/v1` regardless, so moving to
     // `nodeSchemas` then is a one-line change.
+    //
+    // A SECOND family now lives here too, and the validator does not cover it:
+    // the `folio-kg-materialization/v1` part records `kg:materialize` writes
+    // (slices 5-6). Their schema embeds core's `MaterializationSchema`, so it
+    // is core's (`folio-assistant-core/schemas/kg-materialization.ts`) and
+    // this registry cannot name it without pointing up the arrow. They are
+    // JUDGED by `kg:materialize:check` instead; `kg:validate` on one reports
+    // it against the snapshot schema, which is a known gap, not a verdict.
     validator: "schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
     summary:
       "The root declaration of each Knowledge Graph this instance subscribes to, cached byte for byte at " +
-      "the pinned commit with its fixity, and what the substrate judgement found in it.",
+      "the pinned commit with its fixity, and what the substrate judgement found in it; and each chosen " +
+      "subgraph or asset materialised from it, with its fixity, provenance and gate answers.",
   },
   "translation-sources": {
     perInstance: true,

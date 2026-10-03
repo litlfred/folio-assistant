@@ -19,7 +19,8 @@ diverge the moment you start**, and neither side can see that it has happened.
 ## Announce the branch when you create it, not when you finish
 
 Comment on the issue with **the branch name, the process and phase, and the work
-items claimed** — at creation.
+items claimed** — at creation. Before it, run the collision review in
+[`coordinate`](coordinate.md) §"Starting new work".
 
 A summary posted after the work lands is not a substitute. **Until the first
 comment appears, a sibling session and a human both see an issue with nobody

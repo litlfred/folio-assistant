@@ -25,7 +25,7 @@ TWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The track
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [A merge train](merge-train.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

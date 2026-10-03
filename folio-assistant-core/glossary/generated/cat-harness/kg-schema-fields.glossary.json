@@ -882,6 +882,27 @@
       "status": "candidate"
     },
     {
+      "id": "bean-note.beannotefrontmatterschema.bean",
+      "prefLabel": "BeanNoteFrontMatterSchema.bean",
+      "definition": "The bean this note adds to. It must exist in the bean store.",
+      "source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.bean",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-note.beannotefrontmatterschema.branch",
+      "prefLabel": "BeanNoteFrontMatterSchema.branch",
+      "definition": "The branch that wrote it — the key that keeps two writers apart.",
+      "source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.branch",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-note.beannotefrontmatterschema.created",
+      "prefLabel": "BeanNoteFrontMatterSchema.created",
+      "definition": "When this branch started its note on this bean (UTC).",
+      "source": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema.created",
+      "status": "candidate"
+    },
+    {
       "id": "bib-verification.keyresult.locator",
       "prefLabel": "KeyResult.locator",
       "definition": "Locator *within the source*: \"Thm 3.2\", \"§4.1\", \"eq. (12)\", \"p. 87\".",
@@ -6797,6 +6818,139 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue.ejectionschema.evidenceurl",
+      "prefLabel": "EjectionSchema.evidenceUrl",
+      "definition": "The run, comment or log that shows it.",
+      "source": "cat-harness/schemas/merge-queue.ts#EjectionSchema.evidenceUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.ejectionschema.reason",
+      "prefLabel": "EjectionSchema.reason",
+      "definition": "What the steward concluded, e.g. \"own CI red on `docs:harness:check`\".",
+      "source": "cat-harness/schemas/merge-queue.ts#EjectionSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.beans",
+      "prefLabel": "EntryObjectSchema.beans",
+      "definition": "Beans and epics this PR serves. Epics are beans, so one list.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.beans",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.decidedby",
+      "prefLabel": "EntryObjectSchema.decidedBy",
+      "definition": "Who decided — a session URL, `owner`, or an actor id.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.decidedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.reason",
+      "prefLabel": "EntryObjectSchema.reason",
+      "definition": "Why this placement, in a sentence. For `computed`, the rule's description will do.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.repository",
+      "prefLabel": "EntryObjectSchema.repository",
+      "definition": "`owner/name` — a PR number means nothing without its repository.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.trainid",
+      "prefLabel": "EntryObjectSchema.trainId",
+      "definition": "Assigned once the PR is taken into a train; the train-run instance's id.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.trainId",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.authoredpaths",
+      "prefLabel": "MemberFactsSchema.authoredPaths",
+      "definition": "Changed paths a declared merge pattern would REFUSE — the authored ones (T3, R7).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.authoredPaths",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.conflictrisk",
+      "prefLabel": "MemberFactsSchema.conflictRisk",
+      "definition": "Shares an AUTHORED path with another live queued PR — input (d), T3.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.conflictRisk",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.headshamatchesci",
+      "prefLabel": "MemberFactsSchema.headShaMatchesCi",
+      "definition": "Did CI run on the head that would be merged (T2; bean `u7be` item 3).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.headShaMatchesCi",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.mvp",
+      "prefLabel": "MemberFactsSchema.mvp",
+      "definition": "Tagged MVP / feature-priority, by epic or label — input (c).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.mvp",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.overlapkind",
+      "prefLabel": "MemberFactsSchema.overlapKind",
+      "definition": "WHICH KIND of collision this PR has with the rest of the live queue.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.overlapKind",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.ownci",
+      "prefLabel": "MemberFactsSchema.ownCi",
+      "definition": "The PR's own CI on its head: T2's first evidence.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.ownCi",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.refused",
+      "prefLabel": "MemberFactsSchema.refused",
+      "definition": "A declared merge pattern refuses a conflicted path, or GitHub reports it dirty.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.refused",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.seedsstaging",
+      "prefLabel": "MemberFactsSchema.seedsStaging",
+      "definition": "Input (a): `touchesHarness` AND a linked bean descends from the separation goal — the PR seeds the staging repos, which is the reason the owner gave for (a). See `merge-priority.dmn`'s note.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.seedsStaging",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.sizeband",
+      "prefLabel": "MemberFactsSchema.sizeBand",
+      "definition": "Changed files plus changed lines, banded — input (d).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.sizeBand",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.touchesharness",
+      "prefLabel": "MemberFactsSchema.touchesHarness",
+      "definition": "An authored path under `cat-harness/` or `cat-harness-tools/`. The raw measurement behind input (a) — NOT input (a) itself: measured 2026-10-02, it was true for 11 of the 11 PRs in that day's queue.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesHarness",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.touchesshared",
+      "prefLabel": "MemberFactsSchema.touchesShared",
+      "definition": "Touches a shared declaration: a schema, generator, `<instance>.json`, BPMN or DMN (T3, R6).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesShared",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.unblocks",
+      "prefLabel": "MemberFactsSchema.unblocks",
+      "definition": "Open PRs or beans this unblocks, or tangle edges it removes — input (b).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.unblocks",
+      "status": "candidate"
+    },
+    {
       "id": "methodology.methodologyfrontmatterschema.applies-when",
       "prefLabel": "MethodologyFrontMatterSchema.applies-when",
       "definition": "When this methodology applies, phrased so `methodology-adoption`'s selection question can reach it — and saying what it is NOT for.",
@@ -7476,17 +7630,17 @@
       "status": "candidate"
     },
     {
-      "id": "referenced-source.referencedidentityschema.authors",
-      "prefLabel": "ReferencedIdentitySchema.authors",
-      "definition": "Bibliographic fields a paper carries and a specification usually does not. Optional, and each is read off the document. `authors` is the key `check-library-qa.ts` already reads.",
-      "source": "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema.authors",
+      "id": "referenced-source.publishedsourceschema.read_from",
+      "prefLabel": "PublishedSourceSchema.read_from",
+      "definition": "The repo-relative file the identity above was read from.",
+      "source": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema.read_from",
       "status": "candidate"
     },
     {
-      "id": "referenced-source.referencedidentityschema.not_stated",
-      "prefLabel": "ReferencedIdentitySchema.not_stated",
-      "definition": "Each nullable field the document does not state, and only those.",
-      "source": "cat-harness/schemas/referenced-source.ts#ReferencedIdentitySchema.not_stated",
+      "id": "referenced-source.publishedsourceschema.url",
+      "prefLabel": "PublishedSourceSchema.url",
+      "definition": "Where a reader goes to read it — the publisher's own address.",
+      "source": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema.url",
       "status": "candidate"
     },
     {
@@ -8134,10 +8288,24 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.libraryindexentryschema.links",
+      "prefLabel": "LibraryIndexEntrySchema.links",
+      "definition": "Where else to go for a `referenced` entry — an absolute URL, or a site-root path with a leading `/` that the viewer composes against its own base (owner, 2026-10-02: the smart-trust IG as an external reference).",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.links",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.referencedby",
       "prefLabel": "LibraryIndexEntrySchema.referencedBy",
       "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
       "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.view",
+      "prefLabel": "LibraryIndexEntrySchema.view",
+      "definition": "The page that RENDERS this entry, site-root path with a leading `/` and no base (the avatar's convention): another instance's declared root for a referenced entry it renders, else the entry's own library page. GENERATED by `gen-library-viz`, never stored in the asset (#1881).",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.view",
       "status": "candidate"
     },
     {
@@ -11008,6 +11176,118 @@
       "prefLabel": "ViewerNavQaSchema.root",
       "definition": "The published docs root the audit walked, repo-relative.",
       "source": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavQaSchema.root",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping-fhir.loss.path",
+      "prefLabel": "Loss.path",
+      "definition": "Where in the table, e.g. `group[0].element[2].target[1]`.",
+      "source": "cat-harness/schemas/vocab-mapping-fhir.ts#Loss.path",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.attribute",
+      "prefLabel": "DependencySchema.attribute",
+      "definition": "R5 `attribute` (a code); R4 `property` (a URI).",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.attribute",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.display",
+      "prefLabel": "DependencySchema.display",
+      "definition": "R4 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.display",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.system",
+      "prefLabel": "DependencySchema.system",
+      "definition": "R4 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.dependencyschema.valueset",
+      "prefLabel": "DependencySchema.valueSet",
+      "definition": "R5 only.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#DependencySchema.valueSet",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.elementschema.code",
+      "prefLabel": "ElementSchema.code",
+      "definition": "The source term: a field of the source record, or a code in the source system.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.code",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.elementschema.nomap",
+      "prefLabel": "ElementSchema.noMap",
+      "definition": "Deliberately unmapped: an absence that is a statement, not a gap (R5 `noMap`).",
+      "source": "cat-harness/schemas/vocab-mapping.ts#ElementSchema.noMap",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.groupschema.source",
+      "prefLabel": "GroupSchema.source",
+      "definition": "The source vocabulary: an IRI, or a CURIE whose prefix is declared. Never carries `|version`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#GroupSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.authority",
+      "prefLabel": "TargetSchema.authority",
+      "definition": "`derived`: a rendering of another target's output, copied from it.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.authority",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.code",
+      "prefLabel": "TargetSchema.code",
+      "definition": "The target term: a predicate's local name, or a code in the target system.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.code",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.derivedfrom",
+      "prefLabel": "TargetSchema.derivedFrom",
+      "definition": "The `key` (or `code`) of the authoritative target a derived one copies.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.derivedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.equivalence",
+      "prefLabel": "TargetSchema.equivalence",
+      "definition": "The R4 statement, verbatim, when the row came from an R4 map.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.equivalence",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.targetschema.key",
+      "prefLabel": "TargetSchema.key",
+      "definition": "The JSON term written, when it is not `code`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#TargetSchema.key",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.id",
+      "prefLabel": "VocabMappingSchema.id",
+      "definition": "This table's id. A ConceptMap's own resource `id` is metadata, kept in `metadata.id`.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.metadata",
+      "prefLabel": "VocabMappingSchema.metadata",
+      "definition": "Every other ConceptMap field (contact, jurisdiction, meta, text, identifier, the resource id, …), verbatim.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.metadata",
+      "status": "candidate"
+    },
+    {
+      "id": "vocab-mapping.vocabmappingschema.property",
+      "prefLabel": "VocabMappingSchema.property",
+      "definition": "R5 map-level `property` and `additionalAttribute` definitions, verbatim.",
+      "source": "cat-harness/schemas/vocab-mapping.ts#VocabMappingSchema.property",
       "status": "candidate"
     },
     {

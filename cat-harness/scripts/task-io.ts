@@ -208,6 +208,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:workflows": READ_ONLY,
   "check:xml-comments": READ_ONLY,
   "code-lists:check": READ_ONLY,
+  "vocab-mappings:check": READ_ONLY,
   "deps:python:check": READ_ONLY,
   "docs:auto:check": READ_ONLY,
   "docs:harness:check": READ_ONLY,
@@ -227,6 +228,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "kg:detangle:direction": READ_ONLY,
   "kg:schema:check": READ_ONLY,
   "kg:subscribe:check": READ_ONLY,
+  "beans:notes:check": READ_ONLY, // read: `checkNotes` only reads; the writer is `beans:notes`
   "landing:data:check": READ_ONLY,
   "landing:sticky:check": READ_ONLY,
   "library:readmes:check": READ_ONLY,

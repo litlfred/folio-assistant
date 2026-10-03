@@ -25,6 +25,46 @@ describe("classify", () => {
     expect(classify("beans/README.md").strategy).toBe("generated-regions");
   });
 
+  test("the three generated glossary/skill families classify, and their carry-forward neighbours do not", () => {
+    // Bean `8rff`: each was named by no pattern, so `merge:main` refused it
+    // and `merge:overlap` counted it as authored — 54 + 50 + 30 pair-path hits
+    // across 32 open PRs.
+    expect(classify("cat-harness/docs/assets/glossary/bootstrap--kg-skills.skos.jsonld").pattern?.id).toBe(
+      "skos-glossary-export",
+    );
+    expect(classify("folio-assistant-core/glossary/generated/cat-harness/kg-skills.glossary.json").pattern?.id).toBe(
+      "glossary-generated",
+    );
+    expect(classify("cat-harness/docs/reference/skill-instructions/bean-coordination.md").pattern?.id).toBe(
+      "skill-instructions",
+    );
+  });
+
+  test("the glossary LEDGER is refused: it is the one artefact that carries forward", () => {
+    // glossary-export.ts reads the prior ledger and preserves a concept's
+    // earlier names as skos:hiddenLabel (#1168 B10b). Taking one side would
+    // drop a term's history, so `glossary-generated`'s glob must stop at
+    // `generated/` and leave the sibling alone. This is the unsafe neighbour
+    // the skill's §"Adding a pattern" step 3 asks for.
+    expect(classify("cat-harness/glossary/glossary-ledger.json").strategy).toBe("refuse");
+    expect(classify("cat-harness/glossary/bootstrap/glossary-ledger.json").strategy).toBe("refuse");
+  });
+
+  test("a skill SOURCE is refused while its generated instruction page is taken", () => {
+    // The pair that makes `skill-instructions` safe: resolve the generated
+    // copy, never the authored skill it is generated from.
+    expect(classify("cat-harness/docs/reference/skill-instructions/merge-conflict-patterns.md").strategy).toBe(
+      "take-base",
+    );
+    expect(classify("cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md").strategy).toBe("refuse");
+  });
+
+  test("site-data still owns docs/assets JSON: the new SKOS entry did not widen it", () => {
+    // `.skos.jsonld` is not `*.json`, so the two cannot overlap — pinned
+    // because `8rff` flagged exactly this as the thing to confirm.
+    expect(classify("cat-harness/docs/assets/library/index.json").pattern?.id).toBe("site-data");
+  });
+
   test("a kg-qa sidecar is delegated, not taken: it may carry an attestation", () => {
     // Order matters: it is ALSO under test/results, and must not fall through
     // to a take-base family that would drop a recorded adjudication.
