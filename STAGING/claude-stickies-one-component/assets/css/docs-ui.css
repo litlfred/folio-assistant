@@ -7047,6 +7047,16 @@ a.fa-harness-tab__body:focus-visible {
   line-height: 1;
   text-decoration: none;
 }
+/* The window bar's icons are the row's icons (#1925): the same inline SVGs,
+ * filled by the text colour, at the row's size. The fish draws a little
+ * larger, as it does in the row, because its outline is thin. */
+.fa-board-window-control svg { width: 1.05rem; height: 1.05rem; fill: currentColor; }
+.fa-board-window-control[data-fa-control="discard"] svg { width: 1.3rem; height: 1.3rem; }
+/* Pressed is said by the border AND the fill, as the row's pin says it. */
+.fa-board-window-control[data-fa-control="pin"][aria-pressed="true"] {
+  border-color: currentColor;
+  background: rgba(128, 128, 128, 0.22);
+}
 
 /* THE NODE BADGE, on the avatar and on the open window — one query, two
  * surfaces (R7). Sized so the chip reads at avatar scale without covering the
@@ -7197,110 +7207,12 @@ a.fa-harness-tab__body:focus-visible {
   opacity: 0.8;
 }
 
-/* ── The folio's tile strip (beans `v0jv`, refined by #796) ────────────
+/* ── No tile strip on the sticky board (issue #1905, bean `t6ht`) ─────────
  *
- * Owner, 2026-09-21: *"lets have the square tiles lined up on the top of the
- * folio-sicky-board-landingpanel whole slides up if user doesnt want"*, and
- * in the same breath *"i dont want sub-panels of the folio, just one open
- * (miro-like) board … drop all the rounded corners… too much dead space."*
- *
- * TWO CORRECTIONS TO WHAT THIS WAS, both before it shipped. `v0jv` put the
- * tiles in a `<details>` at the BOTTOM, CLOSED. Wrong edge, and wrong
- * default: tiles a reader must open before they can see what a folio offers
- * read as absent, which is the very complaint that opened `v0jv` about the
- * in-flow row. Open is the initial state; sliding it up is the reader's act.
- *
- * CHROME ALONG THE BOARD, NOT A PANEL WITHIN IT. It carries no card, no
- * content and no second surface — that is what *"no sub-panels"* means, and
- * it is why this is a strip rather than a dock.
- *
- * SQUARE, and the same `.fa-tile` the launcher uses: *"i meant to use same
- * SQUARE TILES taht are in the expanding menu of LHS navbar."* The template
- * was already shared; what was not square was the tile itself, a flex item of
- * flexible width in a wrap row. `aspect-ratio` makes it square without
- * hardcoding a size, so it still tracks the theme's own steps.
- *
- * NO ROUNDED CORNERS on this surface. Stated as a rule here rather than swept
- * across all 57 `border-radius` declarations in this file: the folio
- * visualisation is the surface the owner is specifying, and a blanket sweep
- * would change the QA panel, the translation badges and the search field —
- * none of which was asked for and each of which is somebody else's bean. */
-.fa-board-strip {
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  border-bottom: 1px solid var(--border-color, rgba(128, 128, 128, 0.45));
-  /* Opaque: board content scrolls UNDER it. */
-  background: var(--sidebar-color, #27262b);
-}
-:root[data-fa-scheme="light"] .fa-board-strip {
-  background: #e8eaed;
-  border-bottom-color: #767d88;        /* 3.44:1 as a boundary, SC 1.4.11 */
-  color: #1f2933;                      /* 12.24:1 */
-}
-
-.fa-board-strip-summary {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  /* SC 2.5.8's 24px floor. This instance's declared interaction profile is
-     low-dexterity, so the floor is the point rather than a minimum to argue
-     down from. */
-  min-height: 24px;
-  padding: 0.2rem 0.5rem;
-  cursor: pointer;
-  font-size: 0.75rem;
-  list-style: none;
-}
-.fa-board-strip-summary::-webkit-details-marker { display: none; }
-.fa-board-strip-summary::marker { content: ""; }
-.fa-board-strip-summary:hover { background: rgba(128, 128, 128, 0.16); }
-
-/* The declared visualisations, lined up along the top. The navbar's copies
- * live in the launcher's own grid and take its rules; this is the second
- * surface of the same declaration, so it reuses `.fa-tile` rather than
- * styling a new thing — the template is `1le7`'s and is not duplicated. */
-.fa-board-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  /* CONDENSED — *"to much padding between panels, condense"*. Was 0.5rem on
-     both; the gap carries the separation and the padding was dead space. */
-  gap: 0.25rem;
-  padding: 0.25rem;
-  /* NOT the default `stretch`. A flex line stretches its items to the tallest
-     one, which silently un-squares every tile on the row the moment one
-     caption wraps — measured at 64 x 68.8px, and invisible in a screenshot. */
-  align-items: flex-start;
-}
-
-/* SQUARE, and cornerless, on this surface only.
- *
- * AN EXPLICIT HEIGHT rather than `aspect-ratio: 1 / 1`, and the difference is
- * that one of them is a promise and the other is a constraint. `aspect-ratio`
- * supplies a height only while the content fits inside it; a two-line caption
- * grows the box past the ratio and the tile is quietly oblong again. The
- * padding drops with it so the caption has the room not to wrap in the first
- * place — that is the actual fix, and the clip below is only the backstop for
- * a caption longer than any declared today. */
-.fa-board-tiles .fa-tile {
-  flex: 0 0 auto;
-  width: 4rem;
-  height: 4rem;
-  min-height: 0;
-  padding: 0.25rem;
-  overflow: hidden;
-  border-radius: 0;
-}
-
-/* An EMPTY strip is no strip. A row that opens on nothing is the `pb04`
-   failure again — an affordance that promises and delivers nothing — and
-   `:has()` lets the container answer for its contents rather than the mount
-   having to tell it. */
-.fa-board-strip:not(:has(.fa-tile)) { display: none; }
-
-.fa-board-tiles:empty {
-  display: none;
-}
+ * Owner, 2026-10-02: *"stickies panel shouldnt have all those icons"* —
+ * reversing the 2026-09-21 ruling (`v0jv`) that put a `.fa-board-strip` of
+ * square tiles along the top of every sticky board. Its rules went with it;
+ * the tiles stay on the navbar and the glass strip. */
 
 /* ── The sticky panel, slid away ──────────────────────────────────────────
  *
@@ -8307,6 +8219,10 @@ a.fa-harness-tab__body:focus-visible {
   width: var(--fa-sticky-tile-size);
   align-items: stretch;
 }
+/* A sticky sent to fsh-guts is `hidden`, and the cell's own `display` would
+ * otherwise beat the user agent's `[hidden]` rule (see `.fa-tiles-grid`). */
+.fa-sticky-cell[hidden],
+.fa-sticky-slot[hidden] { display: none; }
 /* The process depth's left rule would push one tile right of its neighbours;
  * a tile names its process in words instead (`.fa-sticky-tile-process`). */
 .fa-sticky-cell--tile.fa-sticky-slot-in-process { border-left: 0; padding-left: 0; }
@@ -8492,6 +8408,24 @@ a.fa-harness-tab__body:focus-visible {
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
+/* fsh-guts IN THE ICON ROW (#1925, owner 2026-10-02: "with the others"): the
+ * count rides as a small badge on the fish so the row keeps one glyph width. */
+.fa-nav-icon--fsh-guts { position: relative; }
+.fa-nav-icon--fsh-guts .fa-nav-count {
+  position: absolute;
+  right: -0.35rem;
+  top: -0.3rem;
+  min-width: 1rem;
+  padding: 0 0.2rem;
+  border-radius: 0.5rem;
+  background: rgba(128, 128, 128, 0.85);
+  color: #fff;
+  font-size: 0.625rem;
+  line-height: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  pointer-events: none;
+}
 /* The copy inside a window is shaped to the window, not to the square dock. */
 .fa-landing-window .fa-landing-sticky--fixed { aspect-ratio: auto; min-height: 16rem; }
 /* THE LANDING WINDOWS OPEN BELOW THE TILES, not over them. On the todo board
@@ -8500,6 +8434,10 @@ a.fa-harness-tab__body:focus-visible {
  * opened — measured, the second tile could not be clicked. So the layer is
  * anchored to the board's BOTTOM edge with no height of its own, and the
  * windows (and their cascade) hang beneath the tile row, over the page. */
+/* ONE STICKY, ONE WINDOW PLACE (#1925): a todo window on the inline board
+ * opens below the board exactly as a landing window does, so an open window
+ * never covers the tiles next to the one that opened it. */
+.fa-sticky-board--inline > .fa-board-windows,
 .fa-landing-windows {
   top: 100%;
   bottom: auto;
@@ -8507,6 +8445,7 @@ a.fa-harness-tab__body:focus-visible {
   overflow: visible;
   z-index: 20;
 }
+.fa-sticky-board--inline > .fa-board-windows > .fa-board-window { max-height: 70vh; }
 .fa-landing-windows .fa-board-window { top: 0.5rem; max-height: 70vh; }
 .fa-landing-windows .fa-board-window[data-fa-z="2"] { top: 3.5rem; }
 .fa-landing-windows .fa-board-window[data-fa-z="3"] { top: 6.5rem; }
@@ -8674,3 +8613,87 @@ a.fa-harness-tab__body:focus-visible {
 /* A filtered-out row must stay out even where a table lays its rows out
  * itself (`.fa-hc-table tr { display: grid }` would otherwise beat `hidden`). */
 table[data-fa-filtered] tr[hidden] { display: none !important; }
+
+/* ── The render state: a client-built region, and what print does about it ──
+ *
+ * AT THE END OF THIS FILE DELIBERATELY, and the reason is coordination rather
+ * than cascade. These rules belong beside the `@media print` block ~1340 lines
+ * up; PR #1808 rewrites lines 1060-1340 of this file and was `ready-to-merge`
+ * on 2026-10-02, and a sibling's in-flight work wins. Nothing here competes
+ * with a selector above it, so the position costs nothing. Move it up when
+ * that lands.
+ *
+ * ## What the two obligations are, and which half is enforceable
+ *
+ * `skills/ui/ui-core/ui-accessibility.md` §"A rendering built client-side owes
+ * two things the static one gave for free", owner 2026-10-02: print and PDF
+ * SHALL wait for load and render, and a load that FAILS SHALL say so.
+ *
+ * For a HEADLESS run the wait is enforceable, and `scripts/dak-pdf.ts`
+ * enforces it: it waits on `data-fa-render` and REFUSES to emit over a page
+ * that is `pending` or `failed`, because a PDF is not re-checkable after the
+ * fact the way a web page is.
+ *
+ * For an INTERACTIVE print it is not, and saying so plainly is better than
+ * implying a mechanism exists. `beforeprint` is synchronous, a `fetch` cannot
+ * be awaited inside it, and no browser lets a script hold the print dialogue
+ * open. `kg-render.js` starts its requests at script evaluation — `defer`red,
+ * so before `DOMContentLoaded` — which makes the common case ready long before
+ * anybody reaches the print command. The rules below cover the uncommon one:
+ * they do not make print wait, they make a premature print SELF-IDENTIFY on
+ * the paper instead of leaving a silent gap.
+ *
+ * A `::before` on the region rather than `display: none` on it, for the same
+ * reason `collapseFloor` opens its `<details>` from script rather than from a
+ * stylesheet: hiding the region would print a page that looks complete and is
+ * not, which is the exact failure this exists to prevent.
+ *
+ * TWO SELECTORS because there are two kinds of client-built region in the tree
+ * today — `[data-fa-workplan]`, which `work-plan.js` fills on the
+ * `beans-and-todos` pages, and `[data-fa-region]`, the generic container.
+ * Both, rather than one and a promise: a print rule that matched nothing would
+ * look like it worked, which is the `gjli` lesson from this repository's own
+ * heading-anchor defect.
+ *
+ * Keyed on the attribute `head_custom.html` writes at first paint, so the rule
+ * holds for a print fired before any script ran. A page that declares no
+ * dynamic region carries no attribute and matches neither selector — the third
+ * state, which must not render as either of the other two. */
+@media print {
+  html[data-fa-render="pending"] [data-fa-region]::before,
+  html[data-fa-render="pending"] [data-fa-workplan]::before {
+    content: "This section had not finished loading when this page was printed. "
+             "The published data file named beside it is the complete record.";
+    display: block;
+    font-style: italic;
+  }
+  html[data-fa-render="failed"] [data-fa-region]::before,
+  html[data-fa-render="failed"] [data-fa-workplan]::before {
+    content: "This section could not be loaded when this page was printed. "
+             "That is not an empty section \2014 see the linked data file.";
+    display: block;
+    font-style: italic;
+  }
+}
+
+/* A client-built region that could not be loaded, and one that is genuinely
+ * empty. `kg-render.js`'s `failureNote` and `emptyNote`.
+ *
+ * TWO CLASSES rather than one, because they are opposite facts — "could not be
+ * read" against "there is nothing here" — and a reader who cannot tell them
+ * apart has been handed the third-state failure this repository guards
+ * everywhere else.
+ *
+ * The failure is NOT painted as an error: no red, no icon. It is a sentence
+ * about what the reader is looking at, and the data file in it is a working
+ * link. An alarming box would be louder than the fact and would not help
+ * anybody read the artefact. */
+.fa-render-failed,
+.fa-render-empty,
+.fa-workplan-failed {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+.fa-render-failed code,
+.fa-workplan-failed code { word-break: break-all; }
