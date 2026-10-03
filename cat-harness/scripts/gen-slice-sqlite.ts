@@ -101,7 +101,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { PAYLOAD_MEDIA_TYPES, PAYLOAD_PATH, type PayloadLink } from "../schemas/subgraph-manifest.ts";
-import { readBeans, type BeanNode } from "./beans.ts";
+import { declaredBlockEdges, readBeans, type BeanNode } from "./beans.ts";
 import { auditPayloadTree, renderPayloadFiles, type PayloadPlan } from "./gen-subgraph-jsonld.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -199,17 +199,13 @@ export function payloadBytes(b: BeanNode, root: string): Buffer {
   return readFileSync(join(root, b.file));
 }
 
-/** Every edge, from both declarations, deduplicated and sorted. */
-export function beanEdges(beans: BeanNode[]): { blocker: string; blocked: string; declared_on: string }[] {
-  const seen = new Map<string, { blocker: string; blocked: string; declared_on: string }>();
-  for (const b of beans) {
-    const add = (blocker: string, blocked: string, declared_on: string) =>
-      seen.set(`${blocker}\u0000${blocked}\u0000${declared_on}`, { blocker, blocked, declared_on });
-    for (const t of b.blocking) add(b.id, t, "blocking");
-    for (const f of b.declaredBlockedBy ?? []) add(f, b.id, "blocked_by");
-  }
-  return [...seen.keys()].sort().map((k) => seen.get(k)!);
-}
+/**
+ * Every edge, from both declarations, deduplicated and sorted — one row per
+ * declaration, which is `bean_block`'s shape. The normalisation itself lives
+ * in `beans.ts` (`declaredBlockEdges`, bean `vhqq`) so this slice and the
+ * published beans index read ONE answer to "what is an edge".
+ */
+export const beanEdges = declaredBlockEdges;
 
 /** One `beans` row, exactly as `SELECT` returns it, in column order. */
 function beanRow(b: BeanNode, root: string) {

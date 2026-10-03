@@ -365,6 +365,15 @@
   letter-spacing: 0.03em;
   color: var(--fa-wp-warning);
 }
+/* A blocker's id inside the badge (bean `vhqq`): ids are case-sensitive, so
+   the badge's uppercase does not apply to them. */
+.fa-workplan-block-edge {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--fa-font-mono, ui-monospace, monospace);
+}
+a.fa-workplan-block-edge { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.fa-workplan-block-edge.is-dangling { font-style: italic; }
 .fa-workplan-bean-link { color: var(--fa-wp-ink); }
 a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.15em; }
 .fa-workplan-bean-empty { margin: 0; font-size: 0.8rem; color: var(--fa-wp-ink-2); }

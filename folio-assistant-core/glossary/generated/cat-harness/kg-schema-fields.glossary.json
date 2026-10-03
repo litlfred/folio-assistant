@@ -8344,6 +8344,13 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexschema.edges",
+      "prefLabel": "BeanIndexSchema.edges",
+      "definition": "The block graph as ONE edge set, `blocker → blocked`, over both front-matter declarations (`blocking:` on the blocker, `blocked_by:` on the blocked), deduplicated — `blockEdges` in `scripts/beans.ts`, bean `vhqq`. An end may name no bean in `items`: that edge is kept here and reported as a `blocking-unknown` finding, never dropped.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.extractedtitle",
       "prefLabel": "LibraryIndexEntrySchema.extractedTitle",
       "definition": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`).",
