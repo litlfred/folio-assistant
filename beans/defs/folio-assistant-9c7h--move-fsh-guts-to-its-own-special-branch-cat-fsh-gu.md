@@ -1,10 +1,10 @@
 ---
 # folio-assistant-9c7h
 title: Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-02T21:20:17Z
+updated_at: 2026-10-03T00:50:36Z
 parent: folio-assistant-7x5n
 ---
 
@@ -39,3 +39,5 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 - [ ] the separation partition (`instance-rules.ts`) no longer has an fsh-guts case
 
 Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special branch), `wggr` (non-instance stores), `oi3h` (fsh-guts visualiser).
+
+_2026-10-03T00:50:36Z_ — Claimed by claude/lucid-shannon-o8zop1-fsh-guts — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
