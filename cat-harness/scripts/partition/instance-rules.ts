@@ -420,6 +420,10 @@ export const RULES: Rule[] = [
       // branch and checks it out as a read surface. Harness-level for the same
       // reason as the three above.
       "scripts/state-mount.ts",               // the state branch on disk, or a loud finding saying it is not
+      // The write half of that mount: it turns the worktree diff into a splice
+      // through the library rather than a push from the worktree, which is the
+      // lost update. Harness-level for the same reason as its neighbours.
+      "scripts/state-push.ts",                // the mount's edits, spliced onto the tip
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
