@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 667,
+      "count": 668,
       "unit": "beans"
     }
   },
@@ -382,7 +382,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T00:15:20Z",
-      "updatedAt": "2026-10-03T00:15:28Z",
+      "updatedAt": "2026-10-03T01:07:00Z",
       "preview": "## The defect, in one line\n\n`ranAs` matches a run on **name and event** and never reads its `conclusion`:\n\n```ts\nfunction ranAs(runs: RunRow[], t: WorkflowTrigger, event: string): boolean {\n  return runs.some((r) => r.name === t.name && r.event === event);\n}\n```\n\n`RunRow` already carries `conclusion`. The data was in hand and not consulted.\n\nA `pull_request` run that completes **`action_required`*",
       "file": "beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md"
     },
@@ -2423,14 +2423,14 @@
     {
       "id": "folio-assistant-8rff",
       "title": "MERGE PATTERNS GAP: three generated families have no declared merge-conflict pattern, so merge:main refuses them and merge:overlap counts them as authored",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:46:34Z",
-      "updatedAt": "2026-10-02T21:22:55Z",
+      "updatedAt": "2026-10-03T00:27:48Z",
       "preview": "Found by merge:overlap's first live run (bean blgm, PR #1895, 2026-10-02): 32 open PRs; 109 pairs overlapped on authored paths, and 19 of those overlapped ONLY on these three generated families. None is named in cat-harness/scripts/merge-conflict-patterns.ts PATTERNS or in .gitattributes, so they classify as authored.\n\n| family | writer | check in CI | overlap count (pair-path hits) |\n|---|---|---",
       "file": "beans/defs/folio-assistant-8rff--merge-patterns-gap-three-generated-families-have-n.md"
     },
@@ -2535,14 +2535,14 @@
     {
       "id": "folio-assistant-9c7h",
       "title": "Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:20:17Z",
-      "updatedAt": "2026-10-02T21:20:17Z",
+      "updatedAt": "2026-10-03T00:50:36Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: as pre-requistie as part of separation, fsh-guts content gets its own named branch, cat/cat-harness/fsh-guts and the contents of fsh-guts/ dir goes there. will need to update the tools associated to this, like with other special named branches.\"\n\nBranch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<name>` (note on `fs43`). The owner aske",
       "file": "beans/defs/folio-assistant-9c7h--move-fsh-guts-to-its-own-special-branch-cat-fsh-gu.md"
     },
@@ -7493,14 +7493,14 @@
     {
       "id": "folio-assistant-tlk2",
       "title": "Second hop: move cat-state and cat-fhir-ast/* to cat/<harness>/<name> (handoff to local agy agent)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:33:58Z",
-      "updatedAt": "2026-10-02T21:41:29Z",
+      "updatedAt": "2026-10-03T00:13:49Z",
       "preview": "## Brief\n\nYou are the EXECUTOR for one task handed to you by the merge-steward cloud session (https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT). That session cannot push or delete branches. You can, because you run on the owner's machine. You did the first hop as bean `folio-assistant-46qw`; this is the second hop, to the owner's final naming scheme.\n\nWHERE (you were sent here by one line n",
       "file": "beans/defs/folio-assistant-tlk2--second-hop-move-cat-state-and-cat-fhir-ast-to-cath.md"
     },
@@ -9031,6 +9031,20 @@
       "updatedAt": "2026-10-02T16:25:26Z",
       "preview": "PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:\n\n- paper / formal-math (`folio-paper-adapter`, `authoring-math`) and the three `claude-scientific-skills` packages -> `folio-ass",
       "file": "beans/defs/folio-assistant-ybwt--placement-pr1-content-type-skill-packages-move-up.md"
+    },
+    {
+      "id": "folio-assistant-yc74",
+      "title": "arXiv licence vocabulary: ingest arXiv's licence pages and make archiving-arxiv able to fill a licence.json",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T23:38:48Z",
+      "updatedAt": "2026-10-02T23:42:50Z",
+      "preview": "## Brief\n\nOwner, 2026-10-02: *\"ingest docs and add to doc ingestion skills for arxiv papers\"*,\nwith arXiv's two licence pages attached. Queued beside the train-6 rebuild rather\nthan pivoting, per the standing instruction.\n\n## Why it was worth doing\n\n`archiving-arxiv` already said the right thing — *\"arXiv hosting does not imply a\nredistributable licence\"* — and then stopped, naming no licence, no ",
+      "file": "beans/defs/folio-assistant-yc74--arxiv-licence-vocabulary-ingest-arxivs-licence-pag.md"
     },
     {
       "id": "folio-assistant-yg29",
