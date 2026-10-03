@@ -1678,6 +1678,29 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   composed: z.boolean().optional(),
   /**
+   * This directory's BYTES are published verbatim, at `/<instance>/<path>`, for
+   * the site's own pages to fetch.
+   *
+   * Owner, 2026-10-01: *"other goals of justthedocs rendering is to reduce the
+   * .html bloat.... lots of it can be loaded client side from the KG"*, then
+   * choosing to publish the graph directory itself rather than copy its files
+   * into `docs/` beside the pages that fetch them (bean `680p`,
+   * [`visualizer-loading`]). A copy is a second answer free to drift from the
+   * first; a served directory is the one answer, at a stable URL.
+   *
+   * **Served is not rendered.** `composed` puts markdown through Jekyll and a
+   * mount publishes a directory with its own front door; this publishes DATA,
+   * untouched — no Liquid, no layout, no index page — after Jekyll, by
+   * `mount-instance-docs.ts`. Nothing about the directory becomes navigable;
+   * a page that wants it fetches it.
+   *
+   * **Declared, never inferred**, and opt-in: publishing is outward-facing, so
+   * a directory's bytes reach the site only because its declaration says so.
+   * `withheld.json` still governs, as it does for every mount. Absent means
+   * not served.
+   */
+  served: z.boolean().optional(),
+  /**
    * Which theme this subgraph renders on.
    *
    * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies

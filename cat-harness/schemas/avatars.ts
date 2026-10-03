@@ -460,6 +460,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 190,
     reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
   },
+  openapi: {
+    // Curly braces around a two-way arrow: a machine-readable description
+    // (the braces) of something you call and that answers (the arrow out and
+    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
+    // document is one node holding operations, not an index of things held
+    // elsewhere. Bean `s4ta`.
+    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
+    tone: 136,
+    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+  },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under
