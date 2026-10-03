@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 676,
+      "count": 677,
       "unit": "beans"
     }
   },
@@ -583,6 +583,20 @@
       "updatedAt": "2026-09-30T09:03:42Z",
       "preview": "Found 2026-09-22 by LOOKING at a page rather than at the generator that wrote\nit. `lqo9` slice 2 added the `glossary` state graph, `state:visualizer`\ngenerated `docs/glossary/index.html` for it, every gate went green, and the\npage displays **nothing about the glossary**.\n\nIt is not a defect that slice introduced. Measured across all seven state\ngraphs the visualizer writes a page for:\n\n| graph | p",
       "file": "beans/defs/folio-assistant-1xrg--state-dashboards-4-of-7-render-a-shell-a-declared.md"
+    },
+    {
+      "id": "folio-assistant-24fa",
+      "title": "beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T00:43:10Z",
+      "updatedAt": "2026-10-03T00:43:10Z",
+      "preview": "## Measured on itself, 2026-10-03\n\n`bun run beans:claim 8rff` writes the claim **straight to `main`**:\n\n> `_2026-10-03T00:27:48Z_ — Claimed by claude/merge-patterns-8rff — pushed to\n> main so sibling sessions see it before this branch has a PR (bean 35nj)`\n\nThat is deliberate and it works — `35nj` (\"A bean claim is invisible to a\nsibling until the PR exists, so claim-before-work does not prevent a",
+      "file": "beans/defs/folio-assistant-24fa--beansclaim-pushes-to-main-which-guarantees-a-refus.md"
     },
     {
       "id": "folio-assistant-2634",
@@ -2453,14 +2467,14 @@
     {
       "id": "folio-assistant-8rff",
       "title": "MERGE PATTERNS GAP: three generated families have no declared merge-conflict pattern, so merge:main refuses them and merge:overlap counts them as authored",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:46:34Z",
-      "updatedAt": "2026-10-03T00:27:48Z",
+      "updatedAt": "2026-10-03T00:30:58Z",
       "preview": "Found by merge:overlap's first live run (bean blgm, PR #1895, 2026-10-02): 32 open PRs; 109 pairs overlapped on authored paths, and 19 of those overlapped ONLY on these three generated families. None is named in cat-harness/scripts/merge-conflict-patterns.ts PATTERNS or in .gitattributes, so they classify as authored.\n\n| family | writer | check in CI | overlap count (pair-path hits) |\n|---|---|---",
       "file": "beans/defs/folio-assistant-8rff--merge-patterns-gap-three-generated-families-have-n.md"
     },
