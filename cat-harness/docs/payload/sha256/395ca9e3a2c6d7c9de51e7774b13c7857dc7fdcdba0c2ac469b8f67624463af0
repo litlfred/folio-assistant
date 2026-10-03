@@ -491,6 +491,10 @@ anywhere (measured 2026-10-03; the evidence is on bean `c1m4`).
   re-homing a node never re-mints the subgraph.
 - `/hydrated-graph/` was rejected. The pointer-only file would then live under
   a path that says "hydrated".
+- **The repository's level is `<BASE_URL>/subgraph/`** (bean `ax6r`). It has
+  `index.jsonld` only, and its `hasSubgraph` are the harness roots this build
+  frames. It is the one file a consumer needs to find every root. The workflow
+  page starts there.
 
 ### Two files under the IRI
 
@@ -540,6 +544,19 @@ Rules for the pair:
 - For a directory of a declared graph, the rule is *containment*: a node is in
   the deepest subgraph directory that contains its source path, and in every
   ancestor of that one, transitively.
+- **An overlaid instance heads its own tree** (bean `ax6r`). kg-export reads
+  the corpus of every instance stacked on this one, so `folio-assistant-core`'s
+  processes and skills are nodes of this graph. Until then they all fell to
+  the root, which has no hydrated file, so "every process of this graph"
+  could not be fetched at all. A directory belongs to the instance that
+  declares it, so those nodes now sit under `<BASE_URL>/subgraph/<that
+  instance>/…`, framed by this build because this graph publishes them. Their
+  `@id`s do not change.
+- **Bootstrap gets no tree here.** `bootstrap` and `bootstrap-tools` sit
+  *below* this instance, and `pve3` (#432) keeps their processes out of its
+  graph. They publish through their own graph. Framing a tree for them here
+  would re-carry what that ruling excluded, so a consumer that needs their
+  subgraphs needs bootstrap to publish them.
 - A harness's own rule, saying which directories are its graph, is its
   `<instance>.json` declaration. `Harness` and `Subgraph` therefore share
   one base, `GraphNodeDirectoryShape`. They do not get two parallel
