@@ -11,6 +11,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`content-types.ts`](content-types.ts) | a file |  |
 | [`google-drive-mcp.py`](google-drive-mcp.py) | a file |  |
 | [`index.ts`](index.ts) | a file |  |
+| [`qa-agent-write.test.ts`](qa-agent-write.test.ts) | a file |  |
 | [`qa-agent-write.ts`](qa-agent-write.ts) | a file |  |
 | [`route-groups.ts`](route-groups.ts) | a file |  |
 | [`sage-mcp-server.py`](sage-mcp-server.py) | a file |  |

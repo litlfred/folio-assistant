@@ -39,5 +39,7 @@ New rung: cat-harness/scripts/text-structure.ts, variant text-structure/v1. No m
 - cucumber-2024-gherkin-reference and isaitb-2026-interoperability-test-bed-readme → fhir-harness/library, next to the TestPlan source: the WHO-free test-side literature of a FHIR IG.
 
 
+_2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`).
+
 ## 2026-10-01 — paused for placement PR6 (session session_01CVVoavPoCHMLA7AASxG8cH)
 Library placement is decided by apcg (library/<group>/<slug>/, owner ruling 2026-09-30). Moving sources now would move them twice.

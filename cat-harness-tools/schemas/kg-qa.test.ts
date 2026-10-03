@@ -20,7 +20,7 @@ import {
   KG_SUBJECT_GRAPH_KINDS,
   KG_SUBJECT_KINDS,
 } from "../../cat-harness/schemas/kg-qa";
-import { defaultGraphKinds, kgQaHomeFor, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { defaultGraphKinds, instanceRootsIn, kgQaHomeFor, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { actorsDir } from "../../cat-harness/schemas/role-graph.ts";
 
 describe("the criteria registry", () => {
@@ -335,5 +335,39 @@ describe("where an instance's verdicts live (kgQaHomeFor)", () => {
 
   test("nothing audits bootstrap inside bootstrap any more", () => {
     expect(existsSync(join(bootstrap, "test"))).toBe(false);
+  });
+
+  // Bean de9k (C1): the walk above reads only cat-harness's own `kg-qa/`, so
+  // three conflict-marked sidecars in the HOSTED homes went unseen. Every
+  // instance's home is resolved the way the auditor resolves it, and every
+  // sidecar there must parse and validate.
+  test("every instance's sidecars validate, hosted homes included", () => {
+    const homes = new Set<string>();
+    for (const inst of instanceRootsIn(repo)) homes.add(join(kgQaHomeFor(inst, harness).root, "kg-qa"));
+    expect(homes.has(join(harness, "test", "results", "bootstrap", "kg-qa"))).toBe(true);
+    const walk = (d: string): string[] =>
+      !existsSync(d)
+        ? []
+        : readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+            e.isDirectory() ? walk(join(d, e.name)) : e.name.endsWith(".kg-qa.json") ? [join(d, e.name)] : [],
+          );
+    const bad: string[] = [];
+    let seen = 0;
+    for (const home of homes) {
+      for (const f of walk(home)) {
+        seen += 1;
+        let doc: unknown;
+        try {
+          doc = JSON.parse(readFileSync(f, "utf-8"));
+        } catch (err) {
+          bad.push(`${f}: does not parse (${(err as Error).message})`);
+          continue;
+        }
+        const parsed = KgQaReportSchema.safeParse(doc);
+        if (!parsed.success) bad.push(`${f}: ${parsed.error.message}`);
+      }
+    }
+    expect(seen).toBeGreaterThan(0);
+    expect(bad).toEqual([]);
   });
 });
