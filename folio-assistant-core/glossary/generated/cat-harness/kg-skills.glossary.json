@@ -1667,6 +1667,14 @@
       "status": "candidate"
     },
     {
+      "id": "visualizer-loading",
+      "prefLabel": "visualizer-loading",
+      "definition": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "notation": "visualizer-loading",
+      "source": "cat-harness/skills/ui/ui-core/visualizer-loading.md",
+      "status": "candidate"
+    },
+    {
       "id": "vocabulary-authority",
       "prefLabel": "vocabulary-authority",
       "definition": "One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping. Which vocabulary owns what here, the pros and cons behind each ruling, how DC and SKOS overlap and what stops them drifting, and the normalisation-first rule for any modelling or mapping exercise.",

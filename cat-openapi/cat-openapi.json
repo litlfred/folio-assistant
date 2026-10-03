@@ -1,0 +1,52 @@
+{
+  "_comment": "THE OPENAPI HARNESS, created 2026-10-03 for bean `s4ta`. Owner: \"really there should be a KG harness specfiic to openapi docuemnataiton sources with its own rendering sub-pipeline. and then the smart-trust repo has a smart-base harness and a openapi harness. openapi ahrness could be in cat-harness repo for now\" -- and, on its shape: \"kind is an OpenAPI node. need page + IRI for each operation. swagger style can be dynamically geenated. use dynamic loading as much as possible.\" Staged as a sibling directory like cat-harness-tools; after the split it moves with the harness layer and only `livesAt` changes.",
+  "name": "cat-openapi",
+  "repository": "litlfred/cat-openapi",
+  "livesAt": {
+    "repository": "litlfred/folio-assistant",
+    "path": "cat-openapi"
+  },
+  "version": "0.1.0",
+  "title": "C@T OpenAPI",
+  "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+  "directories": [
+    {
+      "id": "cat-openapi-schemas",
+      "path": "schemas/",
+      "description": "The harness's shapes: `cat-openapi.config.json` (what an instance names), the ingest's provenance node, the subset of OpenAPI 3 the pages read, and how an operation's id is derived.",
+      "graphKinds": [
+        "schemas"
+      ]
+    },
+    {
+      "id": "cat-openapi-scripts",
+      "path": "scripts/",
+      "description": "The rendering sub-pipeline: `ingest-openapi.ts` copies a configured document in verbatim with its provenance; `gen-openapi-pages.ts` writes a JSON-LD node and a thin page per document and per operation; `templates/` holds the one shared loader that draws them in the browser.",
+      "graphKinds": [
+        "code"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — cat-openapi",
+      "description": "Cold start for work in this layer: what it holds, what it renders, and which way the dependencies run."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "cat-openapi",
+      "description": "What the OpenAPI harness is, what an instance declares to use it, and where its pages and IRIs land."
+    }
+  ],
+  "_needs_comment": "The harness this layer sits on: cat-harness, whose graph-kind registry holds `openapi` and whose thin-page module draws every page here.",
+  "needs": [
+    "cat-harness"
+  ],
+  "_canonicalUrl_comment": "A placeholder base under this repository's own publication root, as cat-harness-tools has: the harness IRI is derived from it, and Zod refuses a relative one.",
+  "canonicalUrl": "https://litlfred.github.io/folio-assistant/cat-openapi"
+}

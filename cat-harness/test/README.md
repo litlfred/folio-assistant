@@ -81,6 +81,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | 32 files | |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 1017 files | |
+| [`results/`](results/README.md) | 1020 files | |
 | [`support/`](support/) | 6 files | |
 <!-- kg:subgraph:end -->

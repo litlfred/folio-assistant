@@ -22,6 +22,13 @@ package "smart-base/qa" as pkg_smart_base_qa <<qa>> {
     $schema [1] : 'kg-qa-manifest/v1'
     auditor [1] : object
   }
+  class "qa-results/v1" as smart_base_qa_qa_results_v1 <<ts: QaResult>> #f4e6e6 {
+    $schema [1] : 'qa-results/v1'
+    producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }
+    subject [1] : { kind: string; id: string }
+    families [1] : Record<string, QaResultFamily>
+    total [1] : number
+  }
 }
 
 @enduml
