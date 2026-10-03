@@ -22,7 +22,7 @@
  * @module fhir-harness/scripts/gen-ig-pages.test
  */
 import { describe, expect, it } from "bun:test";
-import { cpSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
@@ -88,6 +88,67 @@ describe("gen-ig-pages defaults: this layer names no publisher (fhir-harness/AGE
       expect(index).toContain("## IG API surface");
       expect(index).not.toContain("WHO Implementation Guide");
       expect(index).not.toMatch(/^## DAK/m);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("gen-ig-pages --compiled-data: an AST-built artefact page loads its resource", () => {
+  // The committed smart-trust index with ONE artefact made a compiled copy, the
+  // shape `ast-to-artifact-index` writes. Scratch instance as above.
+  function scratch(): { dir: string; holder: () => string } {
+    const dir = mkdtempSync(join(ROOT, "gen-ig-pages-scratch-"));
+    const ix = JSON.parse(readFileSync(join(ROOT, "smart-trust", "fhir-artifact-index", "index.json"), "utf8"));
+    const a = ix.artifacts.find((x: { key: string }) => x.key === "ActorDefinition/Holder");
+    expect(a).toBeDefined();
+    a.materialization = {
+      state: "materialized",
+      provenance: { upstream: a.published.html.url, local: "fsh-generated/resources/ActorDefinition-Holder.json" },
+      localPath: "output-ast/resources/ActorDefinition/Holder--7ae5e8a1.json",
+      gates: Object.fromEntries(
+        ["size", "restrictions", "retention", "sourceLoss", "copyright"].map((g) => [g, { verdict: "unknown", basis: "test" }]),
+      ),
+      purpose: "compiled",
+      inputs: { toolchain: "ig-publisher test", sourceRevision: "0".repeat(40), inputDigest: "0".repeat(64) },
+      materializedAt: "2026-10-02T00:00:00Z",
+    };
+    mkdirSync(join(dir, "fhir-artifact-index"), { recursive: true });
+    writeFileSync(join(dir, "fhir-artifact-index", "index.json"), JSON.stringify(ix));
+    return { dir, holder: () => readFileSync(join(dir, "docs", "artifact", "ActorDefinition-Holder.md"), "utf8") };
+  }
+  const gen = (dir: string, ...extra: string[]) =>
+    Bun.spawnSync(["bun", "run", join(ROOT, "fhir-harness/scripts/gen-ig-pages.ts"), "--instance", dir, ...extra], { cwd: ROOT });
+
+  it("with --compiled-data: a pointer, a visible loading state, a no-script link, and the shared loader", () => {
+    const { dir, holder } = scratch();
+    try {
+      expect(gen(dir, "--compiled-data", "../ast-data").exitCode).toBe(0);
+      const md = holder();
+      // `artifact/Name.html` → docs root `../` → the data beside the docs.
+      expect(md).toContain('data-ast-src="../../ast-data/resources/ActorDefinition/Holder--7ae5e8a1.json"');
+      expect(md).toContain('data-ast-pages="../assets/ast-pages.json"');
+      // The base the index says the IG publishes from (the owner's fork since #1766).
+      expect(md).toContain('data-ast-published="https://litlfred.github.io/smart-trust/"');
+      expect(md).toContain('<p class="ast-state">');
+      expect(md).toMatch(/<noscript>.*href="\.\.\/\.\.\/ast-data\/resources\/ActorDefinition\/Holder--7ae5e8a1\.json"/);
+      expect(md).toContain('<script src="../assets/ast-resource.js" defer></script>');
+      expect(existsSync(join(dir, "docs", "assets", "ast-resource.js"))).toBe(true);
+      const list = JSON.parse(readFileSync(join(dir, "docs", "assets", "ast-pages.json"), "utf8")) as string[];
+      expect(list).toContain("ActorDefinition-Holder.html");
+      // Only the one compiled artefact gets the section; the rest are as before.
+      expect(readFileSync(join(dir, "docs", "artifact", "ActorDefinition-Issuer.md"), "utf8")).not.toContain("data-ast-src");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("without --compiled-data: no section, no loader — the published-IG pages are unchanged", () => {
+    const { dir, holder } = scratch();
+    try {
+      expect(gen(dir).exitCode).toBe(0);
+      expect(holder()).not.toContain("data-ast-src");
+      expect(existsSync(join(dir, "docs", "assets", "ast-resource.js"))).toBe(false);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
