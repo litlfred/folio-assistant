@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 762,
+      "count": 764,
       "unit": "beans"
     }
   },
@@ -2715,6 +2715,20 @@
       "updatedAt": "2026-09-27T10:37:00Z",
       "preview": "Measured 2026-09-27 against this branch's `cat-harness/`, and cross-checked\nagainst qou's committed sidecars at platform pin `37a36ce`.\n\n## Four exported checkers whose entire body is `return { result: \"n/a\", hits: [] }`\n\nFound by parsing every `export function check*` in\n`cat-harness/content/pipeline/qa-checkers*.ts` and keeping those with exactly\none `return` statement, which returns `n/a`:\n\n| c",
       "file": "beans/defs/folio-assistant-89wq--four-qa-checkers-are-unconditional-na-stubs-8949-s.md"
+    },
+    {
+      "id": "folio-assistant-8ao5",
+      "title": "Re-seed FHIR AST caches for smart-trust and smart-base after main merge",
+      "status": "scrapped",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:04:19Z",
+      "updatedAt": "2026-10-02T16:45:00Z",
+      "preview": "Re-seed the FHIR AST cache orphan branches on litlfred/smart-trust (fhir-ast/smart.who.int.trust) and litlfred/smart-base (fhir-ast/smart.who.int.base) from the current main. The previous seeds were from an earlier commit and may be stale after main merge.\n\n## Done when\n- [x] smart-trust re-seeded — `fhir-ast/smart.who.int.trust` @ `2bc91d0`, 678 resources, 671 edges, 677 fsh-index entries, source",
+      "file": "beans/defs/folio-assistant-8ao5--re-seed-fhir-ast-caches-for-smart-trust-and-smart-base.md"
     },
     {
       "id": "folio-assistant-8c6v",
@@ -6449,6 +6463,22 @@
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
     {
+      "id": "folio-assistant-mac1",
+      "title": "Re-seed both fhir-ast caches with the git-tree InputDigest (needs FHIR network)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [
+        "folio-assistant-wnhh"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T15:30:31Z",
+      "updatedAt": "2026-10-02T18:00:00Z",
+      "preview": "## Brief\n\nYou are the EXECUTOR for this bean. A cloud Claude session (the coordinator)\nhanded it to you because it cannot reach `packages.fhir.org`, and you can.\nYou were sent here by one sentence:\n`Do bean mac1 on branch agy/wnhh-sushi-publisher-local of repo litlfred/folio-assistant.`\n\nWHERE\n- Repo:     litlfred/folio-assistant\n- Checkout: `~/space_cats/folio-assistant` (NOT `~/space_cats/folio-",
+      "file": "beans/defs/folio-assistant-mac1--re-seed-both-fhir-ast-caches-with-the-git-tree-inp.md"
+    },
+    {
       "id": "folio-assistant-mc8h",
       "title": "MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs",
       "status": "todo",
@@ -9660,9 +9690,11 @@
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-mac1"
+      ],
       "createdAt": "2026-10-01T17:11:25Z",
-      "updatedAt": "2026-10-02T12:30:00Z",
+      "updatedAt": "2026-10-03T17:55:00Z",
       "preview": "For a session whose environment allows **`packages.fhir.org`** and **`tx.fhir.org`**. On 2026-10-01 the jut3 session's proxy denied both (403), along with `hl7.org`, `build.fhir.org`, `smart.who.int` and `litlfred.github.io`. Owner: \"bean for agent with more open access\".\n\n**Already possible without it, so do not ask for more:** GitHub over git (every `gh-pages` branch, and WHO's published release",
       "file": "beans/defs/folio-assistant-wnhh--run-sushi-ig-publisher-locally-needs-packagesfhiro.md"
     },
@@ -10735,6 +10767,12 @@
       "bean": "folio-assistant-tfo1",
       "blocks": "folio-assistant-d3yq",
       "detail": "blocks `folio-assistant-d3yq` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-mac1",
+      "blocks": "folio-assistant-wnhh",
+      "detail": "is completed but still blocks `folio-assistant-wnhh`, which is in-progress"
     },
     {
       "kind": "blocker-closed",

@@ -187,6 +187,20 @@
       ],
       "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed."
     },
+    "IgCacheAction": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "enum": [
+        "status",
+        "restore",
+        "seed",
+        "contribute",
+        "verify",
+        "list",
+        "doctor"
+      ],
+      "description": "An ig-cache verb: restore AST, seed it, or diagnose."
+    },
     "NamespaceLayer": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "string",
@@ -353,8 +367,8 @@
   },
   "staging": {
     "branch": "main",
-    "sha": "1e3fb4e54976506c1080450ce1997162dd41042f",
+    "sha": "efa19a27d048a838e11b881efea2cdfad261d577",
     "pr": "main",
-    "run": "37145997507"
+    "run": "37146810653"
   }
 }

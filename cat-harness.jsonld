@@ -308,14 +308,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T19:03:00.493Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1e3fb4e54976506c1080450ce1997162dd41042f",
-  "sourceCommitSha": "1e3fb4e54976506c1080450ce1997162dd41042f",
-  "sourceCommitAt": "2026-10-03T20:55:02+02:00",
+  "generatedAt": "2026-10-03T19:15:37.751Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/efa19a27d048a838e11b881efea2cdfad261d577",
+  "sourceCommitSha": "efa19a27d048a838e11b881efea2cdfad261d577",
+  "sourceCommitAt": "2026-10-03T21:08:20+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 303,
+    "Skill": 304,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
@@ -2213,6 +2213,22 @@
       ],
       "instructionsPath": "skills/process/process-core/task-authorization.md",
       "instructionLines": 347,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compiled-artefact-cache",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "compiled-artefact-cache",
+      "title": "Compiled Artefact Cache",
+      "description": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
+      "instructionLines": 111,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4129,7 +4145,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 179,
+      "instructionLines": 193,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -4276,7 +4292,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "../folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md",
-      "instructionLines": 157,
+      "instructionLines": 159,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -6509,6 +6525,7 @@
       "path": "skills/process/process-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compiled-artefact-cache",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
@@ -49241,8 +49258,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "1e3fb4e54976506c1080450ce1997162dd41042f",
+    "sha": "efa19a27d048a838e11b881efea2cdfad261d577",
     "pr": "main",
-    "run": "37145997507"
+    "run": "37146810653"
   }
 }
