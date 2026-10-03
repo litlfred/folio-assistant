@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 725,
+      "count": 727,
       "unit": "beans"
     }
   },
@@ -459,7 +459,7 @@
     {
       "id": "folio-assistant-1br0",
       "title": "SEARCH REMOTE: publish the identifier lookup as its own page and link it from the search box (#1972 step 3)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -557,14 +557,14 @@
     {
       "id": "folio-assistant-1j3q",
       "title": "ROUTE-KEYED STORAGE: a third `keyedBy` for regenerable rendered pages — one entry per route, replaced by its one writer, never spliced with `expect`",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:20:54Z",
-      "updatedAt": "2026-10-03T13:21:20Z",
+      "updatedAt": "2026-10-03T15:15:19Z",
       "preview": "Owner, 2026-10-03, decision 3 of the auto-doc rendered-graphs Q&A (#1966):\n**\"Add route-keyed storage, then move it off main\"** — asked about the cost of\nleaving generated pages committed on `main`.\n\nThe schema's own docblock (`cat-harness.ts`, §\"`keyedBy` — two keyings, and a\nthird is a schema change\") says what this bean is: *\"The field is an enum, not\na string, so a third keying is a schema cha",
       "file": "beans/defs/folio-assistant-1j3q--route-keyed-storage-a-third-keyedby-for-regenerabl.md"
     },
@@ -2901,15 +2901,15 @@
     {
       "id": "folio-assistant-9ofm",
       "title": "STATE BRANCH P3: migrate every reader and writer of beans/, todos/, issue-marks/, health results to the branch",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T10:58:10Z",
-      "updatedAt": "2026-10-02T10:58:10Z",
-      "preview": "Proposal section 4 table, one row per change: .beans.yml, workflow/store.ts WORKFLOW_DIR, claim-bean.ts, beans-fallback.ts, beans-landed.ts, gen-docs-pages.ts, state-visualizer.ts, test/health/run.ts, todos.ts, render-pipeline.ts, issue-marks readers, folio_init templates.\n\n## Done when\n- [ ] every row green against the branch\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md",
+      "updatedAt": "2026-10-03T15:38:10Z",
+      "preview": "Proposal section 4 table, one row per change: .beans.yml, workflow/store.ts WORKFLOW_DIR, claim-bean.ts, beans-fallback.ts, beans-landed.ts, gen-docs-pages.ts, state-visualizer.ts, test/health/run.ts, todos.ts, render-pipeline.ts, issue-marks readers, folio_init templates.\n\n## Done when\n- [ ] every row green against the branch\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n_2026",
       "file": "beans/defs/folio-assistant-9ofm--state-branch-p3-migrate-every-reader-and-writer-of.md"
     },
     {
@@ -3930,7 +3930,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T09:06:44Z",
-      "updatedAt": "2026-10-03T14:13:37Z",
+      "updatedAt": "2026-10-03T14:16:53Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"*, then chose to have the crosswalks ingested.\n\n## Summary of Changes\n\n`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.\n\n**225 artefacts ",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
     },
@@ -4604,7 +4604,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:35:28Z",
-      "updatedAt": "2026-10-02T12:43:16Z",
+      "updatedAt": "2026-10-03T14:16:53Z",
       "preview": "Issue #877. The eight PDFs are in `litlfred/qou` as https://github.com/litlfred/qou/commit/a3d2266a1b08018af5f8f88c222c1e7b45e6a36c — a mathematics repository, which is not their home.\n\n**`deletion-requires-confirmation` governs and this is not the agent's call.** What follows is the report the skill requires: what would go, with sizes, and the evidence that nothing would be lost. Nothing has been",
       "file": "beans/defs/folio-assistant-fgkb--smart-base-clear-qouuploads-once-the-bytes-have-a.md"
     },
@@ -5812,7 +5812,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:31:48Z",
-      "updatedAt": "2026-10-03T09:53:26Z",
+      "updatedAt": "2026-10-03T10:06:52Z",
       "preview": "Owner rulings 2026-10-03 (verbatim): \"todos = subgraph node + todo content nodes\" -> option 1, \"and make pattern for declared repo branches (and declared dir subgraphs)\". Later the same day: \"It's the same pattern. One of them is mounting the directory while one of them is mounting a branch. Another mount type could come in the future. A sub graph declares where it's getting its content.. It could",
       "file": "beans/defs/folio-assistant-l4ay--subgraph-source-node-pattern-a-declared-subgraph-d.md"
     },
@@ -6241,9 +6241,23 @@
       "file": "beans/defs/folio-assistant-mkqf--queued-stream-c-what-the-reader-receives-deploymen.md"
     },
     {
+      "id": "folio-assistant-mlux",
+      "title": "PROCESS BINDINGS: clear the 33 wrong-direction skill bindings check:process-bindings baselined",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:38:18Z",
+      "updatedAt": "2026-10-03T15:01:36Z",
+      "preview": "Owner, 2026-10-03: a process may bind only skills (and through them Tools) from its own instance or one it needs — \"general rule, not just fhir-harness\". `check:process-bindings` (cat-harness/scripts/, PR #1968) found 33 unique wrong-direction bindings (35 refs) in 9 diagrams on 2026-10-03, all baselined in cat-harness/scripts/process-bindings.baseline.ts. Each fix is EITHER move the process up to",
+      "file": "beans/defs/folio-assistant-mlux--process-bindings-clear-the-34-wrong-direction-skil.md"
+    },
+    {
       "id": "folio-assistant-mm2n",
       "title": "SEARCH SECTIONS: split the 7.7 MB platform scope by section over a declared budget (#1972)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -7335,6 +7349,20 @@
       "updatedAt": "2026-10-03T00:13:30Z",
       "preview": "`bun run beans:rollover` (issue #1850 step 2) classifies each authored bean path a PR\ntouches as `already-on-main`, `port`, `adjudicate` or `could-not-determine`. The\n`adjudicate` state means BOTH the PR and the base changed the bean since the fork, so a\nperson must pick, because porting either way drops the other's edit.\n\nThat default is right. But it cannot yet see the case where one side's cont",
       "file": "beans/defs/folio-assistant-r3y6--beansrollover-raises-adjudicate-where-one-side-is.md"
+    },
+    {
+      "id": "folio-assistant-r5wu",
+      "title": "SUBGRAPH NODE PATTERN, follow-up: convert the other publishers of a declared subgraph's contents to the declared Subgraph node + inSubgraph",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T08:58:19Z",
+      "updatedAt": "2026-10-03T10:06:52Z",
+      "preview": "Follow-up to bean l4ay (PR #1960), which built the pattern (scripts/subgraph-node.ts: subgraphContainer, memberOf, subgraphPublicationFindings; declaredSubgraphNode in kg-export.ts) and applied it to todos.jsonld only. Owner ruling 2026-10-03: \"todos = subgraph node + todo content nodes\", \"and make pattern for declared repo branches (and declared dir subgraphs)\".\n\nAudit (2026-10-03) of generators ",
+      "file": "beans/defs/folio-assistant-r5wu--subgraph-node-pattern-follow-up-convert-the-other.md"
     },
     {
       "id": "folio-assistant-r6es",

@@ -1387,6 +1387,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
@@ -1433,6 +1434,15 @@
       "label": "Build pipeline",
       "scopeNote": "Executes E_Scope's decision as bytes — cut, serialize, package — precisely enough that GW_Budget can weigh the actual package rather than guess from the graph's node count. Each step reports what it did rather than only succeeding, which is what lets an empty selection be told apart from one that never ran.",
       "source": "cat-harness/processes/kg/kg-to-portal.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+      "label": "Build pipeline",
+      "scopeNote": "Mechanical: every decision on this lane is read off the resolved source, so the same declaration mounts the same way in every container, and an override in the instance config is the only thing that changes it.",
+      "source": "cat-harness/processes/kg/mount-subgraph.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",

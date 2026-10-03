@@ -26,7 +26,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 78,
+  "nodeCount": 79,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -739,6 +739,19 @@
       "body": "# `gurel-tat-2017-swot-analysis.pdf`\n\nIngested to [`cat-harness/library/gurel-tat-2017-swot-analysis`](../../cat-harness/library/gurel-tat-2017-swot-analysis/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/gurel-tat-2017-swot-analysis/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Home-_-folio-assistant.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Home-_-folio-assistant.pdf",
+      "nodeKind": "stray-upload",
+      "sourcePath": "fsh-guts/uploads/Home-_-folio-assistant.md",
+      "movedOn": "2026-10-03",
+      "movedFrom": "litlfred/qou:uploads/Home _ folio-assistant.pdf",
+      "issue": "877",
+      "bean": "folio-assistant-fgkb",
+      "description": "A print of this project's own home page (7,341,534 bytes, sha256 783058fd36feb3cb2618b43fc236b37d3f10a096d5af1edb354970084deffa54). It arrived in litlfred/qou's uploads/ with eight WHO publications and was never ingested, on purpose. Kept here per the owner's ruling of 2026-10-03, \"Move it to fsh-guts\", before it is removed from qou.",
+      "body": "# `Home-_-folio-assistant.pdf`\n\nA print of the folio-assistant home page. It came in with the seven WHO\npublications that `litlfred/qou` received in\n[a3d2266](https://github.com/litlfred/qou/commit/a3d2266a1b08018af5f8f88c222c1e7b45e6a36c),\nwhere it was named `Home _ folio-assistant.pdf`.\n\n**It was never ingested, and that was deliberate.** Ingesting the platform's\nown rendered docs as WHO subject matter would cross the platform/content\nboundary. So the argument for removing the other seven from qou, *\"the\nsource is safely ingested elsewhere\"*, did not apply to this file. It needed a\nseparate ruling, and the owner gave one on 2026-10-03: **\"Move it to\nfsh-guts\"**. This copy is the kept half of that move. Bean\n`folio-assistant-fgkb` records the qou half.\n\n**The bytes are identical to the qou file.** They were copied from this\nrepository's own `uploads/Home-_-folio-assistant.pdf`, which has the same\nsha256. Bean `fgkb`'s 2026-09-22 pass recorded only the PREFIX of qou's\ndigest (`783058fd…`), and that prefix matches. The full digest has to be\ncompared against qou's file again before anything is removed there. A prefix\nmatch is not a verification. The space-free name is the one this repository already used, so the qou\nspelling is kept in `movedFrom` instead.\n\n| field | value |\n|---|---|\n| size | 7,341,534 bytes |\n| sha256 | `783058fd36feb3cb2618b43fc236b37d3f10a096d5af1edb354970084deffa54` |"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "landauer-foltz-laham-1998-intro-lsa.pdf",
@@ -1154,6 +1167,10 @@
     },
     {
       "path": "fsh-guts/uploads/gurel-tat-2017-swot-analysis.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Home-_-folio-assistant.pdf",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
