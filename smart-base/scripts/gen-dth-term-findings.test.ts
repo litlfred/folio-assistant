@@ -7,7 +7,7 @@
  * the matcher's own negative case is the second test.
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { allQuotes, conflictingTerms, quoteProblem, render, sectionText, TermFindingsSchema } from "./gen-dth-term-findings.ts";
@@ -38,8 +38,14 @@ describe("DTH term findings", () => {
   it("records every approach with at least two alternatives and picks none", () => {
     for (const a of findings.approaches) expect(a.alternatives.length).toBeGreaterThanOrEqual(2);
   });
-  it("one proposal per layer, none applied", () => {
+  it("one proposal per layer, each naming artefacts that exist", () => {
     expect(findings.actor.proposals.map((p) => p.layer).sort()).toEqual(["F-A", "RA", "SG"]);
+    for (const p of findings.actor.proposals) for (const a of p.artefacts ?? []) expect(existsSync(join(root, a))).toBe(true);
+  });
+  it("only the folio-assistant mapping is applied; RA and SG are drafted for the owner, never sent", () => {
+    // Owner, 2026-10-03: "1. F-A mapping, 2. Draft RA comment, 3. SMART Base proposal".
+    const by = Object.fromEntries(findings.actor.proposals.map((p) => [p.layer, p.status]));
+    expect(by).toEqual({ "F-A": "applied", RA: "drafted", SG: "drafted" });
   });
   it("the committed page is what the generator writes", () => {
     expect(readFileSync(join(root, "smart-base", "findings", "dth-terms.md"), "utf8")).toBe(render(findings, terms));

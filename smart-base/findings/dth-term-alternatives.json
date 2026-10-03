@@ -198,25 +198,57 @@
       }
     ],
     "correspondence": [
-      { "concept": "a named set of responsibilities, independent of who fulfils it", "RA": "actor (§3.7.2); role (§4.3.2)", "SG": "generic persona; ActorDefinition", "F-A": "role (swimlane)" },
-      { "concept": "the concrete thing that fulfils it", "RA": "system realising an actor (§3.7.6); human or system participant (§4.3.2)", "SG": "not modelled (a DAK stays depersonalised)", "F-A": "actor (human, agentic or mechanical)" },
-      { "concept": "the binding between the two", "RA": "Realisation (system → actor)", "SG": "none in the DAK; an implementation's own deployment", "F-A": "an actor takes on a role for the duration of a lane" }
+      {
+        "concept": "a named set of responsibilities, independent of who fulfils it",
+        "RA": "actor (§3.7.2); role (§4.3.2)",
+        "SG": "generic persona; ActorDefinition",
+        "F-A": "role (swimlane)"
+      },
+      {
+        "concept": "the concrete thing that fulfils it",
+        "RA": "system realising an actor (§3.7.6); human or system participant (§4.3.2)",
+        "SG": "not modelled (a DAK stays depersonalised)",
+        "F-A": "actor (human, agentic or mechanical)"
+      },
+      {
+        "concept": "the binding between the two",
+        "RA": "Realisation (system → actor)",
+        "SG": "none in the DAK; an implementation's own deployment",
+        "F-A": "an actor takes on a role for the duration of a lane"
+      }
     ],
+    "proposalsRuling": {
+      "date": "2026-10-03",
+      "quote": "1. F-A mapping, 2. Draft RA comment, 3. SMART Base proposal"
+    },
     "proposals": [
       {
         "layer": "RA",
-        "status": "proposed",
-        "change": "Qualify the two senses. §3.7.2 and Table 3.7.2 already say \"abstract role\"; §4.3.2 uses \"actor\" for the participant and pairs it with \"role\". A glossary entry for actor (the draft's glossary has none; the term is defined only in the body) naming the conformance sense as primary, and §4.3.2 saying \"participants\" where it means the human and system parties, would remove the ambiguity. This is a comment on a public-comment DRAFT, for WHO to take or leave."
+        "status": "drafted",
+        "change": "Qualify the two senses. §3.7.2 and Table 3.7.2 already say \"abstract role\"; §4.3.2 uses \"actor\" for the participant and pairs it with \"role\". A glossary entry for actor (the draft's glossary has none; the term is defined only in the body) naming the conformance sense as primary, and §4.3.2 saying \"participants\" where it means the human and system parties, would remove the ambiguity. This is a comment on a public-comment DRAFT, for WHO to take or leave.",
+        "outcome": "A public comment on the DRAFT is written, citing its line and page numbers. The owner sends it; nothing has been posted.",
+        "artefacts": [
+          "smart-base/findings/ra-actor-comment.md"
+        ]
       },
       {
         "layer": "F-A",
-        "status": "proposed",
-        "change": "Keep folio-assistant's \"actor\" as settled by role-model, and record the mapping rather than the WHO wording: when an RA or SMART term is ingested, an RA actor or a DAK persona maps to a folio-assistant ROLE (closeMatch), never to an actor, and the RA's realising system maps to a mechanical actor. Concretely: a closeMatch from the glossary's role entry to the RA's conformance actor and to SMART's GenericPersona, and a sentence in role-model saying so. Not applied in this change."
+        "status": "applied",
+        "change": "Keep folio-assistant's \"actor\" as settled by role-model, and record the mapping rather than the WHO wording: when an RA or SMART term is ingested, an RA actor or a DAK persona maps to a folio-assistant ROLE (closeMatch), never to an actor, and the RA's realising system maps to a mechanical actor. Concretely: a closeMatch from the glossary's role entry to the RA's conformance actor and to SMART's GenericPersona, and a sentence in role-model saying so.",
+        "outcome": "The glossary's role entry now carries a closeMatch to the RA §3.7.2 section and to SMART Base's GenericPersona, and role-model says an RA actor or a DAK persona maps to a Role, never an Actor.",
+        "artefacts": [
+          "folio-assistant-core/glossary/cat-harness.glossary.json",
+          "cat-harness/skills/process/process-core/role-model.md"
+        ]
       },
       {
         "layer": "SG",
-        "status": "proposed",
-        "change": "State, in SMART Base's GenericPersona or SGActor description, that a persona is a role and that a system persona (DAK.Persona.System.*) is realised by the systems an implementation deploys: the RA §3.7.2 realisation relationship. That ties the DAK's personas to the RA's conformance model, which §4.3.2 already points at, without renaming anything. A proposal for the upstream IG, not an edit to the ingested copy, which is read-only here."
+        "status": "drafted",
+        "change": "State, in SMART Base's GenericPersona or SGActor description, that a persona is a role and that a system persona (DAK.Persona.System.*) is realised by the systems an implementation deploys: the RA §3.7.2 realisation relationship. That ties the DAK's personas to the RA's conformance model, which §4.3.2 already points at, without renaming anything. A proposal for the upstream IG, not an edit to the ingested copy, which is read-only here.",
+        "outcome": "An issue for the upstream SMART Base IG is written. The owner files it; nothing has been filed, and the read-only ingested copy is unchanged.",
+        "artefacts": [
+          "smart-base/findings/smart-base-persona-issue.md"
+        ]
       }
     ]
   }
