@@ -300,7 +300,7 @@ jobs:
           # permission" and the comment said "the branch moved", which was
           # false. A merge commit that changes a workflow file relative to the
           # head can NEVER be pushed with GITHUB_TOKEN, so retrying is useless:
-          # it is a person's merge (needs-merge-human) until the owner's
+          # it is a person's merge until the owner's
           # credentials design (#1829) supplies a token with `workflows` scope.
           if git push origin "HEAD:refs/heads/$REF" 2> "$RUNNER_TEMP/push.err"; then
             echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -365,10 +365,14 @@ jobs:
             exit 0
           fi
           body=$(jq -r .body <<<"$plan")
-          if [ "$(jq -r .labelNeedsHuman <<<"$plan")" = true ]; then
-            gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
-            gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
-          fi
+          # NO LABEL. Owner ruling 2026-10-03: "stop using needs-merge-human,
+          # it's confusing things." A label asserting "a person is needed"
+          # carries no timestamp and outlives the condition that set it —
+          # measured the same day, 6 of the 10 PRs carrying it were stale:
+          # clean against `main` AND pushable by the bot, because the workflow
+          # change that had blocked them was already in their merge-base. The
+          # refusal reason stays in the comment below, which is dated and
+          # names its run.
           existing=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" --paginate \
             --jq ".[] | select(.body | startswith(\"$MARKER\")) | .id" | head -n1)
           if [ -n "$existing" ]; then
@@ -379,7 +383,7 @@ jobs:
 
       # A failed merge step must not be a green job — measured 2026-10-02:
       # `Script not found` on 7 runs, all green. A REFUSAL is an expected,
-      # reported outcome (labelled needs-merge-human) and stays green; any
+      # reported outcome, said in the comment, and stays green; any
       # other non-zero exit — unrepaired, error, could not start — fails here,
       # AFTER the comment, so the PR is told why.
       - name: Fail on anything but a merge, an up-to-date branch or a refusal
