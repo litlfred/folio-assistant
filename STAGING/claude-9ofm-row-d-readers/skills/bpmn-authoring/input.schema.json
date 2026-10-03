@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9ofm-row-d-readers/skills/bpmn-authoring/input.schema.json",
+  "title": "BPMN Authoring Input",
+  "description": "Input schema for BPMN 2.0 business process authoring.",
+  "type": "object",
+  "required": [
+    "processName"
+  ],
+  "properties": {
+    "processName": {
+      "type": "string",
+      "description": "Name of the business process to model."
+    },
+    "sourceWorkflow": {
+      "type": "string",
+      "description": "Textual description or reference to the workflow to model."
+    },
+    "existingBpmn": {
+      "type": "string",
+      "description": "Path to existing BPMN file to update."
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Actor/participant IDs involved in the process."
+    }
+  },
+  "staging": {
+    "branch": "claude/9ofm-row-d-readers",
+    "sha": "c1f18d758c891a71a1252eb09523c2653922b484",
+    "pr": "2026/merge",
+    "run": "37137859050"
+  }
+}
