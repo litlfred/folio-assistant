@@ -101,3 +101,41 @@ the owner's to make, not a code change.
       a hand dispatch
 - [ ] `check:prs-have-runs` stops calling an all-blocked head `has-run`
 - [ ] tests over every new branch
+
+## A fifth state, NAMED but deliberately NOT built
+
+Raised by the Merge Manager 2026-10-03, and recorded here rather than
+implemented, because it is a different mechanism rather than another reading of
+`conclusion`.
+
+> a green on step 65 does not mean it was never broken — "passed" and "passed
+> because somebody else's regenerate happened to land first" are not the same
+> evidence.
+
+**Their measurement:** `Code-quality gates` step 65, *"Every declared
+directory's README is current"*, was red on `main` itself — `8688288494a`,
+`268c0911a06`, `70882785607` — from one stale generated file (`uploads/README.md`,
+six PDFs added with no rows). It was repaired **by accident, three times in two
+hours**, by unrelated PRs whose own `readme:subgraphs` run happened to land
+first. The last time on the Merge Manager's own PR while writing up the first two.
+
+**Independent confirmation from this branch**, which is the cheap half:
+`readme:subgraphs:check` on this branch's tree reports **0 stale**, while the
+same step fails on its `pull_request` run. A `pull_request` run tests the head
+merged with `main`, so the failure is entirely the BASE's — the
+`github-state-inspection` rule *"ask whether the BASE moved before calling any
+verdict non-deterministic"*, arriving as a gate that is red for a reason the
+branch cannot see or fix.
+
+**Why it is not built here.** This bean's states are all readable from a run
+object: `conclusion` says whether the run executed. "Was this gate green on its
+own merits, or repaired under it" is not in the run at all — answering it needs
+the history of the generated file and which commit last touched it. Adding a
+fifth state on a guess would be the failure
+[`audit-coverage`](../../cat-harness/skills/kg/kg-core/audit-coverage.md) names:
+a measurement must not become a term in itself. So it is written down with its
+evidence and left for the owner to scope.
+
+It is bean `1xhc`'s shape one level above a single gate, and the reason it
+belongs on this bean rather than a new one is that both are the same sentence:
+**a gate that did not judge you is indistinguishable from one that passed.**
