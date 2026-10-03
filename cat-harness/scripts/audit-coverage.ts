@@ -152,7 +152,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
-import { BRANCH_KEYINGS, type BranchKeying } from "./branch-store.ts";
+import { contentIsOffCheckout, resolveSubgraphSource, type SubgraphSource } from "../schemas/subgraph-source.ts";
 // The same single reader `check:declared-dirs` uses, so the two gates cannot
 // disagree about whether a tip-keyed graph is readable here (bean `9ofm`).
 import { tipPresence } from "./check-declared-dirs.ts";
@@ -370,7 +370,7 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  *   tip-keyed directories, so a caller with none needs no git repository.
  */
 export function censusDirectories(
-  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string } }>,
+  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string }; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
   repoRoot: string = process.cwd(),
 ): { files: number; sidecars: number; stored: number; undetermined: number } {
@@ -380,16 +380,21 @@ export function censusDirectories(
   let undetermined = 0;
   for (const d of dirs) {
     let at = d.absPath;
-    if (d.storage?.branch) {
-      if (!(BRANCH_KEYINGS as readonly string[]).includes(d.storage.keyedBy ?? "")) {
+    if (contentIsOffCheckout(d)) {
+      let src;
+      try {
+        src = resolveSubgraphSource({ id: d.id ?? "", path: d.absPath, source: d.source, storage: d.storage });
+      } catch {
+        // The resolver's contradictions are `check:declared-dirs`'s finding to
+        // report, with the remedy. Here the only honest number is "none".
+        undetermined++;
+        continue;
+      }
+      if (src.kind !== "branch" || src.keyedBy !== "tip") {
         stored++;
         continue;
       }
-      const t = tipPresence(
-        { id: d.id ?? "", branch: d.storage.branch, keyedBy: d.storage.keyedBy as BranchKeying },
-        d.absPath,
-        repoRoot,
-      );
+      const t = tipPresence(src, d.absPath, repoRoot);
       if (t.state !== "mounted") {
         undetermined++;
         continue;

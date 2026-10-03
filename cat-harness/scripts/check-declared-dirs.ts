@@ -78,11 +78,17 @@ import { existsSync, statSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
+import {
+  contentIsOffCheckout,
+  resolveSubgraphSource,
+  type ResolvedSubgraphSource,
+  type SubgraphSource,
+} from "../schemas/subgraph-source.js";
 // The marker format has ONE reader, in `branch-store.ts`. This gate asking
 // `existsSync` on a path it spelled itself would be a second, and the two
 // would drift the first time the marker moved — which it already did once,
 // from `--git-common-dir` to the per-worktree git dir (review on #1957).
-import { BRANCH_KEYINGS, readMarker, type BranchKeying } from "./branch-store.ts";
+import { readMarker } from "./branch-store.ts";
 // The `folio` graph kind is registered by CORE as a load-time side effect, so
 // the harness alone does not know it exists and `readDeclaration` throws on a
 // perfectly valid declaration that uses it. Same import, same reason, as
@@ -142,7 +148,7 @@ export function resolveDeclaredPath(
  * because a gate that cannot determine presence has not determined presence.
  */
 export function tipPresence(
-  loc: { id: string; branch: string; keyedBy: BranchKeying },
+  loc: { id: string; branch: string; keyedBy: string },
   abs: string,
   repoRoot: string,
 ): { state: "mounted"; into: string } | { state: "not-cut-over" | "unmounted"; detail: string } {
@@ -199,6 +205,7 @@ export function auditInstance(
           scope?: string;
           absent?: { reason: string };
           storage?: { branch: string; keyedBy?: string };
+          source?: SubgraphSource;
         }>;
       }
     | undefined;
@@ -212,25 +219,37 @@ export function auditInstance(
     // `readdirSync` on it throws rather than reporting an empty graph.
     const present = existsSync(abs) && statSync(abs).isDirectory();
 
-    // A STORED directory (`storage.branch`, bean `16ei`) keeps its files off
-    // the checkout — but the two keyings are not the same question, and
-    // treating them alike is what bean `9ofm` measured going wrong.
-    //
-    // `commit`-keyed is qa-store's layout: the checkout holds at most a
-    // working copy whose size depends on whether `qa:fetch` ran, so its
-    // absence IS the declared state and its presence is not a stale exemption
-    // either. Neither direction applies — skipped, exactly as before.
-    //
-    // A branch TIP is deterministic, so skipping it would be `1xhc`: a reader
-    // of this path sees nothing, and "no content" and "could not reach the
-    // content" would be indistinguishable from here. See {@link tipPresence}.
-    if (e.storage?.branch) {
-      if (!(BRANCH_KEYINGS as readonly string[]).includes(e.storage.keyedBy ?? "")) continue;
-      const t = tipPresence(
-        { id: e.id, branch: e.storage.branch, keyedBy: e.storage.keyedBy as BranchKeying },
-        abs,
-        repoRoot,
-      );
+    // Content off the checkout — `source: { kind: "branch" }` or the legacy
+    // `storage` (beans `16ei`, `l4ay`). `contentIsOffCheckout` is the cheap,
+    // throw-free question: is this entry's content elsewhere at all. It is
+    // asked FIRST so the common case costs nothing.
+    if (contentIsOffCheckout(e)) {
+      // ...and then WHICH elsewhere, because the keyings are not the same
+      // question and treating them alike is what bean `9ofm` measured going
+      // wrong.
+      //
+      // `commit`-keyed is qa-store's layout: the checkout holds at most a
+      // working copy whose size depends on whether `qa:fetch` ran, so its
+      // absence IS the declared state and its presence is not a stale
+      // exemption either. Neither direction applies — skipped, as before.
+      //
+      // A branch TIP is deterministic, so skipping it would be `1xhc`: a
+      // reader of this path sees nothing, and "no content" and "could not
+      // reach the content" would be indistinguishable from here. See
+      // {@link tipPresence}.
+      let src: ResolvedSubgraphSource;
+      try {
+        src = resolveSubgraphSource(e);
+      } catch (err) {
+        // The resolver throws on a contradiction a reader must not paper over
+        // (both fields, or a tip-keyed `qa`). It is a finding here rather than
+        // a crash, so one bad entry does not take the whole sweep with it —
+        // and `unmounted` is the honest state: nothing read this path.
+        findings.push({ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message });
+        continue;
+      }
+      if (src.kind !== "branch" || src.keyedBy !== "tip") continue;
+      const t = tipPresence(src, abs, repoRoot);
       if (t.state !== "mounted") findings.push({ instance: instanceRoot, id: e.id, path: e.path, kind: t.state, detail: t.detail });
       continue;
     }

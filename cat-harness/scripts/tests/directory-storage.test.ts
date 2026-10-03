@@ -235,6 +235,41 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
     });
   });
 
+  // The MODERN spelling (#1987, bean `l4ay`). `storage` is its legacy form and
+  // the resolver maps one onto the other, so both must reach the same verdict
+  // — otherwise the answer depends on which field a declaration happened to
+  // use, which is the defect `subgraph-source` exists to remove.
+  test("`source: { kind: branch, keyedBy: tip }` reaches the same verdict as the legacy `storage`", () => {
+    const src = { kind: "branch", branch: TIP.branch, keyedBy: "tip" } as const;
+    const root = gitInstance([{ id: "beans", path: "beans/", graphKinds: ["beans"], source: src }]);
+    expect(auditInstance(root, root).map((x) => x.kind)).toEqual(["unmounted"]);
+
+    marker(root, "beans", join(root, "beans"));
+    expect(auditInstance(root, root)).toEqual([]);
+    expect(censusDirectories([{ id: "beans", absPath: join(root, "beans"), source: src }], undefined, root).undetermined).toBe(0);
+  });
+
+  test("`source: { kind: branch, keyedBy: commit }` is skipped, like the legacy commit-keyed form", () => {
+    const src = { kind: "branch", branch: "cat/cat-harness/qa-reports", keyedBy: "commit" } as const;
+    const root = gitInstance([{ id: "qa", path: "test/results/", graphKinds: ["qa"], source: src }]);
+    expect(auditInstance(root, root)).toEqual([]);
+    expect(censusDirectories([{ id: "qa", absPath: join(root, "test", "results"), source: src }], undefined, root)).toEqual({
+      files: 0,
+      sidecars: 0,
+      stored: 1,
+      undetermined: 0,
+    });
+  });
+
+  test("an entry declaring BOTH is a finding carrying the resolver's message, not a crash", () => {
+    const root = gitInstance([
+      { id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP, source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } },
+    ]);
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["unmounted"]);
+    expect(f[0]!.detail).toContain("two answers to where its content comes from");
+  });
+
   test("no git repository is `undetermined`, never a pass: a gate that could not ask has not asked", () => {
     const root = instance([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
     const f = auditInstance(root, root);
