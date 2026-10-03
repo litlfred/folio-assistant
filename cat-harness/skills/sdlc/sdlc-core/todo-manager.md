@@ -338,6 +338,43 @@ that is "just a note", is untested. This is the cheap end of the same discipline
 `continual-progress` states about verifying rendered work rather than describing
 it.
 
+### A new bean also owes `readme:subgraphs` — and this is the most-missed step
+
+`beans/README.md` is GENERATED and carries per-subdirectory counts, so creating
+or archiving a bean makes it stale. Nothing in the `beans` CLI regenerates it,
+and the gate that catches it is named for the generic case rather than for
+beans:
+
+```
+Repository gates (hard) · step 65: "Every declared directory's README is current"
+```
+
+That is `readme:subgraphs:check`. Run its writer before you push:
+
+```sh
+bun run readme:subgraphs          # then commit beans/README.md with the bean
+bun run readme:subgraphs:check    # must exit 0
+```
+
+**Measured 2026-10-03: three separate PRs failed this gate on the same day** —
+one for a new bean, one for a new bean on a dispatched agent's branch, and one
+for a newly declared subgraph directory. The second is the instructive case:
+that agent pushed **four consecutive commits** to fix it, every one editing the
+bean's prose, because the check's name says "declared directory's README" and
+gives no hint that adding a bean is what dirtied it. Sixteen of its seventeen
+checks were green the whole time.
+
+So the step is cheap and the DIAGNOSIS is expensive, which is the argument for
+putting it here rather than leaving it to be rediscovered: a session that reads
+only the failing check name will look at directories and never at the bean it
+just created. Read the failing STEP, and remember that `beans/` is a declared
+directory like any other.
+
+The same shape applies one door along: **editing a skill owes
+`bun run skill:register`**, which `skill-registration` carries in full. Both are
+instances of one rule — a declared artefact has generated neighbours, and the
+CLI that writes the artefact does not write them.
+
 ## When the `beans` CLI is not there — you are still not read-only
 
 `scripts/beans-fallback.ts` writes the same store in the same layout: same
