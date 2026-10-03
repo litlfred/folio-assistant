@@ -625,6 +625,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "fallbacks — are covered by `staging-rotate.test.ts` in `bun test`",
   },
   {
+    match: "staging-push-gate.ts",
+    kind: "ci-only",
+    reason:
+      "rate-limits the staging push (owner ruling 2026-10-03, issues #1868 and #1956) by reading the tip " +
+      "of a `gh-pages` checkout and SLEEPING until its Pages build has had time to finish; that checkout " +
+      "and the wait exist only in CI. Its rules — the two windows, clock skew never opening early, the " +
+      "deadline failing rather than pushing, an unreadable tip never open, the PR comment's wording — are " +
+      "covered by `staging-push-gate.test.ts` in `bun test`",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",

@@ -5,14 +5,14 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T08:07:15Z
-updated_at: 2026-10-03T08:11:59Z
+updated_at: 2026-10-03T09:30:00Z
 parent: folio-assistant-1xhc
 ---
 
 Issue #1868, second problem (comment 2026-10-02T18:10Z): GitHub's pages-build keeps only the newest run and staging pushes land every few minutes, so main-site deploys are cancelled. Owner ruling 2026-10-03 (this session): option 1, push staging previews to gh-pages less often (batch / rate-limit).
 
 ## Done when
-- [ ] tracking issue for option 1 opened and linked from #1868
-- [ ] feature-staging.yml pushes to gh-pages at most once per window (design in the PR), preview comments say when the batch lands
-- [ ] skill/doc that describes staging updated
-- [ ] gates green
+- [x] tracking issue for option 1 opened and linked from #1868 — done as #1956
+- [x] feature-staging.yml pushes to gh-pages at most once per window (design in the PR), preview comments say when the batch lands — rate limit via `cat-harness/scripts/staging-push-gate.ts` (5 min after a staging commit, 10 after any other publisher); PR comment says queued with push and live-by times, then pushed
+- [x] skill/doc that describes staging updated — `feature-staging` §7, `staging-review` §"Say how long, and come back"
+- [x] gates green

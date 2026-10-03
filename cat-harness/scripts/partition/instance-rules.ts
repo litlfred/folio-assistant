@@ -1181,6 +1181,8 @@ export const RULES: Rule[] = [
       // (`restore-staging`, `render-log`, `staging-record`,
       // `staging-cleanup-preflight`, `staging-preview`), all harness.
       "scripts/staging-rotate.ts",
+      // The staging rate limit (issue #1956) — same family, harness.
+      "scripts/staging-push-gate.ts",
       "src/tools/check-deps.ts",
       "src/tools/capabilities.ts",
       // Beside `capabilities.ts` and for the same reason: it joins a skill's
