@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zealous-thompson-y8dcf1-jsonld/skills/dmn-authoring/input.schema.json",
+  "title": "DMN Authoring Input",
+  "description": "Input schema for DMN (Decision Model and Notation) decision table authoring.",
+  "type": "object",
+  "required": [
+    "decisionName",
+    "inputVariables"
+  ],
+  "properties": {
+    "decisionName": {
+      "type": "string",
+      "description": "Name of the decision to model."
+    },
+    "inputVariables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "boolean",
+              "date",
+              "codeable-concept"
+            ]
+          }
+        }
+      }
+    },
+    "sourceLogic": {
+      "type": "string",
+      "description": "Reference to the clinical decision logic being modeled."
+    }
+  },
+  "staging": {
+    "branch": "claude/zealous-thompson-y8dcf1-jsonld",
+    "sha": "73f7fc1a3c7c9b6a95a2680e7ca44ec9d47417ce",
+    "pr": "1950/merge",
+    "run": "37106621450"
+  }
+}
