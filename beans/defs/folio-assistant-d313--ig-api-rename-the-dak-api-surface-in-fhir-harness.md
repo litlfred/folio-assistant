@@ -24,8 +24,8 @@ fhir-harness's one rule is that it knows nothing of WHO, yet `dak-views.ts`, the
 - [x] rename templates `dak-*.liquid`/`.js` -> `ig-api-*`
 - [x] schema: `dakApiHub` -> `igApiHub`; migrate the three committed indexes (key rename + recorded placeholder; regenerating needs the remote IG build)
 - [x] WHO specifics become configuration supplied by smart-base (label, marker, hub file name); generic default label "IG API"
-- [ ] regenerate pages; tests; gates
-- [ ] PR stacked on #1970; notify #1816's session (artifactPage overlap)
+- [x] regenerate pages; tests; regen (gates run in CI on #1973)
+- [x] PR #1973 stacked on #1970; #1816 notified (artifactPage overlap)
 
 ## Done when
 No dak/DAK identifier or file name remains in fhir-harness/ outside configuration supplied by smart-base, the WHO sites render the same apart from renamed asset paths, and gates are green.
