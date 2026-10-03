@@ -1527,7 +1527,8 @@ async function collectProcesses(
   // remote, which differs by clone and would make the committed subgraph
   // files differ with it. A file in a submodule resolves to the submodule's
   // repository.
-  const repoRoot = repoRootFor(root);
+  // The CHECKOUT, not `dirname`: for the root instance `dirname` is outside it (g43f).
+  const repoRoot = checkoutRootFor(root);
   const repoName = (() => {
     try {
       return readDeclaration(repoRoot)?.repository;

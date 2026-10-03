@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-10-03T15:30:00Z
+updated_at: 2026-10-03T18:00:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -293,5 +293,76 @@ dot guard: 32 candidates; those inspected (`check-secret-leaks`,
 - [x] Reproduce with a nested probe worktree — done; not reproduced (above).
 - [x] Instance discovery cannot list a sibling or nested worktree — `isForeignCheckout`, with a regression test.
 - [x] The three call sites that composed the escape use `siblingScopeFor`.
-- [ ] `repoRootFor` escapes the checkout for the root instance — the list above.
+- [x] `repoRootFor` escapes the checkout for the root instance — classified and fixed below (`checkoutRootFor`).
 - [ ] What actually produced the 2026-10-03 5-of-220 — not determined.
+
+## 2026-10-03 — the `repoRootFor` class, classified and fixed (session_01AxhsSvodhTgaioG1nUBWkh)
+
+**Shared primitive: `checkoutRootFor(instanceRoot)`** in
+`cat-harness/schemas/cat-harness.ts`. An instance holding its own `.git` that
+its parent's `.gitmodules` does not name IS a checkout (main clone or
+worktree) and answers itself; anything else is nested and keeps `dirname`
+(`repoRootFor`'s contract, unchanged, so every non-git fixture reads as
+before). A declared submodule whose parent holds no `.git` THROWS rather than
+guessing (`dh4f`). Read from the filesystem, not `git rev-parse
+--show-toplevel`: `rootForScope` is on the hot path of every declared-directory
+resolution, and a fixture built under a checkout would get the ENCLOSING
+toplevel. **It absorbs, rather than duplicates, the `checkoutRootFor` that
+`schemas/harness-config.ts` already exported** (the container rule alone, i.e.
+`siblingScopeFor`): the container rule is kept for git-less trees and that
+export now delegates here, so `kg-audit`, `kg-export` and `qa-witness` get the
+git-aware answer too — a root checkout that aggregates nothing no longer
+returns its parent. `repoRootFor` itself is not changed — ~60 callers, most fed a nested
+instance, and its tests pin `dirname`.
+
+Classes: **(a)** reads a sibling INSTANCE → `siblingScopeFor`; **(b)** reads a
+REPOSITORY-level file → `checkoutRootFor`; **(c)** correct as is.
+
+| site | class | why / fix |
+|---|---|---|
+| `cat-harness.ts` `rootForScope` | b | `scope: "repository"` base → `checkoutRootFor` |
+| `cat-harness.ts` `declaredKindsEntryRoot` (was :6147) | b | inlined copy → `rootForScope` |
+| `liquid-values.ts:124` | b | inlined copy → `rootForScope` |
+| `kg-export.ts:1519` | b | root declaration's `repository` → `checkoutRootFor` |
+| `gen-subgraph-jsonld.ts:540` | b | root declaration's `repository` → `checkoutRootFor` |
+| `schema-graph.ts:773` | b | path base; `kg-audit` passes the root instance → `checkoutRootFor` |
+| `check-subgraph-coverage.ts:440` default | b | decides `isRoot` → `checkoutRootFor` |
+| `core/access.ts:83` | b | actor registry at the checkout → `checkoutRootFor` |
+| `pages-bootstrap.ts:152` | b | `.github/workflows` → `checkoutRootFor` |
+| `ensure-landing-sticky.ts:440` | b | `declaredIn` relative path → `checkoutRootFor` |
+| `check-retired-front-matter.ts:212` default | b | sweep roots → `checkoutRootFor` |
+| `library-graph.ts:748` default | b | upload-queue base → `checkoutRootFor` |
+| `known-skills.ts:462` | b | `.claude/skills` → `checkoutRootFor`, **scope preserved** (below) |
+| `voice-criteria.ts:75` | a | `instanceRootsIn` → `siblingScopeFor` |
+| `voices-graph.ts:269` default | a | `instanceRootsIn` → `siblingScopeFor` |
+| `known-skills.ts:766` | c | guarded to `OWN_INSTANCE` (nested) |
+| `check-agents-xref.ts:266` | c | instance from `import.meta.dir` = `cat-harness/` |
+| `validate-skills.ts:78,85` | c | `rootDir` = `cat-harness/` |
+| `declared-dirs.ts:45` | c | instance from `import.meta.dir` |
+| `check-retired-front-matter.ts:46` | c | `INSTANCE` = `cat-harness/` |
+| `ensure-landing-sticky.ts:386` | c | already guarded (`repoRoot !== own` and `.git`) |
+
+**13 (b) + 2 (a) fixed, 6 (c) left.** Not swept: the ~40 further
+`repoRootFor` callers outside the bean's list (e.g. `kg-export.ts`'s
+`repoRootFor(ROOT)` with `ROOT` = `cat-harness/`); those inspected take a
+nested instance.
+
+### The rescope this fix walked into — the bean's own trap, again
+
+Pointing `known-skills.ts:462` at the checkout WIDENED the root instance's
+skill set: **0 → 4** names, one of them `SKILL` (the stem of
+`.claude/skills/interaction-modality/SKILL.md`), and `kg:audit:all` regenerated
+`folio-assistant/kg-qa/scenarios/kg.kg-qa.json` with a new
+`skill-has-entry-point` fail. So the read now never leaves the checkout, but
+the root instance still does not read `.claude/skills`. Whether it SHOULD is a
+scope decision, open, and not made here.
+
+Regression: `cat-harness/schemas/instance-roots-worktrees.test.ts`, a real
+`git worktree add` fixture with the root instance in `.claude/worktrees/<x>`,
+asserting `checkoutRootFor`, `rootForScope`, `findPublishWorkflows`,
+`skillMdDirs` (a seeded `.claude/worktrees/.claude/skills/leak` is not read),
+`check-retired-front-matter`'s sweep roots, `auditInstance`'s default and
+`readSchemaGraph`'s module paths all resolve inside the worktree — plus a live
+assertion on the checkout the test runs in.
+
+- [ ] Whether the root instance should read the checkout's `.claude/skills` (0 → 4, including a bogus `SKILL`).

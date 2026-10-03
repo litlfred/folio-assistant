@@ -16,7 +16,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
+import { checkoutRootFor, resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 
 /**
  * The instance this module belongs to — the one that owns the repository-level
@@ -459,8 +459,20 @@ export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(ro
   // and the exported graph did not — a skill by this repository's own
   // definition, absent from the graph. Latent rather than live (only `local`
   // exists today), and now impossible: the exporter reads this function.
-  const localRoot = join(repoRootFor(root), ".claude", "skills");
-  if (existsSync(localRoot)) {
+  //
+  // `checkoutRootFor`, and NOT for the checkout's own root instance (bean
+  // `g43f`). `repoRootFor` is `dirname`, so for the root instance this read
+  // `.claude/worktrees/.claude/skills` in a worktree and `/home/user/.claude/
+  // skills` in the main checkout — outside the checkout, found nothing. Simply
+  // pointing it at the checkout WIDENS the root instance's skill set, measured
+  // 2026-10-03: 0 -> 4 names, one of them `SKILL` (the stem of
+  // `interaction-modality/SKILL.md`), and `kg:audit` gained a fail for it. That
+  // is a change of scope, not of where the read lands, so it is left to a
+  // decision rather than made here; what changes is that it can no longer
+  // read another checkout.
+  const checkout = checkoutRootFor(root);
+  const localRoot = join(checkout, ".claude", "skills");
+  if (resolve(checkout) !== resolve(root) && existsSync(localRoot)) {
     for (const g of readdirSync(localRoot, { withFileTypes: true })) {
       if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;
       if (readdirSync(join(localRoot, g.name)).some((f) => f.endsWith(".md"))) {
