@@ -30,7 +30,7 @@ gets a <code>.json</code> copy with the same bytes beside it, because many hosts
 <code>.jsonld</code> as a download. The <code>.jsonld</code> stays the real one: it is what the
 <code>@id</code> names.</p><h2>Two checks, four states</h2><table><thead><tr><th>step</th><th>checks</th><th>done</th><th>not done</th><th>could not determine</th></tr></thead><tbody><tr><td><code>schemas:staged</code></td><td>the site build puts each document at its address</td><td>every one is there, byte for byte</td><td>one is missing, or another file holds its address</td><td>the build could not run</td></tr><tr><td><code>schemas:published</code></td><td>each address answers</td><td>every one answers</td><td>one answers 404</td><td>403, 407, 5xx or no answer: that is about the way from here (a proxy, an access rule), not about the address</td></tr></tbody></table><h2>The site is the vehicle</h2><p>The documents get to their addresses by the Pages site
 (<a href="publish-site.html"><code>publish-site</code></a>): its workflow stages each one where its
-IRI says, and lists them all under "Published documents" on the index page.
+IRI says, and lists them all under "Published documents" on the README page (<code>README.html</code>).
 When <code>schemas:published</code> is not done, the site steps are how it gets done.
 The site is not the goal: a site that answers while one schema address does
 not has not finished initializing the harness.</p><p>Where bootstrap-tools is available, <code>site.ts --check</code> lists every address
