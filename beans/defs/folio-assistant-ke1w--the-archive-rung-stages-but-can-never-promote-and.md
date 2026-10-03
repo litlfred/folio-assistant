@@ -1,10 +1,10 @@
 ---
-# folio-assistant-t3n8
+# folio-assistant-ke1w
 title: The archive rung stages but can never promote, and no rung reads plain text at all
 status: todo
 type: bug
 created_at: 2026-09-22T22:17:51Z
-updated_at: 2026-09-22T22:17:51Z
+updated_at: 2026-10-03T12:34:37Z
 parent: folio-assistant-ahvw
 ---
 
@@ -65,3 +65,7 @@ Sitting in `uploads/` is the correct state for it: that is the queue, and the de
 - [ ] a text/markdown rung exists, OR it is recorded as a deliberate refusal with the reason
 - [ ] `madr`'s source is ingested and cited in its `evidence`
 - [ ] whichever way it goes, `library-ingestion` says which source kinds can and cannot become L1 — today a reader has to read the rung union to find out
+
+## Re-id 2026-10-03
+
+Re-id'd 2026-10-03 from t3n8 (bean 4vg7): t3n8 was also the id of the display-names bean (created 2026-09-21), which keeps it; references below dated before today that say t3n8 about the archive rung mean this bean.
