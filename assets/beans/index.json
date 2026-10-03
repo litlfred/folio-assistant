@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 720,
+      "count": 722,
       "unit": "beans"
     }
   },
@@ -3251,14 +3251,14 @@
     {
       "id": "folio-assistant-akjg",
       "title": "DOCS-POPULATED HAS NO SUBJECT TEST: the gate passes smart-trust on docs/category/Other.md — length and authorship have teeth, 06e3 §4(b) processes/roles/tasks half was never built",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:50:38Z",
-      "updatedAt": "2026-10-03T13:50:59Z",
+      "updatedAt": "2026-10-03T14:22:22Z",
       "preview": "`check:docs-populated` (`scripts/check-docs-populated.ts`, 2026-10-02, gated at\n`code-quality-gates.yml:1846`) implements half of `06e3` §4(b) and reports the\nother half as if it were not asked.\n\nOwner, `06e3` §4(b), both halves in one sentence:\n\n> does the page reference the harness's **processes, roles and tasks**, and does\n> it say something about them that the index does not?\n\nBuilt: **length*",
       "file": "beans/defs/folio-assistant-akjg--docs-populated-has-no-subject-test-the-gate-passes.md"
     },
@@ -4551,6 +4551,20 @@
       "updatedAt": "2026-10-01T09:12:25Z",
       "preview": "Arc `3fva`, proposal §3.3 and §4 item 5.6. Blocked on the TEST PROCESS bean.\n\n`test/results/crdm-detect-eval.test-run.json` already holds 27 cases with precision and recall, plus a second-annotator corpus in `scripts/eval/`. Turn it into `test-plan/v1`, execute it through `test-plan-execution.bpmn`, and take a certification decision. The second plan is an MCP tool (`workflow_complete` refuses a st",
       "file": "beans/defs/folio-assistant-ff09--dogfood-test-plan-1-certify-the-crdm-detect-skill.md"
+    },
+    {
+      "id": "folio-assistant-ffv7",
+      "title": "ASK DOWNSTREAM: would a kg-to-portal consumer read SPDX (SBOM or licence ids)? D1 of the SPDX proposal waits on it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:44:28Z",
+      "updatedAt": "2026-10-03T10:44:28Z",
+      "preview": "Owner, 2026-10-03, after the SPDX 3 analysis (bean `sd5v`) found that **nothing\nconsumes an SPDX document** today: *\"Ask a consumer first\"*, then *\"leave a bean\nto ask downstream user feedback\"*.\n\n## Why this exists\n\nThe applicability proposal\n(`cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md`) rated a\nrelease SBOM and an SPDX `kg-to-portal` manifest as worth building **if** a\nconsum",
+      "file": "beans/defs/folio-assistant-ffv7--ask-downstream-would-a-kg-to-portal-consumer-read.md"
     },
     {
       "id": "folio-assistant-fgkb",
@@ -7727,6 +7741,20 @@
       "updatedAt": "2026-09-30T15:01:31Z",
       "preview": "Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.\n\n## Done when\n- [ ] slides-structure.py rung + ingest-document.ts routing + tests\n- [ ] library-ingestion skill updated\n- [ ] deck ingested to a library with a11",
       "file": "beans/defs/folio-assistant-scfh--ingest-slides-pptxodp-rung-a11y-probe-kgfolio-asst.md"
+    },
+    {
+      "id": "folio-assistant-sd5v",
+      "title": "SPDX 3 applicability: where it should, could and should not be used — impact on processes, tasks and gates",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:14:26Z",
+      "updatedAt": "2026-10-03T10:44:49Z",
+      "preview": "Owner, 2026-10-03: deep analysis of where SPDX v3 could/should/should not be used (test results, QA reports, tool definitions...), impact analysis on missing processes/tasks and on existing ones. Deliverable: cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md. Not building anything: owner decisions first.\n\n## Done when\n- [x] proposal written and linked from proposals index\n- [ ] owner h",
+      "file": "beans/defs/folio-assistant-sd5v--spdx-3-applicability-where-it-should-could-and-sho.md"
     },
     {
       "id": "folio-assistant-sff8",

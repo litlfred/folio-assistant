@@ -26,7 +26,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 76,
+  "nodeCount": 78,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -775,6 +775,18 @@
       "body": "# `neubauer-2025-ai-assisted-schema-creation.pdf`\n\nIngested to [`cat-harness/library/arxiv-2508.05192v2`](../../cat-harness/library/arxiv-2508.05192v2/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/arxiv-2508.05192v2/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/neubauer-2025-ai-assisted-schema-creation.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/neubauer-2025-ai-assisted-schema-creation.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/omg-2024-spdx-3-0.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "omg-2024-spdx-3-0.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/omg-2024-spdx-3-0.md",
+      "movedOn": "2026-10-03",
+      "movedFrom": "uploads/formal-24-11-01.pdf",
+      "bean": "folio-assistant-sd5v",
+      "description": "The archival copy of the source ingested to `cat-harness/library/omg-2024-spdx-3-0` (sha256 3041bc8676650ef6d0…): System Package Data Exchange (SPDX) Version 3.0, OMG formal/24-11-01, March 2025. Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `omg-2024-spdx-3-0.pdf`\n\nIngested to [`cat-harness/library/omg-2024-spdx-3-0`](../../cat-harness/library/omg-2024-spdx-3-0/),\nwhich holds what was derived from it. A library entry may not hold the source\nbytes, so this is where the original lives. Its sha256 is\n`3041bc8676650ef6d0dd3d896d6bcf5f9757f9d04ce680ce5ea22a54e08cc67a`, recorded as\n`source_sha256` in that entry's manifest.\n\n**Uploaded by the owner** on 2026-10-03 as `uploads/formal-24-11-01.pdf`\n(commit `b4bdcc4b6`, \"Add files via upload\"), and renamed to its library slug\nbefore ingest, following `omg-2013-bpmn-2-0-2` and `omg-2024-dmn-1-5`. The\nintake record written for that ingest carried the licence into the entry's\n`licence.json` and is not kept separately; everything it said is there and\nhere.\n\n**Licence:** `Community-Spec-1.0 AND CC-BY-3.0`, stated on PDF page ii. Unlike\nthe OMG notice on DMN 1.5, both licences permit holding and redistributing the\ntext, with attribution — *\"the material's name, version number, and source\nfrom where the materials were retrieved\"* (Community-Spec-1.0 §1.2):\nSystem Package Data Exchange (SPDX) Specification, Version 3.0, OMG\nformal/24-11-01, https://www.omg.org/spec/SPDX. Copyright © 2010-2024, The\nLinux Foundation and its Contributors, including SPDX Model contributions from\nOMG and its Contributors. SPDX® is a registered trademark of The Linux\nFoundation.\n\n**Edition.** This is the OMG formal publication of SPDX 3.0. Its Annex A points\nat the 3.0.1 model (`https://spdx.org/rdf/3.0.1/spdx-model.ttl`) and its class\npages carry `https://spdx.org/rdf/3.0.1/terms/…` IRIs, so its model is 3.0.1's.\nIt was not compared with the Linux Foundation's 3.0.1 web edition."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/PIIS2589750021000388-2.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "PIIS2589750021000388-2.pdf",
@@ -881,6 +893,18 @@
       "bean": "folio-assistant-q7ey",
       "description": "The extraction record produced alongside `Skills in OpenAI API.pdf` when it was ingested to `cat-harness/library/skills-in-openai-api`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
       "body": "# `Skills in OpenAI API.pdf.extraction.json`\n\nMoved with [`Skills in OpenAI API.pdf`](./Skills in OpenAI API.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`cat-harness/library/skills-in-openai-api`](../../cat-harness/library/skills-in-openai-api/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md",
+      "movedOn": "2026-10-03",
+      "movedFrom": "uploads/strauch-carbno-2025-spdx-3-1-supply-chain/strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
+      "bean": "folio-assistant-sd5v",
+      "description": "The archival copy of the source ingested to `cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain` (sha256 2fa09a12a579750abf…): Strauch & Carbno, \"Capturing the Supply Chain as HBOMs, SBOMs and more with SPDX 3.1\", NIST, 10 September 2025. Retired here after promotion, per the owner's ruling 2026-09-29.",
+      "body": "# `strauch-carbno-2025-spdx-3-1-supply-chain.pdf`\n\nIngested to [`cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain`](../../cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain/),\nwhich holds what was derived from it. Its sha256 is\n`2fa09a12a579750abf7a41f7da6a5925952bdf279115844cfa17c10474ac7a2b`, recorded as `source_sha256` in that entry's manifest.\n\n**Attached by the owner in chat** on 2026-10-03 as\n`WedAM1.1-CapturingSupplyChain.pdf`, during the SPDX 3 applicability analysis\n(bean `sd5v`). Published at\nhttps://csrc.nist.gov/csrc/media/Presentations/2025/capturing-the-supply-chain-with-spdx-3-1/WedAM1.1-CapturingSupplyChain.pdf.\nIt was never committed to `uploads/` before ingest; the intake record written\nfor the ingest carried its licence into the entry's `licence.json`.\n\n**Licence: CC-BY-SA-3.0**, stated in every slide's footer. The derived library\nentry is an adaptation and is offered under the same licence, **not** under the\nrepository's CC-BY-3.0 content licence. Attribution: Alfred Strauch and Steven\nCarbno, Smart Talk Beacon Solutions Ltd.\n\n**Not normative.** A conference deck describing SPDX 3.1 while 3.1 was a release\ncandidate. Nothing in it is taken as the text of the specification."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2013-prov-o.md",
@@ -1145,6 +1169,10 @@
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
+      "path": "fsh-guts/uploads/omg-2024-spdx-3-0.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
       "path": "fsh-guts/uploads/PIIS2589750021000388-2.pdf",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
@@ -1179,6 +1207,10 @@
     {
       "path": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.json",
       "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
       "path": "fsh-guts/uploads/w3c-2013-prov-o.pdf",
