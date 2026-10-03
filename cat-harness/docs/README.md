@@ -50,7 +50,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 630 files | |
+| [`assets/`](assets/) | 631 files | |
 | [`attestations/`](attestations/) | 1 file | |
 | [`beans/`](beans/) | 2 files | |
 | [`bootstrap/`](bootstrap/) | 1 file | |

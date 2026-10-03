@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**225** units · **6008** terms · k = **100** · retains **78.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**225** units · **6010** terms · k = **100** · retains **78.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.01 | instance, graph, kind, directory, harness, page, session, branch | *(none)* |
-| 2 | 21.95 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, subgraph, iri, instance, declaration, node, directories, directory |
-| 3 | 18.14 | slot, chapter, block, edges, project, formal, watcher, proof | session, push, window, beans, minutes, epic, branch, page |
-| 4 | 17.10 | page, manifest, block, text, blocks, tile, chapter, pdf | sibling, subdirectory, ledger, plan, sessions, session, actor, relocation |
-| 5 | 15.80 | tile, glass, avatar, board, card, sticky, theme, tiles | slice, payloads, payload, heavy, processor, iri, export, manifest |
+| 1 | 46.07 | instance, graph, harness, kind, directory, page, session, branch | *(none)* |
+| 2 | 21.95 | watcher, sibling, queue, prs, commits, slot, backlog, block | harness, subgraph, iri, instance, declaration, node, directories, directory |
+| 3 | 18.13 | slot, chapter, block, edges, project, formal, watcher, proof | session, window, beans, minutes, push, epic, branch, page |
+| 4 | 17.16 | page, manifest, block, text, blocks, tile, chapter, pdf | sibling, subdirectory, ledger, plan, sessions, session, relocation, actor |
+| 5 | 15.79 | tile, glass, avatar, board, card, sticky, theme, tiles | slice, payloads, payload, heavy, processor, iri, export, manifest |
 | 6 | 15.37 | preview, deploy, staging, tile, iri, build, payload, client | rung, archive, archived, licence, ingest, sniff, zip, judgement |
-| 7 | 15.05 | lane, actor, role, requirements, task, analysis, process, impact | queue, sha, slide, backlog, rung, arm, bytes, withheld |
-| 8 | 14.63 | translation, locale, language, translated, staging, french, preview, feature | tile, glass, avatar, card, slice, slot, strip, sticky |
+| 7 | 15.06 | lane, actor, role, requirements, task, process, analysis, diagram | queue, sha, slide, rung, backlog, arm, bytes, zip |
+| 8 | 14.63 | translation, locale, language, staging, translated, preview, french, feature | tile, glass, avatar, card, slice, slot, strip, sticky |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
