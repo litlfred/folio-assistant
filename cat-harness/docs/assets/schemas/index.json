@@ -7078,7 +7078,7 @@
           "type": "DirectoryStorage",
           "optional": true,
           "array": false,
-          "doc": "This directory's contents are STORED on a branch, keyed by commit, and the"
+          "doc": "This directory's contents are STORED on a branch, keyed by commit or tip, and the"
         }
       ],
       "extendsNames": [
@@ -7100,7 +7100,7 @@
       "name": "ContentDirectorySchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "undetermined",
-      "note": "z.preprocess(acceptLegacyGraphsKey, ContentDirectoryShape)",
+      "note": "z.preprocess( acceptLegacyGraphsKey, // A `qa` directory is commit-keyed by construction: its readers compare one // commit's verdicts against a baseline, and …",
       "doc": "As {@link GraphNodeDirectorySchema}, for an instance's own directories.",
       "fields": [],
       "extendsNames": [],
@@ -7288,7 +7288,7 @@
       "name": "DirectoryStorageSchema",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "zod-object",
-      "doc": "A directory whose contents live on a BRANCH, one tree per commit, with the",
+      "doc": "A directory whose contents live on a BRANCH — one tree per commit, or one",
       "fields": [
         {
           "name": "branch",
@@ -7299,10 +7299,10 @@
         },
         {
           "name": "keyedBy",
-          "type": "z.literal(\"commit\")",
+          "type": "z.enum([\"commit\", \"tip\"])",
           "optional": false,
           "array": false,
-          "doc": "How entries are keyed on the branch. Only `commit` exists."
+          "doc": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
         }
       ],
       "extendsNames": [],

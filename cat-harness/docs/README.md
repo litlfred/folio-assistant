@@ -50,11 +50,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 615 files | |
+| [`assets/`](assets/) | 614 files | |
 | [`attestations/`](attestations/) | 1 file | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 120 files | |
+| [`cat-harness/`](cat-harness/) | 134 files | |
 | [`es/`](es/) | 14 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 14 files | |
@@ -74,7 +74,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 14 files | |
 | [`site/`](site/) | 183 files | |
-| [`subgraph/`](subgraph/) | 105 files | |
 | [`subscriptions/`](subscriptions/) | 1 file | |
 | [`swimlane-glossary/`](swimlane-glossary/) | 1 file | |
 | [`themes/`](themes/) | 1 file | |
