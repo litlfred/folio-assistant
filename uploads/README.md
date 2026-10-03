@@ -46,6 +46,8 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`9789240101197-eng/`](9789240101197-eng/) | 2 files | |
 | [`9789240116191-eng/`](9789240116191-eng/) | 2 files | |
+| [`arxiv-licence-assumed-1991-2003/`](arxiv-licence-assumed-1991-2003/) | 2 files | |
+| [`arxiv-license-information/`](arxiv-license-information/) | 2 files | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/) | 2 files | |
 <!-- kg:subgraph:end -->

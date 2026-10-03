@@ -398,7 +398,9 @@ says.
 
 For each bean:
 
-1. **Create feature branch** — always, no exceptions
+1. **Create feature branch** — always, no exceptions. Before the first edit,
+   run the collision review in [`coordinate`](../sdlc-core/coordinate.md)
+   §"Starting new work".
 2. **Implement** — following the accepted requirements
 3. **Open PR** — link to the bean and the parent issue
 4. **Deploy staging preview** — the `feature-staging.yml` workflow
