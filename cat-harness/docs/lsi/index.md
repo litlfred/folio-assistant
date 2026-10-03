@@ -62,11 +62,11 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
 | `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
+| `who-iris/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
 | `who-iris/who-iris-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-site` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `who-style-guide/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 
 ## cat-harness / library
 
@@ -110,7 +110,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**224** units · **5937** terms · k = **100** · retains **78.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**224** units · **5938** terms · k = **100** · retains **78.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 2 | 21.63 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, asset |
 | 3 | 18.01 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, store, window, sessions |
 | 4 | 16.74 | page, text, pdf, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, relocation, renderable, coordination |
-| 5 | 15.21 | rung, queue, archive, withheld, arm, sniff, archived, zip | preview, feature, staging, requirements, role, build, phase, folio |
+| 5 | 15.21 | rung, archive, queue, withheld, arm, sniff, archived, zip | preview, feature, staging, requirements, role, build, phase, folio |
 | 6 | 14.95 | lane, actor, edge, role, edges, forward, process, logical | sha, page, locale, staging, preview, translated, url, pages |
 | 7 | 14.53 | edges, forward, backward, edge, cross-chapter, energy, preview, logical | actor, lane, role, task, criterion, backlog, login, requirement |
 | 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, post, analysis | claim, locale, translated, avatar, translation, adjudicator, tile, slot |
