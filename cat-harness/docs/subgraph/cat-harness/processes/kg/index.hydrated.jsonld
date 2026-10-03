@@ -12,9 +12,9 @@
       ],
       "enforcement": "strict",
       "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Code node review",
       "nodeCount": 8,
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "sourcePath": "processes/kg/review-code.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Start_CodeNodes"
     },
@@ -22,106 +22,86 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C1",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Start_CodeNodes",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_RunNodeAudits"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C2",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_RunNodeAudits",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/GW_NodeKind"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C3",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/GW_NodeKind",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Tool",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_ReviewTool"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C4",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/GW_NodeKind",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "schema",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_ReviewSchema"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C5",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_ReviewTool",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/GW_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C6",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_ReviewSchema",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/GW_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C7",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/GW_Join",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_RecordVerdict"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C8",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/Task_RecordVerdict",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/End_CodeReviewed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Code reviewer",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/node/End_CodeReviewed",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C8",
       "name": "Code nodes reviewed",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -131,6 +111,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C5",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C6"
@@ -138,10 +119,7 @@
       "name": "GW_Join",
       "nodeKind": "exclusive",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C7",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -151,6 +129,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C2",
       "name": "Which node kind?",
       "nodeKind": "exclusive",
@@ -158,10 +137,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C4"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -171,13 +147,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:StartEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Code nodes changed",
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C1",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -188,14 +162,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C7",
       "name": "Record the verdict on the node",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C8",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -209,14 +181,12 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/site-presentation-assets"
       ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C4",
       "name": "Review the schema definition node",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C6",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -230,14 +200,12 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/covered-is-not-reachable"
       ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C3",
       "name": "Review the Tool node",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C5",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -248,14 +216,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/lane/Lane_CodeReviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C1",
       "name": "Run the node audits",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview/flow/F_C2",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -269,9 +235,9 @@
       ],
       "enforcement": "strict",
       "flowCount": 18,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "A sub-graph wants to leave",
       "nodeCount": 15,
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "sourcePath": "processes/kg/graph-detanglement.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Start_Wants"
     },
@@ -279,224 +245,182 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G0",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Start_Wants",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Brief"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G1",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Declare"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G10",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Isolated"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G11",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "not yet",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Isolate"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G12",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "isolated",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Propose"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G13",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Authorise"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G14",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "authorised",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Extract"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G15",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Authorise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "declined",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Declined"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G16",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Extracted"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G2",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Declared"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G3",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "unknown",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Unknown"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G4",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "declared",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Measure"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G5",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "not yet",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Declare"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G5b",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "unknown",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Unknown"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G6",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Detangled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G7",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Move",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Measure"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G8",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "keep detangling",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Move"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G9",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Detangled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "detangled",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Isolate"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Admin",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Administrator",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Authoring agent",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Declined",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G15",
       "name": "Stays where it is — declared, detangled, isolated",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -506,13 +430,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G16",
       "name": "Extracted",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -522,16 +444,14 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G5b"
       ],
       "name": "UNKNOWN — stop. Not “not yet”, not clean",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -543,6 +463,7 @@
       "decidedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate",
       "decisionRef": "decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G2",
       "name": "Declared in place?",
       "nodeKind": "exclusive",
@@ -551,10 +472,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G4",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G5"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -566,6 +484,7 @@
       "decidedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/detanglement-gate/Decision_DetanglementGate",
       "decisionRef": "decisions/detanglement-gate.dmn#Decision_DetanglementGate",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G6",
       "name": "Detangled?",
       "nodeKind": "exclusive",
@@ -574,10 +493,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G8",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G9"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -589,6 +505,7 @@
       "decidedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/isolation-gate/Decision_IsolationGate",
       "decisionRef": "decisions/isolation-gate.dmn#Decision_IsolationGate",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G10",
       "name": "Stands alone?",
       "nodeKind": "exclusive",
@@ -596,10 +513,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G11",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G12"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -609,13 +523,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:StartEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Size, or a semantic reason to separate",
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G0",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -626,6 +538,7 @@
       "bpmnType": "bpmn:UserTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G13",
       "name": "Authorise the extraction",
       "nodeKind": "activity",
@@ -633,10 +546,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G14",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G15"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -647,14 +557,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/opening-brief",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G0",
       "name": "Brief the topic before touching anything",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G1",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -666,6 +574,7 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G1",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G5"
@@ -673,10 +582,7 @@
       "name": "1 · Declare in place (nothing moves)",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G2",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -687,14 +593,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G14",
       "name": "4 · Extract — a directory move, not a file-by-file sift",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G16",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -706,6 +610,7 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G9",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G11"
@@ -713,10 +618,7 @@
       "name": "3 · Isolate — own declaration, namespace, artefact",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G10",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -727,6 +629,7 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G4",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G7"
@@ -734,10 +637,7 @@
       "name": "2a · Measure — unassigned column FIRST",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G6",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -748,14 +648,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G8",
       "name": "2b · Prune, merge, factor — or the classification is wrong",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G7",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -767,14 +665,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G12",
       "name": "Report what would move — sizes, and what breaks",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement/flow/G13",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -788,9 +684,9 @@
       ],
       "enforcement": "strict",
       "flowCount": 27,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "A knowledge graph leaves for its own repositories",
       "nodeCount": 25,
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "sourcePath": "processes/kg/kg-separation.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Start_Trigger"
     },
@@ -798,345 +694,279 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F0",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Start_Trigger",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Brief"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F1",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Brief",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Measure"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F10",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Closed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "closed",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Plan"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F11",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Plan",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Ids"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F12",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Ids",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "mismatch",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Plan"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F13",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Ids",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "every one matches",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Rehearse"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F14",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Rehearse",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Alone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F15",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Alone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "red: an unseen edge",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Detangle"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F16",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Alone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "could not run",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Unknown"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F17",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Alone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "green",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Propose"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F18",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Propose",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Authorise"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F19",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Authorise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "declined",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Declined"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F2",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Measure",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Decide"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F20",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Authorise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "authorised",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Create"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F21",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Create",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Seed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F22",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Seed",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Consume"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F23",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Consume",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Release"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F24",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Release",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Verify"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F25",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Verify",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Cutover"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F26",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Cutover",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Separated"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F3",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Decide",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "declined",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Stays"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F4",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Decide",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "separate",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Detangle"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F5",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Detangle",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Identity"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F6",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Identity",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Hosted"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F7",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Hosted",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Split"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F8",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Split",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Closed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F9",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Closed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "leaks or stale",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Split"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Administrator",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Authoring agent",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Build pipeline",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Platform",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Platform authoring agent",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Publication",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Publication manager",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Declined",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F19",
       "name": "Stays in place, ready to leave",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1146,13 +976,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F26",
       "name": "Separated",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1162,13 +990,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F3",
       "name": "Stays where it is",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1178,13 +1004,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F16",
       "name": "UNKNOWN — stop. Not clean",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1194,6 +1018,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F14",
       "name": "Green alone?",
       "nodeKind": "exclusive",
@@ -1202,10 +1027,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F16",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F17"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1215,6 +1037,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F8",
       "name": "Tools closed, content code-free?",
       "nodeKind": "exclusive",
@@ -1222,10 +1045,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F9",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F10"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1235,6 +1055,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F11",
       "name": "Every identifier its file's path?",
       "nodeKind": "exclusive",
@@ -1242,10 +1063,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F12",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F13"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1255,13 +1073,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:StartEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Too large, or readers and cadence differ",
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F0",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1272,6 +1088,7 @@
       "bpmnType": "bpmn:UserTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F18",
       "name": "9 · Authorise the extraction",
       "nodeKind": "activity",
@@ -1279,10 +1096,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F19",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F20"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1293,14 +1107,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/opening-brief",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F0",
       "name": "Brief, and claim the bean",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F1",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1312,14 +1124,12 @@
       "bpmnType": "bpmn:CallActivity",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upstream-version-adoption",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Platform",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F22",
       "name": "11 · Parent consumes, additively",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F23",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1331,14 +1141,12 @@
       "bpmnType": "bpmn:UserTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F20",
       "name": "Create the repositories",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F21",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1349,14 +1157,12 @@
       "bpmnType": "bpmn:UserTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F25",
       "name": "13 · Cutover: delete the parent's copy",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F26",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1368,6 +1174,7 @@
       "bpmnType": "bpmn:UserTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Admin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F2",
       "name": "Separate this graph?",
       "nodeKind": "activity",
@@ -1375,10 +1182,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F4"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1389,6 +1193,7 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F4",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F15"
@@ -1396,10 +1201,7 @@
       "name": "1–3 · Declare, detangle, isolate",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F5",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1411,14 +1213,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Platform",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F6",
       "name": "5 · Move harness output about it to the host",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F7",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1430,14 +1230,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Platform",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F5",
       "name": "4 · Identity: version, iriBase, nodeSchemas",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F6",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1449,14 +1247,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F1",
       "name": "Measure the signals",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F2",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1468,6 +1264,7 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Publication",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F10",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F12"
@@ -1475,10 +1272,7 @@
       "name": "7 · Plan publication",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F11",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1490,14 +1284,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F17",
       "name": "Report what moves — sizes, what breaks",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F18",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1509,14 +1301,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F13",
       "name": "8 · Rehearse standalone",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F14",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1528,14 +1318,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Publication",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F23",
       "name": "12 · First release",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F24",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1547,14 +1335,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F21",
       "name": "10 · Seed both repositories",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F22",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1566,6 +1352,7 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Platform",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F7",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F9"
@@ -1573,10 +1360,7 @@
       "name": "6 · Split content from tools",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F8",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1588,14 +1372,12 @@
       "bpmnType": "bpmn:CallActivity",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/publish-verification",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F24",
       "name": "Every identifier dereferences",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F25",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1610,9 +1392,9 @@
       ],
       "enforcement": "advisory",
       "flowCount": 17,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "KG to public portal",
       "nodeCount": 18,
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "sourcePath": "processes/kg/kg-to-portal.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/Start_Graph"
     },
@@ -1620,237 +1402,191 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F1",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/Start_Graph",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/D_Constraints"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F10",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/E_HumanEyes",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Transport"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F11",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "a transport was chosen",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Distribute"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F12",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Transport",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "still undetermined",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/D_Undetermined"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F13",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/D_Undetermined",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/End_Blocked"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F14",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Distribute",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/P_Verify"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F15",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/P_Verify",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Verified"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F16",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "signature and digests match",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/End_Served"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F17",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Verified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "mismatch",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/End_Rejected"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F2",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/D_Constraints",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/E_Scope"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F3",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/E_Scope",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Select"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F4",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Select",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Serialize"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F5",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Serialize",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Package"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F6",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Package",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Budget"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F7",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "within budget",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/S_Sign"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F8",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/GW_Budget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "over budget",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/End_OverBudget"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F9",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/S_Sign",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/E_HumanEyes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Attestation",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/attestation-service",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Attestation (GDHCN / WHO SMART Trust)",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Deployment",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Deployment owner",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Editorial",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Editorial",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Pipeline",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Build pipeline",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Portal",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Portal (external consumer)",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Target",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publish-target",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Publish target",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ]
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/node/A_Distribute",
@@ -1858,14 +1594,12 @@
       "bpmnType": "bpmn:ServiceTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Target",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F11",
       "name": "Publish to the origin (a cache may front it)",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F14",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publish-target",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1876,14 +1610,12 @@
       "bpmnType": "bpmn:ServiceTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F5",
       "name": "Package: files plus a manifest of digests",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F6",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1894,14 +1626,12 @@
       "bpmnType": "bpmn:ServiceTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F3",
       "name": "Cut the subgraph that leaves",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F4",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1912,14 +1642,12 @@
       "bpmnType": "bpmn:ServiceTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F4",
       "name": "Serialize to JSON-LD",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F5",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1930,14 +1658,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Deployment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F1",
       "name": "State the constraints, with denominators",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F2",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -1948,14 +1674,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Deployment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F12",
       "name": "Record the decision as still open",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F13",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1967,14 +1691,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Editorial",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F9",
       "name": "Human eyes on the rendered artefact",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F10",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
       "relaxable": true,
       "touchesWorkPlan": true,
@@ -1986,14 +1708,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Editorial",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F2",
       "name": "Decide what may leave the repository",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F3",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2003,13 +1723,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Deployment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F13",
       "name": "Open — awaiting a deployment decision",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2019,13 +1737,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F8",
       "name": "Refused — over budget",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2035,13 +1751,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Portal",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F17",
       "name": "Rejected — serve the previous version",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2051,13 +1765,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Portal",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F16",
       "name": "Readers have the bytes",
       "nodeKind": "end",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2067,6 +1779,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F6",
       "name": "Within the stated budget?",
       "nodeKind": "exclusive",
@@ -2074,10 +1787,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F7",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F8"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2087,6 +1797,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Deployment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F10",
       "name": "Which transport? (UNDETERMINED)",
       "nodeKind": "exclusive",
@@ -2094,10 +1805,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F11",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F12"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2107,6 +1815,7 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Portal",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F15",
       "name": "Verifies?",
       "nodeKind": "exclusive",
@@ -2114,10 +1823,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F16",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F17"
       ],
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2128,14 +1834,12 @@
       "bpmnType": "bpmn:Task",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Portal",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F14",
       "name": "Verify what arrived against what was signed",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F15",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/external-registry",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2146,14 +1850,12 @@
       "bpmnType": "bpmn:ServiceTask",
       "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Attestation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F7",
       "name": "Sign the package and/or each asset",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F9",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/attestation-service",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2163,13 +1865,11 @@
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:StartEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/lane/Lane_Deployment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "A graph exists, and a portal needs it",
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F1",
-      "partOf": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
-      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
@@ -2185,8 +1885,8 @@
           "@type": "cat-harness:Decision",
           "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
           "hitPolicy": "FIRST",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "name": "Detangled?",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "sourcePath": "processes/kg/decisions/detanglement-gate.dmn"
         },
         {
@@ -2194,8 +1894,8 @@
           "@type": "cat-harness:Decision",
           "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
           "hitPolicy": "FIRST",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "name": "Stands alone?",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "sourcePath": "processes/kg/decisions/isolation-gate.dmn"
         },
         {
@@ -2203,8 +1903,8 @@
           "@type": "cat-harness:Decision",
           "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
           "hitPolicy": "FIRST",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "name": "Declared in place?",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
           "sourcePath": "processes/kg/decisions/subgraph-declared-gate.dmn"
         }
       ],

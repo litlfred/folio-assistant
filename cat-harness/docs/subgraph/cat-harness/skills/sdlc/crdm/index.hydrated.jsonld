@@ -16,8 +16,8 @@
       ],
       "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its six skills — three governing the methodology and three detailing a single phase (needs assessment, the requirements template, impact analysis); its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
       "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "name": "crdm",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "path": "skills/sdlc/crdm",
       "version": "0.1.0"
     },
@@ -29,10 +29,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 84,
       "instructionsPath": "skills/sdlc/crdm/crdm-data-model.md",
       "name": "crdm-data-model",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "CRDM — the data-modelling phase"
     },
     {
@@ -43,12 +43,12 @@
       "hasIOContract": true,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/input.schema.json",
       "instructionLines": 281,
       "instructionsPath": "skills/sdlc/crdm/crdm-detect.md",
       "name": "crdm-detect",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/output.schema.json",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Feature-request detection (CRDM trigger)"
     },
     {
@@ -59,10 +59,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 134,
       "instructionsPath": "skills/sdlc/crdm/crdm-impact-analysis.md",
       "name": "crdm-impact-analysis",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Phase 4 — Impact analysis (detail)"
     },
     {
@@ -73,10 +73,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 113,
       "instructionsPath": "skills/sdlc/crdm/crdm-needs-assessment.md",
       "name": "crdm-needs-assessment",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Phase 1 — Needs assessment (detail)"
     },
     {
@@ -87,10 +87,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 123,
       "instructionsPath": "skills/sdlc/crdm/crdm-requirements-template.md",
       "name": "crdm-requirements-template",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Phase 3 — Requirements definition (detail)"
     },
     {
@@ -100,10 +100,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 482,
       "instructionsPath": "skills/sdlc/crdm/crdm-requirements-workflow.md",
       "name": "crdm-requirements-workflow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "CRDM requirements workflow"
     }
   ],

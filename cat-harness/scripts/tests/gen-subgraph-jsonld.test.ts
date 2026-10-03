@@ -125,6 +125,23 @@ describe("gen-subgraph-jsonld", () => {
     expect(ctx.id).toBeUndefined(); // no keyword alias, so files say `@id`
   });
 
+  test("subgraph membership and structural containment stay two properties (bean 3f5f)", () => {
+    const ctx = JSON.parse(files.get(SUBGRAPH_CONTEXT_PATH)!)["@context"];
+    expect(ctx.inSubgraph["@id"]).not.toBe(ctx.partOf["@id"]);
+    // A ProcessNode is part of its diagram AND in the processes subgraph;
+    // compaction must keep both, not fold one into the other.
+    let both = 0;
+    const walk = (o: unknown): void => {
+      if (Array.isArray(o)) return o.forEach(walk);
+      if (o === null || typeof o !== "object") return;
+      const r = o as Record<string, unknown>;
+      if ("partOf" in r && "inSubgraph" in r) both += 1;
+      Object.values(r).forEach(walk);
+    };
+    walk(read("processes/", SUBGRAPH_HYDRATED_FILE));
+    expect(both).toBeGreaterThan(0);
+  });
+
   test("round trip: every file parses back through its schema", () => {
     let n = 0;
     for (const [p, t] of files) {

@@ -20,8 +20,8 @@
           ],
           "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave — and how any graph is DRAWN so the restructuring can be seen (graph-rendering). The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "graph-management",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/kg/graph-management",
           "version": "0.1.0"
         },
@@ -33,10 +33,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 219,
           "instructionsPath": "skills/kg/graph-management/domain-fencing.md",
           "name": "domain-fencing",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Domain fencing — keeping one folio's rules out of everybody's platform"
         },
         {
@@ -47,10 +47,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 170,
           "instructionsPath": "skills/kg/graph-management/edge-kinds-and-blast-radius.md",
           "name": "edge-kinds-and-blast-radius",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task."
         },
         {
@@ -61,10 +61,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 351,
           "instructionsPath": "skills/kg/graph-management/graph-detanglement.md",
           "name": "graph-detanglement",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Graph detanglement — the practice, not the migration"
         },
         {
@@ -75,10 +75,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 140,
           "instructionsPath": "skills/kg/graph-management/graph-rendering.md",
           "name": "graph-rendering",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Graph rendering: one set of rules for every drawn graph"
         },
         {
@@ -89,10 +89,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 217,
           "instructionsPath": "skills/kg/graph-management/kg-separation.md",
           "name": "kg-separation",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Knowledge Graph separation — the method"
         },
         {
@@ -103,10 +103,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 216,
           "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
           "name": "lsi-indexing",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "LSI indexing — the platform's application of `methodologies/lsi.md`"
         }
       ],
@@ -148,8 +148,8 @@
           ],
           "description": "How the knowledge graph is DECLARED, placed, exported, audited and published: directory conventions and graph kinds, placement, schema management, skill registration, audit coverage, kg-export and portal publication. Moved out of folio-core into the kg topic (bean 9umr, owner ruling 2026-09-30) so KG structure and use sit apart from the SDLC process skills; graph-management (restructuring) and kg-navigation (reading) are its siblings in the same topic.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "kg-core",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/kg/kg-core",
           "version": "0.1.0"
         },
@@ -161,10 +161,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 90,
           "instructionsPath": "skills/kg/kg-core/associate-harness.md",
           "name": "associate-harness",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Associate a harness"
         },
         {
@@ -175,10 +175,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 255,
           "instructionsPath": "skills/kg/kg-core/audit-coverage.md",
           "name": "audit-coverage",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Audit coverage — measured, with denominators"
         },
         {
@@ -189,10 +189,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 111,
           "instructionsPath": "skills/kg/kg-core/code-node-review.md",
           "name": "code-node-review",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Code node review"
         },
         {
@@ -203,10 +203,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 293,
           "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
           "name": "content-context-and-state-graphs",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Content, context and state graphs"
         },
         {
@@ -217,10 +217,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 152,
           "instructionsPath": "skills/kg/kg-core/corpus-grep.md",
           "name": "corpus-grep",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Corpus-Grep Skill"
         },
         {
@@ -231,10 +231,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 265,
           "instructionsPath": "skills/kg/kg-core/data-modelling.md",
           "name": "data-modelling",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Data modelling — the entities, before the fields"
         },
         {
@@ -244,10 +244,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 1311,
           "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
           "name": "directory-conventions",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Directory conventions — what an instance declares it scans"
         },
         {
@@ -258,10 +258,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 176,
           "instructionsPath": "skills/kg/kg-core/flushable-containers.md",
           "name": "flushable-containers",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Flushable containers"
         },
         {
@@ -272,10 +272,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 253,
           "instructionsPath": "skills/kg/kg-core/harness-requirements.md",
           "name": "harness-requirements",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Harness requirements — what an instance owes for what it declares"
         },
         {
@@ -286,10 +286,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 289,
           "instructionsPath": "skills/kg/kg-core/instance-kinds.md",
           "name": "instance-kinds",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Instance kinds — naming one, and what a new kind must declare"
         },
         {
@@ -300,10 +300,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 275,
           "instructionsPath": "skills/kg/kg-core/instance-publication.md",
           "name": "instance-publication",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "instance-publication — draft is a state, not an absence of one"
         },
         {
@@ -314,10 +314,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 238,
           "instructionsPath": "skills/kg/kg-core/kg-contribution-offer.md",
           "name": "kg-contribution-offer",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Offering the knowledge graph — the question nobody was asking"
         },
         {
@@ -328,10 +328,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 599,
           "instructionsPath": "skills/kg/kg-core/kg-export.md",
           "name": "kg-export",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "KG export — publishing the graph as linked data, not as a page"
         },
         {
@@ -342,10 +342,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 241,
           "instructionsPath": "skills/kg/kg-core/kg-to-portal.md",
           "name": "kg-to-portal",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "KG → package → distribution → portal"
         },
         {
@@ -356,10 +356,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 337,
           "instructionsPath": "skills/kg/kg-core/placement.md",
           "name": "placement",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Placement — decide where it goes before you write it"
         },
         {
@@ -370,10 +370,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 444,
           "instructionsPath": "skills/kg/kg-core/schema-management.md",
           "name": "schema-management",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Managing a schema — the graph, the viewer, and the three answers that are not \"fine\""
         },
         {
@@ -384,10 +384,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 129,
           "instructionsPath": "skills/kg/kg-core/skill-registration.md",
           "name": "skill-registration",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Adding a skill"
         },
         {
@@ -398,10 +398,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 93,
           "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
           "name": "skill-voice-review",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Skill voice review"
         },
         {
@@ -412,10 +412,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 193,
           "instructionsPath": "skills/kg/kg-core/surprise-to-corpus.md",
           "name": "surprise-to-corpus",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Surprise to corpus — notice it, filter it, then ask"
         },
         {
@@ -426,10 +426,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 178,
           "instructionsPath": "skills/kg/kg-core/uml-overview.md",
           "name": "uml-overview",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "UML overview: generated from declarations and schemas, never drawn"
         },
         {
@@ -440,10 +440,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 173,
           "instructionsPath": "skills/kg/kg-core/vocabulary-authority.md",
           "name": "vocabulary-authority",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Vocabulary authority — one fact, one home, N renderings"
         }
       ],
@@ -463,8 +463,8 @@
           "declaresSkill": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-navigation",
           "description": "How an agent finds the knowledge graph it is standing in. Named here rather than inferred from the directory: every instance's skills live in a directory called `skills`, so a package id taken from the basename makes this one indistinguishable from cat-harness/src/skills, kg-navigation's, large-datasets' and who-iris's. Before this manifest a `seen` Set silently dropped whichever arrived second and every signal read healthy — bean `nlvl`, surfaced by `r1vw` turning that silence into a reported problem.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "kg-navigation",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/kg/kg-navigation",
           "version": "0.1.0"
         },
@@ -476,10 +476,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-navigation",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 147,
           "instructionsPath": "skills/kg/kg-navigation/kg-navigation.md",
           "name": "kg-navigation",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Reading the knowledge graph — how to find the skill you need"
         }
       ],

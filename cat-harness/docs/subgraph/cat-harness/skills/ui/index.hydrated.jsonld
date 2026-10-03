@@ -22,8 +22,8 @@
           ],
           "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "theming",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/ui/theming",
           "version": "0.1.0"
         },
@@ -35,10 +35,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 154,
           "instructionsPath": "skills/ui/theming/create-sticky-note.md",
           "name": "create-sticky-note",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Create a sticky note"
         },
         {
@@ -49,10 +49,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 111,
           "instructionsPath": "skills/ui/theming/site-presentation-assets.md",
           "name": "site-presentation-assets",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
         },
         {
@@ -63,10 +63,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 177,
           "instructionsPath": "skills/ui/theming/theme-art-intake.md",
           "name": "theme-art-intake",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Theme art intake"
         },
         {
@@ -77,10 +77,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 228,
           "instructionsPath": "skills/ui/theming/theme-artefacts.md",
           "name": "theme-artefacts",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Per-artefact specialisation"
         },
         {
@@ -91,10 +91,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 75,
           "instructionsPath": "skills/ui/theming/theme-contrast.md",
           "name": "theme-contrast",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Contrast: measured over the darkest thing that could be there"
         },
         {
@@ -105,10 +105,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 104,
           "instructionsPath": "skills/ui/theming/theme-declaration.md",
           "name": "theme-declaration",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Declaring a theme"
         },
         {
@@ -119,10 +119,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 75,
           "instructionsPath": "skills/ui/theming/theme-generation.md",
           "name": "theme-generation",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Generating a theme's CSS"
         },
         {
@@ -133,10 +133,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 101,
           "instructionsPath": "skills/ui/theming/theming.md",
           "name": "theming",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Theming, split on the stage it fails at"
         }
       ],
@@ -174,8 +174,8 @@
           ],
           "description": "Rendering and publication surfaces: the docs site and its generators (docs-auto, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "ui-core",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/ui/ui-core",
           "version": "0.1.0"
         },
@@ -187,10 +187,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 116,
           "instructionsPath": "skills/ui/ui-core/board-diagram-interchange.md",
           "name": "board-diagram-interchange",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Relationship first, visualisation later"
         },
         {
@@ -201,10 +201,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 335,
           "instructionsPath": "skills/ui/ui-core/board-windows.md",
           "name": "board-windows",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Start in the avatar, open into a window"
         },
         {
@@ -215,10 +215,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 152,
           "instructionsPath": "skills/ui/ui-core/docs-auto.md",
           "name": "docs-auto",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "docs-auto — the index is generated, the meaning is authored"
         },
         {
@@ -229,10 +229,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 185,
           "instructionsPath": "skills/ui/ui-core/docs-generation.md",
           "name": "docs-generation",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Documentation Generation Skill"
         },
         {
@@ -243,10 +243,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 448,
           "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
           "name": "harness-tiles",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "A tile is the harness's, not the node's"
         },
         {
@@ -256,10 +256,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 100,
           "instructionsPath": "skills/ui/ui-core/html-rendering-qc.md",
           "name": "html-rendering-qc",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "HTML Rendering QC"
         },
         {
@@ -270,10 +270,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 210,
           "instructionsPath": "skills/ui/ui-core/incremental-render.md",
           "name": "incremental-render",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Incremental render — the cache is easy, the cascade is the work"
         },
         {
@@ -284,10 +284,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 261,
           "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
           "name": "kg-viewer",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Rendering the knowledge graph"
         },
         {
@@ -298,10 +298,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 160,
           "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
           "name": "liquid-templates",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Liquid templates — layout only, every fact from the graph"
         },
         {
@@ -311,10 +311,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 108,
           "instructionsPath": "skills/ui/ui-core/markdown-render-check.md",
           "name": "markdown-render-check",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Markdown Render Check"
         },
         {
@@ -325,10 +325,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 292,
           "instructionsPath": "skills/ui/ui-core/readme-sections.md",
           "name": "readme-sections",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "A folio's README — the folio owns the file, the platform owns the markers"
         },
         {
@@ -339,10 +339,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 220,
           "instructionsPath": "skills/ui/ui-core/render-logging.md",
           "name": "render-logging",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Render logging — the publish branch keeps its own history"
         },
         {
@@ -352,10 +352,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 124,
           "instructionsPath": "skills/ui/ui-core/render-order.md",
           "name": "render-order",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Render order — flattening a dependency hierarchy, and the two stages"
         },
         {
@@ -365,10 +365,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 162,
           "instructionsPath": "skills/ui/ui-core/serving-renderings.md",
           "name": "serving-renderings",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce"
         },
         {
@@ -379,10 +379,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 144,
           "instructionsPath": "skills/ui/ui-core/theme-ui-review.md",
           "name": "theme-ui-review",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "At ingestion, and only at ingestion"
         },
         {
@@ -393,10 +393,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 187,
           "instructionsPath": "skills/ui/ui-core/ui-accessibility.md",
           "name": "ui-accessibility",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "All UI must follow accessibility guidelines"
         },
         {
@@ -407,10 +407,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 76,
           "instructionsPath": "skills/ui/ui-core/wireframe-design-review.md",
           "name": "wireframe-design-review",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Wireframe design review"
         }
       ],

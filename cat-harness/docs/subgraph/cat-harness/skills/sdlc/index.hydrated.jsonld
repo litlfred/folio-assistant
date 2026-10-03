@@ -20,8 +20,8 @@
           ],
           "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its six skills — three governing the methodology and three detailing a single phase (needs assessment, the requirements template, impact analysis); its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "crdm",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/sdlc/crdm",
           "version": "0.1.0"
         },
@@ -33,10 +33,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 84,
           "instructionsPath": "skills/sdlc/crdm/crdm-data-model.md",
           "name": "crdm-data-model",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "CRDM — the data-modelling phase"
         },
         {
@@ -47,12 +47,12 @@
           "hasIOContract": true,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "inputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/input.schema.json",
           "instructionLines": 281,
           "instructionsPath": "skills/sdlc/crdm/crdm-detect.md",
           "name": "crdm-detect",
           "outputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/output.schema.json",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Feature-request detection (CRDM trigger)"
         },
         {
@@ -63,10 +63,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 134,
           "instructionsPath": "skills/sdlc/crdm/crdm-impact-analysis.md",
           "name": "crdm-impact-analysis",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Phase 4 — Impact analysis (detail)"
         },
         {
@@ -77,10 +77,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 113,
           "instructionsPath": "skills/sdlc/crdm/crdm-needs-assessment.md",
           "name": "crdm-needs-assessment",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Phase 1 — Needs assessment (detail)"
         },
         {
@@ -91,10 +91,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 123,
           "instructionsPath": "skills/sdlc/crdm/crdm-requirements-template.md",
           "name": "crdm-requirements-template",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Phase 3 — Requirements definition (detail)"
         },
         {
@@ -104,10 +104,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 482,
           "instructionsPath": "skills/sdlc/crdm/crdm-requirements-workflow.md",
           "name": "crdm-requirements-workflow",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "CRDM requirements workflow"
         }
       ],
@@ -181,8 +181,8 @@
           ],
           "description": "Software-delivery practice for agents and people working in the harness: the work plan (beans, claiming, blocking, briefs, turn reports), issues and PRs, continual progress, review and merge (prepare-merge, staging review, visual diff, rendered verification), CI health and platform gates, release and deployment, and coordinating sessions and swarms. Moved out of folio-core into the sdlc topic (bean 9umr, owner ruling 2026-09-30); crdm and spec-kit are its siblings in the same topic.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "sdlc-core",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/sdlc/sdlc-core",
           "version": "0.1.0"
         },
@@ -193,10 +193,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 230,
           "instructionsPath": "skills/sdlc/sdlc-core/activity-log.md",
           "name": "activity-log",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Activity log — what an agent did, kept out of the graph"
         },
         {
@@ -207,10 +207,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 266,
           "instructionsPath": "skills/sdlc/sdlc-core/adjudication.md",
           "name": "adjudication",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Adjudication — judgement, when the mechanism ran out of facts"
         },
         {
@@ -221,10 +221,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 117,
           "instructionsPath": "skills/sdlc/sdlc-core/bean-blocking.md",
           "name": "bean-blocking",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Blocking is a claim about the work, not a mood"
         },
         {
@@ -235,10 +235,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 821,
           "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
           "name": "bean-coordination",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Bean Coordination"
         },
         {
@@ -249,10 +249,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 394,
           "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
           "name": "before-after-preview",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/before-after-preview — show the reviewer the change, not a description of it"
         },
         {
@@ -263,10 +263,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 162,
           "instructionsPath": "skills/sdlc/sdlc-core/ci-health.md",
           "name": "ci-health",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "CI health — a red workflow looks exactly like a green one from in here"
         },
         {
@@ -277,10 +277,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 267,
           "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
           "name": "continual-progress",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/continual-progress — trackable, always-PR'd, continually-committed work"
         },
         {
@@ -291,10 +291,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 524,
           "instructionsPath": "skills/sdlc/sdlc-core/coordinate.md",
           "name": "coordinate",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/coordinate — multi-agent / multi-PR coordination"
         },
         {
@@ -305,10 +305,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 85,
           "instructionsPath": "skills/sdlc/sdlc-core/decision-audit.md",
           "name": "decision-audit",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "A decision is not a finding, and neither is a substitute for the other"
         },
         {
@@ -319,10 +319,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 144,
           "instructionsPath": "skills/sdlc/sdlc-core/delivery-summary.md",
           "name": "delivery-summary",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Delivery Summary"
         },
         {
@@ -332,10 +332,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 195,
           "instructionsPath": "skills/sdlc/sdlc-core/deployment-auth.md",
           "name": "deployment-auth",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Deployment & Auth Skill"
         },
         {
@@ -346,10 +346,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 164,
           "instructionsPath": "skills/sdlc/sdlc-core/diff.md",
           "name": "diff",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Diff — Content Block Change Report"
         },
         {
@@ -360,10 +360,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 229,
           "instructionsPath": "skills/sdlc/sdlc-core/dispatch-agent.md",
           "name": "dispatch-agent",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/dispatch-agent — parallel dispatch with a live 2-minute status heartbeat"
         },
         {
@@ -374,10 +374,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 310,
           "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
           "name": "feature-staging",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Feature-branch staging"
         },
         {
@@ -388,10 +388,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 184,
           "instructionsPath": "skills/sdlc/sdlc-core/gate-tree-mutation.md",
           "name": "gate-tree-mutation",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "\"NOT clean\" is a verdict about the RUN, not about your diff"
         },
         {
@@ -402,10 +402,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 223,
           "instructionsPath": "skills/sdlc/sdlc-core/generalise-the-fix.md",
           "name": "generalise-the-fix",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Generalise the fix, then attack the generalisation"
         },
         {
@@ -416,10 +416,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 221,
           "instructionsPath": "skills/sdlc/sdlc-core/github-state-inspection.md",
           "name": "github-state-inspection",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Reading GitHub state — resolve the ref, do not compose the URL"
         },
         {
@@ -430,10 +430,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 399,
           "instructionsPath": "skills/sdlc/sdlc-core/goal-review.md",
           "name": "goal-review",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Goal review — cold start, sweep a window, prioritise against stated goals"
         },
         {
@@ -444,10 +444,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 112,
           "instructionsPath": "skills/sdlc/sdlc-core/handover-report.md",
           "name": "handover-report",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Handover report"
         },
         {
@@ -458,10 +458,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 59,
           "instructionsPath": "skills/sdlc/sdlc-core/idle-backlog.md",
           "name": "idle-backlog",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "idle-backlog"
         },
         {
@@ -472,10 +472,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 309,
           "instructionsPath": "skills/sdlc/sdlc-core/integration-backlog.md",
           "name": "integration-backlog",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/integration-backlog — drive the backlog to zero, one PR at a time"
         },
         {
@@ -486,10 +486,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 175,
           "instructionsPath": "skills/sdlc/sdlc-core/integration-watch.md",
           "name": "integration-watch",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/integration-watch — dispatcher for the integration watchers"
         },
         {
@@ -500,10 +500,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 241,
           "instructionsPath": "skills/sdlc/sdlc-core/integration-watcher.md",
           "name": "integration-watcher",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "integration-watcher (abstract parent)"
         },
         {
@@ -514,10 +514,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 135,
           "instructionsPath": "skills/sdlc/sdlc-core/issue-working.md",
           "name": "issue-working",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Working an issue — announce, then re-check"
         },
         {
@@ -528,10 +528,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 310,
           "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
           "name": "merge-conflict-patterns",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Merge-conflict patterns — what a merge may resolve on its own"
         },
         {
@@ -542,10 +542,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 225,
           "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
           "name": "merge-queue",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Merge queue — what lands next, and as what"
         },
         {
@@ -556,10 +556,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 86,
           "instructionsPath": "skills/sdlc/sdlc-core/narrative-asserts-code.md",
           "name": "narrative-asserts-code",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Does the prose say what the code does?"
         },
         {
@@ -570,10 +570,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 236,
           "instructionsPath": "skills/sdlc/sdlc-core/opening-brief.md",
           "name": "opening-brief",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Opening brief — brief the topic before you touch anything"
         },
         {
@@ -584,10 +584,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 96,
           "instructionsPath": "skills/sdlc/sdlc-core/package-release.md",
           "name": "package-release",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Cutting a package release"
         },
         {
@@ -598,10 +598,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 55,
           "instructionsPath": "skills/sdlc/sdlc-core/pending-show.md",
           "name": "pending-show",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/pending-show — what is this session working on?"
         },
         {
@@ -612,10 +612,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 185,
           "instructionsPath": "skills/sdlc/sdlc-core/pickup.md",
           "name": "pickup",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Pickup Skill"
         },
         {
@@ -626,10 +626,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 356,
           "instructionsPath": "skills/sdlc/sdlc-core/platform-gates.md",
           "name": "platform-gates",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "The platform's own gates — run what CI will run"
         },
         {
@@ -640,10 +640,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 154,
           "instructionsPath": "skills/sdlc/sdlc-core/pr-description.md",
           "name": "pr-description",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "pr-description — a PR body a first-time reader can follow"
         },
         {
@@ -654,10 +654,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 106,
           "instructionsPath": "skills/sdlc/sdlc-core/prepare-for-handover.md",
           "name": "prepare-for-handover",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Prepare for a handover"
         },
         {
@@ -668,10 +668,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 464,
           "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
           "name": "prepare-merge",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Prepare-merge — get a feature branch ready to land"
         },
         {
@@ -682,10 +682,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 181,
           "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge-auto.md",
           "name": "prepare-merge-auto",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/prepare-merge-auto — Autonomous merge pipeline"
         },
         {
@@ -696,10 +696,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 65,
           "instructionsPath": "skills/sdlc/sdlc-core/publish-verification.md",
           "name": "publish-verification",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Publish verification, and the one alert"
         },
         {
@@ -709,10 +709,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 111,
           "instructionsPath": "skills/sdlc/sdlc-core/qa-report-signing.md",
           "name": "qa-report-signing",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "QA report signing — two routes, chosen by the performer's reach"
         },
         {
@@ -723,10 +723,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 127,
           "instructionsPath": "skills/sdlc/sdlc-core/qa-witness.md",
           "name": "qa-witness",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "QA witnesses — the published projection of every verdict"
         },
         {
@@ -737,10 +737,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 58,
           "instructionsPath": "skills/sdlc/sdlc-core/related-work-coordination.md",
           "name": "related-work-coordination",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Related work: find it, sort it, ask"
         },
         {
@@ -751,10 +751,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 352,
           "instructionsPath": "skills/sdlc/sdlc-core/rendered-verification.md",
           "name": "rendered-verification",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/rendered-verification — look at it, then send the picture"
         },
         {
@@ -765,10 +765,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 269,
           "instructionsPath": "skills/sdlc/sdlc-core/session-intent.md",
           "name": "session-intent",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/session-intent — durable session intent + results"
         },
         {
@@ -779,10 +779,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 656,
           "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
           "name": "staging-review",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Staging review — before/after comparison"
         },
         {
@@ -793,10 +793,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 116,
           "instructionsPath": "skills/sdlc/sdlc-core/stalled-agent-triage.md",
           "name": "stalled-agent-triage",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Stalled-agent triage"
         },
         {
@@ -807,10 +807,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 100,
           "instructionsPath": "skills/sdlc/sdlc-core/swarm-management.md",
           "name": "swarm-management",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Swarm management"
         },
         {
@@ -820,10 +820,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 149,
           "instructionsPath": "skills/sdlc/sdlc-core/test-engineer.md",
           "name": "test-engineer",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Test Engineer Skill"
         },
         {
@@ -834,10 +834,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 556,
           "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
           "name": "todo-manager",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Session Task Manager (`beans`)"
         },
         {
@@ -848,10 +848,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 218,
           "instructionsPath": "skills/sdlc/sdlc-core/turn-reporting.md",
           "name": "turn-reporting",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Turn reporting — say which bean you are on, every turn"
         },
         {
@@ -862,10 +862,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 158,
           "instructionsPath": "skills/sdlc/sdlc-core/untainted-verification.md",
           "name": "untainted-verification",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Untainted verification — the producer never writes the verdict"
         },
         {
@@ -876,10 +876,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 198,
           "instructionsPath": "skills/sdlc/sdlc-core/upstream-version-adoption.md",
           "name": "upstream-version-adoption",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Adopting an upstream version bump"
         },
         {
@@ -890,10 +890,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 133,
           "instructionsPath": "skills/sdlc/sdlc-core/visual-diff.md",
           "name": "visual-diff",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Visual diff — see a figure change"
         },
         {
@@ -904,10 +904,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 323,
           "instructionsPath": "skills/sdlc/sdlc-core/watch.md",
           "name": "watch",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "/watch — background watcher with integration check"
         },
         {
@@ -917,10 +917,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 84,
           "instructionsPath": "skills/sdlc/sdlc-core/where-a-proposal-goes.md",
           "name": "where-a-proposal-goes",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Where a proposal goes — the issue, not the documentation"
         }
       ],
@@ -960,8 +960,8 @@
           "declaresSkill": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
           "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/sdlc/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
           "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "spec-kit",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "path": "skills/sdlc/spec-kit",
           "version": "0.1.0"
         },
@@ -973,10 +973,10 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "instructionLines": 146,
           "instructionsPath": "skills/sdlc/spec-kit/spec-kit.md",
           "name": "spec-kit",
-          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "title": "Spec Kit — spec-driven development"
         }
       ],

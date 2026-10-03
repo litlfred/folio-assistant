@@ -18,8 +18,8 @@
       ],
       "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
       "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "name": "theming",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "path": "skills/ui/theming",
       "version": "0.1.0"
     },
@@ -31,10 +31,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 154,
       "instructionsPath": "skills/ui/theming/create-sticky-note.md",
       "name": "create-sticky-note",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Create a sticky note"
     },
     {
@@ -45,10 +45,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 111,
       "instructionsPath": "skills/ui/theming/site-presentation-assets.md",
       "name": "site-presentation-assets",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
     },
     {
@@ -59,10 +59,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 177,
       "instructionsPath": "skills/ui/theming/theme-art-intake.md",
       "name": "theme-art-intake",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Theme art intake"
     },
     {
@@ -73,10 +73,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 228,
       "instructionsPath": "skills/ui/theming/theme-artefacts.md",
       "name": "theme-artefacts",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Per-artefact specialisation"
     },
     {
@@ -87,10 +87,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 75,
       "instructionsPath": "skills/ui/theming/theme-contrast.md",
       "name": "theme-contrast",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Contrast: measured over the darkest thing that could be there"
     },
     {
@@ -101,10 +101,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 104,
       "instructionsPath": "skills/ui/theming/theme-declaration.md",
       "name": "theme-declaration",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Declaring a theme"
     },
     {
@@ -115,10 +115,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 75,
       "instructionsPath": "skills/ui/theming/theme-generation.md",
       "name": "theme-generation",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Generating a theme's CSS"
     },
     {
@@ -129,10 +129,10 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "instructionLines": 101,
       "instructionsPath": "skills/ui/theming/theming.md",
       "name": "theming",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "title": "Theming, split on the stage it fails at"
     }
   ],
