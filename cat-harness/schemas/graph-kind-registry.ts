@@ -1480,6 +1480,46 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Running BPMN instances — one JSON file each, carrying " +
       "`\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
   },
+
+  // The merge queue — what the merge STEWARD decided about an open pull
+  // request. Bean `hfag`'s last open box, and the one that made the schema
+  // homeless: `schemas/merge-queue.ts` has existed since the epic's first
+  // commit, `MergeQueueEntrySchema` validates an entry, and nothing declared
+  // anywhere an entry could LIVE. A schema with no declared graph is reachable
+  // only by the module that imports it, which is `dh4f` pointed the other way
+  // — not a declared directory nothing holds, but a held shape nothing
+  // declares.
+  //
+  // `state` by the one question `content-context-and-state-graphs` asks: a
+  // running process WRITES it. A steward records a placement, a hold or an
+  // ejection as the train proceeds; nothing authors a queue entry outside a
+  // run, and re-running is how you arrive at the next one.
+  //
+  // It sits in `beans/` beside `workflow-state` ON PURPOSE, and the pairing is
+  // the point: the queue holds the DECISIONS, a finished train run holds the
+  // EVIDENCE of what those decisions met (`TrainMemberEvidenceSchema`). Two
+  // kinds, one store, because a reader asking "why did #1899 go in that train"
+  // needs both and should look in one place.
+  //
+  // `recordsWork: true` — an entry is a pull request someone is partway
+  // through placing, which is exactly what that flag is for (beans, todos,
+  // workflow-state). A held entry with an unexpired hold is open work.
+  "merge-queue": {
+    renderable: false,
+    holds: "state",
+    recordsWork: true,
+    schema: "schemas/merge-queue.ts",
+    // declared-path-literal: this table IS the declaration, as on `health` and
+    // `workflow-state`. The validator is the SAME export the steward's tooling
+    // imports, so the kind and the writer cannot drift into two answers.
+    nodeSchemas: {
+      "folio-merge-queue-entry/v1": { validator: "schemas/merge-queue.ts#MergeQueueEntrySchema" },
+    },
+    summary:
+      "A merge steward's DECISIONS about an open pull request — priority, rank or override with its reason, " +
+      "a hold with its expiry, the train it joined, an ejection with its evidence. " +
+      "Never a fact GitHub owns: CI, mergeability, labels and the head SHA are read live and refused by name here.",
+  },
   // The todo graph. NOT a second work plan: `beans` is the agent work plan and
   // `AGENTS.md` forbids standing up another. This is the thing that document
   // already carves out beside it — "the content-review feedback workflow … a

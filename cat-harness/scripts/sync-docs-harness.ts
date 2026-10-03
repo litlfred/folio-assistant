@@ -288,7 +288,10 @@ const config = harnessPanel(
 function navbarRow(
   harnesses: readonly {
     name: string;
+    title?: string;
     navbarIcons?: string[];
+    href?: string;
+    hrefKind?: "folio" | "viewer" | "handled";
     visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
@@ -299,7 +302,7 @@ function navbarRow(
   hrefs: Record<string, string>;
   /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
   notes: Record<string, string>;
-  folders: { kind: string; label?: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
+  folders: NavFolder[];
 } | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
@@ -388,14 +391,67 @@ function navbarRow(
   // `label` RIDES ALONG as `harness-tiles.ts` set it (bean `ob3m` finding 6):
   // FOLDERS printed the bare kind word, and the glass named the same page
   // otherwise. The client renders this and composes nothing.
-  const folders = (mine.visualisations ?? []).filter((v) => v.sameAs === undefined).map((v) => {
+  const folders = foldersOf(mine.visualisations);
+  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
+}
+
+type NavFolder = { kind: string; label?: string; within?: string; path?: string; note?: string; stagingOnly?: true };
+
+/** One instance's visualisations as folder rows — see the note in `navbarRow`. */
+function foldersOf(
+  vis: readonly { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[] | undefined,
+): NavFolder[] {
+  return (vis ?? []).filter((v) => v.sameAs === undefined).map((v) => {
     const within = v.within ? { within: v.within } : {};
     const label = v.label ? { label: v.label } : {};
     return v.path
       ? { kind: v.kind, ...label, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
       : { kind: v.kind, ...label, ...within, ...(v.note ? { note: v.note } : {}) };
   });
-  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
+}
+
+/**
+ * THE INSTANCES A PAGE CAN BE INSIDE, for the rail's PAGES and FOLDERS
+ * (issue #1902). Owner, viewing `/smart-trust/`: *"there are also 101 pages
+ * under .../smart-trust/, which I would have expected only those in the IG
+ * TOC. i think it is showing all the folio pages, not the harnessed
+ * smart-trust's pages ... same for 'folders'."*
+ *
+ * A scope is an instance whose tile goes to its OWN THEMED ROOT
+ * (`hrefKind: "folio"`) at a path of its own. Two kinds of href are not a
+ * scope and are left out, each for a reason a reader could check:
+ *
+ * - `viewer` / `handled` — the href is a page some OTHER thing publishes
+ *   (`/processes/` is bootstrap's tile and the whole site's process viewer),
+ *   so "every page under it belongs to this instance" would be false.
+ * - an anchor (`/#harness-…`) or `/` — the instance's root IS the site's
+ *   landing, so every page would be inside it, which is the unscoped answer
+ *   the client already gives.
+ *
+ * SORTED LONGEST HREF FIRST, so `head_custom.html` can take the first prefix
+ * of `page.url` that matches and stop: a nested instance wins over the one
+ * that holds it. Nothing here names an instance.
+ *
+ * NOT IN `navbar`, and that is a byte budget rather than tidiness: `navbar` is
+ * inlined into every page's head, and the whole list is ~1.8 KB that only the
+ * pages inside one instance need ~250 B of. Liquid resolves `page.url` --
+ * which carries no baseurl, so a staging prefix cannot make it miss -- and
+ * emits the ONE matching scope as `#fa-rail-scope`, or nothing.
+ */
+type RailScope = { name: string; title: string; href: string; folders: NavFolder[] };
+function railScopes(
+  harnesses: readonly {
+    name: string;
+    title?: string;
+    href?: string;
+    hrefKind?: "folio" | "viewer" | "handled";
+    visualisations?: { kind: string; label?: string; sameAs?: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+  }[],
+): RailScope[] {
+  return harnesses
+    .filter((h) => h.hrefKind === "folio" && typeof h.href === "string" && h.href.startsWith("/") && h.href !== "/" && !h.href.includes("#"))
+    .map((h) => ({ name: h.name, title: h.title ?? h.name, href: h.href!, folders: foldersOf(h.visualisations) }))
+    .sort((a, b) => b.href.length - a.href.length || a.name.localeCompare(b.name));
 }
 
 /* The tiles, computed once: the payload carries them and the glass strip's
@@ -524,6 +580,8 @@ const payload = {
    * look like navigation.
    */
   navbar: navbarRow(allHarnesses, decl?.name, links, readDeclaration(REPO_ROOT)?.name),
+  /** The instances a page can be inside, for the rail's PAGES and FOLDERS (#1902). See {@link railScopes}. */
+  railScopes: railScopes(allHarnesses),
   /**
    * EVERY INSTANCE'S VERSION, and its release addresses where it declares an
    * `iriBase` — so a page writes `{{ site.data.harness.releases.bootstrap.version }}`
