@@ -37,5 +37,5 @@ is "no extensions, no fancy, no js (if possible)").
 ## Done when
 - [ ] PR 1: the index is fetched and built on first focus of the search box, never on load; a reader who focused or typed before it was ready gets results without re-typing — e2e test
 - [ ] PR 1 measured on the built site: script/heap on load with the change
-- [ ] PR 2: the index shrunk by `search_exclude` (or equivalent) on generated reference, IG and translated pages — owner to confirm which sections
+- [ ] PR 2: the index shrunk — as step A of issue #1972 (one index per harness and per locale, behind a manifest), which shrinks what any one page loads (a smart-trust page: 1.5 MB, not 13.7 MB) and replaces a separate `search_exclude` pass
 - [ ] green on CI, PRs ready
