@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_AtomicMassDrift",
+    "path": "processes/content/atomic-mass-drift-check.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn",
+      "code": ".github/workflows/atomic-mass-gen-check.yml",
+      "prose_hash": "0ad1254c27cb",
+      "code_hash": "5b6fbd2590f0",
+      "by": "baseline"
+    }
+  ]
+}

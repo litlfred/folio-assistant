@@ -83,7 +83,12 @@ describe("the gates come from the workflow, not from a list", () => {
     // Order matters: `bun test` before the slower graph audits is what makes
     // the runner usable, and it is the workflow's order rather than a sort.
     const cmds = gates.map((g) => g.command);
-    expect(cmds.indexOf("bun test")).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
+    // Found by prefix, never by exact string: the step became
+    // `bun test --parallel` (bean `dlqu`), and an exact `indexOf` would then
+    // return -1, which is less than any index — a vacuous pass.
+    const test = cmds.findIndex((c) => /^bun test\b/.test(c));
+    expect(test).toBeGreaterThanOrEqual(0);
+    expect(test).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
   });
 
   test("each gate carries the step name the Actions UI shows", () => {
@@ -117,9 +122,17 @@ describe("the gates come from the workflow, not from a list", () => {
     // shrinkage fails.
     const gates = loadGates(ROOT);
     const jobs = new Set(gates.map((g) => g.job));
-    expect(jobs.has("typescript")).toBe(true);
+    // Bean `dlqu` split `typescript` into `typescript-static` (lint, types)
+    // and `typescript-test` (sharded `bun test`) under an aggregate that runs
+    // no `bun` line, and moved the browser steps into `e2e-shard` the same
+    // way. So the jobs named here are the ones that CARRY commands; naming the
+    // aggregates would assert membership of jobs that contribute nothing, and
+    // `e2e` would pass the browser exclusion for the wrong reason.
+    expect(jobs.has("typescript-static")).toBe(true);
+    expect(jobs.has("typescript-test")).toBe(true);
     expect(jobs.has("gates")).toBe(true);
-    expect(jobs.has("e2e")).toBe(false);
+    expect(jobs.has("gates-unrun")).toBe(true);
+    expect(jobs.has("e2e-shard")).toBe(false);
     expect(gates.length).toBeGreaterThan(100);
   });
 });
@@ -231,14 +244,24 @@ describe("a strict reader and a loose one agree", () => {
     // deliberately omits commands carrying a shell variable this reader
     // discarded (bean `9zok`); those are REPORTED instead, so the property
     // this test guards is that every loose-scanned line lands in one of the
-    // two — never in neither. Comparing against `loadGates` alone would have
-    // made a deliberate, printed omission look identical to the silent drop
-    // this test exists to catch, which is the distinction it is for.
+    // stated buckets — never in none. Comparing against `loadGates` alone would
+    // have made a deliberate, printed omission look identical to the silent
+    // drop this test exists to catch, which is the distinction it is for.
     const found = new Set([
       ...loadGates(ROOT, { all: true }).map((g) => g.command),
       ...loadUnresolved(ROOT, { all: true }).map((g) => g.command),
     ]);
-    expect(loose.filter((c) => !found.has(c))).toEqual([]);
+    // A PUBLISHER job's lines are dropped on purpose, by `publishes` (bean
+    // `16ei`): a job holding `contents: write` is not a gate, and `bun run
+    // gates` must never push. They are named here, so the drop is a stated
+    // one rather than the silent kind this test exists to catch.
+    const published = new Set(
+      gatesFrom(readFileSync(join(ROOT, GATES_WORKFLOW), "utf-8"), { all: true })
+        .filter((g) => !found.has(g.command))
+        .map((g) => g.command),
+    );
+    expect([...published].every((c) => c.includes("qa:publish"))).toBe(true);
+    expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
     expect(loose.length).toBeGreaterThan(30);
@@ -452,7 +475,10 @@ jobs:
     // command this tool silently will not run, and that should be a decision
     // rather than a discovery.
     const real = readFileSync(resolve(import.meta.dir, "../../..", GATES_WORKFLOW), "utf-8");
-    const skipped = unresolvedGatesFrom(real, { all: true });
+    // Publishers excluded, as `loadUnresolved` excludes them: the
+    // `qa-publish` job's `$GATES_RESULT` line is not a gate at all (bean
+    // `16ei`), so it is neither run nor counted as unrunnable here.
+    const skipped = unresolvedGatesFrom(real, { all: true, skipPublishers: true });
     expect(skipped).toHaveLength(1);
     expect(skipped[0]?.command).toContain("translation:catalogue:check");
   });
