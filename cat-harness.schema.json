@@ -569,7 +569,10 @@
                   },
                   "keyedBy": {
                     "type": "string",
-                    "const": "commit"
+                    "enum": [
+                      "commit",
+                      "tip"
+                    ]
                   }
                 },
                 "required": [
@@ -1048,8 +1051,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "077c3673acc09946ecd3d6b3bfbd7c247d392ce5",
+    "sha": "17454da7220b8eaf9d0a26eda67b035de842050d",
     "pr": "main",
-    "run": "37115278187"
+    "run": "37116073361"
   }
 }
