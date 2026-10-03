@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 /**
@@ -21,6 +21,8 @@ interface SpecialBranch {
   holds: string;
   writers: string[];
   repos: string;
+  /** The `cat/<harness>/<name>` target of a rename still to come, and the bean that owns it. */
+  pendingRename?: string;
 }
 interface Declaration {
   branches: SpecialBranch[];
@@ -51,8 +53,26 @@ describe("special-branches — the declaration", () => {
     expect(byId("gh-pages").legacy).toEqual([]);
   });
 
-  test("every other special branch carries the cat- prefix", () => {
-    for (const b of DECL.branches.filter((x) => x.id !== "gh-pages")) expect(b.name.startsWith("cat-")).toBe(true);
+  // Owner, 2026-10-02: `cat/<harness>/<name>` (note on fs43, "rename-script").
+  // The harness segment is checked against the instance declarations, so a
+  // branch cannot claim a harness that does not exist — the dh4f shape again.
+  const HARNESS = /^cat\/([^/]+)\/[^/]/;
+  const declaredHarness = (h: string) => existsSync(resolve(REPO, h, `${h}.json`));
+
+  test("every other special branch is cat/<declared harness>/<name>, or names the bean that renames it", () => {
+    for (const b of DECL.branches.filter((x) => x.id !== "gh-pages")) {
+      const target = b.pendingRename ? b.pendingRename.split(" ")[0] : b.name;
+      const m = HARNESS.exec(target);
+      expect(m, `${b.id}: ${target}`).not.toBeNull();
+      expect(declaredHarness(m![1]), `${b.id}: harness '${m![1]}' has no ${m![1]}/${m![1]}.json`).toBe(true);
+      if (b.pendingRename) {
+        const bean = /folio-assistant-[0-9a-z]{4}/.exec(b.pendingRename)?.[0];
+        expect(bean, `${b.id}: pendingRename names no bean`).toBeDefined();
+        const defs = resolve(REPO, "beans", "defs");
+        const files = readdirSync(defs).filter((f) => f.startsWith(`${bean}--`));
+        expect(files.length, `${b.id}: bean ${bean} is not in beans/defs`).toBe(1);
+      }
+    }
   });
 
   test("a family's names end in '/', a single branch's never do", () => {
@@ -73,7 +93,7 @@ describe("special-branches — the declaration", () => {
 
 describe("special-branches — resolution (new name first, then legacy)", () => {
   test("neither exists: the new name", () => {
-    expect(resolveBranch("qa-reports", new Set())).toBe("cat-qa-reports");
+    expect(resolveBranch("qa-reports", new Set())).toBe("cat/cat-harness/qa-reports");
     expect(resolveBranch("lake-cache", new Set(), "qou-v4-24-0")).toBe("cat-lake-cache/qou-v4-24-0");
   });
 
@@ -82,8 +102,16 @@ describe("special-branches — resolution (new name first, then legacy)", () => 
     expect(resolveBranch("lake-cache", new Set(["lake-cache/qou-v4-24-0"]), "qou-v4-24-0")).toBe("lake-cache/qou-v4-24-0");
   });
 
-  test("both exist: the new name", () => {
+  test("only the interim cat-<name> exists: that one, ahead of the older legacy name", () => {
+    expect(resolveBranch("qa-reports", new Set(["cat-qa-reports"]))).toBe("cat-qa-reports");
     expect(resolveBranch("state", new Set(["state", "cat-state"]))).toBe("cat-state");
+  });
+
+  test("the new name exists: the new name, whatever else does", () => {
+    expect(resolveBranch("state", new Set(["state", "cat-state", "cat/cat-harness/state"]))).toBe("cat/cat-harness/state");
+    expect(resolveBranch("fhir-ast", new Set(["cat/fhir-harness/fhir-ast/smart.who.int.trust"]), "smart.who.int.trust")).toBe(
+      "cat/fhir-harness/fhir-ast/smart.who.int.trust",
+    );
   });
 
   test("a family needs a key and a single branch refuses one", () => {
