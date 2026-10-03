@@ -21,8 +21,13 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "module": "../cat-openapi/schemas/openapi.ts",
+          "why": "no-tag"
+        }
+      ]
     },
     "undeclaredTerms": {
       "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
@@ -30,5 +35,5 @@
       "entries": []
     }
   },
-  "total": 0
+  "total": 1
 }
