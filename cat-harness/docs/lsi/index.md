@@ -118,14 +118,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.58 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
-| 2 | 21.63 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, asset |
-| 3 | 18.00 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, store, window, sessions |
-| 4 | 16.75 | page, text, pdf, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, renderable, relocation, coordination |
+| 1 | 44.60 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
+| 2 | 21.62 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, asset |
+| 3 | 17.99 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, store, window, sessions |
+| 4 | 16.74 | page, text, pdf, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, renderable, relocation, coordination |
 | 5 | 15.23 | rung, queue, archive, withheld, arm, sniff, archived, zip | preview, feature, staging, build, requirements, role, phase, folio |
-| 6 | 14.94 | lane, actor, edge, role, edges, forward, process, logical | sha, page, locale, staging, preview, translated, url, pages |
-| 7 | 14.53 | edges, forward, backward, edge, cross-chapter, energy, logical, preview | actor, lane, role, task, criterion, login, backlog, requirement |
-| 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, post, analysis | claim, avatar, translated, locale, tile, slot, adjudicator, translation |
+| 6 | 14.94 | lane, actor, edge, role, edges, process, forward, task | sha, page, locale, staging, preview, pages, url, translated |
+| 7 | 14.52 | edges, forward, edge, backward, cross-chapter, energy, logical, preview | actor, lane, role, task, backlog, criterion, login, requirement |
+| 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, analysis, post | claim, avatar, locale, translated, tile, slot, adjudicator, translation |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
