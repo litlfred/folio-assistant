@@ -147,8 +147,8 @@
 
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
-<li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">62</span></li>
+<li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">3</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -162,10 +162,6 @@
 <table id="da-index" data-fa-filtered="true">
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">cat-harness/processes/content/ig-ast-delta-review.bpmn</span></td>
-  <td>THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean <code>a9tx</code>, owner 2026-09-30: &quot;list and view differentials/deltas against AST ...<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Incremental build (system) · QC reviewer · Work plan — beans (shared by humans and agents)</div><div class="f"><span class="k">skills</span> ig-ast-delta, todo-manager</div></td>
-</tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/review-narrative.bpmn"><code>Narrative review</code></a><br><span class="p">cat-harness/processes/content/review-narrative.bpmn</span></td>
   <td>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translatio…<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, content-review, translation-manager, voice-editorial-review, voice-overlay-review</div></td>
@@ -411,6 +407,10 @@
   <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> wireframe-design-review</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">fhir-harness/processes/content/ig-ast-delta-review.bpmn</span></td>
+  <td>THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean <code>a9tx</code>, owner 2026-09-30: &quot;list and view differentials/deltas against AST ...<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Incremental build (system) · QC reviewer · Work plan — beans (shared by humans and agents)</div><div class="f"><span class="k">skills</span> ig-ast-delta, todo-manager</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">fhir-harness/processes/content/ig-incremental-build.bpmn</span></td>
   <td>One change — a PR push or a push to main — through the incremental IG build proposed in issue #199: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm va…<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
@@ -428,7 +428,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-change-review.bpmn"><code>Content Change and Review</code></a><br><span class="p">folio-assistant-core/processes/content/content-change-review.bpmn</span></td>
-  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 30</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, before-after-preview, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, semantic-review-scoping, staging-review, todo-manager, uses-editorial-review, visual-diff, watch</div></td>
+  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 30</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, before-after-preview, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, staging-review, todo-manager, uses-editorial-review, visual-diff, watch</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">folio-assistant-core/processes/content/content-lifecycle.bpmn</span></td>
@@ -436,7 +436,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/draft-to-publication.bpmn"><code>Draft, review and publish</code></a><br><span class="p">folio-assistant-core/processes/content/draft-to-publication.bpmn</span></td>
-  <td>folio-assistant — corpus to draft publication to officially published.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Editors + authoring agents · Work plan — beans (shared by humans and agents) · Corpus + build pipeline (system) · Publication manager · Review team (content · QC · technical officer) · Clinical / scientific SMEs · Programme manager (release authority)</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-publish, content-review, content-test, content-validate, ig-publication, quality-control, render-kg-to-cdn, todo-manager</div></td>
+  <td>folio-assistant — corpus to draft publication to officially published.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Editors + authoring agents · Work plan — beans (shared by humans and agents) · Corpus + build pipeline (system) · Publication manager · Review team (content · QC · technical officer) · Clinical / scientific SMEs · Programme manager (release authority)</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-publish, content-review, content-test, content-validate, quality-control, render-kg-to-cdn, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn"><code>Editing and HCI validation</code></a><br><span class="p">folio-assistant-core/processes/content/editing-hci-validation.bpmn</span></td>

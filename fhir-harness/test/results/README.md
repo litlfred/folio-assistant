@@ -11,5 +11,5 @@ Part of [FHIR IG Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`
 | file | what it is | used by |
 |---|---|---|
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
-| [`kg-qa/`](kg-qa/) | 33 files | |
+| [`kg-qa/`](kg-qa/) | 34 files | |
 <!-- kg:subgraph:end -->

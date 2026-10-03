@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content/content-change-review.bpmn"
   },
-  "source_hash": "sha256:580b150162a282a7110b5f7390ab25a4d58906e9b1e1169a63d518bd1797f496",
+  "source_hash": "sha256:049acbadce979e05dd18699cb87c56143b30c5e89cae073c9ddebf3fed07bbe9",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -34,10 +34,6 @@
     "activity-skill-has-tool": {
       "result": "fail",
       "findings": [
-        {
-          "where": "Task_DetectScope",
-          "detail": "names skill \"semantic-review-scoping\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
         {
           "where": "Task_EditContent",
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
