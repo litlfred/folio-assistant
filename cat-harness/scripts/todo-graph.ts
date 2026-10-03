@@ -3,6 +3,9 @@
  * attachment, people, beans and PRs as typed edges. Issue #1908, bean `h32d`.
  *
  * @module scripts/todo-graph
+ * @conformsTo w3c-rdf-calendar
+ * @conformsTo schema-org
+ * @conformsTo dcmi-terms
  *
  * ## What is published, and where
  *
