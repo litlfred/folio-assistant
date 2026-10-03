@@ -1,7 +1,7 @@
 ---
 # folio-assistant-m4xy
 title: 'INGEST ARM: pdf-images recovers the raster layer, and WHO''s real figures are vector'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T08:48:53Z
@@ -57,8 +57,8 @@ Five regression tests in `ingest-and-l1.test.ts`, including the one asserting th
 ## Done when
 - [x] the pattern is checked across all seven entries rather than four
 - [x] `image-descriptions` either covers vector figures or SAYS it does not, rather than passing silently
-- [ ] the owner has said whether a vector-figure arm is wanted
-- [ ] the role threshold is decided on a stated basis rather than on this corpus
+- [x] the owner has said whether a vector-figure arm is wanted — **yes**, 2026-10-03 (below)
+- [x] the role threshold is decided on a stated basis rather than on this corpus — owner 2026-10-03: *"an optional one can be set, default none"* (below)
 
 ## MEASURED 2026-09-24 — this bean's own premise for the caption option is FALSE
 
@@ -153,10 +153,75 @@ already exists: `apply-image-verdicts`, an `inspection` basis naming who looked.
 - [x] the caption-as-handle option is tested rather than assumed — it fails
 - [x] the arm's real cost is measured — no OCR, no VLM, assembly only
 - [x] the role threshold has evidence — and it argues against a number
-- [ ] the owner rules on whether to build the assembly step
+- [x] the owner rules on whether to build the assembly step — **yes**, 2026-10-03 (below)
 
 
 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Owner ruling 2026-10-03 — build the arm
+
+Asked whether to build the vector-figure assembly step, the owner chose, verbatim:
+
+> **"Yes, build it."**
+
+Relayed into session https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ, which
+builds it under bean `ay3x`. **The role threshold is NOT ruled on and is not
+decided by this**: per the 2026-09-24 measurement above, no number is
+proposed, and the arm carries role calls through `apply-image-verdicts`'
+inspection basis instead. The remaining open item below stays open.
+
+## Owner ruling 2026-10-03 — the role threshold is OPTIONAL, default NONE
+
+Relayed from the parent session https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7.
+The owner first said *"no cutoff"*, then corrected it, and the correction
+supersedes it. Verbatim:
+
+> **"an optional one can be set, default none"**
+
+So a coverage cutoff may sort images into roles **only when a caller supplies
+one**. Nothing is thresholded by default, every image a cutoff decides records
+a caller-supplied basis, and no number ships anywhere. That rule lives in
+`library-ingestion` §"A role threshold is OPTIONAL, and its default is NONE"
+(PR #1968). It is implemented under bean `ay3x` (issue #1980) as
+`pdf-images.py --role-threshold`, which has no default. It writes role
+`furniture` with basis `{method: "threshold", value, suppliedBy: "caller"}`,
+so a thresholded call can never be read as an inspected one.
+
+## CORRECTION 2026-10-03 — the 2026-09-24 gap sentence was wrong
+
+The 2026-09-24 section says the non-WHO minimum of **1.81e-04** is *"above
+the gap entirely — so a threshold placed there is inert on every non-WHO
+document"*. **1.81e-04 lies INSIDE the gap** (≈1.2e-04 .. 3.3e-04). The
+sentence is left above, per this bean's convention. Spotted by the parent
+session; **re-measured here, not copied**, over the sidecars as they stand on
+2026-10-03, which are post-`j820` dedup, so the counts differ from 2026-09-24:
+
+- `smart-base/` figure-role images with a coverage: **171**. The largest ratio
+  gap in the series is still the one this bean named: **1.21e-04 → 3.36e-04**
+  (×2.78), with nothing between them.
+- Outside `smart-base/`: **386** images with a coverage, of which **29 lie
+  inside that gap**. That is 27 `figure` images at exactly 1.81e-04, all in
+  `arxiv-2312.07755v1` (its Table 2 icons), plus 2 `chrome`.
+
+So the conclusion inverts. A cutoff placed in the WHO gap is **not** inert
+outside the WHO corpus: depending on where in the gap it falls, it files all
+27 of that paper's icons on one side or the other. That is more evidence, not
+less, that a corpus-fitted number is fitted to its corpus — and it is why the
+ruling ships none.
+
+## Summary of Changes — closed 2026-10-03
+
+Every Done-when item is checked:
+
+- the raster gap is reported (`image-descriptions` third state, 2026-09-22);
+- the vector arm is built (`a8wy` labels, `ay3x` assembly and render,
+  PR #1990);
+- both owner questions are ruled: build the arm, and the role threshold is
+  optional with no default.
+
+Closed on that evidence by session https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ,
+at the parent session's request (https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7).
+
