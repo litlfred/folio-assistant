@@ -1,0 +1,185 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_FeatureStaging",
+    "path": "processes/sdlc/feature-staging.bpmn"
+  },
+  "source_hash": "sha256:095f36854e0a9e0aefd89ef02428dac53554e3e293ad3944e0adf365b3277d72",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Remove",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_LogRendered",
+          "detail": "needs skill \"render-logging\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Comment",
+          "detail": "needs skill \"staging-review\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Remove",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_LogRetained",
+          "detail": "needs skill \"render-logging\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Notice",
+          "detail": "needs skill \"staging-review\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"user\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "H_Confirm",
+          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/feature-staging.yml",
+          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/sdlc/feature-staging.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 15,
+    "fail": 4,
+    "n/a": 6,
+    "unknown": 0
+  }
+}
