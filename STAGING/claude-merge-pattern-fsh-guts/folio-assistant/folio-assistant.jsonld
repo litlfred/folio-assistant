@@ -318,14 +318,14 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-03T16:50:02.983Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/30d6713078bf58f26a9afbe149fe76ebb4fe68b6",
-  "sourceCommitSha": "30d6713078bf58f26a9afbe149fe76ebb4fe68b6",
-  "sourceCommitAt": "2026-10-03T16:39:52Z",
+  "generatedAt": "2026-10-03T17:14:22.349Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/94135b9f499f2030aa5654f7856f101af07a59e4",
+  "sourceCommitSha": "94135b9f499f2030aa5654f7856f101af07a59e4",
+  "sourceCommitAt": "2026-10-03T17:03:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphKind": 17,
+    "GraphKind": 18,
     "Subgraph": 8,
     "Asset": 2
   },
@@ -378,6 +378,13 @@
       "name": "workflow-state",
       "renderable": false,
       "summary": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/merge-queue",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "merge-queue",
+      "renderable": false,
+      "summary": "A merge steward's DECISIONS about an open pull request — priority, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. Never a fact GitHub owns: CI, mergeability, labels and the head SHA are read live and refused by name here."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todos",
@@ -609,8 +616,8 @@
   ],
   "staging": {
     "branch": "claude/merge-pattern-fsh-guts",
-    "sha": "cc056f507f054bd5e76e731d2fd459c1c21bad06",
+    "sha": "7c5e40fbabd0f7f4b87bb28f7620b6de131c82dd",
     "pr": "2024/merge",
-    "run": "37137722471"
+    "run": "37139135090"
   }
 }

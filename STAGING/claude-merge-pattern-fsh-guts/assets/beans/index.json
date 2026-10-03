@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 727,
+      "count": 731,
       "unit": "beans"
     }
   },
@@ -1019,6 +1019,20 @@
       "file": "beans/defs/folio-assistant-30hn--bpmn-16-of-33-processes-are-strict-by-omission-not.md"
     },
     {
+      "id": "folio-assistant-30jr",
+      "title": "hfag's last three: declare the merge queue as a state graph, give it a viewer and tile, and record a train run",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T07:25:27Z",
+      "updatedAt": "2026-10-03T14:42:55Z",
+      "preview": "## Brief\n\nOwner, 2026-10-03: *\"do the three open hfag items\"*, then — when the tile turned out to be\nblocked on an integrity constraint rather than on effort — *\"1\"* (ship the other two, leave\nit open) *\"and 3\"* (surface the queue in the bean store rather than leaving it invisible).\n\n## What landed\n\n**The queue is a declared `state` graph.** Kind `merge-queue` in the registry — `holds: \"state\"`\nby",
+      "file": "beans/defs/folio-assistant-30jr--hfags-last-three-declare-the-merge-queue-as-a-stat.md"
+    },
+    {
       "id": "folio-assistant-319n",
       "title": "ZOD IS IN CAT-HARNESS: move bootstrap-tools' graph.ts and discussion.ts into cat-harness/schemas, retire bootstrap-tools if empty",
       "status": "completed",
@@ -1885,6 +1899,20 @@
       "updatedAt": "2026-10-02T16:25:17Z",
       "preview": "Placement proposal §2 (owner rulings 2026-09-30 §6; process: review → resolve issues → staged PRs). Parent of PR0/PR1 is `9umr`; PR2–PR9 sit under the separation epic because D4 (owner, 2026-10-01, option 3) interleaves them with the split stages into one ordered sequence. Every PR: references move with the subject; generated trees regenerated, never hand-edited; `beans/**` not rewritten; kg-qa si",
       "file": "beans/defs/folio-assistant-63wl--placement-pr3-bpmn-and-dmn-move-up-to-their-owners.md"
+    },
+    {
+      "id": "folio-assistant-65oe",
+      "title": "library:viz is not reproducible across environments: refScan.filesRead embeds a count of the files on disk",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T15:40:27Z",
+      "updatedAt": "2026-10-03T15:40:47Z",
+      "preview": "## The defect\n\n`cat-harness/docs/assets/library/index.json` ends with\n\n    \"refScan\": { \"filesRead\": 2663, \"unreadable\": [] }\n\n`filesRead` is a COUNT OF THE FILES THE SCAN READ ON DISK. It is therefore a\nproperty of the checkout, not of the library, and it is committed. Any two\nenvironments whose trees differ by even one scanned file disagree, so\n`library:viz:check` reports stale whenever the last",
+      "file": "beans/defs/folio-assistant-65oe--libraryviz-is-not-reproducible-across-environments.md"
     },
     {
       "id": "folio-assistant-676g",
@@ -5941,6 +5969,20 @@
       "updatedAt": "2026-09-29T18:14:49Z",
       "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
+    },
+    {
+      "id": "folio-assistant-lrzn",
+      "title": "PREBUILT SEARCH INDEX: serialize the lunr index at build time for scopes over a token budget (#1972)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T15:42:45Z",
+      "updatedAt": "2026-10-03T15:57:22Z",
+      "preview": "Issue #1972, the owner's \"1 2\" of 2026-10-03: (1) a prebuilt search index.\nAsked with the measured trade-off, the owner chose **big scopes only**.\n\n## Measured (Node / V8, scopes from a local build)\n\nBuilding a scope's lunr index costs ~3–5 µs per token, consistently:\n`section-reference` 550k tokens / 2,489 ms, `smart-immunizations` 163k /\n809 ms, `_platform` 138k / 476 ms, `smart-trust` 137k / 40",
+      "file": "beans/defs/folio-assistant-lrzn--prebuilt-search-index-serialize-the-lunr-index-at.md"
     },
     {
       "id": "folio-assistant-lthi",
@@ -10001,6 +10043,20 @@
       "updatedAt": "2026-09-24T13:16:02Z",
       "preview": "Part of s4sp (plan B5, 'QA check first, then fixes'). @general on RoleDef, SkillDefinition, RequirementStatement, GraphKindDef, CapabilityDefinition, ActorDef, ActorDefinition, ProcessId (owner: core six + Process). schema-graph reads the tag; scripts/arrow-direction.ts checks schema @refs and BPMN folio pointers; kg-audit criterion arrow-direction (major). Reports 19 findings for later fixes: 9 f",
       "file": "beans/defs/folio-assistant-yo4m--b5-1168-arrow-direction-qa-general-nodes-point-onl.md"
+    },
+    {
+      "id": "folio-assistant-yqc4",
+      "title": "CI observability: a failing e2e job is opaque to anyone who cannot reach the log host",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:56:51Z",
+      "updatedAt": "2026-10-03T14:14:54Z",
+      "preview": "## Brief\n\nOwner, 2026-10-03: *\"Have the workflow upload the Playwright report on failure — right\nnow a red E2E job is opaque to any agent that can't reach the log host.\"*\n\n## The defect\n\nA red `End-to-end + accessibility` job carried its diagnosis in exactly one place: the\nrun log, on `productionresultssa14.blob.core.windows.net`. A cloud session whose network\npolicy denies that host sees only the",
+      "file": "beans/defs/folio-assistant-yqc4--ci-observability-a-failing-e2e-job-is-opaque-to-an.md"
     },
     {
       "id": "folio-assistant-yscf",
