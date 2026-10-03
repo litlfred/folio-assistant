@@ -1,0 +1,37 @@
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "arxiv-2507.23348v1",
+  "title": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+  "_comment": "Uploaded by the owner to litlfred/qou in commit 348e299c (2026-10-02) as uploads/2507.23348v1.pdf, which the owner then corrected the same day: \"should have been into folio-assistant, not qou!\". Fetched from that commit by blob and filed here. TITLE AND CATEGORY ARE READ FROM THE PDF, NOT FROM THE arXiv API: export.arxiv.org is denied by this container's network policy (CONNECT tunnel failed, 403, measured 2026-10-02), so the authoritative dcterms record that `archiving-arxiv` asks for is NOT established. Abstract-page URL recorded for whoever can reach it; the version suffix is part of the identity and is kept. Primary arXiv category cs.SE, read from the arXiv stamp in the PDF's own left margin rather than from the API. `source.upstream` is the abstract page, where the authoritative metadata lives for whoever can reach it.",
+  "source": {
+    "local": "uploads/arxiv-2507.23348v1/arxiv-2507.23348v1.pdf (from litlfred/qou 348e299cce96b543d3e736bd86d10d90c0cc7998)",
+    "capturedAt": "2026-10-02T23:09:42Z",
+    "capturedBy": "owner (litlfred), upload via GitHub web to litlfred/qou; refiled into folio-assistant by agent",
+    "upstream": "https://arxiv.org/abs/2507.23348v1"
+  },
+  "files": [
+    {
+      "path": "arxiv-2507.23348v1.pdf",
+      "bytes": 1862542,
+      "sha256": "141ba926efb2b113f614c1d562188a817391f866547cd5236c45b9fdb0b8fd89",
+      "type": "publication",
+      "role": "original-bitstream"
+    }
+  ],
+  "licence": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the PDF's own text (arxiv-2507.23348v1.pdf, all pages, pdftotext)",
+        "result": "no licence statement of any kind: no Creative Commons string, no CC BY variant, no arXiv perpetual-licence notice. Only the arXiv identifier stamp.",
+        "on": "2026-10-02"
+      },
+      {
+        "where": "https://export.arxiv.org/api/query?id_list=2507.23348v1 (the per-submission declared licence)",
+        "result": "could not ask: this container's network policy denies the host (curl exit 56, CONNECT tunnel failed, response 403). Not a missing licence \u2014 an unasked question.",
+        "on": "2026-10-02"
+      }
+    ],
+    "note": "OWNER CLEARANCE, 2026-10-02: \"you can ingest all papers i gave you. ok on arxiv sourced papers\". `archiving-arxiv` reserves this decision for a person \u2014 whether this project may hold and redistribute a source \u2014 and the owner has now made it for the arXiv-sourced captures, these five included. INGESTION AND HOLDING ARE CLEARED.\n\n`status` deliberately stays `unknown` rather than becoming `stated`. The clearance is a permission the owner granted; it is NOT a reading of the licence arXiv declares for this submission, which nobody here has been able to fetch. Writing `stated` would need an `id` and a `basis` \u2014 \"where is it stated?\" \u2014 and the only honest answer is still nowhere this checkout can see. The two `searched` entries record that, and they remain true.\n\nSo: cleared to ingest, licence id still unestablished. Anything that needs the id itself \u2014 republishing a full text to the public site, say \u2014 still needs export.arxiv.org reachable or the owner reading the abs page."
+  }
+}
