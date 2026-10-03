@@ -2548,6 +2548,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectoryshape.served",
+      "prefLabel": "ContentDirectoryShape.served",
+      "definition": "This directory's BYTES are published verbatim, at `/<instance>/<path>`, for the site's own pages to fetch.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.served",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.source",
       "prefLabel": "ContentDirectoryShape.source",
       "definition": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.",
@@ -4253,6 +4260,27 @@
       "prefLabel": "PlacementSchema.page",
       "definition": "The page it sits on, 1-based as a reader counts.",
       "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.thresholdbasisschema.coverage",
+      "prefLabel": "ThresholdBasisSchema.coverage",
+      "definition": "Placed area over page area — the number compared against `value`.",
+      "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.coverage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.thresholdbasisschema.suppliedby",
+      "prefLabel": "ThresholdBasisSchema.suppliedBy",
+      "definition": "Always the caller. Recorded so the provenance is read, not inferred.",
+      "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.suppliedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.thresholdbasisschema.value",
+      "prefLabel": "ThresholdBasisSchema.value",
+      "definition": "The cutoff, exactly as supplied. Images below it were filed `furniture`.",
+      "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value",
       "status": "candidate"
     },
     {
@@ -11463,6 +11491,104 @@
       "prefLabel": "UserStorySchema.want",
       "definition": "What the reader wants to do, in their terms — \"I want to …\".",
       "source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.assemblybasisschema.by",
+      "prefLabel": "AssemblyBasisSchema.by",
+      "definition": "The script, as a `script` attribution — what looked.",
+      "source": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema.by",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.background",
+      "prefLabel": "VectorAssemblySchema.background",
+      "definition": "Of those, page-sized backgrounds that joined no component.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.background",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.between",
+      "prefLabel": "VectorAssemblySchema.between",
+      "definition": "Lines inside the region but in no component — the white space `a8wy` found real labels in.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.between",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.drawings",
+      "prefLabel": "VectorAssemblySchema.drawings",
+      "definition": "Drawing operations on the page. Reported, never graded.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.drawings",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.outside",
+      "prefLabel": "VectorAssemblySchema.outside",
+      "definition": "Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.outside",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.unlabelledclosedshapes",
+      "prefLabel": "VectorAssemblySchema.unlabelledClosedShapes",
+      "definition": "Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.unlabelledClosedShapes",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorboxschema.parent",
+      "prefLabel": "VectorBoxSchema.parent",
+      "definition": "The smallest other labelled box containing this one, or null.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorconnectorschema.from",
+      "prefLabel": "VectorConnectorSchema.from",
+      "definition": "Box the stroke starts in, or null when it lands in none.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema.from",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.captionlabels",
+      "prefLabel": "VectorFigureSchema.captionLabels",
+      "definition": "Figure numbers from the page's caption candidates — candidates, not claims.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.captionLabels",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.file",
+      "prefLabel": "VectorFigureSchema.file",
+      "definition": "The render, relative to the entry; null when nothing was rendered, with the reason.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.id",
+      "prefLabel": "VectorFigureSchema.id",
+      "definition": "`vfig-p034` — one per qualifying page; a verdict keys on it.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.region",
+      "prefLabel": "VectorFigureSchema.region",
+      "definition": "The rendered rectangle, visible frame.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.region",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.shows",
+      "prefLabel": "VectorFigureSchema.shows",
+      "definition": "Which declared figures the render shows. Inspection only — see the module docblock.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.shows",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfiguressidecarschema.figures",
+      "prefLabel": "VectorFiguresSidecarSchema.figures",
+      "definition": "`null` is could-not-determine, never \"draws no figures\" — the `dh4f` rule.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema.figures",
       "status": "candidate"
     },
     {
