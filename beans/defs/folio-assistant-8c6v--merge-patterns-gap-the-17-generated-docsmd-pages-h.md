@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8c6v
 title: 'MERGE PATTERNS GAP: the 17 generated docs/*.md pages have no declared merge-conflict pattern, so merge:main refuses them although their own front matter says do-not-hand-edit'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T08:55:15Z
-updated_at: 2026-10-03T08:55:42Z
+updated_at: 2026-10-03T09:17:35Z
 parent: folio-assistant-d33q
 ---
 
@@ -102,3 +102,5 @@ the mirror only.
 
 Related: `8rff` (the three families this is the fourth of, completed),
 `d33q` (parent), `ba9e` (the other chronically-conflicting generated family).
+
+_2026-10-03T09:17:35Z_ — Claimed by claude/docs-pages-merge-pattern-declare-8c6v — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
