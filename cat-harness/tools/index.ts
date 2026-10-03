@@ -2464,7 +2464,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // No `arg` binding, as on `pin-ig-terminology`: the copy lives in a
           // scratch directory, and `FilesystemPath` is refused as a
           // command-line word.
-          { name: "from", schema: t("FilesystemPath"), required: true, description: "A copy of license-list-data at tag `v<version>`, passed as `--from`. Refused unless both files declare the pin's `licenseListVersion`." },
+          { name: "licenseListCheckout", schema: t("FilesystemPath"), required: true, description: "A copy of github.com/spdx/license-list-data at tag `v<version>`, passed as `--from`. Named for what it is rather than `from`: with the same name it would share `pin-ig-terminology`'s signature and be DERIVED as its substitute, which it is not — an IG clone and a licence list are different inputs (`deriveAlternatives`). Refused unless both files declare the pin's `licenseListVersion`." },
         ],
         outputs: [
           { name: "snapshot", schema: t("RepoPath"), description: "`folio-pinned-terminology/v1`: the version, the source, and every `spdx-license#<id>` / `spdx-exception#<id>` with its name, sorted; `deprecated: true` where the List marks it." },

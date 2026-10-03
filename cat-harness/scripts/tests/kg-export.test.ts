@@ -1136,8 +1136,10 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
     expect(specs.map((n) => n.name)).toContain("omg-bpmn-2.0");
     expect(specs.map((n) => n.name)).toContain("omg-dmn-1.3");
 
-    expect(other).toEqual(["who-smart-base.terminology.json"]);
-    expect(tagOf("who-smart-base.terminology.json")).toBe("folio-pinned-terminology/v1");
+    // A pinned edition's snapshot beside its record: the IG's terminology
+    // (bean `7wou`) and the SPDX License List's ids (bean `sd5v`).
+    expect(other.sort()).toEqual(["spdx-license-list.terminology.json", "who-smart-base.terminology.json"]);
+    for (const f of other) expect(tagOf(f)).toBe("folio-pinned-terminology/v1");
   });
 
   test("the processes GraphKind conforms to BPMN AND DMN, and says why it has no validator", () => {

@@ -12,16 +12,15 @@ parent: folio-assistant-zzmr
 Owner, 2026-10-03: deep analysis of where SPDX v3 could/should/should not be used (test results, QA reports, tool definitions...), impact analysis on missing processes/tasks and on existing ones. Deliverable: cat-harness/docs/proposals/spdx-3-applicability-2026-10-03.md. Not building anything: owner decisions first.
 
 ## Done when
-- [ ] proposal written and linked from proposals index
-- [ ] owner has answered the decisions (D1-D5) or deferred them
+- [x] proposal written and linked from proposals index
+- [ ] owner has answered the decisions (D1-D5) or deferred them — D4 answered (validation built); D1 deferred to bean `ffv7`; D2, D3, D5 not taken up
 
 
 ## Progress, 2026-10-03
 
-- [x] proposal written and linked from proposals index
 - [x] SPDX 3.0 ingested (`library/omg-2024-spdx-3-0`), NIST 3.1 deck ingested, 3.1-RC1 schema queued, methodology node `spdx-3` (ingested, NOT adopted)
 - [x] licence-id validation: `check:source-licence` validates every `stated` id as an SPDX expression over License List 3.29.0, pinned in `external-schemas/spdx-license-list.json` (owner: *"go ahead with licence-id validation, that's it for now"*)
-- [ ] D1 (build SPDX documents?) — **waiting on downstream feedback, bean `ffv7`**. Owner asked "why would we need spdx at all? just export? what consumes?": nothing does today.
+- D1 (build SPDX documents?) — **waiting on downstream feedback, bean `ffv7`**. Owner asked "why would we need spdx at all? just export? what consumes?": nothing does today.
 - D2–D5: not taken up; the owner stopped the scope at validation.
 
 ## Overlap findings (owner asked: where is authoritative, what is duplicative or unneeded, who consumes)
