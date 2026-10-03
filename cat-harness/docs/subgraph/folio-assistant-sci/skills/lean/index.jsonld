@@ -1,0 +1,20 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/lean/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/lean",
+      "@type": "cat-harness:SkillPackage",
+      "name": "lean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formal-edges",
+      "@type": "bootstrap:Skill",
+      "name": "lean-formal-edges",
+      "title": "Lean formal edges (elaborated)"
+    }
+  ],
+  "name": "skills/lean",
+  "path": "skills/lean/"
+}

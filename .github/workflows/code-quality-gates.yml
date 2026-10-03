@@ -546,11 +546,13 @@ jobs:
       - name: workflow skill refs
         run: bun run check:workflow-refs
 
-      # The workflow page's process table is drawn at runtime from
-      # assets/processes/index.json (bean `ax6r`), so "is every diagram on the
-      # page" became "does the published data cover every declared .bpmn".
-      # Recomputed from each instance's declaration, so the projection cannot
-      # vouch for itself; staleness is docs:auto:check's.
+      # The workflow page's process table is drawn at runtime from the
+      # published named-subgraph JSON-LD (bean `ax6r`; owner 2026-10-03: "Move
+      # to JSON-LD"), so "is every diagram on the page" became "does every
+      # declared .bpmn have a documented Process node in a published processes
+      # subgraph". Recomputed from each instance's declaration, so the files
+      # cannot vouch for themselves; bootstrap's diagrams, outside this graph
+      # by `pve3`, are listed as not covered. Staleness is subgraph:jsonld:check's.
       - name: process index covers every declared diagram
         run: bun run check:process-index
 

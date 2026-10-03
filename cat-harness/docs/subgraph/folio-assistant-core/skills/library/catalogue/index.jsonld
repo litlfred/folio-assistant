@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/catalogue/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/catalogue",
+      "@type": "cat-harness:SkillPackage",
+      "name": "catalogue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dublin-core-renderings",
+      "@type": "bootstrap:Skill",
+      "name": "dublin-core-renderings",
+      "title": "Dublin Core renderings"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/library/catalogue",
+  "path": "skills/library/catalogue/"
+}

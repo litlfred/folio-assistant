@@ -777,8 +777,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // they are fetched at different times by different questions.
       "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema", generated: true },
       "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema", generated: true },
-      // Every declared BPMN process, for the workflow page's runtime view (bean `ax6r`).
-      "folio-process-index/v1": { validator: "schemas/site-indexes.ts#ProcessIndexSchema", generated: true },
       "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema", generated: true },
     },
     summary:

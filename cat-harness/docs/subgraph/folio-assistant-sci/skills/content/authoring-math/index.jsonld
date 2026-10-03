@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/authoring-math/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "@type": "cat-harness:SkillPackage",
+      "name": "authoring-math"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "latex-authoring",
+      "title": "latex-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formalization",
+      "@type": "bootstrap:Skill",
+      "name": "lean-formalization",
+      "title": "lean-formalization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-verification",
+      "@type": "bootstrap:Skill",
+      "name": "proof-verification",
+      "title": "proof-verification"
+    }
+  ],
+  "name": "skills/content/authoring-math",
+  "path": "skills/content/authoring-math/"
+}

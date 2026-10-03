@@ -1,32 +1,38 @@
 /**
- * The workflow page's process table — the view logic and the data it reads.
+ * The workflow page's process table — the view logic and the JSON-LD it reads.
  *
  * Bean `ax6r`: the "Every workflow in the repo" table was hand-written and
- * drifted from the diagrams. It is now drawn by `assets/js/process-index.js`
- * from `assets/processes/index.json`. These pin the parts that are not a
- * browser's to judge: the grouping and link rules (evaluated from the SHIPPED
- * bytes, not a copy), that the committed projection validates and covers
- * every declared diagram, and that a row carries no work-plan chatter.
+ * drifted from the diagrams. It is drawn by `assets/js/process-index.js` from
+ * the published named-subgraph JSON-LD (owner, 2026-10-03: "Move to
+ * JSON-LD"; there is no plain-JSON projection). These pin the parts that are
+ * not a browser's to judge: the grouping, row and link rules (evaluated from
+ * the SHIPPED bytes, not a copy), that the committed subgraph files cover
+ * every diagram this graph frames, and that a row carries no work-plan chatter.
  *
  * @module scripts/tests/process-index
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 
-import { collectProcessIndex, concernGroup, declaredDiagrams, firstSentence, processDocumentation, processHead } from "../lib/process-index.ts";
-import { ProcessIndexSchema } from "../../schemas/site-indexes.ts";
+import { declaredDiagrams, framedInstances, publishedProcesses } from "../check-process-index.ts";
+import { firstSentence } from "../kg-export.ts";
+import { subgraphOutDir } from "../gen-subgraph-jsonld.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(HARNESS);
 const SITE = join(HARNESS, siteDirFor(HARNESS));
+const OUT = join(HARNESS, subgraphOutDir(HARNESS));
 const VIEWER = readFileSync(join(SITE, "assets", "js", "process-index.js"), "utf-8");
 
-interface Row { id: string; name: string; path: string; group: string; instance: string; svg?: string; source?: string; summary?: string }
+interface Row { id: string; localId?: string; name: string; path: string; group: string; instance: string; svg?: string; source?: string; summary?: string; calls?: string[] }
 type Api = {
   groupRows: (rows: Row[], key: string) => Array<{ label: string; rows: Row[] }>;
-  rowLinks: (row: Partial<Row>, siteRoot: string) => { svg: string; source: string };
+  rowLinks: (row: Partial<Row>, from?: string, to?: string) => { svg: string; source: string };
+  rowsFromHydrated: (doc: unknown, instance: string) => Row[];
+  localUrl: (iri: string, repoIri: string, srcDir: string, file?: string) => string;
+  holdsProcesses: (node: unknown) => boolean;
   GROUP_NONE: string;
 };
 
@@ -45,7 +51,7 @@ describe("grouping", () => {
     row({ id: "B", name: "beta", group: "sdlc", instance: "cat-harness", path: "b" }),
     row({ id: "A", name: "alpha", group: "content", instance: "smart-base", path: "a" }),
     row({ id: "C", name: "gamma", group: "content", instance: "cat-harness", path: "c" }),
-    row({ id: "D", name: "delta", group: "", instance: "bootstrap", path: "d" }),
+    row({ id: "D", name: "delta", group: "", instance: "folio-assistant-core", path: "d" }),
   ];
   test("by concern group: groups in order, the ungrouped remainder last, rows by instance then name", () => {
     const g = api.groupRows(rows, "group");
@@ -54,8 +60,8 @@ describe("grouping", () => {
   });
   test("by instance: rows ordered by concern group inside each instance", () => {
     const g = api.groupRows(rows, "instance");
-    expect(g.map((x) => x.label)).toEqual(["bootstrap", "cat-harness", "smart-base"]);
-    expect(g[1]!.rows.map((r) => r.id)).toEqual(["C", "B"]);
+    expect(g.map((x) => x.label)).toEqual(["cat-harness", "folio-assistant-core", "smart-base"]);
+    expect(g[0]!.rows.map((r) => r.id)).toEqual(["C", "B"]);
   });
   test("every row lands in exactly one group", () => {
     for (const key of ["group", "instance"]) {
@@ -70,51 +76,98 @@ describe("grouping", () => {
 
 describe("links", () => {
   const api = viewerApi();
-  test("an SVG is a site-root path composed against the site root", () => {
-    expect(api.rowLinks({ svg: "/assets/img/workflows/x.svg" }, "/folio-assistant/").svg).toBe("/folio-assistant/assets/img/workflows/x.svg");
-    expect(api.rowLinks({ svg: "/assets/img/workflows/x.svg" }, "/folio-assistant").svg).toBe("/folio-assistant/assets/img/workflows/x.svg");
+  const canon = "https://litlfred.github.io/folio-assistant/";
+  test("an SVG under the canonical site is re-rooted at this one", () => {
+    expect(api.rowLinks({ svg: `${canon}assets/img/workflows/x.svg` }, canon, "http://localhost:8000/").svg)
+      .toBe("http://localhost:8000/assets/img/workflows/x.svg");
+    expect(api.rowLinks({ svg: `${canon}assets/img/workflows/x.svg` }).svg).toBe(`${canon}assets/img/workflows/x.svg`);
   });
-  test("a protocol-relative or scripted URL is dropped rather than linked", () => {
-    expect(api.rowLinks({ svg: "//evil.example/x.svg" }, "/").svg).toBe("");
-    expect(api.rowLinks({ source: "javascript:alert(1)" }, "/").source).toBe("");
-    expect(api.rowLinks({ source: "https://github.com/x/y/blob/main/a.bpmn" }, "/").source).toBe("https://github.com/x/y/blob/main/a.bpmn");
+  test("a relative, protocol-relative or scripted URL is dropped rather than linked", () => {
+    expect(api.rowLinks({ svg: "//evil.example/x.svg" }).svg).toBe("");
+    expect(api.rowLinks({ svg: "/assets/img/workflows/x.svg" }).svg).toBe("");
+    expect(api.rowLinks({ source: "javascript:alert(1)" }).source).toBe("");
+    expect(api.rowLinks({ source: "https://github.com/x/y/blob/main/a.bpmn" }).source).toBe("https://github.com/x/y/blob/main/a.bpmn");
+  });
+  test("a subgraph IRI is fetched only under the repository's own subgraph IRI", () => {
+    const repo = `${canon}subgraph/`;
+    expect(api.localUrl(`${repo}cat-harness/processes/`, repo, "http://localhost:8000/subgraph/", "index.hydrated.jsonld"))
+      .toBe("http://localhost:8000/subgraph/cat-harness/processes/index.hydrated.jsonld");
+    expect(api.localUrl("https://evil.example/subgraph/x/", repo, "http://localhost:8000/subgraph/")).toBe("");
+    expect(api.localUrl(`${repo}../../x/`, repo, "http://localhost:8000/subgraph/")).toBe("");
   });
 });
 
-describe("extraction", () => {
-  test("the process's own documentation, never a lane's", () => {
-    const own = `<bpmn:process id="P" name="N &amp; M"><bpmn:documentation>Own. More.</bpmn:documentation><bpmn:laneSet/></bpmn:process>`;
-    const lane = `<bpmn:process id="P"><bpmn:laneSet><bpmn:lane id="L"><bpmn:documentation>Lane.</bpmn:documentation></bpmn:lane></bpmn:laneSet></bpmn:process>`;
-    expect(processDocumentation(own)).toBe("Own. More.");
-    expect(processDocumentation(lane)).toBeUndefined();
-    expect(processHead(own)).toEqual({ id: "P", name: "N & M" });
+describe("rows from a hydrated processes subgraph", () => {
+  const api = viewerApi();
+  const P = "https://x.test/doc.jsonld#process/";
+  const doc = {
+    "@id": "https://x.test/subgraph/h/processes/",
+    path: "processes/",
+    holdsGraph: ["bootstrap:graphKind/processes"],
+    hasMember: [{ "@id": `${P}Top`, "@type": "bootstrap:Process", name: "Top", summary: "Does the top thing.", sourcePath: "processes/top.bpmn" }],
+    hasSubgraph: [{
+      "@id": "https://x.test/subgraph/h/processes/sdlc/",
+      path: "processes/sdlc/",
+      hasMember: [
+        { "@id": `${P}Child`, "@type": "bootstrap:Process", name: "Child", sourcePath: "processes/sdlc/child.bpmn", depiction: "https://x.test/assets/img/workflows/child.svg" },
+        { "@id": `${P}Child/node/Call`, "@type": "bootstrap:ProcessNode", partOf: `${P}Child`, calledElement: `${P}Top` },
+      ],
+    }],
+  };
+  test("the concern group is the nesting below the top processes subgraph; calls come from ProcessNodes", () => {
+    const rows = api.rowsFromHydrated(doc, "h");
+    expect(rows.map((r) => [r.localId, r.group, r.instance])).toEqual([["Top", "", "h"], ["Child", "sdlc", "h"]]);
+    expect(rows[1]!.calls).toEqual([`${P}Top`]);
+    expect(rows[0]!.summary).toBe("Does the top thing.");
+    expect(rows[1]!.summary).toBe("");
+    expect(api.holdsProcesses(doc)).toBe(true);
+    expect(api.holdsProcesses({ holdsGraph: ["bootstrap:graphKind/skills"] })).toBe(false);
+  });
+});
+
+describe("first sentence", () => {
+  test("a summary is the documentation's first sentence", () => {
     expect(firstSentence("Own. More.")).toBe("Own.");
-  });
-  test("the concern group is the path between processes/ and the file", () => {
-    expect(concernGroup("cat-harness/processes/sdlc/merge-base.bpmn")).toBe("sdlc");
-    expect(concernGroup("bootstrap/processes/log-message.bpmn")).toBe("");
-    expect(concernGroup("smart-base/methodologies/processes/diig-investment-path.bpmn")).toBe("");
+    expect(firstSentence("No stop")).toBe("No stop");
   });
 });
 
-describe("the committed projection", () => {
-  const committed = JSON.parse(readFileSync(join(SITE, "assets", "processes", "index.json"), "utf-8"));
-  test("validates against its $schema family", () => {
-    expect(ProcessIndexSchema.safeParse(committed).success).toBe(true);
+describe("the committed subgraph JSON-LD", () => {
+  const { processes, problems } = publishedProcesses(OUT);
+  const declared = declaredDiagrams(REPO);
+  const framed = framedInstances(HARNESS);
+  const pathOf = (sourcePath: string): string => relative(REPO, resolve(HARNESS, sourcePath)).split(sep).join("/");
+
+  test("every file the walk reaches exists and validates", () => {
+    expect(problems).toEqual([]);
   });
-  test("is what the generator writes now", () => {
-    expect(committed).toEqual(collectProcessIndex(REPO, HARNESS));
+  test("every diagram an instance in this graph declares is a Process node, and nothing else is", () => {
+    const want = [...declared].filter(([, inst]) => framed.has(inst)).map(([p]) => p).sort();
+    expect(processes.map((p) => pathOf(p.sourcePath)).sort()).toEqual(want);
   });
-  test("has a row for every declared diagram, and none for anything else", () => {
-    expect(committed.processes.map((p: Row) => p.path).sort()).toEqual(declaredDiagrams(REPO));
+  test("bootstrap's diagrams are not re-carried into this graph (pve3, #432)", () => {
+    const boot = [...declared].filter(([p]) => p.startsWith("bootstrap/") || p.startsWith("bootstrap-tools/"));
+    expect(boot.length).toBeGreaterThan(0);
+    for (const [p, inst] of boot) {
+      expect({ p, framed: framed.has(inst) }).toEqual({ p, framed: false });
+    }
   });
-  test("every row has documentation, and no row carries work-plan or issue chatter", () => {
+  test("the shipped viewer reads the same rows from the same files", () => {
+    const api = viewerApi();
+    let n = 0;
+    for (const sub of ["cat-harness/processes", "folio-assistant-core/processes"]) {
+      const doc = JSON.parse(readFileSync(join(OUT, sub, "index.hydrated.jsonld"), "utf-8"));
+      n += api.rowsFromHydrated(doc, sub.split("/")[0]!).length;
+    }
+    expect(n).toBe(processes.filter((p) => p.harness === "cat-harness" || p.harness === "folio-assistant-core").length);
+  });
+  test("every node has documentation, and no summary carries work-plan or issue chatter", () => {
     // The page's rule, enforced where it can drift: a row is what the diagram
     // IS, not who asked for it or where the work got to.
     const chatter = /#\d{2,}|\b[Bb]eans? `[a-z0-9]{4}`|\b[Bb]ean [a-z0-9]{4}[,.;:)]|\b[Oo]wner,? 20\d\d|\b20\d\d-\d\d-\d\d\b/;
-    for (const p of committed.processes as Row[]) {
-      expect({ path: p.path, summary: typeof p.summary }).toEqual({ path: p.path, summary: "string" });
-      expect({ path: p.path, chatter: chatter.test(p.summary!) }).toEqual({ path: p.path, chatter: false });
+    for (const p of processes) {
+      expect({ id: p.id, summary: typeof p.summary }).toEqual({ id: p.id, summary: "string" });
+      expect({ id: p.id, chatter: chatter.test(p.summary!) }).toEqual({ id: p.id, chatter: false });
     }
   });
 });

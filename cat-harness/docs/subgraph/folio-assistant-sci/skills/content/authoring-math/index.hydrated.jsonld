@@ -1,0 +1,52 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/content/authoring-math/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": true,
+      "name": "authoring-math",
+      "path": "../folio-assistant-sci/skills/content/authoring-math"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-authoring",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "instructionLines": 64,
+      "instructionsPath": "../folio-assistant-sci/skills/content/authoring-math/latex-authoring.md",
+      "name": "latex-authoring",
+      "title": "latex-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formalization",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "instructionLines": 95,
+      "instructionsPath": "../folio-assistant-sci/skills/content/authoring-math/lean-formalization.md",
+      "name": "lean-formalization",
+      "title": "lean-formalization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-verification",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-math",
+      "instructionLines": 69,
+      "instructionsPath": "../folio-assistant-sci/skills/content/authoring-math/proof-verification.md",
+      "name": "proof-verification",
+      "title": "proof-verification"
+    }
+  ],
+  "name": "skills/content/authoring-math",
+  "path": "skills/content/authoring-math/"
+}

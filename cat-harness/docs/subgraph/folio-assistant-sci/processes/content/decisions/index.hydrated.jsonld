@@ -1,0 +1,20 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/processes/content/decisions/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/lean-build-gate/Decision_LeanBuildGate",
+      "@type": "cat-harness:Decision",
+      "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
+      "hitPolicy": "FIRST",
+      "name": "Build green, no sorries?",
+      "sourcePath": "../folio-assistant-sci/processes/content/decisions/lean-build-gate.dmn"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/processes"
+  ],
+  "name": "processes/content/decisions",
+  "path": "processes/content/decisions/"
+}

@@ -41,12 +41,16 @@
 import { z } from "zod";
 import { GraphNodeDirectoryShape } from "./cat-harness.js";
 
-/** A subgraph IRI: `<BASE_URL>/subgraph/<HARNESS>/<PATH>/` — always a directory. */
+/**
+ * A subgraph IRI: `<BASE_URL>/subgraph/<HARNESS>/<PATH>/` — always a directory.
+ * `<BASE_URL>/subgraph/` itself is the REPOSITORY's level, above every harness
+ * root (bean `ax6r`): index only, and its children are the harness roots.
+ */
 export const SubgraphIriSchema = z
   .string()
   .url()
-  .refine((s) => /\/subgraph\/[^/]+\/(?:.+\/)?$/.test(s), {
-    message: "a subgraph IRI is <BASE_URL>/subgraph/<HARNESS>/<PATH>/, ending in /",
+  .refine((s) => /\/subgraph\/(?:[^/]+\/(?:.+\/)?)?$/.test(s), {
+    message: "a subgraph IRI is <BASE_URL>/subgraph/[<HARNESS>/[<PATH>/]], ending in /",
   });
 
 /** The shared base: the declared-directory shape, picked, plus the JSON-LD identity. */

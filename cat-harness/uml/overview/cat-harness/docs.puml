@@ -295,28 +295,6 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     voices [0..*] : Voice[]
     totals [1] : object
   }
-  class "Instance" as cat_harness_docs_folio_process_index_v1_Instance <<json: ProcessIndexSchema>> #f4f4f1 {
-    name [1] : string
-    path [1] : string
-    processes [1] : integer
-  }
-  class "Processe" as cat_harness_docs_folio_process_index_v1_Processe <<json: ProcessIndexSchema>> #f4f4f1 {
-    id [1] : string
-    name [1] : string
-    summary [0..1] : string
-    path [1] : string
-    source [1] : string<uri>
-    svg [0..1] : string<starts_with>
-    group [1] : string
-    instance [1] : string
-    calls [0..*] : string[]
-  }
-  class "folio-process-index/v1" as cat_harness_docs_folio_process_index_v1_folio_process_index_v1 <<json: ProcessIndexSchema>> #f4f4f1 {
-    $schema [1] : 'folio-process-index/v1'
-    tile [0..1] : map<object>
-    instances [0..*] : Instance[]
-    processes [0..*] : Processe[]
-  }
   class "Directory" as cat_harness_docs_folio_graph_projection_v1_Directory <<json: FolioGraphProjectionSchema>> #f4f4f1 {
     dir [1] : string
     present [1] : boolean
@@ -364,8 +342,6 @@ cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_v
 cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_ProvenanceFlag : provenanceFlags
 cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_Rule : rules
 cat_harness_docs_folio_voices_index_v1_folio_voices_index_v1 *-- "0..*" cat_harness_docs_folio_voices_index_v1_Voice : voices
-cat_harness_docs_folio_process_index_v1_folio_process_index_v1 *-- "0..*" cat_harness_docs_folio_process_index_v1_Instance : instances
-cat_harness_docs_folio_process_index_v1_folio_process_index_v1 *-- "0..*" cat_harness_docs_folio_process_index_v1_Processe : processes
 cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Directory : directories
 cat_harness_docs_folio_graph_projection_v1_Node *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Link : links
 cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Node : nodes
