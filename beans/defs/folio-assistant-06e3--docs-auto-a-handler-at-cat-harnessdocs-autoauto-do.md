@@ -813,3 +813,50 @@ Screenshots at 1280 and 390 px; phone width has no horizontal overflow.
    named anything at all. A filename is evidence about a file; only the build is
    evidence about a URL. Caught by running `preview:site`, which is the whole
    reason that script exists: *"a green gate set is not a rendered page."*
+
+## §4(c), the navbar index — measured 2026-10-03, and it has NOTHING TO CATCH today
+
+§4(c) asks the LHS navbar to index every KG asset that HAS a populated `docs/` —
+*"Not every declared `docs` directory — one with assets in it"* — on the `dh4f`
+ground that a nav entry to an empty directory is a link resolving to nothing.
+
+Before building that rule, the premise was measured: every declared `docs`-kind
+directory across every instance in this checkout, counted on disk.
+
+| instance | directory | files |
+|---|---|---|
+| `cat-harness` | `cat-harness/docs` | 1905 |
+| `smart-immunizations` | `smart-immunizations/docs` | 753 |
+| `smart-trust` | `smart-trust/docs` | 682 |
+| `smart-base` | `smart-base/docs` | 227 |
+| `smart-base` | `smart-base/findings` | 5 |
+| `who-iris` | `who-iris/site` | 14 |
+| `who-iris` | `who-iris/docs` | 5 |
+| `folio-assistant` | `docs` | **1** |
+
+**Zero EMPTY. Zero ABSENT.** Eight instances declare no `docs` directory at all
+(`bootstrap`, `bootstrap-tools`, `cat-harness-tools`, `fhir-harness`,
+`folio-assistant-core`, `folio-assistant-sci`, `smart-ig`, `who-style-guide`) —
+and declaring nothing is the correct behaviour, not the defect; `dh4f` is about
+declaring what is not there.
+
+So §4(c) is a **guard against a state that does not currently occur**, not a fix
+for a visible one. That is worth knowing before building it: a rule written now
+would fire on nothing, and a rule that fires on nothing cannot be told from a
+rule that is broken — which is the `xom7` shape the rest of this bean is about.
+
+Two things that do follow from the measurement:
+
+1. **`folio-assistant/docs` holds ONE file**, and `check:docs-populated` passes
+   the root instance on it (`docs/README.md`, 299 words). That is the closest
+   thing in the corpus to §4(c)'s concern, and it is a *thin* directory rather
+   than an empty one — so the rule §4(c) names would not catch it either.
+2. The guard has **prospective** value: a downstream folio can declare an empty
+   `docs/`, and `wwi6` pins that a dependent materialises its own directories.
+   So this is worth building eventually, with a fixture rather than the corpus
+   as its first test.
+
+**Not started**, deliberately, and this paragraph is the reason rather than a
+shrug. The owner picked §4(b) of these three; §4(a) is done above because (b)
+grades it. §4(c) is reported with its premise measured so the next agent does
+not repeat the investigation.
