@@ -48,7 +48,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { checkoutRootFor } from "../schemas/cat-harness.js";
 import { resolveHarnessConfigPath } from "../schemas/harness-config.js";
 
 export type Probe = "ok" | "not-found" | "error" | "unchecked";
@@ -149,7 +149,8 @@ export function derivePagesUrl(root: string): Pick<PagesReport, "url" | "urlSour
  * "gh-pages.yml" are both common and neither is required.
  */
 export function findPublishWorkflows(root: string): string[] {
-  const dir = join(repoRootFor(root), ".github", "workflows");
+  // The checkout's `.github/`: `dirname` of a root instance is outside it (g43f).
+  const dir = join(checkoutRootFor(root), ".github", "workflows");
   if (!existsSync(dir)) return [];
   const hits: string[] = [];
   for (const f of readdirSync(dir)) {

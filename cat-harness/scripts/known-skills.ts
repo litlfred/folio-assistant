@@ -16,7 +16,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
+import { checkoutRootFor, resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 
 /**
  * The instance this module belongs to — the one that owns the repository-level
@@ -459,7 +459,7 @@ export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(ro
   // and the exported graph did not — a skill by this repository's own
   // definition, absent from the graph. Latent rather than live (only `local`
   // exists today), and now impossible: the exporter reads this function.
-  const localRoot = join(repoRootFor(root), ".claude", "skills");
+  const localRoot = join(checkoutRootFor(root), ".claude", "skills");
   if (existsSync(localRoot)) {
     for (const g of readdirSync(localRoot, { withFileTypes: true })) {
       if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;

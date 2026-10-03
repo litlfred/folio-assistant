@@ -78,7 +78,7 @@ import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
 import { applyVocabMapping, contextBindings, vocabMapping, type VocabMapping } from "../schemas/vocab-mapping.js";
 import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, checkoutRootFor, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
@@ -1516,7 +1516,8 @@ async function collectProcesses(
   // remote, which differs by clone and would make the committed subgraph
   // files differ with it. A file in a submodule resolves to the submodule's
   // repository.
-  const repoRoot = repoRootFor(root);
+  // The CHECKOUT, not `dirname`: for the root instance `dirname` is outside it (g43f).
+  const repoRoot = checkoutRootFor(root);
   const repoName = (() => {
     try {
       return readDeclaration(repoRoot)?.repository;

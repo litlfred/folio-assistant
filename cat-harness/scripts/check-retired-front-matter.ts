@@ -38,7 +38,7 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import { repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
+import { checkoutRootFor, repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 
@@ -209,7 +209,7 @@ export interface Finding {
 
 export function scan(
   instance = INSTANCE,
-  repo = repoRootFor(instance),
+  repo = checkoutRootFor(instance),
 ): { findings: Finding[]; scanned: number; missingRecords: Retired[]; roots: string[] } {
   const guts = corpusDirectoryForGraph(instance, "fsh-guts");
   // No declared trashcan means the records are UNREACHABLE, not absent. Both

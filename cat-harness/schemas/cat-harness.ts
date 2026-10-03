@@ -3112,6 +3112,58 @@ export function repoRootFor(instanceRoot: string): string {
 }
 
 /**
+ * The CHECKOUT an instance's repository-level files live in — `.gitmodules`,
+ * `.github/`, `.claude/skills/`, the root declaration, a `scope: "repository"`
+ * path — answered for the root instance too (bean `g43f`).
+ *
+ * ## Why {@link repoRootFor} cannot be used for these reads
+ *
+ * `repoRootFor` is `dirname`, so for the instance declared AT the checkout root
+ * it climbs out. In the main checkout that is `/home/user`; in a Claude Code
+ * worktree it is `.claude/worktrees/`, whose every child is ANOTHER session's
+ * checkout. Measured 2026-10-03: twenty-odd readers composed
+ * `join(repoRootFor(root), …)` and were safe only because their callers passed
+ * a nested instance. Given the root instance they read a directory that is not
+ * there — `.claude/skills` read as empty, a root declaration read as absent —
+ * which is `dh4f`: a clean run over nothing.
+ *
+ * ## The rule is git's own marker, read from the filesystem
+ *
+ * - `instanceRoot` holds its own `.git` (a directory for a clone, a FILE for a
+ *   worktree) and its parent's `.gitmodules` does not name it — it IS a
+ *   checkout ({@link isForeignCheckout} from the parent's side): answer itself.
+ * - otherwise it is nested — a plain subdirectory, or a declared submodule such
+ *   as `bootstrap/` — and its repository is one level up, which is
+ *   `repoRootFor`'s contract and is unchanged.
+ *
+ * Read from the filesystem rather than by spawning `git rev-parse
+ * --show-toplevel` for two measured reasons: `rootForScope` is on the hot path
+ * of every declared-directory resolution, and a fixture built under a checkout
+ * would get the ENCLOSING repository's toplevel, which is the wrong answer
+ * delivered confidently. A non-git fixture has no `.git` anywhere and keeps the
+ * `dirname` answer every existing fixture was written against.
+ *
+ * ## It reports rather than guessing
+ *
+ * A nested checkout (a submodule) whose parent holds no `.git` is a tree whose
+ * repository cannot be determined: the `.gitmodules` says one thing and the
+ * parent's git state another. That throws, because returning `dirname` there
+ * is the silent escape this function exists to end.
+ */
+export function checkoutRootFor(instanceRoot: string): string {
+  const abs = resolve(instanceRoot);
+  if (isForeignCheckout(abs)) return abs;
+  const up = repoRootFor(abs);
+  if (existsSync(join(abs, ".git")) && !existsSync(join(up, ".git"))) {
+    throw new Error(
+      `cannot determine the checkout of ${abs}: it is a declared submodule of ${up}, ` +
+        `which holds no \`.git\` — refusing to read repository-level files from outside a checkout`,
+    );
+  }
+  return up;
+}
+
+/**
  * The scope to resolve an instance's SIBLINGS in — `repoRootFor`, except when
  * the instance root IS the repository root.
  *
@@ -3223,7 +3275,9 @@ export function resolveCoveragePath(repoRoot: string, coveragePath: string): str
  * change to this function rather than a sweep over six declarations.
  */
 export function rootForScope(instanceRoot: string, scope?: DeclarationScope): string {
-  return scope === "repository" ? repoRootFor(instanceRoot) : instanceRoot;
+  // `checkoutRootFor`, not `repoRootFor`: a `scope: "repository"` entry on the
+  // ROOT declaration otherwise resolved against the checkout's parent (g43f).
+  return scope === "repository" ? checkoutRootFor(instanceRoot) : instanceRoot;
 }
 
 /**
@@ -6144,8 +6198,7 @@ export function declaredKinds(
 
 /** Where a declared directory actually is, honouring `scope`. */
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
-  const base = d.scope === "repository" ? repoRootFor(root) : root;
-  return resolve(base, d.path);
+  return resolve(rootForScope(root, d.scope as DeclarationScope | undefined), d.path);
 }
 
 /**

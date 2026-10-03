@@ -95,7 +95,7 @@ import { basename, dirname, extname, join, relative, resolve, sep } from "node:p
 import jsonld from "jsonld";
 import { buildContext, buildExport, graphKindId } from "./kg-export.js";
 import { corpusScopeFor, kgDirectories } from "./known-skills.js";
-import { findInstanceRoot, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { checkoutRootFor, findInstanceRoot, readDeclaration } from "../schemas/cat-harness.js";
 import { gitCorpus } from "../schemas/git-corpus.js";
 import { propertyIri, termIri } from "../schemas/namespaces.js";
 import {
@@ -537,7 +537,7 @@ export function planSubgraphs(
   // a harness, given the one file a reader needs to find every harness root
   // this build frames. Index only — a hydrated file here would be the whole
   // graph in one document, the monolith `f233` forbids.
-  const repoRoot = repoRootFor(opts.root);
+  const repoRoot = checkoutRootFor(opts.root); // not `dirname`: the root instance's is outside the checkout (g43f)
   let repoName = basename(repoRoot);
   try {
     repoName = readDeclaration(repoRoot)?.repository?.split("/").pop() ?? repoName;
