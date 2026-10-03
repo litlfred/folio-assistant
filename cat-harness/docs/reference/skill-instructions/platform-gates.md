@@ -363,6 +363,6 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Repository gates (HARD); Registered gates that never run (HARD); Skill-registration chain (UNMASKED); Publish QA results to qa-reports (NOT A GATE) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Import hygiene (HARD) and advisories (WARN-ONLY); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Repository gates (HARD); Registered gates that never run (HARD); Skill-registration chain (UNMASKED); Publish QA results to qa-reports (NOT A GATE) |
 | [A merge train](../../processes/merge-train.html) | Run the gate set on the train (calls a sub-process) |
 
