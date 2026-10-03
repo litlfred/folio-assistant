@@ -315,6 +315,11 @@ jobs:
       fail-fast: false
       matrix:
         shard: [1, 2]
+    # A cap, because a parallel worker that spins (measured once locally:
+    # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
+    # not stopped by a per-test timeout, and the Actions default is six hours.
+    # a shard measured 2m07s-2m21s; 20 is ~9x that, so a red here is a hang, never a slow day.
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -2280,6 +2285,11 @@ jobs:
     # `bun` line locally with no shell, so an interpolation in it would arrive
     # as literal text (bean `9zok`). Unset, as it is locally, means the whole
     # suite — which is what `bun run gates --all` should run.
+    # A cap, because a parallel worker that spins (measured once locally:
+    # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
+    # not stopped by a per-test timeout, and the Actions default is six hours.
+    # a shard measured 1m55s-2m37s; 20 is ~8x that, so a red here is a hang, never a slow day.
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     strategy:
       # Every shard reports, so one red shard does not hide another's result.
