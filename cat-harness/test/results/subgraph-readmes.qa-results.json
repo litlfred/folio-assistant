@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "70ec174e4c49"
+    "script_hash": "8ef39e10c6c3"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 85,
+      "count": 86,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -130,6 +130,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "attestations",
+          "path": "cat-harness/test/attestations"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "health",
           "path": "cat-harness/test/health/results"
         },
@@ -197,11 +202,6 @@
           "instance": "fhir-harness",
           "directory": "fhir-ig-tools",
           "path": "fhir-harness/tools"
-        },
-        {
-          "instance": "fhir-harness",
-          "directory": "fhir-ig-scripts",
-          "path": "fhir-harness/scripts"
         },
         {
           "instance": "fhir-harness",
@@ -287,6 +287,11 @@
           "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "attestations",
+          "path": "folio-assistant-sci/test/attestations"
         },
         {
           "instance": "folio-assistant-sci",
@@ -463,7 +468,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 106,
+      "count": 107,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -597,6 +602,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "attestations",
+          "path": "cat-harness/test/attestations"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "health",
           "path": "cat-harness/test/health/results"
         },
@@ -707,11 +717,6 @@
         },
         {
           "instance": "fhir-harness",
-          "directory": "fhir-ig-scripts",
-          "path": "fhir-harness/scripts"
-        },
-        {
-          "instance": "fhir-harness",
           "directory": "fhir-harness-processes",
           "path": "fhir-harness/processes"
         },
@@ -809,6 +814,11 @@
           "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "attestations",
+          "path": "folio-assistant-sci/test/attestations"
         },
         {
           "instance": "folio-assistant-sci",
@@ -1019,5 +1029,5 @@
       "entries": []
     }
   },
-  "total": 195
+  "total": 197
 }
