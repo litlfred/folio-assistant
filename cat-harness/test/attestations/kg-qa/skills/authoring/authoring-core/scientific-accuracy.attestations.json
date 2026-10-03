@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "scientific-accuracy",
+    "path": "skills/authoring/authoring-core/scientific-accuracy.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/authoring/authoring-core/scientific-accuracy.md",
+      "code": "cat-harness/skills/authoring/authoring-core/scientific-accuracy.ts",
+      "prose_hash": "4dbf4fc21dda",
+      "code_hash": "4f35076d2ef1",
+      "by": "baseline"
+    }
+  ]
+}

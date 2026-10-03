@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CodeQualityGates",
+    "path": "processes/sdlc/code-quality-gates.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/sdlc/code-quality-gates.bpmn",
+      "code": ".github/workflows/code-quality-gates.yml",
+      "prose_hash": "ca85218fed8e",
+      "code_hash": "e719a7c8a66d",
+      "by": "baseline"
+    }
+  ]
+}
