@@ -118,13 +118,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.59 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
-| 2 | 21.61 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, asset |
+| 1 | 44.61 | instance, kind, harness, session, page, directory, graph, block | *(none)* |
+| 2 | 21.60 | watcher, sibling, slot, queue, prs, backlog, commits, coordination | harness, instance, declaration, node, directory, directories, graph, asset |
 | 3 | 18.00 | slot, chapter, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, store, window, sessions |
-| 4 | 16.74 | page, text, pdf, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, relocation, renderable, coordination |
+| 4 | 16.73 | page, text, pdf, block, manifest, blocks, slide, images | sibling, ledger, subdirectory, sessions, items, renderable, relocation, coordination |
 | 5 | 15.23 | rung, archive, queue, withheld, arm, sniff, archived, zip | preview, feature, staging, build, requirements, role, phase, folio |
-| 6 | 14.94 | lane, actor, edge, role, edges, forward, process, logical | sha, page, locale, staging, translated, preview, pages, url |
-| 7 | 14.52 | edges, forward, backward, edge, cross-chapter, energy, preview, logical | actor, lane, role, task, criterion, login, requirement, backlog |
+| 6 | 14.94 | lane, actor, role, edge, edges, process, forward, task | sha, page, locale, staging, preview, pages, translated, url |
+| 7 | 14.52 | edges, forward, edge, backward, cross-chapter, energy, logical, preview | actor, lane, role, task, criterion, backlog, requirement, login |
 | 8 | 14.25 | phase, feature, feedback, impact, preview, stakeholders, pdf, post | claim, avatar, tile, slot, art, adjudicator, card, translated |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
