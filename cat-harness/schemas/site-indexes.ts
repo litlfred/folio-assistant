@@ -63,53 +63,14 @@ export const BeanIndexItemSchema = z
   })
   .strict();
 
-/**
- * One milestone, rolled up over the closure of beans beneath it.
- *
- * Declared HERE and the TypeScript types are inferred from it
- * (`scripts/milestone-rollup.ts` imports them), so the projection's schema and
- * the function that produces it cannot drift. A hand-written interface beside
- * a Zod object is two declarations of one shape, and `.strict()` only catches
- * the drift in one direction.
- */
-export const MilestoneRollupSchema = z
-  .object({
-    id: BeanIdSchema,
-    title: z.string(),
-    /** Repository-relative path of the milestone's bean file. */
-    file: z.string().min(1),
-    /** The milestone's OWN status — not derived from its subtree. */
-    status: z.string(),
-    /** Direct children typed `epic`. */
-    epics: Count,
-    /** Transitive descendants, excluding the milestone itself. */
-    total: Count,
-    closed: Count,
-    open: Count,
-    inProgress: Count,
-    todo: Count,
-    draft: Count,
-    /** In neither status set — reported alone, folded into neither figure. */
-    unclassified: Count,
-    /** `closed / (closed + open)`; `null` when nothing is classified, which is
-     *  NOT the same as 0 — see the module note on `milestone-rollup.ts`. */
-    share: z.number().min(0).max(1).nullable(),
-  })
-  .strict();
+// Declared in `bean-graph.ts`, the HARNESS layer, and imported here. The
+// rollup is a bean-store concept, and `cat-harness` may not import
+// `folio-assistant-core` — core depends on harness, so the declaration has to
+// sit on the side that `scripts/milestone-rollup.ts` can reach. Measured by
+// `check:partition`, which refused the other direction outright.
+import { MilestonePlanSchema, MilestoneRollupSchema } from "./bean-graph.ts";
 
-/** The milestone rollup as a whole, plus what the per-milestone shares omit. */
-export const MilestonePlanSchema = z
-  .object({
-    milestones: z.array(MilestoneRollupSchema),
-    /** Open beans with no milestone anywhere above them. */
-    orphanOpen: Count,
-    openTotal: Count,
-    /** SUMMED from the closures, never `openTotal - orphanOpen`. */
-    coveredOpen: Count,
-    /** Bean ids held by more than one file. A store defect, reported. */
-    duplicateIds: Count,
-  })
-  .strict();
+export { MilestonePlanSchema, MilestoneRollupSchema };
 
 export const BeanIndexSchema = z
   .object({

@@ -257,3 +257,64 @@ export function parseBeanGraph(
 export function nodeOfKind(graph: BeanGraph, kind: BeanNodeKind): BeanGraphNode | undefined {
   return graph.directories.find((n) => n.graphKinds.includes(kind));
 }
+
+
+/* ── The milestone rollup ─────────────────────────────────────────────────
+   Here rather than beside the projection that publishes it
+   (`site-indexes.ts`), because that file is `folio-assistant-core` and
+   `scripts/milestone-rollup.ts` — the only implementation — is `cat-harness`.
+   Core may import harness; harness may not import core. Putting the schema on
+   the core side made `check:partition` report a wrong-direction edge, which is
+   how this landed here. A milestone rollup is a bean-store concept anyway, so
+   this file was the right home by subject as well as by layer. */
+
+/** A non-negative whole number of beans. */
+const Count = z.number().int().nonnegative();
+
+/**
+ * One milestone, rolled up over the closure of beans beneath it.
+ *
+ * Declared HERE and the TypeScript types are inferred from it
+ * (`scripts/milestone-rollup.ts` imports them), so the projection's schema and
+ * the function that produces it cannot drift. A hand-written interface beside
+ * a Zod object is two declarations of one shape, and `.strict()` only catches
+ * the drift in one direction.
+ */
+export const MilestoneRollupSchema = z
+  .object({
+    id: z.string().min(1),
+    title: z.string(),
+    /** Repository-relative path of the milestone's bean file. */
+    file: z.string().min(1),
+    /** The milestone's OWN status — not derived from its subtree. */
+    status: z.string(),
+    /** Direct children typed `epic`. */
+    epics: Count,
+    /** Transitive descendants, excluding the milestone itself. */
+    total: Count,
+    closed: Count,
+    open: Count,
+    inProgress: Count,
+    todo: Count,
+    draft: Count,
+    /** In neither status set — reported alone, folded into neither figure. */
+    unclassified: Count,
+    /** `closed / (closed + open)`; `null` when nothing is classified, which is
+     *  NOT the same as 0 — see the module note on `milestone-rollup.ts`. */
+    share: z.number().min(0).max(1).nullable(),
+  })
+  .strict();
+
+/** The milestone rollup as a whole, plus what the per-milestone shares omit. */
+export const MilestonePlanSchema = z
+  .object({
+    milestones: z.array(MilestoneRollupSchema),
+    /** Open beans with no milestone anywhere above them. */
+    orphanOpen: Count,
+    openTotal: Count,
+    /** SUMMED from the closures, never `openTotal - orphanOpen`. */
+    coveredOpen: Count,
+    /** Bean ids held by more than one file. A store defect, reported. */
+    duplicateIds: Count,
+  })
+  .strict();
