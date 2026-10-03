@@ -303,10 +303,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T00:50:58.651Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6ac627909d4f1dc4bf01345644f286e18f49ce85",
-  "sourceCommitSha": "6ac627909d4f1dc4bf01345644f286e18f49ce85",
-  "sourceCommitAt": "2026-10-03T00:47:59Z",
+  "generatedAt": "2026-10-03T01:13:53.490Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3373eba08af2ea9a6678bb782b746b61bbbe4444",
+  "sourceCommitSha": "3373eba08af2ea9a6678bb782b746b61bbbe4444",
+  "sourceCommitAt": "2026-10-03T01:09:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -321,7 +321,7 @@
     "ProcessNode": 948,
     "Tool": 117,
     "Schema": 156,
-    "ExternalSchema": 20,
+    "ExternalSchema": 21,
     "GraphKind": 26,
     "Role": 48,
     "Subgraph": 26,
@@ -48248,6 +48248,20 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-prov-o"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-todos-jsonld/cat-harness.jsonld#externalSchema/w3c-rdf-calendar",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
+      "name": "w3c-rdf-calendar",
+      "title": "RDF Calendar — an application of the Resource Description Framework to iCalendar Data",
+      "authority": "W3C",
+      "specVersion": "2005-09-29",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/rdfcal/",
+      "namespace": [
+        "http://www.w3.org/2002/12/cal/ical#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf-calendar"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-todos-jsonld/cat-harness.jsonld#externalSchema/w3c-rdf",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#ExternalSchema",
       "name": "w3c-rdf",
@@ -49948,8 +49962,8 @@
   ],
   "staging": {
     "branch": "claude/todos-jsonld",
-    "sha": "f9bd65ffe55cc0d8ce4cd416626042e98b64c021",
+    "sha": "72a08e27ae7b6cdb5afad98b494809ed20c39409",
     "pr": "1941/merge",
-    "run": "37083568613"
+    "run": "37085019863"
   }
 }
