@@ -10,7 +10,11 @@ import { readdirSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { Glob } from "bun";
 
+import { fshGutsDirectory } from "../../schemas/fsh-guts.ts";
+
 const REPO = resolve(import.meta.dir, "..", "..", "..");
+/** The declared trashcan, never `fsh-guts/` spelled (bean 9c7h): it follows the move to its branch. */
+const GUTS = fshGutsDirectory(REPO);
 
 function beanIds(): Set<string> {
   const out = new Set<string>();
@@ -23,15 +27,15 @@ function beanIds(): Set<string> {
 
 describe("fsh-guts bean references resolve", () => {
   const ids = beanIds();
-  const refs = [...new Glob("**/*.md").scanSync({ cwd: join(REPO, "fsh-guts") })].flatMap((rel) => {
-    const m = /^bean:\s*(\S+)\s*$/m.exec(readFileSync(join(REPO, "fsh-guts", rel), "utf-8").slice(0, 4000));
+  const refs = [...new Glob("**/*.md").scanSync({ cwd: GUTS })].flatMap((rel) => {
+    const m = /^bean:\s*(\S+)\s*$/m.exec(readFileSync(join(GUTS, rel), "utf-8").slice(0, 4000));
     return m ? [{ rel, bean: m[1]! }] : [];
   });
 
   test("the corpus is non-empty, so the assertion below is not vacuous", () => {
     expect(ids.size).toBeGreaterThan(0);
     expect(refs.length).toBeGreaterThan(0);
-    expect(readdirSync(join(REPO, "fsh-guts")).length).toBeGreaterThan(0);
+    expect(readdirSync(GUTS).length).toBeGreaterThan(0);
   });
 
   test("every `bean:` names a bean in the work plan", () => {
