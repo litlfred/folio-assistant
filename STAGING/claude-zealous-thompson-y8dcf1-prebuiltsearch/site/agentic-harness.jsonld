@@ -1,0 +1,35 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio-assistant/"
+    }
+  ],
+  "@id": "site/agentic-harness.jsonld",
+  "@type": [
+    "folio-assistant-core:WebPage",
+    "doco:Section"
+  ],
+  "label": "agentic-harness",
+  "title": "Agentic harness",
+  "contains": [
+    "site/agentic-harness/nodes/overview.jsonld",
+    "site/agentic-harness/nodes/interaction-states.jsonld",
+    "site/agentic-harness/nodes/session-lifecycle.jsonld",
+    "site/agentic-harness/nodes/request-classification.jsonld",
+    "site/agentic-harness/nodes/content-workflows.jsonld",
+    "site/agentic-harness/nodes/deterministic-and-agentic.jsonld",
+    "site/agentic-harness/nodes/bpmn-execution.jsonld",
+    "site/agentic-harness/nodes/feature-request-workflow.jsonld",
+    "site/agentic-harness/nodes/user-provided-content.jsonld",
+    "site/agentic-harness/nodes/issue-and-bean-discipline.jsonld",
+    "site/agentic-harness/nodes/consolidated-skill-references.jsonld",
+    "site/agentic-harness/nodes/what-is-not-built-yet.jsonld"
+  ],
+  "provenance": "authored",
+  "meta": {
+    "publishedAt": "agentic-harness.html",
+    "sourceDir": "content/docs/agentic-harness",
+    "navOrder": 5
+  }
+}
