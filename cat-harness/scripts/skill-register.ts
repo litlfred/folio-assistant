@@ -571,12 +571,34 @@ export function missingScripts(instance: string = INSTANCE_ROOT): string[] {
  * `declared-directory-resolves.test.ts` guards a real defect where importing a
  * generator WROTE files.
  */
-function run(args: readonly string[], quiet = false): number {
+function run(args: readonly string[]): number {
   const r = spawnSync("bun", ["run", ...args], {
-    stdio: quiet ? ["ignore", "pipe", "pipe"] : "inherit",
+    stdio: "inherit",
     cwd: resolve(INSTANCE_ROOT, ".."),
   });
   return r.status ?? 1;
+}
+
+/**
+ * Run one VERIFY step quietly, without blocking — the verification pass starts
+ * all of them at once.
+ *
+ * Every step it is given is a `--check` (or `check`) command that writes
+ * nothing, so they share only the cores. Serially they were 29 s of the
+ * Repository gates job, measured 2026-10-03 (bean `fmdl`). Verdicts are still
+ * printed in `STEPS` order, so the report reads the same whichever finished
+ * first. Generating steps stay on {@link run}: those write, and their order is
+ * the chain.
+ */
+async function verifyQuietly(args: readonly string[]): Promise<number> {
+  const p = Bun.spawn(["bun", "run", ...args], {
+    cwd: resolve(INSTANCE_ROOT, ".."),
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  // Drained so a chatty check cannot fill the pipe and stall.
+  await Promise.all([new Response(p.stdout).text(), new Response(p.stderr).text()]);
+  return (await p.exited) ?? 1;
 }
 
 /**
@@ -735,7 +757,7 @@ function declarationVerdicts(f: Findings): DeclarationVerdict[] {
   ];
 }
 
-function main(): number {
+async function main(): Promise<number> {
   const flags = parseFlags(process.argv);
   const checking = flags.check;
 
@@ -851,8 +873,9 @@ function main(): number {
   if (!flags.json) console.log(`\nVerifying — each check run on its own, never through \`gates\`:\n`);
   const red: string[] = [];
   const verdicts: StepVerdict[] = [];
-  for (const s of STEPS) {
-    const rc = run(s.verify, true);
+  const codes = await Promise.all(STEPS.map((s) => verifyQuietly(s.verify)));
+  for (const [i, s] of STEPS.entries()) {
+    const rc = codes[i]!;
     verdicts.push({ verify: s.verify.join(" "), because: s.because, ran: true, current: rc === 0 });
     if (!flags.json) console.log(`${rc === 0 ? "  ✓" : "  ✗"} ${s.verify.join(" ")}`);
     if (rc !== 0) red.push(s.verify.join(" "));
@@ -944,4 +967,4 @@ function main(): number {
   return 0;
 }
 
-if (import.meta.main) process.exit(main());
+if (import.meta.main) process.exit(await main());
