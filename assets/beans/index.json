@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 764,
+      "count": 765,
       "unit": "beans"
     }
   },
@@ -6057,14 +6057,14 @@
     {
       "id": "folio-assistant-kupb",
       "title": "IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import",
-      "status": "completed",
+      "status": "in-progress",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-yg29",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:14Z",
-      "updatedAt": "2026-09-30T08:26:13Z",
+      "updatedAt": "2026-10-01T02:05:09Z",
       "preview": "Owner ask, 2026-09-20, three messages in one session.\n\nSOURCES, both uploaded to the repo root by the owner and both measured this session:\n- `549fb04` — a saved DSpace ITEM PAGE. The HTML declares `saved from url=https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec`; the sidecar zip carries `client-theme.css`, `styles.e55b0c9926626404.css`, `who_logo.svg`, `who_logo_white.svg`, `iris_l",
       "file": "beans/defs/folio-assistant-kupb--iris-catalogue-a-referenced-import-of-who-iris-int.md"
     },
@@ -7713,6 +7713,20 @@
       "updatedAt": "2026-10-02T12:27:27Z",
       "preview": "The generalisation test qsf5 deferred. Until a second DAK-API IG goes through, \"generalisable across many IGs\" is a design claim.\n\nSubject: `smart.who.int.immunizations` v0.2.0, FHIR **4.0.1** (smart-trust is 5.0.0), gh-pages, 232,040 published files.\n\nMeasured 2026-09-21 before writing any code:\n\n| | smart-trust | smart-immunizations |\n|---|---|---|\n| artefacts (.index.json) | 674 | 712 |\n| canon",
       "file": "beans/defs/folio-assistant-qrnz--second-ig-ingest-smart-immunizations-and-find-out.md"
+    },
+    {
+      "id": "folio-assistant-qsx4",
+      "title": "who-style-guide folds INTO who-iris as a declared subgraph, docs included",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T00:02:14Z",
+      "updatedAt": "2026-10-02T22:18:46Z",
+      "preview": "Owner ruling 2026-09-30, verbatim: \"who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.\" Issue #476.\n\nSupersedes the separate-instance arrangement of `w095` (and the \"own repo/dir\" half of the 2026-09-20 decision recorded in `kupb`/`r1lz`). The `z7ev` cross-instance citation was the price of the split; with the voices and the library they are",
+      "file": "beans/defs/folio-assistant-qsx4--who-style-guide-folds-into-who-iris-as-a-declared.md"
     },
     {
       "id": "folio-assistant-qvxh",
