@@ -1,10 +1,11 @@
 ---
 # folio-assistant-9c7h
 title: Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-02T21:20:17Z
+updated_at: 2026-10-03T00:53:08Z
 parent: folio-assistant-7x5n
 ---
 
@@ -31,7 +32,7 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 5. **Update the skills.** Update `kg/kg-core/fsh-guts` ("where it lives") and the special-branches section of the skill that documents them.
 
 ## Done when
-- [ ] `fsh-guts` declared in `special-branches.json`, with the test green
+- [x] `fsh-guts` declared in `special-branches.json`, with the test green (2026-10-03, branch claude/lucid-shannon-o8zop1-fsh-guts)
 - [ ] `cat/cat-harness/fsh-guts` exists with the contents of `fsh-guts/` (owner confirmed the push)
 - [ ] every tool listed above reads and writes through the declaration; `bun run gates` green
 - [ ] relocation ("delete means relocate") writes to the branch, and an end-to-end test proves it
@@ -39,3 +40,20 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 - [ ] the separation partition (`instance-rules.ts`) no longer has an fsh-guts case
 
 Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special branch), `wggr` (non-instance stores), `oi3h` (fsh-guts visualiser).
+
+
+## 2026-10-03: step 1, and why it was larger than one row (session https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd)
+
+**Sibling survey first, on the owner's instruction ("check siblings for related tooling on todos/ and beans/ move").** fsh-guts is the same shape as beans and todos: one live copy at a branch tip. Arc fs43 already builds that mechanism, so 9c7h REUSES it and builds no store of its own:
+- #1764 (arc 3fva) ships `DirectoryStorageSchema` (the `storage` field on a directory declaration);
+- #1937 (bean 2h76, stacked on #1764) widens `keyedBy` to `commit | tip` and adds `scripts/branch-store.ts` (tip-keyed read, splice-write, never force-push; `resolveTipLocation(id)` is what a reader asks).
+- Step 3 (retarget the tools) therefore stacks on #1937, and fsh-guts becomes a declaration: `storage: { branch: "cat/cat-harness/fsh-guts", keyedBy: "tip" }` on its directory entry.
+
+**Step 1 was blocked by stale data, not by this bean.** `special-branches.json` still declared the interim `cat-<name>` names, though bean tlk2 had already renamed `state` to `cat/cat-harness/state` and `fhir-ast` to `cat/fhir-harness/fhir-ast/`. Neither declared name existed, so `resolveBranch('state')` answered `cat-state` and a writer would have created an empty branch beside the real one. The follow-up the fs43 rename note assigned to #1928 ("update special-branches.json and its mirrors to the new names") had not happened. Done here:
+- qa-reports, fhir-ast and state now carry `cat/<harness>/<name>`, with the interim `cat-<name>` kept as the first legacy name;
+- beans and todos are declared (their branches existed but were undeclared: the inverse of dh4f);
+- fsh-guts is declared, NOT CREATED YET;
+- lake-cache keeps its name with `pendingRename`, split out to bean folio-assistant-9io2 (8 mirrors run inside folios);
+- special-branches.test.ts now requires `cat/<declared harness>/`, and a pending rename must name a bean that exists. Both were mutation-checked.
+
+**Survey re-run 2026-10-03:** 101 files mention fsh-guts, against about 30 listed above. Classification (writer, reader, excluder, declaration, test) to follow.
