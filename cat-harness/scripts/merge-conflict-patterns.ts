@@ -182,7 +182,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "beans",
     globs: ["beans/defs/**"],
     strategy: "refuse",
-    why: "bean definitions (44). Authored work-plan state: two sessions editing one bean is a coordination question, and a duplicated updated_at from a careless resolution is check-bean-front-matter's recorded defect.",
+    why: "bean definitions (44). Authored work-plan state, so it is resolved by a person. It may be TWO sessions editing one bean, which is a coordination question — or ONE session whose claim went to the default branch while its completion stayed on the branch, which is `beans:claim`'s normal path and needs no coordination at all (bean `24fa`). Check which before looking for a sibling. Either way, do not union the front matter: a duplicated updated_at is check-bean-front-matter's recorded defect.",
   },
   {
     id: "uploads",

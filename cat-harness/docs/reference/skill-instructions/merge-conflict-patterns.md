@@ -197,6 +197,29 @@ the README shows — the owner kept the exact counts (#1707).
 
 ### `beans` — refused, by declaration (44)
 
+**Before you go looking for the other session, check whether there is one.**
+A `beans/defs/**` conflict has two causes and they need different handling:
+
+| cause | how to tell | what to do |
+|---|---|---|
+| two sessions edited one bean | the default branch's claim note names a branch that is not yours | a coordination question — talk to them |
+| **one session**: the claim landed on the default branch, the completion stayed on the branch | the note names **your own** branch | no coordination needed; keep the completing value and the note |
+
+The second is `beans:claim`'s **normal path**, not an edge case: it pushes the
+claim to the default branch so a sibling sees it before your PR exists (bean
+`35nj`), and your branch then edits the same bean to finish it. Bean `24fa`
+measured it, and the refusal text used to assert the first cause for both —
+sending an agent to hunt a sibling that does not exist.
+
+`claim-bean.ts` now mirrors the claim note onto the branch as well as the
+status, byte-identically (`mirrorClaimNote`), which removes the BODY half of
+that conflict. What remains is `status` and `updated_at`, and that remainder is
+**correct**: `in-progress` on the default branch against `completed` on yours
+is a real divergence from a merge base that predates the claim. Resolve it by
+keeping the completing branch's value and the note — and **never by unioning
+the front matter**, since a duplicated `updated_at` is
+`check-bean-front-matter`'s recorded defect.
+
 Bean definitions are authored work-plan state. Two sessions editing one bean
 is a coordination question (`bean-coordination`), and a duplicated
 `updated_at` from a careless resolution is `check-bean-front-matter`'s
