@@ -1,0 +1,18 @@
+# Declared in `../beans.json` as the `merge-queue` node, and empty until a
+# merge steward records a decision.
+#
+# Same reason as `workflows/.gitkeep`: git does not track an empty directory,
+# and a declared-but-absent directory is the bean `dh4f` defect — a consumer
+# fans out over the declaration, scans nothing, and reports a clean run over
+# it.
+#
+# Empty ON PURPOSE rather than seeded. An entry records a decision a steward
+# actually made, with its reason and its author; inventing one to make the
+# directory look used would put a fabricated decision into the graph that
+# every later reader would take for a real one. The kind's whole discipline is
+# that a stored value is a decision somebody owns.
+#
+# What goes here: one JSON file per open pull request under consideration,
+# carrying `"$schema": "folio-merge-queue-entry/v1"` and validating against
+# `MergeQueueEntrySchema`. Never a fact GitHub owns — CI, mergeability,
+# labels and the head SHA are read live and refused by name.

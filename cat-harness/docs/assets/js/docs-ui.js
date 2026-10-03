@@ -10735,6 +10735,7 @@
       list.appendChild(li);
     }
     box.appendChild(list);
+    mirrorExpanded(box);
 
     // AFTER the header, BEFORE the nav -- the fixed top, with the instance.
     // It is about the thing the reader is looking at rather than about the
@@ -11055,7 +11056,13 @@
     // is a reason to draw an empty folder list. Both leave the middle as the
     // navigation alone, which is what it was.
     if (row === undefined || row === null) return;
-    var graphs = Array.isArray(row.folders) ? row.folders : [];
+    // SCOPED TO THE INSTANCE BEING VIEWED (#1902): inside an instance's own
+    // themed root the folders are THAT instance's declared graphs, not the
+    // site owner's. Outside every instance, the row's own list, as before.
+    var scope = readRailScope();
+    var graphs = scope && Array.isArray(scope.folders)
+      ? scope.folders
+      : Array.isArray(row.folders) ? row.folders : [];
 
     var middle = el("div", { class: "fa-nav-middle" });
     if (graphs.length > 0) {
@@ -11073,6 +11080,7 @@
       // theme's `.site-nav`, so folding it uncovers the navigation rather
       // than emptying the column. Same rule, different content below it.
       var box = el("details", { class: "fa-nav-folders" });
+      if (scope) box.setAttribute("data-fa-scope", scope.name);
       var sum = el("summary", { class: "fa-nav-folders__heading" }, "Folders");
       var count = el("span", { class: "fa-nav-folders__count" }, String(graphs.length));
       sum.appendChild(count);
@@ -11194,11 +11202,117 @@
         into.appendChild(li);
       }
       box.appendChild(list);
+      mirrorExpanded(box);
       middle.appendChild(box);
     }
 
     bar.insertBefore(middle, nav);
     middle.appendChild(nav);
+  }
+
+  /* ── THE RAIL'S SCOPE — issue #1902 ─────────────────────────────────────
+   *
+   * Owner, viewing `/smart-trust/`: *"there are also 101 pages under
+   * .../smart-trust/, which I would have expected only those in the IG TOC.
+   * i think it is showing all the folio pages, not the harnessed
+   * smart-trust's pages ... same for 'folders'."*
+   *
+   * WHICH INSTANCE IS NOT DECIDED HERE. `head_custom.html` emits
+   * `#fa-rail-scope` -- the one entry of `railScopes` (`sync-docs-harness.ts`)
+   * whose href is the innermost prefix of `page.url` -- or nothing. Liquid
+   * holds `page.url` without the baseurl, so the staging prefix that makes
+   * "which instance am I" hard from `location` cannot make it miss there.
+   * Absent is "inside no instance" and the rail lists the whole site, which is
+   * what it did before.
+   */
+  var railScopeRead = false;
+  var railScopeValue = null;
+  function readRailScope() {
+    if (railScopeRead) return railScopeValue;
+    railScopeRead = true;
+    var node = document.getElementById("fa-rail-scope");
+    if (!node) return null;
+    try {
+      var parsed = JSON.parse((node.textContent || "").trim());
+      // Read, never rendered: the href is compared against page links below.
+      var at = parsed && typeof parsed === "object" && parsed.href;
+      if (typeof at === "string" && typeof parsed.name === "string") {
+        railScopeValue = parsed;
+      }
+    } catch (_e) {
+      console.warn("docs-ui: #fa-rail-scope is not valid JSON; the rail lists the whole site.");
+    }
+    return railScopeValue;
+  }
+
+  /** A path with a trailing `index.html` dropped, so `/x/` and `/x/index.html` are one page. */
+  function railPath(p) {
+    return String(p || "").replace(/index\.html$/, "");
+  }
+
+  /**
+   * PAGES, scoped: the theme's page list cut to the instance's own subtree --
+   * the row that links the instance's root and everything nested under it,
+   * which for an IG is its table of contents. Rows outside it are marked
+   * `data-fa-out-of-scope` (hidden by docs-ui.css) rather than removed, so
+   * the theme's own script still finds every node it expects.
+   *
+   * The instance's root row is opened, since its children ARE the list: on a
+   * page the theme does not mark active -- an artefact leaf under the IG --
+   * the scoped list was otherwise one folded row.
+   *
+   * NO ROW FOR THE ROOT, NO SCOPE. If the theme's list carries no link to the
+   * instance's root, there is no subtree to cut to, and an empty PAGES would
+   * report "this instance has no pages". The whole list stays.
+   */
+  function scopeSiteNav() {
+    var scope = readRailScope();
+    var nav = document.querySelector(".side-bar .site-nav");
+    if (!scope || !nav || nav.hasAttribute("data-fa-scope")) return;
+    var want = railPath(withBase(scope.href));
+    var links = nav.querySelectorAll("a.nav-list-link");
+    var root = null;
+    for (var i = 0; i < links.length; i++) {
+      // An in-page anchor resolves to THIS page's path, which on the
+      // instance's root is the root's path too -- a row that is not the
+      // instance's would be taken for it. Only a link to a page counts.
+      if ((links[i].getAttribute("href") || "").charAt(0) === "#") continue;
+      if (railPath(links[i].pathname) === want) { root = links[i].closest(".nav-list-item"); break; }
+    }
+    if (!root) {
+      console.warn("docs-ui: no page-list row links " + want + "; PAGES lists the whole site.");
+      return;
+    }
+    nav.setAttribute("data-fa-scope", scope.name);
+    var items = nav.querySelectorAll(".nav-list-item");
+    for (var j = 0; j < items.length; j++) {
+      var it = items[j];
+      if (it === root || root.contains(it) || it.contains(root)) continue;
+      it.setAttribute("data-fa-out-of-scope", "");
+    }
+    for (var up = root; up && up !== nav; up = up.parentNode) {
+      if (!up.classList || !up.classList.contains("nav-list-item")) continue;
+      up.classList.add("active");
+      var exp = up.querySelector(":scope > .nav-list-expander");
+      if (exp) exp.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  /**
+   * ONE DISCLOSURE, ONE STATE IN THE TREE (#1902: *"all three are collapsible
+   * but only one has the arrow thing"*). The Pages heading is a button with
+   * `aria-expanded`; the other headings are `<summary>`s. axe gives a summary
+   * the button role and Chrome exposes its open state, but the ATTRIBUTE was
+   * only on Pages, so a test -- or a script -- asking "is it open" got an
+   * answer from one heading in three. Mirrored here, kept in step by the
+   * element's own `toggle` event. The caret itself is one rule in docs-ui.css.
+   */
+  function mirrorExpanded(details) {
+    var sum = details && details.querySelector(":scope > summary");
+    if (!sum) return;
+    var sync = function () { sum.setAttribute("aria-expanded", details.open ? "true" : "false"); };
+    sync();
+    details.addEventListener("toggle", sync);
   }
 
   /**
@@ -11216,7 +11330,13 @@
     var nav = document.querySelector(".side-bar .site-nav");
     if (!nav || !nav.parentNode || nav.parentNode.querySelector(":scope > .fa-nav-pages")) return;
     if (!nav.id) nav.id = "site-nav";
-    var top = nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
+    // Scoped (#1902), the count is every page row left in the scope -- the
+    // instance's root and its table of contents -- because the instance's
+    // pages ARE that subtree. Unscoped, the site's top-level pages, as before.
+    var scoped = nav.hasAttribute("data-fa-scope");
+    var top = scoped
+      ? nav.querySelectorAll(".nav-list-item:not([data-fa-out-of-scope])").length
+      : nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
     var btn = el("button", {
       type: "button",
       class: "fa-nav-pages",
@@ -11224,6 +11344,8 @@
       "aria-expanded": "true",
     }, "Pages");
     btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
+    var scope = scoped ? readRailScope() : null;
+    if (scope) btn.title = "Pages of " + (scope.title || scope.name);
     function set(open) {
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) nav.removeAttribute("data-fa-folded");
@@ -11330,12 +11452,14 @@
       group.appendChild(el("summary", { class: "fa-nav-graphs-group__heading" }, "Graphs"));
       group.appendChild(folders);
       middle.appendChild(group);
+      mirrorExpanded(group);
       toTopOnOpen(group);
     }
 
     if (harnesses) {
       harnesses.classList.add("fa-nav-harness-group");
       middle.appendChild(harnesses);
+      mirrorExpanded(harnesses);
       toTopOnOpen(harnesses);
       // THE FOLDED GRAPHS HEADING SITS ON TOP OF ▦, not under it: both are
       // pinned to the bottom edge, so Graphs is offset by ▦'s height. That
@@ -11567,6 +11691,8 @@
     // line rather than the only one.
     mountDocumentIndex();
     mountInstanceGraphs();
+    // BEFORE the heading: its count is read off what the scope left (#1902).
+    scopeSiteNav();
     // AFTER the wrapper exists, so the heading lands beside the nav inside it.
     mountNavPagesHeading();
     // LAST of the sidebar mounts: it MOVES the index, the folders and the

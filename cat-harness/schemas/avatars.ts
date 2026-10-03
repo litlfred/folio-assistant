@@ -243,6 +243,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // THE QUEUE FEEDING A TRAIN. Three queued items on the left converging into
+  // one line that carries on right — the queue's whole shape in one glyph: the
+  // decisions are per pull request, the train they feed is one. Deliberately
+  // NOT a list: a list would read as the store, and what this kind records is
+  // an ORDER somebody decided (bean `hfag`).
+  "merge-queue": {
+    glyph: "M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9",
+    tone: 205,
+    reads: "three queued items converging into one line — a queue feeding a train",
+  },
   // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
   // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
   "bean-notes": {
@@ -449,6 +459,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h12v12H4zM4 10h12M10 6v12M18 13h4m-2-2l2 2-2 2",
     tone: 190,
     reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
+  },
+  openapi: {
+    // Curly braces around a two-way arrow: a machine-readable description
+    // (the braces) of something you call and that answers (the arrow out and
+    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
+    // document is one node holding operations, not an index of things held
+    // elsewhere. Bean `s4ta`.
+    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
+    tone: 136,
+    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
   },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —

@@ -134,6 +134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-jsonld",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Export an IG AST as JSON-LD"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write an AST as linked data against `fhir-harness/schemas/ig-ast.context.jsonld`: each resource a node identified by its canonical URL (`urn:fhir:<Type>/<id>` when it has none) and typed by its FHIR resource type, each dependency edge a link to its target, and the manifest's `authority: cache` and `provisional` list carried on the graph. The AST is validated against the Zod declaration the JSON Schemas are generated from before it is exported (bean `l0lq`)."
+        }
+      ],
+      "skos:notation": "ig-ast-jsonld",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-ast-jsonld",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-list",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -234,6 +254,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-binary-audit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Measure the IG Publisher's binary outputs on a pages branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read a pages branch's git tree and report the Publisher's binary outputs (full-ig.zip, package.tgz and variants, package.db, validator packs, the definitions/examples/expansions zips, spreadsheets) by name: copies, bytes, and how much of it sits in branch previews. Reads the tree, never a checkout, so a multi-gigabyte branch costs a depth-1 fetch."
+        }
+      ],
+      "skos:notation": "ig-binary-audit",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-binary-audit",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-pages",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -271,6 +311,26 @@
       ],
       "skos:notation": "ig-site-data",
       "dcterms:source": "fhir-harness/tools/index.ts#ig-site-data",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ingest-ig-releases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record an IG's GitHub releases as pointers to their binary assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read an IG repository's GitHub releases and write `fhir-artifact-index/releases.json` (`ig-releases/v1`): each asset's name, size, SHA-256 digest and download URL, never its bytes. The IG site's generated `releases` page lists them (bean `b8ip`)."
+        }
+      ],
+      "skos:notation": "ingest-ig-releases",
+      "dcterms:source": "fhir-harness/tools/index.ts#ingest-ig-releases",
       "skos:note": "candidate"
     },
     {

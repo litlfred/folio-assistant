@@ -66,7 +66,8 @@
         "fhir-artifact-index"
       ],
       "readOnly": true,
-      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened. Answered rather than left silent, because absent is NOT a declaration of writability -- a directory that has not answered has asserted nothing, which is why the verdict for silence is `undeclared` and never `false`."
+      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened. Answered rather than left silent, because absent is NOT a declaration of writability -- a directory that has not answered has asserted nothing, which is why the verdict for silence is `undeclared` and never `false`.",
+      "served": true
     },
     {
       "id": "tools",

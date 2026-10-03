@@ -3,6 +3,8 @@
  * `ast-export` library writes on top of the FHIR IG Publisher
  * (`litlfred/fhir-ig-publisher@claude/ast-export`, bean `a9tx`).
  *
+ * @covers schemas
+ *
  * Owner, 2026-09-30: *"need to figure out how to list and view
  * differentials/deltas against AST ... including pipeline rendering"*. This is
  * the consumer half. The producer is Java and lives with the Publisher; this
@@ -16,7 +18,7 @@
  * the reader. This is `ig-publisher-reduction` P3's approved exit criterion:
  * a page built from cache shows a VISIBLE stale-until-full-run mark.
  *
- * ## Four commands
+ * ## Commands
  *
  * - `list <ast>`: what an AST holds (counts per type, edges, provenance).
  * - `validity <ast> --ig <root> [--toolchain <s>]`: whether it was built
@@ -28,6 +30,9 @@
  * - `diff <base> <head> [--plan plan.json] [--json out] [--site dir]`: the
  *   delta between two ASTs, and optionally just-the-docs pages for it.
  * - `render <delta.json> --site dir`: pages from a delta already computed.
+ * - `jsonld <ast>`: the AST as linked data, against `schemas/ig-ast.context.jsonld`.
+ * - `schema [--check]`: regenerate (or check) the JSON Schemas and context
+ *   from the Zod declaration in `schemas/ig-ast.ts` (bean `l0lq`).
  *
  * ## What a delta says, and what it cannot
  *
@@ -45,6 +50,16 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import {
+  AstDependenciesSchema,
+  AstManifestSchema,
+  IG_AST_CONTEXT,
+  igAstJsonSchemas,
+  resourceIri,
+  type AstEdge,
+  type AstManifest,
+  type AstResource,
+} from "../schemas/ig-ast.ts";
 
 import {
   compiledValidity,
@@ -54,42 +69,10 @@ import {
 
 // ── formats ────────────────────────────────────────────────────────────────
 
-export interface AstResource {
-  key: string;
-  canonical: string | null;
-  version: string | null;
-  resourceType: string;
-  id: string;
-  name?: string | null;
-  file: string;
-  source: string | null;
-  /** Set on a merged (mixed-provenance) AST: the revision that built it. */
-  builtAt?: string;
-}
-
-export interface AstManifest {
-  $schema: "ig-ast/v1";
-  authority: "cache";
-  provisional: string[];
-  provisionalUntil?: string;
-  mixed?: boolean;
-  incremental?: { base: string; head: string; rebuilt: number; kept: number; removed: number };
-  generatedAt?: string;
-  toolchain?: Record<string, string | null>;
-  inputs?: { toolchain: string; sourceRevision?: string; inputDigest?: string };
-  inputsUnknown?: Record<string, string>;
-  resources: AstResource[];
-}
-
-export interface AstEdge {
-  source: string;
-  kind: string;
-  target: string;
-  targetVersion: string | null;
-  resolved: string | null;
-  path?: string | null;
-  origin: string;
-}
+// The formats are declared ONCE, in `fhir-harness/schemas/ig-ast.ts` (Zod,
+// with JSON Schema and a JSON-LD context generated from it — bean `l0lq`).
+// This reader validates through them rather than spot-checking a tag.
+export type { AstEdge, AstManifest, AstResource } from "../schemas/ig-ast.ts";
 
 export interface Ast {
   dir: string;
@@ -100,18 +83,19 @@ export interface Ast {
 export function readAst(dir: string): Ast {
   const mf = join(dir, "manifest.json");
   if (!existsSync(mf)) throw new Error(`no AST at ${dir}: manifest.json is missing`);
-  const manifest = JSON.parse(readFileSync(mf, "utf-8")) as AstManifest;
-  if (manifest.$schema !== "ig-ast/v1") throw new Error(`${mf} is not ig-ast/v1 (found ${String(manifest.$schema)})`);
+  const rawManifest = JSON.parse(readFileSync(mf, "utf-8")) as { $schema?: unknown };
+  if (rawManifest.$schema !== "ig-ast/v1") throw new Error(`${mf} is not ig-ast/v1 (found ${String(rawManifest.$schema)})`);
+  const pm = AstManifestSchema.safeParse(rawManifest);
+  if (!pm.success) throw new Error(`${mf} does not match ig-ast/v1: ${pm.error.issues[0]?.path.join(".")}: ${pm.error.issues[0]?.message}`);
+  const manifest: AstManifest = pm.data;
   // REQUIRED. A missing dependency document is "cannot tell", never "no
   // edges": substituting an empty list would let a diff of two incomplete ASTs
   // report no edge changes as a clean result (Copilot review on #1708).
   const df = join(dir, "dependencies.json");
   if (!existsSync(df)) throw new Error(`incomplete AST at ${dir}: dependencies.json is missing`);
-  const deps = JSON.parse(readFileSync(df, "utf-8")) as { $schema?: string; dependencies?: unknown };
-  if (deps.$schema !== "ig-ast-dependencies/v1" || !Array.isArray(deps.dependencies)) {
-    throw new Error(`${df} is not ig-ast-dependencies/v1`);
-  }
-  const edges = deps.dependencies as AstEdge[];
+  const pd = AstDependenciesSchema.safeParse(JSON.parse(readFileSync(df, "utf-8")));
+  if (!pd.success) throw new Error(`${df} is not ig-ast-dependencies/v1: ${pd.error.issues[0]?.path.join(".")}: ${pd.error.issues[0]?.message}`);
+  const edges: AstEdge[] = pd.data.dependencies;
   return { dir, manifest, edges };
 }
 
@@ -548,6 +532,54 @@ function sortKeys<T>(o: Record<string, T>): Record<string, T> {
 
 // ── CLI ────────────────────────────────────────────────────────────────────
 
+// ── jsonld ─────────────────────────────────────────────────────────────────
+
+/**
+ * The AST as JSON-LD (owner, 2026-10-01: "export json(ld)+schema"): one node
+ * per resource, `@id` its canonical URL (`urn:fhir:<Type>/<id>` without one),
+ * `@type` its FHIR resource type, and its outgoing edges as `dependsOn`, each
+ * pointing at the target by `@id` — the in-IG resource when `resolved`, the
+ * canonical as written otherwise. The manifest's cache status rides on the
+ * graph, so a consumer of the linked data still reads it as provisional.
+ */
+export function astJsonLd(ast: Ast): Record<string, unknown> {
+  const byKey = new Map(ast.manifest.resources.map((r) => [r.key, r]));
+  const iriOfKey = (k: string) => {
+    const r = byKey.get(k);
+    return r ? resourceIri(r) : k;
+  };
+  const out = new Map<string, AstEdge[]>();
+  for (const e of ast.edges) out.set(e.source, [...(out.get(e.source) ?? []), e]);
+  return {
+    ...IG_AST_CONTEXT,
+    authority: ast.manifest.authority,
+    provisional: ast.manifest.provisional,
+    "@graph": ast.manifest.resources.map((r) => ({
+      "@id": resourceIri(r),
+      resourceType: `fhir:${r.resourceType}`,
+      key: r.key,
+      ...(r.version ? { version: r.version } : {}),
+      file: r.file,
+      ...(r.source ? { source: r.source } : {}),
+      dependsOn: (out.get(r.key) ?? []).map((e) => ({
+        kind: e.kind,
+        target: e.resolved ? iriOfKey(e.resolved) : e.target,
+        ...(e.resolved ? { resolved: iriOfKey(e.resolved) } : {}),
+        ...(e.path ? { path: e.path } : {}),
+        origin: e.origin,
+      })),
+    })),
+  };
+}
+
+/** The generated files `ig-ast:schema` keeps current: the JSON Schemas and the JSON-LD context. */
+export function igAstSchemaFiles(): Record<string, string> {
+  const files: Record<string, string> = {};
+  for (const [name, schema] of Object.entries(igAstJsonSchemas())) files[name] = `${JSON.stringify(schema, null, 2)}\n`;
+  files["ig-ast.context.jsonld"] = `${JSON.stringify(IG_AST_CONTEXT, null, 2)}\n`;
+  return files;
+}
+
 if (import.meta.main) {
   const [cmd, ...args] = process.argv.slice(2);
   const opt = (k: string) => {
@@ -557,7 +589,8 @@ if (import.meta.main) {
   const pos = args.filter((a, i) => !a.startsWith("--") && !(i > 0 && args[i - 1]!.startsWith("--")));
   const usage =
     "usage: ig-ast.ts list <ast> | validity <ast> --ig <root> [--toolchain <s>] | " +
-    "diff <base-ast> <head-ast> [--plan plan.json] [--json out.json] [--site dir] | render <delta.json> --site dir";
+    "diff <base-ast> <head-ast> [--plan plan.json] [--json out.json] [--site dir] | render <delta.json> --site dir | " +
+    "jsonld <ast> | schema [--check]";
   if (cmd === "list" && pos[0]) {
     console.log(JSON.stringify(listAst(readAst(pos[0])), null, 2));
   } else if (cmd === "validity" && pos[0] && opt("--ig")) {
@@ -575,6 +608,24 @@ if (import.meta.main) {
   } else if (cmd === "render" && pos[0] && opt("--site")) {
     const d = JSON.parse(readFileSync(pos[0], "utf-8")) as AstDelta;
     console.log(`wrote ${renderDelta(d, opt("--site")!).length} page(s) under ${opt("--site")}`);
+  } else if (cmd === "jsonld" && pos[0]) {
+    process.stdout.write(`${JSON.stringify(astJsonLd(readAst(pos[0])), null, 2)}\n`);
+  } else if (cmd === "schema") {
+    // The JSON Schemas and context, generated from `schemas/ig-ast.ts` into the
+    // directory beside it; `--check` fails on any stale or missing file.
+    const dir = join(import.meta.dir, "..", "schemas");
+    const stale: string[] = [];
+    for (const [name, text] of Object.entries(igAstSchemaFiles())) {
+      const at = join(dir, name);
+      if (args.includes("--check")) {
+        if (!existsSync(at) || readFileSync(at, "utf-8") !== text) stale.push(name);
+      } else writeFileSync(at, text);
+    }
+    if (stale.length) {
+      console.error(`✗ stale: ${stale.join(", ")} — run \`bun run ig-ast:schema\` and commit`);
+      process.exit(1);
+    }
+    console.log(args.includes("--check") ? "✓ IG AST JSON Schemas and context are current" : `wrote ${Object.keys(igAstSchemaFiles()).length} file(s) to fhir-harness/schemas/`);
   } else {
     console.error(usage);
     process.exit(2);
