@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ax6r
 title: 'Workflow index page is hand-maintained: generate every-workflow-in-the-repo from the process KG, strip drift; aggregate across KGs'
-status: todo
+status: in-progress
 type: feature
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-02T20:42:54Z
+updated_at: 2026-10-03T09:38:41Z
 parent: folio-assistant-whlc
 ---
 
@@ -18,3 +18,5 @@ Today the page is a hand-written table: every new BPMN needs a manual row (#1894
 - [ ] grouped by concern group and owning instance
 - [ ] after separation: aggregates across instances' KGs (each instance's process graph, resolved through the declared dependencies), not by walking one checkout
 - [ ] the drift found today is listed in the PR (rows whose text contradicts the diagram)
+
+_2026-10-03T09:38:41Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
