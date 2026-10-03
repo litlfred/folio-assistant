@@ -45,9 +45,12 @@
  *   bun run check:methodology-evidence
  *   bun run check:methodology-evidence -- --strict    # any finding exits 1
  *   bun run check:methodology-evidence -- --json      # sidecar only, no prose
+ *   bun run check:methodology-evidence:check          # JUDGE: compute and judge, write nothing (the gate)
  *
  * Exit: 0 reported, 1 a hard finding (or any finding under --strict),
- *       2 could not determine.
+ *       2 could not determine. Judge mode (`--check`, bean `bo44`) keeps the
+ *       same table (`--strict` included) and adds 2 for an unknown flag or a
+ *       run that threw.
  *
  * @module scripts/check-methodology-evidence
  * @covers methodology, library
@@ -62,7 +65,16 @@ import {
   METHODOLOGY_SCHEMA_TAG,
   type MethodologyFrontMatter,
 } from "../schemas/methodology.ts";
-import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.ts";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -280,8 +292,53 @@ export function checkMethodologyEvidence(root = INSTANCE_ROOT): EvidenceReport {
   return r;
 }
 
+/**
+ * Bean `bo44`'s four states over a report. A hard finding (invalid front
+ * matter, an unresolved `evidence` ref) always fails; the reported families
+ * fail only under `strict`, exactly as the writer's exit has always decided.
+ */
+export function judgeMethodologyEvidence(r: EvidenceReport, strict = false): Judgement {
+  const hard = r.invalid.length + r.unresolved.length;
+  const soft = strict ? r.noEvidence.length + r.untagged.length : 0;
+  return judgementOf({ failing: hard + soft, undetermined: r.undetermined });
+}
+
 if (import.meta.main) {
   const strict = process.argv.includes("--strict");
+  const GATE = "check:methodology-evidence";
+  if (judging()) {
+    // Judge mode: compute, judge, write NOTHING (bean `bo44`).
+    const usage = judgeUsage(GATE, process.argv.slice(2), ["--strict"]);
+    if (usage !== undefined) process.exit(usage);
+    let jr: EvidenceReport;
+    try {
+      jr = checkMethodologyEvidence();
+    } catch (e) {
+      process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+    }
+    for (const f of jr.unresolved) console.error(`  ✗ ${(f.name ?? f.node).padEnd(16)} ${f.detail}`);
+    for (const f of jr.invalid) console.error(`  ✗ ${f.node}: ${f.detail}`);
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeMethodologyEvidence(jr, strict),
+        detail: jr.undetermined
+          ? "no directory declares a `methodology` graph"
+          : `${jr.nodes} node(s): ${jr.unresolved.length} unresolved, ${jr.invalid.length} invalid, ` +
+            `${jr.noEvidence.length} with no evidence${strict ? " (gated: --strict)" : " (reported)"}`,
+        ...(jr.undetermined
+          ? {}
+          : {
+              committed: {
+                root: INSTANCE_ROOT,
+                stem: "methodology-evidence",
+                fresh: methodologyEvidenceDocument(jr),
+                writer: GATE,
+              },
+            }),
+      }),
+    );
+  }
   const r = checkMethodologyEvidence();
 
   if (r.undetermined) {
@@ -290,82 +347,88 @@ if (import.meta.main) {
     process.exit(2);
   }
 
-  writeQaResult(
-    INSTANCE_ROOT,
-    "methodology-evidence",
-    buildQaResult({
-      script: "cat-harness/scripts/check-methodology-evidence.ts",
-      scriptAbsPath: fileURLToPath(import.meta.url),
-      subject: { kind: "corpus", id: "methodologies" },
-      families: {
-        "evidence-unresolved": {
-          summary:
-            "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: " +
-            "it reads as an ingested source in every listing, so a reader who does not open it is told the " +
-            "citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer " +
-            "is not an open question about whether to adopt something.",
-          entries: r.unresolved,
-        },
-        "invalid-front-matter": {
-          summary:
-            "A node tagged `folio-methodology/v1` whose front matter does not validate against " +
-            "`schemas/methodology.ts`. The schema is `strict()`, so a misspelled key is a finding rather than " +
-            "a silent omission — `applies_when` beside a correct `applies-when` would otherwise validate while " +
-            "the selection question never reached the node. Fails by default.",
-          entries: r.invalid,
-        },
-        "no-evidence-declared": {
-          summary:
-            "A valid methodology citing an origin, with no `evidence:` pointing at an ingested source. THE " +
-            "FINDING THIS AXIS WAS BUILT FOR: on 2026-09-22 this was six of six. Reported, never gated — " +
-            "whether a methodology whose source nobody can open may still be used is the owner's call, and a " +
-            "gate failing on the whole corpus at once is one somebody switches off. `literature-search` is the " +
-            "skill that closes one of these.",
-          entries: r.noEvidence,
-        },
-        "untagged-file": {
-          summary:
-            "A `.md` sitting in a directory declared as a `methodology` graph, carrying no " +
-            "`$schema: folio-methodology/v1`. It may legitimately be a README, which is why this is separate " +
-            "from `invalid-front-matter` and is not gated — but an untagged node is one no consumer of the " +
-            "graph can see, and that silence is indistinguishable from the file not being there.",
-          entries: r.untagged,
-        },
-      },
-    }),
-  );
+  writeQaResult(INSTANCE_ROOT, "methodology-evidence", methodologyEvidenceDocument(r));
 
   if (!process.argv.includes("--json")) {
-    console.log(`methodology evidence — ${r.nodes} node(s) across the declared \`methodology\` graph(s)\n`);
-    for (const g of r.resolved) {
-      console.log(`  ✓ ${g.name.padEnd(16)} ${g.evidence}  →  ${g.at}`);
-    }
-    for (const f of r.noEvidence) {
-      console.log(`  · ${(f.name ?? basename(f.node)).padEnd(16)} no ingested source — ${f.detail}`);
-    }
-    for (const f of r.unresolved) console.log(`  ✗ ${(f.name ?? f.node).padEnd(16)} ${f.detail}`);
-    for (const f of r.invalid) console.log(`  ✗ ${f.node}: ${f.detail}`);
-    for (const f of r.untagged) console.log(`  ? ${f.node}: ${f.detail}`);
-
-    // COUNT THE METHODOLOGIES, NOT THE REFERENCES. `resolved` holds one entry
-    // per (node, source) pair since `evidence` became an array, so its length
-    // is a count of citations — and printing that as "N of 5 methodologies"
-    // read as 2 the moment one node gained a second source. Exactly the
-    // "never quote a count from prose" failure, in the script that exists to
-    // replace prose counts with measured ones.
-    const backed = new Set(r.resolved.map((g) => g.name)).size;
-    const refs = r.resolved.length;
-    console.log(
-      `\n  ${backed} of ${r.nodes} methodolog${r.nodes === 1 ? "y" : "ies"} rest on a source this ` +
-        `checkout holds${refs > backed ? `, across ${refs} ingested source(s)` : ""}.`,
-    );
-    if (r.noEvidence.length > 0) {
-      console.log(`  ${r.noEvidence.length} cite${r.noEvidence.length === 1 ? "s" : ""} an origin nobody has ingested.`);
-      console.log("  Not a gate. Run `literature-search` against one, or record why it stays as it is.");
-    }
+    printReport(r);
   }
 
   const hard = r.invalid.length + r.unresolved.length;
   if (hard > 0) process.exit(1);
   if (strict && r.noEvidence.length + r.untagged.length > 0) process.exit(1);
+}
+
+/** The sidecar document for a report. Pure, so the judge and the writer render ONE computation. */
+export function methodologyEvidenceDocument(r: EvidenceReport): QaResult {
+  return buildQaResult({
+    script: "cat-harness/scripts/check-methodology-evidence.ts",
+    scriptAbsPath: fileURLToPath(import.meta.url),
+    subject: { kind: "corpus", id: "methodologies" },
+    families: {
+      "evidence-unresolved": {
+        summary:
+          "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: " +
+          "it reads as an ingested source in every listing, so a reader who does not open it is told the " +
+          "citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer " +
+          "is not an open question about whether to adopt something.",
+        entries: r.unresolved,
+      },
+      "invalid-front-matter": {
+        summary:
+          "A node tagged `folio-methodology/v1` whose front matter does not validate against " +
+          "`schemas/methodology.ts`. The schema is `strict()`, so a misspelled key is a finding rather than " +
+          "a silent omission — `applies_when` beside a correct `applies-when` would otherwise validate while " +
+          "the selection question never reached the node. Fails by default.",
+        entries: r.invalid,
+      },
+      "no-evidence-declared": {
+        summary:
+          "A valid methodology citing an origin, with no `evidence:` pointing at an ingested source. THE " +
+          "FINDING THIS AXIS WAS BUILT FOR: on 2026-09-22 this was six of six. Reported, never gated — " +
+          "whether a methodology whose source nobody can open may still be used is the owner's call, and a " +
+          "gate failing on the whole corpus at once is one somebody switches off. `literature-search` is the " +
+          "skill that closes one of these.",
+        entries: r.noEvidence,
+      },
+      "untagged-file": {
+        summary:
+          "A `.md` sitting in a directory declared as a `methodology` graph, carrying no " +
+          "`$schema: folio-methodology/v1`. It may legitimately be a README, which is why this is separate " +
+          "from `invalid-front-matter` and is not gated — but an untagged node is one no consumer of the " +
+          "graph can see, and that silence is indistinguishable from the file not being there.",
+        entries: r.untagged,
+      },
+    },
+  });
+}
+
+/** The writer's prose report. */
+function printReport(r: EvidenceReport): void {
+  console.log(`methodology evidence — ${r.nodes} node(s) across the declared \`methodology\` graph(s)\n`);
+  for (const g of r.resolved) {
+    console.log(`  ✓ ${g.name.padEnd(16)} ${g.evidence}  →  ${g.at}`);
+  }
+  for (const f of r.noEvidence) {
+    console.log(`  · ${(f.name ?? basename(f.node)).padEnd(16)} no ingested source — ${f.detail}`);
+  }
+  for (const f of r.unresolved) console.log(`  ✗ ${(f.name ?? f.node).padEnd(16)} ${f.detail}`);
+  for (const f of r.invalid) console.log(`  ✗ ${f.node}: ${f.detail}`);
+  for (const f of r.untagged) console.log(`  ? ${f.node}: ${f.detail}`);
+
+  // COUNT THE METHODOLOGIES, NOT THE REFERENCES. `resolved` holds one entry
+  // per (node, source) pair since `evidence` became an array, so its length
+  // is a count of citations — and printing that as "N of 5 methodologies"
+  // read as 2 the moment one node gained a second source. Exactly the
+  // "never quote a count from prose" failure, in the script that exists to
+  // replace prose counts with measured ones.
+  const backed = new Set(r.resolved.map((g) => g.name)).size;
+  const refs = r.resolved.length;
+  console.log(
+    `\n  ${backed} of ${r.nodes} methodolog${r.nodes === 1 ? "y" : "ies"} rest on a source this ` +
+      `checkout holds${refs > backed ? `, across ${refs} ingested source(s)` : ""}.`,
+  );
+  if (r.noEvidence.length > 0) {
+    console.log(`  ${r.noEvidence.length} cite${r.noEvidence.length === 1 ? "s" : ""} an origin nobody has ingested.`);
+    console.log("  Not a gate. Run `literature-search` against one, or record why it stays as it is.");
+  }
 }
