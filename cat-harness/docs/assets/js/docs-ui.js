@@ -11250,6 +11250,10 @@
     var links = nav.querySelectorAll("a.nav-list-link");
     var root = null;
     for (var i = 0; i < links.length; i++) {
+      // An in-page anchor resolves to THIS page's path, which on the
+      // instance's root is the root's path too -- a row that is not the
+      // instance's would be taken for it. Only a link to a page counts.
+      if ((links[i].getAttribute("href") || "").charAt(0) === "#") continue;
       if (railPath(links[i].pathname) === want) { root = links[i].closest(".nav-list-item"); break; }
     }
     if (!root) {
