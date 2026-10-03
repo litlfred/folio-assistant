@@ -44,21 +44,23 @@
  * instructions, it wants a skill.
  */
 import { describe, expect, test } from "bun:test";
-import { readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.js";
 import { readRoleGraph, roleForLane } from "../../schemas/role-graph.js";
+import { workflowFiles } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 const root = resolve(import.meta.dir, "../..");
-const WORKFLOW_DIR = join(root, "processes");
 
 describe("every activity names a skill or declares why it has none", () => {
   test("the corpus is non-empty — otherwise this proves nothing", () => {
     // Without this, renaming `processes/` turns the assertion below
     // into a vacuous pass over an empty list, which is the defect being
     // guarded against wearing a green tick.
-    const files = readdirSync(WORKFLOW_DIR).filter((f) => f.endsWith(".bpmn"));
+    const files = workflowFiles(HARNESS).filter((f) => f.endsWith(".bpmn")).map((p) => relative(HARNESS, p));
     expect(files.length).toBeGreaterThan(10);
   });
 
@@ -71,8 +73,8 @@ describe("every activity names a skill or declares why it has none", () => {
     expect(graph, "no role graph — the lane exemptions cannot be resolved").toBeDefined();
     const bare: string[] = [];
 
-    for (const file of readdirSync(WORKFLOW_DIR).filter((f) => f.endsWith(".bpmn"))) {
-      const m = await loadProcessModel(join(WORKFLOW_DIR, file));
+    for (const file of workflowFiles(HARNESS).filter((f) => f.endsWith(".bpmn")).map((p) => relative(HARNESS, p))) {
+      const m = await loadProcessModel(join(HARNESS, file));
 
       const exemptLanes = new Set(
         m.lanes

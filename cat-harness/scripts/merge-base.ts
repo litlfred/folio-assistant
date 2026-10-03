@@ -7,7 +7,7 @@
  * @graphNode none — a maintenance command over the working tree
  * @covers none — a merge step: it changes the tree and judges no declared graph
  *
- * The executable form of `processes/merge-base.bpmn`, which `Task_PrepareMerge`
+ * The executable form of `processes/sdlc/merge-base.bpmn`, which `Task_PrepareMerge`
  * in `code-change-review.bpmn` calls. The patterns, their strategies and why
  * each is safe are in `merge-conflict-patterns.ts` and the skill of that name.
  *

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "d95ade53ee6c"
+    "script_hash": "34dfdf48c6af"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 50 of 50 declared kind(s), 212 gate(s), 73 criteria.",
-      "count": 50,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 52 of 52 declared kind(s), 213 gate(s), 73 criteria.",
+      "count": 52,
       "entries": [
         {
           "kind": "bean-defs",
@@ -36,6 +36,18 @@
           "hasFiles": false
         },
         {
+          "kind": "bean-notes",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run beans:notes:check"
+          ],
+          "typed": false,
+          "hasFiles": false
+        },
+        {
           "kind": "beans",
           "state": "covered",
           "directories": [
@@ -44,6 +56,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run beans:notes:check",
             "bun run check:bean-archive",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -212,7 +225,6 @@
             "cat-harness/src",
             "cat-harness/templates",
             "cat-harness/test",
-            "fhir-harness/scripts",
             "folio-assistant-core/adapters",
             "folio-assistant-core/scripts",
             "folio-assistant-sci/adapters",
@@ -351,7 +363,6 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:artifact-index",
-            "bun run p2:refusals:check",
             "bun run smart-base:pages:check",
             "bun run smart-immunizations:pages:check",
             "bun run smart-trust:pages:check"
@@ -567,7 +578,9 @@
             "bootstrap-tools/processes",
             "bootstrap/processes",
             "cat-harness/processes",
+            "fhir-harness/processes",
             "folio-assistant-core/processes",
+            "folio-assistant-sci/processes",
             "smart-base/methodologies/processes",
             "smart-base/processes"
           ],
@@ -658,7 +671,6 @@
             "bun run check:tabular-stubs",
             "bun run kg:export:check",
             "bun run lsi:viz:check",
-            "bun run p2:refusals:check",
             "bun run translation:block-qa:check"
           ],
           "typed": true,
@@ -761,7 +773,6 @@
             "bun run check:node-iris",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
-            "bun run ig-ast:schema:check",
             "bun run kg:schema:check"
           ],
           "typed": true,
@@ -853,6 +864,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run kg:materialize:check",
             "bun run kg:subscribe:check"
           ],
           "typed": true,
@@ -1015,6 +1027,20 @@
           "hasFiles": true
         },
         {
+          "kind": "vocab-mapping",
+          "state": "covered",
+          "directories": [
+            "cat-harness/vocab-mappings"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run vocab-mappings:check"
+          ],
+          "typed": true,
+          "hasFiles": true
+        },
+        {
           "kind": "voice-vendors",
           "state": "no-directory",
           "directories": [],
@@ -1084,7 +1110,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 15,
+      "count": 16,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1101,6 +1127,13 @@
             "bun run check:bean-rollup",
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
+          ]
+        },
+        {
+          "kind": "bean-notes",
+          "criteria": 0,
+          "gates": [
+            "bun run beans:notes:check"
           ]
         },
         {
@@ -1189,10 +1222,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 212 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 213 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 65
+  "total": 68
 }

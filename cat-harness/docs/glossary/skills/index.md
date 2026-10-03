@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 214 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 218 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 11 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 311 terms and is 233 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 313 terms and is 235 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>311</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>311</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>313</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>313</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">311</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">313</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -53,7 +53,7 @@ adjudication <span class="fa-gloss-status">candidate, extracted</span>
 adopt-methodology-from-source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/methodology-from-source.bpmn.</p>
+<p>The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/adopt-methodology-from-source.md"><code>cat-harness/skills/library/library-core/adopt-methodology-from-source.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--agent-memory" data-fa-state="extracted" data-fa-gloss="">
@@ -889,6 +889,13 @@ groebner-basis <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-H">H</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-skills--handover-report" data-fa-state="extracted" data-fa-gloss="">
+handover-report <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is <a href="#cat-harness--kg-skills--stalled-agent-triage"><code>stalled-agent-triage</code></a>.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/handover-report.md"><code>cat-harness/skills/sdlc/sdlc-core/handover-report.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--harness-requirements" data-fa-state="extracted" data-fa-gloss="">
 harness-requirements <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -949,13 +956,6 @@ ig-ast-delta <span class="fa-gloss-status">candidate, extracted</span>
 <p>List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.</p>
 <p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-ast-delta.md"><code>fhir-harness/skills/fhir-ig-base/ig-ast-delta.md</code></a></p>
 </dd>
-<dt id="fhir-harness--kg-skills--ig-binary-artefacts" data-fa-state="extracted" data-fa-gloss="">
-ig-binary-artefacts <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md"><code>fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md</code></a></p>
-</dd>
 <dt id="fhir-harness--kg-skills--ig-build-pipeline" data-fa-state="extracted" data-fa-gloss="">
 ig-build-pipeline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -990,13 +990,6 @@ ig-render-jekyll <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.</p>
 <p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md"><code>fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md</code></a></p>
-</dd>
-<dt id="fhir-harness--kg-skills--ig-site-theme" data-fa-state="extracted" data-fa-gloss="">
-ig-site-theme <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one <code>webpage</code> theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-site-theme.md"><code>fhir-harness/skills/fhir-ig-base/ig-site-theme.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--incremental-render" data-fa-state="extracted" data-fa-gloss="">
 incremental-render <span class="fa-gloss-status">candidate, extracted</span>
@@ -1360,6 +1353,13 @@ merge-conflict-patterns <span class="fa-gloss-status">candidate, extracted</span
 <p>Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for &quot;merge main&quot;, &quot;resolve the conflicts&quot;, &quot;the PR is conflicted again&quot;, &quot;auto-resolve&quot;, and when adding a pattern for a new kind of churn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md"><code>cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--merge-queue" data-fa-state="extracted" data-fa-gloss="">
+merge-queue <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for &quot;merge the ready PRs&quot;, &quot;what lands next&quot;, &quot;run a merge train&quot;, &quot;why was my PR ejected&quot;, &quot;move this PR up&quot;, and when tuning the train's order or size.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-queue.md"><code>cat-harness/skills/sdlc/sdlc-core/merge-queue.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--methodology-adoption" data-fa-state="extracted" data-fa-gloss="">
 methodology-adoption <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1483,6 +1483,20 @@ platform-gates <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p><code>bun test</code> passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a <code>*:check</code> failure is actually telling you to do.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/platform-gates.md"><code>cat-harness/skills/sdlc/sdlc-core/platform-gates.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--pr-description" data-fa-state="extracted" data-fa-gloss="">
+pr-description <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/pr-description.md"><code>cat-harness/skills/sdlc/sdlc-core/pr-description.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--prepare-for-handover" data-fa-state="extracted" data-fa-gloss="">
+prepare-for-handover <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (&quot;you may stall in N minutes&quot;), before a long or risky step, or whenever a steward or the owner says &quot;prepare for handover&quot;. It is the producing half; <a href="#cat-harness--kg-skills--handover-report"><code>handover-report</code></a> is the format and <a href="#cat-harness--kg-skills--stalled-agent-triage"><code>stalled-agent-triage</code></a> is the reader.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md"><code>cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--prepare-merge" data-fa-state="extracted" data-fa-gloss="">
 prepare-merge <span class="fa-gloss-status">candidate, extracted</span>
@@ -1678,7 +1692,7 @@ reference-dataset-ingestion <span class="fa-gloss-status">candidate, extracted</
 related-work-coordination <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/related-work.bpmn.</p>
+<p>Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md"><code>cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--release-epic-planning" data-fa-state="extracted" data-fa-gloss="">
@@ -1958,6 +1972,13 @@ staging-review <span class="fa-gloss-status">candidate, extracted</span>
 <p>Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md"><code>cat-harness/skills/sdlc/sdlc-core/staging-review.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--stalled-agent-triage" data-fa-state="extracted" data-fa-gloss="">
+stalled-agent-triage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says &quot;pick up what X was doing&quot;.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md"><code>cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--surprise-to-corpus" data-fa-state="extracted" data-fa-gloss="">
 surprise-to-corpus <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2131,7 +2152,7 @@ turn-reporting <span class="fa-gloss-status">candidate, extracted</span>
 ui-accessibility <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.</p>
+<p>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/ui-accessibility.md"><code>cat-harness/skills/ui/ui-core/ui-accessibility.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--uml-overview" data-fa-state="extracted" data-fa-gloss="">
@@ -2215,13 +2236,6 @@ visual-diff <span class="fa-gloss-status">candidate, extracted</span>
 <p>Pictures of a changed figure, diagram or table, before and after, and how much of it changed. Says when to use it, what the percentage means and must NOT be read as, what a missing picture means, and how the staging job and the review process call it. Use when a reviewer asks &quot;what does this figure look like now&quot;, when a table's markup diff is unreadable, or when a staging preview's pictures are missing.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/visual-diff.md"><code>cat-harness/skills/sdlc/sdlc-core/visual-diff.md</code></a></p>
 </dd>
-<dt id="cat-harness--kg-skills--visualizer-loading" data-fa-state="extracted" data-fa-gloss="">
-visualizer-loading <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/visualizer-loading.md"><code>cat-harness/skills/ui/ui-core/visualizer-loading.md</code></a></p>
-</dd>
 <dt id="cat-harness--kg-skills--vocabulary-authority" data-fa-state="extracted" data-fa-gloss="">
 vocabulary-authority <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2279,7 +2293,7 @@ where-does-this-go <span class="fa-gloss-status">candidate, extracted</span>
 wireframe-design-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/wireframe-design-review.bpmn.</p>
+<p>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/wireframe-design-review.md"><code>cat-harness/skills/ui/ui-core/wireframe-design-review.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--witnessed-values" data-fa-state="extracted" data-fa-gloss="">

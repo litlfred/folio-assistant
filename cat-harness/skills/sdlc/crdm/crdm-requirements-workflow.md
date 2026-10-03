@@ -20,7 +20,7 @@ this workflow to gather, validate, and implement requirements collaboratively.
 
 ## BPMN reference
 
-[`processes/crdm-requirements.bpmn`](../../../processes/crdm-requirements.bpmn)
+[`processes/process/crdm-requirements.bpmn`](../../../processes/process/crdm-requirements.bpmn)
 is the outer process — detection, the `Feature?` decision, then six phases, each
 a real subprocess in its own file:
 
@@ -109,7 +109,7 @@ comments up is the same defect wearing a different hat.
 
 **Input:** approved needs statement
 
-1. **Find the current workflow** — check `processes/*.bpmn` for existing
+1. **Find the current workflow** — check `processes/**/*.bpmn` for existing
    process diagrams that cover the affected area
 2. **Map the gap** — where in the current workflow does the need appear?
    Identify the specific activity or decision point
@@ -398,7 +398,9 @@ says.
 
 For each bean:
 
-1. **Create feature branch** — always, no exceptions
+1. **Create feature branch** — always, no exceptions. Before the first edit,
+   run the collision review in [`coordinate`](../sdlc-core/coordinate.md)
+   §"Starting new work".
 2. **Implement** — following the accepted requirements
 3. **Open PR** — link to the bean and the parent issue
 4. **Deploy staging preview** — the `feature-staging.yml` workflow

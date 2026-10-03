@@ -13,6 +13,10 @@ import {
 } from "../../src/workflow/decision-table";
 import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 import { complete, enabled, startInstance, WorkflowError } from "../../src/workflow/instance";
+import { workflowFile } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 /**
  * Four of the ten exclusive gateways across the BPMN diagrams are not judgement
@@ -25,8 +29,6 @@ import { complete, enabled, startInstance, WorkflowError } from "../../src/workf
  * able to assert the answer would defeat the whole mechanism.
  */
 
-const WF = resolve(import.meta.dir, "../../processes");
-const DEC = join(WF, "decisions");
 
 describe("the FEEL subset", () => {
   test("reads the tests the tables actually use", () => {
@@ -63,7 +65,7 @@ describe("the FEEL subset", () => {
 
 describe("the shipped tables", () => {
   test("the Lean gate distinguishes deferred sorries from conjectural ones", async () => {
-    const t = await loadDecisionTable(join(DEC, "lean-build-gate.dmn"), "Decision_LeanBuildGate");
+    const t = await loadDecisionTable(workflowFile(HARNESS, "lean-build-gate.dmn"), "Decision_LeanBuildGate");
     expect(t.hitPolicy).toBe("FIRST");
     expect(t.inputs.map((i) => i.expression)).toEqual(["buildOk", "deferredSorries"]);
 
@@ -79,14 +81,14 @@ describe("the shipped tables", () => {
   });
 
   test("the draft QA gate blocks on critical and major, and says so by rule", async () => {
-    const t = await loadDecisionTable(join(DEC, "draft-qa-gate.dmn"), "Decision_DraftQaGate");
+    const t = await loadDecisionTable(workflowFile(HARNESS, "draft-qa-gate.dmn"), "Decision_DraftQaGate");
     expect(evaluate(t, { failCritical: 1, failMajor: 0 }).rule).toBe("Rule_Critical");
     expect(evaluate(t, { failCritical: 0, failMajor: 2 }).rule).toBe("Rule_Major");
     expect(evaluate(t, { failCritical: 0, failMajor: 0 }).outcome).toBe("yes");
   });
 
   test("a fact the table needs but did not get is an error, not a default", async () => {
-    const t = await loadDecisionTable(join(DEC, "draft-qa-gate.dmn"), "Decision_DraftQaGate");
+    const t = await loadDecisionTable(workflowFile(HARNESS, "draft-qa-gate.dmn"), "Decision_DraftQaGate");
     // A gate that answers on data it never received is the failure the whole
     // mechanism exists to remove.
     expect(() => evaluate(t, { failCritical: 0 })).toThrow(DecisionError);
@@ -94,7 +96,7 @@ describe("the shipped tables", () => {
   });
 
   test("possibleOutcomes reads the rules, not a particular evaluation", async () => {
-    const t = await loadDecisionTable(join(DEC, "lean-build-gate.dmn"), "Decision_LeanBuildGate");
+    const t = await loadDecisionTable(workflowFile(HARNESS, "lean-build-gate.dmn"), "Decision_LeanBuildGate");
     expect(possibleOutcomes(t).sort()).toEqual(["green", "not yet"]);
   });
 });
@@ -146,7 +148,7 @@ describe("a table must be able to route the gateway it backs", () => {
 });
 
 describe("computed gateways in a running process", () => {
-  const paper = async () => loadProcessModel(join(WF, "authoring-a-paper.bpmn"));
+  const paper = async () => loadProcessModel(workflowFile(HARNESS, "authoring-a-paper.bpmn"));
 
   const upToLeanGate = async () => {
     const model = await paper();
@@ -201,7 +203,7 @@ describe("computed gateways in a running process", () => {
   });
 
   test("gateways without a table are still chosen, not computed", async () => {
-    const model = await loadProcessModel(join(WF, "editing-hci-validation.bpmn"));
+    const model = await loadProcessModel(workflowFile(HARNESS, "editing-hci-validation.bpmn"));
     const state = startInstance(model, { id: "d2", subject: "def:x" });
     complete(model, state, "Task_DescribeChange");
     complete(model, state, "Task_ClaimBean");
