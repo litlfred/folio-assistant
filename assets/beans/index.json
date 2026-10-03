@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 715,
+      "count": 718,
       "unit": "beans"
     }
   },
@@ -46,7 +46,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:54:07Z",
-      "updatedAt": "2026-10-03T10:59:40Z",
+      "updatedAt": "2026-10-03T11:41:35Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
       "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
     },
@@ -895,7 +895,7 @@
     {
       "id": "folio-assistant-2tfy",
       "title": "SEARCH COST: the lunr index is built on every page view — ~4.7 s CPU, ~315 MB heap before anyone searches",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -1644,7 +1644,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T18:16:53Z",
-      "updatedAt": "2026-10-03T10:52:39Z",
+      "updatedAt": "2026-10-03T13:54:48Z",
       "preview": "Owner, 2026-10-01 (during stage D, #1767), attaching 9789240116191-eng.pdf (DTH for health product catalogue): 'use for one voice for \"Digital Transformation Handbook\" a specific type of a L1 document that uses the Reference Architecture and DIIG concepts', then 'also as source of methodologies / processes / glossary'. Same session: commit 27078551 on main uploaded four WHO DTHs to uploads/ (prima",
       "file": "beans/defs/folio-assistant-5blc--digital-transformation-handbook-dth-a-voice-an-l1.md"
     },
@@ -2139,6 +2139,20 @@
       "updatedAt": "2026-10-01T19:46:46Z",
       "preview": "Stage 1a of the split plan: stage `cat-harness-tools/` as a sibling instance in this repo and `git mv` the unambiguous code (≈1,340 renames). Owner D1 (2026-10-01): ALL cat-harness code moves; dependents' code may import cat-harness-tools. D4 (2026-10-01): 1a runs NOW, before placement PR2.\n\nPlans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harness-split-plan.md` (stages 0",
       "file": "beans/defs/folio-assistant-70lx--separation-stage-1a-stage-cat-harness-tools-as-a-s.md"
+    },
+    {
+      "id": "folio-assistant-70zt",
+      "title": "SVG rendering of DIIG Fig. 1.1.1 (seven phases of planning and implementing a digital health enterprise)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-qvxh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T10:55:02Z",
+      "updatedAt": "2026-10-03T10:55:02Z",
+      "preview": "Owner, 2026-10-03 (issue #1984, relayed from session_015Q15h1fg2Hh9MJXfAqr4h7): \"use one DIIG seven phase figure as source. need SVG rendering maybe as bean\".\n\nThe figure is DIIG §1.1 Fig. 1.1.1, smart-base/library/9789240010567-eng, PDF p.17 (the phase list is on p.16). vector-labels.json records 82 drawings on that spread, and no raster figure. It is vector-drawn, so its home is the vector-figur",
+      "file": "beans/defs/folio-assistant-70zt--svg-rendering-of-diig-fig-111-seven-phases-of-plan.md"
     },
     {
       "id": "folio-assistant-72gk",
@@ -3235,6 +3249,20 @@
       "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
     },
     {
+      "id": "folio-assistant-akjg",
+      "title": "DOCS-POPULATED HAS NO SUBJECT TEST: the gate passes smart-trust on docs/category/Other.md — length and authorship have teeth, 06e3 §4(b) processes/roles/tasks half was never built",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:50:38Z",
+      "updatedAt": "2026-10-03T13:50:59Z",
+      "preview": "`check:docs-populated` (`scripts/check-docs-populated.ts`, 2026-10-02, gated at\n`code-quality-gates.yml:1846`) implements half of `06e3` §4(b) and reports the\nother half as if it were not asked.\n\nOwner, `06e3` §4(b), both halves in one sentence:\n\n> does the page reference the harness's **processes, roles and tasks**, and does\n> it say something about them that the index does not?\n\nBuilt: **length*",
+      "file": "beans/defs/folio-assistant-akjg--docs-populated-has-no-subject-test-the-gate-passes.md"
+    },
+    {
       "id": "folio-assistant-amom",
       "title": "MODE: test/swarm — a stack of models over shared or independent work queues",
       "status": "todo",
@@ -3867,14 +3895,14 @@
     {
       "id": "folio-assistant-cpmo",
       "title": "SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T09:06:44Z",
-      "updatedAt": "2026-09-22T11:55:46Z",
+      "updatedAt": "2026-10-03T14:13:37Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"*, then chose to have the crosswalks ingested.\n\n## Summary of Changes\n\n`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.\n\n**225 artefacts ",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
     },
@@ -4695,14 +4723,14 @@
     {
       "id": "folio-assistant-g43f",
       "title": "WORKTREE-CONTAMINATED SWEEPS: two more root-walking checks descend into .claude/worktrees and redden bun test for every concurrent session — vpek's general question, answered yes",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:13:37Z",
-      "updatedAt": "2026-09-30T14:35:43Z",
+      "updatedAt": "2026-10-03T14:06:30Z",
       "preview": "Bean `vpek` fixed one instance of this — `eslint.config.mjs` not ignoring\n`.claude/worktrees/**` — and left the general question open on purpose:\n\n> - [ ] The **general** question is answered rather than only this instance:\n>       are there other tools that walk the tree from the repository root and\n>       would find a worktree there? … Whether any of them has this problem is\n>       **not deter",
       "file": "beans/defs/folio-assistant-g43f--worktree-contaminated-sweeps-two-more-root-walking.md"
     },
@@ -6017,7 +6045,7 @@
     {
       "id": "folio-assistant-m7mn",
       "title": "SEARCH SCOPES: split the site index per harness and per locale, with a manifest (#1972 A1)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -8389,6 +8417,20 @@
       "updatedAt": "2026-09-23T21:59:49Z",
       "preview": "## What\n\nEvery generated docs page carries **two elements with `id=\"fa-nav-open\"`**. A\nduplicate `id` is invalid HTML, and `document.getElementById` plus every\n`<label for=…>` resolve to the **first** one only.\n\n## How it was found\n\nMeasured 2026-09-22 on the **rendered** page, not on the source — the staging\npreview for PR #957, read out of the `gh-pages` publish ref rather than over\nHTTP (the ag",
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
+    },
+    {
+      "id": "folio-assistant-uoob",
+      "title": "MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T13:53:29Z",
+      "updatedAt": "2026-10-03T14:17:55Z",
+      "preview": "Owner ruling 2026-10-03: BOTH guards (option 1 of 4, asked by the Parcel B session; proposed by session 01CbYZTA). Three merges on 2026-10-03 landed work in a state its author had not finished, and nothing in the pipeline asked:\n\n- **#1937** merged into its stale base `claude/quirky-davinci-ixuymr` after #1764 had already landed, so the branch-store never reached main (re-opened as #1978).\n- **#19",
+      "file": "beans/defs/folio-assistant-uoob--merge-gate-f-refuse-an-unfinished-pr-no-current-re.md"
     },
     {
       "id": "folio-assistant-upgd",
