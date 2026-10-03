@@ -59,7 +59,7 @@ import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
 import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.ts";
 import { duplicateIds } from "./check-duplicate-ids";
-import { SCOPES_DIR, type SearchManifest } from "./search-split.ts";
+import { ID_LOOKUP_DIR, SCOPES_DIR, type SearchManifest } from "./search-split.ts";
 
 export interface Finding {
   verifier: string;
@@ -588,8 +588,8 @@ export const SEARCH_SCOPES: Verifier = {
   id: "search-scopes",
   tool: "site-search-scopes",
   asks:
-    "Does the per-scope search manifest match the site index in this tree, and do its scope indices parse and " +
-    "partition that index exactly?",
+    "Does the per-scope search manifest match the site index in this tree, do its scope indices parse and " +
+    "partition that index exactly, and is every identifier lookup it links to in the tree?",
   async run(dir) {
     const id = "search-scopes";
     const source = join(dir, SEARCH_INDEX_PATH);
@@ -633,7 +633,16 @@ export const SEARCH_SCOPES: Verifier = {
     if (total !== sourceKeys.length) {
       findings.push({ verifier: id, file: manifestAt, detail: `scopes hold ${total} entries, the site index ${sourceKeys.length} — they do not partition it` });
     }
-    return { checked: (manifest.scopes ?? []).length + 1, outOfScope: 0, findings: findings.slice(0, 40) };
+    // Bean `1br0`: every identifier lookup the search box links to is in the
+    // tree — the page and the index it opens. A link to an index the build did
+    // not publish reads to a reader as "could not be read".
+    for (const r of manifest.remote ?? []) {
+      const page = join(dir, ID_LOOKUP_DIR, "index.html");
+      const idx = join(dir, ID_LOOKUP_DIR, r.id, "manifest.json");
+      if (!existsSync(page)) findings.push({ verifier: id, file: manifestAt, detail: `remote ${r.id} links to ${ID_LOOKUP_DIR}/, which holds no lookup page` });
+      if (!existsSync(idx)) findings.push({ verifier: id, file: manifestAt, detail: `remote ${r.id} names an index that is not in the tree (${ID_LOOKUP_DIR}/${r.id}/manifest.json)` });
+    }
+    return { checked: (manifest.scopes ?? []).length + (manifest.remote ?? []).length + 1, outOfScope: 0, findings: findings.slice(0, 40) };
   },
 };
 
