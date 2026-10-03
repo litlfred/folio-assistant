@@ -39,16 +39,30 @@ const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
 const TODOS = { items: [{ id: "t-one", summary: "First thing to do" }] };
 
 test.beforeEach(async ({ page }) => {
+  // The strip starts HIDDEN on a first open (owner, 2026-10-01). These specs
+  // are about what is ON the strip, so they arrive as a reader who has shown
+  // it; `glass-strip-default-hidden.e2e.ts` holds the default itself.
+  await page.addInitScript(() => {
+    try { if (localStorage.getItem("fa-glass-strip-hidden") === null) localStorage.setItem("fa-glass-strip-hidden", "0"); } catch { /* no storage */ }
+  });
   await page.route("http://filter.test/**", (route) => {
     const path = new URL(route.request().url()).pathname;
     if (path === "/p.html") return route.fulfill({ contentType: "text/html", body: PAGE });
     if (path === "/assets/todos/index.json") {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(TODOS) });
     }
+    // Filter is not among this site's declared pins (bean `ob3m` finding 10),
+    // so this page declares a strip that holds it — the specs are about the
+    // filter, not about where its tile lives.
+    if (path === "/assets/harness/glass-strip.json") {
+      return route.fulfill({ contentType: "application/json",
+        body: JSON.stringify(["glass-todos", "glass-filter", "glass-settings"]) });
+    }
     return route.fulfill({ status: 404, body: "" });
   });
   await page.goto("http://filter.test/p.html");
   await page.waitForSelector(".fa-glass-handle", { state: "attached" });
+  await page.waitForSelector('.fa-glass-tiles [data-fa-strip-item="glass-filter"]', { state: "attached" });
   // Fill the glass: two books, one sticky, one todo.
   await page.locator('[data-fa-library-item="who-iris/handbook"] .fa-pullout').click();
   await page.locator('[data-fa-library-item="smart-base/guide"] .fa-pullout').click();
