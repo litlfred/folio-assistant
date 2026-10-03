@@ -12,6 +12,7 @@ import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { resolveTipLocation, tipLocations } from "../branch-store.js";
 import { mountState, report } from "../state-mount.js";
 import { cleanup, git, MANIFEST, stateFixture, TIP_SOURCE, BRANCH } from "./state-fixture.js";
 
@@ -39,11 +40,11 @@ describe("mounting, dispatched on the declared source", () => {
     const { root, store } = stateFixture("state-mount-t-").checkout("a");
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("mounted");
-    expect(r.mounts).toMatchObject([{ id: "todos", state: "mounted", branch: BRANCH, files: 2 }]);
+    expect(r.graphs).toMatchObject([{ id: "todos", state: "mounted", branch: BRANCH, files: 2 }]);
     expect(readFileSync(join(root, "todos/a.md"), "utf-8")).toBe("A\n");
     // Only the subgraph's own files: the branch root's manifest stays on the branch.
     expect(existsSync(join(root, "todos/manifest.json"))).toBe(false);
-    expect(report(r, root)).toContain("bun run state:push");
+    expect(report(r)).toContain("bun run state:push");
   });
 
   test("a clean mount behind the branch is moved forward", () => {
@@ -55,7 +56,10 @@ describe("mounting, dispatched on the declared source", () => {
 
     const moved = mountState({ repoRoot: root, store });
     expect(moved.state).toBe("mounted");
-    const tipOf = (r: typeof moved) => (r.mounts[0]?.state === "mounted" ? r.mounts[0].tip : "");
+    const tipOf = (r: typeof moved) => {
+      const g = r.graphs[0];
+      return g?.state === "mounted" ? g.tip : "";
+    };
     expect(tipOf(moved)).not.toBe(tipOf(first));
     expect(readFileSync(join(root, "todos/b.md"), "utf-8")).toBe("B\n");
   });
@@ -70,19 +74,21 @@ describe("mounting, dispatched on the declared source", () => {
 });
 
 describe("it never discards work", () => {
-  test("a dirty mount is reported and left exactly as it is", () => {
+  test("a mount with unpushed edits is reported stale and left exactly as it is", () => {
     const { root, store } = stateFixture("state-mount-t-").checkout("a");
     expect(mountState({ repoRoot: root, store }).state).toBe("mounted");
     const edited = join(root, "todos/a.md");
     writeFileSync(edited, "EDITED IN FLIGHT\n");
 
     const r = mountState({ repoRoot: root, store });
-    expect(r.state).toBe("dirty");
+    // Still on disk and readable: present, so the sweep is not failed over it.
+    expect(r.state).toBe("mounted");
+    expect(r.graphs[0]).toMatchObject({ id: "todos", state: "stale" });
     expect(readFileSync(edited, "utf-8")).toBe("EDITED IN FLIGHT\n");
     expect(report(r)).toContain("Nothing was discarded");
   });
 
-  test("a directory the checkout still tracks is refused, never overwritten", () => {
+  test("a directory the checkout still tracks is refused, never overwritten, and NOT read as stale", () => {
     const { root, store } = stateFixture("state-mount-t-").checkout("a");
     // `todos/` tracked on this branch: the cutover has not happened here.
     mkdirSync(join(root, "todos"));
@@ -91,8 +97,35 @@ describe("it never discards work", () => {
     git(root, "commit", "-q", "-m", "tracked");
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    expect(r.mounts[0]).toMatchObject({ state: "failed" });
+    expect(r.graphs[0]).toMatchObject({ state: "refused" });
     expect(readFileSync(join(root, "todos/local.md"), "utf-8")).toBe("main's copy\n");
+  });
+});
+
+describe("stale is ASKED, never inferred from a refusal plus a marker", () => {
+  test("a mounted graph whose path the checkout then tracks is refused, not stale — it exits non-zero", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    expect(mountState({ repoRoot: root, store }).state).toBe("mounted");
+    // The marker stays; the path is now tracked, so mountTip refuses it.
+    git(root, "add", "-A");
+    git(root, "commit", "-q", "-m", "tracked after mounting");
+    const r = mountState({ repoRoot: root, store });
+    expect(r.graphs[0]?.state).toBe("refused");
+    expect(r.state).toBe("failed");
+  });
+});
+
+describe("the resolved source, not only legacy storage (bean doy3)", () => {
+  test("a graph declared with `source` is found by tipLocations and resolveTipLocation", () => {
+    const { root } = stateFixture("state-mount-t-").checkout("a");
+    expect(tipLocations(root)).toEqual([{ id: "todos", path: "todos", branch: BRANCH, keyedBy: "tip" }]);
+    expect(resolveTipLocation("todos", root)).toEqual({ id: "todos", path: "todos", branch: BRANCH, keyedBy: "tip" });
+  });
+
+  test("a directory source is the checkout itself: not a tip location, and resolveTipLocation says so", () => {
+    const { root } = stateFixture("state-mount-t-").checkout("a", { kind: "directory" });
+    expect(tipLocations(root)).toEqual([]);
+    expect(() => resolveTipLocation("todos", root)).toThrow("kept in the checkout");
   });
 });
 
@@ -111,7 +144,7 @@ describe("failure is LOUD, and says what not to believe", () => {
     const { root, store } = stateFixture("state-mount-t-", { "todos/a.md": "A\n" }).checkout("a");
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    expect(r.mounts[0]).toMatchObject({ state: "failed" });
+    expect(r.graphs[0]?.state).toBe("corrupt");
     expect(existsSync(join(root, "todos/a.md"))).toBe(false);
   });
 
@@ -120,7 +153,7 @@ describe("failure is LOUD, and says what not to believe", () => {
     const { root, store } = stateFixture("state-mount-t-", { "manifest.json": foreign, "todos/a.md": "A\n" }).checkout("a");
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    if (r.mounts[0]?.state === "failed") expect(r.mounts[0].reason).toContain("not state-manifest/v1");
+    expect(r.graphs[0]?.reason).toContain("not state-manifest/v1");
   });
 
   test("a commit-keyed manifest is refused — the keying is the contract, not the name", () => {
@@ -128,6 +161,6 @@ describe("failure is LOUD, and says what not to believe", () => {
     const { root, store } = stateFixture("state-mount-t-", { "manifest.json": commitKeyed, "todos/a.md": "A\n" }).checkout("a");
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
-    if (r.mounts[0]?.state === "failed") expect(r.mounts[0].reason).toContain("keyed by commit");
+    expect(r.graphs[0]?.reason).toContain("keyed by commit");
   });
 });

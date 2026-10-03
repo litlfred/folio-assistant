@@ -1,35 +1,12 @@
 #!/usr/bin/env bun
 /**
- * state-mount — put every branch-kept subgraph on disk, or say loudly that it is not there.
+ * state-mount — put the state branch on disk, or say loudly that it is not there.
  *
  * @module scripts/state-mount
- * @graphNode none — a session-start step over the declared subgraph sources
+ * @graphNode none — a session-start step over a declared `storage` directory
  *
- * Bean `2h76` part 4, arc `fs43`; rebuilt by bean `nij4`. The session-start
- * hook calls this; it is also `bun run state:mount` by hand.
- *
- * ## One implementation, reached through the command everyone already uses
- *
- * Main carried two mount/push pairs after #1982 and #1957 both merged: this
- * file's `state/` worktree, and branch-store's `mountTip` / `pushMount`. Owner
- * ruling 2026-10-03 (bean `nij4`): keep the `state:mount` / `state:push`
- * COMMANDS and run them on branch-store's code, which round-trips bytes, modes
- * and symlinks and keys a mount by directory id. So this file decides WHICH
- * subgraphs to mount and how loudly to report; the mounting is `mountTip`'s.
- *
- * ## Which subgraphs: the declared source, dispatched on its kind
- *
- * Every declared directory is asked through `declaredSubgraph`, the one lookup
- * that folds a config override, `source` and the legacy `storage` together.
- * `tipLocations` is NOT used here: it reads `storage` alone, so a subgraph
- * declared the current way (`source: { kind: "branch" }`) is invisible to it.
- *
- * | source | here |
- * |---|---|
- * | `directory` | nothing to do — the content is the checkout |
- * | `branch`, keyed by `tip` | mounted at the declared path |
- * | `branch`, keyed by `commit` | not a mount's — `qa-store` reads it per commit |
- * | anything else | REFUSED, loudly: a kind this file was not written for is not guessed at |
+ * Bean `2h76` part 4, arc `fs43`. The session-start hook calls this; it is also
+ * `bun run state:mount` by hand.
  *
  * ## The failure this exists to make impossible
  *
@@ -39,156 +16,223 @@
  * work-plan look identical to an agent, and the agent acts on the first
  * reading. So every failure here is LOUD: a non-zero exit, and a block on
  * stdout — the hook's stdout IS the agent's context — that says in as many
- * words that an empty `beans list` must not be believed. `mountTip` reports a
- * miss as a miss, never as an empty mount, and a branch without a
- * `state-manifest/v1` root manifest as `corrupt`.
+ * words that an empty `beans list` must not be believed.
+ *
+ * ## One implementation (bean `nij4`)
+ *
+ * This module used to check the whole branch out as a detached worktree at
+ * `state/`. Main then carried two mount implementations, that one and
+ * {@link mountTip}. Owner ruling 2026-10-03 (bean `nij4`): keep ONE. The
+ * worktree path is gone; every mount is {@link mountTip}'s, which round-trips
+ * bytes, modes and symlinks and keeps a per-worktree marker. `beans` reads
+ * `beans/defs` off a disk, and a mount at the declared path serves it the
+ * same way the worktree did.
+ *
+ * ## Which graphs: the RESOLVED source
+ *
+ * {@link tipLocations} reads each declaration's resolved source — a config
+ * override, then `source`, then the legacy `storage` (bean `doy3`) — so a
+ * graph declared `source: { kind: "branch", keyedBy: "tip" }` is mounted, a
+ * `directory` source is the checkout itself, and a `commit`-keyed branch is
+ * qa-store's, not a mount's.
  *
  * ## It is inert until the cutover, and that is not a failure
  *
- * While no declaration keeps a subgraph on a branch tip this reports
- * `not-enabled` and exits 0. A mount that treated "nothing is kept on a
- * branch" as an error would fail every session over a branch nothing reads —
- * the crying-wolf that teaches an agent to ignore the loud case.
+ * While no declaration keeps a graph at a branch tip, {@link tipLocations} is
+ * empty and this reports `not-enabled` and exits 0. A mount that treated
+ * "nothing is kept on a branch" as an error would fail every session over a
+ * branch nothing reads — which is the same crying-wolf that teaches an agent
+ * to ignore the loud case.
  *
  * ## It never discards work
  *
- * A mount with unpushed edits is reported `dirty` and left exactly as it is,
- * never re-read over. Its files are somebody's work in progress, and this
- * module's whole purpose is that state is not lost silently.
+ * A mount holding unpushed edits is left exactly as it is and reported
+ * `stale`, never re-read over. Its files are somebody's work in progress, and
+ * this module's whole purpose is that state is not lost silently.
+ *
+ * ## A branch PER GRAPH — the fan-out (owner ruling 2026-10-03)
+ *
+ * This module used to mount ONE branch at one `state/` directory, and refused
+ * outright above one declared branch, because decision D4 had chosen a single
+ * `state` branch with the graphs as directories inside it. The owner reversed
+ * that default on 2026-10-03:
+ *
+ * > *"Keep per-graph branches"*
+ *
+ * > *"i dont think we need a speciifc "state" branch or mount, several
+ * > potnential subgraphs can be a part of state"*
+ *
+ * So each declared tip-keyed directory lives on the branch ITS OWN
+ * declaration names, and is mounted at ITS OWN declared path. What this
+ * function contributes is only the FAN-OUT: the per-directory mount already
+ * exists as {@link mountTip} (`branch-store.ts`, reached by hand as
+ * `branch-store.ts mount --id <directory-id>`), and it is reused rather than
+ * reimplemented — it round-trips bytes, modes and symlinks, and keeps a
+ * per-worktree marker, none of which this module should own a second copy of.
+ *
+ * ## One graph failing must not let the others read clean (bean `1xhc`)
+ *
+ * A fan-out invites exactly the defect `1xhc` is about: a step that did not
+ * fire looks like one that passed. So the aggregate keeps the three answers
+ * apart — every graph mounted, SOME mounted and these named ones did not, and
+ * "could not determine" — a failing graph never stops its siblings being
+ * mounted, and the process exits non-zero when anything failed, because
+ * `session-start-coord-sweep.sh` calls this with `|| true` and the printed
+ * block and the exit status are then the only carriers of the finding.
+ *
+ * `stale` is deliberately NOT a failure: it means a prior mount with unpushed
+ * edits was left untouched, so the graph is still on disk and readable. That
+ * is the per-graph form of the `dirty` state below, and for the same reason —
+ * nothing was discarded.
  */
 
 import { spawnSync } from "node:child_process";
-import { relative } from "node:path";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
-import { declaredSubgraph } from "../schemas/harness-config.js";
-import { mountChanges, mountTip, type BranchStoreOptions, type TipLocation } from "./branch-store.js";
+import { mountTip, pendingMountChanges, tipLocations, type BranchStoreOptions, type TipLocation } from "./branch-store.js";
 
-/** One declared subgraph this cannot act on, and why. */
-export interface Refusal {
+/**
+ * One declared graph's outcome in the fan-out. `state` is {@link mountTip}'s
+ * verdict, carried through verbatim rather than flattened to a boolean, so a
+ * `miss` (determined absent), a `corrupt` branch and an `unknown` (could not
+ * ask — **never** a pass) stay three different answers.
+ *
+ * `stale` is this module's one addition: {@link mountTip} returns `refused`
+ * both for a prior mount holding unpushed edits and for a path it must not
+ * clobber, and only the first means the graph is nevertheless on disk and
+ * readable. Separating them is what lets a session with edits in flight exit
+ * 0 without that silence also covering a graph that is simply not there — so
+ * it is decided by ASKING for the pending edits before mounting, not inferred
+ * from a refusal plus a marker: a marker is also present when the refusal is
+ * that the path is still tracked, and that graph is not mounted at all.
+ */
+interface GraphMountBase {
   id: string;
+  /** Repository-relative, as declared — where the files were put. */
+  path: string;
+  branch: string;
   reason: string;
 }
 
-/** Which subgraphs live at a branch tip, and which declarations could not be read as one. */
-export interface BranchSubgraphs {
-  locations: TipLocation[];
-  refused: Refusal[];
+/**
+ * A mounted graph ALWAYS has the tip it was read at, and a graph that is not
+ * mounted never pretends to one. That is why this is a union rather than one
+ * interface with `tip?: string`: an optional tip makes "mounted" and "has a
+ * tip" two facts that can disagree, and every reader then has to handle a
+ * state the mount cannot actually be in.
+ */
+export type GraphMount =
+  | (GraphMountBase & { state: "mounted"; tip: string; files?: number })
+  | (GraphMountBase & { state: "stale" | "refused" | "miss" | "corrupt" | "unknown" });
+
+/** A graph whose files are on disk and readable, whether or not it just moved. */
+export function isPresent(g: GraphMount): boolean {
+  return g.state === "mounted" || g.state === "stale";
 }
 
-/** One subgraph's outcome. */
-export type IdMount =
-  | { id: string; state: "mounted"; into: string; branch: string; tip: string; files: number }
-  | { id: string; state: "dirty"; into: string; reason: string }
-  | { id: string; state: "failed"; reason: string };
-
-export type MountResult = { state: "not-enabled" | "mounted" | "dirty" | "failed"; reason: string; mounts: IdMount[] };
+export type MountResult =
+  | { state: "not-enabled"; reason: string; locations: TipLocation[]; graphs: GraphMount[] }
+  /** Every graph that was asked for is present. */
+  | { state: "mounted"; reason: string; locations: TipLocation[]; graphs: GraphMount[] }
+  /** SOME graphs are present and at least one is not. Exits non-zero: the ones that failed are named. */
+  | { state: "partial"; reason: string; locations: TipLocation[]; graphs: GraphMount[] }
+  | { state: "failed"; reason: string; locations: TipLocation[]; graphs: GraphMount[] };
 
 export interface MountOptions {
   repoRoot?: string;
-  /** Mount only this subgraph id. */
+  /** Mount only this declared directory id. */
   id?: string;
   /** Passed to `BranchStore.open` — tests point it at a scratch store. */
   store?: BranchStoreOptions;
 }
 
+function git(cwd: string, args: string[]): { status: number; stdout: string; stderr: string } {
+  const r = spawnSync("git", args, { cwd, encoding: "utf-8" });
+  return { status: r.status ?? 128, stdout: r.stdout ?? "", stderr: r.stderr ?? String(r.error ?? "") };
+}
+
 export function repoRootOf(cwd = process.cwd()): string {
-  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
+  const r = git(cwd, ["rev-parse", "--show-toplevel"]);
   if (r.status !== 0) throw new Error(`not inside a git checkout: ${cwd}`);
   return r.stdout.trim();
 }
 
 /**
- * Every declared subgraph kept at a branch tip, across the checkout's
- * instances — asked from the DECLARING instance, so an id two instances both
- * declare resolves to each one's own entry instead of throwing as ambiguous.
+ * Mount every declared tip-keyed directory, each from the branch its own
+ * declaration names and at its own declared path. Never throws for an
+ * expected state.
  */
-export function branchSubgraphs(repoRoot: string): BranchSubgraphs {
-  const locations: TipLocation[] = [];
-  const refused: Refusal[] = [];
-  for (const inst of instanceRootsIn(repoRoot)) {
-    for (const { id } of readDeclaration(inst)?.directories ?? []) {
-      let sub: ReturnType<typeof declaredSubgraph>;
-      try {
-        sub = declaredSubgraph(inst, id);
-      } catch (e) {
-        refused.push({ id, reason: (e as Error).message });
-        continue;
-      }
-      if (!sub) continue;
-      const src = sub.source;
-      switch (src.kind) {
-        case "directory":
-          continue;
-        case "branch": {
-          if (src.keyedBy !== "tip") continue; // per-commit entries are qa-store's, not a mount's
-          const path = relative(repoRoot, sub.entry.absPath).split("\\").join("/").replace(/\/+$/, "");
-          if (!locations.some((l) => l.id === id && l.path === path)) locations.push({ id, path, branch: src.branch, keyedBy: "tip" });
-          continue;
-        }
-        default: {
-          const unknown: never = src;
-          refused.push({ id, reason: `source kind ${JSON.stringify((unknown as { kind?: unknown }).kind)} is not one a mount knows` });
-        }
-      }
-    }
-  }
-  return { locations: locations.sort((a, b) => a.id.localeCompare(b.id)), refused };
-}
-
-/** Mount each branch-kept subgraph at its declared path, or report why not. Never throws for an expected state. */
 export function mountState(opts: MountOptions = {}): MountResult {
   const root = opts.repoRoot ?? repoRootOf();
-  let found: BranchSubgraphs;
+  let locations: TipLocation[];
   try {
-    found = branchSubgraphs(root);
+    locations = tipLocations(root);
   } catch (e) {
-    return { state: "failed", reason: `could not read the directory declarations: ${(e as Error).message}`, mounts: [] };
+    // Could not ask. Never a pass: the declarations are the only thing that
+    // says which graphs should be here at all.
+    return { state: "failed", reason: `could not read the directory declarations: ${(e as Error).message}`, locations: [], graphs: [] };
   }
-  const want = (id: string) => opts.id === undefined || id === opts.id;
-  const mounts: IdMount[] = found.refused.filter((r) => want(r.id)).map((r) => ({ id: r.id, state: "failed", reason: r.reason }));
-  const locations = found.locations.filter((l) => want(l.id));
-  if (locations.length === 0 && mounts.length === 0) {
-    if (opts.id !== undefined) return { state: "failed", reason: `no declared subgraph \`${opts.id}\` is kept at a branch tip`, mounts };
+  if (opts.id !== undefined) {
+    locations = locations.filter((l) => l.id === opts.id);
+    if (locations.length === 0) {
+      return { state: "failed", reason: `no declared directory \`${opts.id}\` is kept at a branch tip`, locations, graphs: [] };
+    }
+  }
+  if (locations.length === 0) {
     return {
       state: "not-enabled",
-      reason: "no declared subgraph is kept at a branch tip, so the checkout is still authoritative; nothing to mount",
-      mounts,
+      reason: "no declared directory is kept at a branch tip, so `main` is still authoritative; nothing to mount",
+      locations,
+      graphs: [],
     };
   }
-
-  for (const loc of locations) {
-    // Somebody's unpushed edits: report, never re-read over them.
-    let pending;
-    try {
-      pending = mountChanges(loc.id, root);
-    } catch (e) {
-      mounts.push({ id: loc.id, state: "failed", reason: `could not read the existing mount: ${(e as Error).message}` });
-      continue;
-    }
-    if (pending && pending.length > 0) {
-      mounts.push({ id: loc.id, state: "dirty", into: loc.path, reason: `${pending.length} unpushed change(s); left untouched` });
-      continue;
-    }
-    const r = mountTip(loc, { repoRoot: root, store: opts.store });
-    if (r.state === "mounted") mounts.push({ id: loc.id, state: "mounted", into: r.into, branch: r.branch, tip: r.tip, files: r.files });
-    else mounts.push({ id: loc.id, state: "failed", reason: `${r.state}: ${r.reason}` });
-  }
-
-  const failed = mounts.filter((m) => m.state === "failed").length;
-  if (failed) return { state: "failed", reason: `${failed} of ${mounts.length} subgraph(s) could not be mounted`, mounts };
-  const dirty = mounts.filter((m) => m.state === "dirty").length;
-  if (dirty) return { state: "dirty", reason: `${dirty} of ${mounts.length} mount(s) hold unpushed edits`, mounts };
-  return { state: "mounted", reason: `${mounts.length} subgraph(s) mounted`, mounts };
+  return fanOut(root, locations, opts.store);
 }
 
-function line(m: IdMount, root?: string): string {
-  if (m.state === "mounted") {
-    const at = root ? relative(root, m.into) || "." : m.into;
-    return `- \`${m.id}\` at \`${at}/\` — ${m.files} file(s) from \`${m.branch}\`@\`${m.tip.slice(0, 12)}\``;
+/**
+ * One {@link mountTip} per declared directory, aggregated. A graph that fails
+ * is recorded and the loop CONTINUES: stopping at the first failure would
+ * leave the rest in the one state bean `1xhc` forbids — not attempted, and
+ * indistinguishable from fine.
+ */
+function fanOut(root: string, locations: TipLocation[], store?: BranchStoreOptions): MountResult {
+  const graphs: GraphMount[] = [];
+  for (const loc of locations) {
+    const base = { id: loc.id, path: loc.path, branch: loc.branch };
+    try {
+      // A prior mount holding unpushed edits is somebody's work: on disk,
+      // readable, and left untouched. Asked BEFORE mounting, never inferred.
+      const pending = pendingMountChanges(loc.id, { repoRoot: root });
+      if (pending !== undefined && pending.length > 0) {
+        graphs.push({ ...base, state: "stale", reason: `${pending.length} unpushed change(s) left untouched; push them with \`bun run state:push\`` });
+        continue;
+      }
+      const r = mountTip(loc, { repoRoot: root, store });
+      if (r.state === "mounted") {
+        graphs.push({ ...base, state: "mounted", reason: `${r.files} file(s) at ${r.tip.slice(0, 12)}`, tip: r.tip, files: r.files });
+      } else {
+        graphs.push({ ...base, state: r.state, reason: r.reason });
+      }
+    } catch (e) {
+      // A throw for ONE graph must not take the sweep with it.
+      graphs.push({ ...base, state: "unknown", reason: `mounting ${loc.id} threw: ${(e as Error).message}` });
+    }
   }
-  if (m.state === "dirty") return `- \`${m.id}\` at \`${m.into}/\` — ⚠️ ${m.reason}`;
-  return `- \`${m.id}\` — 🛑 ${m.reason}`;
+
+  const present = graphs.filter(isPresent);
+  const failed = graphs.filter((g) => !isPresent(g));
+  const n = graphs.length;
+  if (failed.length === 0) {
+    return { state: "mounted", reason: `${n} declared graph(s), all present`, locations, graphs };
+  }
+  if (present.length === 0) {
+    return { state: "failed", reason: `none of the ${n} declared graph(s) could be mounted`, locations, graphs };
+  }
+  return {
+    state: "partial",
+    reason: `${present.length} of ${n} declared graph(s) mounted; ${failed.map((g) => g.id).join(", ")} did not`,
+    locations,
+    graphs,
+  };
 }
 
 /**
@@ -196,46 +240,78 @@ function line(m: IdMount, root?: string): string {
  * shouty and says what NOT to believe, because the agent's next move after
  * reading this is to read the work-plan.
  */
-export function report(r: MountResult, root?: string): string {
+/** One table row per graph, so a reader sees WHICH graph is in which state. */
+function graphTable(graphs: GraphMount[]): string[] {
+  const L = ["| graph | branch | path | state | detail |", "|---|---|---|---|---|"];
+  for (const g of graphs) {
+    const mark = g.state === "mounted" ? "mounted" : g.state === "stale" ? "⚠️ stale" : `🛑 ${g.state}`;
+    L.push(`| \`${g.id}\` | \`${g.branch}\` | \`${g.path}\` | ${mark} | ${g.reason} |`);
+  }
+  return L;
+}
+
+export function report(r: MountResult): string {
   const L: string[] = ["## State branch mount", ""];
-  const each = r.mounts.map((m) => line(m, root));
   if (r.state === "not-enabled") {
     L.push(`Not enabled — ${r.reason}.`, "", "Beans and todos are read from the checkout, as usual.");
     return L.join("\n");
   }
-  if (r.state === "mounted") {
-    L.push(`Mounted — ${r.reason}:`, "", ...each, "");
-    L.push("Write through `bun run state:push`: it splices only what changed onto the tip, so a sibling's edit to the same file is a conflict, never an overwrite.");
+  const present = r.graphs.filter(isPresent);
+  const failed = r.graphs.filter((g) => !isPresent(g));
+  const stale = r.graphs.filter((g) => g.state === "stale");
+  if (r.graphs.length > 0 && failed.length === 0) {
+    L.push(`Mounted ${present.length} declared graph(s), each from its own branch at its own declared path.`, "");
+    L.push(...graphTable(r.graphs), "");
+    if (stale.length) {
+      L.push(`⚠️ ${stale.map((g) => `\`${g.id}\``).join(", ")} hold unpushed edits and were left untouched. Nothing was discarded.`, "");
+    }
+    L.push("Write through `bun run state:push`, never `git push` from a mount.");
     return L.join("\n");
   }
-  if (r.state === "dirty") {
-    L.push(`⚠️ **${r.reason}, and those were left untouched.**`, "", ...each, "");
-    L.push("Nothing was discarded. Push (`bun run state:push`) or revert those changes before expecting the mount to move.");
-    return L.join("\n");
-  }
+
+  const undetermined = failed.filter((g) => g.state === "unknown");
   L.push(
-    `🛑 **THE STATE MOUNT FAILED — do not trust an empty work-plan.**`,
+    failed.length
+      ? `🛑 **THE STATE MOUNT FAILED FOR ${failed.length} OF ${r.graphs.length} GRAPH(S) — do not trust an empty work-plan.**`
+      : `🛑 **THE STATE MOUNT FAILED — do not trust an empty work-plan.**`,
     "",
-    `Reason: ${r.reason}`,
-    "",
-    ...each,
-    ...(each.length ? [""] : []),
-    `A subgraph that failed is NOT on disk, so anything reading beans or todos from it will report **nothing**, and`,
-    `"no beans" and "could not reach the beans" look identical from there. An empty \`beans list\` right now is`,
-    `**not** evidence that there is no work.`,
-    "",
-    "Fix the mount (`bun run state:mount`) or read the work-plan from the checkout before deciding there is none.",
   );
+  if (r.graphs.length) L.push(...graphTable(r.graphs), "");
+  else L.push(`Reason: ${r.reason}`, "");
+  L.push(
+    failed.length
+      ? `Not mounted: ${failed.map((g) => `\`${g.id}\` (${g.path})`).join(", ")}. Anything reading those paths will report`
+      : `Nothing was mounted. Anything reading a branch-kept graph will report`,
+    `**nothing**, and "no beans" and "could not reach the beans" look identical from there. An empty \`beans list\``,
+    `right now is **not** evidence that there is no work.`,
+  );
+  if (undetermined.length) {
+    L.push(
+      "",
+      `${undetermined.length} graph(s) are **could not determine**, not determined-absent: ` +
+        `${undetermined.map((g) => `\`${g.id}\``).join(", ")}. That is never a pass.`,
+    );
+  }
+  if (present.length) {
+    // Say what DID work, or a reader concludes the whole mount is gone.
+    L.push(
+      "",
+      `Still present and readable: ${present.map((g) => `\`${g.id}\` (${g.path})`).join(", ")} — ` +
+        `a partial mount is not a rollback, and nothing was discarded.`,
+    );
+  }
+  L.push("", "Fix the mount (`bun run state:mount`) or read the work-plan from the checkout before deciding there is none.");
   return L.join("\n");
 }
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--id");
-  const root = repoRootOf();
-  const r = mountState({ repoRoot: root, id: at === -1 ? undefined : argv[at + 1] });
+  const r = mountState({ id: at === -1 ? undefined : argv[at + 1] });
   if (argv.includes("--json")) console.log(JSON.stringify(r, null, 2));
-  else console.log(report(r, root));
-  // Loud means a non-zero exit too: a hook that only prints is a hook a wrapper can swallow.
-  process.exit(r.state === "failed" ? 1 : 0);
+  else console.log(report(r));
+  // Loud means a non-zero exit too: a hook that only prints is a hook a wrapper
+  // can swallow, and the sweep calls this with `|| true`. `partial` counts: a
+  // graph that did not mount is a finding even when its siblings did.
+  process.exit(r.state === "failed" || r.state === "partial" ? 1 : 0);
 }

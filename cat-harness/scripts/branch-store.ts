@@ -103,7 +103,9 @@ import { createHash } from "node:crypto";
 import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 
-import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
+import { instanceRootsIn, resolveDirectories, type ResolvedDirectory } from "../schemas/cat-harness.js";
+import { subgraphSourceOverrides } from "../schemas/harness-config.js";
+import { resolveSubgraphSource } from "../schemas/subgraph-source.js";
 // `readDeclaration` throws on the `folio` kind unless core has registered it —
 // the same side-effect import `qa-store.ts` carries, same reason.
 import "../schemas/folio-graph-kind.js";
@@ -216,11 +218,34 @@ export interface TipLocation {
 }
 
 /**
- * The declared directory `id` whose `storage.keyedBy` is `tip`, across the
- * checkout's instances. Refuses a directory that is undeclared, unstored, or
- * commit-keyed, rather than guessing a branch: the default for "no
- * declaration" is `main`, which is not this store.
+ * Where one declared directory's content is kept, read from its RESOLVED
+ * source (bean `doy3`): a config override, then `source`, then the legacy
+ * `storage`. Until 2026-10-03 these functions read `storage` alone, so a
+ * subgraph declared the current way — `source: { kind: "branch" }` — was
+ * invisible to the `branch-store` CLI, to `StateStore` and to the state mount.
+ *
+ * `route` is the one keying still read straight off `storage`: the source
+ * union has no `route` member yet, so the resolver would refuse it.
  */
+function keptAt(inst: string, repoRoot: string, d: ResolvedDirectory): { branch: string; keyedBy: string } | undefined {
+  if (d.storage?.keyedBy === "route") return { branch: d.storage.branch, keyedBy: "route" };
+  const src = resolveSubgraphSource(d, subgraphSourceOverrides(inst, repoRoot));
+  switch (src.kind) {
+    case "directory":
+      return undefined;
+    case "branch":
+      return { branch: src.branch, keyedBy: src.keyedBy };
+    default: {
+      const unknown: never = src;
+      throw new BranchStoreUsageError(`directory ${d.id} has a source kind this store does not know: ${JSON.stringify(unknown)}`);
+    }
+  }
+}
+
+function repoRelative(repoRoot: string, abs: string): string {
+  return relative(repoRoot, abs).split("\\").join("/").replace(/\/+$/, "");
+}
+
 /**
  * Every declared directory that is kept at a branch tip, across the instances
  * in this checkout.
@@ -228,9 +253,8 @@ export interface TipLocation {
  * The companion to {@link resolveTipLocation}: that answers "which branch for
  * THIS id", this answers "is anything kept on a branch at all". The
  * session-start mount needs the second question, because the honest answer
- * today is "nothing is" — no declaration sets `storage` yet — and a mount that
- * treated that as a failure would fail every session over a branch that
- * nothing reads.
+ * today is "nothing is" — and a mount that treated that as a failure would
+ * fail every session over a branch that nothing reads.
  *
  * Returns them sorted by id so a caller's output is stable.
  */
@@ -238,16 +262,22 @@ export function tipLocations(repoRoot: string = gitTopLevel(), keyedBy: BranchKe
   const out: TipLocation[] = [];
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
-      const k = d.storage?.keyedBy;
+      const at = keptAt(inst, repoRoot, d);
+      const k = at?.keyedBy;
       if (k !== "tip" && k !== "route") continue;
       if (keyedBy !== "any" && k !== keyedBy) continue;
-      const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path, branch: d.storage!.branch, keyedBy: k });
+      if (!out.some((o) => o.id === d.id)) out.push({ id: d.id, path: repoRelative(repoRoot, d.absPath), branch: at!.branch, keyedBy: k });
     }
   }
   return out.sort((a, b) => a.id.localeCompare(b.id));
 }
 
+/**
+ * The declared directory `id`, kept at a branch tip, across the checkout's
+ * instances. Refuses a directory that is undeclared, kept in the checkout, or
+ * commit-keyed, rather than guessing a branch: the default for "no
+ * declaration" is `main`, which is not this store.
+ */
 export function resolveTipLocation(
   id: string,
   repoRoot: string = gitTopLevel(),
@@ -256,8 +286,9 @@ export function resolveTipLocation(
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
       if (d.id !== id) continue;
-      if (!d.storage) throw new BranchStoreUsageError(`directory ${id} declares no storage; it lives on main`);
-      const k = d.storage.keyedBy;
+      const at = keptAt(inst, repoRoot, d);
+      if (!at) throw new BranchStoreUsageError(`directory ${id} is kept in the checkout, not on a branch; it lives on main`);
+      const k = at.keyedBy;
       // `commit` is qa-store's layout, not a branch tip at all; `route` and
       // `tip` are both tips but differ in how a write settles, so a caller
       // that came for one is refused the other rather than served it.
@@ -265,8 +296,7 @@ export function resolveTipLocation(
         throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, which this store does not implement`);
       }
       if (keyedBy !== "any" && k !== keyedBy) throw new BranchStoreUsageError(`directory ${id} is keyed by ${k}, not ${keyedBy}`);
-      const path = relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-      return { id, path, branch: d.storage.branch, keyedBy: k };
+      return { id, path: repoRelative(repoRoot, d.absPath), branch: at.branch, keyedBy: k };
     }
   }
   throw new BranchStoreUsageError(`no declared directory has id ${id}`);
@@ -955,12 +985,6 @@ export function mountedIds(repoRoot: string = gitTopLevel()): string[] {
   return readdirSync(dir).filter((n) => n.endsWith(".json")).map((n) => n.slice(0, -".json".length)).sort();
 }
 
-/** What a push of `id` would send now; `undefined` when `id` is not mounted here. */
-export function mountChanges(id: string, repoRoot: string = gitTopLevel()): Change[] | undefined {
-  const m = readMarker(repoRoot, id);
-  return m ? localChanges(m, repoRoot) : undefined;
-}
-
 function writeMarker(repoRoot: string, m: MountMarker): void {
   const p = markerPath(repoRoot, m.id);
   mkdirSync(dirname(p), { recursive: true });
@@ -1076,6 +1100,21 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
   }
   writeMarker(repoRoot, { $schema: MOUNT_MARKER_SCHEMA, id: loc.id, branch: r.branch, path: loc.path, into, tip: r.tip, files });
   return { state: "mounted", into, tip: r.tip, branch: r.branch, files: r.files.size };
+}
+
+/**
+ * What a push of `id` would send, without sending it — {@link localChanges}
+ * for a mounted directory, or `undefined` when `id` is not mounted here.
+ *
+ * Exported for the `--dry-run` of a caller that fans out over several
+ * mounts (`state-push.ts`): the alternative is each such caller re-deriving
+ * the diff from the marker, and a second implementation of "what changed"
+ * is how a dry run comes to disagree with the push it is previewing.
+ */
+export function pendingMountChanges(id: string, opts: MountOptions = {}): Change[] | undefined {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const m = readMarker(repoRoot, id);
+  return m ? localChanges(m, repoRoot) : undefined;
 }
 
 /**

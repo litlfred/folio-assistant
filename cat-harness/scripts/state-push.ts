@@ -1,46 +1,60 @@
 #!/usr/bin/env bun
 /**
- * state-push — send each mount's edits to its branch THROUGH the library.
+ * state-push — send the mount's edits to the branch THROUGH the library.
  *
  * @module scripts/state-push
  * @graphNode none — the write half of the state mount
  *
- * Bean `2h76`, the `bun run state:push` line; rebuilt on branch-store's
- * `pushMount` by bean `nij4` (see `state-mount.ts` for the ruling). This file
- * chooses which mounts to push and reports; the splice is `pushMount`'s.
+ * Bean `2h76`, the `bun run state:push` line. The proposal: *"`bun run
+ * state:push` commits and pushes the worktree through the library."*
  *
- * ## Which mounts: the markers, not the declarations
- *
- * Every id with a mount marker in THIS worktree is pushed, declared or not. A
- * declaration removed while a mount still holds edits must not make those
- * edits unpushable — that is the silent loss this module exists to prevent.
- * The marker records the branch, so nothing has to be re-resolved.
+ * Rebuilt by bean `nij4` on one implementation: every graph is spliced by
+ * branch-store's {@link pushMount}, once per graph, to the branch that
+ * graph's mount was read from. The `state/` worktree push is gone with the
+ * worktree (`state-mount.ts`).
  *
  * ## Why not `git push`
  *
  * Because that is the lost update. A push of the tree the editor started from
  * reverts a sibling's write to a DIFFERENT file landed meanwhile, and
  * overwrites a sibling's write to the SAME file outright. What goes to the
- * remote is a SPLICE: only the paths that changed, grafted onto whatever the
- * tip is now, every other file carried across by id.
+ * remote instead is a SPLICE: only the paths that actually changed, grafted
+ * onto whatever the tip is now, every other file carried across by id.
  *
  * ## The `expect` is the whole safety story
  *
- * The marker records the blob each file had at the mounted tip, so every
- * change carries what the editor read. A sibling who edited the same file
- * since gets this write stopped as `conflict` with the paths named, and
- * NOTHING is pushed. A file the editor created carries `expect: null`, so two
- * sessions creating the same bean are told instead of both believing they did.
- * Bytes, executable bits and symlinks are read as git records them.
+ * The mount marker records the blob each file had at the mounted tip, which IS
+ * what the editor read. That is exactly `Change.expect`. A sibling who edited
+ * the same file since gets this write stopped as `conflict` with the paths
+ * named, and NOTHING is pushed for that graph — rather than one of the two
+ * edits quietly disappearing. A file the editor created carries
+ * `expect: null`, so two sessions creating the same bean are told instead of
+ * both believing they did.
  *
- * ## It does not touch the mount
+ * ## Which graphs: the declarations AND the mounts
  *
- * On `conflict` or `failed` the files are left exactly as they are: the edits
- * are the only copy.
+ * Every declared tip-keyed graph, plus every graph mounted in this worktree
+ * whose declaration has since gone. A mount's marker records its branch, so
+ * it needs no declaration to push — and edits in a mount nobody declares any
+ * more must not be stranded where no command reaches them.
+ *
+ * ## It never discards edits
+ *
+ * On `conflict` or `failed` the mount is left exactly as it is: the edits are
+ * the only copy.
  */
 
-import type { BranchStoreOptions, Change, WriteResult } from "./branch-store.js";
-import { mountChanges, mountedIds, pushMount } from "./branch-store.js";
+import {
+  mountedIds,
+  pendingMountChanges,
+  pushMount,
+  readMarker,
+  tipLocations,
+  type BranchStoreOptions,
+  type Change,
+  type TipLocation,
+  type WriteResult,
+} from "./branch-store.js";
 import { repoRootOf } from "./state-mount.js";
 
 export interface PushOptions {
@@ -48,99 +62,182 @@ export interface PushOptions {
   message?: string;
   /** Report what would be sent and send nothing. */
   dryRun?: boolean;
-  /** Push only this mounted id. */
+  /** Push only this graph id. */
   id?: string;
   /** Passed to `BranchStore.open` — tests point it at a scratch store. */
   store?: BranchStoreOptions;
 }
 
-type IdState = "nothing" | "would-push" | "pushed" | "conflict" | "failed";
-
-/** One mount's outcome. */
-export interface IdPush {
+/**
+ * One declared graph's splice, in the fan-out — the write half of
+ * `state-mount.ts`'s {@link GraphMount}.
+ *
+ * `state` is {@link pushMount}'s verdict verbatim. `unchanged` and `pushed`
+ * are both successes; `conflict` means a sibling edited the same path since
+ * this mount was taken and **nothing was sent for that graph**, which is a
+ * finding rather than a loss — the edits are still on disk.
+ */
+export interface GraphPush {
   id: string;
-  state: IdState;
+  branch: string;
+  path: string;
+  state: "pushed" | "unchanged" | "would-push" | "conflict" | "absent" | "refused" | "failed";
   reason: string;
-  changes: Change[];
+  changes?: Change[];
   write?: WriteResult;
 }
 
-export type PushResult = { state: "no-mount" | IdState; reason: string; pushes: IdPush[] };
+/** A graph whose splice did not lose anything and needs no further action. */
+export function isSettled(g: GraphPush): boolean {
+  return g.state === "pushed" || g.state === "unchanged" || g.state === "would-push";
+}
 
-/** Worst first: the overall state is the worst any one mount reached. */
-const RANK: IdState[] = ["failed", "conflict", "pushed", "would-push", "nothing"];
+export type PushResult = {
+  state: "no-mount" | "nothing" | "would-push" | "pushed" | "failed" | "partial";
+  reason: string;
+  graphs: GraphPush[];
+};
+
+/**
+ * Splice back every declared tip-keyed graph, each to the branch its own
+ * declaration names. Bean `2h76`, owner ruling 2026-10-03 (D4 option b).
+ *
+ * Symmetric with `state-mount.ts`'s fan-out, and for the same reasons: the
+ * per-directory splice already exists as {@link pushMount}, so it is called
+ * once per declaration rather than reimplemented, and a graph that fails is
+ * recorded while the loop CONTINUES — stopping at the first failure would
+ * leave the rest unattempted and indistinguishable from settled (bean `1xhc`).
+ *
+ * A push to ONE branch is what this replaces: `pushState` resolved the
+ * declarations to a single branch and refused above one, so under a branch per
+ * graph every graph but the first was unreachable.
+ */
+function pushFanOut(root: string, locations: TipLocation[], opts: PushOptions): PushResult {
+  const graphs: GraphPush[] = [];
+  for (const loc of locations) {
+    const base = { id: loc.id, branch: loc.branch, path: loc.path };
+    try {
+      if (opts.dryRun) {
+        const changes = pendingMountChanges(loc.id, { repoRoot: root });
+        if (changes === undefined) {
+          graphs.push({ ...base, state: "refused", reason: `${loc.id} is not mounted; run \`bun run state:mount\` first` });
+        } else {
+          graphs.push({ ...base, state: "would-push", reason: `${changes.length} path(s) would be spliced onto the tip`, changes });
+        }
+        continue;
+      }
+      const changes = pendingMountChanges(loc.id, { repoRoot: root });
+      const message = opts.message ?? `state: ${loc.id} from its mount`;
+      const w = pushMount(loc.id, message, { repoRoot: root, store: opts.store });
+      if (w.state === "refused") graphs.push({ ...base, state: "refused", reason: w.reason });
+      else graphs.push({ ...base, state: w.state, reason: w.reason, write: w, changes });
+    } catch (e) {
+      // A throw for ONE graph must not take the others' pushes with it.
+      graphs.push({ ...base, state: "failed", reason: `pushing ${loc.id} threw: ${(e as Error).message}` });
+    }
+  }
+
+  const settled = graphs.filter(isSettled);
+  const stuck = graphs.filter((g) => !isSettled(g));
+  const n = graphs.length;
+
+  // Nothing is mounted at all: not a failure, the same answer the single-mount
+  // path gives when `state/` is absent.
+  if (stuck.length === n && stuck.every((g) => g.state === "refused" && g.reason.includes("not mounted"))) {
+    return { state: "no-mount", reason: `none of the ${n} declared graph(s) is mounted; run \`bun run state:mount\` first`, graphs };
+  }
+  if (stuck.length === 0) {
+    if (opts.dryRun) {
+      const changes = graphs.flatMap((g) => g.changes ?? []);
+      return { state: "would-push", reason: `${changes.length} path(s) across ${n} graph(s) would be spliced`, graphs };
+    }
+    const pushed = graphs.filter((g) => g.state === "pushed");
+    if (pushed.length === 0) return { state: "nothing", reason: `no graph had changes to push`, graphs };
+    return { state: "pushed", reason: `${pushed.length} of ${n} graph(s) pushed, each to its own branch`, graphs };
+  }
+  if (settled.length === 0) {
+    return { state: "failed", reason: `none of the ${n} declared graph(s) could be pushed`, graphs };
+  }
+  return {
+    state: "partial",
+    reason: `${settled.length} of ${n} declared graph(s) settled; ${stuck.map((g) => `${g.id} (${g.state})`).join(", ")} did not`,
+    graphs,
+  };
+}
 
 export function pushState(opts: PushOptions = {}): PushResult {
   const root = opts.repoRoot ?? repoRootOf();
-  const ids = mountedIds(root).filter((id) => opts.id === undefined || id === opts.id);
-  if (ids.length === 0) {
-    const what = opts.id === undefined ? "nothing is mounted" : `\`${opts.id}\` is not mounted`;
-    return { state: "no-mount", reason: `${what} in this worktree; run \`bun run state:mount\` first`, pushes: [] };
+  let locations: TipLocation[];
+  try {
+    locations = tipLocations(root);
+  } catch (e) {
+    return { state: "failed", reason: `could not read the directory declarations: ${(e as Error).message}`, graphs: [] };
   }
-
-  const pushes: IdPush[] = ids.map((id): IdPush => {
-    let changes: Change[];
-    try {
-      changes = mountChanges(id, root) ?? [];
-    } catch (e) {
-      return { id, state: "failed", reason: (e as Error).message, changes: [] };
-    }
-    if (changes.length === 0) return { id, state: "nothing", reason: "no local edits", changes };
-    if (opts.dryRun) return { id, state: "would-push", reason: `${changes.length} path(s) would be spliced onto the tip`, changes };
-    const write = pushMount(id, opts.message ?? `state: ${changes.length} path(s) from the ${id} mount`, { repoRoot: root, store: opts.store });
-    if (write.state === "pushed" || write.state === "unchanged") return { id, state: "pushed", reason: write.reason, changes, write };
-    if (write.state === "conflict") {
-      return {
-        id,
-        state: "conflict",
-        reason: `${write.conflicts?.length ?? 0} path(s) were edited on ${write.branch} since this mount was taken; NOTHING was pushed and the mount is untouched`,
-        changes,
-        write,
-      };
-    }
-    return { id, state: "failed", reason: `${write.state}: ${write.reason}`, changes, ...("branch" in write ? { write } : {}) };
-  });
-
-  const state = RANK.find((s) => pushes.some((p) => p.state === s))!;
-  const n = pushes.filter((p) => p.state === state).length;
-  return { state, reason: `${n} of ${pushes.length} mount(s) ${state}`, pushes };
+  // A mount whose declaration has gone still pushes, to the branch its marker recorded.
+  for (const id of mountedIds(root)) {
+    if (locations.some((l) => l.id === id)) continue;
+    const m = readMarker(root, id);
+    if (m) locations.push({ id, path: m.path, branch: m.branch, keyedBy: "tip" });
+  }
+  if (opts.id !== undefined) locations = locations.filter((l) => l.id === opts.id);
+  if (locations.length === 0) {
+    const what = opts.id === undefined ? "no graph is declared at a branch tip or mounted here" : `\`${opts.id}\` is neither declared at a branch tip nor mounted here`;
+    return { state: "no-mount", reason: `${what}; run \`bun run state:mount\` first`, graphs: [] };
+  }
+  return pushFanOut(root, locations, opts);
 }
 
-function verb(c: Change): string {
-  return c.content === null ? "delete" : c.expect === null || c.expect === undefined ? "create" : "update";
+/** One row per graph, so a reader sees WHICH branch a splice landed on. */
+function graphTable(graphs: GraphPush[]): string[] {
+  const L = ["| graph | branch | state | detail |", "|---|---|---|---|"];
+  for (const g of graphs) {
+    const mark = isSettled(g) ? g.state : g.state === "conflict" ? "⚠️ conflict" : `🛑 ${g.state}`;
+    L.push(`| \`${g.id}\` | \`${g.branch}\` | ${mark} | ${g.reason} |`);
+  }
+  return L;
 }
 
 export function report(r: PushResult): string {
   const L: string[] = ["## State push", ""];
-  if (r.state === "no-mount") return L.concat(r.reason + ".").join("\n");
-  for (const p of r.pushes) {
-    if (p.state === "nothing") {
-      L.push(`- \`${p.id}\` — nothing to push.`);
-    } else if (p.state === "would-push") {
-      L.push(`- \`${p.id}\` — ${p.reason}:`);
-      for (const c of p.changes) L.push(`  - \`${c.path}\` — ${verb(c)}`);
-    } else if (p.state === "pushed") {
-      L.push(`- \`${p.id}\` — pushed ${p.changes.length} path(s) to \`${p.write?.branch}\`: ${p.reason}.`);
-      if (p.write?.commit) L.push(`  Commit \`${p.write.commit.slice(0, 12)}\`, attempt ${p.write.attempts}.`);
-    } else if (p.state === "conflict") {
-      L.push(`- \`${p.id}\` — ⚠️ **not pushed: a sibling edited the same path(s).** ${p.reason}.`);
-      for (const c of p.write?.conflicts ?? []) L.push(`  - \`${c.path}\` — you read \`${c.expected ?? "(absent)"}\`, the tip has \`${c.actual ?? "(absent)"}\``);
-      L.push("  Your edits are still in the mount. Re-read those files, re-apply your change, and push again.");
-    } else {
-      L.push(`- \`${p.id}\` — 🛑 **the push failed.** ${p.reason}. Nothing was discarded: your edits are still in the mount.`);
+  // The fan-out: one splice per declared graph, each to its own branch.
+  if (r.graphs.length) {
+    const stuck = r.graphs.filter((g) => !isSettled(g));
+    if (stuck.length === 0) {
+      L.push(`${r.reason}.`, "", ...graphTable(r.graphs));
+      if (r.state === "would-push") {
+        for (const g of r.graphs)
+          for (const c of g.changes ?? []) L.push(`- \`${g.id}\`: \`${c.path}\` — ${c.content === null ? "delete" : c.expect === null ? "create" : "update"}`);
+      }
+      return L.join("\n");
     }
+    const conflicts = stuck.filter((g) => g.state === "conflict");
+    L.push(`🛑 **The state push did not settle ${stuck.length} of ${r.graphs.length} graph(s).** ${r.reason}.`, "", ...graphTable(r.graphs), "");
+    for (const g of conflicts)
+      for (const c of g.write?.conflicts ?? [])
+        L.push(`- \`${g.id}\`: \`${c.path}\` — you read \`${c.expected ?? "(absent)"}\`, the tip has \`${c.actual ?? "(absent)"}\``);
+    L.push(
+      "",
+      `**Nothing was discarded** — every unsettled graph's edits are still in its mount. A graph that pushed is NOT`,
+      `rolled back: ${r.graphs.filter(isSettled).map((g) => `\`${g.id}\``).join(", ") || "(none)"} landed.`,
+    );
+    if (conflicts.length) L.push("", "For each conflict, re-read those files, re-apply your change, and push again.");
+    return L.join("\n");
   }
-  return L.join("\n");
+  return L.concat(r.reason + ".").join("\n");
 }
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);
-  const val = (flag: string) => {
-    const i = argv.indexOf(flag);
-    return i === -1 ? undefined : argv[i + 1];
-  };
-  const r = pushState({ dryRun: argv.includes("--dry-run"), message: val("-m"), id: val("--id") });
+  const at = argv.indexOf("-m");
+  const i = argv.indexOf("--id");
+  const r = pushState({
+    dryRun: argv.includes("--dry-run"),
+    message: at === -1 ? undefined : argv[at + 1],
+    id: i === -1 ? undefined : argv[i + 1],
+  });
   if (argv.includes("--json")) console.log(JSON.stringify(r, null, 2));
   else console.log(report(r));
-  process.exit(r.state === "failed" || r.state === "conflict" ? 1 : 0);
+  // `partial` counts: a graph whose splice did not settle is a finding even
+  // when its siblings' did.
+  process.exit(r.state === "failed" || r.state === "partial" ? 1 : 0);
 }

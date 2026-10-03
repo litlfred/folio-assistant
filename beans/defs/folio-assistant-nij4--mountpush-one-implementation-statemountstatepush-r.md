@@ -29,3 +29,9 @@ Owner ruling 2026-10-03 (option 1 of 4, asked by the Parcel B session): main car
 - branch-store gains `mountedIds` and `mountChanges`; nothing was copied.
 - Tests: 11 mount tests and 8 push tests on real git, through a shared `tests/state-fixture.ts` that declares the subgraph with `source`. They include a new binary, an executable bit and a symlink pushed and then mounted back in a second container.
 - Gotcha recorded for the next agent: a statement beginning `declare(` is stripped by Bun's TypeScript transpiler as an ambient declaration, so the fixture's helper is `writeDeclaration`.
+
+## Combined with main's fan-out (2026-10-03, owner: "which is better? compare. combine")
+While this was in review, the 2h76 session merged its own per-branch rewrite to main (`state:mount` fanning out over `mountTip`, `state:push` over `pushMount`). It kept the old `state/` worktree behind `--force` and left its removal to this bean. The combination takes the better half of each:
+- **from main:** `mountTip`'s per-graph verdict carried verbatim (`miss`, `corrupt`, `unknown`, `refused`), `partial`, the per-graph table, a try/catch per graph, the `GraphMount` union with a required tip, and `pendingMountChanges`;
+- **from nij4:** the old worktree path deleted along with `--force`/`--branch`. Graphs are found from the resolved source (fixed in `tipLocations` itself, bean `doy3`). `stale` is decided by asking for pending edits before mounting. Main inferred it from "refused and a marker exists", which misread a still-tracked path as present and exited 0; a test now pins this and fails against main's inference. `state:push` also pushes mounts whose declaration has gone, using the marker's branch. Added `--id`, and binary/mode/symlink round-trip tests through the commands.
+- My duplicate `mountChanges` was dropped in favour of main's `pendingMountChanges`.

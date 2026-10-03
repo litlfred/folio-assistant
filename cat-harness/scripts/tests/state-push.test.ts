@@ -71,7 +71,9 @@ describe("what the mount holds becomes a splice", () => {
     expect(f.sibling("s", root).write([{ path: "todos/a.md", content: "SIBLING\n", expect: blob }], "sibling").state).toBe("pushed");
     writeFileSync(join(root, "todos/a.md"), "MINE\n");
     const r = push();
-    expect(r.state).toBe("conflict");
+    // Nothing settled, so the run fails (exit 1); the graph names why.
+    expect(r.state).toBe("failed");
+    expect(r.graphs[0]?.state).toBe("conflict");
     expect(f.remoteFile("todos/a.md")?.toString()).toBe("SIBLING\n");
     expect(readFileSync(join(root, "todos/a.md"), "utf-8")).toBe("MINE\n");
     expect(report(r)).toContain("todos/a.md");
