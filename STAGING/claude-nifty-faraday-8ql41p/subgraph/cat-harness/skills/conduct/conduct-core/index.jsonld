@@ -1,0 +1,95 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/conduct-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "conduct-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-memory",
+      "@type": "bootstrap:Skill",
+      "name": "agent-memory",
+      "title": "Subagent memory — what a durable entry may claim"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/communication-language",
+      "@type": "bootstrap:Skill",
+      "name": "communication-language",
+      "title": "The language you communicate in"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/confirmation-waiver",
+      "@type": "bootstrap:Skill",
+      "name": "confirmation-waiver",
+      "title": "A confirmation can be waived — by the person who is owed it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-comparison",
+      "@type": "bootstrap:Skill",
+      "name": "decision-comparison",
+      "title": "The comparison goes BEFORE the question, not inside the options"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
+      "@type": "bootstrap:Skill",
+      "name": "deletion-requires-confirmation",
+      "title": "Deletion requires explicit confirmation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/getting-started",
+      "@type": "bootstrap:Skill",
+      "name": "getting-started",
+      "title": "/getting-started — what did they actually ask for?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/interaction-modality",
+      "@type": "bootstrap:Skill",
+      "name": "interaction-modality",
+      "title": "/interaction-modality — ask in a form the person can answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/repo-conversion",
+      "@type": "bootstrap:Skill",
+      "name": "repo-conversion",
+      "title": "/repo-conversion — folio-assistant over a repo that already has a life"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/retry-backoff",
+      "@type": "bootstrap:Skill",
+      "name": "retry-backoff",
+      "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/symbiotic-interaction",
+      "@type": "bootstrap:Skill",
+      "name": "symbiotic-interaction",
+      "title": "symbiotic-interaction — the three registers of author input"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untrusted-input",
+      "@type": "bootstrap:Skill",
+      "name": "untrusted-input",
+      "title": "Untrusted input — the value must never become program text"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/unverified-constraints",
+      "@type": "bootstrap:Skill",
+      "name": "unverified-constraints",
+      "title": "consulted: reference material nobody performs — a DISCIPLINE. \"Never encode a constraint you have not verified\" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go",
+      "@type": "bootstrap:Skill",
+      "name": "where-does-this-go",
+      "title": "Where does this go? — the question, then the skill that answers it"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/conduct/conduct-core",
+  "path": "skills/conduct/conduct-core/"
+}
