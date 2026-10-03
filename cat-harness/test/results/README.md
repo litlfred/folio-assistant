@@ -11,19 +11,11 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | file | what it is | used by |
 |---|---|---|
 | [`audit-coverage.qa-results.json`](audit-coverage.qa-results.json) | data |  |
-| [`audit-coverage.qa-results.json`](audit-coverage.qa-results.json) | data |  |
-| [`audit-coverage.qa-results.json`](audit-coverage.qa-results.json) | data |  |
 | [`avatar-coverage.qa-results.json`](avatar-coverage.qa-results.json) | data |  |
 | [`crdm-detect-eval.test-run.json`](crdm-detect-eval.test-run.json) | data |  |
 | [`harness-state.qa-results.json`](harness-state.qa-results.json) | data |  |
 | [`kg-export.bootstrap.qa-results.json`](kg-export.bootstrap.qa-results.json) | data |  |
-| [`kg-export.bootstrap.qa-results.json`](kg-export.bootstrap.qa-results.json) | data |  |
-| [`kg-export.bootstrap.qa-results.json`](kg-export.bootstrap.qa-results.json) | data |  |
 | [`kg-export.qa-results.json`](kg-export.qa-results.json) | data |  |
-| [`kg-export.qa-results.json`](kg-export.qa-results.json) | data |  |
-| [`kg-export.qa-results.json`](kg-export.qa-results.json) | data |  |
-| [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
-| [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`lane-documentation.qa-results.json`](lane-documentation.qa-results.json) | data |  |
 | [`layout-norms.qa-results.json`](layout-norms.qa-results.json) | data |  |
@@ -36,24 +28,20 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`skill-register.qa-results.json`](skill-register.qa-results.json) | data |  |
 | [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
-| [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
-| [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
-| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
-| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
 | [`agent-skills/`](agent-skills/) | 2 files | |
 | [`block-qa/`](block-qa/) | 122 files | |
-| [`bootstrap/`](bootstrap/) | 24 files | |
-| [`bootstrap-tools/`](bootstrap-tools/) | 9 files | |
-| [`cat-harness-tools/`](cat-harness-tools/) | 4 files | |
-| [`detangle/`](detangle/) | 73 files | |
-| [`folio-assistant/`](folio-assistant/) | 4 files | |
-| [`kg-qa/`](kg-qa/) | 459 files | |
+| [`bootstrap/`](bootstrap/) | 22 files | |
+| [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
+| [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
+| [`detangle/`](detangle/) | 67 files | |
+| [`folio-assistant/`](folio-assistant/) | 2 files | |
+| [`kg-qa/`](kg-qa/) | 455 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
 | [`library-qa/`](library-qa/) | 64 files | |
-| [`lsi/`](lsi/) | 6 files | |
-| [`tool-runs/`](tool-runs/) | 6 files | |
+| [`lsi/`](lsi/) | 4 files | |
+| [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |
 | [`witnesses/`](witnesses/) | 163 files | |

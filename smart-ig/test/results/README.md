@@ -11,7 +11,5 @@ Part of [SMART IG](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | file | what it is | used by |
 |---|---|---|
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
-| [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
-| [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`kg-qa/`](kg-qa/) | 1 file | |
 <!-- kg:subgraph:end -->
