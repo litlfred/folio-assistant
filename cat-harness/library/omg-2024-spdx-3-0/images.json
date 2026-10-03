@@ -1,0 +1,370 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "omg-2024-spdx-3-0",
+  "images": [
+    {
+      "id": "img-p001-1",
+      "file": "images/img-p001-1.png",
+      "role": "decorative",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "the publisher's logo on the title page, above the title; it is not a figure and carries no content the title page's text does not",
+        "page": 1
+      },
+      "narrative": {
+        "text": "The OMG logo: the letters 'OMG' in dark grey, with a blue bar under the M, beside the words 'Standards Development Organization' in blue.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p178-1",
+      "file": "images/img-p178-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.1 of the specification, captioned 'Core Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 178
+      },
+      "narrative": {
+        "text": "UML class diagram of the SPDX 3.0 Core profile. The abstract Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) is the root. Agent (with subclasses Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) and the abstract ElementCollection (profileConformance; element and rootElement) all specialise Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) and Bundle (context) specialise ElementCollection, Bom specialises Bundle, and LifecycleScopedRelationship (scope) specialises Relationship. A 'Non-Element Classes' box holds CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange and IntegrityMethod with its subclasses Hash (algorithm, hashValue) and PackageVerificationCode. Two further boxes list the simple data types (DateTime, MediaType, SemVer) and the enumerations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p179-1",
+      "file": "images/img-p179-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.2 of the specification, captioned 'Software Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 179
+      },
+      "narrative": {
+        "text": "UML class diagram of the Software profile. The abstract SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) specialises Core/Artifact; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) and Snippet (byteRange, lineRange, snippetFromFile File[1]) specialise SoftwareArtifact. Sbom (sbomType SbomType[0..*]) specialises Core/Bom, and ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) specialises Core/IntegrityMethod. Enumerations: ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p180-1",
+      "file": "images/img-p180-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.3 of the specification, captioned 'Security Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 180
+      },
+      "narrative": {
+        "text": "UML class diagram of the Security profile. Vulnerability (publishedTime, modifiedTime, withdrawnTime) specialises Core/Artifact. The abstract VulnAssessmentRelationship specialises Core/Relationship, constrains 'to' to exactly one Element, and adds assessedElement, suppliedBy and the three times; it is specialised by CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) and the abstract VexVulnAssessmentRelationship (vexVersion, statusNotes). The VEX class has four subclasses: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) and VexUnderInvestigation. Enumerations: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p181-1",
+      "file": "images/img-p181-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.4 of the specification, captioned 'Licensing Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 181
+      },
+      "narrative": {
+        "text": "UML class diagram of the two licensing profiles. Simple Licensing: the abstract AnyLicenseInfo specialises Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) specialises it, and SimpleLicensingText (licenseText[1]) specialises Element directly. Expanded Licensing: ConjunctiveLicenseSet and DisjunctiveLicenseSet (each with members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) and the abstract ExtendableLicense all specialise AnyLicenseInfo. ExtendableLicense is specialised by the abstract License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), with subclasses ListedLicense (deprecatedVersion, listVersionAdded) and CustomLicense, and by OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) specialises Element, with subclasses ListedLicenseException and CustomLicenseAddition.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p182-1",
+      "file": "images/img-p182-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.5 of the specification, captioned 'Dataset Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 182
+      },
+      "narrative": {
+        "text": "UML class diagram of the Dataset profile: one class, DatasetPackage, specialising Software/Package. It makes inherited properties mandatory (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, each [1]) and adds anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias and sensor. Enumerations: ConfidentialityLevelType, DatasetAvailabilityType, DatasetType.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p183-1",
+      "file": "images/img-p183-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.6 of the specification, captioned 'AI Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 183
+      },
+      "narrative": {
+        "text": "UML class diagram of the AI profile. AIPackage specialises Software/Package, making releaseTime, suppliedBy, downloadLocation, packageVersion and primaryPurpose mandatory, and adds autonomyType, domain, energyConsumption, hyperparameter, informationAboutApplication, informationAboutTraining, limitation, metric, metricDecisionThreshold, modelDataPreprocessing, modelExplainability, safetyRiskAssessment, standardCompliance, typeOfModel and useSensitivePersonalInformation. EnergyConsumption groups finetuning, inference and training EnergyConsumptionDescription entries (energyQuantity, energyUnit). Enumerations: EnergyUnitType, SafetyRiskAssessmentType.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p184-1",
+      "file": "images/img-p184-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.7 of the specification, captioned 'Build Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 184
+      },
+      "narrative": {
+        "text": "UML class diagram of the Build profile: one class, Build, specialising Core/Element, with buildType anyURI[1], buildId, configSourceEntryPoint, configSourceUri, configSourceDigest Hash[0..*], parameter DictionaryEntry[0..*], buildStartTime, buildEndTime and environment DictionaryEntry[0..*].",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p184-2",
+      "file": "images/img-p184-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.8 of the specification, captioned 'Extension Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 184
+      },
+      "narrative": {
+        "text": "UML class diagram of the Extension profile: the abstract Extension class, specialised by CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*]); CdxPropertyEntry has cdxPropName string[1] and cdxPropValue string[0..1] — a name/value carrier for CycloneDX properties.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p205-1",
+      "file": "images/img-p205-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.1 of the specification, captioned '3T-SBOM draft core model (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 205
+      },
+      "narrative": {
+        "text": "Historical UML class diagram of the 3T-SBOM group's draft core model (circa September 2020). Identity (Id, name, aliases, comment), specialised by Tool (user-agent), Organization and Person (a Person may belong to 0..1 Organization), is linked to Artifact (Id, artifact-url, name, comment) as supplier and as originator (each 0..1); a callout reads 'Need to capture contacts on supplier and originator links'. Artifact has Hashes (algorithm, value), ExternalReferences (type, locator, comment) and takes part in Relationship (type, completeness, comment) as from and to. DocumentMetadata has creators (1..* Identity); a Tool links to 0..1 ExternalDocumentReference (namespace, document-url, comment) by 'bill-of-materials', and that reference carries Hashes.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p206-1",
+      "file": "images/img-p206-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.2 of the specification, captioned 'SPDX 3.0 draft core model (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 206
+      },
+      "narrative": {
+        "text": "Historical UML class diagram of the SPDX community's draft 3.0 core model (circa September 2020). SpdxElement (SPDXID, Name) is the root; Identity, specialised by Person (Email), Organization (Email) and Tool (Version), specialises it. Artifact (Summary, Description) has 0..1 Originator and 0..1 Supplier Identity, Checksums (Hash: Algorithm, Value) and ExternalReferences (Category, Type, Locator, Comment). Package (Version) contains Files by PackageFile, File (Type) has Snippets (ByteRange, LineRange) by FromFile, and all three specialise Artifact. Annotation (Date, Type, Comment) has an Annotator Identity and an SPDXREF to an element; Relationship (Type, Comment) has To and From elements; SpdxDocument (SPDXVersion, DataLicence, a base-namespace URI — printed 'Banesoace', as drawn — Created, Profiles) has a Creator Identity and ExternalDocumentReferences (DocumentRef, Locator) with a Checksum.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p207-1",
+      "file": "images/img-p207-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.3 of the specification, captioned 'Correspondence between 3T-SBOM and SPDX 3.0 draft models (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 207
+      },
+      "narrative": {
+        "text": "The two drafts of Figures F.1 and F.2 side by side on a black background (3T-SBOM on the left, SPDX 3.0 on the right), with coloured ellipses and connecting lines pairing the corresponding parts: ExternalReference (light blue), ExternalDocumentReference (red), Hash (light green), Artifact (dark green), DocumentMetadata ↔ SpdxDocument (orange), Identity (dark red) and Relationship (blue). The point is visual: each concept in one draft has a counterpart in the other.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    },
+    {
+      "id": "img-p207-2",
+      "file": "images/img-p207-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.4 of the specification, captioned 'SPDX 2.3 Model compared to the SPDX 3.0 Model'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 207
+      },
+      "narrative": {
+        "text": "Two UML diagrams joined by a large double-headed arrow. Left: the SPDX 2.3 model, centred on SpdxDocument, SpdxElement and SpdxItem, with Package, File, Snippet, Annotation, Relationship (a long RelationshipType enumeration from contains to hasPrerequisite), Checksum, ExternalRef, the licensing classes (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) and pink notes marking what was 'Added in 2.2'. Right: the SPDX 3.0 Core, Software and Security profiles as in Figures A.1–A.3, with Element as the root rather than SpdxDocument. At this resolution the small print of both diagrams is barely legible; the arrow, not the detail, is the figure's claim.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "drafted_at": "2026-10-03"
+      }
+    }
+  ]
+}

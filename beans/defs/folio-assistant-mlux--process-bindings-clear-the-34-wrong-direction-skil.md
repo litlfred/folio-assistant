@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mlux
 title: 'PROCESS BINDINGS: clear the 33 wrong-direction skill bindings check:process-bindings baselined'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T10:38:18Z
-updated_at: 2026-10-03T10:38:18Z
+updated_at: 2026-10-03T15:01:36Z
 parent: folio-assistant-vke6
 ---
 
@@ -23,3 +23,15 @@ Root cause the gate fixes: kg-audit's skill-ref-resolves resolves against knownS
 - [ ] kg-audit skill-ref-resolves gets an instance-scoped resolvable set, or explicitly defers to this gate (follow-up, ask the owner)
 - [ ] BASELINE is [] and the gate passes
 - [ ] (minor) document-ingestion.bpmn Task_Citeable carries the same skill ref three times
+
+
+## Owner rulings, 2026-10-03 (selected options, recorded verbatim; session https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7)
+
+- **A. "Move skill down".** `folio-assistant-core/skills/library/ingestion/document-intake.md` moves into cat-harness (its library skills area), matching library-ingestion's "Ingestion is a HARNESS capability, not core's". This clears the six cat-harness ingestion processes (28 refs).
+- **B. "Move process up".** `cat-harness/processes/content/ig-ast-delta-review.bpmn` moves into `fhir-harness/processes/content/`, beside `ig-ast-delta`. It must stay WHO-free.
+- **C. "Drop from core; sci adds it".** In `folio-assistant-core/processes/content/content-change-review.bpmn`, Task_DetectScope stops binding `semantic-review-scoping`; folio-assistant-sci binds it in its own overlay for papers, following the existing overlay pattern.
+- **D. "Drop the ig-publication ref".** In `folio-assistant-core/processes/content/draft-to-publication.bpmn`, Task_PublishRelease keeps `content-publish` and `render-kg-to-cdn` and drops `ig-publication`.
+- **Also (minor):** `document-ingestion.bpmn` Task_Citeable carries the same skill ref three times; make it one.
+- **Not this bean's:** fhir-harness `l3-fhir-pipeline` is bean veiu's (#1964).
+
+Worked by session https://claude.ai/code/session_01Vmo3FY8yc8ouQ8qiWsEAfw on branch `claude/mlux-process-bindings`.
