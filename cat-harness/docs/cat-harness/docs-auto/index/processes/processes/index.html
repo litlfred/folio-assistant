@@ -148,7 +148,7 @@
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">62</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">63</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -345,6 +345,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn"><code>Merge the base branch in</code></a><br><span class="p">cat-harness/processes/sdlc/merge-base.bpmn</span></td>
   <td>CALLED FROM <code>Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code>bun run merge:main</code> (cat-harness/scripts/merge-base.ts).<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> merge:main command · Authoring agent</div><div class="f"><span class="k">skills</span> continual-progress, merge-conflict-patterns, prepare-merge</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>A refused merge-train member</code></a><br><span class="p">cat-harness/processes/sdlc/merge-refusal.bpmn</span></td>
+  <td>What a merge steward does with a PR it dropped from a merge train: its merge (<code>merge-base.bpmn</code>, run with <code>--no-regen</code>) refused an authored or undeclared conflict, or the train's combined result failed a gate.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Merge steward · Owning session · Dispatched agent</div><div class="f"><span class="k">skills</span> bean-coordination, dispatch-agent, interaction-modality, merge-conflict-patterns, prepare-merge</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-train.bpmn"><code>A merge train</code></a><br><span class="p">cat-harness/processes/sdlc/merge-train.bpmn</span></td>

@@ -14,7 +14,7 @@ Candidate terms extracted from every skill's front matter: `name` as the label, 
 
 From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 219 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 316 terms and is 238 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 316 terms and is 239 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -1364,7 +1364,7 @@ md-authoring <span class="fa-gloss-status">candidate, extracted</span>
 merge-conflict-patterns <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for &quot;merge main&quot;, &quot;resolve the conflicts&quot;, &quot;the PR is conflicted again&quot;, &quot;auto-resolve&quot;, and when adding a pattern for a new kind of churn.</p>
+<p>Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for &quot;merge main&quot;, &quot;resolve the conflicts&quot;, &quot;the PR is conflicted again&quot;, &quot;auto-resolve&quot;, and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md"><code>cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--merge-queue" data-fa-state="extracted" data-fa-gloss="">
