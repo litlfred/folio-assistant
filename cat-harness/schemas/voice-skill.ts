@@ -66,7 +66,10 @@ import {
  * a mechanical rule — follow the sources — and the corpus falsifies it twice:
  *
  * - `who-editorial` is read out of a WHO publication held by `who-iris`, and
- *   lives in `who-style-guide`. Where the source sits did not decide it.
+ *   lived in `who-style-guide` until 2026-10-01. Where the source sat did not
+ *   decide that, and it did not decide the fold either: it now lives in
+ *   `who-iris` because the owner ruled the style guide DERIVATIVE content of
+ *   that catalogue (bean `qsx4`), a judgement about what it is.
  * - `technical-writer` is read out of RFC 2119 and RFC 8174, both ingested in
  *   `agent-skills`, and lives in `folio-assistant-core` — because what it is
  *   ABOUT is how to write technical documentation of a standard, software or
