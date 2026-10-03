@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T18:07:50Z
-updated_at: 2026-10-03T01:00:33Z
+updated_at: 2026-10-03T01:20:21Z
 parent: folio-assistant-fs43
 ---
 
@@ -95,3 +95,55 @@ another route.
 
     cat-harness/scripts/rename-special-branch.sh litlfred/folio-assistant \
       qa-reports cat/cat-harness/qa-reports            # dry run; --apply to do it
+
+
+## Collision review — run LATE, 2026-10-03, and it found a real collision
+
+`coordinate` §"Starting new work" requires this review **before the first edit**. It was
+run after ten files had been edited and pushed. Recorded with that out of order, because a
+review's value is in its timing and a reader needs to know this one did not have it.
+
+### What it found
+
+| sibling | PR | bean | shared files | outcome |
+|---|---|---|---|---|
+| `claude/lucid-shannon-o8zop1-fsh-guts` | **#1945** (draft, opened 00:53, updated 01:11) | `9c7h` (in-progress) | `cat-harness/scripts/special-branches.json`, `cat-harness/scripts/tests/special-branches.test.ts` | **I stood down**; #1945 carries the declaration |
+| `claude/state-branch-store` | #1937 | `2h76` | `.github/actions/lake-cache-restore/action.yml`, `.github/workflows/lake-cache-refresh.yml` | moot once the mirror sweep was reverted |
+
+**Both steps of the review would have caught it.** Step 1 (open PRs intersected with my
+files) names #1945 directly. Step 2 (in-progress beans by subject) finds `9c7h`, whose
+title is *"Move fsh-guts/ to its own special branch `cat/cat-harness/fsh-guts`"* — the
+scheme itself. I ran neither, started editing at ~01:15, and #1945 had been open since
+00:53.
+
+### Three ways #1945's version is better, measured
+
+1. **It keeps the flat names as `legacy`** — `['cat-qa-reports', 'qa-reports']`. Mine
+   dropped them, losing the fallback for any remote already on the flat form.
+2. **It declares `beans`, `todos` and `fsh-guts`.** `cat/cat-harness/beans` and
+   `cat/cat-harness/todos` **exist on origin**; the declaration omitted them. That is the
+   present-but-undeclared half of `dh4f`, and the larger of the two defects. The same
+   session that measured all 713 heads an hour earlier did not notice.
+3. **It leaves `lake-cache` flat and files bean `9io2`** for the family move. Measured in
+   `litlfred/qou`: **15 branches on legacy `lake-cache/`, 0 on `cat-lake-cache/`, 0 on
+   `cat/folio-assistant-sci/lake-cache/`** (control: 6,277 on `claude/`). The family was
+   never renamed, so deferring beats rewriting 8 mirrors to a name nothing uses.
+
+### What was reverted
+
+Commit `f28c08dbc55` reverted by `7f8e0ee634f` on `claude/festive-galileo-s7ibx0`: the
+declaration, the 8 lake-cache mirrors and the test. The 19-test guard passes against the
+restored declaration. The stand-down and the three measurements are on #1945 as a comment,
+so they reach the session that owns the work.
+
+### Two measurements kept, because they were not duplicated
+
+- **`resolveBranch` lives only inside `special-branches.test.ts`.** No shared module: five
+  shell/python scripts, two `action.yml` and one workflow each hand-roll the
+  new-then-legacy order, which is why 8 mirrors exist. The test proves the rule is
+  coherent, not that any reader obeys it.
+- **Nothing on `main` writes `qa-reports` or `state`.** This bean's own `writers` fields
+  say so — *"on PR #1764/#1801, not on main yet"* and *"by hand … (no workflow yet)"* —
+  and `qa-store.ts` does not exist on main. An earlier turn of this session called the
+  post-rename third-name path urgent on the strength of a writer that is not there. It is
+  armed but unreachable.
