@@ -1,0 +1,51 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--bean-1j3q-route-keyed-storage",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/sdlc/code-change-review.bpmn",
+  "subject": "bean-1j3q-route-keyed-storage",
+  "bean": "folio-assistant-1j3q",
+  "tokens": ["Task_RunCI"],
+  "arrivals": {},
+  "status": "running",
+  "startedAt": "2026-10-03T13:20:00.000Z",
+  "updatedAt": "2026-10-03T13:33:00.000Z",
+  "history": [
+    {
+      "at": "2026-10-03T13:20:00.000Z",
+      "node": "Start_Change",
+      "actor": "claude",
+      "note": "Decision 3 of #1966's Q&A, owner 2026-10-03: 'Add route-keyed storage, then move it off main'. Entered as a code change rather than CRDM because the requirement is already ruled — the proposal, the options and the owner's choice are on #1966 — so phases 1-5 of CRDM have no work left to do. What remains is implementation under an existing ruling, which is this process."
+    },
+    {
+      "at": "2026-10-03T13:20:54.000Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Bean folio-assistant-1j3q created under arc fs43 (which owns `storage`/`keyedBy`) and claimed. `beans:claim` answered that the bean is new on this branch so no sibling can see it and there is nothing to race over — the claim becomes visible when the PR opens, which it now has."
+    },
+    {
+      "at": "2026-10-03T13:22:00.000Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/route-keyed-storage, cut from origin/main at 26441a1da3. PR #1996 opened at the FIRST commit (the bean alone), before any code, per continual-progress invariant 1."
+    },
+    {
+      "at": "2026-10-03T13:28:00.000Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "keyedBy widened to commit|tip|route; the `qa` refinement now refuses both non-commit keyings rather than only `tip`; branch-store takes the keying as an OPTION and compares the branch manifest against it in both directions; a route-keyed write refuses `expect` rather than ignoring it. Skill content-context-and-state-graphs.md updated — where a skill and the schema disagree the skill wins and is wrong, so it moved in the same change. No declaration flipped: main stays authoritative."
+    },
+    {
+      "at": "2026-10-03T13:30:00.000Z",
+      "node": "Task_RunGates",
+      "actor": "claude",
+      "note": "typecheck 0, eslint clean on the four changed files, 19 pass on real git (branch-store.test.ts) and 20 on the schema. skill:register ran and verified 9 derived artefacts. Mutation-checked, this file's own practice: dropping the route `expect` refusal turns a named test red; pinning the manifest check back to the literal 'tip' turns the both-ways test AND the pre-existing corrupt-manifest test red — so neither rule is a vacuous pass. `bun run gates` (the full derived set, not a hand-chosen subset) still running at the time this token moved."
+    },
+    {
+      "at": "2026-10-03T13:33:00.000Z",
+      "node": "Task_CommitAndOpenPR",
+      "actor": "claude",
+      "note": "Three commits pushed to #1996: the bean, the mechanism, and the bean tick plus follow-on bean xsrv (the docs/uml/ cutover, blocked on this PR with the four blocking fields). Token now at Task_RunCI, waiting on CI for head 70c15b9576."
+    }
+  ]
+}
