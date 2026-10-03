@@ -1093,13 +1093,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 106,
+              "instructionLines": 114,
               "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
               "name": "where-does-this-go",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c3bbe7a3052403c678e41a935dd6a5d4d61fbd00569c934ba0e1a64683611b2f",
-                "bytes": 6071,
-                "sha256": "c3bbe7a3052403c678e41a935dd6a5d4d61fbd00569c934ba0e1a64683611b2f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4a57c6d4bde422d5d612ec73d6891b0ef7ec8788b6e8bc35c62ae25bd37ab264",
+                "bytes": 7179,
+                "sha256": "4a57c6d4bde422d5d612ec73d6891b0ef7ec8788b6e8bc35c62ae25bd37ab264"
               },
               "title": "Where does this go? — the question, then the skill that answers it"
             }
@@ -1652,13 +1652,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 1399,
+              "instructionLines": 1400,
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8e76304aba2c268f63a1ec6d067975bdcc6af6a90fd2858ec3b7cf8ca6f78716",
-                "bytes": 106010,
-                "sha256": "8e76304aba2c268f63a1ec6d067975bdcc6af6a90fd2858ec3b7cf8ca6f78716"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0478820eb74707b49abbaff844c844d4d33b884d00360b30ca3723f9bad6c815",
+                "bytes": 106582,
+                "sha256": "0478820eb74707b49abbaff844c844d4d33b884d00360b30ca3723f9bad6c815"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -3767,13 +3767,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 374,
+              "instructionLines": 381,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
               "name": "merge-conflict-patterns",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3bb4fbbfe7e5261d2c6b9970c8d87e675c6adf3052ac72bb5a0761522762bb45",
-                "bytes": 19308,
-                "sha256": "3bb4fbbfe7e5261d2c6b9970c8d87e675c6adf3052ac72bb5a0761522762bb45"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8638df8a9d3eb66ab1ae507a1fd458222fd327fd9b7a52037402152fd33ded3f",
+                "bytes": 19686,
+                "sha256": "8638df8a9d3eb66ab1ae507a1fd458222fd327fd9b7a52037402152fd33ded3f"
               },
               "title": "Merge-conflict patterns — what a merge may resolve on its own"
             },
@@ -4601,6 +4601,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/serving-renderings",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-ui-review",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
               ],
               "description": "Rendering and publication surfaces: the docs site and its generators (docs-auto, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
@@ -4909,6 +4910,25 @@
                 "sha256": "693e5c01cfb18663dd9b501cf6d958e03e3c1a637933ba86b328d3ea51d47de3"
               },
               "title": "All UI must follow accessibility guidelines"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 155,
+              "instructionsPath": "skills/ui/ui-core/visualizer-loading.md",
+              "name": "visualizer-loading",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/734a4b2a3aeea95b96b8e7203fb13b2f51712d3d2979d98292089a9afdcab05a",
+                "bytes": 7353,
+                "sha256": "734a4b2a3aeea95b96b8e7203fb13b2f51712d3d2979d98292089a9afdcab05a"
+              },
+              "title": "Visualizer loading — the page is layout, the graph is fetched"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",

@@ -23,6 +23,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "description": "Rendering and publication surfaces: the docs site and its generators (docs-auto, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
@@ -331,6 +332,25 @@
         "sha256": "693e5c01cfb18663dd9b501cf6d958e03e3c1a637933ba86b328d3ea51d47de3"
       },
       "title": "All UI must follow accessibility guidelines"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 155,
+      "instructionsPath": "skills/ui/ui-core/visualizer-loading.md",
+      "name": "visualizer-loading",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/734a4b2a3aeea95b96b8e7203fb13b2f51712d3d2979d98292089a9afdcab05a",
+        "bytes": 7353,
+        "sha256": "734a4b2a3aeea95b96b8e7203fb13b2f51712d3d2979d98292089a9afdcab05a"
+      },
+      "title": "Visualizer loading — the page is layout, the graph is fetched"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",

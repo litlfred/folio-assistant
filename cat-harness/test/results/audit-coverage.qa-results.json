@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 57 of 57 declared kind(s), 220 gate(s), 73 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 57 of 57 declared kind(s), 224 gate(s), 73 criteria.",
       "count": 57,
       "entries": [
         {
@@ -45,7 +45,8 @@
             "bun run check:bean-restates-skill",
             "bun run check:bean-rollup",
             "bun run check:ready-to-close",
-            "bun run check:stale-paths"
+            "bun run check:stale-paths",
+            "bun run slice:sqlite:check"
           ],
           "typed": false,
           "hasFiles": false
@@ -318,6 +319,7 @@
             "bun run check:folio-mount",
             "bun run check:glossary",
             "bun run check:instance-render",
+            "bun run check:process-index",
             "bun run check:stale-field-advice",
             "bun run check:viewer-backticks",
             "bun run check:viewer-nav",
@@ -669,6 +671,7 @@
           "gates": [
             "bun run check:lane-documentation:check",
             "bun run check:process-documentation",
+            "bun run check:process-index",
             "bun run check:raci",
             "bun run check:stale-field-advice",
             "bun run check:workflow-coverage",
@@ -1207,7 +1210,8 @@
             "bun run check:bean-restates-skill",
             "bun run check:bean-rollup",
             "bun run check:ready-to-close",
-            "bun run check:stale-paths"
+            "bun run check:stale-paths",
+            "bun run slice:sqlite:check"
           ]
         },
         {
@@ -1318,7 +1322,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 220 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 224 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
