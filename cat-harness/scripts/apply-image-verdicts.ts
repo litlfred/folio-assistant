@@ -65,6 +65,26 @@
  * An ORPHANED verdict still fails, in either mode. A verdict naming an image
  * the sidecar does not have is a wrong verdict file, not a missing judgement.
  *
+ * ## Vector figures are judged HERE too — bean `ay3x`
+ *
+ * `pdf-vector-figures.py` renders the drawn figures `pdf-images.py` cannot
+ * see, and assigns them NO role: whether a render is a figure or furniture is
+ * the call `m4xy` refuses to make with a threshold. So the call is made by
+ * looking, and it arrives through this file, keyed `vfig-pNNN` in the same
+ * `image-verdicts.json`, as the same `inspection` basis — one judgement path
+ * for both kinds of image, so they cannot come to be judged by different rules.
+ *
+ * A vector verdict may also carry `shows`: the declared figure numbers the
+ * render holds. The page's caption candidates include cross-references, so
+ * only the inspector can say which figure is on it, and `image-descriptions`
+ * counts a figure as reached by this arm only through `shows`.
+ *
+ * **A render nobody has judged is REPORTED, never a failure** — in either
+ * mode. The arm writes one per caption page, ~100 across the WHO corpus on its
+ * first run, and failing the whole-corpus pass until all were inspected would
+ * make this script unusable for the raster work it already does. The gate that
+ * says what is still uncovered is `image-descriptions`, which names them.
+ *
  *   bun run cat-harness/scripts/apply-image-verdicts.ts            # apply
  *   bun run cat-harness/scripts/apply-image-verdicts.ts --check    # report only
  *   bun run cat-harness/scripts/apply-image-verdicts.ts \
@@ -82,6 +102,11 @@ import {
   type ImageRole,
 } from "../schemas/document-image.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import {
+  VECTOR_FIGURES_FILE,
+  VectorFiguresSidecarSchema,
+  isVectorFigureId,
+} from "../schemas/vector-figure.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -107,6 +132,17 @@ interface Verdict {
   role: ImageRole;
   saw: string;
   draft: string;
+  /** Vector figures only: the declared figure numbers this render shows. */
+  shows?: string[];
+  /**
+   * Who looked at THIS image, when that was not the document's inspector —
+   * bean `ay3x`. The per-document `attribution` was enough while one session
+   * judged a document's images; `9789240101197-eng` has raster verdicts from
+   * one session and vector verdicts from another, and a per-document entry
+   * would re-attribute one set to the other. Most specific wins.
+   */
+  inspected_by?: unknown;
+  inspected_at?: string;
 }
 interface VerdictFile {
   inspected_by: unknown;
@@ -177,23 +213,27 @@ export function applyTo(
       unjudged.push(img.id);
       return img;
     }
+    const who = AttributionSchema.parse(v.inspected_by ?? by);
+    const when = v.inspected_at ?? at;
     const narrative = DESCRIBABLE_ROLES.includes(v.role)
       ? {
           text: v.draft,
           state: "draft" as const,
-          drafted_by: AttributionSchema.parse(by),
-          drafted_at: at,
+          drafted_by: who,
+          drafted_at: when,
         }
       : undefined;
     return {
       ...img,
       role: v.role,
-      basis: { method: "inspection" as const, by: AttributionSchema.parse(by), at, saw: v.saw, page },
+      basis: { method: "inspection" as const, by: who, at: when, saw: v.saw, page },
       ...(narrative ? { narrative } : {}),
     };
   });
 
-  const orphaned = Object.keys(docVerdicts).filter((id) => !seen.has(id));
+  // A `vfig-` verdict belongs to the vector sidecar, which {@link applyToVector}
+  // writes; it is not an orphan of this one.
+  const orphaned = Object.keys(docVerdicts).filter((id) => !seen.has(id) && !isVectorFigureId(id));
   const out = { ...parsed, images: next };
   // Validated on the way OUT as well as in: the refinements are the point of
   // the exercise, and a writer that skips them can emit what a reader refuses.
@@ -202,6 +242,82 @@ export function applyTo(
     text: JSON.stringify(out, null, 2) + "\n",
     result: { applied: seen.size, unjudged, orphaned },
   };
+}
+
+/**
+ * Rewrite one VECTOR sidecar from the `vfig-` verdicts — bean `ay3x`.
+ *
+ * Same contract as {@link applyTo}: pure, validated in and out, and the
+ * judgement arrives as an `inspection` basis naming who looked. `unjudged`
+ * lists the renders with no verdict; the caller REPORTS them and does not
+ * fail on them (see the header).
+ */
+export function applyToVector(
+  sidecarText: string,
+  docVerdicts: Record<string, Verdict>,
+  by: unknown,
+  at: string,
+): { text: string; result: Omit<ApplyResult, "docId"> } {
+  const parsed = VectorFiguresSidecarSchema.parse(JSON.parse(sidecarText));
+  const figures = parsed.figures ?? [];
+  const unjudged: string[] = [];
+  const seen = new Set<string>();
+  const next = figures.map((f) => {
+    const v = docVerdicts[f.id];
+    if (!v) {
+      if (f.file !== null) unjudged.push(f.id);
+      return f;
+    }
+    seen.add(f.id);
+    const { shows: _shows, narrative: _narrative, ...rest } = f;
+    const who = AttributionSchema.parse(v.inspected_by ?? by);
+    const when = v.inspected_at ?? at;
+    return {
+      ...rest,
+      role: v.role,
+      basis: { method: "inspection" as const, by: who, at: when, saw: v.saw, page: f.page },
+      ...(v.shows && v.shows.length > 0 ? { shows: v.shows } : {}),
+      ...(DESCRIBABLE_ROLES.includes(v.role)
+        ? {
+            narrative: {
+              text: v.draft,
+              state: "draft" as const,
+              drafted_by: who,
+              drafted_at: when,
+            },
+          }
+        : {}),
+    };
+  });
+  const orphaned = Object.keys(docVerdicts).filter((id) => isVectorFigureId(id) && !seen.has(id));
+  const out = { ...parsed, figures: next };
+  VectorFiguresSidecarSchema.parse(out);
+  return {
+    text: JSON.stringify(out, null, 2) + "\n",
+    result: { applied: seen.size, unjudged, orphaned },
+  };
+}
+
+/**
+ * Apply the `vfig-` verdicts to the vector sidecar in `entryDir`, if any.
+ * Returns the result, or undefined when the entry has no vector sidecar AND no
+ * vector verdicts. A vector verdict with no sidecar to land in is orphaned.
+ */
+function applyVectorIn(
+  entryDir: string,
+  docVerdicts: Record<string, Verdict>,
+  by: unknown,
+  at: string,
+  check: boolean,
+): Omit<ApplyResult, "docId"> | undefined {
+  const path = join(entryDir, VECTOR_FIGURES_FILE);
+  const vectorIds = Object.keys(docVerdicts).filter(isVectorFigureId);
+  if (!existsSync(path)) {
+    return vectorIds.length ? { applied: 0, unjudged: [], orphaned: vectorIds } : undefined;
+  }
+  const { text, result } = applyToVector(readFileSync(path, "utf-8"), docVerdicts, by, at);
+  if (!check) writeFileSync(path, text, "utf-8");
+  return result;
 }
 
 /** The value after `--flag`, or `undefined`. */
@@ -244,12 +360,25 @@ export function runStaging(entryDir: string, libDir: string, check: boolean): nu
   }
   const who = attributionFor(verdicts, docId);
   const { text, result } = applyTo(readFileSync(sidecar, "utf-8"), docVerdicts, who.by, who.at);
-  if (result.orphaned.length > 0) {
-    console.error(`✗ ${docId}: ${result.orphaned.length} verdict(s) name an image the sidecar does not have:`);
-    for (const id of result.orphaned) console.error(`      ${id}`);
+  // Computed in check mode first so an orphan in EITHER sidecar refuses before
+  // anything is written — a half-applied judgement is worse than none.
+  const vector = applyVectorIn(entryDir, docVerdicts, who.by, who.at, true);
+  const orphans = [...result.orphaned, ...(vector?.orphaned ?? [])];
+  if (orphans.length > 0) {
+    console.error(`✗ ${docId}: ${orphans.length} verdict(s) name an image the sidecars do not have:`);
+    for (const id of orphans) console.error(`      ${id}`);
     return 1;
   }
-  if (!check) writeFileSync(sidecar, text, "utf-8");
+  if (!check) {
+    writeFileSync(sidecar, text, "utf-8");
+    applyVectorIn(entryDir, docVerdicts, who.by, who.at, false);
+  }
+  if (vector) {
+    console.log(
+      `  ${vector.applied} vector verdict(s) applied` +
+        (vector.unjudged.length ? `, ${vector.unjudged.length} render(s) awaiting inspection` : ""),
+    );
+  }
   const rest = result.unjudged.length
     ? `, ${result.unjudged.length} image(s) still unjudged`
     : "";
@@ -294,6 +423,7 @@ function run(): number {
   // library beside a total for all of them.
   let inspected = 0;
   const results: ApplyResult[] = [];
+  const awaiting: string[] = [];
   for (const vf of verdictFiles) {
     const libDir = dirname(vf);
     const verdicts = JSON.parse(readFileSync(vf, "utf-8")) as VerdictFile;
@@ -312,8 +442,13 @@ function run(): number {
       }
       const who = attributionFor(verdicts, docId);
       const { text, result } = applyTo(readFileSync(path, "utf-8"), docVerdicts, who.by, who.at);
+      const vector = applyVectorIn(join(libDir, docId), docVerdicts, who.by, who.at, true);
       if (!check) writeFileSync(path, text, "utf-8");
-      results.push({ docId, ...result });
+      if (!check && !vector?.orphaned.length) applyVectorIn(join(libDir, docId), docVerdicts, who.by, who.at, false);
+      results.push({ docId, ...result, applied: result.applied + (vector?.applied ?? 0), orphaned: [...result.orphaned, ...(vector?.orphaned ?? [])] });
+      // Reported, not counted toward the failure — see "Vector figures are
+      // judged HERE too" in the header.
+      if (vector?.unjudged.length) awaiting.push(`${docId}: ${vector.unjudged.length}`);
     }
   }
 
@@ -330,6 +465,7 @@ function run(): number {
   }
 
   const total = results.reduce((n, r) => n + r.applied, 0);
+  if (awaiting.length) console.log(`  · vector renders awaiting inspection — ${awaiting.join("; ")}`);
   console.log();
   console.log(`  ${total} verdict(s) applied, ${inspected} of them inspection-only roles`);
   if (unjudged || orphaned) {

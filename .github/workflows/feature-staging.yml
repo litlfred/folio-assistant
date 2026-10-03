@@ -302,7 +302,18 @@ jobs:
         run: |
           ref=yes; api=yes; why="no pull request — carrying everything"
           if [ -n "$PR" ]; then
-            if files="$(gh pr view "$PR" --json files --jq '.files[].path' 2>/dev/null)" && [ -n "$files" ]; then
+            # `gh pr view --json files` returns at most the FIRST 100 files,
+            # silently. PR #1766 touched 2,523 and no `smart-trust/` path was
+            # in the first 100, so its preview dropped smart-trust's 2,000-odd
+            # artefact pages: a truncated list read as "nothing here touches
+            # them". The REST listing paginates (to the API's own 3,000 cap),
+            # and the list is used only when its length equals the PR's
+            # `changed_files` count; a list that is short of it is no evidence
+            # of absence and falls through to carrying everything.
+            total="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.changed_files' 2>/dev/null || true)"
+            files="$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files?per_page=100" --jq '.[].filename' 2>/dev/null || true)"
+            got="$(printf '%s\n' "$files" | grep -c . || true)"
+            if [ -n "$files" ] && [ -n "$total" ] && [ "$got" = "$total" ]; then
               # Written out for `compose-docs.ts --changed-files`, so the
               # composed-instance cut (bean `ga8a`) asks the API once rather
               # than twice. ONE lookup means ONE fall-through: if this step
@@ -321,7 +332,7 @@ jobs:
                 api=yes
               fi
             else
-              why="could not read the pull request's files — carrying everything"
+              why="could not read all of the pull request's files (read ${got:-0} of ${total:-?}) — carrying everything"
             fi
           fi
           echo "reference=$ref" >> "$GITHUB_OUTPUT"
@@ -568,6 +579,38 @@ jobs:
             echo "no readable pull-request file list — composing every instance"
             bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
           fi
+
+      # THE FULL IG PUBLISHER AST PIPELINE, rendered (bean wnhh, owner
+      # 2026-10-02: "build an updated web interface for smart trust testing
+      # full ast pipeline"). For each IG instance whose source repository
+      # carries a seeded `fhir-ast/*` cache, restore it, check it, derive its
+      # artefact index and draw the SAME pages the published-output index
+      # gets, at `/<instance>/ast/`, with the parity and validity reports
+      # beside them. Which IGs is DATA (`stage-ast-sites.ts`), so this names
+      # none. Best effort: the preview never fails on it, and every skip is
+      # printed by the lister.
+      - name: Render each IG from its IG Publisher AST cache
+        continue-on-error: true
+        run: |
+          bun run fhir-harness/scripts/stage-ast-sites.ts > ./_ast-list.txt
+          while IFS=$'\t' read -r INSTANCE URL LABEL CHROME; do
+            [ -n "$INSTANCE" ] || continue
+            SRC="./_ast-src/${INSTANCE}"
+            OUT="./_ast-out/${INSTANCE}"
+            rm -rf "$SRC" "$OUT"
+            GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 "$URL" "$SRC" || { echo "clone failed: $URL"; continue; }
+            CHROME_ARGS=()
+            [ "$CHROME" != "-" ] && CHROME_ARGS=(--chrome-owner "$CHROME")
+            bash fhir-harness/scripts/ig-ast-site.sh --ig-root "$SRC" --instance "$INSTANCE" \
+              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
+            mkdir -p "./_docs/${INSTANCE}/ast"
+            cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
+            # The resources the pages load in the browser, beside the pages.
+            rm -rf "./_docs/${INSTANCE}/ast-data" && cp -R "$OUT/ast-data" "./_docs/${INSTANCE}/ast-data"
+            cp "$OUT/validity.json" "./_docs/${INSTANCE}/ast/validity.json"
+            [ -f "$OUT/parity.json" ] && cp "$OUT/parity.json" "./_docs/${INSTANCE}/ast/parity.json"
+            echo "rendered ${INSTANCE} from its AST -> /${INSTANCE}/ast/"
+          done < ./_ast-list.txt
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1

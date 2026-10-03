@@ -229,6 +229,14 @@
       "status": "candidate"
     },
     {
+      "id": "compiled-artefact-cache",
+      "prefLabel": "compiled-artefact-cache",
+      "definition": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "notation": "compiled-artefact-cache",
+      "source": "cat-harness/skills/process/process-core/compiled-artefact-cache.md",
+      "status": "candidate"
+    },
+    {
       "id": "compute-integration-watcher",
       "prefLabel": "compute-integration-watcher",
       "definition": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
@@ -957,7 +965,7 @@
     {
       "id": "merge-conflict-patterns",
       "prefLabel": "merge-conflict-patterns",
-      "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+      "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.",
       "notation": "merge-conflict-patterns",
       "source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
       "status": "candidate"
@@ -1648,6 +1656,14 @@
       "definition": "Pictures of a changed figure, diagram or table, before and after, and how much of it changed. Says when to use it, what the percentage means and must NOT be read as, what a missing picture means, and how the staging job and the review process call it. Use when a reviewer asks \"what does this figure look like now\", when a table's markup diff is unreadable, or when a staging preview's pictures are missing.",
       "notation": "visual-diff",
       "source": "cat-harness/skills/sdlc/sdlc-core/visual-diff.md",
+      "status": "candidate"
+    },
+    {
+      "id": "visualizer-loading",
+      "prefLabel": "visualizer-loading",
+      "definition": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "notation": "visualizer-loading",
+      "source": "cat-harness/skills/ui/ui-core/visualizer-loading.md",
       "status": "candidate"
     },
     {

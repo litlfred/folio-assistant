@@ -193,6 +193,10 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/processes/merge-base.md").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/translation-status/index.html").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/methodologies/index.md").pattern?.id).toBe("viewer-pages");
+    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern?.id).toBe("viewer-pages");
+    // ...but not the archive it renders: fsh-guts/ holds authored, kept content.
+    expect(classify("fsh-guts/uploads/Home-_-folio-assistant.md").strategy).toBe("refuse");
+    expect(classify("cat-harness/docs/fsh-guts/other.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/cat-harness/published-graphs.md").pattern?.id).toBe("handler-index");
     expect(classify("cat-harness/test/health/results/repository.health-report.json").pattern?.id).toBe("health-report");
     // Authored neighbours: a methodology page itself, and the health producer.
@@ -207,6 +211,39 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/ar/index.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/fr/getting-started.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/de/glossary/index.md").strategy).toBe("refuse");
+  });
+
+  test("the PROV-O report is taken; the workflow instances it is derived FROM are refused", () => {
+    // The single unclassified path when the runner refused #1892 against 32 it
+    // resolved. Generated whole by `prov:qaqc` from the instances under
+    // `beans/workflows/`, so any branch that records one rewrites the index.
+    expect(classify("cat-harness/docs/prov-qaqc/index.md").pattern?.id).toBe("prov-qaqc");
+    expect(classify("cat-harness/docs/assets/prov/x.prov.jsonld").pattern?.id).toBe("prov-qaqc");
+    // Instance-agnostic, like `derived-results`: a dependent folio writes the
+    // same two shapes under its own root.
+    expect(classify("who-iris/docs/prov-qaqc/index.md").pattern?.id).toBe("prov-qaqc");
+    // The unsafe neighbours. The INPUT is committed workflow state, not a
+    // derivative of it, so taking base would discard a recorded instance.
+    expect(classify("beans/workflows/crdm-requirements-1.json").strategy).toBe("refuse");
+    // And the generator itself is authored source.
+    expect(classify("cat-harness/scripts/prov-qaqc.ts").strategy).toBe("refuse");
+  });
+
+  test("artefact-verification.json refuses BY NAME, which an unclassified path does not", () => {
+    // The distinction this entry exists for, and the reason it is declared
+    // rather than left to the default: a named refusal tells the next sweep WHY
+    // (bean `mjl3`), where "no declared pattern" reads as an omission. It looks
+    // generated — under scripts/, a .json, key set derived from package.json —
+    // and refused on two open PRs at once (#1958, #1955).
+    const named = classify("cat-harness/scripts/artefact-verification.json");
+    expect(named.strategy).toBe("refuse");
+    expect(named.pattern?.id).toBe("artefact-verification");
+
+    // A genuinely unclassified neighbour refuses with NO pattern. If these two
+    // ever report the same thing, the entry has stopped carrying its reason.
+    const unnamed = classify("cat-harness/scripts/sync-docs-harness.ts");
+    expect(unnamed.strategy).toBe("refuse");
+    expect(unnamed.pattern).toBeUndefined();
   });
 
   test("generated VIEWERS of uploads/ are taken; uploads/ itself stays refused", () => {
