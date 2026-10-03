@@ -39,6 +39,9 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSyn
 import { basename, extname, join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-data";
+import { artifactPageName } from "../schemas/fhir-artifact-index.js";
+import { wrapRaw } from "../../cat-harness/scripts/lib/liquid-raw.ts";
+import type { IgReleases } from "../schemas/ig-releases.ts";
 
 /** One page's navigation, from `sushi-config.yaml` `pages:`. */
 export interface PageNav {
@@ -124,6 +127,12 @@ export function frontMatter(nav: PageNav): string {
 
 export interface StageResult {
   pages: string[];
+  /** Pages the Publisher generates, written here from data this build holds (`toc`, `artifacts`). */
+  generated: string[];
+  /** Pages a fill was written into, and each fill whose marker no page holds — reported, never dropped. */
+  fills?: { filled: string[]; unused: string[] };
+  /** The lifted per-artefact variables: how many artefacts, and which `elements__*` keys no source holds. */
+  variables?: { artifacts: number; notSourced: string[] };
   /** Pages the navigation source does not list: titled by file name (and, with a menu, kept out of the nav). */
   unlisted: string[];
   /** Menu items pointing at a page this source does not hold (the Publisher generates it). */
@@ -164,6 +173,187 @@ export interface StageOptions {
   remoteTheme?: string;
   /** The palette of the theme the IG's instance declares for its web pages; none, no scheme. */
   palette?: SitePalette;
+  /**
+   * The instance's artefact index and where its artefact pages are, relative
+   * to this site. Given, an `artifacts` page is written — the Publisher's
+   * `artifacts.html` — linking each artefact to `<pagesHref><stem>.html`.
+   * Absent, `artifacts.html` stays a menu item this build does not hold.
+   */
+  artifacts?: { list: ReadonlyArray<IndexedArtifact>; pagesHref: string };
+  /**
+   * Content a POST-PROCESSING step writes into a page after the Publisher has
+   * run, at a marker the page's source holds. The source alone is then not
+   * the page the Publisher published, so a fill puts `body` where `marker`
+   * is and adds `data` to the page's front matter for `body`'s Liquid to read.
+   *
+   * Generic on purpose: this layer knows a marker and a template, never whose
+   * post-processing wrote them. Which fills an IG gets is the caller's
+   * business (`stage-ig-sites.ts`).
+   */
+  fills?: ReadonlyArray<{ marker: string; body: string; data: Record<string, unknown> }>;
+  /**
+   * The IG's GitHub releases as pointers to their binary assets
+   * (`fhir-artifact-index/releases.json`, `ig-releases/v1`). Given, a
+   * `releases` page lists them; the bytes stay on GitHub (bean `b8ip`).
+   */
+  releases?: IgReleases;
+}
+
+/** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
+export interface IndexedArtifact {
+  resourceType: string;
+  id: string;
+  title?: string;
+  category?: string;
+  /** Position on the Publisher's `artifacts.html` (see `FhirArtifactSchema.listedAt`). */
+  listedAt?: number;
+  canonical?: string;
+  name?: string;
+  version?: string;
+  description?: string;
+  published?: Partial<Record<"json" | "xml" | "ttl" | "html", { url: string }>>;
+}
+
+/**
+ * The element keys WHO's `generate_smart_liquid.py` exposes under
+ * `elements__*`, in its order. Only the ones the artefact index holds are
+ * written; the rest are REPORTED as not sourced, never written empty.
+ */
+export const ELEMENT_KEYS = ["name", "title", "description", "purpose", "status", "version", "date", "publisher", "copyright", "experimental", "kind", "type"] as const;
+
+/** `<ResourceType>__<id with non-alphanumerics as _>`, the lifted script's own key rule. */
+/** Text safe inside a markdown link label. */
+const mdLabel = (s: string) => s.replace(/([\\[\]|])/g, "\\$1");
+
+export const variableKey = (a: { resourceType: string; id: string }) => `${a.resourceType}__${a.id.replace(/[^A-Za-z0-9]/g, "_")}`;
+
+export interface ArtifactVariables {
+  /** `site.data.fhir.artifacts.<key>.{url,text,link,elements}` — one entry per artefact. */
+  artifacts: Record<string, {
+    url: { canonical?: string; page: string; json?: string; xml?: string; ttl?: string };
+    /** `display` as WHO computes it; `label` is the same text escaped for a markdown link label. */
+    text: { display: string; label: string };
+    link: { html: string };
+    elements: Partial<Record<(typeof ELEMENT_KEYS)[number], string>>;
+    category?: string;
+    reference: string;
+  }>;
+  /** Categories in index order, each naming its artefacts' keys — what a template iterates. Uncategorised artefacts (not on the Publisher's `artifacts.html`) are left out. */
+  artifact_categories: Array<{ name: string; keys: string[] }>;
+  /** How many artefacts `artifact_categories` lists — counted here, so no template counts. */
+  artifacts_listed: number;
+}
+
+/**
+ * The per-artefact Liquid variables WHO's `generate_smart_liquid.py` computes
+ * (`smart__<Type>__<id>__url__page`, …), LIFTED rather than redesigned
+ * (`ig-render-jekyll`, `ig-publisher-reduction` §P0; bean `4tts`):
+ *
+ * - the same families and keys, under `site.data.fhir.artifacts.<Type>__<id>`
+ *   — so `smart__ValueSet__Actors__url__page` reads
+ *   `site.data.fhir.artifacts.ValueSet__Actors.url.page`;
+ * - **no `smart__` prefix**: it is WHO's, and this layer does not know WHO;
+ * - **computed in the build that consumes it.** The script writes its include
+ *   for the IG Publisher's NEXT build, so its surface takes two builds to
+ *   converge; `_data/` is read by the same Jekyll run.
+ *
+ * Source: the instance's artefact index — the Publisher's post-processed
+ * output. `url.page` is this site's page; `url.json/xml/ttl` are where the
+ * Publisher published them (under P2 only JSON is rendered here; XML and
+ * Turtle remain links to the Publisher's copy).
+ */
+export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHref: string): { vars: ArtifactVariables; notSourced: string[] } {
+  const artifacts: ArtifactVariables["artifacts"] = {};
+  const order: ArtifactVariables["artifact_categories"] = [];
+  const held = new Set<string>();
+  // The Publisher's page order: by `listedAt`, which orders the categories
+  // (first appearance) and the artefacts within each. Unlisted ones last.
+  const ordered = [...list].sort((x, y) => (x.listedAt ?? Infinity) - (y.listedAt ?? Infinity));
+  for (const a of ordered) {
+    const key = variableKey(a);
+    const page = `${pagesHref}${artifactPageName(a)}.html`;
+    const display = a.title ?? a.name ?? a.id;
+    const elements: ArtifactVariables["artifacts"][string]["elements"] = {};
+    for (const k of ["name", "title", "description", "version"] as const) {
+      const v = a[k];
+      if (v !== undefined) {
+        elements[k] = v;
+        held.add(k);
+      }
+    }
+    artifacts[key] = {
+      url: { canonical: a.canonical, page, json: a.published?.json?.url, xml: a.published?.xml?.url, ttl: a.published?.ttl?.url },
+      text: { display, label: mdLabel(display) },
+      link: { html: `<a href="${page}">${display.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</a>` },
+      elements,
+      category: a.category,
+      reference: `${a.resourceType}/${a.id}`,
+    };
+    // An artefact's category comes FROM the Publisher's `artifacts.html`, so
+    // one with none is one that page does not list (smart-trust: the
+    // ImplementationGuide itself). Its variables are written; it is not
+    // grouped, so the template lists exactly what the Publisher's page does.
+    if (a.category === undefined) continue;
+    let g = order.find((c) => c.name === a.category);
+    if (!g) order.push((g = { name: a.category, keys: [] }));
+    g.keys.push(key);
+  }
+  return { vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0) }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
+}
+
+/**
+ * The Publisher's `toc.html`: every page in `sushi-config.yaml` `pages:`, nested
+ * as declared. A page this build neither holds nor generates is listed as text,
+ * not as a link — a link to a page that is not there is the defect this site
+ * keeps paying for.
+ */
+export function tocPage(pages: unknown, has: (stem: string) => boolean): string {
+  const lines: string[] = [];
+  const walk = (node: unknown, depth: number) => {
+    if (!node || typeof node !== "object") return;
+    for (const [file, spec] of Object.entries(node as Record<string, unknown>)) {
+      if (file === "title" || file === "generation") continue;
+      const sp = (spec ?? {}) as Record<string, unknown>;
+      const stem = basename(file, extname(file));
+      const title = typeof sp.title === "string" ? sp.title : stem;
+      lines.push(`${"  ".repeat(depth)}- ${has(stem) ? `[${mdLabel(title)}](${stem}.html)` : `${mdLabel(title)} (generated by the IG Publisher; not part of this build)`}`);
+      walk(sp, depth + 1);
+    }
+  };
+  walk(pages, 0);
+  return ["# Table of Contents", "", ...wrapRaw(lines.join("\n")), ""].join("\n");
+}
+
+/**
+ * The Publisher's `artifacts.html`, as a LIQUID TEMPLATE over
+ * `site.data.fhir` — Jekyll renders it, from the variables this same build
+ * wrote (owner, 2026-10-01: "make use of jekyll/liquid templates"). No
+ * artefact data is baked into the page; change the data and the page follows.
+ * The template is a file of this directory (`liquid-templates` §"Where a
+ * template lives"), found relative to this one.
+ */
+export const ARTIFACTS_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/artifacts.liquid");
+export const RELEASES_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/releases.liquid");
+
+/** A byte count as the Publisher's download pages show one: one decimal, in KB or MB. */
+export function sizeLabel(bytes: number): string {
+  return bytes >= 1e6 ? `${(bytes / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1e3))} KB`;
+}
+
+/** `site.data.ig_releases`, which `releases.liquid` reads: every value computed here, none in Liquid. */
+export function releaseVariables(r: IgReleases) {
+  return {
+    repository: r.repository,
+    read_at: r.readAt,
+    releases: r.releases.map((x) => ({
+      tag: x.tag,
+      name: x.name ?? x.tag,
+      url: x.url,
+      published: x.publishedAt.slice(0, 10),
+      prerelease: x.prerelease,
+      assets: x.assets.map((a) => ({ name: a.name, url: a.url, size: sizeLabel(a.bytes), digest: a.digest ?? null })),
+    })),
+  };
 }
 
 /**
@@ -285,6 +475,8 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const pagecontent = join(src, "input", "pagecontent");
   const pages: string[] = [];
   const unlisted: string[] = [];
+  const filled: string[] = [];
+  const usedMarkers = new Set<string>();
   for (const f of files(pagecontent).filter((f) => f.endsWith(".md"))) {
     const name = basename(f, ".md");
     let n = nav.get(name);
@@ -294,15 +486,47 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       // Under a menu it stays reachable but out of the nav, as on the IG.
       n = { title: name, navOrder: 1000 + unlisted.length, ...(fromMenu ? { navExclude: true } : {}) };
     }
-    const body = readFileSync(join(pagecontent, f), "utf-8");
-    // A page that already carries front matter keeps it.
-    writeFileSync(join(out, f), body.startsWith("---\n") ? body : frontMatter(n) + body);
+    let body = readFileSync(join(pagecontent, f), "utf-8");
+    let data: Record<string, unknown> = {};
+    for (const fill of opts.fills ?? []) {
+      if (!body.includes(fill.marker)) continue;
+      body = body.split(fill.marker).join(fill.body);
+      data = { ...data, ...fill.data };
+      filled.push(`${f} (${fill.marker})`);
+      usedMarkers.add(fill.marker);
+    }
+    // Page variables as JSON flow mappings — YAML is a superset of JSON.
+    const dataLines = Object.entries(data).map(([k, v]) => `${k}: ${JSON.stringify(v)}\n`).join("");
+    // A page that already carries front matter keeps it, with the fill's data added.
+    writeFileSync(join(out, f), body.startsWith("---\n") ? `---\n${dataLines}${body.slice(4)}` : frontMatter(n).replace(/---\n$/, `${dataLines}---\n`) + body);
     pages.push(f);
+  }
+
+  // Pages the Publisher GENERATES rather than reads from pagecontent, written
+  // here from data this build holds (bean `jut3`'s parity list). Reported apart
+  // from `pages`, so a generated page is never mistaken for the IG's source.
+  const generated: string[] = [];
+  if (opts.artifacts && !pages.includes("artifacts.md")) {
+    const n = nav.get("artifacts") ?? { title: "Artifacts Summary", navOrder: 999, navExclude: true };
+    writeFileSync(join(out, "artifacts.md"), frontMatter(n) + readFileSync(ARTIFACTS_TEMPLATE_PATH, "utf-8"));
+    generated.push("artifacts.md");
+  }
+  if (opts.releases && !pages.includes("releases.md")) {
+    // Listed in the nav, last: the owner asked for the release binaries to be
+    // findable from the IG's pages (bean `b8ip`).
+    writeFileSync(join(out, "releases.md"), frontMatter(nav.get("releases") ?? { title: "Releases", navOrder: 998 }) + readFileSync(RELEASES_TEMPLATE_PATH, "utf-8"));
+    writeFileSync(join(out, "_data", "ig_releases.json"), JSON.stringify(releaseVariables(opts.releases), null, 2) + "\n");
+    generated.push("releases.md");
+  }
+  if (!pages.includes("toc.md")) {
+    const has = (stem: string) => pages.includes(`${stem}.md`) || generated.includes(`${stem}.md`) || stem === "toc";
+    writeFileSync(join(out, "toc.md"), frontMatter(nav.get("toc") ?? { title: "Table of Contents", navOrder: 1000, navExclude: true }) + tocPage(sushi.pages, has));
+    generated.push("toc.md");
   }
 
   // One section page per menu group, and the items that have no page here.
   const menuMissing: string[] = [];
-  const held = new Set(pages.map((f) => basename(f, ".md")));
+  const held = new Set([...pages, ...generated].map((f) => basename(f, ".md")));
   for (const g of fromMenu?.groups ?? []) {
     // just-the-docs lists a parent's children itself; the page adds only
     // what that list cannot show: items the Publisher generates.
@@ -360,7 +584,10 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   }
 
   const siteData = igSiteData(src);
-  writeFileSync(join(out, "_data", "fhir.json"), JSON.stringify(siteData.data, null, 2) + "\n");
+  // The per-artefact variables ride in the same `site.data.fhir` the IG's
+  // metadata does (bean `4tts`), written in THIS build, read by THIS build.
+  const lifted = opts.artifacts ? artifactVariables(opts.artifacts.list, opts.artifacts.pagesHref) : undefined;
+  writeFileSync(join(out, "_data", "fhir.json"), JSON.stringify({ ...siteData.data, ...(lifted?.vars ?? {}) }, null, 2) + "\n");
   const title = typeof sushi.title === "string" ? sushi.title : String(sushi.id ?? "IG");
   const scheme = opts.palette ? colourScheme(opts.palette) : undefined;
   if (scheme) {
@@ -383,7 +610,8 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       "",
     ].join("\n"),
   );
-  return { pages: pages.sort(), unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
+  const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
 }
 
 /**
@@ -431,6 +659,10 @@ export function dedupeSiteIds(site: string): Map<string, string[]> {
 export function describeStage(r: StageResult): string {
   return [
     `pages: ${r.pages.length}; includes: ${r.includes}; images: ${r.images}; diagrams rendered: ${r.rendered.length}`,
+    ...(r.generated.length ? [`generated from data this build holds (the Publisher generates these): ${r.generated.join(", ")}`] : []),
+    ...(r.fills?.filled.length ? [`post-processing filled: ${r.fills.filled.join(", ")}`] : []),
+    ...(r.fills?.unused.length ? [`post-processing fill with no marker in any page (NOT applied): ${r.fills.unused.join(", ")}`] : []),
+    ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme

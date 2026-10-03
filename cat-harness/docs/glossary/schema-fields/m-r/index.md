@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1733 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1751 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 476 terms and is 267 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 491 terms and is 276 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1957</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1957</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2003</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2003</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">476</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">491</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -801,6 +801,97 @@ OdrlRuleSchema.target <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>What the rule applies to; absent means the instance's whole graph.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts#OdrlRuleSchema.target</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiconfigdocumentschema.description" data-fa-state="extracted" data-fa-gloss="">
+OpenApiConfigDocumentSchema.description <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One sentence on what this API is and why this instance holds it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.description</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiconfigdocumentschema.id" data-fa-state="extracted" data-fa-gloss="">
+OpenApiConfigDocumentSchema.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The document's id: its file stem, its page directory and its IRI segment.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.id</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiconfigdocumentschema.title" data-fa-state="extracted" data-fa-gloss="">
+OpenApiConfigDocumentSchema.title <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What a reader calls it. Absent, the document's own <code>info.title</code> is used.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.title</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiconfigschema.directory" data-fa-state="extracted" data-fa-gloss="">
+OpenApiConfigSchema.directory <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The <code>&lt;instance&gt;.json</code> directory id of graph kind <code>openapi</code> the documents are ingested into.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiConfigSchema.directory</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapioperation.declaredid" data-fa-state="extracted" data-fa-gloss="">
+OpenApiOperation.declaredId <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether &#123;@link id} is the document's own <code>operationId</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiOperation.declaredId</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapioperation.id" data-fa-state="extracted" data-fa-gloss="">
+OpenApiOperation.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The node id: <code>operationId</code>, or <code>&lt;method&gt;-&lt;path&gt;</code> made filename-safe.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiOperation.id</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiprovenanceschema.file" data-fa-state="extracted" data-fa-gloss="">
+OpenApiProvenanceSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The document file beside this one.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema.file</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiprovenanceschema.materialization" data-fa-state="extracted" data-fa-gloss="">
+OpenApiProvenanceSchema.materialization <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The document IS a held copy of upstream bytes, so it says so in the shared <code>folio-materialization/v1</code> shape (<code>folio-assistant-core</code>'s <code>MaterializationSchema</code>): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and <code>check:read-only-graphs</code> reads <code>state</code> to agree with the directory's <code>readOnly</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiprovenanceschema.openapi" data-fa-state="extracted" data-fa-gloss="">
+OpenApiProvenanceSchema.openapi <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The document's <code>openapi</code> version, and its <code>info.title</code> / <code>info.version</code>, as published.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema.openapi</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapiprovenanceschema.operations" data-fa-state="extracted" data-fa-gloss="">
+OpenApiProvenanceSchema.operations <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many operations it holds — every one of which gets a page.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema.operations</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapisourceschema.path" data-fa-state="extracted" data-fa-gloss="">
+OpenApiSourceSchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Path of the document inside that repository.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiSourceSchema.path</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapisourceschema.ref" data-fa-state="extracted" data-fa-gloss="">
+OpenApiSourceSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Branch, tag or commit to read it from. The ingest records the commit it resolved to.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiSourceSchema.ref</code></a></p>
+</dd>
+<dt id="cat-openapi--kg-schema-fields--openapi.openapisourceschema.repository" data-fa-state="extracted" data-fa-gloss="">
+OpenApiSourceSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>owner/repo</code> on GitHub.</p>
+<p class="fa-gloss-meta">Schema fields of cat-openapi · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/schemas/openapi.ts"><code>cat-openapi/schemas/openapi.ts#OpenApiSourceSchema.repository</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--session-context.openinstanceschema.atnode" data-fa-state="extracted" data-fa-gloss="">
 OpenInstanceSchema.atNode <span class="fa-gloss-status">candidate, extracted</span>
@@ -2249,6 +2340,13 @@ ReleaseAssetSchema.contentType <span class="fa-gloss-status">candidate, extracte
 <p>Media type, where the publisher declares one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.contentType</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-schema-fields--ig-releases.releaseassetschema.digest" data-fa-state="extracted" data-fa-gloss="">
+ReleaseAssetSchema.digest <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>sha256:&lt;hex&gt;</code> as GitHub reports it; absent on assets uploaded before GitHub computed digests.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-releases.ts"><code>fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.digest</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--binary-release.releaseassetschema.dispositionreason" data-fa-state="extracted" data-fa-gloss="">
 ReleaseAssetSchema.dispositionReason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2269,6 +2367,13 @@ ReleaseAssetSchema.name <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>The file's published name, e.g. <code>package.tgz</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.name</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-releases.releaseassetschema.url" data-fa-state="extracted" data-fa-gloss="">
+ReleaseAssetSchema.url <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where to fetch the bytes: GitHub's <code>browser_download_url</code>.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-releases.ts"><code>fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema.url</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--binary-release.releaseidentityschema.id" data-fa-state="extracted" data-fa-gloss="">
 ReleaseIdentitySchema.id <span class="fa-gloss-status">candidate, extracted</span>

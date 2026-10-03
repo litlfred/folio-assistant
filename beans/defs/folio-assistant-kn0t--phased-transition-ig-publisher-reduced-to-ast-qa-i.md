@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kn0t
 title: 'PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T14:30:00Z
+updated_at: 2026-10-01T08:02:22Z
 parent: folio-assistant-uhkv
 ---
 
@@ -104,3 +104,12 @@ edges now exist in source anyway (`fsh-cone`, 458 of 458, on `main`).
 
 Not closed: the three open items in the skill (`transform_dmn.py` HTML, the
 parity checklist, `tx` in staging) remain, and no phase has been started.
+
+## Summary of Changes (closed 2026-10-01, on the owner's instruction)
+
+Every box under **Done when** is ticked: the owner approved the five phases on 2026-09-30, as recorded in the skill's §"Approved by the owner, 2026-09-30". This bean was the plan-approval entry, and that is finished. The phase work continues elsewhere:
+- P0: `folio-assistant-jut3`
+- P3/P4 prerequisites (the fork, AST, real-IG measurements): `folio-assistant-a9tx`
+- The skill's three open items (`transform_dmn.py` HTML, the parity checklist, `tx` in staging) stay in `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md`.
+
+Closed by session https://claude.ai/code/session_01DnFZtVpff4o7puqWazGvKN.

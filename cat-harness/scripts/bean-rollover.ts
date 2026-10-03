@@ -73,14 +73,22 @@
  */
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 
+import { directoryForGraph } from "../schemas/cat-harness.ts";
 import { git, parseMemberSpec, resolveMember } from "./merge-pipeline-git.ts";
 import { pathClass, differsOnlyInRegions } from "./merge-pipeline-paths.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const SUBGRAPH = "beans/";
+// The DECLARED beans subgraph (bean `gz47`), not a spelled "beans/". A
+// checkout that declares none has no bean store to roll over, which is a
+// usage error rather than an empty diff.
+const SUBGRAPH = (() => {
+  const dir = directoryForGraph(ROOT, "beans");
+  if (dir === undefined) throw new Error("bean-rollover: no `beans` directory is declared in this checkout");
+  return `${relative(ROOT, dir)}/`;
+})();
 
 type State = "already-on-main" | "port" | "adjudicate" | "could-not-determine";
 
@@ -273,4 +281,7 @@ function main(): number {
   return n("port") + n("adjudicate") > 0 ? 1 : 0;
 }
 
-process.exit(main());
+// Guarded: importing this module must not run a rollover over every open PR
+// (declared-directory-resolves imports each module that resolves a declared
+// directory, which this one does since bean `gz47`).
+if (import.meta.main) process.exit(main());

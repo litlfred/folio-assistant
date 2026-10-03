@@ -2,12 +2,13 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 210,
+      "count": 211,
       "unit": "modules"
     }
   },
   "roots": [
     "cat-harness/schemas",
+    "cat-openapi/schemas",
     "fhir-harness/schemas",
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
@@ -1595,6 +1596,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "instance": "cat-harness",
+      "name": "vector-figure",
+      "graphNode": "schema",
+      "summary": "A DRAWN figure, assembled and rendered — bean `ay3x`, under `m4xy`. The step",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/vector-labels.ts",
       "instance": "cat-harness",
       "name": "vector-labels",
@@ -1707,11 +1716,27 @@
       "isTest": false
     },
     {
+      "module": "cat-openapi/schemas/openapi.ts",
+      "instance": "cat-openapi",
+      "name": "openapi",
+      "graphNode": "schema",
+      "summary": "The OpenAPI harness's shapes: what an instance declares, what an ingest",
+      "isTest": false
+    },
+    {
       "module": "fhir-harness/schemas/fhir-artifact-index.ts",
       "instance": "fhir-harness",
       "name": "fhir-artifact-index",
       "graphNode": "schema",
       "summary": "The artefact index of a published FHIR Implementation Guide.",
+      "isTest": false
+    },
+    {
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "instance": "fhir-harness",
+      "name": "ig-ast",
+      "graphNode": "schema",
+      "summary": "ig-ast.ts — the IG AST's file formats, declared once (bean `l0lq`).",
       "isTest": false
     },
     {
@@ -1775,6 +1800,21 @@
       "name": "ig-metadata-index",
       "graphNode": "schema",
       "summary": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
+      "isTest": false
+    },
+    {
+      "module": "fhir-harness/schemas/ig-releases.test.ts",
+      "instance": "fhir-harness",
+      "name": "ig-releases.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "instance": "fhir-harness",
+      "name": "ig-releases",
+      "graphNode": "schema",
+      "summary": "ig-releases.ts — an IG's GitHub releases, recorded as POINTERS to their",
       "isTest": false
     },
     {
@@ -7247,6 +7287,13 @@
           "optional": true,
           "array": false,
           "doc": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the"
+        },
+        {
+          "name": "served",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory's BYTES are published verbatim, at `/<instance>/<path>`, for"
         },
         {
           "name": "theme",
@@ -13173,6 +13220,75 @@
           "optional": true,
           "array": false,
           "doc": "What this copy serves HERE — never what the image is, which is the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#ThresholdBasis",
+      "name": "ThresholdBasis",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema",
+      "name": "ThresholdBasisSchema",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "zod-object",
+      "doc": "A role decided by a coverage CUTOFF THE CALLER SUPPLIED — bean `ay3x`.",
+      "fields": [
+        {
+          "name": "method",
+          "type": "z.literal(\"threshold\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.number().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "The cutoff, exactly as supplied. Images below it were filed `furniture`."
+        },
+        {
+          "name": "suppliedBy",
+          "type": "z.literal(\"caller\")",
+          "optional": false,
+          "array": false,
+          "doc": "Always the caller. Recorded so the provenance is read, not inferred."
+        },
+        {
+          "name": "coverage",
+          "type": "z.number().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Placed area over page area — the number compared against `value`."
+        },
+        {
+          "name": "imagesOnPage",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -36722,6 +36838,28 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#IgCacheActionSchema",
+      "name": "IgCacheActionSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "status",
+        "restore",
+        "seed",
+        "contribute",
+        "verify",
+        "list",
+        "doctor",
+        "An ig-cache verb: restore AST, seed it, or diagnose."
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#InstanceIdSchema",
       "name": "InstanceIdSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -40815,6 +40953,382 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema",
+      "name": "AssemblyBasisSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "doc": "What the extractor did. Names itself; asserts no role.",
+      "fields": [
+        {
+          "name": "method",
+          "type": "z.literal(\"assembly\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "AttributionSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The script, as a `script` attribution — what looked."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/attribution.ts#AttributionSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "name": "VectorAssemblySchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "drawings",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Drawing operations on the page. Reported, never graded."
+        },
+        {
+          "name": "background",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Of those, page-sized backgrounds that joined no component."
+        },
+        {
+          "name": "groups",
+          "type": "z.array( z .object({ bbox: BBoxSchema, drawings: z.number().int().positive(), /** Touches the page boundary — chapter t…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "boxes",
+          "type": "z.array(VectorBoxSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unlabelledClosedShapes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed."
+        },
+        {
+          "name": "connectors",
+          "type": "z.array(VectorConnectorSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "between",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Lines inside the region but in no component — the white space `a8wy` found real labels in."
+        },
+        {
+          "name": "outside",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+        "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+      "name": "VectorBoxSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^b\\d+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bbox",
+          "type": "BBoxSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "parent",
+          "type": "z.string().regex(/^b\\d+$/).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The smallest other labelled box containing this one, or null."
+        },
+        {
+          "name": "labels",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+      "name": "VectorConnectorSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "from",
+          "type": "z.string().regex(/^b\\d+$/).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "Box the stroke starts in, or null when it lands in none."
+        },
+        {
+          "name": "to",
+          "type": "z.string().regex(/^b\\d+$/).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bbox",
+          "type": "BBoxSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFigure",
+      "name": "VectorFigure",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
+      "name": "VectorFigureBasisSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "method"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "name": "VectorFigureSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^vfig-p\\d{3,}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`vfig-p034` — one per qualifying page; a verdict keys on it."
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The render, relative to the entry; null when nothing was rendered, with the reason."
+        },
+        {
+          "name": "unrendered_reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.enum(IMAGE_ROLES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "basis",
+          "type": "VectorFigureBasisSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rotation",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "captionLabels",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Figure numbers from the page's caption candidates — candidates, not claims."
+        },
+        {
+          "name": "region",
+          "type": "BBoxSchema.nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The rendered rectangle, visible frame."
+        },
+        {
+          "name": "assembly",
+          "type": "VectorAssemblySchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shows",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Which declared figures the render shows. Inspection only — see the module docblock."
+        },
+        {
+          "name": "narrative",
+          "type": "NarrativeSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/narrative.ts#NarrativeSchema",
+        "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+        "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [
+        "IMAGE_ROLES"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecar",
+      "name": "VectorFiguresSidecar",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema",
+      "name": "VectorFiguresSidecarSchema",
+      "module": "cat-harness/schemas/vector-figure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(VECTOR_FIGURES_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "figures",
+          "type": "z.array(VectorFigureSchema).nullable()",
+          "optional": false,
+          "array": true,
+          "doc": "`null` is could-not-determine, never \"draws no figures\" — the `dh4f` rule."
+        },
+        {
+          "name": "undetermined_reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-figure.ts#VectorFigureSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "VECTOR_FIGURES_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
       "name": "BBoxSchema",
       "module": "cat-harness/schemas/vector-labels.ts",
@@ -43614,6 +44128,411 @@
       "exported": true
     },
     {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfig",
+      "name": "OpenApiConfig",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+      "name": "OpenApiConfigDocumentSchema",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(SEGMENT)",
+          "optional": false,
+          "array": false,
+          "doc": "The document's id: its file stem, its page directory and its IRI segment."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a reader calls it. Absent, the document's own `info.title` is used."
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "One sentence on what this API is and why this instance holds it."
+        },
+        {
+          "name": "source",
+          "type": "OpenApiSourceSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SEGMENT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiConfigSchema",
+      "name": "OpenApiConfigSchema",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(OPENAPI_CONFIG_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "directory",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `<instance>.json` directory id of graph kind `openapi` the documents are ingested into."
+        },
+        {
+          "name": "documents",
+          "type": "z.array(OpenApiConfigDocumentSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "OPENAPI_CONFIG_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiDocument",
+      "name": "OpenApiDocument",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiDocumentSchema",
+      "name": "OpenApiDocumentSchema",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "doc": "An OpenAPI 3 document, checked only as far as this harness reads it.",
+      "fields": [
+        {
+          "name": "openapi",
+          "type": "z.string().regex(/^3\\.\\d+\\.\\d+$/, \"an OpenAPI 3.x document\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "info",
+          "type": "z.object({ title: z.string().min(1), version: z.string().min(1), description: z.string().optional() }).passthrough()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "paths",
+          "type": "z.record(z.string(), z.record(z.string(), z.unknown()))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiMethod",
+      "name": "OpenApiMethod",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiOperation",
+      "name": "OpenApiOperation",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "interface",
+      "doc": "One operation, as a node: what its page and its JSON-LD are built from.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The node id: `operationId`, or `<method>-<path>` made filename-safe."
+        },
+        {
+          "name": "declaredId",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Whether {@link id} is the document's own `operationId`."
+        },
+        {
+          "name": "method",
+          "type": "OpenApiMethod",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tags",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "deprecated",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-openapi/schemas/openapi.ts#OpenApiMethod"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiProvenance",
+      "name": "OpenApiProvenance",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
+      "name": "OpenApiProvenanceSchema",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(OPENAPI_SOURCE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(SEGMENT)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().regex(/^[A-Za-z0-9._-]+\\.openapi\\.json$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The document file beside this one."
+        },
+        {
+          "name": "source",
+          "type": "OpenApiSourceSchema.extend({ commit: z.string().regex(/^[0-9a-f]{40}$/) }).strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "openapi",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The document's `openapi` version, and its `info.title` / `info.version`, as published."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "operations",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "How many operations it holds — every one of which gets a page."
+        },
+        {
+          "name": "materialization",
+          "type": "z .object({ $schema: z.literal(\"folio-materialization/v1\"), state: z.literal(\"materialized\"), localPath: z.string().min…",
+          "optional": false,
+          "array": false,
+          "doc": "The document IS a held copy of upstream bytes, so it says so in the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "OPENAPI_SOURCE_SCHEMA_TAG",
+        "SEGMENT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "name": "OpenApiSourceSchema",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/repo` on GitHub."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Path of the document inside that repository."
+        },
+        {
+          "name": "ref",
+          "type": "z.string().min(1).default(\"main\")",
+          "optional": true,
+          "array": false,
+          "doc": "Branch, tag or commit to read it from. The ingest records the commit it resolved to."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-openapi/schemas/openapi.ts#OperationSchema",
+      "name": "OperationSchema",
+      "module": "cat-openapi/schemas/openapi.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "operationId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tags",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "deprecated",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifact",
       "name": "FhirArtifact",
       "module": "fhir-harness/schemas/fhir-artifact-index.ts",
@@ -43722,6 +44641,20 @@
           "array": true
         },
         {
+          "name": "igApiHub",
+          "type": "RepresentationSchema.extend({ placeholder: z.string().min(1).optional() }).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The IG API hub: the region of the IG's hub page between the two markers"
+        },
+        {
+          "name": "package",
+          "type": "RepresentationSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The IG's own `package.tgz` — every resource's JSON in one file, as the"
+        },
+        {
           "name": "sidecarsUnbound",
           "type": "z.array(UnboundSidecarSchema).optional()",
           "optional": true,
@@ -43748,6 +44681,7 @@
         "fhir-harness/schemas/fhir-artifact-index.ts#IgSourceSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#IndexProvenanceSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#JsonLdContextSchema",
+        "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
         "fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema"
       ],
       "unresolved": [],
@@ -43827,6 +44761,13 @@
           "optional": true,
           "array": false,
           "doc": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page."
+        },
+        {
+          "name": "listedAt",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Position on the Publisher's `artifacts.html`, 0-based, first appearance."
         },
         {
           "name": "published",
@@ -44284,6 +45225,359 @@
           "optional": false,
           "array": false,
           "doc": "Why no artefact matched: the strategies tried, in order."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstDependenciesSchema",
+      "name": "AstDependenciesSchema",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "zod-object",
+      "doc": "`dependencies.json`.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_AST_DEPENDENCIES_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dependencies",
+          "type": "z.array(AstEdgeSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-ast.ts#AstEdgeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_AST_DEPENDENCIES_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstEdge",
+      "name": "AstEdge",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstEdgeSchema",
+      "name": "AstEdgeSchema",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "zod-object",
+      "doc": "One dependency edge. `resolved` is the key of the target in this IG, or `null` when it is elsewhere.",
+      "fields": [
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "targetVersion",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "resolved",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().nullish()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "origin",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstManifest",
+      "name": "AstManifest",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema",
+      "name": "AstManifestSchema",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "zod-object",
+      "doc": "`manifest.json`.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_AST_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authority",
+          "type": "z.literal(\"cache\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "provisional",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true,
+          "doc": "What stays provisional until a full Publisher run."
+        },
+        {
+          "name": "provisionalUntil",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "mixed",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "incremental",
+          "type": "z .object({ base: z.string(), head: z.string(), rebuilt: z.number(), kept: z.number(), removed: z.number() }) .passthro…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "toolchain",
+          "type": "z.record(z.string(), z.string().nullable()).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "inputs",
+          "type": "z.object({ toolchain: z.string(), sourceRevision: z.string().optional(), inputDigest: z.string().optional() }).passthro…",
+          "optional": true,
+          "array": false,
+          "doc": "What the AST is valid for, in `CompiledInputsSchema`'s shape."
+        },
+        {
+          "name": "inputsUnknown",
+          "type": "z.record(z.string(), z.string()).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "resources",
+          "type": "z.array(AstResourceSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-ast.ts#AstResourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_AST_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstPlan",
+      "name": "AstPlan",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstPlanSchema",
+      "name": "AstPlanSchema",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "zod-object",
+      "doc": "`plan.json`: what a set of changed files means — rebuild, keep, remove, or a full build and why.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_AST_PLAN_TAG).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "decision",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "coneFraction",
+          "type": "z.number().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "rebuild",
+          "type": "z.array(z.unknown()).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "fullBuildBecause",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_AST_PLAN_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstResource",
+      "name": "AstResource",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema",
+      "name": "AstResourceSchema",
+      "module": "fhir-harness/schemas/ig-ast.ts",
+      "kind": "zod-object",
+      "doc": "One resource the AST holds. `key` is `canonical|version`, or `Type/id` when there is no canonical.",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "resourceType",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().nullish()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The resource's JSON file, relative to the AST directory."
+        },
+        {
+          "name": "source",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The IG source file it was built from, where known."
+        },
+        {
+          "name": "builtAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "On a merged (mixed-provenance) AST: the revision that built this resource."
         }
       ],
       "extendsNames": [],
@@ -45340,6 +46634,264 @@
           "type": "z.array(z.string().min(1))",
           "optional": false,
           "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#GitHubRelease",
+      "name": "GitHubRelease",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "interface",
+      "doc": "The fields of a GitHub REST `release` object this module reads.",
+      "fields": [
+        {
+          "name": "tag_name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "string | null",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "html_url",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "published_at",
+          "type": "string | null",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prerelease",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "draft",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "target_commitish",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assets",
+          "type": "Array<{ name: string; browser_download_url: string; size: number; digest?: string | null; content_type?: string }>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#IgRelease",
+      "name": "IgRelease",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#IgReleases",
+      "name": "IgReleases",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema",
+      "name": "IgReleaseSchema",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "tag",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "The release's page on GitHub."
+        },
+        {
+          "name": "publishedAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prerelease",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commitish",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The commit the tag points at, where GitHub reports it."
+        },
+        {
+          "name": "assets",
+          "type": "z.array(ReleaseAssetSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema",
+      "name": "IgReleasesSchema",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_RELEASES_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[^/\\s]+\\/[^/\\s]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/repo` the releases were read from."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "When they were read (UTC date). A release made later is not here until the next read."
+        },
+        {
+          "name": "releases",
+          "type": "z.array(IgReleaseSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Newest first, as GitHub lists them. Drafts are never recorded: they are not published."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_RELEASES_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#ReleaseAsset",
+      "name": "ReleaseAsset",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema",
+      "name": "ReleaseAssetSchema",
+      "module": "fhir-harness/schemas/ig-releases.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Where to fetch the bytes: GitHub's `browser_download_url`."
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "digest",
+          "type": "z.string().regex(/^sha256:[0-9a-f]{64}$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`sha256:<hex>` as GitHub reports it; absent on assets uploaded before GitHub computed digests."
+        },
+        {
+          "name": "contentType",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -55453,6 +57005,94 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema",
+      "to": "cat-harness/schemas/attribution.ts#AttributionSchema",
+      "via": "by",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+      "via": "boxes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+      "via": "connectors",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "groups",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "bbox",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "bbox",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "via": "narrative",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema",
+      "via": "assembly",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorFigureBasisSchema",
+      "via": "basis",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "region",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema",
+      "to": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema",
+      "via": "figures",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema",
       "to": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema",
       "via": "labels",
@@ -55965,6 +57605,38 @@
       "array": true
     },
     {
+      "from": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+      "to": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-openapi/schemas/openapi.ts#OpenApiConfigSchema",
+      "to": "cat-openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema",
+      "via": "documents",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-openapi/schemas/openapi.ts#OpenApiOperation",
+      "to": "cat-openapi/schemas/openapi.ts#OpenApiMethod",
+      "via": "method",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-openapi/schemas/openapi.ts#OpenApiProvenanceSchema",
+      "to": "cat-openapi/schemas/openapi.ts#OpenApiSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
       "to": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactSchema",
       "via": "artifacts",
@@ -55995,6 +57667,22 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "igApiHub",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
+      "to": "fhir-harness/schemas/fhir-artifact-index.ts#RepresentationSchema",
+      "via": "package",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema",
@@ -56091,6 +57779,22 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-ast.ts#AstDependenciesSchema",
+      "to": "fhir-harness/schemas/ig-ast.ts#AstEdgeSchema",
+      "via": "dependencies",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/ig-ast.ts#AstManifestSchema",
+      "to": "fhir-harness/schemas/ig-ast.ts#AstResourceSchema",
+      "via": "resources",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "fhir-harness/schemas/ig-chrome.ts#IgChromeSchema",
@@ -56232,6 +57936,22 @@
       "from": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
       "to": "fhir-harness/schemas/ig-metadata-index.ts#IgValueSetRefSchema",
       "via": "valueSetRefs",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema",
+      "to": "fhir-harness/schemas/ig-releases.ts#ReleaseAssetSchema",
+      "via": "assets",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/ig-releases.ts#IgReleasesSchema",
+      "to": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema",
+      "via": "releases",
       "kind": "field",
       "optional": false,
       "array": true

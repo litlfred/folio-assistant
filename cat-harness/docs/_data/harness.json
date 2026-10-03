@@ -286,7 +286,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 210,
+      "count": 211,
       "unit": "modules"
     },
     {
@@ -374,7 +374,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 25,
+      "count": 30,
       "unit": "waiting"
     }
   ],
@@ -608,7 +608,8 @@
       "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
-        "smart-ig"
+        "smart-ig",
+        "cat-openapi"
       ],
       "icon": null,
       "avatar": {
@@ -654,12 +655,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -682,6 +683,11 @@
           "readOnly": true
         },
         {
+          "kind": "openapi",
+          "readOnly": true,
+          "note": "no viewer yet"
+        },
+        {
           "kind": "qa",
           "note": "no viewer yet"
         }
@@ -694,6 +700,14 @@
           ],
           "where": "local",
           "path": "smart-trust/fhir-artifact-index/"
+        },
+        {
+          "id": "smart-trust-openapi",
+          "kinds": [
+            "openapi"
+          ],
+          "where": "local",
+          "path": "smart-trust/openapi/"
         },
         {
           "id": "smart-trust-docs",
@@ -721,8 +735,8 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-trust: declares 3 graph(s) with no published viewer — code, openapi, qa. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: 2 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index, openapi. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
@@ -1546,12 +1560,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
@@ -1560,6 +1574,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "library",
           "path": "/cat-harness/library/fhir-harness/"
@@ -1607,6 +1625,14 @@
           "path": "fhir-harness/tools/"
         },
         {
+          "id": "fhir-ig-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "fhir-harness/scripts/"
+        },
+        {
           "id": "fhir-harness-processes",
           "kinds": [
             "processes"
@@ -1624,7 +1650,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — code, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
@@ -1870,6 +1896,83 @@
       ]
     },
     {
+      "name": "cat-openapi",
+      "title": "C@T OpenAPI",
+      "label": "C@T OpenAPI",
+      "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
+      "footer": false,
+      "needs": [
+        "cat-harness"
+      ],
+      "icon": null,
+      "tone": 0,
+      "toneFrom": "avatar",
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "href": "/cat-harness/schemas/cat-openapi/",
+      "hrefKind": "viewer",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "schemas",
+          "path": "/cat-harness/schemas/cat-openapi/"
+        }
+      ],
+      "subgraphs": [
+        {
+          "id": "cat-openapi-schemas",
+          "kinds": [
+            "schemas"
+          ],
+          "where": "local",
+          "path": "cat-openapi/schemas/"
+        },
+        {
+          "id": "cat-openapi-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-openapi/scripts/"
+        }
+      ],
+      "findings": [
+        "cat-openapi: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
+        "cat-openapi: no avatar declared for this instance — showing the generic mark.",
+        "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "fsh-guts",
+        "launcher"
+      ]
+    },
+    {
       "name": "cat-harness-tools",
       "title": "C@T Harness Tools",
       "label": "C@T Harness Tools",
@@ -2028,12 +2131,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 30
+          "value": 31
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 26
+          "value": 27
         },
         {
           "id": "views",
@@ -2061,6 +2164,11 @@
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/docs/"
+        },
+        {
+          "kind": "docs-auto",
+          "within": "docs",
+          "note": "no viewer yet"
         },
         {
           "kind": "external-schema",
@@ -2385,6 +2493,14 @@
           "path": "cat-harness/docs/requirements/"
         },
         {
+          "id": "docs/docs-auto",
+          "kinds": [
+            "docs-auto"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/docs-auto/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -2394,7 +2510,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, docs-auto, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2702,6 +2818,11 @@
         "path": "/cat-harness/docs-auto/index/docs/docs/"
       },
       {
+        "kind": "docs-auto",
+        "within": "docs",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "external-schema",
         "path": "/external-schemas/"
       },
@@ -2827,6 +2948,10 @@
           "path": "/smart-trust/"
         },
         {
+          "kind": "openapi",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "qa",
           "note": "no viewer yet"
         }
@@ -2947,6 +3072,12 @@
       "human": "https://litlfred.github.io/cat-harness/v0/"
     },
     "cat-harness-tools": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "cat-openapi": {
       "version": "0.1.0",
       "major": null,
       "agent": "",
@@ -3428,7 +3559,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
+            "summary": "5: smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart-trust-scripts, qa"
           },
           {
             "key": "stickies",
@@ -3436,7 +3567,7 @@
           },
           {
             "key": "needs",
-            "summary": "smart-ig"
+            "summary": "smart-ig, cat-openapi"
           },
           {
             "key": "version",
@@ -3766,7 +3897,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: library, fhir-ig-skills, fhir-ig-tools, fhir-harness-processes, qa"
+            "summary": "6: library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, fhir-harness-processes, qa"
           },
           {
             "key": "needs",
@@ -3829,6 +3960,56 @@
           {
             "key": "contentAdapters",
             "summary": "1 entry"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "cat-openapi",
+        "title": "C@T OpenAPI",
+        "group": "checkout",
+        "declaredIn": "cat-openapi/cat-openapi.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/cat-openapi/cat-openapi.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/cat-openapi/cat-openapi.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "cat-openapi"
+          },
+          {
+            "key": "title",
+            "summary": "C@T OpenAPI"
+          },
+          {
+            "key": "description",
+            "summary": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and give…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/cat-openapi"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
+            "key": "canonicalUrl",
+            "summary": "https://litlfred.github.io/folio-assistant/cat-openapi"
+          },
+          {
+            "key": "directories",
+            "summary": "2: cat-openapi-schemas, cat-openapi-scripts"
+          },
+          {
+            "key": "needs",
+            "summary": "cat-harness"
           },
           {
             "key": "version",

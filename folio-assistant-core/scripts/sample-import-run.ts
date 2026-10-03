@@ -39,7 +39,7 @@ import { join, relative, resolve } from "node:path";
 import { registerWorkflowTools } from "../../cat-harness/src/tools/workflow.ts";
 import { fshGutsDirectory } from "../../cat-harness/schemas/fsh-guts.ts";
 import { positionOf } from "../../cat-harness/src/workflow/instance.ts";
-import { instanceId, loadInstance } from "../../cat-harness/src/workflow/store.ts";
+import { WORKFLOW_DIR, instanceId, loadInstance } from "../../cat-harness/src/workflow/store.ts";
 import { CatalogueNodeSchema, type CatalogueNode } from "../schemas/catalogue.js";
 import { PUBLICATION_GATES } from "../schemas/materialization.js";
 import { checkSampleImport, describeImportCheck } from "./sample-import-check.ts";
@@ -311,7 +311,7 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
   const final = loadInstance(root, id)!;
   return {
     instanceId: id,
-    instancePath: join(root, "beans", "workflows", `${id}.json`),
+    instancePath: join(root, WORKFLOW_DIR, `${id}.json`), // the store's own constant, not a second spelling (bean `gz47`)
     trialPath,
     steps,
     status: final.status,
