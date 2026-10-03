@@ -19,7 +19,7 @@ ONE INSTANCE PER REFUSED PR, started with `bean:` set to the refusal bean. The s
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [A merge train](merge-train.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

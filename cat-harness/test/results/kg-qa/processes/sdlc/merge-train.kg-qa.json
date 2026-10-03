@@ -101,17 +101,8 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "Call_HandBack",
-          "detail": "calls \"Process_MergeRefusal\", which is the id of no process this instance can load. That is either a typo or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown."
-        },
-        {
-          "where": "Call_EjectHandBack",
-          "detail": "calls \"Process_MergeRefusal\", which is the id of no process this instance can load. That is either a typo or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "process-diagram-published": {
       "result": "pass",
@@ -151,9 +142,9 @@
     }
   },
   "totals": {
-    "pass": 15,
+    "pass": 16,
     "fail": 1,
     "n/a": 8,
-    "unknown": 1
+    "unknown": 0
   }
 }
