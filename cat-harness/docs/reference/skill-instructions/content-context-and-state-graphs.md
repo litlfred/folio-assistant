@@ -130,7 +130,7 @@ verdict.
 `isStateGraph` is usually being asked in service of, and naming it means a
 fourth layer is one edit rather than a search.
 
-## Where a state graph is STORED — `storage.keyedBy`
+## Where a graph is STORED — `storage.keyedBy`
 
 The layer says who may write a graph. The directory's `storage` field says
 where the graph lives when that is not `main`. The two are independent, but
@@ -140,8 +140,31 @@ only process-written graphs are candidates for `storage`:
 |---|---|---|---|
 | `commit` | one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`) | `qa` — derived verdicts read against a baseline | `scripts/qa-store.ts` |
 | `tip` | ONE live copy; the tip IS the current state | beans, todos — `state` with one truth at a time | `scripts/branch-store.ts` |
+| `route` | one entry per published site route | the auto-doc page families — `derived`, regenerable | `scripts/branch-store.ts` |
 
-Three rules (bean `2h76`, owner rulings 2026-10-02):
+### `route` is not a synonym for `tip`, and the difference is REGENERABILITY
+
+Both live at a branch tip, so the temptation is to read them as one keying with
+two names. The question that separates them is the one §3.1 of the state-branch
+proposal already asks: **can this be recomputed from the tree?**
+
+- A bean cannot. It is somebody's decision, a lost write is lost work, so a
+  tip-keyed change carries `expect` (the blob its author read) and two sessions
+  editing one file is a **`conflict` the caller settles**.
+- A rendered page can. Nobody authored either side, the newer generation is
+  simply right, and a lost write costs a rerun. So a route-keyed write carries
+  **no `expect`** — and `branch-store.ts` **refuses** one that does rather than
+  honouring it.
+
+The refusal is the part to understand. Ignoring an `expect` here would let a
+caller believe it had the tip-keyed guarantee while getting last-write-wins,
+which is the vacuous-pass shape. And an `expect` arriving on a route-keyed
+write means the caller thinks the page has two writers — the premise of
+route-keying failing, which is worth a loud stop. **If a generated page really
+does have two writers, `route` is the wrong keying for it and `tip` is right.**
+
+Four rules (bean `2h76`, owner rulings 2026-10-02; `route` from bean `1j3q`,
+owner 2026-10-03 — *"Add route-keyed storage, then move it off main"*):
 
 - **One ref per state subgraph.** Beans are on `cat/cat-harness/beans` and
   todos on `cat/cat-harness/todos`, not on one shared `state` branch. The owner:
@@ -151,17 +174,34 @@ Three rules (bean `2h76`, owner rulings 2026-10-02):
   subgraphs get own branch, especially not semi-static KG content)"*. Skills,
   schemas, processes, roles and the declarations themselves are `content` or
   `context`. They change by PR and stay on `main`.
-- **A `qa` directory is commit-keyed.** The schema refuses `keyedBy: "tip"` on
-  one, because a tip-keyed QA store would be read as if it were keyed by commit.
+- **A `qa` directory is commit-keyed.** The schema refuses `keyedBy: "tip"`
+  **and `"route"`** on one, because either would be read as if it were keyed by
+  commit, and a verdict is addressed by the commit it judges — there is no route
+  to key it by. The guard names both values rather than only `tip`: one that
+  named a single keying would admit every keying added after it.
+- **The keying is PASSED to the store, never sniffed from the branch.** A
+  manifest whose `keyedBy` disagrees with what the caller opened for is
+  `corrupt`, in **both** directions. A store that adopted whatever the branch
+  claimed would read a route-keyed branch as state the moment somebody pushed
+  the wrong manifest.
 
-A tip-keyed read is **hit / miss / corrupt / unknown**, and a branch without a
-`state-manifest/v1` root manifest is `corrupt`, not a hit. A write is spliced
+A branch-tip read is **hit / miss / corrupt / unknown**, and a branch without a
+`state-manifest/v1` root manifest is `corrupt`, not a hit — for a route-keyed
+branch too. The `$schema` string says `state-manifest` on both, and that is a
+choice: the two seeded branches already carry it, the format is identical in
+every field, and `keyedBy` **inside** the manifest is the discriminator, which
+is this repository's own rule that the file declares what it is. The name is
+historical; bean `1j3q` records it as such. A write is spliced
 onto the tip and pushed **without `-f`**, retrying when the tip moves. To edit
 a file somebody else may be editing, pass the blob you read as `expect`. A tip
 that disagrees then answers `conflict` and pushes nothing, so the edit is not
 silently lost.
 
-**Until a declaration sets `storage`, `main` is authoritative.** A directory
+**Until a declaration sets `storage`, `main` is authoritative.** That holds for
+`route` too: no generator writes a route-keyed branch yet, and the first family
+(`docs/uml/`) is a follow-on bean to `1j3q` — deliberately separate, because 49
+of 94 gated checks write page files and a flip of all of them cannot be
+bisected. A directory
 with no `storage` field lives in the checkout, whatever branches exist. The
 seeded `cat/cat-harness/beans` and `cat/cat-harness/todos` say
 `authoritative: false` in their manifests until the steward-run flip on #1850.
