@@ -2409,14 +2409,14 @@
     {
       "id": "folio-assistant-8rff",
       "title": "MERGE PATTERNS GAP: three generated families have no declared merge-conflict pattern, so merge:main refuses them and merge:overlap counts them as authored",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:46:34Z",
-      "updatedAt": "2026-10-02T21:22:55Z",
+      "updatedAt": "2026-10-03T00:27:48Z",
       "preview": "Found by merge:overlap's first live run (bean blgm, PR #1895, 2026-10-02): 32 open PRs; 109 pairs overlapped on authored paths, and 19 of those overlapped ONLY on these three generated families. None is named in cat-harness/scripts/merge-conflict-patterns.ts PATTERNS or in .gitattributes, so they classify as authored.\n\n| family | writer | check in CI | overlap count (pair-path hits) |\n|---|---|---",
       "file": "beans/defs/folio-assistant-8rff--merge-patterns-gap-three-generated-families-have-n.md"
     },
@@ -7493,14 +7493,14 @@
     {
       "id": "folio-assistant-tlk2",
       "title": "Second hop: move cat-state and cat-fhir-ast/* to cat/<harness>/<name> (handoff to local agy agent)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:33:58Z",
-      "updatedAt": "2026-10-02T21:41:29Z",
+      "updatedAt": "2026-10-03T00:13:49Z",
       "preview": "## Brief\n\nYou are the EXECUTOR for one task handed to you by the merge-steward cloud session (https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT). That session cannot push or delete branches. You can, because you run on the owner's machine. You did the first hop as bean `folio-assistant-46qw`; this is the second hop, to the owner's final naming scheme.\n\nWHERE (you were sent here by one line n",
       "file": "beans/defs/folio-assistant-tlk2--second-hop-move-cat-state-and-cat-fhir-ast-to-cath.md"
     },
