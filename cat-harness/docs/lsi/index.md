@@ -118,13 +118,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 44.94 | instance, kind, harness, page, directory, session, graph, block | *(none)* |
+| 1 | 44.98 | harness, instance, kind, page, directory, session, graph, block | *(none)* |
 | 2 | 21.62 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directory, directories, asset, graph |
 | 3 | 18.02 | chapter, slot, block, edges, formal, project, proof, glossary | session, beans, branch, epic, goals, window, push, store |
-| 4 | 16.92 | page, tile, text, block, avatar, card, blocks, glass | sibling, subdirectory, ledger, plan, sessions, session, coordination, actor |
-| 5 | 15.50 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, archived, ingest, pdf, zip, arxiv |
-| 6 | 15.05 | lane, actor, role, requirements, analysis, edge, impact, task | queue, sha, backlog, withheld, bytes, arm, tile, slide |
-| 7 | 14.72 | preview, staging, translation, locale, url, translated, pages, language | tile, glass, avatar, card, slot, sticky, fit, settings |
+| 4 | 16.94 | page, tile, text, avatar, block, glass, card, blocks | sibling, subdirectory, ledger, plan, session, sessions, actor, coordination |
+| 5 | 15.56 | tile, glass, board, avatar, card, sticky, tiles, theme | rung, archive, pdf, sniff, ingest, zip, archived, arxiv |
+| 6 | 15.08 | lane, actor, role, requirements, feature, analysis, impact, edge | queue, sha, backlog, withheld, rung, arm, bytes, slide |
+| 7 | 14.75 | preview, staging, translation, locale, url, translated, pages, language | tile, glass, avatar, card, slot, fit, sticky, role |
 | 8 | 14.50 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, task, requirements, user, login |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
