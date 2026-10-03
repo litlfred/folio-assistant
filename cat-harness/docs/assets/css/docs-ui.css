@@ -5541,6 +5541,39 @@ html:has(body > .fa-glass-handle) {
   transition: transform .12s ease;
 }
 .fa-nav-pages[aria-expanded="false"]::before { transform: rotate(-90deg); }
+
+/* ONE CARET FOR EVERY DISCLOSURE IN THE COLUMN (#1902). Owner: *"all three are
+ * collapsible but only one has the arrow thing"* -- the summaries are
+ * `display: flex`, which drops the native marker, so only the Pages button
+ * (whose caret is drawn above) showed one. The same glyph, the same turn, the
+ * same timing, keyed on the element's own open state rather than on a class a
+ * script has to keep in step. */
+.fa-doc-index__heading,
+.fa-nav-graphs-group__heading,
+.fa-nav-folders__heading { list-style: none; }
+.fa-doc-index__heading::-webkit-details-marker,
+.fa-nav-graphs-group__heading::-webkit-details-marker,
+.fa-nav-folders__heading::-webkit-details-marker { display: none; }
+.fa-doc-index__heading::before,
+.fa-nav-graphs-group__heading::before,
+.fa-nav-folders__heading::before {
+  content: "\25be";
+  display: inline-block;
+  transition: transform .12s ease;
+}
+.fa-doc-index:not([open]) > .fa-doc-index__heading::before,
+.fa-nav-graphs-group:not([open]) > .fa-nav-graphs-group__heading::before,
+.fa-nav-folders:not([open]) > .fa-nav-folders__heading::before { transform: rotate(-90deg); }
+.fa-doc-index__heading:focus-visible,
+.fa-nav-graphs-group__heading:focus-visible,
+.fa-nav-folders__heading:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: -2px;
+}
+
+/* PAGES, SCOPED to the instance being viewed (#1902): `scopeSiteNav` marks the
+ * rows outside the instance's own subtree, and they are not drawn. */
+.site-nav [data-fa-out-of-scope] { display: none !important; }
 .fa-nav-pages:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: -2px;
