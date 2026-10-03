@@ -37,7 +37,6 @@ const DIR = resolve(import.meta.dir, "..", "findings");
 const DATA = join(DIR, "dth-term-alternatives.json");
 const OUT = join(DIR, "dth-terms.md");
 const GENERATOR = "smart-base/scripts/gen-dth-term-findings.ts";
-export const TERM_FINDINGS_SCHEMA_TAG = "folio-term-findings/v1";
 
 const QuoteSchema = z.union([
   z.object({
@@ -53,7 +52,6 @@ const QuoteSchema = z.union([
 export type Quote = z.infer<typeof QuoteSchema>;
 
 export const TermFindingsSchema = z.object({
-  $schema: z.literal(TERM_FINDINGS_SCHEMA_TAG),
   id: z.string().min(1),
   title: z.string().min(1),
   ruling: z.object({ date: z.string(), quote: z.string().min(1), issue: z.string().url(), bean: z.string().min(1) }).strict(),
