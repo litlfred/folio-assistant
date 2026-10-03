@@ -6,6 +6,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. GROUPED BY CONCERN since placement PR3 (bean `63wl`): `processes.json` names the groups, each diagram sits in `processes/<group>/` and a DMN in `processes/<group>/decisions/` beside the diagrams that read it; the content-type diagrams moved up to the instances that own their skills (folio-assistant-core, folio-assistant-sci, fhir-harness), whose same-named `processes/<group>/` are members of these groups.",
       "holdsGraph": [
         "bootstrap:graphKind/processes"
@@ -3072,6 +3076,253 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal/flow/F1",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal",
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/mount-subgraph.svg",
+          "enforcement": "strict",
+          "flowCount": 9,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "Mount a declared subgraph",
+          "nodeCount": 9,
+          "sourcePath": "processes/kg/mount-subgraph.bpmn",
+          "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted",
+          "summary": "Making a declared subgraph's content available at its declared path, whatever its content source."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "directory",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "branch",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "any other kind",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Mounted"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Refused"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "Build pipeline",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Mounted",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8",
+          "name": "Subgraph content at its declared path",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/End_Refused",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9",
+          "name": "Refused, with the reason",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_Join",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7"
+          ],
+          "name": "GW_Join",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M8",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/GW_SourceKind",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2",
+          "name": "Which source kind?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Start_SubgraphWanted",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "name": "A step needs a declared subgraph",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_MountBranchTip",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-context-and-state-graphs"
+          ],
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M4",
+          "name": "Mount the branch tip at the declared path",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M7",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M5",
+          "name": "Refuse: no flow for this source kind",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M9",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_ResolveSource",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M1",
+          "name": "Resolve the subgraph's content source",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/node/Task_UseCheckoutPath",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/lane/Lane_MountPipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M3",
+          "name": "Use the checkout path in place",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph/flow/F_M6",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MountSubgraph",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
           "relaxable": true,
           "touchesWorkPlan": false
         },

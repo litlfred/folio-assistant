@@ -44,6 +44,15 @@
       "@id": "http://purl.org/dc/terms/conformsTo",
       "@type": "@id"
     },
+    "contentSource": {
+      "@context": {
+        "branch": "http://purl.org/dc/terms/identifier",
+        "declaredIn": "https://litlfred.github.io/cat-harness/0.1.0/ns#sourceDeclaredIn",
+        "keyedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns#keyedBy",
+        "kind": "http://purl.org/dc/terms/type"
+      },
+      "@id": "http://purl.org/dc/terms/source"
+    },
     "counts": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#counts",
       "@type": "@json"

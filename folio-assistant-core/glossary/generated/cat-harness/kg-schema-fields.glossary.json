@@ -6225,7 +6225,7 @@
     {
       "id": "intake.intakeschema.licence",
       "prefLabel": "IntakeSchema.licence",
-      "definition": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.",
+      "definition": "The licence the uploader established, as the SAME record a library manifest carries as `licenceRecord` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.",
       "source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
       "status": "candidate"
     },
@@ -8400,6 +8400,13 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexschema.edges",
+      "prefLabel": "BeanIndexSchema.edges",
+      "definition": "The block graph as ONE edge set, `blocker → blocked`, over both front-matter declarations (`blocking:` on the blocker, `blocked_by:` on the blocked), deduplicated — `blockEdges` in `scripts/beans.ts`, bean `vhqq`. An end may name no bean in `items`: that edge is kept here and reported as a `blocking-unknown` finding, never dropped.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.extractedtitle",
       "prefLabel": "LibraryIndexEntrySchema.extractedTitle",
       "definition": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`).",
@@ -8992,6 +8999,20 @@
       "prefLabel": "StickyTextSchema.scale",
       "definition": "Multiply the words' size. `1` is normal; `0.8` fits more in.",
       "source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-manifest.subgraphnodebase.holdsgraph",
+      "prefLabel": "SubgraphNodeBase.holdsGraph",
+      "definition": "Links to the GraphKind nodes this subgraph holds.",
+      "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-manifest.subgraphnodebase.name",
+      "prefLabel": "SubgraphNodeBase.name",
+      "definition": "The subgraph's label: the harness name at the root, the instance-relative path below it.",
+      "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name",
       "status": "candidate"
     },
     {
