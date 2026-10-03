@@ -22,16 +22,20 @@ describe("judge", () => {
   });
   test("a new failure is red and named", () => {
     const j = judge(measured(["a > b", "c > d"]), { failing: ["a > b"], failed: 1 });
-    expect(j.exit).toBe(STANDALONE_EXIT.moved);
+    expect(j.exit).toBe(STANDALONE_EXIT.grew);
     expect(j.lines.join("\n")).toContain("+ c > d");
   });
-  test("a fixed failure is red until the baseline is lowered", () => {
+  test("a listed test that now passes is reported, not red (an unstable entry must not flip CI)", () => {
     const j = judge(measured([]), { failing: ["a > b"], failed: 1 });
-    expect(j.exit).toBe(STANDALONE_EXIT.moved);
+    expect(j.exit).toBe(STANDALONE_EXIT.held);
     expect(j.lines.join("\n")).toContain("- a > b");
+    expect(j.lines.join("\n")).toContain("standalone:baseline");
+  });
+  test("a new failure is red even when another listed one passed", () => {
+    expect(judge(measured(["c > d"]), { failing: ["a > b"], failed: 1 }).exit).toBe(STANDALONE_EXIT.grew);
   });
   test("more unnamed failures is red", () => {
-    expect(judge(measured(["a > b"], 3), { failing: ["a > b"], failed: 2 }).exit).toBe(STANDALONE_EXIT.moved);
+    expect(judge(measured(["a > b"], 3), { failing: ["a > b"], failed: 2 }).exit).toBe(STANDALONE_EXIT.grew);
   });
   test("an error and a missing baseline are never held", () => {
     expect(judge({ state: "error", note: "x" }, { failing: [], failed: 0 }).exit).toBe(STANDALONE_EXIT.undetermined);
@@ -104,7 +108,7 @@ describe("the falsifiers, through the real probe", () => {
       const probe = probeStandalone(root, "layer", DECLS, OPTS);
       expect(probe).toMatchObject({ state: "measured", count: 1 }); // a mismatch prints the probe's note
       const j = judge(probe, { failing: [], failed: 0 });
-      expect(j.exit).toBe(STANDALONE_EXIT.moved);
+      expect(j.exit).toBe(STANDALONE_EXIT.grew);
       expect(j.measured?.failing).toEqual(["reads.test.ts > reads core"]);
     } finally {
       rmSync(root, { recursive: true, force: true });

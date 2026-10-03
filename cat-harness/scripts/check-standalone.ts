@@ -20,15 +20,20 @@
  * is that the number never GROWS: a failure not already in the baseline is a
  * new read of something only the monorepo has, and that is red.
  *
- * A baseline entry that now passes is red too, because a ratchet nobody
- * lowers is a ratchet that lets the next failure in for free. `--update`
- * (`bun run standalone:baseline`) writes `standalone-baseline.json`; a PR
- * that fixes a test commits the shorter list.
+ * A baseline entry that now passes is REPORTED, not red. It was red at first,
+ * and #1977's CI showed why that is the wrong trade: one listed test
+ * (`kg-audit-root-instance … emits a report`) fails in a loaded local run and
+ * passes on the runner, so a symmetric ratchet turns CI red at random over a
+ * test that is not getting worse. The direction the gate exists for — a NEW
+ * standalone failure — stays red. `bun run standalone:baseline` writes
+ * `standalone-baseline.json`; a PR that fixes a test commits the shorter list,
+ * and the report names the command whenever one could be shorter.
  *
  * ## The three states
  *
- * - **held** (0): the failing set is exactly the baseline.
- * - **moved** (1): a new failure, a fixed one, or more unnamed failures.
+ * - **held** (0): nothing fails that the baseline does not list. Listed tests
+ *   that now pass are printed, with the command that lowers the list.
+ * - **grew** (1): a new failure, or more unnamed failures.
  * - **could not determine** (2): the probe could not produce a summary, or no
  *   baseline is committed. Never rendered as held.
  *
@@ -40,7 +45,7 @@ import { relative, resolve } from "node:path";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { probeStandalone, readLayers, type Probe } from "./seed-ready.js";
 
-export const STANDALONE_EXIT = { held: 0, moved: 1, undetermined: 2 } as const;
+export const STANDALONE_EXIT = { held: 0, grew: 1, undetermined: 2 } as const;
 
 /**
  * The committed baseline, one entry per layer. Beside `declared-path-baseline.json`
@@ -86,6 +91,11 @@ export function judge(probe: Probe, baseline: Baseline | undefined): Judgement {
   const unnamedBefore = baseline.failed - baseline.failing.length;
 
   const lines: string[] = [];
+  const shorter: string[] = [];
+  if (fixed.length > 0) {
+    shorter.push(`${fixed.length} listed test(s) now pass standalone — not a failure; \`bun run standalone:baseline\` lowers the list:`);
+    for (const n of fixed) shorter.push(`  - ${n}`);
+  }
   if (grew.length > 0) {
     lines.push(`${grew.length} test(s) fail standalone that the baseline does not list — each reads something only the monorepo has:`);
     for (const n of grew) lines.push(`  + ${n}`);
@@ -93,18 +103,18 @@ export function judge(probe: Probe, baseline: Baseline | undefined): Judgement {
   if (unnamedNow > unnamedBefore) {
     lines.push(`${unnamedNow - unnamedBefore} more failure(s) that carry no test name (errors between tests): ${unnamedBefore} → ${unnamedNow}.`);
   }
-  if (fixed.length > 0) {
-    lines.push(`${fixed.length} baseline entr(y/ies) now pass — lower the baseline with --update:`);
-    for (const n of fixed) lines.push(`  - ${n}`);
-  }
   if (lines.length === 0) {
-    return { exit: STANDALONE_EXIT.held, lines: [`held: ${measured.failed} failing standalone, exactly the baseline.`], measured };
+    const head =
+      fixed.length === 0
+        ? `held: ${measured.failed} failing standalone, exactly the baseline.`
+        : `held: ${measured.failed} failing standalone, none outside the baseline.`;
+    return { exit: STANDALONE_EXIT.held, lines: [head, ...shorter], measured };
   }
-  return { exit: STANDALONE_EXIT.moved, lines, measured };
+  return { exit: STANDALONE_EXIT.grew, lines: [...lines, ...shorter], measured };
 }
 
 const BASELINE_COMMENT =
-  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red, and a listed one that now passes is red until it is removed. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness/scripts/check-standalone.ts.";
+  "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness/scripts/check-standalone.ts.";
 
 interface BaselineFile {
   _comment: string;
