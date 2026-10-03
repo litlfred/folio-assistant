@@ -485,6 +485,9 @@ export const RULES: Rule[] = [
       "schemas/skill-definitions-dir.ts",    // where the JSON skill definitions and conventions live (bean `rqao`)
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
+      "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
+      "scripts/resolve-subgraph.ts",         // the subgraph-source resolver from a shell (Tool `subgraph-resolve`)
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
@@ -657,6 +660,10 @@ export const RULES: Rule[] = [
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.
       "scripts/check-source-licence.ts",
+      // Snapshots the SPDX License List ids that check validates against (bean
+      // `sd5v`): the same subject — every declared library's licences — and
+      // no folio's content.
+      "scripts/pin-spdx-license-list.ts",
       "scripts/check-wireframes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.

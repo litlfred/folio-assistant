@@ -56,6 +56,12 @@
  */
 
 import { z } from "zod";
+import {
+  SubgraphSourceOverridesSchema,
+  resolveSubgraphSource,
+  type ResolvedSubgraphSource,
+  type SubgraphSourceOverrides,
+} from "./subgraph-source";
 
 // ── Dependency types ────────────────────────────────────────────
 
@@ -183,6 +189,8 @@ export interface HarnessConfig {
    * the landing page (issue #1904). See {@link HarnessSiteSchema}.
    */
   site?: HarnessSite;
+  /** Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}. */
+  subgraphSources?: SubgraphSourceOverrides;
 }
 
 // ── Zod schemas ─────────────────────────────────────────────────
@@ -358,6 +366,14 @@ export const HarnessConfigSchema = z.object({
   translation: TranslationConfigSchema.optional(),
   dependencies: HarnessConfigDependenciesSchema.optional(),
   site: HarnessSiteSchema.optional(),
+  /**
+   * Per-instantiation override of where a declared subgraph gets its content,
+   * keyed by the directory's `id` (never its path). The owner, 2026-10-03:
+   * *"That same information can be overwritten by the harness instance
+   * config."* Applied by `resolveSubgraphSource` and nowhere else
+   * (`schemas/subgraph-source.ts`, bean `l4ay`).
+   */
+  subgraphSources: SubgraphSourceOverridesSchema.optional(),
 });
 
 // ── Dependency resolution ───────────────────────────────────────
@@ -1384,6 +1400,77 @@ export function corpusDirectoryForGraph(instanceRoot: string, kind: string): str
     );
   }
   return all[0];
+}
+
+// ── A declared subgraph, with its resolved content source (bean `l4ay`) ──
+
+/** A declared subgraph: who declares it, its entry, and where its content comes from. */
+export interface DeclaredSubgraph {
+  id: string;
+  /** The root of the instance whose OWN declaration carries the entry. */
+  instanceRoot: string;
+  /** That instance's declared `name`. */
+  instanceName: string;
+  /** The instance's declared `repository` (`owner/repo`), when it has one. */
+  repository?: string;
+  entry: ResolvedDirectory;
+  source: ResolvedSubgraphSource;
+}
+
+/**
+ * The instance-config overrides that apply to a subgraph declared by
+ * `declarer`: the declarer's own config, then the CHECKOUT ROOT's on top —
+ * the checkout root is the instantiation, so its word is last. Both matched on
+ * directory id.
+ */
+export function subgraphSourceOverrides(declarer: string, start: string = declarer): SubgraphSourceOverrides {
+  const checkout = checkoutRootFor(start);
+  const out: SubgraphSourceOverrides = {};
+  for (const root of [...new Set([resolve(declarer), checkout])]) {
+    const cfg = readHarnessConfig(root)?.subgraphSources;
+    if (cfg) Object.assign(out, SubgraphSourceOverridesSchema.parse(cfg));
+  }
+  return out;
+}
+
+/**
+ * THE lookup a publisher, the KG export and a mount/push tool use: the
+ * declared subgraph with this `id`, found from any instance in the checkout,
+ * with its source resolved (config override → `source` → legacy `storage` →
+ * `directory`).
+ *
+ * `start`'s own chain is asked first, so an instance redeclaring an inherited
+ * id is answered with its own entry. Otherwise the checkout's instances are
+ * searched for one whose OWN declaration carries the id. `undefined` when no
+ * instance declares it; throws when several unrelated instances do, because
+ * picking one would be a guess.
+ */
+export function declaredSubgraph(start: string, id: string): DeclaredSubgraph | undefined {
+  const here = resolve(start);
+  const graph = checkoutGraph(checkoutRootFor(here));
+  const owners: string[] = [];
+  const candidates = [here, ...graph.order.filter((r) => r !== here)];
+  for (const root of candidates) {
+    const decl = readDeclaration(root);
+    if (decl?.directories.some((d) => d.id === id)) owners.push(root);
+    if (root === here && owners.length > 0) break;
+  }
+  if (owners.length === 0) return undefined;
+  if (owners.length > 1 && owners[0] !== here) {
+    throw new Error(`subgraph "${id}" is declared by ${owners.length} instances (${owners.join(", ")}) — ask from the one you mean`);
+  }
+  const instanceRoot = owners[0]!;
+  const decl = readDeclaration(instanceRoot)!;
+  const entry = resolveDirectories(chainIn(graph, instanceRoot)).find((d) => d.id === id && d.own)
+    ?? resolveDirectories(declarationChain(instanceRoot)).find((d) => d.id === id)!;
+  return {
+    id,
+    instanceRoot,
+    instanceName: decl.name,
+    ...(decl.repository ? { repository: decl.repository } : {}),
+    entry,
+    source: resolveSubgraphSource(entry, subgraphSourceOverrides(instanceRoot, here)),
+  };
 }
 
 /**

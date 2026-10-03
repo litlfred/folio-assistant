@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "a056c5ff7f44"
+    "script_hash": "b4164d449e9e"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -174,7 +174,6 @@
             "bun run check:instance-config",
             "bun run check:instance-graph",
             "bun run check:instance-render",
-            "bun run check:landing-instance",
             "bun run check:layout-norms:check",
             "bun run check:publishable",
             "bun run check:published-instance-exports",
@@ -294,6 +293,7 @@
             "cat-harness/docs",
             "docs",
             "smart-base/docs",
+            "smart-base/findings",
             "smart-immunizations/docs",
             "smart-trust/docs",
             "who-iris/docs",
@@ -333,6 +333,7 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
+            "bun run smart-base:dth-terms:check",
             "bun run subscriptions:viz:check",
             "bun run translated-links:check"
           ],

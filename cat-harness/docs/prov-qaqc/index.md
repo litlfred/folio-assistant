@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 88 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+10 instance(s), 105 step(s) checked, 105 `prov:Activity` emitted, 93 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -26,7 +26,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
 | `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
 | `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 62 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `unknown` | 67 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
@@ -35,6 +35,18 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `unaddressed` | 1 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
+
+### code-change-review--bean-1j3q-route-keyed-storage
+
+5 step(s) checked, 5 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/sdlc/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--bean-1j3q-route-keyed-storage.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `code-change-review--bean-1j3q-route-keyed-storage` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 4 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 5 | `Task_CommitAndOpenPR` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_CommitAndOpenPR as authoring-agent |
 
 ### code-change-review--consolidation-956
 

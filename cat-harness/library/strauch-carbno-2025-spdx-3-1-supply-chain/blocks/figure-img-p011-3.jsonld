@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p011-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p011-3.png",
+  "pageStart": 11,
+  "pageEnd": 11,
+  "narrative": {
+    "text": "UML class diagram in a frame tabbed 'Hardware profile'. Above the frame sit Core/ Specification and Core/ Element. ProductSpecification (hazard: DefinedType [0..*]) specialises Core/Specification. The abstract Hardware specialises Core/Element, with productAgent :Agent [1], hardwareVersion:xsd:string [0..1], partNumber : xsd:string [1], releaseDate :DateTime [0..1], serialNumber : xsd:string [0..1], batchNumber : xsd:string [0..1], hazard: DefinedType [0..*], category: DefinedType [0..*], additionalInformationSpecification : /Core/Specification [0..*] and additionalInformation :/Core/DictionaryEntry [0..*]. Three classes specialise Hardware: PhysicalHardware (massOfHardware: MeasureOfMass [0..1], dimensions : Dimensions [0..1], centerOfMass : Dimensions [0..1]); BulkHardware (bulkQuantity :Core/UnitofMeasure, plus two rows shaded red: /Hardware/Hardware/serialNumber : xsd:string [0] and /Core/Element/description :xsd:string [1]); and VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). A separate Dimensions class has xAxisLength, yAxisLength and zAxisLength, each : MeasureOfLength [1], and an 'Enumerations' frame holds VirtualHardwareModelType.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+  "provenance": "ingested"
+}
