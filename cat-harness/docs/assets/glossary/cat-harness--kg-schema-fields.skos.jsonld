@@ -24182,6 +24182,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/subgraph-manifest.subgraphnodebase.holdsgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.holdsGraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Links to the GraphKind nodes this subgraph holds."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/subgraph-manifest.subgraphnodebase.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The subgraph's label: the harness name at the root, the instance-relative path below it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/substrate-snapshot.substratesnapshotschema.file",
       "@type": "skos:Concept",
       "skos:inScheme": {

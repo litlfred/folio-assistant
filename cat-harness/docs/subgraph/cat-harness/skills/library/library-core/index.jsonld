@@ -1,0 +1,146 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "library-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adopt-methodology-from-source",
+      "@type": "bootstrap:Skill",
+      "name": "adopt-methodology-from-source",
+      "title": "Adopt a methodology from a source document"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv",
+      "@type": "bootstrap:Skill",
+      "name": "archiving-arxiv",
+      "title": "Materializing from arXiv"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-web-pages",
+      "@type": "bootstrap:Skill",
+      "name": "archiving-web-pages",
+      "title": "Archiving a web page"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
+      "@type": "bootstrap:Skill",
+      "name": "asset-extraction",
+      "title": "Asset extraction — the index goes in, the contents do not"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-human-review",
+      "@type": "bootstrap:Skill",
+      "name": "bib-human-review",
+      "title": "bib-human-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-photo-ingestion-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "bib-photo-ingestion-watcher",
+      "title": "bib-photo-ingestion-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
+      "@type": "bootstrap:Skill",
+      "name": "bib-qa",
+      "title": "Bibliography QA Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
+      "@type": "bootstrap:Skill",
+      "name": "code-lists",
+      "title": "Code lists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
+      "@type": "bootstrap:Skill",
+      "name": "content-acquisition",
+      "title": "Acquisition is the step before ingestion, and it had no home"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
+      "@type": "bootstrap:Skill",
+      "name": "filing-dublin-core",
+      "title": "Filing a source: what Dublin Core carries, and what it does not"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
+      "@type": "bootstrap:Skill",
+      "name": "glossary-build",
+      "title": "Glossary Build Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
+      "@type": "bootstrap:Skill",
+      "name": "glossary-terms",
+      "title": "Glossary terms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "library-ingestion",
+      "title": "Library ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
+      "@type": "bootstrap:Skill",
+      "name": "literature-search",
+      "title": "Literature search — finding the source a citation points at"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ontologist",
+      "@type": "bootstrap:Skill",
+      "name": "ontologist",
+      "title": "Semantic Ontologist (Ambiguity Detection & Glossary)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "name": "tabular-metadata",
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
+      "@type": "bootstrap:Skill",
+      "name": "term-disagreement",
+      "title": "Term disagreement — the extractor and the terminology disagree"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
+      "@type": "bootstrap:Skill",
+      "name": "translation-manager",
+      "title": "Translation manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming",
+      "@type": "bootstrap:Skill",
+      "name": "upload-naming",
+      "title": "Upload naming — the name is normalised, not the link escaped"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
+      "@type": "bootstrap:Skill",
+      "name": "upload-routes",
+      "title": "Two mechanisms and a persona"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch",
+      "@type": "bootstrap:Skill",
+      "name": "uploads-watch",
+      "title": "Watching the queue"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/bib-qa/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/library/library-core",
+  "path": "skills/library/library-core/"
+}

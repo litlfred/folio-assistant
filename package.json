@@ -295,6 +295,8 @@
     "kg:detangle:direction": "bun run cat-harness/skills/kg/graph-management/kg-detangle.ts --gate-direction",
     "kg:export": "bun run cat-harness/scripts/kg-export.ts",
     "kg:export:check": "bun run cat-harness/scripts/kg-export.ts --check",
+    "subgraph:jsonld": "bun run cat-harness/scripts/gen-subgraph-jsonld.ts",
+    "subgraph:jsonld:check": "bun run cat-harness/scripts/gen-subgraph-jsonld.ts --check",
     "kg:export:sidecars": "bun run cat-harness/scripts/kg-export.ts --sidecars",
     "kg:export:judge": "bun run cat-harness/scripts/kg-export.ts --judge",
     "kg:instantiate": "bun run cat-harness/scripts/kg-instantiate.ts",

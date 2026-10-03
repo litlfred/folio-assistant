@@ -1,0 +1,47 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/large-datasets/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+      "@type": "cat-harness:SkillPackage",
+      "name": "large-datasets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized",
+      "@type": "bootstrap:Skill",
+      "name": "copy-out-materialized",
+      "title": "Working on materialized content — copy it out"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-subscription",
+      "@type": "bootstrap:Skill",
+      "name": "kg-subscription",
+      "title": "Subscribing to a knowledge graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-on-demand",
+      "@type": "bootstrap:Skill",
+      "name": "materialize-on-demand",
+      "title": "Materialize on demand"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
+      "@type": "bootstrap:Skill",
+      "name": "materialize-remote",
+      "title": "Materializing remote content"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
+      "@type": "bootstrap:Skill",
+      "name": "sample-import",
+      "title": "Sample import"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/library/large-datasets",
+  "path": "skills/library/large-datasets/"
+}

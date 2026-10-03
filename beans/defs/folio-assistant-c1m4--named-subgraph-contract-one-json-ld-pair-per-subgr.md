@@ -25,8 +25,8 @@ Assessment of the pasted design note (owner asked "does the discussion apply"): 
 
 ## Done when
 - [x] measured today: can `kg:materialize` (fnx4) / the existing JSON-LD export pull every node of `cat-harness/skills/sdlc` in one step? record the answer with evidence
-- [ ] contract written into the KG data-modelling skill and `schemas/` (subgraph manifest type; Harness/Subgraph common base decided)
-- [ ] generator emits `index.jsonld` + `hydrated.jsonld` per declared subgraph via framing, with a check gate
+- [x] contract written into the KG data-modelling skill and `schemas/` (subgraph manifest type; Harness/Subgraph common base decided)
+- [x] generator emits `index.jsonld` + `hydrated.jsonld` per declared subgraph via framing, with a check gate
 - [ ] remote materialization consumes the same files
 
 _2026-10-03T08:07:54Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
@@ -49,3 +49,9 @@ Selected "Deep, but not at root": `hydrated.jsonld` inlines EVERY node in the su
 
 ## Owner ruling 2026-10-03 — file name
 The dereferenced file is `index.hydrated.jsonld` (was `hydrated.jsonld`): the pair is `index.jsonld` + `index.hydrated.jsonld`, sorting together, both under the subgraph's directory IRI.
+
+## Implemented 2026-10-03 — schema, generator, gate
+- `cat-harness/schemas/subgraph-manifest.ts`: `SubgraphIndexSchema` / `SubgraphHydratedSchema`. The subgraph node is `GraphNodeDirectoryShape.pick({path, title, description})` — Harness (the root) and Subgraph share that one base. `id` is carried as `@id` (the directory IRI); `graphKinds` as `holdsGraph` links, as kg-export already does.
+- `cat-harness/scripts/gen-subgraph-jsonld.ts` (`bun run subgraph:jsonld`, gate `subgraph:jsonld:check`): reuses `buildExport()`'s in-memory graph; every directory under `kgDirectories(instance)` (skills/, scenarios/, processes/, nested) is a subgraph; direct membership by deepest containing directory, `partOf` inheritance for pathless nodes, the rest at the root. `jsonld.frame` with `@embed @never` (index; direct members as `@explicit` pointer projections) and `@always` (hydrated; members whole, children nested, every KG edge left as an IRI). Root gets `index.jsonld` only.
+- Output: `cat-harness/docs/subgraph/cat-harness/**` (served at `<BASE_URL>/subgraph/cat-harness/…`), 53 subgraphs, 105 files + context `cat-harness/ns/subgraph/v1.jsonld`, 4,462,188 bytes total. `skills/sdlc` hydrated = all 63 sdlc nodes in one fetch.
+- Still open: remote materialization does not yet read these files.

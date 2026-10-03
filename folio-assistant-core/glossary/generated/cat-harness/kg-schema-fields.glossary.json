@@ -8911,6 +8911,20 @@
       "status": "candidate"
     },
     {
+      "id": "subgraph-manifest.subgraphnodebase.holdsgraph",
+      "prefLabel": "SubgraphNodeBase.holdsGraph",
+      "definition": "Links to the GraphKind nodes this subgraph holds.",
+      "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-manifest.subgraphnodebase.name",
+      "prefLabel": "SubgraphNodeBase.name",
+      "definition": "The subgraph's label: the harness name at the root, the instance-relative path below it.",
+      "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name",
+      "status": "candidate"
+    },
+    {
       "id": "substrate-snapshot.substratesnapshotschema.file",
       "prefLabel": "SubstrateSnapshotSchema.file",
       "definition": "The upstream file, relative to the substrate's repository root: `<name>.json`.",
