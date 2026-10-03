@@ -165,6 +165,13 @@ is a place a reader has to already know about.** So the inline board collapses
 to a control in its own position, and focus follows it — left alone, focus
 lands on `<body>` and the keyboard position is gone.
 
+**A default of "hidden" is allowed only with the inverse on screen.** The
+glass's tile strip starts slid away (owner, 2026-10-01), and that is
+acceptable for one reason: its "Show tiles (N)" tab stays in view, in the
+strip's own position, and the same tab hides the tiles again. A hidden default
+whose way back is anywhere else is this section's defect. See
+[`harness-tiles`](harness-tiles.md) §"The glass strip".
+
 ## The floor, which is not negotiable
 
 This instance's declared interaction profile is **low-dexterity**. Every board

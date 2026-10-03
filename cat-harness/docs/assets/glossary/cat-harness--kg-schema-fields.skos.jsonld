@@ -5695,6 +5695,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.glassstrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.glassStrip"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.glassStrip",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.icon",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6151,6 +6170,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.glassstrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.glassStrip"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which tiles the glass's bottom strip pins, in order — see {@link GlassStripSchema}. Same three states as `navbarIcons`: absent inherits, `[]` pins nothing, a list is this instance's own answer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.glassStrip",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6531,6 +6569,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`), which applies the instance config's override by id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.source",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.storage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6702,6 +6759,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.source",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.storage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6866,7 +6942,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+          "@value": "How entries are keyed on the branch: one entry per `commit`, one live copy at the `tip`, or one entry per published `route`. See {@link DirectoryStorageSchema}'s docblock for why `route` is not a synonym for `tip`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
@@ -15651,6 +15727,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.declaredsubgraph.instancename",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredSubgraph.instanceName"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "That instance's declared `name`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceName",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.declaredsubgraph.instanceroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredSubgraph.instanceRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The root of the instance whose OWN declaration carries the entry."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.declaredsubgraph.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DeclaredSubgraph.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's declared `repository` (`owner/repo`), when it has one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.repository",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.folioassistantdependency.derivedfromneeds",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -15974,6 +16107,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.harnessconfig.subgraphsources",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessConfig.subgraphSources"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfig.subgraphSources",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.harnessconfig.translation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16028,6 +16180,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema.interactivity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.harnessconfigschema.subgraphsources",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessConfigSchema.subgraphSources"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per-instantiation override of where a declared subgraph gets its content, keyed by the directory's `id` (never its path). The owner, 2026-10-03: *\"That same information can be overwritten by the harness instance config.\"* Applied by `resolveSubgraphSource` and nowhere else (`schemas/subgraph-source.ts`, bean `l4ay`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema.subgraphSources",
       "skos:note": "candidate"
     },
     {
@@ -19505,6 +19676,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_undetermined_reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pinned-terminology.pinnedconceptschema.deprecated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PinnedConceptSchema.deprecated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The edition itself marks the code deprecated: still valid to read, not to write anew. Absent means the edition says nothing, not \"current\". First user: the SPDX License List (`isDeprecatedLicenseId`), bean `sd5v`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.deprecated",
       "skos:note": "candidate"
     },
     {
@@ -23384,6 +23574,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spdx-license-expression.expressioncheck.deprecated",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExpressionCheck.deprecated"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Listed ids the edition marks deprecated, canonical spelling."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.deprecated",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/spdx-license-expression.expressioncheck.recased",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExpressionCheck.recased"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/staging-preview.stagingdeployfactsschema.branch",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24331,6 +24559,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/subgraph-source.sourcedentry.storage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourcedEntry.storage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "#1764's field, if a declaration carries it. Read only to map it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#SourcedEntry.storage",
       "skos:note": "candidate"
     },
     {

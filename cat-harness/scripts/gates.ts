@@ -543,6 +543,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`search-scopes` verifier",
   },
   {
+    match: "publish-id-lookup.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it copies the identifier-lookup client and each declared index into the BUILT " +
+      "site (bean `1br0`); there is no `_site` in a checkout. Covered by publish-id-lookup.test.ts, and on " +
+      "every deployed tree by publish-verify's `search-scopes`, which fails a linked lookup the tree lacks",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",

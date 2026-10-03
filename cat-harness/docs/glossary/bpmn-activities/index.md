@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 431 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 27 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 435 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 27 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 648 terms and is 524 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 652 terms and is 528 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>648</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>648</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>652</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>652</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,9 +29,9 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">648</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">652</span> shown</p>
 
-<nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
+<nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
 <h2 id="letter-0-9">0–9</h2>
 <dl class="fa-gloss">
@@ -2439,6 +2439,13 @@ Monitor, and use data effectively <span class="fa-gloss-status">candidate, extra
 <p>DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, <code>9789241511766-eng</code>, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_MonitorAndUseData</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_mountbranchtip" data-fa-state="extracted" data-fa-gloss="">
+Mount the branch tip at the declared path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A <code>branch</code> source keyed by <code>tip</code>: <code>branch-store mount --id &lt;dir-id&gt;</code> writes the tip's files at the declared path, so every reader finds the directory where it always was; <code>push</code> splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A <code>commit</code>-keyed branch is read per commit through its own store (<code>qa-store</code>), not mounted.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_ingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
 Move into library/&lt;bib-slug&gt;/ <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3418,6 +3425,13 @@ Refresh the held part [refresh-materialized] <span class="fa-gloss-status">candi
 <p>The shared refresh, called, not re-described: what changed upstream, what changed locally, and what to do when both did. An archival copy is fixity-checked and never re-fetched. Whatever that process decides — refreshed, kept divergent, or deferred — is the part's new state; this loop only moves to the next part.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/subscribe-kg.bpmn"><code>cat-harness/processes/library/subscribe-kg.bpmn#Call_Refresh</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_refuseunknownkind" data-fa-state="extracted" data-fa-gloss="">
+Refuse: no flow for this source kind <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the <code>dh4f</code> defect.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_RefuseUnknownKind</code></a></p>
+</dd>
 <dt id="folio-assistant-sci--kg-bpmn-activities--process_atomicmassdrift.task_check" data-fa-state="extracted" data-fa-gloss="">
 Regenerate AtomicMass.lean from the data table — and diff <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3662,6 +3676,13 @@ Resolve the plan [test-plan/v1] <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>The plan parses, names at least one <code>req:</code> requirement, its <code>exitCriteria</code> resolves to a decision in a <code>.dmn</code> that exists, and its <code>scope.kind</code> is the system's facet kind. A plan that does not resolve is not run — <code>test-plan-resolves</code> audits the same join afterwards.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/test-plan-execution.bpmn"><code>cat-harness/processes/sdlc/test-plan-execution.bpmn#A_ResolvePlan</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_resolvesource" data-fa-state="extracted" data-fa-gloss="">
+Resolve the subgraph's content source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>declaredSubgraph(start, id)</code>: the declaring instance, the entry, and the resolved source with <code>declaredIn</code> saying which layer answered. Never read <code>source</code> off the declaration directly — the config override and the legacy <code>storage</code> field are folded in by the resolver and nowhere else. A contradiction (both <code>source</code> and <code>storage</code>; a <code>qa</code> subgraph keyed by tip) throws here, before anything is mounted.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_ResolveSource</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-bpmn-activities--process_renderkgtogithubpages.a_resolveinputs" data-fa-state="extracted" data-fa-gloss="">
 Resolve the Subgraphs and the root URL <span class="fa-gloss-status">candidate, extracted</span>
@@ -4475,6 +4496,17 @@ TypeScript: lint, types and tests (HARD) <span class="fa-gloss-status">candidate
 <dd>
 <p>Three checks: <code>bun run lint</code>, <code>tsc --noEmit</code> and <code>bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code>om30</code>). Since bean <code>dlqu</code> it is three jobs: <code>typescript-static</code> (lint, then typecheck), <code>typescript-test</code> (<code>bun test</code> as four SEQUENTIAL shards on separate machines — Bun's in-process <code>--parallel</code> worker pool hung at both 4 and 2 workers, measured — the shard passed in <code>BUN_OPTIONS</code> so the command stays the one <code>bun run gates</code> runs locally) and <code>typescript</code>, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — <code>bun test</code> LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three <code>main</code> runs before the change: <code>bun test</code> alone was 7m30s-7m45s of an 8m14s-8m33s job.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_TypeScript</code></a></p>
+</dd>
+</dl>
+
+<h2 id="letter-U">U</h2>
+<dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_usecheckoutpath" data-fa-state="extracted" data-fa-gloss="">
+Use the checkout path in place <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A <code>directory</code> source IS its declared path. Nothing is mounted; a write is an ordinary commit on the working branch, which is why <code>branch-store push</code> answers &quot;commit through git&quot; for it rather than pushing anything.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_UseCheckoutPath</code></a></p>
 </dd>
 </dl>
 

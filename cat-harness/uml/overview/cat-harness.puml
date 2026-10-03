@@ -51,6 +51,7 @@ package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<ext
     system [1] : string
     code [1] : string
     display [1] : string
+    deprecated [0..1] : boolean
   }
   class "folio-pinned-terminology/v1" as cat_harness_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 <<json: PinnedTerminologySchema>> #e9edf3 {
     $schema [1] : 'folio-pinned-terminology/v1'
@@ -656,7 +657,7 @@ package "cat-harness/health" as pkg_cat_harness_health <<health>> {
   }
 }
 package "cat-harness/uploads" as pkg_cat_harness_uploads <<uploads>> {
-  note "uploads: no node schema declared\n(no node here carries a $schema family uploads names (3 named): could not determine)" as n_cat_harness_uploads_uploads
+  note "uploads: no node schema declared\n(no node here carries a $schema family uploads names (4 named): could not determine)" as n_cat_harness_uploads_uploads
 }
 package "cat-harness/library" as pkg_cat_harness_library <<library>> {
   class "folio-document-images/v1" as cat_harness_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {

@@ -54,19 +54,24 @@ describe("the schema", () => {
   test.each([
     ["commit", { id: "qa", path: "test/results/", graphKinds: ["qa"] }],
     ["tip", { id: "beans-defs", path: "beans/defs/", graphKinds: ["bean-defs"] }],
-  ])("accepts keyedBy %s (bean 2h76)", (keyedBy, dir) => {
+    ["route", { id: "docs-auto", path: "docs/cat-harness/docs-auto/", graphKinds: ["docs"] }],
+  ])("accepts keyedBy %s (beans 2h76, 1j3q)", (keyedBy, dir) => {
     const storage = { branch: "cat/cat-harness/beans", keyedBy };
     expect(DirectoryStorageSchema.safeParse(storage).success).toBe(true);
     expect(ContentDirectorySchema.safeParse({ ...dir, storage }).success).toBe(true);
   });
 
-  test("refuses keyedBy tip on a qa directory: qa is commit-keyed by construction", () => {
-    const r = ContentDirectorySchema.safeParse({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: { branch: "x", keyedBy: "tip" } });
+  // Both non-commit keyings, not just `tip`. A guard that named one value
+  // would admit every value added after it — which is exactly how `route`
+  // would have slipped past the check written for `tip` (bean `1j3q`).
+  test.each(["tip", "route"])("refuses keyedBy %s on a qa directory: qa is commit-keyed by construction", (keyedBy) => {
+    const r = ContentDirectorySchema.safeParse({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: { branch: "x", keyedBy } });
     expect(r.success).toBe(false);
   });
 
   test.each([
     [{ branch: "qa-reports", keyedBy: "path" }, "an unimplemented keying"],
+    [{ branch: "qa-reports", keyedBy: "routes" }, "a near-miss of an implemented keying"],
     [{ branch: "refs/heads/qa-reports", keyedBy: "commit" }, "a full ref rather than a branch"],
     [{ branch: "-qa", keyedBy: "commit" }, "a leading dash (an option to git)"],
     [{ branch: "qa..reports", keyedBy: "commit" }, "a `..`"],

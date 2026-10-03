@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1727 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1740 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 538 terms and is 303 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 547 terms and is 309 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1951</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1951</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1964</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1964</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">538</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">547</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1446,6 +1446,13 @@ CatHarnessDeclaration.directories <span class="fa-gloss-status">candidate, extra
 <p>Directories this instance scans, before inheritance.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.directories</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.glassstrip" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.glassStrip <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which tiles the glass's bottom strip pins, in order — see <code>GlassStripSchema</code>. Absent inherits.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.glassStrip</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.icon" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.icon <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1613,6 +1620,13 @@ CatHarnessDeclarationSchema.contentAdapters <span class="fa-gloss-status">candid
 <dd>
 <p>The content adapters this instance ships — see &#123;@link ContentAdapterDeclaration}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.contentAdapters</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.glassstrip" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.glassStrip <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which tiles the glass's bottom strip pins, in order — see &#123;@link GlassStripSchema}. Same three states as <code>navbarIcons</code>: absent inherits, <code>[]</code> pins nothing, a list is this instance's own answer.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.glassStrip</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.id" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.id <span class="fa-gloss-status">candidate, extracted</span>
@@ -2279,6 +2293,13 @@ ContentDirectory.readOnlyBasis <span class="fa-gloss-status">candidate, extracte
 <p>Why — required whenever &#123;@link readOnly} is declared, either value. See the schema field.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.readOnlyBasis</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.source" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectory.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this subgraph gets its content. Absent is <code>&#123; kind: &quot;directory&quot; }</code>. Read it through <code>resolveSubgraphSource</code> (<code>schemas/subgraph-source.ts</code>), which applies the instance config's override by id.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.source</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.storage" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectory.storage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2341,6 +2362,13 @@ ContentDirectoryShape.readOnlyBasis <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>WHY, and required whenever <code>readOnly</code> is declared — either value.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.source" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectoryShape.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means <code>&#123; kind: &quot;directory&quot; }</code>) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with <code>resolveSubgraphSource</code>, never by reading this field: the override and #1764's <code>storage</code> are folded in there, once. See <code>schemas/subgraph-source.ts</code> — bean <code>l4ay</code>, owner 2026-10-03.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.storage" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectoryShape.storage <span class="fa-gloss-status">candidate, extracted</span>
@@ -2990,6 +3018,27 @@ DeclaredImage.textRegion <span class="fa-gloss-status">candidate, extracted</spa
 <p>The quiet interior a sticky's words sit in, in fractions of this image.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#DeclaredImage.textRegion</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--harness-config.declaredsubgraph.instancename" data-fa-state="extracted" data-fa-gloss="">
+DeclaredSubgraph.instanceName <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>That instance's declared <code>name</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceName</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--harness-config.declaredsubgraph.instanceroot" data-fa-state="extracted" data-fa-gloss="">
+DeclaredSubgraph.instanceRoot <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The root of the instance whose OWN declaration carries the entry.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceRoot</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--harness-config.declaredsubgraph.repository" data-fa-state="extracted" data-fa-gloss="">
+DeclaredSubgraph.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance's declared <code>repository</code> (<code>owner/repo</code>), when it has one.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#DeclaredSubgraph.repository</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--types.definitionblock.examples" data-fa-state="extracted" data-fa-gloss="">
 DefinitionBlock.examples <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3393,7 +3442,7 @@ DirectoryStorageSchema.branch <span class="fa-gloss-status">candidate, extracted
 DirectoryStorageSchema.keyedBy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How entries are keyed on the branch: one entry per <code>commit</code>, or one live copy at the <code>tip</code>.</p>
+<p>How entries are keyed on the branch: one entry per <code>commit</code>, one live copy at the <code>tip</code>, or one entry per published <code>route</code>. See &#123;@link DirectoryStorageSchema}'s docblock for why <code>route</code> is not a synonym for <code>tip</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.basis" data-fa-state="extracted" data-fa-gloss="">
@@ -3651,6 +3700,20 @@ ExampleSchema.interprets <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>Label of the provable block this example interprets. Declared on TS <code>ExampleBlock</code> and missing here, unlike its <code>algorithm</code> and <code>remark</code> siblings — so it was silently stripped. <code>.min(1)</code> matches theirs.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/constraints.ts"><code>cat-harness/schemas/constraints.ts#ExampleSchema.interprets</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spdx-license-expression.expressioncheck.deprecated" data-fa-state="extracted" data-fa-gloss="">
+ExpressionCheck.deprecated <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Listed ids the edition marks deprecated, canonical spelling.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spdx-license-expression.ts"><code>cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.deprecated</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spdx-license-expression.expressioncheck.recased" data-fa-state="extracted" data-fa-gloss="">
+ExpressionCheck.recased <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Ids written in a case other than the list's, as <code>[written, canonical]</code>. Valid; reported.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spdx-license-expression.ts"><code>cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--carried-note.externalidentityschema.actor" data-fa-state="extracted" data-fa-gloss="">
 ExternalIdentitySchema.actor <span class="fa-gloss-status">candidate, extracted</span>

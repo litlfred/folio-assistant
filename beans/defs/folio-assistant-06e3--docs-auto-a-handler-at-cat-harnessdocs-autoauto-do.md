@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-03T10:59:40Z
+updated_at: 2026-10-03T11:41:35Z
 parent: folio-assistant-0lmb
 ---
 
@@ -67,9 +67,10 @@ it, and refuses rather than rendering an empty table when the source moves.
       `docs/` is the one that will show whether a derived index and an authored
       summary can sit in the same directory without fighting.
 - [x] the authoring rule lives in a skill with the reuse-not-restate clause
-- [ ] `<harness>/docs` carries a per-process summary that references the derived
-      index rather than duplicating it
-- [ ] a stale or moved source makes the derivation FAIL, never render empty
+- [x] `<harness>/docs` carries a per-process summary that references the derived
+      index rather than duplicating it — `docs/platform.md`, 2026-10-03; see
+      §"The per-process summary, 2026-10-03" below
+- [x] a stale or moved source makes the derivation FAIL, never render empty
 
 ## Not started — and the order is the owner's
 
@@ -563,9 +564,25 @@ not the globs. Worth recording because the first reading looked like
 
 ### Still open
 
-- [ ] `toc` stays OUT (this bean is the only record of that withdrawal)
-- [ ] the authoring-rule half is a SKILL, untouched by the move
-- [ ] `who-iris/docs` is the named first exercise, end to end
+**Withdrawn 2026-10-03 — this was a SHADOW CHECKLIST and two of its three items
+were false.** It restated the canonical `## Done when` in a planning section, and
+once the canonical items were ticked it went on claiming work was outstanding:
+
+| it said | the canonical list says |
+|---|---|
+| `[ ] toc stays OUT` | `[x] the handler exists and is declared … and **no** toc` |
+| `[ ] the authoring-rule half is a SKILL` | `[x] the authoring rule lives in a skill with the reuse-not-restate clause` |
+| `[ ] who-iris/docs is the named first exercise` | `[ ]` — the one genuinely open item, and already there |
+
+So: **see `## Done when` above.** Nothing is tracked here.
+
+`check:bean-bodies` rejects a *ticked* restatement beside an open canonical item,
+for the stated reason that *"the section a reader and every tool consult says this
+is not done"*. This was the INVERSE — an *unticked* restatement beside a ticked
+canonical item — and the gate is green across it, measured on `main` 2026-10-03.
+That direction is worse, not better: a stale "still open" sends the next agent to
+redo finished work, where a stale "done" at least leaves them reading the real
+list. Reported rather than fixed in the gate, which is its own change.
 
 
 ## CORRECTION, 2026-10-03 — two claims in the plan above are wrong
@@ -700,3 +717,162 @@ The type set as it now stands: `glossary`, `index`, `index/docs`,
 `index/skills`, `index/processes`, `index/schemas`, `index/tools`,
 `index/roles`, `index/dmn`, `index/tasks`, `uml`, `lsi`. Count it from `TYPES`
 rather than from this list.
+
+
+## The refuse item is done — PR #1991, merged 2026-10-03
+
+*"a stale or moved source makes the derivation FAIL, never render empty"* is
+implemented and on `main`. Ticked in the canonical list above rather than
+restated here, which is what `check:bean-bodies` rejected a shadow copy for
+earlier today.
+
+`gen-docs-auto.ts` now refuses when a type collects **nothing** while its
+graph's declared directories **hold files**. The three-way discrimination is
+`dh4f`'s, and it is what keeps the guard from becoming a nuisance:
+
+| state | behaviour |
+|---|---|
+| no declared directory for the graph | silent — a fresh folio with no `processes/` must not fail `index/dmn` |
+| declared directories, all empty | silent — "not there" and "empty" are different facts, neither a defect |
+| declared directories **with files**, type collects nothing | **refuse** |
+
+**It was written after shipping the failure twice in one session**, which is
+why it exists rather than being argued for: `index/tools` filtered `.json` on
+`AGENTS.md`'s "Tool definitions" wording when the directory holds `.ts`, and
+`index/roles` passed `dirname()` where `readRoleGraph` wants the directory
+itself. Both emitted **0 items and printed `✓`**; both were caught by a human
+reading the count.
+
+And the guard runs **before** the orphan prune, because the first draft had it
+after and a buggy run then deleted four sub-graph pages before reporting a
+defect against the tree it had emptied — `deletion-requires-confirmation`
+broken by sequencing. Measured both ways: 1 page surviving with the guard
+after, 5 with it before.
+
+## The per-process summary, 2026-10-03 — `docs/platform.md`, not a new page
+
+**The page already existed and was the right page.** `docs/platform.md` is
+titled *"The platform — actors, roles, processes, skills"*, is authored (no
+`generated:` front matter, no `content/docs/platform/` source), and already
+linked the derived process and skill indexes. A second page would have been a
+second answer to the same question.
+
+**What it did not do was name anything.** Measured against the §4(b) check that
+landed the same day (bean `akjg`), `platform.md` came out **`thin`**: it named
+one declared role and **none** of the 61 declared processes and **none** of the
+403 declared tasks. A page about the *shape* of processes, linking an index of
+them, saying nothing about any one of them. The section headed "Roles, tasks and
+skills" linked only **skills** — neither the roles index nor the tasks index,
+both of which exist.
+
+So the gap was concrete and the fix was an edit:
+
+| added | why it is not index-duplication |
+|---|---|
+| a worked entry-point-vs-called pair | the abstract rule was already stated; what was missing was that it SURPRISES — **Adjudication** reads like an entry point and is not |
+| the roles and tasks index links | the section's own title promised them |
+| real roles and tasks, with the mechanical/human point | a role here is as likely to be **Build pipeline** as **Adjudicator**, which the flat index does not convey |
+
+**Every claim was measured before it was written, not recalled.** `Adjudication`
+(`Process_Adjudication`) is called from `Translation Workflow`, from
+`Ingestion subprocess — the L1 completeness gate` and from
+`Refresh materialized remote content`; `Criterion adjudication` is called from
+`Wireframe design review` and `Voice overlay review`; `Content acquisition` is
+called by nothing. Verified by reading `calledElement` across every `.bpmn` under
+the declared `processes` directories.
+
+**No count went into the prose**, deliberately — `bpmn-processes` says to count
+the directory rather than quote a number from a paragraph, and the entry/called
+split is exactly the kind of number that rots. The page names examples and tells
+the reader to ask the index who calls what.
+
+After: `populated` — process `Adjudication`, role `Activity log`, task
+`Authorise the extraction`, three distinct names, 1445 words of prose.
+`docs:pages:check`, `check:anchor-names` and `docs:auto:check` all pass.
+
+**Verified by LOOKING at it, and that caught a defect no gate did.** The first
+draft put the two new index links on consecutive markdown lines, so kramdown
+joined them into ONE paragraph and they rendered run together —
+*"Every role, with the skills its lane carries → Every task, by the process that
+draws it →"* — unlike the single link above them. Every gate was green across
+it. Separated into two paragraphs, rebuilt, re-shot.
+
+The build also confirmed both new links resolve to real pages
+(`cat-harness/docs-auto/index/{roles,tasks}/index.html` present in the output)
+and that every heading anchor on the page is unique, which is the `gjli` rule.
+Screenshots at 1280 and 390 px; phone width has no horizontal overflow.
+
+### Two things reported rather than fixed
+
+1. **The check still names `methodologies/index.md` as cat-harness's subject
+   page**, because it ranks by (score, then prose length) and that page has 6910
+   words against `platform.md`'s 1445. The ranking is behaving as designed — it
+   names the strongest page, not the most *appropriate* one — and there is no
+   declared "this is the landing page" signal for it to prefer. Inventing one is
+   a separate decision, not a bug to patch here.
+2. **§4(a)'s literal URL, `<base-url>/<harness>/docs`, is not what this
+   satisfies** — and it was already settled against: `platform.md`'s own header
+   records that it lived at `/cat-harness/` until 2026-09-21, when the owner
+   ruled **the handler wins** that namespace (bean `8h42`), so every route under
+   it is generator output.
+
+   **WITHDRAWN, same day, and the mistake is worth keeping.** This paragraph
+   first said `<base>/cat-harness/` has *"no index at all"* and called it a real
+   gap for the owner. It is wrong. `<base>/cat-harness/` **is** served —
+   `docs/cat-harness/published-graphs.md` carries `permalink: /cat-harness/`,
+   and a local site build emits `cat-harness/index.html` at 241568 bytes,
+   titled "Published graphs".
+
+   The error was method, not typing: absence was inferred from
+   `find -name 'index.*'`, a FILENAME pattern, when the question was about a
+   published ROUTE — and a page may claim a route with `permalink` while being
+   named anything at all. A filename is evidence about a file; only the build is
+   evidence about a URL. Caught by running `preview:site`, which is the whole
+   reason that script exists: *"a green gate set is not a rendered page."*
+
+## §4(c), the navbar index — measured 2026-10-03, and it has NOTHING TO CATCH today
+
+§4(c) asks the LHS navbar to index every KG asset that HAS a populated `docs/` —
+*"Not every declared `docs` directory — one with assets in it"* — on the `dh4f`
+ground that a nav entry to an empty directory is a link resolving to nothing.
+
+Before building that rule, the premise was measured: every declared `docs`-kind
+directory across every instance in this checkout, counted on disk.
+
+| instance | directory | files |
+|---|---|---|
+| `cat-harness` | `cat-harness/docs` | 1905 |
+| `smart-immunizations` | `smart-immunizations/docs` | 753 |
+| `smart-trust` | `smart-trust/docs` | 682 |
+| `smart-base` | `smart-base/docs` | 227 |
+| `smart-base` | `smart-base/findings` | 5 |
+| `who-iris` | `who-iris/site` | 14 |
+| `who-iris` | `who-iris/docs` | 5 |
+| `folio-assistant` | `docs` | **1** |
+
+**Zero EMPTY. Zero ABSENT.** Eight instances declare no `docs` directory at all
+(`bootstrap`, `bootstrap-tools`, `cat-harness-tools`, `fhir-harness`,
+`folio-assistant-core`, `folio-assistant-sci`, `smart-ig`, `who-style-guide`) —
+and declaring nothing is the correct behaviour, not the defect; `dh4f` is about
+declaring what is not there.
+
+So §4(c) is a **guard against a state that does not currently occur**, not a fix
+for a visible one. That is worth knowing before building it: a rule written now
+would fire on nothing, and a rule that fires on nothing cannot be told from a
+rule that is broken — which is the `xom7` shape the rest of this bean is about.
+
+Two things that do follow from the measurement:
+
+1. **`folio-assistant/docs` holds ONE file**, and `check:docs-populated` passes
+   the root instance on it (`docs/README.md`, 299 words). That is the closest
+   thing in the corpus to §4(c)'s concern, and it is a *thin* directory rather
+   than an empty one — so the rule §4(c) names would not catch it either.
+2. The guard has **prospective** value: a downstream folio can declare an empty
+   `docs/`, and `wwi6` pins that a dependent materialises its own directories.
+   So this is worth building eventually, with a fixture rather than the corpus
+   as its first test.
+
+**Not started**, deliberately, and this paragraph is the reason rather than a
+shrug. The owner picked §4(b) of these three; §4(a) is done above because (b)
+grades it. §4(c) is reported with its premise measured so the next agent does
+not repeat the investigation.

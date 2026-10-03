@@ -160,6 +160,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
+import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.ts";
 import { loadGatesCiRuns } from "./gates.js";
 import {
   againstOrUsage,
@@ -367,7 +368,7 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  * it is counted apart and a caller can tell "examined, empty" from "not here".
  */
 export function censusDirectories(
-  dirs: ReadonlyArray<{ absPath: string; storage?: { branch: string } }>,
+  dirs: ReadonlyArray<{ absPath: string; storage?: { branch: string }; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
 ): { files: number; sidecars: number; stored: number; uncounted: number } {
   let files = 0;
@@ -375,7 +376,7 @@ export function censusDirectories(
   let stored = 0;
   let uncounted = 0;
   for (const d of dirs) {
-    if (d.storage?.branch) {
+    if (contentIsOffCheckout(d)) {
       stored++;
       continue;
     }

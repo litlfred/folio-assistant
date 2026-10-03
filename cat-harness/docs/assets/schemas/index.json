@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 206,
+      "count": 210,
       "unit": "modules"
     }
   },
@@ -1241,6 +1241,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/spdx-license-expression.test.ts",
+      "instance": "cat-harness",
+      "name": "spdx-license-expression.test",
+      "graphNode": "undeclared",
+      "summary": "Licence-id validation against the pinned SPDX License List — bean `sd5v`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/spdx-license-expression.ts",
+      "instance": "cat-harness",
+      "name": "spdx-license-expression",
+      "graphNode": "schema",
+      "summary": "An SPDX licence expression, checked against the pinned SPDX License List.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/staging-preview.ts",
       "instance": "cat-harness",
       "name": "staging-preview",
@@ -1262,6 +1278,22 @@
       "name": "sticky-contribution",
       "graphNode": "schema",
       "summary": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/subgraph-source.test.ts",
+      "instance": "cat-harness",
+      "name": "subgraph-source.test",
+      "graphNode": "undeclared",
+      "summary": "A declared subgraph's content source — one union, one resolver (bean `l4ay`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "instance": "cat-harness",
+      "name": "subgraph-source",
+      "graphNode": "schema",
+      "summary": "WHERE A DECLARED SUBGRAPH GETS ITS CONTENT — one concept, several kinds.",
       "isTest": false
     },
     {
@@ -6552,6 +6584,13 @@
           "doc": "Which icons this instance's navbar row shows — see `NavbarIconsSchema`."
         },
         {
+          "name": "glassStrip",
+          "type": "GlassStripPin[]",
+          "optional": true,
+          "array": true,
+          "doc": "Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits."
+        },
+        {
           "name": "name",
           "type": "string",
           "optional": false,
@@ -6706,6 +6745,7 @@
         "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
         "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+        "cat-harness/schemas/cat-harness.ts#GlassStripPin",
         "cat-harness/schemas/cat-harness.ts#InstanceLocation",
         "cat-harness/schemas/cat-harness.ts#KnownSubstrate",
         "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
@@ -6776,6 +6816,13 @@
           "optional": true,
           "array": false,
           "doc": "Which icons this instance's navbar row shows."
+        },
+        {
+          "name": "glassStrip",
+          "type": "GlassStripSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which tiles the glass's bottom strip pins, in order — see"
         },
         {
           "name": "repository",
@@ -6929,6 +6976,7 @@
         "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclarationSchema",
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
         "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+        "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
         "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
         "cat-harness/schemas/cat-harness.ts#KnownSubstrateSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
@@ -7082,6 +7130,13 @@
           "doc": "Which theme this subgraph renders on — one answer for every surface that"
         },
         {
+          "name": "source",
+          "type": "SubgraphSource",
+          "optional": true,
+          "array": false,
+          "doc": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`."
+        },
+        {
           "name": "storage",
           "type": "DirectoryStorage",
           "optional": true,
@@ -7097,6 +7152,7 @@
         "cat-harness/schemas/cat-harness.ts#DirectoryStorage",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverage",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
         "cat-harness/schemas/theme.ts#ThemeRef"
       ],
       "unresolved": [],
@@ -7206,6 +7262,13 @@
           "optional": true,
           "array": false,
           "doc": "Which theme this subgraph renders on."
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSourceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this subgraph gets its CONTENT — the checkout's own directory (the"
         }
       ],
       "extendsNames": [
@@ -7217,6 +7280,7 @@
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
         "cat-harness/schemas/cat-harness.ts#TileSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
         "cat-harness/schemas/theme.ts#ThemeRefSchema"
       ],
       "unresolved": [],
@@ -7307,10 +7371,10 @@
         },
         {
           "name": "keyedBy",
-          "type": "z.enum([\"commit\", \"tip\"])",
+          "type": "z.enum([\"commit\", \"tip\", \"route\"])",
           "optional": false,
           "array": false,
-          "doc": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+          "doc": "How entries are keyed on the branch: one entry per `commit`, one live"
         }
       ],
       "extendsNames": [],
@@ -7341,6 +7405,58 @@
       "name": "Forge",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassChrome",
+      "name": "GlassChrome",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassStripPin",
+      "name": "GlassStripPin",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassStripPinSchema",
+      "name": "GlassStripPinSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
+      "name": "GlassStripSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-array",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -17332,6 +17448,63 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph",
+      "name": "DeclaredSubgraph",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "interface",
+      "doc": "A declared subgraph: who declares it, its entry, and where its content comes from.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instanceRoot",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The root of the instance whose OWN declaration carries the entry."
+        },
+        {
+          "name": "instanceName",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "That instance's declared `name`."
+        },
+        {
+          "name": "repository",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's declared `repository` (`owner/repo`), when it has one."
+        },
+        {
+          "name": "entry",
+          "type": "ResolvedDirectory",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "ResolvedSubgraphSource",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#ResolvedDirectory",
+        "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency",
       "name": "FolioAssistantDependency",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -17520,13 +17693,21 @@
           "optional": true,
           "array": false,
           "doc": "Cross-folio dependencies."
+        },
+        {
+          "name": "subgraphSources",
+          "type": "SubgraphSourceOverrides",
+          "optional": true,
+          "array": false,
+          "doc": "Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependencies",
-        "cat-harness/schemas/harness-config.ts#TranslationConfig"
+        "cat-harness/schemas/harness-config.ts#TranslationConfig",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides"
       ],
       "unresolved": [],
       "external": [],
@@ -17634,6 +17815,13 @@
           "type": "HarnessConfigDependenciesSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "subgraphSources",
+          "type": "SubgraphSourceOverridesSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Per-instantiation override of where a declared subgraph gets its content,"
         }
       ],
       "extendsNames": [],
@@ -17641,7 +17829,8 @@
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependenciesSchema",
         "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
-        "cat-harness/schemas/harness-config.ts#TranslationConfigSchema"
+        "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema"
       ],
       "unresolved": [],
       "external": [
@@ -22746,6 +22935,13 @@
           "optional": false,
           "array": false,
           "doc": "The human label, and the ONLY field a glossary candidate can match on."
+        },
+        {
+          "name": "deprecated",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The edition itself marks the code deprecated: still valid to read, not"
         }
       ],
       "extendsNames": [],
@@ -25272,7 +25468,7 @@
         },
         {
           "name": "properties",
-          "type": "Readonly<Record<string, string>>",
+          "type": "Readonly<Record<string, string | readonly string[]>>",
           "optional": true,
           "array": false,
           "doc": "The node's own properties, e.g. `{ status: \"open\", priority: \"high\" }`."
@@ -30803,6 +30999,74 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck",
+      "name": "ExpressionCheck",
+      "module": "cat-harness/schemas/spdx-license-expression.ts",
+      "kind": "interface",
+      "doc": "What checking one expression found. `problem` set means the expression is not valid.",
+      "fields": [
+        {
+          "name": "problem",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "deprecated",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Listed ids the edition marks deprecated, canonical spelling."
+        },
+        {
+          "name": "recased",
+          "type": "[string, string][]",
+          "optional": false,
+          "array": true,
+          "doc": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spdx-license-expression.ts#SpdxLicenseList",
+      "name": "SpdxLicenseList",
+      "module": "cat-harness/schemas/spdx-license-expression.ts",
+      "kind": "interface",
+      "doc": "The ids of one License List edition, keyed by lower-cased id.",
+      "fields": [
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "licenses",
+          "type": "ReadonlyMap<string, { id: string; deprecated: boolean }>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "exceptions",
+          "type": "ReadonlyMap<string, { id: string; deprecated: boolean }>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/staging-preview.ts#StagingDeployFacts",
       "name": "StagingDeployFacts",
       "module": "cat-harness/schemas/staging-preview.ts",
@@ -31688,6 +31952,329 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+      "name": "BranchNameSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-scalar",
+      "doc": "A plain branch name: no `refs/`, no `..`, no leading `-` — the rule `DirectoryStorageSchema` (#1764) uses.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
+      "name": "BranchSourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The content is a declared repository branch; the entry's `path` is where a mount of it lands.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"branch\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "branch",
+          "type": "BranchNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "KeyedBySchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#DirectorySourceSchema",
+      "name": "DirectorySourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The content is the checkout's own directory at the entry's `path`.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"directory\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#KeyedBy",
+      "name": "KeyedBy",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "name": "KeyedBySchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-enum",
+      "doc": "How entries are keyed on a branch: one per `commit`, or one live copy at the `tip`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "commit",
+        "tip"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
+      "name": "LegacyStorageSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The #1764 shape, read only to map it.",
+      "fields": [
+        {
+          "name": "branch",
+          "type": "BranchNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "KeyedBySchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource",
+      "name": "ResolvedSubgraphSource",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SourceDeclaredIn",
+      "name": "SourceDeclaredIn",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "doc": "Which layer the answer came from — reported, so an override is never silent.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "default",
+        "declaration",
+        "storage",
+        "config"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SourcedEntry",
+      "name": "SourcedEntry",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "interface",
+      "doc": "The fields of a directory entry the resolver reads.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphKinds",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSource",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "storage",
+          "type": "unknown",
+          "optional": true,
+          "array": false,
+          "doc": "#1764's field, if a declaration carries it. Read only to map it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSource"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SpecialBranchRow",
+      "name": "SpecialBranchRow",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "interface",
+      "doc": "A row of `special-branches.json`, as far as a source needs it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shape",
+          "type": "\"branch\" | \"family\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "legacy",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
+      "name": "SubgraphSource",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceKind",
+      "name": "SubgraphSourceKind",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides",
+      "name": "SubgraphSourceOverrides",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema",
+      "name": "SubgraphSourceOverridesSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-record",
+      "doc": "The config half: `<instance>.config.json` → `subgraphSources`, keyed by directory id.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "name": "SubgraphSourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-union",
+      "doc": "A declared subgraph's content source. A discriminated union, so a new kind",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -49853,6 +50440,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#GlassStripPin",
+      "via": "glassStrip",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
       "via": "livesAt",
       "kind": "field",
@@ -49997,6 +50592,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#GlassStripSchema",
+      "via": "glassStrip",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
       "via": "livesAt",
       "kind": "field",
@@ -50117,6 +50720,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
       "to": "cat-harness/schemas/theme.ts#ThemeRef",
       "via": "theme",
       "kind": "field",
@@ -50151,6 +50762,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
       "to": "cat-harness/schemas/cat-harness.ts#TileSchema",
       "via": "tile",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "via": "source",
       "kind": "field",
       "optional": true,
       "array": false
@@ -51660,6 +52279,22 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph",
+      "to": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory",
+      "via": "entry",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph",
+      "to": "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/harness-config.ts#FolioAssistantDependencySchema",
       "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
       "via": "version",
@@ -51679,6 +52314,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfig",
       "via": "translation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides",
+      "via": "subgraphSources",
       "kind": "field",
       "optional": true,
       "array": false
@@ -51719,6 +52362,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
       "via": "translation",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema",
+      "via": "subgraphSources",
       "kind": "field",
       "optional": true,
       "array": false
@@ -53847,6 +54498,46 @@
       "from": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema",
       "to": "cat-harness/schemas/sticky-contribution.ts#TextBoxSchema",
       "via": "box",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+      "via": "branch",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "via": "keyedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
+      "via": "branch",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "via": "keyedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#SourcedEntry",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSource",
+      "via": "source",
       "kind": "field",
       "optional": true,
       "array": false

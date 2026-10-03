@@ -244,15 +244,43 @@ export function sidecarSubjectsFrom(
 
 function subjectsFrom(names: readonly string[], covered: readonly Invocation[]): Invocation[] {
   const done = new Set(
-    covered.filter((i) => (i.tool ?? "kg-export") === "kg-export").map((i) => basename(resolve(REPO_ROOT, i.instance))),
+    covered.filter((i) => (i.tool ?? "kg-export") === "kg-export").map((i) => instanceStub(i.instance)),
   );
   const out: Invocation[] = [];
   for (const n of [...names].sort()) {
     const m = /^kg-export\.(.+)\.qa-results\.json$/.exec(n);
     if (m === null || done.has(m[1]!)) continue;
-    out.push({ workflow: COMMITTED_SIDECAR, instance: `./${m[1]!}`, standInBase: false, tool: "kg-export" });
+    out.push({ workflow: COMMITTED_SIDECAR, instance: instancePathForStub(m[1]!), standInBase: false, tool: "kg-export" });
   }
   return out;
+}
+
+/**
+ * The stub `kg-export` names an instance's sidecar with — the declaration's
+ * `stub ?? name` (`artefactStub`), read RAW so this gate needs no graph kind
+ * registered. It was `basename(path)`, which is the same answer for
+ * `./bootstrap` and the wrong one for `.`: the checkout root's directory is
+ * named after wherever it was cloned, while its stub is its declared name
+ * (bean `l4ay`, which added the root's export to the deploy).
+ */
+export function instanceStub(instance: string): string {
+  const abs = resolve(REPO_ROOT, instance);
+  const p = declarationPathIn(abs);
+  if (p !== undefined) {
+    try {
+      const d = JSON.parse(readFileSync(p, "utf-8")) as { name?: string; stub?: string };
+      const s = d.stub ?? d.name;
+      if (typeof s === "string" && s !== "") return s;
+    } catch {
+      // unreadable: fall back to the path, and the export itself will fail loudly
+    }
+  }
+  return basename(abs);
+}
+
+/** The repository-relative instance path whose stub is `stub` — `.` for the checkout root, else `./<stub>`. */
+function instancePathForStub(stub: string): string {
+  return instanceStub(".") === stub ? "." : `./${stub}`;
 }
 
 /**
@@ -365,7 +393,7 @@ function runExport(inv: Invocation, outDir: string, against?: string): ExportRes
   // rule: the HOST keeps the bare stem, a foreign instance is qualified by its
   // stub. Composed here rather than parsed out of the export's output, because
   // a gate that reads a path off stdout breaks when a log line is reworded.
-  const qaStem = `kg-export.${basename(resolve(REPO_ROOT, inv.instance))}`;
+  const qaStem = `kg-export.${instanceStub(inv.instance)}`;
   // ONLY for a kg-export row (bean `0utt`). Every invocation shares `outDir`,
   // so an `export-graph` row — which writes no sidecar — read the one a
   // kg-export row had just written there and reported "QA sidecar current"
