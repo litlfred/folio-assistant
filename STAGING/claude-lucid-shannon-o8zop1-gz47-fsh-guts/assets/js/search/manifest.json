@@ -2,17 +2,17 @@
   "$schema": "folio-search-manifest/v1",
   "source": {
     "path": "assets/js/search-data.json",
-    "sha256": "980bc03466141f35be635e1e73bbe601fad1e014231bfdb8a86d851223e83bf0",
-    "entries": 12110,
-    "bytes": 14273521
+    "sha256": "dbf4d84bcc18732a59264985c26d995457020eb31878792443429867381613fc",
+    "entries": 12125,
+    "bytes": 14325616
   },
   "scopes": [
     {
       "id": "_platform",
       "kind": "platform",
       "path": "assets/js/search/_platform.json",
-      "entries": 4892,
-      "bytes": 8257313
+      "entries": 531,
+      "bytes": 1049435
     },
     {
       "id": "bootstrap",
@@ -33,14 +33,14 @@
       "kind": "locale",
       "path": "assets/js/search/locale-ar.json",
       "entries": 123,
-      "bytes": 310718
+      "bytes": 310775
     },
     {
       "id": "locale-es",
       "kind": "locale",
       "path": "assets/js/search/locale-es.json",
       "entries": 123,
-      "bytes": 241624
+      "bytes": 241681
     },
     {
       "id": "locale-fr",
@@ -64,11 +64,46 @@
       "bytes": 205688
     },
     {
+      "id": "section-glossary",
+      "kind": "section",
+      "path": "assets/js/search/section-glossary.json",
+      "entries": 133,
+      "bytes": 976233
+    },
+    {
+      "id": "section-processes",
+      "kind": "section",
+      "path": "assets/js/search/section-processes.json",
+      "entries": 507,
+      "bytes": 658085
+    },
+    {
+      "id": "section-proposals",
+      "kind": "section",
+      "path": "assets/js/search/section-proposals.json",
+      "entries": 277,
+      "bytes": 855317
+    },
+    {
+      "id": "section-reference",
+      "kind": "section",
+      "path": "assets/js/search/section-reference.json",
+      "entries": 3071,
+      "bytes": 3858247
+    },
+    {
+      "id": "section-uml",
+      "kind": "section",
+      "path": "assets/js/search/section-uml.json",
+      "entries": 388,
+      "bytes": 911340
+    },
+    {
       "id": "smart-base",
       "kind": "instance",
       "path": "assets/js/search/smart-base.json",
       "entries": 905,
-      "bytes": 565508
+      "bytes": 565565
     },
     {
       "id": "smart-immunizations",
@@ -83,6 +118,14 @@
       "path": "assets/js/search/smart-trust.json",
       "entries": 2707,
       "bytes": 1495123
+    }
+  ],
+  "remote": [
+    {
+      "id": "who-iris",
+      "kind": "id-lookup",
+      "href": "id-lookup/?index=who-iris/",
+      "entries": 10
     }
   ]
 }

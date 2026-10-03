@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 205,
+      "count": 207,
       "unit": "modules"
     }
   },
@@ -1230,6 +1230,22 @@
       "name": "source-provenance",
       "graphNode": "schema",
       "summary": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/spdx-license-expression.test.ts",
+      "instance": "cat-harness",
+      "name": "spdx-license-expression.test",
+      "graphNode": "undeclared",
+      "summary": "Licence-id validation against the pinned SPDX License List — bean `sd5v`.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/spdx-license-expression.ts",
+      "instance": "cat-harness",
+      "name": "spdx-license-expression",
+      "graphNode": "schema",
+      "summary": "An SPDX licence expression, checked against the pinned SPDX License List.",
       "isTest": false
     },
     {
@@ -7307,10 +7323,10 @@
         },
         {
           "name": "keyedBy",
-          "type": "z.enum([\"commit\", \"tip\"])",
+          "type": "z.enum([\"commit\", \"tip\", \"route\"])",
           "optional": false,
           "array": false,
-          "doc": "How entries are keyed on the branch: one entry per `commit`, or one live copy at the `tip`."
+          "doc": "How entries are keyed on the branch: one entry per `commit`, one live"
         }
       ],
       "extendsNames": [],
@@ -22798,6 +22814,13 @@
           "optional": false,
           "array": false,
           "doc": "The human label, and the ONLY field a glossary candidate can match on."
+        },
+        {
+          "name": "deprecated",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The edition itself marks the code deprecated: still valid to read, not"
         }
       ],
       "extendsNames": [],
@@ -25090,7 +25113,7 @@
         },
         {
           "name": "properties",
-          "type": "Readonly<Record<string, string>>",
+          "type": "Readonly<Record<string, string | readonly string[]>>",
           "optional": true,
           "array": false,
           "doc": "The node's own properties, e.g. `{ status: \"open\", priority: \"high\" }`."
@@ -30508,6 +30531,74 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck",
+      "name": "ExpressionCheck",
+      "module": "cat-harness/schemas/spdx-license-expression.ts",
+      "kind": "interface",
+      "doc": "What checking one expression found. `problem` set means the expression is not valid.",
+      "fields": [
+        {
+          "name": "problem",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "deprecated",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Listed ids the edition marks deprecated, canonical spelling."
+        },
+        {
+          "name": "recased",
+          "type": "[string, string][]",
+          "optional": false,
+          "array": true,
+          "doc": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/spdx-license-expression.ts#SpdxLicenseList",
+      "name": "SpdxLicenseList",
+      "module": "cat-harness/schemas/spdx-license-expression.ts",
+      "kind": "interface",
+      "doc": "The ids of one License List edition, keyed by lower-cased id.",
+      "fields": [
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "licenses",
+          "type": "ReadonlyMap<string, { id: string; deprecated: boolean }>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "exceptions",
+          "type": "ReadonlyMap<string, { id: string; deprecated: boolean }>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
