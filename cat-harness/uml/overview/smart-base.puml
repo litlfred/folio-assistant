@@ -619,6 +619,7 @@ package "smart-base/smart-base-external-schemas" as pkg_smart_base_smart_base_ex
     system [1] : string
     code [1] : string
     display [1] : string
+    deprecated [0..1] : boolean
   }
   class "folio-pinned-terminology/v1" as smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 <<json: PinnedTerminologySchema>> #e9edf3 {
     $schema [1] : 'folio-pinned-terminology/v1'

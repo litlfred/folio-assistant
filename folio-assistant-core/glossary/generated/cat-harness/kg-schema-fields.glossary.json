@@ -7203,6 +7203,13 @@
       "status": "candidate"
     },
     {
+      "id": "pinned-terminology.pinnedconceptschema.deprecated",
+      "prefLabel": "PinnedConceptSchema.deprecated",
+      "definition": "The edition itself marks the code deprecated: still valid to read, not to write anew. Absent means the edition says nothing, not \"current\". First user: the SPDX License List (`isDeprecatedLicenseId`), bean `sd5v`.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.deprecated",
+      "status": "candidate"
+    },
+    {
       "id": "pinned-terminology.pinnedconceptschema.display",
       "prefLabel": "PinnedConceptSchema.display",
       "definition": "The human label, and the ONLY field a glossary candidate can match on.",
@@ -8579,6 +8586,20 @@
       "prefLabel": "SourceProvenanceSchema.upstream",
       "definition": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\".",
       "source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream",
+      "status": "candidate"
+    },
+    {
+      "id": "spdx-license-expression.expressioncheck.deprecated",
+      "prefLabel": "ExpressionCheck.deprecated",
+      "definition": "Listed ids the edition marks deprecated, canonical spelling.",
+      "source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.deprecated",
+      "status": "candidate"
+    },
+    {
+      "id": "spdx-license-expression.expressioncheck.recased",
+      "prefLabel": "ExpressionCheck.recased",
+      "definition": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported.",
+      "source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
       "status": "candidate"
     },
     {
