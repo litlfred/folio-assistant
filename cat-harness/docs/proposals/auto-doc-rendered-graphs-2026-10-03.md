@@ -11,7 +11,12 @@ summary: >-
   proposal is to declare that arrow structurally, so the merge pattern, the
   audit coverage and the gating decision all derive from one fact instead of
   eleven globs. Measurement and options; nothing is built, and the two
-  questions that are the owner's are named rather than answered. Includes the
+  questions that are the owner's are named rather than answered. SUPERSEDED
+  the same day: the owner ruled for a reserved `auto-docs/` prefix with `docs/`
+  kept for authored content, which is the option this page argued against — see
+  §"SUPERSEDED" for why that recommendation was wrong (permalinks already
+  decouple URL from path, so no published URL need break; and the namespace
+  argument was never weighed) and for the measured migration cost. Includes the
   consolidation the same declaration would allow — 16 writers into docs/, 31
   hand-written --check branches, 11 merge globs and 13 skill sections — with
   what must NOT consolidate (the per-writer carry-forward judgement, and the
@@ -20,6 +25,88 @@ summary: >-
 ---
 
 # Auto-docs as rendered sub-graphs
+
+## SUPERSEDED, same day — the owner ruled for relocation
+
+**Owner, 2026-10-03:** *"we need to fixup IRIs and paths … reserve `docs/` for
+user generated content, `auto-docs/` for glossary and such. otherwise we will
+have an issue."*
+
+That is option C, which the §"Options" section below **recommends against**.
+The ruling stands and the recommendation was wrong. The sections after this one
+are kept rather than rewritten, because their measurements are still the
+evidence and their reasoning was right for the question it answered — but read
+this first.
+
+### Why the recommendation was wrong
+
+Two errors, one of them an omission.
+
+**I priced the URL churn without checking the mechanism that removes it.** The
+objection to C was that the 17 `gen-docs-pages.ts` pages "carry `permalink`"
+and moving them breaks reader-facing URLs. Measured properly: of the **488**
+generated pages, exactly **10** carry an explicit `permalink:`, and all ten are
+the glossary pages, which already pin their URL to `/glossary/…` **independent
+of file location**. So moving `docs/glossary/` → `auto-docs/glossary/` changes
+no URL at all. For the rest, `permalink:` is the same mechanism, available
+wherever an old URL must persist. **The published surface can be held byte-fixed
+while every file moves**, and that was checkable before the recommendation was
+written.
+
+**I never weighed the namespace argument, which is the owner's actual reason.**
+"Otherwise we will have an issue" is about `docs/` being one namespace holding
+two kinds of thing. A declaration-keyed scheme (option A) records *which*
+pages are generated; it does not stop an authored page and a generated page
+contending for one path, and it leaves every IRI, `site_path` and
+`visualiserHref` minted over a prefix whose contents are half authored. A
+reserved prefix makes the distinction true of the **path**, which is what every
+consumer already keys on.
+
+### What the migration actually costs — measured, not estimated
+
+Published IRIs are **not** at risk, which is worth stating because it is the
+thing the ruling names first. The SKOS exports mint
+`https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/<ledger>/<local>` —
+no filesystem path appears in any `@id` (the `docssite` that looks like one is
+the `docs-site.yml` **process** id). Moving files rots no minted IRI.
+
+The cost is in-repo references, split by whether the referrer is itself
+regenerated — because those are fixed for free:
+
+| path | generated referrers | **authored referrers** |
+|---|---|---|
+| `docs/reference/` | 7 | **92** |
+| `docs/publication-workflow` | 89 | **38** |
+| `docs/glossary/` | 3 | **23** |
+| `docs/uml/` | 6 | **20** |
+| `docs/lsi/` | 5 | **11** |
+| `docs/harness.md` | 0 | **0** |
+
+So ~**184** authored references, concentrated in `docs/reference/` rather than
+in the page I had assumed (`publication-workflow`, whose 127 referrers are 89
+generated). And the rewrite is **gate-verified rather than hoped**:
+`readme:audit`, `check:anchor-names`, `check-workflow-refs` and
+`check:reference-direction` all resolve links, so a missed reference fails a
+check instead of shipping a 404.
+
+### What the ruling does not settle, and should not be guessed
+
+- **Which 488 move, and whether `docs/assets/` goes with them.** `docs/assets/`
+  holds the SKOS exports and `site-data` JSON — generated, but fetched by the
+  site at paths the viewers compose. "Glossary and such" plainly covers
+  `glossary/`, `lsi/`, `reference/`, `uml/`; `assets/` is the boundary case.
+- **Whether `auto-docs/` is one declared graph or one per writer.** The
+  consolidation section argues for per-source `rendersTo`; a reserved prefix is
+  compatible with either, and it is the second half of the question, not an
+  answer to it.
+- **The graph kind.** Still the question `content-context-and-state-graphs.md`
+  says one question settles, still the owner's.
+
+The three-step sequencing in §"Consolidating" is unchanged and now matters more:
+**step 2's before/after verdict diff over all 908 pages is what proves a move
+changed no resolution**, and it is the only cheap guard against a 184-reference
+rewrite going quietly wrong.
+
 
 ## The one-sentence version
 
