@@ -1,0 +1,883 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "wang-rangaiah-2026-mcdm-aggregation",
+  "blocks": [
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-1 \n \nChapter 8 \nMulti-Criteria Decision-Making: Aggregation-Type Methods \nZhiyuan Wanga, Gade Pandu Rangaiahb, c \na School of Business, Singapore University of Social Sciences, Singapore 599494, \nSingapore \nb Department of Chemical and Biomolecular Engineering, National University of Singapore, \nSingapore 117585, Singapore \nc School of Chemical Engineering, Vellore Institute of Technology, Vellore 632014, India \n \nAbstract \nThis chapter describes selected aggregation-type multi-criteria decision-making (MCDM) \nmethods that convert an alternatives-criteria matr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-2 \n \napproach, ensuring that the final ranking of alternatives reflects the collective impact of all \ncriteria. \nThis chapter covers 8 aggregation-type MCDM methods, detailing their principles and \nalgorithms. These methods are selected based on either their widespread popularity for \nvarious applications or their recent development. Each method is elucidated through a simple \nnumerical example, ensuring that readers gain a clear understanding of its inner workings.  \nThe following sections in this chapter present the 8 aggregation-type MCDM methods, in \nchron",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-3 \n \nalternatives (i.e., 𝑚= 4 and 𝑖∈{1, 2, 3, 4}) and 3 criteria (i.e., 𝑛= 3 and 𝑗∈{1, 2, 3}). Out of \nthe 3 criteria (C1, C2, and C3), C1 and C2 are benefit criteria to be maximized, while C3 is a \ncost criterion to be minimized. For illustration, the 3 criteria are assigned weights as: 𝑤1 = 0.25, \n𝑤2 = 0.33, and 𝑤3 = 0.42. All the 4 alternatives (A1, A2, A3, and A4) are non-dominated, \nwhich means that the improvement in one criterion will inevitably result in degradation in at \nleast one other criterion (Wang et al., 2023). \nTable 8.1: ACM employed f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-4 \n \nNumerical Calculations (using ACM from Table 8.1): \nFor instance, for 𝑖= 1 and 𝑗= 2: \n𝐹12 = 600\n700 = 0.8571 \nSimilar calculations are performed for all other values in the ACM across the 4 alternatives \nand 3 criteria. The complete results, forming the normalized ACM, are shown in Table 8.2. \nTable 8.2: Normalized ACM for SAW walkthrough. \nAlternatives \nC1 \nC2 \nC3 \nA1 \n1 \n0.8571 \n0.3612 \nA2 \n0.5484 \n1 \n0.4708 \nA3 \n0.8280 \n0.7143 \n0.9430 \nA4 \n0.8817 \n0.5714 \n1 \n \nStep 2. Construct the weighted normalized ACM by multiplying each normalized criterion \nva",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-5 \n \n𝑃𝑖= ∑𝑣𝑖𝑗\n𝑛\n𝑗=1\n \n(8.4)  \nFinally, the alternatives are ranked in descending order of 𝑃𝑖, with the highest value indicating \nthe top-ranked alternative and recommended to the decision-maker. \nNumerical Calculations: \nFor instance, for 𝑖= 1: \n𝑃1 = ∑𝑣1𝑗\n3\n𝑗=1\n= 0.2500 + 0.2829 + 0.1517 = 0.6846 \nSimilarly, the performance scores of all alternatives are calculated as 𝑃1 = 0.6846, 𝑃2 =\n0.6648, 𝑃3 = 0.8388, and 𝑃4 = 0.8290. Accordingly, the ranking is A3 ≻ A4 ≻ A1 ≻ A2, with \nA3 being the top-ranked alternative by SAW. \n \nThe advantages of SAW",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-6 \n \nSAW method. For the sake of brevity, the normalization equations and numerical calculations \n(same as Table 8.2) are not repeated here. \nStep 2. Calculate the performance score (𝑃𝑖) for each alternative using the multiplicative \naggregation equation as follows. \n𝑃𝑖= ∏𝐹𝑖𝑗\n𝑤𝑗\n𝑛\n𝑗=1\n \n(8.5) \nThe alternative with the largest 𝑃𝑖 is top-ranked and recommended to the decision-maker. \nNumerical Calculations: \nFor instance, for 𝑖= 1 and using normalized ACM in Table 8.2: \n𝑃1 = ∏𝐹1𝑗\n𝑤𝑗\n𝑛\n𝑗=1\n= 1.00000.25 × 0.85710.33 × 0.36120.42 = 0.6197 \nSimi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p007-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-1.png",
+      "narrative": "draft",
+      "content": "Figure 8.1, the AHP decision hierarchy in the general case. A green rounded box at the top reads \"Goal: Rank m alternatives considering n criteria\". Below it a row of five blue boxes — Criterion 1, Criterion 2, Criterion 3, an ellipsis box, and Criterion n — each joined to the goal. Below those a row of four peach boxes — Alternative 1, Alternative 2, an ellipsis box, and Alternative m. Every criterion is joined to every alternative, which is the property that makes the hierarchy complete: AHP asks for a pairwise comparison of the alternatives under each criterion in turn. The edges are plain lines with no arrowheads, so the diagram asserts membership rather than direction — contrast Figure 8.3, where the ANP version is drawn with arrows.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 7",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/page-007.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-7 \n \nThe AHP method, originally developed by Saaty (1977, 1990), is based on decision-makers’ \nsubjective pairwise comparisons. To facilitate this, Saaty’s fundamental 1–9 scale (Table 8.4) \nis typically employed. The AHP method begins by constructing a decision hierarchy, \norganizing the overall goal, 𝑛 criteria, and 𝑚 alternatives into a structured model, as illustrated \nin Figure 8.1. Decision-makers then perform subjective pairwise comparisons to assess the \nrelative importance among each pair of criteria using Saaty’s 1–9 scale. These comparisons \nare c",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 8",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/page-008.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-8 \n \n5 \nEssential or strong importance of x against y \n7 \nVery strong importance of x against y \n9 \nExtreme importance of x against y \n2, 4, 6, 8 \nIntermediate value between adjacent scales \nAny decimal within [1, 9], \ne.g., 2.3 and 5.1 \nFiner scale \nReciprocals, e.g., 1/3 \nand 1/7 \nIf event x has one of the above numbers assigned to it \nwhen compared with event y, then y has the reciprocal \nvalue when compared with x. \n \nIn addition to determining the criteria weights, it is crucial to recognize that the AHP method \ncan be directly utilized for decision-makin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 9",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/page-009.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-9 \n \neach criterion, and finally aggregating the results to rank the alternatives. In the following, \nSteps 1 to 3 are for the criteria weights, and Steps 4 and 5 are for ranking the alternatives. \nStep 1. Construct the 𝑛× 𝑛 pairwise comparison matrix for 𝑛 criteria as follows. \n𝐌𝐀=\n[\n \n \n \n \n𝑎11\n𝑎12\n𝑎13\n…\n𝑎1𝑛\n𝑎21\n𝑎22\n𝑎23\n…\n𝑎2𝑛\n𝑎31\n𝑎32\n𝑎33\n…\n𝑎3𝑛\n⋮\n⋮\n⋮\n⋱\n⋮\n𝑎𝑛1\n𝑎𝑛2\n𝑎𝑛3\n…\n𝑎𝑛𝑛]\n \n \n \n \n \n(8.6) \n• \nHere, 𝑖, 𝑗∈{1,2, … , 𝑛}, each entry 𝑎𝑖𝑗 represents the relative importance of criterion 𝑖 \ncompared to criterion 𝑗 by using Saaty’s",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 10",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/page-010.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-10 \n \nStep 2. Compute the priority vector (i.e., criteria weights in this step), using the eigenvalue \nmethod by solving the following equation. \n𝐌𝐀 𝐰∗= 𝜆max 𝐰∗ \n(8.8) \nHere, 𝜆max is the largest eigenvalue (known as the principal eigenvalue) of the pairwise \ncomparison matrix, and 𝐰∗ is the corresponding principal eigenvector. The entries of this \nprincipal eigenvector are then normalized to sum to 1, yielding the criteria weights in this step, \nas follows. \n𝑤𝑗=\n𝑤𝑗\n∗\n∑\n𝑤𝑘\n∗\n𝑛\n𝑘=1\n,  𝑗= 1,2, … , 𝑛 \n(8.9) \nHere, 𝑤𝑗\n∗ and 𝑤𝑘\n∗ represent the \ud835",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 11",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/page-011.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-11 \n \nStep 3. Check the consistency of the pairwise comparison matrix of 𝑛 criteria by calculating \nits consistency ratio (𝐶𝑅). \n𝐶𝐼= 𝜆𝑚𝑎𝑥−𝑛\n𝑛−1\n,  𝐶𝑅= 𝐶𝐼\n𝑅𝐼 \n(8.10) \nHere, 𝐶𝐼 is the consistency index, and 𝑅𝐼 (shown in Table 8.5) is the random 𝐶𝐼 value \nprovided by Saaty (1990), who computed it by averaging the 𝐶𝐼 values from numerous \nrandomly generated 𝑛× 𝑛 reciprocal matrices using Saaty’s 1–9 scale. If 𝐶𝑅≤0.1 , \nconsistency is considered acceptable. If not, decision-makers should review and revise their \ngiven values for pairwis",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 12",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/page-012.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-12 \n \n \nAfter obtaining the criteria weights, the following steps are for ranking the alternatives by the \nAHP method. \nStep 4. Determine local priority scores of alternatives under each criterion, denoted as 𝑣𝑖𝑗 with \n𝑖∈{1,2, . . . , 𝑚} and 𝑗∈{1,2, . . . , 𝑛}.  \nWith respect to each of the 𝑛 criteria, a separate pairwise comparison matrix (size 𝑚× 𝑚) is \nconstructed, comparing all pairs of 𝑚 alternatives, which essentially follows the same \nprocedure as described in Steps 1 to 3 including consistency analysis. For example, the \ndecision-maker asses",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 13",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/page-013.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-13 \n \n𝐹𝑖𝑗=\n𝑚𝑖𝑛\n𝑘∈{1,2,...,𝑚}𝑓𝑘𝑗\n𝑓𝑖𝑗\n \n(8.12)  \nThe above normalization transforms all minimization criteria to maximization type (i.e., a higher \n𝐹𝑖𝑗 always indicates a better performance). \nNext, for each criterion 𝑗, determine the largest ratio (𝑟𝑚𝑎𝑥,𝑗) and smallest ratio (𝑟𝑚𝑖𝑛,𝑗) after \ncomparing each alternative’s normalized value with the minimum 𝐹𝑖𝑗 in that criterion: \n𝑟𝑚𝑎𝑥,𝑗=\n𝑚𝑎𝑥\n𝑖\n𝐹𝑖𝑗\n𝑚𝑖𝑛\n𝑖\n𝐹𝑖𝑗\n,  𝑖∈{1,2, . . . , 𝑚} 𝑎𝑛𝑑 𝑗∈{1,2, . . . , 𝑛}  \n(8.13)  \n𝑟𝑚𝑖𝑛,𝑗=\n𝑚𝑖𝑛\n𝑖\n𝐹𝑖𝑗\n𝑚𝑖𝑛\n𝑖\n𝐹𝑖𝑗",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 14",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../sections/page-014.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-14 \n \nApply Max normalization method, the original ACM is normalized and shown in Table 8.6. \nTable 8.6: Normalized ACM for AHP walkthrough. \nAlternatives \nC1 \nC2 \nC3 \nA1 \n1 \n0.8571 \n0.3612 \nA2 \n0.5484 \n1 \n0.4708 \nA3 \n0.8280 \n0.7143 \n0.9430 \nA4 \n0.8817 \n0.5714 \n1 \n \nFor instance, for 𝑗= 1: \n𝑟𝑚𝑎𝑥,1 =\n𝑚𝑎𝑥\n𝑖\n𝐹𝑖1\n𝑚𝑖𝑛\n𝑖\n𝐹𝑖1\n=\n1\n0.5484 = 1.8235 \n𝑟𝑚𝑖𝑛,1 =\n𝑚𝑖𝑛\n𝑖\n𝐹𝑖1\n𝑚𝑖𝑛\n𝑖\n𝐹𝑖1\n= 1 \nNext, under 𝑗= 1, let us compare A1’s normalized value (𝐹11) over A3’s normalized value \n(𝐹31), and perform logarithmic transformation: \n𝑎13 =\n𝑙𝑛(𝐹11",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 15",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/page-015.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-15 \n \n \nFor the remaining criteria (C2 and C3), similar calculations are performed to construct the \npairwise comparison matrices for alternatives under each of them and compute the \ncorresponding local priority scores (𝑣𝑖2 and 𝑣𝑖3) for alternatives, as presented in Table 8.8 \nand Table 8.9, respectively; the CR values are found to be 0.0677 and 0.0389, respectively, \nboth within the acceptable threshold. \nTable 8.8: Pairwise comparison matrix for alternatives under C2. \n \nA1 \nA2 \nA3 \nA4 \nLocal priority \nscore (𝑣𝑖2) \nA1 \n1 \n0.3121 \n3.6051 \n6.7958 \n0.2675",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 16",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/page-016.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-16 \n \nSimilarly, the performance scores for all alternatives are calculated as 𝑃1 = 0.4105, 𝑃2 =\n0.1951, 𝑃3 = 0.1761, 𝑃4 = 0.2183. Accordingly, the ranking is A1 ≻ A4 ≻ A2 ≻ A3, with A1 \nbeing the top-ranked alternative by AHP. \n \nAlternatively, we can utilize SuperDecisions, a specialized software that has AHP and Analytic \nNetwork Process (ANP) implemented, to assist us in solving the foregoing numerical example. \nSuperDecisions (downloadable from https://superdecisions.com/) is a free educational \nsoftware developed by the team of the creator of the met",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p017-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../images/img-p017-1.png",
+      "narrative": "draft",
+      "content": "Figure 8.2(a), the AHP model as built in SuperDecisions. A screenshot of the application's main window, titled \"Super Decisions Main Window: AHP.sdmod\", with its menu bar (File, Design, Assess/Compare, Computations, Networks, Help) and toolbar visible. Three cluster windows are stacked and joined by downward arrows: L1-Goal holding one node \"Goal_Node\"; L2-Criteria holding C1, C2 and C3; and L3-Alternatives holding A1 to A4. It is the worked example's concrete instance of Figure 8.1 — three criteria and four alternatives.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p017-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../images/img-p017-2.png",
+      "narrative": "draft",
+      "content": "Figure 8.2(b), the unweighted supermatrix for the AHP example — a screenshot titled \"Super Decisions Main Window: AHP.sdmod: Unweighted Super Matrix\". Rows and columns are grouped by cluster (L1-Goal / Goal_Node, L2-Criteria / C1-C3, L3-Alternatives / A1-A4) and every cell is printed to six decimals. Two blocks are outlined in red, which is what the caption points at: the criteria weights in the Goal_Node column (C1 0.626696, C2 0.279688, C3 0.093616) and the alternatives' local priorities under each criterion (A1 0.529640 / 0.267456 / 0.040746; A2 0.038790 / 0.583045 / 0.082529; A3 0.174103 / 0.108638 / 0.390851; A4 0.257467 / 0.040862 / 0.485875). Everything else in the visible matrix is 0.000000 — the strictly hierarchical structure AHP assumes, with no feedback between clusters.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 17",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/page-017.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-17 \n \n \nFigure 8.2(a): AHP representation in SuperDecisions software \n \n \nFigure 8.2(b): Criteria weights and local priorities of alternatives for each criterion inside red \nboxes; a screenshot from SuperDecisions for AHP.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p018-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../images/img-p018-1.png",
+      "narrative": "draft",
+      "content": "Figure 8.2(c), the global priorities of the four alternatives — a SuperDecisions results panel headed \"Here are the priorities.\" with columns Name, a blue bar column, and \"Normalized by Cluster\" in green: A1 0.41054, A2 0.19511, A3 0.17608, A4 0.21827. A1 ranks first. The four sum to 1.0000.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 18",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../sections/page-018.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-18 \n \n \n \nFigure 8.2(c): Global priorities of alternatives; a screenshot from SuperDecisions for AHP. \nAdditional Comment: If an ACM based on objective measurement data is available (e.g., \nTable 8.1), apart from what Step 4 describes for mapping objective data into Saaty’s 1–9 scale \neither through subjectively assessing the ACM or mathematical transformation, another \nstraightforward approach is to directly utilize the ACM as is and adopt a hybrid approach \ncombining AHP with other MCDM methods (e.g., SAW, MEW) for ranking alternatives. In this \nhybrid appro",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 19",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/page-019.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-19 \n \nadded or existing ones are removed, since this can alter the relative priorities derived from the \npairwise comparison matrices of alternatives. (4) As the number of criteria and alternatives \ngrows, the required pairwise comparisons increase exponentially, resulting in greater \ncomputational effort and higher cognitive demand on the part of decision-makers. \n8.5 \nAnalytic Network Process (ANP) \nThe ANP method, developed by Saaty (1996, 1999), is a generalization and an advanced \nversion of the AHP method described in Section 8.4. This more advanced meth",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p020-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../images/img-p020-1.png",
+      "narrative": "draft",
+      "content": "Figure 8.3, the ANP representation of a simplified version of the same problem — the figure that shows what ANP adds to AHP. The green goal box (\"Goal: Rank m alternatives considering n criteria\") feeds three blue criteria boxes, and two peach alternative boxes sit below. Two things differ from Figure 8.1. Every edge now carries an arrowhead, so direction is asserted; and the criteria are joined to one another by dash-dot double-headed arrows — Criterion 1 to Criterion 2, Criterion 2 to Criterion 3, and Criterion 1 to Criterion 3 in an arc over the top — which is the interdependence AHP's hierarchy forbids. The alternatives also point back up into the criteria as well as receiving arrows from them, so the feedback runs both ways.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 20",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/page-020.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-20 \n \n𝐶3 influences {𝐶1, 𝐶2} \n• \nEach criterion (𝐶1, 𝐶2, 𝐶3) influences the alternatives (𝐴1, 𝐴2); this does not differ from \nthat of AHP. \n• \nEach alternative (𝐴1, 𝐴2) influences both 𝐶2 and 𝐶3 in a feedback loop. For example, \neach alternative, if implemented, might affect technical feasibility and market risk in the \nlonger term. For instance, a more innovative design 𝐴1 may push the company to \nadopt advanced technology solutions, raising the overall technical feasibility in the long \nrun; and simultaneously reduce future market risk by aligni",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 21",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/page-021.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-21 \n \nSince 𝐺 influences all criteria (𝐶1, 𝐶2, 𝐶3): \n- \nParent: 𝐺 \n- \nChildren: {𝐶1, 𝐶2, 𝐶3} \nSuppose the subjective assessment using Saaty's 1–9 scale are as follows: \n- \n𝐶1 and 𝐶2 are treated equally important (ratio 1:1) \n- \n𝐶3 is twice as important as 𝐶1, and also twice as important as 𝐶2 (ratios 2:1) \nHence, the 3 × 3 pairwise comparison matrix of the 3 criteria under 𝐺 is constructed as \nfollows: \n𝑀𝐺→(𝐶1,𝐶2,𝐶3) = (\n1\n1\n0.5\n1\n1\n0.5\n2\n2\n1.0\n) \nSame as the calculations in Step 2 of AHP, eigenvalue method is employed to determine the \nprin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 22",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/page-022.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-22 \n \n𝑤𝐶1→𝐶3 = 0.6667 × 0.25 = 0.1667 \nAnalogously, inside {𝐴1, 𝐴2} pairwise comparison, 𝐴1 is 3 times as important as 𝐴2 (ratio 3:1). \nThe comparison matrix is as follows: \n𝑀𝐶1→(𝐴1,𝐴2) = ( 1\n3\n1/3\n1) \nFor this matrix, 𝜆max = 2. The corresponding priorities are 0.75 and 0.25 for 𝐴1 and 𝐴2 , \nrespectively. Given that 𝐶1 allocates 75% of its influence to the alternatives cluster, weights \nare: \n𝑤𝐶1→𝐴1 = 0.75 × 0.75 = 0.5625 \n𝑤𝐶1→𝐴2 = 0.25 × 0.75 = 0.1875 \n➢ Under the Criterion 2 node (𝑪𝟐): \nThe calculations under 𝐶2 are similar to those u",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 23",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/page-023.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-23 \n \n𝑤𝐶3→𝐶2 = 0.25 × 0.25 = 0.0625 \nInside {𝐴1, 𝐴2}, 𝐴1 is twice as important as 𝐴2 (ratio 2:1). The corresponding priorities are \n0.6667 and 0.3333 for 𝐴1 and 𝐴2, respectively. Considering 75% of parent’s influence to the \nalternatives cluster, weights are: \n𝑤𝐶3→𝐴1 = 0.6667 × 0.75 = 0.50 \n𝑤𝐶3→𝐴2 = 0.3333 × 0.75 = 0.25 \n➢ Under the Alternative 1 node (𝐴1): \nSince 𝐴1 influences both 𝐶2 and 𝐶3 in a feedback loop: \n- \nParent: 𝐴1 \n- \nChildren: {𝐶2, 𝐶3}. \nInside {𝐶1, 𝐶2}, suppose ratio of 𝐶2:𝐶3 = 1: 2, thus: \n𝑤𝐴1→𝐶2 = 0.3333 \n𝑤𝐴1→𝐶3",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 24",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/page-024.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-24 \n \n \n𝐺 \n𝐶1 \n𝐶2 \n𝐶3 \n𝐴1 \n𝐴2 \n𝐺 \n0 \n0 \n0 \n0 \n0 \n0 \n𝐶1 \n0.25 \n0 \n0.125 \n0.1875 \n0 \n0 \n𝐶2 \n0.25 \n0.0833 \n0 \n0.0625 \n0.3333 \n0.50 \n𝐶3 \n0.50 \n0.1667 \n0.125 \n0 \n0.6667 \n0.50 \n𝐴1 \n0 \n0.5625 \n0.25 \n0.50 \n0 \n0 \n𝐴2 \n0 \n0.1875 \n0.50 \n0.25 \n0 \n0 \n \nStep 4. Compute the limit supermatrix (𝐖∞) as follows: \n𝐖∞= lim\n𝑘→∞𝐖𝑘 \n(8.17)  \nAs seen, the limit supermatrix is obtained by raising the weighted supermatrix to powers until \nconvergence. This can be computed by repeatedly multiplying the weighted supermatrix by \nitself until it stabilizes. In essence, the l",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p025-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../images/img-p025-1.png",
+      "narrative": "draft",
+      "content": "Figure 8.4(a), the weighted supermatrix W for the ANP example — a screenshot titled \"Super Decisions Main Window: Chapter_8_ANP.sdmod\". Clusters are L1-GOAL (Goal_Node), L2-Criteria (C1-C3) and L3-Alternatives (A1, A2). Unlike the AHP matrix in Figure 8.2(b), the criteria-to-criteria block is not zero (C1 column: C2 0.083333, C3 0.166667; C2 column: C1 0.125000, C3 0.125000; C3 column: C1 0.187500, C2 0.062500) and the alternatives feed back into the criteria (A1 column: C2 0.333333, C3 0.666667; A2 column: C2 0.500000, C3 0.500000). That non-zero feedback is the structural difference the chapter is illustrating.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p025-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../images/img-p025-2.png",
+      "narrative": "draft",
+      "content": "Figure 8.4(b), the limit supermatrix W∞ for the same ANP model, in the same SuperDecisions window. The structural fact to read off it: **every column is identical**, each holding C1 0.079748, C2 0.199064, C3 0.292616, A1 0.240932, A2 0.187639, with Goal_Node 0.000000. That is what convergence of a column-stochastic supermatrix to its limit means — the long-run priority no longer depends on where the walk started — and it is why ANP reads its answer off any single column. A \"Done\" button is at the foot of the window.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 25",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/page-025.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-25 \n \n(0.2409 + 0.1876) . Therefore, alternative 𝐴1 is ranked higher and recommended for \nimplementation. \nAlternatively, we can also use SuperDecisions to solve this problem. Figure 8.4(a) presents \nthe weighted supermatrix (𝐖) calculated by SuperDecisions. Figure 8.4(b) displays the limit \nsupermatrix (𝐖∞). Figure 8.4(c) shows the normalized global priority scores. All these results \ntally with our previous calculations. The original SuperDecisions file for this ANP model can \nbe downloaded from our shared folder in Google Drive:  \nhttps://drive.google.co",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p026-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../images/img-p026-1.png",
+      "narrative": "draft",
+      "content": "Figure 8.4(c), the normalised global priority scores from the ANP run — the \"Here are the priorities.\" panel again, listing Goal_Node 0.00000, C1 0.13956, C2 0.34836, C3 0.51208, and, outlined in red, A1 0.56218 and A2 0.43782. The red box marks the two numbers that answer the decision: A1 ranks above A2. The alternatives' two values sum to 1.0000 and the three criteria's to 1.0000 separately, which is the \"normalized by cluster\" the column heading names.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 26",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../sections/page-026.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-26 \n \n \nFigure 8.4(c): Screenshot of the normalized global priority scores from SuperDecisions for \nANP. \nThe advantages of ANP are as follows. (1) ANP is designed to handle interdependent criteria \nand alternatives by allowing feedback loops and reciprocal influences, thereby providing a \nmore realistic representation of complex decision problems that are not strictly hierarchical. \n(2) The network-based model facilitates a deeper understanding of how changes to one \ncriterion can impact others, leading to comprehensive insights that might not emerge from \nli",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 27",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../sections/page-027.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-27 \n \nvalues for all minimization criteria, for each alternative. These two sums are then aggregated \nusing the method’s specific equations (Zavadskas et al., 1994) to determine each alternative’s \nperformance score. The alternative with the highest performance score is top-ranked. \nStep 1. Normalize the original ACM with m rows (i.e., alternatives) and n columns (i.e., criteria) \nusing Sum normalization method. \n𝐹𝑖𝑗=\n𝑓𝑖𝑗\n∑\n𝑓𝑘𝑗\n𝑚\n𝑘=1\n \n(8.18)  \nNumerical Calculations (using ACM from Table 8.1): \nFor instance, for 𝑖= 1 and 𝑗= 2: \n𝐹12 =\n𝑓12\n∑\n𝑓𝑘",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 28",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "target": "../sections/page-028.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-28 \n \nA2 \n0.0421 \n0.1050 \n0.1283 \nA3 \n0.0635 \n0.0750 \n0.0641 \nA4 \n0.0677 \n0.0600 \n0.0604 \n \nStep 3. For each alternative, calculate the sums of weighted normalized values for both \nmaximization and minimization criteria, 𝑆𝑖+ and 𝑆𝑖−, separately. \n𝑆𝑖+ = ∑𝑣𝑖𝑗\n𝑔\n𝑗=1\n \n(8.20)  \n𝑆𝑖−= ∑𝑣𝑖𝑗\n𝑛\n𝑗=𝑔+1\n \n(8.21) \nHere, 𝑔 is the number of maximization criteria, which can be arranged in the first 𝑔 columns \nof the weighted normalized ACM. The minimization criteria are in columns 𝑔+ 1 to 𝑛. If all \ncriteria are for maximization, then 𝑔= 𝑛; whereas 𝑔",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 29",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/page-029.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-29 \n \n𝑃𝑖=\n{\n  \n \n  \n 𝑆𝑖+ +\n∑\n𝑆𝑘−\n𝑚\n𝑘=1\n𝑆𝑖−∑\n1\n𝑆𝑘−\n𝑚\n𝑘=1\n,\nif both maximization and minimization criteria exist\n𝑆𝑖+,\nif only maximization criteria exist\n∑\n𝑆𝑘−\n𝑚\n𝑘=1\n𝑆𝑖−∑\n1\n𝑆𝑘−\n𝑚\n𝑘=1\n,\nif only minimization criteria exist\n \n(8.22)  \nIn the above equation, both ∑\n𝑆𝑘−\n𝑚\n𝑘=1\n and ∑\n1\n𝑆𝑘−\n𝑚\n𝑘=1\n are invariant across the performance score \n(𝑃𝑖) calculations for each alternative 𝑖, and so the term \n∑\n𝑆𝑘−\n𝑚\n𝑘=1\n𝑆𝑖−∑\n1\n𝑆𝑘−\n𝑚\n𝑘=1\n can be considered as a \nscaled 𝑆𝑖− value. Further, a smaller 𝑆𝑖− leads to a higher 𝑃𝑖 valu",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 30",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/page-030.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-30 \n \nperformance score is ranked higher. The MOORA method follows a structured sequence of \nthe following steps. \nStep 1. Normalize the original ACM with 𝑚 rows (i.e., alternatives) and 𝑛 columns (i.e., \ncriteria) by Vector normalization method. \n𝐹𝑖𝑗=\n𝑓𝑖𝑗\n√∑\n𝑓𝑘𝑗\n2\n𝑚\n𝑘=1\n \n(8.23) \nNumerical Calculations (using ACM from Table 8.1): \nFor instance, for 𝑖= 1 and 𝑗= 2: \n𝐹12 =\n𝑓12\n√∑\n𝑓𝑘2\n2\n𝑚\n𝑘=1\n=\n600\n√6002 + 7002 + 5002 + 4002 = 0.5345 \nSimilar calculations are performed for all other values in the ACM across the 4 alternatives \nand 3 criteria.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 31",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/page-031.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-31 \n \nA2 \n0.0825 \n0.2058 \n0.2359 \nA3 \n0.1245 \n0.1470 \n0.1178 \nA4 \n0.1326 \n0.1176 \n0.1111 \n \nStep 3. Compute the performance score (𝑃𝑖) of each alternative as follows. \n𝑃𝑖= ∑\n𝑣𝑖𝑗\n𝑔\n𝑗=1\n−∑\n𝑣𝑖𝑗\n𝑛\n𝑗=𝑔+1\n \n(8.25)  \nHere, significance of 𝑔 is the same as that in COPRAS method, meaning that 𝑔 is the number \nof maximization criteria, which can be arranged in the first 𝑔 columns of the weighted \nnormalized ACM. The minimization criteria are in columns 𝑔+ 1 to 𝑛.  The alternative with the \nlargest 𝑃𝑖 is top-ranked and recommended to the decision-ma",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 32",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "target": "../sections/page-032.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-32 \n \nbest alternative based on rank aggregation. It works by assigning ranks to alternatives with \nrespect to each criterion and then computing a weighted sum of these ranks. The alternative \nwith the smallest aggregated rank is top-ranked and recommended to the decision-maker \n(Wang & Rangaiah, 2017). Thus, no normalization of criteria values is required. \nStep 1. Rank the alternatives for each criterion. Each alternative is assigned a rank with \nrespect to every criterion, denoted as 𝑟𝑖𝑗, based on its performance under that criterion, as \nfollows: \n• \nRa",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 33",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "target": "../sections/page-033.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-33 \n \nNumerical Calculations: \nFor instance, for 𝑖= 4: \n𝑅4 = ∑(𝑟4𝑗× 𝑤𝑗)\n3\n𝑗=1\n= 2 × 0.25 + 4 × 0.33 + 1 × 0.42 = 2.24 \nSimilarly, the aggregated ranks for all alternatives are calculated as 𝑅1 = 2.59, 𝑅2 = 2.59, \n𝑅3 = 2.58, 𝑃4 = 2.24. Accordingly, the ranking is A4 ≻ A3 ≻ A1 = A2, with A4 being the top-\nranked alternative by FUCA. Note that 𝑅𝑖 can have the same value for 2 or more \nalternatives. \n \nThe advantages of FUCA are as follows. (1) It is easy to understand and implement, requiring \nonly ranking assignments and simple weighted summation ca",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 34",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "target": "../sections/page-034.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-34 \n \nStep 2. Calculate the performance score (𝑃𝑖) for each alternative by integrating additive (as in \nthe SAW method) and multiplicative (as in the MEW method) components, as follows. The \nalternative with the largest 𝑃𝑖 is top-ranked and recommended to the decision-maker. \n𝑃𝑖= 𝜆∑𝐹𝑖𝑗𝑤𝑗\n𝑛\n𝑗=1\n+ (1 −𝜆) ∏𝐹𝑖𝑗\n𝑤𝑗\n𝑛\n𝑗=1\n \n(8.27) \nHere, 𝜆∈[0, 1] is a parameter that balances between the additive and multiplicative \ncomponents. When 𝜆= 1, WASPAS reduces to a purely additive approach (i.e., SAW). When \n𝜆= 0, it simplifies to a fully multiplica",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 35",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "target": "../sections/page-035.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-35 \n \n1. This chapter describes and illustrates 8 aggregation-type MCDM methods, each \nemploying distinct principles for aggregating criteria values to determine an overall \nperformance score for alternatives. Listed chronologically, these methods are SAW, MEW, \nAHP, ANP, COPRAS, MOORA, FUCA, and WASPAS. \n2. Aggregation-type MCDM methods evaluate alternatives by combining criteria values and \nweights using additive, multiplicative, or hybrid aggregation techniques. These techniques \ntransform and combine criteria values into a single overall performance score,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 36",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "target": "../sections/page-036.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-36 \n \nFernando, M. M. L., Escobedo, J. L. P., Azzaro-Pantel, C., Pibouleau, L., Domenech, S., & \nAguilar-Lasserre, A. (2011, April). Selecting the best portfolio alternative from a hybrid \nmultiobjective GA-MCDM approach for New Product Development in the \npharmaceutical industry. In 2011 IEEE Symposium on Computational Intelligence in \nMulticriteria Decision-Making (MDCM) (pp. 159-166). IEEE. \nKarim, R., & Karmaker, C. L. (2016). Machine selection by AHP and TOPSIS \nmethods. American Journal of Industrial Engineering, 4(1), 7-13. \nMacCrimmon, K. R. (1968). De",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 37",
+      "pageStart": 37,
+      "pageEnd": 37,
+      "target": "../sections/page-037.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-37 \n \nStefano, N. M., Casarotto Filho, N., Vergara, L. G. L., & da Rocha, R. U. G. (2015). COPRAS \n(Complex \nProportional \nAssessment): \nstate \nof \nthe \nart \nresearch \nand \nits \napplications. IEEE Latin America Transactions, 13(12), 3899-3906. \nSuartini, N. K. Y., Divayana, D. G. H., & Dewi, L. J. E. (2023). Comparison analysis of AHP-\nSAW, AHP-WP, AHP-TOPSIS methods in private tutor selection. International Journal \nof Modern Education and Computer Science, 13(1), 28. \nTeknomo, \nK. \n(2006). \nAnalytic \nhierarchy \nprocess \n(AHP) \ntutorial. \nhttp://people.revole",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 38",
+      "pageStart": 38,
+      "pageEnd": 38,
+      "target": "../sections/page-038.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-38 \n \nZavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Optimization of \nweighted aggregated sum product assessment. Elektronika ir elektrotechnika, 122(6), \n3-6. \n8.13 \nExercises \nE8.1 \nYou are given an ACM consisting of 3 alternatives (A1, A2, A3) and 4 criteria (C1, C2, \nC3, C4), with the following values: \nAlternatives \nC1 \nC2 \nC3 \nC4 \nA1 \n0.78 \n117 \n6.2 \n35 \nA2 \n0.65 \n150 \n5.8 \n40 \nA3 \n0.83 \n110 \n4.9 \n30 \nCriteria C1, C2, and C3 are benefit criteria to be maximized, whereas C4 is a cost \ncriterion to be minimized. The weights f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/wang-rangaiah-2026-mcdm-aggregation/blocks/prose-page-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 39",
+      "pageStart": 39,
+      "pageEnd": 39,
+      "target": "../sections/page-039.md",
+      "narrative": null,
+      "content": "Preliminary Draft Manuscript \n \n8-39 \n \nAlternatives \nC1 \nC2 \nC3 \nA3 \n6100 \n9.0 \n0.110 \nA4 \n5900 \n8.3 \n0.095 \nA5 \n5150 \n8.8 \n0.145 \nA6 \n5650 \n7.9 \n0.105 \nCriteria C1 and C2 are benefit criteria to be maximized, whereas C3 is a cost criterion \nto be minimized. The weights for the criteria are: 𝑤1 = 0.40, 𝑤2 = 0.35, and 𝑤3 = 0.25. \nApply all (or some of) the aggregation-type MCDM methods covered in this chapter to \nrank the alternatives. Identify the top-ranked alternative by each method and compare \nthem. \nE8.4 \nDescribe the similarities and differences between the SAW and MEW methods. \nE8.5",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
