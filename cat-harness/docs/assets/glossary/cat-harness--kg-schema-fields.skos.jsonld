@@ -2389,6 +2389,177 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestoneplanschema.coveredopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestonePlanSchema.coveredOpen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "SUMMED from the closures, never `openTotal - orphanOpen`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.coveredOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestoneplanschema.duplicateids",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestonePlanSchema.duplicateIds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bean ids held by more than one file. A store defect, reported."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.duplicateIds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestoneplanschema.orphanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestonePlanSchema.orphanOpen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open beans with no milestone anywhere above them."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.orphanOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.epics",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.epics"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Direct children typed `epic`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.epics",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repository-relative path of the milestone's bean file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.share",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.share"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`closed / (closed + open)`; `null` when nothing is classified, which is NOT the same as 0 — see the module note on `milestone-rollup.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.share",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The milestone's OWN status — not derived from its subtree."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.status",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.total",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.total"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transitive descendants, excluding the milestone itself."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.total",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.unclassified",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.unclassified"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In neither status set — reported alone, folded into neither figure."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.unclassified",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-note.beannotefrontmatterschema.bean",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22868,6 +23039,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.beanindexschema.plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexSchema.plan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because \"no plan in the projection\" is a state the renderer distinguishes from \"a plan with nothing done\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan",
       "skos:note": "candidate"
     },
     {

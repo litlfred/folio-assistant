@@ -17,7 +17,7 @@
  * |---|---|
  * | priority class, rank or override position | CI status of the head |
  * | the reason, who decided, when | mergeability (`clean`, `dirty`, `unstable`) |
- * | a hold, with its expiry | labels (`ready-to-merge`, `needs-merge-human`) |
+ * | a hold, with its expiry | labels (`ready-to-merge`, `merge-main`) |
  * | the train it was assigned to | the head SHA |
  * | an ejection from a train, with its evidence link | the PR's own CI verdict, and whether CI saw the head |
  * | links to beans and epics | the changed-file list, and what it touches |

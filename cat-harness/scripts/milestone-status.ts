@@ -1,9 +1,51 @@
 #!/usr/bin/env bun
 /**
- * How far is this repository from the separation point — "an MVP of the active
- * feature set, just shy of seeding the repos"?
+ * How far is this repository from the separation point, in two parts that must
+ * not be read as one number?
  *
- * @module scripts/mvp-status
+ * **Part 1 — the declared milestones.** Every `type: milestone` bean, rolled up
+ * over the closure beneath it. This is the PLAN's progress, and it is reported
+ * rather than graded.
+ *
+ * **Part 2 — mechanical readiness.** The gates that say whether the tree is in
+ * a state the repos can be seeded FROM. These are graded, and they set the exit
+ * code.
+ *
+ * ## Why "MVP" is not the name
+ *
+ * The owner asked, 2026-10-03, what to call this: *"mvp = 'named release' /
+ * milestone release? what do we call it in publication and software?"*. The
+ * answer this repository can actually act on is that **"MVP" is declared
+ * nowhere in it** — measured the same day, `cat-harness/methodologies/` (20
+ * files) and `folio-assistant-core/methodologies/` (2) contain zero hits for
+ * MVP, agile, scrum, kanban or sprint, against a control of 19 files matching
+ * `decision|provenance`. The declared methodology set is decision-analysis and
+ * provenance; work sequencing is declared as BPMN plus CRDM.
+ *
+ * `milestone` IS declared — it is a `type` in the bean store, it is a root in
+ * `check-bean-parents`, and three beans carry it. So the report is named after
+ * the object the repository has, not after a term it would have to import. In
+ * publication the neighbouring pair is *edition* / *version of record*; neither
+ * is a work-plan rollup, which is why neither is used here.
+ *
+ * ## The two parts answer different questions, and averaging them would lie
+ *
+ * A milestone share is bean-weighted and says how much of a GOAL is done. A
+ * readiness gate is a precondition: `0 authored conflicts` is not 40 % done
+ * when there are 40 of them. Combining them into one percentage — which is
+ * what a single "MVP %" invites — would produce a figure that is neither.
+ *
+ * ## What the milestone shares DO NOT cover, stated in the report itself
+ *
+ * `orphanOpen` is open beans with no milestone above them. Measured
+ * 2026-10-03: **241 of 390 open beans, under 18 of 30 epics that have no
+ * milestone ancestor.** So the three GOAL shares describe well under half the
+ * open work, and a reader given only those three would overestimate how much
+ * of the repository they account for. Whether those epics belong under a GOAL
+ * or under a milestone that does not yet exist is a scope judgement for the
+ * owner, so this reports it and proposes nothing.
+ *
+ * @module scripts/milestone-status
  * @graphNode none — a read-only report over git, the bean store and the forge
  * @covers none — a merge-steward report: it inventories, it judges no declared graph
  *
@@ -75,11 +117,12 @@
  * So: printed for a person, `--json` for a dashboard that renders it.
  *
  * Usage:
- *   bun run mvp:status                  # the table
- *   bun run mvp:status -- --json        # the same, as JSON on stdout
- *   bun run mvp:status -- --window 9    # the "active" window in hours (default 9)
- *   bun run mvp:status -- --no-fetch    # skip the fetch (faster, may be stale)
- *   bun run mvp:status -- --skip gate-evidence   # omit a slow gate
+ *   bun run milestone:status                  # the table
+ *   bun run milestone:status -- --json        # the same, as JSON on stdout
+ *   bun run milestone:status -- --window 9    # the "active" window in hours (default 9)
+ *   bun run milestone:status -- --bar        # JUST the milestone bars, one line each
+ *   bun run milestone:status -- --no-fetch    # skip the fetch (faster, may be stale)
+ *   bun run milestone:status -- --skip gate-evidence   # omit a slow gate
  *
  * Exit 0 every gate clear · 1 at least one blocked · 2 at least one
  * could-not-determine (which outranks blocked: a sweep blind on one gate has
@@ -89,6 +132,8 @@ import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 import { readdirSync, readFileSync } from "node:fs";
 
+import { readBeans } from "./beans.ts";
+import { milestoneRollup, type MilestoneReport } from "./milestone-rollup.ts";
 import { git } from "./merge-pipeline-git.ts";
 import { pathClass } from "./merge-pipeline-paths.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
@@ -399,6 +444,51 @@ function reportHolders(): Gate {
   };
 }
 
+/**
+ * A milestone's SHORT name, for a one-line bar.
+ *
+ * The text before the first colon, because the three milestones here are
+ * titled "GOAL 1: ...". Falls back to a truncation rather than to the id: a
+ * reader scanning a bar wants the goal, and `folio-assistant-p5wm` is not it.
+ * Nothing depends on the colon convention — a title without one still gets a
+ * label.
+ */
+function shortLabel(title: string, width: number): string {
+  const head = title.includes(":") ? title.slice(0, title.indexOf(":")) : title;
+  return (head.length > width ? head.slice(0, width - 1) + "…" : head).padEnd(width);
+}
+
+/**
+ * The compact status bar: one line per milestone, and the coverage beneath.
+ *
+ * ASCII blocks rather than a colour, because this is read in a terminal, in a
+ * commit message and in a chat log, and two of those three drop colour. The
+ * percentage is printed as a NUMBER beside the bar for the same reason the
+ * board does it: a bar alone cannot be read to a precision anybody can quote.
+ */
+function renderBar(plan: MilestoneReport): string[] {
+  const WIDTH = 24;
+  const out: string[] = [];
+  for (const m of plan.milestones) {
+    const pct = m.share === null ? null : Math.round(m.share * 100);
+    // `null` is not 0%: an empty milestone has nothing to measure, and a bar
+    // of zero blocks would say its work is untouched.
+    const filled = pct === null ? 0 : Math.round((pct / 100) * WIDTH);
+    const bar = pct === null ? "·".repeat(WIDTH) : "█".repeat(filled) + "░".repeat(WIDTH - filled);
+    const label = `${pct === null ? " n/a" : `${pct}%`.padStart(4)}`;
+    out.push(
+      `${shortLabel(m.title, 10)} [${bar}] ${label}  ${`${m.closed}/${m.closed + m.open}`.padStart(7)}  ${String(m.inProgress).padStart(3)} in progress`,
+    );
+  }
+  out.push(
+    `${" ".repeat(10)}  covered ${plan.coveredOpen}/${plan.openTotal} open · ${plan.orphanOpen} under no milestone`,
+  );
+  if (plan.duplicateIds > 0) {
+    out.push(`${" ".repeat(10)}  ! ${plan.duplicateIds} bean id(s) held by more than one file`);
+  }
+  return out;
+}
+
 const ICON: Record<GateState, string> = {
   clear: "✓",
   blocked: "✗",
@@ -409,22 +499,38 @@ const ICON: Record<GateState, string> = {
 function main(): number {
   const argv = process.argv.slice(2);
   const json = argv.includes("--json");
+  const barOnly = argv.includes("--bar");
   const noFetch = argv.includes("--no-fetch");
   const wi = argv.indexOf("--window");
   const windowHours = wi >= 0 ? Number(argv[wi + 1]) || 9 : 9;
   const skip = new Set(argv.flatMap((a, i) => (argv[i - 1] === "--skip" ? [a] : [])));
 
+  // `--bar` is the refreshable form, so it touches NOTHING but the bean store:
+  // no fetch, no `origin/main`, no PR listing. Every gate below asks the forge
+  // — several of them once per open PR — and a status bar you wait minutes for
+  // is a status bar nobody refreshes. It is also why this sits before the
+  // fetch rather than beside the gates.
+  if (barOnly) {
+    const localBeans = readBeans(ROOT);
+    if (!localBeans) {
+      console.error("milestone:status: the bean store could not be read — NOT an empty plan.");
+      return 2;
+    }
+    for (const line of renderBar(milestoneRollup(localBeans))) console.log(line);
+    return 0;
+  }
+
   if (!noFetch) git(ROOT, ["fetch", "-q", "origin", "main"]);
   const baseSha = git(ROOT, ["rev-parse", "--verify", "-q", "origin/main^{commit}"]);
   if (!baseSha.ok) {
-    console.error("mvp:status: no origin/main — COULD NOT DETERMINE, not a clean run.");
+    console.error("milestone:status: no origin/main — COULD NOT DETERMINE, not a clean run.");
     return 2;
   }
   const base = baseSha.out.trim();
 
   const prs = openPrs();
   if (!prs) {
-    console.error("mvp:status: the open PRs could not be listed — COULD NOT DETERMINE, not a clean run.");
+    console.error("milestone:status: the open PRs could not be listed — COULD NOT DETERMINE, not a clean run.");
     return 2;
   }
   // Every head must be present locally before merge-tree, or it errors and the
@@ -436,6 +542,12 @@ function main(): number {
       }
     }
   }
+
+  // Part 1. Composed from `milestone-rollup.ts`, the same function
+  // `gen-docs-pages.ts` uses to write `milestones` into the bean index the
+  // board fetches — so the terminal and the board cannot disagree.
+  const beans = readBeans(ROOT);
+  const plan: MilestoneReport | null = beans ? milestoneRollup(beans) : null;
 
   const gates: Gate[] = [];
   const add = (id: string, f: () => Gate) => { if (!skip.has(id)) gates.push(f()); };
@@ -454,17 +566,49 @@ function main(): number {
 
   if (json) {
     console.log(JSON.stringify({
-      $schema: "mvp-status/v1",
+      $schema: "milestone-status/v1",
       generated_at: new Date().toISOString(),
       base,
       open_prs: prs.length,
       window_hours: windowHours,
+      // null, not an empty list: "the store could not be read" and "there are
+      // no milestones" are different answers, and a dashboard that renders
+      // [] for both reports a repository with no plan.
+      plan,
       summary: { graded: graded.length, clear: clear.length, blocked: blocked.length, could_not_determine: undet.length },
       gates,
     }, null, 2));
   } else {
-    console.log(`MVP status — the separation point, against origin/main at ${base.slice(0, 11)}`);
+    console.log(`Milestone status — against origin/main at ${base.slice(0, 11)}`);
     console.log(`${prs.length} open PR(s) · window ${windowHours}h · ${new Date().toISOString()}\n`);
+
+    console.log("  DECLARED MILESTONES — reported, not graded (bean-weighted; see the module note)");
+    if (!plan) {
+      console.log("    ? the bean store could not be read — NOT an empty plan\n");
+    } else if (plan.milestones.length === 0) {
+      console.log("    · no `type: milestone` bean in the store\n");
+    } else {
+      for (const m of plan.milestones) {
+        const pct = m.share === null ? " n/a" : `${Math.round(m.share * 100)}%`.padStart(4);
+        console.log(`    ${pct}  ${m.id}  ${m.closed}/${m.closed + m.open} closed · ${m.inProgress} in progress · ${m.todo} todo · ${m.epics} epic(s)`);
+        console.log(`          ${m.title.slice(0, 96)}`);
+        // Never silent: a status in neither set is a finding about the store,
+        // and folding it into either would move the share.
+        if (m.unclassified > 0) console.log(`          ! ${m.unclassified} descendant(s) in NEITHER status set — counted in neither figure`);
+      }
+      // `coveredOpen` is SUMMED from the closures, never `openTotal -
+      // orphanOpen` — the two differ, and the module note says why.
+      console.log(`    These cover ${plan.coveredOpen} of ${plan.openTotal} open bean(s). The other ${plan.orphanOpen} sit under NO`);
+      console.log(`    milestone, so the shares above are not a figure for the whole work plan.`);
+      console.log(`    Which milestone those belong under is a scope judgement, not a defect`);
+      console.log(`    this tool can resolve.`);
+      if (plan.duplicateIds > 0) {
+        console.log(`    ! ${plan.duplicateIds} bean id(s) are held by more than one FILE. Counted once each here;`);
+        console.log(`      no current gate catches it, and which file keeps the id is its owner's call.`);
+      }
+      console.log("");
+    }
+    console.log("  MECHANICAL READINESS — graded; these set the exit code\n");
     for (const g of gates) {
       console.log(`  ${ICON[g.state]} ${g.id.padEnd(19)} ${g.value}`);
       if (g.target) console.log(`      target: ${g.target}`);
