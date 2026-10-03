@@ -107,6 +107,6 @@ it and why it exists.
 
 Glossary mechanics — the content kind, its coding and versioning — belong to the
 glossary content kind where that lands (bean `lqo9`), and to
-[`glossary-build`](../../library/library-core/glossary-build.md) for the build half. Model-specific
+`glossary-build` for the build half. Model-specific
 voices are `rkqp`'s. This skill governs the WRITING; those govern the
 artefacts it writes about.

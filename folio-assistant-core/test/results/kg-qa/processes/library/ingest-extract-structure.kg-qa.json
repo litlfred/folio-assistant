@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_BuildL1Kg",
-    "path": "processes/library/ingest-build-l1-kg.bpmn"
+    "id": "Process_ExtractStructure",
+    "path": "processes/library/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:a2b9fadd5be72f81b87b88c6985deba4f35066049707079773da22f6ad7ecf19",
+  "source_hash": "sha256:87a4126fcfea483eac60a05807107c6dcebc50fbc02a082904cd5a8d4cfcba41",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,7 +64,7 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "call-activity-resolves": {
@@ -84,11 +84,11 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "gateway-branches-named": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "node-reachable": {
@@ -109,9 +109,9 @@
     }
   },
   "totals": {
-    "pass": 14,
+    "pass": 15,
     "fail": 0,
-    "n/a": 11,
+    "n/a": 10,
     "unknown": 0
   }
 }

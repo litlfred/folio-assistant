@@ -314,6 +314,106 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_buildl1kg.task_assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record assets[] — local path or remote URL"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync."
+        }
+      ],
+      "skos:notation": "Task_Assets",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Assets",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_buildl1kg.task_bind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bind the folder name to the bibliography slug"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bind the folder name to the document's bibliography slug, so library/<bib-slug>/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them."
+        }
+      ],
+      "skos:notation": "Task_Bind",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Bind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_buildl1kg.task_dublin",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write dublin-core.jsonld (the record of truth)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one."
+        }
+      ],
+      "skos:notation": "Task_Dublin",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Dublin",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_buildl1kg.task_link",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Link L1 nodes into the corpus graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/."
+        }
+      ],
+      "skos:notation": "Task_Link",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Link",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_buildl1kg.task_manifest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write manifest.jsonld referencing it"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields."
+        }
+      ],
+      "skos:notation": "Task_Manifest",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Manifest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_contentchangereview.call_adjudication",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -991,6 +1091,126 @@
       ],
       "skos:notation": "A_Search",
       "dcterms:source": "folio-assistant-core/processes/library/deep-document-research.bpmn#A_Search",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_derivecontent.task_archive",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Archive → greppable contents manifest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data."
+        }
+      ],
+      "skos:notation": "Task_Archive",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Archive",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_derivecontent.task_audio",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe and translate audio"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md."
+        }
+      ],
+      "skos:notation": "Task_Audio",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Audio",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_derivecontent.task_image",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Narrative description per image, localized"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one."
+        }
+      ],
+      "skos:notation": "Task_Image",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Image",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_derivecontent.task_provenance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cite the author of every narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source."
+        }
+      ],
+      "skos:notation": "Task_Provenance",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Provenance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_derivecontent.task_tabular",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Sheet names, headers, shape, narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about."
+        }
+      ],
+      "skos:notation": "Task_Tabular",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Tabular",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_derivecontent.task_techmeta",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "File info, sizes, hashes, timestamps, mimetype"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable."
+        }
+      ],
+      "skos:notation": "Task_TechMeta",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_TechMeta",
       "skos:note": "candidate"
     },
     {
@@ -1714,6 +1934,106 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_extractstructure.task_candidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract claim candidates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts."
+        }
+      ],
+      "skos:notation": "Task_Candidates",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Candidates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_extractstructure.task_extracttext",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract the text layer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document."
+        }
+      ],
+      "skos:notation": "Task_ExtractText",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_ExtractText",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_extractstructure.task_ocr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OCR to ocr/page-*.txt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier."
+        }
+      ],
+      "skos:notation": "Task_Ocr",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Ocr",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_extractstructure.task_sections",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Split into sections/*.md with doc_brief front-matter"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief."
+        }
+      ],
+      "skos:notation": "Task_Sections",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Sections",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_extractstructure.task_structure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write structure.json (TOC, page ranges, metadata)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one."
+        }
+      ],
+      "skos:notation": "Task_Structure",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Structure",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_gettingstarted.task_askintent",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1951,6 +2271,326 @@
       ],
       "skos:notation": "Task_SeedPlan",
       "dcterms:source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_SeedPlan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_basic",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Basic ingestion (harness)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The harness's `document-ingestion.bpmn`: accept the upload by a declared route, extract its metadata into the KG, and catalogue the asset in library/ — placed if materialized, recorded as referenced if not. Everything below refines that result for a document. Called, not copied: this was Lane_0 and Task_Place of this diagram until placement PR6 moved them down as the basic flow."
+        }
+      ],
+      "skos:notation": "CallActivity_Basic",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Basic",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_buildkg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the L1 knowledge graph [document-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See ingest-build-l1-kg.bpmn."
+        }
+      ],
+      "skos:notation": "CallActivity_BuildKg",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_BuildKg",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_derive",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Derive content from the assets [document-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet."
+        }
+      ],
+      "skos:notation": "CallActivity_Derive",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Derive",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_extract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract structure [document-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See ingest-extract-structure.bpmn."
+        }
+      ],
+      "skos:notation": "CallActivity_Extract",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Extract",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_gate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "L1 completeness gate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `l1-document-ingestion` (2026-09-30, bean 7bg9; the section moved there from the harness's `library-ingestion` in placement PR6): its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. Until then this step named `paper-relevance-triage`, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
+        }
+      ],
+      "skos:notation": "CallActivity_Gate",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Gate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_ingesttheme",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ingest the theme [theme-art-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See ingest-theme.bpmn. The subprocess derives one Theme node with kind sticky|webpage|publication, and refuses a source it cannot complete rather than emitting a partial theme."
+        }
+      ],
+      "skos:notation": "CallActivity_IngestTheme",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_IngestTheme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.task_citeable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Available to cite as an L1 source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn."
+        }
+      ],
+      "skos:notation": "Task_Citeable",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Citeable",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.task_detect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Detect media type and mint a doc id [document-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename."
+        }
+      ],
+      "skos:notation": "Task_Detect",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Detect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.task_licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Establish the licence from the upload alone [document-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find."
+        }
+      ],
+      "skos:notation": "Task_Licence",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Licence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.task_openbean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the gap as a bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes."
+        }
+      ],
+      "skos:notation": "Task_OpenBean",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_OpenBean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.task_promote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Move into library/<bib-slug>/"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The folder name IS the bibliography citation key, so a citation and a directory are the same string."
+        }
+      ],
+      "skos:notation": "Task_Promote",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Promote",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1documentingestion.task_summaryqueue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Prose blocks enter the summary queue [l1-document-ingestion]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Owner, 2026-09-24: \"Make as QA sidecar as part of general doc ingestion to slowly drain.\" Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`."
+        }
+      ],
+      "skos:notation": "Task_SummaryQueue",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_SummaryQueue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1gate.task_checkderived",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Is every derived artefact present?"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational."
+        }
+      ],
+      "skos:notation": "Task_CheckDerived",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_CheckDerived",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1gate.task_flagdrift",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Adjudicate the flagged passage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A machine can detect that two readings differ. Which one is right is a human call."
+        }
+      ],
+      "skos:notation": "Task_FlagDrift",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_FlagDrift",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1gate.task_roundtrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Round-trip translation QA"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see."
+        }
+      ],
+      "skos:notation": "Task_RoundTrip",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_RoundTrip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities/process_l1gate.task_verdict",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the L1 completeness verdict"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/."
+        }
+      ],
+      "skos:notation": "Task_Verdict",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_Verdict",
       "skos:note": "candidate"
     },
     {

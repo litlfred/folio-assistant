@@ -415,6 +415,7 @@
         "agent"
       ],
       "skills": [
+        "asset-extraction",
         "kg-subscription",
         "library-ingestion",
         "materialize-remote",
@@ -432,9 +433,6 @@
         "agent"
       ],
       "skills": [
-        "filing-dublin-core",
-        "archiving-web-pages",
-        "archiving-arxiv",
         "library-ingestion"
       ],
       "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
@@ -656,14 +654,11 @@
         "readability-editing",
         "scientific-accuracy",
         "one-voice-audit",
-        "ontologist",
         "md-authoring",
         "html-rendering-qc",
         "markdown-render-check",
         "exposition-swarm-drain",
-        "todo-review",
-        "bib-human-review",
-        "bib-qa"
+        "todo-review"
       ],
       "persona": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it."
     },
@@ -679,10 +674,8 @@
       ],
       "skills": [
         "docs-generation",
-        "glossary-build",
         "create-sticky-note",
         "theme-art-intake",
-        "tabular-metadata",
         "deployment-auth",
         "editor"
       ],
@@ -753,7 +746,6 @@
         "detangler-integration-watcher",
         "devils-advocate-watcher",
         "one-voice-integration-watcher",
-        "bib-photo-ingestion-watcher",
         "integration-watch",
         "integration-audit",
         "integration-backlog"

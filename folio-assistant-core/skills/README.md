@@ -13,7 +13,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-skills`, h
 | [`deep-document-research.md`](deep-document-research.md) | Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. | "Deep document research" |
 | [`skills.json`](skills.json) | data |  |
 | [`content/`](content/) | [Content](https://litlfred.github.io/bootstrap/schemas/#content)-type skill packages: how a folio of a given content type is authored, reviewed, validated and published. Declared HERE because this is the lowest instance holding a `skills/content/` directory (placement PR1, bean ybwt): the same-named directory of every instance stacked on this one is a MEMBER of it (bean 1g4s, option A), never a group of its own. When placement PR2 regroups the harness's `authoring` topic as `content`, the declaration moves down to the harness and this entry is removed. | |
-| [`library/`](library/) | 4 files | |
+| [`library/`](library/) | 17 files | |
 | [`skill-definitions/`](skill-definitions/) | 12 files | |
 | [`voices/`](voices/README.md) | 39 files | |
 <!-- kg:subgraph:end -->

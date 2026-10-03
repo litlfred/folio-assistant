@@ -50,5 +50,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
 | [`lib/`](lib/) | 2 files | |
-| [`tests/`](tests/) | 7 files | |
+| [`tests/`](tests/) | 8 files | |
 <!-- kg:subgraph:end -->

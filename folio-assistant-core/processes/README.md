@@ -13,6 +13,6 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-processes`
 | [`processes.json`](processes.json) | data |  |
 | [`conduct/`](conduct/) | 3 files | |
 | [`content/`](content/) | 8 files | |
-| [`library/`](library/) | 1 file | |
+| [`library/`](library/) | 6 files | |
 | [`ui/`](ui/) | 3 files | |
 <!-- kg:subgraph:end -->

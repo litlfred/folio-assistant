@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_L1Gate",
-    "path": "processes/library/ingest-l1-completeness-gate.bpmn"
+    "id": "Process_L1DocumentIngestion",
+    "path": "processes/library/l1-document-ingestion.bpmn"
   },
-  "source_hash": "sha256:5347900bbce0cbcbf257e88f3f2660d6d9c4c70c864d8bc2f39a667156397691",
+  "source_hash": "sha256:3b226372f3653009e777c1b7f32a8e16fa7993ea39737b5ac7d6436f5325a3cf",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -35,8 +35,16 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_FlagDrift",
-          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+          "where": "CallActivity_IngestTheme",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "CallActivity_Gate",
+          "detail": "names skill \"l1-document-ingestion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_SummaryQueue",
+          "detail": "names skill \"l1-document-ingestion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },
@@ -69,12 +77,21 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "CallActivity_Basic",
+          "detail": "calls \"Process_Ingestion\", which is the id of no process this instance can load. That is either a typo or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown."
+        },
+        {
+          "where": "CallActivity_IngestTheme",
+          "detail": "calls \"Process_IngestTheme\", which is the id of no process this instance can load. That is either a typo or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown."
+        }
+      ]
     },
     "process-diagram-published": {
       "result": "pass",
@@ -114,9 +131,9 @@
     }
   },
   "totals": {
-    "pass": 16,
+    "pass": 14,
     "fail": 1,
-    "n/a": 8,
-    "unknown": 0
+    "n/a": 9,
+    "unknown": 1
   }
 }

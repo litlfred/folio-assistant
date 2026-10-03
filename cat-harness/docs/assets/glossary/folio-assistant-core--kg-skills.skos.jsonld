@@ -14,6 +14,106 @@
       "dcterms:source": "Skills of folio-assistant-core"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/archiving-arxiv",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "archiving-arxiv"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled."
+        }
+      ],
+      "skos:notation": "archiving-arxiv",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/archiving-web-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "archiving-web-pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive."
+        }
+      ],
+      "skos:notation": "archiving-web-pages",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/archiving-web-pages.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/bib-human-review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bib-human-review"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue."
+        }
+      ],
+      "skos:notation": "bib-human-review",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/bib-human-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/bib-photo-ingestion-watcher",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bib-photo-ingestion-watcher"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper."
+        }
+      ],
+      "skos:notation": "bib-photo-ingestion-watcher",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/bib-photo-ingestion-watcher.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/bib-qa",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bib-qa"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence. Generates bib-qa.json consumed by the standalone bib-qa.html dashboard."
+        }
+      ],
+      "skos:notation": "bib-qa",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/bib-qa.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/deep-document-research",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -119,6 +219,61 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/filing-dublin-core",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "filing-dublin-core"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion."
+        }
+      ],
+      "skos:notation": "filing-dublin-core",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/glossary-build",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "glossary-build"
+        }
+      ],
+      "skos:notation": "glossary-build",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/glossary-build.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/l1-document-ingestion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l1-document-ingestion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`."
+        }
+      ],
+      "skos:notation": "l1-document-ingestion",
+      "dcterms:source": "folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/normative-statements",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -134,6 +289,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/ontologist",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ontologist"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds."
+        }
+      ],
+      "skos:notation": "ontologist",
+      "dcterms:source": "folio-assistant-core/skills/library/cataloguing/ontologist.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/quality-control",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -146,6 +321,26 @@
       ],
       "skos:notation": "quality-control",
       "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/tabular-metadata",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "tabular-metadata"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph."
+        }
+      ],
+      "skos:notation": "tabular-metadata",
+      "dcterms:source": "folio-assistant-core/skills/library/ingestion/tabular-metadata.md",
       "skos:note": "candidate"
     }
   ]

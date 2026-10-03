@@ -54,7 +54,7 @@ record had no `@context`, so a CSVW parser rejects it, and a JSON-LD processor
 keeps only the `fac:` keys, read as IRIs in a URI scheme called `fac`. No
 spelling of the prefix fixes that inside CSVW, whose metadata documents may
 put only `@language` and `@base` in a local context — see
-[`kg-export`](../../kg/kg-core/kg-export.md) §"A prefix is the stub".
+[`kg-export`](../../../../cat-harness/skills/kg/kg-core/kg-export.md) §"A prefix is the stub".
 
 The owner chose (2026-09-23) between three answers:
 
@@ -66,7 +66,7 @@ The owner chose (2026-09-23) between three answers:
 
 Two facts decided it. **Nothing reads the annotations as linked data** — the
 graph projection reads `anchor.sheet` from the JSON — and
-[`directory-conventions`](../../kg/kg-core/directory-conventions.md) says to generate as many
+[`directory-conventions`](../../../../cat-harness/skills/kg/kg-core/directory-conventions.md) says to generate as many
 renderings as have a consumer, and no more. And **the three-state rule below
 needs `null` to mean something**, which RDF cannot keep. If a consumer ever
 needs placement as linked data, the full-IRI answer is the one to revisit,

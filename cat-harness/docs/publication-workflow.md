@@ -193,21 +193,24 @@ which is true of ingestion and silent on everything before it:
 |---------|---------|
 | `content-acquisition.bpmn` | Something is offered unprompted, or is needed and has to be asked for — and through which channel: `uploads/` is one, the conversation is another, and the set is open |
 
-**Ingestion** — turning an uploaded source document into corpus. The first is
-the outer process; the rest are its call activities — except
-`ingest-theme.bpmn`, which is conditional and not yet wired in, for the reason
-given under the table:
+**Ingestion** — turning an uploaded source into corpus. Since placement PR6
+(bean `apcg`) this is two layers. The harness's `document-ingestion.bpmn` is the
+**basic flow** every asset takes and calls nothing; core's
+`l1-document-ingestion.bpmn` is the **document refinement**, which calls the
+basic flow first and then the four phases beside it — and, behind a judgement
+gateway, `ingest-theme.bpmn`:
 
 | Diagram | Answers |
 |---------|---------|
-| `document-ingestion.bpmn` | The whole path from `uploads/` to a citeable L1 knowledge graph |
-| `ingest-extract-structure.bpmn` | Text layer, OCR, sections, structure, claim candidates |
-| `ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
-| `ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
-| `ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
+| `document-ingestion.bpmn` | The basic flow: accept an upload, put its metadata into the KG, catalogue the asset in `library/` — held if materialized, referenced if not |
+| `folio-assistant-core/processes/library/l1-document-ingestion.bpmn` | The whole path from a document to a citeable L1 knowledge graph |
+| `folio-assistant-core/processes/library/ingest-extract-structure.bpmn` | Text layer, OCR, sections, structure, claim candidates |
+| `folio-assistant-core/processes/library/ingest-derive-content.bpmn` | Archive, technical metadata, images, audio, tabular data, provenance |
+| `folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn` | Dublin Core, manifest, assets, binding, linking |
+| `folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn` | Is the derived content complete enough to promote, and who says so? |
 | `ingest-theme.bpmn` | Does this artefact carry a theme, and what are its palette roles and layouts? |
 
-`ingest-theme.bpmn` is **not** a call activity of `document-ingestion.bpmn`
+`ingest-theme.bpmn` is **not** an unconditional call activity of the L1 pipeline
 today, and that is a stated gap rather than an oversight (bean `j66n`, whose
 "Done when" asks for the link). Most ingested documents carry no theme. Making
 theme ingestion an unconditional step in the chain would assert that every one

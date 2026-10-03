@@ -1595,9 +1595,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // That was wrong for the THIRD time in one session, and always the same way:
     // I searched skill NAMES instead of reading skill BODIES.
-    // `library-ingestion` §"Reviewing: `bun run narratives`" names these exact
-    // commands in a fenced block, and states the rule this node exists to make
-    // reachable:
+    // `library-ingestion` §"Reviewing: `bun run narratives`" named these exact
+    // commands in a fenced block (the section moved up a layer with the rest of
+    // the L1 method in placement PR6, bean `apcg`), and states the rule this
+    // node exists to make reachable:
     //
     //   "Two attributions, because they are two acts. `drafted_by` is who wrote
     //    the words; `confirmed_by` is who accepted them. … AN AGENT CANNOT

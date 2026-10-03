@@ -134,7 +134,6 @@ classDiagram
       bpmn:exclusiveGateway [0..*] element
       bpmn:extensionElements [0..*] element
       bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
       bpmn:incoming [0..*] element
       bpmn:lane [0..*] element
       bpmn:laneSet [0..*] element
@@ -161,7 +160,6 @@ classDiagram
       bpmn:exclusiveGateway [0..*] element
       bpmn:extensionElements [0..*] element
       bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
       bpmn:incoming [0..*] element
       bpmn:lane [0..*] element
       bpmn:laneSet [0..*] element

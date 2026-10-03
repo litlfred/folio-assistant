@@ -16,7 +16,7 @@ allowed-tools: Read Write Edit Bash Grep Glob Agent WebFetch
 > link each upload to the `references.ts` entry it sources. An upload that
 > supplies a cited source moves that ref to `source-in-repo` (agent-identified
 > passage; no human photo) and then through the
-> [`bib-human-review`](../../../../cat-harness/skills/library/library-core/bib-human-review.md) ladder to `validated`. Existing
+> [`bib-human-review`](../cataloguing/bib-human-review.md) ladder to `validated`. Existing
 > `uploads/` follow the same agent-sourced path.
 
 ## Overview
@@ -143,7 +143,7 @@ See `paper-importer.md §Phase 1` (folio-assistant-sci)
 for the per-tool routing table. Sandboxed Claude-Code-on-the-web
 sessions (github-only allowlist) cannot reach those hosts; in
 those sessions, queue the fetch onto a normal-network machine
-per [`bib-qa.md §Batch intake pipeline`](../../../../cat-harness/skills/library/library-core/bib-qa.md#batch-intake-pipeline).
+per [`bib-qa.md §Batch intake pipeline`](../cataloguing/bib-qa.md#batch-intake-pipeline).
 
 ### Stage 2: Extraction (→ `extracted`)
 
@@ -211,7 +211,7 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`cat-harness/scripts/pdf-structure.py`](../../../../cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline or inferred from heading patterns, per-section text split. The page-1 guess is **never** the entry's title: `library-ingestion` §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
+| [`cat-harness/scripts/pdf-structure.py`](../../../../cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline or inferred from heading patterns, per-section text split. The page-1 guess is **never** the entry's title: [`l1-document-ingestion`](l1-document-ingestion.md) §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
 | [`cat-harness/scripts/pdf-ocr.py`](../../../../cat-harness/scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
 | [`cat-harness/scripts/extract-candidates.py`](../../../../cat-harness/scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 

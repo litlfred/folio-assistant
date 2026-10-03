@@ -7,6 +7,46 @@
   "source": "Skills of folio-assistant-core",
   "terms": [
     {
+      "id": "archiving-arxiv",
+      "prefLabel": "archiving-arxiv",
+      "definition": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
+      "notation": "archiving-arxiv",
+      "source": "folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md",
+      "status": "candidate"
+    },
+    {
+      "id": "archiving-web-pages",
+      "prefLabel": "archiving-web-pages",
+      "definition": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
+      "notation": "archiving-web-pages",
+      "source": "folio-assistant-core/skills/library/cataloguing/archiving-web-pages.md",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-human-review",
+      "prefLabel": "bib-human-review",
+      "definition": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
+      "notation": "bib-human-review",
+      "source": "folio-assistant-core/skills/library/cataloguing/bib-human-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-photo-ingestion-watcher",
+      "prefLabel": "bib-photo-ingestion-watcher",
+      "definition": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
+      "notation": "bib-photo-ingestion-watcher",
+      "source": "folio-assistant-core/skills/library/cataloguing/bib-photo-ingestion-watcher.md",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-qa",
+      "prefLabel": "bib-qa",
+      "definition": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence. Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
+      "notation": "bib-qa",
+      "source": "folio-assistant-core/skills/library/cataloguing/bib-qa.md",
+      "status": "candidate"
+    },
+    {
       "id": "deep-document-research",
       "prefLabel": "deep-document-research",
       "definition": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
@@ -52,6 +92,29 @@
       "status": "candidate"
     },
     {
+      "id": "filing-dublin-core",
+      "prefLabel": "filing-dublin-core",
+      "definition": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
+      "notation": "filing-dublin-core",
+      "source": "folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md",
+      "status": "candidate"
+    },
+    {
+      "id": "glossary-build",
+      "prefLabel": "glossary-build",
+      "notation": "glossary-build",
+      "source": "folio-assistant-core/skills/library/cataloguing/glossary-build.md",
+      "status": "candidate"
+    },
+    {
+      "id": "l1-document-ingestion",
+      "prefLabel": "l1-document-ingestion",
+      "definition": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.",
+      "notation": "l1-document-ingestion",
+      "source": "folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md",
+      "status": "candidate"
+    },
+    {
       "id": "normative-statements",
       "prefLabel": "normative-statements",
       "notation": "normative-statements",
@@ -59,10 +122,26 @@
       "status": "candidate"
     },
     {
+      "id": "ontologist",
+      "prefLabel": "ontologist",
+      "definition": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
+      "notation": "ontologist",
+      "source": "folio-assistant-core/skills/library/cataloguing/ontologist.md",
+      "status": "candidate"
+    },
+    {
       "id": "quality-control",
       "prefLabel": "quality-control",
       "notation": "quality-control",
       "source": "folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "status": "candidate"
+    },
+    {
+      "id": "tabular-metadata",
+      "prefLabel": "tabular-metadata",
+      "definition": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
+      "notation": "tabular-metadata",
+      "source": "folio-assistant-core/skills/library/ingestion/tabular-metadata.md",
       "status": "candidate"
     }
   ]

@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "skill",
-    "id": "ontologist",
-    "path": "skills/library/library-core/ontologist.md"
+    "id": "archiving-arxiv",
+    "path": "skills/library/cataloguing/archiving-arxiv.md"
   },
-  "source_hash": "200455548038",
+  "source_hash": "a17b8616e287",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -24,13 +24,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "cat-harness/skills/library/library-core/ontologist.ts",
-          "detail": "cat-harness/skills/library/library-core/ontologist.ts changed since cat-harness/skills/library/library-core/ontologist.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "n/a",
@@ -48,8 +43,8 @@
   },
   "totals": {
     "pass": 4,
-    "fail": 2,
-    "n/a": 1,
+    "fail": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }

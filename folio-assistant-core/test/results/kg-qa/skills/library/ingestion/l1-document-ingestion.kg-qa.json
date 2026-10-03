@@ -2,22 +2,32 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "skill",
-    "id": "bib-human-review",
-    "path": "skills/library/library-core/bib-human-review.md"
+    "id": "l1-document-ingestion",
+    "path": "skills/library/ingestion/l1-document-ingestion.md"
   },
-  "source_hash": "d66b435ba467",
+  "source_hash": "519d4d7e5333",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/library/ingestion/l1-document-ingestion.md",
+          "detail": "692 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/library/ingestion/l1-document-ingestion.md",
+          "detail": "692 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -42,8 +52,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 1,
+    "pass": 2,
+    "fail": 3,
     "n/a": 2,
     "unknown": 0
   }
