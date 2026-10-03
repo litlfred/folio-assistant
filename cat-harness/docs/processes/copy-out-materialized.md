@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `large-datasets/processes/copy-out-materialized.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/library/copy-out-materialized.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Copy out materialized content — to work on somebody else's bytes

@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/9789240093362-eng/blocks/prose-sec-032",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 71,
   "pageEnd": 71,
   "text": "../sections/sec-032-64-phase-out-of-legacy-systems.md",
-  "derivedFrom": "library/9789240093362-eng/manifest",
-  "sourceDocument": "library/9789240093362-eng/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/9789240093362-eng/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/9789240093362-eng/manifest.jsonld",
   "provenance": "ingested"
 }

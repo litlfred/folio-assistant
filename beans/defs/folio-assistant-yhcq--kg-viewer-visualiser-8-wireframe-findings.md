@@ -1,7 +1,7 @@
 ---
 # folio-assistant-yhcq
 title: 'kg-viewer visualiser: 8 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-kg-viewer
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:48Z
+updated_at: 2026-10-02T07:14:42Z
 parent: folio-assistant-4ccr
 ---
 
@@ -53,3 +53,20 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — Neighbourhood labels cut to 26 characters: Skill wireframe-design-review: the #detail svg text max length is 26 ('Produce >= 2 candidates, w', 'Mechanical checks, both vi'). Tool node: 'Review heat map — where to'. (C_kg.mjs)
 - **STILL-PRESENT** — Language switcher never appears (translation-boundary note never shown): #langs.hidden and #boundary.hidden are true at both widths. (C_kg.mjs)
 - **STILL-PRESENT** — No link back to the docs site: The only anchors outside the list are 'Skip to results' (#list), 'JSON-LD' (../cat-harness.jsonld) and 'source commit' (GitHub, commit 3779d5d27). There is no site or home link. (C_kg.mjs)
+
+Claimed by claude/visualiser-wireframes (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH) — issue #1838.
+
+## Summary of Changes
+
+Worked on claude/visualiser-wireframes (PR #1839, issue #1838). Re-measured on main cf3e62487 at 1280×800 and 390×844. Pictures are in cat-harness/docs/wireframes/kg-viewer/rendered-2026-10-02/, and the per-finding record is in that wireframe's intent.md.
+
+1. No longer holds: scrollWidth 390 at first load.
+2. Fixed. Below 860 px, select() scrolls #detail into view and focuses it (top 101 px, against 1028).
+3. Fixed. A node linking only into another graph gets its own message instead of 'No links…'.
+4. Fixed. Outbound links carry ↗, and cross-graph link values say '(in another graph)'.
+5. Fixed. The list is alphabetical by the shown name.
+6. Fixed. Neighbour labels wrap to two lines, with an ellipsis only when needed.
+7. Still holds, by design: 0 translated msgstr in all five catalogues. This is an owner question on the PR, not a viewer change.
+8. Fixed. A '← Docs site' link to ../ at the top.
+
+Generator: cat-harness/scripts/kg-viewer.ts, plus three strings in kg-viewer-strings.ts (.pot re-extracted, .po stubs). Four new e2e tests are in cat-harness/test/kg-viewer.e2e.ts.

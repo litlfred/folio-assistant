@@ -2,7 +2,9 @@
 # scripts/lake-cache-fetch.sh — agent-side Tier-2 cache fetch
 #
 # Fetches the pre-built `.lake/` artifacts from the populated orphan
-# branch `lake-cache/qou-v<toolchain-slug>` and extracts them into the
+# branch `cat/folio-assistant-sci/lake-cache/qou-v<toolchain-slug>` (or,
+# until the remotes are renamed, the legacy `cat-lake-cache/qou-…` or
+# `lake-cache/qou-…`, in that order) and extracts them into the
 # repo root. The CI-side equivalent lives at
 # `.github/actions/lake-cache-restore/action.yml` (Tier 2 step); this
 # script is the local-agent equivalent for sessions in ephemeral
@@ -61,7 +63,13 @@ if [ -z "$BRANCH" ]; then
     exit 1
   fi
   slug=$(echo "$toolchain" | tr '.' '-')
-  BRANCH="lake-cache/qou-${slug}"
+  # Family names are declared in cat-harness/scripts/special-branches.json
+  # (id `lake-cache`) and checked against this copy by
+  # tests/special-branches.test.ts. New name first, then each legacy one,
+  # newest first, until bean folio-assistant-oycs removes the fallback.
+  CANDIDATES="cat/folio-assistant-sci/lake-cache/qou-${slug} cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
+else
+  CANDIDATES="$BRANCH"
 fi
 
 # Warm-cache short-circuit unless --force. The signal is the mathlib
@@ -77,10 +85,17 @@ if [ "$FORCE" -eq 0 ] && [ -d "$WARMSIG" ]; then
   fi
 fi
 
-echo "lake-cache-fetch: fetching orphan branch '$BRANCH' from origin"
-# Shallow-fetch the orphan branch (no history). Tolerate fetch failure.
-if ! git fetch --depth=1 origin "$BRANCH" 2>&1 | tail -5; then
-  echo "lake-cache-fetch: ERROR — orphan branch '$BRANCH' does not exist on origin" >&2
+# Shallow-fetch the orphan branch (no history). Tolerate fetch failure,
+# and try each candidate name in order.
+BRANCH=""
+for cand in $CANDIDATES; do
+  echo "lake-cache-fetch: fetching orphan branch '$cand' from origin"
+  if git fetch --depth=1 origin "$cand" 2>&1 | tail -5; then
+    BRANCH="$cand"; break
+  fi
+done
+if [ -z "$BRANCH" ]; then
+  echo "lake-cache-fetch: ERROR — none of these orphan branches exists on origin: $CANDIDATES" >&2
   echo "  Hint: refresh the cache via the lake-cache-refresh.yml workflow_dispatch," >&2
   echo "  or set --branch <name> if your toolchain differs from the populated branch." >&2
   exit 1

@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/repository-health-watch.bpmn
+# bpmn: cat-harness/processes/sdlc/repository-health-watch.bpmn
 # Repository health watchdog — the daily half of what `ci-health.yml` does weekly.
 #
 # `ci-health.yml` watches whether the WORKFLOWS pass. This watches the
@@ -124,13 +124,21 @@ jobs:
       # The machine-readable half, kept whatever the verdict — including on
       # `unknown`, where it is the only evidence of WHY the sweep went blind.
       # `if: always()` rather than a verdict filter for exactly that reason.
+      #
+      # The path is where `test/health/run.ts` writes, `healthReportPath` of the
+      # INSTANCE root, relative to the repository root this step runs in. It
+      # read `test/health/results/…` (the pre-#437 layout) until 2026-10-01,
+      # and with `warn` every run was green and kept nothing (bean r7v6, C3:
+      # run 36827961155, `total_count: 0`). `error` makes the next drift loud.
+      # run.ts writes the JSON BEFORE `--out`, so a clean or findings verdict
+      # always has the file, and a crash is already the `unknown` failure.
       - name: Keep the report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: repository-health-report
-          path: test/health/results/repository.health-report.json
-          if-no-files-found: warn
+          path: cat-harness/test/health/results/repository.health-report.json
+          if-no-files-found: error
           retention-days: 90
 
       # Ensured for BOTH issue paths: the clean path filters on this label too,

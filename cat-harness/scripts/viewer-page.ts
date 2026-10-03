@@ -61,7 +61,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, relative, sep } from "node:path";
 
-import { injectRail, type NavItem } from "./lib/harness-rail.js";
+import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
 import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs } from "./mount-instance-docs.js";
 
@@ -74,13 +74,8 @@ import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs } 
  */
 export const NAVBAR_OPT_OUT = `<meta name="folio-navbar" content="none">`;
 
-const OPT_OUT_RE = /<meta\s+[^>]*name=["']folio-navbar["'][^>]*content=["']none["'][^>]*>/i;
-const OPT_OUT_RE_SWAPPED = /<meta\s+[^>]*content=["']none["'][^>]*name=["']folio-navbar["'][^>]*>/i;
-
-/** Does this page explicitly decline the navbar? */
-export function declinesNavbar(html: string): boolean {
-  return OPT_OUT_RE.test(html) || OPT_OUT_RE_SWAPPED.test(html);
-}
+/** Does this page explicitly decline the navbar? One definition, beside the rail it declines. */
+export { declinesNavbar };
 
 /**
  * Is this a page Jekyll's layout never reaches?

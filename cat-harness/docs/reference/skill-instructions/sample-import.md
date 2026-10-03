@@ -6,16 +6,16 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`large-datasets/skills/sample-import.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/sample-import.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/large-datasets/sample-import.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/sample-import.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/sample-import.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/large-datasets/sample-import.md){: .fa-edit-source }
 
 {% raw %}
 # Sample import
 
 The SDLC for trying out a remote source before committing to it: take a
 sample, land it, import it into the store you care about, and find out what
-breaks. The process is `large-datasets/processes/sample-import.bpmn`. IRIS is the worked
+breaks. The process is `cat-harness/processes/library/sample-import.bpmn`. IRIS is the worked
 instance (`who-iris/`); nothing here is WHO-specific.
 
 ## The gates are not here
@@ -33,7 +33,7 @@ happens **around** it.
 
 | question | why it is asked first |
 |---|---|
-| **Which items?** By the source's identifiers, or a subset strategy its descriptor (`large-datasets/sources/`) supports. | the size gate needs a request to measure |
+| **Which items?** By the source's identifiers, or a subset strategy its descriptor (in the owning instance's declared `sources/`, e.g. `who-iris/sources/`) supports. | the size gate needs a request to measure |
 | **Which store?** The graph or database the import is tested against. | the test in step 4 is against *this* store's schema |
 | **Permanent or trial?** | it decides where the copy lands, and moving a landed copy later means moving it under the wrong obligations |
 

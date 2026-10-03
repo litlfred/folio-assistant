@@ -51,13 +51,13 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 | 工作流 | BPMN 源文件 | 进入时机 |
 |---|---|---|
-| **撰写（论文）** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | 用户请求在论文 folio 中撰写内容 |
-| **撰写（文档）** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | 用户请求在文档 folio 中撰写内容 |
-| **内容生命周期** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | 内容经过 validate → render → publish 阶段 |
-| **文档摄取** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | 用户将文件放入 `uploads/` |
-| **草稿至发布** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | 内容从草稿状态转为已发布状态 |
-| **CRDM 需求** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | 智能体检测到功能需求 |
-| **证据检索** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | 智能体检索证据以支持某项主张 |
+| **撰写（论文）** | [`authoring-a-paper.bpmn`](../../../folio-assistant-sci/processes/content/authoring-a-paper.bpmn) | 用户请求在论文 folio 中撰写内容 |
+| **撰写（文档）** | [`authoring-a-document.bpmn`](../../../folio-assistant-core/processes/content/authoring-a-document.bpmn) | 用户请求在文档 folio 中撰写内容 |
+| **内容生命周期** | [`content-lifecycle.bpmn`](../../../folio-assistant-core/processes/content/content-lifecycle.bpmn) | 内容经过 validate → render → publish 阶段 |
+| **文档摄取** | [`document-ingestion.bpmn`](../../processes/library/document-ingestion.bpmn) | 用户将文件放入 `uploads/` |
+| **草稿至发布** | [`draft-to-publication.bpmn`](../../../folio-assistant-core/processes/content/draft-to-publication.bpmn) | 内容从草稿状态转为已发布状态 |
+| **CRDM 需求** | [`crdm-requirements.bpmn`](../../processes/process/crdm-requirements.bpmn) | 智能体检测到功能需求 |
+| **证据检索** | [`evidence-retrieval.bpmn`](../../../folio-assistant-core/processes/content/evidence-retrieval.bpmn) | 智能体检索证据以支持某项主张 |
 
 **状态转换：** 当用户要求切换上下文时，工作流可以被**挂起**。智能体会记录当前所在位置（当前的 BPMN 活动），以便稍后恢复。同一时刻只能有一个处于活动状态的工作流，但挂起的工作流会构成一个栈——最近挂起的工作流最先被恢复。
 
@@ -176,7 +176,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="feature-request-workflow.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/agentic-harness/feature-request-workflow.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/agentic-harness/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../processes/crdm-requirements.bpmn)）。
+当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../processes/process/crdm-requirements.bpmn)）。
 
 功能需求工作流是本框架文档价值最显著之处，因为它描述了一种此前一直处于隐性状态的行为。撰写和评审工作流数月前就已形成文档；而需求工作流此前仅存在于零散的对话中。
 

@@ -52,12 +52,28 @@ worse than an empty one, because the reader believes it was answered.
 Markdown, in this order. Every part is required; an absent part is **stated**,
 not dropped.
 
-1. **Where to start** — one line, one URL: the one that best answers the input,
+1. **What changed, in prose** — a short narrative, before any link: what a
+   reader of the site will now see or do differently, in plain sentences,
+   and why (the request it answers, in the requester's words where there
+   are any). One paragraph per PR or per coherent change. A table of URLs
+   tells a reviewer *where* to look; only the narrative tells them *what
+   they are looking for*, and a reviewer who has not read the code cannot
+   reconstruct it from a filename (owner, 2026-10-01: *"provide/show
+   before/after, provide narrative description of change"*).
+2. **Where to start** — one line, one URL: the one that best answers the input,
    or the page with the most change behind it when there was none. A reader
    opens one thing first whether or not you choose it for them.
-2. **The comparison table** below — before (main), after (staging), what to
-   review.
-3. **What could not be checked**, per the three states below.
+3. **The comparison table** below — before (main), after (staging), what to
+   review. Links are **deep** — to the page, and to the anchor on it where
+   the change sits (`…/#harness-cat-harness`), never the site root with
+   "scroll down".
+4. **The pictures** — a before/after pair for each visual change, SHOWN to
+   the reviewer (sent as images where the surface allows it), not only
+   linked. A link asks the reviewer to do the comparison; a pair does it
+   for them. How to make a fair pair is
+   [`before-after-preview`](before-after-preview.md). If a pair could not be
+   made, say which and why — that is part 5, not a silent gap.
+5. **What could not be checked**, per the three states below.
 
 ### The third column is the one with value
 
@@ -351,7 +367,9 @@ When an author has made content changes on a feature branch:
    with the most changed blocks is where a reviewer's time goes first.
 2. **Construct before/after URLs** for each changed docs page, and for each
    page carrying a changed block
-3. **Present the comparison table** to the author
+3. **Present the change to the author** in the Output order above: the
+   narrative first, then the deep-linked comparison table, then the
+   before/after pictures themselves
 4. **Offer to run the staging workflow** if not already running
 
 ### Finding your way on the review page (bean `eb4l`)
@@ -494,6 +512,44 @@ commit instead, stop: that is the unilateral removal
 [`deletion-requires-confirmation`](deletion-requires-confirmation.md) exists to
 stop, and option 2 exists so you do not have to.
 
+### The cap — at most ten previews, the oldest rotated off
+
+**Owner ruling, 2026-10-02 (issue #1868):** *"for going forward, we should cap
+the maximum number of previews (<= 10) and rotate old ones off."*
+
+Why a cap rather than a better threshold: GitHub Pages deploys `gh-pages`
+as-is, every preview is a full copy of the site (~200–500 MB by then, not the
+~38 MB measured above), and nothing bounded how many existed at once. The
+branch passed GitHub's 10 GB Pages artifact limit and the **live** site stopped
+deploying on 2026-10-01. Every removal path above is per-preview and
+event-driven; none bounds the total, which is the quantity the limit is about.
+
+What the `stage` job now does, on every deploy, before its one push:
+
+- **Counts the previews under `STAGING/`, including the one it is staging,
+  and keeps at most ten.** The number lives once, as `MAX_PREVIEWS` in
+  `cat-harness/scripts/staging-rotate.ts`.
+- **Removes the least recently updated beyond that.** "Last updated" is the
+  `STAGING/<slug>/.staged-at` stamp the job writes on every stage, falling back
+  to the latest `rendered` render-log entry, then the record's `builtAt`, then
+  git. The preview being staged is never removed.
+- **Never touches `STAGING/_retired/`** or anything that is not a preview
+  directory.
+- **Leaves a record for each removal** — a `removed` render-log entry with the
+  reason, the preview's `staging-preview.json` retired into `_retired/`, and a
+  line in the commit message and the job log giving slug, age and size.
+
+**This DOES reach open pull requests, and that is the ruling, not a defect.**
+The paragraphs above say nothing here touches an open PR; under the cap, the
+oldest preview goes whatever its PR's state. The ruling is the confirmation
+[`deletion-requires-confirmation`](deletion-requires-confirmation.md)
+asks for, given for the class. It is recoverable because a preview is a build,
+not content: **the next push to that PR's branch re-stages it**, and the run
+that re-stages it can never rotate it off. So when a reviewer's preview link
+404s, check `_render-log/` on `gh-pages` for a `removed` entry for its slug
+before calling it broken — if it says "rotated off", push to the branch (an
+empty commit will do) or re-run the PR's `Feature Staging` workflow.
+
 ### A closed PR is not an abandoned preview
 
 `staging-preview-orphans` does **not** ask "is there an open PR?" any more, and
@@ -598,7 +654,7 @@ Full rule and the measured failure:
 
 | process | step(s) that name it |
 |---|---|
-| [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging; Slice the change and assign reviewers |
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Comment the preview URL on the PR; Post the retention notice on the PR |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Review the MVP against what we bind to |
+| [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging; Slice the change and assign reviewers |
 

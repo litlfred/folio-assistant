@@ -201,32 +201,64 @@
     }
   ],
   "processes": {
-    "Process_ActivityLog": [],
+    "Process_IgAstDeltaReview": [],
+    "Process_NarrativeReview": [
+      "Process_CriterionAdjudication",
+      "Process_VoiceReview"
+    ],
+    "Process_Review": [
+      "Process_CodeReview",
+      "Process_NarrativeCodeReview",
+      "Process_NarrativeReview"
+    ],
+    "Process_VoiceReview": [
+      "Process_CriterionAdjudication"
+    ],
+    "Process_GraphDetanglement": [],
+    "Process_KgSeparation": [
+      "Process_PublishVerification",
+      "Process_UpstreamAdoption"
+    ],
+    "Process_KgToPortal": [],
+    "Process_MountSubgraph": [],
+    "Process_CodeReview": [],
+    "Process_ContentAcquisition": [],
+    "Process_CopyOutMaterialized": [],
+    "Process_Ingestion": [
+      "Process_BuildL1Kg",
+      "Process_DeriveContent",
+      "Process_ExtractStructure",
+      "Process_IngestTheme",
+      "Process_L1Gate"
+    ],
+    "Process_HumanTranslation": [],
+    "Process_BuildL1Kg": [],
+    "Process_DeriveContent": [],
+    "Process_ExtractStructure": [],
+    "Process_L1Gate": [
+      "Process_Adjudication"
+    ],
+    "Process_MaterializeRemote": [],
+    "Process_MethodologyFromSource": [
+      "Process_Ingestion",
+      "Process_RelatedWork"
+    ],
+    "Process_RefreshMaterialized": [
+      "Process_Adjudication"
+    ],
+    "Process_SampleImport": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
+    ],
+    "Process_SubscribeKg": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
+    ],
+    "Process_Translation": [
+      "Process_Adjudication"
+    ],
     "Process_ActorRoleAdministration": [
       "Process_CodeChangeReview"
-    ],
-    "Process_Adjudication": [],
-    "Process_AtomicMassDrift": [],
-    "Process_DocumentAuthoring": [],
-    "Process_PaperAuthoring": [],
-    "Process_BeanLifecycle": [],
-    "Process_BoardOpenClose": [],
-    "Process_BoardPlaceNote": [],
-    "Process_BoardRelocate": [],
-    "Process_CiHealth": [],
-    "Process_CodeChangeReview": [
-      "Process_MergeBase"
-    ],
-    "Process_CodeQualityGates": [],
-    "Process_ContentAcquisition": [],
-    "Process_ContentChangeReview": [
-      "Process_Adjudication",
-      "Process_OptionsAnalysis",
-      "Process_Review"
-    ],
-    "Process_Lifecycle": [
-      "Process_Editing",
-      "Process_Publication"
     ],
     "Process_CRDM_Close": [],
     "Process_CRDM_DataModel": [],
@@ -249,6 +281,17 @@
       "Process_CRDM_Signoff"
     ],
     "Process_CRDM_Signoff": [],
+    "Process_RenderKgToCdn": [],
+    "Process_SessionStateMachine": [],
+    "Process_SwotAnalysis": [],
+    "Process_ActivityLog": [],
+    "Process_Adjudication": [],
+    "Process_BeanLifecycle": [],
+    "Process_CiHealth": [],
+    "Process_CodeChangeReview": [
+      "Process_MergeBase"
+    ],
+    "Process_CodeQualityGates": [],
     "Process_CriterionAdjudication": [
       "Process_Adjudication"
     ],
@@ -257,49 +300,16 @@
       "Process_PublishVerification",
       "Process_RenderKgToCdn"
     ],
-    "Process_Ingestion": [
-      "Process_BuildL1Kg",
-      "Process_DeriveContent",
-      "Process_ExtractStructure",
-      "Process_IngestTheme",
-      "Process_L1Gate"
-    ],
-    "Process_Publication": [
-      "Process_Editing"
-    ],
-    "Process_Editing": [
-      "Process_EvidenceRetrieval",
-      "Process_OptionsAnalysis"
-    ],
-    "Process_EvidenceRetrieval": [],
     "Process_FeatureStaging": [
       "Process_RenderKgToCdn"
     ],
-    "Process_GettingStarted": [],
-    "Process_GraphDetanglement": [],
-    "Process_HumanTranslation": [],
-    "Process_IgAstDeltaReview": [],
-    "Process_IgIncremental": [],
-    "Process_BuildL1Kg": [],
-    "Process_DeriveContent": [],
-    "Process_ExtractStructure": [],
-    "Process_L1Gate": [
-      "Process_Adjudication"
-    ],
-    "Process_IngestTheme": [
-      "Process_ThemeUIReview"
-    ],
     "Process_JsonLdDrift": [],
-    "Process_KgSeparation": [
-      "Process_PublishVerification",
-      "Process_UpstreamAdoption"
-    ],
-    "Process_KgToPortal": [],
-    "Process_L3Fhir": [],
     "Process_MergeBase": [],
-    "Process_MethodologyFromSource": [
-      "Process_Ingestion",
-      "Process_RelatedWork"
+    "Process_MergeTrain": [
+      "Process_CodeQualityGates",
+      "Process_MergeBase",
+      "Process_MergeRefusal",
+      "Process_PrChecksPresent"
     ],
     "Process_NarrativeCodeReview": [
       "Process_CriterionAdjudication"
@@ -310,52 +320,50 @@
     "Process_PublishVerification": [],
     "Process_QaReportSigning": [],
     "Process_RelatedWork": [],
-    "Process_RenderKgToCdn": [],
     "Process_RepoHealth": [],
-    "Process_CodeReview": [],
-    "Process_NarrativeReview": [
-      "Process_CriterionAdjudication",
-      "Process_VoiceReview"
-    ],
-    "Process_Review": [
-      "Process_CodeReview",
-      "Process_NarrativeCodeReview",
-      "Process_NarrativeReview"
-    ],
-    "Process_SessionStateMachine": [],
-    "Process_RenderLog": [],
-    "Process_SwotAnalysis": [],
-    "Process_ThemeUIReview": [],
-    "Process_Translation": [
-      "Process_Adjudication"
-    ],
+    "Process_StalledAgentTriage": [],
     "Process_UpstreamPinWatch": [
       "Process_UpstreamAdoption"
     ],
     "Process_UpstreamAdoption": [
       "Process_OptionsAnalysis"
     ],
-    "Process_VoiceReview": [
-      "Process_CriterionAdjudication"
+    "Process_IngestTheme": [
+      "Process_ThemeUIReview"
     ],
+    "Process_RenderLog": [],
+    "Process_ThemeUIReview": [],
     "Process_WireframeDesignReview": [
       "Process_CriterionAdjudication",
       "Process_OptionsAnalysis"
     ],
+    "Process_IgIncremental": [],
+    "Process_L3Fhir": [],
+    "Process_GettingStarted": [],
+    "Process_DocumentAuthoring": [],
+    "Process_ContentChangeReview": [
+      "Process_Adjudication",
+      "Process_OptionsAnalysis",
+      "Process_Review"
+    ],
+    "Process_Lifecycle": [
+      "Process_Editing",
+      "Process_Publication"
+    ],
+    "Process_Publication": [
+      "Process_Editing"
+    ],
+    "Process_Editing": [
+      "Process_EvidenceRetrieval",
+      "Process_OptionsAnalysis"
+    ],
+    "Process_EvidenceRetrieval": [],
     "Process_DeepDocumentResearch": [],
-    "Process_CopyOutMaterialized": [],
-    "Process_MaterializeRemote": [],
-    "Process_RefreshMaterialized": [
-      "Process_Adjudication"
-    ],
-    "Process_SampleImport": [
-      "Process_MaterializeRemote",
-      "Process_RefreshMaterialized"
-    ],
-    "Process_SubscribeKg": [
-      "Process_MaterializeRemote",
-      "Process_RefreshMaterialized"
-    ],
+    "Process_BoardOpenClose": [],
+    "Process_BoardPlaceNote": [],
+    "Process_BoardRelocate": [],
+    "Process_AtomicMassDrift": [],
+    "Process_PaperAuthoring": [],
     "Process_DIIG": [],
     "Process_L2Dak": []
   },

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-layout-norms.ts",
-    "script_hash": "29272be0da17"
+    "script_hash": "baef7a53e771"
   },
   "subject": {
     "kind": "corpus",
@@ -11,8 +11,12 @@
   "families": {
     "nested-declaration": {
       "summary": "A declared directory contained by another declared directory — an asset buried below its stub instead of sitting at `<stub>/<asset>`. A consumer scanning the outer graph must then decide whether the inner one's nodes are also its own (bean `x4v4`), and every count computed from that sweep depends on the answer. Known pairs are baselined so outstanding work does not fail the gate; a pair not in the baseline does.",
-      "count": 3,
+      "count": 4,
       "entries": [
+        {
+          "pair": "cat-harness: test contains test/attestations",
+          "known": false
+        },
         {
           "pair": "cat-harness: test contains test/health/results",
           "known": true
@@ -28,5 +32,5 @@
       ]
     }
   },
-  "total": 3
+  "total": 4
 }

@@ -1,8 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import { join, resolve } from "path";
+import { resolve } from "path";
 import { drainSubprocess } from "./helpers";
 import { loadProcessModel } from "../../src/workflow/process-model";
 import { complete, enabled, startInstance } from "../../src/workflow/instance";
+import { workflowFile } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 /**
  * The review half of `content-change-review.bpmn`, run on a fixture. Bean
@@ -18,8 +22,7 @@ import { complete, enabled, startInstance } from "../../src/workflow/instance";
  * - approve and merge are two steps, and merge is the last one.
  */
 
-const WF = resolve(import.meta.dir, "../../processes");
-const model = () => loadProcessModel(join(WF, "content-change-review.bpmn"));
+const model = () => loadProcessModel(workflowFile(HARNESS, "content-change-review.bpmn"));
 const at = (m: Awaited<ReturnType<typeof model>>, s: ReturnType<typeof startInstance>) =>
   enabled(m, s).map((e) => e.node);
 
@@ -67,6 +70,10 @@ describe("content-change-review: sliced review and the coverage gate", () => {
   test("covered goes on to sign-off, where approve and merge are separate steps", async () => {
     const { m, s } = await toCoverageGate();
     complete(m, s, "GW_Covered", { facts: { uncoveredBlocks: 0, openDefects: 0 } });
+    // The editorial-dependency review arrived here from the harness's
+    // `review-narrative` (placement PR3, bean `63wl`), ahead of the impact review.
+    expect(at(m, s)).toEqual(["Task_ReviewUses"]);
+    complete(m, s, "Task_ReviewUses");
     expect(at(m, s)).toEqual(["Task_ReviewImpact"]);
     complete(m, s, "Task_ReviewImpact");
     complete(m, s, "GW_Approved", { outcome: "Yes" });

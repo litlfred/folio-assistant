@@ -40,6 +40,20 @@ const SITE = siteDirFor(ROOT);
 // `/home/user/folio-assistant/home/user/folio-assistant/...`. A name that
 // lies about a path is a name that gets joined wrongly.
 const SITE_ABS = join(ROOT, SITE);
+/**
+ * The library viewer's SHARED assets (#1881). A library page is a thin shell
+ * that loads `assets/library/viewer.css` and `viewer.js`, so a route that
+ * answers every other request with the page's HTML must serve these first —
+ * or the "script" it loads is the page itself, and nothing renders.
+ */
+function libraryViewerAsset(pathname: string): { contentType: string; body: string } | undefined {
+  for (const [file, contentType] of [["viewer.js", "text/javascript"], ["viewer.css", "text/css"]] as const) {
+    if (pathname.endsWith(`assets/library/${file}`)) {
+      return { contentType, body: readFileSync(join(SITE_ABS, "assets", "library", file), "utf8") };
+    }
+  }
+  return undefined;
+}
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
@@ -411,10 +425,20 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
       if (url.pathname.endsWith(".json")) {
         return route.fulfill({ status: 200, contentType: "application/json", body: data });
       }
+      const asset = libraryViewerAsset(url.pathname);
+      if (asset) return route.fulfill({ status: 200, ...asset });
       return route.fulfill({ status: 200, contentType: "text/html", body: html });
     });
     await page.goto("http://127.0.0.1:8080/cat-harness/library/who-iris/index.html");
     await page.waitForLoadState("networkidle");
+    // PARK THE POINTER OFF THE RAIL. The viewer rail expands to an OVERLAY
+    // 248-264 px wide on hover, by design. In CI the pointer starts over it,
+    // and Playwright hit-tests before it moves, so a control in the first
+    // 264 px reads as covered and the click retries until timeout. Since bean
+    // gnqa wrapped the pull-out under the slug (x = 74), this is that case.
+    // Reproduced locally by hovering (10, 300) first. A person reaching for
+    // the button has, by definition, moved off the rail.
+    await page.mouse.move(900, 600);
   };
 
   test("the generated page exists and carries the mount", () => {
@@ -461,7 +485,7 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
   });
 });
 
-test.describe("an asset's address is this page, anchored", () => {
+test.describe("an asset's address is its own path IRI", () => {
   /**
    * Measured before choosing the shape: an ingested library document has NO
    * published page of its own. Nothing writes one, and this viewer is the
@@ -489,18 +513,30 @@ test.describe("an asset's address is this page, anchored", () => {
       if (url.pathname.endsWith(".json")) {
         return route.fulfill({ status: 200, contentType: "application/json", body: data });
       }
+      const asset = libraryViewerAsset(url.pathname);
+      if (asset) return route.fulfill({ status: 200, ...asset });
       return route.fulfill({ status: 200, contentType: "text/html", body: html });
     });
     await page.goto(`http://127.0.0.1:8080/cat-harness/library/who-iris/index.html${hash}`);
     await page.waitForLoadState("networkidle");
+    // PARK THE POINTER OFF THE RAIL. The viewer rail expands to an OVERLAY
+    // 248-264 px wide on hover, by design. In CI the pointer starts over it,
+    // and Playwright hit-tests before it moves, so a control in the first
+    // 264 px reads as covered and the click retries until timeout. Since bean
+    // gnqa wrapped the pull-out under the slug (x = 74), this is that case.
+    // Reproduced locally by hovering (10, 300) first. A person reaching for
+    // the button has, by definition, moved off the rail.
+    await page.mouse.move(900, 600);
   };
 
-  test("a row's href is this page plus its own id", async ({ page }) => {
+  test("a row's href is the entry's own path IRI", async ({ page }) => {
     await serveView(page);
     const row = page.locator("[data-fa-library-item]").first();
     const key = await row.getAttribute("data-fa-library-item");
     const href = await row.getAttribute("data-fa-library-href");
-    expect(href).toBe(`/cat-harness/library/who-iris/index.html#${encodeURIComponent(key!)}`);
+    // The entry's own IRI, a materialized path (#1881) — never a fragment.
+    const [inst, id] = key!.split("/");
+    expect(href).toBe(`/cat-harness/library/${encodeURIComponent(inst!)}/${encodeURIComponent(id!)}/`);
   });
 
   test("and the glass carries it, so a pulled-out asset is reachable", async ({ page }) => {
@@ -514,9 +550,10 @@ test.describe("an asset's address is this page, anchored", () => {
     await expect(page.locator(`.fa-glass-asset[data-fa-asset="${key}"] a`)).toHaveCount(1);
   });
 
-  test("arriving at the anchor SELECTS the row rather than landing at the top", async ({ page }) => {
-    const html = readFileSync(VIEW2, "utf8");
-    expect(html).toContain("honourAnchor");
+  test("arriving at a LEGACY anchor SELECTS the row, at its path IRI", async ({ page }) => {
+    // The page is a shell (#1881); the selection logic is the shared script.
+    const js = readFileSync(join(SITE_ABS, "assets", "library", "viewer.js"), "utf8");
+    expect(js).toContain("honourAddress");
     const data = JSON.parse(readFileSync(DATA2, "utf8")) as { entries: Array<{ instance: string; id: string }> };
     const mine = data.entries.find((e) => e.instance === "who-iris");
     test.skip(!mine, "no who-iris entry in the projection to anchor to");
@@ -524,20 +561,21 @@ test.describe("an asset's address is this page, anchored", () => {
     await serveView(page, `#${encodeURIComponent(key)}`);
     await expect(page.locator(`[data-fa-library-item="${key}"]`))
       .toHaveAttribute("data-fa-anchored", "1");
+    // Normalised ONCE to the entry's own IRI; nothing new carries the fragment.
+    expect(new URL(page.url()).pathname).toBe(`/cat-harness/library/who-iris/${encodeURIComponent(mine!.id)}/`);
   });
 
-  test("an anchor for ANOTHER library's asset says so — the middle outcome", async ({ page }) => {
+  test("a legacy anchor for ANOTHER library's asset goes to THAT asset's IRI", async ({ page }) => {
     // A folio carries assets ACROSS libraries, so an anchor naming an asset
-    // this page does not scope is ordinary rather than exceptional. Showing
-    // an unfiltered table with no explanation would be the `pb04` shape: the
-    // link went somewhere, just not where it said.
+    // this page does not scope is ordinary rather than exceptional. Since
+    // every entry has its own materialized IRI (#1881), the page no longer
+    // explains that the asset is elsewhere — it goes there.
     const data = JSON.parse(readFileSync(DATA2, "utf8")) as { entries: Array<{ instance: string; id: string }> };
     const other = data.entries.find((e) => e.instance !== "who-iris");
     test.skip(!other, "projection holds only who-iris entries");
     const key = `${other!.instance}/${other!.id}`;
     await serveView(page, `#${encodeURIComponent(key)}`);
-    await expect(page.locator("#status")).toContainText("not shown on this page");
-    await expect(page.locator("#status")).toContainText(other!.instance);
+    await page.waitForURL((u) => u.pathname === `/cat-harness/library/${other!.instance}/${encodeURIComponent(other!.id)}/`);
   });
 
   test("no fragment at all changes nothing", async ({ page }) => {

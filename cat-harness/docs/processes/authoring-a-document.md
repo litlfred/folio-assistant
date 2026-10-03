@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/authoring-a-document.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `folio-assistant-core/processes/content/authoring-a-document.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Authoring a document

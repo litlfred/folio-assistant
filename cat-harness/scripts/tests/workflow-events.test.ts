@@ -23,7 +23,13 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { GITHUB_WORKFLOW_DIR, scanTriggers, triggerFor } from "../../src/core/workflow-events.js";
-import { coverageFor, missingRequiredAdvice, type RunRow } from "../check-head-has-run.js";
+import {
+  blockedRequiredAdvice,
+  coverageFor,
+  executed,
+  missingRequiredAdvice,
+  type RunRow,
+} from "../check-head-has-run.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 /** A throwaway repo root carrying exactly the workflow files named. */
@@ -36,11 +42,11 @@ function treeWith(files: Record<string, string>): string {
   return root;
 }
 
-const run = (name: string, event: string): RunRow => ({
+const run = (name: string, event: string, conclusion: string | null = "success"): RunRow => ({
   name,
   event,
   status: "completed",
-  conclusion: "success",
+  conclusion,
   html_url: "https://example.invalid/run",
 });
 
@@ -146,7 +152,7 @@ describe("coverageFor — the bug this bean is about", () => {
     // same input leaves the required workflow unsatisfied.
     const cov = coverageFor([run("Drift", "push")], scan(), "pull_request");
     expect(cov.required).toEqual([
-      { name: "Gates", file: join(GITHUB_WORKFLOW_DIR, "gates.yml"), ran: false },
+      { name: "Gates", file: join(GITHUB_WORKFLOW_DIR, "gates.yml"), ran: false, state: "absent" },
     ]);
     expect(cov.conditional[0]?.ran).toBe(false);
   });
@@ -173,6 +179,120 @@ describe("coverageFor — the bug this bean is about", () => {
   test("unreadable files are carried through to the caller, not swallowed", () => {
     const cov = coverageFor([], scanTriggers(join(tmpdir(), "nope-9x9r"), "pull_request"), "pull_request");
     expect(cov.unreadable).toHaveLength(1);
+  });
+
+  // ---- bean `1acg`: a run that was created and never EXECUTED -------------
+
+  test("an action_required run of the right workflow and event does NOT satisfy it", () => {
+    // The defect in one assertion. Measured live on #1819's head
+    // `9c3d0efad8f`, 2026-10-03: three `pull_request` runs, all
+    // `action_required`, and the old check printed
+    // `✓ all 1 workflow(s) owed for pull_request ran` with exit 0.
+    const cov = coverageFor([run("Gates", "pull_request", "action_required")], scan(), "pull_request");
+    expect(cov.required[0]?.ran).toBe(false);
+  });
+
+  test("it is `blocked`, NOT `absent` — the two need opposite advice", () => {
+    // Collapsing them would print `3pqn`'s "their absence is unexplained" and
+    // "dispatching is safe HERE" over a head whose absence IS explained.
+    const cov = coverageFor([run("Gates", "pull_request", "action_required")], scan(), "pull_request");
+    expect(cov.required[0]?.state).toBe("blocked");
+  });
+
+  test("no run at all stays `absent`, so the blocked state did not swallow it", () => {
+    const cov = coverageFor([], scan(), "pull_request");
+    expect(cov.required[0]?.state).toBe("absent");
+  });
+
+  test("startup_failure is the same class — a run whose jobs never started", () => {
+    const cov = coverageFor([run("Gates", "pull_request", "startup_failure")], scan(), "pull_request");
+    expect(cov.required[0]?.state).toBe("blocked");
+  });
+
+  test("a FAILED run executed: it is a verdict about the tree, not a missing gate", () => {
+    // The distinction from `check-verdict`'s FAILED set, which groups
+    // `action_required` WITH failure because neither is a pass. Here the
+    // question is prior — did the gate run — and a failure did.
+    const cov = coverageFor([run("Gates", "pull_request", "failure")], scan(), "pull_request");
+    expect(cov.required[0]?.state).toBe("ran");
+  });
+
+  test("an in-flight run (null conclusion) is not treated as unexecuted", () => {
+    const cov = coverageFor([run("Gates", "pull_request", null)], scan(), "pull_request");
+    expect(cov.required[0]?.state).toBe("ran");
+  });
+
+  test("one EXECUTED run settles it even beside a blocked sibling", () => {
+    // A re-run that escaped the approval gate is a gate that fired; the
+    // superseded `action_required` row says nothing further. Bean `0qjq`
+    // measured `rerun_workflow_run` escaping it.
+    const cov = coverageFor(
+      [run("Gates", "pull_request", "action_required"), run("Gates", "pull_request", "success")],
+      scan(),
+      "pull_request",
+    );
+    expect(cov.required[0]?.state).toBe("ran");
+  });
+
+  test("a blocked DISPATCH run does not rescue the pull_request requirement", () => {
+    // Both halves of the real #1819 shape at once: the owed event never
+    // executed, and the only other run is a different event.
+    const cov = coverageFor(
+      [run("Gates", "pull_request", "action_required"), run("Gates", "workflow_dispatch", "success")],
+      scan(),
+      "pull_request",
+    );
+    expect(cov.required[0]?.state).toBe("blocked");
+  });
+
+  test("a conditional workflow also reports blocked rather than silently not-run", () => {
+    const cov = coverageFor([run("Drift", "pull_request", "action_required")], scan(), "pull_request");
+    expect(cov.conditional[0]?.state).toBe("blocked");
+    expect(cov.conditional[0]?.ran).toBe(false);
+  });
+});
+
+describe("executed — the predicate the two sweeps share", () => {
+  test("action_required and startup_failure did not execute", () => {
+    expect(executed(run("w", "pull_request", "action_required"))).toBe(false);
+    expect(executed(run("w", "pull_request", "startup_failure"))).toBe(false);
+  });
+
+  test("success, failure, cancelled and a null conclusion all did", () => {
+    // `cancelled` ran and was stopped; that is a concurrency fact, and
+    // `check-verdict` already treats it as undetermined rather than as a
+    // gate that never fired. This predicate must not second-guess it.
+    for (const c of ["success", "failure", "cancelled", "stale", "timed_out", null]) {
+      expect(executed(run("w", "pull_request", c))).toBe(true);
+    }
+  });
+});
+
+describe("blockedRequiredAdvice", () => {
+  test("it names the bot-actor cause rather than calling the absence unexplained", () => {
+    const s = blockedRequiredAdvice(["Code-quality gates"]);
+    expect(s).toContain("github-actions[bot]");
+    expect(s).toContain("NOT a fork");
+    expect(s).not.toContain("unexplained");
+  });
+
+  test("it does NOT tell the operator to dispatch — that is what masked this", () => {
+    const s = blockedRequiredAdvice(["Code-quality gates"]);
+    expect(s).toContain("Do NOT read a `workflow_dispatch` green");
+    expect(s).not.toContain("Dispatching against this ref is safe");
+  });
+
+  test("it names the one change that fixes the class, and whose it is", () => {
+    const s = blockedRequiredAdvice(["Code-quality gates"]);
+    expect(s).toContain("#1829");
+    expect(s).toContain("MERGE_MAIN_TOKEN");
+    expect(s).toContain("owner's to make");
+  });
+
+  test("it says the run existed, which is the half the `no run` wording loses", () => {
+    const s = blockedRequiredAdvice(["Gates", "Other"]);
+    expect(s).toContain("Gates, Other");
+    expect(s).toContain("NONE of them executed");
   });
 });
 

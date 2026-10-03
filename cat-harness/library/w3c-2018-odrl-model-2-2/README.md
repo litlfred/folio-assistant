@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# ODRL Information Model 2.2 W3C Recommendation 15 February 2018 This version: Latest published version: Latest editor's draft: Implementation report: Previous version: Editors:
+# ODRL Information Model 2.2
 
 ingested source material — attributed to its document, not folio content
 

@@ -105,7 +105,7 @@ import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
-import { injectRail, type NavItem } from "./lib/harness-rail.js";
+import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { viewersOf } from "./viewer-declarations.js";
 
@@ -828,11 +828,12 @@ export function railStandalonePages(
   built: string,
   instanceName: string,
   mountRoutes: readonly string[],
-): { injected: number; alreadyNavigated: number; redirects: number; skipped: string[] } {
+): { injected: number; alreadyNavigated: number; redirects: number; declined: number; skipped: string[] } {
   const skipped: string[] = [];
   let injected = 0;
   let alreadyNavigated = 0;
   let redirects = 0;
+  let declined = 0;
 
   const owned = (rel: string): boolean =>
     mountRoutes.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
@@ -863,6 +864,14 @@ export function railStandalonePages(
         redirects++;
         continue;
       }
+      // A page that DECLINED the rail in its own markup keeps that decision
+      // here too (#1881). The generator honoured it; this post-build walk did
+      // not, so every library entry shell was railed in CI only — 2.8 KB
+      // committed, 25 KB published.
+      if (declinesNavbar(before)) {
+        declined++;
+        continue;
+      }
       // `..` per directory the page sits under; the filename is not one.
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
@@ -885,7 +894,7 @@ export function railStandalonePages(
     }
   };
   if (existsSync(siteAbs)) walk(siteAbs);
-  return { injected, alreadyNavigated, redirects, skipped };
+  return { injected, alreadyNavigated, redirects, declined, skipped };
 }
 
 /**
@@ -919,6 +928,7 @@ interface DeclaredEntry {
   instanceRoot?: boolean;
   kindRouteRedirect?: boolean;
   composed?: boolean;
+  served?: boolean;
   scope?: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
 }
@@ -955,6 +965,26 @@ function declaredEntries(): { name: string; instanceDir: string; entry: Declared
     }
   }
   return out;
+}
+
+/** A directory whose bytes are published verbatim for pages to fetch (`served: true`, bean `680p`). */
+export interface Served {
+  name: string;
+  dir: string;
+  /** `<instance>/<path>`, no leading or trailing slash. */
+  route: string;
+}
+
+/**
+ * Every directory declared `served`, with its route — `/<instance>/<path>`,
+ * the same place the instance's composed pages sit under, so a page reaches
+ * the data with a path that does not depend on where the site is hosted
+ * (`visualizer-loading` §"How to fetch").
+ */
+export function servedDirectories(entries: { name: string; entry: DeclaredEntry & { path: string }; abs: string }[] = declaredEntries()): Served[] {
+  return entries
+    .filter((x) => x.entry.served === true)
+    .map((x) => ({ name: x.name, dir: x.abs, route: `${x.name}/${x.entry.path.replace(/^\/+|\/+$/g, "")}` }));
 }
 
 /** The directory's own declared viewer, repo-relative, or `undefined` (#1168 B7a-2b). */
@@ -1341,6 +1371,27 @@ function main(): number {
     if (mine.size) assetsPublished.set(m.route, mine.size);
   }
 
+  // SERVED DIRECTORIES — data, published verbatim for pages to fetch (bean
+  // `680p`). After the mounts and before the redirects, and REFUSED over
+  // anything already published: two sources answering at one URL is the
+  // defect the walk rule exists to prevent.
+  const servedProblems: string[] = [];
+  const servedDone: { route: string; files: number }[] = [];
+  for (const sv of servedDirectories()) {
+    const dest = join(siteAbs, sv.route);
+    if (existsSync(dest)) {
+      servedProblems.push(`/${sv.route}/ is declared served, but the site already publishes something there`);
+      continue;
+    }
+    if (!existsSync(sv.dir)) {
+      servedProblems.push(`/${sv.route}/ is declared served, but ${sv.dir.slice(REPO.length + 1)} does not exist`);
+      continue;
+    }
+    const withheld = withheldPaths(sv.dir);
+    cpSync(sv.dir, dest, { recursive: true, filter: withheldFilter(sv.dir, withheld) });
+    servedDone.push({ route: sv.route, files: countFiles(dest) });
+  }
+
   // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
   //
   // These directories are copied verbatim and deliberately not run through
@@ -1393,7 +1444,14 @@ function main(): number {
     written.push(r);
   }
 
+  for (const d of servedDone) console.log(`  served /${d.route}/ — ${d.files} file(s), verbatim, for pages to fetch`);
+  if (servedProblems.length) {
+    console.error(`\n${servedProblems.length} served director(ies) REFUSED:`);
+    for (const p of servedProblems) console.error(`  ${p}`);
+  }
+
   if (mounts.length === 0 && refused.length === 0 && written.length === 0) {
+    if (servedProblems.length) return 1;
     console.log("mount-instance-docs: nothing declared has rendered content to mount.");
     return 0;
   }
@@ -1435,6 +1493,7 @@ function main(): number {
     console.error(`\n${assetProblems.length} embedded reference(s) NOT published:`);
     for (const p of assetProblems) console.error(`  ${p}`);
   }
+  if (servedProblems.length) failed = true;
   if (redirectProblems.length) {
     failed = true;
     console.error(`\n${redirectProblems.length} kind-route redirect(s) REFUSED:`);

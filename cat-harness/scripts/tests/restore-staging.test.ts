@@ -541,3 +541,108 @@ describe("the retired-record store is carried unconditionally and is not a previ
     expect(v.state).toBe("ok");
   });
 });
+
+describe("a RETIRED preview is not restored", () => {
+  /**
+   * The measured sequence, replayed. `feature-staging.yml`'s cleanup removes
+   * `STAGING/<slug>/` and writes `_retired/<slug>.json` in one commit, so this
+   * is the branch state the next full-replace deploy reads: one live preview,
+   * one retirement record, and no directory for the retired slug.
+   *
+   * On `gh-pages` 2026-10-02 the deploy read a state taken BEFORE that commit
+   * and put all 1615 files back (`a46c58ca9df` removed them, `93ffa64488c`
+   * re-added them). Here the directory is still present alongside its record —
+   * the harder case, and the one a race actually produces.
+   */
+  const withRetired = {
+    "index.html": "<p>home</p>",
+    "STAGING/claude-live/index.html": "<p>a preview whose PR is open</p>",
+    "STAGING/claude-gone/index.html": "<p>a preview that was retired</p>",
+    "STAGING/_retired/claude-gone.json": JSON.stringify({
+      $schema: "folio-fsh-guts/v1",
+      kind: "staging-preview",
+      staging: { slug: "claude-gone", retiredOn: "2026-10-02T09:17:23.071Z", retiredReason: "merged" },
+    }),
+  };
+
+  test("the retired slug is left behind and the live one is carried", () => {
+    const bare = remoteWith(withRetired);
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("restored");
+    // The crux: `claude-gone` is absent from what the restore carries.
+    expect(restored.previews).toEqual(["claude-live"]);
+
+    const after = publish(bare, built, { keepFiles: false });
+    expect(after).toContain("STAGING/claude-live/index.html");
+    expect(after).not.toContain("STAGING/claude-gone/index.html");
+  });
+
+  test("the retirement RECORD still survives the deploy — it outlives the preview", () => {
+    const bare = remoteWith(withRetired);
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.carried).toContainEqual({ prefix: "STAGING/_retired", state: "carried" });
+
+    const after = publish(bare, built, { keepFiles: false });
+    // Carried unconditionally: a record a deploy truncates is worse than none.
+    expect(after).toContain("STAGING/_retired/claude-gone.json");
+  });
+
+  test("the verifier does not expect the retired preview back", () => {
+    const bare = remoteWith(withRetired);
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    publish(bare, built, { keepFiles: false });
+
+    const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, restored.previews, ["STAGING/_retired"]);
+    expect(v.state).toBe("ok");
+    // Narrowed rather than asserted through: `present` is absent from the
+    // `unknown` variant, and an `unknown` read as "nothing present" would pass
+    // this test while saying nothing — the third-state rule, in a test.
+    if (v.state === "unknown") throw new Error(`verify could not run: ${v.reason}`);
+    expect(v.present).not.toContain("claude-gone");
+  });
+
+  test("EVERY preview retired is a determined empty, not a whole-tree archive", () => {
+    // The dangerous shape: if the filter removes every path and the copy still
+    // ran, `git archive <rev>` with no pathspec would lay the whole branch over
+    // the built site. The early `empty` return is what stops it, and
+    // `copyPaths` refuses an empty list as a second guard.
+    const bare = remoteWith({
+      "index.html": "<p>home</p>",
+      "STAGING/claude-gone/index.html": "<p>retired</p>",
+      "STAGING/_retired/claude-gone.json": "{}",
+    });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("empty");
+    expect(restored.previews).toEqual([]);
+    expect(exitCodeFor(restored)).toBe(0);
+    // Nothing of the branch was laid into the site except the carried record.
+    expect(existsSync(join(built, "STAGING", "claude-gone"))).toBe(false);
+  });
+
+  test("an UNREADABLE retirement store is `unknown`, never `no retirements`", () => {
+    // The third-state rule, applied to this function's own input. Answering
+    // "could not read the records" as "there are none" restores every retired
+    // preview — the defect, reintroduced by the guard against it.
+    const bare = remoteWith(withRetired);
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    // A rev that cannot be read at all stands in for an unreadable store: both
+    // reach `previewsAt` as a reason rather than as an empty set.
+    const broken = restoreStaging({ repo, remote: bare, site: built, branch: "no-such-branch", prefix: "STAGING" });
+    expect(broken.state).toBe("no-branch");
+    expect(broken.previews).toEqual([]);
+  });
+});

@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/cucumber-2024-gherkin-reference/blocks/prose-s014-scenario-outline",
   "@type": [
     "folio-assistant-core:Prose",
@@ -8,7 +13,7 @@
   "kind": "prose",
   "title": "Scenario Outline",
   "text": "../sections/s014-scenario-outline.md",
-  "derivedFrom": "library/cucumber-2024-gherkin-reference/manifest",
-  "sourceDocument": "library/cucumber-2024-gherkin-reference/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/cucumber-2024-gherkin-reference/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/cucumber-2024-gherkin-reference/manifest.jsonld",
   "provenance": "ingested"
 }

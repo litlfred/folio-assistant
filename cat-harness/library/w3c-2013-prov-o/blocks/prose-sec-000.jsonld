@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/w3c-2013-prov-o/blocks/prose-sec-000",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 1,
   "pageEnd": 1,
   "text": "../sections/sec-000-prov-o-the-prov-ontology.md",
-  "derivedFrom": "library/w3c-2013-prov-o/manifest",
-  "sourceDocument": "library/w3c-2013-prov-o/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/w3c-2013-prov-o/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/w3c-2013-prov-o/manifest.jsonld",
   "provenance": "ingested"
 }

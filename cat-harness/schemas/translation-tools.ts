@@ -218,9 +218,9 @@ export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
       // resolve makes the re-render silently skip it, which reads exactly
       // like a diagram that needed no work. `check:workflow-refs` now fails
       // on it.
-      "processes/draft-to-publication.bpmn",
-      "processes/translation-workflow.bpmn",
-      "processes/human-translation-workflow.bpmn",
+      "../folio-assistant-core/processes/content/draft-to-publication.bpmn",
+      "processes/library/translation-workflow.bpmn",
+      "processes/library/human-translation-workflow.bpmn",
     ],
     notes: "Full smart-base translation coverage. PlantUML, SVG, and " +
            "ArchiMate extractors are the Python originals; TypeScript " +

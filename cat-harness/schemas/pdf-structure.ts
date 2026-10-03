@@ -127,6 +127,34 @@ export const PdfMetadataSchema = z
   .object({
     title: z.string().nullable(),
     docinfo: z.record(z.string(), z.unknown()),
+    /**
+     * Where `title` came from (bean `w6fu`, `scripts/_pdf_title.py`):
+     * the PDF's `Title` metadata, its first-page heading or its outline when
+     * another source CORROBORATES it, else the text walk's title (`text`) or
+     * nothing (`filename`, and the manifest falls back to the entry id).
+     */
+    title_source: z.enum(["metadata", "heading", "outline", "text", "filename"]).optional(),
+    /** False when no source corroborated the title: the raw title was kept, not guessed at. */
+    title_verified: z.boolean().optional(),
+    /** The text walk's title before resolution, kept so a re-run resolves from it rather than from its own answer. */
+    title_raw: z.string().nullable().optional(),
+    /** Every candidate the resolver saw, and which sources agreed — the record an editor decides from. */
+    title_evidence: z.record(z.string(), z.unknown()).optional(),
+    /**
+     * An EDITORIAL correction, outranking every extracted title (bean `w6fu`,
+     * step b). Authored, never produced by a rung, and carried over by a
+     * re-ingest. `basis` says what the title was read from, so it can be
+     * checked rather than trusted.
+     */
+    title_correction: z
+      .object({
+        title: z.string().min(1),
+        basis: z.string().min(1),
+        corrected_on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        bean: z.string().optional(),
+      })
+      .strict()
+      .optional(),
   })
   .passthrough();
 

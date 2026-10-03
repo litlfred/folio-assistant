@@ -12,7 +12,7 @@ user_invocable: false
 
 # Merge-conflict patterns — what a merge may resolve on its own
 
-`bun run merge:main` is the command; `processes/merge-base.bpmn` is the
+`bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the
 process it executes, called from `Task_PrepareMerge` in
 `code-change-review.bpmn`. The patterns themselves are data in
 `cat-harness/scripts/merge-conflict-patterns.ts`. This page says what each one
@@ -41,6 +41,17 @@ pattern"*, and *"put in merge process bpmn"*.
 
 A path that **no** pattern names is refused. Adding automation is adding a
 pattern, deliberately, with its reason — never widening a glob on a hunch.
+
+## When one side deleted the file
+
+A modify/delete conflict has no stage for the side that deleted it, so
+`checkout --theirs` (or `--ours`) has nothing to take. Every resolving
+strategy takes the **base's side of the deletion** instead: its copy when the
+base kept the file, `git rm` when the base removed it — `takeBase` in
+`merge-base.ts`, and `provisionalSide` in `qa-resolve-conflicts.ts` for the
+delegated sidecars (#1854). Regeneration recreates the file if it is still
+produced. Classification is by path, so an authored path in a modify/delete
+conflict is refused exactly like any other conflict on it.
 
 ## The patterns
 
@@ -115,6 +126,13 @@ scripts/state-visualizer.ts". **`docs/uploads/index.html` is the viewer OF
 `**/uploads/**` caught it, and #1764 refused on it. First match wins, so the
 viewer entries sit above the refusal.
 
+And `docs/fsh-guts/index.md`, written whole by `fsh-guts:viz`
+(`gen-fsh-guts-viz.ts`, checked by `fsh-guts:viz:check`) from everything under
+`fsh-guts/`. Any PR that archives an upload rewrites it, so two such PRs always
+collide; #1766 refused on it alone on 2026-10-03. Only that one page is
+declared: the archive it renders (`fsh-guts/**`) is kept content and stays
+refused.
+
 ### `viewer-namespace` — take the base, regenerate
 
 `docs/cat-harness/{catalogue,folio,library,schemas,uploads,voices}/**`: the
@@ -143,6 +161,112 @@ not delegated to `qa:resolve-conflicts`.
 graph and declared viewer, written whole by `gen-handler-index.ts`
 (`handler:index:check`). Any new graph or viewer rewrites it. Found on #1754's
 third merge, 2026-10-01.
+
+### `skos-glossary-export` — take the base, regenerate (54)
+
+`**/docs/assets/glossary/*.skos.jsonld`: the published SKOS export, written
+whole by `glossary:export` (`glossary-export.ts`, gated by `glossary:check`).
+Bean `8rff` measured **54** pair-path hits across 32 open PRs — every
+instance's export restamps whenever any declared role, skill or term moves, so
+two PRs that touch unrelated skills still collide here.
+
+**It is not the ledger, and that distinction is the whole safety argument.**
+`glossary-ledger.json` carries forward: `glossary-export.ts` reads the prior
+ledger and preserves a concept's earlier names as `skos:hiddenLabel` (#1168
+B10b), so taking one side would drop a term's history. The ledger sits one
+level up from `generated/` and matches no glob here — verified, and pinned by
+a test. This is `.gitattributes`'s rule applied to a resolver: the test is not
+*is it generated* but **does its producer carry anything forward**.
+
+`.skos.jsonld` does not match `site-data`'s `cat-harness/docs/assets/**/*.json`
+— `.jsonld` is not `.json` — which is why it needed its own entry rather than
+falling through.
+
+### `glossary-generated` — take the base, regenerate (50)
+
+`**/glossary/generated/**`: the per-instance generated glossary JSON, same
+writer and same check as `skos-glossary-export`. **50** pair-path hits
+(`8rff`). The glob stops at `generated/`, so the sibling ledger is untouched.
+
+### `skill-instructions` — take the base, regenerate (30)
+
+`**/docs/reference/skill-instructions/**`: skill instruction bodies, written
+whole by `skills:docs` (`gen-skill-docs.ts`'s `OUT_DIR`, gated by
+`skills:docs:check`). **30** pair-path hits (`8rff`), and `AGENTS.md` says of
+this directory: *"Never hand-edit either generated dir."*
+
+Safe because `emit()` is compare-or-write with no merge — under `--check` it
+compares and records drift, otherwise it writes the content whole — so nothing
+is carried forward from the file on disk.
+
+**The authored neighbour is the skill itself.** `skills/**/*.md` is the SOURCE
+these pages are generated from and stays `refuse`; a test pins that pair,
+because resolving the generated copy while taking a side on the source is the
+mistake this entry would otherwise invite.
+
+### `docs-pages` — take the base, regenerate (17)
+
+The 17 `cat-harness/docs/**.md` pages `gen-docs-pages.ts` writes whole from the
+authored blocks under `cat-harness/content/docs/<slug>/` (`docs:pages`, gated
+by `docs:pages:check`). Each one says so in its own front matter:
+
+```
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+```
+
+Bean `8c6v`: **none** of the 17 was named by a pattern, so `classify()`
+returned `refuse / — none —` and the merge handed back for hand-editing the
+files that forbid it. `docs/publication-workflow.md` was one of the **2**
+refusals on #1888 after **53** of its 55 conflicts had resolved by pattern —
+one undeclared family holding up a 53-file resolution is the all-or-nothing
+rule working as designed, and the gap it exposed.
+
+**Safe because nothing is carried forward.** `emit()` is compare-or-write: the
+only read of a prior page is inside its `--check` branch, for the comparison,
+and every other read in the script is of an INPUT (`readBlock` over
+`content/docs/`, BPMN XML, manifests). Its one walk of the output directory
+skips files carrying the generated marker. This is bean `8rff`'s discipline —
+**confirm the writer by reading the script, not by how whole-file it looks** —
+applied again, and here it comes out the other way than it did for the
+glossary ledger.
+
+**Gated on EXACT content, which is why `take-base` is verifiable rather than
+merely convenient.** The generator's own docblock says a difference in a `page`
+is "somebody who added a node, renamed a block, ran a first sweep, or moved a
+sidecar, and did not regenerate". So after `take-base`, `docs:pages:check`
+proves the regenerated page is right — the resolution is not trusted, it is
+checked.
+
+**The 17 slugs are ENUMERATED, not globbed, and that is deliberate.**
+`cat-harness/docs/*.md` is a **mix**: measured 2026-10-03, the directory holds
+31 `.md` pages of which 13 are generated, so 18 authored ones sit beside them
+(`architecture.md`, `index.md`, `getting-started.md`, `platform.md`, …), and
+`guides/` holds 9 of which 4 are generated, leaving `agent-onboarding.md`,
+`voices.md` and 3 more. A directory glob would take a side on
+authored prose — the one thing a resolver must never do. The cost is that a
+page added to `content/docs/` is **refused until its slug is declared here**,
+which is the safe direction to be wrong in, and a test reads the pages' own
+front matter from the TREE so the enumeration cannot go quietly stale.
+
+**That test must read the front matter, not the file**, and it earned the
+distinction immediately. Its first cut tested the whole file for the marker
+and the very next merge of `main` turned up an 18th subject: the generated
+body of **this skill**, `docs/reference/skill-instructions/merge-conflict-patterns.md`,
+which quotes the marker in the code fence three paragraphs above. A detector
+that reads a quotation as a declaration finds its own documentation — *"a
+docblock that documents a tag necessarily contains the tag"*, from
+[`audit-coverage`](../../kg/kg-core/audit-coverage.md). That page's own front
+matter names `gen-skill-docs.ts`, and `skill-instructions` is declared before
+`docs-pages`, so the first match already gives it the right owner. A test pins
+all three facts.
+
+**The authored neighbour is the source, and it stays refused.**
+`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
+is the hand-written INPUT for `docs/publication-workflow.md`; on #1888 both
+sides had only *added* rows to it, but a union of additions is a property of
+that instance and not of the path, so the next conflict there could be a
+contested edit. A test pins the pair, and pins that nothing under `content/`
+is claimed at any depth.
 
 ### `health-report` — take the base's measurement
 
@@ -185,6 +309,29 @@ the README shows — the owner kept the exact counts (#1707).
 
 ### `beans` — refused, by declaration (44)
 
+**Before you go looking for the other session, check whether there is one.**
+A `beans/defs/**` conflict has two causes and they need different handling:
+
+| cause | how to tell | what to do |
+|---|---|---|
+| two sessions edited one bean | the default branch's claim note names a branch that is not yours | a coordination question — talk to them |
+| **one session**: the claim landed on the default branch, the completion stayed on the branch | the note names **your own** branch | no coordination needed; keep the completing value and the note |
+
+The second is `beans:claim`'s **normal path**, not an edge case: it pushes the
+claim to the default branch so a sibling sees it before your PR exists (bean
+`35nj`), and your branch then edits the same bean to finish it. Bean `24fa`
+measured it, and the refusal text used to assert the first cause for both —
+sending an agent to hunt a sibling that does not exist.
+
+`claim-bean.ts` now mirrors the claim note onto the branch as well as the
+status, byte-identically (`mirrorClaimNote`), which removes the BODY half of
+that conflict. What remains is `status` and `updated_at`, and that remainder is
+**correct**: `in-progress` on the default branch against `completed` on yours
+is a real divergence from a merge base that predates the claim. Resolve it by
+keeping the completing branch's value and the note — and **never by unioning
+the front matter**, since a duplicated `updated_at` is
+`check-bean-front-matter`'s recorded defect.
+
 Bean definitions are authored work-plan state. Two sessions editing one bean
 is a coordination question (`bean-coordination`), and a duplicated
 `updated_at` from a careless resolution is `check-bean-front-matter`'s
@@ -216,7 +363,11 @@ that is behind `main`, one live run per PR (a newer run cancels an older one).
   overwritten.
 - **A refusal pushes nothing**, labels the PR `needs-merge-human`, and lists
   the ✗ paths. Adding a pattern stays a person's change, made here.
-- **One comment per PR, edited in place** on every run.
+- **One comment per PR, edited in place** on every run — except a run that
+  was **cancelled** (a newer push to `main` superseded it) or whose merge step
+  reported no status, which leaves the comment untouched. Before #1854 such a
+  run rewrote it to "**Error** (exit )". The text is composed by
+  `cat-harness/scripts/merge-main-comment.ts`, which is unit-tested.
 - **The merge commit is still judged by CI**: pushed with `MERGE_MAIN_TOKEN`
   when that secret exists, otherwise followed by a dispatch of
   `code-quality-gates.yml` on the branch, because a GITHUB_TOKEN push triggers

@@ -28,6 +28,17 @@
  * and it is relative to THIS instance's root, which `loadContributions` pins
  * from the dependency entry rather than taking from this file.
  *
+ * ## Pipeline plugins (bean `squu`)
+ *
+ * Generic pipeline code used to import four of this layer's modules directly:
+ * the Lean lexer, the LaTeX preflight, Lean coverage and one folio's default
+ * chapter profiles. Those files go straight to this instance (owner ruling
+ * 2026-10-01 ~18:15), so the generic callers now ask
+ * `content/pipeline/pipeline-plugins.ts` for a slot and THIS module fills it.
+ * The imports below still reach into `cat-harness/` because the files have
+ * not moved yet. That direction (sci → lower) is allowed, and the move PR
+ * turns each into a local `./content/…` or `./scripts/…` path.
+ *
  * @module folio-assistant-sci/contributions
  */
 
@@ -37,6 +48,12 @@ import type {
 } from "../cat-harness/schemas/block-qa.js";
 import { COST_AUTOMATED_CHECKERS } from "./content/pipeline/qa-checkers-cost.js";
 import { FORMAL_EDGES_TOOL, registerFormalEdgesTools } from "./content/pipeline/formal-edges-mcp.js";
+import type { PipelinePluginContribution } from "../cat-harness/schemas/contributions.js";
+import type { PipelinePlugins } from "../cat-harness/content/pipeline/pipeline-plugins.js";
+import { declarationStarts, stripLeanComments } from "../cat-harness/content/pipeline/lean-lexer.js";
+import { registerDefaultChapterProfiles } from "../cat-harness/content/pipeline/_folio-chapter-profiles.qou.js";
+import { runPreflight } from "../cat-harness/content/pipeline/latex-preflight.js";
+import { computeStats, leanFileStatus, resolveLeanFile } from "../cat-harness/scripts/lean-coverage.js";
 
 /** Where each contributed checker is defined, relative to this instance. */
 const COST_CHECKERS = "content/pipeline/qa-checkers-cost.ts";
@@ -49,6 +66,7 @@ export default function contribute(): {
     sourceFile: string;
   }>;
   tools: Array<{ name: string; register: (server: unknown) => void }>;
+  pipelinePlugins: PipelinePluginContribution[];
 } {
   return {
     // Overwritten by `loadContributions` from the dependency entry — the root
@@ -68,5 +86,22 @@ export default function contribute(): {
     // lives here and reaches the server as a contribution: the server walks
     // declared dependencies and never names this instance.
     tools: [{ name: FORMAL_EDGES_TOOL, register: registerFormalEdgesTools }],
+    pipelinePlugins: PIPELINE_PLUGINS,
   };
 }
+
+/**
+ * The slots this layer fills. Typed against the generic side's own map, so a
+ * shape that drifts from what the callers expect fails `tsc` here rather than
+ * at the call.
+ */
+const PIPELINE_IMPLEMENTATIONS: PipelinePlugins = {
+  "lean-lexer": { stripLeanComments, declarationStarts },
+  "chapter-profile-defaults": { registerDefaults: registerDefaultChapterProfiles },
+  "latex-preflight": { runPreflight },
+  "lean-coverage": { resolveLeanFile, leanFileStatus, computeStats },
+};
+
+const PIPELINE_PLUGINS: PipelinePluginContribution[] = Object.entries(PIPELINE_IMPLEMENTATIONS).map(
+  ([kind, implementation]) => ({ kind, implementation }),
+);

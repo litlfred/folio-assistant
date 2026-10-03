@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Introduction to the Analysis of Probabilistic
+# Introduction to the Analysis of Probabilistic Decision-Making Algorithms
 
 ingested source material — attributed to its document, not folio content
 

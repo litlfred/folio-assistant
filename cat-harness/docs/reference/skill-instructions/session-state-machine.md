@@ -17,7 +17,7 @@ parent: Skill instructions
 > Managing state (kinda) during human/agentic discussion.** — the owner,
 > 2026-09-20
 
-The diagram is `processes/session-state-machine.bpmn`. It keeps a
+The diagram is `processes/process/session-state-machine.bpmn`. It keeps a
 session's context current across a discussion: establish who is acting, open
 the record, and on each turn decide whether anything changed.
 

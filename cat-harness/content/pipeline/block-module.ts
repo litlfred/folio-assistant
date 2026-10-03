@@ -70,9 +70,10 @@ export interface BlockLoadFailure {
   error: string;
 }
 
-// Both adapters: a DAK manifest is loaded by the same import path as a paper
-// one, and a kind outside either set is a legitimate skip (a chapter manifest,
-// a helper module) rather than a failure.
+// The BUILT-IN kinds. A contributed kind (a `dak` one, since bean `1335`) is
+// loaded by the same import path, and admitted when the caller passes the
+// contributed kinds; a kind outside every set it was given is a legitimate skip
+// (a chapter manifest, a helper module) rather than a failure.
 const KINDS = new Set<string>(ALL_BLOCK_KINDS);
 
 /**
@@ -83,9 +84,12 @@ const KINDS = new Set<string>(ALL_BLOCK_KINDS);
  * That is a legitimate skip. A module that *throws* is not: it
  * propagates, so `loadBlocksUnder` can record it.
  */
-export async function loadBlockModule(tsPath: string): Promise<LoadedBlock | undefined> {
+export async function loadBlockModule(
+  tsPath: string,
+  contributedKinds?: ReadonlySet<string>,
+): Promise<LoadedBlock | undefined> {
   const mod = (await import(tsPath)) as { default?: unknown };
-  return asLoadedBlock(mod.default, tsPath);
+  return asLoadedBlock(mod.default, tsPath, contributedKinds);
 }
 
 /**
@@ -130,9 +134,12 @@ export async function loadBlockModule(tsPath: string): Promise<LoadedBlock | und
  * comment (`#125`). Candidate detection stays textual; block *identity* comes
  * from here.
  */
-export function loadBlockModuleSync(tsPath: string): LoadedBlock | undefined {
+export function loadBlockModuleSync(
+  tsPath: string,
+  contributedKinds?: ReadonlySet<string>,
+): LoadedBlock | undefined {
   const mod = requireSync(tsPath) as { default?: unknown };
-  return asLoadedBlock(mod.default, tsPath);
+  return asLoadedBlock(mod.default, tsPath, contributedKinds);
 }
 
 /** `createRequire` is resolved once; building one per call is measurable. */
@@ -147,12 +154,17 @@ function requireSync(tsPath: string): unknown {
  * Shared by both loaders, so "what counts as a block" cannot drift between the
  * sync and async paths — the drift this whole module exists to end.
  */
-function asLoadedBlock(value: unknown, file: string): LoadedBlock | undefined {
+function asLoadedBlock(
+  value: unknown,
+  file: string,
+  contributedKinds?: ReadonlySet<string>,
+): LoadedBlock | undefined {
   const block = value as Record<string, unknown> | undefined;
   if (!block || typeof block !== "object") return undefined;
   const kind = block.kind;
   const label = block.label;
-  if (typeof kind !== "string" || !KINDS.has(kind)) return undefined;
+  if (typeof kind !== "string") return undefined;
+  if (!KINDS.has(kind) && !contributedKinds?.has(kind)) return undefined;
   if (typeof label !== "string" || label.length === 0) return undefined;
   const rawUses = block.uses;
   return {

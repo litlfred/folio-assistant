@@ -60,7 +60,7 @@
  * ## What this module deliberately does NOT do
  *
  * It does not choose a route. The branch is computed by
- * `processes/decisions/signing-route.dmn` and executed by the gateway
+ * `processes/sdlc/decisions/signing-route.dmn` and executed by the gateway
  * in `qa-report-signing.bpmn`. This module supplies the **fact** the table
  * reads. Putting the routing here as well would be a second answer to
  * "which route", free to disagree with the table an editor can change.

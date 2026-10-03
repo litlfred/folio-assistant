@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jsonld-drift-check\n"
-"POT-Creation-Date: 2026-09-26T17:44:08.243Z\n"
+"POT-Creation-Date: 2026-10-02T14:45:26.851Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,67 +14,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/jsonld-drift-check.bpmn:14
+#: processes/sdlc/jsonld-drift-check.bpmn:14
 #. Diagram element documentation
 msgid "A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. Five `--check` runs in one job: the JSON-LD context, the block siblings, the library nodes, the site graph, and the label-resolution tests. Each regenerates from the `.ts` manifest that owns it and fails on any difference. They are drawn as ONE task rather than five, because they are independent of each other and sequential only because a single job runs them. Five boxes would assert an ordering the workflow does not have. THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that \"a diagram that is drawn once and then drifts is worse than none, because it is consulted\", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do — a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained. IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one its job names no node (`# bpmn-node:` in the workflow), so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own — but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting."
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:53
+#: processes/sdlc/jsonld-drift-check.bpmn:53
 #. Diagram element documentation
 msgid "Answered by the diff Task_Check takes after regenerating the context, block, library and site graphs. No difference ends clean; any difference ends the job red, because a committed file is stale against its source."
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:11
+#: processes/sdlc/jsonld-drift-check.bpmn:11
 #. Diagram label
 msgid "Are the .jsonld siblings still in sync with their .ts manifests?"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:31
+#: processes/sdlc/jsonld-drift-check.bpmn:31
 #. Diagram label
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:52
+#: processes/sdlc/jsonld-drift-check.bpmn:52
 #. Diagram label
 msgid "Did anything change?"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:58
+#: processes/sdlc/jsonld-drift-check.bpmn:58
 #. Diagram label
 msgid "Every sibling in sync"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:61
+#: processes/sdlc/jsonld-drift-check.bpmn:61
 #. Diagram label
 msgid "Job RED — the generated file is stale"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:66
+#: processes/sdlc/jsonld-drift-check.bpmn:66
 #. Diagram label
 msgid "no — in sync"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:41
+#: processes/sdlc/jsonld-drift-check.bpmn:41
 #. Diagram label
 msgid "Pull request, push to main, or dispatch"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:44
+#: processes/sdlc/jsonld-drift-check.bpmn:44
 #. Diagram label
 msgid "Regenerate the context, block, library and site graphs — and diff"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:45
+#: processes/sdlc/jsonld-drift-check.bpmn:45
 #. Diagram element documentation
 msgid "Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted."
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:32
+#: processes/sdlc/jsonld-drift-check.bpmn:32
 #. Diagram element documentation
 msgid "The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against."
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:67
+#: processes/sdlc/jsonld-drift-check.bpmn:67
 #. Diagram label
 msgid "yes — drifted"
 msgstr ""

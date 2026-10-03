@@ -4,12 +4,12 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/review-narrative.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/content/review-narrative.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Narrative review
 
-`Process_NarrativeReview` · strict (defaulted) · 6 step(s)
+`Process_NarrativeReview` · strict (defaulted) · 5 step(s)
 
 Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.
 
@@ -33,14 +33,13 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
 
 ## Steps
 
-Every one of the 6 step(s) is documented.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Read the sidecar findings**<br>`Task_ReadFindings` | Narrative reviewer | [`content-review`](../reference/skill-instructions/content-review.html) | Open the block's `.qa.json`, not just the evidence line: register is a<br>property of the passage, and the sidecar quotes one line of it. |
 | **Adjudicate the voice findings**<br>`Task_AdjudicateVoice` | Narrative reviewer | calls [Criterion adjudication](criterion-adjudication.html)<br>[`voice-editorial-review`](../reference/skill-instructions/voice-editorial-review.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | Three outcomes, all legitimate: the register is wrong for this genre;<br>the criterion does not belong in this genre and should carry `profiles`;<br>or the block is a stated exception and a reviewer entry records why. |
 | **Voice overlay review**<br>`Call_VoiceOverlay` | Narrative reviewer | calls [Voice overlay review](voice-review.html)<br>[`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register.<br>Placed after the base voice adjudication because a voice OVERLAYS the house voice rather than replacing it, so the house finding has to be settled first. Its own first gateway leaves immediately when no voice is active, which is this instance's case and the default everywhere. |
-| **Review the editorial dependencies**<br>`Task_ReviewUses` | Narrative reviewer | [`uses-editorial-review`](../reference/skill-instructions/uses-editorial-review.html) | `uses[]` is what a READER must have read to follow the block — never<br>populated from the formal dependency graph. |
 | **Review the translation**<br>`Task_ReviewTranslation` | Narrative reviewer | [`translation-manager`](../reference/skill-instructions/translation-manager.html) | Coverage, preserved terms and echoes are mechanical. A semantic round<br>trip needs a back-translator that has not seen the original; where none<br>has run, the criterion carries no verdict and that is the honest state. |
 | **Record findings as advice**<br>`Task_RecordFindings` | Narrative reviewer | [`content-feedback`](../reference/skill-instructions/content-feedback.html) | A reviewer cannot accept a change — that is the editor's lane — so the<br>output is findings on the sidecar, not a commit. |
 

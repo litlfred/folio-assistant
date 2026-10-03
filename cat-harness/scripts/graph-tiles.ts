@@ -54,6 +54,7 @@ import { join } from "node:path";
 
 import {
   type CatHarnessDeclaration,
+  type GlassStripPin,
   type TileSurface as CatHarnessTileSurface,
   type Visualisation,
   showsOn,
@@ -293,6 +294,57 @@ export function graphTiles(
     });
   }
   return tiles;
+}
+
+/** The glass's pinned strip, resolved to the ids the page draws. */
+export interface GlassStrip {
+  /**
+   * Strip ids in declared order: `glass-<chrome>` for the glass's own
+   * controls, a {@link GraphTile.id} for a kind's tile.
+   */
+  pinned: string[];
+  /**
+   * Kinds the declaration pins that no glass tile here holds. A FINDING, not
+   * a silent skip: "pinned and absent" and "not pinned" are different facts,
+   * and the strip cannot show the difference.
+   */
+  unmatched: string[];
+}
+
+/**
+ * Resolve a `glassStrip` declaration against the tiles this site publishes.
+ *
+ * Owner, 2026-10-01 (bean `ob3m` finding 10): **"Pinned tiles first, plus
+ * '+N more'"**. A `kind` pin takes ONE tile — the tile whose directory id IS
+ * the kind when there is one, else the first glass tile (in `tiles` order)
+ * whose directory holds the kind. One slot per kind is the owner's
+ * "deduplicate across harnesses": the other harnesses' tiles of that kind
+ * stay in More, where their qualifiers tell them apart.
+ *
+ * A tile that is hidden by default, withheld from some deploys (`publish`),
+ * or has no page to open is never pinned: a pinned tile that vanishes on the
+ * canonical site, or opens nothing, would be a slot that promises and
+ * delivers nothing (`pb04`).
+ */
+export function resolveGlassStrip(
+  pins: readonly GlassStripPin[],
+  tiles: readonly GraphTile[],
+  kindsOf: ReadonlyMap<string, readonly string[] | undefined>,
+): GlassStrip {
+  const pinned: string[] = [];
+  const unmatched: string[] = [];
+  const usable = tiles.filter((t) => t.surfaces.includes("glass") && !t.hidden && t.publish === undefined && t.href !== undefined);
+  for (const pin of pins) {
+    if ("chrome" in pin) {
+      pinned.push(`glass-${pin.chrome}`);
+      continue;
+    }
+    const holds = usable.filter((t) => !pinned.includes(t.id) && (kindsOf.get(t.directory) ?? []).includes(pin.kind));
+    const tile = holds.find((t) => t.directory === pin.kind) ?? holds[0];
+    if (tile) pinned.push(tile.id);
+    else unmatched.push(pin.kind);
+  }
+  return { pinned, unmatched };
 }
 
 /** The tiles for one surface, in declaration order. */

@@ -359,7 +359,7 @@ Semantic verification is per BLOCK, not per page, and it is not a script's to as
 
 The human translator workflow is a dedicated path for professional translation,
 distinct from the agentic/machine path. See BPMN:
-`processes/human-translation-workflow.bpmn`.
+`processes/library/human-translation-workflow.bpmn`.
 
 ### Steps
 
@@ -668,7 +668,7 @@ all content types — documents, papers, and DAK folios alike.
 The translation workflow integrates with the existing content lifecycle:
 
 ```
-See: processes/translation-workflow.bpmn
+See: processes/library/translation-workflow.bpmn
 ```
 
 ### Stages

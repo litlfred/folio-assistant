@@ -67,6 +67,7 @@ function main(): number {
   console.log(
     `rail-standalone-pages: rail on ${r.injected} page(s), ` +
       `${r.alreadyNavigated} already navigated, ${r.redirects} redirect stub(s) left bare, ` +
+      `${r.declined} declined in their own markup (folio-navbar: none), ` +
       `${routes.length} mount route(s) left to the mount pass`,
   );
   if (r.skipped.length) {

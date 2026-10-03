@@ -65,10 +65,17 @@ classDiagram
       inspected_at [1] string
       verdicts [1] map~map~object~~
     }
+    class who_iris_library_folio_withheld_v1_Gate["Gate"] {
+      <<json: WithheldSchema>>
+      gate [1] string
+      verdict [1] string
+    }
     class who_iris_library_folio_withheld_v1_Path["Path"] {
       <<json: WithheldSchema>>
       path [1] string
       reason [1] string
+      gates [1..*] Gate[]
+      record [0..1] object
     }
     class who_iris_library_folio_withheld_v1_folio_withheld_v1["folio-withheld/v1"] {
       <<json: WithheldSchema>>
@@ -77,10 +84,12 @@ classDiagram
       paths [0..*] Path[]
     }
   }
+  who_iris_library_folio_withheld_v1_Path *-- "1..*" who_iris_library_folio_withheld_v1_Gate : gates
   who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_section_verdicts_v1_folio_section_verdicts_v1" fa_uml_kind_library
+  cssClass "who_iris_library_folio_withheld_v1_Gate" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_Path" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_folio_withheld_v1" fa_uml_kind_library
 ```

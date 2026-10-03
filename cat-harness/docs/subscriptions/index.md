@@ -16,19 +16,16 @@ Derived from the declarations wherever a fact exists: a staged instance's planne
 
 | substrate | repository | status | tools repository | source | note |
 |---|---|---|---|---|---|
-| **agent-skills** `agent-skills` | [`litlfred/agent-skills`](https://github.com/litlfred/agent-skills) | 🧱 planned | — | staged instance | — |
 | **cat-harness** `cat-harness` | [`litlfred/cat-harness`](https://github.com/litlfred/cat-harness) | 🧱 planned | — | staged instance | — |
 | **cat-harness-tools** `cat-harness-tools` | [`litlfred/cat-harness-tools`](https://github.com/litlfred/cat-harness-tools) | 🧱 planned | — | staged instance | — |
+| **cat-openapi** `cat-openapi` | [`litlfred/cat-openapi`](https://github.com/litlfred/cat-openapi) | 🧱 planned | — | staged instance | — |
 | **fhir-harness** `fhir-harness` | [`litlfred/fhir-harness`](https://github.com/litlfred/fhir-harness) | 🧱 planned | — | staged instance | — |
 | **folio-assistant-core** `folio-assistant-core` | [`litlfred/folio-assistant-core`](https://github.com/litlfred/folio-assistant-core) | 🧱 planned | — | staged instance | — |
 | **folio-assistant-sci** `folio-assistant-sci` | [`litlfred/folio-assistant-sci`](https://github.com/litlfred/folio-assistant-sci) | 🧱 planned | — | staged instance | — |
 | **iHRIS Knowledge Base** `ihris` | [`litlfred/ihris`](https://github.com/litlfred/ihris) | 📦 exists | — | associated harness | — |
-| **large-datasets** `large-datasets` | [`litlfred/large-datasets`](https://github.com/litlfred/large-datasets) | 🧱 planned | — | staged instance | — |
 | **smart-base** `smart-base` | [`litlfred/smart-base`](https://github.com/litlfred/smart-base) | 🧱 planned | — | staged instance | — |
-| **smart-dak** `smart-dak` | [`litlfred/smart-dak`](https://github.com/litlfred/smart-dak) | 🧱 planned | — | staged instance | — |
 | **smart-ig** `smart-ig` | [`litlfred/smart-ig`](https://github.com/litlfred/smart-ig) | 🧱 planned | — | staged instance | — |
 | **smart-immunizations** `smart-immunizations` | [`litlfred/smart-immunizations`](https://github.com/litlfred/smart-immunizations) | 🧱 planned | — | staged instance | — |
-| **smart-l1** `smart-l1` | [`litlfred/smart-l1`](https://github.com/litlfred/smart-l1) | 🧱 planned | — | staged instance | — |
 | **smart-trust** `smart-trust` | [`litlfred/smart-trust`](https://github.com/litlfred/smart-trust) | 🧱 planned | — | staged instance | — |
 | **WHO IRIS** `who-iris` | [`litlfred/who-iris`](https://github.com/litlfred/who-iris) | 📦 exists | — | hand-entered | Repository created 2026-09-30 and empty; the staged instance is who-iris/. Seeding is held (kg-separation stage 10) until the owner says so. The WHO voices style guide merges into it as a subgraph. |
 | **who-style-guide** `who-style-guide` | [`litlfred/who-style-guide`](https://github.com/litlfred/who-style-guide) | 🧱 planned | — | staged instance | — |

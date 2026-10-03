@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/merge-base.bpmn
+# bpmn: cat-harness/processes/sdlc/merge-base.bpmn
 #
 # Merge `main` into opted-in PR branches when it moves — bean `d33q` part B,
 # story S2 of epic `7x5n` (bean `0mf0`).
@@ -50,13 +50,22 @@ name: Merge main into opted-in PRs
 on:
   push:
     branches: [main]
-  pull_request:
+  # `pull_request_target`, NOT `pull_request` — measured 2026-10-02: adding
+  # the label to 4 conflicted PRs started 0 runs. GitHub runs no
+  # `pull_request` workflow for a PR with no merge ref, and a conflicted PR has
+  # none — so the trigger was blind to exactly the PRs this exists for.
+  # `pull_request_target` runs in the BASE context and fires regardless of
+  # mergeability. It also carries a write token, which is why every job below
+  # refuses a PR whose head is not in this repository (only people with write
+  # access can push such a branch) BEFORE anything is checked out.
+  pull_request_target:
     types: [labeled]
   workflow_dispatch:
     inputs:
       pr:
-        description: "PR number to merge main into (it must carry the merge-main label)"
-        required: true
+        description: "PR number to merge main into (must carry the merge-main label). Empty: sweep every labelled PR, as a push to main does."
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -67,7 +76,7 @@ jobs:
     name: Select opted-in PRs that are behind main
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event_name != 'pull_request' || github.event.label.name == 'merge-main'
+    if: github.event_name != 'pull_request_target' || github.event.label.name == 'merge-main'
     permissions:
       pull-requests: read
     outputs:
@@ -83,10 +92,14 @@ jobs:
           INPUT_PR: ${{ github.event.inputs.pr }}
         run: |
           set -euo pipefail
+          candidates=""
           case "$EVENT" in
-            pull_request) candidates="$LABELLED_PR" ;;
+            pull_request_target) candidates="$LABELLED_PR" ;;
             workflow_dispatch) candidates="$INPUT_PR" ;;
-            *) candidates=$(gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" --paginate \
+          esac
+          # An empty dispatch sweeps like a push does.
+          case "$candidates" in
+            "") candidates=$(gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" --paginate \
                  --jq '.[] | select(any(.labels[]; .name == "merge-main")) | .number') ;;
           esac
           prs=()
@@ -116,11 +129,28 @@ jobs:
       fail-fast: false
       matrix:
         pr: ${{ fromJSON(needs.select.outputs.prs) }}
-    # A burst of pushes to main yields ONE live run per PR: a newer run
-    # supersedes an older one, whose merge would be stale before it landed.
+    # Coalesce on the PR's own pushes; QUEUE on pushes to main. The group is
+    # per-PR, and GitHub holds at most one pending run per group, so queue
+    # depth is bounded at one either way — the only question is which of the
+    # two runs survives.
+    #
+    # Under `pull_request_target` the hazard is real and cancelling is right: a
+    # new commit on the PR means the in-flight job is merging main into a head
+    # that no longer exists, so its result would be stale before it landed.
+    #
+    # Under `push` to main there is no such hazard, and cancelling is pure
+    # loss. A job that lands `main@T1` into the PR is not worthless once main
+    # has moved to `T2`: the next sweep then has only `T1 -> T2` to carry, a
+    # strictly smaller step. Kill it and the PR is still at `main@T0`, so the
+    # next sweep must carry `T0 -> T2` — and under a steady merge cadence that
+    # one is cancelled too, so the PR never advances at all. That is bean
+    # `mc8h`'s treadmill, produced by the mechanism meant to avoid it. Measured
+    # (bean `o8s9`, 2026-10-03): of the last 100 runs, `push`-triggered gave 20
+    # success to 21 cancelled, against 14 to 2 for `pull_request_target`. The
+    # queued job re-reads main when it starts, so nothing stale lands.
     concurrency:
       group: merge-main-${{ matrix.pr }}
-      cancel-in-progress: true
+      cancel-in-progress: ${{ github.event_name != 'push' }}
     permissions:
       contents: write
       pull-requests: write
@@ -137,14 +167,36 @@ jobs:
         id: pr
         run: |
           set -euo pipefail
-          gh api "repos/$REPO/pulls/$PR" --jq '"ref=\(.head.ref)\nsha=\(.head.sha)"' >> "$GITHUB_OUTPUT"
+          pr=$(gh api "repos/$REPO/pulls/$PR")
+          # Checked again here, before the checkout, not only in `select`:
+          # under `pull_request_target` this job holds a write token, and a
+          # fork's head must never be checked out with it.
+          if [ "$(jq -r '.head.repo.full_name == .base.repo.full_name' <<<"$pr")" != true ]; then
+            echo "::error::#$PR's head is not in $REPO — refusing to check it out"; exit 1
+          fi
+          jq -r '"ref=\(.head.ref)\nsha=\(.head.sha)"' <<<"$pr" >> "$GITHUB_OUTPUT"
 
+      # SHALLOW, THEN ONLY TWO HISTORIES — measured 2026-10-02: with
+      # `fetch-depth: 0` this checkout took 319-543 s of a ~20 min job, because
+      # it fetches every ref's history (2153 refs, 651 branches, and
+      # `gh-pages` with every preview). A merge needs exactly two: the PR
+      # branch and main. They are fetched blobless; git fetches the contents
+      # of the files the merge touches on demand.
       - uses: actions/checkout@v7
         with:
           ref: ${{ steps.pr.outputs.ref }}
-          fetch-depth: 0
+          fetch-depth: 1
           submodules: recursive
           token: ${{ secrets.MERGE_MAIN_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Fetch the history of the PR branch and main only
+        env:
+          REF: ${{ steps.pr.outputs.ref }}
+        run: |
+          set -euo pipefail
+          git fetch -q --unshallow --no-tags --filter=blob:none origin \
+            "+refs/heads/main:refs/remotes/origin/main" \
+            "+refs/heads/$REF:refs/remotes/origin/$REF"
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -165,18 +217,40 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$SELECTED" || { echo "::notice::head moved since selection; the next run will pick it up"; exit 1; }
 
-      - name: bun run merge:main
+      # THE TOOL COMES FROM MAIN, NOT FROM THE PR — measured 2026-10-02 on 7
+      # real runs: an old branch has neither the `merge:main` script nor
+      # `merge-base.ts`, so `bun run merge:main` in the PR's tree logged
+      # `Script not found` on every one. Main's copy is checked out OUTSIDE
+      # the PR's tree (a clean tree is merge-base's precondition) and pointed
+      # at it with `--root`. Main's patterns are the ones that apply, too: the
+      # base being merged in is main. What merge-base then runs INSIDE the
+      # tree — `qa:resolve-conflicts`, `regen` — runs after the merge, so it is
+      # main's version as merged into the branch, not the branch's old one.
+      - name: Check out main's merge tool beside the PR
+        run: |
+          set -euo pipefail
+          git fetch -q origin main
+          git worktree add --detach "$RUNNER_TEMP/tool" origin/main
+          cd "$RUNNER_TEMP/tool"
+          # merge-base.ts imports the schemas, which import bootstrap-tools — a
+          # submodule a fresh worktree does not have (found by the dry run on
+          # #1777's head that proves this step).
+          git submodule update --init --recursive
+          bun install --frozen-lockfile
+
+      - name: merge main in, with main's merge-base.ts
         id: merge
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           before=$(git rev-parse HEAD)
           set +e
-          bun run merge:main > "$RUNNER_TEMP/merge.log" 2>&1
+          bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE" --base origin/main > "$RUNNER_TEMP/merge.log" 2>&1
           status=$?
           set -e
           cat "$RUNNER_TEMP/merge.log"
           echo "status=$status" >> "$GITHUB_OUTPUT"
+          if grep -qE '^  ✗ .*  \[' "$RUNNER_TEMP/merge.log"; then echo "refused=true" >> "$GITHUB_OUTPUT"; else echo "refused=false" >> "$GITHUB_OUTPUT"; fi
           if [ "$status" = 0 ] && [ "$(git rev-parse HEAD)" != "$before" ]; then
             echo "merged=true" >> "$GITHUB_OUTPUT"
           else
@@ -188,14 +262,47 @@ jobs:
         if: steps.merge.outputs.merged == 'true'
         env:
           REF: ${{ steps.pr.outputs.ref }}
+          SELECTED: ${{ steps.pr.outputs.sha }}
         run: |
           # No --force of any kind: if the author pushed during the run this is
           # rejected, which is the guard against overwriting their work.
-          git push origin "HEAD:refs/heads/$REF"
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          #
+          # A REJECTION BECAUSE THE BRANCH MOVED is an expected race, the same
+          # class as a refusal — measured 2026-10-02 on #1790 (run 36981901740),
+          # where it put a red check on the PR that read as a CI failure. So it
+          # is reported (`rejected=true`, and in the comment) and the job stays
+          # green; the next push to main retries. Any OTHER push failure — the
+          # branch did not move, yet the push failed — is a real error.
+          #
+          # THE REASON IS READ FROM THE PUSH'S OWN STDERR, never inferred —
+          # measured 2026-10-02 on #1790: GitHub refused with "refusing to allow
+          # a GitHub App to create or update workflow … without `workflows`
+          # permission" and the comment said "the branch moved", which was
+          # false. A merge commit that changes a workflow file relative to the
+          # head can NEVER be pushed with GITHUB_TOKEN, so retrying is useless:
+          # it is a person's merge (needs-merge-human) until the owner's
+          # credentials design (#1829) supplies a token with `workflows` scope.
+          if git push origin "HEAD:refs/heads/$REF" 2> "$RUNNER_TEMP/push.err"; then
+            echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          cat "$RUNNER_TEMP/push.err" >&2
+          if grep -qE 'without `?workflows`? permission|refusing to allow a GitHub App to create or update workflow' "$RUNNER_TEMP/push.err"; then
+            echo "::notice::the merge changes a workflow file; GITHUB_TOKEN cannot push it (needs a token with workflows scope, #1829)"
+            echo "blocked=workflows" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          now=$(git ls-remote origin "refs/heads/$REF" | cut -f1)
+          if [ -n "$now" ] && [ "$now" != "$SELECTED" ]; then
+            echo "::notice::the branch moved during the run ($SELECTED -> $now); nothing overwritten, the next push to main retries"
+            echo "rejected=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::error::push failed although the branch did not move"
+          exit 1
 
       - name: Have CI judge the merge commit
-        if: steps.push.outcome == 'success'
+        if: steps.push.outputs.sha != ''
         env:
           REF: ${{ steps.pr.outputs.ref }}
           HAS_TOKEN: ${{ secrets.MERGE_MAIN_TOKEN != '' }}
@@ -203,49 +310,45 @@ jobs:
           if [ "$HAS_TOKEN" = true ]; then
             echo "pushed with MERGE_MAIN_TOKEN: the PR's own CI fires on the push"
           else
-            gh workflow run code-quality-gates.yml --repo "$REPO" --ref "$REF"
+            # Every GATING workflow, so each judges the merge commit: a bot-actor
+            # push leaves their `pull_request` runs at action_required (measured
+            # 2026-10-02), and only a dispatch actually runs. Feature Staging is
+            # preview-only and stays as it is. The real fix is a GitHub App token
+            # (#1829), whose pushes trigger the PR's own runs.
+            for wf in code-quality-gates.yml jsonld-gen-check.yml; do
+              gh workflow run "$wf" --repo "$REPO" --ref "$REF"
+            done
           fi
 
+      # The composition is `cat-harness/scripts/merge-main-comment.ts`, run
+      # from main's tool worktree like merge-base itself, so its branches are
+      # unit-tested. A CANCELLED job (a newer push to main superseded it) or a
+      # merge step with no exit status leaves the existing comment untouched
+      # — measured 2026-10-02 on #1777 (run 36986362911), where this step ran
+      # under always() with an empty STATUS and rewrote the comment to
+      # "**Error** (exit )" (issue #1854).
       - name: Comment once, edited in place
         if: always() && steps.merge.outcome != 'skipped'
         env:
+          JOB_STATUS: ${{ job.status }}
           STATUS: ${{ steps.merge.outputs.status }}
           MERGED: ${{ steps.merge.outputs.merged }}
-          PUSHED: ${{ steps.push.outcome }}
+          PUSHED: ${{ steps.push.outputs.sha != '' && 'success' || 'no' }}
+          BLOCKED: ${{ steps.push.outputs.blocked }}
+          REJECTED: ${{ steps.push.outputs.rejected }}
           SHA: ${{ steps.push.outputs.sha }}
         run: |
           set -euo pipefail
-          log="$RUNNER_TEMP/merge.log"
-          resolved=$(grep -E '^  ✓ .*  \[[a-z0-9-]+: ' "$log" | sed -E 's/.*\[([^:]+):.*/\1/' | sort | uniq -c | awk '{printf "- `%s`: %s\n", $2, $1}' || true)
-          refused=$(grep -E '^  ✗ .*  \[' "$log" | sed -E 's/^  ✗ /- /' || true)
-          unrepaired=$(grep -E 'STILL fails' "$log" | sed -E 's/^ *✗ /- /' || true)
-          if [ "$MERGED" = true ] && [ "$PUSHED" = success ]; then
-            head="**Merged \`main\` and pushed \`${SHA:0:9}\`.** Every conflict was resolved by a declared pattern and the gate set reproduced the result; CI now judges it."
-          elif [ "$MERGED" = true ]; then
-            head="**Merged and proved, but the push was rejected** — the branch moved during the run. Nothing was overwritten; the next push to \`main\` retries."
-          elif [ "$STATUS" = 0 ]; then
-            head="**Already up to date with \`main\`.** Nothing to push."
-          elif [ -n "$refused" ]; then
-            head="**Refused — nothing pushed.** These conflicts are authored or named by no declared pattern, so they need a person. Adding a pattern is a deliberate change with its reason (skill \`merge-conflict-patterns\`), never a widened glob."
+          plan=$(bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-main-comment.ts" --log "$RUNNER_TEMP/merge.log")
+          if [ "$(jq -r .action <<<"$plan")" = leave ]; then
+            echo "::notice::comment left untouched — $(jq -r .reason <<<"$plan")"
+            exit 0
+          fi
+          body=$(jq -r .body <<<"$plan")
+          if [ "$(jq -r .labelNeedsHuman <<<"$plan")" = true ]; then
             gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
             gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
-          elif [ -n "$unrepaired" ]; then
-            main_ci=$(gh api "repos/$REPO/commits/main/check-runs?per_page=100" --jq '[.check_runs[] | select(.conclusion == "failure") | .name] | join(", ")')
-            head="**Not proved — nothing pushed.** Every conflict matched a pattern, but regen could not reproduce these checks. If \`main\` is red on the same checks, it is main's red, not this PR's. Failing on main right now: ${main_ci:-none}."
-          else
-            head="**Could not run** (exit $STATUS) — see the run log. Nothing pushed."
           fi
-          body="$MARKER
-          $head
-          ${resolved:+
-          Resolved by pattern:
-          $resolved}${refused:+
-          Refused:
-          $refused}${unrepaired:+
-          Unrepaired:
-          $unrepaired}
-
-          [Run]($RUN_URL) · \`.github/workflows/merge-main.yml\` (bean \`d33q\`). Remove the \`merge-main\` label to stop."
           existing=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" --paginate \
             --jq ".[] | select(.body | startswith(\"$MARKER\")) | .id" | head -n1)
           if [ -n "$existing" ]; then
@@ -253,3 +356,16 @@ jobs:
           else
             gh api -X POST "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null
           fi
+
+      # A failed merge step must not be a green job — measured 2026-10-02:
+      # `Script not found` on 7 runs, all green. A REFUSAL is an expected,
+      # reported outcome (labelled needs-merge-human) and stays green; any
+      # other non-zero exit — unrepaired, error, could not start — fails here,
+      # AFTER the comment, so the PR is told why.
+      - name: Fail on anything but a merge, an up-to-date branch or a refusal
+        if: always() && steps.merge.outcome == 'success' && steps.merge.outputs.status != '0' && steps.merge.outputs.refused != 'true'
+        env:
+          STATUS: ${{ steps.merge.outputs.status }}
+        run: |
+          echo "::error::merge-base exited $STATUS without a refusal — see the log above"
+          exit 1

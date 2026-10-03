@@ -365,6 +365,7 @@ Then call `mcp__github__create_pull_request` with `owner`, `repo`, `head`
 not a failure — and is needed once per deferred tool per session. The same
 applies to every `mcp__github__*` tool (review, comment, merge, CI status).
 
+PR body content: [`pr-description`](pr-description.md), written for a first-time reader.
 PR body convention: end with the Claude Code footer + session link (see the
 harness git instructions). Do not include the model identifier in the PR.
 

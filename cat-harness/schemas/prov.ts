@@ -26,7 +26,15 @@
  */
 import { z } from "zod";
 
-export const PROV_CONTEXT = "http://www.w3.org/ns/prov-o" as const;
+/**
+ * The JSON-LD context PROV is emitted with: PROV-JSONLD's (W3C Member
+ * Submission 2024-08-25), by owner decision 2026-10-01 (bean `jcet`) — W3C
+ * publishes no JSON-LD context for PROV-O. Until then this held
+ * `http://www.w3.org/ns/prov-o`, the ontology DOCUMENT's address, which is
+ * neither the namespace (`…/ns/prov#`) nor a context. Held locally and pinned;
+ * see `prov-jsonld.ts`, which builds on this module and so imports it from here.
+ */
+export const PROV_CONTEXT = "https://openprovenance.org/prov-jsonld/context.jsonld" as const;
 
 /** `<process>#<task>`: a BPMN process id and one of its task ids. */
 export const PLAN_REF = /^[a-z0-9][a-z0-9-]*#[A-Za-z_][A-Za-z0-9_.-]*$/;

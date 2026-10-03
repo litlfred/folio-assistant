@@ -71,8 +71,9 @@ const CHECKER_DIR = "content/pipeline";
 /**
  * The dependency tree, so a CONTRIBUTED checker is found where it lives.
  *
- * Two criteria (`proof-compile-cost`, `proof-no-cost-regression`) declare
- * `checker_contributed`; their checkers are `folio-assistant-sci`'s. Without
+ * Criteria declaring `checker_contributed` have their checkers in another
+ * instance: `proof-compile-cost` and `proof-no-cost-regression` in
+ * `folio-assistant-sci`, the five `dak-*` in `smart-base` (bean `1335`). Without
  * this the test would report them as having no checker anywhere — which is
  * what it says a defect looks like, so it would fail loudly rather than pass
  * vacuously, but for the wrong reason.
@@ -208,7 +209,12 @@ describe("a contributed checker cannot fall through to the default", () => {
       // Not this instance: that is what "contributed" has to mean, or the flag
       // is decoration and the move never happened.
       expect(src.root).not.toBe(ROOT);
-      expect(src.label.startsWith("folio-assistant-sci/")).toBe(true);
+      // Labelled `<contributor>/<path>` by the contributor that supplied it —
+      // folio-assistant-sci for the cost checkers, smart-base for the DAK ones
+      // since bean 1335.
+      const who = registry.contributedQaCheckers().find((c) => c.criterion === def.id)?.contributor;
+      expect(who).toBeDefined();
+      expect(src.label.startsWith(`${who}/`)).toBe(true);
     }
   });
 });

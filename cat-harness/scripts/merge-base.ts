@@ -7,7 +7,7 @@
  * @graphNode none — a maintenance command over the working tree
  * @covers none — a merge step: it changes the tree and judges no declared graph
  *
- * The executable form of `processes/merge-base.bpmn`, which `Task_PrepareMerge`
+ * The executable form of `processes/sdlc/merge-base.bpmn`, which `Task_PrepareMerge`
  * in `code-change-review.bpmn` calls. The patterns, their strategies and why
  * each is safe are in `merge-conflict-patterns.ts` and the skill of that name.
  *
@@ -30,6 +30,7 @@
  *   bun run merge:main -- --dry-run    # classify the conflicts, change nothing
  *   bun run cat-harness/scripts/merge-base.ts --base origin/<branch>
  *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --dry-run
+ *   bun run cat-harness/scripts/merge-base.ts --root <worktree> --base <sha> --no-regen  # a train member
  *
  * Exit 0 merged (or already up to date) · 1 refused or unproven, tree restored ·
  * 2 could not start (dirty tree, no such base).
@@ -64,6 +65,42 @@ function syncSubmodules(root: string): void {
   spawnSync("git", ["-C", root, "submodule", "update", "--init", "--recursive"], { stdio: "inherit" });
 }
 
+/**
+ * What a take-base resolution does with one conflicted path, from the stages
+ * git holds for it (`ls-files -u`: 1 base, 2 ours, 3 theirs).
+ *
+ * Measured 2026-10-02 on #1805: main DELETED generated files (docs-auto pages
+ * under a folded instance) that the branch had modified. There is no stage 3,
+ * so `checkout --theirs` threw "does not have their version" and the run ended
+ * in "Error". Taking the base's side of a deletion IS the deletion: generated
+ * output the base removed stays removed, and regen recreates anything still
+ * produced. The other direction (deleted on the branch, changed on the base)
+ * has stage 3 and takes it, as before.
+ */
+export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" {
+  return stages.has(3) ? "theirs" : "delete";
+}
+
+/** The stages git holds for an unmerged path. */
+export function unmergedStages(root: string, path: string): Set<number> {
+  const out = new Set<number>();
+  for (const line of git(root, "ls-files", "-u", "--", path).split("\n")) {
+    const stage = Number(line.split(/\s+/)[2]);
+    if (stage) out.add(stage);
+  }
+  return out;
+}
+
+/** Take the base's side of `path`, deletion included; stages the result. */
+export function takeBase(root: string, path: string): void {
+  if (takeBaseAction(unmergedStages(root, path)) === "delete") {
+    git(root, "rm", "-q", "--", path);
+  } else {
+    git(root, "checkout", "--theirs", "--", path);
+    git(root, "add", "--", path);
+  }
+}
+
 function describe(c: Classified): string {
   return c.pattern ? `${c.path}  [${c.pattern.id}: ${c.strategy}]` : `${c.path}  [no declared pattern]`;
 }
@@ -72,6 +109,12 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const opt = (k: string) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
   const dryRun = args.includes("--dry-run");
+  // `--no-regen` is for a merge TRAIN: several branches merged one after
+  // another, then ONE `bun run regen` over the result. Regenerating after each
+  // member cost 5-13 min apiece (measured 2026-10-02), and every member's
+  // generated files are rewritten by the final regen anyway. Each member's
+  // merge commit is NOT proved on its own; the train is proved at its end.
+  const noRegen = args.includes("--no-regen");
   const base = opt("--base") ?? "origin/main";
   // `--root` lets the command run against another checkout (a worktree at an
   // old commit, for a replay of a historical merge) without copying itself in.
@@ -150,8 +193,12 @@ if (import.meta.main) {
     if (qa.status !== 0 || qaLeft.length) abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
   }
   for (const c of p.resolvable) {
-    if (c.strategy === "take-base") {
-      git(root, "checkout", "--theirs", "--", c.path);
+    // A README one side deleted has no hunks to resolve: it is a take-base
+    // case whichever pattern named it.
+    const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
+    if (c.strategy === "take-base" || oneSided) {
+      takeBase(root, c.path);
+      continue;
     } else if (c.strategy === "generated-regions") {
       const text = readFileSync(join(root, c.path), "utf-8");
       const resolved = resolveGeneratedRegions(text);
@@ -161,6 +208,13 @@ if (import.meta.main) {
     git(root, "add", "--", c.path);
   }
 
+  if (noRegen) {
+    git(root, "add", "-A");
+    git(root, "commit", "-q", "--no-edit");
+    console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
+    process.exit(0);
+  }
+
   // The merge moves the submodule GITLINKS but not their checkouts, so without
   // this regen judges the merged tree against the branch's old submodule
   // content. Measured 2026-10-01 on #1754: main had bumped `bootstrap` and
@@ -168,6 +222,16 @@ if (import.meta.main) {
   // `translate-bpmn:bootstrap:check` came back "unrepaired" — a defect in the
   // tool's view, not in the merge.
   syncSubmodules(root);
+  // Likewise the dependencies: when the base changed `bun.lock`, regen must
+  // run against the merged lockfile, not the branch's — otherwise a writer
+  // that needs a dependency the base added reads as "unrepaired". Measured as
+  // a risk when this command started running on old branches in CI
+  // (`merge-main.yml`, 2026-10-02). `node_modules/` is ignored, so the tree
+  // stays clean for the final `add -A`.
+  if (spawnSync("git", ["-C", root, "diff", "--cached", "--quiet", "HEAD", "--", "bun.lock", "package.json"]).status !== 0) {
+    const inst = spawnSync("bun", ["install", "--frozen-lockfile"], { cwd: root, stdio: "inherit" });
+    if (inst.status !== 0) abort("bun install against the merged lockfile failed");
+  }
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
   if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");

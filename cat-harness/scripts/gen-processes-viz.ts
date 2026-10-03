@@ -73,8 +73,9 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { docsLayers } from "./compose-docs.js";
+import { baseDocsDir } from "./compose-docs.js";
 import { skillPagesOf } from "./lib/skill-pages.ts";
+import { wrapRaw } from "./lib/liquid-raw.ts";
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
 import {
@@ -95,11 +96,6 @@ const VIEWER_TOOL = "processes-viewer";
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
 
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 /** One diagram, as the index sees it. */
 export interface ProcessRow {
@@ -304,7 +300,7 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
     // A report that claims a gap which is not there teaches its reader to
     // discount it, and this repository has paid for that once already
     // (`viewer-undiscovered.test.ts`, the same week).
-    const svgRel = join(baseDocs(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
+    const svgRel = join(baseDocsDir(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
     const svg = existsSync(svgRel) ? relative(repo, svgRel) : undefined;
     // The DECLARATION, asked of the file: is there an enforcement VALUE? A
     // presence check, not a second reading of what the policy means — and a
@@ -720,7 +716,10 @@ export function processPage(
   L.push("{: .note }");
   L.push(`> Generated from \`${row.file}\` by \`gen-processes-viz.ts\` — do not edit here. [All processes](index.html)`);
   L.push("");
-  L.push("{% raw %}");
+  // Everything from here to the end is authored BPMN text; `wrapRaw` below
+  // escapes it so a closing raw tag inside a documentation string cannot end
+  // the block early (bean kjbb).
+  const rawFrom = L.length;
   L.push(`# ${row.name}`);
   L.push("");
   L.push(`\`${row.id}\` · ${row.enforcement}${row.enforcementDeclared ? "" : " (defaulted)"} · ${row.activities} step(s)`);
@@ -809,7 +808,7 @@ export function processPage(
     }
     L.push("");
   }
-  L.push("{% endraw %}");
+  L.push(...wrapRaw(L.splice(rawFrom).join("\n")));
   return `${L.join("\n")}\n`;
 }
 
@@ -845,7 +844,7 @@ if (import.meta.main) {
     console.error("no visualiser declared for the `processes` graph — nothing to write");
     process.exit(1);
   }
-  const out = join(baseDocs(REPO), rel);
+  const out = join(baseDocsDir(REPO), rel);
   const rows = await processRows();
   // VACUITY GUARD. A sweep that found nothing reports a clean corpus, which is
   // the `dh4f` shape this page's own Findings section exists to raise — and the

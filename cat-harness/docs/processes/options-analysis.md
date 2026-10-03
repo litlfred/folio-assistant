@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/options-analysis.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/options-analysis.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Options analysis
@@ -23,7 +23,7 @@ WHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-of
 
 ## How it connects
 
-- **Called by:** [Content Change and Review](content-change-review.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Editing and HCI validation](editing-hci-validation.html), [Adopting an upstream version bump](upstream-version-adoption.html), [Wireframe design review](wireframe-design-review.html)
+- **Called by:** [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Adopting an upstream version bump](upstream-version-adoption.html), [Wireframe design review](wireframe-design-review.html), [Content Change and Review](content-change-review.html), [Editing and HCI validation](editing-hci-validation.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

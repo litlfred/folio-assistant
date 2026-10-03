@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/w3c-2018-odrl-model-2-2/blocks/prose-sec-031",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 15,
   "pageEnd": 16,
   "text": "../sections/sec-031-note.md",
-  "derivedFrom": "library/w3c-2018-odrl-model-2-2/manifest",
-  "sourceDocument": "library/w3c-2018-odrl-model-2-2/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/w3c-2018-odrl-model-2-2/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/w3c-2018-odrl-model-2-2/manifest.jsonld",
   "provenance": "ingested"
 }

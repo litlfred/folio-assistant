@@ -13,10 +13,8 @@ import {
 function chrome(over: Partial<IgChrome> = {}): IgChrome {
   return {
     $schema: IG_CHROME_SCHEMA_TAG,
-    id: "smart.who.int.trust",
-    canonical: "http://smart.who.int/trust",
-    status: "draft",
-    version: "1.8.0",
+    id: "who.template.root",
+    version: "0.5.0",
     layers: [
       {
         package: "fhir.base.template",

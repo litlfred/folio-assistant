@@ -276,12 +276,12 @@ This skill has its own process: **[Adjudication](../../processes/adjudication.ht
 
 | process | step(s) that name it |
 |---|---|
-| [Adjudication](../../processes/adjudication.html) | Adjudicate the disagreement |
-| [Content Change and Review](../../processes/content-change-review.html) | Adjudicate the disagreement (calls a sub-process) |
-| [Criterion adjudication](../../processes/criterion-adjudication.html) | Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
-| [Ingestion subprocess — the L1 completeness gate](../../processes/ingest-l1-completeness-gate.html) | Adjudicate the flagged passage (calls a sub-process) |
 | [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
-| [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
 | [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
+| [Ingestion subprocess — the L1 completeness gate](../../processes/ingest-l1-completeness-gate.html) | Adjudicate the flagged passage (calls a sub-process) |
 | [Refresh materialized remote content](../../processes/refresh-materialized.html) | Adjudicate the conflict (calls a sub-process) |
+| [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
+| [Adjudication](../../processes/adjudication.html) | Adjudicate the disagreement |
+| [Criterion adjudication](../../processes/criterion-adjudication.html) | Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
+| [Content Change and Review](../../processes/content-change-review.html) | Adjudicate the disagreement (calls a sub-process) |
 

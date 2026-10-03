@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `smart-base/processes/l2-dak-authoring.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `smart-base/processes/content/l2-dak-authoring.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # L2 DAK authoring
@@ -25,6 +25,7 @@ work plan in beans/.
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Names the `l2-dak-authoring` skill without calling this process:** [L3 FHIR IG pipeline](l3-fhir-pipeline.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../guides/who-smart-dak.html#the-l2-artifacts)
 - **Skill:** [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html)
 

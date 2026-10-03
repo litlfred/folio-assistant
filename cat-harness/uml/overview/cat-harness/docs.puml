@@ -147,6 +147,10 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     decls [0..*] : Decl[]
     edges [0..*] : Edge[]
   }
+  class "Link" as cat_harness_docs_folio_library_index_v1_Link <<json: LibraryIndexSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string<uri> | string
+  }
   class "ReferencedBy" as cat_harness_docs_folio_library_index_v1_ReferencedBy <<json: LibraryIndexSchema>> #f4f4f1 {
     kind [1] : string
     instance [1] : string
@@ -158,6 +162,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     instance [1] : string
     dir [1] : string
     title [1] : string
+    extractedTitle [0..1] : string
     provenance [1] : string
     rung [1] : paged | tabular | referenced | none
     docId [1] : string
@@ -175,6 +180,8 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     hasStructure [1] : boolean
     hasImagesJson [1] : boolean
     readme [0..1] : string<uri>
+    links [0..*] : Link[]
+    view [0..1] : string
     pageStart [1] : integer | null
     pageEnd [1] : integer | null
     words [1] : integer
@@ -184,6 +191,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     uploadInstance [1] : string
     referencedBy [0..*] : ReferencedBy[]
     withheld [0..1] : string
+    withheldBy [0..1] : object
     avatar [0..1] : object
     summaries [0..1] : object
   }
@@ -323,6 +331,7 @@ cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harn
 cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Edge : edges
+cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_Link : links
 cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_ReferencedBy : referencedBy
 cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Entry : entries
 cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Upload : uploads

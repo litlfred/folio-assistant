@@ -38,6 +38,7 @@ import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../
 import { gitCorpus } from "../../../schemas/git-corpus.ts";
 import { groupDepthFor } from "./group-depth.ts";
 import { TOPICS_FILE, topicsOf } from "../../../scripts/skill-topics.ts";
+import { defaultGraphKinds } from "../../../schemas/graph-kind-registry.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -167,6 +168,15 @@ function inheritedTopics(path: string): string[] {
 
 const EXT = /\.(md|bpmn|dmn|json|ts)$/;
 
+/** The files a grouping kind names its groups in (`skills.json`, `processes.json`, …) — labels, never nodes. */
+const DECLARATION_FILES = new Set<string>([
+  TOPICS_FILE,
+  ...defaultGraphKinds
+    .names()
+    .map((k) => defaultGraphKinds.get(k)?.declarationFile)
+    .filter((f): f is string => typeof f === "string"),
+]);
+
 /** Per-directory file names that name no node — see the name index below. */
 const CONVENTIONAL = new Set(["README", "AGENTS"]);
 
@@ -280,8 +290,12 @@ for (const { path } of SCAN) {
   // `skills.json` is the same kind of thing as a README one level up: the
   // labelling node that says which subdirectories are TOPICS (bean `9umr`),
   // about the directory rather than a node in it.
+  //
+  // Every concern-group declaration file is that same labelling node —
+  // `processes/processes.json` since placement PR3 (bean `63wl`) — so each is
+  // excluded at its scan root, read from the registry rather than listed.
   const scanned = corpusOf(join(ROOT, path)).filter(
-    (p) => !isDirectoryReadme(p) && !(basename(p) === TOPICS_FILE && dirname(p) === join(ROOT, path)),
+    (p) => !isDirectoryReadme(p) && !(DECLARATION_FILES.has(basename(p)) && dirname(p) === join(ROOT, path)),
   );
   const groupDepth = groupDepthFor(path, scanned);
   // A group that is a declared TOPIC is not a package, it holds packages; the

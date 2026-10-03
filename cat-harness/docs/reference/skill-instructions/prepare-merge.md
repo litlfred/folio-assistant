@@ -367,6 +367,7 @@ Then call `mcp__github__create_pull_request` with `owner`, `repo`, `head`
 not a failure — and is needed once per deferred tool per session. The same
 applies to every `mcp__github__*` tool (review, comment, merge, CI status).
 
+PR body content: [`pr-description`](pr-description.md), written for a first-time reader.
 PR body convention: end with the Claude Code footer + session link (see the
 harness git instructions). Do not include the model identifier in the PR.
 
@@ -469,9 +470,10 @@ harness git instructions). Do not include the model identifier in the PR.
 | process | step(s) that name it |
 |---|---|
 | [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
-| [Code change and review](../../processes/code-change-review.html) | Prepare the merge, and watch it through (calls a sub-process) |
-| [Content Change and Review](../../processes/content-change-review.html) | Merge, on explicit confirmation |
 | [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Phase 6: Implement (feature branch + PR) |
+| [Code change and review](../../processes/code-change-review.html) | Prepare the merge, and watch it through (calls a sub-process) |
 | [Merge the base branch in](../../processes/merge-base.html) | Merge the base in, without committing; Regenerate, asking every CI gate; Resolve by hand, then regenerate |
+| [A merge train](../../processes/merge-train.html) | Merge each member onto the base (calls a sub-process); Land the train at the tested SHA |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Move the pin and open the PR |
+| [Content Change and Review](../../processes/content-change-review.html) | Merge, on explicit confirmation |
 

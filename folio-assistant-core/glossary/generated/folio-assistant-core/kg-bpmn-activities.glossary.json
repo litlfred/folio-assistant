@@ -7,11 +7,371 @@
   "source": "BPMN activities of folio-assistant-core",
   "terms": [
     {
+      "id": "process_boardopenclose.a_close",
+      "prefLabel": "Close the window back to its avatar",
+      "definition": "[x] closes the window back to its avatar. Only a person's [x] does this; a zoom-out never closes a window, or [x] and zooming become indistinguishable to the reader.",
+      "notation": "A_Close",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_Close",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardopenclose.a_offerwayback",
+      "prefLabel": "Leave a reachable way back",
+      "definition": "Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on <body> and the keyboard position is lost. An action whose inverse is not reachable is not a toggle (bean l4zi).",
+      "notation": "A_OfferWayBack",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_OfferWayBack",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardopenclose.a_open",
+      "prefLabel": "Project a window onto the board",
+      "definition": "Project a window onto the board for the chosen card. A window is not the card grown large: it survives zooming out, and only [x] closes it. The frame is fixed ([x] always present, always in the same place); the kind fills in its declared controls.",
+      "notation": "A_Open",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_Open",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardopenclose.a_raise",
+      "prefLabel": "Raise the window the reader selected",
+      "definition": "Raise the selected window to the top. Selecting ANY part raises it, not just a title bar. Z-order is session-only by stated default: no z is written to the layout, so a raise is never a file write.",
+      "notation": "A_Raise",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_Raise",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardopenclose.a_renderavatars",
+      "prefLabel": "Render every card as its avatar",
+      "definition": "Render every card as its avatar — the starting state. Each content kind controls its own avatar; the board decides only that nothing starts open.",
+      "notation": "A_RenderAvatars",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_RenderAvatars",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardopenclose.a_resolvethreshold",
+      "prefLabel": "Resolve the kind's zoom threshold",
+      "definition": "Resolve the semantic-zoom threshold for each card's kind: the folio default unless the kind overrides it with a stated because. Return the source alongside the value, so a card that flipped too early can be traced to a decision or to a default.",
+      "notation": "A_ResolveThreshold",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_ResolveThreshold",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardopenclose.a_swaptoavatar",
+      "prefLabel": "Swap cards below the threshold; leave open windows alone",
+      "definition": "Cards whose rendered width is strictly below the threshold swap to their avatar — automatic, driven by size. Open windows are left alone: semantic zoom and open/close are two mechanisms and must not be conflated.",
+      "notation": "A_SwapToAvatar",
+      "source": "folio-assistant-core/processes/ui/board-open-close.bpmn#A_SwapToAvatar",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardplacenote.a_createnote",
+      "prefLabel": "Write the note into the folio — with no coordinate",
+      "definition": "A new note: write it into the folio with no x, no y, no board and no position. A folio is complete with no board, and one note may sit on several boards, which a coordinate on the note could not express.",
+      "notation": "A_CreateNote",
+      "source": "folio-assistant-core/processes/ui/board-place-note.bpmn#A_CreateNote",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardplacenote.a_place",
+      "prefLabel": "Record x,y for this note on THIS board",
+      "definition": "Record the note's x,y in the layout layer for THIS board, naming the note by id. An existing card dragged here only gets a new position — placing is not creating, so no content is duplicated.",
+      "notation": "A_Place",
+      "source": "folio-assistant-core/processes/ui/board-place-note.bpmn#A_Place",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardplacenote.a_sweeporphans",
+      "prefLabel": "Sweep positions whose note is gone",
+      "definition": "Remove every position in this board's layer whose note no longer exists. The sweep edits only the layer — one file, one pass — and never a note a person owns; a stale position must not keep a note alive.",
+      "notation": "A_SweepOrphans",
+      "source": "folio-assistant-core/processes/ui/board-place-note.bpmn#A_SweepOrphans",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardrelocate.a_askconfirm",
+      "prefLabel": "Name what will move, and where it lands",
+      "definition": "Before anything moves, name the content that would move — what it is, with its size and age — and where it lands. The confirmation sits in front of the move: an agent never relocates a durable artefact on its own initiative.",
+      "notation": "A_AskConfirm",
+      "source": "folio-assistant-core/processes/ui/board-relocate.bpmn#A_AskConfirm",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardrelocate.a_cancel",
+      "prefLabel": "Leave the content exactly where it is",
+      "definition": "The reader said no: nothing moves, no position is dropped, and the board is left exactly as it was. Drawn as its own end state because a destructive action whose refusal is not drawn gets performed by accident.",
+      "notation": "A_Cancel",
+      "source": "folio-assistant-core/processes/ui/board-relocate.bpmn#A_Cancel",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardrelocate.a_movecontent",
+      "prefLabel": "Relocate the content to the trashcan",
+      "definition": "Relocate the confirmed content — that one thing, not the class it belongs to — to the trashcan. The folio changes first, because the folio carries what is true.",
+      "notation": "A_MoveContent",
+      "source": "folio-assistant-core/processes/ui/board-relocate.bpmn#A_MoveContent",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardrelocate.a_reportmove",
+      "prefLabel": "Say what moved and where it went",
+      "definition": "Tell the reader what moved and where it went, so the content can be found in the trashcan rather than inferred missing from a card that disappeared.",
+      "notation": "A_ReportMove",
+      "source": "folio-assistant-core/processes/ui/board-relocate.bpmn#A_ReportMove",
+      "status": "candidate"
+    },
+    {
+      "id": "process_boardrelocate.a_updatelayer",
+      "prefLabel": "Drop its positions and sweep orphans",
+      "definition": "Only after the content has moved: drop its positions from the layout layer and sweep any position whose note is now gone. Sweeping first would make the board authoritative over the folio for one step.",
+      "notation": "A_UpdateLayer",
+      "source": "folio-assistant-core/processes/ui/board-relocate.bpmn#A_UpdateLayer",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.call_adjudication",
+      "prefLabel": "Adjudicate the disagreement [adjudication]",
+      "definition": "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.",
+      "notation": "Call_Adjudication",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_Adjudication",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.call_optionsanalysis",
+      "prefLabel": "Options analysis how to absorb the impact",
+      "definition": "On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment.",
+      "notation": "Call_OptionsAnalysis",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_OptionsAnalysis",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.call_reviewslices",
+      "prefLabel": "Review each slice [review-task]",
+      "definition": "review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the `block:` tag where something needs saying.",
+      "notation": "Call_ReviewSlices",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Call_ReviewSlices",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_approve",
+      "prefLabel": "Approve",
+      "definition": "The committee approves the change: the judgement, recorded with the evidence it rests on. Approving is not merging. They were one task (\"Approve and merge\") until bean en2d split them, because a self-authored change cannot be approved through GitHub's own review (the approver may not be the PR's author), and a merge needs the owner's explicit confirmation whoever approved.",
+      "notation": "Task_Approve",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_Approve",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_assessimpact",
+      "prefLabel": "Assess downstream impact",
+      "definition": "Agent reviews downstream implications: - Will indicators need adjustment? - Will referral/follow-up for next visit be impacted? - Are translations affected (re-extract POT)? - Do Lean proofs still hold? skill: integration-watcher, translation-manager",
+      "notation": "Task_AssessImpact",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_AssessImpact",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_buildstaging",
+      "prefLabel": "Build staging site",
+      "definition": "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page",
+      "notation": "Task_BuildStaging",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_BuildStaging",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_cleanupstaging",
+      "prefLabel": "Remove STAGING/<slug>/",
+      "definition": "When the PR is merged or closed, the cleanup job removes the STAGING/<slug>/ directory from gh-pages so stale previews don't accumulate.",
+      "notation": "Task_CleanupStaging",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CleanupStaging",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_commentpr",
+      "prefLabel": "Comment staging URL on PR",
+      "definition": "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link.",
+      "notation": "Task_CommentPR",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CommentPR",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_commitpush",
+      "prefLabel": "Commit, push, update PR",
+      "definition": "Agent commits all changes to the feature branch and pushes. The feature-staging.yml workflow automatically deploys to STAGING/<branch-slug>/ and comments the URL on the PR. For a rendered change the agent also produces the before/after preview (skill before-after-preview) and links it in the PR body.",
+      "notation": "Task_CommitPush",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CommitPush",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_comparebeforeafter",
+      "prefLabel": "Compare main vs staging",
+      "definition": "Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview).",
+      "notation": "Task_CompareBeforeAfter",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CompareBeforeAfter",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_createbranch",
+      "prefLabel": "Create feature branch",
+      "definition": "Agent creates a feature branch from main. Branch naming: feature/<short-description> Opens a PR immediately (AGENTS.md: \"open the PR at the first commit\").",
+      "notation": "Task_CreateBranch",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_CreateBranch",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_deploystaging",
+      "prefLabel": "Deploy to STAGING/<slug>/",
+      "definition": "peaceiris/actions-gh-pages deploys to gh-pages branch under STAGING/<branch-slug>/ with keep_files: true so other staging deployments and the main site are preserved.",
+      "notation": "Task_DeployStaging",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_DeployStaging",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_describechange",
+      "prefLabel": "Describe the desired change",
+      "definition": "Author describes the content change in natural language. Example: \"Update the immunization schedule to add a booster at 18 months.\"",
+      "notation": "Task_DescribeChange",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_DescribeChange",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_detectscope",
+      "prefLabel": "Detect change scope & impact",
+      "definition": "Agent analyses the requested change: - Which content blocks are affected? - Are there downstream implications (indicators, referral logic, visit schedules)? - Will deterministic logic (CQL/DMN) need updating? skill: content-graph, integration-watcher",
+      "notation": "Task_DetectScope",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_DetectScope",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_editcontent",
+      "prefLabel": "Edit narrative content blocks",
+      "definition": "Agent modifies the relevant content blocks (.md files, block manifests). Validates each edit against the schema (content_validate). skill: content editing, block builders",
+      "notation": "Task_EditContent",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_EditContent",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_editlogic",
+      "prefLabel": "Edit deterministic logic (if needed)",
+      "definition": "If the content change affects decision logic, indicators, or workflows: - Update CQL expressions - Update DMN decision tables - Adjust indicator definitions skill: dak-authoring, fhir-pipeline",
+      "notation": "Task_EditLogic",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_EditLogic",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_ingestcomments",
+      "prefLabel": "Ingest tagged review comments [folio-review-comments]",
+      "definition": "Every PR conversation comment that starts with `block: <label>` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.",
+      "notation": "Task_IngestComments",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_IngestComments",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_iterate",
+      "prefLabel": "Iterate on author feedback",
+      "definition": "Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp. A revision push does not pass through Task_CommitPush, so for a rendered change the agent refreshes the before/after preview here (skill before-after-preview), and the next review round never reads a stale one.",
+      "notation": "Task_Iterate",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_Iterate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_merge",
+      "prefLabel": "Merge, on explicit confirmation",
+      "definition": "The owner says \"merge it\", and only then is the branch merged. Merge to main triggers: 1. the main site rebuilds with the changes; 2. the staging preview's cleanup runs; 3. the review comments committed on the feature branch land on main, as the review record.",
+      "notation": "Task_Merge",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_Merge",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_rebuildmain",
+      "prefLabel": "Rebuild main site",
+      "definition": "docs-site.yml triggers on the merge commit to main, rebuilding the root of gh-pages with the accepted changes. The build SHA stamp now reflects the merged state.",
+      "notation": "Task_RebuildMain",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_RebuildMain",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_requestchanges",
+      "prefLabel": "Request changes",
+      "definition": "Committee provides feedback. PR stays open. Author and agent iterate further.",
+      "notation": "Task_RequestChanges",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_RequestChanges",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_requestrevision",
+      "prefLabel": "Request further revisions",
+      "definition": "Author provides feedback on what needs adjustment. Agent iterates on the feature branch.",
+      "notation": "Task_RequestRevision",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_RequestRevision",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_reviewimpact",
+      "prefLabel": "Review impact assessment",
+      "definition": "Committee reviews the agent's impact assessment: - Were all downstream effects identified? - Are the indicator changes acceptable? - Does the logic change match the narrative intent?",
+      "notation": "Task_ReviewImpact",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_ReviewImpact",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_reviewstaging",
+      "prefLabel": "Review staged rendering",
+      "definition": "Author reviews the rendered feature branch at <pages-url>/STAGING/<branch-slug>/ and compares against the main site. The staging banner shows the commit SHA. The agent's before/after preview (skill before-after-preview) sits beside the URLs, with its counts and status line.",
+      "notation": "Task_ReviewStaging",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_ReviewStaging",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_reviewuses",
+      "prefLabel": "Review the editorial dependencies",
+      "definition": "`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph. Once every changed block is covered, the committee checks the editorial dependencies of the change as a whole before judging its impact. Moved here from the harness's `review-narrative` by placement PR3 (bean `63wl`): reading order is a property of folio content, so the step belongs to the content process, which reaches the harness's review by calling DOWN into `review-task`.",
+      "notation": "Task_ReviewUses",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_ReviewUses",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_sliceandassign",
+      "prefLabel": "Slice the change and assign reviewers",
+      "definition": "From the ChangeSet and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.",
+      "notation": "Task_SliceAndAssign",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_SliceAndAssign",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_submitforreview",
+      "prefLabel": "Submit to review committee",
+      "definition": "Author submits the PR for formal review by the guidance review committee. The STAGING URL is the review surface.",
+      "notation": "Task_SubmitForReview",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_SubmitForReview",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_watchbranchci",
+      "prefLabel": "Open the branch-watch bean [watch]",
+      "definition": "First dispatch point for a CI watcher: the feature branch has changed and a staging build now exists to watch. The watcher is DISPATCHED BY OPENING A BEAN, not by a workflow_dispatch -- per the owner on bean 29ij, this is a task/workflow initiation. That is the whole reason it is an activity rather than a line of prose. A bean makes the watch durable past the session that opened it: the container is reclaimed, and what survives is the claim. Starting the watcher and recording that it is running are ONE declared step, so the two cannot disagree about whether anything is watching. Claim rather than note: the watch is work in progress, and it is idempotent, so re-entering on a subsequent push does not duplicate it.",
+      "notation": "Task_WatchBranchCI",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_WatchBranchCI",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_watchmainci",
+      "prefLabel": "Note the main-branch watch [watch]",
+      "definition": "Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher.",
+      "notation": "Task_WatchMainCI",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_WatchMainCI",
+      "status": "candidate"
+    },
+    {
+      "id": "process_contentchangereview.task_withdrawcomment",
+      "prefLabel": "Withdraw a review comment [folio-review-comment-move]",
+      "definition": "The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS.",
+      "notation": "Task_WithdrawComment",
+      "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_WithdrawComment",
+      "status": "candidate"
+    },
+    {
       "id": "process_deepdocumentresearch.a_plan",
       "prefLabel": "Filter the corpus, choose the granularity, decompose the question",
       "definition": "The paper's Planner. Three outputs, and the middle one is the method's substance: a filtered document subset, the granularity to search at, and the sub-questions. CHOOSING THE GRANULARITY PER QUESTION is the whole point of parsing at several. A broad question is answered from summaries and a specific one from chunks; a pipeline that picks once has answered every future question the same way. This checkout cannot yet offer the choice — `l1-blocks.ts` produces blocks, there is no summary level — so this step SAYS which granularity it searched rather than implying the corpus offered alternatives. Re-entered on every iteration, not only the first: the sub-questions are re-derived from what has been found so far, which is what makes the loop a search rather than a retry.",
       "notation": "A_Plan",
-      "source": "folio-assistant-core/processes/deep-document-research.bpmn#A_Plan",
+      "source": "folio-assistant-core/processes/library/deep-document-research.bpmn#A_Plan",
       "status": "candidate"
     },
     {
@@ -19,7 +379,7 @@
       "prefLabel": "Deduplicate, and keep what is actually relevant",
       "definition": "The paper's Refiner. Accumulates into the evidence set the report is built from — so what is dropped here is invisible downstream, which is why it is a step somebody performs rather than a filter buried in retrieval.",
       "notation": "A_Refine",
-      "source": "folio-assistant-core/processes/deep-document-research.bpmn#A_Refine",
+      "source": "folio-assistant-core/processes/library/deep-document-research.bpmn#A_Refine",
       "status": "candidate"
     },
     {
@@ -27,7 +387,7 @@
       "prefLabel": "Synthesise, cite to a location, and say what was not found",
       "definition": "The paper's Reporter, with two obligations it does not state. CITE TO A LOCATION, not to a document — the page and bounding box the parse preserved, so a reader verifies a claim where it was made rather than being sent to a PDF. AND SAY WHAT WAS NOT FOUND. The failure this method makes easy is that a search which ended quietly looks exactly like one that succeeded. Sub-questions that returned nothing are reported, distinguishing \"not in the corpus\" from \"not found by this search\" — only the first is a fact about the folio. A figure description an agent drafted is NOT reported as what the figure shows. `schemas/narrative.ts` holds that line and this step does not cross it.",
       "notation": "A_Report",
-      "source": "folio-assistant-core/processes/deep-document-research.bpmn#A_Report",
+      "source": "folio-assistant-core/processes/library/deep-document-research.bpmn#A_Report",
       "status": "candidate"
     },
     {
@@ -35,7 +395,543 @@
       "prefLabel": "Retrieve for each sub-question",
       "definition": "The paper's Searcher, at the granularity A_Plan chose. Which retrieval paradigm — text-only, vision-only or hybrid — is recorded in the methodology node as an open trade-off rather than settled here: the paper's comparison was measured on its own corpus and says nothing about a folio's.",
       "notation": "A_Search",
-      "source": "folio-assistant-core/processes/deep-document-research.bpmn#A_Search",
+      "source": "folio-assistant-core/processes/library/deep-document-research.bpmn#A_Search",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_authorblocks",
+      "prefLabel": "4 · Author blocks [document-authoring]",
+      "definition": "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement goes through normative-statements.",
+      "notation": "Task_AuthorBlocks",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_AuthorBlocks",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_plan",
+      "prefLabel": "1 · Plan the document [content-plan]",
+      "definition": "Scope it: chapters, the blocks each needs, which statements are normative.",
+      "notation": "Task_Plan",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Plan",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_profilecheck",
+      "prefLabel": "5 · Check the profile [content-validate]",
+      "definition": "content_profile_check: no math kind, no lean field, no .lean sibling. This is the step a paper folio does not have, and the reason a document folio never needs Lean or TeX to publish.",
+      "notation": "Task_ProfileCheck",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_ProfileCheck",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_publish",
+      "prefLabel": "9 · Publish [content-publish]",
+      "definition": "See draft-to-publication.bpmn for the review and release path this expands into. Release authorisation is not relaxable.",
+      "notation": "Task_Publish",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Publish",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_render",
+      "prefLabel": "7 · Render MD / HTML / PDF [document-publishing]",
+      "definition": "Assemble to Markdown, then pandoc. The PDF goes through an HTML engine — never latexmk.",
+      "notation": "Task_Render",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Render",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_review",
+      "prefLabel": "8 · Review and feedback [content-review]",
+      "definition": "The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document.",
+      "notation": "Task_Review",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Review",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_scaffold",
+      "prefLabel": "3 · Scaffold the folio [folio_init]",
+      "definition": "folio_init writes content/, uploads/, library/, the manifests, the builder shim and AGENTS.md. Skipped when the folio already exists.",
+      "notation": "Task_Scaffold",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Scaffold",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_seedplan",
+      "prefLabel": "2 · Seed the work plan [todo-manager]",
+      "definition": "The plan becomes beans, so a resumed session or a sibling agent can pick it up.",
+      "notation": "Task_SeedPlan",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_SeedPlan",
+      "status": "candidate"
+    },
+    {
+      "id": "process_documentauthoring.task_validate",
+      "prefLabel": "6 · Validate [content-validate]",
+      "definition": "Schema and constraint checks over every block.",
+      "notation": "Task_Validate",
+      "source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Task_Validate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.call_optionsanalysis",
+      "prefLabel": "Options analysis accept · revise · discard",
+      "definition": "On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down. NOT between `Gateway_EditorDecision` and `Task_RecordDecision`, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. `Flow_21b` goes `Task_RecordDecision` -> `Gateway_EditorDecision`, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. `Task_RecordDecision` is a `userTask` in `Lane_Editor` that already names `decision-audit`, and `Process_OptionsAnalysis` ends with its own `decision-audit` note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor's lane would collapse them, making the same party both analyse and decide. The subprocess's own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. `CallActivity_Evidence` sits in `Lane_Editor` instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.",
+      "notation": "Call_OptionsAnalysis",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Call_OptionsAnalysis",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.callactivity_evidence",
+      "prefLabel": "Gather and verify the evidence [evidence-retrieval]",
+      "definition": "Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate's authority resolved against its publisher's own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded. This step has nothing to do for content that carries no recommendations -- a mathematics folio has none -- and is skipped there rather than satisfied vacuously.",
+      "notation": "CallActivity_Evidence",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#CallActivity_Evidence",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_agentreview",
+      "prefLabel": "Agent review of the change [content-review]",
+      "definition": "A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant.",
+      "notation": "Task_AgentReview",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_AgentReview",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_buildgates",
+      "prefLabel": "Build and QA gates [content-test]",
+      "definition": "Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes.",
+      "notation": "Task_BuildGates",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_BuildGates",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_claimbean",
+      "prefLabel": "Claim or open the bean [todo-manager]",
+      "definition": "Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate.",
+      "notation": "Task_ClaimBean",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_ClaimBean",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_collatefindings",
+      "prefLabel": "Collate findings into a report",
+      "definition": "Mechanical results and review findings are merged into one report against the proposed change.",
+      "notation": "Task_CollateFindings",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_CollateFindings",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_commit",
+      "prefLabel": "Commit into the corpus",
+      "definition": "Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement.",
+      "notation": "Task_Commit",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_Commit",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_describechange",
+      "prefLabel": "Describe the intended change",
+      "definition": "The editor states the change in natural language; no content has moved yet.",
+      "notation": "Task_DescribeChange",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_DescribeChange",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_draftedit",
+      "prefLabel": "Draft the block edit [content-author]",
+      "definition": "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. For a rendered change it also produces the before/after preview (skill before-after-preview) here, before Gateway_ValidationFork, so the preview exists when the parallel review starts.",
+      "notation": "Task_DraftEdit",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_DraftEdit",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_logfindings",
+      "prefLabel": "Log findings on the bean [todo-manager]",
+      "definition": "Findings are appended to the bean, so the next agent or human sees what is outstanding.",
+      "notation": "Task_LogFindings",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_LogFindings",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_recorddecision",
+      "prefLabel": "Record the decision and its audit note [decision-audit]",
+      "definition": "A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided.",
+      "notation": "Task_RecordDecision",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_RecordDecision",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_resolvebean",
+      "prefLabel": "Resolve or re-open the bean [todo-manager]",
+      "definition": "Resolved when the change landed clean; left open with the residue when it did not.",
+      "notation": "Task_ResolveBean",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_ResolveBean",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_reviewfindings",
+      "prefLabel": "Review the findings",
+      "definition": "THE GATE: the editor sees every finding BEFORE anything reaches the corpus.",
+      "notation": "Task_ReviewFindings",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_ReviewFindings",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_reviseedit",
+      "prefLabel": "Revise the proposed change [content-author]",
+      "definition": "The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. The before/after preview is refreshed with it (skill before-after-preview).",
+      "notation": "Task_ReviseEdit",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_ReviseEdit",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_schemavalidate",
+      "prefLabel": "Schema and constraint checks [content-validate]",
+      "definition": "Block schema, label prefixes, required fields, constraint rules.",
+      "notation": "Task_SchemaValidate",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_SchemaValidate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_smereview",
+      "prefLabel": "Human / SME review [content-review]",
+      "definition": "Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. A rendered change reaches the reviewer with its before/after preview (skill before-after-preview).",
+      "notation": "Task_SmeReview",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_SmeReview",
+      "status": "candidate"
+    },
+    {
+      "id": "process_editing.task_syntaxspell",
+      "prefLabel": "Syntax, spelling and links [content-validate]",
+      "definition": "Syntax, spelling, cross-references, citation and link resolution.",
+      "notation": "Task_SyntaxSpell",
+      "source": "folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_SyntaxSpell",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_appraisegrade",
+      "prefLabel": "Appraise and grade the body of evidence",
+      "definition": "Certainty of evidence per the grading system the folio declares. The grade attaches to the BODY of evidence for one PICO question, not to an individual citation -- which is why this step is after the join and not inside the fan-out.",
+      "notation": "Task_AppraiseGrade",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_AppraiseGrade",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_attachevidence",
+      "prefLabel": "Attach the evidence to the recommendation [content-author]",
+      "definition": "The PICO, the graded body of evidence, each verified citation and its resolved authority record are written onto the recommendation block, so a reader can retrace the whole chain from the sentence back to the source.",
+      "notation": "Task_AttachEvidence",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_AttachEvidence",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_datarepos",
+      "prefLabel": "Query data repositories and statistical datasets",
+      "definition": "Indicator and microdata sources. Distinct from the two above because the unit of evidence is a MEASUREMENT with a population, a period and a method, not a claim in prose.",
+      "notation": "Task_DataRepos",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_DataRepos",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_framepico",
+      "prefLabel": "Frame the question as PICO [content-author]",
+      "definition": "Population, Intervention, Comparator, Outcome. The PICO is what makes the search reproducible and the evidence auditable: without it, 'we looked for evidence' is not a claim anyone can check. WHO guideline development states the question this way before any retrieval.",
+      "notation": "Task_FramePico",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_FramePico",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_l1sources",
+      "prefLabel": "Search trusted SOURCES — L1 [document-intake]",
+      "definition": "Ingested primary literature under library/: the sections/*.md tree and, where a document was scanned, ocr/page-NNN.txt. NOTE the known blind spot — a document OCR'd but never re-run through pdf-structure.py has only a stub in sections/, so a sections-only search misses it.",
+      "notation": "Task_L1Sources",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_L1Sources",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_l2l3content",
+      "prefLabel": "Search trusted CONTENT — L2 DAKs, L3 IGs",
+      "definition": "Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED. This step named `corpus-search`, which has never existed. It is not `corpus-grep`, whose job is the pre-declaration check that something really is an open gap — searching adjudicated L2/L3 content for evidence is a different task, so pointing the ref there would have been a plausible-looking wrong answer. Left uncovered until the skill is written.",
+      "notation": "Task_L2L3Content",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_L2L3Content",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_recordgap",
+      "prefLabel": "Record the evidence gap [todo-manager]",
+      "definition": "Insufficient evidence is a RESULT. It is recorded as such -- an honest gap the guideline can state -- rather than being closed by weakening the recommendation until the available evidence supports it.",
+      "notation": "Task_RecordGap",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_RecordGap",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_recordunverified",
+      "prefLabel": "Open a bean for the unverified citation [todo-manager]",
+      "definition": "An unresolvable citation is not dropped and not silently kept. It becomes a tracked item, so the gap is visible in the work plan rather than surviving as a footnote nobody re-checks.",
+      "notation": "Task_RecordUnverified",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_RecordUnverified",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_reviewexisting",
+      "prefLabel": "Review the guidance already in this content [content-review]",
+      "definition": "The author reads what the document, DAK or IG ALREADY says on this question, before looking outward. A recommendation that contradicts a sibling recommendation in the same artefact is a defect no external evidence will reveal.",
+      "notation": "Task_ReviewExisting",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_ReviewExisting",
+      "status": "candidate"
+    },
+    {
+      "id": "process_evidenceretrieval.task_verifyauthority",
+      "prefLabel": "Verify authority against the observatory / registry API",
+      "definition": "Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.",
+      "notation": "Task_VerifyAuthority",
+      "source": "folio-assistant-core/processes/content/evidence-retrieval.bpmn#Task_VerifyAuthority",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_askintent",
+      "prefLabel": "Choose from the offered options",
+      "definition": "The question is presented as a short list of selectable options, never as free prose, and the list names the top-level content types the agent knows about. The answer becomes the statedIntent fact and the table is evaluated again — the user's answer is read as evidence, like any other fact.",
+      "notation": "Task_AskIntent",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_AskIntent",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_confirmimport",
+      "prefLabel": "Import what, where, and who does it",
+      "definition": "Three questions the scan cannot answer: import these or not; library or content for each group; leave the files where they are or reorganize to declutter. Plus whether to dispatch one ingestion agent or a small swarm. Non-relaxable: nobody's files are moved or imported on inference.",
+      "notation": "Task_ConfirmImport",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ConfirmImport",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_createrepo",
+      "prefLabel": "Create the repository",
+      "definition": "Only on the new-repo branch, and only after the user has named it. An empty working directory is scaffolded in place instead.",
+      "notation": "Task_CreateRepo",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_CreateRepo",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_detectmodality",
+      "prefLabel": "Detect the interaction modality",
+      "definition": "Before the first question is asked, establish HOW to ask it: audio, ordinary chat, selectable options for a user with limited hand function, large-type for low vision. A user who finds the questions unusable never reaches the rest of this diagram.",
+      "notation": "Task_DetectModality",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_DetectModality",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_pagesbootstrap",
+      "prefLabel": "Start the Pages build and derive the URL",
+      "definition": "scripts/pages-bootstrap.ts: derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists, and optionally probe until the site answers.",
+      "notation": "Task_PagesBootstrap",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_PagesBootstrap",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_readfacts",
+      "prefLabel": "Read the repository facts",
+      "definition": "Mechanical, read-only: does a `<name>.config.json` declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project.",
+      "notation": "Task_ReadFacts",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ReadFacts",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_reportpending",
+      "prefLabel": "Say where it will be",
+      "definition": "A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live.",
+      "notation": "Task_ReportPending",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ReportPending",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_reportunknown",
+      "prefLabel": "Say it could not be confirmed",
+      "definition": "No URL, no probe, or a failed request. Reported as \"could not check\", never as \"not yet\" and never as \"live\".",
+      "notation": "Task_ReportUnknown",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ReportUnknown",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_reporturl",
+      "prefLabel": "Hand over the live link",
+      "definition": "Confirmed live. The link is given as a link, and the author is told what is on it.",
+      "notation": "Task_ReportUrl",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ReportUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_scaffold",
+      "prefLabel": "Scaffold the folio (folio_init)",
+      "definition": "content/, uploads/, library/, the first manifests, <slug>.json and <slug>.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present.",
+      "notation": "Task_Scaffold",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_Scaffold",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_scanrepo",
+      "prefLabel": "Scan the repo for content worth importing",
+      "definition": "Read-only. Classifies candidates into library/ (external source) and content/ (authored here), and reports what it could not classify as its own bucket rather than forcing every file into one of the two.",
+      "notation": "Task_ScanRepo",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ScanRepo",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_seedplan",
+      "prefLabel": "Seed the work plan",
+      "definition": "The first beans: what the author said they want to get started on, one bean per top-level content object they named.",
+      "notation": "Task_SeedPlan",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_SeedPlan",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.callactivity_editing",
+      "prefLabel": "Editing and HCI validation [content-author]",
+      "definition": "See editing-hci-validation.bpmn. Runs once per proposed change, not once per cycle.",
+      "notation": "CallActivity_Editing",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#CallActivity_Editing",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.callactivity_publication",
+      "prefLabel": "Draft, review and publish [content-publish]",
+      "definition": "See draft-to-publication.bpmn.",
+      "notation": "CallActivity_Publication",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#CallActivity_Publication",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.task_feedback",
+      "prefLabel": "Triage published feedback [content-feedback]",
+      "definition": "Implementer and reader feedback on the published folio, triaged by severity and scope.",
+      "notation": "Task_Feedback",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Task_Feedback",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.task_feedbackbeans",
+      "prefLabel": "File feedback as beans [todo-manager]",
+      "definition": "Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for.",
+      "notation": "Task_FeedbackBeans",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Task_FeedbackBeans",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.task_plan",
+      "prefLabel": "Plan scope, team, artifacts [content-plan]",
+      "definition": "Scope the work, identify artifacts and actors, form the team, set the timeline.",
+      "notation": "Task_Plan",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Task_Plan",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.task_retire",
+      "prefLabel": "Retire or archive [content-retire]",
+      "definition": "No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes.",
+      "notation": "Task_Retire",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Task_Retire",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.task_seedbeans",
+      "prefLabel": "Seed the work plan [todo-manager]",
+      "definition": "The plan becomes beans. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
+      "notation": "Task_SeedBeans",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Task_SeedBeans",
+      "status": "candidate"
+    },
+    {
+      "id": "process_lifecycle.task_test",
+      "prefLabel": "Integration test and QA sweep [content-test]",
+      "definition": "Corpus-wide checks that a single-block gate cannot make: cross-references, build green, proof status, QA axes across the whole folio.",
+      "notation": "Task_Test",
+      "source": "folio-assistant-core/processes/content/content-lifecycle.bpmn#Task_Test",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.callactivity_editing",
+      "prefLabel": "Editing and HCI validation [content-author]",
+      "definition": "The editing sub-process. Every change to the corpus goes through its HCI validation gate — a red draft is fixed there, never by patching the built artifact.",
+      "notation": "CallActivity_Editing",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#CallActivity_Editing",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_authorizerelease",
+      "prefLabel": "Authorise the release [content-publish]",
+      "definition": "Publication requires authorisation by the programme manager or designated authority.",
+      "notation": "Task_AuthorizeRelease",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_AuthorizeRelease",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_builddraft",
+      "prefLabel": "Build the draft publication [content-publish]",
+      "definition": "Render the corpus into the draft form of the folio: PDF, HTML site, or FHIR IG.",
+      "notation": "Task_BuildDraft",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_BuildDraft",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_circulatedraft",
+      "prefLabel": "Circulate the draft [content-review]",
+      "definition": "The draft publication is circulated to the review team for formal review.",
+      "notation": "Task_CirculateDraft",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_CirculateDraft",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_closereleasebeans",
+      "prefLabel": "Close the release beans [todo-manager]",
+      "definition": "What shipped is resolved; what slipped stays open and carries into the next cycle.",
+      "notation": "Task_CloseReleaseBeans",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_CloseReleaseBeans",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_openchangebeans",
+      "prefLabel": "Open beans for the change requests [todo-manager]",
+      "definition": "Each requested change becomes a bean, so the editors and agents picking the work up next see exactly what review asked for and what is still open.",
+      "notation": "Task_OpenChangeBeans",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_OpenChangeBeans",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_openreleasebean",
+      "prefLabel": "Open or claim the release bean [todo-manager]",
+      "definition": "The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it.",
+      "notation": "Task_OpenReleaseBean",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_OpenReleaseBean",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_publicationqa",
+      "prefLabel": "Run publication QA gates [content-test]",
+      "definition": "Publication-readiness QA across layers — QC reports, IG Publisher QA, proof status, broken links, build warnings.",
+      "notation": "Task_PublicationQa",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_PublicationQa",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_publishrelease",
+      "prefLabel": "Version, tag and publish [content-publish]",
+      "definition": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool.",
+      "notation": "Task_PublishRelease",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_PublishRelease",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_reviewdraft",
+      "prefLabel": "Review the draft publication [content-review]",
+      "definition": "Content reviewer, QC reviewer and technical officer review the draft as a whole — coherence, phase-gate criteria, breaking vs non-breaking change.",
+      "notation": "Task_ReviewDraft",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_ReviewDraft",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.task_smesignoff",
+      "prefLabel": "Clinical / scientific sign-off [content-review]",
+      "definition": "Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper.",
+      "notation": "Task_SmeSignoff",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_SmeSignoff",
       "status": "candidate"
     }
   ]

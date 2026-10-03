@@ -16,6 +16,7 @@ import { join, resolve } from "node:path";
 
 import { readFshGutsNode } from "../../schemas/fsh-guts.ts";
 import { buildFshGutsExport, fshGutsDirs } from "../fsh-guts-export.ts";
+import { fshGutsDirectory } from "../../schemas/fsh-guts.ts";
 import { buildExport } from "../kg-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -107,6 +108,15 @@ describe("the real corpus", () => {
       { absPath: join(repoRootFor(ROOT), "fsh-guts"), path: "fsh-guts" },
     ]);
     expect(fshGutsDirs(instance(false))).toEqual([]);
+  });
+
+  // Bean 9c7h: ONE resolution for every reader and writer, so the move to
+  // `cat/cat-harness/fsh-guts` changes one function, not each caller.
+  test("a writer gets the one declared trashcan, and is refused when there is none", () => {
+    const declared = instance(true);
+    expect(fshGutsDirectory(declared)).toBe(fshGutsDirs(declared)[0].absPath);
+    const bare = instance(false);
+    expect(() => fshGutsDirectory(bare)).toThrow(/no `fsh-guts` directory is declared/);
   });
 });
 

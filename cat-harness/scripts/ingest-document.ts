@@ -39,6 +39,7 @@
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
  *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run ingest uploads/FILE.pdf --refresh-title  # re-resolve the title (w6fu)
  *   bun run ingest uploads/FILE.pdf --library who-iris
  *
  * `--library` is required only when the repository declares more than one, and
@@ -376,6 +377,13 @@ export function withDerivedArms(
       // write different files — but it sits beside `pdf-images.py` because
       // the two answer the same question about the same page.
       ["python3", pyHelper("pdf-vector-labels.py"), "-o", stagingRoot, pdf],
+      // The step ABOVE the labels — bean `ay3x`, owner ruling 2026-10-03:
+      // group the page's drawings, relate the labels to them, and render the
+      // region so somebody can look. It assigns no role; a verdict does. Like
+      // `pdf-images.py` it opens its sidecar with `"w"`, so it must run BEFORE
+      // `apply-image-verdicts.ts`, which lays the committed `vfig-` judgements
+      // back over it — the same ordering reason given for the fourth arm below.
+      ["python3", pyHelper("pdf-vector-figures.py"), "-o", stagingRoot, pdf],
       // `l1-blocks.ts` reads what the rung already wrote, so it takes the
       // ENTRY directory and no source at all. See the table above.
       ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],
@@ -815,6 +823,34 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
 }
 
 /**
+ * `--refresh-title`: re-resolve an existing entry's title from its PDF (bean
+ * `w6fu`, owner's ruling 2026-10-02 on #1838).
+ *
+ * The title rule is `_pdf_title.py`'s, shared with both PDF rungs, so a
+ * refresh and a fresh ingest agree. It replaces the title only with one an
+ * independent source corroborates, records every candidate it saw, keeps the
+ * text walk's title as `title_raw` and never touches an editor's
+ * `title_correction`. Like {@link refreshMeta} it reads the file's indent off
+ * the file rather than choosing one.
+ */
+export function refreshTitle(pdf: string, libRoot = libraryRoot()): string {
+  const slug = bibSlug(pdf);
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
+  if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
+  const r = Bun.spawnSync(["python3", pyHelper("_pdf_title.py"), "--refresh", structure, pdf]);
+  if (r.exitCode !== 0) {
+    throw new Error(`refreshing the title of ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
+  }
+  const out = JSON.parse(new TextDecoder().decode(r.stdout)) as {
+    before: string | null;
+    after: string | null;
+    source: string;
+    verified: boolean;
+  };
+  return `${slug}: ${JSON.stringify(out.before)} -> ${JSON.stringify(out.after)} [${out.source}${out.verified ? "" : ", unverified"}]`;
+}
+
+/**
  * Which half of the pipeline is being asked for — bean `pn6j`.
  *
  * Exported for the same reason as {@link mayPromote}: the first version read
@@ -874,6 +910,10 @@ if (import.meta.main) {
   }
   if (argv.includes("--refresh-meta")) {
     console.log(refreshMeta(pdf));
+    process.exit(0);
+  }
+  if (argv.includes("--refresh-title")) {
+    console.log(refreshTitle(pdf, libraryRoot(INSTANCE_ROOT, chosenLibrary)));
     process.exit(0);
   }
   const slug = bibSlug(pdf);

@@ -45,6 +45,7 @@ import {
   loadCatalogues,
   localeDir,
   localeName,
+  plannedLocales,
   poHeader,
   potEntries,
 } from "../kg-viewer-strings.ts";
@@ -154,6 +155,32 @@ describe("the catalogues that ship", () => {
     expect(loadCatalogues(ROOT)).toEqual([]);
   });
 
+  test("...and shows every shipped locale as PLANNED, disabled (bean w6fu)", () => {
+    // Owner's ruling 2026-10-02: the switcher is shown, disabled, so a reader
+    // can see translations are planned. Each catalogue with no translated
+    // string is a planned language — and none is a choice.
+    expect(plannedLocales(ROOT).map((l) => l.locale)).toEqual([...LOCALES].sort());
+    expect(plannedLocales(ROOT).find((l) => l.locale === "ar")?.dir).toBe("rtl");
+  });
+
+  test("a catalogue's first translated string enables it, with no code change", () => {
+    // The two lists are decided by the catalogue's CONTENTS, read through one
+    // loader, so a language cannot be in both and cannot be in neither.
+    const root = mkdtempSync(join(tmpdir(), "kg-viewer-planned-"));
+    const write = (loc: string, msgstr: string) => {
+      mkdirSync(join(root, "translations", loc), { recursive: true });
+      writeFileSync(join(root, "translations", loc, "kg-viewer.po"),
+        'msgid ""\nmsgstr ""\n"Language: ' + loc + '\\n"\n\nmsgid "Nodes"\nmsgstr "' + msgstr + '"\n');
+    };
+    write("qaa", "");
+    expect(loadCatalogues(root)).toEqual([]);
+    expect(plannedLocales(root).map((l) => l.locale)).toEqual(["qaa"]);
+    write("qaa", "NODES");
+    expect(loadCatalogues(root).map((c) => c.locale)).toEqual(["qaa"]);
+    expect(plannedLocales(root)).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
   test("a catalogue is unofficial until its own file says otherwise", () => {
     // Read from the .po header rather than a second store, so the file
     // answers for its own status.
@@ -205,6 +232,13 @@ describe("the generated page", () => {
     expect(html).toContain('"locale":"en"');
     expect(html).toContain("const LOCALES = ");
     expect(html).toContain("const STRINGS = {}");
+  });
+
+  test("a planned language reaches the page as PLANNED, never as a choice", () => {
+    const html = viewerHtml("some-stub", [], [{ locale: "xx", name: "Test", dir: "ltr" }]);
+    expect(html).toContain('const PLANNED = [{"locale":"xx","name":"Test","dir":"ltr"}]');
+    const locales = html.slice(html.indexOf("const LOCALES = "), html.indexOf("const PLANNED = "));
+    expect(locales).not.toContain('"xx"');
   });
 
   test("a catalogue reaches the page, whole", () => {

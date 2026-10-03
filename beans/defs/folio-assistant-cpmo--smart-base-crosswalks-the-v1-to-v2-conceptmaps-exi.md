@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpmo
 title: 'SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T09:06:44Z
-updated_at: 2026-09-22T11:55:46Z
+updated_at: 2026-10-03T15:59:20Z
 parent: folio-assistant-2yyh
 ---
 
@@ -42,11 +42,32 @@ So a v1 code does not yet resolve to v2 mechanically from inside this repository
 
 ## Done when
 - [x] the crosswalks are known to the graph, by reference, with their state
-- [ ] the owner has said whether to run `materialize-remote.bpmn` over them, and for what purpose
-- [ ] the upstream findings are either reported or deliberately not
+- [x] the owner has said whether to run `materialize-remote.bpmn` over them, and for what purpose
+- [x] the upstream findings are either reported or deliberately not
 
 ## Still open, and not ours to fix
 
 `CDHIv1toCDHIv2.fsh` stops mid-group-4 and never emits the unmatched rows for the v2-only codes its own description promises. That is a finding about someone else's repository. Reporting it upstream is a decision, not a task.
 
 The nine categories of health system challenge remain in the publication (`library/9789240081949-eng/sections/page-010.md`) and **not** in smart-base, where the only resource titled for them wraps the 25-code A–Y system-categories ValueSet. Worth a note to whoever owns the FSH.
+
+_2026-10-03T14:13:37Z_ — Claimed by claude/fgkb-cpmo-qou-uploads — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner ruling 2026-10-03
+
+Dispatched from https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7. Held by https://claude.ai/code/session_013Pdniq3SSCRvxhsN4E5aFi.
+
+Selected option, verbatim: **"Keep by reference, report upstream"**. The four crosswalks are NOT materialized: `materialize-remote.bpmn` is not run, and they stay `referenced` in `smart-base/fhir-artifact-index/`.
+
+Upstream draft: `smart-base/fhir-artifact-index/upstream-report-CDHIv1toCDHIv2.md`, pinned to WorldHealthOrganization/smart-base@5891a220e8ebbbd2d107282876a085641c5c767f. **Saved for the owner to file. Not posted upstream.** Findings, measured from the FSH (119 v1 codes, 138 v2 codes, 120 rows): (1) the map stops after 4.4, with no row for v2 4.3.5 or 4.5–4.5.4; (2) zero `unmatched` entries, and 22 v2 codes are the target of no row; (3) v1 3.5.3 has no row, and the description's "shifted by one" contradicts the identity rows 3.5.4–3.5.6. The draft also notes that R4 cannot put v2-only codes in a v1→v2 map, so keeping that promise needs a reverse map or a reworded description.
+
+The nine-health-system-challenges note stays unfiled, as the 2026-09-22 text says. The ruling covered the ConceptMap finding only.
+
+Done-when 2 is answered (do not materialize). Done-when 3 is answered (report it, as a draft for the owner). Close when this draft is merged.
+
+## Summary of Changes
+
+Closed 2026-10-03 by https://claude.ai/code/session_013Pdniq3SSCRvxhsN4E5aFi. Evidence: #2005 merged to main (PR head `68e18e0` is an ancestor of main `f10ad6d`). It carries `smart-base/fhir-artifact-index/upstream-report-CDHIv1toCDHIv2.md`, the upstream issue draft for WorldHealthOrganization/smart-base, pinned to `5891a22`.
+
+- Ruling "Keep by reference, report upstream" applied: the four crosswalks stay `referenced`, and `materialize-remote.bpmn` was not run.
+- The upstream report is a **draft for the owner to file**. It was not posted. Filing it is the owner's step, and the file says how.

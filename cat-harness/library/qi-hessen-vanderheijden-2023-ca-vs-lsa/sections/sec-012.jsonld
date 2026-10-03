@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/qi-hessen-vanderheijden-2023-ca-vs-lsa/sections/sec-012",
   "@type": [
     "doco:Section"
@@ -10,7 +15,7 @@
   "contains": [
     "library/qi-hessen-vanderheijden-2023-ca-vs-lsa/blocks/prose-sec-012"
   ],
-  "derivedFrom": "library/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest",
-  "sourceDocument": "library/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest.jsonld",
   "provenance": "ingested"
 }

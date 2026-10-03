@@ -35,7 +35,7 @@ signed.
 
 ## The process is executable — do not hand-roll the branch
 
-`processes/qa-report-signing.bpmn`, with the branch computed by
+`processes/sdlc/qa-report-signing.bpmn`, with the branch computed by
 `decisions/signing-route.dmn`. Run it with `workflow_start` /
 `workflow_next` / `workflow_complete` like every other diagram here. The
 gateway **refuses a hand-supplied outcome**, which is the point: the route

@@ -34,10 +34,11 @@
 # ## What is deliberately NOT here, and it is the whole discipline
 #
 # **Not `cat-harness/test/results/**`**, though 840 generated files live there.
-# `kg-audit` reads its own sidecars back — `readAttestations(sidecarPath(r))` —
-# so a `kg-qa` sidecar carries adjudications that an earlier run or a person
-# recorded. It is not purely generated, and `-merge` on one would discard an
-# attestation with nothing said. `audit-coverage.qa-results.json` is named
+# `kg-audit` reads its prior judgements back — `readAttestations` — so the
+# file holding them carries adjudications that an earlier run or a person
+# recorded. Since bean `2gst` that is `test/attestations/**`, not the `kg-qa`
+# sidecar; neither is marked here. Such a file is not purely generated, and
+# `-merge` on one would discard an attestation with nothing said. `audit-coverage.qa-results.json` is named
 # individually for exactly that reason: its producer reads the committed file
 # only to compare for staleness, and writes a fresh document every time.
 #

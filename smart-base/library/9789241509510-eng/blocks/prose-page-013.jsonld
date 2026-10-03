@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/9789241509510-eng/blocks/prose-page-013",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 13,
   "pageEnd": 13,
   "text": "../sections/page-013.md",
-  "derivedFrom": "library/9789241509510-eng/manifest",
-  "sourceDocument": "library/9789241509510-eng/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/9789241509510-eng/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/9789241509510-eng/manifest.jsonld",
   "provenance": "ingested"
 }

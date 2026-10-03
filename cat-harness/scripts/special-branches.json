@@ -1,0 +1,96 @@
+{
+  "$comment": [
+    "The harness's SPECIAL branches: long-lived data and cache branches a process writes and reads, as opposed to a feature or pull-request branch. Bean folio-assistant-32f6.",
+    "Owner, 2026-10-02, verbatim: \"need to prefix 'special' branches with cat-, cat-qa-reports, cat-fhir-ast, cat-lean-cacje (or whatever), not sure if any more. gh-pages stays as is\".",
+    "Owner, 2026-10-02, later the same day: special branches are `cat/<harness>/<name>` (note on bean folio-assistant-fs43, 'rename-script'). The branch path mirrors the named-subgraph IRI `<HARNESS>/<NAME>`, and one ruleset pattern, `cat/**`, covers them all. The `<harness>` segment must be a declared instance; cat-harness/scripts/tests/special-branches.test.ts checks it. The interim `cat-<name>` spellings are kept as LEGACY names, newest first, so a remote that still carries one resolves.",
+    "This file is the ONE declaration of the names. JSON rather than TypeScript so a shell or Python reader can use it, and so it is data rather than a module. The scripts and workflows that run inside a folio carry a copy of the prefix (a folio may restore a cache with no bun on the path); each copy is listed in `mirrors`, and cat-harness/scripts/tests/special-branches.test.ts fails if a copy disagrees.",
+    "RESOLUTION, for readers AND writers: the new `name` if it exists on the remote; else the first `legacy` name that exists; else the new `name`. Writers follow the readers' rule on purpose: a writer that created a cat- branch while the legacy one still existed would make the owner's rename (POST /repos/{o}/{r}/branches/{old}/rename, which keeps a redirect for the web and API but NOT for git fetch/push) fail, because its target would already exist.",
+    "REMOVING THE FALLBACK is bean folio-assistant-oycs: once every remote carrying a legacy name is renamed and one lake-cache-refresh cycle has run since, empty each `legacy` list and drop the fallback from each mirror.",
+    "INTERIM: bean folio-assistant-rva2 (arc fs43 P7) plans to declare every special branch with the `storage` field arc 3fva introduces on ContentDirectory. When that field is on main, this table folds into it.",
+    "gh-pages is listed so 'is this branch special?' has one answer. It is never renamed: GitHub Pages serves it by name."
+  ],
+  "branches": [
+    {
+      "id": "gh-pages",
+      "shape": "branch",
+      "name": "gh-pages",
+      "legacy": [],
+      "holds": "the published docs site and staging previews; GitHub Pages serves it by name — NOT renamed",
+      "writers": [".github/workflows/docs-site.yml", ".github/workflows/feature-staging.yml", ".github/workflows/folio-staging.yml", ".github/workflows/discoverability-docs.yml"],
+      "repos": "this repository and every folio"
+    },
+    {
+      "id": "qa-reports",
+      "shape": "branch",
+      "name": "cat/cat-harness/qa-reports",
+      "legacy": ["cat-qa-reports", "qa-reports"],
+      "holds": "derived QA verdicts, commit-keyed under main/<sha>/ and pr/<n>/<sha>/ (arc 3fva)",
+      "writers": ["code-quality-gates.yml publish job via scripts/qa-store.ts — on PR #1764/#1801, not on main yet"],
+      "repos": "this repository (and, per #1801, each folio's own)"
+    },
+    {
+      "id": "lake-cache",
+      "shape": "family",
+      "name": "cat/folio-assistant-sci/lake-cache/",
+      "legacy": ["cat-lake-cache/", "lake-cache/"],
+      "holds": "Lean .lake build caches, one branch per <package>-<toolchain-slug> (or toolchain-<slug>)",
+      "writers": [".github/workflows/lake-cache-refresh.yml", "cat-harness/scripts/lake-cache.sh seed --push / contribute", "cat-harness/scripts/lake-cache-produce.py", "cat-harness/scripts/reseed-lean-cache.sh"],
+      "repos": "folio repositories with Lean (e.g. litlfred/qou); none in this repository"
+    },
+    {
+      "id": "fhir-ast",
+      "shape": "family",
+      "name": "cat/fhir-harness/fhir-ast/",
+      "legacy": ["cat-fhir-ast/", "fhir-ast/"],
+      "holds": "FHIR IG Publisher AST + tx cache, one branch per IG package id",
+      "writers": ["fhir-harness ig-cache.sh seed --push — on PR #1816, not on main yet"],
+      "repos": "IG folio repositories (litlfred/smart-trust, litlfred/smart-base)"
+    },
+    {
+      "id": "state",
+      "shape": "branch",
+      "name": "cat/cat-harness/state",
+      "legacy": ["cat-state", "state"],
+      "holds": "process-written state graphs (beans, workflow instances, todos) — seeded, not authoritative until arc fs43 Phase 3",
+      "writers": ["folio-state-bot, by hand from the fs43 session (no workflow yet)"],
+      "repos": "this repository"
+    },
+    {
+      "id": "beans",
+      "shape": "branch",
+      "name": "cat/cat-harness/beans",
+      "legacy": [],
+      "holds": "the work plan (beans/), one live copy at the tip (`storage.keyedBy: tip`); seeded, not authoritative until the steward-run flip on #1850 (arc fs43, bean 2h76)",
+      "writers": ["scripts/branch-store.ts, on PR #1937 — not on main yet"],
+      "repos": "this repository"
+    },
+    {
+      "id": "todos",
+      "shape": "branch",
+      "name": "cat/cat-harness/todos",
+      "legacy": [],
+      "holds": "agent todos (todos/), one live copy at the tip (`storage.keyedBy: tip`); seeded, not authoritative until the steward-run flip on #1850 (arc fs43, bean 2h76)",
+      "writers": ["scripts/branch-store.ts, on PR #1937 — not on main yet"],
+      "repos": "this repository"
+    },
+    {
+      "id": "fsh-guts",
+      "shape": "branch",
+      "name": "cat/cat-harness/fsh-guts",
+      "legacy": [],
+      "holds": "the kept trashcan (fsh-guts/: retired material, never rendered or published), one live copy at the tip; SEEDED 2026-10-03 (9c8828be, an orphan seed, tree = main's fsh-guts/ at 53ba9f55), not authoritative: main's fsh-guts/ stays the store until bean 9c7h moves every reader and writer onto it",
+      "writers": ["none yet: bean 9c7h retargets the relocating processes onto scripts/branch-store.ts (PR #1937)"],
+      "repos": "this repository"
+    }
+  ],
+  "mirrors": [
+    { "file": "cat-harness/scripts/lake-cache.sh", "id": "lake-cache" },
+    { "file": "cat-harness/scripts/lake-cache-fetch.sh", "id": "lake-cache" },
+    { "file": "cat-harness/scripts/lake-cache-fetch-multi.py", "id": "lake-cache" },
+    { "file": "cat-harness/scripts/lake-cache-produce.py", "id": "lake-cache" },
+    { "file": "cat-harness/scripts/reseed-lean-cache.sh", "id": "lake-cache" },
+    { "file": ".github/actions/lake-cache-restore/action.yml", "id": "lake-cache" },
+    { "file": "cat-harness/templates/paper/github/actions/lake-cache-restore/action.yml", "id": "lake-cache" },
+    { "file": ".github/workflows/lake-cache-refresh.yml", "id": "lake-cache" }
+  ]
+}

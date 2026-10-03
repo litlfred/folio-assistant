@@ -57,6 +57,7 @@ import {
   type IgChromeRule,
   type IgChromeToken,
 } from "../schemas/ig-chrome.js";
+import { IG_IDENTITY_FILENAME, IG_IDENTITY_SCHEMA_TAG, IgIdentitySchema, type IgIdentity } from "../schemas/ig-identity.js";
 
 const CHROME_FILENAME = "chrome.json";
 
@@ -117,12 +118,53 @@ function decomment(css: string): string {
   return css.replace(/\/\*[\s\S]*?\*\//g, "");
 }
 
+/**
+ * Split a block body into its declarations, in order.
+ *
+ * A `;` ends a declaration and the FIRST `:` separates property from value —
+ * but only outside a string and outside parentheses. The DRAFT watermark is
+ * `url("data:image/svg+xml;utf8,<svg xmlns='http://…'>…")`: splitting it on
+ * every `;` and `:` (what a `[^;]+` regex does) produced a truncated
+ * `url("data:image/svg+xml` plus a bogus `http` property, and the unterminated
+ * string that left in the mirrored stylesheet made browsers drop every rule
+ * after it — the IG header bar among them.
+ */
+export function declarationsIn(body: string): Array<{ property: string; value: string }> {
+  const out: Array<{ property: string; value: string }> = [];
+  let quote: string | undefined;
+  let depth = 0;
+  let start = 0;
+  let colon = -1;
+  const flush = (end: number): void => {
+    if (colon >= 0) {
+      const property = body.slice(start, colon).trim();
+      const value = body.slice(colon + 1, end).trim();
+      if (/^-{0,2}[\w-]+$/.test(property) && value) out.push({ property, value });
+    }
+    start = end + 1;
+    colon = -1;
+  };
+  for (let i = 0; i < body.length; i++) {
+    const c = body[i]!;
+    if (quote) {
+      if (c === "\\") i++;
+      else if (c === quote) quote = undefined;
+    } else if (c === '"' || c === "'") quote = c;
+    else if (c === "(") depth++;
+    else if (c === ")") depth = Math.max(0, depth - 1);
+    else if (depth === 0 && c === ":" && colon < 0) colon = i;
+    else if (depth === 0 && c === ";") flush(i);
+  }
+  flush(body.length);
+  return out;
+}
+
 /** Every custom property declared in a `:root` block, in file order. */
 export function rootTokens(css: string): Array<{ name: string; value: string }> {
   const out: Array<{ name: string; value: string }> = [];
   for (const block of decomment(css).matchAll(/:root\s*\{([^}]*)\}/g)) {
-    for (const [, name, value] of block[1]!.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
-      out.push({ name: name!, value: value!.trim() });
+    for (const d of declarationsIn(block[1]!)) {
+      if (d.property.startsWith("--")) out.push({ name: d.property, value: d.value });
     }
   }
   return out;
@@ -139,10 +181,7 @@ export function ruleFor(css: string, selector: string): Array<{ property: string
   const needle = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const m = decomment(css).match(new RegExp(`(?:^|[},])\\s*${needle}\\s*\\{([^}]*)\\}`));
   if (!m) return undefined;
-  const decls = [...m[1]!.matchAll(/([-\w]+)\s*:\s*([^;]+);?/g)].map((d) => ({
-    property: d[1]!,
-    value: d[2]!.trim(),
-  }));
+  const decls = declarationsIn(m[1]!);
   return decls.length > 0 ? decls : undefined;
 }
 
@@ -314,17 +353,21 @@ export function overlay(layers: RawLayer[]): {
   return { tokens, rules, conflicts };
 }
 
-export function buildChrome(igRepo: string, layerRoots: string[], readAt: string): IgChrome {
-  const configPath = join(igRepo, "sushi-config.yaml");
-  const raw = parseYaml(readFileSync(configPath, "utf-8")) as Record<string, unknown>;
+/**
+ * The chrome of a template chain, keyed by its TOP layer (`folio-ig-chrome/v2`).
+ *
+ * No IG is read: every IG building with this chain wears this chrome, so an
+ * IG's identity is not the chrome's to state — {@link buildIdentity} reads it
+ * into a file of its own.
+ */
+export function buildChrome(layerRoots: string[], readAt: string): IgChrome {
   const read = layerRoots.map((r) => readLayer(resolve(r), readAt));
+  const top = read[read.length - 1]!.layer;
   const { tokens, rules, conflicts } = overlay(read);
   const chrome: IgChrome = {
     $schema: IG_CHROME_SCHEMA_TAG,
-    id: String(raw.id ?? ""),
-    canonical: String(raw.canonical ?? ""),
-    status: String(raw.status ?? ""),
-    ...(raw.version ? { version: String(raw.version) } : {}),
+    id: top.package,
+    version: top.version,
     layers: read.map((r) => r.layer),
     tokens,
     rules,
@@ -340,54 +383,103 @@ export function buildChrome(igRepo: string, layerRoots: string[], readAt: string
   return parsed.data;
 }
 
+/** One IG's identity and status, read from its own `sushi-config.yaml`. */
+export function buildIdentity(igRepo: string, readAt: string): IgIdentity {
+  const configPath = join(igRepo, "sushi-config.yaml");
+  const raw = parseYaml(readFileSync(configPath, "utf-8")) as Record<string, unknown>;
+  const origin = gitRemote(igRepo);
+  const identity = {
+    $schema: IG_IDENTITY_SCHEMA_TAG,
+    id: String(raw.id ?? ""),
+    canonical: String(raw.canonical ?? ""),
+    status: String(raw.status ?? ""),
+    ...(raw.version ? { version: String(raw.version) } : {}),
+    readFrom: `${origin ?? igRepo} sushi-config.yaml`,
+    readAt,
+  };
+  const parsed = IgIdentitySchema.safeParse(identity);
+  if (!parsed.success) {
+    throw new Error(
+      `the identity read from ${configPath} does not validate:\n` +
+        parsed.error.issues.map((i) => `  ${i.path.join(".")}: ${i.message}`).join("\n"),
+    );
+  }
+  return parsed.data;
+}
+
 if (import.meta.main) {
   const ig = arg("ig");
   const layerRoots = args("layer");
   const out = arg("out");
+  const identityOut = arg("identity-out");
   const check = process.argv.includes("--check");
-  if (!out) {
-    console.error("usage: ingest-ig-chrome.ts --ig <ig-repo> --layer <base> [--layer <next> …] --out <dir> [--check]");
+  if (!out && !identityOut) {
+    console.error(
+      "usage: ingest-ig-chrome.ts --layer <base> [--layer <next> …] --out <dir> [--check]\n" +
+        "       ingest-ig-chrome.ts --ig <ig-repo> --identity-out <ig's index dir> [--check]",
+    );
     process.exit(2);
   }
-  const target = join(resolve(out), CHROME_FILENAME);
+  const readAt = new Date().toISOString().slice(0, 10);
+  // `readAt` moves every run and says nothing about the CONTENT. `ref` does
+  // NOT move for free: a different commit is different chrome even when the
+  // values happen to match, and hiding that would pass over an upstream
+  // change. Same rule as `ingest-ig-menu.ts`.
+  const strip = (t: string): string => t.replace(/"readAt": "[^"]*"/g, '"readAt": "-"');
+  let failed = false;
 
-  if (!ig || layerRoots.length === 0) {
-    // THE THIRD STATE, and here it is the NORMAL one: the template packages
-    // are separate repositories nobody clones to work in this one. Exits 2 —
-    // not 0, and not 1.
-    console.error("could not determine: no --ig and --layer checkouts, so there is nothing to read the chrome from.");
-    console.error(`  ${existsSync(target) ? "The committed chrome was NOT verified." : "No chrome is committed either."}`);
-    console.error("  Clone the IG and each fhir.template it depends on, and pass them base-first with --layer.");
-    process.exit(2);
-  }
-
-  const chrome = buildChrome(resolve(ig), layerRoots, new Date().toISOString().slice(0, 10));
-  const serialised = `${JSON.stringify(chrome, null, 2)}\n`;
-
-  if (check) {
-    if (!existsSync(target)) {
-      console.error(`✗ no ${relative(process.cwd(), target)} — the chrome has never been ingested`);
-      process.exit(1);
+  /** Write `doc` to `target`, or with --check compare against what is committed. */
+  const emit = (target: string, doc: unknown, what: string): void => {
+    const serialised = `${JSON.stringify(doc, null, 2)}\n`;
+    if (check) {
+      if (!existsSync(target)) {
+        console.error(`✗ no ${relative(process.cwd(), target)} — the ${what} has never been ingested`);
+        failed = true;
+      } else if (strip(readFileSync(target, "utf-8")) !== strip(serialised)) {
+        console.error(`✗ ${relative(process.cwd(), target)} is stale against its source`);
+        failed = true;
+      } else {
+        console.log(`✓ ${what} current — ${relative(process.cwd(), target)}`);
+      }
+      return;
     }
-    // `readAt` moves every run and says nothing about the CONTENT. `ref` does
-    // NOT move for free: a different commit is different chrome even when the
-    // values happen to match, and hiding that would pass over an upstream
-    // change. Same rule as `ingest-ig-menu.ts`.
-    const strip = (t: string): string => t.replace(/"readAt": "[^"]*"/g, '"readAt": "-"');
-    if (strip(readFileSync(target, "utf-8")) !== strip(serialised)) {
-      console.error(`✗ ${relative(process.cwd(), target)} is stale against the template chain`);
-      process.exit(1);
+    mkdirSync(resolve(target, ".."), { recursive: true });
+    writeFileSync(target, serialised);
+    console.log(`${relative(process.cwd(), target)} written`);
+  };
+
+  if (out) {
+    const target = join(resolve(out), CHROME_FILENAME);
+    if (layerRoots.length === 0) {
+      // THE THIRD STATE, and here it is the NORMAL one: the template packages
+      // are separate repositories nobody clones to work in this one. Exits 2 —
+      // not 0, and not 1.
+      console.error("could not determine: no --layer checkouts, so there is nothing to read the chrome from.");
+      console.error(`  ${existsSync(target) ? "The committed chrome was NOT verified." : "No chrome is committed either."}`);
+      console.error("  Clone each fhir.template in the chain and pass them base-first with --layer.");
+      process.exit(2);
     }
-    console.log(`✓ chrome current — ${chrome.tokens.length} token(s), ${chrome.rules.length} rule(s), ${chrome.conflicts.length} conflict(s)`);
-    process.exit(0);
+    const chrome = buildChrome(layerRoots, readAt);
+    emit(target, chrome, "chrome");
+    if (!check) {
+      console.log(`  ${chrome.id} ${chrome.version}: ${chrome.tokens.length} token(s), ${chrome.rules.length} rule(s)`);
+      for (const [pkg, n] of Object.entries(tokensByPackage(chrome))) console.log(`  ${pkg} won ${n}`);
+      for (const r of chrome.rules) console.log(`  rule ${r.selector} ← ${r.from}`);
+      for (const c of chrome.conflicts) {
+        console.log(`  ⚠ ${c.kind} ${c.token}: ${c.sites.map((s) => `${s.package}="${s.value}"`).join(" vs ")}`);
+      }
+    }
   }
 
-  mkdirSync(resolve(out), { recursive: true });
-  writeFileSync(target, serialised);
-  console.log(`${relative(process.cwd(), target)}: ${chrome.tokens.length} token(s), ${chrome.rules.length} rule(s)`);
-  for (const [pkg, n] of Object.entries(tokensByPackage(chrome))) console.log(`  ${pkg} won ${n}`);
-  for (const r of chrome.rules) console.log(`  rule ${r.selector} ← ${r.from}`);
-  for (const c of chrome.conflicts) {
-    console.log(`  ⚠ ${c.kind} ${c.token}: ${c.sites.map((s) => `${s.package}="${s.value}"`).join(" vs ")}`);
+  if (identityOut) {
+    const target = join(resolve(identityOut), IG_IDENTITY_FILENAME);
+    if (!ig) {
+      console.error("could not determine: no --ig checkout, so there is no sushi-config.yaml to read the identity from.");
+      console.error(`  ${existsSync(target) ? "The committed identity was NOT verified." : "No identity is committed either."}`);
+      process.exit(2);
+    }
+    emit(target, buildIdentity(resolve(ig), readAt), "identity");
   }
+
+  process.exit(failed ? 1 : 0);
 }

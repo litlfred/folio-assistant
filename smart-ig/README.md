@@ -5,8 +5,8 @@ The **L3** layer — a WHO SMART Guideline's FHIR Implementation Guide.
 | in | out |
 |---|---|
 | the DAK API surface a SMART IG publishes | the bare IG pipeline — SUSHI, Publisher, Jekyll → `fhir-harness` |
-| `smart.who.int` canonicals and WHO publication conventions | the DAK components → `smart-dak` |
-| what a SMART Guideline's L3 owes beyond a plain IG | the guideline narrative → `smart-l1` |
+| `smart.who.int` canonicals and WHO publication conventions | the DAK components → `smart-base`'s DAK document kind |
+| what a SMART Guideline's L3 owes beyond a plain IG | the guideline narrative → `smart-base`'s L1 document kind |
 
 **Contents**
 

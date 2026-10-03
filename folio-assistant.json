@@ -69,6 +69,10 @@
     {
       "id": "todos",
       "path": "todos/",
+      "coverage": {
+        "serialisations": "cat-harness/docs/todos.jsonld"
+      },
+      "_coverage_comment": "Issue #1908: the todo graph is published as ONE JSON-LD graph at <base>/todos.jsonld (+ .json), and every todo at <base>/todos/<id>.jsonld (+ .json), whose @id is that address, with a page at <base>/todos/<id>/. All written by gen-docs-pages.ts from the same items as assets/todos/index.json; scripts/todo-graph.ts is the builder.",
       "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphKinds": [
         "todos"
@@ -136,7 +140,6 @@
   ],
   "_needs_comment": "THE CHECKOUT AGGREGATES (bean cmsl option A, owner 2026-09-30 round 3; placement PR0, bean ejye): the root instance `needs` EVERY instance this checkout stages, so a corpus-wide tool resolves a kind over this instance's overlay (`checkoutDirectories` in schemas/harness-config.ts) instead of asking the platform, which until PR0 named 19 of its own dependents' directories with `scope: \"repository\"`. The arrow is now the right way round: the checkout depends on what it contains, nobody depends on the checkout, and the platform names no folio. Before PR0 this was `[\"folio-assistant-core\"]` and the layering was the owner's 2026-09-20 sentence, \"So bootsteap, cat harness, fa-core, f-a, from bottom to top\" — which still holds: every instance listed here sits on that stack through its own `needs`. `check:instance-graph` refuses an instance in this checkout that this list omits.",
   "needs": [
-    "agent-skills",
     "bootstrap",
     "bootstrap-tools",
     "cat-harness",
@@ -144,12 +147,9 @@
     "fhir-harness",
     "folio-assistant-core",
     "folio-assistant-sci",
-    "large-datasets",
     "smart-base",
-    "smart-dak",
     "smart-ig",
     "smart-immunizations",
-    "smart-l1",
     "smart-trust",
     "who-iris",
     "who-style-guide"
@@ -163,7 +163,7 @@
         "themeId": "engineer"
       },
       "summary": "The repository, acting as an initialized instance",
-      "bodyFrom": "description"
+      "bodyFrom": "summary"
     }
   ]
 }

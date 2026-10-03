@@ -24,7 +24,7 @@
     {
       "id": "adopt-methodology-from-source",
       "prefLabel": "adopt-methodology-from-source",
-      "definition": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/methodology-from-source.bpmn.",
+      "definition": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.",
       "notation": "adopt-methodology-from-source",
       "source": "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
       "status": "candidate"
@@ -346,6 +346,14 @@
       "definition": "Coordinate work across multiple in-flight Claude PRs working toward a shared goal. Post intent + asks on related PRs, identify cherry-pickable work, respond to code-review comments on your own PR, periodically triage sibling PR activity (new comments, CI status, new commits), watch main + newly created branches/PRs, escalate inconsistent findings to the author, and keep a coordination ledger up to date.",
       "notation": "coordinate",
       "source": "cat-harness/skills/sdlc/sdlc-core/coordinate.md",
+      "status": "candidate"
+    },
+    {
+      "id": "copy-out-materialized",
+      "prefLabel": "copy-out-materialized",
+      "definition": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+      "notation": "copy-out-materialized",
+      "source": "cat-harness/skills/library/large-datasets/copy-out-materialized.md",
       "status": "candidate"
     },
     {
@@ -686,6 +694,14 @@
       "status": "candidate"
     },
     {
+      "id": "handover-report",
+      "prefLabel": "handover-report",
+      "definition": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`.",
+      "notation": "handover-report",
+      "source": "cat-harness/skills/sdlc/sdlc-core/handover-report.md",
+      "status": "candidate"
+    },
+    {
       "id": "harness-requirements",
       "prefLabel": "harness-requirements",
       "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
@@ -829,6 +845,14 @@
       "status": "candidate"
     },
     {
+      "id": "kg-subscription",
+      "prefLabel": "kg-subscription",
+      "definition": "Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.",
+      "notation": "kg-subscription",
+      "source": "cat-harness/skills/library/large-datasets/kg-subscription.md",
+      "status": "candidate"
+    },
+    {
       "id": "kg-to-portal",
       "prefLabel": "kg-to-portal",
       "definition": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
@@ -884,6 +908,22 @@
       "status": "candidate"
     },
     {
+      "id": "materialize-on-demand",
+      "prefLabel": "materialize-on-demand",
+      "definition": "After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.",
+      "notation": "materialize-on-demand",
+      "source": "cat-harness/skills/library/large-datasets/materialize-on-demand.md",
+      "status": "candidate"
+    },
+    {
+      "id": "materialize-remote",
+      "prefLabel": "materialize-remote",
+      "definition": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
+      "notation": "materialize-remote",
+      "source": "cat-harness/skills/library/large-datasets/materialize-remote.md",
+      "status": "candidate"
+    },
+    {
       "id": "mcp-assembly",
       "prefLabel": "mcp-assembly",
       "definition": "Compose several Tool nodes into one MCP service — naming, collisions, grouping and versioning. Read when a service will expose more than one tool, or when two instances' tools land in the same namespace.",
@@ -920,6 +960,14 @@
       "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
       "notation": "merge-conflict-patterns",
       "source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue",
+      "prefLabel": "merge-queue",
+      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "notation": "merge-queue",
+      "source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
       "status": "candidate"
     },
     {
@@ -1034,6 +1082,22 @@
       "status": "candidate"
     },
     {
+      "id": "pr-description",
+      "prefLabel": "pr-description",
+      "definition": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
+      "notation": "pr-description",
+      "source": "cat-harness/skills/sdlc/sdlc-core/pr-description.md",
+      "status": "candidate"
+    },
+    {
+      "id": "prepare-for-handover",
+      "prefLabel": "prepare-for-handover",
+      "definition": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader.",
+      "notation": "prepare-for-handover",
+      "source": "cat-harness/skills/sdlc/sdlc-core/prepare-for-handover.md",
+      "status": "candidate"
+    },
+    {
       "id": "prepare-merge",
       "prefLabel": "prepare-merge",
       "definition": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
@@ -1114,7 +1178,7 @@
     {
       "id": "related-work-coordination",
       "prefLabel": "related-work-coordination",
-      "definition": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/related-work.bpmn.",
+      "definition": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.",
       "notation": "related-work-coordination",
       "source": "cat-harness/skills/sdlc/sdlc-core/related-work-coordination.md",
       "status": "candidate"
@@ -1204,6 +1268,14 @@
       "definition": "Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through `inherits` and through a subprocess call chain, how a lane binds to a declared role, and how `kg:audit` finds a dangling skill, lane, role or decision.",
       "notation": "role-model",
       "source": "cat-harness/skills/process/process-core/role-model.md",
+      "status": "candidate"
+    },
+    {
+      "id": "sample-import",
+      "prefLabel": "sample-import",
+      "definition": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
+      "notation": "sample-import",
+      "source": "cat-harness/skills/library/large-datasets/sample-import.md",
       "status": "candidate"
     },
     {
@@ -1317,6 +1389,14 @@
       "status": "candidate"
     },
     {
+      "id": "stalled-agent-triage",
+      "prefLabel": "stalled-agent-triage",
+      "definition": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "notation": "stalled-agent-triage",
+      "source": "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
+      "status": "candidate"
+    },
+    {
       "id": "surprise-to-corpus",
       "prefLabel": "surprise-to-corpus",
       "definition": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
@@ -1377,6 +1457,14 @@
       "definition": "Write and review technical documentation of standards, software and knowledge assets as an SDO writes. Carries the RFC 2119 requirement levels as RFC 8174 constrains them, the three questions a first draft is measured against, and the rule that an ingested specification is checked for supersession before it is cited.",
       "notation": "technical-documentation",
       "source": "cat-harness/skills/authoring/authoring-core/technical-documentation.md",
+      "status": "candidate"
+    },
+    {
+      "id": "term-disagreement",
+      "prefLabel": "term-disagreement",
+      "definition": "When a glossary term the extractor minted and an authorised terminology disagree — the corpus spells a concept differently from the authority, or uses a word the authority does not carry — decide among three outcomes: change the prose, author a local term with its reason, or record that the vocabulary is wrong for this domain. Says which disagreements need a decision at all, how to choose, what each outcome writes and where, and what is NOT this skill (two judges disagreeing about a mapping).",
+      "notation": "term-disagreement",
+      "source": "cat-harness/skills/library/library-core/term-disagreement.md",
       "status": "candidate"
     },
     {
@@ -1477,7 +1565,7 @@
     {
       "id": "ui-accessibility",
       "prefLabel": "ui-accessibility",
-      "definition": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.",
+      "definition": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names.",
       "notation": "ui-accessibility",
       "source": "cat-harness/skills/ui/ui-core/ui-accessibility.md",
       "status": "candidate"
@@ -1563,6 +1651,14 @@
       "status": "candidate"
     },
     {
+      "id": "visualizer-loading",
+      "prefLabel": "visualizer-loading",
+      "definition": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+      "notation": "visualizer-loading",
+      "source": "cat-harness/skills/ui/ui-core/visualizer-loading.md",
+      "status": "candidate"
+    },
+    {
       "id": "vocabulary-authority",
       "prefLabel": "vocabulary-authority",
       "definition": "One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping. Which vocabulary owns what here, the pros and cons behind each ruling, how DC and SKOS overlap and what stops them drifting, and the normalisation-first rule for any modelling or mapping exercise.",
@@ -1620,7 +1716,7 @@
     {
       "id": "wireframe-design-review",
       "prefLabel": "wireframe-design-review",
-      "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/wireframe-design-review.bpmn.",
+      "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
       "notation": "wireframe-design-review",
       "source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
       "status": "candidate"

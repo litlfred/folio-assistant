@@ -415,7 +415,10 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // `bjzs`). The list grew because the instance did, exactly as it did for
     // `code`; pinning it at seven would make the assertion a statement about
     // 2026-09-26 rather than about the declaration.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "qa", "skills", "themes", "uploads"]);
+    // NINE since 2026-10-01: `schemas` joined when who-iris took its own
+    // source descriptor (`sources/`) and generated lookup (`id-lookup/`, kind
+    // `code`) from large-datasets (bean `j7ql`). Same reason as both above.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "qa", "schemas", "skills", "themes", "uploads"]);
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -434,6 +437,8 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       // per-instance graph page. Declared-and-unrendered is the state this
       // assertion keeps visible.
       "qa",
+      // `schemas` (who-iris/sources/, bean `j7ql`) publishes no page either.
+      "schemas",
       "skills",
       "themes",
       "uploads",

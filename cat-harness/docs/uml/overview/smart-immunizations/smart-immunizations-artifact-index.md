@@ -43,20 +43,20 @@ Kept so the page renders even where the PlantUML image is missing, and because M
 classDiagram
   direction TB
   namespace smart_immunizations__smart_immunizations_artifact_index {
-    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context["Context"] {
+    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context["Context"] {
       <<json: FhirArtifactIndexSchema>>
       id [1] string
       representation [1] object
       binds [0..*] string[]
     }
-    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_DakUnbound["DakUnbound"] {
+    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound["SidecarsUnbound"] {
       <<json: FhirArtifactIndexSchema>>
       filename [1] string
       title [0..1] string
       enumeration [1] string
       reason [1] string
     }
-    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Artifact["Artifact"] {
+    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact["Artifact"] {
       <<json: FhirArtifactIndexSchema>>
       $schema [0..1] 'folio-fhir-artifact/v1'
       key [1] string
@@ -68,13 +68,14 @@ classDiagram
       canonical [0..1] string
       version [0..1] string
       category [0..1] string
+      listedAt [0..1] integer
       published [1] object
-      dak [0..1] object
+      sidecars [0..1] object
       materialization [1] object
     }
-    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1["folio-fhir-artifact-index/v1"] {
+    class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2["folio-fhir-artifact-index/v2"] {
       <<json: FhirArtifactIndexSchema>>
-      $schema [1] 'folio-fhir-artifact-index/v1'
+      $schema [1] 'folio-fhir-artifact-index/v2'
       id [1] string
       title [1] string
       packageId [0..1] string
@@ -84,9 +85,11 @@ classDiagram
       builtAt [0..1] string
       source [1] object
       provenance [1] object
-      dakApi [1] unknown | absent | present
+      sidecarApi [1] unknown | absent | present
       contexts [0..*] Context[]
-      dakUnbound [0..*] DakUnbound[]
+      igApiHub [0..1] object
+      package [0..1] object
+      sidecarsUnbound [0..*] SidecarsUnbound[]
       count [1] integer
       artifacts [0..*] Artifact[]
     }
@@ -1206,13 +1209,13 @@ classDiagram
       dak/ValueSet-IMMZD5DTYellowFeverContraindicationsVS [1] enum(704) of string
     }
   }
-  smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
-  smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
-  smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
-  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_DakUnbound" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Artifact" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1" fa_uml_kind_fhir_artifact_index
+  smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
+  smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
+  smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_C4_Create_client_record_schema_json_IMMZ_C4_Create_client_record" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_D13_Update_client_record_schema_json_IMMZ_D13_Update_client_record" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_D17_Report_AEFI_schema_json_IMMZ_D17_Report_AEFI" fa_uml_kind_fhir_artifact_index

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# PROV-O: The PROV Ontology W3C Recommendation 30 April 2013 This version: Latest published version: Implementation report: Previous version: Editors:
+# PROV-O: The PROV Ontology
 
 ingested source material — attributed to its document, not folio content
 

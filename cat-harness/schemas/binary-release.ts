@@ -140,12 +140,14 @@ export const DECIDED_DISPOSITIONS = ["deleted-before-deploy", "superseded"] as c
 /**
  * A digest over an asset's bytes.
  *
- * The same shape as `FixitySchema` in core's `materialization.ts`, restated
- * rather than imported — and this is a deliberate duplicate, not an oversight.
- * Nothing under `cat-harness/` imports from `folio-assistant-core/`, and the
- * registry's `fhir-artifact-index` entry says why in as many words: a harness
- * that reached up into core would be that dependency in all but name. When
- * this repository splits, the two can be unified from core's side.
+ * The same shape as `FixitySchema`, restated rather than imported. It was a
+ * deliberate duplicate while `FixitySchema` lived in core's `materialization.ts`:
+ * nothing under `cat-harness/` imports from `folio-assistant-core/`. Since bean
+ * `tlat` (2026-10-02) `FixitySchema` lives in this instance, in
+ * `materialization-state.ts`, so the two CAN now be unified without an upward
+ * import; that is left as its own change, because this one's `verifiedAt`
+ * semantics are a release's, and unifying is a decision about whether they are
+ * the same claim, not only the same shape.
  *
  * `verifiedAt` records when the digest was last RE-COMPUTED against the bytes,
  * not when it was written down. An unverified digest ages.

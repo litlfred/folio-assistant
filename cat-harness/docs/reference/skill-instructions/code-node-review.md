@@ -117,6 +117,6 @@ expectations on.
 
 | process | step(s) that name it |
 |---|---|
-| [Code change and review](../../processes/code-change-review.html) | Review the change |
 | [Code node review](../../processes/review-code.html) | Run the node audits; Review the schema definition node; Record the verdict on the node |
+| [Code change and review](../../processes/code-change-review.html) | Review the change |
 

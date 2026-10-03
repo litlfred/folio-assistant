@@ -60,7 +60,7 @@
  * SC 1.4.1, the `j66n` rule).
  */
 import { existsSync, readdirSync } from "node:fs";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve, sep } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { hexHue, resolveThemeBackdrop } from "../schemas/theme.js";
@@ -645,12 +645,31 @@ function tileFor(
    * resolves on disk but is not published is not something a tile can open,
    * and claiming it would put a 404 behind the tab — `pb04`.
    */
+  // A COMPOSED directory of this instance is the second place a declared ref
+  // can be published, and its URL is as computable as the site prefix's:
+  // `compose-docs.ts` copies the directory to `_docs/<name>/`, so a page in it
+  // is served at `/<name>/<path within it>`. Reading `composed` off the
+  // declaration, as `composedInstances` does, rather than restating the rule.
+  // Before this, an instance's own generated viewer (`<instance>/docs/`, with
+  // `rendered-by` naming a kind's viewer Tool) was found and then reported as
+  // "built and unreachable" — the routing gap the `declaredFor` note below
+  // names. #1767, stage C3.
+  const instanceRel = relative(repoRoot, instanceDir).split(sep).join("/");
+  const composedPrefixes = (decl.directories ?? [])
+    .filter((d) => (d as { composed?: boolean }).composed === true && typeof d.path === "string")
+    .map((d) => `${instanceRel}/${d.path!.replace(/^\.?\/+/, "").replace(/\/*$/, "/")}`);
+  const publishedRefOf = (ref: string): string | undefined => {
+    if (ref.startsWith(sitePrefix)) return publishedUrlOf(ref.slice(sitePrefix.length));
+    const under = composedPrefixes.find((p) => ref.startsWith(p));
+    return under === undefined ? undefined : publishedUrlOf(`${decl.name}/${ref.slice(under.length)}`);
+  };
+
   const declared = new Map<string, string>();
   for (const d of dirs) {
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!v.ref.startsWith(sitePrefix)) continue;
       if (!existsSync(join(repoRoot, v.ref))) continue;
-      const page = publishedUrlOf(v.ref.slice(sitePrefix.length));
+      const page = publishedRefOf(v.ref);
+      if (page === undefined) continue;
       for (const kind of d.graphKinds ?? []) {
         if (!declared.has(kind)) declared.set(kind, page);
       }

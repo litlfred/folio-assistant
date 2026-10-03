@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/related-work.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/related-work.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Related work: find, sort, summarize, ask to coordinate
@@ -17,7 +17,7 @@ Before new work takes shape, find the work it touches. When a requirement is ini
 
 ## How it connects
 
-- **Called by:** [CRDM — link the work to an issue](crdm-issue-linking.html), [Adopt a methodology from a source document](methodology-from-source.html)
+- **Called by:** [Adopt a methodology from a source document](methodology-from-source.html), [CRDM — link the work to an issue](crdm-issue-linking.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

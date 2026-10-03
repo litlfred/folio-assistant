@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import { malformation, overlay, rootTokens, ruleFor, type RawLayer } from "../ingest-ig-chrome";
+import { declarationsIn, malformation, overlay, rootTokens, ruleFor, type RawLayer } from "../ingest-ig-chrome";
 import type { IgChromeLayer } from "../../schemas/ig-chrome";
 
 function layer(pkg: string, css: string): RawLayer {
@@ -143,5 +143,39 @@ describe("malformation", () => {
     // stylesheet of a fault it does not have.
     expect(malformation("rgba(245,45,45,0.5)")).toBeUndefined();
     expect(malformation('url("data:image/svg+xml;utf8,<svg/>")')).toBeUndefined();
+  });
+});
+
+// who.css 82603d0, line 567: the DRAFT watermark. Its value holds `;` and `:`
+// inside a quoted data URI; a `[^;]+` split cut it into a truncated `url(` and a
+// bogus `http` property, and browsers then dropped every later mirrored rule.
+const DRAFT_RULE = `#ig-status.ig-status-draft {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px'><text fill='rgba(245,45,45,0.5)'>DRAFT</text></svg>");
+  background-size: calc(50% / 5) 100px;
+  background-repeat: repeat-x;
+}`;
+
+describe("declarations inside strings and parentheses", () => {
+  test("a data-URI value stays one declaration", () => {
+    const decls = ruleFor(DRAFT_RULE, "#ig-status.ig-status-draft");
+    expect(decls?.map((d) => d.property)).toEqual(["background-image", "background-size", "background-repeat"]);
+    expect(decls?.[0]?.value).toBe(
+      `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px'><text fill='rgba(245,45,45,0.5)'>DRAFT</text></svg>")`,
+    );
+  });
+
+  test("the first colon outside a string separates property from value", () => {
+    expect(declarationsIn("a: b; --x: url(http://e.org/a;b); c:d")).toEqual([
+      { property: "a", value: "b" },
+      { property: "--x", value: "url(http://e.org/a;b)" },
+      { property: "c", value: "d" },
+    ]);
+  });
+
+  test("custom properties in :root keep a quoted semicolon", () => {
+    expect(rootTokens(`:root { --q: "a;b"; --c: #fff; }`)).toEqual([
+      { name: "--q", value: `"a;b"` },
+      { name: "--c", value: "#fff" },
+    ]);
   });
 });

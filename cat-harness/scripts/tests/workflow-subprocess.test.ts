@@ -26,9 +26,12 @@ import {
   UnsupportedBpmn,
   type ProcessModel,
 } from "../../src/workflow/process-model";
+import { workflowFile } from "../known-skills.ts";
 
-const WORKFLOWS = resolve(import.meta.dir, "../../processes");
-const bpmn = (stem: string): string => join(WORKFLOWS, `${stem}.bpmn`);
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
+
+const bpmn = (stem: string): string => workflowFile(HARNESS, `${stem}.bpmn`);
 
 /**
  * Advance a fresh `document-ingestion` instance to the point where the Extract

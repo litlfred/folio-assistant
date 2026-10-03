@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Abies
+# WHO editorial style manual
 
 ingested source material — attributed to its document, not folio content
 

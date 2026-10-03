@@ -51,7 +51,7 @@ import {
   declaresInstance,
   instanceRootsIn,
   readDeclaration,
-  repoRootFor,
+  siblingScopeFor,
   resolveGraphKind,
   type GraphKindRegistry,
 } from "./cat-harness.js";
@@ -250,7 +250,10 @@ const rootsByName = new Map<string, Map<string, string>>();
  */
 export function rootOf(instance: string | undefined, instanceRoot: string): string | undefined {
   if (instance === undefined) return instanceRoot;
-  const repo = repoRootFor(instanceRoot);
+  // `siblingScopeFor`, not `repoRootFor` (`dirname`): for the instance declared
+  // AT the checkout root the latter climbs out of the checkout and finds no
+  // instance by name — the class of beans `pgzn` and `676g`.
+  const repo = siblingScopeFor(instanceRoot);
   let byName = rootsByName.get(repo);
   if (!byName) {
     byName = new Map();

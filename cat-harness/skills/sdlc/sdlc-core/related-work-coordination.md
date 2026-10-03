@@ -6,7 +6,7 @@ description: >
   user whether and how to coordinate. Judgement decides the categories and the
   recommendation, and the user decides the coordination. Called by CRDM when a
   requirement is initiated or updated in chat, and by methodology adoption.
-  Process: processes/related-work.bpmn.
+  Process: processes/sdlc/related-work.bpmn.
 ---
 
 # Related work: find it, sort it, ask

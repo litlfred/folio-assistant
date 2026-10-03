@@ -135,7 +135,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   "smart-base": {
     // A broad base with three narrowing courses above it — the layer the rest
     // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
-    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // under it, and `smart-ig` (and the IGs that need it) is built on top,
     // so the glyph reads the instance's position rather than its subject.
     glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
     tone: 199,
@@ -243,6 +243,23 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // THE QUEUE FEEDING A TRAIN. Three queued items on the left converging into
+  // one line that carries on right — the queue's whole shape in one glyph: the
+  // decisions are per pull request, the train they feed is one. Deliberately
+  // NOT a list: a list would read as the store, and what this kind records is
+  // an ORDER somebody decided (bean `hfag`).
+  "merge-queue": {
+    glyph: "M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9",
+    tone: 205,
+    reads: "three queued items converging into one line — a queue feeding a train",
+  },
+  // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
+  // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
+  "bean-notes": {
+    glyph: "M8 5c4 0 6 3 6 7s-2 7-6 7c2-3 2-4 2-7s0-4-2-7zM16 8h4v8h-4zM17 11h2M17 13h2",
+    tone: 40,
+    reads: "a bean with a slip of paper beside it — an addendum, not a second item",
+  },
   // A SURVEY of a commit window. Two endpoint marks with a span between them,
   // because the two edge commits ARE the artefact: a survey whose window
   // cannot be pinned tells a reader nothing about today (bean `6ptx`).
@@ -281,6 +298,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h16v9H9l-4 4v-4H4zM9 10h6",
     tone: 320,
     reads: "a speech bubble — a remark about the work, not the work",
+  },
+  attestations: {
+    glyph: "M6 3h12v18H6zM9 8h6M9 12h6M10 17l2 2 3-4",
+    tone: 28,
+    reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
   "review-verdicts": {
     glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
@@ -351,6 +373,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
     tone: 180,
     reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
+  },
+  // A CROSSWALK — a column of source rows, lines crossing to a column of
+  // target rows. Bean `k74z`: one value carried into several vocabularies.
+  // `tone: 120` was unused, and is far from `code-list`'s 180 so the two
+  // "tables of codes" kinds are not confused at a glance.
+  "vocab-mapping": {
+    glyph: "M3 6h4M3 12h4M3 18h4M8 6l8 6M8 12l8-6M8 18h8M17 6h4M17 12h4M17 18h4",
+    tone: 120,
+    reads: "a crosswalk — source rows on the left, lines crossing to target rows on the right — one value carried into another vocabulary",
   },
   // A CLASS BOX — a title compartment over an attribute compartment, with an
   // association line leaving it. The one glyph that says "a diagram of shapes"
@@ -429,6 +460,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 190,
     reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
   },
+  openapi: {
+    // Curly braces around a two-way arrow: a machine-readable description
+    // (the braces) of something you call and that answers (the arrow out and
+    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
+    // document is one node holding operations, not an index of things held
+    // elsewhere. Bean `s4ta`.
+    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
+    tone: 136,
+    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+  },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under
@@ -438,6 +479,22 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 9l8-4 8 4v7l-8 4-8-4zM4 9l8 4m8-4l-8 4m0 0v7M8 7l8 4",
     tone: 24,
     reads: "a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes",
+  },
+  "test-plan": {
+    // A checklist of empty boxes: what must be shown, before anybody has run
+    // it. Deliberately empty — a plan carries no verdicts, and a ticked box
+    // would say it did.
+    glyph: "M6 4h12v16H6zM8 8h2v2H8zM12 9h4M8 12h2v2H8zM12 13h4M8 16h2v2H8zM12 17h4",
+    tone: 140,
+    reads: "a checklist with its boxes empty — what a system must show, before any run",
+  },
+  "test-report": {
+    // The same checklist with its boxes filled in, one ticked and one crossed:
+    // the plan's form, completed by a run. Quotes `test-plan`'s glyph on
+    // purpose, as `ig-metadata-index` quotes its sibling's.
+    glyph: "M6 4h12v16H6zM8 8l1 1 2-2M12 9h4M8 12l2 2m0-2l-2 2M12 13h4M8 16l1 1 2-2M12 17h4",
+    tone: 110,
+    reads: "the plan's checklist filled in — one run's verdicts against one plan, never a tally across plans",
   },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
@@ -457,6 +514,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M10 4a3 3 0 013 3v4a3 3 0 01-6 0V7a3 3 0 013-3zM5 11a5 5 0 0010 0M10 16v4M16 6h5v5h-5zM18.5 8.5h.01",
     tone: 312,
     reads: "a microphone with a tag — an editorial voice specialised for one vendor",
+  },
+  "document-kinds": {
+    // A page outline with ruled sections: a document kind is a STRUCTURE to
+    // fill — the headings are fixed, the content is not. Distinct from
+    // `docs`, which is written pages; this is the shape a page must take.
+    glyph: "M6 3h9l3 3v15H6zM9 9h6M9 13h6M9 17h4",
+    tone: 268,
+    reads: "a page outline with its sections ruled in — a structure to fill, not a page written",
   },
   themes: {
     // A paint swatch with a corner turned: a theme is a palette APPLIED to a

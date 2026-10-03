@@ -1,5 +1,5 @@
 {
-  "$schema": "folio-fhir-artifact-index/v1",
+  "$schema": "folio-fhir-artifact-index/v2",
   "id": "smart-base",
   "title": "smart.who.int.base — artefact index",
   "packageId": "smart.who.int.base",
@@ -19,12 +19,12 @@
     "canonicals": "canonicals.json",
     "packageIndex": "package.tgz!package/.index.json",
     "artifactsHtml": "artifacts.html",
-    "dakEnumerations": [
+    "sidecarEnumerations": [
       "LogicalModels.schema.json",
       "ValueSets.schema.json"
     ]
   },
-  "dakApi": "present",
+  "sidecarApi": "present",
   "count": 225,
   "artifacts": [
     {
@@ -3364,7 +3364,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3374,7 +3374,7 @@
       "category": "Structures: Logical Models",
       "title": "Business Process Workflow (DAK)",
       "description": "Logical Model for representing Generic Business Processes and Workflows from a DAK. A business process is a set of related activities or tasks performed together to achieve the objectives of the health programme area.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-BusinessProcessWorkflow.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-BusinessProcessWorkflow.schema.json",
@@ -3436,7 +3436,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3446,7 +3446,7 @@
       "category": "Structures: Logical Models",
       "title": "Business Process Workflow Source",
       "description": "Source reference for Business Process Workflow - exactly one of the following must be provided: url (url data type): URL to retrieve BusinessProcessWorkflow definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the BusinessProcessWorkflow definition instance: Inline BusinessProcessWorkflow instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-BusinessProcessWorkflowSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-BusinessProcessWorkflowSource.schema.json",
@@ -3508,7 +3508,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3518,7 +3518,7 @@
       "category": "Structures: Logical Models",
       "title": "Core Data Element (DAK)",
       "description": "Logical Model for representing Core Data Elements from a DAK. A core data element can be one of: a ValueSet, a CodeSystem, a ConceptMap, or a Logical Model adherent to SGLogicalModel. This is the ONE EXCEPTION to allowing FHIR R4 models into the DAK LMs.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-CoreDataElement.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-CoreDataElement.schema.json",
@@ -3580,7 +3580,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3590,7 +3590,7 @@
       "category": "Structures: Logical Models",
       "title": "Core Data Element Source",
       "description": "Source reference for Core Data Element - exactly one of the following must be provided: url (url data type): URL to retrieve CoreDataElement definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the CoreDataElement definition instance: Inline CoreDataElement instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-CoreDataElementSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-CoreDataElementSource.schema.json",
@@ -3652,7 +3652,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3662,7 +3662,7 @@
       "category": "Structures: Logical Models",
       "title": "Digital Adaptation Kit (DAK)",
       "description": "Logical Model for representing a complete Digital Adaptation Kit (DAK) with metadata and all 9 DAK components",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DAK.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-DAK.schema.json",
@@ -3724,7 +3724,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3734,7 +3734,7 @@
       "category": "Structures: Logical Models",
       "title": "Decision-Support Logic (DAK)",
       "description": "Logical Model for representing Decision-Support Logic from a DAK. Decision-support logic and algorithms to support appropriate service delivery in accordance with WHO clinical, public health and data use guidelines.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DecisionSupportLogic.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-DecisionSupportLogic.schema.json",
@@ -3796,7 +3796,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3806,7 +3806,7 @@
       "category": "Structures: Logical Models",
       "title": "Decision Support Logic Source",
       "description": "Source reference for Decision Support Logic - exactly one of the following must be provided: url (url data type): URL to retrieve DecisionSupportLogic definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the DecisionSupportLogic definition instance: Inline DecisionSupportLogic instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DecisionSupportLogicSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-DecisionSupportLogicSource.schema.json",
@@ -3868,7 +3868,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3878,7 +3878,7 @@
       "category": "Structures: Logical Models",
       "title": "Dublin Core Metadata Element Set",
       "description": "Logical Model representing Dublin Core metadata elements as defined at https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DublinCore.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-DublinCore.schema.json",
@@ -3940,7 +3940,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -3950,7 +3950,7 @@
       "category": "Structures: Logical Models",
       "title": "FHIR Schema Base (SMART Guidelines)",
       "description": "Base logical model providing the common schema metadata interface inherited by all SMART Guidelines logical models. Every SMART Guidelines logical model schema derives from this base, which documents the shared FHIR and JSON-LD metadata properties used by the JSON Schema generation pipeline.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-FHIRSchemaBase.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-FHIRSchemaBase.schema.json",
@@ -4012,7 +4012,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4022,7 +4022,7 @@
       "category": "Structures: Logical Models",
       "title": "Functional Requirement (DAK)",
       "description": "Logical Model for representing functional requirement from a DAK",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-FunctionalRequirement.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-FunctionalRequirement.schema.json",
@@ -4084,7 +4084,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4094,7 +4094,7 @@
       "category": "Structures: Logical Models",
       "title": "Generic Persona (DAK)",
       "description": "Logical Model for representing Generic Personas from a DAK. Depiction of the human and system actors. Human actors are end users, supervisors and related stakeholders who would be interacting with the digital system or involved in the clinical care, public health or health system pathway.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-GenericPersona.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-GenericPersona.schema.json",
@@ -4156,7 +4156,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4166,7 +4166,7 @@
       "category": "Structures: Logical Models",
       "title": "Generic Persona Source",
       "description": "Source reference for Generic Persona - exactly one of the following must be provided: url (url data type): URL to retrieve GenericPersona definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the GenericPersona definition instance: Inline GenericPersona instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-GenericPersonaSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-GenericPersonaSource.schema.json",
@@ -4228,7 +4228,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4238,7 +4238,7 @@
       "category": "Structures: Logical Models",
       "title": "Health Interventions and Recommendations (DAK)",
       "description": "Logical Model for representing Health Interventions and Recommendations from a DAK. Overview of the health interventions and WHO, regional or national recommendations included within the DAK.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-HealthInterventions.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-HealthInterventions.schema.json",
@@ -4300,7 +4300,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4310,7 +4310,7 @@
       "category": "Structures: Logical Models",
       "title": "Health Interventions Source",
       "description": "Source reference for Health Interventions - exactly one of the following must be provided: url (url data type): URL to retrieve HealthInterventions definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the HealthInterventions definition instance: Inline HealthInterventions instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-HealthInterventionsSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-HealthInterventionsSource.schema.json",
@@ -4434,7 +4434,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4444,7 +4444,7 @@
       "category": "Structures: Logical Models",
       "title": "Non-Functional Requirement (DAK)",
       "description": "Logical Model for representing non-functional requirement from a DAK",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-NonFunctionalRequirement.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-NonFunctionalRequirement.schema.json",
@@ -4506,7 +4506,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4516,7 +4516,7 @@
       "category": "Structures: Logical Models",
       "title": "Persona (DAK)",
       "description": "Logical Model for representing Personas from a DAK",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-Persona.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-Persona.schema.json",
@@ -4578,7 +4578,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4588,7 +4588,7 @@
       "category": "Structures: Logical Models",
       "title": "Program Indicator (DAK)",
       "description": "Logical Model for representing Program Indicators from a DAK. Core set of indicators that need to be aggregated for decision-making, performance metrics and subnational and national reporting.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-ProgramIndicator.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-ProgramIndicator.schema.json",
@@ -4650,7 +4650,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4660,7 +4660,7 @@
       "category": "Structures: Logical Models",
       "title": "Program Indicator Source",
       "description": "Source reference for Program Indicator - exactly one of the following must be provided: url (url data type): URL to retrieve ProgramIndicator definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the ProgramIndicator definition instance: Inline ProgramIndicator instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-ProgramIndicatorSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-ProgramIndicatorSource.schema.json",
@@ -4722,7 +4722,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4732,7 +4732,7 @@
       "category": "Structures: Logical Models",
       "title": "Functional and Non-Functional Requirements (DAK)",
       "description": "Logical Model for representing Functional and Non-Functional Requirements from a DAK. A high-level list of core functions and capabilities that the system must have to meet the end users' needs.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-Requirements.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-Requirements.schema.json",
@@ -4794,7 +4794,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -4804,7 +4804,7 @@
       "category": "Structures: Logical Models",
       "title": "Requirements Source",
       "description": "Source reference for Requirements - exactly one of the following must be provided: url (url data type): URL to retrieve Requirements definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the Requirements definition instance: Inline Requirements instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-RequirementsSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-RequirementsSource.schema.json",
@@ -5765,7 +5765,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -5775,7 +5775,7 @@
       "category": "Structures: Logical Models",
       "title": "SUSHI Configuration Logical Model",
       "description": "Logical model defining the structure of sushi-config.yaml files used for FHIR Implementation Guide configuration. This model captures the essential metadata and configuration parameters needed for IG publishing.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-SushiConfigLogicalModel.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-SushiConfigLogicalModel.schema.json",
@@ -5837,7 +5837,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -5847,7 +5847,7 @@
       "category": "Structures: Logical Models",
       "title": "Test Scenario (DAK)",
       "description": "Logical Model for representing Test Scenarios from a DAK. A set of test scenarios to validate an implementation of the DAK.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-TestScenario.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-TestScenario.schema.json",
@@ -5909,7 +5909,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -5919,7 +5919,7 @@
       "category": "Structures: Logical Models",
       "title": "Test Scenario Source",
       "description": "Source reference for Test Scenario - exactly one of the following must be provided: url (url data type): URL to retrieve TestScenario definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the TestScenario definition instance: Inline TestScenario instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-TestScenarioSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-TestScenarioSource.schema.json",
@@ -5981,7 +5981,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -5991,7 +5991,7 @@
       "category": "Structures: Logical Models",
       "title": "User Scenario (DAK)",
       "description": "Logical Model for representing User Scenarios from a DAK. Narratives that describe how the different personas may interact with each other.",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-UserScenario.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-UserScenario.schema.json",
@@ -6053,7 +6053,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6063,7 +6063,7 @@
       "category": "Structures: Logical Models",
       "title": "User Scenario Source",
       "description": "Source reference for User Scenario - exactly one of the following must be provided: url (url data type): URL to retrieve UserScenario definition from input/ or external source canonical (canonical data type): Canonical URI pointing to the UserScenario definition instance: Inline UserScenario instance data",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-UserScenarioSource.schema.json",
           "localPath": "fhir-artifact-index/dak/StructureDefinition-UserScenarioSource.schema.json",
@@ -6125,7 +6125,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6135,7 +6135,7 @@
       "category": "Terminology: Value Sets",
       "title": "Classification of Digital Health Interventions v1",
       "description": "Value Set for Classification of Digital Health Interventions v1. Autogenerated from DAK artifacts",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv1.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv1.schema.json",
@@ -6207,7 +6207,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6217,7 +6217,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions for Clients",
       "description": "Digital Health Interventions whose primary user group is Clients (persons using health services). Group 1 of the Classification of Digital Health Interventions v1 (2018).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv1.1.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv1.1.schema.json",
@@ -6289,7 +6289,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6299,7 +6299,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions for Health Workers",
       "description": "Digital Health Interventions whose primary user group is Health Workers. Group 2 of the Classification of Digital Health Interventions v1 (2018).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv1.2.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv1.2.schema.json",
@@ -6371,7 +6371,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6381,7 +6381,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions for Health System Managers",
       "description": "Digital Health Interventions whose primary user group is Health System Managers. Group 3 of the Classification of Digital Health Interventions v1 (2018).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv1.3.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv1.3.schema.json",
@@ -6453,7 +6453,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6463,7 +6463,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions: Data Services",
       "description": "Crosscutting Data Services DHIs. Group 4 of the Classification of Digital Health Interventions v1 (2018).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv1.4.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv1.4.schema.json",
@@ -6535,7 +6535,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6545,7 +6545,7 @@
       "category": "Terminology: Value Sets",
       "title": "Classification of Digital Health Interventions v2",
       "description": "Value Set for the Classification of Digital Interventions, Services and Applications in Health (CDISAH), second edition (2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv2.schema.json",
@@ -6617,7 +6617,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6627,7 +6627,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions for Persons",
       "description": "Digital Health Interventions whose primary user group is Persons (health service users). Group 1 of the Classification of Digital Interventions, Services and Applications in Health v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.1.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv2.1.schema.json",
@@ -6699,7 +6699,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6709,7 +6709,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions for Healthcare Providers",
       "description": "Digital Health Interventions whose primary user group is Healthcare Providers. Group 2 of the Classification of Digital Interventions, Services and Applications in Health v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.2.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv2.2.schema.json",
@@ -6781,7 +6781,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6791,7 +6791,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions for Health Management and Support Personnel",
       "description": "Digital Health Interventions whose primary user group is Health Management and Support Personnel. Group 3 of the Classification of Digital Interventions, Services and Applications in Health v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.3.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv2.3.schema.json",
@@ -6863,7 +6863,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6873,7 +6873,7 @@
       "category": "Terminology: Value Sets",
       "title": "Digital Health Interventions: Data Services",
       "description": "Crosscutting Data Services DHIs. Group 4 of the Classification of Digital Interventions, Services and Applications in Health v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.4.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDHIv2.4.schema.json",
@@ -6945,7 +6945,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -6955,7 +6955,7 @@
       "category": "Terminology: Value Sets",
       "title": "Health System Challenges",
       "description": "Value set for Health System Challenges (Classification of Digital Health System Categories v1, 2018). Includes all 25 system category codes (A–Y).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv1.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv1.schema.json",
@@ -7027,7 +7027,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7037,7 +7037,7 @@
       "category": "Terminology: Value Sets",
       "title": "Services and Application Types",
       "description": "Value set for Services and Application Types (Classification of Digital Health Services and Application Types v2, CDISAH 2023). Includes all codes across the five architecture groups (A–E).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv2.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv2.schema.json",
@@ -7109,7 +7109,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7119,7 +7119,7 @@
       "category": "Terminology: Value Sets",
       "title": "Services and Application Types: Point of Service",
       "description": "Systems that facilitate the provision and delivery of healthcare services to persons at the point of care. Group A of the Classification of Digital Health Services and Application Types v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv2.A.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv2.A.schema.json",
@@ -7191,7 +7191,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7201,7 +7201,7 @@
       "category": "Terminology: Value Sets",
       "title": "Services and Application Types: Health System/Provider Administration",
       "description": "Systems that support the administrative and managerial functions of health systems and healthcare organisations. Group B of the Classification of Digital Health Services and Application Types v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv2.B.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv2.B.schema.json",
@@ -7273,7 +7273,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7283,7 +7283,7 @@
       "category": "Terminology: Value Sets",
       "title": "Services and Application Types: Registries and Directories",
       "description": "Systems that create, maintain, and provide authoritative master records for persons, providers, facilities, products and health events. Group C of the Classification of Digital Health Services and Application Types v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv2.C.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv2.C.schema.json",
@@ -7355,7 +7355,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7365,7 +7365,7 @@
       "category": "Terminology: Value Sets",
       "title": "Services and Application Types: Data Management Services",
       "description": "Services and systems that support the collection, aggregation, storage, analysis, and exchange of health data. Group D of the Classification of Digital Health Services and Application Types v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv2.D.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv2.D.schema.json",
@@ -7437,7 +7437,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7447,7 +7447,7 @@
       "category": "Terminology: Value Sets",
       "title": "Services and Application Types: Surveillance and Response",
       "description": "Systems that support the detection, monitoring, and response to disease outbreaks and public health threats. Group E of the Classification of Digital Health Services and Application Types v2 (CDISAH, 2023).",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDSCv2.E.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CDSCv2.E.schema.json",
@@ -7519,7 +7519,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7529,7 +7529,7 @@
       "category": "Terminology: Value Sets",
       "title": "Core Data Element Type Value Set",
       "description": "Value set of core data element types",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CoreDataElementTypeVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-CoreDataElementTypeVS.schema.json",
@@ -7601,7 +7601,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7611,7 +7611,7 @@
       "category": "Terminology: Value Sets",
       "title": "Smart Guidelines Decision Table Actions",
       "description": "Value Set for Smart Guidelines Documentation Decision Table Actions",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-DecisionTableActions.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-DecisionTableActions.schema.json",
@@ -7745,7 +7745,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7755,7 +7755,7 @@
       "category": "Terminology: Value Sets",
       "title": "SMART Guidelines Authoring Persona Types ValueSet",
       "description": "ValueSet for SMART Guidelines authoring persona types",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-SGAuthoringPersonaTypesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-SGAuthoringPersonaTypesVS.schema.json",
@@ -7827,7 +7827,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7837,7 +7837,7 @@
       "category": "Terminology: Value Sets",
       "title": "SMART Guidelines Authoring Skills ValueSet",
       "description": "ValueSet for all SMART Guidelines authoring skill capabilities",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-SGAuthoringSkillsVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-SGAuthoringSkillsVS.schema.json",
@@ -7909,7 +7909,7 @@
           },
           "copyright": {
             "verdict": "unknown",
-            "basis": "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest."
+            "basis": "Not established. The IG's content licensing has not been read for this ingest."
           }
         }
       },
@@ -7919,7 +7919,7 @@
       "category": "Terminology: Value Sets",
       "title": "Smart Guidelines Persona Types Value Set",
       "description": "Value Set for Smart Guidelines Persona Section to autogenerate documentation from artifacts",
-      "dak": {
+      "sidecars": {
         "schema": {
           "url": "https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-SGPersonaTypesVS.schema.json",
           "localPath": "fhir-artifact-index/dak/ValueSet-SGPersonaTypesVS.schema.json",

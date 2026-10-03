@@ -64,6 +64,7 @@ import {
   SCRIPT_ROOTS,
   type ScriptTarget,
 } from "./script-walker";
+import { implementingRootFor } from "../../schemas/harness-config";
 import { findContentRepoRoot } from "./repo-root";
 import {
   checkDoesNotDefaultToFloat,
@@ -239,12 +240,14 @@ async function run(): Promise<void> {
   // Precompute the script-hash bundle per criterion (mirrors
   // qa-sweep tranche-1 plumbing).
   const scriptHashesByCriterion: Record<string, CriterionScriptHashes> = {};
+  // Read each checker from the instance that implements it (ruling T7, bean
+  // `70lx`); the recorded `source_file` is the declared path either way.
   for (const id of runnableIds) {
     scriptHashesByCriterion[id] = computeCriterionScriptHashes(
       id,
       getCriterionSourceFile(id),
       getCriterionExtraInputs(id),
-      PLATFORM_ROOT,
+      implementingRootFor(PLATFORM_ROOT, getCriterionSourceFile(id)),
       QA_CRITERIA_BY_ID[id],
     );
   }

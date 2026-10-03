@@ -16,7 +16,7 @@ export default webpage({
       title: "What a document folio is",
       asset: {
         kind: "bpmn",
-        source: "processes/authoring-a-document.bpmn",
+        source: "../folio-assistant-core/processes/content/authoring-a-document.bpmn",
         rendered: "../assets/img/workflows/authoring-a-document.svg",
         alt: "BPMN swimlane diagram of document authoring, plan to published.",
         sourceLinks: [

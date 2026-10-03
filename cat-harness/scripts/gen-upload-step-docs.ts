@@ -51,8 +51,8 @@
  * @module cat-harness/scripts/gen-upload-step-docs
  * @covers tools, processes
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, resolve } from "node:path";
 
 import { loadProcessModel, type ProcessModel, type ProcessNode } from "../src/workflow/process-model.ts";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -86,6 +86,14 @@ const PROCESS_FILE = "document-ingestion.bpmn";
  * directory is searched, exactly one must hold the file, and both other
  * answers — none, or several — refuse.
  */
+/** Every file called `name` under `dir`, at any depth. */
+function filesNamed(dir: string, name: string): string[] {
+  if (!existsSync(dir)) return [];
+  return (readdirSync(dir, { recursive: true }) as string[])
+    .filter((rel) => basename(rel) === name)
+    .map((rel) => join(dir, rel));
+}
+
 function processPath(): string {
   const dirs = corpusDirectoriesForGraph(INSTANCE_ROOT, "processes");
   if (dirs.length === 0) {
@@ -94,7 +102,9 @@ function processPath(): string {
         `\`${PROCESS_FILE}\` from`,
     );
   }
-  const hits = dirs.map((d) => join(d, PROCESS_FILE)).filter((f) => existsSync(f));
+  // At ANY depth: since placement PR3 (bean `63wl`) a declared `processes/`
+  // groups its diagrams by concern, so the file sits in `processes/<group>/`.
+  const hits = dirs.flatMap((d) => filesNamed(d, PROCESS_FILE));
   if (hits.length === 1) return hits[0]!;
   if (hits.length === 0) {
     throw new CannotDerive(

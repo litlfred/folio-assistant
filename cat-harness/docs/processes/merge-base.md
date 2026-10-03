@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/merge-base.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/merge-base.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Merge the base branch in
@@ -21,7 +21,7 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
 
 ## How it connects
 
-- **Called by:** [Code change and review](code-change-review.html)
+- **Called by:** [Code change and review](code-change-review.html), [A merge train](merge-train.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

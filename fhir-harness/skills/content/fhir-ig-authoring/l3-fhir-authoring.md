@@ -23,13 +23,18 @@ DAK, using FHIR Shorthand and SUSHI.
 
 `fhir-harness/schemas/skills/l3-fhir-authoring/`:
 
-- **in** — `artifactType` (required), `l2Source` (required), `fshOutputDir`,
+- **in** — `artifactType` (required), `sourceModel` (required), `fshOutputDir`,
   `igRoot`
 - **out** — `fshFiles`, `sushiResult`, `generatedResources`
 
-`l2Source` being required is the design: **L3 is derived, not authored from
-scratch.** An L3 artefact with no L2 behind it is a profile nobody can review
-clinically, and it is the commonest way a DAK drifts from its guideline.
+`sourceModel` being required is the design: **L3 is derived, not authored from
+scratch.** An L3 artefact with no source behind it is a profile nobody can
+review against what it was meant to encode. Which source is the layer above's
+to say: a WHO SMART guideline passes its DAK's L2 content, and the WHO L3
+pipeline (`l3-fhir-pipeline.bpmn`, "Map L2 → L3") binds `l2-dak-authoring`
+beside this skill. This skill names no DAK, because `fhir-harness` may not
+(`fhir-harness/AGENTS.md`). Until stage D of the smart-* separation (#1767)
+the input was `l2Source` and the skill `dependsOn` `l2-dak-authoring`.
 
 CQL — clinical decision logic — is part of this skill, not a separate one; the
 input schema already carries `cql` among its artefact types.

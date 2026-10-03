@@ -84,8 +84,8 @@ This skill has its own process: **[Render a Knowledge Graph to a CDN](../../proc
 
 | process | step(s) that name it |
 |---|---|
-| [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE (calls a sub-process) |
-| [Draft, review and publish](../../processes/draft-to-publication.html) | Version, tag and publish |
-| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Push to the CDN at STAGING/&lt;slug&gt;/ (calls a sub-process) |
 | [Render a Knowledge Graph to a CDN](../../processes/render-kg-to-cdn.html) | Resolve the Subgraphs, the root URL and the target's Tool; Render and push with the target's Tool [its own subprocess]; Report the push: status and message |
+| [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE (calls a sub-process) |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Push to the CDN at STAGING/&lt;slug&gt;/ (calls a sub-process) |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Version, tag and publish |
 

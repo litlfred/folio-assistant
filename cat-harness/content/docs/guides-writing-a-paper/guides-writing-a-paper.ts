@@ -16,7 +16,7 @@ export default webpage({
       title: "The end-to-end workflow",
       asset: {
         kind: "bpmn",
-        source: "processes/authoring-a-paper.bpmn",
+        source: "../folio-assistant-sci/processes/content/authoring-a-paper.bpmn",
         rendered: "../assets/img/workflows/authoring-a-paper.svg",
         alt: "BPMN swimlane diagram: the author plans, the plan is seeded as beans, the authoring agent scaffolds the repo and drafts blocks, Lean formalisation loops until the build is green with no sorries, the build pipeline validates and renders, a reviewer either sends it back to authoring or approves it for publication.",
         sourceLinks: [

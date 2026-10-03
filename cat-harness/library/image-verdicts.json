@@ -1,6 +1,6 @@
 {
   "$schema": "folio-image-verdicts/v1",
-  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it. 2026-09-24 adds arxiv-2504.07199v3 (SemEval-2025 Task 5), eight images, every one opened. Its four figures are each a stack of panels, and WHICH PANEL IS WHICH WAS SETTLED BY GEOMETRY, not by reading order: the sub-captions and the figure captions interleave in the extracted text stream, so `page.get_image_rects` was compared against each `(a)`/`(b)` block's own bbox. That check also turned up something worth recording: Figure 1 is the RECORD-TYPE ablation and its legend reads A/B/C/R/T, but both of its sub-captions say \"based on the language ablation\" — the same wording Figure 2's sub-captions carry. Marked in the drafts as a reading of the page, never as a finding about the authors' work. 2026-09-29 adds the two decision-methodology sources. `wang-rangaiah-2026-mcdm-aggregation` (renamed from the basename fallback `250906388v1` on the owner's instruction 2026-09-29, to the author-year convention the other non-arXiv entries use) is eight images, every one opened; three of them (Figs 8.1, 8.3, 8.4(c)) could not be written at all until the alpha+soft-mask fix in the same PR, so they are the first images here judged from files that did not previously exist. Panel letters were settled by comparing `page.get_image_rects` against each caption's own bbox, as for arxiv-2504.07199v3. It also adds arxiv-2607.20636v1 (Ravichandran's PhD thesis), 17 images over 184 pages, every one opened. Three of them are ~0.0026-coverage thumbnails placed INSIDE Figure 4.1's schematic rather than figures of their own, and the appendix pairs (B.1/B.2, C.1-C.4) were identified from each page's own caption lines rather than from page order.",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it. 2026-09-24 adds arxiv-2504.07199v3 (SemEval-2025 Task 5), eight images, every one opened. Its four figures are each a stack of panels, and WHICH PANEL IS WHICH WAS SETTLED BY GEOMETRY, not by reading order: the sub-captions and the figure captions interleave in the extracted text stream, so `page.get_image_rects` was compared against each `(a)`/`(b)` block's own bbox. That check also turned up something worth recording: Figure 1 is the RECORD-TYPE ablation and its legend reads A/B/C/R/T, but both of its sub-captions say \"based on the language ablation\" — the same wording Figure 2's sub-captions carry. Marked in the drafts as a reading of the page, never as a finding about the authors' work. 2026-09-29 adds the two decision-methodology sources. `wang-rangaiah-2026-mcdm-aggregation` (renamed from the basename fallback `250906388v1` on the owner's instruction 2026-09-29, to the author-year convention the other non-arXiv entries use) is eight images, every one opened; three of them (Figs 8.1, 8.3, 8.4(c)) could not be written at all until the alpha+soft-mask fix in the same PR, so they are the first images here judged from files that did not previously exist. Panel letters were settled by comparing `page.get_image_rects` against each caption's own bbox, as for arxiv-2504.07199v3. It also adds arxiv-2607.20636v1 (Ravichandran's PhD thesis), 17 images over 184 pages, every one opened. Three of them are ~0.0026-coverage thumbnails placed INSIDE Figure 4.1's schematic rather than figures of their own, and the appendix pairs (B.1/B.2, C.1-C.4) were identified from each page's own caption lines rather than from page order. The three agent-skills documents (arxiv-2602.12670v4, skill-authoring-best-practices---claude-platform-docs, equipping-agents-for-the-real-world-with-agent-skills-anthro) arrived from agent-skills/library/image-verdicts.json when that corpus dissolved into cat-harness (bean j7ql, 2026-10-01); their verdicts are unchanged and that file's file-wide attribution (2026-09-23) is kept per document under `attribution`.",
   "inspected_by": {
     "kind": "agent",
     "id": "claude",
@@ -473,6 +473,346 @@
         "saw": "captioned 'Figure 4 ODRL Shared Properties' on page 26; Policy with dashed arrows to Party, Asset and Action and solid arrows to Rule 1..n",
         "draft": "Figure 4, ODRL Shared Properties: a Policy linked to Rule 1, Rule 2 and so on to Rule n. Dashed arrows show properties declared once on the Policy and shared by all its Rules: the function properties assigner and assignee to a Party (uid), the relation property target to an Asset, and action to an Action."
       }
+    },
+    "arxiv-2602.12670v4": {
+      "img-p003-1": {
+        "role": "logo",
+        "saw": "the Claude Code mark beside its label in the harness list",
+        "draft": "Claude Code's logo: a white many-pointed starburst on a rounded terracotta square. It sits beside the \"Claude Code\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-2": {
+        "role": "logo",
+        "saw": "the Gemini CLI mark beside its label in the harness list",
+        "draft": "Gemini CLI's logo: a blue-to-magenta gradient chevron on a rounded near-black square with a matching gradient border. It sits beside the \"Gemini CLI\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-3": {
+        "role": "logo",
+        "saw": "the Codex CLI mark beside its label in the harness list",
+        "draft": "Codex CLI's logo: a white `>_` terminal prompt on a violet-to-blue gradient, in a scalloped cloud outline. It sits beside the \"Codex CLI\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-4": {
+        "role": "logo",
+        "saw": "the OpenHands mark beside its label in the harness list",
+        "draft": "OpenHands' logo: two raised yellow hands with short motion lines above them, on a white rounded square. It sits beside the \"OpenHands\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p025-1": {
+        "role": "figure",
+        "saw": "the \"Pass Rate\" colour scale for the page's heatmap, 1.0 blue at top to 0.0 red at bottom",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Pass Rate\" and running from 1.0 at the top to 0.0 at the bottom. Dark blue at 1.0 fades through mid and pale blue to near-white and pale green around 0.6, pale yellow near 0.5, then yellow, orange, red and dark crimson at 0.0. Blue therefore marks a HIGH pass rate and red a LOW one — the scale is inverted relative to the common convention that red is high, so reading it the usual way reverses every cell."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "the \"Pass Rate\" colour scale for the page's heatmap, 1.0 blue at top to 0.0 red at bottom",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Pass Rate\" and running from 1.0 at the top to 0.0 at the bottom. Dark blue at 1.0 fades through mid and pale blue to near-white and pale green around 0.6, pale yellow near 0.5, then yellow, orange, red and dark crimson at 0.0. Blue therefore marks a HIGH pass rate and red a LOW one — the scale is inverted relative to the common convention that red is high, so reading it the usual way reverses every cell."
+      },
+      "img-p027-1": {
+        "role": "figure",
+        "saw": "the \"Delta Pass Rate\" diverging scale, +0.6 blue to -0.6 red about a white zero — a DIFFERENT scale from pp. 25-26",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Delta Pass Rate\" and diverging about zero: +0.6 dark blue at the top, through mid and pale blue to WHITE at 0.0 in the centre, then pale red, red and dark crimson to -0.6 at the bottom. Blue marks a positive change in pass rate and red a negative one. This is NOT the same scale as the \"Pass Rate\" bars on the two preceding pages: it is signed, centred on zero, and carries no yellow band."
+      }
+    },
+    "skill-authoring-best-practices---claude-platform-docs": {
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "the SKILL.md anatomy diagram — YAML frontmatter above, Markdown body below",
+        "draft": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file."
+      },
+      "img-p008-1": {
+        "role": "figure",
+        "saw": "the bundling diagram — SKILL.md linking out to reference.md and forms.md",
+        "draft": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them."
+      },
+      "img-p024-1": {
+        "role": "figure",
+        "saw": "the executable-script diagram — forms.md linking to extract_fields.py",
+        "draft": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose."
+      }
+    },
+    "equipping-agents-for-the-real-world-with-agent-skills-anthro": {
+      "img-p002-1": {
+        "role": "figure",
+        "saw": "the architecture diagram — agent configuration on the left, its virtual machine on the right",
+        "draft": "Diagram titled \"Agent + Skills + Virtual Machine\", in two panels. Left, \"Agent configuration\": a core system prompt, a row of equipped Skills (bigquery, docx, nda-review, pdf, pptx, xlsx and others), and three equipped MCP servers which arrow down to remote MCP servers elsewhere on the internet. Right, \"Agent virtual machine\": Bash, Python and Nodejs above a file system holding one directory per skill — skills/bigquery/ with SKILL.md, datasources.md and rules.md; skills/docx/ with SKILL.md and an ooxml/ subtree; skills/nda-review/; skills/pdf/ with SKILL.md, forms.md, reference.md and extract_fields.py. A labelled arrow between the panels reads \"use computer\", and a note explains that the contents of Skill directories live in the agent computer's file system."
+      },
+      "img-p003-1": {
+        "role": "figure",
+        "saw": "the SKILL.md anatomy diagram — same figure as the platform docs, name: pdf",
+        "draft": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file."
+      },
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "the bundling diagram — SKILL.md linking out to reference.md and forms.md",
+        "draft": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them."
+      },
+      "img-p004-2": {
+        "role": "figure",
+        "saw": "a TABLE rendered as an image — the three progressive-disclosure levels",
+        "draft": "Table of the three progressive-disclosure levels, four columns: Level, File, Context Window, # Tokens. Level 1 is SKILL.md metadata (YAML), always loaded, about 100 tokens. Level 2 is the SKILL.md body (Markdown), loaded when the Skill triggers, under 5k tokens. Level 3 and beyond is bundled files — text files, scripts, data — loaded as needed by Claude, marked unlimited with an asterisk. The table is an IMAGE, so none of these figures appear in the page's text layer."
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "the context-window walkthrough — how a Skill enters and is read",
+        "draft": "Diagram titled \"Skills and the Context Window\", showing one conversation as it fills the window. At the top, the agent's system prompt followed by short snippets from each equipped Skill (bigquery, docx, nda-review, pdf, pptx, xlsx). Below it the user's message asking for a PDF to be filled out, with an attachment at /mnt/uploads/order_form.pdf. Claude then replies that it will use the PDF Skill and issues Bash(\"cat /mnt/skills/pdf/SKILL.md\"); the tool result returns that file's contents. A second tool use, Bash(\"cat /mnt/skills/pdf/forms.md\"), follows the reference found inside SKILL.md. Callouts on either side label each step. The point is that only the snippets are always present — the body and the bundled files are read on demand."
+      },
+      "img-p006-1": {
+        "role": "figure",
+        "saw": "the executable-script diagram — forms.md linking to extract_fields.py",
+        "draft": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose."
+      }
+    },
+    "omg-2024-spdx-3-0": {
+      "img-p001-1": {
+        "role": "logo",
+        "saw": "the publisher's logo on the title page, above the title; it is not a figure and carries no content the title page's text does not",
+        "draft": "The OMG logo: the letters 'OMG' in dark grey, with a blue bar under the M, beside the words 'Standards Development Organization' in blue."
+      },
+      "img-p178-1": {
+        "role": "figure",
+        "saw": "Figure A.1 of the specification, captioned 'Core Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the SPDX 3.0 Core profile. The abstract Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) is the root. Agent (with subclasses Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) and the abstract ElementCollection (profileConformance; element and rootElement) all specialise Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) and Bundle (context) specialise ElementCollection, Bom specialises Bundle, and LifecycleScopedRelationship (scope) specialises Relationship. A 'Non-Element Classes' box holds CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange and IntegrityMethod with its subclasses Hash (algorithm, hashValue) and PackageVerificationCode. Two further boxes list the simple data types (DateTime, MediaType, SemVer) and the enumerations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType)."
+      },
+      "img-p179-1": {
+        "role": "figure",
+        "saw": "Figure A.2 of the specification, captioned 'Software Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the Software profile. The abstract SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) specialises Core/Artifact; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) and Snippet (byteRange, lineRange, snippetFromFile File[1]) specialise SoftwareArtifact. Sbom (sbomType SbomType[0..*]) specialises Core/Bom, and ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) specialises Core/IntegrityMethod. Enumerations: ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose."
+      },
+      "img-p180-1": {
+        "role": "figure",
+        "saw": "Figure A.3 of the specification, captioned 'Security Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the Security profile. Vulnerability (publishedTime, modifiedTime, withdrawnTime) specialises Core/Artifact. The abstract VulnAssessmentRelationship specialises Core/Relationship, constrains 'to' to exactly one Element, and adds assessedElement, suppliedBy and the three times; it is specialised by CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) and the abstract VexVulnAssessmentRelationship (vexVersion, statusNotes). The VEX class has four subclasses: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) and VexUnderInvestigation. Enumerations: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType."
+      },
+      "img-p181-1": {
+        "role": "figure",
+        "saw": "Figure A.4 of the specification, captioned 'Licensing Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the two licensing profiles. Simple Licensing: the abstract AnyLicenseInfo specialises Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) specialises it, and SimpleLicensingText (licenseText[1]) specialises Element directly. Expanded Licensing: ConjunctiveLicenseSet and DisjunctiveLicenseSet (each with members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) and the abstract ExtendableLicense all specialise AnyLicenseInfo. ExtendableLicense is specialised by the abstract License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), with subclasses ListedLicense (deprecatedVersion, listVersionAdded) and CustomLicense, and by OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) specialises Element, with subclasses ListedLicenseException and CustomLicenseAddition."
+      },
+      "img-p182-1": {
+        "role": "figure",
+        "saw": "Figure A.5 of the specification, captioned 'Dataset Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the Dataset profile: one class, DatasetPackage, specialising Software/Package. It makes inherited properties mandatory (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, each [1]) and adds anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias and sensor. Enumerations: ConfidentialityLevelType, DatasetAvailabilityType, DatasetType."
+      },
+      "img-p183-1": {
+        "role": "figure",
+        "saw": "Figure A.6 of the specification, captioned 'AI Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the AI profile. AIPackage specialises Software/Package, making releaseTime, suppliedBy, downloadLocation, packageVersion and primaryPurpose mandatory, and adds autonomyType, domain, energyConsumption, hyperparameter, informationAboutApplication, informationAboutTraining, limitation, metric, metricDecisionThreshold, modelDataPreprocessing, modelExplainability, safetyRiskAssessment, standardCompliance, typeOfModel and useSensitivePersonalInformation. EnergyConsumption groups finetuning, inference and training EnergyConsumptionDescription entries (energyQuantity, energyUnit). Enumerations: EnergyUnitType, SafetyRiskAssessmentType."
+      },
+      "img-p184-1": {
+        "role": "figure",
+        "saw": "Figure A.7 of the specification, captioned 'Build Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the Build profile: one class, Build, specialising Core/Element, with buildType anyURI[1], buildId, configSourceEntryPoint, configSourceUri, configSourceDigest Hash[0..*], parameter DictionaryEntry[0..*], buildStartTime, buildEndTime and environment DictionaryEntry[0..*]."
+      },
+      "img-p184-2": {
+        "role": "figure",
+        "saw": "Figure A.8 of the specification, captioned 'Extension Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "UML class diagram of the Extension profile: the abstract Extension class, specialised by CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*]); CdxPropertyEntry has cdxPropName string[1] and cdxPropValue string[0..1] — a name/value carrier for CycloneDX properties."
+      },
+      "img-p205-1": {
+        "role": "figure",
+        "saw": "Figure F.1 of the specification, captioned '3T-SBOM draft core model (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "Historical UML class diagram of the 3T-SBOM group's draft core model (circa September 2020). Identity (Id, name, aliases, comment), specialised by Tool (user-agent), Organization and Person (a Person may belong to 0..1 Organization), is linked to Artifact (Id, artifact-url, name, comment) as supplier and as originator (each 0..1); a callout reads 'Need to capture contacts on supplier and originator links'. Artifact has Hashes (algorithm, value), ExternalReferences (type, locator, comment) and takes part in Relationship (type, completeness, comment) as from and to. DocumentMetadata has creators (1..* Identity); a Tool links to 0..1 ExternalDocumentReference (namespace, document-url, comment) by 'bill-of-materials', and that reference carries Hashes."
+      },
+      "img-p206-1": {
+        "role": "figure",
+        "saw": "Figure F.2 of the specification, captioned 'SPDX 3.0 draft core model (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "Historical UML class diagram of the SPDX community's draft 3.0 core model (circa September 2020). SpdxElement (SPDXID, Name) is the root; Identity, specialised by Person (Email), Organization (Email) and Tool (Version), specialises it. Artifact (Summary, Description) has 0..1 Originator and 0..1 Supplier Identity, Checksums (Hash: Algorithm, Value) and ExternalReferences (Category, Type, Locator, Comment). Package (Version) contains Files by PackageFile, File (Type) has Snippets (ByteRange, LineRange) by FromFile, and all three specialise Artifact. Annotation (Date, Type, Comment) has an Annotator Identity and an SPDXREF to an element; Relationship (Type, Comment) has To and From elements; SpdxDocument (SPDXVersion, DataLicence, a base-namespace URI — printed 'Banesoace', as drawn — Created, Profiles) has a Creator Identity and ExternalDocumentReferences (DocumentRef, Locator) with a Checksum."
+      },
+      "img-p207-1": {
+        "role": "figure",
+        "saw": "Figure F.3 of the specification, captioned 'Correspondence between 3T-SBOM and SPDX 3.0 draft models (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "The two drafts of Figures F.1 and F.2 side by side on a black background (3T-SBOM on the left, SPDX 3.0 on the right), with coloured ellipses and connecting lines pairing the corresponding parts: ExternalReference (light blue), ExternalDocumentReference (red), Hash (light green), Artifact (dark green), DocumentMetadata ↔ SpdxDocument (orange), Identity (dark red) and Relationship (blue). The point is visual: each concept in one draft has a counterpart in the other."
+      },
+      "img-p207-2": {
+        "role": "figure",
+        "saw": "Figure F.4 of the specification, captioned 'SPDX 2.3 Model compared to the SPDX 3.0 Model'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "draft": "Two UML diagrams joined by a large double-headed arrow. Left: the SPDX 2.3 model, centred on SpdxDocument, SpdxElement and SpdxItem, with Package, File, Snippet, Annotation, Relationship (a long RelationshipType enumeration from contains to hasPrerequisite), Checksum, ExternalRef, the licensing classes (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) and pink notes marking what was 'Added in 2.2'. Right: the SPDX 3.0 Core, Software and Security profiles as in Figures A.1–A.3, with Element as the root rather than SpdxDocument. At this resolution the small print of both diagrams is barely legible; the arrow, not the detail, is the figure's claim."
+      }
+    },
+    "strauch-carbno-2025-spdx-3-1-supply-chain": {
+      "img-p001-1": {
+        "role": "decorative",
+        "saw": "a small semi-transparent white rounded bar on the title slide ('Capturing the Supply Chain as HBOMs, SBOMs and more with SPDX 3.1'); it is invisible against the white slide and carries no text or symbol, so it is a layout ornament, not content",
+        "draft": "A blank, semi-transparent white bar with soft rounded edges; it contains no text, mark or picture."
+      },
+      "img-p001-2": {
+        "role": "logo",
+        "saw": "the square SPDX emblem in the lower-right corner of the title slide, repeated on the 'Topics' slide (page 3); repeated branding with no content beyond the slide text",
+        "draft": "The SPDX emblem without its wordmark: a dark navy square whose upper-left region is cut by a diagonal stripe in bright blue, with a smaller solid bright-blue square overlapping the lower-right corner."
+      },
+      "img-p002-1": {
+        "role": "logo",
+        "saw": "the SPDX logo with wordmark in the lower-left corner of 'Take Away Message', repeated on nearly every later slide (pages 2 and 4-43); repeated branding",
+        "draft": "The SPDX logo: the dark-navy and bright-blue square emblem beside the word 'SPDX' in bold black capitals."
+      },
+      "img-p002-2": {
+        "role": "logo",
+        "saw": "the small SPDX emblem in the upper-right corner of 'Take Away Message', repeated on pages 4-10; repeated branding",
+        "draft": "A small copy of the SPDX square emblem: a navy square with a diagonal bright-blue stripe and a bright-blue square overlapping its lower-right corner."
+      },
+      "img-p003-2": {
+        "role": "decorative",
+        "saw": "a small semi-transparent white rounded bar on the 'Topics' slide; invisible against the white background and carries no text or symbol",
+        "draft": "A blank, semi-transparent white bar with soft rounded edges; it contains no text, mark or picture."
+      },
+      "img-p004-3": {
+        "role": "figure",
+        "saw": "the only content of the slide titled 'SPDX History' (the slide text is just that title); the timeline is the slide's whole substance",
+        "draft": "A timeline graphic headed 'Timeline of SPDX Evolution - Use Case by Use Case', with a 'MITRE' logo at the bottom left and the footer '(c) 2024 The MITRE Corporation. All rights reserved. Approved for Public Release; Distribution Unlimited. Case No: 23-01614-54'. A row of blue arrow segments carries years and versions: 2010 'SPDX begins', 2011 'SPDX 1.0', 2013 'SPDX 1.2', 2015 'SPDX 2.0', 2018 '2.1 to ISO', 2019, 2020, 2021 'SPDX 2.3', 2022, 2023 'SPDX 3rc1', 2024+ 'SPDX 3.0'. Below the arrows: 2010 'Standardized Single Package Information: Machine and human readable formats'; 2011 'Compliance Use Cases: Additional Project and License Information'; 2013 'Package Relations: 30+ additional use cases supported for complex packaging relationships and distribution scenarios'; 2015 'Security use cases: External references for vulnerabilities and product identification'; 2020 'SPDX & 3T-SBOM efforts merge: SPDX revises charter as an SDO'; 2021 'Free ISO Standard: ISO/IEC 5962 SPDX available' with a thumbnail of the 'ISO/IEC 5962:2021' cover; 2022 'Format Interoperability' with CDx and SPDX logos; 2023 'Profiles: New areas of use cases: Build, Data, Security, AI, Lite'; 2024+ 'Profiles: New areas of use cases: Services, Hardware, Safety'. Above the arrows: an 'I AM THE Cavalry' logo with 'Legislation: proposed software transparency, updatability & bill of material as reqts in safety critical sectors (automotive & healthcare)'; the NTIA seal with 'NTIA: Software Transparency begins'; OMG and CISQ logos with '3T-SBOM: OMG/CISQ begins w/ CONOPs for Tool-to-Tool SBOM'; two vertical labels 'SPDX 3.0 initial draft' and '3T-SBOM initial draft' at 2020; a seal with 'Transition of SBOM work to DHS'; a thumbnail of 'Executive Order on Improving the Nation's Cybersecurity' with 'Executive Order 14028'; and a document thumbnail with 'EU Cyber Resilience Act'."
+      },
+      "img-p010-3": {
+        "role": "figure",
+        "saw": "the class diagram on the slide titled 'SPDX 3.1 Core', whose text lists the Core elements and cites 'https://github.com/spdx/spdx-3-model/blob/develop/images/model-Core.png'; the diagram is the slide's main content",
+        "draft": "UML class diagram in a frame tabbed 'Core profile', reproduced small: most attribute text is not legible at the extracted resolution, so only the larger class names are transcribed here, as drawn. Upper half: PhysicalLocation (attributes including country, countryCode, city, postalCode, postOfficeBoxNumber, provinceStateCode, streetAddress, geographicPointLocation), Location (locationTime), Requirement, Person, Organization (headquartersLocation : Location), SoftwareAgent and Agent; Element at the centre, with Annotation, Relationship, ElementCollection, SpdxDocument, Bundle, Bom, IndividualElement and LifecycleScopedRelationship around it; Tool and Artifact; DefinedProcess (processVersion, processRationale, processReadiness : ProcessReadinessType); Regulation pointing to Specification; and Action (actionStartTime, actionEndTime, actionLocation : Location, additionalInformation). Specification and Action each carry one attribute row shaded red. A 'Non-Element Classes' frame holds CreationInfo, ExternalIdentifier, ExternalMap, DictionaryEntry, ExternalRef, PositiveIntegerRange, NamespaceMap, IntegrityMethod with Hash and PackageVerificationCode, UnitOfMeasure (quantity, unitQUDT) with MeasureOfMass and MeasureOfLength, DefinedType and RequirementContext. A 'Simple Data Types' frame lists DateTime, MediaType, SemVer and one further type, and an 'Enumerations' frame lists about twelve enumeration names that are not reliably legible at this size."
+      },
+      "img-p011-2": {
+        "role": "logo",
+        "saw": "the 'SPDX HARDWARE' badge in the upper-right of 'Hardware Profile', repeated on pages 11-41; repeated branding with no content beyond the slide titles",
+        "draft": "A badge reading 'SPDX' in small white capitals above 'HARDWARE' in large white capitals on a blue gradient, with a stylised chip icon at the left."
+      },
+      "img-p011-3": {
+        "role": "figure",
+        "saw": "the class diagram on the slide titled 'Hardware Profile', whose text lists Physical, Virtual and Bulk hardware and cites 'https://github.com/spdx/spdx-3-model/blob/develop/images/model-Hardware.png'",
+        "draft": "UML class diagram in a frame tabbed 'Hardware profile'. Above the frame sit Core/ Specification and Core/ Element. ProductSpecification (hazard: DefinedType [0..*]) specialises Core/Specification. The abstract Hardware specialises Core/Element, with productAgent :Agent [1], hardwareVersion:xsd:string [0..1], partNumber : xsd:string [1], releaseDate :DateTime [0..1], serialNumber : xsd:string [0..1], batchNumber : xsd:string [0..1], hazard: DefinedType [0..*], category: DefinedType [0..*], additionalInformationSpecification : /Core/Specification [0..*] and additionalInformation :/Core/DictionaryEntry [0..*]. Three classes specialise Hardware: PhysicalHardware (massOfHardware: MeasureOfMass [0..1], dimensions : Dimensions [0..1], centerOfMass : Dimensions [0..1]); BulkHardware (bulkQuantity :Core/UnitofMeasure, plus two rows shaded red: /Hardware/Hardware/serialNumber : xsd:string [0] and /Core/Element/description :xsd:string [1]); and VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). A separate Dimensions class has xAxisLength, yAxisLength and zAxisLength, each : MeasureOfLength [1], and an 'Enumerations' frame holds VirtualHardwareModelType."
+      },
+      "img-p012-3": {
+        "role": "figure",
+        "saw": "the class diagram on the slide titled 'Supply Chain Profile', whose text lists Creation, Modify, Destroy, Actions, Responsibility, Use and Processes and cites 'https://github.com/spdx/spdx-3-model/blob/develop/images/model-SupplyChain.png'",
+        "draft": "UML class diagram of the Supply Chain profile, reproduced small: class names are mostly legible but most attribute text is not, so names are given as drawn and approximately. Three parents sit above the frame: Core/ Action, Core/ Artifact and Core/ DefinedProcess. The left column hangs action classes from Core/Action: CreateAction with HarvestingAction (or similar), AssemblyAction, ManufactureAction and ReproduceAction beneath it; UseAction with BoundaryCrossingAction, InspectionAction, OutOfSpecAction, PlanAction, ResolutionAction, a state-related action and TestAction; ModifyAction with ChangeAction, StorageAction and TransportAction; then BoundaryDefinitionAction, DestroyAction and ResponsibilityChangeAction. The right column mirrors it with process classes from Core/DefinedProcess: CreateProcess with InstantiateVirtualHardwareProcess, HarvestProcess, AssemblyProcess, ManufactureProcess and ReproduceProcess; UseProcess with InspectionProcess, PlanProcess, DefinedStateProcess and TestProcess among others; ModifyProcess with ChangeProcess, StorageProcess and TransportProcess; then BoundaryDefinitionProcess, DestroyProcess and ResponsibilityChangeProcess. A single class near the top centre hangs from Core/Artifact. Many classes carry one or more attribute rows shaded red, and a small 'Enumerations' frame at the lower right holds one enumeration."
+      },
+      "img-p014-3": {
+        "role": "decorative",
+        "saw": "an illustrative picture beside the label 'Hardware' on 'SPDX makes it easy to read and link / Use Case: Extracting Information'; it illustrates the label and adds nothing the slide text does not say",
+        "draft": "An illustration of a computer motherboard seen at an angle, with a processor, memory modules and a disk drive."
+      },
+      "img-p014-4": {
+        "role": "decorative",
+        "saw": "an illustrative picture beside the label 'Software' on 'SPDX makes it easy to read and link'; it illustrates the label and adds nothing the slide text does not say",
+        "draft": "An illustration of a desktop computer monitor and keyboard surrounded by screens, charts and interface panels, suggesting software."
+      },
+      "img-p014-5": {
+        "role": "decorative",
+        "saw": "an illustrative picture beside the label 'Processes' on 'SPDX makes it easy to read and link'; its boxes carry no legible content, so it adds nothing the slide text does not say",
+        "draft": "A sketch-style illustration of many small boxes and devices joined by lines, like a process or flow diagram with no legible labels."
+      },
+      "img-p014-6": {
+        "role": "decorative",
+        "saw": "an illustrative picture beside the label 'Network' on 'SPDX makes it easy to read and link'; it illustrates the label and adds nothing the slide text does not say",
+        "draft": "An illustration of networked equipment (a laptop, switches, routers and other boxes) linked by cables."
+      },
+      "img-p016-3": {
+        "role": "figure",
+        "saw": "the only content beneath the slide title 'SPDX makes it easy to read and link / Use Case: Viewing Information'; the slide text says nothing about what the graph contains",
+        "draft": "A screenshot of a graph-editor canvas with node cards, each showing a type and a name, joined by labelled edges. Organization 'Smart Talk Becom' is reached by a 'createdBy' edge from CreationInfo '3.0.1'. PhysicalHardware 'AMD A10-6700 APU with Rad...' has a 'productAgent' edge to Organization 'AMD' and a 'to' edge to Relationship 'hasOutput'. Relationship 'hasOutput' has a 'from' edge to ManufacturerAction 'Make CPU', which has a 'from' edge to Relationship 'hasInput', which has a 'to' edge to PhysicalHardware 'Wafer'. 'Wafer' has a 'productAgent' edge to Organization 'TMC Technology'. Relationship 'performedBy' has a 'from' edge to 'Make CPU' and a 'to' edge to 'TMC Technology'. The type name 'ManufacturerAction' and the spelling 'Smart Talk Becom' are as drawn."
+      },
+      "img-p021-3": {
+        "role": "figure",
+        "saw": "one of two definition panels on 'Supply Chain And SPDX / Example Supply Chain And Visualization in SPDX', whose text introduces 'a Graphite mining org->(SPDX Organization)'; this panel shows the Organization definition the text refers to",
+        "draft": "A screenshot of a definition pop-up titled 'Organization'. Summary: 'A group of people who work together in an organized way for a shared purpose.' Description: 'An Organization is a group of people who work together in an organized way for a shared purpose.' Metadata: 'https://spdx.org/rdf/3.0.1/terms/Core/Organization'; Instantiability 'Concrete'; SubclassOf 'Agent'."
+      },
+      "img-p021-4": {
+        "role": "figure",
+        "saw": "the second definition panel on the same slide, whose text says 'Mining is a HarvestAction'; this panel shows the HarvestAction definition",
+        "draft": "A screenshot of a definition pop-up titled 'HarvestAction'. Summary: 'HarvestAction represents the act of creating a product by directly extracting goods or materials from nature.' Description: 'HarvestAction refers to an event where goods or products are obtained directly from natural sources. This includes activities such as mining, and fishing. In such cases, there may be no associated hasInput relationships, as the products are not assembled from other components but sourced directly.' Metadata: 'https://spdx.org/rdf/3.1/terms/SupplyChain/HarvestAction'; Instantiability 'Concrete'; SubclassOf 'CreateAction'."
+      },
+      "img-p022-3": {
+        "role": "figure",
+        "saw": "the graph screenshot on 'Supply Chain And SPDX / Example Supply Chain', whose text says 'This Harvest Action can have relationships to other SPDX Items'; the same image is placed again on page 23",
+        "draft": "A screenshot of a graph-editor canvas centred on a highlighted green node, HarvestAction 'Mine Graphite'. Dashed 'from' edges join it to four Relationship nodes: 'hasInput' (above), 'conformsTo' (left), 'performedBy' (upper right) and 'hasOutput' (lower left). Solid edges run from it to Organization 'Graphite Mineing LLD' (labelled 'originatedBy') and to PhysicalLocation 'Mine Site A' (labelled 'action_location'). Other nodes are drawn faded in the background and are not legible. The spellings 'Mineing LLD' and 'action_location' are as drawn."
+      },
+      "img-p024-3": {
+        "role": "figure",
+        "saw": "the graph screenshot on 'Example Supply Chain / Organization', whose text says organization relationships define the role an organization plays in relation to other elements in the graph",
+        "draft": "A screenshot of a graph-editor canvas centred on Organization 'Graphite Mineing LLD'. Edges into it: 'originatedBy' from HarvestAction 'Mine Graphite'; 'productAgent' from BulkHardware 'Graphite' (drawn in gold); 'previous' from each of two nodes titled 'ResponsibilityChange...' (truncated, green); and a dashed 'to' edge from Relationship 'performedBy'. A CreationInfo node '3.1' sits at the upper right, unconnected as drawn. Other nodes are faded and not legible."
+      },
+      "img-p025-3": {
+        "role": "figure",
+        "saw": "the graph screenshot on 'Example Supply Chain', whose text reads 'Consider the Output relationship. Harvest Action produces BulkHardware.'",
+        "draft": "A screenshot of a graph-editor canvas with three highlighted nodes: HarvestAction 'Mine Graphite', Relationship 'hasOutput' and BulkHardware 'Graphite'. A dashed 'from' edge joins 'hasOutput' to 'Mine Graphite', and a dashed 'to' edge joins 'hasOutput' to 'Graphite'. The rest of the graph is drawn faded and is not legible."
+      },
+      "img-p026-3": {
+        "role": "figure",
+        "saw": "the definition panel on 'Example Supply Chain', whose text says BulkHardware measurement units can be used to record CO2 emissions per action and cites QUDT",
+        "draft": "A screenshot of a definition pop-up titled 'BulkHardware'. Summary: 'Products or commodities produced as a bulk unit are called bulk products. Commodities are often sold in bulk.' Description: 'Products or commodities produced as a bulk unit are called bulk products. Commodities are often sold in bulk based on a batch or bulk ID number associated with the bulk unit. Bulk units defined in the QUDT Units standards.' Metadata: 'https://spdx.org/rdf/3.1/terms/Hardware/BulkHardware'; Instantiability 'Concrete'; SubclassOf 'Hardware'."
+      },
+      "img-p027-3": {
+        "role": "figure",
+        "saw": "the larger of two images on 'Example Supply Chain', whose text says bulk hardware units and measurement are defined in bulk Quantity, '/Core/UnitOfMeasure'; this one shows the bulkQuantity definition",
+        "draft": "A screenshot of a definition pop-up titled 'bulkQuantity'. Summary: 'The amount or measure of a bulk product.' Description: 'The amount or measure of a bulk product includes the quality and unit of measure.' Metadata: 'https://spdx.org/rdf/3.1/terms/Hardware/bulkQuantity'."
+      },
+      "img-p027-4": {
+        "role": "figure",
+        "saw": "the second image on the same slide; it shows the bulkQuantity value instantiated in the graph, which the slide text does not give",
+        "draft": "A screenshot of two graph nodes: BulkHardware 'Graphite' (gold) with a 'bulkQuantity' edge to an expanded UnitOfMeasure node whose fields read 'quantity*' = '7.8' and 'unitQUDT*' = 'http://qudt.org/vocab/unit/MTON'."
+      },
+      "img-p028-3": {
+        "role": "figure",
+        "saw": "one of two images on 'Example Supply Chain / Representing a TransportAction'; this one shows the TransportAction definition",
+        "draft": "A screenshot of a definition pop-up titled 'TransportAction'. Summary: 'An actual change to a product's location.' Description: 'A TransportAction expresses the change in location of a product, such as a component being moved from an assembly plant to a warehouse.' Metadata: 'https://spdx.org/rdf/3.1/terms/SupplyChain/TransportAction'; Instantiability 'Concrete'; SubclassOf 'ModifyAction'."
+      },
+      "img-p028-4": {
+        "role": "figure",
+        "saw": "the second image on 'Representing a TransportAction'; it shows a TransportAction node and its links in the graph",
+        "draft": "A screenshot of a graph-editor canvas centred on TransportAction 'Transport to Train' (green). A 'pickupLocation' edge runs to PhysicalLocation 'Mine Site A' and a 'dropoffLocation' edge to PhysicalLocation 'Load Terminal #4'. Dashed 'from' edges join it to Relationship 'hasInput', Relationship 'hasOutput' and Relationship 'performedBy'. The rest of the graph is drawn faded."
+      },
+      "img-p029-3": {
+        "role": "figure",
+        "saw": "the largest of three images on 'Representing a TransportAction / Dropoff or pickup links'; it repeats the TransportAction graph view that the two smaller definition panels annotate",
+        "draft": "A screenshot of the same graph view as the previous slide: TransportAction 'Transport to Train' (green) with a 'pickupLocation' edge to PhysicalLocation 'Mine Site A', a 'dropoffLocation' edge to PhysicalLocation 'Load Terminal #4', and dashed 'from' edges to Relationship 'hasInput', Relationship 'hasOutput' and Relationship 'performedBy'. Other nodes are faded."
+      },
+      "img-p029-4": {
+        "role": "figure",
+        "saw": "a definition panel on 'Representing a TransportAction', whose text reads 'Dropoff or pickup links'; this one defines pickupLocation",
+        "draft": "A screenshot of a definition pop-up titled 'pickupLocation'. Summary: 'The location for picking up a package or item.' Description: 'This is a specific location that an item was picked up.' Metadata: 'https://spdx.org/rdf/3.1/terms/SupplyChain/pickupLocation'."
+      },
+      "img-p029-5": {
+        "role": "figure",
+        "saw": "the second definition panel on the same slide; this one defines dropoffLocation",
+        "draft": "A screenshot of a definition pop-up titled 'dropoffLocation'. Summary: 'The location for dropping off or delivering a package or item.' Description: 'This is a specific location that an item was dropped off to.' Metadata: 'https://spdx.org/rdf/3.1/terms/SupplyChain/dropoffLocation'."
+      },
+      "img-p030-3": {
+        "role": "figure",
+        "saw": "the graph screenshot on 'Example Supply Chain', whose text reads 'TransportAction can link to new TransportAction'",
+        "draft": "A screenshot of a graph-editor canvas showing two TransportActions in sequence. TransportAction 'Transport to Train' has a 'dropoffLocation' edge to PhysicalLocation 'Load Terminal #4'; TransportAction 'Train To Siding 341A' has a 'pickupLocation' edge to 'Load Terminal #4' and a 'dropoffLocation' edge to PhysicalLocation 'Siding 341A'. Each TransportAction has its own Relationship 'hasInput', 'hasOutput' and 'performedBy' nodes; BulkHardware 'Graphite' (gold) is reached by 'to' edges from those relationships and has a 'bulkQuantity' edge leaving the top of the view. 'Transport to Train' is performed by Organization 'Safe Trucking LTD', and 'Train To Siding 341A' by Organization 'KJ Trains LTD'. Two 'ResponsibilityChange...' nodes (truncated) carry 'previous', 'current' and 'responsibilityChangedOn' edges; one is expanded to show 'responsibilityCategory*' = 'ownership' and actionStartTime and actionEndTime fields with values beginning '2025-08-27'. A Relationship 'isLocatedAt' links PhysicalLocation 'Siding 341A' to Organization 'Carbon Graph Inc'."
+      },
+      "img-p031-3": {
+        "role": "figure",
+        "saw": "the graph screenshot on 'Example Supply Chain', whose text reads 'Showing a Custody of a assist/product change'",
+        "draft": "A screenshot of a graph-editor canvas centred on an expanded node titled 'ResponsibilityChange...' (truncated), whose 'responsibilityCategory*' field is set to 'custody'. It has a 'previous' edge to Organization 'Graphite Mineing LLD', a 'current' edge to Organization 'Safe Trucking LTD' and a 'responsibilityChangedOn' edge to BulkHardware 'Graphite'. Other nodes are drawn faded."
+      },
+      "img-p032-3": {
+        "role": "figure",
+        "saw": "the larger image on 'Supply Chain and SPDX / Example Supply Chain / Full graph'; it is the full graph the earlier slides showed piece by piece",
+        "draft": "A screenshot of the whole example graph in a graph editor, zoomed out so that most labels are not legible at the extracted resolution. The legible nodes include HarvestAction 'Mine Graphite', BulkHardware 'Graphite' (gold), Organization 'Graphite Mineing LLD', PhysicalLocation 'Mine Site A', TransportAction 'Transport to Train' and 'Train To Siding 341A', PhysicalLocation 'Load Terminal #4' and 'Siding 341A', two ResponsibilityChange nodes, Organizations 'Safe Trucking LTD', 'KJ Trains LTD' and 'Carbon Graph Inc', a UnitOfMeasure node, a CreationInfo node, a Regulation node joined to an ExternalIdentifier node, a second gold BulkHardware node at the top, and many Relationship nodes. A vertical toolbar of icons runs down the left edge and a collapse button sits at the upper right."
+      },
+      "img-p032-4": {
+        "role": "figure",
+        "saw": "the narrow panel on the 'Full graph' slide; it is the editor's class browser, which the slide text does not describe",
+        "draft": "A screenshot of a searchable tree list with a 'Search...' box and collapsible groups: AI, Build, Core, Dataset, ExpandedLicensing, Extension, Hardware, Security, SimpleLicensing, Software and SupplyChain. SupplyChain is expanded and lists AssemblyAction, AssemblyProcess, BoundaryCrossingAction, BoundaryDefinitionAction, BoundaryDefinitionProcess, ChangeAction, ChangeProcess, DestroyAction, DestroyProcess, HarvestAction, HarvestProcess, InspectionAction, InspectionProcess, InstantiationVirtualHardwarePro... (truncated), ManufacturerAction and ManufacturerProcess; the list continues below the visible area."
+      },
+      "img-p037-3": {
+        "role": "figure",
+        "saw": "the only content of the slide titled 'Assembling a Regulatory Requirement / SPDX Elements Used to Define Regulation'",
+        "draft": "An object diagram of an example regulation. The central Regulation box lists: spdxId: ExampleID1234567890; description: an Example for a export Regulation; creationInfo: CreationInfo[1]; externalRef: ExternalRef[0..*]; comment: xsd:string[0..1]; summary: 2025 export Regulation for \"XYZ\"; name: DIN 123456789. An arrow runs from Regulation to CreationInfo (specVersion: 3.1; created: 2025 08 31; createdBy:; createdUsing: Tool[0..*]; comment: xsd:string[0..1]), and from CreationInfo to Organization (description: Government Organization; name: Gov Org; spdxId: Org1abcd). Another arrow runs to ExternalRef (externalRefType: documentation; locator: .gov/Regulaion-123; comment: An Passed Regulation). Three arrows labelled 'Contens' run from Regulation to Requirement (requirementText: Must provide a country of origin), Requirement (requirementText: Must provide a product name) and a stacked-document shape labelled 'Addition Requirements'. The spellings 'Contens', 'Regulaion' and 'Addition' are as drawn."
+      },
+      "img-p040-1": {
+        "role": "logo",
+        "saw": "the SPDX logo with wordmark placed in the centre of the 'Uranium Mining Metadata' diagram, as the box that data flows into; it is the same branding mark used throughout and names nothing the slide text does not",
+        "draft": "The SPDX logo: the navy and bright-blue square emblem beside the word 'SPDX' in bold black capitals."
+      },
+      "img-p040-2": {
+        "role": "decorative",
+        "saw": "a photograph captioned 'Disposal Site' at the upper left of 'Uranium Mining Metadata'; it illustrates the caption and carries no information beyond it",
+        "draft": "A black-and-white photograph of a large excavated pit or open-cut site with terraced walls, a group of buildings or tanks on its floor and mountains behind."
+      },
+      "img-p040-3": {
+        "role": "figure",
+        "saw": "the excerpt labelled 'Structured Document definition (One example)' on 'Uranium Mining Metadata'; its table carries content the slide text does not",
+        "draft": "An excerpt from a document headed 'Appendix Y: Classes of Nuclear Substances'. Text: 'The following table organizes a number of common nuclear substances, including those for which surface contamination and waste disposal limits are typically incorporated into CNSC licences, into three classes -Class A, Class B, or Class C- on the basis of common radiological characteristics.' and 'To find out the classification, for regulatory purposes, of any nuclear substance that is not listed below, contact a CNSC Licensing Specialist at 1-888-229-2672.' Under 'CLASS A: 3 Bq/cm2 controlled, 0.3 Bq/cm2 public' a table lists Ag-110m, Bi-210, Co-56, Co-60, Cs-134, Cs-137, I-124, Lu-177m, Mn-52, Na-22, Po-210, Pu-238, Pu-239, Pu-240, Sb-124, Sc-46, Sr-82, U-234, U-235, U-238, V-48, Zn-65 and 'All alpha emitters and their daughter isotopes'."
+      },
+      "img-p042-2": {
+        "role": "logo",
+        "saw": "the presenters' company logo on the closing contact slide, which names 'Smart Talk Beacon Solutions Inc.' in its text; a logo carries no content beyond that",
+        "draft": "The Smart Talk Beacon logo: a blue starburst of triangles around a pale circle containing a dark keyhole shape, above the words 'SMART TALK', 'BEACON' in large blue capitals, and 'BULLETPROOF SECURITY'."
+      }
     }
   },
   "attribution": {
@@ -493,6 +833,48 @@
         "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
       },
       "inspected_at": "2026-10-01"
+    },
+    "arxiv-2602.12670v4": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "inspected_at": "2026-09-23"
+    },
+    "skill-authoring-best-practices---claude-platform-docs": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "inspected_at": "2026-09-23"
+    },
+    "equipping-agents-for-the-real-world-with-agent-skills-anthro": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "inspected_at": "2026-09-23"
+    },
+    "omg-2024-spdx-3-0": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "inspected_at": "2026-10-03"
+    },
+    "strauch-carbno-2025-spdx-3-1-supply-chain": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "inspected_at": "2026-10-03"
     }
   }
 }

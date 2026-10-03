@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# landauer-foltz-laham-1998-intro-lsa
+# An Introduction to Latent Semantic Analysis
 
 ingested source material — attributed to its document, not folio content
 

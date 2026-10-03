@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "content-block-review",
+    "path": "skills/content/folio-paper-adapter/content-block-review.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/content-block-review.ts",
+      "prose_hash": "716dc9a3d0bd",
+      "code_hash": "96ecd9ffaf77",
+      "by": "baseline"
+    }
+  ]
+}

@@ -8,39 +8,41 @@
   },
   "po": "translations/ru/getting-started.po",
   "source_hashes": {
-    "md": "16828b9e9b25",
-    "po": "614979f1e894"
+    "md": "26fb5b1204ec",
+    "po": "dcaf40223c6b"
   },
   "criteria": {
     "translation-coverage": [
       {
         "field_hash": {
-          "md": "16828b9e9b25",
-          "po": "614979f1e894"
+          "md": "26fb5b1204ec",
+          "po": "dcaf40223c6b"
         },
-        "result": "pass",
+        "result": "warn",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
           "actor": "local-sweep",
           "version": "v1",
-          "script_hash": "bfa208ac04cb",
+          "script_hash": "498ddac874a0",
           "script_commit_sha": "b40f407b1d9ea73187c3d777b83d39cd96b2ad0b"
         },
-        "reviewed_at": "2026-10-01T00:12:55.947Z",
-        "reviewed_sha": "1af1a57397407899b715647bc1f74926f02da383",
+        "reviewed_at": "2026-10-03T07:54:23.796Z",
+        "reviewed_sha": "0844d868ddcdf3038c926016f96e37b300321651",
+        "severity": "minor",
         "metrics": {
-          "translated": 149,
+          "translated": 148,
           "total": 149,
-          "pct": 100
-        }
+          "pct": 99
+        },
+        "notes": "1 of 149 strings carry no translation in this locale."
       }
     ],
     "translation-terms-preserved": [
       {
         "field_hash": {
-          "md": "16828b9e9b25",
-          "po": "614979f1e894"
+          "md": "26fb5b1204ec",
+          "po": "dcaf40223c6b"
         },
         "result": "fail",
         "reviewer": {
@@ -48,11 +50,11 @@
           "id": "content/pipeline/translation-block-qa.ts",
           "actor": "local-sweep",
           "version": "v1",
-          "script_hash": "bfa208ac04cb",
+          "script_hash": "498ddac874a0",
           "script_commit_sha": "b40f407b1d9ea73187c3d777b83d39cd96b2ad0b"
         },
-        "reviewed_at": "2026-10-01T00:12:55.953Z",
-        "reviewed_sha": "1af1a57397407899b715647bc1f74926f02da383",
+        "reviewed_at": "2026-10-03T07:54:23.803Z",
+        "reviewed_sha": "0844d868ddcdf3038c926016f96e37b300321651",
         "severity": "major",
         "evidence": [
           {
@@ -60,7 +62,7 @@
           }
         ],
         "metrics": {
-          "checked": 149,
+          "checked": 148,
           "missing": 1,
           "missing_strict": 1,
           "missing_acronyms": 0,
@@ -72,8 +74,8 @@
     "translation-not-echo": [
       {
         "field_hash": {
-          "md": "16828b9e9b25",
-          "po": "614979f1e894"
+          "md": "26fb5b1204ec",
+          "po": "dcaf40223c6b"
         },
         "result": "warn",
         "reviewer": {
@@ -81,20 +83,20 @@
           "id": "content/pipeline/translation-block-qa.ts",
           "actor": "local-sweep",
           "version": "v1",
-          "script_hash": "bfa208ac04cb",
+          "script_hash": "498ddac874a0",
           "script_commit_sha": "b40f407b1d9ea73187c3d777b83d39cd96b2ad0b"
         },
-        "reviewed_at": "2026-10-01T00:12:55.958Z",
-        "reviewed_sha": "1af1a57397407899b715647bc1f74926f02da383",
+        "reviewed_at": "2026-10-03T07:54:23.808Z",
+        "reviewed_sha": "0844d868ddcdf3038c926016f96e37b300321651",
         "severity": "minor",
         "metrics": {
           "echoed": 13,
-          "translated": 149
+          "translated": 148
         },
         "notes": "13 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
       }
     ],
     "translation-semantic-roundtrip": []
   },
-  "updated_at": "2026-10-01T00:12:55.960Z"
+  "updated_at": "2026-10-03T07:54:23.811Z"
 }

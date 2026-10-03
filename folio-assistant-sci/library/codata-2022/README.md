@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# allascii-codata-2022.txt
+# codata-2022
 
 _No disposition is recorded for `codata-2022`._
 

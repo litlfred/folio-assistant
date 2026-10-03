@@ -54,7 +54,7 @@ const VIEWERS: Viewer[] = [
   {
     id: "library-viewer",
     title: "Library viewer",
-    description: "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.",
+    description: "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance, and give every entry its own path IRI (<library>/<instance>/<id>/): a materialized thin shell that loads the entry from the published projection, with its JSON-LD manifest as the alternate.",
     script: "library:viz",
     renders: ["library"],
   },
@@ -106,6 +106,13 @@ const VIEWERS: Viewer[] = [
     description: "Render each declared voices directory as a page per subject instance.",
     script: "voices:viz",
     renders: ["voices"],
+  },
+  {
+    id: "document-kinds-viewer",
+    title: "Document kinds viewer",
+    description: "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.",
+    script: "document-kinds:viz",
+    renders: ["document-kinds"],
   },
   {
     id: "state-viewer",

@@ -27,9 +27,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>17</b><span>specifications</span></div>
-<div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>195</b><span>declared uses</span></div>
+<div class="xs-stat"><b>22</b><span>specifications</span></div>
+<div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>216</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -39,20 +39,25 @@ depends on it**, and **which of its terms this repository branches on**.
 |---|---|---|---|
 | **[DCMI Metadata Terms](#dcmi-terms)**<br>`dcmi-terms` | DCMI | [2020-01-20](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/) | `reads` — this repository parses documents written in it |
 | **[HL7 FHIR](#hl7-fhir)**<br>`hl7-fhir` | HL7 | [unpinned](https://hl7.org/fhir/) | `reads` — this repository parses documents written in it |
+| **[Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652)](#ietf-handle-system)**<br>`ietf-handle-system` | IETF | [2003-11](https://www.rfc-editor.org/rfc/rfc3650) | `conforms` — this repository's artefacts are valid against it |
 | **[Business Process Model and Notation (BPMN)](#omg-bpmn-2.0)**<br>`omg-bpmn-2.0` | OMG | [2.0](https://www.omg.org/spec/BPMN/2.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Diagram Definition (DD)](#omg-dd-1.0)**<br>`omg-dd-1.0` | OMG | [1.0](https://www.omg.org/spec/DD/1.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Decision Model and Notation (DMN)](#omg-dmn-1.3)**<br>`omg-dmn-1.3` | OMG | [1.3](https://www.omg.org/spec/DMN/1.3/) | `conforms` — this repository's artefacts are valid against it |
 | **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
+| **[SPDX License List](#spdx-license-list)**<br>`spdx-license-list` | other | [3.29.0](https://spdx.org/licenses/) | `reads` — this repository parses documents written in it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
 | **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
+| **[The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model](#w3c-prov-jsonld)**<br>`w3c-prov-jsonld` | W3C | [2024-08-25](https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/) | `conforms` — this repository's artefacts are valid against it |
 | **[PROV-O: The PROV Ontology](#w3c-prov-o)**<br>`w3c-prov-o` | W3C | [2013-04-30](https://www.w3.org/TR/prov-o/) | `conforms` — this repository's artefacts are valid against it |
+| **[RDF Calendar — an application of the Resource Description Framework to iCalendar Data](#w3c-rdf-calendar)**<br>`w3c-rdf-calendar` | W3C | [2005-09-29](https://www.w3.org/TR/rdfcal/) | `conforms` — this repository's artefacts are valid against it |
 | **[RDF 1.1 Concepts and Abstract Syntax](#w3c-rdf)**<br>`w3c-rdf` | W3C | [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) | `conforms` — this repository's artefacts are valid against it |
 | **[RDF Schema 1.1](#w3c-rdfs)**<br>`w3c-rdfs` | W3C | [2014-02-25](https://www.w3.org/TR/rdf-schema/) | `conforms` — this repository's artefacts are valid against it |
 | **[SKOS Simple Knowledge Organization System Reference](#w3c-skos)**<br>`w3c-skos` | W3C | [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) | `conforms` — this repository's artefacts are valid against it |
 | **[Web Annotation Vocabulary](#w3c-web-annotation)**<br>`w3c-web-annotation` | W3C | [2017-02-23](https://www.w3.org/TR/annotation-vocab/) | `conforms` — this repository's artefacts are valid against it |
 | **[XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes](#w3c-xsd11-datatypes)**<br>`w3c-xsd11-datatypes` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) | `conforms` — this repository's artefacts are valid against it |
+| **[W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures](#w3c-xsd11-structures)**<br>`w3c-xsd11-structures` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-1/) | `conforms` — this repository's artefacts are valid against it |
 | **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [v1.0.0](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
 
 ## Who declares each specification
@@ -68,17 +73,18 @@ Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
-Read from the BPMN and DMN files themselves — **6** namespace IRI(s)
+Read from the BPMN and DMN files themselves — **5** namespace IRI(s)
 are in use. Derived rather than listed, so a diagram that adopts a new
 vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**18 declared and not in use.** Not a defect on its own: a
+**25 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
 - `http://hl7.org/fhir/`
+- `http://purl.org/dc/dcam/`
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
 - `http://purl.org/spar/cito/`
@@ -89,13 +95,19 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/1999/02/22-rdf-syntax-ns#`
 - `http://www.w3.org/2000/01/rdf-schema#`
 - `http://www.w3.org/2001/XMLSchema#`
+- `http://www.w3.org/2001/XMLSchema-instance`
 - `http://www.w3.org/2002/07/owl#`
+- `http://www.w3.org/2002/12/cal/ical#`
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
+- `https://hdl.handle.net/`
+- `https://openprovenance.org/ns/provext#`
 - `https://schema.org/`
+- `https://spdx.org/licenses/`
+- `https://www.omg.org/spec/DMN/20191111/DMNDI/`
 
 ## Each specification
 
@@ -107,6 +119,7 @@ a registry nobody prunes is one that stops describing the repository.
 
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
+- `http://purl.org/dc/dcam/`
 
 **Note.** `reads`, not `conforms`: these records describe SOMEBODY ELSE'S metadata — DSpace's — so a DCMI revision is a compatibility question rather than a migration. THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT. `dublin-core.ts` was written from ONE captured IRIS record and carries the prefix string `dc` with no namespace URI and no edition, so it recorded what one deployment SPELLS rather than what the standard DEFINES — and a transcription with no cited edition cannot say whether a field it lacks is missing or simply not in that edition. The operative terms below are derived from the catalogue records, so they are what IRIS actually sends; DSpace also mints `dcterms`, `local` and other prefixes this repository has not met. A term absent here is UNDECLARED, not unsupported.
 
@@ -116,6 +129,8 @@ a registry nobody prunes is one that stops describing the repository.
 |---|---|
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| [`cat-harness/scripts/todo-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/todo-graph.ts) | `@conformsTo` tag |
+| [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
@@ -165,6 +180,9 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping-fhir.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping-fhir.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
 **Operative terms (1).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -173,6 +191,26 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `fhir:ValueSet` | derived from the corpus; what this repository does with it is not yet described |
+
+### Handle System Overview (RFC 3650), with its namespace (RFC 3651) and protocol (RFC 3652) {#ietf-handle-system}
+
+`ietf-handle-system` — IETF, edition [2003-11](https://www.rfc-editor.org/rfc/rfc3650) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://hdl.handle.net/`
+
+**Note.** The persistent identifiers DSpace mints (`<prefix>/<suffix>`, e.g. WHO IRIS's 10665/332098), written as IRIs through the global HTTP resolver https://hdl.handle.net/. Emitted by schemas/prov-jsonld.ts for PROV `prov:used`: owner decision 2026-10-01 (option A) links a catalogue item at its Handle, the identifier that outlives the publishing host, rather than at the host's own item URL. folio-assistant-core's catalogue schema (HandleSchema, handleIri) applies the same rule to catalogue records. The RFCs are Informational and define the identifier system; the hdl.handle.net proxy is the resolver its operators run, not a namespace in the vocabulary sense.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/prov-jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
 
 ### Business Process Model and Notation (BPMN) {#omg-bpmn-2.0}
 
@@ -190,14 +228,23 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/*.bpmn (68)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (5)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (23)` | `xmlns` binding |
+| `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
-| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
-| `large-datasets/processes/*.bpmn (5)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
-| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -243,12 +290,21 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/*.bpmn (68)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (5)` | `xmlns` binding |
+| `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
+| `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/*.bpmn (23)` | `xmlns` binding |
+| `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
-| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
-| `large-datasets/processes/*.bpmn (5)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
+| `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
-| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -269,7 +325,11 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/decisions/*.dmn (9)` | `xmlns` binding |
+| `cat-harness/processes/kg/decisions/*.dmn (3)` | `xmlns` binding |
+| `cat-harness/processes/sdlc/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
+| `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -290,6 +350,7 @@ graph. That is a determined zero, not an unfilled field.
 | user | declared by |
 |---|---|
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
+| [`cat-harness/scripts/todo-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/todo-graph.ts) | `@conformsTo` tag |
 
 **Operative terms (4).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -333,6 +394,26 @@ a subset of the edition rather than a transcription of it.
 | `doco:Formula` | derived from the corpus; what this repository does with it is not yet described |
 | `doco:Section` | derived from the corpus; what this repository does with it is not yet described |
 | `doco:Table` | derived from the corpus; what this repository does with it is not yet described |
+
+### SPDX License List {#spdx-license-list}
+
+`spdx-license-list` — other, edition [3.29.0](https://spdx.org/licenses/) — `reads`, meaning this repository parses documents written in it.
+
+**Namespaces.**
+
+- `https://spdx.org/licenses/`
+
+**Note.** The identifiers a `licence.json` `id` (and an `intake.json` licence) may use, as an SPDX licence expression: a listed licence or exception id, or a `LicenseRef-`. Adopted for VALIDATION ONLY on the owner's ruling 2026-10-03 (bean sd5v): 'go ahead with licence-id validation, that's it for now' — no SPDX documents are produced. The ids are snapshotted beside this record in spdx-license-list.terminology.json; move this pin, fetch github.com/spdx/license-list-data at tag v<version>, and re-run scripts/pin-spdx-license-list.ts to update both together. Authority is `other` because the list is published by the SPDX Legal Team of The Linux Foundation, not by a standards body this registry names.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/spdx-license-expression.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spdx-license-expression.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
 
 ### Metadata Vocabulary for Tabular Data {#w3c-csvw}
 
@@ -420,6 +501,26 @@ a subset of the edition rather than a transcription of it.
 | `owl:deprecated` | derived from the corpus; what this repository does with it is not yet described |
 | `owl:sameAs` | derived from the corpus; what this repository does with it is not yet described |
 
+### The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model {#w3c-prov-jsonld}
+
+`w3c-prov-jsonld` — W3C, edition [2024-08-25](https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://openprovenance.org/ns/provext#`
+
+**Note.** A W3C Member Submission (King's College London; editors Luc Moreau, Dong Huynh) — acknowledged by W3C, NOT endorsed. Adopted by owner decision 2026-10-01 (beans jcet, 9y9j) because W3C publishes no JSON-LD context for PROV-O; PROV itself stays pinned by w3c-prov-o. The text is held at library/w3c-2024-prov-jsonld and its context.jsonld beside it, pinned by sha256 in schemas/prov-jsonld.ts and served offline; provext# is the Submission's own extension namespace, which that context binds.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/prov-jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
 ### PROV-O: The PROV Ontology {#w3c-prov-o}
 
 `w3c-prov-o` — W3C, edition [2013-04-30](https://www.w3.org/TR/prov-o/) — `conforms`, meaning this repository's artefacts are valid against it.
@@ -445,6 +546,24 @@ a subset of the edition rather than a transcription of it.
 | `prov:alternateOf` | derived from the corpus; what this repository does with it is not yet described |
 | `prov:wasDerivedFrom` | derived from the corpus; what this repository does with it is not yet described |
 
+### RDF Calendar — an application of the Resource Description Framework to iCalendar Data {#w3c-rdf-calendar}
+
+`w3c-rdf-calendar` — W3C, edition [2005-09-29](https://www.w3.org/TR/rdfcal/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/2002/12/cal/ical#`
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/scripts/todo-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/todo-graph.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
 ### RDF 1.1 Concepts and Abstract Syntax {#w3c-rdf}
 
 `w3c-rdf` — W3C, edition [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) — `conforms`, meaning this repository's artefacts are valid against it.
@@ -459,6 +578,7 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | [`cat-harness/scripts/code-lists.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/code-lists.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 
 **Operative terms (2).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -510,11 +630,13 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
+| [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/vocabulary.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocabulary.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/glossary-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/glossary-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
-**Operative terms (21).** The terms this repository acts on —
+**Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -535,6 +657,7 @@ a subset of the edition rather than a transcription of it.
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
 | `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
 | `skos:memberList` | derived from the corpus; what this repository does with it is not yet described |
+| `skos:narrowMatch` | The SKOS rendering of FHIR R5's `source-is-broader-than-target` in a vocabulary mapping table (`SKOS_MATCH_FOR`, schemas/vocab-mapping.ts, bean k74z): `A skos:narrowMatch B` says B is narrower. |
 | `skos:notation` | The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the "coded glossary" requirement was satisfied by data that existed rather than by new authoring. |
 | `skos:note` | The status of a glossary term that is not `authored` (`candidate`, or `could-not-extract` with its reason), so a SKOS-only reader can tell it is not a curated definition (bean `lqo9`). |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |
@@ -574,6 +697,26 @@ graph. That is a determined zero, not an unfilled field.
 |---|---|
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures {#w3c-xsd11-structures}
+
+`w3c-xsd11-structures` — W3C, edition [2012-04-05](https://www.w3.org/TR/xmlschema11-1/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/2001/XMLSchema-instance`
+
+**Note.** Added for bean 7eak. The Dublin Core XML rendering (folio-assistant-core/schemas/dublin-core-render.ts) puts `xsi:type="dcterms:<Scheme>"` on an element to name its encoding scheme. That is how DCMI's Guidelines for implementing Dublin Core in XML (2003-04-02) carry W3CDTF, URI, RFC4646 and MESH. The `xsi` namespace is defined in Part 1 (Structures) §2.7, not in Part 2 (Datatypes), which `w3c-xsd11-datatypes` already pins. So this is a separate record and not an extra namespace on that one.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

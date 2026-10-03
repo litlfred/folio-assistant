@@ -77,8 +77,8 @@ a SWOT would be ceremony in front of it.
   contested origin, and its stated limitations
 - [`methodology-adoption`](methodology-adoption.md) — the selection question, and
   why methodologies are parallel rather than composable
-- `processes/swot-analysis.bpmn` — the executable process
-- `processes/options-analysis.bpmn` — where the candidates go next
+- `processes/process/swot-analysis.bpmn` — the executable process
+- `processes/sdlc/options-analysis.bpmn` — where the candidates go next
 {% endraw %}
 
 ## Processes that run this skill

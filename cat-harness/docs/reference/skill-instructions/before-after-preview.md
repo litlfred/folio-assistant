@@ -43,12 +43,28 @@ If the change is a folio block and the staging job already made its pictures,
 link to those. Use this skill for everything the job cannot make: page chrome,
 behaviour on scroll, a PDF page, an IG page, a slide.
 
+**A staging "after" is not permanent.** `gh-pages` keeps at most ten
+`STAGING/<slug>/` previews and rotates the least recently updated off (owner
+ruling 2026-10-02, issue #1868), so a link in a preview can 404 days later
+while the PR is still open. The next push to the branch re-stages it. Where the
+comparison must outlive that, publish the captures themselves (§6) rather than
+only the staging URL. Detail: [`staging-review`](staging-review.md) §"The cap".
+
 ## The rule
 
 > **A reviewer is shown a rendered change as a before/after pair. Each pair
 > comes from ONE build with ONE variable, is captured stably, is paired with a
 > measured count and its method, and has a status line saying what it is and
-> what was not checked.**
+> what was not checked. Each pair is introduced by a narrative: a sentence or
+> two, in plain words, on what a reader will now see or do differently and
+> why.**
+
+The narrative comes first, above the pictures. A pair without it makes the
+reviewer play spot-the-difference, and the difference they find first is not
+always the one that changed: a re-render shifts anti-aliasing, a merge brings
+in somebody else's edit. Name the change so the reviewer looks for it, then
+let the pair confirm it (owner, 2026-10-01: *"provide/show before/after,
+provide narrative description of change"*).
 
 If any part is missing, say so in the preview. Never drop a missing part
 silently.

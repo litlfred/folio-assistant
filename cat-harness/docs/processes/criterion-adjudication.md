@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/criterion-adjudication.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/criterion-adjudication.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Criterion adjudication
@@ -23,7 +23,7 @@ ADVISORY at the process level, for the reason the adjudication itself is: a judg
 
 ## How it connects
 
-- **Called by:** [Prose and the code it describes](narrative-code-review.html), [Narrative review](review-narrative.html), [Voice overlay review](voice-review.html), [Wireframe design review](wireframe-design-review.html)
+- **Called by:** [Narrative review](review-narrative.html), [Voice overlay review](voice-review.html), [Prose and the code it describes](narrative-code-review.html), [Wireframe design review](wireframe-design-review.html)
 - **Calls:** [Adjudication](adjudication.html)
 - **Presented on:** no docs page section shows this diagram
 

@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/isaitb-2026-interoperability-test-bed-readme/blocks/prose-s022-using-the-application",
   "@type": [
     "folio-assistant-core:Prose",
@@ -8,7 +13,7 @@
   "kind": "prose",
   "title": "Using the application",
   "text": "../sections/s022-using-the-application.md",
-  "derivedFrom": "library/isaitb-2026-interoperability-test-bed-readme/manifest",
-  "sourceDocument": "library/isaitb-2026-interoperability-test-bed-readme/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/isaitb-2026-interoperability-test-bed-readme/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/isaitb-2026-interoperability-test-bed-readme/manifest.jsonld",
   "provenance": "ingested"
 }

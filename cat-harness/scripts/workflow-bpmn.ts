@@ -13,7 +13,7 @@
  * accept an unknown key:
  *
  * ```yaml
- * # bpmn: cat-harness/processes/ci-health-watch.bpmn
+ * # bpmn: cat-harness/processes/sdlc/ci-health-watch.bpmn
  * jobs:
  *   report:
  *     # bpmn-node: Start_Sweep

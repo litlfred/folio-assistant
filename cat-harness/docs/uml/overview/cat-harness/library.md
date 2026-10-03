@@ -119,6 +119,7 @@ classDiagram
       outline_source [1] embedded | none
       materialization [1] object
       withheld [1] object
+      links [0..*] object[]
     }
   }
   cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded

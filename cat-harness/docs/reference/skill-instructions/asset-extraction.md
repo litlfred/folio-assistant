@@ -24,8 +24,8 @@ Owner, 2026-09-20:
 > KG. don't extract contents unless explict ask by user."*
 
 ```sh
-bun run folio-assistant-core/scripts/extract-assets.ts <container>
-bun run folio-assistant-core/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
+bun run cat-harness-tools/scripts/extract-assets.ts <container>
+bun run cat-harness-tools/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
 ```
 
 The first writes a `folio-extraction/v1` record beside the container. The
@@ -175,10 +175,13 @@ file's `localPath`, which exists only once somebody asked for it.
 
 - [`library-ingestion`](library-ingestion.md) — the other way in. A container
   read this way has not been ingested; it has been *described*.
-- `schemas/extraction.ts` in folio-assist-core — the record, and why each
-  field is optional or not.
-- `schemas/materialization.ts` — `materializedAt`, the timestamp this one is
-  most often confused with.
+- `schemas/extraction.ts` in this harness — the record, and why each
+  field is optional or not. It moved down from folio-assist-core with the
+  script that writes it (bean `tlat`, placement PR5), because this skill is
+  the harness's own.
+- `schemas/materialization.ts` in folio-assist-core — `materializedAt`, the
+  timestamp this one is most often confused with; its state vocabulary is
+  `schemas/materialization-state.ts` here.
 - `cat-harness/scripts/pdf-cover.py` — the generic page raster, and
   `folio-assistant-core/scripts/gen-covers.ts` the catalogue wiring (any instance; the catalogue decides which
   documents get one) that checks every claim it makes about them.

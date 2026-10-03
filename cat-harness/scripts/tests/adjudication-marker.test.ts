@@ -17,9 +17,10 @@
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import { loadProcessModel } from "../../src/workflow/process-model.js";
+import { workflowFile, workflowFiles } from "../known-skills.ts";
 
 /** One activity carrying whatever extension XML the case needs. */
 function fixture(activityExt: string, type = "task"): string {
@@ -232,11 +233,10 @@ describe("absence stays absence", () => {
     // contract expresses the diagram that motivated it, rather than only the
     // fixtures above.
     const { loadProcessModel: load } = await import("../../src/workflow/process-model.js");
-    const { readdirSync } = await import("node:fs");
-    const dir = join(import.meta.dir, "../../processes");
-    const files = readdirSync(dir).filter((f) => f.endsWith(".bpmn"));
+    const diagram = (n: string): string => workflowFile(join(import.meta.dir, "../.."), n);
+    const files = workflowFiles(join(import.meta.dir, "../..")).filter((f) => f.endsWith(".bpmn")).map((x) => basename(x));
     expect(files.length, "no diagrams found — this assertion would be vacuous").toBeGreaterThan(5);
-    for (const f of files) await load(join(dir, f));
+    for (const f of files) await load(diagram(f));
   });
 });
 
@@ -366,12 +366,12 @@ describe("the two real callers that fit", () => {
     // The diagram's own claim, now checked: "The three outcomes are the ones
     // `review-narrative` and `voice-review` already use". It was prose in a
     // documentation element and nothing compared it to anything.
-    const dir = join(import.meta.dir, "../../processes");
+    const diagram = (n: string): string => workflowFile(join(import.meta.dir, "../.."), n);
     for (const [f, id] of [
       ["review-narrative.bpmn", "Task_AdjudicateVoice"],
       ["voice-review.bpmn", "Task_Adjudicate"],
     ] as const) {
-      const m = await loadProcessModel(join(dir, f));
+      const m = await loadProcessModel(diagram(f));
       expect(m.nodes.get(id)!.adjudicationAccepts, `${f} lost its accepts`).toEqual([
         "stands",
         "scope",
@@ -467,12 +467,12 @@ describe("`defers=\"caller\"` — an adjudication whose enum the caller owns", (
 });
 
 describe("the split — bean `bvuk`, the owner's shape", () => {
-  const dir = join(import.meta.dir, "../../processes");
+  const diagram = (n: string): string => workflowFile(join(import.meta.dir, "../.."), n);
 
   test("Process_Adjudication ends AT the judgement and names no outcomes", async () => {
     // What the split is. The three outcome tasks ran for every caller; four of
     // six had no criterion to scope and no dispensation to grant.
-    const m = await loadProcessModel(join(dir, "adjudication.bpmn"));
+    const m = await loadProcessModel(diagram("adjudication.bpmn"));
     expect(m.nodes.get("A_Adjudicate")!.adjudicationDefers).toBe(true);
     for (const gone of ["GW_Outcome", "A_ScopeCriterion", "A_Dispensation", "A_RecordEntry"]) {
       expect(m.nodes.get(gone), `${gone} is the caller's now`).toBeUndefined();
@@ -483,14 +483,14 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     // The objection to separating per question kind was that
     // `adjudicator_sees` and the actor restriction would be restated N times.
     // They are not restated; they did not move.
-    const m = await loadProcessModel(join(dir, "adjudication.bpmn"));
+    const m = await loadProcessModel(diagram("adjudication.bpmn"));
     expect(m.nodes.get("GW_Adjudicable")).toBeDefined();
     expect(m.nodes.get("A_Dispatch")!.skills).toContain("untainted-verification");
     expect(m.nodes.get("A_Adjudicate")!.fulfilment!.kinds.sort()).toEqual(["agent", "person"]);
   });
 
   test("criterion-adjudication owns the three outcomes and declares the enum", async () => {
-    const m = await loadProcessModel(join(dir, "criterion-adjudication.bpmn"));
+    const m = await loadProcessModel(diagram("criterion-adjudication.bpmn"));
     expect(m.nodes.get("Call_Adjudicate")!.adjudication!.codes.sort()).toEqual([
       "dispensation",
       "scope",
@@ -517,7 +517,7 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
       ["voice-review.bpmn", "Task_Adjudicate"],
       ["wireframe-design-review.bpmn", "Call_Adjudicate"],
     ] as const) {
-      const m = await loadProcessModel(join(dir, f));
+      const m = await loadProcessModel(diagram(f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_CriterionAdjudication");
     }
   });
@@ -529,14 +529,14 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     // three multi-answer sets are the owner's own design, #1156), so
     // no caller runs an adjudication whose answers nobody stated.
     for (const [f, id, codes] of [
-      // large-datasets' own diagram since bean `cjvs` (2026-09-30): it calls
-      // cat-harness's adjudication, which is the direction the arrow allows.
-      ["../../large-datasets/processes/refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
+      // Back beside its callee since bean `j7ql` (2026-10-01), after a spell
+      // in large-datasets (bean `cjvs`) calling down into cat-harness.
+      ["refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
       ["translation-workflow.bpmn", "Task_Adjudicate", ["accept", "edit", "retranslate"]],
       ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift", ["real", "source-wrong", "spurious"]],
       ["content-change-review.bpmn", "Call_Adjudication", ["stands", "withdrawn"]],
     ] as const) {
-      const m = await loadProcessModel(join(dir, f));
+      const m = await loadProcessModel(diagram(f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_Adjudication");
       expect(m.nodes.get(id)!.adjudication!.codes.slice().sort(), f).toEqual([...codes]);
       const child = m.children.get(id)!;

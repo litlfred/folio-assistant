@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# arxiv-2607.14456v1
+# Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution
 
 ingested source material — attributed to its document, not folio content
 

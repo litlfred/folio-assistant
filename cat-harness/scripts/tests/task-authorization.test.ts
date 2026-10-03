@@ -16,6 +16,7 @@ import { complete, enabled, startInstance } from "../../src/workflow/instance.js
 import { authorizeTask } from "../../src/workflow/authorize.js";
 import { loadAccessContext, principalFromEnv, type AccessContext } from "../../src/core/access.js";
 import { allows, principalOf } from "../../src/core/rbac.js";
+import { workflowFile } from "../known-skills.js";
 import { actionGraph, OdrlPolicySchema, type OdrlPolicy } from "../../schemas/odrl.js";
 import { readPermissions, type LoadedActor } from "../../schemas/role-graph.js";
 
@@ -107,7 +108,7 @@ describe("authentication is the executor's, and GitHub is today's authenticator"
 
 describe("the interpreter runs the check before recording anything", () => {
   test("a role mismatch refuses and leaves the instance untouched", async () => {
-    const model = await loadProcessModel(join(ROOT, "processes", "getting-started.bpmn"));
+    const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
     const state = startInstance(model, { id: "t", subject: "s" });
     const step = model.nodes.get(enabled(model, state).find((e) => e.kind === "activity" && model.nodes.get(e.node)?.roleRef)!.node)!;
     const outsider = [...REAL.actors.values()].find((a) => (a.roles?.length ?? 0) > 0 && !a.roles!.includes(step.roleRef!))!;
@@ -119,7 +120,7 @@ describe("the interpreter runs the check before recording anything", () => {
   });
 
   test("an allowed step carries its verdict in the history", async () => {
-    const model = await loadProcessModel(join(ROOT, "processes", "getting-started.bpmn"));
+    const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
     const state = startInstance(model, { id: "t", subject: "s" });
     const step = model.nodes.get(enabled(model, state).find((e) => e.kind === "activity" && model.nodes.get(e.node)?.roleRef)!.node)!;
     const insider = [...REAL.actors.values()].find((a) => a.roles?.includes(step.roleRef!))!;

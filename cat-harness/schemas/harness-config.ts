@@ -56,6 +56,12 @@
  */
 
 import { z } from "zod";
+import {
+  SubgraphSourceOverridesSchema,
+  resolveSubgraphSource,
+  type ResolvedSubgraphSource,
+  type SubgraphSourceOverrides,
+} from "./subgraph-source";
 
 // ── Dependency types ────────────────────────────────────────────
 
@@ -177,6 +183,9 @@ export interface HarnessConfig {
 
   /** Cross-folio dependencies. */
   dependencies?: HarnessConfigDependencies;
+
+  /** Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}. */
+  subgraphSources?: SubgraphSourceOverrides;
 }
 
 // ── Zod schemas ─────────────────────────────────────────────────
@@ -324,12 +333,20 @@ export const HarnessConfigSchema = z.object({
   harness: HarnessDirsSchema.optional(),
   translation: TranslationConfigSchema.optional(),
   dependencies: HarnessConfigDependenciesSchema.optional(),
+  /**
+   * Per-instantiation override of where a declared subgraph gets its content,
+   * keyed by the directory's `id` (never its path). The owner, 2026-10-03:
+   * *"That same information can be overwritten by the harness instance
+   * config."* Applied by `resolveSubgraphSource` and nowhere else
+   * (`schemas/subgraph-source.ts`, bean `l4ay`).
+   */
+  subgraphSources: SubgraphSourceOverridesSchema.optional(),
 });
 
 // ── Dependency resolution ───────────────────────────────────────
 
 import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import {
   describeRepository,
@@ -981,6 +998,7 @@ const checkoutCache = new Map<string, ResolvedDirectory[]>();
 export function clearCheckoutCache(): void {
   checkoutCache.clear();
   dependentsCache.clear();
+  implementersCache.clear();
   graphCache.clear();
 }
 
@@ -1083,6 +1101,116 @@ export function checkoutDependentsOf(instanceRoot: string): Array<{ name: string
   return out;
 }
 
+const implementersCache = new Map<string, Array<{ name: string; root: string }>>();
+
+/**
+ * The instances that IMPLEMENT `declaringRoot`: those in the checkout whose own
+ * `needs` names it directly.
+ *
+ * ## Why this exists
+ *
+ * Owner rulings T1 and T7 (2026-10-01, bean `70lx`). A harness DEFINITION names
+ * its implementation by an instance-relative path — a Tool's
+ * `invoke.inProcess.module` (`src/tools/x.ts`), a criterion's `source_file`
+ * (`content/pipeline/x.ts`). The code those paths name is moving to the layer
+ * above, and writing that layer's name into the harness
+ * would be a lower layer naming a higher one, which `check:reference-direction`
+ * grades. So the path stays as written, and is resolved against the instance
+ * that implements the definition — found the way the arrow already runs, from
+ * the implementer's `needs` to the definer, never the reverse.
+ *
+ * ## Direct, not transitive
+ *
+ * {@link checkoutDependentsOf} is transitive: every folio in the checkout
+ * depends on the harness eventually, and any of them may hold a
+ * `scripts/x.ts`. Only an instance that names the definer in its OWN `needs`
+ * has taken it on directly, which is the relation "implements" can mean.
+ *
+ * The checkout's aggregate root is excluded even though it `needs`
+ * everything: its directory CONTAINS the definer, so a relative path under it
+ * would be a different path, not the same one somewhere else.
+ */
+export function implementingInstancesOf(declaringRoot: string): Array<{ name: string; root: string }> {
+  const target = resolve(declaringRoot);
+  const cached = implementersCache.get(target);
+  if (cached !== undefined) return cached;
+  let name: string | undefined;
+  try {
+    name = readDeclaration(target)?.name;
+  } catch {
+    // unreadable: it implements nothing we can name; `check:harness-dirs` reports it
+  }
+  const out: Array<{ name: string; root: string }> = [];
+  if (name !== undefined) {
+    for (const dep of checkoutDependentsOf(target)) {
+      const root = resolve(dep.root);
+      if (target.startsWith(`${root}${sep}`)) continue;
+      let needs: readonly string[] = [];
+      try {
+        needs = readDeclaration(root)?.needs ?? [];
+      } catch {
+        continue;
+      }
+      if (needs.includes(name)) out.push({ name: dep.name, root });
+    }
+  }
+  implementersCache.set(target, out);
+  return out;
+}
+
+/** Where an instance-relative path declared by one instance actually is. */
+export type ImplementingPath =
+  /** `via: "own"` — the declaring instance holds it; `"needs"` — one implementer does. */
+  | { state: "found"; root: string; instance: string; via: "own" | "needs" }
+  /** Nobody holds it. `looked` is every root tried, declaring instance first. */
+  | { state: "missing"; looked: string[] }
+  /** More than one implementer holds it. Never resolved by order: both are named. */
+  | { state: "ambiguous"; candidates: Array<{ name: string; root: string }> };
+
+/**
+ * Resolve `relPath`, written in `declaringRoot`'s definitions, to the instance
+ * that holds it: the declaring instance itself first, then exactly one of
+ * {@link implementingInstancesOf}.
+ *
+ * The declaring instance comes first so that a path that has not moved yet
+ * keeps resolving where it always did; that is what lets the code move run in
+ * batches without rewriting a single definition. Two implementers holding the
+ * same path is `ambiguous`, never "the first": picking one by checkout order
+ * is how a check comes to read another instance's file and report it current.
+ */
+export function resolveImplementingPath(declaringRoot: string, relPath: string): ImplementingPath {
+  const own = resolve(declaringRoot);
+  let ownName = own;
+  try {
+    ownName = readDeclaration(own)?.name ?? own;
+  } catch {
+    // named by path
+  }
+  if (existsSync(join(own, relPath))) return { state: "found", root: own, instance: ownName, via: "own" };
+  const implementers = implementingInstancesOf(own);
+  const holding = implementers.filter((i) => existsSync(join(i.root, relPath)));
+  if (holding.length === 1) return { state: "found", root: holding[0]!.root, instance: holding[0]!.name, via: "needs" };
+  if (holding.length > 1) return { state: "ambiguous", candidates: holding };
+  return { state: "missing", looked: [own, ...implementers.map((i) => i.root)] };
+}
+
+/**
+ * The root to read `relPath` against, for a caller that composes
+ * `join(root, relPath)` and already reports a missing file in its own words.
+ *
+ * `missing` returns the declaring root, so such a caller's report is
+ * unchanged. `ambiguous` THROWS: there is no root that would be honest.
+ */
+export function implementingRootFor(declaringRoot: string, relPath: string): string {
+  const r = resolveImplementingPath(declaringRoot, relPath);
+  if (r.state === "found") return r.root;
+  if (r.state === "missing") return resolve(declaringRoot);
+  throw new Error(
+    `${relPath} (declared by ${declaringRoot}) is held by more than one implementing instance: ` +
+      `${r.candidates.map((c) => c.name).join(", ")}. Each declared path must name one file.`,
+  );
+}
+
 /**
  * Every directory in the checkout holding `kind`, as absolute paths — the
  * corpus-wide counterpart of `directoriesForGraph`, which answers for ONE
@@ -1126,6 +1254,77 @@ export function corpusDirectoryForGraph(instanceRoot: string, kind: string): str
     );
   }
   return all[0];
+}
+
+// ── A declared subgraph, with its resolved content source (bean `l4ay`) ──
+
+/** A declared subgraph: who declares it, its entry, and where its content comes from. */
+export interface DeclaredSubgraph {
+  id: string;
+  /** The root of the instance whose OWN declaration carries the entry. */
+  instanceRoot: string;
+  /** That instance's declared `name`. */
+  instanceName: string;
+  /** The instance's declared `repository` (`owner/repo`), when it has one. */
+  repository?: string;
+  entry: ResolvedDirectory;
+  source: ResolvedSubgraphSource;
+}
+
+/**
+ * The instance-config overrides that apply to a subgraph declared by
+ * `declarer`: the declarer's own config, then the CHECKOUT ROOT's on top —
+ * the checkout root is the instantiation, so its word is last. Both matched on
+ * directory id.
+ */
+export function subgraphSourceOverrides(declarer: string, start: string = declarer): SubgraphSourceOverrides {
+  const checkout = checkoutRootFor(start);
+  const out: SubgraphSourceOverrides = {};
+  for (const root of [...new Set([resolve(declarer), checkout])]) {
+    const cfg = readHarnessConfig(root)?.subgraphSources;
+    if (cfg) Object.assign(out, SubgraphSourceOverridesSchema.parse(cfg));
+  }
+  return out;
+}
+
+/**
+ * THE lookup a publisher, the KG export and a mount/push tool use: the
+ * declared subgraph with this `id`, found from any instance in the checkout,
+ * with its source resolved (config override → `source` → legacy `storage` →
+ * `directory`).
+ *
+ * `start`'s own chain is asked first, so an instance redeclaring an inherited
+ * id is answered with its own entry. Otherwise the checkout's instances are
+ * searched for one whose OWN declaration carries the id. `undefined` when no
+ * instance declares it; throws when several unrelated instances do, because
+ * picking one would be a guess.
+ */
+export function declaredSubgraph(start: string, id: string): DeclaredSubgraph | undefined {
+  const here = resolve(start);
+  const graph = checkoutGraph(checkoutRootFor(here));
+  const owners: string[] = [];
+  const candidates = [here, ...graph.order.filter((r) => r !== here)];
+  for (const root of candidates) {
+    const decl = readDeclaration(root);
+    if (decl?.directories.some((d) => d.id === id)) owners.push(root);
+    if (root === here && owners.length > 0) break;
+  }
+  if (owners.length === 0) return undefined;
+  if (owners.length > 1 && owners[0] !== here) {
+    throw new Error(`subgraph "${id}" is declared by ${owners.length} instances (${owners.join(", ")}) — ask from the one you mean`);
+  }
+  const instanceRoot = owners[0]!;
+  const decl = readDeclaration(instanceRoot)!;
+  const entry = resolveDirectories(chainIn(graph, instanceRoot)).find((d) => d.id === id && d.own)
+    ?? resolveDirectories(declarationChain(instanceRoot)).find((d) => d.id === id)!;
+  return {
+    id,
+    instanceRoot,
+    instanceName: decl.name,
+    ...(decl.repository ? { repository: decl.repository } : {}),
+    entry,
+    source: resolveSubgraphSource(entry, subgraphSourceOverrides(instanceRoot, here)),
+  };
 }
 
 /**
@@ -1324,9 +1523,61 @@ export async function loadContributions<C extends { name: string }, S extends Co
   folioRoot: string,
   registry: S,
 ): Promise<S> {
-  const flat = orderedDependencies(folioRoot);
+  for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    const fn = contributeFunction(dep, modulePath, await import(modulePath));
+    registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
+  }
+  return registry;
+}
 
-  for (const dep of flat) {
+/**
+ * {@link loadContributions}, synchronously.
+ *
+ * ## Why a second loader exists
+ *
+ * The generic pipeline reaches the science layer's code through slots that a
+ * dependency fills (`content/pipeline/pipeline-plugins.ts`, bean `squu`), and
+ * the callers of those slots are synchronous: a QA checker inside the sweep's
+ * hot loop, a module-load side effect, a build step. Threading an awaited
+ * registry through every one of them would change the checker signatures the
+ * dispatch tables are keyed on. Bun's `require` loads a `.ts` module
+ * synchronously — the same property `schemas/theme-by-ref.ts` relies on.
+ *
+ * It shares {@link contributingDependencies}, {@link contributeFunction} and
+ * {@link registerPinned} with the async loader, so the two differ only in how
+ * a module is loaded and cannot drift on which dependencies contribute, what
+ * counts as a broken contribution, or which fields are pinned.
+ *
+ * A contributor whose default export returns a Promise is refused here rather
+ * than awaited: a synchronous caller cannot wait for it, and silently skipping
+ * it would be the "appears wired and is not" failure the async loader refuses.
+ */
+export function loadContributionsSync<C extends { name: string }, S extends ContributionSink<C>>(
+  folioRoot: string,
+  registry: S,
+): S {
+  for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const fn = contributeFunction(dep, modulePath, require(modulePath));
+    const contribution = (fn as () => C | Promise<C>)();
+    if (contribution instanceof Promise) {
+      throw new Error(
+        `folio dependency "${dep.dependency.name}" contributes module ` +
+          `${modulePath} returns a Promise, so it cannot be loaded synchronously. ` +
+          `Return the contribution directly.`,
+      );
+    }
+    registerPinned(registry, dep, contribution);
+  }
+  return registry;
+}
+
+/** Every dependency declaring a `contributes` module, with its resolved path. */
+function contributingDependencies(
+  folioRoot: string,
+): Array<{ dep: ResolvedDependency; modulePath: string }> {
+  const out: Array<{ dep: ResolvedDependency; modulePath: string }> = [];
+  for (const dep of orderedDependencies(folioRoot)) {
     const spec = dep.config?.contributes;
     if (!spec) continue;
 
@@ -1339,40 +1590,49 @@ export async function loadContributions<C extends { name: string }, S extends Co
           `contributing nothing is how a dependency appears wired and is not.`,
       );
     }
-
-    const mod: unknown = await import(modulePath);
-    const fn = (mod as { default?: unknown }).default;
-    if (typeof fn !== "function") {
-      throw new Error(
-        `folio dependency "${dep.dependency.name}" contributes module ` +
-          `${modulePath} has no callable default export.`,
-      );
-    }
-
-    const contribution = (await (fn as () => C | Promise<C>)());
-    // The dependency entry's name is authoritative over whatever the module
-    // says about itself: the root declared the name, and a contributor that
-    // could rename itself could impersonate another contributor's namespace
-    // and turn a collision into a silent merge.
-    //
-    // `root` is pinned here for the same reason and is not the same field as
-    // `name`: it is where the contributor's FILES are, and a contributed QA
-    // checker's source file is resolved against it in order to be
-    // freshness-hashed. A contributor that could name its own root could point
-    // the sweep at bytes it does not own, and the resulting `script_hash`
-    // would be computed over a file the contribution never mentions.
-    //
-    // The spread widens `C` to `C & { name: string; root: string }`, which is
-    // C's own shape with two fields pinned; the cast states that rather than
-    // loosening the parameter.
-    registry.register({
-      ...contribution,
-      name: dep.dependency.name,
-      root: dep.rootPath,
-    } as C);
+    out.push({ dep, modulePath });
   }
+  return out;
+}
 
-  return registry;
+/** The module's callable default export, or a loud error naming the dependency. */
+function contributeFunction(dep: ResolvedDependency, modulePath: string, mod: unknown): unknown {
+  const fn = (mod as { default?: unknown }).default;
+  if (typeof fn !== "function") {
+    throw new Error(
+      `folio dependency "${dep.dependency.name}" contributes module ` +
+        `${modulePath} has no callable default export.`,
+    );
+  }
+  return fn;
+}
+
+/** Hand one contribution to the registry with `name` and `root` pinned. */
+function registerPinned<C extends { name: string }>(
+  registry: ContributionSink<C>,
+  dep: ResolvedDependency,
+  contribution: C,
+): void {
+  // The dependency entry's name is authoritative over whatever the module
+  // says about itself: the root declared the name, and a contributor that
+  // could rename itself could impersonate another contributor's namespace
+  // and turn a collision into a silent merge.
+  //
+  // `root` is pinned here for the same reason and is not the same field as
+  // `name`: it is where the contributor's FILES are, and a contributed QA
+  // checker's source file is resolved against it in order to be
+  // freshness-hashed. A contributor that could name its own root could point
+  // the sweep at bytes it does not own, and the resulting `script_hash`
+  // would be computed over a file the contribution never mentions.
+  //
+  // The spread widens `C` to `C & { name: string; root: string }`, which is
+  // C's own shape with two fields pinned; the cast states that rather than
+  // loosening the parameter.
+  registry.register({
+    ...contribution,
+    name: dep.dependency.name,
+    root: dep.rootPath,
+  } as C);
 }
 
 // ── What a repository IS, closed under the dependency tree ──────────

@@ -10,7 +10,7 @@ description: >
 # dak-preprocessing
 
 > Skill id: `dak-preprocessing` · Package: `authoring-who-smart-guidelines` ·
-> Layer: **`smart-dak`** ([`smart-stack-layering`](smart-stack-layering.md)),
+> Layer: **`smart-base`, DAK kind** ([`smart-stack-layering`](smart-stack-layering.md); `smart-dak` until stage D, #1767),
 > with two steps that are not pre-processing at all — see §"Two of these are
 > authoring, not pre-processing".
 
@@ -87,7 +87,7 @@ Steps 4 and 5 — `dmn_questionnaire_generator.py` and `transform_dmn.py` — ar
 
 They run late because the pipeline had nowhere earlier to put them, not because
 they depend on anything the Publisher does. **They are content generation and
-belong upstream of the Publisher, in `smart-dak` as authoring steps** — which is
+belong upstream of the Publisher, in the DAK document kind as authoring steps** — which is
 how they survive the transition while step 2 does not.
 
 `transform_dmn.py` has a second property worth recording: its output is

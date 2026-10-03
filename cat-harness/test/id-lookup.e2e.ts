@@ -8,7 +8,7 @@ import { repoRootFor } from "../schemas/cat-harness.ts";
  * The prefix-sharded identifier lookup, in a browser, over the COMMITTED
  * who-iris index. Bean `folio-assistant-4pm8`.
  *
- * `large-datasets/schemas/id-lookup.test.ts` runs the same client under bun
+ * `cat-harness/schemas/id-lookup.test.ts` runs the same client under bun
  * with a map standing in for `fetch`. This runs the page a reader opens, so
  * what it proves is the part a unit test cannot: that the module loads in a
  * browser as written, that the relative shard URLs resolve against a real
@@ -20,7 +20,9 @@ import { repoRootFor } from "../schemas/cat-harness.ts";
  */
 const REPO = repoRootFor(join(import.meta.dirname, ".."));
 const NODES = join(REPO, "who-iris", "catalogue", "nodes");
-const PAGE = "/large-datasets/id-lookup/index.html";
+// The generic reader page, told which index to open: who-iris hosts its own
+// generated index (D3, bean `j7ql`), and the page names no instance.
+const PAGE = "/cat-harness-tools/id-lookup/index.html?index=" + encodeURIComponent("../../who-iris/id-lookup/");
 
 const referenced = readdirSync(NODES)
   .filter((f) => f.endsWith(".json"))
@@ -50,7 +52,7 @@ test("every referenced who-iris node resolves in the browser, one shard per look
 
 test("the form shows a found node as a link to where it is held, and says when one is absent", async ({ page }) => {
   const n = referenced[0]!;
-  await page.goto(`${PAGE}?q=${encodeURIComponent(n.id)}`);
+  await page.goto(`${PAGE}&q=${encodeURIComponent(n.id)}`);
   await expect(page.locator("#out a")).toHaveText(n.title);
   await page.fill("#q", "community/00000000-0000-4000-8000-000000000000");
   await page.press("#q", "Enter");

@@ -21,7 +21,7 @@ import { join } from "path";
 import { tmpdir } from "os";
 import { blockToJsonLd } from "../../content/pipeline/gen-block-jsonld";
 import { loadBlocksUnder, type LoadedBlock } from "../../content/pipeline/block-module";
-import { CONTENT_CONTEXT_URL } from "../../schemas/jsonld";
+import { CONTENT_DOCUMENT_CONTEXT } from "../../schemas/jsonld";
 
 const ROOT = mkdtempSync(join(tmpdir(), "gen-block-jsonld-"));
 const PAPER = "test-paper";
@@ -81,7 +81,7 @@ describe("gen-block-jsonld", () => {
     const doc = blockToJsonLd(blocks.get("def:widget")!, PAPER, []);
     expect(doc["@id"]).toBe("papers/test-paper/blocks/def-widget");
     expect(doc.label).toBe("def:widget");
-    expect(doc["@context"]).toBe(CONTENT_CONTEXT_URL);
+    expect(doc["@context"]).toEqual(CONTENT_DOCUMENT_CONTEXT);
   });
 
   test("co-types with DoCO where the mapping is unambiguous", () => {

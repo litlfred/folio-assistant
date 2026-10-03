@@ -234,9 +234,13 @@ test.describe("the first paint is dark — \"it should deafult dark mode then tu
  * flash; what must hold is that their FIRST CSS is dark, with no script at
  * all. Measured with JavaScript OFF, in a light-preferring browser, which is
  * the worst case for a page that might have leaned on either. They do not
- * carry the snippet, deliberately — `head_custom.html` says why. */
+ * carry the snippet, deliberately — `head_custom.html` says why.
+ *
+ * `todos/` is NOT here since #1906: it is a themed page on the default
+ * layout, so it paints through the theme and `head_custom.html` like every
+ * other site page, and its unbuilt source is not a page a browser is served. */
 const SHELLS = [
-  "todos/index.html", "beans/index.html", "issue-marks/index.html", "qa/index.html",
+  "beans/index.html", "issue-marks/index.html", "qa/index.html",
   "health/index.html", "uploads/index.html", "swimlane-glossary/index.html",
   "translation-status/index.html",
 ];

@@ -37,6 +37,7 @@ import { basename, join, relative, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 import { knownSkills } from "./known-skills.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { resolveImplementingPath } from "../schemas/harness-config.js";
 
 interface Dangling { file: string; node: string; ref: string }
 interface Coverage { file: string; covered: number; total: number; uncovered: string[] }
@@ -297,7 +298,7 @@ for (const ct of CONTENT_TYPE_TRANSLATIONS) {
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const f of ct.formats) {
     for (const rel of [f.extractModule, f.injectModule]) {
-      if (rel && !existsSync(join(INSTANCE_ROOT, rel))) {
+      if (rel && resolveImplementingPath(INSTANCE_ROOT, rel).state !== "found") {
         missingDeclared.push(`${ct.contentType}/${f.id} → ${rel}`);
       }
     }

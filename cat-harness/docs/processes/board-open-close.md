@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/board-open-close.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `folio-assistant-core/processes/ui/board-open-close.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Board: open and close content

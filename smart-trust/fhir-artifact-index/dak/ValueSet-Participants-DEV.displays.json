@@ -2,16 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "http://smart.who.int/trust/ValueSet-Participants-DEV.displays.json",
   "title": "WHO GDHCN Trust Network Participant - DEV Display Values",
-  "description": "Display values for WHO GDHCN Trust Network Participant - DEV ValueSet codes. Generated from FHIR expansions.",
+  "description": "Display values for WHO GDHCN Trust Network Participant - DEV ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
   "type": "object",
   "properties": {
     "fhir:displays": {
       "type": "object",
-      "description": "Multilingual display values for ValueSet codes using IRI format to match JSON schema enum values",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
       "patternProperties": {
-        "^https?://.*": {
+        "^.+$": {
           "type": "object",
-          "description": "Display values for a specific IRI-formatted code by language",
+          "description": "Display values for a specific code fragment by language",
           "properties": {
             "en": {
               "type": "string",
@@ -35,188 +35,188 @@
   ],
   "additionalProperties": true,
   "fhir:displays": {
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#AND": {
-      "en": "AND"
+    "IOM": {
+      "en": "TEST"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ARE": {
-      "en": "ARE"
+    "WHO": {
+      "en": "DEV Participant WHO"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ARG": {
-      "en": "ARG"
+    "XCL": {
+      "en": "California"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ARM": {
-      "en": "ARM"
+    "XML": {
+      "en": "GDHCN entomo"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BHS": {
-      "en": "BHS"
+    "XXA": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BLZ": {
-      "en": "BLZ"
+    "XXB": {
+      "en": "TEST"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BOL": {
-      "en": "BOL"
+    "XXC": {
+      "en": "TEST"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BRA": {
-      "en": "BRA"
+    "XXD": {
+      "en": "CENS XD"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#BRB": {
-      "en": "BRB"
+    "XXE": {
+      "en": "Geneva XE"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CHL": {
-      "en": "CHL"
+    "XXF": {
+      "en": "Test Locality XF"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#COL": {
-      "en": "COL"
+    "XXG": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CRI": {
-      "en": "CRI"
+    "XXH": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#CYP": {
-      "en": "CYP"
+    "XXI": {
+      "en": "California"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#DOM": {
-      "en": "DOM"
+    "XXJ": {
+      "en": "DEV Participant XXJ"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#ECU": {
-      "en": "ECU"
+    "XXK": {
+      "en": "Rengo"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#EST": {
-      "en": "EST"
+    "XXN": {
+      "en": "DEV Participant XXN"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#GTM": {
-      "en": "GTM"
+    "XXO": {
+      "en": "DEV Participant XXO"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#HND": {
-      "en": "HND"
+    "XXP": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#IDN": {
-      "en": "IDN"
+    "XXQ": {
+      "en": "Test Locality"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#JAM": {
-      "en": "JAM"
+    "XXT": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#LVA": {
-      "en": "LVA"
+    "XXU": {
+      "en": "Geneva"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#NIC": {
-      "en": "NIC"
+    "XXV": {
+      "en": "TEST CITY"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#OMN": {
-      "en": "OMN"
+    "XXW": {
+      "en": "Test Locality"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PAN": {
-      "en": "PAN"
+    "XXX": {
+      "en": "Warrandyte"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PER": {
-      "en": "PER"
+    "XYK": {
+      "en": "Test"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#PRY": {
-      "en": "PRY"
+    "AND": {
+      "en": "Andorra"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SGP": {
-      "en": "SGP"
+    "ARE": {
+      "en": "United Arab Emirates"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SLV": {
-      "en": "SLV"
+    "ARG": {
+      "en": "Argentina"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SMR": {
-      "en": "SMR"
+    "ARM": {
+      "en": "Armenia"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SUR": {
-      "en": "SUR"
+    "BHS": {
+      "en": "Bahamas"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#SVN": {
-      "en": "SVN"
+    "BLZ": {
+      "en": "Belize"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#TGO": {
-      "en": "TGO"
+    "BOL": {
+      "en": "Bolivia (Plurinational State of)"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#TTO": {
-      "en": "TTO"
+    "BRA": {
+      "en": "Brazil"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#URY": {
-      "en": "URY"
+    "BRB": {
+      "en": "Barbados"
     },
-    "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY#USA": {
-      "en": "USA"
+    "CHL": {
+      "en": "Chile"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#IOM": {
-      "en": "IOM"
+    "COL": {
+      "en": "Colombia"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#WHO": {
-      "en": "WHO"
+    "CRI": {
+      "en": "Costa Rica"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XCL": {
-      "en": "XCL"
+    "CYP": {
+      "en": "Cyprus"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XML": {
-      "en": "XML"
+    "DOM": {
+      "en": "Dominican Republic"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXA": {
-      "en": "XXA"
+    "ECU": {
+      "en": "Ecuador"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXB": {
-      "en": "XXB"
+    "EST": {
+      "en": "Estonia"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXC": {
-      "en": "XXC"
+    "GTM": {
+      "en": "Guatemala"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXD": {
-      "en": "XXD"
+    "HND": {
+      "en": "Honduras"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXE": {
-      "en": "XXE"
+    "IDN": {
+      "en": "Indonesia"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXF": {
-      "en": "XXF"
+    "JAM": {
+      "en": "Jamaica"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXG": {
-      "en": "XXG"
+    "LVA": {
+      "en": "Latvia"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXH": {
-      "en": "XXH"
+    "NIC": {
+      "en": "Nicaragua"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXI": {
-      "en": "XXI"
+    "OMN": {
+      "en": "Oman"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXJ": {
-      "en": "XXJ"
+    "PAN": {
+      "en": "Panama"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXK": {
-      "en": "XXK"
+    "PER": {
+      "en": "Peru"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXN": {
-      "en": "XXN"
+    "PRY": {
+      "en": "Paraguay"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXO": {
-      "en": "XXO"
+    "SGP": {
+      "en": "Singapore"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXP": {
-      "en": "XXP"
+    "SLV": {
+      "en": "El Salvador"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXQ": {
-      "en": "XXQ"
+    "SMR": {
+      "en": "San Marino"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXT": {
-      "en": "XXT"
+    "SUR": {
+      "en": "Suriname"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXU": {
-      "en": "XXU"
+    "SVN": {
+      "en": "Slovenia"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXV": {
-      "en": "XXV"
+    "TGO": {
+      "en": "Togo"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXW": {
-      "en": "XXW"
+    "TTO": {
+      "en": "Trinidad and Tobago"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XXX": {
-      "en": "XXX"
+    "URY": {
+      "en": "Uruguay"
     },
-    "http://smart.who.int/trust/CodeSystems/Participants-DEV#XYK": {
-      "en": "XYK"
+    "USA": {
+      "en": "United States of America"
     }
   },
   "fhir:valueSet": "http://smart.who.int/trust/ValueSet/Participants-DEV",
   "fhir:version": "1.8.0",
-  "fhir:expansionTimestamp": "2026-09-07T14:05:57.486868"
+  "fhir:expansionTimestamp": "2026-10-01T11:51:29+00:00"
 }

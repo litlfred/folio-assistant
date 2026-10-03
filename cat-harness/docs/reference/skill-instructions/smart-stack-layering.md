@@ -21,19 +21,34 @@ parent: Skill instructions
 
 > `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`,  no smart-guidelines.
 
+### Revised 2026-10-01: L1 and DAK are document KINDS, not layers
+
+The owner, reframing the three siblings during the smart-* separation (#1767):
+*"what they really need to be are sub-document types/kinds/visualizer for them.
+smart-L1 is like a L1 document that was fully computable from smart-base assets
+… semi fixed structure … similarly DAK is a publication type w/ the 10
+components, fixed structure."* Then, asked what happens to the directories:
+**retire `smart-l1` and `smart-dak`, keep `smart-ig`.** Stage D, bean `kg83`.
+
 ```
 folio-assistant-core
   └── fhir-harness              bare FHIR IG pipeline — no WHO anything
         └── smart-base          WHO SMART harness rules + data models; instantiates smart.who.int.base
-              ├── smart-l1      L1 — narrative assets, the source a DTH is written from
-              ├── smart-dak     L2 — the DAK harness every smart-* DAK repo instantiates
-              └── smart-ig      L3 — the FHIR IG instantiation of a DAK
+              │                   ├─ L1  document kind — semi-fixed, computed from smart-base's library (+ PICO, Cochrane …)
+              │                   └─ DAK document kind — fixed: the ten components
+              └── smart-ig      L3 — the FHIR IG publication a DAK feeds
 ```
 
-**The three are siblings, not a chain.** An instance may hold any one without
-the others: an L1 corpus with no DAK behind it is a real thing, and so is an IG
-with no L1. Chaining them would make every IG declare a dependency on a
-narrative corpus it never reads.
+So the 2026-09-22 ruling's three siblings became **two kinds and one layer**.
+An L1 document and a DAK are things an author PRODUCES with the smart-base
+harness, which is what a document kind is; they never had code, tools or
+processes of their own (each directory held only its boilerplate). An IG is
+still a different thing: it is published through the IG Publisher, and every
+ingested IG (`smart-trust`, `smart-immunizations`) `needs: smart-ig`.
+
+**L1, DAK and the IG are still not a chain.** An L1 document with no DAK behind
+it is real, and so is an IG with no L1. Chaining them would make every IG
+declare a dependency on a narrative corpus it never reads.
 
 ## The question that settles placement
 
@@ -41,7 +56,8 @@ One question, asked in this order, first `no` wins:
 
 > **1. Would a non-WHO FHIR IG need this?** → `fhir-harness`.
 > **2. Would every WHO SMART asset need it, L1, L2 and L3 alike?** → `smart-base`.
-> **3. Otherwise** → whichever of the three siblings owns that knowledge layer.
+> **3. Is it about publishing one guideline's FHIR IG?** → `smart-ig`.
+> **4. Otherwise** → `smart-base`, as part of the L1 or DAK document kind it serves.
 
 It is deliberately not "which layer does it feel like". The first question is
 answerable by naming one non-WHO IG that would want the thing; if you cannot
@@ -56,18 +72,18 @@ home, and it also instantiates its own IG.
 
 So the failure mode to watch for is **re-introducing the layer under another
 name**: a `smart-common`, a `smart-core`, a `shared/` skills package that only
-the three siblings import. If three siblings need one rule, that rule is
-`smart-base`'s. Three siblings agreeing is not evidence that a fourth layer is
-missing; it is evidence that the rule was always general.
+the WHO kinds import. If L1, DAK and the IG all need one rule, that rule is
+`smart-base`'s. Agreement across them is not evidence that a missing layer
+exists; it is evidence that the rule was always general. The 2026-10-01 revision
+applies the same reasoning one step further: a "layer" that holds no code of its
+own is a kind.
 
 ## What each layer may hold, and what it may not
 
 | layer | holds | must NOT hold |
 |---|---|---|
 | `fhir-harness` | SUSHI, IG Publisher invocation, Jekyll assembly, publication to a pages branch, the artefact-index reconstruction | any WHO term, `dak.config.json`, any DAK pre/post step, any `smart.who.int` canonical |
-| `smart-base` | the SMART harness rules, the DAK logical model, `dak.config.json`'s schema, WHO voices and methodologies, the `smart.who.int.base` IG | subject matter for any one guideline; anything only one sibling needs |
-| `smart-l1` | narrative L1 assets, figure narratives, the corpus a DTH is written from | FHIR resources; anything an IG build reads |
-| `smart-dak` | L2 — the DAK components, DMN/BPMN authoring, the DAK-shaped pre-processing | FHIR profiles; publication |
+| `smart-base` | the SMART harness rules, the DAK logical model, `dak.config.json`'s schema, WHO voices and methodologies, the `smart.who.int.base` IG — **and the two document kinds:** L1 (narrative assets, figure narratives, the corpus a DTH is written from) and DAK (the ten components, DMN/BPMN authoring, the DAK-shaped pre-processing) | subject matter for any one guideline; FHIR resources in an L1 document; FHIR profiles or publication in a DAK |
 | `smart-ig` | L3 — FSH, profiles, terminology binding, the IG build for one guideline | L1 narrative; DAK authoring |
 
 ## Two consequences that overturn what is on `main`
@@ -125,8 +141,8 @@ The split is a claim, and it is checkable:
 The build is 13 steps of DAK pre- and post-processing around one Publisher run,
 read from `WorldHealthOrganization/smart-base`'s `.github/workflows/ghbuild.yml`
 (the `do_dak` input gates the pre and post phases). If a step cannot be placed,
-or if two siblings both need to own one, **the sibling split is wrong** and this
-skill is what should change. The assignment is in
+or if two owners both claim one, **the split is wrong** and this skill is what
+should change. The assignment is in
 [`dak-preprocessing`](dak-preprocessing.md) and
 [`dak-postprocessing`](dak-postprocessing.md); those two skills carry the steps,
 this one carries the rule they are placed by.
@@ -156,9 +172,11 @@ passed once is not a test.
 
 ## Where an instance says which layer it is
 
-In its declaration's `needs`, and nowhere else. `needs: ["smart-base"]` is what
-makes an instance a sibling; `needs: ["fhir-harness"]` is what makes it a
-non-WHO IG. There is no `layer` field and there should not be one — a second
+In its declaration's `needs`, and nowhere else. `needs: ["smart-ig"]` is what
+makes an instance a published WHO SMART IG; `needs: ["smart-base"]` makes it a
+WHO SMART instance that publishes no IG; `needs: ["fhir-harness"]` is what makes
+it a non-WHO IG. Which document kinds an instance authors (L1, DAK) is a
+property of its CONTENT, not of its `needs`. There is no `layer` field and there should not be one — a second
 place to state it is a second place for it to be wrong.
 
 Conventions for the declaration itself:

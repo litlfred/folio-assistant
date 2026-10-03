@@ -8,7 +8,7 @@
  * `readWorkPlanOp` already refused an unknown op VALUE. It silently ignored an
  * unknown ATTRIBUTE, and the two are different checks.
  *
- * `processes/bean-lifecycle.bpmn` records the cost in its own comment: a
+ * `processes/sdlc/bean-lifecycle.bpmn` records the cost in its own comment: a
  * diagram carried `<cat-harness.processes:bean action="create"/>`, the engine reads `op`, and
  * "the step silently did nothing for weeks".
  *

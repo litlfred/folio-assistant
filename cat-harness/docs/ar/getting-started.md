@@ -44,7 +44,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 إن عملية الفرز هي مصنّف حقيقي وقابل للقراءة وليست مجرد عادة قد يمتلكها الوكيل:
 
 - العملية هي
-  [`processes/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn)؛
+  [`folio-assistant-core/processes/conduct/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn)؛
 - القرار في محورها هو
   [`decisions/folio-intent.dmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/folio-intent.dmn)،
   وهو جدول قرارات DMN يمكنك فتحه في أي أداة DMN وتعديله دون لمس
@@ -54,7 +54,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="عملية BPMN: يطلب المستخدم إنشاء folio؛ يكتشف الوكيل طريقة التفاعل، ويقرأ حقائق المستودع، وبوابة حصرية محسوبة من folio-intent.dmn توجه إلى أحد الفروع الخمسة — ask، أو overlay، أو new-repo، أو add-folio، أو تسليم إلى تأليف المحتوى. يزرع الهيكل (scaffold) خطة العمل، ثم يبلغ بناء Pages عن كونه مباشرًا (live)، أو ليس بعد (not-yet)، أو غير معروف (unknown).">
 </figure>
-<p class="bpmn-source"><em>المصدر: <code>processes/getting-started.bpmn</code> — تم توليد ملف SVG بواسطة <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>المصدر: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — تم توليد ملف SVG بواسطة <code>bun run render:bpmn</code>.</em></p>
 
 ### الحقائق الثلاث
 

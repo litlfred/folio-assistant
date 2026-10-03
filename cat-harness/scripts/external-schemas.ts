@@ -204,7 +204,9 @@ export function bpmnTermsInUse(root = ROOT): string[] {
   const dir = join(root, "processes");
   if (!existsSync(dir)) return [];
   const out = new Set<string>();
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn"))) {
+  // Recursive since placement PR3 (bean `63wl`): the diagrams sit in
+  // `processes/<group>/`, so a top-level read saw none of them.
+  for (const f of (readdirSync(dir, { recursive: true }) as string[]).filter((f) => f.endsWith(".bpmn"))) {
     for (const m of readFileSync(join(dir, f), "utf-8").matchAll(/<(bpmn:[a-zA-Z]+)/g)) {
       out.add(m[1]!);
     }

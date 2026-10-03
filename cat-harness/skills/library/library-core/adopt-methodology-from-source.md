@@ -7,7 +7,7 @@ description: >
   render the method with its adopted and refused parts, place it by
   ownership, integrate it by calling existing processes, give every tool it
   uses a Tool node, and put it to the owner. Process:
-  processes/methodology-from-source.bpmn.
+  processes/library/methodology-from-source.bpmn.
 ---
 
 # Adopt a methodology from a source document

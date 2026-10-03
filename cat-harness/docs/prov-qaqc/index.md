@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-9 instance(s), 100 step(s) checked, 100 `prov:Activity` emitted, 79 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+11 instance(s), 117 step(s) checked, 117 `prov:Activity` emitted, 105 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -26,21 +26,35 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
 | `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
 | `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 62 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `unknown` | 79 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
-| `source-moved` | 10 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
+| `source-moved` | 18 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
+| `unaddressed` | 1 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
-### code-change-review--consolidation-956
+### code-change-review--bean-1j3q-route-keyed-storage
 
-8 step(s) checked, 8 `prov:Activity` emitted, 7 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--consolidation-956.prov.jsonld' | relative_url }})
+5 step(s) checked, 5 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/sdlc/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--bean-1j3q-route-keyed-storage.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `code-change-review--bean-1j3q-route-keyed-storage` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 4 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
+| `code-change-review--bean-1j3q-route-keyed-storage` | 5 | `Task_CommitAndOpenPR` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_CommitAndOpenPR as authoring-agent |
+
+### code-change-review--consolidation-956
+
+8 step(s) checked, 8 `prov:Activity` emitted, 8 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--consolidation-956.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `code-change-review--consolidation-956` | (instance) | `Process_CodeChangeReview` | `source-moved` | cat-harness/processes/code-change-review.bpmn does not exist; read cat-harness/processes/sdlc/code-change-review.bpmn, which defines Process_CodeChangeReview |
 | `code-change-review--consolidation-956` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
 | `code-change-review--consolidation-956` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
 | `code-change-review--consolidation-956` | 3 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
@@ -51,10 +65,11 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### code-change-review--issue-1015-prefix-is-stub
 
-9 step(s) checked, 9 `prov:Activity` emitted, 9 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1015-prefix-is-stub.prov.jsonld' | relative_url }})
+9 step(s) checked, 9 `prov:Activity` emitted, 10 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1015-prefix-is-stub.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `code-change-review--issue-1015-prefix-is-stub` | (instance) | `Process_CodeChangeReview` | `source-moved` | cat-harness/processes/code-change-review.bpmn does not exist; read cat-harness/processes/sdlc/code-change-review.bpmn, which defines Process_CodeChangeReview |
 | `code-change-review--issue-1015-prefix-is-stub` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
 | `code-change-review--issue-1015-prefix-is-stub` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
 | `code-change-review--issue-1015-prefix-is-stub` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
@@ -67,10 +82,11 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### code-change-review--issue-1190-bean-restates-skill
 
-6 step(s) checked, 6 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1190-bean-restates-skill.prov.jsonld' | relative_url }})
+6 step(s) checked, 6 `prov:Activity` emitted, 6 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1190-bean-restates-skill.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `code-change-review--issue-1190-bean-restates-skill` | (instance) | `Process_CodeChangeReview` | `source-moved` | cat-harness/processes/code-change-review.bpmn does not exist; read cat-harness/processes/sdlc/code-change-review.bpmn, which defines Process_CodeChangeReview |
 | `code-change-review--issue-1190-bean-restates-skill` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
 | `code-change-review--issue-1190-bean-restates-skill` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
 | `code-change-review--issue-1190-bean-restates-skill` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
@@ -79,10 +95,11 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### code-change-review--issue-1531-upload-step
 
-5 step(s) checked, 5 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1531-upload-step.prov.jsonld' | relative_url }})
+5 step(s) checked, 5 `prov:Activity` emitted, 6 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1531-upload-step.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `code-change-review--issue-1531-upload-step` | (instance) | `Process_CodeChangeReview` | `source-moved` | cat-harness/processes/code-change-review.bpmn does not exist; read cat-harness/processes/sdlc/code-change-review.bpmn, which defines Process_CodeChangeReview |
 | `code-change-review--issue-1531-upload-step` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
 | `code-change-review--issue-1531-upload-step` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
 | `code-change-review--issue-1531-upload-step` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
@@ -95,7 +112,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
-| `crdm--folio-assistant-6lb8` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
+| `crdm--folio-assistant-6lb8` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn does not exist; read cat-harness/processes/process/crdm-requirements.bpmn, which defines Process_CRDM |
 | `crdm--folio-assistant-6lb8` | 1 | `BA_Submit` | `unknown` | no policy grants perform-task for Process_CRDM/BA_Submit as business-analyst |
 | `crdm--folio-assistant-6lb8` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
 | `crdm--folio-assistant-6lb8` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
@@ -107,39 +124,40 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--folio-assistant-6lb8` | 9 | `A_OfferKg` | `node-not-in-model` | A_OfferKg is not a node of Process_CRDM as the diagram now stands |
 | `crdm--folio-assistant-6lb8` | 10 | `BA_ChooseKg` | `node-not-in-model` | BA_ChooseKg is not a node of Process_CRDM as the diagram now stands |
 | `crdm--folio-assistant-6lb8` | 11 | `A_RecordKg` | `node-not-in-model` | A_RecordKg is not a node of Process_CRDM as the diagram now stands |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | (instance) | `Process_CRDM_DataModel` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn does not exist; read cat-harness/processes/crdm-data-model.bpmn, which defines Process_CRDM_DataModel |
+| `crdm--folio-assistant-6lb8/Call_DataModel` | (instance) | `Process_CRDM_DataModel` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn does not exist; read cat-harness/processes/process/crdm-data-model.bpmn, which defines Process_CRDM_DataModel |
 | `crdm--folio-assistant-6lb8/Call_DataModel` | 1 | `A_Entities` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/A_Entities as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_DataModel` | 2 | `A_Relations` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/A_Relations as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_DataModel` | 6 | `A_Declare` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/A_Declare as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_Issue` | (instance) | `Process_CRDM_Issue` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn does not exist; read cat-harness/processes/crdm-issue-linking.bpmn, which defines Process_CRDM_Issue |
+| `crdm--folio-assistant-6lb8/Call_Issue` | (instance) | `Process_CRDM_Issue` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn does not exist; read cat-harness/processes/process/crdm-issue-linking.bpmn, which defines Process_CRDM_Issue |
 | `crdm--folio-assistant-6lb8/Call_Issue` | 1 | `A_ScanIssues` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/A_ScanIssues as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Issue` | 2 | `GW_Issue` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/GW_Issue as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Issue` | 3 | `A_AskCreate` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/A_AskCreate as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/crdm-needs.bpmn, which defines Process_CRDM_Needs |
+| `crdm--folio-assistant-6lb8/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/process/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--folio-assistant-6lb8/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Needs` | 5 | `GW_Needs` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/GW_Needs as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_Requirements` | (instance) | `Process_CRDM_Requirements` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn does not exist; read cat-harness/processes/crdm-requirements-definition.bpmn, which defines Process_CRDM_Requirements |
+| `crdm--folio-assistant-6lb8/Call_Requirements` | (instance) | `Process_CRDM_Requirements` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn does not exist; read cat-harness/processes/process/crdm-requirements-definition.bpmn, which defines Process_CRDM_Requirements |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 1 | `A_MapWorkflow` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/A_MapWorkflow as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 2 | `A_DefineReqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/A_DefineReqs as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 3 | `A_CompareOptions` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/A_CompareOptions as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 6 | `GW_Reqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/GW_Reqs as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_Signoff` | (instance) | `Process_CRDM_Signoff` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn does not exist; read cat-harness/processes/crdm-signoff.bpmn, which defines Process_CRDM_Signoff |
+| `crdm--folio-assistant-6lb8/Call_Signoff` | (instance) | `Process_CRDM_Signoff` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn does not exist; read cat-harness/processes/process/crdm-signoff.bpmn, which defines Process_CRDM_Signoff |
 | `crdm--folio-assistant-6lb8/Call_Signoff` | 1 | `A_CreateBeans` | `unknown` | no policy grants perform-task for Process_CRDM_Signoff/A_CreateBeans as authoring-agent |
 
 ### crdm--folio-assistant-b94c
 
-5 step(s) checked, 5 `prov:Activity` emitted, 7 finding(s). Source: `cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--folio-assistant-b94c.prov.jsonld' | relative_url }})
+5 step(s) checked, 5 `prov:Activity` emitted, 8 finding(s). Source: `cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--folio-assistant-b94c.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
-| `crdm--folio-assistant-b94c` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
+| `crdm--folio-assistant-b94c` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn does not exist; read cat-harness/processes/process/crdm-requirements.bpmn, which defines Process_CRDM |
 | `crdm--folio-assistant-b94c` | 1 | `BA_Submit` | `undeclared-actor` | "costateixeira" is not a declared actor |
 | `crdm--folio-assistant-b94c` | 1 | `BA_Submit` | `unknown` | no policy grants perform-task for Process_CRDM/BA_Submit as business-analyst |
 | `crdm--folio-assistant-b94c` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
 | `crdm--folio-assistant-b94c` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
 | `crdm--folio-assistant-b94c` | 4 | `Call_Issue` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Issue as authoring-agent |
 | `crdm--folio-assistant-b94c` | 5 | `Call_Needs` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Needs as authoring-agent |
+| `crdm--folio-assistant-b94c` | 1 | `costateixeira` | `unaddressed` | agent: no instance in this checkout declares actor "costateixeira" |
 
 ### crdm--issue-607-kg-to-cdn-portal
 
@@ -147,35 +165,58 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
-| `crdm--issue-607-kg-to-cdn-portal` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
+| `crdm--issue-607-kg-to-cdn-portal` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn does not exist; read cat-harness/processes/process/crdm-requirements.bpmn, which defines Process_CRDM |
 | `crdm--issue-607-kg-to-cdn-portal` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal` | 4 | `Call_Issue` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Issue as authoring-agent |
-| `crdm--issue-607-kg-to-cdn-portal/Call_Issue` | (instance) | `Process_CRDM_Issue` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn does not exist; read cat-harness/processes/crdm-issue-linking.bpmn, which defines Process_CRDM_Issue |
+| `crdm--issue-607-kg-to-cdn-portal/Call_Issue` | (instance) | `Process_CRDM_Issue` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn does not exist; read cat-harness/processes/process/crdm-issue-linking.bpmn, which defines Process_CRDM_Issue |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Issue` | 1 | `A_ScanIssues` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/A_ScanIssues as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Issue` | 2 | `GW_Issue` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/GW_Issue as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Issue` | 3 | `A_LinkIssue` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/A_LinkIssue as authoring-agent |
-| `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/crdm-needs.bpmn, which defines Process_CRDM_Needs |
+| `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/process/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
 
-### sampleimport--xlg2-wpro-trial
+### merge-train--train-6
 
-12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+12 step(s) checked, 12 `prov:Activity` emitted, 12 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/merge-train--train-6.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `merge-train--train-6` | 1 | `Task_ReadLive` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_ReadLive as merge-steward |
+| `merge-train--train-6` | 2 | `Task_TakeNext` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_TakeNext as merge-steward |
+| `merge-train--train-6` | 3 | `GW_Placement` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Placement as merge-steward |
+| `merge-train--train-6` | 4 | `Task_Admit` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Admit as merge-steward |
+| `merge-train--train-6` | 5 | `Call_MergeMembers` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_MergeMembers as build-pipeline |
+| `merge-train--train-6` | 6 | `GW_AllMerged` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_AllMerged as build-pipeline |
+| `merge-train--train-6` | 7 | `Call_Gates` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_Gates as build-pipeline |
+| `merge-train--train-6` | 8 | `Task_Attribute` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Attribute as merge-steward |
+| `merge-train--train-6` | 9 | `Call_ChecksPresent` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_ChecksPresent as build-pipeline |
+| `merge-train--train-6` | 10 | `GW_Green` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Green as build-pipeline |
+| `merge-train--train-6` | 11 | `Task_Release` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Release as user |
+| `merge-train--train-6` | 12 | `Task_Land` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Land as merge-steward |
+
+### sampleimport--xlg2-wpro-trial
+
+12 step(s) checked, 12 `prov:Activity` emitted, 4 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial` | (instance) | `Process_SampleImport` | `source-moved` | large-datasets/processes/sample-import.bpmn does not exist; read cat-harness/processes/library/sample-import.bpmn, which defines Process_SampleImport |
 | `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
 | `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
+| `sampleimport--xlg2-wpro-trial/Call_Materialize` | (instance) | `Process_MaterializeRemote` | `source-moved` | large-datasets/processes/materialize-remote.bpmn does not exist; read cat-harness/processes/library/materialize-remote.bpmn, which defines Process_MaterializeRemote |
 
 ### sampleimport--xlg2-wpro-trial-original
 
-17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
+17 step(s) checked, 17 `prov:Activity` emitted, 4 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial-original` | (instance) | `Process_SampleImport` | `source-moved` | large-datasets/processes/sample-import.bpmn does not exist; read cat-harness/processes/library/sample-import.bpmn, which defines Process_SampleImport |
 | `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
 | `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
+| `sampleimport--xlg2-wpro-trial-original/Call_Materialize` | (instance) | `Process_MaterializeRemote` | `source-moved` | large-datasets/processes/materialize-remote.bpmn does not exist; read cat-harness/processes/library/materialize-remote.bpmn, which defines Process_MaterializeRemote |
 
 ## Regenerate
 

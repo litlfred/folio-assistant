@@ -44,11 +44,11 @@
  *
  * ## Why `@id` is relative
  *
- * Emitted IRIs are relative (`papers/<paper>/blocks/def-foo`) and `@base`
- * lives in the published context. That keeps generator output identical
- * regardless of where a folio is deployed — which matters because the
- * generated siblings are committed and gated on drift: a base-URL change must
- * not rewrite thousands of files.
+ * Emitted IRIs are relative (`papers/<paper>/blocks/def-foo`). `@base` lived
+ * only in the published context, so that a base-URL change would not rewrite
+ * thousands of committed files. JSON-LD 1.1 §4.1.3 ignores `@base` in a remote
+ * context, so since bean `bh4q` it is ALSO in each document's own context
+ * ({@link CONTENT_DOCUMENT_CONTEXT}) — and a base change does rewrite them.
  *
  * @module schemas/jsonld
  * @graphNode schema
@@ -63,13 +63,8 @@
  * @conformsTo w3c-xsd11-datatypes
  */
 
-import {
-  BLOCK_KINDS,
-  DAK_BLOCK_KINDS,
-  DAK_LABEL_PREFIXES,
-  type BlockKind,
-  type DakBlockKind,
-} from "./block-kinds";
+import { BLOCK_KINDS, type BlockKind } from "./block-kinds";
+import type { ContributionRegistry } from "./contributions";
 
 // ── Namespaces ───────────────────────────────────────────────────
 
@@ -81,7 +76,9 @@ import {
  * harness-layer module must not import the content vocabulary — see that
  * module's note.
  */
-import { CORE_NS, FOLIO_BASE } from "./namespaces";
+import { z } from "zod";
+
+import { CORE_NS, FOLIO_BASE, ownNamespace } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
@@ -130,10 +127,61 @@ export const CONTENT_CONTEXT_URL =
   "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld";
 
 /**
- * Base every minted `@id` is relative to. Declared in the context rather
- * than baked into emitted files — see the module docstring.
+ * Base every minted `@id` is relative to. Declared in the published context
+ * AND in each document's own context — see {@link CONTENT_DOCUMENT_CONTEXT}.
  */
 export { FOLIO_BASE };
+
+/**
+ * The `@context` every emitted content document carries: the published
+ * context by URL, then `@base` in the document's OWN context (bean `bh4q`,
+ * owner 2026-10-01, option 2).
+ *
+ * JSON-LD 1.1 §4.1.3 says `@base` in a remote context is ignored, so a
+ * conforming processor resolves our relative `@id`s against each document's
+ * own URL. jsonld.js applies it anyway — measured — which is why this went
+ * unnoticed. Rule `ld-no-base-in-a-remote-context` in the `linked-data` voice.
+ *
+ * The cost, accepted: a base-URL change now rewrites every emitted file,
+ * which is what keeping `@base` only in the context had avoided.
+ */
+export const CONTENT_DOCUMENT_CONTEXT = [CONTENT_CONTEXT_URL, { "@base": FOLIO_BASE }] as const;
+
+/**
+ * The published docs site's root — `_config.yml` `url` + `baseurl`, from the
+ * own-namespaces code list (`docs-site`). The same value `library-iri.ts`
+ * mints library assets under.
+ */
+export const DOCS_SITE_BASE = ownNamespace("docs-site");
+
+/**
+ * The `@context` the DOCS SITE's own nodes carry (`gen-site-jsonld.ts`) —
+ * issue #1908.
+ *
+ * {@link FOLIO_BASE} is `https://litlfred.github.io/folio/`, which is not
+ * where anything is served, so a site node's `@id` named nothing a reader
+ * could open — and a todo's `target`, an IRI edge to that node, could not be
+ * followed. The site's nodes ARE published (at {@link siteNodeSitePath}), so
+ * their base is the site, and each `@id` is the address of its own JSON-LD:
+ * the `kg-viewer` rule from #1881, that an asset's IRI dereferences to it.
+ *
+ * Only the site's nodes move. The corpus and library documents keep
+ * {@link FOLIO_BASE} — thousands of committed files whose ids key summaries,
+ * LSI indexes and kg-qa sidecars, and none of which is a published file yet.
+ */
+export const SITE_DOCUMENT_CONTEXT = [CONTENT_CONTEXT_URL, { "@base": DOCS_SITE_BASE }] as const;
+
+/**
+ * A content document's `@context`, as a record schema accepts it: the
+ * two-part form above, the site form, or the bare URL that records written
+ * before bean `bh4q` carry. Any other context would bind their keys to terms
+ * nobody declared, so nothing else is accepted.
+ */
+export const ContentContextSchema = z.union([
+  z.literal(CONTENT_CONTEXT_URL),
+  z.tuple([z.literal(CONTENT_CONTEXT_URL), z.object({ "@base": z.literal(FOLIO_BASE) }).strict()]),
+  z.tuple([z.literal(CONTENT_CONTEXT_URL), z.object({ "@base": z.literal(DOCS_SITE_BASE) }).strict()]),
+]);
 
 // ── Block kind → RDF types ───────────────────────────────────────
 
@@ -197,16 +245,32 @@ export const SITE_NARRATIVE_TYPES = ["folio-assistant-core:Prose", "doco:Section
 export const SITE_ASSET_TYPES = ["folio-assistant-core:Figure", "doco:Figure"] as const;
 
 /**
- * Relative IRI for a docs-site node. `site/<slug>` for a page, and
- * `site/<slug>/nodes/<id>` for one of its children — the same
- * document/section/block shape `gen-library-jsonld` mints for an ingested
- * source, so both populations read the same way when the graph is walked.
+ * Relative IRI for a docs-site node, against {@link DOCS_SITE_BASE}:
+ * `site/<slug>.jsonld` for a page and `site/<slug>/nodes/<id>.jsonld` for one
+ * of its children — the same document/section/block shape `gen-library-jsonld`
+ * mints for an ingested source, so both populations read the same way when the
+ * graph is walked.
+ *
+ * It IS the node's published path ({@link siteNodeSitePath}), so the IRI
+ * dereferences to the node's JSON-LD (#1908; the `kg-viewer` rule of #1881).
+ * The rendering — `<slug>.html#<id>` — is a different resource, and the node
+ * does not name it.
  *
  * The slug keeps its slashes: `guides/writing-a-paper` publishes at that path
  * and an IRI that flattened it would no longer say where the page is.
  */
 export function siteIri(slug: string, nodeId?: string): string {
-  return nodeId ? `site/${slug}/nodes/${nodeId}` : `site/${slug}`;
+  return siteNodeSitePath(slug, nodeId);
+}
+
+/** Where a site node's JSON-LD is published, SITE-relative. One function names both the `@id` and the file. */
+export function siteNodeSitePath(slug: string, nodeId?: string): string {
+  return nodeId ? `site/${slug}/nodes/${encodeURIComponent(nodeId)}.jsonld` : `site/${slug}.jsonld`;
+}
+
+/** A site node's absolute IRI — what an edge from outside the site graph (a todo's `target`) points at. */
+export function siteNodeIri(slug: string, nodeId?: string): string {
+  return `${DOCS_SITE_BASE}${siteNodeSitePath(slug, nodeId)}`;
 }
 
 export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
@@ -230,108 +294,29 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
   proof: "doco:Section",
 };
 
-/**
- * `folio-assistant-core:` type for each DAK kind.
- *
- * Folio's own classes rather than FHIR's, deliberately. A `value-set` *block*
- * is the authored unit that carries the label, the editorial edges and the QA
- * sidecar; the FHIR `ValueSet` is what its `.fsh` companion compiles to. Typing
- * the block as `fhir:ValueSet` would assert that a manifest is a FHIR resource,
- * which it is not — and would invite a consumer to read FHIR fields off it.
- * The link to the resource is the companion, not the type.
- */
-export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
-  "health-intervention": "folio-assistant-core:HealthIntervention",
-  persona: "folio-assistant-core:Persona",
-  "user-scenario": "folio-assistant-core:UserScenario",
-  "business-process": "folio-assistant-core:BusinessProcess",
-  "data-element": "folio-assistant-core:DataElement",
-  "decision-table": "folio-assistant-core:DecisionTable",
-  "scheduling-logic": "folio-assistant-core:SchedulingLogic",
-  indicator: "folio-assistant-core:Indicator",
-  "functional-requirement": "folio-assistant-core:FunctionalRequirement",
-  "non-functional-requirement": "folio-assistant-core:NonFunctionalRequirement",
-  "test-scenario": "folio-assistant-core:TestScenario",
-  "logical-model": "folio-assistant-core:LogicalModel",
-  profile: "folio-assistant-core:Profile",
-  "value-set": "folio-assistant-core:ValueSet",
-  questionnaire: "folio-assistant-core:Questionnaire",
-  "cql-library": "folio-assistant-core:CqlLibrary",
-  "structure-map": "folio-assistant-core:StructureMap",
-  "plan-definition": "folio-assistant-core:PlanDefinition",
-  measure: "folio-assistant-core:Measure",
-  "test-case": "folio-assistant-core:TestCase",
-  "actor-definition": "folio-assistant-core:ActorDefinition",
-};
 
 /**
- * The WHO logical model each DAK kind corresponds to, as a canonical IRI.
+ * Every `@type` for a block, most specific first.
  *
- * WHO's IG publisher post-processes `smart-base`'s logical models into JSON
- * Schema and JSON-LD. Inspecting `generate_logical_model_schemas.py`, the
- * generated `@type` is a plain string carrying only an *example*
- * (`LogicalModel-HealthInterventions`), while `resourceDefinition` is a `const`
- * pinned to the StructureDefinition's canonical URL. **The canonical URL is the
- * stable identifier**, and it is the same one `DAKComponentSources.fsh` uses as
- * `canonical ^type[0].targetProfile`.
+ * A built-in kind is typed from the two tables above. A CONTRIBUTED kind — the
+ * `dak` adapter's, which smart-base contributes (bean `1335`) — carries its own
+ * `folioType` and `docoType` on its `BlockKindContribution`, so this reads them
+ * from the registry rather than from a table naming another harness's kinds.
+ * Built-ins are consulted first, which is the order `register` already
+ * guarantees by refusing a contribution that redefines a built-in kind.
  *
- * So a block keeps its `folio-assistant-core:` `@type` — it is a manifest, not a FHIR resource
- * — and gains this as a separate assertion: *the thing this block is an
- * authored instance of*. That makes a folio DAK joinable with WHO's published
- * vocabularies instead of merely parallel to them.
- *
- * Deliberately **partial**. Ten of WHO's logical models name a component; kinds
- * without one — the L3 FHIR artefacts, and `scheduling-logic`, which WHO's model
- * still folds into decision support (the owner counts it as its own component;
- * see `DAK_UNFORMALIZED_COMPONENTS`) — get no entry rather than a fabricated IRI. An
- * unverified IRI never goes in a published graph.
+ * With no registry, a contributed kind gets no type — the same answer an
+ * unknown kind gets, because without the registry it IS unknown here.
  */
-export const DAK_KIND_TO_WHO_MODEL: Partial<Record<DakBlockKind, string>> = {
-  "health-intervention": `${SMART_BASE_NS}HealthInterventions`,
-  persona: `${SMART_BASE_NS}GenericPersona`,
-  "user-scenario": `${SMART_BASE_NS}UserScenario`,
-  "business-process": `${SMART_BASE_NS}BusinessProcessWorkflow`,
-  "data-element": `${SMART_BASE_NS}CoreDataElement`,
-  "decision-table": `${SMART_BASE_NS}DecisionSupportLogic`,
-  indicator: `${SMART_BASE_NS}ProgramIndicator`,
-  "functional-requirement": `${SMART_BASE_NS}FunctionalRequirement`,
-  "non-functional-requirement": `${SMART_BASE_NS}NonFunctionalRequirement`,
-  "test-scenario": `${SMART_BASE_NS}TestScenario`,
-};
-
-/**
- * DoCO co-type for DAK kinds — even more sparing than the paper side.
- *
- * Only the three that really are document components in DoCO's sense get one.
- * A `decision-table` renders as a table, and a `business-process` and a
- * `logical-model` as figures. The rest are guideline artefacts rather than
- * parts of a document's layout, and co-typing them `doco:Section` would be a
- * stretch that puts wrong triples in a published graph.
- */
-export const DAK_KIND_TO_DOCO_TYPE: Partial<Record<DakBlockKind, string>> = {
-  "decision-table": "doco:Table",
-  "business-process": "doco:Figure",
-  "logical-model": "doco:Figure",
-};
-
-/** Every `@type` for a block, most specific first. Spans both adapters. */
-export function typesForKind(kind: string): string[] {
-  const folio =
-    BLOCK_KIND_TO_FOLIO_TYPE[kind as BlockKind] ??
-    DAK_KIND_TO_FOLIO_TYPE[kind as DakBlockKind];
-  const doco =
-    BLOCK_KIND_TO_DOCO_TYPE[kind as BlockKind] ??
-    DAK_KIND_TO_DOCO_TYPE[kind as DakBlockKind];
+export function typesForKind(kind: string, contributions?: ContributionRegistry): string[] {
+  const contributed = contributions?.kindEntry(kind);
+  const folio = BLOCK_KIND_TO_FOLIO_TYPE[kind as BlockKind] ?? contributed?.folioType;
+  const doco = BLOCK_KIND_TO_DOCO_TYPE[kind as BlockKind] ?? contributed?.docoType;
   const out: string[] = [];
   if (folio) out.push(folio);
   if (doco) out.push(doco);
   return out;
 }
-
-/** DAK kinds with no DoCO counterpart — most of them, by design. */
-export const DAK_KINDS_WITHOUT_DOCO_TYPE = DAK_BLOCK_KINDS.filter(
-  (k) => !DAK_KIND_TO_DOCO_TYPE[k],
-);
 
 // ── Label ↔ IRI segment ──────────────────────────────────────────
 
@@ -348,7 +333,10 @@ export const KIND_PREFIXES: readonly string[] = [
   "prf", "sim", "eq", "fig", "tbl",
   "alg", "prose",
   "sec", "chap", "app", "bib",
-  ...Object.values(DAK_LABEL_PREFIXES),
+  // The `dak` adapter's prefixes were spread in here until bean `1335`. They
+  // are a contributed adapter's now, carried as `labelPrefix` on each
+  // contributed kind (`ContributionRegistry.contributedLabelPrefixes()`), so
+  // this list is the BUILT-IN prefixes and nothing a harness adds.
 ];
 
 const KIND_PREFIX_SET: ReadonlySet<string> = new Set(KIND_PREFIXES);
@@ -402,7 +390,7 @@ export type ParsedReference =
  * (`def:foo:bar`), which is why the *first* kind prefix wins rather than the
  * last colon losing.
  */
-export function parseReference(ref: string): ParsedReference {
+export function parseReference(ref: string, contributedPrefixes: readonly string[] = []): ParsedReference {
   if (/^https?:\/\//i.test(ref)) return { form: "absolute", iri: ref };
   if (!ref.includes(":")) {
     // NOT unresolvable. A colon-free reference is a same-paper label that
@@ -424,7 +412,10 @@ export function parseReference(ref: string): ParsedReference {
   }
 
   const parts = ref.split(":");
-  const pivot = parts.findIndex((p) => KIND_PREFIX_SET.has(p));
+  // A contributed kind's prefix is a pivot too (bean `1335`): core's set is
+  // the built-in prefixes only, so a registry-holding caller passes the rest.
+  const contributed = new Set(contributedPrefixes.map((p) => p.replace(/:$/, "")));
+  const pivot = parts.findIndex((p) => KIND_PREFIX_SET.has(p) || contributed.has(p));
   if (pivot < 0) {
     return {
       form: "unresolvable",
@@ -483,8 +474,12 @@ export function segmentToLabel(segment: string): string | undefined {
  * convention deviation worth REPORTING (`prose` aside, labels carry a prefix)
  * but not worth DROPPING AN EDGE over — see the note in {@link parseReference}.
  */
-export function resolveLabel(ref: string, paper: string): string | undefined {
-  const parsed = parseReference(ref);
+export function resolveLabel(
+  ref: string,
+  paper: string,
+  contributedPrefixes: readonly string[] = [],
+): string | undefined {
+  const parsed = parseReference(ref, contributedPrefixes);
   switch (parsed.form) {
     case "absolute":
       return parsed.iri;

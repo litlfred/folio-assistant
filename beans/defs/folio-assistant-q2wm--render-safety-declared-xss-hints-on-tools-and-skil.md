@@ -163,3 +163,16 @@ the hole and looked like a simplification.
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
 _2026-10-01T09:06:55Z_ — Claimed by claude/quirky-hypatia-k3aoh4 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-01 — the render hint, built on the owner's instruction (session_01Cw8JgZEDT5VqQ5ergjdMjB)
+
+Re-measured first, on main cdb0a018: **still nothing renders a tool's output, and no window fetches per card.** Offered the owner three options (split and close / build the hint now / leave open); the owner chose **build the XSS hints now**, knowing the risk this bean names — a vocabulary chosen with no renderer to constrain it.
+
+So the vocabulary is the one this bean already proposed, and it is held to an implementation rather than left as prose:
+
+- `schemas/tool.ts`: `render?: { as: "text" | "url" | "markdown" | "json", reason? }` on each OUTPUT port (`ToolOutputSchema`). Absent = `text`. Anything but `text` needs a reason; `url` / `markdown` only on a Url / Markdown schema.
+- `schemas/render-output.ts`: `renderToolOutput` — the one implementation. text → escaped; url → `safeHref` or escaped text (a refused URL is shown, not dropped); markdown → remark with raw HTML off (sanitised); json → escaped `<pre>`.
+- 7 tests (`render-output.test.ts`), each falsified: sanitize off → fails; safeHref bypassed → fails.
+- Declared on the 6 Url/Markdown outputs in `tools/index.ts`, each with its reason.
+
+**Still true, and the reason this is not "done":** no page calls `renderToolOutput` yet, because no page renders a tool's output. The day one does, it calls this. Lazy window fetch still has no subject (every fetch loads a whole index once).

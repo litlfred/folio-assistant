@@ -31,8 +31,10 @@
  * `repo-partition` counts a dynamic `import("./literal")` as an edge and a
  * variable one as no edge, and that is the right distinction rather than a
  * loophole: the edge disappears exactly when the target stops being
- * hardcoded. Nothing here names `qa-checkers-dak.ts`; it is reached because a
- * `dak-*` criterion says so.
+ * hardcoded. Nothing here names `qa-checkers-dak.ts`; it was reached because a
+ * `dak-*` criterion said so, and since bean `1335` — when the `dak` adapter
+ * became a contribution — because its contributor registers the checkers and
+ * the criteria declare `checker_contributed`.
  *
  * ## Two subjects, declared not inferred
  *

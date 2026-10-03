@@ -24,7 +24,18 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { FHIR_PIN, FHIR_SNAPSHOT, candidates, pinnedTerminology, resolveFhir, resolveSkos, skosIndex } from "../check-term-mapping.ts";
+import {
+  FHIR_PIN,
+  FHIR_SNAPSHOT,
+  candidates,
+  perScheme,
+  pinnedTerminology,
+  resolveFhir,
+  resolveSkos,
+  skosIndex,
+  termState,
+  type SchemeState,
+} from "../check-term-mapping.ts";
 
 const scheme = (id: string, terms: unknown[]) => ({ id, terms, file: `${id}.glossary.json` }) as never;
 const authored = (prefLabel: string, over: Record<string, unknown> = {}) => ({
@@ -80,6 +91,88 @@ describe("the index matches when it should — the non-vacuity guard", () => {
   test("normalisation is substance, not typography", () => {
     expect(normaliseLabel("  Policy. ")).toBe(normaliseLabel("policy"));
     expect(normaliseLabel("task   run")).toBe("task run");
+  });
+
+  test("the committed projection KEEPS the pair: exact and concept-only stay apart (bean 5yhm)", () => {
+    const [row] = perScheme(results, "skos", [{ target: "skos", consulted: ["platform"], via: "local" }]);
+    expect(row!.mappedTerms).toEqual([
+      { term: "participant", exact: false, concepts: ["platform:actor"], exactConcepts: [] },
+      {
+        term: "policy",
+        exact: true,
+        concepts: ["http://www.w3.org/ns/odrl/2/Policy"],
+        exactConcepts: ["http://www.w3.org/ns/odrl/2/Policy"],
+      },
+    ]);
+    // Not mixed, so no per-term undetermined list: the counts already say it.
+    expect(row!.undeterminedTerms).toBeUndefined();
+  });
+});
+
+describe("exactConcepts names WHICH concept was exact (bean 5yhm, SKOS publish)", () => {
+  // One candidate, two concepts: A by prefLabel, B by altLabel. `exact` is
+  // true, and publishing exactMatch to B would assert an equivalence nothing
+  // measured — so the record must say A alone was exact.
+  const schemes = [
+    scheme("platform", [
+      authored("Ledger", { exactMatch: ["http://example.org/A"] }),
+      authored("Journal", { exactMatch: ["http://example.org/B"], altLabel: ["Ledger"] }),
+    ]),
+    scheme("kg-tools", [candidate("Ledger")]),
+  ];
+  const results = resolveSkos(candidates(schemes), skosIndex(schemes));
+
+  test("only the prefLabel hit is in exactConcepts; both are in concepts", () => {
+    const [row] = perScheme(results, "skos", [{ target: "skos", consulted: ["platform"], via: "local" }]);
+    expect(row!.mappedTerms).toEqual([
+      {
+        term: "ledger",
+        exact: true,
+        concepts: ["http://example.org/A", "http://example.org/B"],
+        exactConcepts: ["http://example.org/A"],
+      },
+    ]);
+  });
+});
+
+describe("termState — the one place the record becomes a per-term answer (bean 5yhm)", () => {
+  const row = (over: Record<string, unknown> = {}): SchemeState =>
+    ({ scheme: "s", target: "fhir", mapped: 0, unmapped: 0, undetermined: 0, mappedTerms: [], ...over }) as SchemeState;
+
+  test("mapped carries exact and the concepts", () => {
+    const st = [row({ mapped: 1, mappedTerms: [{ term: "a", exact: false, concepts: ["u"], exactConcepts: [] }] })];
+    expect(termState(st, "s", "fhir", "a")).toEqual({ state: "mapped", exact: false, concepts: ["u"] });
+  });
+
+  test("an all-undetermined row answers undetermined with its reason — never unmapped", () => {
+    const st = [row({ undetermined: 3, reason: "host refused" })];
+    expect(termState(st, "s", "fhir", "z")).toEqual({ state: "undetermined", reason: "host refused" });
+  });
+
+  test("a mixed row reads its list; without one it answers unknown", () => {
+    expect(termState([row({ unmapped: 1, undetermined: 1, undeterminedTerms: ["b"] })], "s", "fhir", "b").state).toBe(
+      "undetermined",
+    );
+    expect(termState([row({ unmapped: 1, undetermined: 1, undeterminedTerms: ["b"] })], "s", "fhir", "a").state).toBe(
+      "unmapped",
+    );
+    expect(termState([row({ unmapped: 1, undetermined: 1 })], "s", "fhir", "a").state).toBe("unknown");
+  });
+
+  test("no row, or two rows, is unknown", () => {
+    expect(termState([], "s", "fhir", "a").state).toBe("unknown");
+    expect(termState([row({ unmapped: 1 }), row({ unmapped: 1 })], "s", "fhir", "a").state).toBe("unknown");
+  });
+
+  test("perScheme names undetermined terms ONLY when a row is mixed", () => {
+    const ms = [
+      { term: "a", scheme: "s", target: "fhir", exact: "unmapped", concept: "unmapped" },
+      { term: "b", scheme: "s", target: "fhir", exact: "undetermined", concept: "undetermined", undetermined_reason: "r" },
+    ] as never;
+    const [mixed] = perScheme(ms, "fhir", []);
+    expect(mixed!.undeterminedTerms).toEqual(["b"]);
+    expect(termState([mixed!], "s", "fhir", "a").state).toBe("unmapped");
+    expect(termState([mixed!], "s", "fhir", "b").state).toBe("undetermined");
   });
 });
 

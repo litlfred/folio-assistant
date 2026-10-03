@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-l1-complete.ts",
-    "script_hash": "a765a8aa116e"
+    "script_hash": "441bd3c3b6bb"
   },
   "subject": {
     "kind": "library-document",
@@ -15,7 +15,7 @@
       "entries": [
         {
           "requirement": "image-descriptions",
-          "detail": "no raster image was placed, and 4 of 4 declared figure(s) carry no caption text either — Fig. 1, 2, 3, 4. They are drawn in vector and the caption handle does not reach them (bean m4xy). The vector arm recovered 376 positioned label(s) across 2 page(s) that declare a figure — see vector-labels.json; which labels belong to which figure is NOT established (bean a8wy)."
+          "detail": "no raster image was placed, and 4 of 4 declared figure(s) carry no caption text either — Fig. 1, 2, 3, 4. They are drawn in vector and neither the caption handle nor an inspected vector render reaches them (beans m4xy, ay3x). The vector arm recovered 376 positioned label(s) across 2 page(s) that declare a figure — see vector-labels.json; which labels belong to which figure is NOT established (bean a8wy)."
         },
         {
           "requirement": "audio-transcripts",

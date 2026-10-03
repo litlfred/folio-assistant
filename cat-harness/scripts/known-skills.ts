@@ -799,6 +799,22 @@ export function knownSkills(root: string, scope: CorpusScope = corpusScopeFor(ro
  * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
  * reads files from them rather than composing repo-relative ids.
  */
+/**
+ * Whether a directory holds a `.bpmn` or `.dmn` at ANY depth.
+ *
+ * Recursive since placement PR3 (bean `63wl`): a declared `processes/` groups
+ * its diagrams by concern (`processes/sdlc/`, `processes/kg/decisions/`, …)
+ * and holds none directly, so the flat test this replaced reported a
+ * 59-diagram directory as empty — and every consumer then scanned nothing.
+ */
+function holdsDiagrams(dir: string): boolean {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && (e.name.endsWith(".bpmn") || e.name.endsWith(".dmn"))) return true;
+    if (e.isDirectory() && holdsDiagrams(joinPath(dir, e.name))) return true;
+  }
+  return false;
+}
+
 export function workflowDirs(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
   const out: string[] = [];
   for (const d of kgDirectories(root, scope)) {
@@ -811,7 +827,7 @@ export function workflowDirs(root: string, scope: CorpusScope = corpusScopeFor(r
     // declares its diagrams directly instead.
     const wf = joinPath(d.absPath, "processes");
     if (existsSync(wf)) out.push(wf);
-    else if (readdirSync(d.absPath).some((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
+    else if (holdsDiagrams(d.absPath)) {
       out.push(d.absPath);
     }
   }
@@ -851,6 +867,27 @@ export function workflowFiles(root: string, scope: CorpusScope = corpusScopeFor(
   // overlapping directories this function never chose, and the same file
   // reached twice is a duplicate `@id` downstream either way.
   return [...new Set(out)].sort();
+}
+
+/**
+ * One declared diagram by FILE NAME (`getting-started.bpmn`,
+ * `draft-qa-gate.dmn`), wherever its owner placed it.
+ *
+ * Placement PR3 (bean `63wl`) grouped every instance's diagrams by concern and
+ * moved the content-type ones up to their owners, so a path composed as
+ * `<instance>/processes/<name>` stopped being a fact about the diagram. A
+ * name is: `workflowFiles` already walks every declared `processes` graph in
+ * the corpus scope, so resolving through it survives the next regroup too.
+ * Throws rather than guessing when the name is absent or ambiguous.
+ */
+export function workflowFile(root: string, name: string, scope: CorpusScope = corpusScopeFor(root)): string {
+  const hits = workflowFiles(root, scope).filter((f) => basename(f) === name);
+  if (hits.length === 1) return hits[0]!;
+  throw new Error(
+    hits.length === 0
+      ? `no declared diagram named ${name} under ${root}`
+      : `${hits.length} declared diagrams are named ${name}: ${hits.join(", ")}`,
+  );
 }
 
 /**

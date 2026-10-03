@@ -12,7 +12,7 @@ import { provActivityFor } from "../../src/workflow/prov-record.js";
 import { loadAccessContext, type Principal } from "../../src/core/access.js";
 import { ProvActivitySchema } from "../../schemas/prov.js";
 import { reportInstance } from "../prov-qaqc.js";
-import { roleGraphFor } from "../known-skills.js";
+import { roleGraphFor, workflowFile } from "../known-skills.js";
 import type { TaskAuthVerdict } from "../../src/workflow/authorize.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
@@ -20,7 +20,7 @@ const CTX = loadAccessContext(ROOT);
 const GITHUB: Principal = { actor: "collaborator", authenticatedBy: "github", account: "octo" };
 
 async function firstRoledStep() {
-  const model = await loadProcessModel(join(ROOT, "processes", "getting-started.bpmn"));
+  const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
   const state = startInstance(model, { id: "t", subject: "s" });
   const e = enabled(model, state).find((x) => x.kind === "activity" && model.nodes.get(x.node)?.roleRef);
   return { model, state, node: model.nodes.get(e!.node)! };

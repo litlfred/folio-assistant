@@ -168,6 +168,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
       install: { none: true },
       invoke: { shell: "bun run fhir-harness/scripts/gen-ig-pages.ts" },
+      // The viewer for this kind: each instance's index page declares
+      // `renders` / `rendered-by: ig-pages`, so harness-tiles opens it for
+      // the instance's artefact index (#1767, stage C3).
+      renders: ["fhir-artifact-index"],
       io: {
         inputs: [
           { name: "instance", schema: t("RepoPath"), required: true, description: "The instance directory: holds `fhir-artifact-index/` and receives `docs/`." },
@@ -570,6 +574,72 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Milliseconds per page.",
       },
       requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "ig-ast-jsonld",
+      title: "Export an IG AST as JSON-LD",
+      description:
+        "Write an AST as linked data against `fhir-harness/schemas/ig-ast.context.jsonld`: each resource a node identified by its canonical URL (`urn:fhir:<Type>/<id>` when it has none) and typed by its FHIR resource type, each dependency edge a link to its target, and the manifest's `authority: cache` and `provisional` list carried on the graph. The AST is validated against the Zod declaration the JSON Schemas are generated from before it is exported (bean `l0lq`).",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/ig-ast.ts jsonld <ast> > ast.jsonld" },
+      io: {
+        inputs: [{ name: "ast", schema: t("FilesystemPath"), required: true }],
+        outputs: [{ name: "jsonld", schema: t("FilesystemPath"), description: "JSON-LD on stdout." }],
+      },
+      satisfies: ["ig-ast-delta"],
+      selection: {
+        when: "Handing an AST to a consumer that reads linked data, or joining it with another graph by canonical URL.",
+        limits: "Exports the manifest and edges, not each resource's full JSON; a consumer that needs the resource body reads its `file`. Still a cache: the export carries the provisional mark, it does not remove it.",
+        cost: "Reads the manifest and dependency document once.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "ig-binary-audit",
+      title: "Measure the IG Publisher's binary outputs on a pages branch",
+      description:
+        "Read a pages branch's git tree and report the Publisher's binary outputs (full-ig.zip, package.tgz and variants, package.db, validator packs, the definitions/examples/expansions zips, spreadsheets) by name: copies, bytes, and how much of it sits in branch previews. Reads the tree, never a checkout, so a multi-gigabyte branch costs a depth-1 fetch.",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/ig-binary-audit.ts --repo <checkout> [--ref origin/gh-pages] [--previews branches/] [--json]" },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("FilesystemPath"), required: false, description: "A clone that has the pages branch fetched." },
+          { name: "ref", schema: t("Text"), required: false, description: "Default `origin/gh-pages`." },
+        ],
+        outputs: [{ name: "audit", schema: t("Text"), description: "A table, or `ig-binary-audit/v1` JSON with `--json`." }],
+      },
+      satisfies: ["ig-binary-artefacts"],
+      selection: {
+        when: "Before configuring an IG's deploy or release step, when a pages branch nears its size limit, or before linking a download from a page.",
+        limits: "Counts only the Publisher's own binary names; another large file is in `total` but not itemised. It measures, and deletes nothing.",
+        cost: "One `git ls-tree` over the branch; seconds for 64,000 files.",
+      },
+      requires: { runtime: ["bun", "git"], network: false },
+    }),
+
+    defineTool({
+      id: "ingest-ig-releases",
+      title: "Record an IG's GitHub releases as pointers to their binary assets",
+      description:
+        "Read an IG repository's GitHub releases and write `fhir-artifact-index/releases.json` (`ig-releases/v1`): each asset's name, size, SHA-256 digest and download URL, never its bytes. The IG site's generated `releases` page lists them (bean `b8ip`).",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/ingest-ig-releases.ts --instance <dir> [--repo owner/repo] [--from releases.json]" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("FilesystemPath"), required: true },
+          { name: "repo", schema: t("Text"), required: false, description: "`owner/repo`; default the instance menu's recorded IG source, else its declaration's `repository`." },
+        ],
+        outputs: [{ name: "releases", schema: t("FilesystemPath"), description: "`<instance>/fhir-artifact-index/releases.json`." }],
+      },
+      satisfies: ["ig-binary-artefacts"],
+      selection: {
+        when: "After an IG repository cuts a release, so its pages list the new assets.",
+        limits: "A record of what GitHub reported on the day it was read; a later release is absent until the next run. Drafts are never recorded.",
+        cost: "One GitHub API call per 100 releases.",
+      },
+      requires: { runtime: ["bun"], network: true },
     }),
   ];
 }

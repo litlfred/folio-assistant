@@ -64,6 +64,16 @@
       }
     },
     {
+      "code": "docs-site",
+      "label": "published site root",
+      "definition": "The root the docs site is served at: _config.yml url + baseurl. A PUBLISHED asset's IRI is minted under it, so the IRI dereferences to the file — a library entry's JSON-LD at <root>assets/library/jsonld/<instance>/<id>/manifest.jsonld. A base, not a vocabulary.",
+      "value": "https://litlfred.github.io/folio-assistant/",
+      "source": {
+        "href": "https://github.com/litlfred/folio-assistant/issues/1881",
+        "note": "owner, 2026-10-02: \"each asset should have one IRI, but the view page is a rendering of that asset, a different page. fix IRIs\""
+      }
+    },
+    {
       "code": "folio-bpmn",
       "label": "retired single BPMN extension address",
       "definition": "The one XML namespace every BPMN extension element was in until 2026-09-24. Retired then (bean 12s9): each element is now in the namespace of the Subgraph that declares it, bootstrap-processes or cat-harness-processes. Listed so a check can name it when a diagram still binds it.",
@@ -112,6 +122,15 @@
       "source": {
         "href": "https://github.com/litlfred/folio-assistant/issues/1140",
         "note": "bean rtrg, owner 2026-09-23"
+      }
+    },
+    {
+      "code": "fhir-harness-ig-ast",
+      "label": "IG AST vocabulary",
+      "definition": "The vocabulary the IG AST's JSON-LD export uses for what FHIR does not name (key, file, dependsOn, target, provisional ...), and the base of the generated IG AST JSON Schemas' $id. An identifier, following the <stub>/<instance>/<version>/ns/<vocab># pattern; not a resolvable address.",
+      "value": "https://litlfred.github.io/fhir-harness/0.1.0/ns/ig-ast#",
+      "source": {
+        "note": "bean l0lq"
       }
     }
   ]

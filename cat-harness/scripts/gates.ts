@@ -47,6 +47,11 @@
  *   bun run gates              # the fast set — what the `typescript` job runs
  *   bun run gates --all        # plus the jobs that need a browser
  *   bun run gates --list       # print them and exit, running nothing
+ *   bun run gates --jobs 3     # pool size for read-only gates (default: CPUs - 1)
+ *
+ * Gates whose script declares `outputs: []` in `task-io.ts` run in a worker
+ * pool, output printed in workflow order; every other gate runs alone, as it
+ * always did (bean `xpcu`).
  *
  * @module scripts/gates
  */
@@ -65,6 +70,8 @@ import {
   readTree,
   type GateMutation,
 } from "./gate-tree-guard.js";
+import { jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
+import { gateReadsOnly } from "./task-io.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -212,6 +219,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
+  },
+  {
+    // Bean `16ei`. The scheduled retention job for the `qa-reports` branch.
+    // It WRITES a branch rather than judging a tree, needs `contents: write`
+    // and `pull-requests: read`, and a contributor has no verdict to get from
+    // it. Its rule is pinned by `qa-store.test.ts` in `bun test`, on real
+    // repositories.
+    match: "qa:prune",
+    kind: "ci-only",
+    reason:
+      "a scheduled WRITE to the qa-reports branch, not a check; its retention rule and its " +
+      "tip-only rewrite are covered by qa-store.test.ts in `bun test`",
   },
   {
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
@@ -483,9 +502,48 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
   },
   {
+    match: "search-split.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it cuts the BUILT (or, on a preview, borrowed) search index into per-scope " +
+      "indices (bean `m7mn`); there is no `_site` in a checkout. Its scope rule, partition and determinism " +
+      "are covered by search-split.test.ts, and its output on every deployed tree by publish-verify's " +
+      "`search-scopes` verifier",
+  },
+  {
+    match: "publish-id-lookup.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it copies the identifier-lookup client and each declared index into the BUILT " +
+      "site (bean `1br0`); there is no `_site` in a checkout. Covered by publish-id-lookup.test.ts, and on " +
+      "every deployed tree by publish-verify's `search-scopes`, which fails a linked lookup the tree lacks",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
+  },
+  {
+    // Its last-in-the-pipeline sibling: drops the comments and the unrendered
+    // inter-tag whitespace from every emitted page. `ci-only` for the same
+    // reason — it takes `--site ./_site` — and for one more that is specific
+    // to it: the saving it reports is a fact about the BUILT tree, so a gate
+    // run in a checkout would have nothing to measure and would print 0.
+    //
+    // There IS a `--check` mode, and it is deliberately not gated: it reports
+    // what a build would save rather than passing or failing, so it is a
+    // measurement, not a verdict. The verdicts are elsewhere —
+    // `minify-site.test.ts` holds the equivalence rules (verbatim regions
+    // untouched, word boundaries kept, the three comment classes that stay)
+    // and idempotency, and `bun run preview:site` builds a tree to run it on.
+    match: "minify-site.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it minifies the BUILT tree as the last pass before a publish, and " +
+      "there is no `_site` in a checkout. Its equivalence rules and its idempotency are covered " +
+      "by minify-site.test.ts in `bun test`, and its ORDERING — after every check and rewrite " +
+      "that reads the built HTML, two of which decide whether a marker is inside a COMMENT " +
+      "(bean `ur84`) — by check:invocation-parity requiring both workflows to run it",
   },
   {
     match: "set-html-lang.ts",
@@ -587,6 +645,15 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`schemas/staging-preview.ts` and covered by `staging-record.test.ts` in `bun test`",
   },
   {
+    match: "staging-rotate.ts",
+    kind: "ci-only",
+    reason:
+      "enforces the preview cap (owner ruling 2026-10-02, issue #1868) by removing previews from a " +
+      "`gh-pages` checkout at deploy time; that checkout exists only in CI. Its rules — the cap counts " +
+      "the current preview, the oldest go, `_retired/` and non-previews are untouched, the age " +
+      "fallbacks — are covered by `staging-rotate.test.ts` in `bun test`",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",
@@ -682,6 +749,29 @@ function installsBrowser(def: { steps?: { run?: string }[] }): boolean {
   return (def.steps ?? []).some((s) => /playwright\s+install/.test(s.run ?? ""));
 }
 
+/**
+ * A job granted `contents: write` is a PUBLISHER, not a gate.
+ *
+ * Bean `16ei`: `code-quality-gates.yml` gained a job that publishes the QA
+ * results to the `qa-reports` branch after the gates have run. Its `bun run
+ * qa:publish` line would otherwise be extracted here and run by `bun run
+ * gates` on a contributor's machine — a gate set that PUSHES. No gate needs
+ * write access to judge a tree, so the permission is the structural
+ * discriminator, as `playwright install` is for {@link installsBrowser}: it is
+ * what the job actually holds, not what it is called.
+ *
+ * SCOPED TO THE GATES WORKFLOW ({@link loadGates}). Other workflows have jobs
+ * holding `contents: write` too — `publish.yml`'s, for one — and their `bun`
+ * steps are still classified by {@link otherWorkflowSteps} and the exemption
+ * table, which is what keeps a CI step from going unaccounted for. The first
+ * version applied it everywhere and three exemptions stopped matching.
+ */
+export function publishes(def: { permissions?: unknown }): boolean {
+  const p = def.permissions;
+  if (p === "write-all") return true;
+  return typeof p === "object" && p !== null && (p as Record<string, unknown>).contents === "write";
+}
+
 /** One runnable gate, with the job and step that ask for it. */
 export interface Gate {
   job: string;
@@ -699,13 +789,65 @@ export interface Gate {
  * here by design, and running their bodies locally would report a clean scan
  * of nothing, which is the thing this module refuses to do.
  */
-export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): Gate[] {
+/**
+ * `$VAR` or `${VAR}` — a shell variable this reader cannot resolve.
+ *
+ * ## Why a command carrying one is NOT a gate
+ *
+ * The extraction keeps `bun …` lines and discards everything else, which
+ * necessarily discards the shell that gave those lines their variables.
+ * `code-quality-gates.yml` writes
+ *
+ *     base="$(git merge-base origin/main HEAD 2>/dev/null || true)"   # :1345
+ *     bun run translation:catalogue:check -- --base "$base"           # :1348
+ *
+ * and only the second line survives. Run as written, git is handed a ref
+ * literally named `$base`, so the check exits 2 with *"could not determine:
+ * git would not list what this change adds (`$base..HEAD`)"* — on every
+ * branch, forever. Measured 2026-10-02, bean `9zok`: this made
+ * `bun run gates` report `✗ 1 of 210` on a clean tree, which means the STRICT
+ * pre-push rule in `AGENTS.md` was unsatisfiable as written.
+ *
+ * ## Why skipping loses nothing, and why that was checked rather than assumed
+ *
+ * The obvious worry is that skipping hides a gate. It does not here, and the
+ * reason is measurable: the SAME script is invoked twice in that workflow —
+ * once with `--base` for CI, which has a PR base sha, and once bare at :1321
+ * for when it does not. Both are extracted, so the bare form already runs in
+ * the same sweep. Measured on this workflow: 2 `translation:catalogue`
+ * invocations extracted, and exactly 1 command in the whole set carrying an
+ * unexpanded variable.
+ *
+ * ## It is reported, never silently dropped
+ *
+ * This file's own `NoGatesFound` doctrine is that a reader finding nothing is
+ * not a clean sweep. The same applies one command at a time: a skipped
+ * command is printed every run under its own heading, so "this reader cannot
+ * run it" stays distinguishable from "it passed". Resolving the variable
+ * properly would mean executing the workflow's shell, which is a different
+ * and much larger thing than reading it.
+ */
+/** What {@link gatesFrom} takes: `all` widens to the browser jobs; `skipPublishers` drops jobs holding `contents: write` (bean `16ei`). */
+export interface GateOpts {
+  all?: boolean;
+  skipPublishers?: boolean;
+}
+
+const SHELL_VAR = /\$\{?[A-Za-z_][A-Za-z0-9_]*\}?/;
+
+/** Whether a command references a shell variable this reader cannot resolve. */
+export function carriesUnexpandedVariable(command: string): boolean {
+  return SHELL_VAR.test(command);
+}
+
+export function gatesFrom(workflowText: string, opts: GateOpts = {}): Gate[] {
   const doc = parse(workflowText) as {
-    jobs?: Record<string, { steps?: { name?: string; run?: string }[] }>;
+    jobs?: Record<string, { permissions?: unknown; steps?: { name?: string; run?: string }[] }>;
   };
   const out: Gate[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
     if (!opts.all && installsBrowser(def)) continue;
+    if (opts.skipPublishers && publishes(def)) continue;
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       // A step's `run` may hold several lines; each `bun …` line is its own
@@ -721,6 +863,31 @@ export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): G
   return out;
 }
 
+/**
+ * The commands this reader READ but cannot run.
+ *
+ * A VIEW over {@link gatesFrom}, not a narrowing of it, and that distinction
+ * was paid for: the first version of this fix filtered inside `gatesFrom`
+ * itself, which broke two tests that were right to break. `gatesFrom` answers
+ * **"what does CI run"** — `unclassifiedSteps` and the `STEP_EXEMPTIONS`
+ * staleness check both read it that way, and 14 exemptions went stale the
+ * moment a command vanished from it — while *this* answers "what can I run
+ * here". CI runs the `--base` command correctly, with a shell; only this tool
+ * cannot. Removing it from the first answer asserted something false about CI.
+ */
+export function unresolvedGatesFrom(workflowText: string, opts: GateOpts = {}): Gate[] {
+  return gatesFrom(workflowText, opts).filter((g) => carriesUnexpandedVariable(g.command));
+}
+
+/**
+ * What this tool will actually run: {@link gatesFrom} minus
+ * {@link unresolvedGatesFrom}. The two partition the extraction, so a command
+ * is in exactly one of them and none goes missing from both.
+ */
+export function runnableGatesFrom(workflowText: string, opts: GateOpts = {}): Gate[] {
+  return gatesFrom(workflowText, opts).filter((g) => !carriesUnexpandedVariable(g.command));
+}
+
 /** Thrown when the extraction finds nothing — never reported as a clean run. */
 export class NoGatesFound extends Error {
   constructor(path: string) {
@@ -734,10 +901,46 @@ export class NoGatesFound extends Error {
   }
 }
 
-/** Read and parse, refusing an empty result. */
+/**
+ * The commands this reader could not run, for the CLI to print.
+ *
+ * Separate from {@link loadGates} rather than returned beside it, because a
+ * caller that wants the runnable set must not have to destructure an
+ * "and also these" it can then ignore — that is how a skipped gate becomes a
+ * silent one.
+ */
+export function loadUnresolved(root: string, opts: { all?: boolean } = {}): Gate[] {
+  // Publishers are dropped here as in `loadGates`: they are not gates, so
+  // they are neither run nor reported as unrunnable (bean `16ei`).
+  return unresolvedGatesFrom(readFileSync(join(root, GATES_WORKFLOW), "utf-8"), { ...opts, skipPublishers: true });
+}
+
+/**
+ * Every gate CI RUNS — the runnable set plus the ones only this tool cannot run.
+ *
+ * The third consumer of this list, and the second time the layering caught me
+ * out. `audit:coverage` asks "how many gates declare a kind", which is a
+ * question about CI: a gate CI runs and that declares `@covers` still covers
+ * its kind, whether or not a local runner can execute it. Pointing it at
+ * {@link loadGates} silently shrank its census from 210 to 209 and turned
+ * *"all 210 gates have declared, so this is a verdict rather than an upper
+ * bound"* into a verdict over a smaller set than reality.
+ *
+ * So the two questions get two functions with their names on them:
+ * `loadGates` for **what can I run**, this for **what does CI run**.
+ */
+export function loadGatesCiRuns(root: string, opts: { all?: boolean } = {}): Gate[] {
+  return [...loadGates(root, opts), ...loadUnresolved(root, opts)];
+}
+
+/** Read and parse, refusing an empty result. The RUNNER's list — see {@link loadGatesCiRuns}. */
 export function loadGates(root: string, opts: { all?: boolean } = {}): Gate[] {
   const path = join(root, GATES_WORKFLOW);
-  const gates = gatesFrom(readFileSync(path, "utf-8"), opts);
+  // The RUNNER's list, so the filter belongs here rather than in `gatesFrom`:
+  // a command referencing a shell variable this reader discarded cannot be run
+  // as written, but CI does run it, and `gatesFrom` is what the accounting
+  // checks read as "what CI runs". `reportUnresolved` prints what this drops.
+  const gates = runnableGatesFrom(readFileSync(path, "utf-8"), { ...opts, skipPublishers: true });
   if (gates.length === 0) throw new NoGatesFound(GATES_WORKFLOW);
   if (!opts.all) return gates;
 
@@ -889,6 +1092,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "SUBSUMED by `check:source-licence:check`, which CI runs: the same script with `--check`, so it computes the same report and fails on the same malformed records, and additionally fails when the committed sidecar is not what the corpus produces. The bare form is the WRITER of `test/results/source-licence.qa-results.json`, and it used to be the gate — so the gate rewrote the record it should have judged, and a stale sidecar failed nothing (bean `i2kp`). Kept as the author's command, and as the writer `regen` pairs with the `:check` twin",
   },
   {
+    script: "check:library-qa",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:library-qa:check`, which CI runs: the same script with `--check`, so it judges exactly the same library entries and fails on a stale sidecar or a could-not-determine entry instead of rewriting the sidecar. Kept as a script because the writer is what refreshes `library-entry-qa.qa-results.json` after an ingest. Issue #1794, bean `8iqc`",
+  },
+  {
     script: "audit:coverage:check",
     kind: "covered-by",
     reason:
@@ -987,6 +1196,27 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     reason:
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
+  // Bean `bo44`: seven producers whose bare form WRITES its QA sidecar. Each
+  // used to be the gate, so the gate CI ran was also the writer of the record
+  // it reported into. The bare form is now the author's command and the
+  // `:check` form — compute, judge, write nothing — is what is wired.
+  ...(
+    [
+      "check:avatar-coverage",
+      "check:lane-documentation",
+      "check:layout-norms",
+      "check:methodology-evidence",
+      "check:rendered-labels",
+      "check:source-licence",
+      "check:wireframes",
+    ] as const
+  ).map(
+    (script): ScriptExemption => ({
+      script,
+      kind: "report",
+      reason: `WRITES its QA sidecar (bean \`bo44\`), so it is the author's command and not a gate; \`${script}:check\` is the judge form — compute, judge, write nothing — and is wired`,
+    }),
+  ),
   {
     script: "check:upload-names",
     kind: "report",
@@ -1113,6 +1343,34 @@ export function unrunScripts(root: string): string[] {
 }
 
 /**
+ * Print the commands the extraction read but cannot run.
+ *
+ * Unconditional: printed on a green run as well as a red one. A line that
+ * appears only when something else is already wrong is a line nobody reads,
+ * and the fact being reported — that this tool is not covering a command CI
+ * does run — is exactly as true on a clean tree.
+ */
+function reportUnresolved(root: string, opts: { all?: boolean }): void {
+  let skipped: Gate[];
+  try {
+    skipped = loadUnresolved(root, opts);
+  } catch {
+    return;
+  }
+  if (skipped.length === 0) return;
+  console.log(
+    `\n· ${skipped.length} command(s) COULD NOT BE EXTRACTED — not run, and not counted clean:`,
+  );
+  for (const g of skipped) console.log(`    ${g.command}   (${g.job} / ${g.step})`);
+  console.log(
+    `  Each references a shell variable defined on a line this reader discards\n` +
+      `  (it keeps \`bun …\` lines only), so running it as written would pass the\n` +
+      `  variable's NAME to the script. CI runs these correctly; this tool does not\n` +
+      `  run them at all. Bean \`9zok\`.`,
+  );
+}
+
+/**
  * What to print when the gate set could not be derived.
  *
  * Pure, and exported, for one reason: the CLI's `ROOT` is computed from this
@@ -1160,6 +1418,31 @@ async function runTee(cmd: string, args: string[]): Promise<{ code: number; outp
   };
   await Promise.all([pump(child.stdout, process.stdout), pump(child.stderr, process.stderr)]);
   return { code: await child.exited, output: chunks.join("") };
+}
+
+/** A run of consecutive gates: either all read-only (may share the pool) or one that runs alone. */
+export interface GateSegment {
+  parallel: boolean;
+  gates: Gate[];
+}
+
+/**
+ * Split the gate list, in order, into maximal runs of read-only gates and
+ * single serial gates — bean `xpcu`.
+ *
+ * Order across segments is the workflow's: a writing gate is never moved
+ * ahead of or behind a reader, so whatever it repairs, a later reader sees
+ * repaired exactly as it did serially (and the tree guard still names it).
+ */
+export function gateSegments(gates: readonly Gate[], readsOnly: (g: Gate) => boolean): GateSegment[] {
+  const out: GateSegment[] = [];
+  for (const g of gates) {
+    const ro = readsOnly(g);
+    const last = out[out.length - 1];
+    if (ro && last?.parallel) last.gates.push(g);
+    else out.push({ parallel: ro, gates: [g] });
+  }
+  return out;
 }
 
 /**
@@ -1212,6 +1495,7 @@ if (import.meta.main) {
   // `await` below — the gate loop tees each child's output (bean `ucb9`).
   const all = process.argv.includes("--all");
   const listOnly = process.argv.includes("--list");
+  const jobs = jobsFromArgv(process.argv);
 
   // ── The third state (bean `6366`) ──────────────────────────────────────
   //
@@ -1309,6 +1593,10 @@ if (import.meta.main) {
 
   if (listOnly) {
     for (const g of gates) console.log(`  ${g.command.padEnd(52)} ${g.step}`);
+    // `--list` is where somebody goes to learn what this tool covers, so the
+    // commands it will NOT run belong here most of all. Omitting them would
+    // make the list read as the whole gate set.
+    reportUnresolved(ROOT, { all });
     console.log(
       all ? "" : "\n`--all` adds the jobs that need a browser (bpmn-js renders through Chromium).",
     );
@@ -1332,28 +1620,73 @@ if (import.meta.main) {
   const undetermined: string[] = baseline.ok ? [] : formatUndetermined(baseline.why);
   const mutations: GateMutation[] = [];
 
+  // ── Read-only gates run in a pool (bean `xpcu`) ────────────────────────
+  //
+  // A gate whose script DECLARES `outputs: []` in `task-io.ts` only reads, so a
+  // run of consecutive such gates goes to a worker pool and its output is
+  // buffered and printed in workflow order. Every other gate — undeclared, or
+  // declared as writing — runs alone and streams live, exactly as before, and
+  // is a barrier: nothing after it starts until it is done. So `bun test`,
+  // which writes, still runs by itself and still has its writes attributed to
+  // it by the tree guard below.
+  //
+  // The tree is snapshotted per SEGMENT. A serial gate's segment is the gate,
+  // so attribution is as exact as it was. A read-only batch that changed the
+  // tree is attributed to the batch, named in full: that is a declaration that
+  // turned out false, and `--jobs 1` re-runs everything one at a time to pin it.
+  const segments = gateSegments(gates, (g) => gateReadsOnly(g.command));
   const failed: { gate: Gate; why: string[] }[] = [];
-  for (const g of gates) {
-    process.stdout.write(`▸ ${g.command}\n`);
-    const [cmd, ...args] = g.command.split(/\s+/);
-    const r = await runTee(cmd!, args);
-    if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
-
-    if (seen !== undefined) {
-      const now = readTree(ROOT);
-      if (!now.ok) {
-        // The baseline read fine and this one did not, so the question stops
-        // being answerable PART WAY THROUGH. Reported with the gate it stopped
-        // at, and the comparison is abandoned rather than continued against a
-        // snapshot that is now of unknown age.
-        undetermined.push(...formatUndetermined(`${now.why} (after \`${g.command}\`)`));
-        seen = undefined;
-      } else {
-        const changes = diffReadings(seen, now.entries);
-        if (changes.length > 0) mutations.push({ gate: g.command, changes });
-        seen = now.entries;
+  const t0 = performance.now();
+  const parallelCount = segments.filter((s) => s.parallel).reduce((n, s) => n + s.gates.length, 0);
+  console.log(
+    `${jobs} worker(s): ${parallelCount} read-only gate(s) run in parallel, ` +
+      `${gates.length - parallelCount} one at a time (undeclared or writing)\n`,
+  );
+  for (const seg of segments) {
+    if (!seg.parallel || jobs === 1) {
+      for (const g of seg.gates) {
+        process.stdout.write(`▸ ${g.command}\n`);
+        const [cmd, ...args] = g.command.split(/\s+/);
+        const r = await runTee(cmd!, args);
+        if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+        seen = snapshot(seen, g.command);
       }
+      continue;
     }
+    const emitter = orderedEmitter<{ code: number; output: string; ms: number }>((i, r) => {
+      const g = seg.gates[i]!;
+      process.stdout.write(`▸ ${g.command}   (${(r.ms / 1000).toFixed(1)}s, parallel)\n`);
+      process.stdout.write(r.output);
+      if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+    });
+    await runPool(
+      seg.gates.map((g) => ({
+        id: g.command,
+        outputs: [],
+        run: () => runCaptured(g.command.split(/\s+/), ROOT),
+      })),
+      jobs,
+      (i, r) => emitter.push(i, r),
+    );
+    seen = snapshot(seen, `one of the parallel read-only gates: ${seg.gates.map((g) => g.command).join(", ")}`);
+  }
+  console.log(`\n(${((performance.now() - t0) / 1000).toFixed(0)}s wall for the gate run)`);
+
+  /** Compare the tree with the last snapshot and attribute any change to `who`. */
+  function snapshot(prev: ReadonlyMap<string, string> | undefined, who: string): ReadonlyMap<string, string> | undefined {
+    if (prev === undefined) return undefined;
+    const now = readTree(ROOT);
+    if (!now.ok) {
+      // The baseline read fine and this one did not, so the question stops
+      // being answerable PART WAY THROUGH. Reported with the gate it stopped
+      // at, and the comparison is abandoned rather than continued against a
+      // snapshot that is now of unknown age.
+      undetermined.push(...formatUndetermined(`${now.why} (after \`${who}\`)`));
+      return undefined;
+    }
+    const changes = diffReadings(prev, now.entries);
+    if (changes.length > 0) mutations.push({ gate: who, changes });
+    return now.entries;
   }
 
   console.log("");
@@ -1367,6 +1700,7 @@ if (import.meta.main) {
     // the clean line.
     if (mutations.length === 0) {
       console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      reportUnresolved(ROOT, { all });
       if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
       process.exit(0);
     }
@@ -1386,6 +1720,7 @@ if (import.meta.main) {
     );
     process.exit(1);
   }
+  reportUnresolved(ROOT, { all });
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {
     console.log(`  · ${gate.command}   (${gate.job} / ${gate.step})`);

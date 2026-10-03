@@ -330,15 +330,23 @@ describe("the real backlog — not vacuous, and it adds up", () => {
     let summarised = 0;
     // A library its owner holds back (bean x80s) is not backlog. Read from the
     // owner's declaration file directly, sharing no code with summaries.ts.
-    const heldByOwner = (lib: string): boolean => {
+    // An entry can be held on its own (`heldEntries`, bean `j7ql`).
+    const ownerEntry = (lib: string): { summaries?: string; heldEntries?: string[] } | undefined => {
       const owner = dirname(resolve(lib));
       const decl = join(owner, `${basename(owner)}.json`);
-      if (!existsSync(decl)) return false;
-      const dirs = (JSON.parse(readFileSync(decl, "utf-8")).directories ?? []) as { path: string; summaries?: string }[];
-      return dirs.some((d) => resolve(owner, d.path) === resolve(lib) && d.summaries === "held");
+      if (!existsSync(decl)) return undefined;
+      const dirs = (JSON.parse(readFileSync(decl, "utf-8")).directories ?? []) as {
+        path: string;
+        summaries?: string;
+        heldEntries?: string[];
+      }[];
+      return dirs.find((d) => resolve(owner, d.path) === resolve(lib));
     };
+    const heldByOwner = (lib: string): boolean => ownerEntry(lib)?.summaries === "held";
     for (const lib of directoriesForGraph(ROOT, "library").filter((d) => existsSync(d) && !heldByOwner(d))) {
+      const heldHere = new Set(ownerEntry(lib)?.heldEntries ?? []);
       for (const slug of readdirSync(lib)) {
+        if (heldHere.has(slug)) continue;
         const blocksDir = join(lib, slug, "blocks");
         if (!existsSync(blocksDir)) continue;
         const sc = join(lib, slug, SUMMARIES_FILE);
@@ -378,11 +386,12 @@ describe("a library whose owner holds summaries back (bean x80s)", () => {
   test("is named as held, and the drain never offers its blocks", async () => {
     const { heldLibraries, next } = await import("../summaries.ts");
     const held = heldLibraries(ROOT);
-    // The owner's 2026-09-24 decision, declared on agent-skills' own library entry.
-    expect(held.some((d) => d.endsWith("agent-skills/library"))).toBe(true);
+    // The owner's 2026-09-24 decision, declared on agent-skills' library and
+    // carried per entry when that corpus dissolved into cat-harness's (bean j7ql).
+    expect(held.some((d) => d.endsWith("library/arxiv-2607.25032v1"))).toBe(true);
     for (const b of next(ROOT, { n: 10_000 })) {
       expect(held.some((d) => d.endsWith(`/${b.entry}`) || existsSync(join(d, b.entry)))).toBe(false);
     }
-    expect(entryDirs(ROOT).some((e) => held.some((d) => e.startsWith(d + "/")))).toBe(false);
+    expect(entryDirs(ROOT).some((e) => held.some((d) => e === d || e.startsWith(d + "/")))).toBe(false);
   });
 });

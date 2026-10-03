@@ -2,8 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { drainSubprocess } from "./helpers";
 import { mkdtempSync, rmSync } from "fs";
 import { tmpdir } from "os";
-import { join, resolve } from "path";
-import { readdirSync } from "fs";
+import { join, relative, resolve } from "path";
 import {
   loadProcessModel,
   UnsupportedBpmn,
@@ -11,6 +10,10 @@ import {
 } from "../../src/workflow/process-model";
 import { complete, enabled, startInstance, WorkflowError } from "../../src/workflow/instance";
 import { instanceId, loadInstance, saveInstance } from "../../src/workflow/store";
+import { workflowFile, workflowFiles } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 /**
  * The workflow diagrams are the normative picture of how a change reaches the
@@ -24,14 +27,13 @@ import { instanceId, loadInstance, saveInstance } from "../../src/workflow/store
  * repo keeps finding.
  */
 
-const WORKFLOW_DIR = resolve(import.meta.dir, "../../processes");
-const bpmn = (stem: string): string => join(WORKFLOW_DIR, `${stem}.bpmn`);
+const bpmn = (stem: string): string => workflowFile(HARNESS, `${stem}.bpmn`);
 
 const names = (model: ProcessModel, ids: string[]): string[] =>
   ids.map((id) => model.nodes.get(id)!.name).sort();
 
 describe("every shipped diagram is interpretable", () => {
-  const files = readdirSync(WORKFLOW_DIR).filter((f) => f.endsWith(".bpmn"));
+  const files = workflowFiles(HARNESS).filter((f) => f.endsWith(".bpmn")).map((p) => relative(HARNESS, p));
 
   test("there are diagrams to interpret", () => {
     expect(files.length).toBeGreaterThan(0);
@@ -39,7 +41,7 @@ describe("every shipped diagram is interpretable", () => {
 
   for (const f of files) {
     test(`${f} parses, and every flow connects two known nodes`, async () => {
-      const model = await loadProcessModel(join(WORKFLOW_DIR, f));
+      const model = await loadProcessModel(join(HARNESS, f));
       expect(model.id).toMatch(/^Process_/);
       expect(model.startNodes.length).toBeGreaterThan(0);
       for (const flow of model.flows.values()) {

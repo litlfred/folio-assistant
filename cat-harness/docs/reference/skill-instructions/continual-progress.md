@@ -50,7 +50,9 @@ while you work.
    update the checklist (invariant 3) for routine progress; comment only
    for genuine coordination (overlap, a blocker, a handoff-relevant
    finding). Defer to [`/coordinate`](coordinate.md) for the full
-   cross-PR triage protocol.
+   cross-PR triage protocol. New work posts its intent only after the
+   collision review in `coordinate` §"Starting new work" has been run
+   and recorded in the workplan bean.
 
 ## The fifth invariant, and the one agents get wrong
 
@@ -256,6 +258,9 @@ have seen it (bean `391j`).
 
 ## Relationship to other skills
 
+- [`pr-description`](pr-description.md): what the PR body says ABOVE the
+  status checklist (the problem, why, approach, constraints, solution, usage,
+  what is not done), for a reader who was not here.
 - [`/coordinate`](coordinate.md) — cross-PR triage (scope map, sibling
   intent, cherry-picks, ledger). `continual-progress` keeps *your* PR
   legible so `/coordinate` (yours or a sibling's) has something to triage.
@@ -272,8 +277,8 @@ have seen it (bean `391j`).
 
 | process | step(s) that name it |
 |---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Human eyes on the rendered artefact |
 | [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
 | [Code change and review](../../processes/code-change-review.html) | Make the change; Commit, push, open the PR |
-| [KG to public portal](../../processes/kg-to-portal.html) | Human eyes on the rendered artefact |
 | [Merge the base branch in](../../processes/merge-base.html) | Commit the merge |
 

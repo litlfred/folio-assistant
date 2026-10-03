@@ -9,18 +9,18 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_artifact_index <<fhir-artifact-index>> {
-  class "Context" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+  class "Context" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context <<json: FhirArtifactIndexSchema>> #f4f4f1 {
     id [1] : string
     representation [1] : object
     binds [0..*] : string[]
   }
-  class "DakUnbound" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+  class "SidecarsUnbound" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound <<json: FhirArtifactIndexSchema>> #f4f4f1 {
     filename [1] : string
     title [0..1] : string
     enumeration [1] : string
     reason [1] : string
   }
-  class "Artifact" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+  class "Artifact" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Artifact <<json: FhirArtifactIndexSchema>> #f4f4f1 {
     $schema [0..1] : 'folio-fhir-artifact/v1'
     key [1] : string
     resourceType [1] : string
@@ -31,12 +31,13 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     canonical [0..1] : string
     version [0..1] : string
     category [0..1] : string
+    listedAt [0..1] : integer
     published [1] : object
-    dak [0..1] : object
+    sidecars [0..1] : object
     materialization [1] : object
   }
-  class "folio-fhir-artifact-index/v1" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 <<json: FhirArtifactIndexSchema>> #f4f4f1 {
-    $schema [1] : 'folio-fhir-artifact-index/v1'
+  class "folio-fhir-artifact-index/v2" as smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 <<json: FhirArtifactIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-fhir-artifact-index/v2'
     id [1] : string
     title [1] : string
     packageId [0..1] : string
@@ -46,9 +47,11 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     builtAt [0..1] : string
     source [1] : object
     provenance [1] : object
-    dakApi [1] : unknown | absent | present
+    sidecarApi [1] : unknown | absent | present
     contexts [0..*] : Context[]
-    dakUnbound [0..*] : DakUnbound[]
+    igApiHub [0..1] : object
+    package [0..1] : object
+    sidecarsUnbound [0..*] : SidecarsUnbound[]
     count [1] : integer
     artifacts [0..*] : Artifact[]
   }
@@ -68,6 +71,37 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
     version [0..1] : string
     source [1] : object
     groups [0..*] : Group[]
+  }
+  class "folio-ig-identity/v1" as smart_trust_smart_trust_artifact_index_folio_ig_identity_v1_folio_ig_identity_v1 <<json: IgIdentitySchema>> #f4f4f1 {
+    $schema [1] : 'folio-ig-identity/v1'
+    id [1] : string
+    canonical [1] : string<uri>
+    status [1] : string
+    version [0..1] : string
+    readFrom [1] : string
+    readAt [1] : string
+  }
+  class "Asset" as smart_trust_smart_trust_artifact_index_ig_releases_v1_Asset <<json: IgReleasesSchema>> #f4f4f1 {
+    name [1] : string
+    url [1] : string<uri>
+    bytes [1] : integer
+    digest [0..1] : string
+    contentType [0..1] : string
+  }
+  class "Release" as smart_trust_smart_trust_artifact_index_ig_releases_v1_Release <<json: IgReleasesSchema>> #f4f4f1 {
+    tag [1] : string
+    name [0..1] : string
+    url [1] : string<uri>
+    publishedAt [1] : string
+    prerelease [1] : boolean
+    commitish [0..1] : string
+    assets [0..*] : Asset[]
+  }
+  class "ig-releases/v1" as smart_trust_smart_trust_artifact_index_ig_releases_v1_ig_releases_v1 <<json: IgReleasesSchema>> #f4f4f1 {
+    $schema [1] : 'ig-releases/v1'
+    repository [1] : string
+    readAt [1] : string
+    releases [0..*] : Release[]
   }
   class "COSE Headers (DRAFT)" as smart_trust_smart_trust_artifact_index_dak_StructureDefinition_COSEHeader_schema_json_COSE_Headers__DRAFT_ <<schema: dak/StructureDefinition-COSEHeader.schema.json>> #f4f4f1 {
     1 [0..1] : string
@@ -122,66 +156,108 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
   class "WHO GDHCN Actor ValueSet of actor codes Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Actors_displays_json_WHO_GDHCN_Actor_ValueSet_of_actor_codes_Display_Values <<schema: dak/ValueSet-Actors.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN Actor ValueSet of actor codes Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Actors_schema_json_WHO_GDHCN_Actor_ValueSet_of_actor_codes_Schema <<schema: dak/ValueSet-Actors.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/Actors'
+    code [1] : credential-holder | credential-issuer | gdhcn | TNG | TNP
+  }
   class "WHO GDHCN Connection Types Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_ConnectionTypes_displays_json_WHO_GDHCN_Connection_Types_Display_Values <<schema: dak/ValueSet-ConnectionTypes.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
+  }
+  class "WHO GDHCN Connection Types Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_ConnectionTypes_schema_json_WHO_GDHCN_Connection_Types_Schema <<schema: dak/ValueSet-ConnectionTypes.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/ConnectionTypes'
+    code [1] : http-get | mtls
   }
   class "WHO GDHCN Trust Domains - DEV Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_DEV_displays_json_WHO_GDHCN_Trust_Domains___DEV_Display_Values <<schema: dak/ValueSet-Domains-DEV.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN Trust Domains - DEV Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_DEV_schema_json_WHO_GDHCN_Trust_Domains___DEV_Schema <<schema: dak/ValueSet-Domains-DEV.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/Domains-DEV'
+    code [1] : DDCC | IPS-PILGRIMAGE | PH4H | ICVP
+  }
   class "WHO GDHCN Trust Domains - UAT Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_UAT_displays_json_WHO_GDHCN_Trust_Domains___UAT_Display_Values <<schema: dak/ValueSet-Domains-UAT.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Domains - UAT Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_UAT_schema_json_WHO_GDHCN_Trust_Domains___UAT_Schema <<schema: dak/ValueSet-Domains-UAT.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/Domains-UAT'
+    code [1] : DDCC | IPS-PILGRIMAGE | PH4H | ICVP
   }
   class "WHO GDHCN Trust Domains Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_displays_json_WHO_GDHCN_Trust_Domains_Display_Values <<schema: dak/ValueSet-Domains.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN Trust Domains Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Domains_schema_json_WHO_GDHCN_Trust_Domains_Schema <<schema: dak/ValueSet-Domains.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/Domains'
+    code [1] : DDCC | IPS-PILGRIMAGE | PH4H | ICVP
+  }
   class "WHO GDHCN  Key Usage ValueSet - DEV Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_DEV_displays_json_WHO_GDHCN__Key_Usage_ValueSet___DEV_Display_Values <<schema: dak/ValueSet-KeyUsage-DEV.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
+  }
+  class "WHO GDHCN  Key Usage ValueSet - DEV Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_DEV_schema_json_WHO_GDHCN__Key_Usage_ValueSet___DEV_Schema <<schema: dak/ValueSet-KeyUsage-DEV.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/KeyUsage-DEV'
+    code [1] : SCA | DSC | UP | TLS
   }
   class "WHO GDHCN  Key Usage ValueSet - UAT Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_UAT_displays_json_WHO_GDHCN__Key_Usage_ValueSet___UAT_Display_Values <<schema: dak/ValueSet-KeyUsage-UAT.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN  Key Usage ValueSet - UAT Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_UAT_schema_json_WHO_GDHCN__Key_Usage_ValueSet___UAT_Schema <<schema: dak/ValueSet-KeyUsage-UAT.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/KeyUsage-UAT'
+    code [1] : SCA | DSC | UP | TLS
+  }
   class "WHO GDHCN  Key Usage ValueSet Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_displays_json_WHO_GDHCN__Key_Usage_ValueSet_Display_Values <<schema: dak/ValueSet-KeyUsage.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
+  }
+  class "WHO GDHCN  Key Usage ValueSet Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_KeyUsage_schema_json_WHO_GDHCN__Key_Usage_ValueSet_Schema <<schema: dak/ValueSet-KeyUsage.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/KeyUsage'
+    code [1] : SCA | DSC | UP | TLS
   }
   class "WHO GDHCN Trust Network Participant - DEV Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_DEV_displays_json_WHO_GDHCN_Trust_Network_Participant___DEV_Display_Values <<schema: dak/ValueSet-Participants-DEV.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN Trust Network Participant - DEV Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_DEV_schema_json_WHO_GDHCN_Trust_Network_Participant___DEV_Schema <<schema: dak/ValueSet-Participants-DEV.schema.json>> #f4f4f1 {
+    system [1] : string
+    code [1] : string
+  }
   class "WHO GDHCN Trust Network Participant - UAT Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_UAT_displays_json_WHO_GDHCN_Trust_Network_Participant___UAT_Display_Values <<schema: dak/ValueSet-Participants-UAT.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
+  }
+  class "WHO GDHCN Trust Network Participant - UAT Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_UAT_schema_json_WHO_GDHCN_Trust_Network_Participant___UAT_Schema <<schema: dak/ValueSet-Participants-UAT.schema.json>> #f4f4f1 {
+    system [1] : string
+    code [1] : string
   }
   class "WHO GDHCN Trust Network Participant Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_displays_json_WHO_GDHCN_Trust_Network_Participant_Display_Values <<schema: dak/ValueSet-Participants.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN Trust Network Participant Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Participants_schema_json_WHO_GDHCN_Trust_Network_Participant_Schema <<schema: dak/ValueSet-Participants.schema.json>> #f4f4f1 {
+    system [1] : string
+    code [1] : string
+  }
   class "WHO GDHCN Payload Types Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_PayloadTypes_displays_json_WHO_GDHCN_Payload_Types_Display_Values <<schema: dak/ValueSet-PayloadTypes.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
+  }
+  class "WHO GDHCN Payload Types Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_PayloadTypes_schema_json_WHO_GDHCN_Payload_Types_Schema <<schema: dak/ValueSet-PayloadTypes.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/PayloadTypes'
+    code [1] : urn:who:trust:trustlist:v2
   }
   class "WHO GDHCN Transaction Codes Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Transactions_displays_json_WHO_GDHCN_Transaction_Codes_Display_Values <<schema: dak/ValueSet-Transactions.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
+  class "WHO GDHCN Transaction Codes Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_Transactions_schema_json_WHO_GDHCN_Transaction_Codes_Schema <<schema: dak/ValueSet-Transactions.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/Transactions'
+    code [1] : keys-get-api | keys-get-did | keys-put-api
+  }
   class "WHO Regional Offices Display Values" as smart_trust_smart_trust_artifact_index_dak_ValueSet_WHORegionalOffices_displays_json_WHO_Regional_Offices_Display_Values <<schema: dak/ValueSet-WHORegionalOffices.displays.json>> #f4f4f1 {
     fhir:displays [1] : object
   }
-  class "14 schema(s) with no properties" as smart_trust_smart_trust_artifact_index_https___json_schema_org_draft_2020_12_schema_listed <<ext: JSON Schema 2020-12>> #f4f4f1 {
-    dak/ValueSet-Actors [1] : enum(5) of string
-    dak/ValueSet-ConnectionTypes [1] : enum(2) of string
-    dak/ValueSet-Domains-DEV [1] : enum(4) of string
-    dak/ValueSet-Domains-UAT [1] : enum(4) of string
-    dak/ValueSet-Domains [1] : enum(4) of string
-    dak/ValueSet-KeyUsage-DEV [1] : enum(10) of string
-    dak/ValueSet-KeyUsage-UAT [1] : enum(10) of string
-    dak/ValueSet-KeyUsage [1] : enum(10) of string
-    dak/ValueSet-Participants-DEV [1] : enum(60) of string
-    dak/ValueSet-Participants-UAT [1] : enum(57) of string
-    dak/ValueSet-Participants [1] : enum(34) of string
-    dak/ValueSet-PayloadTypes [1] : enum(1) of string
-    dak/ValueSet-Transactions [1] : enum(3) of string
-    dak/ValueSet-WHORegionalOffices [1] : enum(7) of string
+  class "WHO Regional Offices Schema" as smart_trust_smart_trust_artifact_index_dak_ValueSet_WHORegionalOffices_schema_json_WHO_Regional_Offices_Schema <<schema: dak/ValueSet-WHORegionalOffices.schema.json>> #f4f4f1 {
+    system [1] : 'http://smart.who.int/trust/CodeSystem/WHORegionalOffices'
+    code [1] : enum(7)
   }
 }
 
-smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
-smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
-smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
+smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
+smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
+smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item : items
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
+smart_trust_smart_trust_artifact_index_ig_releases_v1_Release *-- "0..*" smart_trust_smart_trust_artifact_index_ig_releases_v1_Asset : assets
+smart_trust_smart_trust_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_ig_releases_v1_Release : releases
 @enduml

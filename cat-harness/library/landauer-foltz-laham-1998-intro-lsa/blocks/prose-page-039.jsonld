@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/landauer-foltz-laham-1998-intro-lsa/blocks/prose-page-039",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 39,
   "pageEnd": 39,
   "text": "../sections/page-039.md",
-  "derivedFrom": "library/landauer-foltz-laham-1998-intro-lsa/manifest",
-  "sourceDocument": "library/landauer-foltz-laham-1998-intro-lsa/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/landauer-foltz-laham-1998-intro-lsa/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/landauer-foltz-laham-1998-intro-lsa/manifest.jsonld",
   "provenance": "ingested"
 }

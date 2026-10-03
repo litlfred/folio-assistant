@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`large-datasets/skills/materialize-remote.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/large-datasets/materialize-remote.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/large-datasets/materialize-remote.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/materialize-remote.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/large-datasets/materialize-remote.md){: .fa-edit-source }
 
 {% raw %}
 # Materializing remote content
@@ -89,7 +89,7 @@ never re-download.
 
 ## Before you enumerate anything
 
-`large-datasets/schemas/source-descriptor.ts` answers the question that comes
+`cat-harness/schemas/source-descriptor.ts` answers the question that comes
 *before* the gates: how to enumerate a corpus and ask it for a subset. Check
 `subsetIsSelfContained` first — when it is `false` (mathlib), close the request
 over its dependencies **before** gating, because the size being gated is the

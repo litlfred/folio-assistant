@@ -247,6 +247,17 @@ export interface NavbarModel {
    */
   documentIndex?: NavGroup;
   /**
+   * fsh-guts, the trashcan that is kept, as a control in the FIXED top — issue
+   * #1925, owner 2026-10-02: *"(also add fsh-guts icon to LHS top navbar)"*.
+   *
+   * It is where a sticky sent to fsh-guts is restored from, which is why it is
+   * on every page rather than inside a settings panel. Rendered `hidden`:
+   * the list, the count and the restore are all script (`docs-ui.js`
+   * `mountFshGutsNav`), so with no script it is absent rather than a button
+   * that does nothing. Absent from the model, nothing is rendered at all.
+   */
+  fshGuts?: { label: string };
+  /**
    * The KG's own graphs — the scrollable middle, as ONE collapsible group.
    *
    * Owner, 2026-09-21: *"librarues should be in hambuger menu so can collase
@@ -488,7 +499,62 @@ export function navbarCss(): string {
     `.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}`,
     `@media print{.fa-nav{display:none}body{padding-left:0}}`,
     `.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`,
+    ...railTipCss(),
   ].join("");
+}
+
+/**
+ * THE TOOLTIP ON AN ICON-ONLY CONTROL — owner's ruling on bean `ob3m`
+ * finding 1, 2026-10-01: *"show each icon's name as a tooltip on hover or
+ * keyboard focus."* Option 1 of 4; always-visible captions were option 2 and
+ * were NOT chosen, so the strip stays `NAV_COLLAPSED_PX` wide.
+ *
+ * WHICH CONTROLS. One whose name is in `aria-label` and nowhere visible — the
+ * `⚙` here, the icon row on the docs site. A row with a `.fa-nav-label` is
+ * NOT one: hover and keyboard focus open this rail, and the label then reads
+ * beside its own mark, which is the name in the place a reader looks. A
+ * tooltip there would say the same word twice, 8px apart.
+ * `check-viewer-nav.ts`' `rail-tips` flag is the rule, read off the markup.
+ *
+ * CSS ONLY, because this rail carries no script (see `navbarCss`). The
+ * pseudo-element is `position:fixed` with `top` left `auto`, so it takes its
+ * STATIC position vertically — level with its own control — while `left`
+ * puts it beyond the strip's right edge, which is what "not covering the
+ * icon" means. Fixed is also what keeps it from being CLIPPED: `.fa-nav` is
+ * `overflow:hidden`, and an `overflow` box clips a fixed descendant only when
+ * it is that descendant's containing block, which nothing here is.
+ *
+ * ONE NAME, NOT TWO. `content: … / ""` gives the generated text an EMPTY
+ * alternative, so it never enters the accessibility tree; the control's name
+ * stays its `aria-label`. The first `content` is the fallback for an engine
+ * that cannot parse the alt syntax and drops the second declaration.
+ *
+ * `docs-ui.css` paints the same tooltip on the docs site's strip under
+ * `.side-bar`, in that theme's two schemes. Different selectors on purpose:
+ * `navbar-css-single-source.test.ts` holds a SHARED selector to one body, and
+ * these two differ in colour and in the widths they read.
+ */
+function railTipCss(): string[] {
+  const at = (w: number) => `${w + 8}px`;
+  return [
+    `.fa-nav [data-fa-tip]::after{content:attr(data-fa-tip);content:attr(data-fa-tip) / "";`,
+    `position:fixed;left:${at(NAV_COLLAPSED_PX)};z-index:2147483001;padding:4px 8px;border-radius:4px;`,
+    `background:#1f2328;color:#ffffff;border:1px solid #58a6ff;box-shadow:0 2px 8px rgba(0,0,0,.35);`,
+    `font:600 13px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;`,
+    `letter-spacing:normal;text-transform:none;white-space:nowrap;pointer-events:none;`,
+    // `opacity` alone, not `visibility`: the rail is CLOSED, never hidden, and
+    // `navbar.test.ts` holds this stylesheet to carrying no `visibility:hidden`
+    // at all. With `pointer-events:none` an invisible tooltip intercepts nothing.
+    `opacity:0}`,
+    `.fa-nav [data-fa-tip]:hover::after,.fa-nav [data-fa-tip]:focus-visible::after{opacity:1}`,
+    // Beyond the strip at whatever width it has: open, the controls it names
+    // sit inside a wider rail and the tooltip moves out with its edge.
+    `.fa-nav:hover [data-fa-tip]::after,.fa-nav:has(:focus-visible) [data-fa-tip]::after,`,
+    `.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:${at(NAV_OPEN_PX)}}`,
+    `@media(min-width:${NAV_WIDE_MQ_PX}px){.fa-nav:hover [data-fa-tip]::after,`,
+    `.fa-nav:has(:focus-visible) [data-fa-tip]::after,.fa-nav:has(.fa-nav-open:checked) [data-fa-tip]::after{left:${at(NAV_OPEN_WIDE_PX)}}}`,
+    `@media(prefers-reduced-motion:no-preference){.fa-nav [data-fa-tip]::after{transition:opacity .12s ease}}`,
+  ];
 }
 
 /** An item's mark: its avatar when it has one, its glyph otherwise. */
@@ -568,7 +634,7 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // both, so the row and its control stay adjacent in the tab order.
   const action = i.action
     ? `<button type="button" class="fa-nav-action" ${esc(i.action.data)}="${esc(i.action.value)}"` +
-      ` aria-label="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
+      ` aria-label="${esc(i.action.label)}" data-fa-tip="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
     : "";
   const kids = i.children?.length
     ? `<div class="fa-nav-kids">${i.children.map((k) => itemHtml(k, c)).join("")}</div>`
@@ -622,6 +688,29 @@ export function navbarOpenInputHtml(): string {
  * image is already silent — and the label's name is the instance, so a
  * screen reader hears "cat-harness" and the `title` says what a click does.
  */
+/** The dead fish (`7vhe`), the same drawing `docs-ui.js` uses for fsh-guts. */
+const FISH_SVG =
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M2 12c3-4 7-6 11-6s7 2 9 6c-2 4-5 6-9 6s-8-2-11-6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+  '<path d="M22 12l-3-3v6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
+  '<path d="M7.2 10.2l2 2m0-2l-2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+/**
+ * The fsh-guts control. Its count starts `pending` and is written by the
+ * client, which knows the four states (`absent`, `zero`, `some`, `error`); a
+ * number baked here would be the build's, not this reader's.
+ */
+export function fshGutsHtml(f: { label: string }): string {
+  return (
+    `<button type="button" class="fa-nav-fsh-guts" data-fa-fsh-guts-open hidden ` +
+    `aria-label="${esc(f.label)}" data-fa-tip="${esc(f.label)}">` +
+    `<span class="fa-nav-glyph" aria-hidden="true">${FISH_SVG}</span>` +
+    `<span class="fa-nav-label">fsh-guts</span>` +
+    `<span class="fa-nav-count" data-fa-count-state="pending" aria-hidden="true">\u2026</span>` +
+    `</button>`
+  );
+}
+
 export function headHtml(m: NavbarModel, c: Ctx = { liquid: false }): string {
   const item: NavItem = { label: m.instance, ...(m.mark ?? {}) };
   return (
@@ -653,6 +742,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     (m.head === "none" ? "" : headHtml(m, c)) +
     (m.root ? itemHtml(m.root, c) : "") +
     (m.documentIndex ? groupHtml(m.documentIndex, c) : "") +
+    (m.fshGuts ? fshGutsHtml(m.fshGuts) : "") +
     `</div>` +
     (m.graphs || m.visualiser
       ? `<div class="fa-nav-graphs">` +

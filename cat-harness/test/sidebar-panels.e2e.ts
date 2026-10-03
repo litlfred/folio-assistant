@@ -72,7 +72,7 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8"><sty
 
 /** Each action's tile, and the thing its view must actually show. */
 const VIEWS = [
-  { name: "settings", tile: "Settings", content: ".fa-a11y-panel" },
+  { name: "settings", tile: "Page settings", content: ".fa-a11y-panel" },
   { name: "language", tile: "Language", content: ".fa-lang-bar" },
   { name: "QR", tile: "QR code", content: ".fa-qr-panel" },
 ];
@@ -148,7 +148,7 @@ test.describe("sidebar disclosure panels", () => {
     // view that overflows the column pass — which is the original bug in a new
     // place, since the content that used to be clipped now lives in a view.
     await page.setContent(HARNESS);
-    await openView(page, "Settings");
+    await openView(page, "Page settings");
     const panel = (await page.locator(".fa-tiles").boundingBox())!;
     const nav = (await page.locator(".site-nav").boundingBox())!;
     expect(nav.y).toBeGreaterThanOrEqual(panel.y + panel.height - 1);

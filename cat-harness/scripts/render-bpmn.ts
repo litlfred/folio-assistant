@@ -27,8 +27,7 @@
  */
 import { workflowFiles } from "./known-skills.js";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { createHash } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import {
   besideSource as besideSourceSvg,
@@ -36,7 +35,6 @@ import {
   openRenderer,
   VIEWER_BUNDLE,
   wrapShapeInLink,
-  type Renderer,
 } from "../../bootstrap-tools/scripts/render-bpmn.ts";
 import { checkXmlComments } from "./xml-comment-check";
 import {
@@ -134,63 +132,7 @@ if (commentFindings.length > 0) {
 // `CHROMIUM_PATH` wins when set, then a probe of PLAYWRIGHT_BROWSERS_PATH: an
 // explicit variable only helps someone who already knows the build numbers
 // disagree, and re-downloading browsers is blocked in the sandbox.
-//
-// ## The render cache — bean `2i5k`
-//
-// Drawing a diagram is the slow part (headless Chromium, ~5 min per CI run for
-// every diagram), and it is a PURE function of four things: the `.bpmn` text,
-// the bpmn-js bundle, the page-side render code in bootstrap-tools, and the
-// Chromium build (fixed by the installed Playwright). With
-// `BPMN_RENDER_CACHE=<dir>`, bpmn-js's raw output is kept per diagram under a
-// key hashing all four, and Chromium is launched only on a miss — so a run
-// where no diagram changed launches no browser at all.
-//
-// What is cached is ONLY that raw drawing. Everything after it — the
-// responsive edits, the call-activity links (which depend on the site's
-// pages, not on the diagram), the beside-the-source copy, and the `--check`
-// comparison against the committed bytes — runs every time, unchanged. So the
-// check asserts exactly what it did before; a hit only skips recomputing a
-// value whose every input is in its key. Unset (the default, and every local
-// run), nothing is read or written.
-const CACHE_DIR = process.env.BPMN_RENDER_CACHE || undefined;
-const REPO = repoRootFor(ROOT);
-const FINGERPRINT = CACHE_DIR
-  ? createHash("sha256")
-      .update(readFileSync(VIEWER))
-      .update("\0")
-      .update(readFileSync(join(REPO, "bootstrap-tools", "scripts", "render-bpmn.ts")))
-      .update("\0")
-      .update(readFileSync(join(REPO, "node_modules", "playwright-core", "package.json")))
-      .update("\0")
-      .update(process.env.CHROMIUM_PATH ?? "")
-      .digest("hex")
-  : "";
-let browser: Renderer | undefined;
-const cacheStats = { hit: 0, drawn: 0 };
-const renderer: Renderer = {
-  async render(xml) {
-    const file = CACHE_DIR
-      ? join(CACHE_DIR, `${createHash("sha256").update(FINGERPRINT).update("\0").update(xml).digest("hex")}.json`)
-      : undefined;
-    if (file && existsSync(file)) {
-      cacheStats.hit++;
-      return JSON.parse(readFileSync(file, "utf8")) as { svg: string; warnings: string[] };
-    }
-    browser ??= await openRenderer(VIEWER);
-    const out = await browser.render(xml);
-    cacheStats.drawn++;
-    // Only a clean import is kept: a diagram with warnings fails this run
-    // anyway, and must be drawn (and reported) afresh on the next one.
-    if (file && out.warnings.length === 0) {
-      mkdirSync(CACHE_DIR!, { recursive: true });
-      writeFileSync(file, JSON.stringify(out));
-    }
-    return out;
-  },
-  async close() {
-    await browser?.close();
-  },
-};
+const renderer = await openRenderer(VIEWER);
 
 /**
  * Map every `bpmn:process` id to the file that defines it, so a call activity's
@@ -349,7 +291,4 @@ for (const file of sources) {
 }
 
 await renderer.close();
-if (CACHE_DIR) {
-  console.log(`render cache (${CACHE_DIR}): ${cacheStats.hit} reused, ${cacheStats.drawn} drawn${browser ? "" : " — no browser launched"}`);
-}
 if (stale > 0) process.exit(1);

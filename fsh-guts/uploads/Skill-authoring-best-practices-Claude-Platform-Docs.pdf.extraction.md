@@ -7,7 +7,7 @@ movedFrom: "uploads/Skill authoring best practices - Claude Platform Docs.pdf.ex
 bean: folio-assistant-q7ey
 summary: >-
   The extraction record produced alongside `Skill authoring best practices - Claude Platform Docs.pdf` when it was ingested to
-  `agent-skills/library/skill-authoring-best-practices---claude-platform-docs`. A derived artefact of that ingest, not a
+  `cat-harness/library/skill-authoring-best-practices---claude-platform-docs`. A derived artefact of that ingest, not a
   queue item — archived beside the source it was derived from rather than
   left in `uploads/` once the source moved.
 ---
@@ -17,7 +17,7 @@ summary: >-
 Moved with [`Skill authoring best practices - Claude Platform Docs.pdf`](./Skill authoring best practices - Claude Platform Docs.pdf) under the owner's ruling 2026-09-29 that an
 ingested upload is archival. It is derived rather than original: the source is
 the PDF beside it, and what the ingest made of that source is in
-[`agent-skills/library/skill-authoring-best-practices---claude-platform-docs`](../../agent-skills/library/skill-authoring-best-practices---claude-platform-docs/).
+[`cat-harness/library/skill-authoring-best-practices---claude-platform-docs`](../../cat-harness/library/skill-authoring-best-practices---claude-platform-docs/).
 
 Kept rather than dropped because it records how *this* extraction ran, which
 a re-derivation can be compared against. See

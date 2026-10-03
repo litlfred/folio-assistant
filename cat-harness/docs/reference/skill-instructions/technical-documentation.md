@@ -45,8 +45,8 @@ the experience that produced it. A SHOULD whose cost is unstated is an
 instruction the reader cannot weigh, and is the commonest reason a correct
 instruction is ignored.
 
-Both RFCs are ingested — `agent-skills/library/rfc2119-key-words-requirement-levels/`
-and `agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words/`.
+Both RFCs are ingested — `cat-harness/library/rfc2119-key-words-requirement-levels/`
+and `cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words/`.
 Quote them from there, not from memory.
 
 ## Check whether the specification has been superseded

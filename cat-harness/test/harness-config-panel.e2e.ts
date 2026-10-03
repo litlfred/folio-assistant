@@ -38,7 +38,7 @@ const CONFIG = {
       editHref: "https://github.com/x/y/edit/main/cat-harness/cat-harness.json",
       declared: [{ key: "name", summary: "cat-harness" }, { key: "associatedHarnesses", summary: "1: ihris" }],
     },
-    { name: "smart-l1", title: "smart-l1", group: "checkout", declaredIn: "smart-l1/smart-l1.json", declared: [] },
+    { name: "smart-ig", title: "smart-ig", group: "checkout", declaredIn: "smart-ig/smart-ig.json", declared: [] },
   ],
   associated: [
     {
@@ -51,6 +51,12 @@ const CONFIG = {
 };
 
 test.beforeEach(async ({ page }) => {
+  // The strip starts HIDDEN on a first open (owner, 2026-10-01). These specs
+  // are about what is ON the strip, so they arrive as a reader who has shown
+  // it; `glass-strip-default-hidden.e2e.ts` holds the default itself.
+  await page.addInitScript(() => {
+    try { if (localStorage.getItem("fa-glass-strip-hidden") === null) localStorage.setItem("fa-glass-strip-hidden", "0"); } catch { /* no storage */ }
+  });
   await page.route("http://replica.test/**", (route) => {
     const url = new URL(route.request().url());
     if (url.pathname === "/page.html") return route.fulfill({ contentType: "text/html", body: PAGE });

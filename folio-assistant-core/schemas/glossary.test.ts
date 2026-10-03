@@ -9,8 +9,10 @@ import { join, relative, resolve } from "node:path";
 
 import { GlossarySchema, schemeIri, termIri, toSkos, type Glossary } from "./glossary.ts";
 import {
+  LETTER_PARTS,
   PAGE_KEYS,
   budgetOf,
+  partOfLabel,
   collect,
   counts,
   instanceNs,
@@ -149,10 +151,19 @@ describe("the glossary pages", () => {
   const pages = renderPages(c);
   const idsOn = (page: string) => [...page.matchAll(/<dt id="([^"]+)"/g)].map((m) => m[1]!);
   const idOf = (s: (typeof c.glossaries)[number], t: { id: string }) => `${s.instance}--${s.glossary.id}--${t.id}`;
+  /** The page a term is on: its scheme's, or for a split type the part its label's first letter falls in. */
+  const pageOfTerm = (s: (typeof c.glossaries)[number], t: { prefLabel: unknown }) => {
+    const k = pageOf(s);
+    if (k === "index" || !LETTER_PARTS[k as AssetType]) return k;
+    const label = typeof t.prefLabel === "string" ? t.prefLabel : Object.values(t.prefLabel as Record<string, string>)[0]!;
+    return `${k}/${partOfLabel(k as AssetType, label)}`;
+  };
+  /** A type's term-holding pages: itself, or its parts when it is split. */
+  const pagesOfType = (t: AssetType) => (LETTER_PARTS[t] ? LETTER_PARTS[t]!.map((r) => `${t}/${r}`) : [t]);
 
   test("there is an index and one page per asset type, and each is an output", () => {
     expect([...pages.keys()]).toEqual([...PAGE_KEYS]);
-    expect(PAGE_KEYS).toEqual(["index", ...ASSET_TYPES]);
+    expect([...PAGE_KEYS] as string[]).toEqual(["index", ...ASSET_TYPES.flatMap((t) => [t, ...(LETTER_PARTS[t] ?? []).map((r) => `${t}/${r}`)])]);
     const out = outputs(c);
     for (const k of PAGE_KEYS) expect(out.get(pagePath(k))).toBe(pages.get(k)!);
   });
@@ -168,7 +179,7 @@ describe("the glossary pages", () => {
     const all = c.glossaries.flatMap((s) => s.glossary.terms.map((t) => ({ s, t })));
     expect(all.length).toBeGreaterThan(ASSET_TYPES.length); // vacuity guard
     expect(seen.size).toBe(all.length);
-    for (const { s, t } of all) expect(seen.get(idOf(s, t))).toBe(pageOf(s));
+    for (const { s, t } of all) expect(seen.get(idOf(s, t))).toBe(pageOfTerm(s, t));
   });
 
   test("the index holds the authored terms only; each type's page holds that type's extracted terms only", () => {
@@ -177,7 +188,7 @@ describe("the glossary pages", () => {
     expect((index.match(/data-fa-state="extracted"/g) ?? []).length).toBe(0);
     expect(idsOn(index).length).toBe(c.glossaries.filter((s) => !s.extracted).reduce((k, s) => k + s.glossary.terms.length, 0));
     for (const t of ASSET_TYPES) {
-      const page = pages.get(t)!;
+      const page = pagesOfType(t).map((k) => pages.get(k as never)!).join("\n");
       const want = c.glossaries.filter((s) => s.extracted === t).reduce((k, s) => k + s.glossary.terms.length, 0);
       expect(idsOn(page).length).toBe(want);
       expect((page.match(/data-fa-state="extracted"/g) ?? []).length).toBe(want);
@@ -190,6 +201,8 @@ describe("the glossary pages", () => {
     for (const [k, page] of pages) {
       const bytes = Buffer.byteLength(page, "utf-8");
       expect(`${k} ${bytes <= budgetOf(k) ? "within" : `over: ${bytes} > ${budgetOf(k)}`}`).toBe(`${k} within`);
+      // A split type's landing page holds no terms, so it states no load cost.
+      if (k !== "index" && LETTER_PARTS[k as AssetType]) continue;
       expect(page).toMatch(/is [0-9.]+ (MB|KB) before compression, (fetched in one request, )?within its budget of [0-9.]+ (MB|KB)/);
     }
     // The budgets are what the split was for: the index stays small, and no
@@ -208,6 +221,37 @@ describe("the glossary pages", () => {
       expect(page).toContain(`{{ '${permalinkOf("index")}' | relative_url }}`);
     }
     expect(index).toContain("has_children: true\n");
+  });
+
+  test("a split type's term links name the part the target is on, and every one resolves", () => {
+    for (const t of ASSET_TYPES.filter((x) => LETTER_PARTS[x])) {
+      const parts = pagesOfType(t);
+      const anchors = new Map(parts.map((k) => [k, new Set(idsOn(pages.get(k as never)!))] as const));
+      let links = 0;
+      for (const k of parts) {
+        for (const m of pages.get(k as never)!.matchAll(/<a href="\{\{ '\/glossary\/[^']+\/([a-z]-[a-z])\/' \| relative_url \}\}#([^"]+)">/g)) {
+          links++;
+          expect(`${m[2]} on ${m[1]}: ${anchors.get(`${t}/${m[1]}`)?.has(m[2]!) ?? "no such part"}`).toBe(`${m[2]} on ${m[1]}: true`);
+        }
+        // No bare same-page anchor survives on a split type: it would break for a target on another part.
+        expect(pages.get(k as never)!.match(/<a href="#[^"]*--[^"]*--[^"]*">/g) ?? []).toEqual([]);
+      }
+      // The real schema-field definitions carry no same-scheme term codes
+      // today, so `links` may be 0 here; the synthetic test below proves the
+      // cross-part href itself.
+      expect(links).toBeGreaterThanOrEqual(0);
+    }
+  });
+
+  test("on a split type, a term code links to the PART its target's label falls in", () => {
+    const s = {
+      instance: "i",
+      extracted: "kg-schema-fields",
+      glossary: { id: "g", terms: [{ id: "a", prefLabel: "alpha" }, { id: "z", prefLabel: "zeta" }] },
+    } as unknown as Parameters<typeof linkTermCodes>[0];
+    expect(linkTermCodes(s, "a", "<code>z</code>")).toBe(
+      `<a href="{{ '${permalinkOf("kg-schema-fields/s-z" as never)}' | relative_url }}#i--g--z"><code>z</code></a>`,
+    );
   });
 
   test("every page keeps the text filter and the A–Z bar", () => {
@@ -367,7 +411,14 @@ describe("extracted KG terms", () => {
     expect(index).toMatch(new RegExp(`holds ${n.authored} terms and is [0-9.]+ (MB|KB) before compression`));
     for (const t of ASSET_TYPES) {
       const k = extracted.filter((s) => s.extracted === t).reduce((m, s) => m + s.glossary.terms.length, 0);
-      expect(pages.get(t)!).toMatch(new RegExp(`holds ${k} terms and is [0-9.]+ (MB|KB) before compression`));
+      const parts = LETTER_PARTS[t];
+      if (!parts) {
+        expect(pages.get(t)!).toMatch(new RegExp(`holds ${k} terms and is [0-9.]+ (MB|KB) before compression`));
+        continue;
+      }
+      // A split type states each part's count, and the parts add up to the type.
+      const held = parts.map((r) => Number(/holds (\d+) terms and is/.exec(pages.get(`${t}/${r}` as never)!)?.[1] ?? NaN));
+      expect(held.reduce((a, b) => a + b, 0)).toBe(k);
     }
   });
 

@@ -5,9 +5,10 @@
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { TodoNodeSchema } from "../../cat-harness/schemas/todo";
+import { workflowFile } from "../../cat-harness/scripts/known-skills";
 import {
   REVIEW_TRANSITIONS,
   ReviewCommentKind,
@@ -20,7 +21,8 @@ import {
   type PrComment,
 } from "./review-comment";
 
-const PROCESSES = resolve(import.meta.dir, "../../cat-harness/processes");
+/** The diagrams are found by NAME through the declared `processes` graphs, from the harness whose corpus scope is the checkout (placement PR3, bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../../cat-harness");
 const EDITOR = { process: "Process_Review", task: "Task_EditorDecides" };
 // `Process_CriterionAdjudication` since bean `bvuk` split the outcome half
 // out of the shared judgement — A_RecordEntry went with the outcome.
@@ -85,7 +87,7 @@ describe("the lifecycle is closed, and only process tasks move it", () => {
 
   it("every transition names a BPMN task that exists", () => {
     for (const t of REVIEW_TRANSITIONS) {
-      const xml = readFileSync(join(PROCESSES, t.by.file), "utf-8");
+      const xml = readFileSync(workflowFile(HARNESS, t.by.file), "utf-8");
       expect(xml).toContain(`<bpmn:process id="${t.by.process}"`);
       expect(xml).toMatch(new RegExp(`<bpmn:\\w+ id="${t.by.task}"`));
     }

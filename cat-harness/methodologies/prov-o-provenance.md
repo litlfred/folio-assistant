@@ -10,6 +10,7 @@ origin: >
   not held here.
 evidence:
   - library/w3c-2013-prov-o
+  - library/w3c-2024-prov-jsonld
 applies-when: >
   **Recording, after or as it happens, what was done — which activity ran, which
   agent was responsible for it, in which role, following which plan, and what
@@ -35,6 +36,7 @@ held source is cited by the node that rests on it.
 |---|---|---|
 | PROV-O, W3C REC 2013-04-30 | ✅ `library/w3c-2013-prov-o` | the classes and properties used, read from §2–§4 |
 | PROV-DM (the data model PROV-O encodes) | ❌ not held | nothing directly; every term below is read from PROV-O's own definitions |
+| PROV-JSONLD, W3C Member Submission 2024-08-25 (Moreau & Huynh) | ✅ `library/w3c-2024-prov-jsonld` | the JSON-LD shape and context PROV is emitted in — adopted by owner decision 2026-10-01, because W3C publishes no JSON-LD context for PROV-O; a Submission is acknowledged, **not endorsed**, by W3C. Held page by page (the print has no outline) |
 | ODRL 2.2 (the policy a record points at) | held as `library/w3c-2018-odrl-model-2-2`, **not** this node's source | the permission half; not adopted here |
 
 **Limits of the held copy, from its own `licence.json`:** it is the Working
@@ -135,8 +137,14 @@ Recorded so the next reader does not mistake them for adoption decisions:
   `provDocument` (`prov-qaqc.ts`) maps `prov:` but does not coerce
   `prov:agent`, `prov:hadRole` or `prov:hadPlan` to `@id`, so a JSON-LD
   processor would read their values as literals, where the held text marks all
-  three `op` (object property). Inferred from the context; not run through a
-  processor.
+  three `op` (object property). **Measured 2026-10-01** by expanding a committed
+  report with jsonld.js: all three, and `prov:used`, come out as `{"@value": …}`
+  in all 100 activities of the 9 reports. Owner decision the same day: emit PROV
+  in PROV-JSONLD's shape, whose held context coerces `agent`, `role` and `plan`
+  (§5.8, `sections/page-037.md`), with each value at its node's release
+  address. The rules this broke are now the `linked-data` voice
+  (`folio-assistant-core/skills/voices/linked-data/voice.json`), which a coding
+  agent authoring or reviewing JSON-LD-emitting code is held to.
 - The association node carries no `@type: prov:Association` and the unqualified
   `prov:wasAssociatedWith` is not asserted beside it, as the §4.3 entry (51)
   example does. Both are inferable from the range of `prov:qualifiedAssociation`,

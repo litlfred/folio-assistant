@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/who-rhr-1806-eng/sections/page-017",
   "@type": [
     "doco:Section"
@@ -10,7 +15,7 @@
   "contains": [
     "library/who-rhr-1806-eng/blocks/prose-page-017"
   ],
-  "derivedFrom": "library/who-rhr-1806-eng/manifest",
-  "sourceDocument": "library/who-rhr-1806-eng/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-rhr-1806-eng/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-rhr-1806-eng/manifest.jsonld",
   "provenance": "ingested"
 }

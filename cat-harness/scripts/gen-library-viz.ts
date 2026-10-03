@@ -55,6 +55,9 @@ import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
   readEntryBlocks,
 } from "./library-graph.ts";
 import { tally } from "./summaries.ts";
+import { WITHHELD_VIEW_JS } from "./lib/library-withheld-view.ts";
+import { ADDRESS_JS } from "./lib/library-address.ts";
+import { LIBRARY_JSONLD_SITE_DIR, libraryAssetSitePath } from "../schemas/library-iri.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
@@ -130,24 +133,16 @@ function projection(
  * Empty by default, so a caller that publishes no folio surface emits no
  * mount and nothing changes for it. Absent is a real state.
  */
-export function viewerHtml(dataHref: string, scope = "", mount = ""): string {
-  // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
-  //
-  // The whole page is one template literal, so a backtick anywhere inside it
-  // terminates the string and the rest becomes TypeScript. It fails at a line
-  // number far from the mistake, and it has happened twice: once in a comment
-  // reading "the intake's own files[]", once in one quoting a field
-  // declaration. `viz-generators.test.ts` imports this module, so a stray one
-  // reddens the suite rather than only the generator.
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Library — the L1 corpus</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E">
-<style>
-/* The block content panel — bean lrmo. Tokens only, so it follows the light
+/** HTML-escape for the generator's own server-side markup (the viewer's script has its own `esc`). */
+const escHtml = (s: string): string =>
+  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+
+/**
+ * The viewer's stylesheet — published ONCE at `assets/library/viewer.css` and
+ * referenced by every library page, so a page is a shell rather than a copy
+ * (owner, 2026-10-02, #1881).
+ */
+export const VIEWER_CSS = `/* The block content panel — bean lrmo. Tokens only, so it follows the light
    and dark themes above rather than hardcoding either. */
 #blocks details > summary { cursor: pointer; }
 #blocks .block-body { margin: .4rem 0 .2rem; }
@@ -172,6 +167,14 @@ export function viewerHtml(dataHref: string, scope = "", mount = ""): string {
 #blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
   font-size: 13px; line-height: 1.5; }
 #blocks .sum p { margin: .35rem 0 0; }
+/* A WITHHELD ENTRY -- issue #1794. Said in words, styled as information
+   rather than as an error: not publishing a refused work is the system
+   working, and the banner is there so it is not mistaken for a gap. */
+#blocks .wh-banner { margin: 8px 16px 12px; padding: .6rem .8rem; border: 1px solid var(--info);
+  background: var(--info-soft); border-radius: 8px; font-size: .86rem; line-height: 1.5; }
+#blocks .wh-banner p { margin: 0 0 .35rem; }
+#blocks .wh-banner p:last-child { margin: 0; }
+#blocks .wh-line { color: var(--muted); font-size: .8rem; }
 :root {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
@@ -248,43 +251,102 @@ p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 .lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
 td.lib-first { white-space:nowrap; }
 .card .lib-ava { width:56px; height:76px; }
-</style>
-</head>
-<body>
-<header>
-  <h1>Library — the L1 corpus</h1>
-  <p class="empty" id="status" style="padding:0">loading…</p>
-  <div class="badges" id="badges"></div>
-</header>
-<div class="toolbar">
-  <input id="q" type="search" placeholder="Search entries…" aria-label="Search entries">
-  <span class="seg" role="group" aria-label="View">
-    <button type="button" id="vList" aria-pressed="true">Listing</button>
-    <button type="button" id="vDesk" aria-pressed="false">Desktop</button>
-  </span>
-</div>
-<main>
-  <section id="listing" class="wrap"></section>
-  <section id="desktop" hidden></section>
-  <section id="blocks" class="wrap" hidden aria-live="polite"></section>
-  <h2>Uploads — the queue feeding this</h2>
-  <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
-    Queues are counted per declaring instance and never merged.</p>
-  <section id="queue" class="wrap"></section>
-</main>
-<script>
-"use strict";
+/* THE LISTING FITS MORE OF ITSELF, AND SAYS WHEN IT DOES NOT -- bean gnqa,
+   findings 1 and 2. Measured 2026-10-02 at 1280 px: a 3636 px table in a
+   1224 px box, every cell nowrap, so the title and source path alone were
+   2,000 px and nine of thirteen columns sat past the right edge with
+   nothing on screen saying so. The long TEXT cells now wrap inside a
+   bounded width; the short numeric and pill cells keep nowrap, because a
+   count broken over two lines is harder to read than one scrolled to. */
+#listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
+#listing td.lib-first .slug { overflow-wrap:anywhere; }
+#listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
+#listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
+#listing td.t-source .slug { overflow-wrap:anywhere; }
+#listing td.t-source .pill { white-space:nowrap; }
+#queue td.slug { white-space:normal; overflow-wrap:anywhere; min-width:12rem; max-width:24rem; }
+/* "Referenced by" OPENS rather than hovers -- finding 6. A title tooltip is
+   unreachable by touch and by keyboard; a details element is both. */
+details.refs > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; min-height:28px; }
+details.refs > summary::-webkit-details-marker { display:none; }
+details.refs > summary .pill::after { content:" \\25B8"; }
+details.refs[open] > summary .pill::after { content:" \\25BE"; }
+details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:var(--muted);
+  white-space:normal; overflow-wrap:anywhere; max-width:22rem; }
+/* THE EDGE CUE AT DESKTOP WIDTH. narrow-viewport.css fades a table's
+   overflowing edge below 800 px; above it the scroll box is .wrap, and it
+   had mask-image none. Same mask, same scroll-driven animation, so a box
+   that does not overflow shows no fade. */
+@media (min-width: 800px) {
+  /* The entry's identity stays in view while the reader scrolls to its
+     numbers: the first column is pinned to the scroll box's left edge. */
+  #listing th:first-child, #listing td.lib-first { position:sticky; left:0; z-index:1;
+    background:var(--bg); box-shadow:1px 0 0 var(--line); }
+  #listing th:first-child { z-index:2; }
+  @supports (animation-timeline: scroll()) {
+    /* Right edge only: the pinned first column already shows what is to
+       the left, and a left fade would dim the entry's own name. */
+    #listing.wrap, #queue.wrap {
+      mask-image: linear-gradient(to right,
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+}
+/* ON A PHONE A ROW IS A CARD -- finding 2. At 390 px a sideways-scrolling
+   table showed one column of thirteen: the cover, the slug and a button,
+   none of the metadata the listing exists for. Each row now lays its cells
+   out in a two-column grid, every cell labelled from its own header, and
+   the header row stays as the SORT controls. Overrides narrow-viewport.css
+   by id, which outranks its type selector. */
+@media (max-width: 799.98px) {
+  #listing table, #queue table { display:block; mask-image:none; animation:none; overflow:visible; }
+  #listing thead, #queue thead, #listing tbody, #queue tbody { display:block; }
+  #listing thead tr, #queue thead tr { display:flex; flex-wrap:wrap; gap:2px 12px; padding:6px 10px; }
+  #listing thead th, #queue thead th { position:static; border:0; padding:2px 0; }
+  #listing thead tr::before { content:"Sort by"; font-size:.74rem; color:var(--muted); align-self:center; }
+  #listing tbody tr, #queue tbody tr { display:grid; grid-template-columns:1fr 1fr; gap:2px 10px;
+    padding:10px; border-bottom:1px solid var(--line); }
+  #listing tbody td, #queue tbody td { display:block; border:0; padding:2px 0; white-space:normal;
+    min-width:0; max-width:none; text-align:left; overflow-wrap:anywhere; }
+  #listing td.lib-first, #listing td.t-title, #listing td.t-source, #listing td.t-refs,
+  #queue td.slug { grid-column:1 / -1; }
+  #listing td[data-label]::before, #queue td[data-label]::before { content:attr(data-label);
+    display:block; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  #listing td.lib-first::before, #listing td.t-title::before { content:none; }
+}
+`;
+
+/**
+ * The viewer's script — published ONCE at `assets/library/viewer.js`.
+ *
+ * NO BACKTICKS INSIDE IT — not in strings, not in comments. It is one template
+ * literal, so a backtick terminates it and the rest becomes TypeScript; that
+ * has happened twice. `viz-generators.test.ts` imports this module, so a stray
+ * one reddens the suite rather than only the generator.
+ */
+export const VIEWER_JS = `"use strict";
 var G = null, SORT = { key: "id", dir: 1 }, VIEW = "list";
-var DATA_HREF = "${dataHref}";
+/* THE PAGE'S IDENTITY, and the only thing a page carries -- owner,
+   2026-10-02 (#1881): every page is a thin shell that loads its content from
+   the published assets. A JSON data block rather than script, so a shell
+   holds no code of its own. DATA_HREF is made ABSOLUTE here, once, before
+   anything can rewrite the address bar (see honourAddress). */
+var CONFIG = (function(){
+  var el = document.getElementById("fa-library-config");
+  try { return JSON.parse(el ? el.textContent : "{}") || {}; } catch (_e) { return {}; }
+})();
+var DATA_HREF = new URL(String(CONFIG.data || ""), location.href).href;
 /* The SUBJECT this page is scoped to, or "" for the handler's whole view.
    One projection serves both — a second JSON per subject would be the same
    facts written N+1 times, free to disagree the moment one is regenerated. */
-var SCOPE = "${scope}";
+var SCOPE = typeof CONFIG.scope === "string" ? CONFIG.scope : "";
 function inScope(x){ return !SCOPE || x.instance === SCOPE; }
 /* THE SITE ROOT, derived from the projection's own relative address rather
    than declared -- the page is served at more than one depth, and DATA_HREF
    is already the one path that is right at every one of them. */
-var SITE_ROOT = new URL(DATA_HREF.slice(0, DATA_HREF.length - "assets/library/index.json".length), location.href).pathname;
+var SITE_ROOT = new URL(DATA_HREF.slice(0, DATA_HREF.length - "assets/library/index.json".length)).pathname;
 /* An entry's avatar URL, or "". The projection carries a SITE-ROOT path
    (library-graph.ts avatarOf), absent when there is no picture or the site
    does not serve it; nothing is guessed here either. */
@@ -306,6 +368,33 @@ function avatarHtml(e){
   return '<span class="lib-ava">' + (u
     ? '<img src="' + esc(u) + '" alt="" loading="lazy">'
     : BOOK_SVG) + "</span>";
+}
+/* A REFERENCED entry's own links -- the published IG, this site's artefact
+   index. Owner, 2026-10-02. An entry recorded by reference holds nothing to
+   open, so without these its row names a thing and goes nowhere. A site path
+   (leading slash) is composed against SITE_ROOT like an avatar; anything
+   else must be http(s), so a record cannot put a script URL in an href. */
+function linkHref(h){
+  h = typeof h === "string" ? h : "";
+  if (h.charAt(0) === "/") return SITE_ROOT + h.slice(1);
+  return /^https?:[/][/]/i.test(h) ? h : "";
+}
+function linksHtml(e){
+  return (e.links || []).map(function(l){
+    var h = linkHref(l.href);
+    return h ? ' <a class="src" href="' + esc(h) + '">' + esc(l.label) + "</a>" : "";
+  }).join("");
+}
+/* EVERY ENTRY HAS ITS OWN IRI, AND IT IS A PATH -- owner, 2026-10-02
+   (#1881): "each asset gets its own IRI", "no query strings", materialized
+   on gh-pages rather than routed by a 404. The generator writes a shell at
+   <library>/<instance>/<id>/ for every entry, so a row links there. LIB_ROOT
+   is the library's own directory, given relative to the page by CONFIG and
+   resolved once against where the page was LOADED. */
+var LIB_ROOT = new URL(String(CONFIG.libRoot || "./"), location.href).pathname;
+${ADDRESS_JS}
+function entryHref(e){
+  return LIB_ROOT + encodeURIComponent(e.instance) + "/" + encodeURIComponent(e.id) + "/";
 }
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
@@ -345,15 +434,27 @@ function uploadState(e){
 }
 
 var COLS = [
-  { k:"id",       t:"slug",     n:false, f:function(e){ return avatarHtml(e) + '<span class="slug">'+esc(e.id)+"</span>"; } },
+  /* THE SLUG OPENS THE ENTRY'S VISUALISER -- e.view, generated per entry by
+     the projection (owner, 2026-10-02: "click on smart-trust slug and open
+     up the visualizer"). A site-root path, composed like an avatar; an entry
+     whose projection carries none keeps a plain slug. */
+  { k:"id",       t:"slug",     n:false, f:function(e){
+      var v = typeof e.view === "string" && e.view.charAt(0) === "/" ? SITE_ROOT + e.view.slice(1) : "";
+      var s = '<span class="slug">'+esc(e.id)+"</span>";
+      return avatarHtml(e) + (v ? '<a class="lib-view" href="'+esc(v)+'">'+s+"</a>" : s); } },
   /* Bean qgjh: an entry can be OPENED. The title is a link to the item's own
      page (its generated README) where one exists, and the document's upstream
      record rides beside it: arXiv or DOI, from the identifier its manifest
      records. Nothing is linked that the projection does not carry. */
-  { k:"title",    t:"title",    n:false, f:function(e){
-      var t = e.readme ? '<a href="'+esc(e.readme)+'">'+esc(e.title)+"</a>" : esc(e.title);
+  { k:"title",    t:"title",    n:false, c:"t-title", f:function(e){
+      /* THE TITLE OPENS THE ENTRY'S OWN PAGE -- its path IRI (#1881). It
+         used to open the item's README on GitHub, which a referenced entry
+         may not have (owner, 2026-10-02: the smart-trust title went to a
+         404). The README stays as a secondary link, only when one exists. */
+      var t = '<a class="lib-title" href="'+esc(entryHref(e))+'">'+esc(e.title)+"</a>";
       var src = e.arxiv ? "https://arxiv.org/abs/"+encodeURIComponent(e.arxiv) : e.doi ? "https://doi.org/"+e.doi : "";
-      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "");
+      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "") +
+        (e.readme ? ' <a class="src" href="'+esc(e.readme)+'">README</a>' : "") + linksHtml(e);
     } },
   { k:"instance", t:"instance", n:false, f:function(e){ return '<span class="pill">'+esc(e.instance)+"</span>"; } },
   { k:"rung",     t:"rung",     n:false, f:function(e){ return '<span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>"; } },
@@ -364,14 +465,16 @@ var COLS = [
   { k:"pageEnd",  t:"pages",    n:true, f:function(e){ return e.pageStart==null?'<span class="pill">—</span>':esc(e.pageStart+"–"+e.pageEnd); } },
   { k:"words",    t:"words",    n:true, f:function(e){ return e.words.toLocaleString(); } },
   { k:"bytes",    t:"size",     n:true, f:function(e){ return kb(e.bytes); } },
-  { k:"refCount", t:"referenced by", n:true, f:function(e){ var s=refState(e);
-      // The join separator is written with a DOUBLED backslash on purpose:
-      // this page is a template literal, so a single one is eaten by
-      // TypeScript and emitted as a real line break inside the browser's
-      // string — which does not parse, and took the whole viewer down.
-      var files = (e.referencedBy||[]).map(function(r){ return r.from + " (" + r.count + ")"; }).join("\\n");
-      return '<span class="pill '+s.cls+'"'+(files?' title="'+esc(files)+'"':"")+">"+esc(s.label)+"</span>"; } },
-  { k:"upload",   t:"source",   n:false, f:function(e){ var s=uploadState(e);
+  { k:"refCount", t:"referenced by", n:true, c:"t-refs", f:function(e){ var s=refState(e);
+      /* The referencing files used to ride in a title attribute, which touch
+         and keyboard readers cannot reach (bean gnqa, finding 6). A details
+         element is focusable and opens on tap, Enter or Space. */
+      var refs = e.referencedBy || [];
+      var pill = '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>";
+      if (!refs.length) return pill;
+      return '<details class="refs"><summary>'+pill+'</summary><ul>' + refs.map(function(r){
+        return "<li>"+esc(r.from)+" ("+r.count+")</li>"; }).join("") + "</ul></details>"; } },
+  { k:"upload",   t:"source",   n:false, c:"t-source", f:function(e){ var s=uploadState(e);
       return '<span class="pill '+s.cls+'">'+esc(s.label)+"</span>"+(e.sourceFile?'<br><span class="slug" style="font-size:.72rem;color:var(--muted)">'+esc(e.sourceFile)+"</span>":""); } }
 ];
 
@@ -380,7 +483,7 @@ function rows(){
   var r = G.entries.filter(function(e){
     if (!inScope(e)) return false;
     if (!q) return true;
-    return (e.id+" "+e.title+" "+e.sourceFile+" "+e.docId+" "+e.instance).toLowerCase().indexOf(q) >= 0;
+    return (e.id+" "+e.title+" "+(e.extractedTitle||"")+" "+e.sourceFile+" "+e.docId+" "+e.instance).toLowerCase().indexOf(q) >= 0;
   });
   var k = SORT.key, d = SORT.dir;
   return r.sort(function(a,b){
@@ -420,8 +523,13 @@ function renderList(){
        emits both the row and the page it points at, and a reader arriving
        at the anchor gets the row selected rather than a 404. Nothing to
        declare, so nothing to drift -- the folio-mount's argument for
-       deriving its root, applied one level in. */
-    var href = location.pathname + "#" + encodeURIComponent(key);
+       deriving its root, applied one level in.
+
+       Since 2026-10-02 the address is the entry's PATH (entryHref above),
+       which the generator backs with a page that lands on this same anchor
+       -- so the anchor is still the contract, and the path is a name a
+       person can type and share. */
+    var href = entryHref(e);
     /* data-fa-pullout-host puts the pull-out control in the FIRST cell.
        It used to land in the last one, which on a table wider than the
        screen is past its right edge -- the owner could not find a way onto
@@ -430,7 +538,9 @@ function renderList(){
       ' data-fa-library-href="' + esc(href) + '"' +
       ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
       ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c, i){
-      return "<td"+(c.n?' class="num"':i===0?' class="lib-first" data-fa-pullout-host':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
+      var cls = i === 0 ? "lib-first" : [c.n ? "num" : "", c.c || ""].join(" ").trim();
+      return "<td" + (cls ? ' class="'+cls+'"' : "") + (i === 0 ? " data-fa-pullout-host" : "") +
+        ' data-label="'+esc(c.t)+'">' + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
   }).join("") || '<tr><td colspan="'+COLS.length+'"><p class="empty">Nothing matches.</p></td></tr>';
   $("listing").innerHTML = h + "</tbody></table>";
@@ -444,7 +554,7 @@ function renderDesk(){
        library item too and the folio's pull-out finds it in either view. */
     var key = e.instance + "/" + e.id;
     return '<article class="card" data-fa-library-item="' + esc(key) + '"' +
-      ' data-fa-library-href="' + esc(location.pathname + "#" + encodeURIComponent(key)) + '"' +
+      ' data-fa-library-href="' + esc(entryHref(e)) + '"' +
       ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
       ' data-fa-library-title="' + esc(e.title || e.id) + '"><div class="spine"></div>' +
       '<div data-fa-pullout-host style="display:flex;gap:8px;align-items:flex-start">' + avatarHtml(e) +
@@ -478,8 +588,8 @@ function renderQueue(){
       : esc(u.ext || "—");
     var label = esc(u.file) + (u.kind === "intake" && u.title
       ? '<br><span style="font-family:inherit;color:var(--muted);font-size:.78rem">' + esc(u.title) + "</span>" : "");
-    return '<tr><td class="slug">' + label + '</td><td><span class="pill">' + esc(u.instance) +
-      "</span></td><td>" + kind + '</td><td class="num">' + kb(u.bytes) + "</td><td>" +
+    return '<tr><td class="slug" data-label="unit">' + label + '</td><td data-label="queue"><span class="pill">' + esc(u.instance) +
+      '</span></td><td data-label="kind">' + kind + '</td><td class="num" data-label="size">' + kb(u.bytes) + '</td><td data-label="state">' +
       (u.ingestedBy ? '<span class="pill ok">ingested → ' + esc(u.ingestedBy) + "</span>"
                     : '<span class="pill warn">uningested</span>') + "</td></tr>";
   }).join("") || '<tr><td colspan="5"><p class="empty">No uploads queue for this subject.</p></td></tr>';
@@ -488,49 +598,58 @@ function renderQueue(){
 
 function render(){ if (VIEW === "list") renderList(); else renderDesk(); }
 
-/* A LINK TO #<id> SELECTS THAT ROW, or says it is not on this page.
+/* WHICH ENTRY THIS PAGE IS ABOUT -- read off its own PATH (#1881).
 
-   The folio composes an asset's address as this page plus a fragment, so
-   this is the other half of that contract. Without it the link resolves to
-   the page and lands the reader at the top of an unfiltered table -- which
-   is pb04: an affordance that goes somewhere, just not where it said.
+   THREE OUTCOMES, and the middle one is why this is not a one-liner. The
+   path names an entry of this page's library and it is selected; the path
+   names something the library does not hold, and the page says "not found"
+   with a link to the library rather than showing an unfiltered table as if
+   it had worked (pb04); or the page is a library page, with no entry, and
+   nothing happens.
 
-   THREE OUTCOMES, not two. The row is here and is selected; the id names an
-   entry this page does not scope, and the page says so rather than showing
-   an empty table with no explanation; or there is no fragment at all and
-   nothing happens. The middle one is the case a reader actually hits --
-   a folio carries assets across libraries, so an anchor for another
-   instance's asset is ordinary rather than exceptional. */
-function honourAnchor(){
-  var raw = location.hash.replace(/^#/, "");
-  if (!raw) return;
-  var key;
-  try { key = decodeURIComponent(raw); } catch (_e) { key = raw; }
-
-  var known = G.entries.filter(function(e){ return e.instance + "/" + e.id === key; })[0];
-  if (!known) return;                       /* not ours to explain */
-
-  if (!inScope(known)) {
-    $("status").textContent =
-      key + " is in your folio but is not shown on this page \u2014 it belongs to " +
-      known.instance + ". Open that library to see it.";
-    return;
-  }
-
-  /* Filter to it rather than scrolling: the table is sortable and paged by
-     nothing, so a scroll target moves the next time somebody sorts, while a
-     filter puts the row under the reader's eye whatever the order. */
+   A LEGACY #<instance>/<id> link is honoured ONCE and normalised to the path
+   IRI: replaceState when the entry is this page's own, a real navigation
+   when it belongs to another library page. Nothing emits the fragment form
+   any more. Every URL composed here is built from an entry the PROJECTION
+   holds, never from the address bar's text. */
+function byKey(key){
+  return G.entries.filter(function(e){ return e.instance + "/" + e.id === key; })[0];
+}
+function selectEntry(known){
   if (VIEW !== "list") setView("list");
   $("q").value = known.id;
   renderList();
+  var key = known.instance + "/" + known.id;
   var row = document.querySelector('[data-fa-library-item="' + key.replace(/"/g, '\\"') + '"]');
   if (row) {
     row.setAttribute("data-fa-anchored", "1");
     row.scrollIntoView({ block: "center" });
   }
-  /* The graph of the thing the reader just opened — bean 7nvr. Driven off the
-     anchor rather than a click so a shared URL lands on the same view. */
-  loadBlocks(known.id);
+  document.title = (known.title || known.id) + " \u2014 " + known.instance + " library";
+  /* The graph of the thing the reader just opened -- bean 7nvr. */
+  loadBlocks(known.id, known);
+}
+function honourAddress(){
+  var legacy = legacyKey(location.hash);
+  if (legacy) {
+    var old = byKey(legacy);
+    if (old) {
+      var to = entryHref(old);
+      if (SCOPE && old.instance === SCOPE) history.replaceState(null, "", to);
+      else { location.replace(to); return; }
+    }
+  }
+  var at = entryFromPath(location.pathname, LIB_ROOT);
+  if (!at) return;
+  var known = at.instance === SCOPE ? byKey(at.instance + "/" + at.id) : undefined;
+  if (!known) {
+    var lib = LIB_ROOT + encodeURIComponent(SCOPE) + "/";
+    $("status").innerHTML = "No entry at this address in the " + esc(SCOPE) + ' library. <a href="' + esc(lib) +
+      '">Open the ' + esc(SCOPE) + " library</a>.";
+    $("status").setAttribute("data-fa-not-found", "1");
+    return;
+  }
+  selectEntry(known);
 }
 
 /* THE BLOCK GRAPH OF ONE ENTRY, fetched only when a reader opens one.
@@ -551,7 +670,7 @@ function blocksHref(id){
   var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
   return dir + "entries/" + encodeURIComponent(id) + ".json";
 }
-function renderBlocks(id, data, err){
+function renderBlocks(id, data, err, entry){
   var el = $("blocks");
   el.hidden = false;
   if (err) {
@@ -575,7 +694,7 @@ function renderBlocks(id, data, err){
     ' prose block(s) summarised, <b>' + (prose - done) + '</b> still in the queue. ' +
     'Summaries are drafted by an agent a few at a time and confirmed only by a person.</p>' : '';
   el.innerHTML = '<h2>Blocks \u2014 ' + esc(id) + ' <span class="note">(' + bs.length +
-    ', in page order)</span></h2>' + drain + '<table><thead><tr>' +
+    ', in page order)</span></h2>' + withheldBanner(entry, bs) + drain + '<table><thead><tr>' +
     '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative / summary</th></tr></thead><tbody>' +
     bs.map(function(b){
       /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
@@ -600,22 +719,11 @@ function renderBlocks(id, data, err){
          TRUNCATION IS DECLARED, never inferred from length. A reader who
          cannot tell a short section from a cut one is being shown a claim the
          data does not support. */
-      var title = esc(b.title || '\u2014');
-      var body;
-      if (b.content) {
-        var extract = '<pre>' + esc(b.content) + '</pre>' +
-          (b.truncated ? '<p class="note">Excerpt \u2014 the first 600 characters. The section file holds the rest.</p>' : '');
-        body = '<details><summary>' + title + '</summary><div class="block-body">' +
-          (b.summary
-            ? '<div class="pair"><div><p class="lbl">Extract</p>' + extract + '</div>' +
-              '<div><p class="lbl">Agent summary</p>' + summaryPanel(b.summary) + '</div></div>'
-            : extract) +
-          '</div></details>';
-      } else {
-        /* No content is a DETERMINED answer for a page-scan or an image with
-           no description, and is said plainly rather than left blank. */
-        body = title + ' <span class="note">(no content carried)</span>';
-      }
+      /* THE CONTENT CELL is blockBody -- summary, withheld line, or the
+         neutral "(no content carried)", in that order (issue #1794). Its
+         text lives in scripts/lib/library-withheld-view.ts so a test runs
+         exactly what this page runs. */
+      var body = blockBody(b, entry);
       return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
         '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td class="bt">' + body +
         '</td><td>' + nar + '</td></tr>';
@@ -641,6 +749,7 @@ function summaryLabel(s){
     default: return { cls: "", t: "not yet summarised" };
   }
 }
+${WITHHELD_VIEW_JS}
 function summaryBadge(s){
   var l = summaryLabel(s);
   return '<span class="pill ' + l.cls + '">' + esc(l.t) + '</span>';
@@ -663,11 +772,11 @@ function summaryPanel(s){
     (s.text ? '<p>' + esc(s.text) + '</p>' : '<p>' + esc(why || "") + '</p>') +
     (who ? '<p class="note">' + esc(who) + '</p>' : '') + '</div>';
 }
-function loadBlocks(id){
+function loadBlocks(id, entry){
   fetch(blocksHref(id), {cache: "no-store"})
     .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function(d){ renderBlocks(id, d, null); })
-    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e)); });
+    .then(function(d){ renderBlocks(id, d, null, entry); })
+    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e), entry); });
 }
 
 function setView(v){
@@ -730,18 +839,185 @@ fetch(DATA_HREF).then(function(r){
   });
   render();
   renderQueue();
-  honourAnchor();
-  window.addEventListener("hashchange", honourAnchor);
+  honourAddress();
+  window.addEventListener("hashchange", honourAddress);
 }).catch(function(e){
   $("status").textContent = "could not load the projection: " + e.message;
   $("listing").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
     "That is not an empty corpus \\u2014 it is a corpus that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
-</script>
+`;
+
+/** The entry a shell is about, when it is one — its identity only, never its content. */
+export interface ShellEntry {
+  id: string;
+  /** Href of the entry's published JSON-LD, relative to the page — the `alternate`. */
+  jsonld?: string;
+}
+
+/**
+ * One library page: a THIN SHELL — owner, 2026-10-02, #1881: *"each link/page
+ * needs to be materialized on the CDN (gh-pagees), just load the content from
+ * the KG json(ld) assets already published"*.
+ *
+ * The same template serves the handler's whole view, an instance's library and
+ * every entry: what differs is the identity in the config block — the
+ * projection's href, the scope, the library root — and, for an entry, the
+ * `alternate` link to its JSON-LD. Styles and script are the shared assets
+ * {@link VIEWER_CSS} and {@link VIEWER_JS}, found beside the projection.
+ * Nothing about any entry's content is written here; the script loads it.
+ *
+ * `mount` is the folio mount fragment, passed IN rather than composed here —
+ * a fact about where the CALLER publishes. Empty by default.
+ *
+ * @param libRoot  the library root relative to this page: `./`, `../`, `../../`
+ */
+export function viewerHtml(dataHref: string, scope = "", mount = "", libRoot?: string, entry?: ShellEntry): string {
+  const assets = dataHref.slice(0, dataHref.lastIndexOf("/") + 1);
+  const config = JSON.stringify({
+    data: dataHref,
+    scope,
+    libRoot: libRoot ?? (scope ? "../" : "./"),
+    ...(entry ? { entry: entry.id } : {}),
+  }).replace(/</g, "\\u003c");
+  const title = entry ? `${escHtml(entry.id)} — ${escHtml(scope)} library` : "Library — the L1 corpus";
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${title}</title>
+<link rel="canonical" href="./">
+${entry ? `<meta name="folio-navbar" content="none">\n` : ""}${entry?.jsonld ? `<link rel="alternate" type="application/ld+json" href="${escHtml(entry.jsonld)}">\n` : ""}<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="${escHtml(assets)}viewer.css">
+</head>
+<body>
+<header>
+  <h1>Library — the L1 corpus</h1>
+  <p class="empty" id="status" style="padding:0">loading…</p>
+  <div class="badges" id="badges"></div>
+</header>
+<div class="toolbar">
+  <input id="q" type="search" placeholder="Search entries…" aria-label="Search entries">
+  <span class="seg" role="group" aria-label="View">
+    <button type="button" id="vList" aria-pressed="true">Listing</button>
+    <button type="button" id="vDesk" aria-pressed="false">Desktop</button>
+  </span>
+</div>
+<main>
+  <section id="listing" class="wrap"></section>
+  <section id="desktop" hidden></section>
+  <section id="blocks" class="wrap" hidden aria-live="polite"></section>
+  <h2>Uploads — the queue feeding this</h2>
+  <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
+    Queues are counted per declaring instance and never merged.</p>
+  <section id="queue" class="wrap"></section>
+</main>
+<noscript><p class="note">This page loads its entries from <a href="${escHtml(dataHref)}">the library projection</a>${
+    entry?.jsonld ? ` and this entry from <a href="${escHtml(entry.jsonld)}">its JSON-LD</a>` : ""
+  }; it needs JavaScript to draw them.</p></noscript>
+<script type="application/json" id="fa-library-config">${config}</script>
+<script src="${escHtml(assets)}viewer.js"></script>
 ${mount}
 </body>
 </html>
 `;
+}
+
+/**
+ * A library page's identity, read from its config block — or `undefined` when
+ * it carries none. The page names itself there (#1881), which is what lets a
+ * later run prune its own stale output and nothing else.
+ */
+export function libraryConfigOf(content: string): { data?: unknown; scope?: unknown; libRoot?: unknown; entry?: unknown } | undefined {
+  const m = /<script type="application\/json" id="fa-library-config">([^<]*)<\/script>/.exec(content);
+  if (!m) return undefined;
+  try {
+    return JSON.parse(m[1]!) as { data?: unknown; scope?: unknown; libRoot?: unknown; entry?: unknown };
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * `orphanSubjectPages`' ownership test for a SUBJECT page: it names the
+ * directory it sits in as its scope, and no entry. The library viewer's form of
+ * `declaresItsOwnDirectory`, which reads a `var SCOPE` line this page no longer
+ * carries now that its script is a shared asset.
+ */
+export const isSubjectShell = (content: string, name: string): boolean => {
+  const c = libraryConfigOf(content);
+  return c !== undefined && c.scope === name && c.entry === undefined;
+};
+
+/** The same, for an ENTRY page at `<subject>/<name>/`: scope and entry both match. */
+export function isEntryShellFor(instance: string): (content: string, name: string) => boolean {
+  return (content, name) => {
+    const c = libraryConfigOf(content);
+    return c !== undefined && c.scope === instance && c.entry === name;
+  };
+}
+
+/** Every file under `root` (recursively) that is not in `wanted` — absolute paths, sorted. */
+export function orphanFiles(root: string, wanted: ReadonlySet<string>): string[] {
+  const out: string[] = [];
+  const walk = (d: string): void => {
+    for (const f of existsSync(d) ? readdirSync(d, { withFileTypes: true }) : []) {
+      const abs = join(d, f.name);
+      if (f.isDirectory()) walk(abs);
+      else if (!wanted.has(abs)) out.push(abs);
+    }
+  };
+  walk(root);
+  return out.sort();
+}
+
+/**
+ * Every instance whose declaration publishes a renderable directory at its
+ * ROOT route (`instanceRoot: true`), by name → its site-root path `/<name>/`.
+ * The route rule is `mount-instance-docs.ts` `withRoutes`: a declared root
+ * answers at `/<instance>/`.
+ */
+export function instanceRootRoutes(repoRoot: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const inst of instanceRootsIn(repoRoot)) {
+    let decl;
+    try {
+      decl = readDeclaration(inst);
+    } catch {
+      continue; // an unreadable declaration is check:declaration-filename's to report
+    }
+    const name = decl?.name;
+    if (!name) continue;
+    const rooted = (decl?.directories ?? []).some((d) => (d as { instanceRoot?: boolean }).instanceRoot === true);
+    if (rooted) out.set(name, `/${name}/`);
+  }
+  return out;
+}
+
+/**
+ * An entry's `view` — the site-root path of the page that RENDERS it.
+ *
+ * Owner, 2026-10-02: *"i also expected to be able to click on "smart-trust"
+ * slug and open up the visualizer for smart-trust"*. Two cases:
+ *
+ * - a REFERENCED entry whose record links a `site_path` that is another
+ *   instance's DECLARED root route (`instanceRootRoutes`) is rendered there —
+ *   smart-trust's IG viewer at `/smart-trust/`. The link chooses the
+ *   candidate; the declaration is what makes it a visualiser rather than a
+ *   page that merely exists, so a link to anything else is not taken;
+ * - every other entry is rendered by this viewer, at its own entry page.
+ *
+ * Generated into the projection, never stored in the asset.
+ */
+export function entryView(
+  e: { links?: { href: string }[] },
+  roots: ReadonlyMap<string, string>,
+  entryPage: string,
+): string {
+  const declared = new Set(roots.values());
+  const hit = (e.links ?? []).map((l) => l.href).find((h) => declared.has(h));
+  return hit ?? `/${entryPage}/`;
 }
 
 let stale = 0;
@@ -960,6 +1236,16 @@ if (import.meta.main) {
     e.summaries = tally(blocks.flatMap((b) => (b.summary ? [b.summary] : [])));
   }
 
+  // ── EACH ENTRY'S RENDERING, DERIVED (owner, 2026-10-02, #1881) ────────
+  //
+  // `view` is where the entry is SHOWN — written here, into this generated
+  // index, and never into the asset ("asset doesnt know about its
+  // renderings"). See `entryView` for the rule.
+  const roots = instanceRootRoutes(repoRoot);
+  for (const e of g.entries) {
+    e.view = entryView(e, roots, relative(site, join(pageDir, e.instance, e.id)).split(sep).join("/"));
+  }
+
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
 
   // ── PER-ENTRY BLOCK GRAPHS (bean `7nvr`) ──────────────────────────────
@@ -972,9 +1258,10 @@ if (import.meta.main) {
   // "what is in here" by twenty-five, to serve the question "what is in THIS
   // one" — which a reader asks about one entry at a time, if at all.
   //
-  // The library JSON-LD is not published to the site (checked: no
-  // `library/<id>/manifest.jsonld` under the built tree), so the viewer cannot
-  // simply fetch the source. A projection is the only thing it can read.
+  // The library's block JSON-LD is not published to the site, so the viewer
+  // cannot simply fetch the source; a projection is what it reads. (Each
+  // entry's MANIFEST is published since #1881 — see the entry pages below —
+  // as the `alternate` of the entry's own IRI, not as the viewer's input.)
   for (const e of g.entries) {
     const blocks = blocksOf.get(e.id) ?? [];
     // An entry with no blocks still gets a file. The alternative is a 404 the
@@ -1035,13 +1322,94 @@ if (import.meta.main) {
     { label: "Entries", id: "listing" },
     { label: "Queue", id: "queue" },
   ];
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
+  // ── THE SHARED VIEWER ASSETS (#1881) ──────────────────────────────────
+  //
+  // Published ONCE beside the projection and referenced by every page, so a
+  // page is a shell of a few KB rather than ~60 KB of the same CSS and script
+  // per URL. Through `emit`, so `--check` compares them like any page.
+  emit(join(dataDir, "viewer.css"), VIEWER_CSS);
+  emit(join(dataDir, "viewer.js"), VIEWER_JS);
+
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount, "./"), drawn(), VIEWER_TOOL));
+  const wantedJsonld = new Set<string>();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(
       join(sub.pageDir, "index.html"),
-      withRenders(viewerHtml(sub.dataHref, subject, folioMount), drawn(subject), VIEWER_TOOL),
+      withRenders(viewerHtml(sub.dataHref, subject, folioMount, "../"), drawn(subject), VIEWER_TOOL),
     );
+
+    // ── EVERY ENTRY'S OWN IRI, MATERIALIZED (owner, 2026-10-02, #1881) ──
+    //
+    //   > each link/page needs to be materialized on the CDN (gh-pagees),
+    //   > just load the content from the KG json(ld) assets already published
+    //   > … no query strings... each asset gets its own IRI
+    //
+    // So `<library>/<instance>/<id>/` is a REAL file — no 404 routing, which
+    // the owner ruled "a hack" — and it is the SAME template as the instance
+    // page with the entry's identity in its config: nothing of the entry's
+    // content is written into it. The script reads the projection and the
+    // entry's block file, both already published, and selects the entry from
+    // the page's own path.
+    //
+    // The entry's JSON-LD manifest was NOT published before this (the
+    // per-entry note above records it). It is the KG's own serialisation of
+    // the entry, so it is copied as-is rather than re-expressed, and each
+    // shell names it as its `alternate`.
+    const mine = g.entries.filter((e) => e.instance === subject);
+    for (const e of mine) {
+      const shellDir = join(sub.pageDir, e.id);
+      const src = join(repoRoot, e.dir, "manifest.jsonld");
+      let jsonld: string | undefined;
+      if (existsSync(src)) {
+        // At the path its IRI names (`schemas/library-iri.ts`), so the entry's
+        // `@id` dereferences to exactly this file — one function decides both.
+        const dest = join(site, libraryAssetSitePath(subject, e.id));
+        wantedJsonld.add(dest);
+        emitBytes(dest, readFileSync(src));
+        jsonld = relative(shellDir, dest).split(sep).join("/");
+      }
+      // `emit`, not `emitPage`: the viewer rail is ~14 KB of style and markup
+      // INLINED by `withViewerNav`, which would make every shell as heavy as
+      // the page it stands for. The shell declines it in its own markup
+      // (`folio-navbar: none`, which the viewer-nav audit reads as a decision)
+      // until the rail is itself a shared asset.
+      emit(
+        join(shellDir, "index.html"),
+        viewerHtml(`../${sub.dataHref}`, subject, folioMount, "../../", { id: e.id, ...(jsonld ? { jsonld } : {}) }),
+      );
+    }
+
+    // A shell whose entry is gone is this generator's own stale output: the
+    // subject-page orphan rule (bean `ankg`) one level down, recognised by
+    // the shell's own config block rather than by its name.
+    const shells = orphanSubjectPages(sub.pageDir, mine.map((e) => e.id), isEntryShellFor(subject));
+    for (const name of shells.foreign) {
+      console.error(`  ! ${join(sub.pageDir, name)} is not an entry page and does not identify itself — left in place`);
+    }
+    for (const name of shells.owned) {
+      const dir = join(sub.pageDir, name);
+      if (check) {
+        console.error(`  ✗ ${dir} is an orphan entry page — no ${subject} entry is named ${name}`);
+        stale++;
+        continue;
+      }
+      rmSync(dir, { recursive: true });
+      console.log(`  ✗ pruned ${dir}`);
+    }
+  }
+
+  // Published JSON-LD no entry names any more — the avatar rule (bean `cw35`):
+  // the directory is this generator's alone, so pruned on a write and a
+  // finding under `--check`.
+  for (const abs of orphanFiles(join(site, LIBRARY_JSONLD_SITE_DIR), wantedJsonld)) {
+    if (check) {
+      console.error(`  ✗ ${abs} is an orphan — no entry publishes it`);
+      stale++;
+      continue;
+    }
+    rmSync(abs);
+    console.log(`  ✗ pruned orphan ${abs}`);
   }
 
 
@@ -1050,7 +1418,7 @@ if (import.meta.main) {
   // A subject page the declaration no longer describes. `emit()` cannot see
   // one — it compares only the files it is about to write — so this is asked
   // separately, and in `--check` an orphan is a FINDING rather than silence.
-  const { owned, foreign } = orphanSubjectPages(pageDir, subjects);
+  const { owned, foreign } = orphanSubjectPages(pageDir, subjects, isSubjectShell);
   for (const name of foreign) {
     // Reported and LEFT. Ownership could not be established from the file, and
     // `deletion-requires-confirmation` is about exactly this case.

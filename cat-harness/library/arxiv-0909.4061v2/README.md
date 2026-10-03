@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# arxiv-0909.4061v2
+# Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions
 
 ingested source material — attributed to its document, not folio content
 

@@ -221,6 +221,11 @@ And a second-order caution, because it inverts who pays: a duplicate-detecting
 test punishes **whoever merges second**, not whoever duplicated. Merging first
 does not mean you were first.
 
+**Starting any new unit of work runs the collision review in
+[`coordinate`](coordinate.md) §"Starting new work"**, scaled to its blast
+radius and recorded in the workplan bean before the first edit (owner,
+2026-10-02, #1885).
+
 ### And ASK AGAIN before you open the PR — looking once is not enough
 
 **Owner decision, 2026-09-26, bean `dx5j`.** The two checks above and the
@@ -377,9 +382,11 @@ what makes them the shared substrate.
 2. **Declare intent + claim** — before starting, set the bean `in-progress` and
    add a short note naming your branch. Read §"A claim is branch-local" above
    first: the claim announces, it does not reserve.
-3. **Work** — keep the bean current; append status notes as you go. Do not fork
-   it into a parallel `todos/*.json` queue — link to any bulk queue from the
-   bean instead.
+3. **Work** — keep the bean current; append status notes as you go **to a bean
+   only your branch is changing**. When other open pull requests are adding
+   to the same bean, write a note instead — §"Adding to a bean — a note, not
+   an append" below. Do not fork it into a parallel `todos/*.json` queue —
+   link to any bulk queue from the bean instead.
 4. **Hand off or finish** — on landing, close the bean and update any cross-repo
    ownership note. **If you stop mid-flight, leave the bean `in-progress` with a
    note saying where you got to**, so the next session resumes instead of
@@ -421,6 +428,62 @@ Two things that follow:
 in a merged PR's title on `main`, those with every Done-when item ticked listed
 first. It reports and never closes; closing is still on evidence, per the next
 section.
+
+## Adding to a bean — a note, not an append
+
+**When more than one open pull request has something to add to the same bean,
+each writes a NOTE, never an append to the bean.**
+
+```bash
+bun run beans:note <bean-id> --title "Finding 3: ruling and after state" --body "…"
+git add beans/notes/      # the note AND the regenerated index
+```
+
+That writes `<bean-id>--<YYYY-MM-DD>--<branch>.md` in the declared `notes`
+directory of `beans/beans.json`, and rewrites the generated index beside it
+(`README.md`). The bean itself is not touched.
+
+**Why.** `ob3m` (the navbar findings) was appended to by one pull request per
+finding. Every merge put every other open pull request in conflict on that one
+file, and the merge-main bot refuses a bean conflict on purpose — two sessions
+editing one bean is a coordination question, not a regeneration. On 2026-10-02
+that cost hand-merges of #1798, #1805, #1807, #1808 and #1819 within a few
+hours (bean `m61r`, issue #1853). Teaching the bot to union that one bean was
+rejected: the refusal is right, the shared write was the defect.
+
+**The branch is the key, and that is the rule that must not drift.** Two open
+pull requests never share a branch, and the branch is known at the first
+commit, which a pull request number is not. A date-plus-finding name was
+refused: two sessions on the same finding on the same day pick the same slug.
+A second note from the same branch is a new `##` section in that branch's own
+file — found by its front matter, not by today's date — so only that branch
+ever writes it. Reasoning in full: `cat-harness/schemas/bean-note.ts`.
+
+**What still conflicts, and why that is acceptable.** The index is rewritten
+by every pull request that adds a note, so two of them conflict on it. It is a
+`README.md` whose rows all sit inside one `<!-- bean-notes:begin -->` region,
+so the declared `readme-generated-regions` pattern resolves it without a
+person and `regen` rewrites it from the merged notes. The notes themselves
+never conflict. `cat-harness/scripts/tests/bean-notes.test.ts` merges two real
+branches to show both halves, and fails when the branch is dropped from the
+name.
+
+**What `beans:notes:check` judges** (in CI): every file in the directory is a
+`folio-bean-note/v1` note naming a bean that exists, under exactly the name its
+own front matter derives — a hand-named note is the first step back to two
+pull requests writing one path — and the index is current.
+
+Three things that follow:
+
+- **The bean's own body stays the owner's.** Re-scoping it, ticking its
+  `## Done when`, or closing it are still edits to the bean, made by whoever
+  holds it, and they are rare enough not to collide.
+- **A note does not move the bean's `updated_at`.** Bumping it from every
+  pull request is exactly the one-line conflict this removes. A reader asking
+  "is anyone working on this?" reads the index's dates as well as the bean's.
+- **Sections appended before the convention stay where they are.** Moving them
+  would rewrite the region every still-open pull request is appending to,
+  which is one more round of the hand-merges this exists to stop.
 
 ## Closing a bean whose work has already landed (STRICT)
 
@@ -772,4 +835,6 @@ downstream repo, update that repo's ownership note and close the tracking beans.
 |---|---|
 | [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Leave it alone (coordinate instead); Claim it (status: in-progress); Record the blocker and hand back |
 | [Code change and review](../../processes/code-change-review.html) | Claim the work item |
+| [A merge train](../../processes/merge-train.html) | Fix the PR, then re-signal ready |
+| [Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route](../../processes/stalled-agent-triage.html) | Record the triage and claim the picked-up work |
 

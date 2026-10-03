@@ -82,8 +82,14 @@ must contain no reference to:
 - `dak.config.json` (`dak.json` as upstream still spells it), the DAK logical
   model, or any DAK component
 - `smart.who.int` canonicals, or any WHO publisher metadata
-- the DAK API surface — `.schema.json`, `.displays.json`, `.openapi.json`, the
-  `dak-api.html` hub
+- the DAK API's NAMES and its PRODUCTION — the label "DAK API", the
+  `dak-api.html` hub page and its `DAK_API_*` markers, and the
+  post-processing that writes the sidecars. **Rendering** the sidecars an IG
+  publishes is generic and IS here, as the **IG API** (`ig-api-views.ts`):
+  owner, 2026-10-03, *"can we rename dakapi hub to someting more ig generic.
+  split up/generifize code. relabel?"* (bean `d313`). A WHO instance passes
+  its names in as configuration (`--sidecar-label`, `--api-hub-page`,
+  `--api-hub-markers`, `--api-placeholder`); nothing here writes them down
 - the DAK pre- and post-processing steps, in either direction
 - anything in the `authoring-who-smart-guidelines` package
 
@@ -108,8 +114,9 @@ evidence that a split is doing work.
 
 ## Upgrading to the overlay
 
-An IG that wants the DAK surface does not change this pipeline; it instantiates
-`smart-dak` and gets the pre/post steps as an **overlay**. The base takes no
+An IG that wants the DAK surface does not change this pipeline; the WHO harness
+above it (smart-base, whose DAK document kind carries the pre/post steps)
+supplies them as an **overlay**. The base takes no
 position on whether an overlay exists, and must not gain a flag for one — a
 `do_dak` input at this layer would be this layer knowing about DAKs.
 

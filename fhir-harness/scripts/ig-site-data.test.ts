@@ -68,9 +68,18 @@ describe("from a published IG's artifact index (the real smart-base one)", () =>
     expect(JSON.stringify(r.data)).not.toContain('""');
   });
 
-  test("refuses a chrome.json that describes a DIFFERENT IG (measured: trust under smart-base)", () => {
+  test("states no status: smart-base has no ig-identity.json, and the template's chrome states none", () => {
     expect(r.data.ig.status).toBeUndefined();
-    expect(r.refused[0]).toContain("smart.who.int.trust");
+    expect(r.refused).toEqual([]);
+  });
+});
+
+describe("from smart-trust's index, which carries its own ig-identity.json", () => {
+  const r = igSiteData(join(import.meta.dir, "..", "..", "smart-trust"));
+
+  test("status comes from the IG's own identity file", () => {
+    expect(r.data.ig.status).toBe("draft");
+    expect(r.provenance["ig.status"]).toBe("fhir-artifact-index/ig-identity.json");
   });
 });
 

@@ -147,8 +147,13 @@ import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 import { withViewerNav } from "./viewer-page.ts";
-import { visualiserNavDeclaration } from "./lib/navbar.ts";
-import { renderedPath, siteDirectories, withRenders, withViewers } from "./viewer-declarations.js";
+import {
+  renderedPath,
+  siteDirectories,
+  withRenders,
+  withRendersFrontMatter,
+  withViewers,
+} from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "state-viewer";
@@ -171,6 +176,29 @@ const check = process.argv.slice(2).includes("--check");
 /** The renderer and its styles, read from the files the docs site also serves. */
 const WORK_PLAN_JS = readFileSync(join(SITE, "assets", "js", "work-plan.js"), "utf-8");
 const WORK_PLAN_CSS = readFileSync(join(SITE, "assets", "css", "work-plan.css"), "utf-8");
+
+/**
+ * The shared renderer `work-plan.js` reads `window.faRender` from.
+ *
+ * TWO FILES INLINED RATHER THAN ONE, since 2026-10-02: `el`, the three-state
+ * fetch and the in-DOM failure copy moved out of `work-plan.js` into
+ * `kg-render.js` so a second converted region could use them instead of
+ * copying them. The same argument this file already rests on — *"a second copy
+ * of a renderer is two answers to what the work plan looks like, free to
+ * disagree while both look right in review"* — applies one level down, and it
+ * is why this reads the file rather than growing its own copy of those
+ * helpers.
+ *
+ * ORDER IS LOAD-BEARING. `work-plan.js` reads `window.faRender` at evaluation
+ * and returns early with a console warning if it is absent, so this must be
+ * emitted first. `head_custom.html` states the same constraint for the docs
+ * site, where `defer` preserves document order.
+ *
+ * These pages declare NO `fa-render-regions` meta and therefore carry no
+ * `data-fa-render` attribute. That is the deliberate third state: a page that
+ * never asked is not a page that is pending.
+ */
+const KG_RENDER_JS = readFileSync(join(SITE, "assets", "js", "kg-render.js"), "utf-8");
 
 /**
  * The projection tags this generator knows how to render.
@@ -579,6 +607,9 @@ ${WORK_PLAN_CSS}
 ${opts.body}
 </main>
 <script>
+${KG_RENDER_JS}
+</script>
+<script>
 ${WORK_PLAN_JS}
 </script>
 </body>
@@ -736,106 +767,86 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     });
   }
 
+  if (tag === TODO_INDEX_SCHEMA) return todoBoardPage(g);
+
   // ONE graph per page, so one meta: the renderer tells an absent meta from a
   // failed fetch, and a second meta here would quietly make this the combined
   // view under a single graph's name.
   const metas = [
-    tag === BEAN_INDEX_SCHEMA
-      ? `<meta name="fa-beans-src" content="${src}">`
-      : `<meta name="fa-todo-src" content="${src}">`,
+    `<meta name="fa-beans-src" content="${src}">`,
+    // The deploy's stamp, at the site root beside this page's directory.
+    // Written by the deploy, never committed — bean `y7b3`.
+    `<meta name="fa-build-src" content="../build.json">`,
   ];
-  // The todo graph is LISTED as well as counted (#1757) — the counts are the
-  // script's, the listing and its rail section are static.
-  const todos = tag === TODO_INDEX_SCHEMA ? todoItemsOf(g.id) : undefined;
-  const listing = todos ? todoListing(todos) : undefined;
   return page({
     title: `${g.id} — state`,
     metas,
-    body: head + (listing ? listing.nav : "") + `<div class="fa-workplan" data-fa-workplan>
+    body: head + `<div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">This view needs JavaScript. The data is
   <a href="${src}">a plain JSON file</a>.</p>
-</div>` + (listing ? listing.html : "") + registry(graphs, g.id),
+</div>` + registry(graphs, g.id),
   });
 }
 
-/** A todo as the projection publishes it — only the fields the listing reads. */
-interface ListedTodo {
-  id: string;
-  summary?: string;
-  status?: string;
-  priority?: string;
-  target?: { page?: string; node?: string };
-}
-
 /**
- * The todos, LISTED, grouped by the knowledge-graph node each is attached to —
- * and the rail section that indexes them.
+ * `<base>/todos/` — a THEMED site page that mounts the landing page's sticky
+ * panel, not a standalone dashboard.
  *
- * Owner, 2026-10-01 (#1757): *"todos page should have a LHS navbar to help see
- * todos associated the KG"*. The page showed two counts and no todo, so there
- * was nothing a navbar could point at. Rendered SERVER-SIDE, like
- * {@link qaPanels}: the data is known at generate time, and a list of links
- * needs no script.
+ * Owner, 2026-10-02 (#1906): *"https://litlfred.github.io/folio-assistant/todos/
+ * should also have the same stickies panel. not sure why all the graphs are
+ * listed on the todos page. cluttery"*.
  *
- * Grouped by `target.page` — the node the todo is attached to — because that
- * is the association the owner asked to see. A todo attached to nothing is
- * grouped as such, by name, rather than dropped: a todo missing from the
- * listing reads as one that does not exist.
+ * So this page is NOT the work-plan shell the other dashboards are. It is a
+ * Jekyll page on the default layout, which gives it three things, none of
+ * them by a second implementation:
  *
- * Returns the HTML and the `data-fa-visualiser-nav` declaration together, so
- * the anchors the nav links to and the ids the listing carries are minted in
- * one place and cannot disagree.
+ * - the site chrome — the navbar and a way back, which the standalone shell
+ *   lacked (wireframe `todos` finding 5);
+ * - `docs-ui.js` with `meta[name="fa-todo-src"]` (from `head_custom.html`),
+ *   which mounts the todo board INTO `.fa-landing-board`. The panel is the
+ *   landing page's own include, so the board is the same board, mounted the
+ *   same way (wireframe finding 1: the items were not on the page);
+ * - the no-JS floor, `_includes/generated/todo-listing.html` in the footer,
+ *   which carries each item's body, status, who raised it and its resolved
+ *   "About" link to the node it is attached to.
+ *
+ * The panel is OPEN here, and closed on the landing page. On the landing page
+ * the owner asked for it slid away (2026-09-21) because it pushed what the
+ * repository IS below the fold; on this page the items are what the page is
+ * for, and a closed panel would leave finding 1 standing until a click.
+ *
+ * WHAT IS NOT HERE, on purpose:
+ *
+ * - "State graphs this harness declares", the registry every other dashboard
+ *   carries. The owner called it clutter on this page, and wireframe finding 3
+ *   measured it at most of the first screen. The other dashboards keep it;
+ *   whether they should is an open question, not this page's to settle.
+ * - "Todos by the node they are attached to" (#1757). Its items were plain
+ *   text — no body, no link to the node, no view or edit (owner, 2026-10-02:
+ *   *"are not functional for more info or anything"*) — and everything it
+ *   could show is already on this page twice: on each sticky (View / Edit)
+ *   and in the floor (body and the resolved "About" link). A third listing of
+ *   the same items would be the clutter this page is being cleared of.
+ *
+ * The `renders` declaration goes in the FRONT MATTER, the form a themed page
+ * carries it in (`withRendersFrontMatter`), and the do-not-hand-edit sentence
+ * stays in the body so `prunableDashboards` still recognises the page as ours.
  */
-export function todoListing(items: readonly ListedTodo[]): { html: string; nav: string } {
-  const UNATTACHED = "attached to no node";
-  const groups = new Map<string, ListedTodo[]>();
-  for (const t of items) {
-    const k = t.target?.page ?? UNATTACHED;
-    groups.set(k, [...(groups.get(k) ?? []), t]);
-  }
-  const keys = [...groups.keys()].sort((a, b) =>
-    a === UNATTACHED ? 1 : b === UNATTACHED ? -1 : a.localeCompare(b, "en"),
-  );
-  const slug = (s: string): string => s.replace(/[^A-Za-z0-9_-]+/g, "-");
-  const nav = keys.map((k) => ({
-    label: k,
-    href: `#node-${slug(k)}`,
-    items: groups.get(k)!.map((t) => ({ label: t.summary ?? t.id, href: `#todo-${slug(t.id)}` })),
-  }));
-  const html =
-    `<h2 class="sv-h2">Todos by the node they are attached to — ${items.length}</h2>` +
-    keys
-      .map(
-        (k) =>
-          `<section class="sv-item" id="node-${slug(k)}">` +
-          `<h3>${esc(k)}</h3><ul>` +
-          groups
-            .get(k)!
-            .map(
-              (t) =>
-                `<li id="todo-${slug(t.id)}">${esc(t.summary ?? t.id)}` +
-                (t.status ? ` <span class="sv-tag">${esc(t.status)}</span>` : "") +
-                (t.priority ? ` <span class="sv-tag">${esc(t.priority)}</span>` : "") +
-                (t.target?.node ? ` <span class="sv-sub">· ${esc(t.target.node)}</span>` : "") +
-                `</li>`,
-            )
-            .join("") +
-          `</ul></section>`,
-      )
-      .join("\n");
-  return { html, nav: visualiserNavDeclaration(nav) };
-}
-
-/** The todo items a graph's projection publishes, or `undefined` if unreadable. */
-function todoItemsOf(id: string): ListedTodo[] | undefined {
-  const p = projectionFor(id);
-  if (p === null) return undefined;
-  try {
-    const d = JSON.parse(readFileSync(p, "utf8")) as { items?: ListedTodo[] };
-    return Array.isArray(d.items) ? d.items : undefined;
-  } catch {
-    return undefined;
-  }
+export function todoBoardPage(g: Pick<StateGraph, "description">): string {
+  const lead = g.description ? g.description.split(/(?<=\.)\s/)[0]! : "";
+  return `---
+layout: default
+title: Todos
+nav_exclude: true
+---
+<!--
+  ${GENERATED_BY}: the next run
+  overwrites it, \`state:visualizer:check\` fails on the difference, and a
+  hand-edit here is a change nothing else in the tree knows about.
+-->
+<h1 id="todos">Todos</h1>
+${lead ? `<p class="fs-5 fw-300">${describe(lead)}</p>\n` : ""}{% include landing.html open=true %}
+`;
 }
 
 /** The `$schema` a graph's published projection declares, or null. */
@@ -1006,7 +1017,11 @@ const drawnDir = (g: StateGraph): string => {
   return renderedPath(REPO_ROOT, join(base, g.path));
 };
 for (const g of graphs) {
-  emit(join(SITE, g.id, "index.html"), withRenders(dashboardPage(g, graphs), [drawnDir(g)], VIEWER_TOOL));
+  // A themed page (front matter: `todos`) declares what it renders in its
+  // front matter; a standalone one in its `<head>`. Asked of the page.
+  const html = dashboardPage(g, graphs);
+  const declare = html.startsWith("---\n") ? withRendersFrontMatter : withRenders;
+  emit(join(SITE, g.id, "index.html"), declare(html, [drawnDir(g)], VIEWER_TOOL));
 }
 
 // Orphans, AFTER the writes so the keep-set is what this run actually wanted.

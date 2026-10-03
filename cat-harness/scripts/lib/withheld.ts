@@ -23,6 +23,10 @@ export const WITHHELD_FILE = "withheld.json";
 export interface WithheldEntry {
   path: string;
   reason: string;
+  /** The gates that refused, when the generator recorded them structurally (issue #1794). */
+  gates?: { gate: string; verdict: string }[];
+  /** The catalogue record — a published page (site-root path) and/or an upstream URI. */
+  record?: { id?: string; page?: string; uri?: string };
 }
 
 /**
@@ -47,7 +51,12 @@ export function withheldEntries(dir: string): WithheldEntry[] {
         `refusing to publish rather than publish what it withholds`,
     );
   }
-  return parsed.data.paths.map((p) => ({ path: p.path.replace(/^\.?\/+/, "").replace(/\/+$/, ""), reason: p.reason }));
+  return parsed.data.paths.map((p) => ({
+    path: p.path.replace(/^\.?\/+/, "").replace(/\/+$/, ""),
+    reason: p.reason,
+    ...(p.gates ? { gates: p.gates } : {}),
+    ...(p.record ? { record: p.record } : {}),
+  }));
 }
 
 /** The withheld paths alone. */
@@ -71,4 +80,15 @@ export function withheldFilter(dir: string, withheld: readonly string[]): (src: 
 export function withheldReason(entryDir: string): string | undefined {
   const slug = basename(entryDir);
   return withheldEntries(dirname(entryDir)).find((e) => e.path === slug)?.reason;
+}
+
+/**
+ * The whole withheld record for a library ENTRY directory — reason, gates and
+ * catalogue record — or `undefined` when it is not withheld. Issue #1794: the
+ * viewer says WHICH gate refused and links the record, and both come from the
+ * list, never from the entry's emptiness.
+ */
+export function withheldEntryFor(entryDir: string): WithheldEntry | undefined {
+  const slug = basename(entryDir);
+  return withheldEntries(dirname(entryDir)).find((e) => e.path === slug);
 }

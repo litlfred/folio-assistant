@@ -137,7 +137,8 @@ it to be remembered:
 
 | path | event | how it lands |
 |---|---|---|
-| `feature-staging.yml` → `stage` | `rendered` | its **own commit**, after the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes |
+| `feature-staging.yml` → `stage` | `rendered` | the **same commit as the deploy** (bean `bm6d`). The entry goes to the root `_render-log/`, never into `_site`, which would land it at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes |
+| `feature-staging.yml` → `stage`, preview cap | `removed`, one per rotated preview | the **same commit as the deploy**, written by `staging-rotate.ts`; the reason names the cap, the owner ruling of 2026-10-02 and issue #1868, and the summary gives slug, age and size |
 | `feature-staging.yml` → `cleanup`, confirmed | `removed` | the **same commit as the removal** |
 | `feature-staging.yml` → `cleanup`, refused | `retained` | its own commit |
 | `feature-staging.yml` → `cleanup-dispatch` | `removed` | the **same commit as the removal** |

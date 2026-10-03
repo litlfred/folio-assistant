@@ -81,7 +81,7 @@ import {
 import { discoverBlockCheckers } from "./qa-checker-discovery";
 import { isCriterionSourceMiss, resolveCriterionSource } from "./criterion-source";
 import { loadContributions } from "../../schemas/harness-config";
-import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
+import { ContributionRegistry, composedKindOwner, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
 import { contributionsRoot } from "./repo-root";
@@ -394,7 +394,14 @@ async function run(): Promise<void> {
   // and outros, the notation register — render into the paper and were outside
   // every criterion, while already carrying sidecars nothing could refresh.
   // See `qou/3fui`.
-  for (const block of walkBlocks(walkRoot, { includeUnlabelled: true })) {
+  //
+  // `contributedBuilders`: a dependency's block kinds (the contributed `dak`
+  // kinds, since bean `1335`) are discovered only when the walk is told their
+  // builders — core no longer bakes them in.
+  for (const block of walkBlocks(walkRoot, {
+    includeUnlabelled: true,
+    contributedBuilders: contributions.contributedBuilders(),
+  })) {
     if (blockRootFilter && block.root !== blockRootFilter) continue;
     totalBlocks++;
     // Every present companion, not the paper triple. Building `{md, ts,
@@ -561,7 +568,10 @@ async function run(): Promise<void> {
       // error, and it would land as a `fail` rather than as an obviously
       // wrong `n/a`. Criteria default to `["paper"]` (see `criterionAdapters`)
       // so the ~47 existing definitions stay correct unedited.
-      const blockAdapter = adapterForKind(block.kind);
+      //
+      // Built-in kinds first, then the registry: a contributed kind (a `dak`
+      // one) belongs to the adapter its contributor named.
+      const blockAdapter = composedKindOwner(block.kind, contributions, adapterForKind);
       const criterionScope = criterionAdapters(def);
       if (!blockAdapter || !criterionScope.includes(blockAdapter)) {
         const naEntry: QaCriterionEntry = {

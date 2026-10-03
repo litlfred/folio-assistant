@@ -153,6 +153,10 @@ If working on an existing bean, run `bun run beans:claim <id>` — not
 After step 4, run `/coordinate` to post intent on relevant sibling PRs
 + triage their review comments. Then start work.
 
+Before the first edit of any new unit of work, run the collision review in
+`coordinate` §"Starting new work", scaled to the blast radius and recorded in
+your workplan bean. A pickup (§"Hand-off pickup protocol") runs its own.
+
 ## Session-end protocol (3 steps)
 
 > Run these BEFORE pushing the final commit. The push triggers PR
@@ -239,6 +243,8 @@ or partial result):
 2. Read the bean discussion/comments (`beans show <id>`) — that's the technical state.
 3. Read the partial PR (if open) — that's the code state.
 4. Declare your intent normally (create your session bean and append a comment to the existing bean).
+5. Re-run the collision review in `coordinate` §"Starting new work" before
+   your first edit, and add the result to the bean.
 
 ## Anti-patterns
 

@@ -36,14 +36,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 这种分流是一份真实的、可读的制品，而不是智能体某种不可捉摸的习惯：
 
-- 流程为 [`processes/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn)；
+- 流程为 [`folio-assistant-core/processes/conduct/getting-started.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/getting-started.bpmn)；
 - 其核心决策为 [`decisions/folio-intent.dmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/decisions/folio-intent.dmn)，这是一张可以在任何 DMN 工具中打开并在无需触碰代码的情况下进行修改的 DMN 决策表。
 
 <figure class="bpmn-figure">
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="BPMN 流程：用户请求创建一个 folio；智能体检测交互模态，读取仓库事实，并由基于 folio-intent.dmn 计算得出的排他网关路由到五个分支之一——ask、overlay、new-repo、add-folio，或是交接给内容创作。脚手架为工作计划提供初始数据，随后 Pages 构建报告 live、not-yet 或 unknown。">
 </figure>
-<p class="bpmn-source"><em>来源：<code>processes/getting-started.bpmn</code> — 该 SVG 由 <code>bun run render:bpmn</code> 生成。</em></p>
+<p class="bpmn-source"><em>来源：<code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — 该 SVG 由 <code>bun run render:bpmn</code> 生成。</em></p>
 
 ### 三项事实
 

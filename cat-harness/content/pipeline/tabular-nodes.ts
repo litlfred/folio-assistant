@@ -39,7 +39,7 @@
  *
  * @module content/pipeline/tabular-nodes
  */
-import { CONTENT_CONTEXT_URL } from "../../schemas/jsonld.ts";
+import { CONTENT_DOCUMENT_CONTEXT } from "../../schemas/jsonld.ts";
 
 /** All a manifest needs to know, from either record. */
 export interface TabularShape {
@@ -218,13 +218,13 @@ export function buildTabularNodes(
  * Serialise, dropping undefined so output is byte-stable.
  *
  * The `@context` goes FIRST and is not optional: every other node under
- * `library/` carries {@link CONTENT_CONTEXT_URL}, and a node without it is one
+ * `library/` carries {@link CONTENT_DOCUMENT_CONTEXT}, and a node without it is one
  * a JSON-LD loader cannot type — `kind`, `contains` and `headers` would stay
  * bare strings. This was missing while nothing called the emitter, which is
  * precisely the class of defect an unreached function hides.
  */
 function node(doc: Record<string, unknown>): string {
-  const clean: Record<string, unknown> = { "@context": CONTENT_CONTEXT_URL };
+  const clean: Record<string, unknown> = { "@context": CONTENT_DOCUMENT_CONTEXT };
   for (const [k, v] of Object.entries(doc)) {
     if (v === undefined) continue;
     clean[k] = v;

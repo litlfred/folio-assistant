@@ -44,7 +44,8 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  CONTENT_CONTEXT_URL,
+  SITE_DOCUMENT_CONTEXT,
+  siteNodeSitePath,
   SITE_PAGE_TYPES,
   SITE_NARRATIVE_TYPES,
   SITE_ASSET_TYPES,
@@ -52,7 +53,7 @@ import {
 } from "../../schemas/jsonld.ts";
 import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
 import { portableSegment } from "../../schemas/portable-path";
-import { repoRootFor, sourceLinks } from "../../schemas/cat-harness.ts";
+import { repoRootFor, siteDirFor, sourceLinks } from "../../schemas/cat-harness.ts";
 import { detectRepoUrl } from "../../src/core/git-refs.js";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -102,9 +103,34 @@ function emit(path: string, doc: Record<string, unknown>): void {
   written++;
 }
 
+/**
+ * The site directory, where each node is ALSO published at the path its `@id`
+ * names — issue #1908. Before this the nodes lived only under `content/docs/`,
+ * which the site does not serve, so every `site/…` IRI (and every todo's
+ * `target` edge to one) named nothing a reader could open.
+ */
+const SITE_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
+/**
+ * Write the node beside its source AND at its published path.
+ *
+ * The published copy is skipped, loudly, for an id that does not encode to
+ * itself: a static host decodes `%3A` before looking for the file, so the
+ * file a percent-encoded IRI names cannot be written portably. Every id in
+ * the corpus today is a slug, so this reports nothing.
+ */
+function emitBoth(source: string, sitePath: string, doc: Record<string, unknown>): void {
+  emit(source, doc);
+  if (sitePath.includes("%")) {
+    console.error(`  ! ${sitePath}: the id does not encode to itself — not published at its IRI`);
+    return;
+  }
+  emit(join(SITE_DIR, sitePath), doc);
+}
+
 function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string, unknown> {
   const doc: Record<string, unknown> = {
-    "@context": CONTENT_CONTEXT_URL,
+    "@context": SITE_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug, node.id),
     "@type": [...(node.asset ? SITE_ASSET_TYPES : SITE_NARRATIVE_TYPES)],
     label: node.id,
@@ -167,8 +193,8 @@ for (const flat of flats) {
   }
   const page = ((await import(manifest)) as { default: WebPage }).default;
 
-  emit(join(SRC_DIR, flat, `${flat}.jsonld`), {
-    "@context": CONTENT_CONTEXT_URL,
+  emitBoth(join(SRC_DIR, flat, `${flat}.jsonld`), siteNodeSitePath(page.slug), {
+    "@context": SITE_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug),
     "@type": [...SITE_PAGE_TYPES],
     label: page.slug,
@@ -191,7 +217,11 @@ for (const flat of flats) {
     // in the corpus today is a slug and encodes to itself, so no emitted path
     // moves — but the knowledge graph this reads also holds `req:*` ids, and
     // one reaching here would write a name NTFS cannot create.
-    emit(join(SRC_DIR, flat, "nodes", `${portableSegment(node.id)}.jsonld`), nodeDoc(page, node, flat));
+    emitBoth(
+      join(SRC_DIR, flat, "nodes", `${portableSegment(node.id)}.jsonld`),
+      siteNodeSitePath(page.slug, node.id),
+      nodeDoc(page, node, flat),
+    );
     nodes++;
   }
 }

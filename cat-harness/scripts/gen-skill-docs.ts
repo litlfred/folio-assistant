@@ -31,6 +31,7 @@ import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { stripInlineCode } from "../schemas/inline-code.ts";
+import { wrapRaw } from "./lib/liquid-raw.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -416,6 +417,8 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
   "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
   ingestion: "Document ingestion methods (ingestion)",
+  // Bean `7eak`: rendering catalogue records as standard Dublin Core.
+  catalogue: "Catalogue records — Dublin Core renderings (catalogue)",
   // Declared directories that hold their skills DIRECTLY, so they are keyed by
   // the declaration's id, like `crdm` and `bootstrap` below. All three were
   // declared in `cat-harness.json` with no label here, which made
@@ -535,7 +538,10 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // folio-assistant-sci, never in core. Declared from within sci's `skills/`.
   "lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
   "data-skills": "Science layer: reference data (folio-assistant-sci)",
-  "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
+  // `large-datasets` is a package of the harness's `library` group since bean
+  // `j7ql` (2026-10-01), keyed by basename like the packages above; it was
+  // the `large-datasets-skills` root of its own instance before.
+  "large-datasets": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
   // are package subdirectories of a declared root (`fhir-ig-skills`), not roots
@@ -1109,10 +1115,9 @@ async function main(): Promise<void> {
       }
       page.push("");
       // Wrap the body in a Liquid raw block so prose containing `{{ }}` / `{% %}`
-      // (math, code, templates) is emitted verbatim, not parsed by Jekyll.
-      page.push("{% raw %}");
-      page.push(body.trimEnd());
-      page.push("{% endraw %}");
+      // (math, code, templates) is emitted verbatim, not parsed by Jekyll —
+      // including a skill that writes the closing raw tag itself (bean kjbb).
+      page.push(...wrapRaw(body.trimEnd()));
       page.push(...processesSection(name, procRows));
       page.push("");
       emit(join(OUT_DIR, `${published}.md`), page.join("\n"));

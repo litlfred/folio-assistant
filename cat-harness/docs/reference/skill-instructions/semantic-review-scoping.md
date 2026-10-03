@@ -92,5 +92,4 @@ statement-level criteria.
 | process | step(s) that name it |
 |---|---|
 | [Content Change and Review](../../processes/content-change-review.html) | Detect change scope & impact |
-| [Review task](../../processes/review-task.html) | Classify what changed |
 

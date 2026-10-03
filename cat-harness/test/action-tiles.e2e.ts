@@ -116,7 +116,7 @@ const SEARCH_MARKUP =
  *
  * DEFAULT OFF, and that is not tidiness. Supplying these adds thirty tiles to
  * the panel, and the caption assertions elsewhere in this file name their
- * tiles exactly (`["Search", "Settings", "Language", "QR code"]`). A third
+ * tiles exactly (`["Search", "Page settings", "Language", "QR code"]`). A third
  * parameter that defaults to `null` leaves every existing call byte-identical
  * in behaviour; putting the meta into the shared HARNESS would have rewritten
  * six unrelated tests to accommodate one new one.
@@ -195,7 +195,7 @@ test.describe("action tiles", () => {
     const captions = await page.locator(".fa-tiles-grid .fa-tile-caption").allTextContents();
     // Named, not counted. `toHaveLength(n)` breaks on the next tile and says
     // nothing about which one is missing.
-    for (const name of ["Search", "Settings", "Language", "QR code",
+    for (const name of ["Search", "Page settings", "Language", "QR code",
                         "Knowledge graph", "JSON-LD", "Source"]) {
       expect(captions).toContain(name);
     }
@@ -235,7 +235,7 @@ test.describe("action tiles", () => {
       await expect(page.locator(".fa-tile", { hasText: gone })).toHaveCount(0);
     }
     const captions = await page.locator(".fa-tiles-grid .fa-tile-caption").allTextContents();
-    expect(captions).toEqual(["Search", "Settings", "Language", "QR code"]);
+    expect(captions).toEqual(["Search", "Page settings", "Language", "QR code"]);
   });
 
   /* ── The search, back in the top display navbar ─────────────────────── */
@@ -435,7 +435,7 @@ test.describe("action tiles", () => {
     await page.locator(".fa-tiles-toggle").click();
     await expect(page.locator(".fa-tile", { hasText: "Search" })).toHaveCount(0);
     const captions = await page.locator(".fa-tiles-grid .fa-tile-caption").allTextContents();
-    expect(captions[0]).toBe("Settings");
+    expect(captions[0]).toBe("Page settings");
     expect(captions).toContain("Knowledge graph");
   });
 
@@ -444,13 +444,13 @@ test.describe("action tiles", () => {
     // and never touches, so it does not earn a row of prime space.
     await openTiles(page);
     await expect(page.locator(".fa-tiles-grid .fa-theme-toggle")).toHaveCount(0);
-    await page.locator(".fa-tile", { hasText: "Settings" }).click();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).click();
     await expect(page.locator(".fa-tiles-view .fa-theme-toggle")).toBeVisible();
   });
 
   test("the theme tile still switches the scheme, and says which it is in", async ({ page }) => {
     await openTiles(page);
-    await page.locator(".fa-tile", { hasText: "Settings" }).click();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).click();
     const theme = page.locator(".fa-theme-toggle");
     const before = await theme.getAttribute("aria-pressed");
     await theme.click();
@@ -483,7 +483,7 @@ test.describe("action tiles", () => {
 
   test("Escape undoes one step, not three", async ({ page }) => {
     await openTiles(page);
-    await page.locator(".fa-tile", { hasText: "Settings" }).click();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).click();
     await page.keyboard.press("Escape");
     // Back to the grid — the panel is still open.
     await expect(page.locator(".fa-tiles-grid")).toBeVisible();
@@ -543,7 +543,7 @@ test.describe("action tiles", () => {
     // Real <button>s and <a>s, so Tab reaches them and Enter acts, without the
     // page having to implement either. A <div> with an onclick would pass a
     // click test and fail this one.
-    await page.locator(".fa-tile", { hasText: "Settings" }).focus();
+    await page.locator(".fa-tile", { hasText: "Page settings" }).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator(".fa-tiles-view .fa-theme-toggle")).toBeVisible();
   });

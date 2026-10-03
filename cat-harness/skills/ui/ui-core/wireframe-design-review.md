@@ -7,12 +7,12 @@ description: >
   viewports, a blind per-criterion review, adjudication where reviewers
   disagree, and a recorded choice. Also how an EXISTING visualiser is
   wireframed as-is, so that every declared visualiser has a wireframe with a QA
-  sidecar. Process: processes/wireframe-design-review.bpmn.
+  sidecar. Process: processes/ui/wireframe-design-review.bpmn.
 ---
 
 # Wireframe design review
 
-Method: [`wiregen`](../../../methodologies/wiregen.md). Process: [`processes/wireframe-design-review.bpmn`](../../../processes/wireframe-design-review.bpmn). Owner, 2026-09-23: *"need both web and mobile layouts in usability reviews. wireframe is part of design process for adjudication"*.
+Method: [`wiregen`](../../../methodologies/wiregen.md). Process: [`processes/ui/wireframe-design-review.bpmn`](../../../processes/ui/wireframe-design-review.bpmn). Owner, 2026-09-23: *"need both web and mobile layouts in usability reviews. wireframe is part of design process for adjudication"*.
 
 ## Where wireframes live
 

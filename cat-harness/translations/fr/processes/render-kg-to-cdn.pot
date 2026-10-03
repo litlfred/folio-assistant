@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: render-kg-to-cdn\n"
-"POT-Creation-Date: 2026-10-01T05:58:02.405Z\n"
+"POT-Creation-Date: 2026-10-02T14:45:26.819Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,102 +14,102 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/render-kg-to-cdn.bpmn:39
+#: processes/process/render-kg-to-cdn.bpmn:39
 #. Diagram label
 msgid "A Knowledge Graph, a root URL, a CDN target"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:48
+#: processes/process/render-kg-to-cdn.bpmn:48
 #. Diagram label
 msgid "A Tool for this target?"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:49
+#: processes/process/render-kg-to-cdn.bpmn:49
 #. Diagram element documentation
 msgid "Answered by the Tool registry: does any Tool satisfy `render-kg-to-cdn` for the named CDN? `no` reports not-pushed and names the missing Tool, rather than guessing a mechanism."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:55
+#: processes/process/render-kg-to-cdn.bpmn:55
 #. Diagram element documentation
 msgid "BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocesses` are what this descends into — for `gh-pages`, bootstrap-tools' render-kg-to-github-pages (make sure gh-pages exists and Pages serves it, stage, check the staging, commit onto gh-pages, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:26
+#: processes/process/render-kg-to-cdn.bpmn:26
 #. Diagram label
 msgid "Build pipeline"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:43
+#: processes/process/render-kg-to-cdn.bpmn:43
 #. Diagram element documentation
 msgid "Every Subgraph id asked for must be one the declaration lists; none means the whole graph. The root URL is the one given. The target's Tool is the one that `satisfies: [\"render-kg-to-cdn\"]` for that CDN — `gh-pages` for GitHub Pages. A caller that already rendered and verified its tree hands the tree over instead of the graph, and the Tool pushes it without rendering again."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:82
+#: processes/process/render-kg-to-cdn.bpmn:82
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:86
+#: processes/process/render-kg-to-cdn.bpmn:86
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:76
+#: processes/process/render-kg-to-cdn.bpmn:76
 #. Diagram label
 msgid "Not pushed, or could not tell; the message says why"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:73
+#: processes/process/render-kg-to-cdn.bpmn:73
 #. Diagram label
 msgid "Pushed; the message says what is live"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:68
+#: processes/process/render-kg-to-cdn.bpmn:68
 #. Diagram element documentation
 msgid "Read off the status just reported. Anything but `pushed` ends at End_NotPushed, and the caller decides what that means for it — an alert, a retry, a person."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:14
+#: processes/process/render-kg-to-cdn.bpmn:14
 #. Diagram element documentation
 msgid "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\". STAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs — who may start it, what is verified first, what else on the host must survive the push — belongs to the CALLER: `feature-staging` and `docs-site-publish` call this and keep their own steps around the call. TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: \"tools can describe their own specific subprocesses if needed to not bog down general skills\". The one call activity names the skill; the Tool for the chosen target satisfies it and lists its own `subprocesses`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' render-kg-to-github-pages. No step here is GitHub's."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:11
+#: processes/process/render-kg-to-cdn.bpmn:11
 #. Diagram label
 msgid "Render a Knowledge Graph to a CDN"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:54
+#: processes/process/render-kg-to-cdn.bpmn:54
 #. Diagram label
 msgid "Render and push with the target's Tool [its own subprocess]"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:60
+#: processes/process/render-kg-to-cdn.bpmn:60
 #. Diagram label
 msgid "Report the push: status and message"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:42
+#: processes/process/render-kg-to-cdn.bpmn:42
 #. Diagram label
 msgid "Resolve the Subgraphs, the root URL and the target's Tool"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:67
+#: processes/process/render-kg-to-cdn.bpmn:67
 #. Diagram label
 msgid "Status is pushed?"
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:61
+#: processes/process/render-kg-to-cdn.bpmn:61
 #. Diagram element documentation
 msgid "The output, on every path: `pushed`, `not-pushed` or `could-not-determine`, and one message — what is live (a commit), at which root URL, and the QA result. From the no-Tool branch the status is `not-pushed` and the message names the target nobody implements. A check that could not look is never reported as pushed."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:27
+#: processes/process/render-kg-to-cdn.bpmn:27
 #. Diagram element documentation
 msgid "Whoever renders: a workflow running the Tool's commands, or an agent running the same ones. A fixed program either way — the judgement about whether to publish was made by the caller before it got here."
 msgstr ""
 
-#: processes/render-kg-to-cdn.bpmn:81
+#: processes/process/render-kg-to-cdn.bpmn:81
 #. Diagram label
 msgid "yes"
 msgstr ""

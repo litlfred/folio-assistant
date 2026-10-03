@@ -32,7 +32,12 @@ describe("a library reference resolves only where its target exists", () => {
   });
 
   it("gives an arXiv item its arXiv record, and invents none for the rest", () => {
-    const arxiv = entries.find((e) => e.id.startsWith("arxiv-"))!;
+    // An item whose metadata RECORDS its arXiv id: `arxiv-0909.4061v2` is
+    // named like one and records none, and it became the first `arxiv-` entry
+    // when the agent-skills corpus joined cat-harness's library (bean `j7ql`).
+    // Its missing record is a data gap for the test below, not this one.
+    const arxiv = entries.find((e) => e.id.startsWith("arxiv-") && itemFacts(join(REPO, e.dir))?.arxiv)!;
+    expect(arxiv, "no library item records an arXiv id").toBeDefined();
     expect(r.links(arxiv.id, arxiv.instance)?.source).toMatch(/^https:\/\/arxiv\.org\/abs\/\d{4}\.\d{4,5}v\d+$/);
     const who = entries.find((e) => /^\d{13}-eng$/.test(e.id));
     if (who) expect(r.links(who.id, who.instance)?.source).toBeUndefined();

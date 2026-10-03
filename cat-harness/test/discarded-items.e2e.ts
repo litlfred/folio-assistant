@@ -109,7 +109,7 @@ async function stub(page: Page, body: unknown | null): Promise<void> {
 /** Open the launcher, then Settings — where the owner put this control. */
 async function openSettings(page: Page): Promise<void> {
   await page.locator(".fa-tiles-toggle").click();
-  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Settings"))').click();
+  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Page settings"))').click();
 }
 
 test.describe("the discarded-items control lives under Settings", () => {

@@ -43,8 +43,9 @@
  * written as a pass.
  *
  * @module scripts/kg-audit
- * @covers processes, scenarios, skills, tools, cat-harness — the graph kinds
- *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto
+ * @covers processes, scenarios, skills, tools, cat-harness, attestations — the graph kinds
+ *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto, plus the
+ *   attestation store it reads and `--check`s (bean `2gst`)
  */
 
 import { createHash } from "node:crypto";
@@ -59,10 +60,20 @@ import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
-import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles, corpusScopeFor } from "./known-skills.js";
+import { kgDirectories, ownKgRoots, workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
-import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
-import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
+import { PAIR_CRITERION, discoverPairs, evaluatePairsFrom, readAttestations, type PairAttestation } from "./prose-code-pairs.js";
+import { VOICE_REVIEW_CRITERION, evaluateVoiceReviewsFrom, readVoiceReviews, skillVoices, type VoiceReview } from "./skill-voice-review.js";
+import {
+  ATTESTATIONS_SUFFIX,
+  attestationPathFor,
+  attestationsHomeFor,
+  KG_QA_SIDECAR_SUFFIX,
+  QA_ATTESTATIONS_SCHEMA,
+  readAttestationFile,
+  serialiseAttestations,
+  type KgAttestations,
+} from "../schemas/qa-attestations.js";
 import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
@@ -75,6 +86,7 @@ import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
   kgQaSidecarPath,
+  partitionBySubjectOwner,
   sweepOrphans,
   type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
@@ -118,10 +130,10 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
-import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
-import { orderedDependencies } from "../schemas/harness-config.js";
+import { checkoutRootFor, orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
@@ -263,9 +275,24 @@ const KG_ROOT = join(root, "skills");
 // graph: that is "no actor registry here", which `readActors` answers with an
 // empty list and the actor criteria then report on. It was the same before the
 // move, when the probed `.claude/skills/actors` simply did not exist.
-const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? "";
+/**
+ * The CHECKOUT the audited instance is staged in — where `package.json`,
+ * `.claude/`, the actor registry and the tracked-file list live, and what every
+ * repo-relative path in a sidecar is relative to (bean `pgzn`).
+ *
+ * NOT `REPO_ROOT`, which is `dirname`. That is right for every instance
+ * nested one level under the repository and wrong for the one declared AT it:
+ * for `--instance .` it climbed out of the checkout, so `rootScripts` threw
+ * `ENOENT …/package.json` before anything was audited — and the other call
+ * sites that asked the same question through `repoRootFor` would have read a
+ * directory above the checkout without saying so. `checkoutRootFor` agrees
+ * with `dirname` for every nested instance and is the root itself for the
+ * root instance; `siblingScopeFor`'s docblock records the same trap.
+ */
+const REPO_ROOT = checkoutRootFor(root);
+const ACTOR_DIR = actorsDir(REPO_ROOT) ?? "";
 // Declared home inside `scenarios` (bean rqao); "" when there is none, as for ACTOR_DIR.
-const CAPABILITY_DIR = capabilitiesDir(repoRootFor(root)) ?? "";
+const CAPABILITY_DIR = capabilitiesDir(REPO_ROOT) ?? "";
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same
 // reasoning as `WORKFLOW_DIR`. A Tool node carries NO path of its own — the
@@ -315,6 +342,18 @@ const INSTANCE_RUN = root !== AUDITOR_ROOT;
  */
 const QA_HOME = kgQaHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefined);
 const KG_QA_TREE = join(QA_HOME.root, "kg-qa");
+
+/**
+ * Where this run's JUDGEMENTS live — pair attestations and voice reviews —
+ * apart from the derived sidecars above (bean `2gst`, owner ruling D2 (a)).
+ * The same own / hosted / convention answer as `QA_HOME`, from the
+ * `attestations` directory; the tree under it mirrors `KG_QA_TREE` exactly.
+ * See `schemas/qa-attestations.ts`.
+ */
+const ATT_HOME = attestationsHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefined);
+const KG_ATT_TREE = join(ATT_HOME.root, "kg-qa");
+/** The declared directory whose absence makes every read `unknown` (never a re-baseline). */
+const ATT_STORE = ATT_HOME.storeRoot;
 
 /**
  * How many criteria this run did not evaluate because they are `repo`-scoped.
@@ -856,7 +895,7 @@ async function auditProcess(
 
   // CONVENTION REFS. The dangling direction only — see the criterion's note
   // in `kg-qa.ts` for why absence is deliberately not a finding.
-  const conventionDir = conventionsDir(repoRootFor(root));
+  const conventionDir = conventionsDir(REPO_ROOT);
   const knownConventions = conventionDir !== undefined && existsSync(conventionDir)
     ? new Set(readdirSync(conventionDir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)))
     : undefined;
@@ -1024,10 +1063,12 @@ function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry>
 async function auditDecisions(
   processes: LoadedProcess[],
 ): Promise<KgQaReport[]> {
-  const decisionDirs = workflowDirs(root, corpusScopeFor(root))
-    .map((d) => join(d, "decisions"))
-    .filter((d) => existsSync(d));
-  if (decisionDirs.length === 0) return [];
+  // Every `.dmn` under a declared processes directory, at ANY depth. Was
+  // `<dir>/decisions/` alone, which placement PR3 (bean `63wl`) outgrew: a
+  // decision now sits beside the diagrams that read it, in
+  // `processes/<group>/decisions/`, and a flat read audited none of them.
+  const decisionFiles = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".dmn"));
+  if (decisionFiles.length === 0) return [];
   const referenced = new Set<string>();
   for (const p of processes) {
     for (const n of p.model?.nodes.values() ?? []) {
@@ -1036,9 +1077,7 @@ async function auditDecisions(
   }
 
   const out: KgQaReport[] = [];
-  for (const abs of decisionDirs
-    .flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".dmn")).map((f) => join(d, f)))
-    .sort()) {
+  for (const abs of [...decisionFiles].sort()) {
     const f = basename(abs);
     const rel = relative(root, abs);
     const hash = sha256(readFileSync(abs, "utf-8"));
@@ -1291,8 +1330,15 @@ function auditTools(instance?: string): KgQaReport[] {
   const alternatives = deriveAlternatives(instance === undefined ? tools() : toolsOf(instance));
   const unreadable = new Set(check.unreadableContracts);
 
+  // SUBJECTS are this instance's own Tools, on every run. The CHECKS above
+  // still read the whole checkout on the default run, because a Tool here may
+  // name one there — resolution widens, coverage does not (`satisfiableSkills`
+  // in `check-tools.ts`, ruling `pve3`). Until 2026-10-01 the default run
+  // iterated `tools()`, so it wrote 29 sidecars about Tools that fhir-harness
+  // (19), folio-assistant-core (4) and smart-base (6) declare and audit
+  // themselves — a second copy of each verdict, free to drift (Q-A PR 4).
   const out: KgQaReport[] = [];
-  for (const t of instance === undefined ? tools() : toolsOf(instance)) {
+  for (const t of toolsOf(instance ?? root)) {
     const f = (rows: { detail: string }[] | undefined): KgFinding[] =>
       (rows ?? []).map((r) => ({ where: t.id, detail: r.detail }));
 
@@ -1663,7 +1709,7 @@ function arrowDirection(): KgCriterionEntry {
  * undetermined (an output, a folio's file, an example) and never a finding.
  */
 function proseNamesResolve(): KgCriterionEntry {
-  const repo = repoRootFor(root);
+  const repo = REPO_ROOT;
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
@@ -1910,9 +1956,9 @@ function localHarnessSkills(): Set<string> {
   // The `.md` bodies stay in the agent harness's `.claude/skills/local/`; the
   // JSON definitions moved by theme into each owner's `skill-definitions/`
   // (bean `rqao`).
-  const dir = join(repoRootFor(root), ".claude", "skills", "local");
+  const dir = join(REPO_ROOT, ".claude", "skills", "local");
   if (existsSync(dir)) for (const f of readdirSync(dir)) if (f.endsWith(".md")) out.add(f.slice(0, -3));
-  for (const d of skillDefinitionDirs(repoRootFor(root))) {
+  for (const d of skillDefinitionDirs(REPO_ROOT)) {
     for (const f of readdirSync(d)) if (f.endsWith(".json")) out.add(f.slice(0, -5));
   }
   return out;
@@ -1944,7 +1990,7 @@ function manifestEntries(): { pkg: string; skill: string }[] {
  * reader-facing fields only — a Jekyll data file, not an instance.
  */
 function unreadNestedInstances(): KgFinding[] {
-  const repo = repoRootFor(root);
+  const repo = REPO_ROOT;
   const out: KgFinding[] = [];
   const walk = (dir: string, depth: number): void => {
     if (depth > 3) return;
@@ -2343,6 +2389,11 @@ function sidecarPath(r: KgQaReport): string {
   return kgQaSidecarPath(root, dir, name, KG_QA_TREE);
 }
 
+/** The attestation store file for a report: its sidecar's mirror under `KG_ATT_TREE`. */
+function attestationPath(r: KgQaReport): string {
+  return attestationPathFor(sidecarPath(r), KG_QA_TREE, ATT_HOME.root, "kg-qa", KG_QA_SIDECAR_SUFFIX);
+}
+
 function serialise(r: KgQaReport): string {
   return `${JSON.stringify(r, null, 2)}\n`;
 }
@@ -2353,6 +2404,17 @@ const args = process.argv.slice(2);
 const check = args.includes("--check");
 const strict = args.includes("--strict");
 const asJson = args.includes("--json");
+/**
+ * Create the attestation store (the declared `attestations` directory) when it
+ * is absent. Without it every read is `unknown` and NOTHING is baselined: re-baselining over a
+ * store that is missing is exactly how C4 lost the drift it recorded, so
+ * starting a store is an explicit act, never a side effect.
+ */
+const initAttestations = args.includes("--init-attestations");
+if (initAttestations && check) {
+  console.error("--init-attestations starts a store; --check writes nothing. Run them separately.");
+  process.exit(2);
+}
 
 const auditorHash = sha256(readFileSync(join(AUDITOR_ROOT, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root, corpusScopeFor(root));
@@ -2374,9 +2436,11 @@ const skills = knownSkills(root, corpusScopeFor(root));
  * correct.
  *
  * The auditor's own run already knew: `test/results/kg-qa/_external/smart-base/`
- * records `skill-ref-resolves` **pass (0)** for that same diagram, because from
+ * recorded `skill-ref-resolves` **pass (0)** for that same diagram, because from
  * here the skill is local. So the two runs disagreed about one file, and the
- * instance-scoped one was wrong.
+ * instance-scoped one was wrong. (That `_external/` copy was itself the
+ * defect's enabler — two verdicts about one subject — and was deleted with the
+ * other seven on 2026-10-01, Q-A PR 4; the owner's run now holds the only one.)
  *
  * ## This is the FIFTH cross-instance defect, and the only DOWNWARD one
  *
@@ -2598,6 +2662,33 @@ reports.push(...auditSkills());
 reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
 reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
 
+/**
+ * Drop every subject ANOTHER instance owns — it audits that subject itself.
+ *
+ * The default run walks the CHECKOUT (`corpusScopeFor`), so it loads
+ * smart-base's, large-datasets' and folio-assistant-core's diagrams beside its
+ * own. Loading them is right: a call activity here may name one, and the
+ * graph-level criteria need the whole corpus. Writing a VERDICT about them is
+ * not — each owner's `kg:audit:all` run already writes one under its own
+ * `test/results/kg-qa/`, and until 2026-10-01 this run wrote a second under
+ * `_external/`. Eight duplicates, deleted with the owner's confirmation
+ * (Q-A PR 4, epic `7x5n`); `kgQaSidecarPath` now refuses the path, so this
+ * filter is what keeps the run from throwing rather than a courtesy.
+ *
+ * A subject outside this instance that NO checkout instance owns is refused
+ * loudly: dropping it would be a clean run over nothing (`dh4f`), and giving
+ * it a path is what `_external/` was.
+ */
+const ownership = partitionBySubjectOwner(reports, root, instanceRootsIn(checkoutRootFor(root)));
+if (ownership.unowned.length > 0) {
+  console.error(`${ownership.unowned.length} subject(s) lie outside ${root} and no instance in the checkout owns them:`);
+  for (const r of ownership.unowned) console.error(`  · ${r.subject.kind}:${r.subject.id}  ${r.subject.path}`);
+  console.error("This is NOT a pass. Nothing was written; declare the owning instance, or stop discovering the subject.");
+  process.exit(2);
+}
+reports.splice(0, reports.length, ...ownership.kept);
+const ownerAudited = ownership.skipped.length;
+
 // Write or compare.
 //
 // THE MANIFEST IS ONE FILE, AND THAT IS THE POINT. The auditor's hash used to
@@ -2703,42 +2794,67 @@ if (!check) {
   const moved = relocateSidecars(root, targets);
   for (const m of moved) {
     console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+    // The judgement follows its subject the same way, under the same three
+    // conditions `relocateSidecars` already checked — and only onto a vacant path.
+    const from = attestationPathFor(join(root, m.from), KG_QA_TREE, ATT_HOME.root, "kg-qa", KG_QA_SIDECAR_SUFFIX);
+    const to = attestationPathFor(join(root, m.to), KG_QA_TREE, ATT_HOME.root, "kg-qa", KG_QA_SIDECAR_SUFFIX);
+    if (existsSync(from) && !existsSync(to)) {
+      mkdirSync(dirname(to), { recursive: true });
+      renameSync(from, to);
+      console.log(`  → moved ${relative(root, from)}\n      to ${relative(root, to)}  (its attestations)`);
+    }
   }
 }
+if (initAttestations && !check && !existsSync(ATT_STORE)) {
+  mkdirSync(ATT_STORE, { recursive: true });
+  console.log(`  → started the attestation store at ${relative(root, ATT_STORE)} — declare it as an \`attestations\` directory`);
+}
+
+/**
+ * The judgements this run carries forward, per report. `undefined` for a half
+ * means its store could not be read (`corrupt` / `unknown`), and then NOTHING
+ * is written for that subject — a write would replace a judgement nobody read.
+ */
+const judgements = new Map<KgQaReport, { pairs: PairAttestation[] | undefined; reviews: VoiceReview[] | undefined }>();
+const judgementsOf = (r: KgQaReport) =>
+  judgements.get(r) ?? judgements.set(r, { pairs: [], reviews: [] }).get(r)!;
 
 // ── Declared prose ↔ code pairs (bean `cuxx`, issue #1042).
 //
 // Evaluated here rather than inside auditProcess/auditSkills because it is the
-// one criterion that READS the previous sidecar: its baseline is carried across
-// runs, the way a block-qa reviewer entry is. Done before the write loop so
-// `--check` regenerates the same text the writer would.
+// one criterion that READS a prior judgement: its baseline is carried across
+// runs, the way a block-qa reviewer entry is. The prior comes from the
+// attestation STORE, not the sidecar (bean `2gst`): a sidecar is derived and
+// leaves main, and an absent one used to re-baseline every pair (C4, 13 → 0).
+// Done before the write loop so `--check` regenerates the same text the writer would.
 {
-  const repoRoot = resolve(root, "..");
+  // `REPO_ROOT`, not `resolve(root, "..")` — see its declaration (bean `pgzn`).
+  const repoRoot = REPO_ROOT;
   const scripts = rootScripts(repoRoot);
   for (const r of reports) {
     if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
     const pairs = discoverPairs(r.subject, root, repoRoot);
-    const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
+    const { entry: e, attestations } = evaluatePairsFrom(pairs, readAttestations(attestationPath(r), ATT_STORE), repoRoot);
     r.criteria[PAIR_CRITERION] = e;
     // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
     r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
     r.totals = tally(r.criteria);
-    if (attestations.length) r.pair_attestations = attestations;
+    judgementsOf(r).pairs = attestations;
   }
 }
 
 // ── Skills reviewed against the voices that judge skills (bean `rkqp`).
 //
-// The same shape as the pairs above: it READS the previous sidecar, because a
+// The same shape as the pairs above: it READS the attestation store, because a
 // review is carried across runs, so it runs before the write loop too.
 {
   const voices = skillVoices(resolve(root, ".."));
   for (const r of reports) {
     if (r.subject.kind !== "skill" || !r.subject.path) continue;
-    const { entry: e, reviews } = evaluateVoiceReviews(join(root, r.subject.path), readVoiceReviews(sidecarPath(r)), voices);
+    const { entry: e, reviews } = evaluateVoiceReviewsFrom(join(root, r.subject.path), readVoiceReviews(attestationPath(r), ATT_STORE), voices);
     r.criteria[VOICE_REVIEW_CRITERION] = e;
     r.totals = tally(r.criteria);
-    if (reviews.length) r.voice_reviews = reviews;
+    judgementsOf(r).reviews = reviews;
   }
 }
 
@@ -2754,6 +2870,64 @@ for (const r of reports) {
     mkdirSync(join(p, ".."), { recursive: true });
     writeFileSync(p, text);
   }
+}
+
+// ── The judgements, to the attestation store (bean `2gst`).
+//
+// Written only where both halves were read (hit or miss). A subject whose
+// computed set is EMPTY while a file exists is left as it is and reported:
+// emptying it would delete judgements, and that is a person's call.
+const attWritten = new Set<string>();
+const attKept: string[] = [];
+for (const r of reports) {
+  const p = attestationPath(r);
+  attWritten.add(resolve(p));
+  const j = judgements.get(r);
+  if (j === undefined || j.pairs === undefined || j.reviews === undefined) continue;
+  const file: KgAttestations = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject: r.subject };
+  if (j.pairs.length) file.pair_attestations = j.pairs;
+  if (j.reviews.length) file.voice_reviews = j.reviews;
+  if (!file.pair_attestations && !file.voice_reviews) {
+    if (existsSync(p)) attKept.push(relative(root, p));
+    continue;
+  }
+  const text = serialiseAttestations(file);
+  if (check) {
+    const current = existsSync(p) ? readFileSync(p, "utf-8") : undefined;
+    if (current !== text) stale.push(relative(root, p));
+  } else {
+    mkdirSync(join(p, ".."), { recursive: true });
+    writeFileSync(p, text);
+  }
+}
+if (attKept.length > 0) {
+  console.error(`\n  ${attKept.length} attestation file(s) left untouched: their subject declares no pair or review now.`);
+  for (const k of attKept) console.error(`    ${k}`);
+  console.error("    Kept, never emptied — removing a judgement is a person's call.");
+}
+
+/** Attestation files no report accounts for — the store's half of the orphan sweep below. */
+function attestationOrphans(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (e.name.endsWith(ATTESTATIONS_SUFFIX) && !attWritten.has(resolve(abs))) out.push(relative(root, abs));
+    }
+  };
+  walk(KG_ATT_TREE);
+  return out.sort();
+}
+const attOrphans = attestationOrphans();
+if (attOrphans.length > 0) {
+  console.error(`\n\u2717 ${attOrphans.length} attestation file(s) judge a subject no report covers:`);
+  for (const o of attOrphans) {
+    const read = readAttestationFile(join(root, o), ATT_STORE);
+    console.error(`    ${o}${read.state === "hit" ? "" : `  (${read.state})`}`);
+  }
+  console.error("  Reported, never deleted — `deletion-requires-confirmation`. It fails `kg:audit:check`.");
 }
 
 // ── A SIDECAR NO REPORT ACCOUNTS FOR.
@@ -2830,6 +3004,11 @@ if (asJson) {
 
   console.log(`Knowledge-graph audit  (${reports.length} subjects, ${skills.size} skills, ${graph?.roles.length ?? 0} roles)\n`);
   console.log(`  pass ${counts.pass}   fail ${counts.fail}   n/a ${counts["n/a"]}   unknown ${counts.unknown}\n`);
+  // Said, not silent: a subject left to its owner is still a subject this run
+  // saw, and a reader comparing counts across runs needs the difference named.
+  if (ownerAudited > 0) {
+    console.log(`  ${ownerAudited} subject(s) another instance owns were left to that instance's own audit.\n`);
+  }
   // The scope line, printed only when it has something to say. A run at the
   // auditor's own root suppresses nothing, so a `0 suppressed` line there would
   // be noise; an instance run states the number and where to read the argument,
@@ -2910,6 +3089,6 @@ if (check) {
   //   · Only `--check` gates. Bare `kg:audit` is the WRITER and still exits 0,
   //     or regenerating after a rename would fail the very command you run to
   //     fix it.
-  process.exit(stale.length || tripped || orphans.length > 0 ? 1 : 0);
+  process.exit(stale.length || tripped || orphans.length > 0 || attOrphans.length > 0 ? 1 : 0);
 }
 process.exit(0);

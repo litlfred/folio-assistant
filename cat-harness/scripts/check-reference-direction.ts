@@ -457,7 +457,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/external-schemas.ts", names: 3 },
   { file: "cat-harness/docs/methodologies/index.md", names: 2 },
   { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md", names: 2 },
-  { file: "cat-harness/schemas/dak.ts", names: 2 },
+  { file: "smart-base/schemas/dak.ts", names: 2 },
   { file: "cat-harness/schemas/namespaces.ts", names: 2 },
   { file: "cat-harness/scripts/kg-export.ts", names: 2 },
   { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },

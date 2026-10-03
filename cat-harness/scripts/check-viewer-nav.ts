@@ -141,6 +141,152 @@ export function layoutFlags(html: string): ViewerNavFlag[] {
   if (nav.includes('class="fa-nav-close"') || nav.includes("&#9776;") || nav.includes("☰") || burger) {
     flags.push("no-redundant-toggle");
   }
+
+  const css = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]!).join("\n");
+  if (untippedControls(nav).length > 0 || (needsTips(nav) && !paintsTips(css, ".fa-nav"))) {
+    flags.push("rail-tips");
+  }
+  const harnesses = summaries.some((m) => m[2] === "Harnesses");
+  if (!harnesses || hidesSummaryAtRest(css)) flags.push("harnesses-at-rest");
+  return flags;
+}
+
+/* ── THE TWO FLAGS FROM bean `ob3m` FINDING 1 ─────────────────────────────
+ *
+ * Owner's ruling, 2026-10-01, option 1 of 4: *"Make ▦ Harnesses visible on
+ * the landing page too, and show each icon's name as a tooltip on hover or
+ * keyboard focus."* Both are read off what the reader is SERVED — the rail's
+ * markup and the stylesheet the page carries — for the reason `layoutFlags`
+ * gives. `stripFlags` below asks the same two questions of the docs site's
+ * strip, which a script builds and so has no markup to read. */
+
+/** Text a sighted reader sees in a control: no screen-reader-only span, nothing aria-hidden, no tags. */
+function visibleText(inner: string): string {
+  return inner
+    .replace(/<span class="fa-nav-sr"[^>]*>[\s\S]*?<\/span>/g, "")
+    .replace(/<(span|div)\b[^>]*aria-hidden="true"[^>]*>[\s\S]*?<\/\1>/g, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&[a-z]+;|&#\d+;/gi, "")
+    .trim();
+}
+
+/**
+ * An ICON-ONLY control: named by `aria-label` and showing no word. A row with
+ * a `.fa-nav-label` is not one — hover and keyboard focus open the rail and
+ * the label then reads beside the mark, which is the name where the reader
+ * is looking. A letter anywhere in the visible text is a word.
+ */
+function iconOnly(attrs: string, inner: string): boolean {
+  if (/class="fa-nav-label"/.test(inner)) return false;
+  return !/\p{L}/u.test(visibleText(inner));
+}
+
+/** Every `<a>`, `<button>` and `<label>` in the rail, as attributes and inner HTML. */
+function controls(nav: string): { attrs: string; inner: string }[] {
+  return [...nav.matchAll(/<(a|button|label)\b([^>]*)>([\s\S]*?)<\/\1>/g)].map((m) => ({
+    attrs: m[2]!,
+    inner: m[3]!,
+  }));
+}
+
+const attr = (attrs: string, name: string): string | undefined =>
+  new RegExp(`\\b${name}="([^"]*)"`).exec(attrs)?.[1];
+
+/**
+ * The icon-only controls with no tooltip, or with one that says something
+ * other than the control's name. Exported for the test.
+ *
+ * EQUAL TO `aria-label`, not merely present: a tooltip that says one thing
+ * while a screen reader hears another is two names for one control, and the
+ * one a sighted keyboard user reads is then not the one their reader speaks.
+ */
+export function untippedControls(nav: string): string[] {
+  const out: string[] = [];
+  for (const c of controls(nav)) {
+    if (!iconOnly(c.attrs, c.inner)) continue;
+    const name = attr(c.attrs, "aria-label") ?? visibleText(c.inner.replace(/class="fa-nav-sr"/g, ""));
+    const tip = attr(c.attrs, "data-fa-tip");
+    if (tip === undefined || tip !== name) out.push(name || c.attrs.trim());
+  }
+  return out;
+}
+
+const needsTips = (nav: string): boolean => controls(nav).some((c) => iconOnly(c.attrs, c.inner));
+
+/** `selector { body }` pairs with comments stripped — a comment carries braces. */
+function cssRules(css: string): { sel: string; body: string }[] {
+  const s = css.replace(/\/\*[\s\S]*?\*\//g, " ");
+  return [...s.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((m) => ({ sel: m[1]!.trim(), body: m[2]! }));
+}
+
+/**
+ * Does the stylesheet SHOW `[data-fa-tip]` on hover AND on keyboard focus,
+ * inside `scope`? Both, because the ruling names both, and `:focus` rather
+ * than `:focus-visible` would show it on a mouse click too — not a failure, so
+ * either spelling of focus passes.
+ */
+export function paintsTips(css: string, scope: string): boolean {
+  const shown = cssRules(css).filter((r) => /visibility:\s*visible/.test(r.body) || /opacity:\s*1\b/.test(r.body));
+  const has = (state: RegExp): boolean =>
+    shown.some((r) =>
+      r.sel.split(",").some((s) => s.includes(scope) && state.test(s) && /\[data-fa-tip\][^,]*::after/.test(s)),
+    );
+  return has(/\[data-fa-tip\]:hover::after/) && has(/\[data-fa-tip\]:focus(?:-visible)?::after/);
+}
+
+/**
+ * Does a rule hide the disclosure's SUMMARY with no state attached — that is,
+ * at rest? A selector conditioned on hover, focus, the pinned box or `[open]`
+ * is a statement about another state; a pseudo-element (`::marker`, the
+ * WebKit marker) is not the summary.
+ */
+export function hidesSummaryAtRest(css: string): boolean {
+  const hides = /(?:^|;)\s*(?:opacity:\s*0(?![.\d])|display:\s*none|visibility:\s*hidden|max-height:\s*0(?![.\d]))/;
+  return cssRules(css).some(
+    (r) =>
+      hides.test(r.body) &&
+      r.sel
+        .split(",")
+        .some((s) => /fa-nav-group\s*>\s*summary(?![\w-])/.test(s) && !/::|:hover|:focus|:checked|\[open\]|:has\(/.test(s)),
+  );
+}
+
+/**
+ * The same two questions of the DOCS SITE's strip, which `docs-ui.js` builds
+ * at load and so has no markup a page walk can read. Asked of the two files
+ * that make it instead:
+ *
+ * - `rail-tips` — every control `mountNavIconRow` creates carries
+ *   `data-fa-tip`, and `docs-ui.css` paints it on hover and on focus;
+ * - `harnesses-at-rest` — the bottom disclosure's summary is declared
+ *   visible at rest. The rest state there is a FLAG (`--fa-nav-text`) the
+ *   generic lists scale everything by, so "hidden" is not a literal `0` this
+ *   could grep for; what is checked is the override that undoes it. The
+ *   rendered proof is `rail-tips.e2e.ts`, which measures it in a browser.
+ */
+export function stripFlags(js: string, css: string): ViewerNavFlag[] {
+  const flags: ViewerNavFlag[] = [];
+  const at = js.indexOf("function mountNavIconRow(");
+  const body = at < 0 ? "" : js.slice(at, js.indexOf("\n  function ", at + 10));
+  const built = [...body.matchAll(/el\("(?:a|button|span)",\s*\{([\s\S]*?)\}\)/g)]
+    .map((m) => m[1]!)
+    .filter((o) => /class:\s*"fa-nav-icon\b/.test(o));
+  // The light/dark switch is NAMED BY A PAINTER (its name changes with the
+  // scheme), so its tooltip is written where its `aria-label` is, not at
+  // creation. Accepted only when that painter writes both.
+  const switchVar = /var (\w+) = el\("button",\s*\{[^}]*fa-nav-scheme/.exec(body)?.[1];
+  const paintsTip = switchVar !== undefined && body.includes(`${switchVar}.setAttribute("data-fa-tip"`);
+  const untipped = built.filter((o) => !/"data-fa-tip":/.test(o) && !(/fa-nav-scheme/.test(o) && paintsTip));
+  if (at < 0 || built.length === 0 || untipped.length > 0 || !paintsTips(css, ".side-bar")) {
+    flags.push("rail-tips");
+  }
+  const shown = cssRules(css).some(
+    (r) =>
+      r.sel.split(",").some((s) => /\.fa-nav-bottom\s*>\s*\.fa-nav-group\s*>\s*summary\s*$/.test(s.trim())) &&
+      /opacity:\s*1\b/.test(r.body) &&
+      /max-height:\s*none/.test(r.body),
+  );
+  if (!shown) flags.push("harnesses-at-rest");
   return flags;
 }
 
@@ -298,6 +444,18 @@ if (import.meta.main) {
       console.error(`  ✗ ${p.path} — ${p.reason} (${p.source})`);
       failed++;
     }
+  }
+
+  // THE DOCS SITE'S STRIP, which no page walk can see. Failed in every mode
+  // that grades: it is clean on the day this lands, so a flag here is always
+  // the author of the diff, which is the gate's own test for a regression.
+  const strip = stripFlags(
+    readFileSync(join(DOCS, "assets", "js", "docs-ui.js"), "utf-8"),
+    readFileSync(join(DOCS, "assets", "css", "docs-ui.css"), "utf-8"),
+  );
+  for (const f of strip) {
+    console.error(`  ✗ the docs site's sidebar strip fails ${f} (docs-ui.js / docs-ui.css)`);
+    if (check || strict) failed++;
   }
 
   console.log(

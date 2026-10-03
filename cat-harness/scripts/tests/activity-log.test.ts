@@ -21,6 +21,7 @@ import {
 } from "../../schemas/log-entry.ts";
 import { buildExport } from "../kg-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { fshGutsDirectory } from "../../schemas/fsh-guts.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -140,7 +141,7 @@ describe("persistence is off by default in the repository too", () => {
     // COMMITTED rather than ignored wholesale; `retired/` witnesses it just as
     // well and is the population that is actually retired material, which
     // `proposals/` never was.
-    expect(existsSync(join(repoRootFor(ROOT), "fsh-guts/retired"))).toBe(true);
+    expect(existsSync(join(fshGutsDirectory(repoRootFor(ROOT)), "retired"))).toBe(true);
   });
 });
 

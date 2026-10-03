@@ -17,19 +17,22 @@
  */
 
 import { describe, expect, test } from "bun:test";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { evaluate, loadDecisionTable, possibleOutcomes } from "../../src/workflow/decision-table.js";
 import { loadProcessModel } from "../../src/workflow/process-model.js";
 import { classify, scanRepo } from "../scan-repo-content.js";
 import { derivePagesUrl, outcomeFor, parseRemote, type PagesOutcome } from "../pages-bootstrap.js";
+import { workflowFile } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
-const WORKFLOWS = join(INSTANCE_ROOT, "processes");
 
 describe("folio-intent.dmn — five requests, one sentence", () => {
   const load = () =>
-    loadDecisionTable(join(WORKFLOWS, "decisions", "folio-intent.dmn"), "Decision_FolioIntent");
+    loadDecisionTable(workflowFile(HARNESS, "folio-intent.dmn"), "Decision_FolioIntent");
 
   test("a bare non-folio directory is the ONE state that answers itself", async () => {
     const t = await load();
@@ -68,7 +71,7 @@ describe("folio-intent.dmn — five requests, one sentence", () => {
 
   test("every outcome the table can return names a real branch of the gateway", async () => {
     const t = await load();
-    const model = await loadProcessModel(join(WORKFLOWS, "getting-started.bpmn"));
+    const model = await loadProcessModel(workflowFile(HARNESS, "getting-started.bpmn"));
     const gateway = model.nodes.get("Gateway_Intent");
     expect(gateway).toBeDefined();
     const branches = gateway!.outgoing.map((f) => model.flows.get(f)!.name);
@@ -80,7 +83,7 @@ describe("folio-intent.dmn — five requests, one sentence", () => {
 
 describe("pages-live-gate.dmn — 'could not check' is not 'not yet'", () => {
   const load = () =>
-    loadDecisionTable(join(WORKFLOWS, "decisions", "pages-live-gate.dmn"), "Decision_PagesLive");
+    loadDecisionTable(workflowFile(HARNESS, "pages-live-gate.dmn"), "Decision_PagesLive");
 
   test("a measured 404 is `not-yet`; a failed request is `unknown`", async () => {
     const t = await load();

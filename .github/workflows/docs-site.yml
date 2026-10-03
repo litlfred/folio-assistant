@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/docs-site-publish.bpmn
+# bpmn: cat-harness/processes/sdlc/docs-site-publish.bpmn
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
@@ -29,6 +29,12 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
+      # The identifier lookup this workflow publishes (bean `1br0`): the
+      # script, its client, and each instance's generated index — a changed
+      # index must redeploy, or the search box links to a stale one.
+      - 'cat-harness-tools/scripts/**'
+      - 'cat-harness-tools/id-lookup/**'
+      - '*/id-lookup/**'
       # EVERY script under here, not the handful somebody remembered.
       #
       # This list was eight named scripts, each added with a comment arguing
@@ -215,34 +221,10 @@ jobs:
       # The BPMN sources under processes/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
       # Chromium, so the published site can never show a stale diagram.
-      # Bean `2i5k`: bpmn-js's raw drawing of each diagram, kept per diagram
-      # under a key covering everything the drawing is a function of (see
-      # `render-bpmn.ts`). The actions key below only decides WHICH directory
-      # comes back; correctness rests on the per-diagram key inside it, so a
-      # partial restore is safe and a stale entry is never read.
-      - name: Restore the BPMN render cache
-        id: bpmn-cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ runner.temp }}/bpmn-render-cache
-          key: bpmn-render-${{ hashFiles('**/*.bpmn', '!**/node_modules/**', 'bootstrap-tools/scripts/render-bpmn.ts', 'bun.lock') }}
-          restore-keys: bpmn-render-
-
       - name: Render BPMN workflow diagrams
-        env:
-          BPMN_RENDER_CACHE: ${{ runner.temp }}/bpmn-render-cache
-          EXACT_HIT: ${{ steps.bpmn-cache.outputs.cache-hit }}
         run: |
-          # On an exact cache hit every diagram is already drawn, so no browser
-          # is launched and the Chromium install is skipped. If anything
-          # still needs drawing, install and
-          # render — the cache only ever removes work, never a diagram.
-          log="$RUNNER_TEMP/render-bpmn.log"
-          if [ "$EXACT_HIT" != "true" ] || ! bun run render:bpmn > "$log" 2>&1; then
-            npx --yes playwright install --with-deps chromium
-            bun run render:bpmn > "$log" 2>&1 || { cat "$log"; exit 1; }
-          fi
-          cat "$log"
+          npx --yes playwright install --with-deps chromium
+          bun run render:bpmn
 
       # Stamp the build so a reader can tell WHAT IS DEPLOYED from the page
       # itself. Without it the only way to know whether a change is live is to
@@ -452,6 +434,17 @@ jobs:
           #
           # `.json` alias for the same reason as every document above: Pages
           # serves `.jsonld` as octet-stream. The `.jsonld` stays canonical.
+          # The CHECKOUT ROOT instance's own graph (bean `l4ay`). It declares
+          # the checkout-level subgraphs — `todos`, `beans`, `fsh-guts`, … —
+          # and `todos.jsonld` is published AS its declared `todos` Subgraph
+          # node (`<base>/folio-assistant/folio-assistant.jsonld#directory/todos`,
+          # `subgraph-node.ts`). Publishing the document is what makes that
+          # `@id` dereference rather than name a node nothing serves.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
+
           bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
@@ -661,6 +654,22 @@ jobs:
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
 
+      # The identifier lookup (bean `1br0`, issue #1972 step 3): its client page
+      # and each instance's generated index, copied into the built tree — never
+      # into the Jekyll source, which the client says it must not sit under.
+      # BEFORE the split, which names every lookup it finds as a `remote` entry
+      # the search box links to.
+      - name: Publish the identifier lookup
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+
+      # One search index per scope — each instance, each target locale, the
+      # platform — cut from the index Jekyll just wrote, plus the manifest a
+      # page reads to load only its own (issue #1972, bean `m7mn`). Before the
+      # verify step, whose `search-scopes` verifier checks the split matches
+      # THIS index and partitions it exactly.
+      - name: Split the search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
+
       # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure
       # triggers an alert to the publisher manager ... before deployment".
@@ -672,8 +681,47 @@ jobs:
         id: verify
         run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
 
+      # MINIFY LAST, and it is a POST-BUILD PASS rather than a Jekyll plugin
+      # on purpose. CI builds with `actions/jekyll-build-pages@v1` -- the
+      # `github-pages` gem set and its plugin allow-list -- so
+      # `jekyll-minifier` would mean a plain `bundle exec jekyll build`, which
+      # also un-pins the `remote_theme` that `_config.yml` lines 10-45 argue
+      # must only move through `upstream-version-adoption`. Nothing has to
+      # move: this job already post-processes the emitted tree
+      # (`set-html-lang`, `rail-standalone-pages`), so one more pass over
+      # `_site` couples to no gem, no theme file and no config.
+      #
+      # It runs AFTER every check and rewrite above, and the ordering is the
+      # correctness argument rather than tidiness: `check:escaped-markup`,
+      # `check:maintained-artefacts`, `site-links` and `publish-verify` all
+      # read this HTML, and `staging-banner`/`folio-mount` decide whether a
+      # marker is live by asking whether it sits inside a COMMENT (bean
+      # `ur84`). Minifying before any of them would silently change what they
+      # judge. Measured on the published main site: 9.4% of its 614 MiB of
+      # HTML is comments, 10.3% once the unrendered inter-tag whitespace goes,
+      # and ~22% of gzipped transfer.
+      #
+      # Mirrored in `feature-staging.yml`, which `check:invocation-parity`
+      # requires -- a preview must carry the deploy's passes or it is not a
+      # preview of what ships.
+      - name: Minify the built pages
+        run: bun run cat-harness/scripts/minify-site.ts --site ./_site
+
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
+
+      # ONE file carries the build's moment, read by the work-plan dashboard
+      # at load time to say "generated … · N commits behind main". Not a page
+      # and not committed: `_data/build.yml` already varies per run for the
+      # footer, and this is the same three facts as JSON for a page Jekyll
+      # never renders (the generated visualisers are copied verbatim).
+      - name: Write the build stamp for client-side readers
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          printf '{\n  "sha": "%s",\n  "built": "%s",\n  "runUrl": "%s"\n}\n' \
+            "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$RUN_URL" > ./_site/build.json
+          cat ./_site/build.json
 
       # CARRY THE OPEN PRs' REVIEW PREVIEWS ACROSS THIS DEPLOY — bean `plj1`.
       #

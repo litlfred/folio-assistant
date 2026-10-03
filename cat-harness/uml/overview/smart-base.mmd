@@ -13,12 +13,43 @@ classDiagram
       images [1] object[] | null
       undetermined_reason [0..1] string
     }
+    class smart_base_library_folio_image_verdicts_v1["folio-image-verdicts/v1"] {
+      <<ts: VerdictFile>>
+      inspected_by [1] unknown
+      inspected_at [1] string
+      attribution [0..1] Record~string,  inspected_by: unknown; inspected_at: string ~
+      verdicts [1] Record~string, Record~string, Verdict~~
+    }
     class smart_base_library_folio_vector_labels_v1_folio_vector_labels_v1["folio-vector-labels/v1"] {
       <<json: VectorLabelsSidecarSchema>>
       $schema [1] 'folio-vector-labels/v1'
       doc_id [1] string
       pages [1] object[] | null
       undetermined_reason [0..1] string
+    }
+    class smart_base_library_folio_vector_figures_v1_folio_vector_figures_v1["folio-vector-figures/v1"] {
+      <<json: VectorFiguresSidecarSchema>>
+      $schema [1] 'folio-vector-figures/v1'
+      doc_id [1] string
+      figures [1] object[] | null
+      undetermined_reason [0..1] string
+    }
+    class smart_base_library_folio_referenced_source_v1_Outline["Outline"] {
+      <<json: ReferencedSourceSchema>>
+      level [1] integer
+      title [1] string
+      page [1] integer | null
+    }
+    class smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1["folio-referenced-source/v1"] {
+      <<json: ReferencedSourceSchema>>
+      $schema [1] 'folio-referenced-source/v1'
+      identity [1] object
+      source [1] object
+      outline [0..*] Outline[]
+      outline_source [1] embedded | none
+      materialization [1] object
+      withheld [1] object
+      links [0..*] object[]
     }
   }
   namespace smart_base__methodologies {
@@ -81,20 +112,20 @@ classDiagram
     }
   }
   namespace smart_base__smart_base_artifact_index {
-    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Context["Context"] {
+    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Context["Context"] {
       <<json: FhirArtifactIndexSchema>>
       id [1] string
       representation [1] object
       binds [0..*] string[]
     }
-    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_DakUnbound["DakUnbound"] {
+    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound["SidecarsUnbound"] {
       <<json: FhirArtifactIndexSchema>>
       filename [1] string
       title [0..1] string
       enumeration [1] string
       reason [1] string
     }
-    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Artifact["Artifact"] {
+    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Artifact["Artifact"] {
       <<json: FhirArtifactIndexSchema>>
       $schema [0..1] 'folio-fhir-artifact/v1'
       key [1] string
@@ -106,13 +137,14 @@ classDiagram
       canonical [0..1] string
       version [0..1] string
       category [0..1] string
+      listedAt [0..1] integer
       published [1] object
-      dak [0..1] object
+      sidecars [0..1] object
       materialization [1] object
     }
-    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1["folio-fhir-artifact-index/v1"] {
+    class smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2["folio-fhir-artifact-index/v2"] {
       <<json: FhirArtifactIndexSchema>>
-      $schema [1] 'folio-fhir-artifact-index/v1'
+      $schema [1] 'folio-fhir-artifact-index/v2'
       id [1] string
       title [1] string
       packageId [0..1] string
@@ -122,67 +154,58 @@ classDiagram
       builtAt [0..1] string
       source [1] object
       provenance [1] object
-      dakApi [1] unknown | absent | present
+      sidecarApi [1] unknown | absent | present
       contexts [0..*] Context[]
-      dakUnbound [0..*] DakUnbound[]
+      igApiHub [0..1] object
+      package [0..1] object
+      sidecarsUnbound [0..*] SidecarsUnbound[]
       count [1] integer
       artifacts [0..*] Artifact[]
     }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Layer["Layer"] {
-      <<json: IgChromeSchema>>
-      package [1] string
-      version [1] string
-      of [1] string~uri~
-      ref [1] string
-      path [1] string
-      readAt [1] string
+    class smart_base_smart_base_artifact_index_folio_ig_menu_v1_Item["Item"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [1] string
     }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Override["Override"] {
-      <<json: IgChromeSchema>>
-      package [1] string
-      value [1] string
+    class smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group["Group"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [0..1] string
+      items [0..*] Item[]
     }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token["Token"] {
-      <<json: IgChromeSchema>>
-      name [1] string
-      value [1] string
-      from [1] string
-      overrides [0..*] Override[]
-    }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Declaration["Declaration"] {
-      <<json: IgChromeSchema>>
-      property [1] string
-      value [1] string
-    }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule["Rule"] {
-      <<json: IgChromeSchema>>
-      selector [1] string
-      from [1] string
-      declarations [1..*] Declaration[]
-    }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Site["Site"] {
-      <<json: IgChromeSchema>>
-      package [1] string
-      value [1] string
-    }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict["Conflict"] {
-      <<json: IgChromeSchema>>
-      token [1] string
-      kind [1] shape | malformed
-      detail [1] string
-      sites [1..*] Site[]
-    }
-    class smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1["folio-ig-chrome/v1"] {
-      <<json: IgChromeSchema>>
-      $schema [1] 'folio-ig-chrome/v1'
+    class smart_base_smart_base_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1["folio-ig-menu/v1"] {
+      <<json: IgMenuSchema>>
+      $schema [1] 'folio-ig-menu/v1'
       id [1] string
       canonical [1] string~uri~
-      status [1] string
       version [0..1] string
-      layers [1..*] Layer[]
-      tokens [0..*] Token[]
-      rules [0..*] Rule[]
-      conflicts [0..*] Conflict[]
+      source [1] object
+      groups [0..*] Group[]
+    }
+    class smart_base_smart_base_artifact_index_ig_releases_v1_Asset["Asset"] {
+      <<json: IgReleasesSchema>>
+      name [1] string
+      url [1] string~uri~
+      bytes [1] integer
+      digest [0..1] string
+      contentType [0..1] string
+    }
+    class smart_base_smart_base_artifact_index_ig_releases_v1_Release["Release"] {
+      <<json: IgReleasesSchema>>
+      tag [1] string
+      name [0..1] string
+      url [1] string~uri~
+      publishedAt [1] string
+      prerelease [1] boolean
+      commitish [0..1] string
+      assets [0..*] Asset[]
+    }
+    class smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1["ig-releases/v1"] {
+      <<json: IgReleasesSchema>>
+      $schema [1] 'ig-releases/v1'
+      repository [1] string
+      readAt [1] string
+      releases [0..*] Release[]
     }
     class smart_base_smart_base_artifact_index_dak_StructureDefinition_BusinessProcessWorkflow_schema_json_Business_Process_Workflow__DAK_["Business Process Workflow (DAK)"] {
       <<schema: dak/StructureDefinition-BusinessProcessWorkflow.schema.json>>
@@ -601,32 +624,6 @@ classDiagram
     }
   }
   namespace smart_base__qa {
-    class smart_base_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
-      <<json: KgQaReportSchema>>
-      kind [1] implements | co-located
-      prose [1] string
-      code [1] string
-      prose_hash [1] string
-      code_hash [1] string
-      by [1] baseline | agent | human
-      reason [0..1] string
-    }
-    class smart_base_qa_kg_qa_v1_Verdict["Verdict"] {
-      <<json: KgQaReportSchema>>
-      rule [1] string
-      result [1] pass | fail | n/a
-      note [0..1] string
-    }
-    class smart_base_qa_kg_qa_v1_Voice_review["Voice_review"] {
-      <<json: KgQaReportSchema>>
-      voice [1] string
-      instance [1] string
-      skill_hash [1] string
-      voice_hash [1] string
-      by [1] agent | human
-      at [1] string
-      verdicts [0..*] Verdict[]
-    }
     class smart_base_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
       $schema [1] 'kg-qa/v1'
@@ -634,13 +631,140 @@ classDiagram
       source_hash [1] string | null
       criteria [1] map~object~
       totals [1] map~number~
-      pair_attestations [0..*] Pair_attestation[]
-      voice_reviews [0..*] Voice_review[]
+      pair_attestations [0..1] any
+      voice_reviews [0..1] any
     }
     class smart_base_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
       <<json: KgQaManifestSchema>>
       $schema [1] 'kg-qa-manifest/v1'
       auditor [1] object
+    }
+    class smart_base_qa_qa_results_v1["qa-results/v1"] {
+      <<ts: QaResult>>
+      $schema [1] 'qa-results/v1'
+      producer [1]  /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; 
+      subject [1]  kind: string; id: string 
+      families [1] Record~string, QaResultFamily~
+      total [1] number
+    }
+  }
+  namespace smart_base__smart_base_themes {
+    class smart_base_smart_base_themes_Override["Override"] {
+      <<json: ThemeSchema>>
+      field [1] string
+      source [1] string
+      reason [1] string
+    }
+    class smart_base_smart_base_themes_Theme["Theme"] {
+      <<json: ThemeSchema>>
+      $schema [1] 'folio-theme/v1'
+      id [1] string
+      kind [1] sticky | webpage | publication
+      inherits [0..1] object
+      name [0..1] string
+      description [0..1] string
+      palette [0..1] object
+      backdrop [0..1] object
+      layouts [0..1] object
+      overrides [0..*] Override[]
+    }
+  }
+  namespace smart_base__smart_base_document_kinds {
+    class smart_base_smart_base_document_kinds_folio_document_kind_v1_Source["Source"] {
+      <<json: DocumentKindSchema>>
+      ref [1] string
+      locator [0..1] string
+      note [0..1] string
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_v1_Section["Section"] {
+      <<json: DocumentKindSchema>>
+      id [1] string
+      title [1] string
+      required [1] boolean
+      description [1] string
+      computedFrom [0..*] string[]
+      modelledBy [0..*] string[]
+      sources [0..*] Source[]
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1["folio-document-kind/v1"] {
+      <<json: DocumentKindSchema>>
+      $schema [1] 'folio-document-kind/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      structure [1] fixed | semi-fixed
+      extends [0..1] string
+      sections [1..*] Section[]
+      sources [1..*] Source[]
+      generatedBy [0..1] string
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member["Member"] {
+      <<json: DocumentKindCoverageSchema>>
+      key [1] string
+      label [1] string
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section["Section"] {
+      <<json: DocumentKindCoverageSchema>>
+      id [1] string
+      members [0..*] Member[]
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced["Unplaced"] {
+      <<json: DocumentKindCoverageSchema>>
+      group [1] string
+      count [1] integer
+    }
+    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1["folio-document-kind-coverage/v1"] {
+      <<json: DocumentKindCoverageSchema>>
+      $schema [1] 'folio-document-kind-coverage/v1'
+      kind [1] string
+      subject [1] string
+      from [1] string
+      method [1] string
+      total [1] integer
+      sections [0..*] Section[]
+      unplaced [0..*] Unplaced[]
+      generatedBy [1] string
+    }
+  }
+  namespace smart_base__smart_base_findings {
+    class n_smart_base_smart_base_findings_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace smart_base__smart_base_external_schemas {
+    class smart_base_smart_base_external_schemas_folio_external_schema_v1_Term["Term"] {
+      <<json: ExternalSchemaSchema>>
+      term [1] string
+      operative [1] string
+    }
+    class smart_base_smart_base_external_schemas_folio_external_schema_v1_folio_external_schema_v1["folio-external-schema/v1"] {
+      <<json: ExternalSchemaSchema>>
+      $schema [1] 'folio-external-schema/v1'
+      id [1] string
+      authority [1] enum(7)
+      title [1] string
+      version [1] string
+      specUrl [1] string~uri~
+      namespaces [0..*] string[]
+      use [1] conforms | reads | cites
+      terms [0..*] Term[]
+      note [0..1] string
+    }
+    class smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_Concept["Concept"] {
+      <<json: PinnedTerminologySchema>>
+      system [1] string
+      code [1] string
+      display [1] string
+      deprecated [0..1] boolean
+    }
+    class smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1["folio-pinned-terminology/v1"] {
+      <<json: PinnedTerminologySchema>>
+      $schema [1] 'folio-pinned-terminology/v1'
+      _comment [0..1] string
+      pin [1] string
+      version [1] string
+      source [1] string
+      concepts [0..*] Concept[]
     }
   }
   namespace smart_base__voices {
@@ -686,7 +810,7 @@ classDiagram
       sources [1..*] Source[]
       rules [1..*] Rule[]
       overlaySeverity [0..1] critical | major | minor
-      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification~
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
       provenance [1] assertion | evidence | house
       extends [0..1] object
       activeIn [0..1] object
@@ -695,34 +819,34 @@ classDiagram
   }
   cssClass "n_smart_base_smart_base_docs_docs" fa_uml_kind_docs
   cssClass "n_smart_base_smart_base_docs_docs" fa_uml_undetermined
+  smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" smart_base_library_folio_referenced_source_v1_Outline : outline
   cssClass "smart_base_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
+  cssClass "smart_base_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "smart_base_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
+  cssClass "smart_base_library_folio_vector_figures_v1_folio_vector_figures_v1" fa_uml_kind_library
+  cssClass "smart_base_library_folio_referenced_source_v1_Outline" fa_uml_kind_library
+  cssClass "smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1" fa_uml_kind_library
   cssClass "n_smart_base_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_smart_base_methodologies_methodology" fa_uml_undetermined
   cssClass "smart_base_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "smart_base_smart_base_house_processes_omg_bpmn_2_0" fa_uml_kind_processes
-  smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
-  smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
-  smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "1..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Layer : layers
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Override : overrides
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token : tokens
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule *-- "1..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Declaration : declarations
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule : rules
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict *-- "1..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Site : sites
-  smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict : conflicts
-  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Context" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_DakUnbound" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Artifact" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Layer" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Override" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Token" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Declaration" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Rule" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Site" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_Conflict" fa_uml_kind_fhir_artifact_index
-  cssClass "smart_base_smart_base_artifact_index_folio_ig_chrome_v1_folio_ig_chrome_v1" fa_uml_kind_fhir_artifact_index
+  smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
+  smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
+  smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
+  smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_menu_v1_Item : items
+  smart_base_smart_base_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group : groups
+  smart_base_smart_base_artifact_index_ig_releases_v1_Release *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Asset : assets
+  smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Release : releases
+  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Context" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_Artifact" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_folio_ig_menu_v1_Item" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_ig_releases_v1_Asset" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_ig_releases_v1_Release" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1" fa_uml_kind_fhir_artifact_index
   cssClass "smart_base_smart_base_artifact_index_dak_StructureDefinition_BusinessProcessWorkflow_schema_json_Business_Process_Workflow__DAK_" fa_uml_kind_fhir_artifact_index
   cssClass "smart_base_smart_base_artifact_index_dak_StructureDefinition_BusinessProcessWorkflowSource_schema_json_Business_Process_Workflow_Source" fa_uml_kind_fhir_artifact_index
   cssClass "smart_base_smart_base_artifact_index_dak_StructureDefinition_CoreDataElement_schema_json_Core_Data_Element__DAK_" fa_uml_kind_fhir_artifact_index
@@ -774,14 +898,33 @@ classDiagram
   smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
   cssClass "smart_base_tools_Maintain" fa_uml_kind_tools
   cssClass "smart_base_tools_ToolDefinition" fa_uml_kind_tools
-  smart_base_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" smart_base_qa_kg_qa_v1_Pair_attestation : pair_attestations
-  smart_base_qa_kg_qa_v1_Voice_review *-- "0..*" smart_base_qa_kg_qa_v1_Verdict : verdicts
-  smart_base_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" smart_base_qa_kg_qa_v1_Voice_review : voice_reviews
-  cssClass "smart_base_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
-  cssClass "smart_base_qa_kg_qa_v1_Verdict" fa_uml_kind_qa
-  cssClass "smart_base_qa_kg_qa_v1_Voice_review" fa_uml_kind_qa
   cssClass "smart_base_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "smart_base_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
+  cssClass "smart_base_qa_qa_results_v1" fa_uml_kind_qa
+  smart_base_smart_base_themes_Theme *-- "0..*" smart_base_smart_base_themes_Override : overrides
+  cssClass "smart_base_smart_base_themes_Override" fa_uml_kind_themes
+  cssClass "smart_base_smart_base_themes_Theme" fa_uml_kind_themes
+  smart_base_smart_base_document_kinds_folio_document_kind_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
+  smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Section : sections
+  smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
+  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member : members
+  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section : sections
+  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced : unplaced
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_Source" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_Section" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1" fa_uml_kind_document_kinds
+  cssClass "n_smart_base_smart_base_findings_docs" fa_uml_kind_docs
+  cssClass "n_smart_base_smart_base_findings_docs" fa_uml_undetermined
+  smart_base_smart_base_external_schemas_folio_external_schema_v1_folio_external_schema_v1 *-- "0..*" smart_base_smart_base_external_schemas_folio_external_schema_v1_Term : terms
+  smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 *-- "0..*" smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_Concept : concepts
+  cssClass "smart_base_smart_base_external_schemas_folio_external_schema_v1_Term" fa_uml_kind_external_schema
+  cssClass "smart_base_smart_base_external_schemas_folio_external_schema_v1_folio_external_schema_v1" fa_uml_kind_external_schema
+  cssClass "smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_Concept" fa_uml_kind_external_schema
+  cssClass "smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1" fa_uml_kind_external_schema
   smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Source : sources
   smart_base_voices_Rule *-- "0..*" smart_base_voices_Pattern : patterns
   smart_base_voices_Rule *-- "0..*" smart_base_voices_Terminology : terminology

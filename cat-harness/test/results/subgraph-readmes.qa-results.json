@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "70ec174e4c49"
+    "script_hash": "8ef39e10c6c3"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 82,
+      "count": 89,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -59,21 +59,6 @@
           "path": "docs"
         },
         {
-          "instance": "agent-skills",
-          "directory": "library",
-          "path": "agent-skills/library"
-        },
-        {
-          "instance": "agent-skills",
-          "directory": "qa",
-          "path": "agent-skills/test/results"
-        },
-        {
-          "instance": "agent-skills",
-          "directory": "voices",
-          "path": "agent-skills/skills/voices"
-        },
-        {
           "instance": "bootstrap",
           "directory": "processes",
           "path": "bootstrap/processes"
@@ -95,8 +80,18 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "subscriptions",
+          "path": "cat-harness/subscriptions"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "code-lists",
           "path": "cat-harness/code-lists"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
         },
         {
           "instance": "cat-harness",
@@ -132,6 +127,11 @@
           "instance": "cat-harness",
           "directory": "qa",
           "path": "cat-harness/test/results"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "attestations",
+          "path": "cat-harness/test/attestations"
         },
         {
           "instance": "cat-harness",
@@ -174,6 +174,21 @@
           "path": "cat-harness/templates"
         },
         {
+          "instance": "cat-harness",
+          "directory": "voices",
+          "path": "cat-harness/skills/voices"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-schemas",
+          "path": "cat-harness-tools/schemas"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-scripts",
+          "path": "cat-harness-tools/scripts"
+        },
+        {
           "instance": "fhir-harness",
           "directory": "library",
           "path": "fhir-harness/library"
@@ -187,6 +202,16 @@
           "instance": "fhir-harness",
           "directory": "fhir-ig-tools",
           "path": "fhir-harness/tools"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-scripts",
+          "path": "fhir-harness/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-processes",
+          "path": "fhir-harness/processes"
         },
         {
           "instance": "fhir-harness",
@@ -255,8 +280,23 @@
         },
         {
           "instance": "folio-assistant-sci",
+          "directory": "sci-sources",
+          "path": "folio-assistant-sci/sources"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-processes",
+          "path": "folio-assistant-sci/processes"
+        },
+        {
+          "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "attestations",
+          "path": "folio-assistant-sci/test/attestations"
         },
         {
           "instance": "folio-assistant-sci",
@@ -267,26 +307,6 @@
           "instance": "folio-assistant-sci",
           "directory": "data-skills",
           "path": "folio-assistant-sci/skills/data"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-sources",
-          "path": "large-datasets/sources"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-processes",
-          "path": "large-datasets/processes"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-id-lookup",
-          "path": "large-datasets/id-lookup"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "qa",
-          "path": "large-datasets/test/results"
         },
         {
           "instance": "smart-base",
@@ -330,18 +350,23 @@
         },
         {
           "instance": "smart-base",
-          "directory": "voices",
-          "path": "smart-base/skills/voices"
+          "directory": "smart-base-findings",
+          "path": "smart-base/findings"
         },
         {
-          "instance": "smart-dak",
-          "directory": "qa",
-          "path": "smart-dak/test/results"
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
         },
         {
           "instance": "smart-ig",
           "directory": "qa",
           "path": "smart-ig/test/results"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
         },
         {
           "instance": "smart-immunizations",
@@ -354,14 +379,14 @@
           "path": "smart-immunizations/test/results"
         },
         {
-          "instance": "smart-l1",
-          "directory": "qa",
-          "path": "smart-l1/test/results"
-        },
-        {
           "instance": "smart-trust",
           "directory": "smart-trust-artifact-index",
           "path": "smart-trust/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-openapi",
+          "path": "smart-trust/openapi"
         },
         {
           "instance": "smart-trust",
@@ -410,6 +435,16 @@
         },
         {
           "instance": "who-iris",
+          "directory": "who-iris-sources",
+          "path": "who-iris/sources"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "id-lookup",
+          "path": "who-iris/id-lookup"
+        },
+        {
+          "instance": "who-iris",
           "directory": "qa",
           "path": "who-iris/test/results"
         },
@@ -448,7 +483,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 104,
+      "count": 112,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -496,21 +531,6 @@
           "path": "docs"
         },
         {
-          "instance": "agent-skills",
-          "directory": "library",
-          "path": "agent-skills/library"
-        },
-        {
-          "instance": "agent-skills",
-          "directory": "qa",
-          "path": "agent-skills/test/results"
-        },
-        {
-          "instance": "agent-skills",
-          "directory": "voices",
-          "path": "agent-skills/skills/voices"
-        },
-        {
           "instance": "bootstrap",
           "directory": "skills",
           "path": "bootstrap/skills"
@@ -552,6 +572,11 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "vocab-mappings",
+          "path": "cat-harness/vocab-mappings"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "schemas",
           "path": "cat-harness/schemas"
         },
@@ -589,6 +614,11 @@
           "instance": "cat-harness",
           "directory": "qa",
           "path": "cat-harness/test/results"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "attestations",
+          "path": "cat-harness/test/attestations"
         },
         {
           "instance": "cat-harness",
@@ -656,14 +686,44 @@
           "path": "cat-harness/deploy"
         },
         {
+          "instance": "cat-harness",
+          "directory": "voices",
+          "path": "cat-harness/skills/voices"
+        },
+        {
           "instance": "cat-harness-tools",
           "directory": "cat-harness-tools-adapters",
           "path": "cat-harness-tools/adapters"
         },
         {
           "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-schemas",
+          "path": "cat-harness-tools/schemas"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-scripts",
+          "path": "cat-harness-tools/scripts"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-id-lookup",
+          "path": "cat-harness-tools/id-lookup"
+        },
+        {
+          "instance": "cat-harness-tools",
           "directory": "cat-harness-tools-tests",
           "path": "cat-harness-tools/test"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-schemas",
+          "path": "cat-openapi/schemas"
+        },
+        {
+          "instance": "cat-openapi",
+          "directory": "cat-openapi-scripts",
+          "path": "cat-openapi/scripts"
         },
         {
           "instance": "fhir-harness",
@@ -679,6 +739,16 @@
           "instance": "fhir-harness",
           "directory": "fhir-ig-tools",
           "path": "fhir-harness/tools"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-ig-scripts",
+          "path": "fhir-harness/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-processes",
+          "path": "fhir-harness/processes"
         },
         {
           "instance": "fhir-harness",
@@ -762,8 +832,23 @@
         },
         {
           "instance": "folio-assistant-sci",
+          "directory": "sci-sources",
+          "path": "folio-assistant-sci/sources"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "sci-processes",
+          "path": "folio-assistant-sci/processes"
+        },
+        {
+          "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "attestations",
+          "path": "folio-assistant-sci/test/attestations"
         },
         {
           "instance": "folio-assistant-sci",
@@ -779,41 +864,6 @@
           "instance": "folio-assistant-sci",
           "directory": "data-skills",
           "path": "folio-assistant-sci/skills/data"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-schemas",
-          "path": "large-datasets/schemas"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-sources",
-          "path": "large-datasets/sources"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-skills",
-          "path": "large-datasets/skills"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-processes",
-          "path": "large-datasets/processes"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-scripts",
-          "path": "large-datasets/scripts"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-id-lookup",
-          "path": "large-datasets/id-lookup"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "qa",
-          "path": "large-datasets/test/results"
         },
         {
           "instance": "smart-base",
@@ -857,18 +907,38 @@
         },
         {
           "instance": "smart-base",
-          "directory": "voices",
-          "path": "smart-base/skills/voices"
+          "directory": "smart-base-themes",
+          "path": "smart-base/themes"
         },
         {
-          "instance": "smart-dak",
-          "directory": "qa",
-          "path": "smart-dak/test/results"
+          "instance": "smart-base",
+          "directory": "smart-base-document-kinds",
+          "path": "smart-base/document-kinds"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-findings",
+          "path": "smart-base/findings"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-external-schemas",
+          "path": "smart-base/external-schemas"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
         },
         {
           "instance": "smart-ig",
           "directory": "qa",
           "path": "smart-ig/test/results"
+        },
+        {
+          "instance": "smart-immunizations",
+          "directory": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs"
         },
         {
           "instance": "smart-immunizations",
@@ -881,14 +951,14 @@
           "path": "smart-immunizations/test/results"
         },
         {
-          "instance": "smart-l1",
-          "directory": "qa",
-          "path": "smart-l1/test/results"
-        },
-        {
           "instance": "smart-trust",
           "directory": "smart-trust-artifact-index",
           "path": "smart-trust/fhir-artifact-index"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-openapi",
+          "path": "smart-trust/openapi"
         },
         {
           "instance": "smart-trust",
@@ -904,11 +974,6 @@
           "instance": "smart-trust",
           "directory": "qa",
           "path": "smart-trust/test/results"
-        },
-        {
-          "instance": "smart-trust",
-          "directory": "smart-trust-themes",
-          "path": "smart-trust/themes"
         },
         {
           "instance": "who-iris",
@@ -949,6 +1014,16 @@
           "instance": "who-iris",
           "directory": "who-iris-scripts",
           "path": "who-iris/scripts"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "who-iris-sources",
+          "path": "who-iris/sources"
+        },
+        {
+          "instance": "who-iris",
+          "directory": "id-lookup",
+          "path": "who-iris/id-lookup"
         },
         {
           "instance": "who-iris",
@@ -994,5 +1069,5 @@
       "entries": []
     }
   },
-  "total": 190
+  "total": 205
 }

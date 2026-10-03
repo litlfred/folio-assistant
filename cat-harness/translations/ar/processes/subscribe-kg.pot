@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: subscribe-kg\n"
-"POT-Creation-Date: 2026-09-30T23:31:01.815Z\n"
+"POT-Creation-Date: 2026-10-02T14:45:26.798Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,272 +14,272 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:80
+#: processes/library/subscribe-kg.bpmn:80
 #. Diagram element documentation
 msgid "`owner/repo` and a 40-character commit SHA — never a branch, never an abbreviated SHA. The schema refuses anything else (SubscriptionSchema.ref), and this step exists so the refusal is met while choosing rather than at commit time. A tag replaces the SHA only once the substrate publishes releases."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:91
+#: processes/library/subscribe-kg.bpmn:91
 #. Diagram element documentation
 msgid "A sparse, shallow fetch of the substrate's root declaration only. Two questions: does it parse as bootstrap's KnowledgeGraphDeclarationSchema, and does it declare at least one harness? `could not fetch` is a third answer and is never read as `conforms`."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:99
+#: processes/library/subscribe-kg.bpmn:99
 #. Diagram label
 msgid "A substrate at this pin?"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:73
+#: processes/library/subscribe-kg.bpmn:73
 #. Diagram label
 msgid "A substrate is wanted, or a held pin is due to move"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:213
+#: processes/library/subscribe-kg.bpmn:213
 #. Diagram label
 msgid "Another chosen harness not yet instantiated?"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:194
+#: processes/library/subscribe-kg.bpmn:194
 #. Diagram label
 msgid "Another chosen subgraph or asset not yet walked?"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:137
+#: processes/library/subscribe-kg.bpmn:137
 #. Diagram label
 msgid "Another held part not yet refreshed?"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:122
+#: processes/library/subscribe-kg.bpmn:122
 #. Diagram element documentation
 msgid "Answered by the subscriber's declaration: an entry with this id already exists or it does not. A new one is recorded and reviewed; an existing one first refreshes every part it already holds against the new pin, because a pin that moved under held bytes would leave their records describing a commit nobody is subscribed to."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:176
+#: processes/library/subscribe-kg.bpmn:176
 #. Diagram label
 msgid "Choose subgraphs, the asset policy, harnesses"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:62
+#: processes/library/subscribe-kg.bpmn:62
 #. Diagram label
 msgid "Corpus — the subscriber's declaration"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:101
+#: processes/library/subscribe-kg.bpmn:101
 #. Diagram element documentation
 msgid "Decided from Task_Validate's result, not by a person. `yes` needs both answers positive; a declaration that does not conform, declares no harness, or could not be fetched all take `no`, and the reason is recorded rather than the subscription half-written."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:41
+#: processes/library/subscribe-kg.bpmn:41
 #. Diagram element documentation
 msgid "Every CHOICE in the walk is made here and nowhere else: which substrate and at which commit, which of its subgraphs, asset classes and harnesses to hold. The engine never chooses a part on the subscriber's behalf — a subgraph not chosen stays referenced, which is a state, not an omission — and the pre-check on harness needs sends the choice back here rather than resolving it silently."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:187
+#: processes/library/subscribe-kg.bpmn:187
 #. Diagram label
 msgid "Every chosen harness's needs held here?"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:167
+#: processes/library/subscribe-kg.bpmn:167
 #. Diagram element documentation
 msgid "Every subgraph, asset class and harness the cached declaration names, each with its current state — referenced, materialised, unknown, stale, or refused by a gate. Shown whole, because a reader who sees only what was chosen cannot tell \"not offered\" from \"not taken\"."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:89
+#: processes/library/subscribe-kg.bpmn:89
 #. Diagram label
 msgid "Fetch the root declaration at the pin, and validate it"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:189
+#: processes/library/subscribe-kg.bpmn:189
 #. Diagram element documentation
 msgid "For each chosen harness, is every instance it `needs` either local to this checkout or itself subscribed? Decided from the two declarations, before any byte moves. `no` goes back to the choice — subscribe the missing dependency first, or leave that harness referenced — because instantiating a harness whose needs cannot load writes a navbar entry that fails check:instance-render."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:49
+#: processes/library/subscribe-kg.bpmn:49
 #. Diagram label
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:221
+#: processes/library/subscribe-kg.bpmn:221
 #. Diagram label
 msgid "Instantiate the harness: write its config"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:202
+#: processes/library/subscribe-kg.bpmn:202
 #. Diagram label
 msgid "Materialise the part [materialize-remote]"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:155
+#: processes/library/subscribe-kg.bpmn:155
 #. Diagram label
 msgid "Move the entry's ref and re-cache the declaration"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:252
+#: processes/library/subscribe-kg.bpmn:252
 #. Diagram label
 msgid "moving a held pin"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:78
+#: processes/library/subscribe-kg.bpmn:78
 #. Diagram label
 msgid "Name the substrate, pin a full commit SHA"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:251
+#: processes/library/subscribe-kg.bpmn:251
 #. Diagram label
 msgid "new"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:120
+#: processes/library/subscribe-kg.bpmn:120
 #. Diagram label
 msgid "New subscription, or moving a held pin?"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:260
+#: processes/library/subscribe-kg.bpmn:260
 #. Diagram label
 msgid "no — choose again"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:108
+#: processes/library/subscribe-kg.bpmn:108
 #. Diagram element documentation
 msgid "No subscription entry is written for a repository that is not a substrate. What is recorded is the reason (non-conforming, no harness, or unreachable) and the pin it was asked at, so a later attempt at a different commit starts from what failed."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:256
+#: processes/library/subscribe-kg.bpmn:256
 #. Diagram label
 msgid "no, all refreshed"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:267
+#: processes/library/subscribe-kg.bpmn:267
 #. Diagram label
 msgid "no, every harness walked"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:264
+#: processes/library/subscribe-kg.bpmn:264
 #. Diagram label
 msgid "no, every part walked"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:248
+#: processes/library/subscribe-kg.bpmn:248
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:116
+#: processes/library/subscribe-kg.bpmn:116
 #. Diagram label
 msgid "Not subscribed, and the record says why"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:233
+#: processes/library/subscribe-kg.bpmn:233
 #. Diagram element documentation
 msgid "One line per offered part: materialised, referenced by choice, or referenced because a gate refused (and which). Nothing new is decided here; it is the account the visualizer and the next refresh read, written once rather than reconstructed from the loop."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:196
+#: processes/library/subscribe-kg.bpmn:196
 #. Diagram element documentation
 msgid "One part at a time, in the order chosen. `yes` hands the next subgraph — or, under an `all` asset policy, the next referenced asset — to the shared subprocess. Under `on-demand`, assets are not walked here at all: each is materialised through the same subprocess when first asked for. `no` moves on to harnesses."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:157
+#: processes/library/subscribe-kg.bpmn:157
 #. Diagram element documentation
 msgid "Only after every held part has been through the refresh. Moving the ref first would make the records of parts not yet refreshed describe a commit the entry no longer names. The cached declaration is replaced so the review that follows shows what the NEW pin offers, including subgraphs that did not exist at the old one."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:27
+#: processes/library/subscribe-kg.bpmn:27
 #. Diagram element documentation
-msgid "Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8. A SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time. A SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository. WHY IT LIVES IN large-datasets, not cat-harness (proposal decision #3, default taken). It calls Process_MaterializeRemote and Process_RefreshMaterialized, which large-datasets owns, and names the kg-subscription and materialize-remote skills, which live in large-datasets/skills/. cat-harness needs only bootstrap, so a diagram there would run every one of those edges against the dependency arrow — the defect bean cjvs moved 25 skill refs out of cat-harness to remove. Here the calls are siblings and the remaining refs point down. STRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned."
+msgid "Owner, 2026-09-30 (issue #1719): \"a way for a folio instance (or cat-harness in general) to \"subscribe\" to external KGs … they can choose to materialize some or all subgraphs … an asset reference … they can choose to materialize locally … instantiate one or more harnesses … so then harness appears in their navbar.\" Design: cat-harness/docs/proposals/kg-subscriptions.md, epic bean fnx4, slice 8. A SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is kept honest. Every byte that arrives does so through Process_MaterializeRemote, called once per chosen subgraph or asset; every held copy is refreshed through Process_RefreshMaterialized. Neither is re-described here. What this process adds is only the walk: pin, validate, choose, and then carry each chosen part from referenced to materialised one at a time. A SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository. WHERE IT LIVES: cat-harness/processes/, beside Process_MaterializeRemote and Process_RefreshMaterialized, which it calls, and naming the kg-subscription and materialize-remote skills in cat-harness/skills/library/large-datasets/. It was written in large-datasets (proposal decision #3), because those subprocesses and skills lived there and a diagram in cat-harness would have run every edge against the dependency arrow (bean cjvs). The owner's 2026-10-01 ruling dissolved large-datasets into cat-harness's concern groups (bean j7ql), so the callees came with it: the calls are siblings again and every ref stays inside the harness. STRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:231
+#: processes/library/subscribe-kg.bpmn:231
 #. Diagram label
 msgid "Record how the walk ended, part by part"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:106
+#: processes/library/subscribe-kg.bpmn:106
 #. Diagram label
 msgid "Record why it is not a substrate; write no entry"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:145
+#: processes/library/subscribe-kg.bpmn:145
 #. Diagram label
 msgid "Refresh the held part [refresh-materialized]"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:165
+#: processes/library/subscribe-kg.bpmn:165
 #. Diagram label
 msgid "Review what the substrate offers"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:24
+#: processes/library/subscribe-kg.bpmn:24
 #. Diagram label
 msgid "Subscribe to an external knowledge graph"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:241
+#: processes/library/subscribe-kg.bpmn:241
 #. Diagram label
 msgid "Subscribed, every part in a recorded state"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:40
+#: processes/library/subscribe-kg.bpmn:40
 #. Diagram label
 msgid "Subscriber (the folio's owner)"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:129
+#: processes/library/subscribe-kg.bpmn:129
 #. Diagram element documentation
 msgid "The `subscriptions` entry in the subscriber's instance declaration — id, repository, ref, and nothing chosen yet — plus a cached copy of the substrate's declaration at the pin. The entry holds the choice and the pin, never state: whether a part is held is answered by its materialisation record, and a second answer here would be free to disagree with it."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:204
+#: processes/library/subscribe-kg.bpmn:204
 #. Diagram element documentation
 msgid "The ONLY way bytes arrive. Purpose first, then the five gates — size, restrictions, copyright, retention, source loss — then fetch with fixity, or stay referenced with the refusing gate's basis recorded. Both ends of that subprocess return here and the walk continues: one part refused is not the subscription refused."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:147
+#: processes/library/subscribe-kg.bpmn:147
 #. Diagram element documentation
 msgid "The shared refresh, called, not re-described: what changed upstream, what changed locally, and what to do when both did. An archival copy is fixity-checked and never re-fetched. Whatever that process decides — refreshed, kept divergent, or deferred — is the part's new state; this loop only moves to the next part."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:75
+#: processes/library/subscribe-kg.bpmn:75
 #. Diagram element documentation
 msgid "Two ways in, one path: a first subscription, or an existing one whose pin should move. Both start by naming a commit, because refresh is not re-subscribe but it does need the new declaration validated before anything held is compared against it."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:50
+#: processes/library/subscribe-kg.bpmn:50
 #. Diagram element documentation
 msgid "Validates the substrate at the pin, then walks the chosen parts one at a time: each subgraph or asset through the shared materialisation subprocess, each held copy through the shared refresh, each harness by writing its config. Every loop here re-enters its decision after each part, so a refusal on one part is recorded and the walk continues to the next rather than aborting the subscription."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:215
+#: processes/library/subscribe-kg.bpmn:215
 #. Diagram element documentation
 msgid "Walks the chosen harnesses, whose needs the pre-check already found held. `yes` instantiates the next; `no` closes the walk. A harness already instantiated at this pin is skipped rather than rewritten."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:139
+#: processes/library/subscribe-kg.bpmn:139
 #. Diagram element documentation
 msgid "Walks the parts this subscription already holds — every subgraph and asset with a materialisation record — one at a time. `yes` refreshes the next; `no` re-pins. Held parts are found from their records, never from the entry's `subgraphs` list, which says what was chosen, not what arrived."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:63
+#: processes/library/subscribe-kg.bpmn:63
 #. Diagram element documentation
 msgid "Where the subscription is written down: the entry in the subscriber's instance declaration (choice and pin only, never state), the cached copy of the substrate's declaration the visualizer reads offline, and the record of how the walk ended. A refusal lands here with the same weight as a success, so the next caller does not re-litigate it."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:223
+#: processes/library/subscribe-kg.bpmn:223
 #. Diagram element documentation
 msgid "Write `<harness>.config.json` at the repository root, plus the state directories the harness declares. That file is what harness-tiles reads as INSTANTIATED, and it is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:127
+#: processes/library/subscribe-kg.bpmn:127
 #. Diagram label
 msgid "Write the entry and cache the declaration"
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:178
+#: processes/library/subscribe-kg.bpmn:178
 #. Diagram element documentation
 msgid "Written to the entry as `subgraphs`, `assets.policy` (none, on-demand or all) and `harnesses`. Choosing is not holding: a chosen subgraph is still referenced until the gates below let it through. Choosing nothing is legitimate — a subscription with no parts chosen is a pinned reference, the case associatedHarnesses covers today."
 msgstr ""
 
-#: ../large-datasets/processes/subscribe-kg.bpmn:249
+#: processes/library/subscribe-kg.bpmn:249
 #. Diagram label
 msgid "yes"
 msgstr ""

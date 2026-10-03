@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "content-validation",
+    "path": "skills/content/folio-paper-adapter/content-validation.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/content-validation.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/content-validation.ts",
+      "prose_hash": "bcc7e3b0266d",
+      "code_hash": "192243a1663f",
+      "by": "baseline"
+    }
+  ]
+}

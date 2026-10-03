@@ -86,12 +86,19 @@ describe("a staging deploy is one commit — bean `bm6d`", () => {
     expect(stage).not.toMatch(/peaceiris\/actions-gh-pages/);
   });
 
-  test("the contended-ref retry survives — three attempts, rebasing between", () => {
+  test("the contended-ref retry survives — three attempts, each re-reading gh-pages", () => {
     // `gh-pages` is the most contended ref here and a queue does not help: a
     // PENDING job is cancelled by the next arrival rather than waiting.
+    //
+    // Re-read and rebuild, never rebase — issue #1868. Since the preview cap
+    // the commit carries rotation REMOVALS decided against one read of the
+    // branch; replaying it by rebase would push a stale removal. Same shape
+    // as `publish-gh-pages.sh`.
     const [writer] = ghPagesWriters(stage);
     expect(writer).toMatch(/for attempt in 1 2 3; do/);
-    expect(writer).toMatch(/git -C pages pull --rebase origin gh-pages/);
+    expect(writer).toMatch(/git -C pages fetch --depth=1 origin gh-pages/);
+    expect(writer).toMatch(/git -C pages reset --hard FETCH_HEAD/);
+    expect(writer).not.toMatch(/pull\s+--rebase|git\s+(-C\s+\S+\s+)?rebase/);
   });
 
   test("a failed deploy still fails the job — a lost preview stays visible", () => {

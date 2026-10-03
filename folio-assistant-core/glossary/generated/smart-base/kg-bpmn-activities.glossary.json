@@ -83,7 +83,7 @@
       "prefLabel": "Assemble and validate the DAK [content-validate]",
       "definition": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.",
       "notation": "Task_AssembleDak",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_AssembleDak",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_AssembleDak",
       "status": "candidate"
     },
     {
@@ -91,7 +91,7 @@
       "prefLabel": "Business processes · BPMN 2.0 [bpmn-authoring]",
       "definition": "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR.",
       "notation": "Task_Bpmn",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Bpmn",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_Bpmn",
       "status": "candidate"
     },
     {
@@ -99,7 +99,7 @@
       "prefLabel": "Data dictionary and core data elements [l2-dak-authoring]",
       "definition": "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice.",
       "notation": "Task_DataDict",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_DataDict",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_DataDict",
       "status": "candidate"
     },
     {
@@ -107,7 +107,7 @@
       "prefLabel": "Decision logic · DMN tables [dmn-authoring]",
       "definition": "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.",
       "notation": "Task_Dmn",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Dmn",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_Dmn",
       "status": "candidate"
     },
     {
@@ -115,7 +115,7 @@
       "prefLabel": "Indicators and requirements [l2-dak-authoring]",
       "definition": "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations.",
       "notation": "Task_Indicators",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Indicators",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_Indicators",
       "status": "candidate"
     },
     {
@@ -123,7 +123,7 @@
       "prefLabel": "Personas and scenarios [l2-dak-authoring]",
       "definition": "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated.",
       "notation": "Task_Personas",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Personas",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_Personas",
       "status": "candidate"
     },
     {
@@ -131,7 +131,7 @@
       "prefLabel": "Scope the DAK [content-plan]",
       "definition": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors.",
       "notation": "Task_ScopeDak",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_ScopeDak",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_ScopeDak",
       "status": "candidate"
     },
     {
@@ -139,7 +139,7 @@
       "prefLabel": "Seed the work plan [todo-manager]",
       "definition": "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.",
       "notation": "Task_SeedBeans",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_SeedBeans",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_SeedBeans",
       "status": "candidate"
     },
     {
@@ -147,7 +147,7 @@
       "prefLabel": "Clinical validation [content-review]",
       "definition": "Ground truth: does the DAK say what the guideline says?",
       "notation": "Task_SmeValidate",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_SmeValidate",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_SmeValidate",
       "status": "candidate"
     },
     {
@@ -155,7 +155,7 @@
       "prefLabel": "Terminology bindings [terminology-management]",
       "definition": "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them.",
       "notation": "Task_Terminology",
-      "source": "smart-base/processes/l2-dak-authoring.bpmn#Task_Terminology",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_Terminology",
       "status": "candidate"
     }
   ]

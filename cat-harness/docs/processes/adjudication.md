@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/adjudication.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/adjudication.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Adjudication
@@ -25,7 +25,7 @@ What stays shared is what must not vary: the entry condition nobody may declare 
 
 ## How it connects
 
-- **Called by:** [Content Change and Review](content-change-review.html), [Criterion adjudication](criterion-adjudication.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Translation Workflow](translation-workflow.html), [Refresh materialized remote content](refresh-materialized.html)
+- **Called by:** [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Refresh materialized remote content](refresh-materialized.html), [Translation Workflow](translation-workflow.html), [Criterion adjudication](criterion-adjudication.html), [Content Change and Review](content-change-review.html)
 - **Calls:** none
 - **Names the `adjudication` skill without calling this process:** [Criterion adjudication](criterion-adjudication.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram

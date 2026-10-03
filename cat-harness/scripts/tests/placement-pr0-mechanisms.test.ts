@@ -361,7 +361,7 @@ describe("this checkout", () => {
     }
     const files = workflowFiles(PLATFORM, "checkout").map((f) => relative(REPO, f));
     expect(files).toContain("smart-base/methodologies/processes/diig-investment-path.bpmn");
-    expect(files).toContain("folio-assistant-core/processes/deep-document-research.bpmn");
+    expect(files).toContain("folio-assistant-core/processes/library/deep-document-research.bpmn");
   });
 
   test("falsifier 2: the platform resolved alone names nothing above it", () => {
@@ -371,9 +371,10 @@ describe("this checkout", () => {
     expect(knownSkills(PLATFORM, "instance").has("lean-formal-edges")).toBe(false);
   });
 
-  test("the six libraries the mirrors named are all in the corpus", () => {
+  test("the five libraries the mirrors named are all in the corpus", () => {
+    // Six until bean `j7ql`: agent-skills/library dissolved into cat-harness/library (#1787).
     const libs = corpusDirectoriesForGraph(PLATFORM, "library").map((p) => relative(REPO, p));
-    for (const l of ["cat-harness/library", "agent-skills/library", "folio-assistant-core/library", "folio-assistant-sci/library", "smart-base/library", "who-iris/library"]) {
+    for (const l of ["cat-harness/library", "folio-assistant-core/library", "folio-assistant-sci/library", "smart-base/library", "who-iris/library"]) {
       expect(libs).toContain(l);
     }
   });

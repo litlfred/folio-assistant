@@ -593,7 +593,7 @@ function readWorkPlanOp(
   // check from the one below, which refuses an unknown op VALUE.
   //
   // The gap between them has a measured cost recorded in
-  // `processes/bean-lifecycle.bpmn`: a diagram carried
+  // `processes/sdlc/bean-lifecycle.bpmn`: a diagram carried
   // `<cat-harness.processes:bean action="create"/>`, the engine reads `op` and never looked at
   // `action`, and "the step silently did nothing for weeks". Nothing could
   // have caught it, because an absent `op` is DOCUMENTED as meaningful —
@@ -1133,11 +1133,50 @@ export function findInModel(
  */
 function processIndex(dir: string): Map<string, string> {
   const out = new Map<string, string>();
-  for (const file of readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort()) {
-    const xml = readFileSync(join(dir, file), "utf-8");
-    for (const m of xml.matchAll(/<bpmn:process\s+id="([^"]+)"/g)) out.set(m[1], join(dir, file));
-  }
+  // RECURSIVE since placement PR3 (bean `63wl`): a declared `processes/`
+  // directory groups its diagrams by concern (`processes/sdlc/`,
+  // `processes/process/`, …), so a caller and its callee in one instance can
+  // sit in sibling subdirectories. A flat read here turned every cross-group
+  // call opaque — no descent, and no `checkAcceptedCodes` — exactly the
+  // silent failure `dependencyProcessHome` was written to stop one level out.
+  // Files directly in `dir` are read first so they win a duplicate id.
+  const walk = (d: string): void => {
+    const entries = readdirSync(d, { withFileTypes: true });
+    for (const e of entries.filter((x) => x.isFile() && x.name.endsWith(".bpmn")).sort((a, b) => a.name.localeCompare(b.name))) {
+      const xml = readFileSync(join(d, e.name), "utf-8");
+      for (const m of xml.matchAll(/<(?:bpmn:)?process\b[^>]*?\sid="([^"]+)"/g)) {
+        if (!out.has(m[1]!)) out.set(m[1]!, join(d, e.name));
+      }
+    }
+    for (const e of entries.filter((x) => x.isDirectory()).sort((a, b) => a.name.localeCompare(b.name))) {
+      walk(join(d, e.name));
+    }
+  };
+  walk(dir);
   return out;
+}
+
+/**
+ * Where a called process lives in the calling diagram's OWN instance when no
+ * file beside it defines it: that instance's declared `processes` directories,
+ * walked recursively. Bean `63wl` — once diagrams are grouped by concern, the
+ * sibling directory is one group, not the instance.
+ */
+function ownInstanceProcessHome(dir: string, processId: string): string | undefined {
+  let dirs: string[];
+  try {
+    const own = findInstanceRoot(dir);
+    if (own === undefined || own === null) return undefined;
+    dirs = directoriesForGraph(own, "processes");
+  } catch {
+    return undefined;
+  }
+  for (const d of dirs) {
+    if (!existsSync(d)) continue;
+    const home = processIndex(d).get(processId);
+    if (home !== undefined) return home;
+  }
+  return undefined;
 }
 
 /**
@@ -1151,7 +1190,10 @@ function processIndex(dir: string): Map<string, string> {
  * first diagram whose callee (`Process_Adjudication`) is in ANOTHER
  * instance — one it is allowed to reach, since large-datasets needs
  * folio-assistant-core, which needs cat-harness. Without this the call went
- * silently opaque: no descent, and `checkAcceptedCodes` never ran.
+ * silently opaque: no descent, and `checkAcceptedCodes` never ran. (Bean
+ * `j7ql`, 2026-10-01, dissolved large-datasets into cat-harness, so the
+ * diagram is back in `cat-harness/processes/` beside its callee; the
+ * dependency search stays, for every other cross-instance call.)
  *
  * Only DEPENDENCIES are searched, never dependents, so a lower layer's
  * diagram cannot descend into a process defined above it — the same arrow
@@ -1638,7 +1680,10 @@ export async function loadProcessModel(
           `on the call path (${path.join(" → ")}). A process cannot contain itself.`,
       );
     }
-    const home = index.get(node.calledElement) ?? dependencyProcessHome(dirname(bpmnPath), node.calledElement);
+    const home =
+      index.get(node.calledElement) ??
+      ownInstanceProcessHome(dirname(bpmnPath), node.calledElement) ??
+      dependencyProcessHome(dirname(bpmnPath), node.calledElement);
     if (!home) continue;
     const child = await loadProcessModel(home, path);
     children.set(node.id, child);

@@ -1,0 +1,50 @@
+classDiagram
+  direction TB
+  namespace cat_harness__vocab_mappings {
+    class cat_harness_vocab_mappings_Element["Element"] {
+      <<json: VocabMappingSchema>>
+      code [0..1] string
+      display [0..1] string
+      valueSet [0..1] string
+      noMap [0..1] boolean
+      target [0..*] object[]
+      extra [0..1] map~any~
+    }
+    class cat_harness_vocab_mappings_Group["Group"] {
+      <<json: VocabMappingSchema>>
+      source [0..1] string
+      sourceVersion [0..1] string
+      target [0..1] string
+      targetVersion [0..1] string
+      element [1..*] Element[]
+      unmapped [0..1] object
+      extra [0..1] map~any~
+    }
+    class cat_harness_vocab_mappings_VocabMapping["VocabMapping"] {
+      <<json: VocabMappingSchema>>
+      $schema [1] 'folio-vocab-mapping/v1'
+      id [1] string
+      url [0..1] string
+      version [0..1] string
+      name [0..1] string
+      title [0..1] string
+      status [1] draft | active | retired | unknown
+      experimental [0..1] boolean
+      date [0..1] string
+      publisher [0..1] string
+      description [0..1] string
+      purpose [0..1] string
+      copyright [0..1] string
+      sourceScope [0..1] object
+      targetScope [0..1] object
+      property [0..*] map~any~[]
+      additionalAttribute [0..*] map~any~[]
+      group [0..*] Group[]
+      metadata [0..1] map~any~
+    }
+  }
+  cat_harness_vocab_mappings_Group *-- "1..*" cat_harness_vocab_mappings_Element : element
+  cat_harness_vocab_mappings_VocabMapping *-- "0..*" cat_harness_vocab_mappings_Group : group
+  cssClass "cat_harness_vocab_mappings_Element" fa_uml_kind_vocab_mapping
+  cssClass "cat_harness_vocab_mappings_Group" fa_uml_kind_vocab_mapping
+  cssClass "cat_harness_vocab_mappings_VocabMapping" fa_uml_kind_vocab_mapping

@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/w3c-2020-json-ld-1-1/blocks/prose-sec-043",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 28,
   "pageEnd": 29,
   "text": "../sections/sec-043-419-context-propagation.md",
-  "derivedFrom": "library/w3c-2020-json-ld-1-1/manifest",
-  "sourceDocument": "library/w3c-2020-json-ld-1-1/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/w3c-2020-json-ld-1-1/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/w3c-2020-json-ld-1-1/manifest.jsonld",
   "provenance": "ingested"
 }

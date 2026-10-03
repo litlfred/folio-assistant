@@ -10,13 +10,13 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2897 terms: **38 authored** in 4 glossaries, on this page, and **2859 extracted** from knowledge-graph assets in 25 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 3152 terms: **38 authored** in 4 glossaries, on this page, and **3114 extracted** from knowledge-graph assets in 28 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>38</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2859</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>3114</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
@@ -28,7 +28,7 @@ Extracted candidates are minted from this repository's own assets and are not, b
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2859</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2859</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>3114</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3114</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -42,15 +42,15 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
-<tr><td>this page</td><td>authored terms, counts and sources</td><td>38</td><td>51 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>306</td><td>228 KB</td></tr>
-<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>141</td><td>96 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>600</td><td>466 KB</td></tr>
-<tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>8 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1803</td><td>995 KB</td></tr>
+<tr><td>this page</td><td>authored terms, counts and sources</td><td>38</td><td>52 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>316</td><td>238 KB</td></tr>
+<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>153</td><td>107 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>633</td><td>512 KB</td></tr>
+<tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>10</td><td>9 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>2002</td><td>1.1 MB</td></tr>
 </tbody></table></div>
 
-**Size:** this page holds 38 terms and is 51 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 38 terms and is 52 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 ## Authored terms
 
@@ -356,7 +356,7 @@ role
 <dd>
 <p>The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need.</p>
 <p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/role</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md"><code>cat-harness/skills/process/process-core/role-model.md</code></a></p>
-<ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Role">www.w3.org/ns/prov#Role</a></li></ul>
+<ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Role">www.w3.org/ns/prov#Role</a></li><li>closeMatch: <a href="https://litlfred.github.io/folio/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048">litlfred.github.io/folio/library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048</a></li><li>closeMatch: <a href="http://smart.who.int/base/StructureDefinition/GenericPersona">smart.who.int/base/StructureDefinition/GenericPersona</a></li></ul>
 </dd>
 </dl>
 
@@ -418,27 +418,27 @@ voice
 <li><strong>Folio Assistant platform terms (cat-harness)</strong> (cat-harness, 14 terms) · <a href="{{ '/assets/glossary/cat-harness--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/cat-harness.glossary.json</code></li>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 1 term) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
 <li><strong>WHO house terms</strong> (who-style-guide, 1 term) · <a href="{{ '/assets/glossary/who-style-guide--who-terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>who-style-guide/glossary/who-style-guide.glossary.json</code></li>
-<li><strong>Swimlane roles</strong> (cat-harness, 48 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
+<li><strong>Swimlane roles</strong> (cat-harness, 49 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
 <li><strong>Swimlane roles</strong> (bootstrap, 7 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/bootstrap/glossary-ledger.json</code></li>
 </ul>
 
 ### Extracted from knowledge-graph assets
 
-Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assistant-core/glossary/generated/<instance>/<type>.glossary.json`, one scheme per asset type per instance, each term's IRI in the namespace of the instance that holds the asset. BPMN lanes and roles are not extracted again: the 55 swimlane-role terms above already carry them, with every lane name as an alternative label.
+Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assistant-core/glossary/generated/<instance>/<type>.glossary.json`, one scheme per asset type per instance, each term's IRI in the namespace of the instance that holds the asset. BPMN lanes and roles are not extracted again: the 56 swimlane-role terms above already carry them, with every lane name as an alternative label.
 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>instance</th><th><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></th><th><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></th><th><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></th><th><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></th><th><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></th></tr></thead>
 <tbody>
-<tr><td>bootstrap</td><td>11 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>33 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
+<tr><td>bootstrap</td><td>11 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>38 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>2 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>7 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>28 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>207 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>112 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>496 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1573 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>fhir-harness</td><td>11 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>19 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>29 · <a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>folio-assistant-core</td><td>7 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>155 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>folio-assistant-sci</td><td>54 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>large-datasets</td><td>5 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>41 · <a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>18 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>smart-base</td><td>8 · <a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>6 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>19 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
+<tr><td>cat-harness</td><td>219 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>120 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>416 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>5 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1750 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-openapi</td><td>—</td><td>—</td><td>—</td><td>—</td><td>13 · <a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>fhir-harness</td><td>13 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>22 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>27 · <a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>75 · <a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>folio-assistant-core</td><td>8 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>5 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>116 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>127 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>folio-assistant-sci</td><td>54 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>10 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td></tr>
+<tr><td>smart-base</td><td>8 · <a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>6 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>19 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>306</strong></td><td><strong>141</strong></td><td><strong>600</strong></td><td><strong>9</strong></td><td><strong>1803</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>316</strong></td><td><strong>153</strong></td><td><strong>633</strong></td><td><strong>10</strong></td><td><strong>2002</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">

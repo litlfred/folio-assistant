@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/hl7-2023-fhir-r5-testplan/blocks/prose-s001-source-testplan-testplan-introduction-xml",
   "@type": [
     "folio-assistant-core:Prose",
@@ -8,7 +13,7 @@
   "kind": "prose",
   "title": "source/testplan/testplan-introduction.xml",
   "text": "../sections/s001-source-testplan-testplan-introduction-xml.md",
-  "derivedFrom": "library/hl7-2023-fhir-r5-testplan/manifest",
-  "sourceDocument": "library/hl7-2023-fhir-r5-testplan/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/hl7-2023-fhir-r5-testplan/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/fhir-harness/hl7-2023-fhir-r5-testplan/manifest.jsonld",
   "provenance": "ingested"
 }

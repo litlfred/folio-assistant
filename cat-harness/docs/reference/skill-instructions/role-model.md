@@ -24,9 +24,16 @@ Four objects, each with a home:
 | **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `cat-harness/scenarios/actors/*.json` (the declared `scenarios` graph, beside the roles; `.claude/skills/actors/` until 2026-09-30, bean `rqao`) |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`); JSON `SkillDefinition`s in each owning instance's `skills/skill-definitions/` (bean `rqao`) |
-| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
+| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/**/*.bpmn`, `processes/**/decisions/*.dmn` |
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
+
+**WHO's "actor" is this model's Role.** An actor in the WHO DPI-H Reference
+Architecture's conformance model (§3.7.2, an abstract information-processing
+role) and a DAK generic persona each map to a folio-assistant **Role**, never
+to an Actor. The RA's system *realising* an actor maps to a mechanical Actor
+taking on that role. Owner, 2026-10-03 (#1984); the comparison is on
+`smart-base/findings/dth-terms.md`.
 
 Schema: [`schemas/role-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-audit.ts), sidecar schema

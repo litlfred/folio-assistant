@@ -354,5 +354,26 @@
       "n_words": 62
     }
   ],
-  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not."
+  "structure_note": "Ingested at PAGE granularity by scripts/pdf-pages.py. This PDF carries no embedded outline and its inferred chapter structure was measurably wrong (bean 6xaz), so no chapter tree is claimed. A page is a determined division; an inferred chapter was not.",
+  "metadata": {
+    "title": null,
+    "title_raw": null,
+    "docinfo": {
+      "Producer": "macOS Version 14.7.4 (Build 23H420) Quartz PDFContext, AppendMode 1.1",
+      "CreationDate": "D:19991215111131Z00'00'"
+    },
+    "title_source": "filename",
+    "title_verified": false,
+    "title_evidence": {
+      "heading": "Indexing by Latent Semantic Analysis Scott Deerwester Graduate Library School University of Chicago Chicago, IL 60637 Susan T. Dumais George W. Furnas Thomas K. Landauer Bell Communications Research 435 South St. Morristown, NJ 07960 Richard Harshman University of Western Ontario London, Ontario Can",
+      "corroborated_by": [],
+      "browser_print": false
+    },
+    "title_correction": {
+      "title": "Indexing by Latent Semantic Analysis",
+      "basis": "Page 1 prints this title above the authors (Deerwester, Dumais, Furnas, Landauer, Harshman); the PDF has no Title metadata, and the heading reader ran the title on into the author block.",
+      "corrected_on": "2026-10-02",
+      "bean": "folio-assistant-w6fu"
+    }
+  }
 }

@@ -18,11 +18,12 @@ import { dirname, join, resolve } from "node:path";
 import { complete, startInstance } from "../../cat-harness/src/workflow/instance.ts";
 import { loadProcessModel } from "../../cat-harness/src/workflow/process-model.ts";
 import { instanceId, loadInstance, saveInstance } from "../../cat-harness/src/workflow/store.ts";
+import { writeDeclaration } from "../../cat-harness/test/support/instance-fixture.ts";
 import { runSampleImport, type Handler } from "./sample-import-run.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const WHO_IRIS = join(REPO, "who-iris");
-const DIAGRAM = join(REPO, "large-datasets", "processes", "sample-import.bpmn");
+const DIAGRAM = join(REPO, "cat-harness", "processes", "library", "sample-import.bpmn");
 const ITEM = "item/18892cf3-5a4f-42a4-923c-a93f4a594dec";
 
 const made: string[] = [];
@@ -34,6 +35,15 @@ afterAll(() => {
 function fixture(): string {
   const root = mkdtempSync(join(tmpdir(), "sample-import-"));
   made.push(root);
+  // The trashcan is DECLARED, as the real root instance declares it: the
+  // writer resolves it and refuses to invent one (bean 9c7h). A path OTHER
+  // than `fsh-guts/`, so a writer that spells the conventional path fails.
+  writeDeclaration(root, JSON.stringify({
+    name: "t",
+    stub: "t",
+    canonicalUrl: "https://example.invalid/t",
+    directories: [{ id: "fsh-guts", path: "kept-trash/", description: "trashcan", graphKinds: ["fsh-guts"] }],
+  }));
   const copy = (rel: string) => {
     const to = join(root, "who-iris", rel);
     mkdirSync(dirname(to), { recursive: true });
@@ -88,7 +98,7 @@ describe("the whole item — a derived thumbnail's sourceLoss gate is unknown", 
     expect(r.steps.find((s) => s.node === "Gateway_Gates")?.outcome).toBe("no, or unknown");
     expect(r.steps.find((s) => s.node === "Gateway_Materialized")?.outcome).toBe("no, or unknown");
     expect(r.trialPath).toBeUndefined();
-    expect(existsSync(join(root, "fsh-guts", "samples"))).toBe(false);
+    expect(existsSync(join(root, "kept-trash", "samples"))).toBe(false);
     expect(endOf(root, "whole")).toBe("EndEvent_Refused");
   });
 });
@@ -106,6 +116,8 @@ describe("the ORIGINAL bundle only — every gate permitted", () => {
     // Liveness is asked, through the Handle, and an unanswered probe is recorded as such.
     expect(r.steps.find((s) => s.node === "Task_Fetch")?.note).toContain("LIVENESS of https://hdl.handle.net/10665/332098: could-not-determine");
     // A trial lands in fsh-guts/ as a declared node, and library/ is untouched.
+    expect(r.trialPath!.startsWith(join(root, "kept-trash", "samples"))).toBe(true);
+    expect(existsSync(join(root, "fsh-guts"))).toBe(false);
     const trial = readFileSync(r.trialPath!, "utf-8");
     expect(trial).toContain("$schema: folio-fsh-guts/v1");
     expect(trial).toContain("kind: sample-import-trial");

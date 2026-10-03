@@ -62,11 +62,36 @@
       ]
     },
     {
+      "id": "sci-sources",
+      "path": "sources/",
+      "description": "Source descriptors (`folio-source-descriptor/v1`): how to ENUMERATE Lean mathlib and ask it for a SUBSET, so an agent asked for part of it is not told the API by a human every time. Moved here from large-datasets' `sources/` on 2026-10-01 (owner ruling: large-datasets dissolves into cat-harness; bean `j7ql`), because a descriptor is ABOUT one corpus and the instance that holds or catalogues that corpus owns it — the schema stays in cat-harness. Its far-apart sibling, WHO IRIS, is in who-iris: a mathlib declaration needs its import closure (`subsetIsSelfContained: false`), one identifier system, a local module graph.",
+      "graphKinds": [
+        "schemas"
+      ]
+    },
+    {
+      "id": "sci-processes",
+      "path": "processes/",
+      "dependents": "skip",
+      "description": "The BPMN and DMN this layer OWNS: the paper's content processes, grouped by concern exactly as the harness groups its own (`processes/<group>/`, a DMN in `processes/<group>/decisions/`). `content/authoring-a-paper.bpmn` with `content/decisions/lean-build-gate.dmn`, and `content/atomic-mass-drift-check.bpmn`. Moved up from cat-harness/processes/ by placement PR3 (bean `63wl`, owner rulings 2026-09-30): both name Lean and paper skills that live here, which cat-harness cannot reach. Their calls and skill refs that stay generic point DOWN through core to the harness. Declared WITH its files in one commit, per bean `dh4f`.",
+      "graphKinds": [
+        "processes"
+      ]
+    },
+    {
       "id": "qa",
       "path": "test/results/",
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"
+      ]
+    },
+    {
+      "id": "attestations",
+      "path": "test/attestations/",
+      "description": "The judgement half of this instance's QA verdicts, kept on main by owner ruling D2 (a), 2026-10-01 (bean `2gst`): the `pair_attestations` that were carried inside its `kg-qa/v1` sidecars (all `by: baseline` at migration, which the owner ruled are judgements), one `qa-attestations/v1` file per subject at `kg-qa/<mirrored subject path>.attestations.json`. Schema: cat-harness `schemas/qa-attestations.ts`. dependents: reproduce, for the reason the `qa` entry gives. Declared WITH its files, per bean dh4f.",
+      "graphKinds": [
+        "attestations"
       ]
     }
   ]

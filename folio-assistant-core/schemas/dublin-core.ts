@@ -201,8 +201,8 @@ export const DCTERMS_NS = "http://purl.org/dc/terms/";
  */
 export const DSPACE_NS = ownNamespace("folio-assistant-core-dspace");
 
-/** The fifteen. A qualifier on any of them is a refinement, not one of these. */
-const SIMPLE_ELEMENTS = new Set([
+/** The fifteen. A qualifier on any of them is a refinement, not one of these. Exported for the renderer's dumb-down (`dublin-core-render.ts`). */
+export const SIMPLE_ELEMENTS: ReadonlySet<string> = new Set([
   "contributor", "coverage", "creator", "date", "description", "format",
   "identifier", "language", "publisher", "relation", "rights", "source",
   "subject", "title", "type",

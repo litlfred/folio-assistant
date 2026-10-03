@@ -265,3 +265,10 @@ that folio — this skill is the procedure, and the procedure carries no
 subject matter. See the platform-boundary rule in
 [`placement`](placement.md).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phases 2–4 — BPA and requirements](../../processes/crdm-requirements-definition.html) | Phases 3–4: Define requirements + impact |
+

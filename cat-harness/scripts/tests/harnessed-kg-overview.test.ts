@@ -16,10 +16,8 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../schemas/block-kinds.ts";
 import { ActorDefSchema } from "../../schemas/role-graph.ts";
-import { ownKgRoots } from "../known-skills.ts";
-import { DAK_CARDS, DAK_FIGURE_PATH, renderDakComponentsSvg } from "../gen-dak-components-figure.ts";
+import { ownKgRoots, workflowFile } from "../known-skills.ts";
 
 const H = resolve(import.meta.dir, "../..");
 const REPO = resolve(H, "..");
@@ -56,7 +54,7 @@ describe("living deck: every claim about the KG still holds", () => {
   });
 
   test("slide 6 — the lifecycle process still has the six lanes and eight tasks shown", () => {
-    const x = read(join(H, "processes/content-lifecycle.bpmn"));
+    const x = read(workflowFile(H, "content-lifecycle.bpmn"));
     expect([...x.matchAll(/<bpmn:lane [^>]*name=/g)]).toHaveLength(6);
     for (const skill of ["content-plan", "todo-manager", "content-author", "content-test",
       "content-publish", "content-feedback", "content-retire"]) expect(x).toContain(`[${skill}]`);
@@ -75,23 +73,10 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(body).toContain("## Decision outcome");
   });
 
-  test("slide 3 — ten components, scheduling logic marked unformalized in WHO's model", () => {
-    // The owner's count is 10 (2026-09-30). When WHO formalizes scheduling logic
-    // it leaves the unformalized list, and slide 3's note must be revised.
-    expect(DAK_COMPONENTS).toHaveLength(10);
-    expect(DAK_COMPONENTS).toContain("test-scenarios");
-    expect(DAK_UNFORMALIZED_COMPONENTS).toEqual(["scheduling-logic"]);
-  });
-
-  test("slide 3 — the squares figure has one card per component and is current", () => {
-    expect(Object.keys(DAK_CARDS).sort()).toEqual([...DAK_COMPONENTS].sort());
-    const svg = renderDakComponentsSvg();
-    // One number badge per component, in vocabulary order.
-    for (let i = 1; i <= DAK_COMPONENTS.length; i++) expect(svg).toContain(`>${i}</text>`);
-    expect(svg).toContain("Not yet its own DAK model field");
-    expect(read(DAK_FIGURE_PATH), "run cat-harness/scripts/gen-dak-components-figure.ts").toBe(svg);
-    expect(read(join(DECK, "slide-03.md"))).toContain("](assets/img/dak-components.svg)");
-  });
+  // Slide 3's two claims (ten DAK components; the squares figure is current)
+  // moved to smart-base/scripts/gen-dak-components-figure.test.ts with the
+  // generator and the DAK vocabulary (bean 1335). Core no longer imports
+  // either, so a core test asserting them would be core importing a harness.
 
   test("slide 4 — the ingested SMART Base index still holds 25 StructureDefinition pages", () => {
     const ids = new Set<string>();

@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/pr-checks-present.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/sdlc/pr-checks-present.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Which open pull requests have no CI run on their head?
@@ -25,7 +25,7 @@ TWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The track
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [A merge train](merge-train.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 

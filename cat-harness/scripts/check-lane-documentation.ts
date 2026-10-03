@@ -68,11 +68,28 @@
  * Usage:
  *   bun run cat-harness/scripts/check-lane-documentation.ts
  *   bun run cat-harness/scripts/check-lane-documentation.ts --json
+ *   bun run check:lane-documentation:check   # JUDGE: compute and judge, write nothing (the gate)
+ *
+ * Exit (writer): 0 clean, 1 any finding — or zero diagrams, which it has
+ * always reported as 1. Judge mode (`--check`, bean `bo44`): 0 clean · 1 any
+ * of the four families · 2 zero diagrams (could not determine — a corpus of
+ * nothing is not a finding about lanes either), an unknown flag, or a run
+ * that threw. An activity in no lane stays a FINDING in both modes: it is
+ * undetermined about ONE activity, and the gate has always failed on it.
  */
 import { readFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -320,6 +337,101 @@ export function checkLanes(root = REPO): LaneReport {
   };
 }
 
+/** The sidecar document for a report. Pure, so the judge and the writer render ONE computation. */
+export function laneDocumentationDocument(r: LaneReport): QaResult {
+  return buildQaResult({
+    script: "cat-harness/scripts/check-lane-documentation.ts",
+    scriptAbsPath: resolve(import.meta.dir, "check-lane-documentation.ts"),
+    subject: { kind: "corpus", id: "bpmn-lanes" },
+    families: {
+      "undocumented-lane": {
+        summary:
+          "A lane containing at least one activity, carrying a `name` but no `<bpmn:documentation>`. " +
+          "A reader meeting the task cannot learn what the lane is, and the glossary has a label with no definition.",
+        entries: r.undocumented,
+      },
+      "lane-without-name": {
+        summary:
+          "A lane containing an activity, with no usable `name`. The glossary term has no LABEL — a " +
+          "separate failure from having no definition, so a fix for one is not read as a fix for the other.",
+        entries: r.unnamed,
+      },
+      "lane-string-not-extracted": {
+        summary:
+          "A lane `name` or `<documentation>` the extractor does not produce a msgid for — so no translator " +
+          "could ever see it, in any locale. This asks about EXTRACTION, never about a translation existing: " +
+          "catalogues here ship with an empty `msgstr` awaiting a person, and gating on that would be a gate " +
+          "on somebody else's unfinished work. It asks `extractBpmn` rather than searching a `.pot`'s bytes, " +
+          "because gettext wraps a long msgid across quoted lines and escapes every `\"` — a substring search " +
+          "reported 13 correctly-extracted lanes as missing on 2026-09-21, and a false finding is worse than " +
+          "no check. WHETHER A TEMPLATE ON DISK CARRIES IT is a different question, owned by " +
+          "`translate-bpmn --check`; for the three `bootstrap/` diagrams that check does not scan, it is " +
+          "bean `j28g` and awaits a ruling.",
+        entries: r.unextracted,
+      },
+      "activity-outside-any-lane": {
+        summary:
+          "An activity in no lane. The containing-lane question cannot be asked about it, so it is reported " +
+          "as UNDETERMINED rather than counted as passing.",
+        entries: r.orphans,
+      },
+    },
+  });
+}
+
+/**
+ * Bean `bo44`'s four states over a report. Zero diagrams is `unknown`; any of
+ * the four families — an activity in no lane included, as the writer has
+ * always failed on it — is a finding.
+ */
+export function judgeLaneDocumentation(r: LaneReport): Judgement {
+  return judgementOf({
+    failing: r.undocumented.length + r.unnamed.length + r.unextracted.length + r.orphans.length,
+    undetermined: r.diagrams === 0,
+  });
+}
+
+if (import.meta.main && judging()) {
+  // Judge mode: compute, judge, write NOTHING (bean `bo44`).
+  const GATE = "check:lane-documentation";
+  const usage = judgeUsage(GATE, process.argv.slice(2), []);
+  if (usage !== undefined) process.exit(usage);
+  let jr: LaneReport;
+  try {
+    jr = checkLanes();
+  } catch (e) {
+    process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+  }
+  for (const u of jr.undocumented.slice(0, 12)) {
+    console.error(`  ✗ ${u.file}#${u.lane}  ${u.name ?? "(unnamed)"}  — undocumented`);
+  }
+  if (jr.undocumented.length > 12) console.error(`  … and ${jr.undocumented.length - 12} more undocumented`);
+  for (const u of jr.unnamed) console.error(`  ✗ ${u.file}#${u.lane}  has no name`);
+  for (const u of jr.unextracted) console.error(`  ✗ ${JSON.stringify(u)}  not extracted`);
+  for (const o of jr.orphans) console.error(`  ✗ ${JSON.stringify(o)}  is in no lane`);
+  process.exit(
+    concludeJudgement({
+      gate: GATE,
+      judgement: judgeLaneDocumentation(jr),
+      detail:
+        jr.diagrams === 0
+          ? "no .bpmn diagrams found — every count would be vacuous"
+          : `${jr.diagrams} diagram(s), ${jr.lanes} lane(s): ${jr.undocumented.length} undocumented, ` +
+            `${jr.unnamed.length} unnamed, ${jr.unextracted.length} not extracted, ${jr.orphans.length} activit(ies) in no lane`,
+      ...(jr.diagrams === 0
+        ? {}
+        : {
+            committed: {
+              root: INSTANCE_ROOT,
+              stem: "lane-documentation",
+              fresh: laneDocumentationDocument(jr),
+              writer: GATE,
+            },
+          }),
+    }),
+  );
+}
+
 if (import.meta.main) {
   const r = checkLanes();
 
@@ -344,48 +456,7 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  writeQaResult(
-    INSTANCE_ROOT,
-    "lane-documentation",
-    buildQaResult({
-      script: "cat-harness/scripts/check-lane-documentation.ts",
-      scriptAbsPath: resolve(import.meta.dir, "check-lane-documentation.ts"),
-      subject: { kind: "corpus", id: "bpmn-lanes" },
-      families: {
-        "undocumented-lane": {
-          summary:
-            "A lane containing at least one activity, carrying a `name` but no `<bpmn:documentation>`. " +
-            "A reader meeting the task cannot learn what the lane is, and the glossary has a label with no definition.",
-          entries: r.undocumented,
-        },
-        "lane-without-name": {
-          summary:
-            "A lane containing an activity, with no usable `name`. The glossary term has no LABEL — a " +
-            "separate failure from having no definition, so a fix for one is not read as a fix for the other.",
-          entries: r.unnamed,
-        },
-        "lane-string-not-extracted": {
-          summary:
-            "A lane `name` or `<documentation>` the extractor does not produce a msgid for — so no translator " +
-            "could ever see it, in any locale. This asks about EXTRACTION, never about a translation existing: " +
-            "catalogues here ship with an empty `msgstr` awaiting a person, and gating on that would be a gate " +
-            "on somebody else's unfinished work. It asks `extractBpmn` rather than searching a `.pot`'s bytes, " +
-            "because gettext wraps a long msgid across quoted lines and escapes every `\"` — a substring search " +
-            "reported 13 correctly-extracted lanes as missing on 2026-09-21, and a false finding is worse than " +
-            "no check. WHETHER A TEMPLATE ON DISK CARRIES IT is a different question, owned by " +
-            "`translate-bpmn --check`; for the three `bootstrap/` diagrams that check does not scan, it is " +
-            "bean `j28g` and awaits a ruling.",
-          entries: r.unextracted,
-        },
-        "activity-outside-any-lane": {
-          summary:
-            "An activity in no lane. The containing-lane question cannot be asked about it, so it is reported " +
-            "as UNDETERMINED rather than counted as passing.",
-          entries: r.orphans,
-        },
-      },
-    }),
-  );
+  writeQaResult(INSTANCE_ROOT, "lane-documentation", laneDocumentationDocument(r));
 
   if (!process.argv.includes("--json")) {
     for (const u of r.undocumented.slice(0, 12)) {

@@ -1,0 +1,5 @@
+{
+  "$schema": "concern-groups/v1",
+  "_comment": "The concern groups this instance's diagrams sit in, by code from code-lists/concern-group.json (placement PR3, bean 63wl). A DMN sits in `<group>/decisions/`, beside the diagrams whose gateways read it, so a `decision ref=\"decisions/...\"` stays relative to its caller. A higher instance's same-named `processes/<group>/` is a MEMBER of the group declared here (bean 1g4s, option A); `conduct` has no harness diagram, so core declares it.",
+  "groups": ["content", "kg", "library", "process", "sdlc", "ui"]
+}

@@ -315,6 +315,34 @@
       "status": "candidate"
     },
     {
+      "id": "dublin-core-render.dctermsmapping.range",
+      "prefLabel": "DctermsMapping.range",
+      "definition": "`literal` when DCMI gives the term the range `rdfs:Literal` or gives no range and the value is prose; `resource` when the range is a class (Agent, Location, LinguisticSystem, …) or DCMI says the term is \"intended to be used with non-literal values\".",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.range",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-render.dctermsmapping.ses",
+      "prefLabel": "DctermsMapping.ses",
+      "definition": "A syntax encoding scheme the values are in, by the field's own name. Becomes a datatype (JSON-LD) or `xsi:type` (XML).",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ses",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-render.dctermsmapping.term",
+      "prefLabel": "DctermsMapping.term",
+      "definition": "The local name under `http://purl.org/dc/terms/`.",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.term",
+      "status": "candidate"
+    },
+    {
+      "id": "dublin-core-render.dctermsmapping.ves",
+      "prefLabel": "DctermsMapping.ves",
+      "definition": "A vocabulary encoding scheme the values are members of. Becomes `dcam:memberOf` (JSON-LD) or `xsi:type` (XML).",
+      "source": "folio-assistant-core/schemas/dublin-core-render.ts#DctermsMapping.ves",
+      "status": "candidate"
+    },
+    {
       "id": "dublin-core.dcfieldschema.schema",
       "prefLabel": "DcFieldSchema.schema",
       "definition": "The namespace prefix. `dc` throughout the measured record; DSpace also mints `dcterms`, `local` and others.",
@@ -354,293 +382,6 @@
       "prefLabel": "DublinCoreRecordSchema.provenance",
       "definition": "Where this record was read from, and when. A metadata record with no provenance is the `source: null` defect bean `r1lz` was opened over, wearing a different hat.",
       "source": "folio-assistant-core/schemas/dublin-core.ts#DublinCoreRecordSchema.provenance",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.bytes",
-      "prefLabel": "ExtractedAssetSchema.bytes",
-      "definition": "Uncompressed size in bytes, from the container's index.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.bytes",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.extractedbecause",
-      "prefLabel": "ExtractedAssetSchema.extractedBecause",
-      "definition": "Why this one entry was extracted, when one was.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.extractedBecause",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.localpath",
-      "prefLabel": "ExtractedAssetSchema.localPath",
-      "definition": "Where the entry was written, IF it was written.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.localPath",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.mediatype",
-      "prefLabel": "ExtractedAssetSchema.mediaType",
-      "definition": "Media type.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.mediaType",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.modifiedat",
-      "prefLabel": "ExtractedAssetSchema.modifiedAt",
-      "definition": "The entry's own timestamp, as the container records it.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.modifiedAt",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.path",
-      "prefLabel": "ExtractedAssetSchema.path",
-      "definition": "Path INSIDE the container, exactly as the container spells it.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.path",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractedassetschema.sha256",
-      "prefLabel": "ExtractedAssetSchema.sha256",
-      "definition": "sha256 of the entry's bytes, when it was read rather than indexed.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractedAssetSchema.sha256",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractionschema.assets",
-      "prefLabel": "ExtractionSchema.assets",
-      "definition": "Every entry the container indexes.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.assets",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractionschema.capturedat",
-      "prefLabel": "ExtractionSchema.capturedAt",
-      "definition": "When the CONTAINER'S CONTENTS were produced — the capture moment.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.capturedAt",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractionschema.container",
-      "prefLabel": "ExtractionSchema.container",
-      "definition": "The container this describes, repo-relative.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.container",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractionschema.omitted",
-      "prefLabel": "ExtractionSchema.omitted",
-      "definition": "Entries deliberately not listed, and why.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.omitted",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractionschema.producer",
-      "prefLabel": "ExtractionSchema.producer",
-      "definition": "The tool that produced the container, verbatim.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.producer",
-      "status": "candidate"
-    },
-    {
-      "id": "extraction.extractionschema.readat",
-      "prefLabel": "ExtractionSchema.readAt",
-      "definition": "When THIS record was written — a fact about the reading, not the file.",
-      "source": "folio-assistant-core/schemas/extraction.ts#ExtractionSchema.readAt",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.dakoverlayschema.codecount",
-      "prefLabel": "DakOverlaySchema.codeCount",
-      "definition": "Number of codes, for a ValueSet.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema.codeCount",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.dakoverlayschema.displays",
-      "prefLabel": "DakOverlaySchema.displays",
-      "definition": "`schemas/<name>.displays.json` — display strings, keyed by code.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema.displays",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.dakoverlayschema.jsonld",
-      "prefLabel": "DakOverlaySchema.jsonld",
-      "definition": "`<name>.jsonld` — the JSON-LD vocabulary, published at the IG ROOT, not under `schemas/`.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema.jsonld",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.dakoverlayschema.openapi",
-      "prefLabel": "DakOverlaySchema.openapi",
-      "definition": "`schemas/<name>.openapi.json` — this ARTEFACT's OpenAPI fragment. Never `openapi/openapi.json`; see the module doc.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema.openapi",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.dakoverlayschema.propertycount",
-      "prefLabel": "DakOverlaySchema.propertyCount",
-      "definition": "Number of properties, for a logical model.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema.propertyCount",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.dakoverlayschema.schema",
-      "prefLabel": "DakOverlaySchema.schema",
-      "definition": "`schemas/<name>.schema.json` — the JSON Schema for this artefact.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#DakOverlaySchema.schema",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactindexschema.builtat",
-      "prefLabel": "FhirArtifactIndexSchema.builtAt",
-      "definition": "The IG's own build timestamp, verbatim from `package.manifest.json`. Not reformatted: a transcription that normalises is no longer a transcription.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.builtAt",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactindexschema.canonicalbase",
-      "prefLabel": "FhirArtifactIndexSchema.canonicalBase",
-      "definition": "The canonical base every artefact's canonical URL extends, e.g. `http://smart.who.int/trust`.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.canonicalBase",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactindexschema.dakunbound",
-      "prefLabel": "FhirArtifactIndexSchema.dakUnbound",
-      "definition": "Sidecars an enumeration listed that bound to no artefact. Absent means none; an empty array is not written. See {@link UnboundSidecarSchema} for why these are recorded rather than warned about and forgotten.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.dakUnbound",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactindexschema.id",
-      "prefLabel": "FhirArtifactIndexSchema.id",
-      "definition": "Instance id — the directory this index lives in, e.g. `smart-trust`.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactindexschema.packageid",
-      "prefLabel": "FhirArtifactIndexSchema.packageId",
-      "definition": "NPM-style package id, e.g. `smart.who.int.trust`.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.packageId",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactschema.canonical",
-      "prefLabel": "FhirArtifactSchema.canonical",
-      "definition": "FHIR canonical URL. Absent for examples and instances; see the doc above.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema.canonical",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactschema.category",
-      "prefLabel": "FhirArtifactSchema.category",
-      "definition": "Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema.category",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.fhirartifactschema.key",
-      "prefLabel": "FhirArtifactSchema.key",
-      "definition": "Stable within the index: `<resourceType>/<id>`, which is unique where a bare id is not.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactSchema.key",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.igsourceschema.of",
-      "prefLabel": "IgSourceSchema.of",
-      "definition": "The URI the artefacts are published AT — what a `published` URL is resolved against.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema.of",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.igsourceschema.readat",
-      "prefLabel": "IgSourceSchema.readAt",
-      "definition": "When the source was read. An index with no read date cannot be told from a current one.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema.readAt",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.igsourceschema.revision",
-      "prefLabel": "IgSourceSchema.revision",
-      "definition": "Git revision of the branch read, when the source was a checkout. Absent means not established.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IgSourceSchema.revision",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.indexprovenanceschema.artifactshtml",
-      "prefLabel": "IndexProvenanceSchema.artifactsHtml",
-      "definition": "`artifacts.html` — the ONLY source of an artefact's editorial category.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.artifactsHtml",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.indexprovenanceschema.canonicals",
-      "prefLabel": "IndexProvenanceSchema.canonicals",
-      "definition": "`canonicals.json` — the spine for anything with a canonical URL.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.canonicals",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.indexprovenanceschema.dakenumerations",
-      "prefLabel": "IndexProvenanceSchema.dakEnumerations",
-      "definition": "The DAK API enumeration schemas, when present.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.dakEnumerations",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.indexprovenanceschema.packageindex",
-      "prefLabel": "IndexProvenanceSchema.packageIndex",
-      "definition": "`package.tgz` -> `package/.index.json` — the spine for everything else. Lossy; see the module doc.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.packageIndex",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.indexprovenanceschema.packagemanifest",
-      "prefLabel": "IndexProvenanceSchema.packageManifest",
-      "definition": "`package.manifest.json` — package id, version, FHIR version, build date.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#IndexProvenanceSchema.packageManifest",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.jsonldcontextschema.binds",
-      "prefLabel": "JsonLdContextSchema.binds",
-      "definition": "Canonical URLs of the artefacts whose terms this context binds, where that could be established.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema.binds",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.representationschema.localpath",
-      "prefLabel": "RepresentationSchema.localPath",
-      "definition": "Instance-relative path, present iff these bytes were materialised.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#RepresentationSchema.localPath",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.unboundsidecarschema.enumeration",
-      "prefLabel": "UnboundSidecarSchema.enumeration",
-      "definition": "Which enumeration listed it.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.enumeration",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.unboundsidecarschema.filename",
-      "prefLabel": "UnboundSidecarSchema.filename",
-      "definition": "The sidecar file the enumeration named.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.filename",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.unboundsidecarschema.reason",
-      "prefLabel": "UnboundSidecarSchema.reason",
-      "definition": "Why no artefact matched: the strategies tried, in order.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.reason",
-      "status": "candidate"
-    },
-    {
-      "id": "fhir-artifact-index.unboundsidecarschema.title",
-      "prefLabel": "UnboundSidecarSchema.title",
-      "definition": "Its title, as the enumeration gives it — usually the only human handle on what was missed.",
-      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.title",
       "status": "candidate"
     },
     {
@@ -742,6 +483,76 @@
       "status": "candidate"
     },
     {
+      "id": "kg-materialization.kgdecisionsschema.decidedby",
+      "prefLabel": "KgDecisionsSchema.decidedBy",
+      "definition": "Who decided, applied to every gate that does not name its own `decidedBy`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.decidedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgdecisionsschema.expiresat",
+      "prefLabel": "KgDecisionsSchema.expiresAt",
+      "definition": "When the copy expires; recorded as `expiresAt`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.expiresAt",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgdecisionsschema.maxbytes",
+      "prefLabel": "KgDecisionsSchema.maxBytes",
+      "definition": "The size budget, in bytes. Absent: {@link DEFAULT_MAX_BYTES}.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgDecisionsSchema.maxBytes",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgfilerecordschema.name",
+      "prefLabel": "KgFileRecordSchema.name",
+      "definition": "Path relative to the part's `tree/` (or the licence's own name).",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgFileRecordSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.files",
+      "prefLabel": "KgMaterializationRecordSchema.files",
+      "definition": "A held SUBGRAPH: one record per file under `tree/`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.files",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.licence",
+      "prefLabel": "KgMaterializationRecordSchema.licence",
+      "definition": "The upstream licence, copied beside the tree so its notice travels with the copy.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.licence",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.ref",
+      "prefLabel": "KgMaterializationRecordSchema.ref",
+      "definition": "The pin the part was asked at — the subscription's `ref` when it was written.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.refusal",
+      "prefLabel": "KgMaterializationRecordSchema.refusal",
+      "definition": "Present iff the part stayed referenced.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.refusal",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgmaterializationrecordschema.subscription",
+      "prefLabel": "KgMaterializationRecordSchema.subscription",
+      "definition": "The `subscriptions[].id` this part belongs to.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgMaterializationRecordSchema.subscription",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgrefusalschema.purposemissing",
+      "prefLabel": "KgRefusalSchema.purposeMissing",
+      "definition": "A purpose is asked FIRST; a part with none cannot have its gates judged.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgRefusalSchema.purposeMissing",
+      "status": "candidate"
+    },
+    {
       "id": "library-ref.libraryref.instance",
       "prefLabel": "LibraryRef.instance",
       "definition": "The DECLARED NAME of the instance holding the corpus — not a path.",
@@ -767,13 +578,6 @@
       "prefLabel": "CompiledInputsSchema.toolchain",
       "definition": "The compiler and its version: `leanprover/lean4:v4.24.0`, `sushi 3.12.0`.",
       "source": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema.toolchain",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.fixityschema.verifiedat",
-      "prefLabel": "FixitySchema.verifiedAt",
-      "definition": "When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages.",
-      "source": "folio-assistant-core/schemas/materialization.ts#FixitySchema.verifiedAt",
       "status": "candidate"
     },
     {

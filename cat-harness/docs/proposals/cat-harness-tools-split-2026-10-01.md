@@ -2,7 +2,7 @@
 
 **Status:** plan for review. Nothing in it has been done. It follows the
 `kg-separation` method (`cat-harness/skills/kg/graph-management/kg-separation.md`,
-`processes/kg-separation.bpmn`, stages 0–13) and the bootstrap / bootstrap-tools
+`processes/kg/kg-separation.bpmn`, stages 0–13) and the bootstrap / bootstrap-tools
 worked example (bean `xsqm`, `fsh-guts/retired/bootstrap-split.md`).
 
 **Checkout measured:** origin/main at `609b7532ee3` (2026-10-01), in a throwaway

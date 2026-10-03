@@ -22,9 +22,15 @@ import {
   toAsciiJson,
 } from "../ensure-landing-sticky.js";
 import { LandingStickySchema } from "../../schemas/landing-sticky.js";
-import { contributingRoots, declaredContributions, initiationFromArgv } from "../ensure-landing-sticky.js";
+import {
+  contributingRoots,
+  declaredContributions,
+  initiationFromArgv,
+  readLandingStickies,
+  readerTextProblems,
+} from "../ensure-landing-sticky.js";
 import { InitiationSchema } from "../../schemas/sticky-contribution.js";
-import { declarationPathIn } from "../../schemas/cat-harness.js";
+import { declarationPathIn, instanceRootFor } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /**
@@ -528,5 +534,86 @@ describe("a sticky is an initiation RECEIPT", () => {
       harness: "boot", phase: "complete", status: "failed", detail: "why",
     });
     expect(initiationFromArgv(["--check"])).toBeUndefined();
+  });
+});
+
+/**
+ * A harness sticky shows the same text as the landing page: bean `ob3m` finding 3.
+ *
+ * The owner, 2026-10-01: *"Stickies show the same text as the landing page"*.
+ * The landing's harness section shows the declaration's `summary` and its
+ * `alsoWritten` spellings. Before this, a sticky read the declaration's
+ * `description`, and the folio-assistant card opened with the reason its name
+ * was chosen.
+ */
+describe("a harness sticky shows the landing's text, not the author's (ob3m 3)", () => {
+  const RATIONALE = "NAMED `a-folio-checkout` because two declarations shared a name.";
+  const declWith = (bodyFrom: "summary" | "description") => `{
+  "name": "a-folio",
+  "summary": "A one-line gloss for a reader.",
+  "alsoWritten": ["a-f0lio", "a@folio"],
+  "description": ${JSON.stringify(RATIONALE)},
+  "stickies": [
+    { "id": "landing", "order": 10, "theme": { "themeId": "engineer" }, "bodyFrom": "${bodyFrom}" }
+  ],
+  "directories": []
+}
+`;
+
+  test("`bodyFrom: summary` writes the summary and the Also written list, and no rationale", () => {
+    const root = instance(declWith("summary"));
+    ensureLandingSticky(root, "2026-10-01T00:00:00.000Z");
+    const card = LandingStickySchema.parse(
+      JSON.parse(readFileSync(join(root, "folio", stickyFile("landing")), "utf8")),
+    );
+    expect(card.comment).toBe("A one-line gloss for a reader.\n\nAlso written: `a-f0lio`, `a@folio`");
+    expect(card.comment).not.toContain("NAMED");
+    expect(readerTextProblems(root)).toEqual([]);
+  });
+
+  test("a card that shows the description when a summary is declared is a finding", () => {
+    const root = instance(declWith("description"));
+    ensureLandingSticky(root, "2026-10-01T00:00:00.000Z");
+    const problems = readerTextProblems(root);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain(join("folio", stickyFile("landing")));
+    expect(problems[0]).toContain('use `bodyFrom: "summary"`');
+  });
+
+  test("no summary falls back to the description, as the landing does", () => {
+    const root = instance(`{
+  "name": "a-folio",
+  "description": "Only a description.",
+  "stickies": [
+    { "id": "landing", "order": 10, "theme": { "themeId": "engineer" }, "bodyFrom": "summary" }
+  ],
+  "directories": []
+}
+`);
+    ensureLandingSticky(root, "2026-10-01T00:00:00.000Z");
+    const card = JSON.parse(readFileSync(join(root, "folio", stickyFile("landing")), "utf8")) as { comment: string };
+    expect(card.comment).toBe("Only a description.");
+    expect(readerTextProblems(root)).toEqual([]);
+  });
+
+  test("the live board: every harness card opens with its declaration's summary", () => {
+    const root = instanceRootFor(join(import.meta.dir, ".."));
+    expect(readerTextProblems(root)).toEqual([]);
+    const cards = new Map(readLandingStickies(root).map((s) => [s.id, s]));
+    let judged = 0;
+    for (const d of declaredContributions(root)) {
+      if (d.contribution.bodyFrom === undefined || d.summary === undefined) continue;
+      const card = cards.get(d.contribution.id);
+      expect(card).toBeDefined();
+      expect(card!.comment.startsWith(d.summary)).toBe(true);
+      for (const w of d.alsoWritten ?? []) expect(card!.comment).toContain(`\`${w}\``);
+      if (d.description !== undefined && d.description !== d.summary) {
+        expect(card!.comment).not.toContain(d.description);
+      }
+      judged += 1;
+    }
+    // folio-assistant and cat-harness both declare a summary. A count of zero
+    // would mean this loop judged nothing and passed over it.
+    expect(judged).toBeGreaterThanOrEqual(2);
   });
 });

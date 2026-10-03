@@ -85,7 +85,7 @@ classDiagram
       sources [1..*] Source[]
       rules [1..*] Rule[]
       overlaySeverity [0..1] critical | major | minor
-      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification~
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
       provenance [1] assertion | evidence | house
       extends [0..1] object
       activeIn [0..1] object

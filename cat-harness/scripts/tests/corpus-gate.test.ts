@@ -25,6 +25,7 @@ function labelFor(tsPath: string): string | undefined {
 }
 import { drainSubprocess } from "./helpers";
 import { loadProcessModel } from "../../src/workflow/process-model";
+import { workflowFile } from "../known-skills.ts";
 import { complete, startInstance } from "../../src/workflow/instance";
 import { instanceId, saveInstance } from "../../src/workflow/store";
 
@@ -60,7 +61,7 @@ const block = (slug: string, label: string): string => {
 
 /** Drive a real instance to the point where the commit step is enabled. */
 const authorise = async (label: string, decision = "accept"): Promise<void> => {
-  const model = await loadProcessModel(join(INSTANCE_ROOT, "processes/editing-hci-validation.bpmn"));
+  const model = await loadProcessModel(workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn"));
   const state = startInstance(model, { id: instanceId(model.id, label), subject: label });
   // CallActivity_Evidence sits between claiming the bean and drafting: a
   // recommendation gathers its evidence BEFORE the change is written. It is a
@@ -126,7 +127,7 @@ describe("refusing by default", () => {
   test("an instance that has not reached the editor's decision is refused", async () => {
     const f = block("carbon", "prop:carbon");
     const model = await loadProcessModel(
-      join(INSTANCE_ROOT, "processes/editing-hci-validation.bpmn"),
+      workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn"),
     );
     const state = startInstance(model, {
       id: instanceId(model.id, "prop:carbon"),
@@ -162,7 +163,7 @@ describe("allowing what the process authorised", () => {
   test("a block already committed in an earlier round stays allowed", async () => {
     const f = block("carbon", "prop:carbon");
     const model = await loadProcessModel(
-      join(INSTANCE_ROOT, "processes/editing-hci-validation.bpmn"),
+      workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn"),
     );
     await authorise("prop:carbon");
     const state = (await import("../../src/workflow/store")).loadInstance(
@@ -209,7 +210,7 @@ describe("it does not fail open", () => {
     mkdirSync(join(platform, "skills", "pkg"), { recursive: true });
     writeFileSync(
       join(platform, "processes/editing-hci-validation.bpmn"),
-      await Bun.file(join(INSTANCE_ROOT, "processes/editing-hci-validation.bpmn")).text(),
+      await Bun.file(workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn")).text(),
     );
     // A package holds a skill: policies are read from discovered packages (bean 9umr).
     writeFileSync(join(platform, "skills/pkg/a-skill.md"), "# A skill\n");

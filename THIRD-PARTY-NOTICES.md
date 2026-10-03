@@ -46,7 +46,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### `agent-skills/library/mcp-2026-specification-2026-07-28/` — Apache-2.0 and MIT
+### `cat-harness/library/mcp-2026-specification-2026-07-28/` — Apache-2.0 and MIT
 
 From `modelcontextprotocol/modelcontextprotocol` at
 `046fa30efd374370afb87ef830bd788eac5f217e`, `docs/specification/2026-07-28/`.
@@ -81,7 +81,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### `agent-skills/library/hmans-2026-beans-readme/` — Apache-2.0
+### `cat-harness/library/hmans-2026-beans-readme/` — Apache-2.0
 
 From `hmans/beans` at `99260bf1a6bec3e395b629406b737f6418653a17`, `README.md`.
 Licensed under the Apache License, Version 2.0 (see `LICENSE`). The project

@@ -6,7 +6,7 @@ user_invocable: true
 
 # /repo-conversion — folio-assistant over a repo that already has a life
 
-Process: [`processes/getting-started.bpmn`](../../../processes/getting-started.bpmn),
+Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../../../folio-assistant-core/processes/conduct/getting-started.bpmn),
 `Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
 Scanner: `bun run cat-harness/scripts/scan-repo-content.ts`.
 
@@ -80,7 +80,7 @@ preference; a broken relative link in somebody's README is a defect.
 ## 3. Dispatch the ingestion
 
 Ingestion proper is `document-intake` (folio-assistant-core)
-and `processes/document-ingestion.bpmn`. What this skill decides is *how
+and `processes/library/document-ingestion.bpmn`. What this skill decides is *how
 much parallelism*, and it is a question for the author because it spends their
 tokens:
 

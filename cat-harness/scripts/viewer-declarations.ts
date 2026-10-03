@@ -117,8 +117,12 @@ export function viewerPages(repoRoot: string, files: readonly string[]): ViewerP
     } catch {
       continue;
     }
-    const renders = md ? frontMatterList(text, "renders") : metaRenders(text);
-    const renderedBy = md ? frontMatterScalar(text, "rendered-by") : metaRenderedBy(text);
+    // A THEMED `.html` page (Jekyll front matter, no `<head>` of its own —
+    // `/todos/`, #1906) declares in its front matter, the same as markdown.
+    // Asked of the content: the extension says nothing about which it is.
+    const fm = md || text.startsWith("---\n");
+    const renders = fm ? frontMatterList(text, "renders") : metaRenders(text);
+    const renderedBy = fm ? frontMatterScalar(text, "rendered-by") : metaRenderedBy(text);
     if (renders.length > 0) out.push({ page: f, renders, ...(renderedBy ? { renderedBy } : {}) });
   }
   return out;

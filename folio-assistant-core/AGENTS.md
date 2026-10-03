@@ -19,4 +19,6 @@ cannot serve.
 
 **Before adding anything here**, read [`README.md`](README.md) — in particular
 the three materialisation states, which have no default and are checked rather
-than assumed.
+than assumed. The state NAMES (and fixity) are the one owner-ruled
+exception to the rule above: they live in `cat-harness/schemas/materialization-state.ts`
+(bean `tlat`), and the gates that judge content stay here.

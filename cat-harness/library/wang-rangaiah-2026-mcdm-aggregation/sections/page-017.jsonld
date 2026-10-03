@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/wang-rangaiah-2026-mcdm-aggregation/sections/page-017",
   "@type": [
     "doco:Section"
@@ -12,7 +17,7 @@
     "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p017-1",
     "library/wang-rangaiah-2026-mcdm-aggregation/blocks/figure-img-p017-2"
   ],
-  "derivedFrom": "library/wang-rangaiah-2026-mcdm-aggregation/manifest",
-  "sourceDocument": "library/wang-rangaiah-2026-mcdm-aggregation/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/wang-rangaiah-2026-mcdm-aggregation/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/wang-rangaiah-2026-mcdm-aggregation/manifest.jsonld",
   "provenance": "ingested"
 }

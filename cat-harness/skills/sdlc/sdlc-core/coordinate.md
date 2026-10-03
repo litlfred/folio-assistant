@@ -75,6 +75,11 @@ commit.
   store, and the boundary of that inference, is
   [`bean-coordination`](bean-coordination.md) §"Where a sibling
   session is visible from" — not restated here.
+- **When you START any new unit of work — before the first edit.** A
+  new story, epic, feature or task bean, an issue, CRDM Phase 6, a
+  workplan tranche, or a handover pickup runs the collision review in
+  §"Starting new work" below, scaled to its blast radius, and records
+  it in the workplan bean. Owner, 2026-10-02 (#1885).
 
 ## Inputs
 
@@ -329,6 +334,132 @@ and both were competent; the second was free to skip. Before re-deriving a
 measurement, check whether a sibling's **pushed commit** already carries it:
 an open PR's diff is a fact, and reading it costs one call against a session's
 worth of re-measurement.
+
+## Starting new work — a collision review, recorded before the first edit (STRICT)
+
+<a id="before-a-platform-refactor"></a>
+Formerly §"Before a platform refactor". The rule began there and now covers
+the start of any unit of SDLC work; citations of the old title land here.
+
+Owner, 2026-10-02, on issue #1885, verbatim:
+
+> *"(in genreal update agent-agent coorindation/hadover skills - if you are
+> working on a refactor of the platform, review active agents/beans for impact
+> and coordiante)"*
+
+Owner, 2026-10-02, later the same day, verbatim:
+
+> *"Before any platform refactor, a session must now review the open PR-->
+> genrealizes to parts of the SDLC / begining on a new story/epic or so..."*
+
+**This section is the rule's only home.** `bean-coordination`,
+`session-intent`, `continual-progress`, `opening-brief`, `issue-working` and
+`crdm-requirements-workflow` point here. They do not restate it.
+
+### When it runs — the start of any new unit of work
+
+Run the review once, before the first edit, whenever you start:
+
+- a new story, epic, feature or task bean;
+- work on an issue, before you announce the branch;
+- CRDM Phase 6, implementation;
+- a new tranche of a workplan;
+- a pickup of someone else's work from a handover.
+
+A pickup runs its own review. The previous session's review is dated, and PRs
+may have opened since it was written.
+
+### How deep — scale the review to the blast radius
+
+The review is proportional. The question is how much other work your change
+can collide with, not how big your diff is.
+
+- **A platform refactor gets the full review: all five steps, with messages
+  to the owners.** A platform refactor is a change to something that many
+  pages, generators or open PRs depend on:
+  - shared layout and includes: `_includes/`, `docs-ui.css`, `docs-ui.js`,
+    the navbar;
+  - a generator whose output is committed or published, such as
+    `gen-ig-pages.ts` or `gen-navbar-include.ts`;
+  - a schema, a BPMN process, a workflow or a gate that other work is
+    checked against.
+
+  A ten-line change to a shared include collides with every PR that
+  regenerates it.
+- **A small, local story still runs steps 1 and 2, quickly.** When they find
+  nothing, record "no overlap found" in the bean, together with what you
+  checked: the PR search, the bean search, and the terms you used. That takes
+  about two minutes and one bean note.
+- **Only an overlap triggers steps 3 and 4.** If steps 1 and 2 find a
+  sibling on your files or your subject, name its owner and message it,
+  whatever the size of your change.
+
+"No overlap found" with no record of what was checked is not a review. The
+next session cannot tell it from a review that was skipped.
+
+The bean trigger above catches a sibling working on the same **subject**.
+§"The collision surface is FILES" catches two sessions editing the same
+**file** from different subjects. A refactor causes both kinds at once, which
+is why it gets the full review and does not rely on either trigger.
+
+### The five steps, in order, before any file is edited
+
+1. **List the open PRs and the files they change.** Use
+   `gh pr list --state open --json number,title,headRefName,files`, or
+   `pull_request_read` with the `get_files` method for each PR. Intersect the
+   result with the files your work will touch. A PR that changes only
+   **generated** files you will also regenerate is not a collision; say so
+   and move on.
+2. **Scan the `in-progress` beans for overlapping scope.** Use
+   `beans list --status in-progress --search <term>`, and search the subject
+   as well as the ids: the file names, the generator, the page type. A bean id finds nothing
+   when the overlapping work has no bean of its own; see
+   [`bean-coordination`](bean-coordination.md) §"The trigger is STARTING WORK".
+3. **Name the owning sessions.** Use `list_sessions`, the `Claude-Session:`
+   trailers on each PR's commits, and `bun run sessions --since <window>`.
+   [`bean-coordination`](bean-coordination.md) §"Where a sibling session is
+   visible from" says how far that inference goes.
+4. **Message each owner with your intent and your asks.** State what you will
+   change, phase by phase, and the files each phase touches. Then ask two
+   things: which order do we land in, and who owns each overlapping file.
+   Send it through a channel that actually reaches them; §"What actually
+   reaches a sibling" says which ones do. A PR comment also leaves a durable
+   copy.
+5. **Record the review in the workplan bean before editing.** Write down each
+   overlapping session, its PRs and beans, the files you share, and the phases
+   affected; or "no overlap found" and what you checked. A review that exists
+   only in the chat is gone when the container goes, and the next session has
+   to run it again.
+
+**Phases that overlap a sibling wait.** They wait until the sibling has agreed
+an order, or until its overlapping PR has landed. Phases that touch none of the
+sibling's files can go ahead, and the review says which ones those are.
+
+### Worked example — #1885, bean `gp2f`
+
+This is the full-depth case: a platform refactor, with overlaps found and
+owners messaged.
+
+The refactor moves the per-page nav, the harness bar, icons, scripts and the
+IG chrome CSS into shared cached assets. It touches the layout of every page
+on the site. Before any edit, the review found active sibling work on **every
+layout file the plan needed**:
+
+| sibling | its PRs | shared files | `gp2f` phases affected |
+|---|---|---|---|
+| navbar session (bean `ob3m`) | #1804, #1805, #1808, #1819 | `docs-ui.css`, `docs-ui.js`, `_includes/generated/navbar-footer.html`, `harness_details.html`, `head_custom.html`, `harness-tiles.md` | B, C, D, E |
+| fhir-ast session (bean `wnhh`) | #1816 | `fhir-harness/scripts/gen-ig-pages.ts` | A |
+| smart-trust IG session | #1766 | the `gen-ig-pages` area | A |
+
+If the review had been skipped, five PRs would have been rebased into a
+refactor of the files they were editing.
+
+What happened instead:
+
+- The review went into `gp2f` before any edit.
+- The three owning sessions were messaged with the plan and asked for an order.
+- The only work that started was work that touches none of their files: this
+  section, and a read-only baseline measurement of page sizes.
 
 ## Related skills
 

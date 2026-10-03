@@ -79,7 +79,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
@@ -93,6 +93,45 @@ function git(repoRoot: string, args: string[]): string {
 export function unmergedPaths(repoRoot: string): string[] {
   const out = git(repoRoot, ["diff", "--name-only", "--diff-filter=U"]);
   return out.split("\n").map((s) => s.trim()).filter((s) => s.length > 0);
+}
+
+/** The stages git holds for an unmerged path (1 base, 2 ours, 3 theirs). */
+export function unmergedStages(repoRoot: string, path: string): Set<number> {
+  const out = new Set<number>();
+  for (const line of git(repoRoot, ["ls-files", "-u", "--", path]).split("\n")) {
+    const stage = Number(line.split(/\s+/)[2]);
+    if (stage) out.add(stage);
+  }
+  return out;
+}
+
+/**
+ * Which side stands in for a resolved sidecar until regeneration rewrites it.
+ *
+ * Both sides present: either will do, and this has always taken ours. ONE side
+ * missing is a modify/delete conflict, and `checkout --ours` throws on it
+ * ("does not have our version") — the qa-sidecar half of issue #1854, the
+ * same crash `takeBase` in `merge-base.ts` fixed for take-base paths. Then
+ * the side being merged in (the base, "theirs") decides, as it does there:
+ * its copy when it kept the file, its deletion when it removed it. Taking a
+ * deletion loses nothing the guard protects — `plan` has already refused any
+ * file whose surviving side carries a non-script verdict — and regeneration
+ * recreates the sidecar if its subject is still audited.
+ */
+export function provisionalSide(stages: ReadonlySet<number>): "ours" | "theirs" | "delete" {
+  if (stages.has(2) && stages.has(3)) return "ours";
+  return stages.has(3) ? "theirs" : "delete";
+}
+
+/** Apply `provisionalSide` to one path and stage the result. */
+export function takeProvisionalSide(repoRoot: string, path: string): void {
+  const side = provisionalSide(unmergedStages(repoRoot, path));
+  if (side === "delete") {
+    git(repoRoot, ["rm", "-q", "--", path]);
+    return;
+  }
+  git(repoRoot, ["checkout", `--${side}`, "--", path]);
+  git(repoRoot, ["add", "--", path]);
 }
 
 /** How a file's two sides look to the guard. */
@@ -184,11 +223,31 @@ export interface Outcome {
   reason: string;
 }
 
-/** Decide, per conflicted path, without touching anything. */
-export function plan(repoRoot: string, qaDir: string, paths: readonly string[]): Outcome[] {
+/**
+ * Decide, per conflicted path, without touching anything.
+ *
+ * `qaDirs` is EVERY declared `qa` directory in the checkout, repo-relative,
+ * not only the root instance's — measured 2026-10-02 on #1822: a
+ * `who-iris/test/results/kg-qa/…` sidecar was classified `qa-sidecar` by
+ * `merge-conflict-patterns.ts`, handed here, and "left alone — outside the
+ * declared qa graph", because this walked `cat-harness/test/results/` only.
+ * merge-base then aborted on a conflict the pattern had promised to resolve.
+ */
+export function plan(repoRoot: string, qaDirs: string | readonly string[], paths: readonly string[]): Outcome[] {
+  const dirs = typeof qaDirs === "string" ? [qaDirs] : qaDirs;
   return paths.map((path) => {
-    if (!path.startsWith(qaDir)) {
-      return { path, action: "skip" as const, reason: `outside the declared \`qa\` graph (${qaDir})` };
+    if (!dirs.some((d) => path.startsWith(d))) {
+      return { path, action: "skip" as const, reason: `outside every declared \`qa\` graph (${dirs.join(", ")})` };
+    }
+    // A qa DIRECTORY holds more than sidecars: `test/results/README.md` is a
+    // generated README that `merge-conflict-patterns.ts` resolves by its own
+    // pattern. Measured 2026-10-02 on #1811 and #1830: it was scanned here as
+    // a sidecar, refused as "not valid JSON", and that refusal aborted
+    // merge-base on a conflict another pattern had already promised to
+    // resolve. Only a JSON file can be a sidecar; anything else is skipped and
+    // left to the pattern that names it (or refused there, if none does).
+    if (!path.endsWith(".json")) {
+      return { path, action: "skip" as const, reason: "not a JSON sidecar — left to the merge pattern that names it" };
     }
     const scan = scanConflict(repoRoot, path);
     if (scan.unreadable.length > 0) {
@@ -218,11 +277,12 @@ export function plan(repoRoot: string, qaDir: string, paths: readonly string[]):
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const qaAbs = directoryForGraph(ROOT, "qa");
-  if (qaAbs === undefined) {
-    // NOT a pass. An instance declaring no `qa` graph has no sidecars to
+  // Every instance in the checkout, nested ones included — see `plan`.
+  const qaAbsAll = [...new Set(instanceRootsIn(repoRoot).flatMap((inst) => directoriesForGraph(inst, "qa")))];
+  if (qaAbsAll.length === 0) {
+    // NOT a pass. A checkout declaring no `qa` graph has no sidecars to
     // resolve, and saying so differs from saying there was nothing to do.
-    console.log("qa-resolve-conflicts — this instance declares no `qa` graph, so nothing was considered");
+    console.log("qa-resolve-conflicts — no instance here declares a `qa` graph, so nothing was considered");
     process.exit(0);
   }
   // `directoryForGraph` returns an ABSOLUTE path; `git diff --name-only`
@@ -235,10 +295,11 @@ if (import.meta.main) {
   // **It failed OPEN**, which is the shape this whole command exists to
   // prevent, in the command itself. Found on its first real conflict, not by
   // a test — hence the guard below and the regression beside it.
-  const qaDir = relative(repoRoot, qaAbs).replace(/\/*$/, "") + "/";
-  if (!existsSync(qaAbs)) {
+  const qaDirs = qaAbsAll.map((a) => relative(repoRoot, a).replace(/\/*$/, "") + "/");
+  const missing = qaAbsAll.find((a) => !existsSync(a));
+  if (missing !== undefined) {
     console.error(
-      `qa-resolve-conflicts — the declared \`qa\` directory does not exist: ${qaAbs}\n` +
+      `qa-resolve-conflicts — a declared \`qa\` directory does not exist: ${missing}\n` +
         "  Everything would be reported as 'outside the graph', which is indistinguishable\n" +
         "  from having nothing to do. Refusing rather than exiting clean.",
     );
@@ -251,7 +312,7 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const outcomes = plan(repoRoot, qaDir, paths);
+  const outcomes = plan(repoRoot, qaDirs, paths);
   const resolve = outcomes.filter((o) => o.action === "resolve");
   const refuse = outcomes.filter((o) => o.action === "refuse");
   const skip = outcomes.filter((o) => o.action === "skip");
@@ -282,9 +343,9 @@ if (import.meta.main) {
 
   // Take either side. Which one does not matter: the regeneration below
   // overwrites it from the MERGED tree, and both sides are stale with respect
-  // to that tree by definition.
-  for (const o of resolve) git(repoRoot, ["checkout", "--ours", "--", o.path]);
-  git(repoRoot, ["add", "--", ...resolve.map((o) => o.path)]);
+  // to that tree by definition. A side that does not exist (modify/delete)
+  // cannot be taken — see `provisionalSide`.
+  for (const o of resolve) takeProvisionalSide(repoRoot, o.path);
 
   // Which generators. Read from the files themselves, then matched against
   // package.json — never guessed.
@@ -304,7 +365,9 @@ if (import.meta.main) {
   // every writer whose OUTPUT lives under the qa graph. Stated rather than
   // silent: this is the one place the mapping is not read from the data.
   if (wanted.size === 0 && unknown.size === 0) {
-    for (const s of ["kg:audit", "translation:block-qa"]) if (scripts[s] !== undefined) wanted.add(s);
+    // `kg:audit:all` too: a resolved sidecar may belong to a nested instance
+    // (#1822's was who-iris's), which the root-only `kg:audit` does not write.
+    for (const s of ["kg:audit", "kg:audit:all", "translation:block-qa"]) if (scripts[s] !== undefined) wanted.add(s);
   }
 
   for (const s of [...wanted].sort()) {
@@ -335,7 +398,10 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  git(repoRoot, ["add", "--", ...resolve.map((o) => o.path)]);
+  // A sidecar taken as a deletion and not recreated is already staged by
+  // `git rm`; naming it to `git add` would fail on a path that is gone.
+  const present = resolve.map((o) => o.path).filter((p) => existsSync(join(repoRoot, p)));
+  if (present.length > 0) git(repoRoot, ["add", "--", ...present]);
   console.log(`\n  ✓ ${resolve.length} sidecar(s) regenerated and staged.`);
   for (const o of refuse) console.log(`  ✗ ${o.path} left conflicted — ${o.reason}`);
   for (const o of skip) console.log(`  · ${o.path} left alone — ${o.reason}`);

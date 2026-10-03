@@ -52,7 +52,10 @@ function unbackedClaims(src: string): string[] {
   const t = triggers(src);
   const h = header(src);
   const out: string[] = [];
-  if (/\bPRs?\b|pull request/i.test(h) && !t.has("pull_request")) out.push("pull_request");
+  // `pull_request_target` receives the same PR events (and, unlike
+  // `pull_request`, fires on a conflicted PR — `merge-main.yml`, 2026-10-02).
+  if (/\bPRs?\b|pull request/i.test(h) && !t.has("pull_request") && !t.has("pull_request_target"))
+    out.push("pull_request");
   if (/\bon (each|every) (main )?(commit|push)|push to main|main commit/i.test(h) && !t.has("push"))
     out.push("push");
   // `schedule` is matched only in its TRIGGER senses ("on a schedule",
@@ -334,7 +337,8 @@ describe("workflow triggers match what their headers claim", () => {
     const dead: string[] = [];
     for (const f of FILES) {
       const src = readFileSync(join(DIR, f), "utf-8");
-      if (triggers(src).has("pull_request") || triggers(src).has("workflow_call")) continue;
+      const t = triggers(src);
+      if (t.has("pull_request") || t.has("pull_request_target") || t.has("workflow_call")) continue;
       if (!/github\.event\.pull_request/.test(src)) continue;
       if (src.includes("TRIGGERS, ACTUAL")) continue;
       dead.push(f);

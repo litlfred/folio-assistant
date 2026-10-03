@@ -91,11 +91,12 @@ const REPO_URL = (root: string): string | undefined => {
   return repoUrls.get(root);
 };
 import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
-import { withheldReason } from "./lib/withheld.ts";
+import { withheldEntryFor } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -115,7 +116,18 @@ export interface LibraryEntry {
   instance: string;
   /** Repo-relative directory. */
   dir: string;
+  /**
+   * The title a reader is shown. A catalogue record's title when a catalogue
+   * node names this slug (`libraryId`), else the manifest's, else the slug —
+   * see `catalogueTitles` for why the order is that way round (bean `gnqa`).
+   */
   title: string;
+  /**
+   * The manifest's own title, present ONLY when a catalogue title replaced
+   * it. Kept rather than dropped: the extraction is still evidence of what
+   * the ingest saw, and search still matches it.
+   */
+  extractedTitle?: string;
   /** From the manifest — `ingested`, `authored`, … or `""`. */
   provenance: string;
   /** Which ingest rung: `paged`, `tabular`, or a determined `none`. */
@@ -192,6 +204,16 @@ export interface LibraryEntry {
    */
   withheld?: string;
   /**
+   * The structured half of {@link withheld}, when the list records it — issue
+   * #1794. `gates` names which publication gate refused and how; `record` is
+   * the catalogue record a reader is sent to instead of the text. Absent when
+   * the list carries only a sentence, and the viewer then says the sentence.
+   */
+  withheldBy?: {
+    gates?: { gate: string; verdict: string }[];
+    record?: { id?: string; page?: string; uri?: string };
+  };
+  /**
    * The block-summary drain's counts for this entry — owner, 2026-09-24.
    *
    * Attached by the CALLER (`gen-library-viz`), for the reason `referencedBy`
@@ -201,6 +223,34 @@ export interface LibraryEntry {
    * Absent means nobody counted — never "nothing to summarise".
    */
   summaries?: SummaryTally;
+  /**
+   * The site-root path of the page that RENDERS this entry — attached by the
+   * caller (`gen-library-viz` `entryView`), derived from the declarations and
+   * never read from the asset (#1881). Absent when nobody derived it.
+   */
+  view?: string;
+  /**
+   * Where else a reader can go for this entry — read from a `referenced`
+   * entry's own `links` (`schemas/referenced-source.ts`). Owner, 2026-10-02:
+   * the smart-trust IG is in smart-base's library as an EXTERNAL reference,
+   * so the row has nothing of its own to open and must say where the thing is.
+   *
+   * `href` is an absolute URL, or SITE-ROOT-relative with a leading `/` and no
+   * base — the avatar's convention, composed by the viewer against wherever
+   * the site is served. Absent when the entry records none.
+   */
+  links?: { label: string; href: string }[];
+}
+
+/**
+ * An entry's recorded links, or `undefined` — only a `referenced.json` that
+ * validates contributes any, so a malformed record adds nothing to a page
+ * rather than a half-checked URL. `check:l1-complete` reports the malformation.
+ */
+export function referencedLinksOf(dir: string): { label: string; href: string }[] | undefined {
+  const r = ReferencedSourceSchema.safeParse(readJson<unknown>(join(dir, "referenced.json")));
+  if (!r.success || !r.data.links?.length) return undefined;
+  return r.data.links.map((l) => ("url" in l ? { label: l.label, href: l.url } : { label: l.label, href: `/${l.site_path}` }));
 }
 
 /** Where an entry's picture came from, where it lives, and where it is published. */
@@ -627,6 +677,42 @@ export function readEntryBlocks(dir: string, opts: { verbatim?: boolean } = {}):
 }
 
 /**
+ * Catalogue titles by library slug, for one instance root (bean `gnqa`,
+ * finding 5).
+ *
+ * A manifest's `title` is whatever the extractor found on the first page, and
+ * for a scanned or designed cover that is often not the title at all —
+ * measured 2026-10-02: `who-pub-tps-931` read "Abies", `wpr-rdo-2020-003-eng`
+ * read "PUBLICATION AND INFORMATION", and `9789241548960-eng` read "Handbook
+ * forGuideline Development 2nd edition". Each of the three already has a
+ * catalogue node that names the slug in `libraryId` and carries the
+ * publisher's own title. A record somebody catalogued outranks a string an
+ * extractor guessed, so the catalogue answers first and the manifest only
+ * where no catalogue node names the entry.
+ *
+ * Read from the instance's DECLARED `catalogue` graph, the same lookup
+ * `intakeTitle` uses — never a hardcoded `catalogue/nodes` path.
+ */
+const catalogueTitleCache = new Map<string, Map<string, string>>();
+function catalogueTitles(instanceRoot: string): Map<string, string> {
+  const hit = catalogueTitleCache.get(instanceRoot);
+  if (hit) return hit;
+  const out = new Map<string, string>();
+  for (const cat of directoriesForGraph(instanceRoot, "catalogue")) {
+    const nodes = join(cat, "nodes");
+    if (!existsSync(nodes)) continue;
+    for (const f of readdirSync(nodes).filter((n) => n.endsWith(".json")).sort()) {
+      const node = readJson<{ libraryId?: unknown; title?: unknown }>(join(nodes, f));
+      if (typeof node?.libraryId === "string" && typeof node.title === "string" && node.title.trim()) {
+        if (!out.has(node.libraryId)) out.set(node.libraryId, node.title.trim());
+      }
+    }
+  }
+  catalogueTitleCache.set(instanceRoot, out);
+  return out;
+}
+
+/**
  * What an intake is a capture OF, as a title (bean `d4lb`).
  *
  * `folio-intake/v1` no longer repeats what another record says: it names a
@@ -749,7 +835,13 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         id: slug,
         instance,
         dir: relative(repoRoot, dir).split("\\").join("/"),
-        title: manifest?.title ?? slug,
+        ...(() => {
+          const extracted = manifest?.title ?? slug;
+          const catalogued = catalogueTitles(dirname(libDir)).get(slug);
+          return catalogued && catalogued !== extracted
+            ? { title: catalogued, extractedTitle: extracted }
+            : { title: extracted };
+        })(),
         provenance: manifest?.provenance ?? "",
         rung: ingestRungOf(has),
         docId: str("doc_id"),
@@ -783,8 +875,15 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
           ? { readme: sourceLinks(REPO_URL(repoRoot), `${relative(repoRoot, dir).split("\\").join("/")}/README.md`, "main")?.viewHref }
           : {}),
         ...(() => {
-          const withheld = withheldReason(dir);
-          if (withheld) return { withheld };
+          const links = has("referenced.json") ? referencedLinksOf(dir) : undefined;
+          return links ? { links } : {};
+        })(),
+        ...(() => {
+          const w = withheldEntryFor(dir);
+          if (w) {
+            const by = { ...(w.gates ? { gates: w.gates } : {}), ...(w.record ? { record: w.record } : {}) };
+            return { withheld: w.reason, ...(Object.keys(by).length ? { withheldBy: by } : {}) };
+          }
           const avatar = avatarOf(libDir, instance, slug, images, repoRoot);
           return avatar ? { avatar } : {};
         })(),

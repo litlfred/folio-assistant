@@ -33,14 +33,13 @@ afterAll(() => {
 });
 
 /**
- * A root instance depending on `large-datasets` — and through it on core and
- * cat-harness — and optionally a diagram of its own.
+ * A root instance depending on cat-harness, and optionally a diagram of its own.
  *
- * It depended on cat-harness alone until placement PR0 (bean `ejye`), and
- * reached `sample-import` only because cat-harness declared a
- * `scope: "repository"` mirror of `large-datasets/processes/`. The mirror is
- * gone, so a root that wants a dependent's diagram must depend on its owner:
- * the cmsl falsifier, "a split checkout sees less", stated as a fixture.
+ * It depended on cat-harness alone until placement PR0 (bean `ejye`), then on
+ * `large-datasets`, which owned `sample-import` from bean `cjvs` — a root that
+ * wants a diagram must depend on its owner: the cmsl falsifier, "a split
+ * checkout sees less", stated as a fixture. Bean `j7ql` (2026-10-01)
+ * dissolved large-datasets into cat-harness, so the owner is cat-harness again.
  */
 function rootWithDependency(ownDiagram?: string): string {
   const root = mkdtempSync(join(tmpdir(), "wf-overlay-"));
@@ -50,7 +49,7 @@ function rootWithDependency(ownDiagram?: string): string {
   writeFileSync(join(root, "t.json"), JSON.stringify({ name: "t", version: "0.0.0", title: "t", directories }));
   writeFileSync(
     join(root, "t.config.json"),
-    JSON.stringify({ dependencies: { folioAssistant: [{ name: "large-datasets", path: join(REPO, "large-datasets") }] } }),
+    JSON.stringify({ dependencies: { folioAssistant: [{ name: "cat-harness", path: CAT_HARNESS }] } }),
   );
   if (ownDiagram) {
     mkdirSync(join(root, "processes"), { recursive: true });
@@ -109,9 +108,9 @@ describe("a root that declares no diagram of its own", () => {
 
 describe("a name collision", () => {
   test("the root's own diagram shadows the dependency's", () => {
-    // large-datasets owns the diagram since bean `cjvs`, and the fixture
-    // reaches it by depending on large-datasets (placement PR0).
-    const root = rootWithDependency(join(REPO, "large-datasets", "processes", "sample-import.bpmn"));
+    // cat-harness owns the diagram (again, since bean `j7ql`), and the
+    // fixture reaches it by depending on cat-harness (placement PR0).
+    const root = rootWithDependency(join(CAT_HARNESS, "processes", "library", "sample-import.bpmn"));
     const hits = processFiles(root).filter((f) => f.endsWith("/sample-import.bpmn"));
     expect(hits).toEqual([join(root, "processes", "sample-import.bpmn")]);
     expect(readFileSync(hits[0], "utf-8")).toContain("Process_SampleImport");

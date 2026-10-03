@@ -23,7 +23,8 @@
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { EXTERNAL_SCHEMA_TAG } from "../../schemas/external-schema.ts";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
+import { workflowFiles } from "../known-skills.ts";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
@@ -286,10 +287,12 @@ describe("kg export", () => {
     expect(retired.filter((k) => seen.has(k))).toEqual([]);
     // And the facts they carried are still reachable, by link: a ProcessNode's
     // performer is a Role node with a name, and its skills are Skill nodes.
+    // A Role's name is its `prefLabel` and its id its `notation` since bean
+    // `lodp` (D3), so the id is no longer written as `name`.
     const byId = new Map(EXPORT["@graph"].map((n) => [n["@id"] as string, n]));
     const withLane = typed("ProcessNode").filter((n) => n.performedBy !== undefined);
     expect(withLane.length).toBeGreaterThan(100);
-    for (const n of withLane) expect(byId.get(n.performedBy as string)?.name).toBeTruthy();
+    for (const n of withLane) expect(byId.get(n.performedBy as string)?.notation).toBeTruthy();
   });
 
   test("internal links resolve, bar the known data defects", () => {
@@ -766,7 +769,7 @@ describe("a Role comes from the registry; a lane is a Lane that binds one", () =
   test("every role the registry declares is a node", () => {
     const declared = readRoleGraph(join(import.meta.dir, "../../scenarios"))!.roles;
     expect(declared.length).toBeGreaterThan(20);
-    const byName = new Set(registry.map((r) => r.name));
+    const byName = new Set(registry.map((r) => r.notation));
     expect(declared.filter((d) => !byName.has(d.id)).map((d) => d.id)).toEqual([]);
   });
 
@@ -777,7 +780,7 @@ describe("a Role comes from the registry; a lane is a Lane that binds one", () =
     // no flow nodes by construction. Exactly the roles whose emptiness is the
     // point were the ones the graph dropped.
     for (const id of ["corpus", "work-plan", "log"]) {
-      const node = registry.find((r) => r.name === id);
+      const node = registry.find((r) => r.notation === id);
       expect(node, `${id} is missing from the graph`).toBeDefined();
       expect(node!.actedUpon).toBe(true);
     }
@@ -788,7 +791,7 @@ describe("a Role comes from the registry; a lane is a Lane that binds one", () =
     // what the role IS, each Lane where it acts. The lane holds the pointer,
     // not the role (#1168). The join is only worth having if it resolves,
     // which is what the `log` lane failed until the lane set was read.
-    const log = registry.find((r) => r.name === "log")!;
+    const log = registry.find((r) => r.notation === "log")!;
     const binding = EXPORT["@graph"].filter((n) => n.bindsRole === log["@id"]);
     expect(binding.length).toBeGreaterThanOrEqual(1);
     expect(log.bindsLane).toBeUndefined();
@@ -800,10 +803,84 @@ describe("a Role comes from the registry; a lane is a Lane that binds one", () =
   test("`actedUpon` and `judgementOnly` are two flags, not one", () => {
     // Collapsing them would give a store an actor or a stakeholder a skill.
     // Asserted on real rows so the distinction is observed, not just typed.
-    const stakeholder = registry.find((r) => r.name === "stakeholder")!;
+    const stakeholder = registry.find((r) => r.notation === "stakeholder")!;
     expect(stakeholder.judgementOnly).toBe(true);
     expect(stakeholder.actedUpon).toBeUndefined();
-    expect(registry.find((r) => r.name === "corpus")!.judgementOnly).toBeUndefined();
+    expect(registry.find((r) => r.notation === "corpus")!.judgementOnly).toBeUndefined();
+  });
+});
+
+/**
+ * Bean `lodp`, finding D3 of `docs/proposals/vocabulary-mappings-2026-10-02.md`.
+ * kg-export and glossary-export both mint a role as `makeIri(doc, "role", id)`,
+ * and named it two ways: `rdfs:label` = the id beside `dcterms:title`, and
+ * `skos:prefLabel` beside `skos:notation` = the id. Merged, one node carried
+ * `rdfs:label "reviewer"` and `skos:prefLabel "Reviewer / SME"`, and
+ * `skos:prefLabel` is a sub-property of `rdfs:label`. Owner default applied
+ * (option 1, 2026-10-02): one table row, `role-naming`, names it in both.
+ *
+ * Asserted on the MERGED, EXPANDED graph rather than on either document's
+ * JSON keys, because the defect only exists where the two meet, and a key is
+ * only a predicate once its document's context has said which.
+ */
+const D3 = await (async () => {
+  const jsonld = (await import("jsonld")).default;
+  const { buildGlossary } = await import("../glossary-export.ts");
+  const SKOS = "http://www.w3.org/2004/02/skos/core#";
+  const LABEL = "http://www.w3.org/2000/01/rdf-schema#label";
+  const TITLE = "http://purl.org/dc/terms/title";
+  const roleIri = (id: string) => id.includes("#role/");
+  const glossary = buildGlossary({ today: () => "2026-10-02" }).doc;
+  const kgRoles = EXPORT["@graph"].filter((n) => roleIri(String(n["@id"])));
+  const glossaryRoles = (glossary["@graph"] as Array<Record<string, unknown>>).filter((n) => roleIri(String(n["@id"])));
+  const expanded = [
+    ...(await jsonld.expand({ "@context": EXPORT["@context"], "@graph": kgRoles } as never)),
+    ...(await jsonld.expand({ "@context": glossary["@context"], "@graph": glossaryRoles } as never)),
+  ] as Array<Record<string, Array<{ "@value"?: unknown }> | string>>;
+  const merged = new Map<string, Map<string, Set<unknown>>>();
+  for (const n of expanded) {
+    const props = merged.get(n["@id"] as string) ?? new Map<string, Set<unknown>>();
+    merged.set(n["@id"] as string, props);
+    for (const [p, vs] of Object.entries(n)) {
+      if (p.startsWith("@")) continue;
+      const set = props.get(p) ?? new Set<unknown>();
+      for (const v of vs as Array<{ "@value"?: unknown; "@id"?: string }>) set.add(v["@value"] ?? v["@id"]);
+      props.set(p, set);
+    }
+  }
+  const shared = [...merged.keys()].filter(
+    (iri) => kgRoles.some((n) => n["@id"] === iri) && glossaryRoles.some((n) => n["@id"] === iri),
+  );
+
+  return { merged, shared, LABEL, TITLE, SKOS };
+})();
+
+describe("a role node merged from kg-export and glossary-export has one name", () => {
+  const { merged, shared, LABEL, TITLE, SKOS } = D3;
+  test("the two exports do meet on role IRIs", () => {
+    // The vacuity guard: every assertion below is over `shared`, and a check
+    // over two graphs that never meet would pass by meeting nothing.
+    expect(shared.length).toBeGreaterThan(20);
+  });
+
+  test("no merged role node carries two different labels", () => {
+    const conflicts: string[] = [];
+    for (const iri of shared) {
+      const props = merged.get(iri)!;
+      // Every label-like value on the node: rdfs:label and its SKOS
+      // sub-properties' preferred form, plus the Dublin Core title.
+      const names = new Set([...(props.get(LABEL) ?? []), ...(props.get(`${SKOS}prefLabel`) ?? []), ...(props.get(TITLE) ?? [])]);
+      if (names.size !== 1) conflicts.push(`${iri}: ${[...names].map((v) => JSON.stringify(v)).join(" vs ")}`);
+    }
+    expect(conflicts).toEqual([]);
+  });
+
+  test("the id is a notation and never a label, in either export", () => {
+    for (const iri of shared) {
+      const props = merged.get(iri)!;
+      expect([iri, props.has(LABEL)]).toEqual([iri, false]);
+      expect([iri, [...(props.get(`${SKOS}notation`) ?? [])]]).toEqual([iri, [iri.slice(iri.lastIndexOf("/") + 1)]]);
+    }
   });
 });
 
@@ -863,21 +940,23 @@ describe("a package's id is declared, not derived from its path", () => {
   // graph, then `bootstrap-render` (directory `tools/`) until bean `n350`
   // consolidated that package into `bootstrap/skills/` on 2026-09-23.
   //
-  // It is now `large-datasets`: directory `large-datasets/skills/`, basename
-  // `skills`, manifest `large-datasets`. (It was `kg-navigation` until bean
-  // `byql` folded that one into `cat-harness/skills/kg/kg-navigation/`, where the
-  // basename IS the name and the test would no longer discriminate.) Same shape, and a witness the root
-  // graph carries for its own reasons rather than by a declaration made for
-  // one package. The members are READ from its manifest rather than listed,
-  // so adding a skill there is not a test edit.
-  const WITNESS = "large-datasets";
+  // It is now `who-iris`: directory `who-iris/skills/`, basename `skills`,
+  // manifest `who-iris`. (It was `large-datasets` until bean `j7ql` dissolved
+  // that instance into cat-harness on 2026-10-01, where its package sits at
+  // `cat-harness/skills/library/large-datasets/` and the basename IS the name;
+  // before that `kg-navigation`, until bean `byql` folded it into
+  // `cat-harness/skills/kg/kg-navigation/` for the same reason.) Same shape,
+  // and a witness the root graph carries for its own reasons rather than by a
+  // declaration made for one package. The members are READ from its manifest
+  // rather than listed, so adding a skill there is not a test edit.
+  const WITNESS = "who-iris";
   const witness = () => packages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
 
   test("a package is named by its manifest, not by its directory", () => {
     const p = witness();
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
     expect(p!["name"]).toBe(WITNESS);
-    expect(String(p!["path"])).toContain("large-datasets/skills");
+    expect(String(p!["path"])).toContain("who-iris/skills");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
     expect(p!["name"]).not.toBe("skills");
@@ -888,7 +967,7 @@ describe("a package's id is declared, not derived from its path", () => {
     // from ANOTHER package — a count would have gone on passing while one
     // name was swapped for another.
     const manifest = JSON.parse(
-      readFileSync(join(import.meta.dir, "../../..", "large-datasets", "skills", "package-manifest.json"), "utf8"),
+      readFileSync(join(import.meta.dir, "../../..", "who-iris", "skills", "package-manifest.json"), "utf8"),
     ) as { skills: string[] };
     expect(membersOf(String(witness()!["@id"])).sort()).toEqual(manifest.skills.map((k) => `skill/${k}`).sort());
   });
@@ -1057,8 +1136,10 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
     expect(specs.map((n) => n.name)).toContain("omg-bpmn-2.0");
     expect(specs.map((n) => n.name)).toContain("omg-dmn-1.3");
 
-    expect(other).toEqual(["who-smart-base.terminology.json"]);
-    expect(tagOf("who-smart-base.terminology.json")).toBe("folio-pinned-terminology/v1");
+    // A pinned edition's snapshot beside its record: the IG's terminology
+    // (bean `7wou`) and the SPDX License List's ids (bean `sd5v`).
+    expect(other.sort()).toEqual(["spdx-license-list.terminology.json", "who-smart-base.terminology.json"]);
+    for (const f of other) expect(tagOf(f)).toBe("folio-pinned-terminology/v1");
   });
 
   test("the processes GraphKind conforms to BPMN AND DMN, and says why it has no validator", () => {
@@ -1074,6 +1155,13 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
     const withValidator = byType("GraphKind").filter((n) => n.validator !== undefined);
     expect(withValidator.length).toBeGreaterThan(0);
     for (const k of withValidator) expect(schemas.has(k.validator)).toBe(true);
+  });
+
+  test("a Schema node's docblock line is its summary and its title is the stem (D5)", () => {
+    const schemas = byType("Schema");
+    expect(schemas.length).toBeGreaterThan(0);
+    for (const n of schemas) expect(n.title).toBe(n.name);
+    expect(schemas.some((n) => typeof n.summary === "string")).toBe(true);
   });
 
   test("every Process links to the standard its own file declares", () => {
@@ -1098,12 +1186,13 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
   const dmn13 = String(byType("ExternalSchema").find((n) => n.name === "omg-dmn-1.3")?.["@id"]);
 
   test("every decision in every .dmn file is a Decision node conforming to DMN 1.3", () => {
-    const dir = resolve(import.meta.dir, "..", "..", "processes", "decisions");
-    const declared = readdirSync(dir)
+    // Every `.dmn` the harness's corpus declares, wherever it is grouped
+    // (`processes/<group>/decisions/`, placement PR3, bean `63wl`).
+    const declared = workflowFiles(resolve(import.meta.dir, "..", ".."))
       .filter((f) => f.endsWith(".dmn"))
       .flatMap((f) =>
-        [...readFileSync(join(dir, f), "utf-8").matchAll(/<decision\s[^>]*\bid="([^"]+)"/g)].map(
-          (m) => `${f.replace(/\.dmn$/, "")}/${m[1]}`,
+        [...readFileSync(f, "utf-8").matchAll(/<decision\s[^>]*\bid="([^"]+)"/g)].map(
+          (m) => `${basename(f).replace(/\.dmn$/, "")}/${m[1]}`,
         ),
       );
     expect(declared.length).toBeGreaterThan(0);

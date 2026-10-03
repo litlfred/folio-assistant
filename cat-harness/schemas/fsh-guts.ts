@@ -27,7 +27,9 @@
 
 import { z } from "zod";
 
+import { type ResolvedDirectory, resolveDirectories } from "./cat-harness.ts";
 import { type FrontMatter, parseFrontMatter, scalar } from "./front-matter.ts";
+import { checkoutDirectories } from "./harness-config.ts";
 import { BeanIdSchema } from "./tool-types.ts";
 
 /** The `$schema` tag every node of the trashcan carries. */
@@ -218,4 +220,49 @@ function jsonSchemaTag(text: string): string | undefined {
     // Not JSON. The caller's message for "declares nothing" is correct.
   }
   return undefined;
+}
+
+/** The graph kind a trashcan directory declares. */
+export const FSH_GUTS_KIND = "fsh-guts";
+
+/**
+ * Every `fsh-guts` directory that `root` declares; if it declares none, those
+ * of the checkout stacked on it. Since placement PR0a the repository's
+ * `fsh-guts/` is declared by the ROOT instance, not by the platform whose
+ * tools read and write it.
+ *
+ * **The one place "where is the trashcan" is answered.** Before bean `9c7h`
+ * the same resolution was written out twice (`logDirs`, the export's
+ * `fshGutsDirs`) and `sample-import-run.ts` spelled `fsh-guts/samples` as a
+ * literal. When the contents move to `cat/cat-harness/fsh-guts` (a
+ * `keyedBy: "tip"` store read through `scripts/branch-store.ts`), this is the
+ * seam the cutover changes, not each caller.
+ *
+ * A LIST, and callers must not quietly take the first (the `kgRoots`
+ * contract): a writer that needs one directory asks {@link fshGutsDirectory}.
+ * An unreadable declaration yields nothing rather than a guess.
+ */
+export function fshGutsDirectories(root: string): ResolvedDirectory[] {
+  const isGuts = (d: ResolvedDirectory) => (d.graphKinds as readonly string[]).includes(FSH_GUTS_KIND);
+  try {
+    const own = resolveDirectories([{ name: "(local)", root, own: true }]).filter(isGuts);
+    return own.length > 0 ? own : checkoutDirectories(root, { stackedOn: root }).filter(isGuts);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * The ONE trashcan a writer lands in. More than one is an error and never
+ * "the first", and none is an error too: a writer with nowhere declared must
+ * not invent `fsh-guts/` beside the real one (the `dh4f` defect, written).
+ */
+export function fshGutsDirectory(root: string): string {
+  const all = fshGutsDirectories(root).map((d) => d.absPath);
+  if (all.length === 1) return all[0];
+  throw new Error(
+    all.length === 0
+      ? `no \`${FSH_GUTS_KIND}\` directory is declared for ${root}, so there is nowhere to relocate into`
+      : `\`${FSH_GUTS_KIND}\` is declared ${all.length} times (${all.join(", ")}), so there is no single trashcan to write to`,
+  );
 }

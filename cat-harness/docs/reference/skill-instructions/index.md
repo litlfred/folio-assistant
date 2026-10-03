@@ -72,9 +72,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [A confirmation can be waived](confirmation-waiver.html) | `confirmation-waiver` | — | Several rules here stop an agent and hand a decision back: merging to `main`, |
 | [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
 | [Deletion requires explicit confirmation](deletion-requires-confirmation.html) | `deletion-requires-confirmation` | — | **One rule, and it has no exceptions worth the word:** |
-| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
-| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
-| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
+| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-sta |
+| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-sta |
+| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-sta |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
@@ -143,6 +143,16 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Reading the knowledge graph](kg-navigation.html) | `kg-navigation` | — | You are in a fresh container. You have a task, a filesystem, and no memory of |
 
+## Large data sets (subsetting, materializing, publishing)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
+| [Subscribing to a knowledge graph](kg-subscription.html) | `kg-subscription` | — | Owner, 2026-09-30 (issue #1719): *"a way for a folio instance (or cat-harness |
+| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
+| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
+| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
+
 ## Library and information management (library-core)
 
 | Skill | Id | Schema | Summary |
@@ -163,6 +173,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Literature search](literature-search.html) | `literature-search` | — | A node cites a source. Nothing in any declared library holds it. This skill is |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
+| [Term disagreement](term-disagreement.html) | `term-disagreement` | — | > Skill id: `term-disagreement` · Package: `library-core` |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Package: |
 | [Upload naming](upload-naming.html) | `upload-naming` | — | > **Lives in `library-core`, not `folio-core`.** It was written into |
 | [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
@@ -237,18 +248,22 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Generalise the fix, then attack the generalisation](generalise-the-fix.html) | `generalise-the-fix` | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Package: `sdlc-core` |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
+| [Handover report](handover-report.html) | `handover-report` | — | An agent's state lives in three places that do not survive it: the chat, its |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
-| [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run merge:main` is the command; `processes/merge-base.bpmn` is the |
+| [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the |
+| [Merge queue](merge-queue.html) | `merge-queue` | — | `processes/sdlc/merge-train.bpmn` is the process. The ORDER is computed by |
 | [Does the prose say what the code does?](narrative-asserts-code.html) | `narrative-asserts-code` | — | Issue #1042, feature bean `flbx`, stage C. The owner, 2026-09-21: *"need to see |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [The platform's own gates](platform-gates.html) | `platform-gates` | — | **One command:** |
+| [pr-description](pr-description.html) | `pr-description` | — | Owner, 2026-10-02, on litlfred/fhir-ig-publisher#8: *"PR should be readable |
+| [Prepare for a handover](prepare-for-handover.html) | `prepare-for-handover` | — | When a session stalls, what survives is what is **on the remote**: commits on |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
 | [Publish verification, and the one alert](publish-verification.html) | `publish-verification` | — | Bean `vigi`. Owner, 2026-09-23: *"a set of post processing tools for |
@@ -258,6 +273,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `sdlc-core` |
+| [Stalled-agent triage](stalled-agent-triage.html) | `stalled-agent-triage` | — | A stall is not an event anyone records. The agent simply stops, and what it |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
@@ -307,6 +323,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
+| [Visualizer loading](visualizer-loading.html) | `visualizer-loading` | — | > Skill id: `visualizer-loading` · Package: `ui-core` · Beans `680p`, `s32v`, |
 | [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
 ## Content layer (folio-assistant-core)
@@ -329,6 +346,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+
+## Catalogue records — Dublin Core renderings (catalogue)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
 
 ## Document ingestion methods (ingestion)
 
@@ -357,20 +380,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [ig-ast-delta](ig-ast-delta.html) | `ig-ast-delta` | — | > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance: |
+| [ig-binary-artefacts](ig-binary-artefacts.html) | `ig-binary-artefacts` | — | > Skill id: `ig-binary-artefacts` · Package: `fhir-ig-base` · Instance: |
 | [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
 | [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
-
-## Large data sets (subsetting, materializing, publishing)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Working on materialized content](copy-out-materialized.html) | `copy-out-materialized` | — | **Materialized content is a copy of somebody else's bytes, and this repository |
-| [Subscribing to a knowledge graph](kg-subscription.html) | `kg-subscription` | — | Owner, 2026-09-30 (issue #1719): *"a way for a folio instance (or cat-harness |
-| [Materialize on demand](materialize-on-demand.html) | `materialize-on-demand` | — | Bootstrap brings an agent to a working harness. It does **not** bring the |
-| [Materializing remote content](materialize-remote.html) | `materialize-remote` | — | **One process, and this repository already ran it twice before naming it.** |
-| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
+| [ig-site-theme](ig-site-theme.html) | `ig-site-theme` | — | > Skill id: `ig-site-theme` · Package: `fhir-ig-base` · Instance: |
 
 ## WHO IRIS (catalogue instance)
 

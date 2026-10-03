@@ -53,7 +53,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 
 import { repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
-import { CAT_HARNESS_NS, FOLIO_BASE } from "../schemas/namespaces.js";
+import { addressBook, provJsonldDocument, type AddressBook } from "../schemas/prov-jsonld.js";
 import { ProvActivitySchema, type ProvActivity } from "../schemas/prov.js";
 import { laneBinding, type RoleGraph } from "../schemas/role-graph.js";
 import { accessContext, type AccessContext, type Principal } from "../src/core/access.js";
@@ -84,6 +84,7 @@ export const FINDING_KINDS = [
   "node-not-in-model",
   "source-moved",
   "source-missing",
+  "unaddressed",
 ] as const;
 export type FindingKind = (typeof FINDING_KINDS)[number];
 
@@ -100,6 +101,8 @@ export const FINDING_MEANING: Readonly<Record<FindingKind, string>> = {
   "source-moved":
     "the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's",
   "source-missing": "the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked",
+  unaddressed:
+    "the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`)",
 };
 
 export interface Finding {
@@ -294,6 +297,8 @@ export async function buildReport(
     return models.get(p)!;
   };
 
+  let addresses: AddressBook | undefined;
+  const book = () => (addresses ??= addressBook(repo));
   const instances = new Map<string, InstanceReport[]>();
   const invalid: string[] = [];
   const all = (opts.instances ?? listInstances(repo)).slice().sort((a, b) => a.id.localeCompare(b.id, "en"));
@@ -310,7 +315,9 @@ export async function buildReport(
         const moved = where.moved
           ? [note("source-moved", `${s.source} does not exist; read ${relative(repo, where.path).split("\\").join("/")}, which defines ${s.processId}`)]
           : [];
-        out.push({ id: r.id, source: r.source, activities: r.activities, findings: [...moved, ...r.findings], checked: r.checked });
+        const part = { id: r.id, source: r.source, activities: r.activities, findings: [...moved, ...r.findings], checked: r.checked };
+        part.findings.push(...addressFindings(part, book()));
+        out.push(part);
       }
       for (const k of Object.keys(s.children ?? {}).sort()) await walk(`${id}/${k}`, s.children![k]!);
     };
@@ -320,16 +327,27 @@ export async function buildReport(
   return { instances, policies: [...ctx.policies.keys()].sort(), invalid };
 }
 
-/** The PROV JSON-LD log for one top-level instance and its subprocesses. */
-export function provDocument(id: string, parts: InstanceReport[]): Record<string, unknown> {
-  return {
-    // `@base` as `schemas/jsonld.ts` emits it: an instance id and its `#<n>`
-    // entries are relative, and a JSON-LD processor must resolve them to IRIs
-    // (publish:verify expands every published file and refuses a relative @id).
-    "@context": { "@base": FOLIO_BASE, prov: PROV_NS, "cat-harness": CAT_HARNESS_NS },
-    "@id": id,
-    "@graph": parts.flatMap((p) => p.activities),
-  };
+/**
+ * The PROV log for one top-level instance and its subprocesses, in
+ * PROV-JSONLD's shape with each agent, role and plan a link at its release
+ * address (`schemas/prov-jsonld.ts`, beans `jcet`, `9y9j`). Until 2026-10-01
+ * this emitted the activities as they are stored, with `prov:`-prefixed keys
+ * nothing coerced, so every agent, role and plan was a string literal.
+ */
+export function provDocument(id: string, parts: InstanceReport[], book: AddressBook = addressBook(REPO)): Record<string, unknown> {
+  return provJsonldDocument(id, parts.flatMap((p) => p.activities), book).document;
+}
+
+/**
+ * The `unaddressed` findings for one instance's activities: what the PROV-JSONLD
+ * record had to carry as a literal, and why. Entry index is the `#<n>` the
+ * activity id ends in.
+ */
+export function addressFindings(part: InstanceReport, book: AddressBook): Finding[] {
+  return provJsonldDocument(part.id, part.activities, book).unaddressed.map((u) => {
+    const n = Number(u.activity.slice(u.activity.lastIndexOf("#") + 1));
+    return { instance: part.id, entry: Number.isInteger(n) ? n : -1, node: u.value, kind: "unaddressed" as const, detail: `${u.kind}: ${u.why}` };
+  });
 }
 
 export function assetName(id: string): string {
@@ -414,7 +432,8 @@ ${sections.join("\n\n")}
 /** Every file this generator owns, path → content. */
 export function outputs(r: Report, site: { page: string; assets: string } = { page: PAGE, assets: ASSETS }): Map<string, string> {
   const out = new Map<string, string>([[site.page, renderPage(r)]]);
-  for (const [id, parts] of r.instances) out.set(join(site.assets, assetName(id)), stableJson(provDocument(id, parts)));
+  const book = addressBook(REPO);
+  for (const [id, parts] of r.instances) out.set(join(site.assets, assetName(id)), stableJson(provDocument(id, parts, book)));
   return out;
 }
 

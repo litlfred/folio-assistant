@@ -1,5 +1,5 @@
 {
-  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THE INGESTED INDEX HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING: everything under `fhir-artifact-index/` and `docs/` was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit THERE is a defect, because the next check will either overwrite it or fail. If something is wrong in the index, the fix is in the pipeline or in the upstream IG, never in those files. THAT SENTENCE USED TO COVER THE WHOLE INSTANCE and stopped being true on 2026-09-30, when `themes/` arrived (bean `7h3u`): a theme is DERIVED from an upstream stylesheet but is not produced by `ingest:ig`, and `themes.test.ts` re-reads the vendored source rather than a pipeline re-deriving it. Narrowed rather than deleted, because the rule is still exactly right for the two directories it names -- and a whole-instance claim that is true of most of it is the stale-guidance defect this repository keeps paying for.",
+  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THE INGESTED INDEX HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING: everything under `fhir-artifact-index/` and `docs/` was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit THERE is a defect, because the next check will either overwrite it or fail. If something is wrong in the index, the fix is in the pipeline or in the upstream IG, never in those files. THAT SENTENCE USED TO COVER THE WHOLE INSTANCE and stopped being true on 2026-09-30, when `themes/` arrived (bean `7h3u`; it moved to `smart-base/themes/` in stage D of the smart-* separation, bean `kg83`, because the theme is the WHO template's, not this IG's): a theme is DERIVED from an upstream stylesheet but is not produced by `ingest:ig`, and `themes.test.ts` re-reads the vendored source rather than a pipeline re-deriving it. Narrowed rather than deleted, because the rule is still exactly right for the two directories it names -- and a whole-instance claim that is true of most of it is the stale-guidance defect this repository keeps paying for.",
   "name": "smart-trust",
   "repository": "litlfred/smart-trust",
   "livesAt": {
@@ -17,7 +17,19 @@
         "fhir-artifact-index"
       ],
       "readOnly": true,
-      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened."
+      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened.",
+      "served": true
+    },
+    {
+      "id": "smart-trust-openapi",
+      "path": "openapi/",
+      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
+      "graphKinds": [
+        "openapi"
+      ],
+      "readOnly": true,
+      "readOnlyBasis": "Copies of an upstream API description (each a materialized node, `<id>.source.json`) and pages generated from it; `ingest-openapi.ts` and `gen-openapi-pages.ts` rewrite them, a person does not. A hand edit would silently change what this repository claims the API's authors published — the two scripts' `--check` is what catches one.",
+      "served": true
     },
     {
       "id": "smart-trust-docs",
@@ -49,16 +61,6 @@
       "graphKinds": [
         "qa"
       ]
-    },
-    {
-      "_comment": "The WHO SMART IG template's web theme, DERIVED from the stylesheet the IG actually builds with. Bean `7h3u`, issue #1682, on the owner's 2026-09-30 ruling: theme it, keep the just-the-docs machinery, WHO's styling, and the nav on the LEFT rather than their top bar. THE SOURCE IS NOT THIS IG. `WorldHealthOrganization/smart-trust` carries no branding CSS at all; its `ig.ini` selects `#local-template`, whose package.json declares `base: who.template.root` -- and that is `WorldHealthOrganization/smart-ig-template`, whose `content/assets/css/who.css` is the branding. It is vendored under `upstream/` so the test reads a COMMITTED artefact rather than the network, and because `local-template` depends on `who.template.root#current`, which can re-skin under us at any time. CC0-1.0, stated by that package's own package.json, is what makes vendoring permitted. Declared rather than left implicit because an undeclared directory is the `dh4f` defect: every declaration-driven consumer scans nothing and reports a clean run over it.",
-      "id": "smart-trust-themes",
-      "path": "themes/",
-      "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
-      "_dependents_comment": "skip, not reproduce -- the same reasoning `who-iris-themes` carries. This entry says where THIS instance's theme lives; a dependent with no theme of its own needs no themes/ directory, and reproduce would ship an empty one downstream, which is the `dh4f` shape arriving by inheritance.",
-      "graphKinds": [
-        "themes"
-      ]
     }
   ],
   "assets": [
@@ -78,9 +80,10 @@
     }
   ],
   "needs": [
-    "smart-ig"
+    "smart-ig",
+    "cat-openapi"
   ],
-  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here.",
+  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here. `cat-openapi` added 2026-10-03 (bean `s4ta`): owner, *\"the smart-trust repo has a smart-base harness and a openapi harness\"* — smart-ig brings smart-base, cat-openapi renders the gateway API.",
   "stickies": [
     {
       "_comment": "THE INSTANCE'S OWN CARD, and the reason it exists is the navbar rather than the landing board. Owner, 2026-09-22: \"now do smart-trust and folio-assistant-core avatars\", then \"operations\" chosen from three cards that already carry a measured avatarRegion. A THEME IS REACHED THROUGH A STICKY -- an instance contributes a card, the card names a theme, the theme names an imageRole, and the instance's images (or its supplier's) carry that role per layout. So a harness cannot have a theme avatar without contributing a card, and THIS CARD THEREFORE ALSO APPEARS ON THE LANDING BOARD. That is a visible consequence of asking for an avatar and is stated here rather than discovered: every other instance with an avatar has a landing card for the same reason. `bodyFrom: description` so the words are read from this declaration's own `description` and cannot drift from it.",
@@ -90,7 +93,7 @@
         "themeId": "operations"
       },
       "summary": "A published IG, read back as a graph",
-      "bodyFrom": "description"
+      "bodyFrom": "summary"
     }
   ]
 }

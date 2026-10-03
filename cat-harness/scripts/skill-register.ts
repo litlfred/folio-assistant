@@ -258,7 +258,7 @@ const STRIPPABLE = ["roles", "package", "capability"] as const;
  *
  * Asking the declaration also widens the subject correctly rather than by
  * accident: `kgDirectories` resolves a dependent instance's packages too
- * (`folio-assistant-core/skills/`, `who-iris/skills/`, `large-datasets/skills/`
+ * (`folio-assistant-core/skills/` and `who-iris/skills/`
  * here), so a skill added in one of those is judged by the same gate instead of
  * being a case nobody thought of.
  *
@@ -571,12 +571,34 @@ export function missingScripts(instance: string = INSTANCE_ROOT): string[] {
  * `declared-directory-resolves.test.ts` guards a real defect where importing a
  * generator WROTE files.
  */
-function run(args: readonly string[], quiet = false): number {
+function run(args: readonly string[]): number {
   const r = spawnSync("bun", ["run", ...args], {
-    stdio: quiet ? ["ignore", "pipe", "pipe"] : "inherit",
+    stdio: "inherit",
     cwd: resolve(INSTANCE_ROOT, ".."),
   });
   return r.status ?? 1;
+}
+
+/**
+ * Run one VERIFY step quietly, without blocking — the verification pass starts
+ * all of them at once.
+ *
+ * Every step it is given is a `--check` (or `check`) command that writes
+ * nothing, so they share only the cores. Serially they were 29 s of the
+ * Repository gates job, measured 2026-10-03 (bean `fmdl`). Verdicts are still
+ * printed in `STEPS` order, so the report reads the same whichever finished
+ * first. Generating steps stay on {@link run}: those write, and their order is
+ * the chain.
+ */
+async function verifyQuietly(args: readonly string[]): Promise<number> {
+  const p = Bun.spawn(["bun", "run", ...args], {
+    cwd: resolve(INSTANCE_ROOT, ".."),
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  // Drained so a chatty check cannot fill the pipe and stall.
+  await Promise.all([new Response(p.stdout).text(), new Response(p.stderr).text()]);
+  return (await p.exited) ?? 1;
 }
 
 /**
@@ -588,7 +610,7 @@ function run(args: readonly string[], quiet = false): number {
  * by a sibling session, or by a person asking *"was this ever checked?"*.
  */
 export interface Flags {
-  /** Verify only — regenerate nothing. What CI runs. */
+  /** Verify only — regenerate nothing and write no sidecar (bean `bo44`). What CI runs. */
   check: boolean;
   /** Print the chain and exit 0. Writes nothing, verifies nothing. */
   dryRun: boolean;
@@ -596,6 +618,20 @@ export interface Flags {
   json: boolean;
   /** Skip the committed QA sidecar. For a scratch tree that must not be dirtied. */
   noReport: boolean;
+}
+
+/**
+ * Does a VERIFYING run write the committed QA sidecar?
+ *
+ * Never under `--check` (bean `bo44`): the gate form judges and writes
+ * nothing, and measured 2026-10-01 it was rewriting
+ * `test/results/skill-register.qa-results.json` whenever that differed — the
+ * gate CI runs was a writer of the record it reports into. `--no-report` keeps
+ * its meaning for the writing path. (`--dry-run` decides separately, above
+ * the verify.)
+ */
+export function writesReport(flags: Flags): boolean {
+  return !flags.noReport && !flags.check;
 }
 
 export function parseFlags(argv: readonly string[]): Flags {
@@ -704,7 +740,7 @@ const HELP =
   `skill-register — regenerate everything adding a skill stales, and refuse a\n` +
   `skill that arrived without its declarations (beans \`v625\`, \`nfv3\`).\n\n` +
   `  bun run skill:register              regenerate, then verify\n` +
-  `  bun run skill:register --check      verify only — what CI runs\n` +
+  `  bun run skill:register --check      verify only, write nothing (not even the QA sidecar) — what CI runs\n` +
   `  bun run skill:register --dry-run    print the chain; write and verify nothing\n` +
   `  bun run skill:register --json       emit the verdicts as JSON\n` +
   `  bun run skill:register --no-report  skip the committed QA sidecar\n\n` +
@@ -735,7 +771,7 @@ function declarationVerdicts(f: Findings): DeclarationVerdict[] {
   ];
 }
 
-function main(): number {
+async function main(): Promise<number> {
   const flags = parseFlags(process.argv);
   const checking = flags.check;
 
@@ -851,8 +887,9 @@ function main(): number {
   if (!flags.json) console.log(`\nVerifying — each check run on its own, never through \`gates\`:\n`);
   const red: string[] = [];
   const verdicts: StepVerdict[] = [];
-  for (const s of STEPS) {
-    const rc = run(s.verify, true);
+  const codes = await Promise.all(STEPS.map((s) => verifyQuietly(s.verify)));
+  for (const [i, s] of STEPS.entries()) {
+    const rc = codes[i]!;
     verdicts.push({ verify: s.verify.join(" "), because: s.because, ran: true, current: rc === 0 });
     if (!flags.json) console.log(`${rc === 0 ? "  ✓" : "  ✗"} ${s.verify.join(" ")}`);
     if (rc !== 0) red.push(s.verify.join(" "));
@@ -861,9 +898,16 @@ function main(): number {
   // Written BEFORE the exit branches, so a red run is recorded rather than only
   // printed. A sidecar that exists only on success cannot distinguish "clean"
   // from "never ran".
-  const reportAt = flags.noReport
-    ? undefined
-    : writeReport(INSTANCE_ROOT, verdicts, declarationVerdicts(f));
+  //
+  // NOT under `--check` (bean `bo44`). The gate form judges and writes nothing:
+  // measured 2026-10-01, `skill:register:check` rewrote
+  // `test/results/skill-register.qa-results.json` whenever it differed, so the
+  // gate CI runs was also a writer of the record it reports into. The record is
+  // the author's command's to write (`bun run skill:register`); the gate's
+  // verdict is its exit code.
+  const reportAt = writesReport(flags)
+    ? writeReport(INSTANCE_ROOT, verdicts, declarationVerdicts(f))
+    : undefined;
   if (flags.json) {
     console.log(
       JSON.stringify(
@@ -944,4 +988,4 @@ function main(): number {
   return 0;
 }
 
-if (import.meta.main) process.exit(main());
+if (import.meta.main) process.exit(await main());

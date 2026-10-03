@@ -21,6 +21,7 @@
  * from an IRI to the label an author actually wrote.
  */
 import { describe, test, expect } from "bun:test";
+import { resolve } from "path";
 import {
   assertPrefixesInSync,
   KIND_PREFIXES,
@@ -32,7 +33,8 @@ import {
   typesForKind,
   BLOCK_KIND_TO_FOLIO_TYPE,
 } from "../../schemas/jsonld";
-import { KNOWN_LABEL_PREFIXES } from "../../schemas/constraints";
+import { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "../../schemas/constraints";
+import type { FolioContribution } from "../../schemas/contributions";
 import { BLOCK_KINDS } from "../../schemas/block-kinds";
 
 describe("prefix list stays in sync with constraints.ts", () => {
@@ -221,5 +223,50 @@ describe("mintNodeId — a block's own label always yields an id", () => {
     // and no known kind prefix, there is no way to tell namespace from label.
     expect(resolveLabel("unital-groebner-bases:mystery:pbw", "qou")).toBeUndefined();
     expect(resolveLabel("def:", "qou")).toBeUndefined();
+  });
+});
+
+// Since bean `1335` core's prefix lists are the BUILT-IN ones; a contributed
+// kind's prefix (smart-base's DAK `dt`) reaches the parsers only when a caller
+// holding a registry passes `contributedLabelPrefixes()`.
+describe("contributed label prefixes", () => {
+  test("without them a contributed prefix is not a pivot", () => {
+    expect(parseReference("dt:anc-contact").form).toBe("unresolvable");
+    expect(isCrossPaperRef("dt:anc-contact")).toBe(true);
+  });
+
+  test("with them it parses as same-paper and cross-paper", () => {
+    expect(parseReference("dt:anc-contact", ["dt"])).toEqual({
+      form: "same-paper",
+      prefix: "dt",
+      slug: "anc-contact",
+    });
+    expect(parseReference("anc-dak:dt:anc-contact", ["dt"])).toEqual({
+      form: "cross-paper",
+      namespace: ["anc-dak"],
+      prefix: "dt",
+      slug: "anc-contact",
+    });
+    expect(isCrossPaperRef("dt:anc-contact", ["dt"])).toBe(false);
+    expect(isCrossPaperRef("dt:anc-contact", ["dt:"])).toBe(false);
+  });
+
+  test("resolveLabel threads them through", () => {
+    expect(resolveLabel("dt:anc-contact", "p")).toBeUndefined();
+    expect(resolveLabel("dt:anc-contact", "p", ["dt"])).toBe(
+      `papers/p/blocks/${labelToSegment("dt", "anc-contact")}`,
+    );
+  });
+
+  test("the real registry supplies them", async () => {
+    const { loadContributions } = await import("../../schemas/harness-config");
+    const { ContributionRegistry } = await import("../../schemas/contributions");
+    const registry = await loadContributions<FolioContribution, InstanceType<typeof ContributionRegistry>>(
+      resolve(import.meta.dir, "../../.."),
+      new ContributionRegistry(),
+    );
+    const prefixes = registry.contributedLabelPrefixes();
+    expect(prefixes).toContain("dt");
+    expect(parseReference("dt:anc-contact", prefixes).form).toBe("same-paper");
   });
 });

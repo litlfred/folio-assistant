@@ -15,12 +15,19 @@
  * edited to stay correct and would misfire silently on any that were missed.
  * These tests pin that default, and pin that the change is a no-op for every
  * kind the existing corpus actually contains.
+ *
+ * Since bean `1335` the `dak` adapter is not built in: smart-base contributes
+ * it. The tests that pinned the DAK vocabulary itself moved to
+ * `smart-base/schemas/dak-blocks.test.ts`; what stays here is how CORE scopes
+ * criteria to an adapter, checked against the contributed adapter the way a
+ * running sweep sees it — through the registry `loadContributions` fills from
+ * this checkout's declared dependencies.
  */
 import { describe, test, expect } from "bun:test";
+import { resolve } from "path";
 import {
   BLOCK_KINDS,
   PAPER_BLOCK_KINDS,
-  DAK_BLOCK_KINDS,
   ALL_BLOCK_KINDS,
   ADAPTER_BLOCK_KINDS,
   CONTENT_ADAPTERS,
@@ -28,6 +35,21 @@ import {
 } from "../../schemas/block-kinds";
 import { criterionAdapters, incompatibleCompanions } from "../../schemas/block-qa";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry";
+import { loadContributions } from "../../schemas/harness-config";
+import {
+  ContributionRegistry,
+  composedKindOwner,
+  type FolioContribution,
+} from "../../schemas/contributions";
+
+/** The checkout's declared dependencies, as the sweep loads them. */
+const REPO = resolve(import.meta.dir, "../../..");
+const registry = await loadContributions<FolioContribution, ContributionRegistry>(
+  REPO,
+  new ContributionRegistry(),
+);
+/** Every kind a dependency contributed, with the adapter it named. */
+const contributed = registry.contributedKinds();
 
 describe("adapter partition", () => {
   test("paper kinds are BLOCK_KINDS itself, not a copy", () => {
@@ -35,14 +57,21 @@ describe("adapter partition", () => {
     expect(PAPER_BLOCK_KINDS).toBe(BLOCK_KINDS);
   });
 
-  test("the two adapters do not overlap", () => {
-    const paper = new Set<string>(PAPER_BLOCK_KINDS);
-    for (const k of DAK_BLOCK_KINDS) expect(paper.has(k)).toBe(false);
+  test("paper is the one built-in adapter — dak is contributed (bean 1335)", () => {
+    expect([...CONTENT_ADAPTERS]).toEqual(["paper"]);
+    expect(registry.contributedAdapters()).toContain("dak");
   });
 
-  test("ALL_BLOCK_KINDS is exactly the union, with no duplicates", () => {
-    const total: number = PAPER_BLOCK_KINDS.length + DAK_BLOCK_KINDS.length;
-    expect(ALL_BLOCK_KINDS.length as number).toBe(total);
+  test("a contributed kind never overlaps a built-in one", () => {
+    // `register` refuses the collision; this pins that the checkout's real
+    // contributors honour it.
+    const paper = new Set<string>(PAPER_BLOCK_KINDS);
+    expect(contributed.length).toBeGreaterThan(0);
+    for (const { kind } of contributed) expect(paper.has(kind)).toBe(false);
+  });
+
+  test("ALL_BLOCK_KINDS is the built-in kinds, with no duplicates", () => {
+    expect([...ALL_BLOCK_KINDS]).toEqual([...PAPER_BLOCK_KINDS]);
     expect(new Set(ALL_BLOCK_KINDS).size).toBe(ALL_BLOCK_KINDS.length);
   });
 
@@ -58,51 +87,6 @@ describe("adapter partition", () => {
     // ValueSet: the caller has to decide what an unrecognised kind means.
     expect(adapterForKind("value-sett")).toBeUndefined();
     expect(adapterForKind("")).toBeUndefined();
-  });
-});
-
-describe("DAK vocabulary tracks the repo's own L2/L3 schemas", () => {
-  test("carries the L2 DAK components", () => {
-    for (const k of [
-      "persona",
-      "user-scenario",
-      "business-process",
-      "data-element",
-      "decision-table",
-      "scheduling-logic",
-      "indicator",
-      "functional-requirement",
-      "non-functional-requirement",
-    ]) {
-      expect(DAK_BLOCK_KINDS as readonly string[]).toContain(k);
-    }
-  });
-
-  test("carries the L3 FHIR artefact types", () => {
-    for (const k of [
-      "logical-model",
-      "profile",
-      "value-set",
-      "questionnaire",
-      "cql-library",
-      "structure-map",
-      "plan-definition",
-      "measure",
-      "test-case",
-      "actor-definition",
-    ]) {
-      expect(DAK_BLOCK_KINDS as readonly string[]).toContain(k);
-    }
-  });
-
-  test("DAK kinds stay out of the paper union", () => {
-    // They now have builders and Zod schemas (schemas/dak-blocks.ts) and their
-    // own exhaustiveness proof against DakBlock — but they must never enter
-    // BLOCK_KINDS, whose proof is against the paper `Block` union and whose
-    // membership is what every paper QA axis is scoped by.
-    for (const k of DAK_BLOCK_KINDS) {
-      expect(BLOCK_KINDS as readonly string[]).not.toContain(k);
-    }
   });
 });
 
@@ -125,19 +109,26 @@ describe("criterion adapter scope", () => {
   test("a criterion never depends on a companion its adapters cannot have", () => {
     // `depends_on` gates applicability, so a mismatched pair does not error —
     // it produces a criterion that is permanently `n/a` and looks registered.
+    // A contributed adapter's roles come from the registry.
     for (const def of QA_CRITERIA_REGISTRY) {
-      expect({ id: def.id, bad: incompatibleCompanions(def) }).toEqual({
+      expect({ id: def.id, bad: incompatibleCompanions(def, registry) }).toEqual({
         id: def.id,
         bad: [],
       });
     }
   });
 
+  test("without the registry, a contributed adapter's roles are not guessed", () => {
+    // The loud answer: every companion is reported, never assumed compatible.
+    expect(incompatibleCompanions({ adapters: ["dak"], depends_on: ["ts"] })).toEqual(["ts"]);
+  });
+
   test("paper axes never admit a DAK block, and DAK axes never admit a paper one", () => {
     for (const def of QA_CRITERIA_REGISTRY) {
       const scope = criterionAdapters(def);
-      for (const k of DAK_BLOCK_KINDS) {
-        expect(scope.includes(adapterForKind(k)!)).toBe(scope.includes("dak"));
+      for (const { kind } of contributed.filter((c) => c.adapter === "dak")) {
+        const owner = composedKindOwner(kind, registry, adapterForKind)!;
+        expect(scope.includes(owner)).toBe(scope.includes("dak"));
       }
       for (const k of BLOCK_KINDS) {
         expect(scope.includes(adapterForKind(k)!)).toBe(scope.includes("paper"));

@@ -56,8 +56,10 @@ further down dep tree)"*.
 - **`folio-assist-core` owns the remote half**, because `library/` is core's
   graph and so are `materialization.ts` and `library-ref.ts`. A harness that
   cannot hold content must not own the vocabulary for acquiring it.
-- **`large-datasets` owns the question before both**: how to enumerate a corpus
-  and ask it for a subset (`source-descriptor.ts`). Neither entry point can
+- **The `large-datasets` package owns the question before both**
+  ([`skills/library/large-datasets/`](../large-datasets/materialize-remote.md),
+  an instance of its own until bean `j7ql` dissolved it here): how to
+  enumerate a corpus and ask it for a subset (`source-descriptor.ts`). Neither entry point can
   start until something says what is out there.
 - **Further down the tree**, a dependency's declared `remoteGraphs` is what
   makes the second path reachable at all: an instance discovers assets through
@@ -361,6 +363,20 @@ posting is a reading of the licence, not of the bytes. `check:l1-complete`
 knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
 `blocks/` or `images/`. That would be the copy this kind exists not to make.
 
+**A publication, not a file — an external reference (owner, 2026-10-02).** A
+FHIR implementation guide is a website and a package, not one PDF, so there are
+no bytes to hash. Its `referenced.json` takes the `published` variant of
+`source` (`schemas/referenced-source.ts`): `kind: "published"`, `url`,
+`canonical`, `package_id`, `version`, and `read_from` / `read_at` naming the
+local record the identity was read off — no `sha256`, rather than a made-up
+one. `links` names where a reader goes instead (the publisher's page, and a
+`site_path` on this site such as the instance's artefact index), and the
+library viewer shows them on the entry's row. Write it by hand — there is no
+file to run `referenced-source.py` on — then `gen-library-jsonld.ts --entry`
+for the manifest. The licence follows the usual rule: `stated` only with a
+basis, else `unknown` with where you looked. First case:
+`smart-base/library/smart-trust/`, the WHO SMART Trust IG.
+
 ## A source published as text in a repository — read it at a commit (bean `y4uj`)
 
 The Gherkin reference, the MCP specification, the `hmans/beans` README and
@@ -436,6 +452,52 @@ library/<bib-slug>/
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
 per-format arms (images, audio, tables, archives) are tracked separately and a
 check that cannot run must not read as a pass. Bean `pn6j`.
+
+## A manifest's title — the authority order, and never the page-1 parse
+
+The owner's ruling of 2026-10-01 (issue #1794, option 2 of 4). A library
+entry's `manifest.jsonld` `title` is the first of these the entry has:
+
+| rank | `meta.title_source` | read from |
+|---|---|---|
+| 1 | `dc-record` | `dc.title` of the Dublin Core record that the catalogue node naming this entry (`libraryId`) points at through `metadataRef` |
+| 2 | `referenced` | `referenced.json` `identity.title` |
+| 3 | `pdf-info` | `structure.json` `metadata.docinfo.Title`, the PDF Info `/Title`, when it is not junk |
+| 3 | `text-heading` | `structure.json` `metadata.title` of a **text or notebook** structure: front-matter `title:`, `--title`, or the level-1 heading |
+| 4 | `slug` | the entry id. Nothing better exists, and `check:library-qa` reports it as `title-missing` |
+
+**The page-1 front-matter parse is NEVER a title.** On a `pdf-structure/v1`,
+`metadata.title` is `parse_front_matter`'s guess at which lines of page 1 are
+the title. It guessed *Abies* for the WHO editorial style manual, *LeanArchitect
+LeanArchitect*, *Algorithmic Approaches to*, and the whole W3C status block for
+three specifications. A plausible wrong title passes every check that has no
+second source. A slug is honest about being a placeholder and gets flagged.
+The parse may still feed search and the section files' `doc_title`.
+
+`text-heading` shares rank 3 because it is the same kind of fact as `/Title`
+(the source naming itself, in its format's own metadata). The two are exclusive
+by variant, so no entry ever has both. A tabular record's `title` is its source
+file name, which is never a title.
+
+**Junk `/Title`** (`pdfInfoTitleJunk`): shorter than 3 characters or no letters;
+`untitled` and its kin; `Microsoft Word - …`; an arXiv stamp
+(`arXiv:0909.4061v2 [math.NA] …`); anything ending in a file extension; the
+source's file name or stem; the slug. A junk value falls through to the next
+source. It never becomes the title. Records (ranks 1–2) are taken as written,
+because a cataloguer's choice is not a program's default.
+
+**Record the Info dictionary at ingest.** `pdf-structure.py` writes
+`metadata.docinfo`. `pdf-pages.py` did not until #1794, which left 20
+page-granular entries with no `/Title` to read. Backfill an older entry with
+`python3 cat-harness/scripts/pdf-pages.py --docinfo-into <entry> <pdf>`. It
+refuses unless the PDF's sha256 is the one the entry recorded.
+
+One resolver, `cat-harness/content/pipeline/library-title.ts`
+(`resolveLibraryTitle`, `TITLE_AUTHORITY`), is used by both
+`gen-library-jsonld.ts` and `check-library-qa.ts`. The manifest records
+`meta.title_source` and `meta.title_from`, and the QA check re-derives the
+order from the entry's files. So a manifest that claims `pdf-info` while a
+catalogue record exists is reported as `title-implausible`, not believed.
 
 ## `source{}` — the technical facts, written by whichever rung ran
 
@@ -683,6 +745,42 @@ the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
 or source that is not there.
 
+### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
+
+An entry whose library root's `withheld.json` names it (bean `cw35`) is listed
+but publishes no verbatim text: `gen-library-viz` reads its blocks with
+`verbatim: false`. Until 2026-10-01 every such row then read **"(no content
+carried)"** — 121 of 121 rows of `who-pub-tps-931`, 250 of 250 of
+`9789241548960-eng` — which is what a page-scan with no text says, so "not ours
+to show" looked exactly like "nothing was extracted". The owner's ruling
+(option 1 of 4, *"Fix the viewer now"*) is the rule:
+
+1. **A row shows the section's summary when one exists**, labelled as a summary
+   and never as the source text. Summaries are our writing and stay published.
+2. **Otherwise, a withheld row says the gate**: *"Withheld — copyright not
+   granted"*, naming every gate that refused (*"copyright and restrictions not
+   granted"*), with a link to the catalogue record — its published page first,
+   its upstream URI second, no link rather than a guessed one.
+3. **Anything else with no content keeps the neutral "(no content carried)"**,
+   because for those it is true.
+4. **A banner tops a withheld entry**: why the text is not shown, which gate
+   refused, the record link, and how many sections have summaries (*"0 of 121
+   sections summarised"*). No banner on any other entry.
+
+**Withheld is READ, never inferred from emptiness.** The flag, the gates and the
+record come from `withheld.json` — `folio-withheld/v1` carries an optional
+structured `gates[]` and `record{id, page, uri}` beside the `reason` sentence,
+which the instance's generator writes from its own data (who-iris:
+`gen-iris-pages.ts`, from the catalogue's publication gates). A list that
+carries only the sentence still works: the row then says the sentence.
+
+The row and banner code is `scripts/lib/library-withheld-view.ts`, embedded in
+the page verbatim so `library-withheld-view.test.ts` runs the same text the
+browser does; `library-withheld-viewer.e2e.ts` opens the rendered page.
+Drafting the summaries is a separate backlog (bean `r96p`):
+`bun run summaries:next -- --entry <slug>` serves a withheld entry's text to the
+summariser like any other.
+
 ### Describing a document's images — and why it is an ARM, not a step you run
 
 `pdf-images.py` classifies by geometry, which answers exactly one question: is
@@ -829,4 +927,4 @@ only from a layer above it: a wrong-direction dependency, and after the split
 
 - [`directory-conventions`](../../kg/kg-core/directory-conventions.md) — the graph kinds and who declares them
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
-- `processes/document-ingestion.bpmn` — the process this sits inside
+- `processes/library/document-ingestion.bpmn` — the process this sits inside

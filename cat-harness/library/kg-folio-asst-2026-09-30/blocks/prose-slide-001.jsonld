@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/kg-folio-asst-2026-09-30/blocks/prose-slide-001",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 1,
   "pageEnd": 1,
   "text": "../sections/slide-001.md",
-  "derivedFrom": "library/kg-folio-asst-2026-09-30/manifest",
-  "sourceDocument": "library/kg-folio-asst-2026-09-30/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/kg-folio-asst-2026-09-30/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/kg-folio-asst-2026-09-30/manifest.jsonld",
   "provenance": "ingested"
 }

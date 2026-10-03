@@ -24,6 +24,7 @@ import { CONTENT_PROFILES } from "./block-kinds";
 
 import type { AttributionKind } from "./attribution";
 import type { ContentAdapter, ContentProfile } from "./block-kinds";
+import type { ContributionRegistry } from "./contributions";
 
 /**
  * The kind of reviewer that produced this finding.
@@ -214,11 +215,15 @@ export interface CheckerHit {
 
 
 /**
- * Which companion roles each adapter's blocks can actually have.
+ * Which companion roles each BUILT-IN adapter's blocks can actually have.
  *
- * `md` and `ts` are shared: every block has a manifest, and either kind of
- * block may carry prose. `lean` is paper-only; the BPMN/DMN/FSH/CQL/XLSX
- * artefacts are DAK-only.
+ * `md` and `ts` are shared: every block has a manifest, and every kind of
+ * block may carry prose. `lean` is paper-only.
+ *
+ * A CONTRIBUTED adapter declares its own on its `AdapterContribution`
+ * (`companionRoles`) — the `dak` row that stood here until bean `1335`, with
+ * BPMN/DMN/FSH/CQL/XLSX/feature, is its contributor's now — and
+ * {@link incompatibleCompanions} reads it from the registry.
  *
  * Stated here so that "a paper criterion depends on `.dmn`" is a *checkable*
  * mistake rather than one that shows up as a criterion which silently never
@@ -227,20 +232,33 @@ export interface CheckerHit {
  */
 export const ADAPTER_COMPANION_ROLES: Record<ContentAdapter, readonly CompanionRole[]> = {
   paper: ["md", "ts", "lean"],
-  dak: ["md", "ts", "bpmn", "dmn", "xlsx", "fsh", "cql", "feature"],
 };
+
+/** {@link ADAPTER_COMPANION_ROLES}, keyed by a plain string for lookup. */
+const BUILT_IN_COMPANION_ROLES: ReadonlyMap<string, readonly CompanionRole[]> = new Map(
+  Object.entries(ADAPTER_COMPANION_ROLES),
+);
 
 /**
  * Companion roles a criterion declares that no adapter in its scope can
  * provide — always empty in a healthy registry.
+ *
+ * A contributed adapter's roles come from `contributions`. Without it, a
+ * criterion scoped to an adapter core does not own has NO allowed roles, so
+ * every companion it depends on is reported — the loud answer, because "could
+ * not tell which roles that adapter has" must not read as "compatible".
  */
-export function incompatibleCompanions(def: {
-  adapters?: ContentAdapter[];
-  depends_on: CompanionRole[];
-}): CompanionRole[] {
+export function incompatibleCompanions(
+  def: {
+    adapters?: string[];
+    depends_on: CompanionRole[];
+  },
+  contributions?: Pick<ContributionRegistry, "adapterCompanionRoles">,
+): CompanionRole[] {
   const allowed = new Set<CompanionRole>();
   for (const a of criterionAdapters(def)) {
-    for (const r of ADAPTER_COMPANION_ROLES[a]) allowed.add(r);
+    const roles = BUILT_IN_COMPANION_ROLES.get(a) ?? contributions?.adapterCompanionRoles(a) ?? [];
+    for (const r of roles) allowed.add(r);
   }
   return def.depends_on.filter((r) => !allowed.has(r));
 }
@@ -376,10 +394,15 @@ export function untaintedPartitionDefects<A extends string = CompanionRole>(
   return out;
 }
 
-/** The adapters a criterion applies to, with the documented default applied. */
+/**
+ * The adapters a criterion applies to, with the documented default applied.
+ *
+ * Strings rather than `ContentAdapter`, because a criterion may be scoped to a
+ * CONTRIBUTED adapter (`dak`) that core's type does not name.
+ */
 export function criterionAdapters(def: {
-  adapters?: ContentAdapter[];
-}): readonly ContentAdapter[] {
+  adapters?: string[];
+}): readonly string[] {
   return def.adapters ?? ["paper"];
 }
 
@@ -713,9 +736,14 @@ export interface QaCriterionDefinition {
    * were all written for needs none, and a new DAK criterion opts in by
    * saying so.
    *
+   * A plain string, not `ContentAdapter`: the value may name a CONTRIBUTED
+   * adapter — `dak` is contributed since bean `1335` — and a content type is
+   * data rather than an import. Whether a named adapter actually exists is a
+   * runtime question for the contribution registry.
+   *
    * Resolve with `criterionAdapters()` rather than reading this directly.
    */
-  adapters?: ContentAdapter[];
+  adapters?: string[];
   /**
    * Which content **profiles** this criterion applies to.
    *

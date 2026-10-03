@@ -15,7 +15,7 @@ publication to a CDN at a given publication root URL … independent of staging
 vs publication … just rendering … output is status of push to CDN +
 message"*, and *"gh-pages is one specific tool of general 'publish to CDN'"*.
 
-Drawn as [`render-kg-to-cdn.bpmn`](../../../processes/render-kg-to-cdn.bpmn).
+Drawn as [`render-kg-to-cdn.bpmn`](../../../processes/process/render-kg-to-cdn.bpmn).
 
 ## Inputs and output
 

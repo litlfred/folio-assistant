@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-007",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 7,
   "pageEnd": 7,
   "text": "../sections/page-007.md",
-  "derivedFrom": "library/deerwester-1990-indexing-by-lsa/manifest",
-  "sourceDocument": "library/deerwester-1990-indexing-by-lsa/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/deerwester-1990-indexing-by-lsa/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/deerwester-1990-indexing-by-lsa/manifest.jsonld",
   "provenance": "ingested"
 }

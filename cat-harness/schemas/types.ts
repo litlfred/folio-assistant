@@ -385,7 +385,7 @@ export interface AuthorNote {
 /** Base fields shared by all environment blocks. */
 /**
  * Shared block fields. Exported so the `dak` adapter's blocks in
- * `dak-blocks.ts` extend the same base — one set of editorial fields across
+ * `smart-base/schemas/dak-blocks.ts` extend the same base — one set of editorial fields across
  * both adapters is what lets one graph loader and one QA sweep serve both.
  */
 export interface BlockBase {

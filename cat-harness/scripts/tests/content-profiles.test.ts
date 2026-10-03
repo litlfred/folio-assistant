@@ -18,7 +18,6 @@ import {
   MATH_BLOCK_KINDS,
   CONTENT_PROFILES,
   PROFILE_BLOCK_KINDS,
-  DAK_BLOCK_KINDS,
   adapterForKind,
   profileAcceptsKind,
   kindsOutsideProfile,
@@ -84,11 +83,8 @@ describe("profiles do not disturb the adapter axis", () => {
     for (const k of BLOCK_KINDS) expect(adapterForKind(k)).toBe("paper");
   });
 
-  test("a DAK kind is in no profile — a different adapter, not a narrower paper", () => {
-    for (const k of DAK_BLOCK_KINDS) {
-      for (const p of CONTENT_PROFILES) expect(profileAcceptsKind(p, k)).toBe(false);
-    }
-  });
+  // "A DAK kind is in no profile" moved to smart-base/schemas/dak-blocks.test.ts
+  // with the DAK kinds (bean 1335): core no longer names one to test with.
 });
 
 describe("profileAcceptsKind", () => {

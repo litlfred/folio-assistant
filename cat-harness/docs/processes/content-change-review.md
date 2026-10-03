@@ -4,12 +4,12 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/content-change-review.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `folio-assistant-core/processes/content/content-change-review.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Content Change and Review
 
-`Process_ContentChangeReview` · strict (defaulted) · 29 step(s)
+`Process_ContentChangeReview` · strict (defaulted) · 30 step(s)
 
 Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.
 
@@ -37,7 +37,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
 ## Steps
 
-Every one of the 29 step(s) is documented.
+Every one of the 30 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -59,6 +59,7 @@ Every one of the 29 step(s) is documented.
 | **Review each slice**<br>`Call_ReviewSlices` | Review Committee | calls [Review task](review-task.html)<br>[`content-review`](../reference/skill-instructions/content-review.html)<br>[`review-comments`](../reference/skill-instructions/review-comments.html) | review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the `block:` tag where something needs saying. |
 | **Withdraw a review comment**<br>`Task_WithdrawComment` | Review Committee | [`review-comments`](../reference/skill-instructions/review-comments.html) | The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS. |
 | **Adjudicate the disagreement**<br>`Call_Adjudication` | Review Committee | calls [Adjudication](adjudication.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it.<br>Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check. |
+| **Review the editorial dependencies**<br>`Task_ReviewUses` | Review Committee | [`uses-editorial-review`](../reference/skill-instructions/uses-editorial-review.html) | `uses[]` is what a READER must have read to follow the block — never<br>populated from the formal dependency graph. Once every changed block<br>is covered, the committee checks the editorial dependencies of the<br>change as a whole before judging its impact. Moved here from the<br>harness's `review-narrative` by placement PR3 (bean `63wl`): reading<br>order is a property of folio content, so the step belongs to the<br>content process, which reaches the harness's review by calling DOWN<br>into `review-task`. |
 | **Review impact assessment**<br>`Task_ReviewImpact` | Review Committee | [`content-review`](../reference/skill-instructions/content-review.html) | Committee reviews the agent's impact assessment:<br>- Were all downstream effects identified?<br>- Are the indicator changes acceptable?<br>- Does the logic change match the narrative intent? |
 | **Request changes**<br>`Task_RequestChanges` | Review Committee | [`content-review`](../reference/skill-instructions/content-review.html)<br>[`content-review`](../reference/skill-instructions/content-review.html) | Committee provides feedback. PR stays open.<br>Author and agent iterate further. |
 | **Approve**<br>`Task_Approve` | Review Committee | [`decision-audit`](../reference/skill-instructions/decision-audit.html) | The committee approves the change: the judgement, recorded with the<br>evidence it rests on. Approving is not merging. They were one task<br>("Approve and merge") until bean en2d split them, because a<br>self-authored change cannot be approved through GitHub's own review<br>(the approver may not be the PR's author), and a merge needs the<br>owner's explicit confirmation whoever approved. |
@@ -80,7 +81,7 @@ Every one of the 6 decision(s) is documented.
 | **Satisfied with changes?**<br>`GW_AuthorSatisfied` | The author's own call after looking at the staged rendering. `No` requests further revisions; `Yes` submits the change to the review committee. | **No** → Request further revisions<br>**Yes** → Submit to review committee |
 | **A comment withdrawn?**<br>`GW_Withdraw` | Asked after the slices are reviewed: did a reviewer withdraw a comment? `Yes` records the withdrawal first; either way the flow then asks whether a finding is disputed. | **Yes** → Withdraw a review comment<br>**No** → A finding disputed? |
 | **A finding disputed?**<br>`GW_Disputed` | Is any finding disputed between author and reviewer? `Yes` goes to adjudication; `No` goes on to check that every changed block was reviewed. | **Yes** → Adjudicate the disagreement<br>**No** → Every changed block reviewed? |
-| **Every changed block reviewed?**<br>`GW_Covered` | Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved. | **no** → Slice the change and assign reviewers<br>**yes** → Review impact assessment |
+| **Every changed block reviewed?**<br>`GW_Covered` | Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved. | **no** → Slice the change and assign reviewers<br>**yes** → Review the editorial dependencies |
 | **Changes approved?**<br>`GW_Approved` | The committee's decision on the impact assessment. `No` requests changes; `Yes` approves. | **No** → Request changes<br>**Yes** → Approve |
 | **PR merged?**<br>`GW_Merged` | Was the PR merged? `Yes` removes the STAGING/<slug>/ preview; `No` ends this run at End_NotMerged without deploying and without looping back into review (the lane note says why); the preview stays in place, and the next push starts a new run. | **Yes** → Remove STAGING/<slug>/<br>**No** → Not merged: preview kept |
 

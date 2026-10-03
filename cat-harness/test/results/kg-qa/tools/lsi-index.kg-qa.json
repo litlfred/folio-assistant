@@ -35,24 +35,16 @@
       "result": "fail",
       "findings": [
         {
-          "where": "lsi-index/agent-skills/library",
-          "detail": "not-run: no successful run recorded — re-run `bun run lsi index --instance agent-skills --graph library`"
-        },
-        {
           "where": "lsi-index/cat-harness/docs",
           "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs`"
         },
         {
-          "where": "lsi-index/cat-harness/library",
-          "detail": "stale: stale — re-run `bun run lsi index --instance cat-harness --graph library`"
-        },
-        {
-          "where": "lsi-index/smart-base/library",
-          "detail": "not-run: no successful run recorded — re-run `bun run lsi index --instance smart-base --graph library`"
-        },
-        {
           "where": "lsi-index/smart-base/smart-base-docs",
           "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs`"
+        },
+        {
+          "where": "lsi-index/smart-immunizations/smart-immunizations-docs",
+          "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs`"
         },
         {
           "where": "lsi-index/smart-trust/smart-trust-docs",

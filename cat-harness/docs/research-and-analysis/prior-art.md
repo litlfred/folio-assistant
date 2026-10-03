@@ -165,7 +165,7 @@ development as agent commands (`/speckit-specify`, `/speckit-plan`,
 
 **Overlap:** phased requirements before implementation, as in
 [CRDM](../crdm-methodology.html). **Difference:** CRDM runs as
-`processes/crdm-requirements.bpmn`, with its state committed under
+`processes/process/crdm-requirements.bpmn`, with its state committed under
 `beans/workflows/`.
 
 ### MetaGPT

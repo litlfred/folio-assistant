@@ -213,7 +213,7 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
+| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline or inferred from heading patterns, per-section text split. The page-1 guess is **never** the entry's title: `library-ingestion` §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
 | [`cat-harness/scripts/pdf-ocr.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
 | [`cat-harness/scripts/extract-candidates.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 
@@ -466,10 +466,10 @@ Before marking intake complete:
 | process | step(s) that name it |
 |---|---|
 | [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Detect media type and mint a doc id; Establish the licence from the upload alone; Extract structure (calls a sub-process); Derive content from the assets (calls a sub-process); Build the L1 knowledge graph (calls a sub-process); Move into library/<bib-slug>/; Available to cite as an L1 source |
-| [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Search trusted SOURCES — L1; Search trusted CONTENT — L2 DAKs, L3 IGs; Query data repositories and statistical datasets |
-| [Getting started](../../processes/getting-started.html) | Scan the repo for content worth importing |
 | [Ingestion subprocess — build the L1 knowledge graph](../../processes/ingest-build-l1-kg.html) | Write dublin-core.jsonld (the record of truth); Write manifest.jsonld referencing it; Record assets[] — local path or remote URL; Bind the folder name to the bibliography slug; Link L1 nodes into the corpus graph |
 | [Ingestion subprocess — derive content from the assets](../../processes/ingest-derive-content.html) | Archive → greppable contents manifest; File info, sizes, hashes, timestamps, mimetype; Narrative description per image, localized; Transcribe and translate audio; Sheet names, headers, shape, narrative; Cite the author of every narrative |
 | [Ingestion subprocess — extract structure](../../processes/ingest-extract-structure.html) | Extract the text layer; OCR to ocr/page-*.txt; Split into sections/*.md with doc_brief front-matter; Write structure.json (TOC, page ranges, metadata); Extract claim candidates |
 | [Ingestion subprocess — the L1 completeness gate](../../processes/ingest-l1-completeness-gate.html) | Is every derived artefact present?; Round-trip translation QA; Adjudicate the flagged passage (calls a sub-process); Record the L1 completeness verdict |
+| [Getting started](../../processes/getting-started.html) | Scan the repo for content worth importing |
+| [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Search trusted SOURCES — L1; Search trusted CONTENT — L2 DAKs, L3 IGs; Query data repositories and statistical datasets |
 
