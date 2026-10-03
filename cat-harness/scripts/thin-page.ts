@@ -78,7 +78,17 @@ export interface ThinPage {
   lang?: string;
   /** Keep the viewer rail. Off by default — see the module docs. */
   navbar?: boolean;
+  /** The tab icon's href. Defaults to {@link DEFAULT_ICON}. */
+  icon?: string;
 }
+
+/**
+ * An inline icon, so a thin page makes no request the browser would otherwise
+ * make for `/favicon.ico` — a 404 on every page view, which reads in the
+ * console exactly like a broken asset.
+ */
+export const DEFAULT_ICON =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3C/svg%3E";
 
 /** The config block's JSON, safe to sit inside a `<script>` element. */
 function configJson(config: Record<string, unknown>): string {
@@ -95,6 +105,7 @@ export function thinPageHtml(p: ThinPage): string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escHtml(p.title)}</title>
 <link rel="canonical" href="./">
+<link rel="icon" href="${escHtml(p.icon ?? DEFAULT_ICON)}">
 ${p.navbar ? "" : `${NAVBAR_OPT_OUT}\n`}<link rel="alternate" type="application/ld+json" href="${escHtml(p.jsonld)}">
 ${p.stylesheet ? `<link rel="stylesheet" href="${escHtml(p.stylesheet)}">\n` : ""}</head>
 <body>
