@@ -347,6 +347,15 @@ function pageName(a: FhirArtifact): string {
 }
 
 /**
+ * What the uncategorised bucket is called — on its section, its Contents row
+ * and, if it ever outgrows the index, its page. Never "Other": the IG HAS a
+ * literal "Other" category (`byCategory`), and a coined second one put two
+ * sections named "Other" on smart-trust's index, the second holding the IG's
+ * own ImplementationGuide resource.
+ */
+const UNCATEGORISED = "Uncategorised";
+
+/**
  * A category's own page name, sanitised the same way an artefact's is.
  *
  * Categories are free text out of the IG (`Requirements: Formal Requirements`,
@@ -355,7 +364,7 @@ function pageName(a: FhirArtifact): string {
  * one, because two sanitisers are two answers to "what is a safe name".
  */
 function categoryName(label: string | undefined): string {
-  return (label ?? "Other").replace(/[^A-Za-z0-9._-]/g, "_");
+  return (label ?? UNCATEGORISED).replace(/[^A-Za-z0-9._-]/g, "_");
 }
 
 /**
@@ -382,7 +391,7 @@ function contentsBox(ordered: [string | undefined, FhirArtifact[]][]): string {
     ``,
     `**Contents**`,
     ``,
-    ...ordered.map(([label, list]) => `- [${mdText(label ?? "Uncategorised")}](#${categoryAnchor(label)}) — ${list.length}`),
+    ...ordered.map(([label, list]) => `- [${mdText(label ?? UNCATEGORISED)}](#${categoryAnchor(label)}) — ${list.length}`),
     ``,
     `</nav>`,
   ].join("\n");
@@ -617,7 +626,7 @@ function indexPage(ix: FhirArtifactIndex): string {
 
   const sections = ordered
     .map(([label, list]) => {
-      const name = label ?? "Other";
+      const name = label ?? UNCATEGORISED;
       const id = ` id="${categoryAnchor(label)}"`;
       if (list.length > INLINE_LIMIT) {
         // Too many to inline; say so and say where they are, rather than
@@ -793,7 +802,7 @@ function artifactTable(list: FhirArtifact[], base: string): string[] {
  * cannot disagree about which category comes first.
  */
 function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
-  const name = label ?? "Other";
+  const name = label ?? UNCATEGORISED;
   const body = [
     `[← all ${ix.count} artefacts](../)`,
     ``,

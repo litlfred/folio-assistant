@@ -334,7 +334,7 @@ unreadable. Every one has its own page: **[browse all 192](./category/Terminolog
 </details>
 
 <details markdown="1" id="cat--uncategorised">
-<summary><strong>Other</strong> — 1</summary>
+<summary><strong>Uncategorised</strong> — 1</summary>
 
 | Artefact | Description |
 |---|---|

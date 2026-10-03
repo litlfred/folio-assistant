@@ -329,7 +329,7 @@ its own page.
 </details>
 
 <details markdown="1" id="cat--uncategorised">
-<summary><strong>Other</strong> — 65</summary>
+<summary><strong>Uncategorised</strong> — 65</summary>
 
 | Artefact | Description |
 |---|---|
