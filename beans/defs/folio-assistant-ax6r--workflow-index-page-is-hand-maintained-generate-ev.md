@@ -17,7 +17,7 @@ Today the page is a hand-written table: every new BPMN needs a manual row (#1894
 - [x] row text is the diagram's own `bpmn:documentation` (first sentence) — no PM status, no bean/issue chatter in the table; anything editorial that must stay moves to the diagram's documentation or a skill
 - [x] grouped by concern group and owning instance
 - [ ] after separation: aggregates across instances' KGs (each instance's process graph, resolved through the declared dependencies), not by walking one checkout
-- [ ] the drift found today is listed in the PR (rows whose text contradicts the diagram) — listed below; copy it into the PR body when the PR is opened
+- [x] the drift found today is listed in the PR (#1955 body, §"Drift found in the old hand table")
 
 ## What was built (2026-10-03)
 
