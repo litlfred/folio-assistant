@@ -3,8 +3,11 @@
 title: Prefix the harness's special branches with cat- (qa-reports, lake-cache/*, state); gh-pages unchanged
 status: in-progress
 type: task
+priority: normal
+tags:
+    - ready-to-close
 created_at: 2026-10-02T18:07:50Z
-updated_at: 2026-10-02T18:07:50Z
+updated_at: 2026-10-03T01:03:30Z
 parent: folio-assistant-fs43
 ---
 
@@ -17,7 +20,7 @@ Parent: fs43, not 7x5n — fs43 is the arc whose subject is the special branches
 - [x] One declared source of truth for the names (`cat-harness/scripts/special-branches.json`) with a test that every copy agrees
 - [x] Readers and writers resolve new-then-legacy name, so nothing breaks across the rename
 - [x] Collision review recorded: #1764/#1801 (qa-reports), #1816 (fhir-ast), state branch session
-- [ ] Owner approves the renames; renames done through the rename API (keeps a redirect), never delete
+- [x] Owner approves the renames; renames done through the rename API (keeps a redirect), never delete
 - [x] Follow-up bean (folio-assistant-oycs) for removing the legacy fallback
 
 ## Collision review (coordinate §"Before a platform refactor"), 2026-10-02, before the first edit
@@ -31,3 +34,35 @@ Open PRs scanned: all 29 (REST diffs; #1764, #1766, #1799, #1801 too large for t
 | fs43 (state branch) | no PR; beans 8ez4, 2h76, rva2 | session_01KC89Knbbj8V6YL6Hrr7kk1 | the `state` branch (seeded, not authoritative) | **none** — no code reads it yet |
 
 Phases: lake-cache/* (this branch) touches no sibling file, so it went ahead. qa-reports, fhir-ast and state renames wait on their owners.
+
+## Evidence (renames, 2026-10-02/03)
+
+All renames done via `rename-special-branch.sh`, using SSH override (`RENAME_SPECIAL_BRANCH_URL`).
+
+### state → cat-state → cat/cat-harness/state (litlfred/folio-assistant)
+
+Done by bean 46qw (first hop) and tlk2 (second hop). Final: `cat/cat-harness/state` at `d913ea45b8eb`.
+
+### fhir-ast/smart.who.int.trust → cat/fhir-harness/fhir-ast/smart.who.int.trust (litlfred/smart-trust)
+
+Done by bean 46qw (first hop) and tlk2 (second hop). Final: `cat/fhir-harness/fhir-ast/smart.who.int.trust` at `f254e5bb6f6b`.
+
+### fhir-ast/smart.who.int.base → cat/fhir-harness/fhir-ast/smart.who.int.base (litlfred/smart-base)
+
+Done by bean 46qw (first hop) and tlk2 (second hop). Final: `cat/fhir-harness/fhir-ast/smart.who.int.base` at `eb7bed8395af`.
+
+### qa-reports → cat/cat-harness/qa-reports (litlfred/folio-assistant)
+
+```
+APPLY — litlfred/folio-assistant: 1 branch(es)
+  qa-reports (26ea1444d1fb) -> cat/cat-harness/qa-reports
+    created cat/cat-harness/qa-reports at 26ea1444d1fb (verified)
+    removed qa-reports
+Now on litlfred/folio-assistant:
+    cat/cat-harness/qa-reports
+DONE
+```
+
+### lake-cache/*
+
+No `lake-cache/*` data branches exist on litlfred/folio-assistant (only on Lean folio repos like litlfred/qou). Bean 46qw noted these wait for their prerequisites (#1913 merge).
