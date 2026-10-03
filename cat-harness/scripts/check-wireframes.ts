@@ -31,6 +31,10 @@
  * Usage:
  *   bun run check:wireframes            # report, write the sidecar, exit 1 on any gap
  *   bun run check:wireframes -- --json  # print the sidecar document
+ *   bun run check:wireframes:check      # JUDGE: compute and judge, write nothing (the gate)
+ *
+ * Judge mode (`--check`, bean `bo44`): 0 no gap · 1 any gap · 2 no visualiser
+ * declared (could not determine), an unknown flag, or the run threw.
  *
  * @module scripts/check-wireframes
  * @covers cat-harness, docs — the declarations supply the visualiser list through
@@ -41,7 +45,16 @@ import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { instanceDirectories, instanceRootsIn, repoRootFor, siteDirFor, visualisationsOf } from "../schemas/cat-harness.ts";
-import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.ts";
 import { withViewers } from "./viewer-declarations.js";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -135,13 +148,9 @@ export function wireframeGaps(r: WireframeReport): number {
   return r.uncovered.length + r.unknownRef.length + r.incomplete.length + r.missingViewport.length + r.failing.length;
 }
 
-if (import.meta.main) {
-  const r = checkWireframes();
-  if (r.declared.length === 0) {
-    console.error("UNDETERMINED: no declared visualiser found. This is not a pass; nothing was checked.");
-    process.exit(2);
-  }
-  const doc = buildQaResult({
+/** The sidecar document for a report. Pure, so the judge and the writer render ONE computation. */
+export function wireframesDocument(r: WireframeReport): QaResult {
+  return buildQaResult({
     script: "cat-harness/scripts/check-wireframes.ts",
     scriptAbsPath: fileURLToPath(import.meta.url),
     subject: { kind: "corpus", id: "harness-visualiser-wireframes" },
@@ -157,6 +166,49 @@ if (import.meta.main) {
       failing: { summary: "A mechanical check that failed: renders, no-overflow or no-placeholder.", entries: r.failing },
     },
   });
+}
+
+/**
+ * The judgement over a report — bean `bo44`'s four states. `unknown` when no
+ * visualiser is declared (nothing was checked); `finding` on any gap, since
+ * every family but `covered` is one.
+ */
+export function judgeWireframes(r: WireframeReport): Judgement {
+  return judgementOf({ failing: wireframeGaps(r), undetermined: r.declared.length === 0 });
+}
+
+if (import.meta.main) {
+  const GATE = "check:wireframes";
+  if (judging()) {
+    // Judge mode: compute, judge, write NOTHING (bean `bo44`).
+    const usage = judgeUsage(GATE, process.argv.slice(2), []);
+    if (usage !== undefined) process.exit(usage);
+    let jr: WireframeReport;
+    try {
+      jr = checkWireframes();
+    } catch (e) {
+      process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+    }
+    for (const u of jr.uncovered) console.error(`  ✗ no wireframe: ${u.ref}`);
+    for (const u of jr.unknownRef) console.error(`  ✗ ${u.wireframe}: covers an undeclared ref ${u.ref}`);
+    for (const i of jr.incomplete) console.error(`  ✗ ${i.wireframe}: ${i.problem}`);
+    for (const m of jr.missingViewport) console.error(`  ✗ ${m.wireframe}/${m.candidate}: no ${m.viewport} check`);
+    for (const f of jr.failing) console.error(`  ✗ ${f.wireframe}/${f.candidate}: ${f.viewport} ${f.criterion} failed`);
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeWireframes(jr),
+        detail: `${jr.covered.length}/${jr.declared.length} declared visualiser(s) covered, ${wireframeGaps(jr)} gap(s)`,
+        committed: { root: INSTANCE_ROOT, stem: "wireframes", fresh: wireframesDocument(jr), writer: GATE },
+      }),
+    );
+  }
+  const r = checkWireframes();
+  if (r.declared.length === 0) {
+    console.error("UNDETERMINED: no declared visualiser found. This is not a pass; nothing was checked.");
+    process.exit(2);
+  }
+  const doc = wireframesDocument(r);
   if (process.argv.includes("--json")) console.log(JSON.stringify(doc, null, 2));
   else {
     writeQaResult(INSTANCE_ROOT, "wireframes", doc);

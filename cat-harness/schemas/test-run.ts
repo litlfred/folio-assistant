@@ -86,6 +86,7 @@ import { join } from "node:path";
 import { SkillNameSchema } from "./tool-types";
 
 import { RequirementRefSchema } from "../../bootstrap-tools/schemas/requirement.ts";
+import { NETWORK_REACHES, REACH_UNKNOWN } from "./actor-reach";
 
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
@@ -127,7 +128,42 @@ export const TestCaseSchema = z.object({
 });
 export type TestCase = z.infer<typeof TestCaseSchema>;
 
-export const TestRunSchema = z.object({
+/**
+ * WHICH PLAN a run executed, and which version of it (bean `ygzh`).
+ *
+ * The run points at the plan; the plan names no run. Plans are reused across
+ * runs and systems, so a back-pointer would make every execution rewrite an
+ * authored `test-plan/v1` node — content turned into live state. The version
+ * is required because a plan's cases change, and a verdict on case `c3` of
+ * plan v1 says nothing about `c3` of v2.
+ */
+export const TestPlanRefSchema = z.strictObject({
+  /** The plan's `id` (`test-plan/v1`). */
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/, "a test-plan id is a lowercase slug"),
+  /** The plan's `version` at execution time. */
+  version: z.string().min(1),
+});
+export type TestPlanRef = z.infer<typeof TestPlanRefSchema>;
+
+/**
+ * The SYSTEM UNDER TEST — who was tested, at what version, with what reach.
+ *
+ * `actor` is an id under `cat-harness/scenarios/actors/` (or the best name
+ * available; resolving it is `kg-audit`'s job, not the schema's). `reach` is
+ * the actor's network reach in the ONE vocabulary `actor-reach.ts` reuses
+ * from the deployment level, plus its third state: `unknown` is a value here
+ * because a run must say it did not know, and an absent field would read the
+ * same as "not relevant".
+ */
+export const SutRefSchema = z.strictObject({
+  actor: z.string().min(1),
+  version: z.string().min(1),
+  reach: z.enum([...NETWORK_REACHES, REACH_UNKNOWN]),
+});
+export type SutRef = z.infer<typeof SutRefSchema>;
+
+export const TestRunSchema = z
+  .object({
   $schema: z.literal(TEST_RUN_SCHEMA_ID),
   /**
    * The skill this run tests, by name.
@@ -175,7 +211,26 @@ export const TestRunSchema = z.object({
    * run differ from every other by construction.
    */
   updated_at: z.string().min(1),
-});
+  /**
+   * The plan this run executed (bean `ygzh`). Optional: a run recorded before
+   * plans existed — `crdm-detect-eval` — tested a skill directly, and still
+   * parses.
+   */
+  plan: TestPlanRefSchema.optional(),
+  /** The system under test (bean `ygzh`). Required whenever `plan` is set. */
+  sut: SutRefSchema.optional(),
+  })
+  .superRefine((r, ctx) => {
+    // A plan is executed AGAINST something. A run naming a plan and no system
+    // under test is a certification-shaped record with its subject missing.
+    if (r.plan !== undefined && r.sut === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["sut"],
+        message: `run executes plan \`${r.plan.id}\` but names no system under test — a plan is run AGAINST something, and the record must say what`,
+      });
+    }
+  });
 export type TestRun = z.infer<typeof TestRunSchema>;
 
 /**
@@ -240,6 +295,8 @@ export function buildTestRun(args: {
   processInputs: string[];
   outcome: Record<string, unknown>;
   cases?: TestCase[];
+  plan?: TestPlanRef;
+  sut?: SutRef;
   now?: Date;
 }): TestRun {
   const data = hashBasis(args.root, args.dataInputs);
@@ -255,6 +312,8 @@ export function buildTestRun(args: {
     outcome: args.outcome,
     ...(args.cases === undefined ? {} : { cases: args.cases }),
     updated_at: (args.now ?? new Date()).toISOString(),
+    ...(args.plan === undefined ? {} : { plan: args.plan }),
+    ...(args.sut === undefined ? {} : { sut: args.sut }),
   };
 }
 
