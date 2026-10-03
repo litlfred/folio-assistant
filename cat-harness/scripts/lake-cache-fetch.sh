@@ -2,7 +2,7 @@
 # scripts/lake-cache-fetch.sh — agent-side Tier-2 cache fetch
 #
 # Fetches the pre-built `.lake/` artifacts from the populated orphan
-# branch `cat/folio-assistant-sci/lake-cache/qou-v<toolchain-slug>` (or, until the remotes are
+# branch `cat-lake-cache/qou-v<toolchain-slug>` (or, until the remotes are
 # renamed, the legacy `lake-cache/qou-v<toolchain-slug>`) and extracts them into the
 # repo root. The CI-side equivalent lives at
 # `.github/actions/lake-cache-restore/action.yml` (Tier 2 step); this
@@ -66,7 +66,7 @@ if [ -z "$BRANCH" ]; then
   # (id `lake-cache`) and checked against this copy by
   # tests/special-branches.test.ts. New name first, then the legacy one,
   # until bean folio-assistant-oycs removes the fallback.
-  CANDIDATES="cat/folio-assistant-sci/lake-cache/qou-${slug} lake-cache/qou-${slug}"
+  CANDIDATES="cat-lake-cache/qou-${slug} lake-cache/qou-${slug}"
 else
   CANDIDATES="$BRANCH"
 fi

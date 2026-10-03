@@ -1,6 +1,6 @@
 name: Lake cache refresh (orphan-branch family)
 
-# Refreshes the `cat/folio-assistant-sci/lake-cache/<package>-<toolchain>` family of orphan
+# Refreshes the `cat-lake-cache/<package>-<toolchain>` family of orphan
 # branches. Tier-2 of the hybrid Lean-cache strategy
 # (.github/actions/lake-cache-restore/).
 #
@@ -103,7 +103,7 @@ jobs:
           echo "$slug" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          # The family moved to `cat/folio-assistant-sci/lake-cache/` (bean folio-assistant-32f6;
+          # The family moved to `cat-lake-cache/` (bean folio-assistant-32f6;
           # names declared in cat-harness/scripts/special-branches.json). The
           # push step resolves this key through lake-cache.sh, which writes
           # to the legacy `lake-cache/` name only while that is the one that
@@ -169,7 +169,7 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-      - name: List + prune cat/folio-assistant-sci/lake-cache/* and lake-cache/* branches
+      - name: List + prune cat-lake-cache/* and lake-cache/* branches
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGES: ${{ needs.setup.outputs.packages }}
@@ -187,19 +187,19 @@ jobs:
           # whole workflow. Per PR #1097 review (Copilot).
 
           # Two families during the cat- rename (bean folio-assistant-32f6):
-          # the new `cat/folio-assistant-sci/lake-cache/` and the legacy `lake-cache/`. The
+          # the new `cat-lake-cache/` and the legacy `lake-cache/`. The
           # keep-2 rule is applied to EACH family separately — exactly the
           # rule this job always applied to `lake-cache/`, and no wider: a
           # legacy branch is never pruned because a `cat-` one is newer.
           # The legacy family goes with bean folio-assistant-oycs.
-          for fam in cat/folio-assistant-sci/lake-cache lake-cache; do
+          for fam in cat-lake-cache lake-cache; do
             # Tolerate the fetch's failure on empty pattern.
             git fetch origin --quiet "refs/heads/$fam/*:refs/remotes/origin/$fam/*" 2>/dev/null \
               || echo "(no $fam/* refs to fetch — first run or no remote branches yet)"
           done
 
           mapfile -t pkgs < <(echo "$PACKAGES" | jq -r '.[]')
-          for fam in cat/folio-assistant-sci/lake-cache lake-cache; do
+          for fam in cat-lake-cache lake-cache; do
             for pkg in "${pkgs[@]}"; do
               branches=$(git branch -r --list "origin/$fam/$pkg-*" \
                          --sort=-committerdate 2>/dev/null | sed 's|.*origin/||' | head -50)
@@ -220,7 +220,7 @@ jobs:
 
           # Hard cap (paranoia for the case where per-package keep-2 still
           # leaves stale entries from a removed package).
-          total=$(git branch -r --list 'origin/cat/folio-assistant-sci/lake-cache/*' 'origin/lake-cache/*' 2>/dev/null | wc -l)
+          total=$(git branch -r --list 'origin/cat-lake-cache/*' 'origin/lake-cache/*' 2>/dev/null | wc -l)
           if [ "$total" -gt 20 ]; then
-            echo "::warning::cat/folio-assistant-sci/lake-cache/* + lake-cache/* branch count = $total (> 20 cap). Manual cleanup recommended."
+            echo "::warning::cat-lake-cache/* + lake-cache/* branch count = $total (> 20 cap). Manual cleanup recommended."
           fi

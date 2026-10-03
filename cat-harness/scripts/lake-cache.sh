@@ -25,7 +25,7 @@
 #   scripts/lake-cache.sh doctor   [--lake-root DIR]
 #   scripts/lake-cache.sh resolve-branch --key <pkg>-<slug>
 #
-# Cache branches are `cat/folio-assistant-sci/lake-cache/<pkg>-<slug>`; the legacy
+# Cache branches are `cat-lake-cache/<pkg>-<slug>`; the legacy
 # `lake-cache/<pkg>-<slug>` is still read AND written where it is the one
 # that exists, until the remotes are renamed (bean folio-assistant-32f6).
 #
@@ -68,12 +68,12 @@ PRIVATE_REF="refs/lake-cache-restore"
 # copied here because a folio may restore a cache with no `bun` on the
 # path. tests/special-branches.test.ts fails if the copy disagrees.
 #
-# The family is moving from `lake-cache/` to `cat/folio-assistant-sci/lake-cache/` (bean
+# The family is moving from `lake-cache/` to `cat-lake-cache/` (bean
 # folio-assistant-32f6). Until every remote is renamed, a branch is
 # resolved new-name-first, then the legacy name — for WRITES as well as
 # reads, so nothing creates a `cat-` branch beside a legacy one and blocks
 # the rename. LEGACY_CACHE_PREFIX goes when bean folio-assistant-oycs says.
-CACHE_PREFIX="cat/folio-assistant-sci/lake-cache"
+CACHE_PREFIX="cat-lake-cache"
 LEGACY_CACHE_PREFIX="lake-cache"
 
 die()  { printf '%s: %s\n' "$PROG" "$*" >&2; exit 2; }
