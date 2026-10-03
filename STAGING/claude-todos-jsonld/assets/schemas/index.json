@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 198,
+      "count": 199,
       "unit": "modules"
     }
   },
@@ -714,6 +714,14 @@
       "name": "memory",
       "graphNode": "schema",
       "summary": "An agent's memory — what it carries into the next task, as a graph node.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "instance": "cat-harness",
+      "name": "merge-queue",
+      "graphNode": "schema",
+      "summary": "The MERGE QUEUE — what the merge steward DECIDED about each open pull",
       "isTest": false
     },
     {
@@ -20788,6 +20796,535 @@
       "unresolved": [],
       "external": [
         "MEMORY_LABELS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#BeanIdSchema",
+      "name": "BeanIdSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-scalar",
+      "doc": "A bean id as the store writes it, e.g. `folio-assistant-hfag`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Ejection",
+      "name": "Ejection",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "name": "EjectionSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "The PR was taken out of a train (T1; R3, R4 — see the module docblock).",
+      "fields": [
+        {
+          "name": "trainId",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "What the steward concluded, e.g. \"own CI red on `docs:harness:check`\"."
+        },
+        {
+          "name": "evidenceUrl",
+          "type": "z.url()",
+          "optional": false,
+          "array": false,
+          "doc": "The run, comment or log that shows it."
+        },
+        {
+          "name": "at",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "name": "EntryObjectSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(MERGE_QUEUE_ENTRY_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/, \"`owner/name`\")",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/name` — a PR number means nothing without its repository."
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "placement",
+          "type": "PlacementSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Why this placement, in a sentence. For `computed`, the rule's description will do."
+        },
+        {
+          "name": "decidedBy",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Who decided — a session URL, `owner`, or an actor id."
+        },
+        {
+          "name": "decidedAt",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hold",
+          "type": "HoldSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "trainId",
+          "type": "NonBlank.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Assigned once the PR is taken into a train; the train-run instance's id."
+        },
+        {
+          "name": "ejection",
+          "type": "EjectionSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "beans",
+          "type": "z.array(BeanIdSchema).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Beans and epics this PR serves. Epics are beans, so one list."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#BeanIdSchema",
+        "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+        "cat-harness/schemas/merge-queue.ts#HoldSchema",
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank",
+        "cat-harness/schemas/merge-queue.ts#PlacementSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "MERGE_QUEUE_ENTRY_TAG",
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Hold",
+      "name": "Hold",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "name": "HoldSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "A hold — the entry stays in the queue but is not taken into a train.",
+      "fields": [
+        {
+          "name": "waitsOn",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "since",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "expires",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "handoff",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Instant",
+      "name": "Instant",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "undetermined",
+      "note": "z.iso.datetime({ offset: true })",
+      "doc": "An ISO-8601 timestamp with a zone, as everywhere else in the work plan.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MemberFacts",
+      "name": "MemberFacts",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema",
+      "name": "MemberFactsSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "The live facts about one PR that the reprioritisation table reads.",
+      "fields": [
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authoredPaths",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true,
+          "doc": "Changed paths a declared merge pattern would REFUSE — the authored ones (T3, R7)."
+        },
+        {
+          "name": "touchesShared",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Touches a shared declaration: a schema, generator, `<instance>.json`, BPMN or DMN (T3, R6)."
+        },
+        {
+          "name": "touchesHarness",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "An authored path under `cat-harness/` or `cat-harness-tools/`. The raw"
+        },
+        {
+          "name": "seedsStaging",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Input (a): `touchesHarness` AND a linked bean descends from the"
+        },
+        {
+          "name": "unblocks",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Open PRs or beans this unblocks, or tangle edges it removes — input (b)."
+        },
+        {
+          "name": "mvp",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Tagged MVP / feature-priority, by epic or label — input (c)."
+        },
+        {
+          "name": "sizeBand",
+          "type": "z.enum([\"small\", \"large\"])",
+          "optional": false,
+          "array": false,
+          "doc": "Changed files plus changed lines, banded — input (d)."
+        },
+        {
+          "name": "conflictRisk",
+          "type": "z.enum([\"low\", \"high\"])",
+          "optional": false,
+          "array": false,
+          "doc": "Shares an AUTHORED path with another live queued PR — input (d), T3."
+        },
+        {
+          "name": "overlapKind",
+          "type": "z.enum([\"none\", \"generated-only\", \"shared-declaration\", \"authored\"])",
+          "optional": false,
+          "array": false,
+          "doc": "WHICH KIND of collision this PR has with the rest of the live queue."
+        },
+        {
+          "name": "refused",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "A declared merge pattern refuses a conflicted path, or GitHub reports it dirty."
+        },
+        {
+          "name": "ownCi",
+          "type": "z.enum([\"green\", \"red\", \"missing-required\", \"none\", \"unknown\"])",
+          "optional": false,
+          "array": false,
+          "doc": "The PR's own CI on its head: T2's first evidence."
+        },
+        {
+          "name": "headShaMatchesCi",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Did CI run on the head that would be merged (T2; bean `u7be` item 3)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MergeQueueEntry",
+      "name": "MergeQueueEntry",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#MergeQueueEntrySchema",
+      "name": "MergeQueueEntrySchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "One queue entry, one file: `<merge-queue>/<owner>--<repo>--<pr>.json`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "name": "NonBlank",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Placement",
+      "name": "Placement",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+      "name": "PlacementSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-union",
+      "doc": "Where the PR sits, and on whose authority.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "computed",
+        "override"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#PriorityClass",
+      "name": "PriorityClass",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#PriorityClassSchema",
+      "name": "PriorityClassSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#TrainMemberEvidence",
+      "name": "TrainMemberEvidence",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#TrainMemberEvidenceSchema",
+      "name": "TrainMemberEvidenceSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "A DATED snapshot of the facts the steward acted on, for one member of a",
+      "fields": [
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "headSha",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"a full 40-character object name\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ownCi",
+          "type": "z.enum([\"green\", \"red\", \"none\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "headShaMatchesCi",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "observedAt",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "outcome",
+          "type": "z.enum([\"merged\", \"ejected\", \"handed-back\", \"held\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidenceUrl",
+          "type": "z.url().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant"
+      ],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -49803,6 +50340,134 @@
       "via": "measured",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "at",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "trainId",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#BeanIdSchema",
+      "via": "beans",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#EjectionSchema",
+      "via": "ejection",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "via": "hold",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "decidedAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "decidedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "trainId",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+      "via": "placement",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "expires",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "since",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "handoff",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "waitsOn",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#TrainMemberEvidenceSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "observedAt",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
