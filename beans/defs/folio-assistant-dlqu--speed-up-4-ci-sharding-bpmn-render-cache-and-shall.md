@@ -84,3 +84,26 @@ lost; the leak is a latent order-dependence `--isolate` removes.
 for 2,086 s (one worker at 99 % CPU) on 11 files that finish in 5 s without
 `--reporter=junit`. CI does not use that reporter; anyone who adds it to the
 parallel step will hit this.
+
+## Parallel tests surfaced three tests that wrote into the real checkout
+
+`--parallel` runs test files concurrently against ONE working tree. Three
+latent races appeared, each a different pair of files per run — the shape that
+gets called a flake and re-run. None is a Bun bug; each is a test writing where
+another test reads.
+
+| writer | what it wrote | reader that broke | evidence |
+|---|---|---|---|
+| `navbar-consistency.test.ts` | planted `"icon": "no-such-image"` in the REAL `cat-harness.json` / `folio-assistant.json`, restored after | any test reading the declarations (MCP tool groups, implementing-path) | CI shard 1 on `1b77432d2`; local error text names the planted icon |
+| `repo-files.test.ts` | an untracked probe in the real `cat-harness/scripts/` | `ns-export-skos.test.ts` (enumerates the tree) | paired: 4/4 fail; alone 0/3; after the fix 0/6 |
+| 4 tests with an in-tree `__test_*__` dir (`po-resolve`, `pipeline-plugins`, `contributions`, `harness-config` — the last holds a fake instance declaration) | scratch directories inside the checkout | anything that enumerates untracked files | latent; moved pre-emptively, all 80 of their tests green from `tmpdir()` |
+
+Fixes: the navbar test plants in a symlinked COPY of the tree; the repo-files
+probe lives in a throwaway `git init` repository; the four scratch dirs moved
+to `mkdtempSync(tmpdir())`. Rule for the next author: **a test writes under
+`tmpdir()`, never under the checkout** — the parallel runner makes every
+in-tree write somebody else's race.
+
+`registry.test.ts` still renames `.claude/skills/registry.json` (untracked,
+generated) and restores it; nothing measured reads it concurrently, so it is
+left and named here rather than changed blind.
