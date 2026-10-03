@@ -37,6 +37,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { registerWorkflowTools } from "../../cat-harness/src/tools/workflow.ts";
+import { fshGutsDirectory } from "../../cat-harness/schemas/fsh-guts.ts";
 import { positionOf } from "../../cat-harness/src/workflow/instance.ts";
 import { instanceId, loadInstance } from "../../cat-harness/src/workflow/store.ts";
 import { CatalogueNodeSchema, type CatalogueNode } from "../schemas/catalogue.js";
@@ -237,7 +238,8 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
         note = "trial, per the scope";
         break;
       case "Task_Trial": {
-        const dir = join(root, "fsh-guts", "samples");
+        // Through the declaration, never `fsh-guts/` spelled (bean 9c7h).
+        const dir = join(fshGutsDirectory(root), "samples");
         mkdirSync(dir, { recursive: true });
         trialPath = join(dir, `${opts.subject}.md`);
         const check = checkSampleImport(instanceRoot, [opts.item]);

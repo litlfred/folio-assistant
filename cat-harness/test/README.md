@@ -13,6 +13,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`board-move-filter.e2e.ts`](board-move-filter.e2e.ts) | a file |  |
 | [`board-windows.e2e.ts`](board-windows.e2e.ts) | a file |  |
 | [`discarded-items.e2e.ts`](discarded-items.e2e.ts) | a file |  |
+| [`e2e-global-setup.ts`](e2e-global-setup.ts) | a file |  |
 | [`figure-export.e2e.ts`](figure-export.e2e.ts) | a file |  |
 | [`first-paint-scheme.e2e.ts`](first-paint-scheme.e2e.ts) | a file |  |
 | [`fishbone-relocate.e2e.ts`](fishbone-relocate.e2e.ts) | a file |  |
@@ -68,6 +69,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
 | [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 973 files | |
+| [`results/`](results/README.md) | 977 files | |
 | [`support/`](support/) | 3 files | |
 <!-- kg:subgraph:end -->
