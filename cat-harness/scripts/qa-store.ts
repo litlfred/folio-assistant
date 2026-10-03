@@ -343,7 +343,6 @@ class Store extends TreeStore {
     super(dir, remote, candidates, authEnv, { identity: QA_BOT, refNamespace: "qa-store", log });
   }
 }
-}
 
 /** The checkout's own `http.*.extraheader` lines, carried in env (never argv). */
 function authEnvFrom(repoRoot: string): Record<string, string> {
