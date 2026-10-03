@@ -24,9 +24,7 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 export { beanDefsDir } from "./check-bean-parents.ts";
-import { DEFAULT_BEAN_GRAPH_ROOT } from "../schemas/bean-graph.ts";
-import { resolveBeanDefsAt } from "./beans.ts";
-import { graphReadPath } from "./graph-read.ts";
+import { resolveBeanDefs } from "./beans.ts";
 
 /** One bean, as it sits on disk. */
 export interface BeanFile {
@@ -183,21 +181,16 @@ export type BeanStore =
   | { state: "read"; dir: string; beans: BeanFile[]; skipped: SkippedFile[]; filesSeen: number };
 
 export function readBeanStore(root: string): BeanStore {
-  // WHERE THE GRAPH IS (row D), then where `defs` is within it. Two questions:
-  // the mount is keyed on the `beans` entry in the root instance's
-  // declaration, while `beans/beans.json` declares `defs` relative to the
-  // graph — and `beans/` is not an instance root, so the nested declaration is
-  // invisible to the mount.
-  const where = graphReadPath("beans", root);
-  if (where.state === "refused") {
+  // `resolveBeanDefs` now answers BOTH halves — where the graph is (row D) and
+  // where `defs` is within it — so this reader no longer asks `graphReadPath`
+  // itself. One implementation of the question, which is the point: the two
+  // would otherwise be able to disagree.
+  const { dir, declared, unreachable } = resolveBeanDefs(root);
+  if (unreachable) {
     // Never a path that merely happens not to exist: that reads as
     // `declared-but-absent` and sends the reader to fix a correct declaration.
-    return { state: "unreachable", dir: null, reason: where.reason };
+    return { state: "unreachable", dir: null, reason: unreachable };
   }
-  // `undeclared` keeps the convention, which is what an unmigrated folio has:
-  // no `beans` entry at all is "no store", not "wrong".
-  const graphRoot = where.state === "ok" ? where.at : join(root, DEFAULT_BEAN_GRAPH_ROOT);
-  const { dir, declared } = resolveBeanDefsAt(graphRoot);
   // The graph declares no `bean-defs` node at all.
   if (dir === null) return { state: "absent", dir: null };
   if (!existsSync(dir)) {
