@@ -31,12 +31,31 @@
 (function () {
   "use strict";
 
-  function el(tag, attrs, text) {
-    var node = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
-    if (text != null) node.textContent = text;
-    return node;
+  /**
+   * The shared renderer, from `kg-render.js`.
+   *
+   * `el` and `fetchIndex` were defined in this file and were the first two
+   * things any other converted region needed, so they moved out rather than
+   * being copied: two `el` helpers is two answers to how this site escapes,
+   * and two three-state fetches is two answers to what a failed load means.
+   * `failureNote` came the OTHER way — this file had only a `console.warn`,
+   * which `skills/ui/ui-core/ui-accessibility.md` names as not saying so.
+   *
+   * REQUIRED, not optional. `head_custom.html` loads `kg-render.js` before
+   * this file and `scripts/state-visualizer.ts` inlines both, in that order.
+   * A missing dependency says so here rather than failing on the first call
+   * with a `TypeError` in a stack frame that does not name it.
+   */
+  var FA = window.faRender;
+  if (!FA) {
+    if (window.console && console.warn) {
+      console.warn("work-plan: assets/js/kg-render.js did not load, so the work-plan " +
+                   "dashboard was not mounted. Its container keeps the authored prose " +
+                   "and the link to the projection.");
+    }
+    return;
   }
+  var el = FA.el;
 
   /** Untouched for this long, an `in-progress` bean is worth a second look. */
   var BEAN_STALE_DAYS = 14;
@@ -189,23 +208,25 @@
   function fetchIndex(metaName, done) {
     var src = document.querySelector('meta[name="' + metaName + '"]');
     var url = src && src.getAttribute("content");
-    if (!url) return done(undefined);
-    fetch(url)
-      .then(function (r) {
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      })
-      .then(function (doc) {
-        done(doc && Array.isArray(doc.items) ? doc : null);
-      })
-      .catch(function (e) {
+    FA.fetchIndex(metaName, function (doc, failure) {
+      // `undefined` passes straight through: the page never asked for this
+      // graph, and that is not a failure to report.
+      if (doc === undefined) return done(undefined, undefined, url);
+      // A document with no `items` array is not this projection, whatever it
+      // is. Reported as unreadable rather than rendered as empty.
+      if (doc !== null && !Array.isArray(doc.items)) {
+        return done(null, "the document carries no `items` array", url);
+      }
+      if (doc === null) {
         // Third state, reported and never rendered as "nothing outstanding".
         // A dashboard that opens at zero is indistinguishable from a store
-        // with no work in it, and those are opposite facts.
-        console.warn("work-plan: could not read " + url + " (" + e.message + "); " +
-                     "that half of the work-plan dashboard was not mounted.");
-        done(null);
-      });
+        // with no work in it, and those are opposite facts. The console is
+        // half of saying so; `renderFailure` below is the half a reader sees.
+        console.warn("work-plan: could not read " + url + " (" + (failure || "no reason " +
+                     "reported") + "); that half of the work-plan dashboard was not mounted.");
+      }
+      done(doc, failure, url);
+    });
   }
 
   /** One `<dt>/<dd>` pair in a count row. */
@@ -725,9 +746,101 @@
     return board;
   }
 
-  /** Swap the board in place, preserving nothing but the scope. */
+  /* ── When was this built, and how far behind main is it? ─────────────
+   *
+   * A reviewer reading counts needs to know WHICH moment they describe. The
+   * stamp is not written into the committed page or its projection: bean
+   * `y7b3` measured a timestamp in a committed generated file as a merge
+   * conflict on every pair of concurrent changes, and the owner ruled them
+   * out. So the deploy writes it — `build.json` at the root of the main site
+   * (`docs-site.yml`), `staging.json` at the root of a preview
+   * (`staging-banner.ts`) — and the page reads it at load time.
+   *
+   * The distance from main is asked of GitHub at load time too, because it
+   * changes with every merge and no build can know it in advance. Every
+   * failure renders as "could not determine", never as "up to date": a
+   * stamp that cannot say how stale it is must not claim to be fresh.
+   */
+  var STAMP = null;
+
+  function fetchJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  }
+
+  /** The deploy's facts, normalised over the two stamp files' spellings. */
+  function readBuildStamp(src) {
+    var dir = src.replace(/[^/]*$/, "");
+    return fetchJson(src)
+      .catch(function () { return fetchJson(dir + "staging.json"); })
+      .then(function (f) {
+        var sha = f && typeof f.sha === "string" ? f.sha : "";
+        if (!sha) throw new Error("no sha");
+        return { sha: sha, built: f.built || f.builtAt || "", runUrl: f.runUrl || "" };
+      });
+  }
+
+  function ageText(iso) {
+    var t = Date.parse(iso);
+    if (isNaN(t)) return "";
+    var mins = Math.max(0, Math.round((Date.now() - t) / 60000));
+    if (mins < 60) return mins + " min ago";
+    var hrs = Math.round(mins / 60);
+    if (hrs < 48) return hrs + " h ago";
+    return Math.round(hrs / 24) + " days ago";
+  }
+
+  /** `https://github.com/<owner>/<repo>` → the API's compare URL, or null. */
+  function compareUrl(sha) {
+    var m = /^https:\/\/github\.com\/([^/]+)\/([^/]+?)\/?$/.exec(repoWeb);
+    return m ? "https://api.github.com/repos/" + m[1] + "/" + m[2] +
+      "/compare/" + encodeURIComponent(sha) + "...main" : null;
+  }
+
+  function behindText(cmp) {
+    if (!cmp || typeof cmp.ahead_by !== "number") return "commits behind main: could not determine";
+    if (cmp.ahead_by === 0) return "up to date with main";
+    return cmp.ahead_by + (cmp.ahead_by === 1 ? " commit" : " commits") + " behind main";
+  }
+
+  function mountStamp(host) {
+    var meta = document.querySelector('meta[name="fa-build-src"]');
+    var src = meta && meta.getAttribute("content");
+    if (!src) return;
+    STAMP = el("p", { class: "fa-workplan-stamp", role: "status" },
+      "Generated: reading the build stamp\u2026");
+    host.insertBefore(STAMP, host.firstChild);
+    readBuildStamp(src).then(function (b) {
+      STAMP.textContent = "Generated ";
+      if (b.built) {
+        var time = el("time", { datetime: b.built }, b.built.replace("T", " ").replace("Z", " UTC"));
+        STAMP.appendChild(time);
+        var age = ageText(b.built);
+        if (age) STAMP.appendChild(document.createTextNode(" (" + age + ")"));
+        STAMP.appendChild(document.createTextNode(" "));
+      }
+      STAMP.appendChild(document.createTextNode("from "));
+      var code = el("code", null, b.sha.slice(0, 7));
+      var commit = repoWeb ? el("a", { href: repoWeb + "/commit/" + b.sha }) : null;
+      if (commit) { commit.appendChild(code); STAMP.appendChild(commit); } else STAMP.appendChild(code);
+      var behind = document.createTextNode(" \u00b7 checking how far main has moved\u2026");
+      STAMP.appendChild(behind);
+      var url = compareUrl(b.sha);
+      (url ? fetchJson(url) : Promise.reject(new Error("no repo")))
+        .then(function (cmp) { behind.textContent = " \u00b7 " + behindText(cmp); })
+        .catch(function () { behind.textContent = " \u00b7 " + behindText(null); });
+    }).catch(function () {
+      // Absent on a local build; a third state, said rather than hidden.
+      STAMP.textContent = "Generated: no build stamp on this deploy, so its age could not be determined.";
+    });
+  }
+
+  /** Swap the board in place, preserving nothing but the scope and stamp. */
   function renderBoard(host) {
     host.textContent = "";
+    if (STAMP) host.appendChild(STAMP);
     host.appendChild(buildBoard());
   }
 
@@ -776,14 +889,52 @@
     });
   }
 
+  /**
+   * Say in the DOM that a projection could not be read.
+   *
+   * `skills/ui/ui-core/ui-accessibility.md` §"A rendering built client-side
+   * owes two things the static one gave for free": *"a `console.warn` is not
+   * saying so: it reaches a developer with the console open and no reader
+   * ever."* Until 2026-10-02 this file's only failure path was that warning,
+   * which made it the live instance of the defect that rule names.
+   *
+   * APPENDED beside the authored fallback rather than replacing it. The rule
+   * `mountWorkPlan` already follows is that the fallback is replaced on
+   * success and LEFT ALONE on failure, because it links the data file and an
+   * empty box would not. Both hold: the reader keeps the working link AND is
+   * told that what they are looking at is a failure rather than an empty work
+   * plan. `aria-live` is not used — the message is present at first render of
+   * the failure, so there is nothing for a live region to announce.
+   *
+   * Idempotent on the id, so two failed halves say so once rather than twice.
+   */
+  function renderFailure(host, noun, url, message) {
+    if (host.querySelector('[data-fa-workplan-failed="' + noun + '"]')) return;
+    var note = FA.failureNote(noun, url, message, "fa-workplan-failed");
+    note.setAttribute("data-fa-workplan-failed", noun);
+    host.appendChild(note);
+  }
+
   function mountWorkPlan() {
     var host = document.querySelector("[data-fa-workplan]");
     if (!host) return;
-    fetchIndex("fa-beans-src", function (beanDoc) {
-      fetchIndex("fa-todo-src", function (todoDoc) {
+    var region = FA.region ? FA.region("work-plan") : null;
+    fetchIndex("fa-beans-src", function (beanDoc, beanWhy, beanUrl) {
+      fetchIndex("fa-todo-src", function (todoDoc, todoWhy, todoUrl) {
+        // SAID IN THE PAGE, per half, before anything is decided about
+        // rendering. `null` is "asked and could not read"; `undefined` is
+        // "never asked", and a page that deliberately shows only one graph
+        // must not report the other as broken.
+        if (beanDoc === null) renderFailure(host, "work plan", beanUrl, beanWhy);
+        if (todoDoc === null) renderFailure(host, "todo index", todoUrl, todoWhy);
+        if (region) {
+          if (beanDoc === null || todoDoc === null) region.failed();
+          else region.ready();
+        }
         // Nothing to show at all — a fetch that failed, or a page carrying
         // neither meta. The container's fallback prose stays put, because it
-        // links the data directly and an empty box would not.
+        // links the data directly and an empty box would not; the note above
+        // is what distinguishes the two cases for the reader.
         if (!beanDoc && !todoDoc) return;
 
         // Either projection carries it and both agree, because one generator
@@ -804,6 +955,7 @@
         };
 
         renderBoard(host);
+        mountStamp(host);
         wireBoard(host);
       });
     });

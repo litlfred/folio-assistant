@@ -45,11 +45,11 @@ are thin stubs pointing here.
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
 > Conventions for the declaration and its graph kinds:
-> [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
+> [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 >
 > **A dependency's skills ARE reachable** — `resolveSkillDirs` in
 > `schemas/harness-config.ts` computes the cross-instance overlay and
-> `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from it, so
+> `LOCAL_PACKAGES` in `scripts/skill-packages.ts` is built from it, so
 > `skill_list` and `skill_fetch` serve a dependency's packages. This entry said
 > the opposite until 2026-09-19 — *"no caller … not yet reachable"* — and a
 > stale gap notice is worse than none, because an agent that believes it either
@@ -94,7 +94,7 @@ and typeset through LaTeX. `PaperContentAdapter` extends
 a kind added to `BLOCK_KINDS` cannot go unclassified.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/content-profiles.md`](cat-harness/skills/folio-core/content-profiles.md)
+[`skills/authoring/authoring-core/content-profiles.md`](cat-harness/skills/authoring/authoring-core/content-profiles.md)
 carries why adapters and profiles are different axes (adapters partition
 disjointly and `adapterForKind` must stay total; profiles *nest*), the question
 to ask when adding a content type — different **code**, or only different
@@ -183,7 +183,7 @@ tag, instance state was identifiable only by SHAPE. **Extension is a
 coincidence; a declaration inside the file is the contract.**
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md)
+[`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md)
 carries the declaration schema and every graph kind, path resolution and the
 dot-prefix guard that tests **every** segment, and the rule that an unavoidable
 duplicate is fine while an unchecked one is not. In this instance
@@ -233,14 +233,14 @@ record no holder, and `beans:claim` answered "go ahead" for every one of them
 closing your own bean, `--body-append`, `--blocked-by`.
 
 **The discipline is in the skill, not here.**
-[`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries
+[`skills/sdlc/sdlc-core/todo-manager.md`](cat-harness/skills/sdlc/sdlc-core/todo-manager.md) carries
 the store itself, including §"Check before you create" — `beans create` is
 **not idempotent** and dedupes on nothing, which is how an unguarded re-run once
 produced **14,688** duplicates, 92 % of every open bean in that repo.
-[`opening-brief.md`](cat-harness/skills/folio-core/opening-brief.md) and
-[`turn-reporting.md`](cat-harness/skills/folio-core/turn-reporting.md) carry the brief you
+[`opening-brief.md`](cat-harness/skills/sdlc/sdlc-core/opening-brief.md) and
+[`turn-reporting.md`](cat-harness/skills/sdlc/sdlc-core/turn-reporting.md) carry the brief you
 open a topic with and the turn-report formats with their seven rules.
-[`skills/folio-core/bean-coordination.md`](cat-harness/skills/folio-core/bean-coordination.md)
+[`skills/sdlc/sdlc-core/bean-coordination.md`](cat-harness/skills/sdlc/sdlc-core/bean-coordination.md)
 carries the cross-session half: **claim before you work** — and §"A claim is
 branch-local" for why a claim **announces rather than reserves** until your PR
 exists, with the two checks to run first; §"Closing a bean whose work has
@@ -252,7 +252,7 @@ deleted one leaves a sibling unable to tell abandonment from accident.
 
 **That is one instance of a general rule, and the general rule is the source of
 truth** —
-[`deletion-requires-confirmation.md`](cat-harness/skills/folio-core/deletion-requires-confirmation.md):
+[`deletion-requires-confirmation.md`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md):
 an agent never removes a durable artefact on its own initiative; it reports what
 would go, with sizes and ages, and waits to be told. The bean case is the
 strictest because a bean id is referenced from commits, issues and other beans.
@@ -273,7 +273,7 @@ them, `readme:audit` for the authored half — or the `readme_sync` / `readme_au
 MCP tools, registered among the **generic** tools.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/readme-sections.md`](cat-harness/skills/folio-core/readme-sections.md)
+[`skills/ui/ui-core/readme-sections.md`](cat-harness/skills/ui/ui-core/readme-sections.md)
 carries the opt-in contract, the third state ("could not determine" leaves the
 region untouched, and an empty directory is still a determined empty), why every
 link is resolved rather than composed, why `raw` is not the private-repo answer,
@@ -287,20 +287,20 @@ carries where it was drawn, and the arrow runs `folio → board → position →
 note` and never back. A folio is complete with no board.
 
 **The discipline is in the skills, not here** —
-[`board-diagram-interchange`](cat-harness/skills/folio-core/board-diagram-interchange.md)
+[`board-diagram-interchange`](cat-harness/skills/ui/ui-core/board-diagram-interchange.md)
 carries that split, why a note holds no coordinate, and how an orphan is swept
 from the LAYER;
-[`board-windows`](cat-harness/skills/folio-core/board-windows.md) carries the
+[`board-windows`](cat-harness/skills/ui/ui-core/board-windows.md) carries the
 two mechanisms that must not be conflated — semantic zoom is automatic and
 driven by size, open and close are a person's — and the `l4zi` rule that an
 action whose inverse is not reachable is not a toggle;
-[`harness-tiles`](cat-harness/skills/folio-core/harness-tiles.md) carries why a
+[`harness-tiles`](cat-harness/skills/ui/ui-core/harness-tiles.md) carries why a
 tile belongs to the **harness** rather than to a node, why `instantiated` is a
 different question from `declared`, and the two gaps it reports rather than
 hides.
 
 The processes are executable diagrams, not prose: `board-open-close.bpmn`,
-`board-relocate.bpmn` and `board-place-note.bpmn` under `processes/`,
+`board-relocate.bpmn` and `board-place-note.bpmn` under `folio-assistant-core/processes/ui/`,
 indexed with the rest on the [publication-workflow
 page](cat-harness/docs/publication-workflow.md). **Count the directory rather
 than quoting a number from this paragraph** — `bpmn-processes` says why.
@@ -316,7 +316,7 @@ repository saying so. Bean `xom7`.
 GitHub holds *about* this repository rather than one the repository holds, so
 it is asked externally every run and cached nowhere. The session-start sweep
 prints both.
-[`skills/folio-core/ci-health.md`](cat-harness/skills/folio-core/ci-health.md) carries the
+[`skills/sdlc/sdlc-core/ci-health.md`](cat-harness/skills/sdlc/sdlc-core/ci-health.md) carries the
 three rules for reading it — "could not check" is never green, a red that has
 not re-run in a week is *possibly stale*, and a red whose workflow file changed
 after the failing run is `superseded` — plus why a report alone cannot cover the
@@ -350,7 +350,7 @@ fails. `bun run health:list` says what the checks are.
 
 **It reports and never acts.** Four of the five checks are about artefacts
 accumulating, and every finding's action names something a *person* does. That
-is [`deletion-requires-confirmation`](cat-harness/skills/folio-core/deletion-requires-confirmation.md)
+is [`deletion-requires-confirmation`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)
 applied to the tool that most wants to break it — the skill's own worked
 example is `plj1`, a workflow whose shape deleted every open PR's preview
 without anybody deciding it.
@@ -374,7 +374,7 @@ be *typed*. This asks who *judges* it, and the two come apart: a kind can be
 perfectly typed and audited by nothing.
 
 **The discipline is in the skill, not here** —
-[`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
+[`audit-coverage`](cat-harness/skills/kg/kg-core/audit-coverage.md)
 carries why the gate half is **declared** rather than inferred
 (a grep fails in both directions), the four per-kind states that must not
 collapse into one zero — including why `typed-only` is still a **finding**,
@@ -396,7 +396,7 @@ One sentence, and every word in it is a distinct declared object:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `cat-harness/scenarios/actors/*.json` |
 | **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries skills. | `scenarios/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | the `cat-harness` graph — here, `skills/` |
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |
@@ -407,7 +407,7 @@ the duration of a lane, and the same actor is a different role in another
 diagram.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/role-model.md`](cat-harness/skills/folio-core/role-model.md) carries the
+[`skills/process/process-core/role-model.md`](cat-harness/skills/process/process-core/role-model.md) carries the
 three actor kinds and why the line between agentic and mechanical is judgement;
 the actor's three lists (`roles`, `permissions`, `capabilities`) and why moving
 permissions onto Role produced 36 conflicts; the two compositions (`inherits` is
@@ -432,7 +432,7 @@ Subagents declared under [`.claude/agents/`](.claude/agents/) carry
 lines only**, with the overflow dropped silently.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/agent-memory.md`](cat-harness/skills/folio-core/agent-memory.md) carries
+[`skills/conduct/conduct-core/agent-memory.md`](cat-harness/skills/conduct/conduct-core/agent-memory.md) carries
 the three entry labels and what each promises, why entries are authored as nodes
 under `memory/` rather than in the generated file, the two ways the
 injection budget has to be checked, archiving as the third state between
@@ -461,7 +461,7 @@ once it is available. Run the pieces by hand with `beans prime`, `beans list`,
 `beans roadmap`.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries
+[`skills/sdlc/sdlc-core/todo-manager.md`](cat-harness/skills/sdlc/sdlc-core/todo-manager.md) carries
 the fallback's commands and why a read-only one is no fallback for an agent, the
 2026-09-18 session that did two merged PRs' worth of work **unclaimed**, and
 what the session-start sweep emits and in what order. Set `BEANS_CHECKOUT_ROOT`
@@ -481,9 +481,9 @@ When a user request is a **feature request** (platform capability change rather
 than content work), the agent enters the
 [CRDM requirements workflow](https://litlfred.github.io/folio-assistant/crdm-methodology.html)
 rather than implementing directly. Detection signals and session-state handling
-are in [`skills/crdm/crdm-detect.md`](cat-harness/skills/crdm/crdm-detect.md);
+are in [`skills/sdlc/crdm/crdm-detect.md`](cat-harness/skills/sdlc/crdm/crdm-detect.md);
 the full six-phase process is in
-[`skills/crdm/crdm-requirements-workflow.md`](cat-harness/skills/crdm/crdm-requirements-workflow.md).
+[`skills/sdlc/crdm/crdm-requirements-workflow.md`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md).
 
 **The CRDM process is executable — do not hand-roll a phase tracker.**
 `processes/crdm-requirements.bpmn` loads like every other diagram here,
@@ -507,12 +507,12 @@ the *pointer*, with the skill as the text:
 
 | rule | where it lives |
 |---|---|
-| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/crdm/crdm-detect.md) §"Issue association" |
-| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/folio-core/continual-progress.md) invariant 1 |
-| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/crdm/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
-| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/crdm/crdm-requirements-workflow.md) |
-| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/folio-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
-| an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), and `crdm-close.bpmn` executes it |
+| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/sdlc/crdm/crdm-detect.md) §"Issue association" |
+| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/sdlc/sdlc-core/continual-progress.md) invariant 1 |
+| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
+| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
+| an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md), and `crdm-close.bpmn` executes it |
 
 Six rows for seven bullets: *"use a feature branch"* and *"always PR"* were
 two statements of one invariant, and `continual-progress` already states it as
@@ -534,12 +534,12 @@ instance under the declared `workflow-state` graph, and the session-start sweep
 reports "no instance recorded" as a **finding** rather than as silence.
 
 **The discipline is in the skill, not here** —
-[`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md)
+[`skills/process/workflow/process-state.md`](cat-harness/skills/process/workflow/process-state.md)
 §"Say which process you are in" carries the format and §"Naming it is not the
 same as recording it" carries that rule, and the rest of that skill carries the
 five detectors for being out of process and the recovery that confirms with the
 user before re-entering — a confirmation the owner may waive for a session or a
-process run ([`confirmation-waiver`](cat-harness/skills/folio-core/confirmation-waiver.md)).
+process run ([`confirmation-waiver`](cat-harness/skills/conduct/conduct-core/confirmation-waiver.md)).
 
 ## Working an issue — announce, then re-check
 
@@ -549,7 +549,7 @@ else's: **announce the branch when you create it**, not when you finish, and
 comment keeps its id, and an edited requirement is a changed requirement.
 The discipline, the two marks to track, and the session that missed five
 owner comments in eighty-four minutes are in
-[`skills/folio-core/issue-working.md`](cat-harness/skills/folio-core/issue-working.md).
+[`skills/sdlc/sdlc-core/issue-working.md`](cat-harness/skills/sdlc/sdlc-core/issue-working.md).
 It also carries what an issue is *for* against a PR and a bean, and the rule
 that an agent never closes one on its own say-so.
 
@@ -566,7 +566,7 @@ look at it** — that is the rule agents invert in the name of care, and inverti
 it is not caution, it is a blocked reviewer.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/continual-progress.md`](cat-harness/skills/folio-core/continual-progress.md)
+[`skills/sdlc/sdlc-core/continual-progress.md`](cat-harness/skills/sdlc/sdlc-core/continual-progress.md)
 carries the five invariants, why a human cannot assess a rendered artefact from
 a description of it (measured on PR #178, 2026-09-16), what to do with the thing
 you could not verify, and the three narrow exceptions — none of which is "I am
@@ -589,7 +589,7 @@ question is not ready. A link is where somebody goes for *more*; it is never
 where the terms are defined.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/interaction-modality.md`](cat-harness/skills/folio-core/interaction-modality.md)
+[`skills/conduct/conduct-core/interaction-modality.md`](cat-harness/skills/conduct/conduct-core/interaction-modality.md)
 §4.1 carries the six parts, the surfaces this binds that do not feel like asking
 (the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
 comment), why feature work breaks it more than content work, and a worked
@@ -600,7 +600,7 @@ agent enforcing it: **with several decisions open, ask ONE in full and give a
 COUNT for the rest** — never a compact list of option names — and a
 **write-time pass** over the report you actually wrote, since the failure
 happens while composing a status update rather than a question
-([`turn-reporting.md`](cat-harness/skills/folio-core/turn-reporting.md)).
+([`turn-reporting.md`](cat-harness/skills/sdlc/sdlc-core/turn-reporting.md)).
 
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
@@ -612,7 +612,7 @@ provenance; how do I plan to do it, what will I verify against, and **what would
 falsify the approach**. Then what you are *not* doing, and why.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/opening-brief.md`](cat-harness/skills/folio-core/opening-brief.md)
+[`skills/sdlc/sdlc-core/opening-brief.md`](cat-harness/skills/sdlc/sdlc-core/opening-brief.md)
 carries the four parts, when the rule applies (the trigger is
 **irreversibility and surprise**, not line count), a worked ~200-word brief, the
 thin one that fails and why, and the cheapest correct move when you do not want
@@ -621,7 +621,7 @@ to spend the words: **do not start the topic.**
 ## More
 
 - **Not sure where a thing goes? There is a router now** —
-  [`where-does-this-go`](cat-harness/skills/folio-core/where-does-this-go.md).
+  [`where-does-this-go`](cat-harness/skills/conduct/conduct-core/where-does-this-go.md).
   This repository answers "where does this file?" nine separate times, each
   well and each in its own skill, and until 2026-09-22 nothing said WHICH
   question you were asking. The router answers none of them: every row is a
@@ -629,7 +629,7 @@ to spend the words: **do not start the topic.**
   nine answers would be nine summaries free to drift from nine skills. It is
   for the moment you notice yourself about to guess, not for every turn. Its
   companion is
-  [`surprise-to-corpus`](cat-harness/skills/folio-core/surprise-to-corpus.md)
+  [`surprise-to-corpus`](cat-harness/skills/kg/kg-core/surprise-to-corpus.md)
   — notice what was logically unexpected, filter it by whether the next agent
   in that process would hit it too, and then **prompt**: the agent never
   writes corpus guidance unasked, which is
@@ -644,7 +644,7 @@ to spend the words: **do not start the topic.**
   `RemarkBlock.interprets` in `schemas/types.ts`; union accessors in
   `content/pipeline/content-graph.ts`. The discipline, the two caveats that
   change what a count means, and why a count in prose is a claim rather than
-  evidence: [`uses-editorial-review`](cat-harness/skills/folio-core/uses-editorial-review.md)
+  evidence: [`uses-editorial-review`](cat-harness/skills/authoring/authoring-core/uses-editorial-review.md)
   (agent/human) plus the mechanical `uses` QA axis.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:
@@ -661,9 +661,9 @@ to spend the words: **do not start the topic.**
   same position. **Which store answers which question**, what
   `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be
   one answer rather than two, are in
-  [`workflow-state`](cat-harness/skills/workflow/workflow-state.md).
+  [`workflow-state`](cat-harness/skills/process/workflow/workflow-state.md).
   **The discipline is in the skill, not here** —
-  [`bpmn-processes`](cat-harness/skills/workflow/bpmn-processes.md) carries how to author
+  [`bpmn-processes`](cat-harness/skills/process/workflow/bpmn-processes.md) carries how to author
   an activity (`<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>`, both required), strict
   vs advisory and the four steps no package may relax, the commit-boundary
   corpus gate and why it refuses when it cannot tell, DMN-backed gateways and
@@ -673,14 +673,14 @@ to spend the words: **do not start the topic.**
   holds nested state — a task, inside a process instance, under a role that owns
   a swimlane — and the five detectors for "you are out of process", plus the
   recovery that **confirms with the user before re-entering**, are in
-  [`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md).
+  [`skills/process/workflow/process-state.md`](cat-harness/skills/process/workflow/process-state.md).
   Bean status defaults to **non-blocking**; a real block carries what it waits
   on, since, an **expiry** and a handoff, because a block with no expiry cannot
   be told from abandoned work —
-  [`skills/folio-core/bean-blocking.md`](cat-harness/skills/folio-core/bean-blocking.md).
+  [`skills/sdlc/sdlc-core/bean-blocking.md`](cat-harness/skills/sdlc/sdlc-core/bean-blocking.md).
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
-  [`skills/folio-core/swarm-management.md`](cat-harness/skills/folio-core/swarm-management.md)
+  [`skills/sdlc/sdlc-core/swarm-management.md`](cat-harness/skills/sdlc/sdlc-core/swarm-management.md)
   and the [reader-facing page](cat-harness/docs/swarm-management.md).
 - **An instance declares the directories it scans — `<instance>.json` at that
   instance's own root.** Each entry names a directory and the **kind of graph**
@@ -693,7 +693,7 @@ to spend the words: **do not start the topic.**
   Both are required, so a kind that has not decided does not compile, and a
   step writing to a `context` graph is a defect rather than an update.
   **The discipline is in the skill, not here** —
-  [`skills/folio-core/content-context-and-state-graphs.md`](cat-harness/skills/folio-core/content-context-and-state-graphs.md)
+  [`skills/kg/kg-core/content-context-and-state-graphs.md`](cat-harness/skills/kg/kg-core/content-context-and-state-graphs.md)
   carries the one question that settles a kind, the two that settle a hard
   case, the kinds whose layer is not obvious from their name, what a consumer
   may assume of each, and why agent memory is `context` while its mirror
@@ -723,7 +723,7 @@ to spend the words: **do not start the topic.**
   argument for its first clause, and the reason no count is given here on
   purpose: a count in prose is the same failure one turn later. Schema:
   `schemas/cat-harness.ts`; conventions:
-  [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
+  [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - **Adding one is never a one-file change** — `bun run skill:register` performs
@@ -733,7 +733,7 @@ to spend the words: **do not start the topic.**
   your skill, so the cause is invisible from the symptom** — which is why the
   remedy is a command rather than a list. **The discipline is in the skill, not
   here** —
-  [`skill-registration`](cat-harness/skills/folio-core/skill-registration.md)
+  [`skill-registration`](cat-harness/skills/kg/kg-core/skill-registration.md)
   carries what a skill owes and why the feedback arrives on somebody else's PR,
   the ONE declaration the command deliberately leaves to you (which package a
   file belongs to is your assertion, not a derivable fact), why the chain cannot
@@ -747,7 +747,7 @@ to spend the words: **do not start the topic.**
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
   proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),
   then pushes. It does not merge. Command: `.claude/commands/prepare-merge.md`;
-  full discipline: `skills/folio-core/prepare-merge.md`.
+  full discipline: `skills/sdlc/sdlc-core/prepare-merge.md`.
 - Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.

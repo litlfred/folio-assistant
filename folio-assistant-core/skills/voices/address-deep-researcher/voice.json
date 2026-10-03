@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `deep-researcher` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
-      "kgRef": "scenarios/roles.json"
+      "instance": "litlfred/cat-harness",
+      "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "deep-researcher"
       }
     ]
@@ -28,8 +28,8 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
-        "kgRef": "scenarios/roles.json",
+        "instance": "litlfred/cat-harness",
+        "path": "scenarios/roles.json",
         "quote": "Cites to a location, not to a document. Distinguishes what a source says from what it implies, and marks a synthesis as a synthesis rather than letting it read as a quotation."
       }
     }

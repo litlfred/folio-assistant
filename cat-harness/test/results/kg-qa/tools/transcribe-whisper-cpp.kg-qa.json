@@ -5,7 +5,7 @@
     "id": "transcribe-whisper-cpp",
     "path": null
   },
-  "source_hash": "bc1835beee84",
+  "source_hash": "8d813da85f15",
   "criteria": {
     "tool-invoke-path-resolves": {
       "result": "pass",
@@ -27,8 +27,12 @@
       "result": "pass",
       "findings": []
     },
-    "tool-alternative-resolves": {
+    "tool-alternative-selectable": {
       "result": "pass",
+      "findings": []
+    },
+    "tool-downstream-fresh": {
+      "result": "n/a",
       "findings": []
     },
     "tool-maintains-in-tree": {
@@ -39,7 +43,7 @@
   "totals": {
     "pass": 6,
     "fail": 0,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }

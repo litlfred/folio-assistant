@@ -5,7 +5,7 @@
     "id": "ns-vocabulary",
     "path": null
   },
-  "source_hash": "8cdee362acc9",
+  "source_hash": "90d134a8e108",
   "criteria": {
     "tool-invoke-path-resolves": {
       "result": "pass",
@@ -27,7 +27,11 @@
       "result": "pass",
       "findings": []
     },
-    "tool-alternative-resolves": {
+    "tool-alternative-selectable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-downstream-fresh": {
       "result": "n/a",
       "findings": []
     },
@@ -36,7 +40,11 @@
       "findings": [
         {
           "where": "ns-vocabulary",
-          "detail": "maintains \"ns/vocabulary.jsonld\" — presence is a fact about the assembled site, not this checkout. Answered by `check:maintained-artefacts ./_site` in the docs-site workflow."
+          "detail": "maintains \"cat-harness/ns.jsonld\" — presence is a fact about the assembled site, not this checkout. Answered by `check:maintained-artefacts ./_site` in the docs-site workflow."
+        },
+        {
+          "where": "ns-vocabulary",
+          "detail": "maintains \"folio-assistant-core/ns.jsonld\" — presence is a fact about the assembled site, not this checkout. Answered by `check:maintained-artefacts ./_site` in the docs-site workflow."
         }
       ]
     }
@@ -44,7 +52,7 @@
   "totals": {
     "pass": 5,
     "fail": 0,
-    "n/a": 1,
+    "n/a": 2,
     "unknown": 1
   }
 }

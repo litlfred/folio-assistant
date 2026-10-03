@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/workflow/code-review-process.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/code-review-process.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/workflow/code-review-process.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/code-review-process.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/code-review-process.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/code-review-process.md){: .fa-edit-source }
 
 {% raw %}
 # Code review process — from PR to release approval
@@ -46,7 +46,7 @@ the arbiter. If ambiguous, ask the BA.
 | Schema (`schemas/*.ts`) | Code review | BA (type ↔ requirement) |
 | Pipeline (`content/pipeline/*.ts`) | Code review + tests | BA (output correctness) |
 | Skills (`cat-harness/skills/**`) | BA (guidance sense) | Code review (cross-refs) |
-| BPMN (`cat-harness/processes/*.bpmn`) | BA (process ↔ reality) | Code review (compliance) |
+| BPMN (`cat-harness/processes/**/*.bpmn`) | BA (process ↔ reality) | Code review (compliance) |
 | Docs (`cat-harness/docs/**`) | BA (content accuracy) | Visual (staging preview) |
 | Tests | Code review | — |
 | CI/workflows | Code review | CI health check |
@@ -71,7 +71,7 @@ the arbiter. If ambiguous, ask the BA.
 ## Cross-references
 
 - [`release-lifecycle`](release-lifecycle.md) — the broader release flow
-- [`../folio-core/prepare-merge-auto.md`](prepare-merge-auto.md) — merge mechanics
-- [`../folio-core/staging-review.md`](staging-review.md) — visual comparison
-- [`../../skills/crdm/crdm-requirements-template.md`](crdm-requirements-template.md) — acceptance criteria
+- [`../../sdlc/sdlc-core/prepare-merge-auto.md`](prepare-merge-auto.md) — merge mechanics
+- [`../../sdlc/sdlc-core/staging-review.md`](staging-review.md) — visual comparison
+- [`../../skills/sdlc/crdm/crdm-requirements-template.md`](crdm-requirements-template.md) — acceptance criteria
 {% endraw %}

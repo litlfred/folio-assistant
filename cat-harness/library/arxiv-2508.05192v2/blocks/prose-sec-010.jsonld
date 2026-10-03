@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/arxiv-2508.05192v2/blocks/prose-sec-010",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 4,
   "pageEnd": 5,
   "text": "../sections/sec-010-conclusion.md",
-  "derivedFrom": "library/arxiv-2508.05192v2/manifest",
-  "sourceDocument": "library/arxiv-2508.05192v2/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2508.05192v2/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2508.05192v2/manifest.jsonld",
   "provenance": "ingested"
 }

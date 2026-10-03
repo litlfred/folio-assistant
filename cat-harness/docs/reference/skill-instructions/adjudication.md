@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/adjudication.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/adjudication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md){: .fa-edit-source }
 
 {% raw %}
 # Adjudication — judgement, when the mechanism ran out of facts
 
-> Skill id: `adjudication` · Capability: `review` · Package: `folio-core`
+> Skill id: `adjudication` · Package: `sdlc-core`
 
 ## Why this exists
 
@@ -182,7 +182,7 @@ record the disagreement, lead with the judgement, keep the other entry.
 
 The outcome carries its reason. That mechanism already exists and is
 schema-backed — `block-qa/v1`'s multi-reviewer primitive, documented at length
-in [`q-usage-watcher`](q-usage-watcher.md):
+in `q-usage-watcher` (folio-assistant-sci):
 
 - a `kind: "human"` entry with `result: "pass"` overrides the script's `fail`
   for the same criterion;
@@ -259,7 +259,7 @@ deliberately stops short of it.
 
 - [`untainted-verification`](untainted-verification.md) — the parties and what
   each is given. Adjudication is what happens when they disagree.
-- [`q-usage-watcher`](q-usage-watcher.md) — the
+- `q-usage-watcher` (folio-assistant-sci) — the
   dispensation mechanism, documented where it was first applied.
 - [`code-node-review`](code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
   [`voice-overlay-review`](voice-overlay-review.md) — the reviews that produce
@@ -276,12 +276,12 @@ This skill has its own process: **[Adjudication](../../processes/adjudication.ht
 
 | process | step(s) that name it |
 |---|---|
-| [Adjudication](../../processes/adjudication.html) | Adjudicate the disagreement |
-| [Content Change and Review](../../processes/content-change-review.html) | Adjudicate the disagreement (calls a sub-process) |
-| [Criterion adjudication](../../processes/criterion-adjudication.html) | Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
+| [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
+| [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
 | [Ingestion subprocess — the L1 completeness gate](../../processes/ingest-l1-completeness-gate.html) | Adjudicate the flagged passage (calls a sub-process) |
 | [Refresh materialized remote content](../../processes/refresh-materialized.html) | Adjudicate the conflict (calls a sub-process) |
-| [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
 | [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
-| [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
+| [Adjudication](../../processes/adjudication.html) | Adjudicate the disagreement |
+| [Criterion adjudication](../../processes/criterion-adjudication.html) | Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
+| [Content Change and Review](../../processes/content-change-review.html) | Adjudicate the disagreement (calls a sub-process) |
 

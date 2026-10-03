@@ -131,7 +131,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { basename, dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
 import {
   graphKindsOfLayer,
@@ -147,7 +147,13 @@ import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 import { withViewerNav } from "./viewer-page.ts";
-import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+import {
+  renderedPath,
+  siteDirectories,
+  withRenders,
+  withRendersFrontMatter,
+  withViewers,
+} from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "state-viewer";
@@ -170,6 +176,29 @@ const check = process.argv.slice(2).includes("--check");
 /** The renderer and its styles, read from the files the docs site also serves. */
 const WORK_PLAN_JS = readFileSync(join(SITE, "assets", "js", "work-plan.js"), "utf-8");
 const WORK_PLAN_CSS = readFileSync(join(SITE, "assets", "css", "work-plan.css"), "utf-8");
+
+/**
+ * The shared renderer `work-plan.js` reads `window.faRender` from.
+ *
+ * TWO FILES INLINED RATHER THAN ONE, since 2026-10-02: `el`, the three-state
+ * fetch and the in-DOM failure copy moved out of `work-plan.js` into
+ * `kg-render.js` so a second converted region could use them instead of
+ * copying them. The same argument this file already rests on — *"a second copy
+ * of a renderer is two answers to what the work plan looks like, free to
+ * disagree while both look right in review"* — applies one level down, and it
+ * is why this reads the file rather than growing its own copy of those
+ * helpers.
+ *
+ * ORDER IS LOAD-BEARING. `work-plan.js` reads `window.faRender` at evaluation
+ * and returns early with a console warning if it is absent, so this must be
+ * emitted first. `head_custom.html` states the same constraint for the docs
+ * site, where `defer` preserves document order.
+ *
+ * These pages declare NO `fa-render-regions` meta and therefore carry no
+ * `data-fa-render` attribute. That is the deliberate third state: a page that
+ * never asked is not a page that is pending.
+ */
+const KG_RENDER_JS = readFileSync(join(SITE, "assets", "js", "kg-render.js"), "utf-8");
 
 /**
  * The projection tags this generator knows how to render.
@@ -578,6 +607,9 @@ ${WORK_PLAN_CSS}
 ${opts.body}
 </main>
 <script>
+${KG_RENDER_JS}
+</script>
+<script>
 ${WORK_PLAN_JS}
 </script>
 </body>
@@ -735,13 +767,16 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
     });
   }
 
+  if (tag === TODO_INDEX_SCHEMA) return todoBoardPage(g);
+
   // ONE graph per page, so one meta: the renderer tells an absent meta from a
   // failed fetch, and a second meta here would quietly make this the combined
   // view under a single graph's name.
   const metas = [
-    tag === BEAN_INDEX_SCHEMA
-      ? `<meta name="fa-beans-src" content="${src}">`
-      : `<meta name="fa-todo-src" content="${src}">`,
+    `<meta name="fa-beans-src" content="${src}">`,
+    // The deploy's stamp, at the site root beside this page's directory.
+    // Written by the deploy, never committed — bean `y7b3`.
+    `<meta name="fa-build-src" content="../build.json">`,
   ];
   return page({
     title: `${g.id} — state`,
@@ -751,6 +786,67 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
   <a href="${src}">a plain JSON file</a>.</p>
 </div>` + registry(graphs, g.id),
   });
+}
+
+/**
+ * `<base>/todos/` — a THEMED site page that mounts the landing page's sticky
+ * panel, not a standalone dashboard.
+ *
+ * Owner, 2026-10-02 (#1906): *"https://litlfred.github.io/folio-assistant/todos/
+ * should also have the same stickies panel. not sure why all the graphs are
+ * listed on the todos page. cluttery"*.
+ *
+ * So this page is NOT the work-plan shell the other dashboards are. It is a
+ * Jekyll page on the default layout, which gives it three things, none of
+ * them by a second implementation:
+ *
+ * - the site chrome — the navbar and a way back, which the standalone shell
+ *   lacked (wireframe `todos` finding 5);
+ * - `docs-ui.js` with `meta[name="fa-todo-src"]` (from `head_custom.html`),
+ *   which mounts the todo board INTO `.fa-landing-board`. The panel is the
+ *   landing page's own include, so the board is the same board, mounted the
+ *   same way (wireframe finding 1: the items were not on the page);
+ * - the no-JS floor, `_includes/generated/todo-listing.html` in the footer,
+ *   which carries each item's body, status, who raised it and its resolved
+ *   "About" link to the node it is attached to.
+ *
+ * The panel is OPEN here, and closed on the landing page. On the landing page
+ * the owner asked for it slid away (2026-09-21) because it pushed what the
+ * repository IS below the fold; on this page the items are what the page is
+ * for, and a closed panel would leave finding 1 standing until a click.
+ *
+ * WHAT IS NOT HERE, on purpose:
+ *
+ * - "State graphs this harness declares", the registry every other dashboard
+ *   carries. The owner called it clutter on this page, and wireframe finding 3
+ *   measured it at most of the first screen. The other dashboards keep it;
+ *   whether they should is an open question, not this page's to settle.
+ * - "Todos by the node they are attached to" (#1757). Its items were plain
+ *   text — no body, no link to the node, no view or edit (owner, 2026-10-02:
+ *   *"are not functional for more info or anything"*) — and everything it
+ *   could show is already on this page twice: on each sticky (View / Edit)
+ *   and in the floor (body and the resolved "About" link). A third listing of
+ *   the same items would be the clutter this page is being cleared of.
+ *
+ * The `renders` declaration goes in the FRONT MATTER, the form a themed page
+ * carries it in (`withRendersFrontMatter`), and the do-not-hand-edit sentence
+ * stays in the body so `prunableDashboards` still recognises the page as ours.
+ */
+export function todoBoardPage(g: Pick<StateGraph, "description">): string {
+  const lead = g.description ? g.description.split(/(?<=\.)\s/)[0]! : "";
+  return `---
+layout: default
+title: Todos
+nav_exclude: true
+---
+<!--
+  ${GENERATED_BY}: the next run
+  overwrites it, \`state:visualizer:check\` fails on the difference, and a
+  hand-edit here is a change nothing else in the tree knows about.
+-->
+<h1 id="todos">Todos</h1>
+${lead ? `<p class="fs-5 fw-300">${describe(lead)}</p>\n` : ""}{% include landing.html open=true %}
+`;
 }
 
 /** The `$schema` a graph's published projection declares, or null. */
@@ -852,7 +948,15 @@ if (import.meta.main) main();
 function main(): void {
 // Viewers RESOLVED from the pages (#1168 B7a-2b).
 const declRead = readDeclaration(ROOT);
-const decl = declRead && { ...declRead, directories: withViewers(declRead.directories ?? [], ROOT) };
+// The CHECKOUT's state graphs too (placement PR0, bean `ejye`): `beans`,
+// `todos`, `memory`, `interaction` and `issue-marks` are declared by the
+// checkout's ROOT instance since the platform stopped mirroring them, and
+// this site still draws their dashboards. Read as `repository`-scoped, which
+// is what they are relative to this instance and how `drawnDir` resolves them.
+const decl = declRead && {
+  ...declRead,
+  directories: withViewers(siteDirectories(declRead.directories ?? [], ROOT, REPO_ROOT), ROOT),
+};
 if (!decl) {
   // "Could not determine", and this generator does not get to decide it means
   // "no state". Exit 2 is never rendered as a pass, the same rule
@@ -862,7 +966,19 @@ if (!decl) {
   process.exit(2);
 }
 
-const all = stateGraphsOf(decl);
+// AND the checkout root's own state graphs (bean `cmsl` step 2, issue #1694):
+// `beans/`, `todos/`, `memory/`, `fsh-guts/`, `issue-marks/`, `interaction/`
+// are declared by the root instance since the owner's round-5 ruling, and this
+// site is where their dashboards were always published — every one of them
+// names `cat-harness/docs/<id>/index.html` as its visualiser. Reading only this
+// instance's declaration would orphan all six the moment the entries moved.
+const rootRead = resolve(REPO_ROOT) === resolve(ROOT) ? undefined : readDeclaration(REPO_ROOT);
+const rootDirs = rootRead ? withViewers(rootRead.directories ?? [], REPO_ROOT, REPO_ROOT) : [];
+const ownIds = new Set((decl.directories ?? []).map((d) => d.id));
+const checkoutDirs = rootDirs.filter((d) => !ownIds.has(d.id));
+const all = [...stateGraphsOf(decl), ...stateGraphsOf({ ...decl, directories: checkoutDirs })].sort((a, b) =>
+  a.id.localeCompare(b.id),
+);
 const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
 for (const g of taken) {
   console.error(
@@ -895,10 +1011,17 @@ const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));
 // repository root, any other from this instance's.
 const drawnDir = (g: StateGraph): string => {
   const entry = decl.directories?.find((d) => d.id === g.id);
-  return renderedPath(REPO_ROOT, join(entry?.scope === "repository" ? REPO_ROOT : ROOT, g.path));
+  // An entry the checkout root declares resolves against the root, which is
+  // where a `repository`-scoped entry of this instance resolved too.
+  const base = entry === undefined || entry.scope === "repository" ? REPO_ROOT : ROOT;
+  return renderedPath(REPO_ROOT, join(base, g.path));
 };
 for (const g of graphs) {
-  emit(join(SITE, g.id, "index.html"), withRenders(dashboardPage(g, graphs), [drawnDir(g)], VIEWER_TOOL));
+  // A themed page (front matter: `todos`) declares what it renders in its
+  // front matter; a standalone one in its `<head>`. Asked of the page.
+  const html = dashboardPage(g, graphs);
+  const declare = html.startsWith("---\n") ? withRendersFrontMatter : withRenders;
+  emit(join(SITE, g.id, "index.html"), declare(html, [drawnDir(g)], VIEWER_TOOL));
 }
 
 // Orphans, AFTER the writes so the keep-set is what this run actually wanted.

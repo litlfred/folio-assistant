@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync, readdirSync 
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { LOCAL_PACKAGES, discoverLocalPackages } from "./skill-fetch.js";
+import { LOCAL_PACKAGES, discoverLocalPackages, locateLocalSkill } from "./skill-fetch.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -20,7 +20,7 @@ function instance(pkgs: Record<string, string>, kgPath = "skills"): string {
   const root = mkdtempSync(join(tmpdir(), "pkgs-"));
   writeDeclaration(root, JSON.stringify({
       name: "t",
-      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, graphKinds: ["cat-harness"] }],
     }));
   for (const [name, body] of Object.entries(pkgs)) {
     mkdirSync(join(root, kgPath, name), { recursive: true });
@@ -64,8 +64,13 @@ describe("the live table", () => {
     // So the SUBJECT moved and the CLAIM did not: a co-located skill is still
     // discovered rather than hand-listed. Asserted on the skill rather than on
     // the directory, because the directory was the accident.
-    const dir = discoverLocalPackages(ROOT)["folio-core"];
+    //
+    // And it moved again (bean `9umr`): `corpus-grep` is a KG skill, now in
+    // `kg-core` inside the `kg` TOPIC — one level deeper, which is the second
+    // thing this now proves discovery reaches.
+    const dir = discoverLocalPackages(ROOT)["kg-core"];
     expect(dir).toBeDefined();
+    expect(dir!).toContain(join("skills", "kg", "kg-core"));
     expect(readdirSync(dir!)).toContain("corpus-grep.md");
   });
 
@@ -89,7 +94,7 @@ describe("the live table", () => {
     // live subject instead. `bootstrap/skills/` is basenamed `skills` and
     // takes its instance's name, exactly as `src/skills/` did. (The subject was
     // `kg-navigation/skills/` until bean `byql` folded that instance into
-    // cat-harness as an ordinary `skills/kg-navigation/` package.)
+    // cat-harness as an ordinary `skills/kg/kg-navigation/` package.)
     expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/skills");
   });
 });
@@ -170,7 +175,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     mkdirSync(join(repo, "sibling", "skills"), { recursive: true });
     writeDeclaration(join(repo, "sibling"), JSON.stringify({
         name: "sibling",
-        directories: [{ id: "cat-harness", path: "skills", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "skills", graphKinds: ["cat-harness"] }],
       }));
     writeFileSync(join(repo, "sibling", "skills", "s.md"), SKILL);
 
@@ -182,8 +187,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
         directories: [
-          { id: "sib", path: "sibling/skills", dependents: "reproduce", graphKinds: ["cat-harness"], scope: "repository" },
-          { id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] },
+          { id: "sib", path: "sibling/skills", graphKinds: ["cat-harness"], scope: "repository" },
+          { id: "cat-harness", path: "kg", graphKinds: ["cat-harness"] },
         ],
       }));
 
@@ -200,8 +205,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // does not reach: it has one directly-held directory per instance, so
     // "named by its instance" and "named by first-wins" agree there.
     //
-    // `cat-harness` really declares four — `src/skills/`, `skills/crdm/`
-    // and `skills/raci/` — and until bean `1hvo`
+    // `cat-harness` really declares four — `src/skills/`, `skills/sdlc/crdm/`
+    // and `skills/process/raci/` — and until bean `1hvo`
     // all four resolved to the name `folio-assistant` with the last winning.
     // Three packages were found and silently dropped: `kg:audit` reported six
     // `manifest-skill-exists` CRITICALs for theming and 27 MAJORs for CRDM
@@ -217,7 +222,6 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
         directories: ["src/skills", "theming", "a", "b"].map((path, i) => ({
           id: `d${i}`,
           path,
-          dependents: "reproduce",
           graphKinds: ["cat-harness"],
         })),
       }));
@@ -247,7 +251,6 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
         directories: ["b", "a", "theming", "src/skills"].map((path, i) => ({
           id: `d${i}`,
           path,
-          dependents: "reproduce",
           graphKinds: ["cat-harness"],
         })),
       }));
@@ -266,7 +269,7 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     writeFileSync(join(inst, "kg", "s.md"), SKILL);
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: "kg", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "kg", graphKinds: ["cat-harness"] }],
       }));
     expect(Object.keys(discoverLocalPackages(inst))).toEqual(["inst"]);
     rmSync(repo, { recursive: true, force: true });
@@ -308,5 +311,28 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     expect(Object.values(live).some((p) => p.includes("bootstrap/tools"))).toBe(false);
     const paths = Object.values(live);
     expect(paths.length).toBe(new Set(paths).size);
+  });
+});
+
+describe("locateLocalSkill — a skill asked for in a package that no longer holds it (bean 9umr)", () => {
+  const dir = mkdtempSync(join(tmpdir(), "skill-locate-"));
+  for (const [pkg, skills] of [["core", ["stays"]], ["kg", ["moved", "twice"]], ["lib", ["twice"]]] as const) {
+    mkdirSync(join(dir, pkg));
+    for (const s of skills) writeFileSync(join(dir, pkg, `${s}.md`), `# ${s}\n`);
+  }
+  const packages = { core: join(dir, "core"), kg: join(dir, "kg"), lib: join(dir, "lib") };
+
+  test("the named package wins when it holds the skill", () => {
+    expect(locateLocalSkill("stays", "core", packages)).toEqual({ package: "core", dir: packages.core });
+  });
+  test("a moved skill is found in the one package that holds it", () => {
+    expect(locateLocalSkill("moved", "core", packages)).toEqual({ package: "kg", dir: packages.kg });
+  });
+  test("two holders is an error naming both, never a pick", () => {
+    const r = locateLocalSkill("twice", "core", packages);
+    expect("error" in r && r.error).toMatch(/kg, lib/);
+  });
+  test("a skill nobody holds is still unknown", () => {
+    expect("error" in locateLocalSkill("nowhere", "core", packages)).toBe(true);
   });
 });

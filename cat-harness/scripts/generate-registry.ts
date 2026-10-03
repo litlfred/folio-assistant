@@ -18,7 +18,10 @@ import type {
 } from "../schemas/assistant-types.ts";
 import type { SkillPackageManifest } from "../schemas/skill-package.ts";
 import { kgRoots } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
+import { skillDefinitionDirs } from "../schemas/skill-definitions-dir.ts";
 
 /**
  * The declared knowledge-graph root, or the convention.
@@ -104,10 +107,11 @@ function loadRoleAssignments(): RoleAssignment[] {
 function loadPackageManifests(): SkillPackageManifest[] {
   const skillsDir = kgRoot(instanceDir);
   if (!existsSync(skillsDir)) return [];
-  return readdirSync(skillsDir, { withFileTypes: true })
-    .filter(d => d.isDirectory())
+  // Topic-aware (bean `9umr`): a package may sit one level down, inside a
+  // topic `skills/skills.json` declares.
+  return packageDirsIn(skillsDir)
     .map(d => {
-      const manifestPath = join(skillsDir, d.name, "package-manifest.json");
+      const manifestPath = join(d.dir, "package-manifest.json");
       if (!existsSync(manifestPath)) return null;
       try {
         return JSON.parse(readFileSync(manifestPath, "utf-8")) as SkillPackageManifest;
@@ -129,9 +133,9 @@ const registry: RegistryOutput = {
   schemaVersion: "1.0",
   repository: pkg.name || "folio-assistant",
   generatedAt: new Date().toISOString(),
-  actors: loadJsonFiles<ActorDefinition>(join(rootDir, ".claude", "skills", "actors")),
-  capabilities: loadJsonFiles<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities")),
-  skills: loadJsonFiles<SkillDefinition>(join(rootDir, ".claude", "skills", "local")),
+  actors: loadJsonFiles<ActorDefinition>(actorsDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })()),
+  capabilities: loadJsonFiles<CapabilityDefinition>(capabilitiesDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the capability registry (bean rqao) has no home to read"); })()),
+  skills: skillDefinitionDirs(rootDir).flatMap((d) => loadJsonFiles<SkillDefinition>(d)),
   requirements: loadJsonFiles<Requirement>(join(instanceDir, "skills", "requirements")),
   packages: loadPackageManifests(),
   hooks: [],

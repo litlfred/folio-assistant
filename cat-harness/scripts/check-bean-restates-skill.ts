@@ -106,7 +106,7 @@
  *
  * **It does not read `## Done when`.** 607 of 888 beans carry one (180 of 254
  * open): it is the house shape for a work plan and the skill
- * [`opening-brief.md`](../skills/folio-core/opening-brief.md) asks for it. The
+ * [`opening-brief.md`](../skills/sdlc/sdlc-core/opening-brief.md) asks for it. The
  * brief suggested flagging a Done-when that "restates the skill's criteria
  * rather than naming the work outstanding" — that is a judgement about
  * MEANING, which is the dead end above wearing a different hat. Left to the
@@ -151,7 +151,7 @@
  * **It does not repair anything.** Same rule as `check:bean-bodies` and
  * `bun run health`: the finding names something a *person* does, and the
  * person is the bean's owner. See
- * [`deletion-requires-confirmation.md`](../skills/folio-core/deletion-requires-confirmation.md).
+ * [`deletion-requires-confirmation.md`](../skills/conduct/conduct-core/deletion-requires-confirmation.md).
  *
  * **It ignores closed beans**, like `check:bean-parents` and
  * `check:bean-bodies` and for their reason: a finished bean is history, and

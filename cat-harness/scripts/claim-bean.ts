@@ -63,12 +63,58 @@
  * @module scripts/claim-bean
  */
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { findBean, noteBean, updateBean } from "./beans-fallback.js";
+
+/** The claim line `noteBean` just appended, exactly as it was written. */
+const CLAIM_NOTE = /^_\d{4}-\d{2}-\d{2}T[\d:]+Z_ — Claimed by \S+ —.*$/m;
+
+/**
+ * Copy the claim note from what was PUSHED onto the local branch, byte for byte.
+ *
+ * Bean `24fa`. The status is already mirrored below, and for a bare claim that
+ * is enough: `status` changes identically on both sides so git merges it, and
+ * `updated_at` and the note are one-sided. **The conflict appears once the
+ * branch edits the bean too**, which is the normal path — claim it, work it,
+ * complete it. Then both sides have appended to the end of the same body and
+ * both have bumped the same front-matter fields.
+ *
+ * Mirroring the note fixes the BODY half: with main's line already present, the
+ * branch's later `## Summary of Changes` lands *after* it rather than racing
+ * it. Measured by hand on #1943 — carrying this one line across took the
+ * conflict from two hunks to one.
+ *
+ * **It must be byte-identical, which is why this copies rather than re-notes.**
+ * `noteBean` stamps `nowStamp()`, so calling it again here would write a
+ * different second and git would see two different additions — the opposite of
+ * the intent.
+ *
+ * What this deliberately does NOT fix: `status` and `updated_at` once the
+ * branch changes them (`in-progress` on the default branch against
+ * `completed` on the branch). Both sides then differ from a merge base that
+ * predates the claim, so it is a real divergence and it SHOULD be resolved by
+ * a person — keep the completing branch's value, keep the note. Only moving
+ * the merge base (merging the default branch in after claiming) removes it,
+ * and that is the session's decision rather than this tool's.
+ *
+ * Not committed, for the reason the status mirror gives: a tool that commits to
+ * your branch behind your back is worse than the problem.
+ */
+export function mirrorClaimNote(repo: string, work: string, id: string): "mirrored" | "already-there" | "no-note" {
+  const from = findBean(work, id);
+  const onto = findBean(repo, id);
+  if (!from || !onto) return "no-note";
+  const note = CLAIM_NOTE.exec(readFileSync(from.path, "utf-8"))?.[0];
+  if (note === undefined) return "no-note";
+  const local = readFileSync(onto.path, "utf-8");
+  if (local.includes(note)) return "already-there";
+  writeFileSync(onto.path, `${local.replace(/\s*$/, "")}\n\n${note}\n`, "utf-8");
+  return "mirrored";
+}
 
 /**
  * Where the platform's own code lives — NOT where the beans are.
@@ -322,6 +368,9 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
         // problem.
         try {
           updateBean(repo, id, { status: "in-progress" });
+          // Bean `24fa`: the note as well as the status, copied from what was
+          // pushed so the two are byte-identical. See `mirrorClaimNote`.
+          mirrorClaimNote(repo, work, id);
         } catch {
           // The push already succeeded, which is the durable half. A local
           // write failing is worth reporting, not worth undoing a landed claim.
@@ -343,6 +392,32 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
     }
   }
   return { state: "fell-back", reason: `${MAX_ATTEMPTS} attempts all lost the race. Last: ${lastReason}`, attempts };
+}
+
+/**
+ * Why a claim made from this checkout would be recorded against the wrong
+ * work — or `undefined` when the checkout looks like the one doing it.
+ *
+ * Bean `ssfp`. The store defaults to the current directory, and a bean store
+ * exists at EVERY checkout of the repository, so a claim run from the wrong
+ * tree finds the bean, succeeds, records that tree's branch as the holder and
+ * leaves the local status edit there as unexplained dirt. Nothing noticed.
+ *
+ * The tell is the branch. Work happens on a work branch; a checkout sitting on
+ * the default branch, or detached, is not where anybody's work is — it is the
+ * main checkout doing something else, or a scratch tree. So a claim from one is
+ * refused, naming the tree it was about to write to, rather than attributed to
+ * a branch that holds no work.
+ */
+export function wrongCheckout(root: string, branch: string): string | undefined {
+  if (branch === "(detached)" || branch === "HEAD") {
+    return `${root} has a detached HEAD, so the claim would name no branch as its holder`;
+  }
+  const def = defaultBranch(root);
+  if (def !== undefined && branch === def) {
+    return `${root} is on '${def}', the default branch, which holds nobody's work`;
+  }
+  return undefined;
 }
 
 export function describe(o: ClaimOutcome, id: string): string {
@@ -380,7 +455,7 @@ export function describe(o: ClaimOutcome, id: string): string {
         `could NOT push the claim to the default branch, so ${id} is NOT claimed anywhere a sibling can see.\n` +
         `  reason: ${o.reason}\n` +
         `  do this instead: claim it on your branch (\`beans update ${id} --status in-progress\`) and open the PR at your FIRST commit,\n` +
-        `  which is what makes a branch-local claim visible at all. See skills/folio-core/bean-coordination.md.`
+        `  which is what makes a branch-local claim visible at all. See skills/sdlc/sdlc-core/bean-coordination.md.`
       );
     case "unknown":
       return `COULD NOT DETERMINE whether ${id} is claimable: ${o.reason}. This is not "the bean is free" — do not start work on that reading.`;
@@ -418,13 +493,28 @@ if (import.meta.main) {
   const id = argv.filter((a, i) => !a.startsWith("-") && !(repoAt >= 0 && i === repoAt + 1))[0];
   if (id === undefined) {
     console.error(
-      `usage: bun run ${PLATFORM_ROOT}/scripts/claim-bean.ts <bean-id> [--repo <folio>] [--dry-run]\n` +
+      `usage: bun run ${PLATFORM_ROOT}/scripts/claim-bean.ts <bean-id> [--repo <folio>] [--dry-run] [--any-branch]\n` +
         "       the store defaults to the CURRENT DIRECTORY, because beans live in the folio, not the platform",
     );
     process.exit(64);
   }
-  const root = repo ?? process.cwd();
+  // The checkout's TOP LEVEL, not the literal directory: run from a subdirectory
+  // the store would otherwise not be found, and a worktree's top level is the
+  // worktree — which is the tree this claim is about (bean `ssfp`).
+  const start = repo ?? process.cwd();
+  const top = git(start, ["rev-parse", "--show-toplevel"]).out.trim();
+  const root = top !== "" ? top : start;
   const branch = git(root, ["rev-parse", "--abbrev-ref", "HEAD"]).out.trim() || "(detached)";
+  const wrong = wrongCheckout(root, branch);
+  if (wrong !== undefined && !argv.includes("--any-branch")) {
+    console.error(
+      `✗ not claiming ${id}: ${wrong}.\n` +
+        "  A claim records the branch holding the work. Run it from the worktree doing the work,\n" +
+        "  or pass --repo <that worktree>. --any-branch overrides, for a claim that really is made from here.",
+    );
+    process.exit(5);
+  }
+  console.log(`  claiming from ${root} (branch ${branch})`);
   const outcome = claimOnDefaultBranch(id, branch, { repo: root, dryRun: argv.includes("--dry-run") });
   const code = exitCodeFor(outcome);
   (code === 0 ? console.log : console.error)(`${code === 0 ? "✓" : "✗"} ${describe(outcome, id)}`);

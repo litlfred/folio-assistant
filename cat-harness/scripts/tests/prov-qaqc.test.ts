@@ -20,7 +20,7 @@ import {
   totals,
   type Report,
 } from "../prov-qaqc.js";
-import { roleGraphFor } from "../known-skills.js";
+import { roleGraphFor, workflowFile } from "../known-skills.js";
 import { ProvActivitySchema } from "../../schemas/prov.js";
 import { actionGraph, OdrlPolicySchema, type OdrlPolicy } from "../../schemas/odrl.js";
 import { readPermissions, type LoadedActor } from "../../schemas/role-graph.js";
@@ -29,8 +29,8 @@ import type { HistoryEntry } from "../../src/workflow/instance.js";
 import { loadProcessModel } from "../../src/workflow/process-model.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const SOURCE = "cat-harness/processes/code-change-review.bpmn";
-const MODEL = await loadProcessModel(join(ROOT, "processes", "code-change-review.bpmn"));
+const SOURCE = "cat-harness/processes/sdlc/code-change-review.bpmn";
+const MODEL = await loadProcessModel(workflowFile(ROOT, "code-change-review.bpmn"));
 const GRAPH = roleGraphFor(ROOT);
 
 function ctxWith(permission: unknown[], prohibition: unknown[] = []): AccessContext {
@@ -181,7 +181,11 @@ describe("prov-qaqc: outputs", () => {
     expect(staleness(files, site.assets)).toEqual({ stale: [], orphans: [] });
 
     const log = join(site.assets, "t.prov.jsonld");
-    expect(readFileSync(log, "utf-8")).toContain('"prov:hadPlan": "code-change-review#Task_ClaimBean"');
+    // PROV-JSONLD since 2026-10-01 (beans jcet, 9y9j): the plan is a LINK at
+    // the process's release address, under the context's `plan` term.
+    expect(readFileSync(log, "utf-8")).toContain(
+      '"plan": "https://litlfred.github.io/cat-harness/0.1.0/processes/sdlc/code-change-review#Task_ClaimBean"',
+    );
     writeFileSync(log, "{}\n");
     expect(staleness(files, site.assets).stale).toEqual([log]);
 

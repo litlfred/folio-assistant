@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/gurel-tat-2017-swot-analysis/sections/page-002",
   "@type": [
     "doco:Section"
@@ -11,7 +16,7 @@
     "library/gurel-tat-2017-swot-analysis/blocks/prose-page-002",
     "library/gurel-tat-2017-swot-analysis/blocks/figure-img-p002-3"
   ],
-  "derivedFrom": "library/gurel-tat-2017-swot-analysis/manifest",
-  "sourceDocument": "library/gurel-tat-2017-swot-analysis/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/gurel-tat-2017-swot-analysis/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/gurel-tat-2017-swot-analysis/manifest.jsonld",
   "provenance": "ingested"
 }

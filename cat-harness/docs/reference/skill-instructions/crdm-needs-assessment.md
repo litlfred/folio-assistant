@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/crdm/crdm-needs-assessment.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-needs-assessment.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-needs-assessment.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md){: .fa-edit-source }
 
 {% raw %}
 # Phase 1 — Needs assessment (detail)
@@ -113,5 +113,5 @@ stakeholders directly.
 
 - [`crdm-requirements-workflow`](crdm-requirements-workflow.md) — the parent workflow
 - [`crdm-detect`](crdm-detect.md) — what triggers this phase
-- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean management
+- [`../../skills/sdlc/sdlc-core/todo-manager.md`](todo-manager.md) — bean management
 {% endraw %}

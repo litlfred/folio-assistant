@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/schema-management.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/schema-management.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/schema-management.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/schema-management.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/schema-management.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/schema-management.md){: .fa-edit-source }
 
 {% raw %}
 # Managing a schema — the graph, the viewer, and the three answers that are not "fine"
@@ -282,8 +282,11 @@ subject's own `docs/`, and the handler's job includes looking for those
 directories.
 
 **Measured 2026-09-20 and not yet true:** only `cat-harness` has a `docs/`
-directory and only it declares one, with `dependents: "skip"` — which is
-precisely what stops a dependent from getting its own. Nothing was declared
+directory and only it declares one, with `dependents: "skip"` — which was
+precisely what stopped a dependent from getting its own. **Superseded
+2026-09-30** (option A): `docs` is a `perInstance` kind, so every instance
+inheriting it gets its own, and each existing `<instance>/docs/` is a member
+of the one declared subgraph. Nothing was declared
 against an absent directory here, because a declared-but-absent directory is
 the `dh4f` defect. Bean `n0nf` carries the same `skip` finding from the root's
 side.

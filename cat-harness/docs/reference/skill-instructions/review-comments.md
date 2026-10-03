@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/review-comments.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/review-comments.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/review-comments.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/review-comments.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/review-comments.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/review-comments.md){: .fa-edit-source }
 
 {% raw %}
 # Review comments — from a PR comment to a structured todo
 
-> Skill id: `review-comments` · Capability: `review` · Package: `folio-core`
+> Skill id: `review-comments` · Package: `folio-core`
 > Tools: `folio-review-comments` (ingest), `folio-review-comment-move` (record a decision) · Bean: `423d` · Epic: `q4jm`
 
 A reviewer comments on **one block** of a folio by writing an ordinary comment

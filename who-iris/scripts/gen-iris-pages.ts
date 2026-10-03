@@ -46,16 +46,20 @@
  *   bun run who-iris/scripts/gen-iris-pages.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
-import { basename, dirname, join, relative, resolve, sep } from "path";
+import { basename, dirname, join, posix, relative, resolve, sep } from "path";
 
-import { readDeclaration, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
+import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
+import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
+import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
-import { bytesFor, repoRelative } from "./lib/bytes.js";
-import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { bytesFor, repoRelative } from "../../folio-assistant-core/scripts/lib/bytes.js";
+import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { dcRenderingsFor } from "../../folio-assistant-core/scripts/dc-render.ts";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
+import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -84,8 +88,28 @@ const NODES = join(INSTANCE, "catalogue", "nodes");
  * would appear in the L1 listing as a document titled "assets" with no
  * sections. The covers therefore stay where the catalogue's `localPath`
  * already names them, and nothing about `yl5w` has to move again.
+ *
+ * ## The replica LEFT `library/` on 2026-09-30 — bean `2b5s`
+ *
+ * Owner, choosing *"site/ + publish covers"*: the replica pages move to their
+ * own directory, `site/`, which is the instance root; `library/` holds the
+ * corpus only. The 2026-09-21 words place the KG — corpus and materialized
+ * content — in `library/`, and say nothing about where its RENDERING lives.
+ * Keeping the rendering there meant the build copied the whole corpus (1,367
+ * sidecars) to two published routes as if it were pages, because a mount
+ * copies the directory whose `index.html` it found.
+ *
+ * So `LIB` is now the CORPUS side only — the covers the replica shows and the
+ * `withheld.json` this generator writes — and `SITE` is where the pages go.
+ * The covers are NOT copied into `site/`: a page references
+ * `../library/<slug>-cover.png`, which resolves in the checkout, and the
+ * mount's referenced-asset rule publishes exactly the files a page embeds
+ * (`referencedAssets` in `mount-instance-docs.ts`). A copy here would be a
+ * second committed binary of one image, free to drift from the one the
+ * catalogue's `localPath` names.
  */
 const LIB = join(INSTANCE, "library");
+const SITE = join(INSTANCE, "site");
 const DOCS = join(INSTANCE, "docs");
 
 /**
@@ -226,7 +250,7 @@ const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-
  * through — are enumerated once here.
  */
 const PAGES = {
-  library: {
+  site: {
     /** The replica: the KG rendered. */
     fixed: ["index", "community-list"],
     /** One page per collection and per item; prunable when the node is gone. */
@@ -254,8 +278,8 @@ export const SIDES = Object.keys(PAGES) as Side[];
 const ownedPattern = (names: readonly string[]): RegExp =>
   new RegExp(`^(${names.join("|")})\\.html$`);
 
-/** What it owns in `library/`. */
-export const OWNED_LIB = ownedPattern([...PAGES.library.fixed, ...PAGES.library.families]);
+/** What it owns in `site/`. */
+export const OWNED_SITE = ownedPattern([...PAGES.site.fixed, ...PAGES.site.families]);
 
 /** What it owns in `docs/`. */
 export const OWNED_DOCS = ownedPattern([...PAGES.docs.fixed, ...PAGES.docs.families]);
@@ -276,7 +300,7 @@ export const fixedPagesOf = (side: Side): string[] =>
   PAGES[side].fixed.map((n) => `${n}.html`);
 
 /** The pattern that governs one side. */
-export const ownedOn = (side: Side): RegExp => (side === "library" ? OWNED_LIB : OWNED_DOCS);
+export const ownedOn = (side: Side): RegExp => (side === "site" ? OWNED_SITE : OWNED_DOCS);
 
 /**
  * Where a committed file is actually served from.
@@ -439,11 +463,11 @@ function assetHref(
   );
   if (!b) return undefined;
   // Where the bytes ARE, which is not where the catalogue says — bean `yl5w`,
-  // and the resolution order is in `lib/bytes.ts` so the workaround has one
+  // and the resolution order is in core's `scripts/lib/bytes.ts` so the workaround has one
   // home to be deleted from.
-  const found = bytesFor(b.materialization?.localPath, b.name);
+  const found = bytesFor(INSTANCE, b.materialization?.localPath, b.name);
   if (!found) return undefined;
-  const rel = encPath(repoRelative(found));
+  const rel = encPath(repoRelative(REPO_ROOT, found));
   const gates = b.materialization?.gates;
   const withheld = publicationBlockers(gates).map(
     (k) => `${k}: ${gates?.[k]?.verdict ?? "not recorded"}${gates?.[k]?.basis ? ` — ${gates[k].basis}` : ""}`,
@@ -455,15 +479,24 @@ function assetHref(
  * What the site must not SERVE from `library/`, for the mount to honour
  * (`WITHHELD_FILE` in `mount-instance-docs.ts`, bean `cw35`).
  *
- * Removing a link does not stop a URL: the mount copies `library/` wholesale,
- * so a refused publication's cover and its ingested text stayed reachable. For
+ * Removing a link does not stop a URL: the mount copied `library/` wholesale
+ * until bean `2b5s`, so a refused publication's cover and its ingested text
+ * stayed reachable. It no longer mounts `library/` at all; it publishes the
+ * files a replica page EMBEDS, and it still consults this list for each, so a
+ * page that came to embed a withheld cover would be refused rather than
+ * served. For
  * every item whose ORIGINAL bitstream's publication gates block, its whole
  * library entry is withheld — the text, figures and structure are derived from
  * the same bytes under the same licence. A blocked THUMBNAIL is withheld on its
  * own gates. The item's catalogue PAGE stays: it is metadata, and it says why.
  */
 export function withheldManifest(all: Node[]): string {
-  const paths: { path: string; reason: string }[] = [];
+  const paths: {
+    path: string;
+    reason: string;
+    gates?: { gate: string; verdict: string }[];
+    record?: { id: string; page?: string; uri?: string };
+  }[] = [];
   for (const n of all) {
     for (const b of n.bitstreams ?? []) {
       const blocked = publicationBlockers(b.materialization?.gates);
@@ -471,7 +504,25 @@ export function withheldManifest(all: Node[]): string {
       const reason = `${n.id} ${b.bundle} "${b.name}": ${blocked
         .map((k) => `${k} ${b.materialization?.gates?.[k]?.verdict ?? "not recorded"}`)
         .join(", ")}`;
-      if (b.bundle === "ORIGINAL" && n.libraryId) paths.push({ path: `${n.libraryId}/`, reason });
+      // The ENTRY carries its gates and its catalogue record as data (issue
+      // #1794), so the library viewer can say which gate refused and send the
+      // reader to the record without parsing `reason`. The record page is the
+      // replica's item page, at the route the declaration gives it; the URI is
+      // the item's own resolvable IRI, absent when it records none.
+      if (b.bundle === "ORIGINAL" && n.libraryId) {
+        const page = replicaPageOf(n);
+        const uri = sourceOf(n);
+        paths.push({
+          path: `${n.libraryId}/`,
+          reason,
+          gates: blocked.map((k) => ({ gate: k, verdict: b.materialization?.gates?.[k]?.verdict ?? "not recorded" })),
+          record: {
+            id: n.id,
+            ...(page ? { page: `/${REPLICA_ROUTE}/${page}` } : {}),
+            ...(uri ? { uri } : {}),
+          },
+        });
+      }
       const lp = b.materialization?.localPath;
       if (b.bundle === "THUMBNAIL" && lp?.startsWith("library/")) paths.push({ path: lp.slice("library/".length), reason });
     }
@@ -509,7 +560,7 @@ function linkOrWithheld(a: NonNullable<ReturnType<typeof assetHref>>, withSize: 
  * The cover thumbnail, or nothing.
  *
  * A THUMBNAIL-bundle bitstream **this repository rendered itself** — not the
- * one DSpace generates upstream. `who-iris/scripts/gen-covers.ts` writes the
+ * one DSpace generates upstream. `folio-assistant-core/scripts/gen-covers.ts` writes the
  * bytes and the node records the derivation; here it is only read.
  *
  * Nothing is invented when it is absent, and nothing is guessed when it is
@@ -579,7 +630,7 @@ function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean
   // A literal prefix is a second answer to "where is this page", and it goes
   // stale the moment the first answer moves. `relative()` asks the one answer.
   return {
-    src: encPath(relative(LIB, abs).split(sep).join("/")),
+    src: encPath(relative(SITE, abs).split(sep).join("/")),
     w: b.pixelWidth,
     h: b.pixelHeight,
     // Read off the bitstream rather than assumed for every cover: a future
@@ -641,7 +692,7 @@ function banner(): string {
  * implementation here to drift.
  *
  * **The pattern lives in this file and not in the platform**, because it is a
- * statement about THIS instance's routes: `who-iris/library/` is served at
+ * statement about THIS instance's routes: `who-iris/site/` is served at
  * `/who-iris/` and `who-iris/docs/` at `/docs/who-iris/`, exactly as the
  * comment below records. A platform module that knew that would be the
  * platform knowing about one library.
@@ -676,7 +727,7 @@ const FOLIO_ROUTE = /^(.*?)(?:docs\/)?who-iris\//;
  * chrome. Matching it would put who-iris's furniture on a cat-harness route.
  *
  * #879's own gate agrees by construction: who-iris declares
- * `folioMount.roots` as `["library/", "docs/"]`, and the viewer is under
+ * `folioMount.roots` as `["site/", "docs/"]`, and the viewer is under
  * neither, so nothing asks that page for the marker.
  */
 const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
@@ -685,7 +736,7 @@ const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
  * One replica page.
  *
  * `side` is not decoration: the two sides are MOUNTED AT DIFFERENT ROUTES —
- * `who-iris/library/` at `/who-iris/` and `who-iris/docs/` at
+ * `who-iris/site/` at `/who-iris/` and `who-iris/docs/` at
  * `/docs/who-iris/` — so a relative link written on one side and rendered on
  * the other resolves to a path that does not exist. Both sides carried exactly
  * that, and both 404ed on the deployed site: the shared chrome's
@@ -707,11 +758,11 @@ function page(
   /**
    * WHICH SITE THIS PAGE IS ON, which is now three answers rather than two.
    *
-   * `library` and `docs` are who-iris's own tree, mounted under its routes.
+   * `site` and `docs` are who-iris's own tree, mounted under its routes.
    * `harness` is a kind viewer published into cat-harness's site at
    * `/<handler>/<kind>/<subject>/` — a different site, with its own chrome.
    */
-  side: "library" | "docs" | "harness",
+  side: "site" | "docs" | "harness",
   /**
    * The graph kinds this page documents, as `<meta name="documents">` — the
    * page names what it is about, so the directory need not name the page
@@ -868,11 +919,18 @@ function page(
   table.items td:first-child, table.items th:first-child { min-width: 13rem; }
   table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
-  .dl { white-space: nowrap; }
+  /* Wraps at EVERY width (bean on the 2026-09-30 QA re-run): nowrap held the
+     "Metadata record" column to its longest file name, so collection pages ran
+     1338-1475px wide at 1280 and 1162-1405px at 1024. #1592 fixed this only
+     below 640px. A long file name breaks inside the link; the short
+     format/size label stays on one line. */
+  .dl { white-space: normal; }
+  .dl a { overflow-wrap: anywhere; }
+  .dl code { white-space: nowrap; }
 
   /* ── IRIS home replica ────────────────────────────────────────────────
      Bands in the capture's order: hero, search, Recent Submissions. Measured
-     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+     against who-iris/uploads/iris-home/iris-capture/IRIS-Home.pdf page 1.
 
      The hero bleeds to the wrap's edges rather than to the viewport: 100vw
      inside a centred column is the classic horizontal-scrollbar bug, and a
@@ -996,6 +1054,9 @@ function page(
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
+    /* The download-cell wrap that g9r2 put here (537 px wide at 390) now
+       applies at every width, in the \`.dl\` rule above: desktop overflowed
+       the same way, one column wider. */
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
     table.reqs thead { display: none; }
@@ -1052,7 +1113,7 @@ function page(
   failing at a line far from the mistake.)
 -->
 <nav class="main"><div class="wrap">
-  ${side === "library"
+  ${side === "site"
     ? `<a href="community-list.html">Communities &amp; Collections</a>`
     : `<span>Communities &amp; Collections</span>`}
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
@@ -1130,6 +1191,26 @@ function verdictBadge(verdict: string): string {
   return `<span class="state ${tone}">${esc(verdict)}</span>`;
 }
 
+/**
+ * A "held as" library id, linked the way every library reference is (bean
+ * `qgjh`, `lib/library-links.ts`): the library viewer opened on the item, the
+ * item's page and its source, each only where it resolves. The viewer link is
+ * made relative to this page. An id nothing resolves stays code.
+ */
+function heldAs(id: string): string {
+  const l = LIBRARY_LINKS.links(id, SUBJECT);
+  const code = `<code>${esc(id)}</code>`;
+  if (l === undefined) return code;
+  const from = subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "");
+  const parts = [l.viewer === undefined ? code : (() => {
+    const [path, hash] = l.viewer!.split("#");
+    return `<a href="${esc(`${posix.relative(from, path!)}/#${hash}`)}">${code}</a>`;
+  })()];
+  if (l.readme !== undefined) parts.push(`<a href="${esc(l.readme)}">item page</a>`);
+  if (l.source !== undefined) parts.push(`<a href="${esc(l.source)}">source</a>`);
+  return parts.join(" &middot; ");
+}
+
 function cataloguePage(all: Node[]): string {
   const c = catalogue();
   const byState = (s: string): Node[] => all.filter((n) => (n.materialization?.state ?? "unknown") === s);
@@ -1169,13 +1250,13 @@ function cataloguePage(all: Node[]): string {
   const nodeRows = all
     .map((n) => {
       const state = n.materialization?.state ?? "unknown";
-      const held = n.libraryId ? `<code>${esc(n.libraryId)}</code>` : "—";
+      const held = n.libraryId ? heldAs(n.libraryId) : "—";
       const rec = n.metadataRef ? "yes" : "—";
       const bs = (n.bitstreams ?? []).length;
       return `<tr>
   <td>${stateBadge(state)}</td>
   <td><code>${esc(n.flavour ?? n.kind ?? "?")}</code></td>
-  <td>${esc(n.title)}<br><code class="dim">${esc(n.id)}</code></td>
+  <td>${replicaPageOf(n) ? `<a href="${esc(`${REPLICA_FROM_CATALOGUE}/${replicaPageOf(n)}`)}">${esc(n.title)}</a>` : esc(n.title)}<br><code class="dim">${esc(n.id)}</code></td>
   <td>${held}</td>
   <td>${rec}</td>
   <td>${bs || "—"}</td>
@@ -1360,6 +1441,55 @@ function slug(id: string): string {
 }
 
 /**
+ * The replica page this run writes for a node, or `undefined` for a flavour
+ * that has none. ONE answer for the writer below and for the catalogue page's
+ * links (bean `qgjh`), so a link cannot name a page nobody wrote.
+ */
+function replicaPageOf(n: Node): string | undefined {
+  if (n.flavour === "collection") return `collection-${slug(n.id)}.html`;
+  if (n.flavour === "item") return `item-${slug(n.id)}.html`;
+  return undefined;
+}
+
+/**
+ * The catalogue page's way to the replica, relative (bean `qgjh`).
+ *
+ * The replica is the INSTANCE ROOT, and since bean `2b5s` that is the only
+ * route it answers at: `site/` shares the `docs` kind with `docs/`, and
+ * `withRoutes` gives the kind route to the sibling that is not the instance
+ * root. It used to link the kind route `library/who-iris`, which is now a
+ * redirect to the library viewer — a link that would land on a different page
+ * from the one it names. So the route is ASKED of `withRoutes`, fed from the
+ * declaration, rather than spelled: the declaration says which directory is
+ * the root, and `withRoutes` says where that puts it. Relative, so it holds
+ * under the bare site, the project baseurl and a staging preview alike.
+ */
+const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
+
+/** The replica's route from the site root (no slashes), as `withRoutes` gives it. */
+const REPLICA_ROUTE = (() => {
+  const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
+    (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
+  );
+  const { candidates } = withRoutes(declared);
+  const root = candidates.find((c) => c.instanceRoot && c.route === SUBJECT);
+  if (root === undefined) {
+    throw new Error(
+      "who-iris.json marks no directory `instanceRoot`, so the replica has no route for the " +
+        "catalogue page to link. Mark the replica's directory, or this link is a guess.",
+    );
+  }
+  return root.route;
+})();
+
+/* Relative from the catalogue page, built on the one route above, which the
+   withheld list also uses (issue #1794) — two consumers, one route. */
+const REPLICA_FROM_CATALOGUE = posix.relative(
+  subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, ""),
+  REPLICA_ROUTE,
+);
+
+/**
  * The item's upstream URI, or undefined when it has none.
  *
  * **Undefined is the common case and it must survive to the page.** Two of the
@@ -1379,8 +1509,9 @@ function slug(id: string): string {
  * question the function is actually asking, so the heuristic is gone.
  */
 function sourceOf(n: Node): string | undefined {
-  const b = n.bitstreams?.find((x) => x.materialization?.provenance?.upstream);
-  return b?.materialization?.provenance?.upstream ?? n.materialization?.provenance?.upstream;
+  // Bean `08u4`: the Handle IRI first (it outlives the host), the host URL
+  // second, never the front page — one definition, in the schema.
+  return resolvableIri(n);
 }
 
 /**
@@ -1517,6 +1648,28 @@ function metadataCell(n: Node): string {
 }
 
 /**
+ * The record's two standard renderings — DC XML and DCMI-Terms JSON-LD —
+ * written by `dc-render.ts` beside these pages (bean `7eak`, owner:
+ * *"who-iris should link to json and xml renderings"*).
+ *
+ * The path comes from `dcRenderingsFor`, the same function the renderer
+ * writes with, so the link and the file cannot name two places. A file that
+ * is not there is NOT linked: a link to a rendering nobody wrote reads exactly
+ * like one that works. `dc:render:check` is what makes "not there" a failure.
+ */
+function renderingsCell(n: Node): string {
+  if (!n.metadataRef) return `<span class="none">no record, so nothing to render</span>`;
+  const r = dcRenderingsFor(INSTANCE, n.metadataRef);
+  if (r === undefined) return `<span class="none">this instance declares no published root</span>`;
+  const link = (abs: string, label: string): string =>
+    existsSync(abs)
+      ? `<a href="${esc(encPath(relative(SITE, abs).split(sep).join("/")))}">${label}</a>`
+      : `<span class="none">${label}: not rendered (run <code>bun run dc:render</code>)</span>`;
+  return `${link(r.xml, "Dublin Core XML")}
+      <br>${link(r.jsonld, "JSON-LD (DCMI Terms)")}`;
+}
+
+/**
  * Where this item can be read FROM — upstream and here, side by side.
  *
  * The owner's *"both links there"*: the IRIS source, and this repository's own
@@ -1559,7 +1712,7 @@ function collectionPage(c: Node, all: Node[]): string {
   ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">none recorded</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
-${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${esc(c.materialization.note)}</p></div>` : ""}
+${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${withInlineCode(c.materialization.note, esc)}</p></div>` : ""}
 
 <h2>Items in this Collection</h2>
 <p>Now showing 1 – ${items.length} of ${items.length} <em>modelled</em>. The upstream
@@ -1621,6 +1774,7 @@ ${bits}
 <tr><td>Ingested text (L1)</td>
     <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
 <tr><td>Dublin Core record</td><td>${metadataCell(n)}</td></tr>
+<tr><td>Dublin Core renderings</td><td>${renderingsCell(n)}</td></tr>
 </tbody>
 </table>
 
@@ -1664,7 +1818,7 @@ ${
  * > mocks the iris landing page. … go back to orinal .pdf of iris pages and
  * > validate look."*
  *
- * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf`,
+ * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS-Home.pdf`,
  * page 1, rendered at 900px on 2026-09-20. Five bands, in the source's order:
  * masthead, hero, search, Recent Submissions, footer. Everything below is
  * either read off that capture or read out of the catalogue; nothing is
@@ -1988,16 +2142,17 @@ function kgToPortal(all: Node[]): string {
   const heldBytes = held
     .map((n) => assetHref(n)?.bytes ?? 0)
     .reduce((a, b) => a + b, 0);
-  // BOTH sides, since the 2026-09-21 split: the replica is library-side and
+  // BOTH sides, since the 2026-09-21 split: the replica is site-side and
   // the documentation is docs-side, and "how many pages does this instance
   // ship" is a question about the instance rather than about one directory.
   const htmlIn = (dir: string): number =>
     existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".html")).length : 0;
-  const pages = htmlIn(LIB) + htmlIn(DOCS);
-  // The covers stay docs-side, where the catalogue's `localPath` names them.
-  const covers = existsSync(join(DOCS, "assets", "covers"))
-    ? readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png")).length
-    : 0;
+  const pages = htmlIn(SITE) + htmlIn(DOCS);
+  // The covers the replica SHOWS — which are exactly the covers the mount
+  // publishes, since bean `2b5s` publishes a page's embedded assets and not
+  // the directory they sit in. This counted `docs/assets/covers/`, a
+  // directory the covers left in `yl5w`, so it reported 0 over three.
+  const covers = all.filter((n) => coverSrc(n) !== undefined).length;
 
   const svg = existsSync(ARCH_SVG)
     ? readFileSync(ARCH_SVG, "utf-8").replace(/^<\?xml[^>]*\?>\s*/, "").replace(/<!--[\s\S]*?-->\s*/g, "")
@@ -2152,8 +2307,8 @@ function docsIndex(): string {
 
 <p class="lede">What this harness is, what ingesting it cost, and where the
 ingested copy is meant to end up. These pages are <em>about</em> the work; the
-catalogue itself, and the replica rendered from it, are served separately by
-the library handler.</p>
+catalogue itself is served by the library handler, and the replica rendered
+from it is this instance&rsquo;s own front page.</p>
 
 <div class="caveat">
   <p><strong>This is not a copy of IRIS.</strong> who-iris models the WHO
@@ -2203,8 +2358,8 @@ function main(): number {
   // `mount-instance-docs.ts` will not mount a directory without it — so a map
   // keyed on the bare name can hold only one of them.
   files.set(
-    "library/index.html",
-    page("who-iris", [{ label: "Home" }], landingPage(all), "library"),
+    "site/index.html",
+    page("who-iris", [{ label: "Home" }], landingPage(all), "site"),
   );
 
   files.set(
@@ -2260,21 +2415,21 @@ function main(): number {
   );
 
   files.set(
-    "library/community-list.html",
-    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all), "library"),
+    "site/community-list.html",
+    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all), "site"),
   );
 
   for (const c of all.filter((n) => n.flavour === "collection")) {
     files.set(
-      `library/collection-${slug(c.id)}.html`,
-      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "library"),
+      `site/${replicaPageOf(c)!}`,
+      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "site"),
     );
   }
 
   for (const n of all.filter((x) => x.flavour === "item")) {
     files.set(
-      `library/item-${slug(n.id)}.html`,
-      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "library"),
+      `site/${replicaPageOf(n)!}`,
+      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "site"),
     );
   }
 
@@ -2394,7 +2549,7 @@ function main(): number {
           .sort()
       : [];
   const orphans = [
-    ...orphansIn(LIB, OWNED_LIB).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+    ...orphansIn(SITE, OWNED_SITE).map((f) => ({ dir: SITE, name: f, rel: `who-iris/site/${f}` })),
     ...orphansIn(DOCS, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
     // The pages that CHANGED SIDES, and the predicate here is deliberately
     // NOT the one above. A page carrying the other side's name does not belong
@@ -2404,8 +2559,13 @@ function main(): number {
     // so the docs-side copy looked live and stayed exactly where the owner did
     // not want it. Caught by listing the directory afterwards rather than by
     // trusting the sweep.
-    ...wrongSide(DOCS, OWNED_LIB, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
-    ...wrongSide(LIB, OWNED_DOCS, OWNED_LIB).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+    ...wrongSide(DOCS, OWNED_SITE, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
+    ...wrongSide(SITE, OWNED_DOCS, OWNED_SITE).map((f) => ({ dir: SITE, name: f, rel: `who-iris/site/${f}` })),
+    // `library/` IS CORPUS ONLY (bean `2b5s`), so no page of this generator's
+    // belongs there at all. This is the sweep with teeth: an `index.html` left
+    // in `library/` is what made the mount copy the whole corpus to two
+    // published routes, so a stale one is pruned rather than tolerated.
+    ...wrongSide(LIB, OWNED, /(?!)/).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
   ];
 
   if (check) {
@@ -2428,10 +2588,10 @@ function main(): number {
 
   for (const o of orphans) rmSync(join(o.dir, o.name));
 
-  const lib = [...files.keys()].filter((k) => k.startsWith("library/"));
+  const site = [...files.keys()].filter((k) => k.startsWith("site/"));
   const docs = [...files.keys()].filter((k) => k.startsWith("docs/"));
-  console.log(`wrote ${lib.length} page(s) to who-iris/library/ and ${docs.length} to who-iris/docs/`);
-  for (const key of [...lib, ...docs]) console.log(`  who-iris/${key}`);
+  console.log(`wrote ${site.length} page(s) to who-iris/site/ and ${docs.length} to who-iris/docs/`);
+  for (const key of [...site, ...docs]) console.log(`  who-iris/${key}`);
   for (const o of orphans) console.log(`  pruned ${o.rel}`);
   return 0;
 }

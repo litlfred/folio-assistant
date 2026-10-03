@@ -71,7 +71,7 @@ flowchart TD
 |---------|--------------|--------|
 | **Определение** (роли, требуемые возможности, требования, шаблоны маршрутизации, этапы жизненного цикла, ссылка на схему) | `.claude/skills/local/<skill>.json` | ✅ все 22 навыка создания контента — валидированы в CI с помощью `scripts/validate-skills.ts` |
 | **Типизированный контракт** (JSON Schema ввода/вывода) | `schemas/skills/<skill>/` | ✅ все 22 — см. [справочник](../reference/skills/) |
-| **Тело инструкций** (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике [Инструкции к навыкам](../reference/skill-instructions/) | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ навыки жизненного цикла, агента, платформенного набора и **folio-document-adapter**; ⏳ **тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)** (эти пакеты поставляют манифест + определения JSON) |
+| **Тело инструкций** (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике [Инструкции к навыкам](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ навыки жизненного цикла, агента, платформенного набора и **folio-document-adapter**; ⏳ **тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)** (эти пакеты поставляют манифест + определения JSON) |
 | **Пакет** (зависимости среды выполнения/Docker) | `skills/<package>/package-manifest.json` | ✅ все четыре пакета |
 
 Таким образом, *да, навыки существуют* — в виде структурированных определений и типизированных схем,
@@ -154,7 +154,7 @@ flowchart TD
 | `bean-coordination` | Дисциплина распределения задач и координации между несколькими агентами |
 | `todo-manager` | Дисциплина управления задачами beans-as-todos |
 
-### Платформенные наборы навыков (`skills/folio-core`, `skills/folio-document-adapter`, `skills/folio-paper-adapter`)
+### Платформенные наборы навыков (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Более крупные **платформенные наборы**, два из которых были перенесены из репозитория контента qou (см.
 [отчет о миграции](migrations/2026-06-29-platform-skills-migration.html) и

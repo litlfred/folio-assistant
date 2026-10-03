@@ -1,9 +1,9 @@
 {
-  "_comment": "The instance's default permissions, as a W3C ODRL 2.2 Set (issue #1180). Migrated 2026-09-23 from the `permissions` list each actor file carried: one permission rule per (actor, action) it held, unscoped, so every actor holds exactly what it held before (scripts/tests/odrl-policies.test.ts checks this against the pre-migration lists). The last two rules are the owner's floor for an unauthenticated reader: visualize and render, and nothing else. A narrower grant is a rule with cat-harness:process, cat-harness:task or cat-harness:role constraints; see docs/proposals/odrl-prov-actor-model.md. The @context is inline rather than ODRL's published odrl.jsonld so the document reads offline: @vocab is the ODRL 2.2 namespace, which is what that context maps its terms to.",
+  "_comment": "The instance's default permissions, as a W3C ODRL 2.2 Set (issue #1180). Migrated 2026-09-23 from the `permissions` list each actor file carried: one permission rule per (actor, action) it held, unscoped, so every actor holds exactly what it held before (schemas/odrl.test.ts checks this against the pre-migration lists). The last two rules are the owner's floor for an unauthenticated reader: visualize and render, and nothing else. A narrower grant is a rule with cat-harness:process, cat-harness:task or cat-harness:role constraints; see docs/proposals/odrl-prov-actor-model.md. The @context is inline rather than ODRL's published odrl.jsonld so the document reads offline: @vocab is the ODRL 2.2 namespace, which is what that context maps its terms to.",
   "@context": {
     "@vocab": "http://www.w3.org/ns/odrl/2/",
     "odrl": "http://www.w3.org/ns/odrl/2/",
-    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#"
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#"
   },
   "@type": "Set",
   "uid": "https://litlfred.github.io/folio-assistant/policies/folio-defaults",

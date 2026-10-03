@@ -8,7 +8,7 @@
  * `readWorkPlanOp` already refused an unknown op VALUE. It silently ignored an
  * unknown ATTRIBUTE, and the two are different checks.
  *
- * `processes/bean-lifecycle.bpmn` records the cost in its own comment: a
+ * `processes/sdlc/bean-lifecycle.bpmn` records the cost in its own comment: a
  * diagram carried `<cat-harness.processes:bean action="create"/>`, the engine reads `op`, and
  * "the step silently did nothing for weeks".
  *
@@ -54,7 +54,7 @@ function diagram(beanMarkup: string): string {
     file,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
                   id="Defs_B" targetNamespace="urn:test">
   <bpmn:process id="Process_B" name="Bean attr">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>

@@ -44,8 +44,15 @@ import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { basename, join, relative, resolve } from "path";
 
-/** The PLATFORM root — where the science layer would be installed. */
-const ROOT = resolve(import.meta.dir, "../..");
+/**
+ * Is `dir` the root of a git submodule? A submodule's `.git` is a FILE (a
+ * `gitdir:` pointer), a checkout's own is a directory — the one marker that
+ * holds whether or not the submodule has been initialised with history.
+ */
+export function isSubmoduleRoot(dir: string): boolean {
+  const git = join(dir, ".git");
+  return existsSync(git) && statSync(git).isFile();
+}
 
 import {
   discoverPapers,
@@ -55,6 +62,7 @@ import {
   type ReadmeTocConfig,
 } from "./readme-toc";
 import { findContentRepoRoot } from "./repo-root";
+import { optionalPipelinePlugin } from "./pipeline-plugins";
 import { expectedInstanceConfigPath } from "../../schemas/harness-config";
 import {
   AGENT_INSTRUCTIONS_ROLE,
@@ -65,7 +73,8 @@ import {
   readDeclaration,
   workPlanGraphsIn,
 } from "../../schemas/cat-harness";
-import { filesSection, processesSection } from "../../../bootstrap-tools/scripts/readme-graph-sections.ts";
+import { generatedBanner } from "../../../bootstrap-tools/scripts/generated-by.ts";
+import { filesSection, processesSection, rolesSection } from "../../../bootstrap-tools/scripts/readme-graph-sections.ts";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -88,6 +97,17 @@ export interface SectionContext {
    * rather than replacing a correct table with "no Lean found".
    */
   leanCoverage?: LeanCoverageStats;
+  /**
+   * The README being synced, as it stands when this section renders — with
+   * every section registered BEFORE it already injected.
+   *
+   * Only `readme:toc` reads it: a table of the README's own headings is the
+   * one section whose input is the file itself. Supplied by
+   * {@link syncSections}; `undefined` when a caller renders a section on its
+   * own, which the TOC reports as undetermined rather than as a README with
+   * no headings.
+   */
+  readme?: string;
 }
 
 /**
@@ -650,11 +670,11 @@ const coldStartSection: ReadmeSection = {
       "| | |",
       "|---|---|",
       "| **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |",
-      "| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |",
-      "| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |",
+      "| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |",
+      "| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/process/workflow/process-state.md). |",
       active
         ? "| **4. It is active, so** | Work out your role, process and task from the BPMN under [`processes/`](cat-harness/processes/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |"
-        : "| **4. It is static, so** | There is no work plan to prioritise and no process to resume. Determine your context from [`process-state`](cat-harness/skills/workflow/process-state.md) and work from what you were asked to do. |",
+        : "| **4. It is static, so** | There is no work plan to prioritise and no process to resume. Determine your context from [`process-state`](cat-harness/skills/process/workflow/process-state.md) and work from what you were asked to do. |",
       "",
       "*Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*",
       "",
@@ -667,6 +687,193 @@ const coldStartSection: ReadmeSection = {
   },
 };
 
+// ── The README's own table of contents ──────────────────────────────────────
+
+/**
+ * The marker for the heading TOC. NOT `folio:toc`, which is a different
+ * thing that happens to share the word: that one is the folio's CONTENTS —
+ * papers and chapters, with publish-ref-verified PDFs — and says nothing
+ * about the README it sits in. This one is the README's own h2/h3 outline.
+ */
+export const README_TOC_MARKER = "readme:toc";
+
+export interface ReadmeHeading {
+  /** 1–6. */
+  level: number;
+  /** The heading as GitHub renders it: inline markup stripped. */
+  text: string;
+  /** The anchor GitHub assigns, deduplicated across the whole file. */
+  anchor: string;
+  /** 1-based line of the heading (the text line, for a setext heading). */
+  line: number;
+}
+
+/**
+ * The anchor GitHub gives a heading's text — `github-slugger`'s rule, which
+ * is what github.com and the GitHub-flavoured renderers use.
+ *
+ * Lowercase; drop every character that is not a letter, mark, digit,
+ * connector (`_`), space or hyphen; each space becomes `-`. Spaces are NOT
+ * collapsed — `A & B` is `a--b` on GitHub, and a TOC that tidied it to `a-b`
+ * would link to nothing.
+ */
+export function githubSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{M}\p{N}\p{Pc} -]/gu, "")
+    .replace(/ /g, "-");
+}
+
+/** A heading's source text as it renders: links to their text, markup dropped. */
+function renderedHeadingText(src: string): string {
+  return src
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]*)\]\[[^\]]*\]/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/`+([^`]*?)`+/g, "$1")
+    .replace(/(\*\*|__)(?=\S)([\s\S]*?\S)\1/g, "$2")
+    .replace(/(^|[^\w*])\*(?=\S)([^*]*?\S)\*/g, "$1$2")
+    .replace(/(^|\W)_(?=\S)([^_]*?\S)_(?=\W|$)/g, "$1$2")
+    .replace(/~~(?=\S)([\s\S]*?\S)~~/g, "$1")
+    .replace(/\\([\\`*_{}[\]()#+\-.!|<>~])/g, "$1")
+    .trim();
+}
+
+/**
+ * Every heading in a Markdown document, in order, with GitHub's anchors.
+ *
+ * Skips what GitHub does not render as a heading: lines inside a fenced code
+ * block (```` ``` ```` or `~~~`, closed only by a fence of the same character
+ * at least as long), inside an HTML comment, and anything indented four or
+ * more spaces. Handles ATX (`## x`) and setext (`x` over `---`/`===`).
+ *
+ * `excludeRegion` names a marker whose region is skipped — the TOC's own, so
+ * a generated TOC is never an input to itself. The region only ever holds a
+ * list, so skipping it cannot shift another heading's anchor.
+ */
+export function extractHeadings(markdown: string, excludeRegion?: string): ReadmeHeading[] {
+  const lines = markdown.split(/\r?\n/);
+  const headings: ReadmeHeading[] = [];
+  const seen = new Map<string, number>();
+  let fence: { ch: string; len: number } | undefined;
+  let inComment = false;
+  let inExcluded = false;
+  /** The current paragraph's lines, for a setext underline. */
+  let para: { start: number; lines: string[] } | undefined;
+
+  // github-slugger's dedupe, step for step: a repeat becomes `-1`, `-2`, …,
+  // and a suffixed anchor that collides with a LITERAL heading (`a`, `a-1`,
+  // `a`) is bumped past it rather than issued twice.
+  const push = (level: number, raw: string, line: number): void => {
+    const text = renderedHeadingText(raw);
+    const original = githubSlug(text);
+    let anchor = original;
+    while (seen.has(anchor)) {
+      const n = seen.get(original)! + 1;
+      seen.set(original, n);
+      anchor = `${original}-${n}`;
+    }
+    seen.set(anchor, 0);
+    headings.push({ level, text, anchor, line });
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    if (excludeRegion !== undefined) {
+      if (line.includes(`<!-- ${excludeRegion}:begin -->`)) { inExcluded = true; para = undefined; continue; }
+      if (inExcluded) { if (line.includes(`<!-- ${excludeRegion}:end -->`)) inExcluded = false; continue; }
+    }
+
+    if (fence) {
+      const close = line.match(/^ {0,3}(`{3,}|~{3,})\s*$/);
+      if (close && close[1][0] === fence.ch && close[1].length >= fence.len) fence = undefined;
+      continue;
+    }
+    if (inComment) {
+      if (line.includes("-->")) inComment = false;
+      continue;
+    }
+
+    const open = line.match(/^ {0,3}(`{3,}|~{3,})/);
+    if (open) {
+      fence = { ch: open[1][0], len: open[1].length };
+      para = undefined;
+      continue;
+    }
+    const commentStart = line.lastIndexOf("<!--");
+    if (commentStart !== -1 && line.indexOf("-->", commentStart) === -1) {
+      inComment = true;
+      para = undefined;
+      continue;
+    }
+
+    const atx = line.match(/^ {0,3}(#{1,6})(?:[ \t]+(.*?))?(?:[ \t]+#+)?[ \t]*$/);
+    if (atx) {
+      push(atx[1].length, atx[2] ?? "", i + 1);
+      para = undefined;
+      continue;
+    }
+
+    const setext = line.match(/^ {0,3}(=+|-+)[ \t]*$/);
+    if (setext && para) {
+      push(setext[1][0] === "=" ? 1 : 2, para.lines.join(" "), para.start);
+      para = undefined;
+      continue;
+    }
+
+    if (line.trim() === "") { para = undefined; continue; }
+    // Only a plain paragraph line can be the text of a setext heading; a list
+    // item, quote, table row or HTML line followed by `---` is not one.
+    if (/^ {4,}|^\s*([-*+>|<]|\d+[.)])/.test(line)) { para = undefined; continue; }
+    if (para) para.lines.push(line.trim());
+    else para = { start: i + 1, lines: [line.trim()] };
+  }
+  return headings;
+}
+
+/** Link text in a list item: a bracket in the heading must not close the link. */
+function linkText(text: string): string {
+  return text.replace(/([[\]])/g, "\\$1");
+}
+
+/**
+ * The README's h2/h3 outline as a nested list of in-page links.
+ *
+ * h1 is left out because a README's h1 is its title, and a TOC that begins by
+ * linking to the line above it is noise. Anchors are deduplicated over EVERY
+ * heading in the file — h1 and h4+ included — because GitHub counts them all.
+ */
+export function renderReadmeToc(readme: string): SectionOutput {
+  const headings = extractHeadings(readme, README_TOC_MARKER).filter((h) => h.level === 2 || h.level === 3);
+  if (headings.length === 0) {
+    return { markdown: "_This README has no sections yet._\n", notes: ["no h2/h3 headings found"] };
+  }
+  const base = Math.min(...headings.map((h) => h.level));
+  const lines = headings.map(
+    (h) => `${"  ".repeat(h.level - base)}- [${linkText(h.text)}](#${h.anchor})`,
+  );
+  return { markdown: lines.join("\n") + "\n", notes: [] };
+}
+
+const readmeTocSection: ReadmeSection = {
+  marker: README_TOC_MARKER,
+  summary: "The README's own table of contents: its h2/h3 headings, as GitHub anchors.",
+  render({ readme }) {
+    if (readme === undefined) return undetermined("no README text was supplied to render from");
+    return renderReadmeToc(readme);
+  },
+};
+
+/**
+ * `readme:toc` is registered LAST, and the order is load-bearing: it reads the
+ * README as the sections before it have left it, so a heading another section
+ * generates (a `folio:toc` paper title) is in the outline on the same run
+ * rather than one run later — which would make `--check` fail on a README
+ * that was just synced.
+ */
 export const SECTIONS: readonly ReadmeSection[] = [
   tocSection,
   coldStartSection,
@@ -677,6 +884,8 @@ export const SECTIONS: readonly ReadmeSection[] = [
   workflowsSection,
   processesSection,
   filesSection,
+  rolesSection,
+  readmeTocSection,
 ];
 
 // ── Sync ────────────────────────────────────────────────────────────────────
@@ -719,13 +928,22 @@ export function syncSections(
       absent.push(section.marker);
       continue;
     }
-    const out = section.render(ctx);
+    const out = section.render({ ...ctx, readme: content });
     if (out.skip) {
       notes.push(...out.notes.map((n) => `${section.marker}: ${n}`));
       skipped.push(section.marker);
       continue;
     }
-    const injected = injectSection(content, out.markdown, section.marker);
+    // A section bootstrap-tools owns (`kg:processes`, `kg:files`, `kg:roles`)
+    // says what generated it, exactly as bootstrap-tools' own writer does —
+    // two writers of one region that disagree on its first line make each
+    // other's `--check` red. Its `from` is what marks it as the tools'.
+    const from = (section as { from?: unknown }).from;
+    const markdown =
+      typeof from === "string"
+        ? `${generatedBanner("scripts/readme-sections.ts", `${from} (section \`${section.marker}\`)`, "edit outside the markers, or change what it is generated from", "section")}\n\n${out.markdown}`
+        : out.markdown;
+    const injected = injectSection(content, markdown, section.marker);
     content = injected.content;
     changed = changed || injected.changed;
     written.push(section.marker);
@@ -738,19 +956,17 @@ export function syncSections(
 /**
  * Load the science layer's coverage computation, if it is installed.
  *
- * A VARIABLE specifier, so this module names no science-layer file and the
- * repository partition records no edge — the same mechanism
- * `qa-checker-discovery` and `render-discovery` use. `undefined` on any
- * failure, which the coverage section renders as "could not determine" rather
- * than as an empty table.
+ * Through the `lean-coverage` pipeline slot, which folio-assistant-sci fills
+ * (bean `squu`). This used to import `scripts/lean-coverage.ts` by a variable
+ * path under THIS instance's root, which named no file to the partition but
+ * would have found nothing once that script moves to the science layer, and
+ * reported "could not determine" for a reason nobody could see. `undefined` on
+ * any failure, which the coverage section renders as "could not determine"
+ * rather than as an empty table.
  */
 async function loadLeanCoverage(): Promise<LeanCoverageStats | undefined> {
-  const rel = "scripts/lean-coverage.ts";
-  const abs = join(ROOT, rel);
-  if (!existsSync(abs)) return undefined;
   try {
-    const mod = (await import(abs)) as Record<string, unknown>;
-    const fn = mod.computeStats;
+    const fn = optionalPipelinePlugin("lean-coverage")?.computeStats;
     return typeof fn === "function" ? (fn as LeanCoverageStats) : undefined;
   } catch {
     return undefined;
@@ -852,6 +1068,48 @@ if (import.meta.main) {
     process.exit(2);
   }
   const only = flag("only")?.split(",").map((s) => s.trim()).filter(Boolean);
+
+  // `--all`: every instance under `--dir` (default: this checkout), each
+  // against its OWN declared README. Added with `readme:toc`, which the owner
+  // asked for on every harness's README: a generated region only the root,
+  // cat-harness and bootstrap were checked for is a hand-kept list in every
+  // other one — correct the day it was synced and silently wrong after.
+  if (argv.includes("--all")) {
+    const repo = resolve(flag("dir") ?? ".");
+    const roots = instanceRootsIn(repo);
+    if (roots.length === 0) {
+      console.error(`no instance declares a <name>.json under ${repo} — nothing was read`);
+      process.exit(2);
+    }
+    let worst = 0;
+    for (const root of roots) {
+      // A SUBMODULE is another repository, and it owns its own README (owner
+      // D3, 2026-10-01: each instance hosts the generated outputs about
+      // itself). Writing into it leaves a change this checkout cannot commit,
+      // and checking it compares the other repository's generator against
+      // this one's — they disagree on bootstrap-tools/README.md (bean `kye5`).
+      // Said, not silently dropped: a skipped README is not a current one.
+      if (resolve(root) !== repo && isSubmoduleRoot(root)) {
+        console.log(`${relative(repo, root)}/README.md skipped — a submodule; its own repository generates and checks it (bean kye5).`);
+        continue;
+      }
+      try {
+        const r = await runReadmeSync({
+          root,
+          check: argv.includes("--check"),
+          fetch: argv.includes("--fetch"),
+          only,
+          linkStyle: style as ReadmeTocConfig["linkStyle"] | undefined,
+        });
+        (r.exitCode === 0 ? console.log : console.error)(r.text);
+        worst = Math.max(worst, r.exitCode);
+      } catch (e) {
+        console.error(`${relative(repo, root) || "."}: ${e instanceof Error ? e.message : String(e)}`);
+        worst = 2;
+      }
+    }
+    process.exit(worst);
+  }
 
   try {
     const result = await runReadmeSync({

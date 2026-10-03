@@ -34,7 +34,7 @@ session. I never invoked that subagent, so its memory was never injected.
 ## The mechanism, and why it is not a memory problem
 
 The knowledge is not only in memory — there is a **skill**,
-`skills/folio-core/github-state-inspection.md`, 6 KB, covering exactly
+`skills/sdlc/sdlc-core/github-state-inspection.md`, 6 KB, covering exactly
 these traps. Measured today:
 
     grep -rl 'github-state-inspection' processes/ scenarios/

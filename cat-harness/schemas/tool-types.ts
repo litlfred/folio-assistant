@@ -53,6 +53,22 @@ export const RepoPathSchema = z
   .refine((p) => !p.split("/").includes(".."), "a repo path may not contain a `..` segment")
   .describe("A path relative to the repository root. No `..` segments.");
 
+/**
+ * A repository path to a delimited text file (CSV or TSV).
+ *
+ * Distinct from {@link WorkbookPathSchema} because the Tools taking them read
+ * different formats: typed alike, they read as interchangeable, and
+ * `deriveAlternatives` (#1168, B9a) would call them alternatives.
+ *
+ * The same shape as `RepoPath`, and NOT refined by extension: a CSV has no
+ * magic bytes, and routing one must not become an extension guess (bean
+ * `p67i`). The distinction is the NAME — what the Tool is declared to read.
+ */
+export const DelimitedTextPathSchema = RepoPathSchema.describe("A repository path to a delimited text (CSV or TSV) file.");
+
+/** A repository path to a spreadsheet workbook. See {@link DelimitedTextPathSchema}. */
+export const WorkbookPathSchema = RepoPathSchema.describe("A repository path to a spreadsheet workbook.");
+
 /** An absolute http(s) URL. */
 export const UrlSchema = z.string().url().describe("An absolute http(s) URL");
 
@@ -71,20 +87,8 @@ export const BranchSchema = z
   .refine((b) => !b.includes(".."), "a branch name may not contain `..`")
   .describe("A git branch name");
 
-/**
- * A forge repository's full name, `owner/name`.
- *
- * Its own type rather than `Text` because a Tool takes it on the command line
- * (`folio-review-comments --repo`, bean `423d`), and `Text` is deliberately
- * not admissible there. Each half is the character set GitHub allows in an
- * owner and a repository name, which contains no shell metacharacter, and
- * `..` is refused, so it can never climb a path it is joined into.
- */
-export const RepoFullNameSchema = z
-  .string()
-  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/, "a repository is `owner/name`")
-  .refine((r) => !r.includes(".."), "a repository name may not contain `..`")
-  .describe("A forge repository's full name, owner/name");
+import { RepoFullNameSchema } from "./repo-full-name.js";
+export { RepoFullNameSchema };
 
 /** A pull/merge request number. */
 export const ChangeProposalNumberSchema = z
@@ -134,7 +138,7 @@ export const SkillRefSchema = z
     /^(?:[a-z][a-z0-9-]*\/)?[a-z][a-z0-9-]*$/,
     "a skill reference is a skill name, optionally qualified by its package: `name` or `package/name`",
   )
-  .describe("A skill reference, e.g. todo-manager or folio-core/todo-manager");
+  .describe("A skill reference, e.g. todo-manager or sdlc-core/todo-manager");
 
 /** A skill package — the directory under `skills/`, e.g. `folio-core`. */
 export const PackageNameSchema = z
@@ -546,6 +550,8 @@ export const TOOL_TYPES = {
   Flag: FlagSchema,
   BeanStatus: BeanStatusSchema,
   RepoPath: RepoPathSchema,
+  DelimitedTextPath: DelimitedTextPathSchema,
+  WorkbookPath: WorkbookPathSchema,
   Url: UrlSchema,
   Branch: BranchSchema,
   RepoFullName: RepoFullNameSchema,

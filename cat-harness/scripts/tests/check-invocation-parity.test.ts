@@ -17,6 +17,17 @@ const REPO_ROOT = resolve(import.meta.dir, "..", "..", "..");
 const wf = (n: string) => readFileSync(join(REPO_ROOT, ".github", "workflows", n), "utf-8");
 
 describe("invocations", () => {
+  test("a bootstrap-tools script is its own obligation, and `--root` is its instance", () => {
+    const got = invocations(
+      "          bun run bootstrap-tools/scripts/export-graph.ts --root ./no-such-instance --out b.jsonld\n" +
+        "          bun run cat-harness/scripts/kg-export.ts --out a.jsonld\n",
+    );
+    expect(got).toEqual([
+      { script: "bootstrap-tools/export-graph", instance: "./no-such-instance" },
+      { script: "kg-export" },
+    ]);
+  });
+
   test("`kg-export` and `kg-export --instance X` are DIFFERENT obligations", () => {
     // The whole of `3jhq`: staging ran the exporter, just not for the foreign
     // instance. Collapsing the two is what let that pass unnoticed.
@@ -27,6 +38,27 @@ describe("invocations", () => {
     const got = invocations(yml);
     expect(got).toHaveLength(2);
     expect(got.map((i) => i.instance)).toEqual([undefined, "./no-such-instance"]);
+  });
+
+  test("a check the deploy runs BY SCRIPT NAME is an obligation too (63es)", () => {
+    // `check:escaped-markup` ran only in the deploy, invoked by name, so the
+    // path matcher never saw it — and a <slide> line that broke every publish
+    // from #1615 on stayed green on each PR's preview (#1726).
+    const yml = "        run: bun run check:no-such-check ./_site\n          bun run cat-harness/scripts/kg-export.ts --out a.jsonld\n";
+    expect(invocations(yml)).toEqual([{ script: "check:no-such-check" }, { script: "kg-export" }]);
+  });
+
+  test("a named check mentioned only in a COMMENT is not an obligation", () => {
+    expect(invocations("        # run bun run check:no-such-check here\n        echo hi")).toEqual([]);
+  });
+
+  test("the real deploy's built-site checks are obligations the real preview meets", () => {
+    const deploy = invocations(wf("docs-site.yml")).map((i) => i.script);
+    const preview = new Set(invocations(wf("feature-staging.yml")).map((i) => i.script));
+    for (const c of ["check:escaped-markup", "check:maintained-artefacts"]) {
+      expect(deploy).toContain(c);
+      expect(preview.has(c)).toBe(true);
+    }
   });
 
   test("a repeated invocation is counted once", () => {
@@ -66,7 +98,10 @@ describe("invocations", () => {
     // property that was actually wanted. Naming a real-looking directory in a
     // fixture is what made it renameable in the first place.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
+    //
+    // Since 2026-09-30 (bean `xsqm`) that export is bootstrap-tools'
+    // `export-graph.ts --root ./bootstrap`, not `kg-export --instance`.
+    expect(got.some((i) => i.script === "bootstrap-tools/export-graph" && i.instance === "./bootstrap")).toBe(true);
   });
 });
 

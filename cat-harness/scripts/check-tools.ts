@@ -30,15 +30,18 @@
  * @covers tools, skills
  */
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { tools, toolsOf } from "../tools/discover.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
+import { alternativesWithoutSelection } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
-import { knownSkills as knownSkillsIn } from "./known-skills.js";
+import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
 import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
+import { resolveImplementingPath } from "../schemas/harness-config.js";
+import type { ToolDefinition } from "../schemas/tool.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
@@ -111,7 +114,15 @@ const REPO = join(ROOT, "..");
  * | field | resolved against | why |
  * |---|---|---|
  * | `invoke.shell` | the **repository** | it is a command a caller types, and `package.json` and `.github/` are at the repo root |
- * | `invoke.*.module` | the **instance** | it is loaded by this instance's own server, and matches `maintains.source` |
+ * | `invoke.*.module` | the **declaring instance**, then the one instance that **implements** it | it is loaded by the implementing instance's server, and matches `maintains.source` |
+ *
+ * "Implements" is owner ruling T1 (2026-10-01, bean `70lx`): the definitions
+ * stay in the harness and the code moves to the layer above, so a module path
+ * stays as written (`src/tools/x.ts`) and is found in the instance whose own
+ * `needs` names the declarer — `resolveImplementingPath` in
+ * `schemas/harness-config.ts`. Writing the implementer's name into the path
+ * instead would be the harness naming a layer above it. Two implementers
+ * holding the same path is reported, never resolved by order.
  *
  * Getting that backwards would have "fixed" twenty correct paths. The `module`
  * field's own docstring said *"Repo-relative"* while giving `src/tools/workflow.ts`
@@ -129,7 +140,15 @@ export function unresolvedPaths(
   // `REPO` stays the checkout either way: an `invoke` path is repo-relative
   // whichever instance declared the Tool, so narrowing the tool SET must not
   // narrow where its paths are resolved.
-  for (const t of toolsFor(instance)) {
+  //
+  // A `module`, by contrast, is resolved against the instance that DECLARED
+  // the Tool, and then against the instance that implements it — so the Tools
+  // are read per declaring instance rather than as one flat list.
+  const roots = instance === undefined ? instanceRootsIn(REPO) : [instance];
+  const declared: Array<{ declaringRoot: string; t: ToolDefinition }> = roots.flatMap((r) =>
+    toolsOf(r).map((t) => ({ declaringRoot: resolve(r), t })),
+  );
+  for (const { declaringRoot, t } of declared) {
     const inv = t.invoke as Record<string, unknown> | undefined;
     if (!inv) continue;
 
@@ -147,8 +166,22 @@ export function unresolvedPaths(
     for (const arm of ["inProcess", "container", "mcp"]) {
       const a = inv[arm] as { module?: unknown } | undefined;
       const mod = a && typeof a.module === "string" ? a.module : undefined;
-      if (mod !== undefined && !existsSync(join(ROOT, mod))) {
-        out.push({ field: `invoke.${arm}.module`, tool: t.id, value: mod, expected: `${mod} under the instance root` });
+      if (mod === undefined) continue;
+      const found = resolveImplementingPath(declaringRoot, mod);
+      if (found.state === "missing") {
+        out.push({
+          field: `invoke.${arm}.module`,
+          tool: t.id,
+          value: mod,
+          expected: `${mod} under the declaring instance or one instance that needs it (looked in ${found.looked.map((r) => relative(REPO, r) || ".").join(", ")})`,
+        });
+      } else if (found.state === "ambiguous") {
+        out.push({
+          field: `invoke.${arm}.module`,
+          tool: t.id,
+          value: mod,
+          expected: `exactly one implementing instance, but ${found.candidates.map((c) => c.name).join(" and ")} both hold ${mod}`,
+        });
       }
     }
   }
@@ -187,7 +220,7 @@ export function unresolvedPaths(
  * another instance is a thing that exists.
  */
 export function knownSkills(): Set<string> {
-  return knownSkillsIn(ROOT);
+  return knownSkillsIn(ROOT, corpusScopeFor(ROOT));
 }
 
 /**
@@ -206,9 +239,10 @@ export type InputContract =
   | { kind: "ok"; required: string[]; types: Map<string, string> };
 
 export function inputContract(root: string, skill: string): InputContract {
-  const ref = skillContracts(root).get(skill)?.input;
-  if (ref === undefined) return { kind: "absent" };
-  const f = contractFile(root, ref);
+  const c = skillContracts(root).get(skill);
+  const ref = c?.input;
+  if (c === undefined || ref === undefined) return { kind: "absent" };
+  const f = contractFile(c.instanceRoot, ref);
   if (f === undefined) return { kind: "external", ref };
   if (!existsSync(f)) return { kind: "unreadable", ref };
   try {
@@ -266,21 +300,24 @@ export interface ToolCheck {
   /** Skills whose contract could not be read — never counted as agreement. */
   unreadableContracts: string[];
   /**
-   * An `alternativeTo` naming a Tool that does not exist.
+   * A Tool with a DERIVED alternative ({@link deriveAlternatives}) that
+   * carries no `selection`.
    *
-   * Same class as a dangling `satisfies`: an edge to nothing, which reads as a
-   * choice the agent cannot find.
+   * The reader learns a choice exists and cannot make it. Checked here rather
+   * than in the schema because whether a Tool HAS an alternative is a fact
+   * about the whole set, which a single node cannot see (#1168, B9a). The
+   * dangling and one-sided checks this replaces are gone with the field: a
+   * derived relation cannot name a Tool that does not exist, and is
+   * symmetric by construction.
    */
-  danglingAlternatives: Array<{ tool: string; names: string }>;
+  unselectableAlternatives: Array<{ tool: string; alternatives: string[] }>;
   /**
-   * A declared alternative the other end does not return.
-   *
-   * If A names B and B is silent, a reader arriving at B never learns a choice
-   * exists — the failure this relation exists to prevent, occurring exactly
-   * half the time, which is worse than not declaring it because the half that
-   * works makes it look maintained.
+   * A Tool naming a `subprocesses` id no `.bpmn` in the checkout has as its
+   * stem (placement ruling 6: a Tool may describe its own specific
+   * subprocess). A pointer at nothing is the dangling-edge shape `satisfies`
+   * is already held to.
    */
-  asymmetricAlternatives: Array<{ tool: string; names: string }>;
+  danglingSubprocesses: Array<{ tool: string; process: string }>;
   skillsWithTools: number;
   skillsWithoutTools: number;
 }
@@ -309,6 +346,21 @@ export interface ToolCheck {
  * instance's skills, so adding a sibling cannot silently create an obligation
  * to write Tools for it.
  */
+/**
+ * Every process id (`.bpmn` stem) any instance in this checkout declares —
+ * the set a Tool's `subprocesses` may name. Every instance, for the reason
+ * `satisfiableSkills` gives: not in my overlay is not does not exist.
+ */
+function declaredProcessIds(instance: string = ROOT): Set<string> {
+  const out = new Set<string>();
+  for (const inst of new Set([resolve(instance), ...instanceRootsIn(repoRootFor(instance)).map((r) => resolve(r))])) {
+    for (const f of workflowFiles(inst)) {
+      if (f.endsWith(".bpmn")) out.add(f.replace(/^.*\//, "").slice(0, -".bpmn".length));
+    }
+  }
+  return out;
+}
+
 function satisfiableSkills(instance: string = ROOT): Set<string> {
   const out = new Set(knownSkillsIn(instance));
   // `ROOT` is THIS INSTANCE (`cat-harness/`), not the checkout. Sibling
@@ -339,10 +391,15 @@ export function checkTools(instance?: string): ToolCheck {
   const mistypedContracts: ToolCheck["mistypedContracts"] = [];
   const unreadable = new Set<string>();
   const covered = new Set<string>();
-  const danglingAlternatives: ToolCheck["danglingAlternatives"] = [];
-  const asymmetricAlternatives: ToolCheck["asymmetricAlternatives"] = [];
+  const unselectableAlternatives: ToolCheck["unselectableAlternatives"] = [];
+  const danglingSubprocesses: ToolCheck["danglingSubprocesses"] = [];
+  let processIds: Set<string> | undefined;
 
   for (const t of toolsFor(instance)) {
+    for (const p of t.subprocesses ?? []) {
+      processIds ??= declaredProcessIds(instance);
+      if (!processIds.has(p)) danglingSubprocesses.push({ tool: t.id, process: p });
+    }
     const portNames = new Set(t.io.inputs.map((i) => i.name));
     for (const s of t.satisfies) {
       if (skills.has(s)) covered.add(s);
@@ -402,25 +459,10 @@ export function checkTools(instance?: string): ToolCheck {
     }
   }
 
-  // The alternative relation, checked in a second pass because it is about
-  // pairs: the first pass cannot know whether a Tool later in the list returns
-  // the edge. Built from the same `toolsFor()` call, so a Tool that fails to
-  // parse never reaches here.
-  {
-    const byId = new Map(toolsFor(instance).map((t) => [t.id, t]));
-    for (const t of toolsFor(instance)) {
-      for (const other of t.alternativeTo ?? []) {
-        const peer = byId.get(other);
-        if (peer === undefined) {
-          danglingAlternatives.push({ tool: t.id, names: other });
-          continue;
-        }
-        if (!(peer.alternativeTo ?? []).includes(t.id)) {
-          asymmetricAlternatives.push({ tool: t.id, names: other });
-        }
-      }
-    }
-  }
+  // The alternative relation, in a second pass because it is about pairs.
+  // Built from the same `toolsFor()` call, so a Tool that fails to parse
+  // never reaches here.
+  unselectableAlternatives.push(...alternativesWithoutSelection(toolsFor(instance)));
 
   return {
     danglingSatisfies: dangling,
@@ -429,8 +471,8 @@ export function checkTools(instance?: string): ToolCheck {
     unmetContracts,
     mistypedContracts,
     unreadableContracts: [...unreadable].sort(),
-    danglingAlternatives,
-    asymmetricAlternatives,
+    unselectableAlternatives,
+    danglingSubprocesses,
     skillsWithTools: covered.size,
     skillsWithoutTools: skills.size - covered.size,
   };
@@ -455,6 +497,11 @@ if (import.meta.main) {
     console.error(`\n✗ ${r.danglingSatisfies.length} satisfies naming no skill:`);
     for (const d of r.danglingSatisfies) console.error(`    ${d.tool} → ${d.skill}`);
   }
+  if (r.danglingSubprocesses.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.danglingSubprocesses.length} subprocess(es) naming no declared .bpmn:`);
+    for (const d of r.danglingSubprocesses) console.error(`    ${d.tool} → ${d.process}`);
+  }
   if (r.unsafeArgs.length > 0) {
     bad = true;
     console.error(`\n✗ ${r.unsafeArgs.length} command-line input(s) of a type that can express a shell payload:`);
@@ -465,21 +512,11 @@ if (import.meta.main) {
     console.error(`\n✗ ${r.unknownTypes.length} port(s) referencing an unknown type:`);
     for (const u of r.unknownTypes) console.error(`    ${u.tool}.${u.port} → ${u.ref}`);
   }
-  if (r.danglingAlternatives.length > 0) {
+  if (r.unselectableAlternatives.length > 0) {
     bad = true;
-    console.error(`\n✗ ${r.danglingAlternatives.length} alternativeTo naming no Tool:`);
-    for (const d of r.danglingAlternatives) console.error(`    ${d.tool} → ${d.names}`);
-  }
-  if (r.asymmetricAlternatives.length > 0) {
-    bad = true;
-    console.error(`\n✗ ${r.asymmetricAlternatives.length} one-sided alternative(s):`);
-    for (const d of r.asymmetricAlternatives) {
-      console.error(`    ${d.tool} names ${d.names}, but ${d.names} does not name ${d.tool}`);
-    }
-    console.error(
-      "    An agent arriving at the silent end never learns a choice exists.\n" +
-        "    Add the return edge, and give both ends a `selection`.",
-    );
+    console.error(`\n✗ ${r.unselectableAlternatives.length} Tool(s) with an alternative and no \`selection\`:`);
+    for (const d of r.unselectableAlternatives) console.error(`    ${d.tool} ~ ${d.alternatives.join(", ")}`);
+    console.error("    A reader learns a choice exists without learning how to make it. Add `selection` (when, limits, cost).");
   }
   if (r.unmetContracts.length > 0) {
     bad = true;

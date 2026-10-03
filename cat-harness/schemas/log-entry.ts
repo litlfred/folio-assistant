@@ -38,9 +38,9 @@ import { join } from "node:path";
 
 import { z } from "zod";
 
-import { resolveDirectories } from "./cat-harness.ts";
 import { BeanIdSchema } from "./tool-types.ts";
 import { ProcessElementIdSchema } from "./process-element-id.ts";
+import { fshGutsDirectories } from "./fsh-guts.ts";
 
 /** The `$schema` tag every log entry carries, per the declare-yourself rule. */
 export const LOG_ENTRY_SCHEMA_ID = "folio-log/v1";
@@ -62,13 +62,10 @@ export const LOG_NODE = "logs";
  * nothing rather than a guess.
  */
 export function logDirs(root: string): string[] {
-  try {
-    return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphKinds.includes("fsh-guts"))
-      .map((d) => join(d.absPath, LOG_NODE));
-  } catch {
-    return [];
-  }
+  // The shared resolution (bean 9c7h). Logs are git-ignored local scratch,
+  // so they stay in the WORKING TREE's trashcan when the committed contents
+  // move to `cat/cat-harness/fsh-guts`.
+  return fshGutsDirectories(root).map((d) => join(d.absPath, LOG_NODE));
 }
 
 /**
@@ -214,7 +211,7 @@ export const LogEntrySchema = z.object({
   detail: z.string().optional(),
 
   // ── Who and where ──────────────────────────────────────────────
-  /** The actor id from `.claude/skills/actors/`, where one is known. */
+  /** The actor id from `cat-harness/scenarios/actors/`, where one is known. */
   actor: z.string().min(1).optional(),
   /**
    * The role the actor was acting AS — a BPMN swimlane, per the role model.

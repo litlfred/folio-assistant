@@ -23,6 +23,7 @@
 import { execSync } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
+import { capabilitiesDir } from "../../schemas/role-graph.js";
 
 export interface CapabilityDetection {
   method: "command" | "env-var" | "file-exists" | "mcp-probe" | "always";
@@ -62,8 +63,10 @@ export interface CapabilityStatus {
 
 /** Load every declared capability. Returns `[]` when the directory is absent. */
 export function loadCapabilities(repoRoot: string): Capability[] {
-  const dir = join(repoRoot, ".claude", "skills", "capabilities");
-  if (!existsSync(dir)) return [];
+  // The declared home inside `scenarios` (bean rqao). An instance with no
+  // platform `scenarios` graph declares no capabilities: `[]`, as before.
+  const dir = capabilitiesDir(repoRoot);
+  if (dir === undefined || !existsSync(dir)) return [];
   const out: Capability[] = [];
   for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith(".json")) continue;

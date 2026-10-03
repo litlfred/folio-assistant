@@ -18,7 +18,7 @@
  * ## This is NOT vendoring, and the distinction is the whole reconciliation
  *
  * `smart-base.json`'s own header says the upstream toolchain is not vendored
- * here, and [`smart-base-tools`](../../cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md)
+ * here, and [`smart-base-tools`](../../smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md)
  * argues why: a copy of the Python would be a second, drifting toolchain.
  *
  * **That argument is about copies of the CODE and it still stands.** A Tool
@@ -35,7 +35,7 @@
  * *DAK Postprocessing* and are not DAK-shaped — any IG depending on
  * `hl7.fhir.uv.cql` produces oversized `Library` resources. By the placement
  * question in
- * [`smart-stack-layering`](../../cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md)
+ * [`smart-stack-layering`](../../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md)
  * they belong to `fhir-harness`, and putting them here to keep the list
  * tidy would be the layering rule being overruled by a step's own name.
  *
@@ -186,74 +186,12 @@ export function tools(baseUrl?: string): ToolDefinition[] {
 
     // ── The DAK API surface ──────────────────────────────────────────────
     //
-    // Four tools producing what `ig-artifact-ingestion` reconstructs an index
-    // FROM. They run against the Publisher's `output/`, so they are
-    // post-processing in the strict sense: they consume a rendered IG.
-    defineTool({
-      id: "logical-model-schemas",
-      title: "Logical models → JSON Schema",
-      description: "A JSON Schema per logical model, from the published FHIR resources.",
-      install: { none: true },
-      invoke: { shell: "python3 input/scripts/generate_logical_model_schemas.py" },
-      io: {
-        inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true, description: "The Publisher's `output/`." }],
-        outputs: [{ name: "schemas", schema: t("RepoPath"), description: "`schemas/<stem>.schema.json`." }],
-      },
-      satisfies: ["dak-postprocessing", "ig-artifact-ingestion"],
-      selection: {
-        when: "A DAK IG is to expose its logical models as an addressable API surface.",
-        limits: "It describes what the Publisher emitted. A model the Publisher did not publish is not reported as missing.",
-        cost: "Seconds, inside the publisher container.",
-      },
-      requires: { runtime: ["python3"], network: false },
-    }),
+    // `dak-api-hub` is the WHO-shaped one. Three siblings that were here —
+    // `logical-model-schemas`, `valueset-schemas`, `jsonld-vocabularies` —
+    // are any IG's JSON surface and moved to `fhir-harness/tools/` (#1767,
+    // stage B′), on the precedent the Library strippers set.
 
-    defineTool({
-      id: "valueset-schemas",
-      title: "ValueSets → JSON Schema",
-      description:
-        "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.",
-      install: { none: true },
-      invoke: { shell: "python3 input/scripts/generate_valueset_schemas.py" },
-      io: {
-        inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
-        outputs: [{ name: "schemas", schema: t("RepoPath") }],
-      },
-      // `terminology-management` dropped 2026-09-22 (bean p0za): that skill's
-      // contract requires `operation`, which this Tool does not accept. Never
-      // checked before tool auto-discovery made smart-base's Tools visible.
-      satisfies: ["dak-postprocessing"],
-      selection: {
-        when: "A DAK IG is to expose its terminology as an API.",
-        limits:
-          "The root `ValueSets.schema.json` it writes is a SCHEMA describing an enumeration response, carrying an `example` that holds the list. It is not an index instance, and reading it as one is the trap `qsf5` recorded — no FHIR IG publishes an artefact-index instance.",
-        cost: "Seconds. Output size scales with the IG: 19 sidecars for smart-trust against 198 for smart-immunizations, so re-derive rather than assume.",
-      },
-      requires: { runtime: ["python3"], network: false },
-    }),
 
-    defineTool({
-      id: "jsonld-vocabularies",
-      title: "ValueSet expansions → JSON-LD",
-      description: "JSON-LD vocabularies built from the ValueSet expansions in the published output.",
-      install: { none: true },
-      invoke: { shell: "python3 input/scripts/generate_jsonld_vocabularies.py" },
-      io: {
-        inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
-        outputs: [{ name: "vocabularies", schema: t("RepoPath"), description: "`*.jsonld` at the published root." }],
-      },
-      // `terminology-management` dropped 2026-09-22 (bean p0za): that skill's
-      // contract requires `operation`, which this Tool does not accept. Never
-      // checked before tool auto-discovery made smart-base's Tools visible.
-      satisfies: ["dak-postprocessing"],
-      selection: {
-        when: "The terminology is to be reachable as linked data rather than only as FHIR.",
-        limits:
-          "IT DEPENDS ON EXPANSION, which depends on the terminology server the build was given. An IG built against a dead or restricted `tx` produces fewer vocabularies and FAILS NOTHING — the step warns and continues. A thin output is therefore not evidence of a thin ValueSet; check the expansion before concluding anything.",
-        cost: "Seconds locally; the expansion it depends on is the expensive part and happens in the Publisher run.",
-      },
-      requires: { runtime: ["python3"], network: false },
-    }),
 
     defineTool({
       id: "dak-api-hub",

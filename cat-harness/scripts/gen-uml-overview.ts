@@ -54,7 +54,7 @@ import type { z } from "zod";
 
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 
-import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration, siteDir } from "../schemas/cat-harness.js";
+import { instanceDirectoryForGraph, instanceRootsIn, instanceDirectories, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
 import { readUmlPalette } from "./uml-palette.js";
 import { bothViews, gridLinks, renderSvgs, safeId, sha256, svgStamp, views, type RenderJob } from "./plantuml-render.js";
@@ -397,11 +397,14 @@ async function sectionsOf(instanceRoot: string): Promise<Section[]> {
   const decl = readDeclaration(instanceRoot);
   if (!decl) return [];
   const out: Section[] = [];
-  for (const entry of decl.directories) {
+  // Its own entries AND the ones declared from within (bean `cmsl`) — see
+  // `instanceDirectories` for the five diagrams `decl.directories` dropped.
+  for (const entry of instanceDirectories(instanceRoot, decl)) {
+    const abs = join(instanceRoot, entry.path);
     const section: Section = {
       instance: decl.name,
       id: entry.id,
-      path: relative(REPO, join(instanceRoot, entry.path)).replace(/\\/g, "/"),
+      path: relative(REPO, abs).replace(/\\/g, "/"),
       kinds: entry.graphKinds.map((k) => resolveGraphKind(k).kind),
       classes: [],
       compositions: [],
@@ -633,7 +636,7 @@ function page(opts: {
   }
   L.push(
     "",
-    "*Nodes, cohesion, in and out* are the detangler's pinned measurements for the same directory (`bun run kg:detangle`; skill [`graph-detanglement`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-detanglement.md)). *Not measured* means the detangler does not scan that directory, not that it has no edges.",
+    "*Nodes, cohesion, in and out* are the detangler's pinned measurements for the same directory (`bun run kg:detangle`; skill [`graph-detanglement`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-detanglement.md)). *Not measured* means the detangler does not scan that directory, not that it has no edges.",
   );
   if (opts.links?.length) {
     L.push("", "## Sub-graphs", "");

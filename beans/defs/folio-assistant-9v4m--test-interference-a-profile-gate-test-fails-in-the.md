@@ -5,8 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-27T14:31:29Z
-parent: folio-assistant-1swy
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-1xhc
 ---
 
 Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).
@@ -514,3 +514,20 @@ routes.
 exists or is planned, so nothing is waiting on the restructure; and the file's
 write-on-evaluation shape has now cost a second session time, which is an
 argument about this file generally rather than about the three lines.
+
+
+_2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A test that fails in the suite and passes alone is test/CI reliability, not a QA verdict.
+
+## A measured cause for the timeout class — the checkout's pack count, not the test (2026-09-30)
+
+A sibling timeout reproduces on demand in a long-lived agent container, and the cause is **git**, not the test. `head-has-run.test.ts` › "an id git does not know is undefined" failed in every full `bun test` run in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB, at 5.0–6.9 s against the 5 s default budget, and passed when run alone.
+
+- It calls `git rev-parse --verify <unknown-40-hex>^{commit}`, which is a **miss**, so git must rule the object out everywhere.
+- In that checkout, `git count-objects -v` reported **2,400 packs** (2.33 M objects), accumulated from hundreds of fetches in one day. `git cat-file -e deadbeef…` took **6.6 s**, of which 5.5 s was user CPU.
+- `GIT_NO_LAZY_FETCH=1` did not help (5.8 s), so it is not a promisor round-trip. A freshly written `multi-pack-index` did not help either (7.7 s), so the cost is in the miss path over that many packs.
+- A found object is fast, because it hits early. Only misses pay the cost, so only tests that assert on an **unknown** id are slow.
+- A CI runner clones fresh with a handful of packs, which is why CI never sees it.
+
+**Relevance here:** this bean's failing test was also a ~5.7 s timeout, inside `profile-scoping`, which spawns sweeps that shell out to git. Not proven the same cause, but the same shape: a git-heavy test near the 5 s budget, in a checkout whose object store is fragmented.
+
+**Remedy, and why not applied:** `git repack -a -d` (or `git gc`) collapses the packs. That container had 3.5 GB free against a 4.6 GB pack store, too little to repack safely, so it was not run. **Not a test change:** raising the budget would hide a real environment signal, and skipping the test is never an option.

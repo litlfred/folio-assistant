@@ -51,13 +51,13 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 | 工作流 | BPMN 源文件 | 进入时机 |
 |---|---|---|
-| **撰写（论文）** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | 用户请求在论文 folio 中撰写内容 |
-| **撰写（文档）** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | 用户请求在文档 folio 中撰写内容 |
-| **内容生命周期** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | 内容经过 validate → render → publish 阶段 |
-| **文档摄取** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | 用户将文件放入 `uploads/` |
-| **草稿至发布** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | 内容从草稿状态转为已发布状态 |
-| **CRDM 需求** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | 智能体检测到功能需求 |
-| **证据检索** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | 智能体检索证据以支持某项主张 |
+| **撰写（论文）** | [`authoring-a-paper.bpmn`](../../../folio-assistant-sci/processes/content/authoring-a-paper.bpmn) | 用户请求在论文 folio 中撰写内容 |
+| **撰写（文档）** | [`authoring-a-document.bpmn`](../../../folio-assistant-core/processes/content/authoring-a-document.bpmn) | 用户请求在文档 folio 中撰写内容 |
+| **内容生命周期** | [`content-lifecycle.bpmn`](../../../folio-assistant-core/processes/content/content-lifecycle.bpmn) | 内容经过 validate → render → publish 阶段 |
+| **文档摄取** | [`document-ingestion.bpmn`](../../processes/library/document-ingestion.bpmn) | 用户将文件放入 `uploads/` |
+| **草稿至发布** | [`draft-to-publication.bpmn`](../../../folio-assistant-core/processes/content/draft-to-publication.bpmn) | 内容从草稿状态转为已发布状态 |
+| **CRDM 需求** | [`crdm-requirements.bpmn`](../../processes/process/crdm-requirements.bpmn) | 智能体检测到功能需求 |
+| **证据检索** | [`evidence-retrieval.bpmn`](../../../folio-assistant-core/processes/content/evidence-retrieval.bpmn) | 智能体检索证据以支持某项主张 |
 
 **状态转换：** 当用户要求切换上下文时，工作流可以被**挂起**。智能体会记录当前所在位置（当前的 BPMN 活动），以便稍后恢复。同一时刻只能有一个处于活动状态的工作流，但挂起的工作流会构成一个栈——最近挂起的工作流最先被恢复。
 
@@ -96,7 +96,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 | **内容撰写** | 编写、编辑、扩充 folio 内容（章节、块、小节） | 撰写工作流（论文或文档） |
 | **内容评审** | 评审、验证现有内容并提供反馈 | 内容生命周期 / editing-HCI 工作流 |
 | **内容摄取** | 将源文档摄取到 folio 中 | 文档摄取工作流 |
-| **功能需求** | 请求新的平台功能（参见 [crdm-detect](../../skills/crdm/crdm-detect.md)） | CRDM 需求工作流 |
+| **功能需求** | 请求新的平台功能（参见 [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)） | CRDM 需求工作流 |
 | **信息咨询** | 询问有关平台、内容或流程的问题 | 无工作流 — 直接回答 |
 | **工具调用** | 运行特定工具（`content_validate`、`qa_sweep` 等） | 无工作流 — 执行并报告 |
 | **工作计划管理** | 创建、更新或查询 beans | 无工作流 — 执行并报告 |
@@ -104,7 +104,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 ### 功能需求检测规则
 
-最关键的分类边界存在于**内容撰写**与**功能需求**之间。`crdm-detect` 技能（[`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md)）提供了详细的检测信号。总结性规则如下：
+最关键的分类边界存在于**内容撰写**与**功能需求**之间。`crdm-detect` 技能（[`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md)）提供了详细的检测信号。总结性规则如下：
 
 > 如果实现该请求需要修改 **folio-assistant**（平台仓库）而非 **folio 仓库**，则该请求属于新功能，智能体应当进入 CRDM 工作流。
 
@@ -176,13 +176,13 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="feature-request-workflow.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/agentic-harness/feature-request-workflow.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/agentic-harness/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../processes/crdm-requirements.bpmn)）。
+当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../processes/process/crdm-requirements.bpmn)）。
 
 功能需求工作流是本框架文档价值最显著之处，因为它描述了一种此前一直处于隐性状态的行为。撰写和评审工作流数月前就已形成文档；而需求工作流此前仅存在于零散的对话中。
 
 ### 智能体如何进入 CRDM
 
-检测逻辑位于 [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md)。三种场景：
+检测逻辑位于 [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md)。三种场景：
 
 **新会话，首个请求即为功能需求：**
 → 确认请求，说明将首先协助梳理需求，进入阶段 1。
@@ -285,12 +285,12 @@ CRDM 工作流在满足以下条件时退出：
 | 会话启动巡检 | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Bean 协议 | `todo-manager.md`、`bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | 提交与 PR 纪律 | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| 功能需求检测 | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| 内容撰写（论文） | authoring-math 技能 | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| 内容撰写（文档） | folio-document-adapter 技能 | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| 内容生命周期 | content-lifecycle 技能 | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
-| 文档摄取 | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| 功能需求检测 | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| 内容撰写（论文） | authoring-math 技能 | `skill_list` → `authoring-math` |
+| 内容撰写（文档） | folio-document-adapter 技能 | `skill_list` → `folio-document-adapter` |
+| 内容生命周期 | content-lifecycle 技能 | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
+| 文档摄取 | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | 调度与协调 | `dispatch-agent.md`、`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | 内容类型与适配器 | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | BPMN 图绘制 | `bpmn-authoring` 技能 | [`skills/folio-core/`](../../skills/folio-core/) |

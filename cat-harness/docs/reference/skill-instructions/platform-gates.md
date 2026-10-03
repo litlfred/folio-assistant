@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/platform-gates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/platform-gates.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/platform-gates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/platform-gates.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/platform-gates.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/platform-gates.md){: .fa-edit-source }
 
 {% raw %}
 # The platform's own gates — run what CI will run
@@ -221,7 +221,7 @@ failed again, on `kg:audit:check`:
 
 ```
 1 sidecar(s) are stale. Run `bun run kg:audit` and commit:
-  · test/results/kg-qa/skills/folio-core/platform-gates.kg-qa.json
+  · test/results/kg-qa/skills/sdlc/sdlc-core/platform-gates.kg-qa.json
 ```
 
 The gates run was launched, and *while it ran* this very file was edited to
@@ -363,5 +363,6 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Repository gates (HARD); Skill-registration chain (UNMASKED) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Repository gates (HARD); Registered gates that never run (HARD); Skill-registration chain (UNMASKED); Publish QA results to qa-reports (NOT A GATE) |
+| [A merge train](../../processes/merge-train.html) | Run the gate set on the train (calls a sub-process) |
 

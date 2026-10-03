@@ -51,10 +51,10 @@ const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 /**
- * A page the generator wrote. `community-list.html` is the library landing —
+ * A page the generator wrote. `community-list.html` is the replica's landing —
  * the page a reader arrives on, so the one whose folio matters most.
  */
-const PAGE_FILE = join(REPO, "who-iris", "library", "community-list.html");
+const PAGE_FILE = join(REPO, "who-iris", "site", "community-list.html");
 const PAGE = existsSync(PAGE_FILE) ? readFileSync(PAGE_FILE, "utf8") : "";
 
 /**
@@ -134,7 +134,7 @@ test.describe("the glass comes down on a library page", () => {
   });
 
   test("and on the OTHER mount route, where a relative href would 404", async ({ page }) => {
-    // `who-iris/library/` is served at `/who-iris/` and `who-iris/docs/` at
+    // `who-iris/site/` is served at `/who-iris/` and `who-iris/docs/` at
     // `/docs/who-iris/`. One generated file, two depths below the site root —
     // which is the whole reason the root is derived in the browser.
     await serve(page, "/docs/who-iris/index.html");
@@ -178,20 +178,37 @@ test.describe("the replica is unchanged with the glass closed", () => {
   /**
    * Every element's computed box and colour, keyed by a stable path. Compared
    * between the page with the mount and the same page without it.
+   *
+   * POSITIONS ARE MEASURED FROM THE TOP OF BODY'S CONTENT, not the viewport —
+   * bean `g9r2`, owner 2026-09-29: "Band on replicas". The top-centre handle
+   * (`2vne`) covered the ingested-copy banner, and the owner chose to reserve
+   * a band above the replica rather than move the handle. That band is body
+   * `padding-top`, so the replica as a whole sits lower and nothing inside it
+   * changes. Measured from the viewport, this test would call every element
+   * "moved"; measured from the content edge it still fails on a restyle, a
+   * resize, or any shift that is not the whole page at once. The band itself
+   * is asserted separately below, so it cannot grow unseen.
    */
   const snapshot = async (page: import("@playwright/test").Page) =>
     page.evaluate(() => {
       const out: Record<string, string> = {};
+      const b = document.body.getBoundingClientRect();
+      const bs = getComputedStyle(document.body);
+      const ox = b.x + parseFloat(bs.paddingLeft);
+      const oy = b.y + parseFloat(bs.paddingTop);
       const walk = (el: Element, path: string) => {
         // The folio's own chrome is not the replica and is excluded by name;
         // everything else the page renders is compared.
         if (el.className && String(el.className).indexOf("fa-") === 0) return;
         const c = getComputedStyle(el);
         const r = el.getBoundingClientRect();
+        // BODY carries the band, so its padding and height are the band's
+        // business and are asserted on their own; its colours still count.
+        const isBody = el === document.body;
         out[path] =
           [c.color, c.backgroundColor, c.fontFamily, c.fontSize, c.fontWeight, c.lineHeight,
-            c.margin, c.padding, c.border, c.display, c.textDecorationLine].join("|") +
-          "#" + [r.x, r.y, r.width, r.height].map((n) => Math.round(n)).join(",");
+            c.margin, isBody ? "" : c.padding, c.border, c.display, c.textDecorationLine].join("|") +
+          "#" + (isBody ? [r.width] : [r.x - ox, r.y - oy, r.width, r.height]).map((n) => Math.round(n)).join(",");
         let i = 0;
         for (const kid of Array.from(el.children)) walk(kid, `${path}/${kid.tagName}[${i++}]`);
       };
@@ -216,6 +233,21 @@ test.describe("the replica is unchanged with the glass closed", () => {
     expect(Object.keys(before).length).toBeGreaterThan(20);
   });
 
+  test("the band above the replica is the handle's, and clears it", async ({ page }) => {
+    await serve(page, "/who-iris/community-list.html");
+    const handle = page.locator(".fa-glass-handle");
+    await expect(handle).toBeVisible();
+    const [band, handleBottom, bannerTop] = await page.evaluate(() => [
+      parseFloat(getComputedStyle(document.body).paddingTop),
+      document.querySelector(".fa-glass-handle")!.getBoundingClientRect().bottom,
+      document.querySelector(".ingested")!.getBoundingClientRect().top,
+    ]);
+    // 2.25rem, the viewers' band: one reservation, not a second number.
+    expect(band).toBe(36);
+    // The point of the band: the banner starts below the handle.
+    expect(bannerTop).toBeGreaterThanOrEqual(handleBottom);
+  });
+
   test("the ingested-copy banner — who-iris requirement 1 — still reads as itself", async ({ page }) => {
     await serve(page, "/who-iris/community-list.html");
     const banner = page.locator(".ingested").first();
@@ -223,3 +255,45 @@ test.describe("the replica is unchanged with the glass closed", () => {
     await expect(banner).toHaveCSS("background-color", "rgb(0, 102, 102)");
   });
 });
+
+/**
+ * A REPLICA ON A PHONE does not pan sideways — bean `g9r2`. Measured
+ * 2026-09-29 on this page: 537 px wide at 390, because a stacked download
+ * cell kept the desktop `nowrap` on a whole sentence. The glass is mounted
+ * here, as a reader has it; the fidelity test above already proves the
+ * mount itself moves nothing.
+ */
+test.describe("the replica at phone width", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test("the page is no wider than the screen", async ({ page }) => {
+    await serve(page, "/who-iris/community-list.html");
+    const [scroll, client] = await page.evaluate(() => [
+      document.documentElement.scrollWidth,
+      document.documentElement.clientWidth,
+    ]);
+    expect(scroll, "the page scrolls sideways at 390 px").toBeLessThanOrEqual(client);
+  });
+});
+
+/**
+ * ...AND ON A DESKTOP. The phone case above let the desktop one through: the
+ * 2026-09-30 QA re-run measured community-list.html 1475 px wide at 1280 and
+ * 1405 px at 1024, because the "Metadata record" column kept `nowrap` on its
+ * longest file name at every width but a phone's. Same page, same assertion,
+ * the two widths that overflowed.
+ */
+for (const width of [1024, 1280]) {
+  test.describe("the replica at " + width + " px", () => {
+    test.use({ viewport: { width, height: 800 } });
+
+    test("the page is no wider than the screen", async ({ page }) => {
+      await serve(page, "/who-iris/community-list.html");
+      const [scroll, client] = await page.evaluate(() => [
+        document.documentElement.scrollWidth,
+        document.documentElement.clientWidth,
+      ]);
+      expect(scroll, "the page scrolls sideways at " + width + " px").toBeLessThanOrEqual(client);
+    });
+  });
+}

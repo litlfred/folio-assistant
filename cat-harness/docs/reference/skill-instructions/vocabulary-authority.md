@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/vocabulary-authority.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/vocabulary-authority.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/vocabulary-authority.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/vocabulary-authority.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/vocabulary-authority.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/vocabulary-authority.md){: .fa-edit-source }
 
 {% raw %}
 # Vocabulary authority — one fact, one home, N renderings
 
-> Skill id: `vocabulary-authority` · Capability: `schema` · Package: `folio-core`
+> Skill id: `vocabulary-authority` · Package: `folio-core`
 
 ## The rule
 
@@ -169,7 +169,7 @@ the other as absent.
 ## Related
 
 - [`schema-management`](schema-management.md) — the registry's own discipline.
-- [`terminology-management`](terminology-management.md) —
+- `terminology-management` (fhir-harness) —
   the FHIR half, for a folio's clinical terminology.
 - `folio-assistant-core/schemas/external-schema.ts` — the record contract, and
   why `conforms` / `reads` / `cites` are different answers.

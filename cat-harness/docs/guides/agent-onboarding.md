@@ -153,8 +153,8 @@ close a bean a sibling is mid-flight on (a finished one closes on evidence, not 
 store. Do not `beans create` bulk machine-generated queues (`*.qa.json`,
 witness files) — those stay as bulk JSON.
 
-Full discipline: `skills/folio-core/todo-manager.md`,
-`skills/folio-core/bean-coordination.md`.
+Full discipline: `skills/sdlc/sdlc-core/todo-manager.md`,
+`skills/sdlc/sdlc-core/bean-coordination.md`.
 
 ## 7. QA sidecars and axes
 
@@ -211,7 +211,7 @@ Watching a sibling PR: `/watch <pr|branch>`.
 | What a QA criterion means | `content/pipeline/qa-criteria-registry.ts` — descriptions are the spec |
 | The block schema | `schemas/types.ts` |
 | The QA sidecar schema | `schemas/block-qa.ts` |
-| What this environment can do | `.claude/skills/capabilities/*.json`, `--check-deps` |
+| What this environment can do | `cat-harness/scenarios/capabilities/*.json`, `--check-deps` |
 | Lean tooling roadmap | [Lean tooling proposal](https://github.com/litlfred/folio-assistant/issues/198) |
 
 ## 10. Habits that keep you out of trouble

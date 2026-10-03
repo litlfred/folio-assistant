@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/workflow/session-state-machine.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-state-machine.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/workflow/session-state-machine.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-state-machine.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/session-state-machine.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/session-state-machine.md){: .fa-edit-source }
 
 {% raw %}
 # Playing a state machine
@@ -17,7 +17,7 @@ parent: Skill instructions
 > Managing state (kinda) during human/agentic discussion.** — the owner,
 > 2026-09-20
 
-The diagram is `processes/session-state-machine.bpmn`. It keeps a
+The diagram is `processes/process/session-state-machine.bpmn`. It keeps a
 session's context current across a discussion: establish who is acting, open
 the record, and on each turn decide whether anything changed.
 

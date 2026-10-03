@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/asset-extraction.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/asset-extraction.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/library-core/asset-extraction.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/asset-extraction.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/asset-extraction.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/asset-extraction.md){: .fa-edit-source }
 
 {% raw %}
 # Asset extraction — the index goes in, the contents do not
@@ -24,8 +24,8 @@ Owner, 2026-09-20:
 > KG. don't extract contents unless explict ask by user."*
 
 ```sh
-bun run folio-assistant-core/scripts/extract-assets.ts <container>
-bun run folio-assistant-core/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
+bun run cat-harness-tools/scripts/extract-assets.ts <container>
+bun run cat-harness-tools/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
 ```
 
 The first writes a `folio-extraction/v1` record beside the container. The
@@ -118,7 +118,7 @@ Three rules, in the order they bite:
    the image. `local:cat-harness/uploads/<file>.pdf#page=1` says the true thing
    and resolves to the true thing.
 2. **The declaration is authored, and the tool refuses without it.**
-   `who-iris/scripts/gen-covers.ts` will not write bytes for a `THUMBNAIL`
+   `folio-assistant-core/scripts/gen-covers.ts` will not write bytes for a `THUMBNAIL`
    whose `materialization.note` does not declare the derivation. Generating
    that sentence would make the check circular — a tool cannot attest to its
    own output.
@@ -175,11 +175,14 @@ file's `localPath`, which exists only once somebody asked for it.
 
 - [`library-ingestion`](library-ingestion.md) — the other way in. A container
   read this way has not been ingested; it has been *described*.
-- `schemas/extraction.ts` in folio-assist-core — the record, and why each
-  field is optional or not.
-- `schemas/materialization.ts` — `materializedAt`, the timestamp this one is
-  most often confused with.
+- `schemas/extraction.ts` in this harness — the record, and why each
+  field is optional or not. It moved down from folio-assist-core with the
+  script that writes it (bean `tlat`, placement PR5), because this skill is
+  the harness's own.
+- `schemas/materialization.ts` in folio-assist-core — `materializedAt`, the
+  timestamp this one is most often confused with; its state vocabulary is
+  `schemas/materialization-state.ts` here.
 - `cat-harness/scripts/pdf-cover.py` — the generic page raster, and
-  `who-iris/scripts/gen-covers.ts` the instance wiring that decides which
-  documents get one and checks every claim it makes about them.
+  `folio-assistant-core/scripts/gen-covers.ts` the catalogue wiring (any instance; the catalogue decides which
+  documents get one) that checks every claim it makes about them.
 {% endraw %}

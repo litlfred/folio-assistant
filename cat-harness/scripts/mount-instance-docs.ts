@@ -100,12 +100,13 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
-import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
-import { join, resolve } from "path";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
+import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
-import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
-import { injectRail, type NavItem } from "./lib/harness-rail.js";
+import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
+import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
+import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { viewersOf } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -162,6 +163,12 @@ export interface Mountable {
    * real answer and the common one.
    */
   visualiser?: string;
+  /**
+   * The instance's own directory, absolute — the boundary a page's embedded
+   * asset may be published from (see {@link referencedAssets}). Optional so a
+   * routing test need not invent one; `mountable()` always sets it.
+   */
+  instanceDir?: string;
 }
 
 /**
@@ -178,6 +185,16 @@ export interface Mountable {
  * concrete the day it declared both `docs` and `library`: `docs` sorts first,
  * so the themed root would have served the documentation, contradicting the
  * very ruling it implemented. `instanceRoot: true` on the directory decides it.
+ *
+ * **A declared root YIELDS ITS KIND ROUTE to a same-kind sibling** (bean
+ * `2b5s`). Two directories of one instance may share a kind — a themed
+ * replica in `site/` and plain documentation in `docs/`, both `docs` — and
+ * both would claim `/<kind>/<instance>/`, which the walk refuses as a
+ * collision. The owner's table already says which is which: the kind route
+ * is the kind handler's default rendering and the root is the instance
+ * presenting itself. So the root directory answers at `/<instance>/` only,
+ * and the sibling keeps the kind route. With no same-kind sibling nothing
+ * changes — a lone root still publishes at both routes.
  *
  * With several renderable kinds and none marked, the root is returned as
  * UNDETERMINED. The deterministic order still picks one, because a site has to
@@ -201,14 +218,18 @@ export function withRoutes<T extends Mountable>(
 
   const declaredRoot = new Set(found.filter((m) => m.instanceRoot).map((m) => m.name));
   const rooted = new Set<string>();
+  // The root yields its kind route when a sibling that is NOT the root
+  // declares the same kind — see the rule above.
+  const yieldsKindRoute = (m: T): boolean =>
+    m.instanceRoot && found.some((o) => o !== m && o.name === m.name && o.kind === m.kind && !o.instanceRoot);
   const candidates = found.flatMap((m) => {
-    const byKind = { ...m, route: `${m.kind}/${m.name}` };
-    if (rooted.has(m.name)) return [byKind];
+    const byKind = yieldsKindRoute(m) ? [] : [{ ...m, route: `${m.kind}/${m.name}` }];
+    if (rooted.has(m.name)) return byKind;
     // A declared root waits for its own entry rather than letting whichever
     // kind comes first claim the route.
-    if (declaredRoot.has(m.name) && !m.instanceRoot) return [byKind];
+    if (declaredRoot.has(m.name) && !m.instanceRoot) return byKind;
     rooted.add(m.name);
-    return [byKind, { ...m, route: m.name }];
+    return [...byKind, { ...m, route: m.name }];
   });
   return { candidates, undetermined };
 }
@@ -365,7 +386,10 @@ export function declaredGraphs(
   if (decl === undefined || !existsSync(decl)) return [];
   let d: { directories?: { graphKinds?: string[] }[] };
   try {
-    d = JSON.parse(readFileSync(decl, "utf-8"));
+    // Own entries AND those declared from within (bean `cmsl`): `voices` is
+    // declared in `skills/skills.json` now, and the raw file dropped it from
+    // every voices viewer page's rail (measured 2026-09-30, bean `2j2r`).
+    d = { directories: instanceDirectories(join(REPO, instanceDirName)) };
   } catch {
     // Not this script's finding — `kg:schema:check` owns an unparseable
     // declaration. Here it is an empty middle, and the caller still renders
@@ -385,9 +409,12 @@ export function declaredGraphs(
       // mount table while the note came from the site, and those two are not
       // the pair that function makes exclusive.
       const note = href ? undefined : fallback?.note;
+      // A distinct glyph and a full accessible name per kind (bean `yag0`):
+      // `docs` and `library` were adjacent one-letter marks, and the owner
+      // clicked the wrong one.
       out.push({
         label: kind,
-        icon: kind.slice(0, 1).toUpperCase(),
+        ...graphKindRowDecor(kind, instanceDirName),
         ...(href ? { href } : {}),
         ...(note ? { note } : {}),
       });
@@ -561,6 +588,40 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
 }
 
 /**
+ * An instance's MARK for the navbar header — its declared avatar and tone,
+ * read off the same `_data/harness.json` as {@link instantiatedHarnesses}.
+ *
+ * Any harness row named `instance` answers, instantiated or not: the header
+ * names the instance whose page this is, which is a different question from
+ * whether it belongs in the harnesses list. Absent, the header draws the
+ * instance's initial — never a `☰` (#1757).
+ */
+export function instanceMark(built: string, instance: string, toRoot: string): Pick<NavItem, "avatar" | "tone"> | undefined {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return undefined;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return undefined;
+  type Icon = { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
+  let d: { name?: string; icon?: Icon | null; harnesses?: { name?: string; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const h = d.harnesses?.find((x) => x.name === instance);
+  const icon = h?.icon ?? (d.name === instance ? d.icon : undefined);
+  const avatar = icon?.src
+    ? {
+        src: `${toRoot}${icon.src}`,
+        ...(icon.title ? { title: icon.title } : {}),
+        ...(icon.region ? { region: icon.region } : {}),
+      }
+    : undefined;
+  if (!avatar && !h?.tone) return undefined;
+  return { ...(avatar ? { avatar } : {}), ...(h?.tone ? { tone: h.tone } : {}) };
+}
+
+/**
  * Inject the harness rail into every mounted HTML page.
  *
  * The rail's LINKS ARE DERIVED FROM THE MOUNT TABLE, never listed: an instance
@@ -660,9 +721,11 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
+      const mark = instanceMark(built, m.name, toRoot);
       const after = injectRail(before, {
         instance: m.name,
         toRoot,
+        ...(mark ? { mark } : {}),
         ...(root[0] ? { root: root[0] } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
@@ -728,6 +791,9 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
  */
 const NAVIGATED = /<nav class="fa-nav"|id="site-nav"/;
 
+/** A meta-refresh redirect stub, which {@link railStandalonePages} leaves bare. */
+const REDIRECT = /<meta\s+http-equiv="refresh"/i;
+
 /**
  * Where this pass does NOT go — **empty, and that is the answer rather than an
  * oversight**.
@@ -762,10 +828,12 @@ export function railStandalonePages(
   built: string,
   instanceName: string,
   mountRoutes: readonly string[],
-): { injected: number; alreadyNavigated: number; skipped: string[] } {
+): { injected: number; alreadyNavigated: number; redirects: number; declined: number; skipped: string[] } {
   const skipped: string[] = [];
   let injected = 0;
   let alreadyNavigated = 0;
+  let redirects = 0;
+  let declined = 0;
 
   const owned = (rel: string): boolean =>
     mountRoutes.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
@@ -789,14 +857,31 @@ export function railStandalonePages(
         alreadyNavigated++;
         continue;
       }
+      // A REDIRECT STUB is not a page anybody stays on — the mount writes one
+      // for a kind route whose directory is not mounted (bean `2b5s`). Railing
+      // it would make a one-file redirect carry the whole navigation.
+      if (REDIRECT.test(before)) {
+        redirects++;
+        continue;
+      }
+      // A page that DECLINED the rail in its own markup keeps that decision
+      // here too (#1881). The generator honoured it; this post-build walk did
+      // not, so every library entry shell was railed in CI only — 2.8 KB
+      // committed, 25 KB published.
+      if (declinesNavbar(before)) {
+        declined++;
+        continue;
+      }
       // `..` per directory the page sits under; the filename is not one.
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
       const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot));
       const harnesses = instantiatedHarnesses(built, toRoot);
+      const mark = instanceMark(built, instanceName, toRoot);
       const after = injectRail(before, {
         instance: instanceName,
         toRoot,
+        ...(mark ? { mark } : {}),
         links,
         ...(harnesses ? { harnesses } : {}),
       });
@@ -809,7 +894,7 @@ export function railStandalonePages(
     }
   };
   if (existsSync(siteAbs)) walk(siteAbs);
-  return { injected, alreadyNavigated, skipped };
+  return { injected, alreadyNavigated, redirects, declined, skipped };
 }
 
 /**
@@ -835,25 +920,32 @@ export function mountRoutes(built: string): string[] {
   return resolve_(candidates).mounts.map((m) => m.route);
 }
 
-function mountable(): Mountable[] {
-  const out: Mountable[] = [];
+/** One directory entry as a declaration carries it — only the fields read here. */
+interface DeclaredEntry {
+  id?: string;
+  path?: string;
+  graphKinds?: string[];
+  instanceRoot?: boolean;
+  kindRouteRedirect?: boolean;
+  composed?: boolean;
+  scope?: string;
+  coverage?: Parameters<typeof visualisationsOf>[0];
+}
+
+/**
+ * Every instance declaration at the repository's top level, with each entry's
+ * directory resolved — the one walk {@link mountable} and
+ * {@link kindRouteRedirects} both read, so the two cannot disagree about which
+ * instances exist or what a directory is called.
+ */
+function declaredEntries(): { name: string; instanceDir: string; entry: DeclaredEntry & { path: string }; abs: string }[] {
+  const out: { name: string; instanceDir: string; entry: DeclaredEntry & { path: string }; abs: string }[] = [];
   for (const e of readdirSync(REPO, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
     const decl = declarationPathIn(join(REPO, e.name));
     if (decl === undefined) continue;
     if (!existsSync(decl)) continue;
-    let d: {
-      name?: string;
-      directories?: {
-        id?: string;
-        path?: string;
-        graphKinds?: string[];
-        instanceRoot?: boolean;
-        composed?: boolean;
-        scope?: string;
-        coverage?: Parameters<typeof visualisationsOf>[0];
-      }[];
-    };
+    let d: { name?: string; directories?: DeclaredEntry[] };
     try {
       d = JSON.parse(readFileSync(decl, "utf-8"));
     } catch {
@@ -863,39 +955,279 @@ function mountable(): Mountable[] {
     }
     for (const entry of d.directories ?? []) {
       if (!entry.path) continue;
-      // COMPOSED directories belong to Jekyll, not to this script.
-      //
-      // `compose-docs.ts` lays them into the Jekyll SOURCE at
-      // `_docs/<instance>/`, so mounting the same directory into `_site`
-      // afterwards would publish two documents at one URL -- the composed page
-      // and the raw source -- with the later copy winning by timing.
-      //
-      // Skipped by DECLARATION rather than by shape. Today a composed
-      // directory holds `index.md` and the `index.html` floor below would drop
-      // it anyway; that is a coincidence of one file extension, and a
-      // composed directory that happened to carry an `index.html` would be
-      // double-published while looking fine.
-      if (entry.composed === true) continue;
-      const abs = join(REPO, e.name, entry.path);
-      if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
-      if (!existsSync(join(abs, "index.html"))) continue;
-      // The directory's own declared visualiser, if it has one. Read here
-      // rather than re-derived later: the declaration is the only place that
-      // knows, and a second answer is free to disagree with it.
-      // Resolved from the pages (#1168 B7a-2b).
-      const visualiser = viewersOf({ ...entry, id: entry.id ?? entry.path, path: entry.path }, join(REPO, e.name), REPO)[0]?.ref;
-      for (const kind of entry.graphKinds ?? []) {
-        out.push({
-          name: d.name ?? e.name,
-          kind,
-          dir: abs,
-          instanceRoot: entry.instanceRoot === true,
-          ...(visualiser === undefined ? {} : { visualiser }),
-        });
-      }
+      out.push({
+        name: d.name ?? e.name,
+        instanceDir: join(REPO, e.name),
+        entry: entry as DeclaredEntry & { path: string },
+        abs: join(REPO, e.name, entry.path),
+      });
+    }
+  }
+  return out;
+}
+
+/** The directory's own declared viewer, repo-relative, or `undefined` (#1168 B7a-2b). */
+function viewerOf(x: { instanceDir: string; entry: DeclaredEntry & { path: string } }): string | undefined {
+  return viewersOf({ ...x.entry, id: x.entry.id ?? x.entry.path, path: x.entry.path }, x.instanceDir, REPO)[0]?.ref;
+}
+
+function mountable(): Mountable[] {
+  const out: Mountable[] = [];
+  for (const { name, instanceDir, entry, abs } of declaredEntries()) {
+    // COMPOSED directories belong to Jekyll, not to this script.
+    //
+    // `compose-docs.ts` lays them into the Jekyll SOURCE at
+    // `_docs/<instance>/`, so mounting the same directory into `_site`
+    // afterwards would publish two documents at one URL -- the composed page
+    // and the raw source -- with the later copy winning by timing.
+    //
+    // Skipped by DECLARATION rather than by shape. Today a composed
+    // directory holds `index.md` and the `index.html` floor below would drop
+    // it anyway; that is a coincidence of one file extension, and a
+    // composed directory that happened to carry an `index.html` would be
+    // double-published while looking fine.
+    if (entry.composed === true) continue;
+    if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
+    if (!existsSync(join(abs, "index.html"))) continue;
+    // The directory's own declared visualiser, if it has one. Read here
+    // rather than re-derived later: the declaration is the only place that
+    // knows, and a second answer is free to disagree with it.
+    const visualiser = viewerOf({ instanceDir, entry });
+    for (const kind of entry.graphKinds ?? []) {
+      out.push({
+        name,
+        kind,
+        dir: abs,
+        instanceRoot: entry.instanceRoot === true,
+        instanceDir,
+        ...(visualiser === undefined ? {} : { visualiser }),
+      });
     }
   }
   return out.sort((a, b) => (a.kind + a.name).localeCompare(b.kind + b.name));
+}
+
+// ── Embedded assets from outside the mounted directory — bean `2b5s` ──────
+//
+// A mount copies ONE directory. A page in it may embed a file that lives
+// elsewhere in the same instance — a catalogue replica shows each item's
+// cover, and the covers stay in `library/` where the catalogue names them. Copying `library/` to make the `<img>` resolve is exactly the wholesale
+// copy this rule replaces: 1,367 corpus files published to serve one image.
+//
+// So the unit of publication is the REFERENCE, not the directory: every file a
+// page embeds is published beside the mount, and nothing else is.
+
+/** One asset a mounted page embeds from outside its mounted directory. */
+export interface ReferencedAsset {
+  /** The embedding page, relative to the mounted directory, `/`-separated. */
+  page: string;
+  /** The reference exactly as the page writes it. */
+  ref: string;
+  /** The asset's path relative to the instance directory, `/`-separated. */
+  underInstance: string;
+  /** The asset, absolute. */
+  abs: string;
+}
+
+/** A reference the rule could not publish, and why. Never silently dropped. */
+export interface AssetProblem {
+  page: string;
+  ref: string;
+  why: string;
+}
+
+/**
+ * `src` only, and that is the definition of "embedded". A `src` is something
+ * the page cannot render without — an image, a script, a frame. An `href` is
+ * navigation: the replica may link a sibling directory's page, and publishing
+ * that page under this route would be a second copy of it at a second URL,
+ * which is the defect this rule exists to remove rather than one to add.
+ */
+const EMBED = /\bsrc="([^"]+)"/g;
+
+/** A reference that points off the site, at a fragment, or at inline data — none are files here. */
+const NOT_A_FILE = /^(?:[a-z][a-z0-9+.-]*:|\/|#)/i;
+
+/**
+ * Every embedded asset under `mountDir` that lives outside it but inside
+ * `instanceDir`, and every such reference that cannot be honoured.
+ *
+ * **Bounded by the instance, not the repository.** A reference that climbs out
+ * of the instance would publish another instance's bytes under this one's
+ * route — a page choosing, by `..`, what somebody else's declaration never
+ * offered. It is a problem, not an asset.
+ *
+ * **`withheld.json` still governs.** A mounted directory's list stopped a
+ * wholesale copy from publishing a refused work (bean `cw35`); with no
+ * wholesale copy the same list must stop a REFERENCE doing it, so each
+ * directory between the asset and the instance root is asked. A page
+ * embedding a withheld file is a problem to fix in its generator, and it is
+ * refused rather than served.
+ */
+export function referencedAssets(
+  mountDir: string,
+  instanceDir: string,
+): { assets: ReferencedAsset[]; problems: AssetProblem[] } {
+  const assets: ReferencedAsset[] = [];
+  const problems: AssetProblem[] = [];
+  const pages: string[] = [];
+  const walk = (d: string): void => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      if (e.name.startsWith(".")) continue;
+      const p = join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith(".html")) pages.push(p);
+    }
+  };
+  if (existsSync(mountDir)) walk(mountDir);
+  const inside = (root: string, p: string): boolean => {
+    const r = relative(root, p);
+    return r !== "" && r !== ".." && !r.startsWith(`..${sep}`) && !isAbsolute(r);
+  };
+  for (const pageAbs of pages.sort()) {
+    const page = relative(mountDir, pageAbs).split(sep).join("/");
+    const html = readFileSync(pageAbs, "utf-8");
+    for (const m of html.matchAll(EMBED)) {
+      const ref = m[1]!;
+      if (NOT_A_FILE.test(ref)) continue;
+      let decoded: string;
+      try {
+        decoded = decodeURIComponent(ref.split(/[?#]/)[0]!);
+      } catch {
+        problems.push({ page, ref, why: "not a decodable path" });
+        continue;
+      }
+      const abs = resolve(dirname(pageAbs), decoded);
+      if (inside(mountDir, abs)) continue; // copied with the mount already
+      if (!inside(instanceDir, abs)) {
+        problems.push({ page, ref, why: "resolves outside the instance, which this route may not publish from" });
+        continue;
+      }
+      if (!existsSync(abs) || !statSync(abs).isFile()) {
+        problems.push({ page, ref, why: "resolves to no file" });
+        continue;
+      }
+      const underInstance = relative(instanceDir, abs).split(sep).join("/");
+      const withheldBy = withheldAncestor(instanceDir, abs);
+      if (withheldBy !== undefined) {
+        problems.push({ page, ref, why: `withheld by ${withheldBy}` });
+        continue;
+      }
+      assets.push({ page, ref, underInstance, abs });
+    }
+  }
+  return { assets, problems };
+}
+
+/** The `withheld.json` (instance-relative) that names this file or one of its parents, if any. */
+function withheldAncestor(instanceDir: string, abs: string): string | undefined {
+  let dir = dirname(abs);
+  for (;;) {
+    const rel = relative(dir, abs).split(sep).join("/");
+    if (withheldPaths(dir).some((w) => rel === w || rel.startsWith(`${w}/`))) {
+      return relative(instanceDir, join(dir, WITHHELD_FILE)).split(sep).join("/");
+    }
+    if (resolve(dir) === resolve(instanceDir)) return undefined;
+    const up = dirname(dir);
+    if (up === dir) return undefined;
+    dir = up;
+  }
+}
+
+/**
+ * Where an embedded asset is published, and what the page must now call it.
+ *
+ * Beneath the route, at the asset's path RELATIVE TO THE INSTANCE — so
+ * an instance's `library/<slug>-cover.png` lands at
+ * `/<instance>/library/<slug>-cover.png`. The published tree then mirrors the
+ * repository's, restricted to what a page embeds, which is the one layout a
+ * reader can check against the checkout without being told a mapping.
+ *
+ * The page's reference is rewritten to match, because the committed page's
+ * `../library/…` is right in the checkout and climbs past the route on the
+ * site. The rewrite happens on the PUBLISHED copy only, so the instance's own
+ * gate still checks the page its generator wrote.
+ */
+export function publishedAsset(route: string, a: ReferencedAsset): { dest: string; ref: string } {
+  const pageDir = posix.dirname(a.page);
+  return {
+    dest: posix.join(route, a.underInstance),
+    ref: posix.relative(pageDir === "." ? "" : pageDir, a.underInstance),
+  };
+}
+
+// ── A kind route whose directory is not mounted — bean `2b5s` ─────────────
+
+/** One `/<kind>/<instance>/` that answers with a redirect to its viewer. */
+export interface KindRouteRedirect {
+  route: string;
+  /** Site-root-relative target, as {@link visualiserHref} returns it. */
+  target: string;
+}
+
+/**
+ * The one-file redirect page. A meta refresh, a canonical link and a visible
+ * link — the last because a refresh can be disabled, and a page that only
+ * moves when the browser co-operates reads as blank when it does not.
+ *
+ * `noindex`, because the stub is not a page and a search engine that indexed
+ * it would list the old URL beside the new one.
+ */
+export function redirectHtml(route: string, target: string): string {
+  const href = `${toRootFor(route, "index.html")}/${target}`;
+  const esc = (x: string): string => x.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moved</title>
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=${esc(href)}">
+<link rel="canonical" href="${esc(href)}">
+</head>
+<body>
+<p>/${esc(route)}/ is not published as a copy of its directory any more. Its viewer is at <a href="${esc(href)}">${esc(href)}</a>.</p>
+</body>
+</html>
+`;
+}
+
+/**
+ * Every declared `kindRouteRedirect`, and every one that cannot be honoured.
+ *
+ * THE RULE: a directory declaring `kindRouteRedirect` answers at
+ * `/<kind>/<instance>/`, for each of its kinds, with a one-file redirect to
+ * its own declared viewer. Two refusals, both named:
+ *
+ * - the directory IS mountable — it carries an `index.html`, so the mount
+ *   claims the same route, and a route cannot be both;
+ * - it declares no viewer, or one outside the published tree — a redirect to
+ *   nowhere is a 404 with an extra hop.
+ *
+ * The collision with a mount route and with a file already in the site are
+ * checked by the caller, which holds the mount table and the site.
+ */
+export function kindRouteRedirects(docsPrefix: string | undefined): { redirects: KindRouteRedirect[]; problems: string[] } {
+  const redirects: KindRouteRedirect[] = [];
+  const problems: string[] = [];
+  for (const x of declaredEntries()) {
+    if (x.entry.kindRouteRedirect !== true) continue;
+    const where = `${relative(REPO, x.abs).split(sep).join("/")}`;
+    if (existsSync(join(x.abs, "index.html"))) {
+      problems.push(`${where} declares kindRouteRedirect but carries an index.html, so it is also a mount`);
+      continue;
+    }
+    const viewer = viewerOf(x);
+    const target = viewer !== undefined && docsPrefix !== undefined ? visualiserHref(viewer, docsPrefix) : undefined;
+    if (target === undefined) {
+      problems.push(
+        `${where} declares kindRouteRedirect but ${viewer === undefined ? "no viewer" : `its viewer ${viewer} is not published`}`,
+      );
+      continue;
+    }
+    for (const kind of x.entry.graphKinds ?? []) redirects.push({ route: `${kind}/${x.name}`, target });
+  }
+  return { redirects: redirects.sort((a, b) => a.route.localeCompare(b.route)), problems };
 }
 
 
@@ -987,6 +1319,37 @@ function main(): number {
     }
   }
 
+  // EMBEDDED ASSETS FROM OUTSIDE THE MOUNT — bean `2b5s`. Published per
+  // ROUTE, since one directory may mount at two, and before the rail goes on
+  // so the rewrite sees the page its generator wrote.
+  const assetProblems: string[] = [];
+  const assetsPublished = new Map<string, number>();
+  for (const m of mounts) {
+    if (m.instanceDir === undefined) continue;
+    const { assets, problems } = referencedAssets(m.dir, m.instanceDir);
+    for (const p of problems) assetProblems.push(`/${m.route}/${p.page} embeds "${p.ref}", which ${p.why}`);
+    const mine = new Set<string>();
+    for (const a of assets) {
+      const { dest, ref } = publishedAsset(m.route, a);
+      const destAbs = join(siteAbs, dest);
+      if (!mine.has(dest)) {
+        // Never over a file the mount itself copied: that would be two files
+        // answering at one URL, with the later write winning by order.
+        if (existsSync(destAbs)) {
+          assetProblems.push(`/${m.route}/${a.page} embeds "${a.ref}", but /${dest} is already published by the mount`);
+          continue;
+        }
+        mkdirSync(dirname(destAbs), { recursive: true });
+        cpSync(a.abs, destAbs);
+        mine.add(dest);
+      }
+      const pageAbs = join(siteAbs, m.route, a.page);
+      const html = readFileSync(pageAbs, "utf-8");
+      writeFileSync(pageAbs, html.split(`src="${a.ref}"`).join(`src="${ref}"`));
+    }
+    if (mine.size) assetsPublished.set(m.route, mine.size);
+  }
+
   // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
   //
   // These directories are copied verbatim and deliberately not run through
@@ -1017,7 +1380,29 @@ function main(): number {
     );
   }
 
-  if (mounts.length === 0 && refused.length === 0) {
+  // KIND ROUTES WHOSE DIRECTORY IS NOT MOUNTED — bean `2b5s`. After the
+  // mounts, so a redirect can be refused against the routes they own.
+  const redirectProblems: string[] = [];
+  const { redirects, problems: declaredRedirectProblems } = kindRouteRedirects(docsPrefix);
+  redirectProblems.push(...declaredRedirectProblems);
+  const written: KindRouteRedirect[] = [];
+  for (const r of redirects) {
+    const owner = mounts.find((m) => r.route === m.route || r.route.startsWith(`${m.route}/`));
+    if (owner !== undefined) {
+      redirectProblems.push(`/${r.route}/ is declared a redirect, but the walk stops at the mount /${owner.route}/`);
+      continue;
+    }
+    const at = join(siteAbs, r.route, "index.html");
+    if (existsSync(at)) {
+      redirectProblems.push(`/${r.route}/ is declared a redirect, but the site already serves a page there`);
+      continue;
+    }
+    mkdirSync(dirname(at), { recursive: true });
+    writeFileSync(at, redirectHtml(r.route, r.target));
+    written.push(r);
+  }
+
+  if (mounts.length === 0 && refused.length === 0 && written.length === 0) {
     console.log("mount-instance-docs: nothing declared has rendered content to mount.");
     return 0;
   }
@@ -1048,6 +1433,23 @@ function main(): number {
     );
   }
 
+  for (const [route, n] of assetsPublished) {
+    console.log(`  /${route}/: ${n} embedded asset(s) from outside the mounted directory, and nothing else from there`);
+  }
+  for (const r of written) console.log(`  /${r.route}/  ->  redirect to /${r.target}`);
+
+  let failed = false;
+  if (assetProblems.length) {
+    failed = true;
+    console.error(`\n${assetProblems.length} embedded reference(s) NOT published:`);
+    for (const p of assetProblems) console.error(`  ${p}`);
+  }
+  if (redirectProblems.length) {
+    failed = true;
+    console.error(`\n${redirectProblems.length} kind-route redirect(s) REFUSED:`);
+    for (const p of redirectProblems) console.error(`  ${p}`);
+  }
+
   if (refused.length) {
     console.error(`\n${refused.length} claim(s) REFUSED — a path already owned by another handler:`);
     for (const r of refused) {
@@ -1060,7 +1462,7 @@ function main(): number {
     );
     return 1;
   }
-  return 0;
+  return failed ? 1 : 0;
 }
 
 if (import.meta.main) process.exit(main());

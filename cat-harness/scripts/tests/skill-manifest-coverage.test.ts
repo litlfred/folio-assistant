@@ -70,7 +70,7 @@
  * The three entries this file's `knownSkills()` switch surfaced —
  * `scientific-visualization`, `hypothesis-generation`,
  * `scientific-critical-thinking` — ARE declared, by
- * `skills/remote-packages/claude-scientific-skills.json`, and `kg-audit.ts`
+ * `folio-assistant-sci/skills/remote-packages/claude-scientific-skills.json`, and `kg-audit.ts`
  * accepted that as resolution. So for two hours the two checkers disagreed:
  * this one said delete, the audit said keep, and the corpus followed whichever
  * ran last.
@@ -88,6 +88,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { knownSkills } from "../known-skills.js";
+import { packageDirsIn } from "../skill-topics.js";
 
 const SKILLS = join(import.meta.dir, "../../skills");
 
@@ -101,13 +102,13 @@ function skillFilesIn(pkgDir: string): string[] {
 function packages(): Array<{ name: string; dir: string; listed: string[] }> {
   if (!existsSync(SKILLS)) return [];
   const out: Array<{ name: string; dir: string; listed: string[] }> = [];
-  for (const d of readdirSync(SKILLS, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const dir = join(SKILLS, d.name);
+  // Topic-aware (bean 9umr): a one-level readdir skipped every package inside
+  // a topic directory, so their manifests went unchecked.
+  for (const { name, dir } of packageDirsIn(SKILLS)) {
     const manifest = join(dir, "package-manifest.json");
     if (!existsSync(manifest)) continue;
     const parsed = JSON.parse(readFileSync(manifest, "utf-8")) as { skills?: string[] };
-    out.push({ name: d.name, dir, listed: parsed.skills ?? [] });
+    out.push({ name, dir, listed: parsed.skills ?? [] });
   }
   return out;
 }
@@ -184,7 +185,7 @@ describe("skill package manifests cover the package", () => {
     //
     // The convention is already INSTRUCTED, in two places — `skill-register.ts`
     // prints "Add the slug to its `package-manifest.json` `skills` list, sorted"
-    // and `skills/folio-core/skill-registration.md` says "you add the slug,
+    // and `skills/kg/kg-core/skill-registration.md` says "you add the slug,
     // sorted". Measured 2026-09-27: 6 of the 22 manifests carrying a `skills`
     // array did not obey it. An instruction nothing checks is an instruction
     // that drifts, and `kfkh` asked for it to be enforced or dropped; dropping

@@ -2,6 +2,7 @@ import { describe, expect, test, beforeEach, afterEach } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
+import { workflowFile } from "../known-skills.ts";
 import { applyWorkPlanOp, findBean, listBeans } from "../../src/workflow/bean-link";
 import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 
@@ -112,11 +113,13 @@ describe("an instance with no bean", () => {
 
 describe("the diagrams declare which operation each step performs", () => {
   test("every bean-marked activity in the shipped diagrams names an op", async () => {
-    const dir = resolve(import.meta.dir, "../../processes");
+    // Found by NAME through the declared `processes` graphs: each diagram sits
+    // with its owner (#1772; placement PR3, bean `63wl`), grouped by concern.
     let marked = 0;
     for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
                      "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      const model = await loadProcessModel(join(dir, `${f}.bpmn`));
+      const file = workflowFile(resolve(import.meta.dir, "../.."), `${f}.bpmn`);
+      const model = await loadProcessModel(file);
       for (const n of model.nodes.values()) {
         if (!n.touchesWorkPlan) continue;
         marked++;
@@ -132,7 +135,7 @@ describe("the diagrams declare which operation each step performs", () => {
 
   test("the editing process claims, notes, then resolves — in that order", async () => {
     const model = await loadProcessModel(
-      resolve(import.meta.dir, "../../processes/editing-hci-validation.bpmn"),
+      workflowFile(resolve(import.meta.dir, "../.."), "editing-hci-validation.bpmn"),
     );
     expect(model.nodes.get("Task_ClaimBean")!.workPlanOp).toBe("claim");
     expect(model.nodes.get("Task_LogFindings")!.workPlanOp).toBe("note");
@@ -145,7 +148,7 @@ describe("the diagrams declare which operation each step performs", () => {
       join(dir, "bad.bpmn"),
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
                   id="D" targetNamespace="urn:x">
   <bpmn:process id="Process_Bad" name="Bad" isExecutable="false">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>

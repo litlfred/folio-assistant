@@ -27,10 +27,24 @@ export const PROPERTY_SKILLS = {
   name: { skills: ["instance-kinds", "directory-conventions"] },
   title: { skills: ["harness-tiles"] },
   description: { skills: ["harness-tiles"] },
+  // The one-line gloss and the other spellings shown under a harness's
+  // section on the landing page (bean `ob3m` findings 4–5).
+  summary: { skills: ["harness-tiles"] },
+  alsoWritten: { skills: ["harness-tiles"] },
   images: { skills: ["theme-declaration", "harness-tiles"] },
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },
   navbarIcons: { skills: ["harness-tiles"] },
+  // Which tiles the glass's bottom strip pins, in order; the rest are
+  // counted on its "+N more" tile (owner's ruling, bean `ob3m` finding 10).
+  glassStrip: { skills: ["harness-tiles"] },
+  // The planned owner/repo and, pre-split, the host + directory it sits in
+  // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
+  repository: { skills: ["instance-kinds", "directory-conventions"] },
+  livesAt: { skills: ["instance-kinds", "directory-conventions"] },
+  // Content or tools half of the split (bean eayu); a content instance holding
+  // code is a failing kg:audit finding.
+  separation: { skills: ["kg-separation"] },
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },
@@ -50,9 +64,16 @@ export const PROPERTY_SKILLS = {
   directories: { skills: ["directory-conventions", "schema-management"] },
   remoteGraphs: { skills: ["library-ingestion", "materialize-remote"] },
   associatedHarnesses: { skills: ["associate-harness"] },
+  // Issue #1719. Both name a large-datasets skill, as `remoteGraphs` already
+  // does with `materialize-remote`: the process that walks a subscription
+  // calls that layer's subprocesses, so its skill lives beside them.
+  subscriptions: { skills: ["kg-subscription", "materialize-remote"] },
+  knownSubstrates: { skills: ["kg-subscription"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
+  contentAdapters: { skills: ["content-profiles"] },
+  liquid: { skills: ["witnessed-values"] },
   // `publishable` was here until 2026-09-24 and the field is gone — replaced
   // by `publication.state`, which is a STATE rather than a boolean. The three
   // below point at `instance-publication` rather than `directory-conventions`:

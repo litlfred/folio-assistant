@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/harness-requirements.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/harness-requirements.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/harness-requirements.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/harness-requirements.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/harness-requirements.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/harness-requirements.md){: .fa-edit-source }
 
 {% raw %}
 # Harness requirements — what an instance owes for what it declares
@@ -246,6 +246,6 @@ Three rules for reading it, the same three every sweep here follows:
 - `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
   `owesVisualiser()` — the visualiser obligation, and
   `SubgraphCoverageSchema.serialisations` — the one that takes no waiver
-- [`url-space`](https://github.com/litlfred/folio-assistant/tree/main/beans/defs) — bean `o7eq` for where a rendered
-  asset is addressed, and why not to compose that URL by hand
+- `url-space` — bean `o7eq` (`beans show folio-assistant-o7eq`) for where a
+  rendered asset is addressed, and why not to compose that URL by hand
 {% endraw %}

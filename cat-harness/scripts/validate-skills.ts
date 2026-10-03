@@ -13,6 +13,7 @@ import { readFileSync, readdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { kgRoots } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { vacuityRefusal, type Source } from "./vacuity-refusal.ts";
 
 /**
@@ -35,6 +36,9 @@ import {
   RequirementSchema,
   SkillDefinitionSchema,
 } from "../schemas/skill-package.js";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
+import { skillDefinitionDirs } from "../schemas/skill-definitions-dir.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -67,15 +71,18 @@ function validateDir(dir: string, schema: z.ZodType<unknown>, label: string): vo
 console.log("Validating skill framework files...\n");
 
 // Validate actors
+// From the DECLARED home (bean rqao). This read `<cat-harness>/.claude/skills/actors`,
+// a directory that never existed, so it validated zero actors while reporting
+// a clean run: the dh4f class. `repoRootFor(rootDir)` is the repository.
 validateDir(
-  join(rootDir, ".claude", "skills", "actors"),
+  actorsDir(repoRootFor(rootDir)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })(),
   ActorDefinitionSchema,
   "actors",
 );
 
 // Validate capabilities
 validateDir(
-  join(rootDir, ".claude", "skills", "capabilities"),
+  capabilitiesDir(repoRootFor(rootDir)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the capability registry (bean rqao) has no home to read"); })(),
   CapabilityDefinitionSchema,
   "capabilities",
 );
@@ -95,11 +102,10 @@ validateDir(
 // nothing would say so until something tried to load it. Only `.json` here —
 // the directory also holds `.md` instruction bodies, which `validateDir`
 // already filters out.
-validateDir(
-  join(rootDir, ".claude", "skills", "local"),
-  SkillDefinitionSchema,
-  "local",
-);
+// Split by theme across the instances that own them (bean `rqao`).
+for (const dir of skillDefinitionDirs(rootDir)) {
+  validateDir(dir, SkillDefinitionSchema, "skill-definitions");
+}
 
 // Validate skill package manifests
 //
@@ -108,26 +114,26 @@ validateDir(
 // are the skills" two ways is a defect in its own right, reported rather than
 // changed here because it is not this bean's subject.
 const skillsDir = join(rootDir, "skills");
-const pkgDirs = existsSync(skillsDir)
-  ? readdirSync(skillsDir, { withFileTypes: true }).filter((d) => d.isDirectory())
-  : [];
+// Topic-aware (bean `9umr`): a package may sit one level down, inside a topic
+// `skills/skills.json` declares.
+const pkgDirs = packageDirsIn(skillsDir);
 sources.push({
   label: "packages",
   dir: skillsDir,
   present: existsSync(skillsDir),
-  found: pkgDirs.filter((d) => existsSync(join(skillsDir, d.name, "package-manifest.json"))).length,
+  found: pkgDirs.filter((d) => existsSync(join(d.dir, "package-manifest.json"))).length,
 });
 if (existsSync(skillsDir)) {
   for (const pkg of pkgDirs) {
-    const manifestPath = join(skillsDir, pkg.name, "package-manifest.json");
+    const manifestPath = join(pkg.dir, "package-manifest.json");
     if (existsSync(manifestPath)) {
       try {
         const data = JSON.parse(readFileSync(manifestPath, "utf-8"));
         SkillPackageManifestSchema.parse(data);
-        console.log(`  ✓ skills/${pkg.name}/package-manifest.json`);
+        console.log(`  ✓ skills/${pkg.rel}/package-manifest.json`);
         validated++;
       } catch (e) {
-        console.error(`  ✗ skills/${pkg.name}/package-manifest.json: ${e instanceof Error ? e.message : String(e)}`);
+        console.error(`  ✗ skills/${pkg.rel}/package-manifest.json: ${e instanceof Error ? e.message : String(e)}`);
         errors++;
       }
     }

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/qa-report-signing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/qa-report-signing.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/qa-report-signing.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md){: .fa-edit-source }
 
 {% raw %}
 # QA report signing — two routes, chosen by the performer's reach
@@ -35,7 +35,7 @@ signed.
 
 ## The process is executable — do not hand-roll the branch
 
-`processes/qa-report-signing.bpmn`, with the branch computed by
+`processes/sdlc/qa-report-signing.bpmn`, with the branch computed by
 `decisions/signing-route.dmn`. Run it with `workflow_start` /
 `workflow_next` / `workflow_complete` like every other diagram here. The
 gateway **refuses a hand-supplied outcome**, which is the point: the route

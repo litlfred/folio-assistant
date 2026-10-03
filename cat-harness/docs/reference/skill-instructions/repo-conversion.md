@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/repo-conversion.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/repo-conversion.md) — do not edit here.
+> Generated from [`cat-harness/skills/conduct/conduct-core/repo-conversion.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/repo-conversion.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md){: .fa-edit-source }
 
 {% raw %}
 # /repo-conversion — folio-assistant over a repo that already has a life
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html),
+Process: [`folio-assistant-core/processes/conduct/getting-started.bpmn`](../../processes/getting-started.html),
 `Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
 Scanner: `bun run cat-harness/scripts/scan-repo-content.ts`.
 
@@ -86,8 +86,8 @@ preference; a broken relative link in somebody's README is a defect.
 
 ## 3. Dispatch the ingestion
 
-Ingestion proper is [`document-intake`](document-intake.md)
-and `processes/document-ingestion.bpmn`. What this skill decides is *how
+Ingestion proper is `document-intake` (folio-assistant-core)
+and `processes/library/document-ingestion.bpmn`. What this skill decides is *how
 much parallelism*, and it is a question for the author because it spends their
 tokens:
 

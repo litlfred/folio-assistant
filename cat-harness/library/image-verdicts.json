@@ -1,13 +1,82 @@
 {
   "$schema": "folio-image-verdicts/v1",
-  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it. 2026-09-24 adds arxiv-2504.07199v3 (SemEval-2025 Task 5), eight images, every one opened. Its four figures are each a stack of panels, and WHICH PANEL IS WHICH WAS SETTLED BY GEOMETRY, not by reading order: the sub-captions and the figure captions interleave in the extracted text stream, so `page.get_image_rects` was compared against each `(a)`/`(b)` block's own bbox. That check also turned up something worth recording: Figure 1 is the RECORD-TYPE ablation and its legend reads A/B/C/R/T, but both of its sub-captions say \"based on the language ablation\" — the same wording Figure 2's sub-captions carry. Marked in the drafts as a reading of the page, never as a finding about the authors' work.",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it. 2026-09-24 adds arxiv-2504.07199v3 (SemEval-2025 Task 5), eight images, every one opened. Its four figures are each a stack of panels, and WHICH PANEL IS WHICH WAS SETTLED BY GEOMETRY, not by reading order: the sub-captions and the figure captions interleave in the extracted text stream, so `page.get_image_rects` was compared against each `(a)`/`(b)` block's own bbox. That check also turned up something worth recording: Figure 1 is the RECORD-TYPE ablation and its legend reads A/B/C/R/T, but both of its sub-captions say \"based on the language ablation\" — the same wording Figure 2's sub-captions carry. Marked in the drafts as a reading of the page, never as a finding about the authors' work. 2026-09-29 adds the two decision-methodology sources. `wang-rangaiah-2026-mcdm-aggregation` (renamed from the basename fallback `250906388v1` on the owner's instruction 2026-09-29, to the author-year convention the other non-arXiv entries use) is eight images, every one opened; three of them (Figs 8.1, 8.3, 8.4(c)) could not be written at all until the alpha+soft-mask fix in the same PR, so they are the first images here judged from files that did not previously exist. Panel letters were settled by comparing `page.get_image_rects` against each caption's own bbox, as for arxiv-2504.07199v3. It also adds arxiv-2607.20636v1 (Ravichandran's PhD thesis), 17 images over 184 pages, every one opened. Three of them are ~0.0026-coverage thumbnails placed INSIDE Figure 4.1's schematic rather than figures of their own, and the appendix pairs (B.1/B.2, C.1-C.4) were identified from each page's own caption lines rather than from page order. The three agent-skills documents (arxiv-2602.12670v4, skill-authoring-best-practices---claude-platform-docs, equipping-agents-for-the-real-world-with-agent-skills-anthro) arrived from agent-skills/library/image-verdicts.json when that corpus dissolved into cat-harness (bean j7ql, 2026-10-01); their verdicts are unchanged and that file's file-wide attribution (2026-09-23) is kept per document under `attribution`.",
   "inspected_by": {
     "kind": "agent",
     "id": "claude",
     "model": "claude-opus-5"
   },
-  "inspected_at": "2026-09-24",
+  "inspected_at": "2026-09-29",
   "verdicts": {
+    "arxiv-2202.02427v1": {
+      "img-p003-1": {
+        "role": "decorative",
+        "saw": "a node glyph inside Figure 1 (the streaming-graph example); the figure's edges and layout are vector-drawn, so this raster is one icon, not the figure",
+        "draft": "A flat avatar icon: a faceless person with brown hair in a grey hoodie, on a yellow circle — a USER node. Used as a node glyph in Figure 1, the example graph of users and items arriving over time; on its own it carries no information the figure's caption and text do not."
+      },
+      "img-p003-4": {
+        "role": "decorative",
+        "saw": "a node glyph inside Figure 1 (the streaming-graph example); the figure's edges and layout are vector-drawn, so this raster is one icon, not the figure",
+        "draft": "A flat avatar icon: a faceless person with long brown hair and glasses, on a green circle — a USER node. Used as a node glyph in Figure 1, the example graph of users and items arriving over time; on its own it carries no information the figure's caption and text do not."
+      },
+      "img-p003-7": {
+        "role": "decorative",
+        "saw": "a node glyph inside Figure 1 (the streaming-graph example); the figure's edges and layout are vector-drawn, so this raster is one icon, not the figure",
+        "draft": "A flat avatar icon: a faceless person with blond hair, white collar and green tie, on a dark blue circle — a USER node. Used as a node glyph in Figure 1, the example graph of users and items arriving over time; on its own it carries no information the figure's caption and text do not."
+      },
+      "img-p003-10": {
+        "role": "decorative",
+        "saw": "a node glyph inside Figure 1 (the streaming-graph example); the figure's edges and layout are vector-drawn, so this raster is one icon, not the figure",
+        "draft": "A grey outline icon of an open book with lines of text on both pages — an ITEM node. Used as a node glyph in Figure 1, the example graph of users and items arriving over time; on its own it carries no information the figure's caption and text do not."
+      },
+      "img-p003-24": {
+        "role": "decorative",
+        "saw": "a node glyph inside Figure 1 (the streaming-graph example); the figure's edges and layout are vector-drawn, so this raster is one icon, not the figure",
+        "draft": "A flat avatar icon: a faceless person with blond hair, glasses and a striped vest, on a teal circle — a USER node. Used as a node glyph in Figure 1, the example graph of users and items arriving over time; on its own it carries no information the figure's caption and text do not."
+      }
+    },
+    "arxiv-2504.07199v3": {
+      "img-p001-1": {
+        "role": "logo",
+        "saw": "the NFDI4DataScience organisational mark, on the title page",
+        "draft": "The NFDI4DataScience logo: a stylised tree drawn in pink-to-orange gradient lines with small circular nodes at the branch ends, beside the wordmark \"NFDI4 DataScience\" in black. A funder's mark on the title page, not content of the paper."
+      },
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "a grouped bar chart over 14 team names, legend A/B/C/R/T × all-subjects/tib-core, y-axis to 0.8",
+        "draft": "Figure 1(a): Recall@5 on the RECORD-TYPE ablation. Grouped bars for the fourteen teams — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB and YNU-HPCC — in alphabetical order on the x-axis. Ten bars per team: A (article), B (book), C (conference), R (report) and T (thesis), each once for the all-subjects dataset and once for tib-core. The y-axis runs 0 to 0.8 and no bar carries a printed value. The tallest group is RUC Team, whose A all-subjects bar reaches about 0.69; Annif, DUTIR831, Jim and LA²I²F sit around 0.6 for A all-subjects; last_minute and TSOTSALAB are near zero throughout, and Homa, DNB-AI-Project, Jim and NBF have bars missing for several record types. READ OFF THE PAGE, not a claim about the work: the sub-caption under this panel says \"based on the language ablation\", but the legend is the record types and Figure 2 is the language ablation."
+      },
+      "img-p007-2": {
+        "role": "figure",
+        "saw": "the same grouped bar chart one panel down, y-axis to 0.5",
+        "draft": "Figure 1(b): Precision@5 on the RECORD-TYPE ablation. The same fourteen teams and the same ten series as panel (a) — A/B/C/R/T × all-subjects/tib-core — with the y-axis running 0 to 0.5 and no printed values. Values are roughly half those of the recall panel: DUTIR831, Annif, Jim and RUC Team peak near 0.3, and RUC Team's A tib-core bar is the tallest at about 0.48. The same sub-caption mismatch as panel (a)."
+      },
+      "img-p007-3": {
+        "role": "figure",
+        "saw": "a grouped bar chart over the same 14 teams, legend de/en × all-subjects/tib-core, values printed above each bar",
+        "draft": "Figure 2(a): Recall@5 on the LANGUAGE ablation. Four bars per team — de all-subjects (blue), en all-subjects (red), de tib-core (yellow), en tib-core (green) — over the same fourteen teams in alphabetical order, y-axis 0 to 0.6, each bar labelled with its value. DUTIR831 is highest on en tib-core at 0.510 and Annif close behind at 0.502; RUC Team reads 0.447 / 0.421 / 0.494 / 0.461. Several teams submitted for only part of the grid: DNB-AI-Project and Jim have no tib-core bars, Homa and last_minute no all-subjects bars, NBF no tib-core bars. The lowest non-empty values are TSOTSALAB at 0.034 (en tib-core) and last_minute at 0.048. Some printed labels overlap their neighbours and are only partly legible; the ones quoted here are the ones that are not occluded."
+      },
+      "img-p007-4": {
+        "role": "figure",
+        "saw": "the same four-series chart one panel down, y-axis to 0.3, values printed",
+        "draft": "Figure 2(b): Precision@5 on the LANGUAGE ablation. Same four series and same fourteen teams as panel (a), y-axis 0 to 0.3, values printed. Annif leads on de all-subjects at 0.269, with DUTIR831 at 0.263 and DNB-AI-Project at 0.254; RUC Team's de tib-core bar is the single tallest at 0.278. icip reads 0.216 / 0.164 / 0.187 / 0.163 and TartuNLP 0.142 / 0.113 / 0.146 / 0.134. The same teams are missing the same parts of the grid as in panel (a). As with the recall panel, some labels overlap and only the legible ones are quoted."
+      },
+      "img-p009-1": {
+        "role": "figure",
+        "saw": "a six-series grouped bar chart over 13 teams in ranked order, legend P@5/R@5/F1@5 and Avg. P@k/R@k/F1@k",
+        "draft": "Figure 3: overall qualitative evaluation. Six bars per team — P@5, R@5, F1@5 and the averages over k = 5, 10, 15, 20 of precision, recall and F1 — for thirteen teams, ordered left to right by average recall@k rather than alphabetically: DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. The y-axis runs 0 to 0.6 and every bar is labelled. DNB-AI-Project leads with P@5 0.53 and Avg. R@k 0.51; DUTIR831 follows at 0.49 / 0.49 and RUC Team at 0.48 / 0.46. TSOTSALAB is last at about 0.04 across the board. Avg. R@k exceeds P@5 for the mid-table teams, which is what a recall measure over a larger k does. silp_nlp, present in Figures 1, 2 and 4, does not appear here."
+      },
+      "img-p009-2": {
+        "role": "figure",
+        "saw": "a 14-series grouped bar chart over 13 teams, legend of domain acronyms, y-axis to 0.8",
+        "draft": "Figure 4(a): average recall@k per domain, over k = 5, 10, 15, 20. Fourteen bars per team, one for each subject domain — arc (architecture), che (chemistry), elt (electrical engineering), fer (material science), his (history), inf (computer science), lin (linguistics), lit (literature studies), mat (mathematics), oek (economics), phy (physics), sow (social sciences), tec (engineering), ver (traffic engineering) — for thirteen teams in alphabetical order. No printed values; the y-axis runs 0 to 0.8. Computer science (inf, teal) is the tallest bar in most teams' groups, reaching about 0.65 for DNB-AI-Project and icip and about 0.62 for RUC Team; mathematics (mat) is also consistently high. TSOTSALAB and YNU-HPCC are low across every domain, and Homa's bars are missing for several. Which domain is easiest is not uniform across teams, and the figure carries no aggregate."
+      },
+      "img-p009-3": {
+        "role": "figure",
+        "saw": "the same 14-series domain chart one panel down, same axis, generally lower bars",
+        "draft": "Figure 4(b): average precision@k per domain, over k = 5, 10, 15, 20. The same fourteen domain series and the same thirteen teams as panel (a), on the same 0-to-0.8 axis, with no printed values. The bars are lower throughout — most teams peak between 0.4 and 0.6 rather than 0.6 and 0.7 — and the ordering within a team's group differs from the recall panel: architecture (arc, blue) is the tallest bar for most teams here, where computer science led on recall. RUC Team's social sciences (sow) bar is the tallest single bar at about 0.61, and DUTIR831's architecture bar reaches about 0.67."
+      }
+    },
     "arxiv-2607.14456v1": {
       "img-p005-1": {
         "role": "figure",
@@ -80,47 +149,460 @@
         "draft": "Figure 15, the Weather workflow — the smallest in the benchmark at 9 nodes and 10 edges. From \"Start: Recieve location input\" (spelt so in the diagram) it fetches weather data and asks \"Data Retrieved Successfully?\". No informs of a connection failure. Yes parses the weather conditions and asks \"[P] Is Severe Weather Expected?\", the bracketed P marking it as a predicate in the authors' notation; Yes displays a severe-weather alert and No displays the regular forecast. All three terminal boxes converge on End."
       }
     },
-    "arxiv-2504.07199v3": {
-      "img-p001-1": {
-        "role": "logo",
-        "saw": "the NFDI4DataScience organisational mark, on the title page",
-        "draft": "The NFDI4DataScience logo: a stylised tree drawn in pink-to-orange gradient lines with small circular nodes at the branch ends, beside the wordmark \"NFDI4 DataScience\" in black. A funder's mark on the title page, not content of the paper."
+    "arxiv-2607.20636v1": {
+      "img-p045-1": {
+        "role": "figure",
+        "saw": "a small unlabelled line plot with no axis titles, placed at about 0.26% of the page inside the Figure 4.1 schematic",
+        "draft": "One of three miniature learning-curve plots embedded inside Figure 4.1, the chapter's framework schematic (\"In phase 1 (left), the learning...\"). It shows five coloured curves rising from 0 and flattening by roughly x=20 on an unlabelled 0-50 horizontal axis against a 0.0-1.0 vertical one: an orange curve settling near 0.97, red and green both near 0.62 (green rising more slowly and crossing red at about x=27), blue near 0.46 and purple near 0.33. No axis titles, legend or tick labels beyond the numbers — it is an illustration of the SHAPE of a learning curve inside the diagram, not a figure to be read for values."
       },
+      "img-p045-2": {
+        "role": "figure",
+        "saw": "a small unlabelled line plot with no axis titles, placed at about 0.26% of the page inside the Figure 4.1 schematic, placed twice",
+        "draft": "A second miniature learning-curve plot inside Figure 4.1, placed at two points in the schematic. Five curves on the same unlabelled 0-50 by 0.0-1.0 axes: red highest and flat near 0.75 from about x=7, orange and green together near 0.48-0.50, purple just below at about 0.43, and blue lowest at about 0.25. Same role as the other two thumbnails — illustrative, not quantitative."
+      },
+      "img-p045-4": {
+        "role": "figure",
+        "saw": "a small unlabelled line plot with no axis titles, placed at about 0.26% of the page inside the Figure 4.1 schematic",
+        "draft": "The third miniature learning-curve plot inside Figure 4.1. Blue is highest and flattens fastest, near 0.90 by x=7; green settles near 0.70; orange plateaus low near 0.20; and red and purple both keep climbing across the whole range to meet around 0.42 at x=50 — the only one of the three thumbnails in which two curves have not converged by the right-hand edge. Illustrative, not quantitative."
+      },
+      "img-p052-1": {
+        "role": "figure",
+        "saw": "a six-series line chart with shaded confidence bands, x-axis alpha",
+        "draft": "Figure 4.4: \"Sensitivity of PTRRα to α on selected LCDB instances (T = 44, k = 22)\". Normalised cumulative reward (ALG/OPT) against α from 0.1 to 1.0, six datasets, each a line with a shaded 95% band. The reading the figure is for is that the datasets DISAGREE about α: ds 55 is flat at about 0.995 throughout, ds 67 RISES with α (0.943 to 0.954), ds 16 peaks in the middle around 0.846 at α≈0.4-0.7, while ds 58 (0.907 to 0.886), ds 19 (0.789 to 0.722) and ds 46 (0.735 to 0.696) all FALL. Every curve's total variation across the sweep is small — the largest, ds 19, moves about 0.067 — so the sensitivity is real but shallow, and the bands of ds 19 and ds 46 overlap over much of the range."
+      },
+      "img-p053-1": {
+        "role": "figure",
+        "saw": "three side-by-side line panels, many unlabelled curves each, shared y-axis",
+        "draft": "Figure 4.5: mean LCDB reward curves for three datasets whose best α on the grid differs — Dataset 19 (best α = 0.1), Dataset 16 (best α = 0.7) and Dataset 67 (best α = 1.0). Each panel plots reward = 1 − error_rate against pull count (anchor index) from 0 to about 44, with one coloured curve per arm and no legend. The panels look different in exactly the way the caption's framing implies: Dataset 19's curves are still climbing and widely spread at the right-hand edge (roughly 0.25 to 0.85); Dataset 16's are tighter and mostly flattening (about 0.55 to 0.93); Dataset 67's jump almost immediately to a dense band near 0.9-0.97 with three visible stragglers at about 0.73, 0.64 and 0.60. Placed twice on the page."
+      },
+      "img-p090-1": {
+        "role": "figure",
+        "saw": "a two-series line chart with error bars, subsidy vs no subsidy",
+        "draft": "Figure 6.1: \"Impact of Financial Supplement on Finding Correct Cascade with Supplement, 100 agents\". Proportion of correct cascades against signal strength from 0.5 to 1.0. The orange \"our subsidy\" curve starts at about 0.89 at signal strength 0.5 and reaches 1.0 by 0.6, staying there; the blue \"no subsidy\" curve starts at about 0.51 and climbs through roughly 0.70 at 0.6, 0.85 at 0.7 and 0.94 at 0.8 before meeting 1.0 near 0.9. The gap is largest at the weakest signal and closed by 0.9, which is the claim: the subsidy matters precisely where signals are weak."
+      },
+      "img-p090-2": {
+        "role": "figure",
+        "saw": "a three-series line chart, population sizes 10/100/1000, no subsidy",
+        "draft": "Figure 6.2: \"Probability of Finding Correct Cascade without Supplement\", for 10, 100 and 1000 agents. All three curves lie on top of one another within their error bars — about 0.50 at signal strength 0.5, 0.67 at 0.6, 0.80 at 0.7, 0.93 at 0.8, and 1.0 by 0.9 — so the figure's content is a NEGATIVE: without the supplement, population size makes no visible difference to the chance of a correct cascade. Read against Figure 6.1, that is what isolates the subsidy as the cause there."
+      },
+      "img-p091-1": {
+        "role": "figure",
+        "saw": "a six-series line chart with error bars, subsidy per agent index",
+        "draft": "Figure 6.3: \"Average Subsidy Progression for 100 Agents\", one curve per signal strength. The curves separate by how long the subsidy has to keep paying. At signal strength 0.99 (yellow) and 0.9 (magenta) the subsidy is at or near zero throughout. At 0.8 (cyan) it spikes early and is gone by about agent 18; at 0.7 (red) it peaks near 0.07 at about agent 4 and decays to zero by about agent 60; at 0.6 (green) it peaks near 0.062 around agent 8 and is still decaying, at about 0.003, at agent 100. At 0.51 (blue) it behaves differently in kind — it RISES to about 0.022 by agent 40 and then stays flat to agent 100 rather than decaying. The weakest signal is the one where the subsidy never stops being needed."
+      },
+      "img-p100-1": {
+        "role": "figure",
+        "saw": "a 4x3 table of formulae with graded green shading",
+        "draft": "Figure 7.1, which the caption itself calls a table: the reward the agents of Section 7.3.2 receive as a function of where the true threshold θ falls. Columns are Agent A, Agent B and Agent C; rows are the four cases θ < s_A, s_A ≤ θ < s_B, s_B ≤ θ < s_C, and s_C ≤ θ. A cell is either the quadratic (α/2)(T−θ)² — dark green, the un-switched payoff — or the square root √(2T/α̃_X) for that agent, in progressively paler green. The shading tracks the staircase: the top row is all quadratic, and each row down converts one more agent, left to right, so the bottom row is all square roots. The colour carries no quantity beyond that ordering."
+      },
+      "img-p107-1": {
+        "role": "figure",
+        "saw": "a two-series line chart, switch point against prior standard deviation",
+        "draft": "Figure 7.2: \"Switch point as a function of standard deviation σ for prior of N(25, σ²)\". The blue \"switches\" curve starts at 25 when σ is near 0 — coinciding with the flat orange μ = 25 reference line — rises steeply to about 70 by σ = 20, then flattens, reaching roughly 80 by σ = 40 and about 82 at σ = 100, with visible small steps in the upper range where the switch point moves by discrete amounts. The two lines meet only at the left-hand edge: the more uncertain the prior, the later the switch, but with sharply diminishing effect."
+      },
+      "img-p150-1": {
+        "role": "figure",
+        "saw": "an alpha sweep over datasets 0-25, nine series with 95% bands",
+        "draft": "Figure B.1, first of three panels: alpha sweeps with 95% t-intervals for LCDB datasets 0-25 (T = 44, k = 22) — the appendix's full-corpus version of Figure 4.4. Nine datasets, normalised cumulative reward against α from 0.1 to 1.0. Most are close to flat between 0.84 and 0.94; ds 19 (pink) is the clear outlier, falling from 0.789 to 0.722 across the sweep and sitting about 0.09 below the next lowest. ds 25 leads at about 0.938 falling gently to 0.928; ds 12 and ds 16 rise slightly; ds 9 and ds 17 fall away after about α = 0.6."
+      },
+      "img-p150-2": {
+        "role": "figure",
+        "saw": "an alpha sweep over datasets 28-50, nine series with 95% bands",
+        "draft": "Figure B.1, second panel: datasets 28-50 on the same axes. ds 42 is highest and almost perfectly flat at about 0.955; ds 32, ds 50 and ds 33 cluster near 0.91-0.92; ds 28, ds 30 and ds 49 sit around 0.89-0.91 with ds 49 rising slightly; ds 41 is flat at 0.866 until about α = 0.8 then falls to 0.857. ds 46 (pink) is the outlier here, falling steadily from 0.735 to 0.696 — the same shape ds 19 has in the first panel."
+      },
+      "img-p150-3": {
+        "role": "figure",
+        "saw": "an alpha sweep over datasets 51-71, nine series with 95% bands",
+        "draft": "Figure B.1, third panel: datasets 51-71. The tightest of the three — every curve lies between 0.885 and 1.0, with no outlier of the ds 19 / ds 46 kind. ds 55 is flat at about 0.995, ds 51 flat at 0.958. ds 67 rises from 0.943 to about 0.955 and ds 63 rises then falls back to 0.926; ds 58 falls from 0.908 to 0.885 and ds 71 from 0.903 to 0.889. Across all three panels the pattern is that a few datasets are α-sensitive in opposite directions and most are nearly flat, which is what makes a single global α defensible and a per-dataset one better."
+      },
+      "img-p177-1": {
+        "role": "figure",
+        "saw": "a two-series line chart with error bars, 10 agents",
+        "draft": "Figure C.1: \"Proportion Correct Cascades for 10 Agents\" — the small-population version of Figure 6.1. The orange \"our subsidy\" and blue \"no subsidy\" curves are nearly on top of each other, orange only slightly above: about 0.53 against 0.49 at signal strength 0.5, 0.67 against 0.63 at 0.6, 0.85 against 0.80 at 0.7, and both at 1.0 by 0.9, with overlapping error bars throughout. With ten agents the subsidy buys almost nothing."
+      },
+      "img-p177-2": {
+        "role": "figure",
+        "saw": "a two-series line chart with error bars, 1000 agents",
+        "draft": "Figure C.2: \"Proportion Correct Cascades for 1000 Agents\". The same pair at the large-population end, and the separation is at its widest: \"our subsidy\" is already at about 0.98 at signal strength 0.5 and at 1.0 from 0.6 onward, while \"no subsidy\" starts at about 0.53 and climbs through 0.70, 0.87 and 0.95 before converging near 0.9. Set beside Figure C.1 and Figure 6.1 (100 agents), the three make one point the individual figures do not: the subsidy's benefit GROWS with population size."
+      },
+      "img-p178-1": {
+        "role": "figure",
+        "saw": "a six-series line chart with error bars, 10 agents, subsidy per agent",
+        "draft": "Figure C.3: \"Average Subsidy Progression for 10 Agents\". With only ten agents the curves are jagged rather than smooth: red (0.7) oscillates between about 0.03 and 0.083 with no clear decay, green (0.6) between 0.03 and 0.054, cyan (0.8) spikes to 0.061 at agent 2 and decays erratically to near zero by agent 8, magenta (0.9) peaks at 0.024 and fades, blue (0.51) creeps up to about 0.012, and yellow (0.99) is flat at zero. The decay-to-zero structure visible at 100 and 1000 agents is not resolvable at this population size."
+      },
+      "img-p178-2": {
+        "role": "figure",
+        "saw": "a six-series line chart with dense error bars, 1000 agents",
+        "draft": "Figure C.4: \"Average Subsidy Progression for 1000 Agents\". The clearest of the three subsidy figures. Cyan (0.8), magenta (0.9) and red (0.7) all spike in the first few agents and are at zero within roughly 10, 10 and 40 agents; green (0.6) peaks near 0.075 and decays to zero by about agent 130; yellow (0.99) never leaves zero. Blue (0.51) again behaves differently in kind — it rises to about 0.022 by agent 100 and then decays very slowly, still paying about 0.011 at agent 1000. The error bars are dense enough to read as a band. Same qualitative story as Figure 6.3 at 100 agents, with the slow decay of the weakest-signal curve now visible over a longer horizon."
+      }
+    },
+    "qi-hessen-vanderheijden-2023-ca-vs-lsa": {
+      "img-p001-1": {
+        "role": "decorative",
+        "saw": "black serif text on white reading 'Published online: 09 September 2023' — the publisher's date line rasterised, not a figure",
+        "draft": "The article's publication-date line, \"Published online: 09 September 2023\", set as an image on the first page. It carries no information beyond that text."
+      }
+    },
+    "wang-rangaiah-2026-mcdm-aggregation": {
       "img-p007-1": {
         "role": "figure",
-        "saw": "a grouped bar chart over 14 team names, legend A/B/C/R/T × all-subjects/tib-core, y-axis to 0.8",
-        "draft": "Figure 1(a): Recall@5 on the RECORD-TYPE ablation. Grouped bars for the fourteen teams — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB and YNU-HPCC — in alphabetical order on the x-axis. Ten bars per team: A (article), B (book), C (conference), R (report) and T (thesis), each once for the all-subjects dataset and once for tib-core. The y-axis runs 0 to 0.8 and no bar carries a printed value. The tallest group is RUC Team, whose A all-subjects bar reaches about 0.69; Annif, DUTIR831, Jim and LA²I²F sit around 0.6 for A all-subjects; last_minute and TSOTSALAB are near zero throughout, and Homa, DNB-AI-Project, Jim and NBF have bars missing for several record types. READ OFF THE PAGE, not a claim about the work: the sub-caption under this panel says \"based on the language ablation\", but the legend is the record types and Figure 2 is the language ablation."
+        "saw": "a three-level node-and-edge diagram, Goal over Criteria over Alternatives, fully connected between levels",
+        "draft": "Figure 8.1, the AHP decision hierarchy in the general case. A green rounded box at the top reads \"Goal: Rank m alternatives considering n criteria\". Below it a row of five blue boxes — Criterion 1, Criterion 2, Criterion 3, an ellipsis box, and Criterion n — each joined to the goal. Below those a row of four peach boxes — Alternative 1, Alternative 2, an ellipsis box, and Alternative m. Every criterion is joined to every alternative, which is the property that makes the hierarchy complete: AHP asks for a pairwise comparison of the alternatives under each criterion in turn. The edges are plain lines with no arrowheads, so the diagram asserts membership rather than direction — contrast Figure 8.3, where the ANP version is drawn with arrows."
       },
-      "img-p007-2": {
+      "img-p017-1": {
         "role": "figure",
-        "saw": "the same grouped bar chart one panel down, y-axis to 0.5",
-        "draft": "Figure 1(b): Precision@5 on the RECORD-TYPE ablation. The same fourteen teams and the same ten series as panel (a) — A/B/C/R/T × all-subjects/tib-core — with the y-axis running 0 to 0.5 and no printed values. Values are roughly half those of the recall panel: DUTIR831, Annif, Jim and RUC Team peak near 0.3, and RUC Team's A tib-core bar is the tallest at about 0.48. The same sub-caption mismatch as panel (a)."
+        "saw": "a Windows screenshot of SuperDecisions showing the same three-level hierarchy as clusters",
+        "draft": "Figure 8.2(a), the AHP model as built in SuperDecisions. A screenshot of the application's main window, titled \"Super Decisions Main Window: AHP.sdmod\", with its menu bar (File, Design, Assess/Compare, Computations, Networks, Help) and toolbar visible. Three cluster windows are stacked and joined by downward arrows: L1-Goal holding one node \"Goal_Node\"; L2-Criteria holding C1, C2 and C3; and L3-Alternatives holding A1 to A4. It is the worked example's concrete instance of Figure 8.1 — three criteria and four alternatives."
       },
-      "img-p007-3": {
+      "img-p017-2": {
         "role": "figure",
-        "saw": "a grouped bar chart over the same 14 teams, legend de/en × all-subjects/tib-core, values printed above each bar",
-        "draft": "Figure 2(a): Recall@5 on the LANGUAGE ablation. Four bars per team — de all-subjects (blue), en all-subjects (red), de tib-core (yellow), en tib-core (green) — over the same fourteen teams in alphabetical order, y-axis 0 to 0.6, each bar labelled with its value. DUTIR831 is highest on en tib-core at 0.510 and Annif close behind at 0.502; RUC Team reads 0.447 / 0.421 / 0.494 / 0.461. Several teams submitted for only part of the grid: DNB-AI-Project and Jim have no tib-core bars, Homa and last_minute no all-subjects bars, NBF no tib-core bars. The lowest non-empty values are TSOTSALAB at 0.034 (en tib-core) and last_minute at 0.048. Some printed labels overlap their neighbours and are only partly legible; the ones quoted here are the ones that are not occluded."
+        "saw": "a SuperDecisions supermatrix table with two blocks outlined in red",
+        "draft": "Figure 8.2(b), the unweighted supermatrix for the AHP example — a screenshot titled \"Super Decisions Main Window: AHP.sdmod: Unweighted Super Matrix\". Rows and columns are grouped by cluster (L1-Goal / Goal_Node, L2-Criteria / C1-C3, L3-Alternatives / A1-A4) and every cell is printed to six decimals. Two blocks are outlined in red, which is what the caption points at: the criteria weights in the Goal_Node column (C1 0.626696, C2 0.279688, C3 0.093616) and the alternatives' local priorities under each criterion (A1 0.529640 / 0.267456 / 0.040746; A2 0.038790 / 0.583045 / 0.082529; A3 0.174103 / 0.108638 / 0.390851; A4 0.257467 / 0.040862 / 0.485875). Everything else in the visible matrix is 0.000000 — the strictly hierarchical structure AHP assumes, with no feedback between clusters."
+      },
+      "img-p018-1": {
+        "role": "figure",
+        "saw": "a small SuperDecisions priorities panel, four alternatives with a bar column",
+        "draft": "Figure 8.2(c), the global priorities of the four alternatives — a SuperDecisions results panel headed \"Here are the priorities.\" with columns Name, a blue bar column, and \"Normalized by Cluster\" in green: A1 0.41054, A2 0.19511, A3 0.17608, A4 0.21827. A1 ranks first. The four sum to 1.0000."
+      },
+      "img-p020-1": {
+        "role": "figure",
+        "saw": "the same three-level diagram redrawn with directed arrows and dash-dot edges between criteria",
+        "draft": "Figure 8.3, the ANP representation of a simplified version of the same problem — the figure that shows what ANP adds to AHP. The green goal box (\"Goal: Rank m alternatives considering n criteria\") feeds three blue criteria boxes, and two peach alternative boxes sit below. Two things differ from Figure 8.1. Every edge now carries an arrowhead, so direction is asserted; and the criteria are joined to one another by dash-dot double-headed arrows — Criterion 1 to Criterion 2, Criterion 2 to Criterion 3, and Criterion 1 to Criterion 3 in an arc over the top — which is the interdependence AHP's hierarchy forbids. The alternatives also point back up into the criteria as well as receiving arrows from them, so the feedback runs both ways."
+      },
+      "img-p025-1": {
+        "role": "figure",
+        "saw": "a SuperDecisions supermatrix for the ANP model, with non-zero off-diagonal blocks",
+        "draft": "Figure 8.4(a), the weighted supermatrix W for the ANP example — a screenshot titled \"Super Decisions Main Window: Chapter_8_ANP.sdmod\". Clusters are L1-GOAL (Goal_Node), L2-Criteria (C1-C3) and L3-Alternatives (A1, A2). Unlike the AHP matrix in Figure 8.2(b), the criteria-to-criteria block is not zero (C1 column: C2 0.083333, C3 0.166667; C2 column: C1 0.125000, C3 0.125000; C3 column: C1 0.187500, C2 0.062500) and the alternatives feed back into the criteria (A1 column: C2 0.333333, C3 0.666667; A2 column: C2 0.500000, C3 0.500000). That non-zero feedback is the structural difference the chapter is illustrating."
+      },
+      "img-p025-2": {
+        "role": "figure",
+        "saw": "the same matrix after convergence — every column identical",
+        "draft": "Figure 8.4(b), the limit supermatrix W∞ for the same ANP model, in the same SuperDecisions window. The structural fact to read off it: **every column is identical**, each holding C1 0.079748, C2 0.199064, C3 0.292616, A1 0.240932, A2 0.187639, with Goal_Node 0.000000. That is what convergence of a column-stochastic supermatrix to its limit means — the long-run priority no longer depends on where the walk started — and it is why ANP reads its answer off any single column. A \"Done\" button is at the foot of the window."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "a SuperDecisions priorities panel for the ANP model, the two alternatives boxed in red",
+        "draft": "Figure 8.4(c), the normalised global priority scores from the ANP run — the \"Here are the priorities.\" panel again, listing Goal_Node 0.00000, C1 0.13956, C2 0.34836, C3 0.51208, and, outlined in red, A1 0.56218 and A2 0.43782. The red box marks the two numbers that answer the decision: A1 ranks above A2. The alternatives' two values sum to 1.0000 and the three criteria's to 1.0000 separately, which is the \"normalized by cluster\" the column heading names."
+      }
+    },
+    "kg-folio-asst-2026-09-30": {
+      "img-p001-1": {
+        "role": "decorative",
+        "saw": "line-art cat in a hoodie seated in a sleigh-like chair, typing on a laptop; the project mascot, no information",
+        "draft": "Line drawing of a grumpy-faced cat in a hoodie sitting in a sleigh-shaped seat and working on a laptop — the C@T harness mascot, placed three times on the opening slide."
+      },
+      "img-p001-2": {
+        "role": "decorative",
+        "saw": "line-art sleigh pulled by four robot cats; mascot artwork repeated at larger size on slide 7",
+        "draft": "Line drawing of the grumpy mascot cat riding a sleigh pulled by a team of four robotic cats — the human-directs, agents-pull picture of the harness."
+      },
+      "img-p001-3": {
+        "role": "figure",
+        "saw": "three overlapping WHO guideline covers (family planning, intrapartum care, PEN/NCD package, antenatal care)",
+        "draft": "Three overlapping covers of WHO guideline publications — among them intrapartum care for a positive childbirth experience, the Package of Essential Noncommunicable (PEN) Disease Interventions, a family-planning handbook and antenatal care for a positive pregnancy experience. On this slide it stands for SMART Guidelines layer L1, the narrative guideline."
+      },
+      "img-p001-4": {
+        "role": "figure",
+        "saw": "blue icon of a monitor and a tablet each showing a head with a circuit-board brain",
+        "draft": "Blue icon: a desktop monitor and a tablet, each showing a human head in profile with a circuit-board brain. On this slide it marks advanced analytics — the L5 dynamic layer's precision-health use."
+      },
+      "img-p001-5": {
+        "role": "figure",
+        "saw": "blue outline icon of a clipboard holding a five-item checklist",
+        "draft": "Blue outline icon of a clipboard holding a checklist of five items. On this slide it marks structured requirements, the L2 operational layer (the Digital Adaptation Kit)."
+      },
+      "img-p001-6": {
+        "role": "figure",
+        "saw": "thin blue flowchart: boxes, two decision diamonds and arrows",
+        "draft": "A small, generic blue flowchart — rectangles, two decision diamonds and connecting arrows — standing for the business processes and decision logic of an L2 Digital Adaptation Kit."
+      },
+      "img-p001-7": {
+        "role": "figure",
+        "saw": "blue icon of a monitor and a phone each showing a caduceus",
+        "draft": "Blue icon of a desktop monitor and a mobile phone, each displaying a caduceus (the medical staff-and-serpents emblem). On this slide it stands for customizable health software built from the guideline — the L4 executable layer."
+      },
+      "img-p001-8": {
+        "role": "figure",
+        "saw": "screenshot of a DHIS2 web data-entry screen with a table of records",
+        "draft": "Screenshot of a DHIS2 web application (the red DHIS2 header bar is visible): a patient or event record form with a table of dated entries below it and side panels on the right. Text is too small to read at slide size. It illustrates a deployed consumer application built on SMART content."
+      },
+      "img-p001-9": {
+        "role": "figure",
+        "saw": "cropped variant of the monitor-and-phone caduceus icon",
+        "draft": "A cropped variant of the blue monitor-and-phone icon showing caduceus emblems, used as a second marker for executable, deployable software."
+      },
+      "img-p001-10": {
+        "role": "figure",
+        "saw": "small teal circle icon: a person holding a document/card",
+        "draft": "Small teal circular icon of a person holding a document or card — a health worker or client persona marker."
+      },
+      "img-p001-11": {
+        "role": "figure",
+        "saw": "blue icon of a monitor showing text lines and two gears",
+        "draft": "Blue icon of a desktop monitor showing lines of text beside two gears — configurable or computable software, marking the fully-computable-assets step."
+      },
+      "img-p001-12": {
+        "role": "figure",
+        "saw": "screenshot of FHIR XML: a MeasureReport group with codes, measureScore and stratifiers",
+        "draft": "Screenshot of FHIR XML from a MeasureReport: type summary, a measure URL for HIV indicators, a reporter, a period in January 2018, and a group with coded strata and measureScore values. It illustrates the L3 machine-readable layer: an indicator expressed as FHIR."
+      },
+      "img-p001-13": {
+        "role": "figure",
+        "saw": "the HL7 FHIR flame logo with the word FHIR",
+        "draft": "The HL7 FHIR logo (orange-red flame and the word FHIR), marking the L3 machine-readable layer's standard."
+      },
+      "img-p001-14": {
+        "role": "decorative",
+        "saw": "line-art robot cat standing, antenna on its back; mascot of an agent; placed three times",
+        "draft": "Line drawing of a robotic cat with an antenna and headphones — the mascot for an agentic actor, placed three times on the opening slide."
+      },
+      "img-p002-1": {
+        "role": "figure",
+        "saw": "infographic titled WHO DECOUPLED ARCHITECTURE WORKFLOW, three columns left to right",
+        "draft": "Infographic titled \"WHO Decoupled Architecture Workflow — secure, automated, trusted, globally accessible\", in three columns joined by arrows. Left, \"Internal secure origin — trusted WHO data sources\": Internal IRIS (DSpace), the WHO institutional repository, and the World Health Data Hub, global health datasets and resources. Middle, \"Automated compile engine — build, sign, snapshot, publish\": folio-assistant (auto-sign and snapshot), feeding \"Cryptographic asset signing\" via the WHO Trust Network Gateway and Swiss Observatory schemas. Right, \"Zero-egress public CDN\": Cloudflare R2 storage (10 TB) of signed static assets, then the Cloudflare CDN edge network for global low-latency delivery, reaching global researchers. The product names are the slide's proposal, not a decision recorded in this repository."
+      },
+      "img-p003-1": {
+        "role": "figure",
+        "saw": "nine numbered coloured boxes, the components of a DAK, each with bullets",
+        "draft": "The nine components of a WHO Digital Adaptation Kit, as numbered coloured cards: 1 Health interventions and recommendations (from the WHO guideline; informs DAK scope); 2 Generic personas (roles, responsibilities and interventions of targeted personas); 3 User scenarios (brief narratives of how personas engage with the system); 4 Business processes and workflows (generic clinical and non-clinical workflows; when data is collected and used); 5 Core data elements (for decision-making, indicators and other needs; inform forms and L3 interoperability); 6 Decision support logic (decision tables for counselling and treatment algorithms); 7 Scheduling logic (decision tables for scheduling per care plans — marked as previously combined with decision support logic); 8 Indicators and monitoring (numerator and denominator data elements; linking person-centred to aggregate data); 9 Functional and non-functional requirements. Note: the slide's speaker notes still say eight components."
+      },
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "screenshot of a documentation page listing schema cards with FHIR / JSON Schema / OpenAPI badges",
+        "draft": "Screenshot of the SMART Base DAK API documentation page: sections 8.2.16–8.2.22 list ValueSet JSON schemas (digital health interventions for managers, providers and data services; SMART Guidelines authoring skills; service and application types), and section 8.3, \"Logical Model Schemas (25 available)\", lists cards such as Decision-Support Logic, Health Interventions and Recommendations, Functional and Non-Functional Requirements, Program Indicator, Core Data Element, Dublin Core Metadata Element Set, SUSHI Configuration, User Scenario Source, Test Scenario Source, Persona and Business Process Workflow. Each card carries FHIR, JSON Schema and OpenAPI badges."
+      },
+      "img-p004-2": {
+        "role": "figure",
+        "saw": "a QR code with a small pixel dinosaur in its centre; not decoded",
+        "draft": "A QR code with a small pixel-art dinosaur in its centre. It was not decoded for this description; the slide prints https://smart.who.int/base/dak-api.html beside it."
+      },
+      "img-p004-3": {
+        "role": "figure",
+        "saw": "screenshot of a JSON Schema document for DecisionSupportLogicSource",
+        "draft": "Screenshot of a JSON Schema (draft 2020-12) for \"Decision Support Logic Source\", $id under worldhealthorganization.github.io/smart-base/branches/v1.0.0: an object whose properties are resourceType (const DecisionSupportLogicSource), url and canonical (both URI strings) — exactly one of url, canonical or an inline instance must be provided."
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "screenshot of the SMART Base 1.0.0 page for logical model DecisionSupportLogicSource",
+        "draft": "Screenshot of the SMART Base 1.0.0 release page for the logical model Decision Support Logic Source (http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource, active as of 2026-08-27): the source reference must be exactly one of url, canonical or instance, it is used by the Digital Adaptation Kit (DAK) model, and its key-elements table lists url (0..1), canonical (0..1) and instance (0..1)."
+      },
+      "img-p005-2": {
+        "role": "figure",
+        "saw": "screenshot of the SMART Base 1.0.0 page for logical model DAK, key elements table",
+        "draft": "Screenshot of the SMART Base 1.0.0 page for the logical model Digital Adaptation Kit (DAK) — \"a complete DAK with metadata and all 9 DAK components\". Its key-elements table lists id, name, title, description (string or URI), version, status, publicationUrl, previewUrl, canonicalUrl, license, copyrightYear, publisher (name, url) and the start of healthInterventions (HealthInterventionsSource, 0..*)."
+      },
+      "img-p006-1": {
+        "role": "figure",
+        "saw": "BPMN collaboration: folio lifecycle, six lanes, eight tasks, one gateway",
+        "draft": "BPMN diagram \"Folio lifecycle — one cycle, plan to retire\", in six horizontal lanes. Programme manager: Folio initiative (start), Plan scope, team, artifacts [content-plan]. Work plan — beans (shared by humans and agents): Seed the work plan [todo-manager]. Editors + authoring agents: Editing and HCI validation [content-author], a subprocess. Validation and QA (mechanical + agents): Integration test and QA sweep [content-test], a service task. Publication manager: Draft, review and publish [content-publish], a subprocess. Review team and SMEs: Triage published feedback [content-feedback]. Work plan again: File feedback as beans [todo-manager]. Programme manager: gateway \"More content?\" — yes loops back to editing; no leads to Retire or archive [content-retire] and the end event Folio retired. Each bracketed name is the skill the task runs."
+      },
+      "img-p006-2": {
+        "role": "decorative",
+        "saw": "icon of four dark beans",
+        "draft": "Icon of four dark kidney beans — the project's symbol for 'beans', the agents' work-plan items."
+      },
+      "img-p006-3": {
+        "role": "decorative",
+        "saw": "icon of a yellow sticky note with a red pushpin",
+        "draft": "Icon of a yellow sticky note held by a red pushpin — the symbol for a human actor's todo."
+      },
+      "img-p006-4": {
+        "role": "decorative",
+        "saw": "line icon of a toll booth with a raised barrier arm",
+        "draft": "Line icon of a booth with a barrier arm — a gate, the symbol for a gated step or a QA gate."
+      },
+      "img-p007-1": {
+        "role": "decorative",
+        "saw": "line-art: nine robot cats hanging from an overhead rail, several at devices",
+        "draft": "Line drawing of nine robotic cats suspended from an overhead rail like an assembly line, some holding tablets or laptops — the managed, strictly-governed end of the deterministic-to-agentic spectrum."
       },
       "img-p007-4": {
-        "role": "figure",
-        "saw": "the same four-series chart one panel down, y-axis to 0.3, values printed",
-        "draft": "Figure 2(b): Precision@5 on the LANGUAGE ablation. Same four series and same fourteen teams as panel (a), y-axis 0 to 0.3, values printed. Annif leads on de all-subjects at 0.269, with DUTIR831 at 0.263 and DNB-AI-Project at 0.254; RUC Team's de tib-core bar is the single tallest at 0.278. icip reads 0.216 / 0.164 / 0.187 / 0.163 and TartuNLP 0.142 / 0.113 / 0.146 / 0.134. The same teams are missing the same parts of the grid as in panel (a). As with the recall panel, some labels overlap and only the legible ones are quoted."
+        "role": "decorative",
+        "saw": "line icon of an engine block with gears",
+        "draft": "Line icon of an engine block with two gears — the symbol for an execution engine, here a BPMN engine."
       },
-      "img-p009-1": {
+      "img-p007-6": {
         "role": "figure",
-        "saw": "a six-series grouped bar chart over 13 teams in ranked order, legend P@5/R@5/F1@5 and Avg. P@k/R@k/F1@k",
-        "draft": "Figure 3: overall qualitative evaluation. Six bars per team — P@5, R@5, F1@5 and the averages over k = 5, 10, 15, 20 of precision, recall and F1 — for thirteen teams, ordered left to right by average recall@k rather than alphabetically: DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. The y-axis runs 0 to 0.6 and every bar is labelled. DNB-AI-Project leads with P@5 0.53 and Avg. R@k 0.51; DUTIR831 follows at 0.49 / 0.49 and RUC Team at 0.48 / 0.46. TSOTSALAB is last at about 0.04 across the board. Avg. R@k exceeds P@5 for the mid-table teams, which is what a recall measure over a larger k does. silp_nlp, present in Figures 1, 2 and 4, does not appear here."
+        "saw": "perspective rendering of the folio-lifecycle BPMN lanes, beans scattered across them",
+        "draft": "A perspective rendering of the same folio-lifecycle BPMN diagram (lanes now left to right: publication manager, review team and SMEs, validation and QA, editors and authoring agents, work plan, programme manager) with dark beans scattered freely across every lane — the swarm picture, in which agents do not stay in their swimlanes."
       },
-      "img-p009-2": {
-        "role": "figure",
-        "saw": "a 14-series grouped bar chart over 13 teams, legend of domain acronyms, y-axis to 0.8",
-        "draft": "Figure 4(a): average recall@k per domain, over k = 5, 10, 15, 20. Fourteen bars per team, one for each subject domain — arc (architecture), che (chemistry), elt (electrical engineering), fer (material science), his (history), inf (computer science), lin (linguistics), lit (literature studies), mat (mathematics), oek (economics), phy (physics), sow (social sciences), tec (engineering), ver (traffic engineering) — for thirteen teams in alphabetical order. No printed values; the y-axis runs 0 to 0.8. Computer science (inf, teal) is the tallest bar in most teams' groups, reaching about 0.65 for DNB-AI-Project and icip and about 0.62 for RUC Team; mathematics (mat) is also consistently high. TSOTSALAB and YNU-HPCC are low across every domain, and Homa's bars are missing for several. Which domain is easiest is not uniform across teams, and the figure carries no aggregate."
+      "img-p007-7": {
+        "role": "decorative",
+        "saw": "single dark bean icon",
+        "draft": "Icon of a single dark bean — one agent work-plan item."
       },
-      "img-p009-3": {
+      "img-p007-9": {
+        "role": "decorative",
+        "saw": "an 80×158 near-white blank; no visible content",
+        "draft": "A near-white blank rectangle with no visible content, apparently a spacer."
+      },
+      "img-p008-1": {
         "role": "figure",
-        "saw": "the same 14-series domain chart one panel down, same axis, generally lower bars",
-        "draft": "Figure 4(b): average precision@k per domain, over k = 5, 10, 15, 20. The same fourteen domain series and the same thirteen teams as panel (a), on the same 0-to-0.8 axis, with no printed values. The bars are lower throughout — most teams peak between 0.4 and 0.6 rather than 0.6 and 0.7 — and the ordering within a team's group differs from the recall panel: architecture (arc, blue) is the tallest bar for most teams here, where computer science led on recall. RUC Team's social sciences (sow) bar is the tallest single bar at about 0.61, and DUTIR831's architecture bar reaches about 0.67."
+        "saw": "UML class diagram 'Harness schemas — attributes derived from JSON Schema'",
+        "draft": "UML class diagram \"Harness schemas — attributes derived from JSON Schema\", in four packages. test: KG QA Report (kg-qa/v1; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) and Test Run (folio-test-run/v1; skill, subject, data and process hashes, outcome, cases). process: Task (process, task; BPMN callActivity, serviceTask, task and userTask) 'in process' Process (external OMG BPMN 2.0; start and end events, gateways, lanes, sequence flows) — noted as XSD, not JSON Schema. scenario: Actor (id, title, kind person|agent|system|external, roles) 'takes on roles' Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly); User Story (role, want, soThat) 'as a role'; Role 'carries skills' Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema: JSON Schema (draft-07, from Zod) and External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other; use conforms|reads|cites). Edges: KG QA Report audits subject kind; Test Run tests Skill; Task in lane of Role and uses Skill; every class conforms to JSON Schema."
+      },
+      "img-p011-1": {
+        "role": "figure",
+        "saw": "grumpy cat in a green C@T hoodie beneath a large empty thought bubble with the C@T logo, in rain",
+        "draft": "Photographic-style illustration: a grumpy cat in a dark-green hoodie bearing the C@T logo (an @ sign drawn as a cat's face) sits at lower left in the rain, thinking a large empty speech-bubble cloud with the C@T logo at its top. The slide overlays the name 'computable asset acquisition, adjudication and agentic test tool harness' and its playful abbreviations down to cat-harness."
+      },
+      "img-p012-1": {
+        "role": "figure",
+        "saw": "full-bleed: grumpy cat in a C@T-branded sleigh pulled by four robot cats in the rain, empty thought bubble",
+        "draft": "Full-slide illustration: the grumpy cat in a green C@T hoodie rides a C@T-branded sleigh through rain, pulled by four robotic cats with glowing C@T badges, under a large empty thought bubble carrying the C@T logo. The slide overlays the folio-assistant site and repository links."
       }
+    },
+    "w3c-2018-odrl-model-2-2": {
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 1 ODRL Information Model' in the text layer of page 4; a UML-style class diagram of every ODRL class and property, not decoration",
+        "draft": "Figure 1, the ODRL Information Model: a class diagram centred on Policy (uid, profile; subclasses Set, Offer and Agreement; inheritFrom pointing to itself; conflict pointing to ConflictTerm), whose permission, obligation and prohibition properties point to Rule (uid). Rule has the subclasses Permission, Duty and Prohibition, with duty from Permission to Duty, remedy from Prohibition to Duty, consequence from Duty to Duty, and failure from Rule to itself. Rule links by action to Action (includedIn, implies); by the relation sub-property target to Asset (uid; hasPolicy to Policy; subclass AssetCollection with source, and partOf); by the function sub-properties assigner and assignee to Party (uid; subclass PartyCollection with source, and partOf); and by constraint to Constraint (uid, rightOperandReference, dataType, unit, status; leftOperand to LeftOperand, operator to Operator, rightOperand to RightOperand) or LogicalConstraint (uid; operand, a list of Constraints). A refinement property links Action, AssetCollection and PartyCollection to Constraint and LogicalConstraint."
+      },
+      "img-p014-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 2 ODRL Constraint Relationships' on page 14; four rows of boxes and labelled arrows",
+        "draft": "Figure 2, ODRL Constraint Relationships: a Rule reaches constraints in four ways. Its assignee is a PartyCollection, its target an AssetCollection and its action an Action, and each of these has a refinement to one or more Constraints or LogicalConstraints. The Rule's own constraint property points to Constraints or LogicalConstraints directly. In every row a LogicalConstraint points back to the Constraints it combines. Stacked boxes mean one or more."
+      },
+      "img-p019-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 3 ODRL Rule Relationships' on page 19; Policy on the left fanning out to three rows of rule boxes",
+        "draft": "Figure 3, ODRL Rule Relationships: a Policy holds one or more Permissions, one or more Prohibitions and one or more obligations. A Permission has a duty to one or more Duties, which may have a consequence to further Duties. A Prohibition has a remedy to one or more Duties. An obligation is a Duty, with its own consequence Duties."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 4 ODRL Shared Properties' on page 26; Policy with dashed arrows to Party, Asset and Action and solid arrows to Rule 1..n",
+        "draft": "Figure 4, ODRL Shared Properties: a Policy linked to Rule 1, Rule 2 and so on to Rule n. Dashed arrows show properties declared once on the Policy and shared by all its Rules: the function properties assigner and assignee to a Party (uid), the relation property target to an Asset, and action to an Action."
+      }
+    },
+    "arxiv-2602.12670v4": {
+      "img-p003-1": {
+        "role": "logo",
+        "saw": "the Claude Code mark beside its label in the harness list",
+        "draft": "Claude Code's logo: a white many-pointed starburst on a rounded terracotta square. It sits beside the \"Claude Code\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-2": {
+        "role": "logo",
+        "saw": "the Gemini CLI mark beside its label in the harness list",
+        "draft": "Gemini CLI's logo: a blue-to-magenta gradient chevron on a rounded near-black square with a matching gradient border. It sits beside the \"Gemini CLI\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-3": {
+        "role": "logo",
+        "saw": "the Codex CLI mark beside its label in the harness list",
+        "draft": "Codex CLI's logo: a white `>_` terminal prompt on a violet-to-blue gradient, in a scalloped cloud outline. It sits beside the \"Codex CLI\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-4": {
+        "role": "logo",
+        "saw": "the OpenHands mark beside its label in the harness list",
+        "draft": "OpenHands' logo: two raised yellow hands with short motion lines above them, on a white rounded square. It sits beside the \"OpenHands\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p025-1": {
+        "role": "figure",
+        "saw": "the \"Pass Rate\" colour scale for the page's heatmap, 1.0 blue at top to 0.0 red at bottom",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Pass Rate\" and running from 1.0 at the top to 0.0 at the bottom. Dark blue at 1.0 fades through mid and pale blue to near-white and pale green around 0.6, pale yellow near 0.5, then yellow, orange, red and dark crimson at 0.0. Blue therefore marks a HIGH pass rate and red a LOW one — the scale is inverted relative to the common convention that red is high, so reading it the usual way reverses every cell."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "the \"Pass Rate\" colour scale for the page's heatmap, 1.0 blue at top to 0.0 red at bottom",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Pass Rate\" and running from 1.0 at the top to 0.0 at the bottom. Dark blue at 1.0 fades through mid and pale blue to near-white and pale green around 0.6, pale yellow near 0.5, then yellow, orange, red and dark crimson at 0.0. Blue therefore marks a HIGH pass rate and red a LOW one — the scale is inverted relative to the common convention that red is high, so reading it the usual way reverses every cell."
+      },
+      "img-p027-1": {
+        "role": "figure",
+        "saw": "the \"Delta Pass Rate\" diverging scale, +0.6 blue to -0.6 red about a white zero — a DIFFERENT scale from pp. 25-26",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Delta Pass Rate\" and diverging about zero: +0.6 dark blue at the top, through mid and pale blue to WHITE at 0.0 in the centre, then pale red, red and dark crimson to -0.6 at the bottom. Blue marks a positive change in pass rate and red a negative one. This is NOT the same scale as the \"Pass Rate\" bars on the two preceding pages: it is signed, centred on zero, and carries no yellow band."
+      }
+    },
+    "skill-authoring-best-practices---claude-platform-docs": {
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "the SKILL.md anatomy diagram — YAML frontmatter above, Markdown body below",
+        "draft": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file."
+      },
+      "img-p008-1": {
+        "role": "figure",
+        "saw": "the bundling diagram — SKILL.md linking out to reference.md and forms.md",
+        "draft": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them."
+      },
+      "img-p024-1": {
+        "role": "figure",
+        "saw": "the executable-script diagram — forms.md linking to extract_fields.py",
+        "draft": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose."
+      }
+    },
+    "equipping-agents-for-the-real-world-with-agent-skills-anthro": {
+      "img-p002-1": {
+        "role": "figure",
+        "saw": "the architecture diagram — agent configuration on the left, its virtual machine on the right",
+        "draft": "Diagram titled \"Agent + Skills + Virtual Machine\", in two panels. Left, \"Agent configuration\": a core system prompt, a row of equipped Skills (bigquery, docx, nda-review, pdf, pptx, xlsx and others), and three equipped MCP servers which arrow down to remote MCP servers elsewhere on the internet. Right, \"Agent virtual machine\": Bash, Python and Nodejs above a file system holding one directory per skill — skills/bigquery/ with SKILL.md, datasources.md and rules.md; skills/docx/ with SKILL.md and an ooxml/ subtree; skills/nda-review/; skills/pdf/ with SKILL.md, forms.md, reference.md and extract_fields.py. A labelled arrow between the panels reads \"use computer\", and a note explains that the contents of Skill directories live in the agent computer's file system."
+      },
+      "img-p003-1": {
+        "role": "figure",
+        "saw": "the SKILL.md anatomy diagram — same figure as the platform docs, name: pdf",
+        "draft": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file."
+      },
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "the bundling diagram — SKILL.md linking out to reference.md and forms.md",
+        "draft": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them."
+      },
+      "img-p004-2": {
+        "role": "figure",
+        "saw": "a TABLE rendered as an image — the three progressive-disclosure levels",
+        "draft": "Table of the three progressive-disclosure levels, four columns: Level, File, Context Window, # Tokens. Level 1 is SKILL.md metadata (YAML), always loaded, about 100 tokens. Level 2 is the SKILL.md body (Markdown), loaded when the Skill triggers, under 5k tokens. Level 3 and beyond is bundled files — text files, scripts, data — loaded as needed by Claude, marked unlimited with an asterisk. The table is an IMAGE, so none of these figures appear in the page's text layer."
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "the context-window walkthrough — how a Skill enters and is read",
+        "draft": "Diagram titled \"Skills and the Context Window\", showing one conversation as it fills the window. At the top, the agent's system prompt followed by short snippets from each equipped Skill (bigquery, docx, nda-review, pdf, pptx, xlsx). Below it the user's message asking for a PDF to be filled out, with an attachment at /mnt/uploads/order_form.pdf. Claude then replies that it will use the PDF Skill and issues Bash(\"cat /mnt/skills/pdf/SKILL.md\"); the tool result returns that file's contents. A second tool use, Bash(\"cat /mnt/skills/pdf/forms.md\"), follows the reference found inside SKILL.md. Callouts on either side label each step. The point is that only the snippets are always present — the body and the bundled files are read on demand."
+      },
+      "img-p006-1": {
+        "role": "figure",
+        "saw": "the executable-script diagram — forms.md linking to extract_fields.py",
+        "draft": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose."
+      }
+    }
+  },
+  "attribution": {
+    "kg-folio-asst-2026-09-30": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+      },
+      "inspected_at": "2026-09-30"
+    },
+    "w3c-2018-odrl-model-2-2": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+      },
+      "inspected_at": "2026-10-01"
+    },
+    "arxiv-2602.12670v4": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "inspected_at": "2026-09-23"
+    },
+    "skill-authoring-best-practices---claude-platform-docs": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "inspected_at": "2026-09-23"
+    },
+    "equipping-agents-for-the-real-world-with-agent-skills-anthro": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "inspected_at": "2026-09-23"
     }
   }
 }

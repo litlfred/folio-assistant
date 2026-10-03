@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-29T20:03:11Z
+updated_at: 2026-09-30T14:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -76,10 +76,10 @@ on an AST dump existing.
 
 ## Done when
 
-- [ ] the phases are approved by the owner, or replaced — **as the SKILL states
+- [x] the phases are approved by the owner, or replaced — **as the SKILL states
       them**, which is the wording that was drifting
-- [ ] each phase has an exit criterion that is measured, not asserted
-- [ ] P3 and P4 are not approved while the logic-layer edges do not exist, or
+- [x] each phase has an exit criterion that is measured, not asserted
+- [x] P3 and P4 are not approved while the logic-layer edges do not exist, or
       are approved with a criterion that can be satisfied
 
 
@@ -87,3 +87,20 @@ on an AST dump existing.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## Phases approved 2026-09-30
+
+Put to the owner one phase at a time (session
+https://claude.ai/code/session_015v8WoYtr8gHuz9Tadg7KjV). The decisions are
+recorded in the skill, §"Approved by the owner, 2026-09-30" — not restated
+here, per this bean's own rule. In short: P0 on smart-trust with a strict page
+match; P1 and P2 **per IG plus a combined view**; P3 with the **fork
+required**; P4 as written.
+
+Why the third box is ticked: P3 is approved with the fork as a prerequisite,
+so its criterion is satisfiable once `a9tx` delivers — and the logic-layer
+edges now exist in source anyway (`fsh-cone`, 458 of 458, on `main`).
+
+Not closed: the three open items in the skill (`transform_dmn.py` HTML, the
+parity checklist, `tx` in staging) remain, and no phase has been started.

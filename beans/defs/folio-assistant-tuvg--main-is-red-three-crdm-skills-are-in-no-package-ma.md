@@ -15,23 +15,23 @@ Measured 2026-09-26 on `origin/main` at `6840b14097b`. **This fails every open P
 
 Both name the same three files, added by main's commit `7edf7b7ed5a` (*"feat: CRDM Phase 4b prioritization, SDLC/release skills, CRDM phase detail skills"*):
 
-    cat-harness/skills/crdm/crdm-needs-assessment.md
-    cat-harness/skills/crdm/crdm-impact-analysis.md
-    cat-harness/skills/crdm/crdm-requirements-template.md
+    cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md
+    cat-harness/skills/sdlc/crdm/crdm-impact-analysis.md
+    cat-harness/skills/sdlc/crdm/crdm-requirements-template.md
 
 | gate | what it says |
 |---|---|
-| `skill package manifests cover the package` (test) | all three are unlisted in `cat-harness/skills/crdm/package-manifest.json` |
+| `skill package manifests cover the package` (test) | all three are unlisted in `cat-harness/skills/sdlc/crdm/package-manifest.json` |
 | `check:retired-front-matter` | all three carry `roles:`, retired from skill markdown |
 
 ## It is main's, established rather than assumed
 
-- `git show origin/main:cat-harness/skills/crdm/package-manifest.json | grep -c 'needs-assessment|impact-analysis|requirements-template'` → **0**. Not listed on main either.
+- `git show origin/main:cat-harness/skills/sdlc/crdm/package-manifest.json | grep -c 'needs-assessment|impact-analysis|requirements-template'` → **0**. Not listed on main either.
 - No fix exists to port: the 25 most recently updated remote branches were checked for a manifest listing any of the three. **None does.**
 
 ## The proposed patch
 
-1. Add the three basenames to the `skills` array in `cat-harness/skills/crdm/package-manifest.json`.
+1. Add the three basenames to the `skills` array in `cat-harness/skills/sdlc/crdm/package-manifest.json`.
 2. Remove the `roles:` key from each file's front matter. That field is retired — 325 annotations across 140 files, read by nothing, dangling from its first commit (record: `fsh-guts/retired/skill-roles-front-matter.md`). If a skill should declare who performs it, that is bean `y1w9`, and the field has to be declared before it is written.
 
 Not applied here: this is not the work of whoever's PR happens to notice it, and `check:retired-front-matter` plus the manifest belong to the crdm package. Reported with the patch rather than widened into an unrelated PR.
@@ -67,7 +67,7 @@ The full set, each established against `origin/main` rather than inferred:
 
 ### Cause A — the retired `roles:` field, in FOUR files across TWO packages
 
-Not three in crdm. `cat-harness/skills/workflow/branch-freshness.md` carries it
+Not three in crdm. `cat-harness/skills/process/workflow/branch-freshness.md` carries it
 too, and on `origin/main` it reads literally:
 
     roles: [reader, collaborator, owner]
@@ -76,9 +76,9 @@ Those three actor ids **have never existed in any commit** — which is the whol
 reason the field was retired (325 annotations across 140 files, read by nothing;
 record: `fsh-guts/retired/skill-roles-front-matter.md`).
 
-Files: `skills/workflow/branch-freshness.md`,
-`skills/crdm/crdm-needs-assessment.md`, `skills/crdm/crdm-impact-analysis.md`,
-`skills/crdm/crdm-requirements-template.md`.
+Files: `skills/process/workflow/branch-freshness.md`,
+`skills/sdlc/crdm/crdm-needs-assessment.md`, `skills/sdlc/crdm/crdm-impact-analysis.md`,
+`skills/sdlc/crdm/crdm-requirements-template.md`.
 
 Failure 2 is the same cause seen from the other side: that test asserts the
 exemption guards a **non-empty set and only that set**, and expects
@@ -91,7 +91,7 @@ wrong reason, and the test is doing its job.
 Unchanged from this bean's first version, and still unfixed on main:
 `crdm-needs-assessment.md`, `crdm-impact-analysis.md`,
 `crdm-requirements-template.md` are absent from
-`cat-harness/skills/crdm/package-manifest.json`.
+`cat-harness/skills/sdlc/crdm/package-manifest.json`.
 
 ### Cause C — translated pages published with no `.po` catalogue
 
@@ -157,10 +157,10 @@ a corpus that has moved on"*.
 
 | when | file(s) | unlisted | retired `roles:` |
 |---|---|---|---|
-| 09-25 | `folio-core/decision-methodology-selector.md` | yes | — |
-| 09-26 | 3 × `skills/crdm/crdm-*.md` | yes | yes |
-| 09-26 | `skills/workflow/branch-freshness.md` | — | yes |
-| 09-26 | `skills/workflow/release-epic-planning.md` | yes | yes |
+| 09-25 | `process-core/decision-methodology-selector.md` | yes | — |
+| 09-26 | 3 × `skills/sdlc/crdm/crdm-*.md` | yes | yes |
+| 09-26 | `skills/process/workflow/branch-freshness.md` | — | yes |
+| 09-26 | `skills/process/workflow/release-epic-planning.md` | yes | yes |
 
 **Four in two days, and the last one landed hours after the previous three were
 repaired.** Each repair is two minutes; the class is not going away, because a

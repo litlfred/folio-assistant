@@ -78,7 +78,7 @@
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localeDirIn, translationsHomeFor } from "../schemas/cat-harness.js";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
 import { formatPot, potWithoutTimestamp } from "../content/pipeline/pot-extract.js";
@@ -143,7 +143,16 @@ if (wantInject && !locale) {
 // ABSOLUTE paths from every declared knowledge-graph directory. A diagram in
 // a topical directory is as translatable as one under `skills/`, and a
 // translator who is never shown it has no way to know it was skipped.
-const diagrams = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+//
+// SCOPE DIFFERS FROM glossary-export ON PURPOSE (bean `nafz`). `workflowFiles`
+// walks the dependency overlay, so a dependent's diagrams are translated here:
+// a translator works on what the instance SHOWS, inherited diagrams included.
+// `glossary-export` walks this instance's own diagrams only, because a
+// glossary is a published artefact OF one instance and each dependent builds
+// its own; it names roles drawn in another instance rather than hiding them.
+// The skill says so: `swimlane-glossary` §"Run it once per instance — never
+// widen the scan" (widening re-opens the `7u3g` leak).
+const diagrams = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".bpmn"));
 if (diagrams.length === 0) {
   console.error("No .bpmn files in any declared knowledge-graph directory.");
   process.exit(2);

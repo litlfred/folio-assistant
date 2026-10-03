@@ -32,7 +32,7 @@ follow its links.
 
 ## STABLE — placement is a SKILL — run it before the first file exists
 
-`skills/folio-core/placement.md` is a four-step decision procedure with a
+`skills/kg/kg-core/placement.md` is a four-step decision procedure with a
 stop — **instance → declared graph → kind of node → which of the two
 unrelated "stub" conventions**, and when you cannot tell, ask rather than
 default to the repo you are standing in. Run it **before** adding a skill,
@@ -85,7 +85,7 @@ branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
 A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 `restore-staging.ts` carries it across, and `--verify` checks the carry as well
 as the previews. Add a prefix there, never a third code path. Skill:
-[`folio-core/render-logging.md`](../cat-harness/skills/folio-core/render-logging.md).
+[`ui-core/render-logging.md`](../cat-harness/skills/ui/ui-core/render-logging.md).
 
 ## STABLE — top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory
 
@@ -108,7 +108,7 @@ read before any harness resolves. `scope: "repository"` means exactly these four
 ## STABLE — there is no `recommendation` block kind
 
 A normative statement is a labelled, titled `prose` block; the convention and
-its limits are in `skills/folio-document-adapter/normative-statements.md`. A
+its limits are in `folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md`. A
 real kind means a builder, a Zod schema, a label prefix, viewer registration,
 constraint rows and QA criteria — about **thirty files** — and is tracked
 separately rather than half-done.
@@ -147,7 +147,7 @@ Encode an entailment of the mechanism, or something measured here with the
 command shown. Never "someone said so".
 
 Full rule, the worked case and both lanes:
-[`folio-core/unverified-constraints.md`](../cat-harness/skills/folio-core/unverified-constraints.md).
+[`conduct-core/unverified-constraints.md`](../cat-harness/skills/conduct/conduct-core/unverified-constraints.md).
 
 ## TRAP — a page is a translation because it declares `lang`, never because of its directory's name
 
@@ -162,7 +162,7 @@ property of a FORMAT within a content type (`schemas/translation-tools.ts`,
 its content (e.g. markdown, bpmn) should be translatable"*. `nav_exclude: true`
 is the half JS cannot do — just-the-docs builds the nav once, for every
 reader, before anybody picks a locale. Full rule:
-`skills/folio-core/translation-manager.md#the-navbar-filters-by-locale`.
+`skills/library/library-core/translation-manager.md#the-navbar-filters-by-locale`.
 
 ## TRAP — the schema cannot catch a profile violation
 

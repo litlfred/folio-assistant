@@ -53,7 +53,7 @@ flowchart TD
 |-------|----------|--------|
 | **定义**（角色、所需能力、门禁要求、路由模式、生命周期阶段、模式引用） | `.claude/skills/local/<skill>.json` | ✅ 全部 22 项创作技能 — 由 `scripts/validate-skills.ts` 在 CI 中验证 |
 | **类型化契约**（输入/输出 JSON Schema） | `schemas/skills/<skill>/` | ✅ 全部 22 项 — 参见[参考](../reference/skills/) |
-| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令](../reference/skill-instructions/)参考中查阅 | `skills/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
+| **指令正文**（LLM 加载的文字操作指南） — 可在[技能指令](../reference/skill-instructions/)参考中查阅 | `skills/authoring/content-lifecycle/*.md`、`skills/folio-*-adapter/*.md`、`src/skills/*.md` | ✅ lifecycle、agent、platform-bundle 以及 **folio-document-adapter** 技能；⏳ **authoring-math / authoring-who-smart-guidelines 正文待补充**（这些技能包已提供清单 + JSON 定义） |
 | **技能包**（Docker/运行时依赖项） | `skills/<package>/package-manifest.json` | ✅ 全部四个技能包 |
 
 所以，*是的，这些技能确实存在* — 表现为结构化定义与类型化模式，且生命周期和智能体技能已随附详细的文本指南。`skill_fetch` MCP 工具当前提供 `src/skills/*.md` 指令正文；创作技能的文本正文是后续待补充的内容（它们所属的定义和契约均已就绪）。
@@ -126,7 +126,7 @@ LLM 在仓库中高效工作所使用的技能（通过 `skill_fetch` 加载，�
 | `bean-coordination` | 多智能体认领与协作规范 |
 | `todo-manager` | 以 bean 作为待办事项（todo）的管理规范 |
 
-### 平台技能包（`skills/folio-core`、`skills/folio-document-adapter`、`skills/folio-paper-adapter`）
+### 平台技能包（`skills/folio-core`、`folio-assistant-core/skills/content/folio-document-adapter`、`folio-assistant-sci/skills/content/folio-paper-adapter`）
 
 更大型的**平台技能包**（platform bundles），其中两个从 qou 内容仓库迁移而来（参见[迁移记录](migrations/2026-06-29-platform-skills-migration.html)以及 issue [#27](https://github.com/litlfred/folio-assistant/issues/27)）。它们与具体内容无关，旨在同步到任何 folio 中：
 

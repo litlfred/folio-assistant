@@ -5,9 +5,20 @@ knowledge graph of skills, the BPMN processes they run inside, the roles that
 own the swimlanes, the schemas that declare all of it, the MCP server that
 serves it, and the published documentation site.
 
-It is a *layer*, not the repository. The repository is
-[`folio-assistant`](../README.md), which holds this layer beside several
-others; [its instance table](../README.md#harness-instances) is the index.
+It is a *layer*, not a repository of its own: whichever repository checks it
+out holds it beside other layers, and that repository's root `README.md`
+indexes them. It is not linked from here, because this layer may not point up
+the dependency arrow to what includes it.
+
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What is in here](#what-is-in-here)
+- [Reading it as a person, or as an agent](#reading-it-as-a-person-or-as-an-agent)
+- [Running it](#running-it)
+
+<!-- readme:toc:end -->
 
 ## What is in here
 
@@ -40,9 +51,8 @@ Both entries exist and they are different files on purpose:
 
 ## Running it
 
-Commands live in the repository root [`README.md`](../README.md#common-commands)
-and in [`package.json`](../package.json); they are run from the repository
-root, not from here.
+Commands live in the checkout root's `README.md` (§ Common commands) and
+`package.json`; they are run from that root, not from here.
 
 ---
 

@@ -6,8 +6,9 @@ summary: "link style: `raw` is not the private-repo answer"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 A private folio whose README links to `https://<owner>.github.io/...` is
 unreachable for exactly the people who have repository access, and

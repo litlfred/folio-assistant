@@ -1,12 +1,12 @@
 ---
 # folio-assistant-jut3
 title: 'SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-09-29T18:14:50Z
-parent: folio-assistant-yj32
+updated_at: 2026-10-01T12:16:24Z
+parent: folio-assistant-uhkv
 ---
 
 ## The owner's words, verbatim
@@ -389,3 +389,8 @@ was fine is the exact failure this session spent a bean on.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+_2026-09-29_ — **Re-parented `yj32` → `uhkv`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Rendering the smart-* IGs through Jekyll is SMART-stack work; yj32 stays the interface epic.
+
+_2026-10-01T12:16:24Z_ — Claimed by claude/wonderful-curie-gbfeuy — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

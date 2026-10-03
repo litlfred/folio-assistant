@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/render-logging.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-logging.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/ui-core/render-logging.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/render-logging.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/render-logging.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/render-logging.md){: .fa-edit-source }
 
 {% raw %}
 # Render logging — the publish branch keeps its own history
@@ -137,7 +137,8 @@ it to be remembered:
 
 | path | event | how it lands |
 |---|---|---|
-| `feature-staging.yml` → `stage` | `rendered` | its **own commit**, after the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes |
+| `feature-staging.yml` → `stage` | `rendered` | the **same commit as the deploy** (bean `bm6d`). The entry goes to the root `_render-log/`, never into `_site`, which would land it at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes |
+| `feature-staging.yml` → `stage`, preview cap | `removed`, one per rotated preview | the **same commit as the deploy**, written by `staging-rotate.ts`; the reason names the cap, the owner ruling of 2026-10-02 and issue #1868, and the summary gives slug, age and size |
 | `feature-staging.yml` → `cleanup`, confirmed | `removed` | the **same commit as the removal** |
 | `feature-staging.yml` → `cleanup`, refused | `retained` | its own commit |
 | `feature-staging.yml` → `cleanup-dispatch` | `removed` | the **same commit as the removal** |
@@ -212,7 +213,7 @@ is on the publish branch belongs where its subject's absence can be seen.
 | | |
 |---|---|
 | the process | [`staging-render-log.bpmn`](../../processes/staging-render-log.html) |
-| the entry shape it specialises | `schemas/log-entry.ts`, `skills/folio-core/activity-log.md` |
+| the entry shape it specialises | `schemas/log-entry.ts`, `skills/sdlc/sdlc-core/activity-log.md` |
 | why the publish branch loses things | bean `plj1`, `scripts/restore-staging.ts` |
 | why a closed PR is not an abandoned branch | bean `w2g5` |
 | the path hazard | bean `fuzm` |

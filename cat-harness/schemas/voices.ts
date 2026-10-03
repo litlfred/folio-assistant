@@ -4,7 +4,7 @@
  * A **voice** is a named set of editorial rules an agent applies when authoring
  * or reviewing prose. Voices are OVERLAID, not chosen: a folio may activate
  * several, and the union of their rules applies on top of the base house voice
- * in `skills/folio-core/one-voice-style-guide.md`.
+ * in `skills/authoring/authoring-core/one-voice-style-guide.md`.
  *
  * ## A voice is a third axis, and conflating it with the other two is costly
  *
@@ -61,9 +61,10 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolveHarnessConfigPath } from "./harness-config";
 import { join, relative, resolve } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
-import { directoryForGraph } from "./cat-harness.js";
+import { defaultGraphKinds, directoryForGraph } from "./cat-harness.js";
 import { BLOCK_KINDS } from "./block-kinds.js";
 import { ProcessElementIdSchema } from "./process-element-id.js";
 
@@ -100,8 +101,8 @@ export type VoiceRuleCategory = (typeof VOICE_RULE_CATEGORIES)[number];
 export const VoiceRuleSourceSchema = z
   .object({
     /**
-     * The DECLARED NAME of the instance holding the corpus, when it is not this
-     * one. Absent means this instance, so every existing citation keeps its
+     * The instance holding the corpus, as its planned `owner/repo` (bean
+     * `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its
      * meaning unchanged.
      *
      * Bean `r1lz` predicted why this is needed, on 2026-09-19, while deciding
@@ -111,14 +112,14 @@ export const VoiceRuleSourceSchema = z
      * breaks all 25 cited rules at once — and provenance was the entire reason
      * those rules were rewritten.
      *
-     * A NAME, never a path. `../who-iris/library/...` would work today and
+     * An identity, never a path. `../who-iris/library/...` would work today and
      * hardcode a checkout layout into content, which is the practice
      * `AGENTS.md` opens by warning against and which this repository paid for
      * twice in one week. Resolution is `folio-assist-core`'s
      * `resolveLibraryRef`, which reports an unknown instance as its own
      * finding and NEVER falls back to local.
      */
-    instance: z.string().min(1).optional(),
+    instance: RepoFullNameSchema.optional(),
     /** `doc_id` under `library/`, e.g. `who-pub-tps-931`. */
     libraryId: z.string().min(1).optional(),
     /** `section_id` within that document, e.g. `page-014` or `sec-180-106-…`. */
@@ -137,15 +138,17 @@ export const VoiceRuleSourceSchema = z
      *
      * **`milnor` was this field's worked example and is no longer one.** Its
      * hallmarks were named after Milnor's exposition without being extracted
-     * from his writing, so `kgRef` was the honest citation at the time. The
+     * from his writing, so `path` was the honest citation at the time. The
      * paper was then ingested and each hallmark traced to a page — the last on
      * 2026-09-21, bean `w0hi` — so all twelve rules now carry a `libraryId`.
      * The voice keeps `provenance: "house"` regardless, because the citations
      * are evidence FOR this project's standard rather than its source; see
-     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `kgRef` case,
-     * citing `skills/folio-core/technical-documentation.md`.
+     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `path` case,
+     * citing `skills/authoring/authoring-core/technical-documentation.md`.
      */
-    kgRef: z.string().min(1).optional(),
+    // Named `kgRef` until #1168 B9d (owner, 2026-09-30): it holds a PATH, not
+    // a `{kind, id}` KG reference, and the old name said the other thing.
+    path: z.string().min(1).optional(),
     /**
      * The passage the rule was read from. Required: a citation with no quote
      * cannot be checked without re-reading the source, which is the cost this
@@ -156,10 +159,10 @@ export const VoiceRuleSourceSchema = z
   .refine(
     (src) =>
       (src.libraryId !== undefined && src.sectionId !== undefined) !==
-      (src.kgRef !== undefined),
+      (src.path !== undefined),
     {
       message:
-        "a rule cites EITHER an ingested source (libraryId + sectionId) OR a node of this instance's KG (kgRef) — exactly one, never both and never neither",
+        "a rule cites EITHER an ingested source (libraryId + sectionId) OR a node of this instance's KG (path) — exactly one, never both and never neither",
     },
   );
 export type VoiceRuleSource = z.infer<typeof VoiceRuleSourceSchema>;
@@ -218,8 +221,8 @@ export type VoiceRule = z.infer<typeof VoiceRuleSchema>;
  */
 export const VoiceRefSchema = z
   .object({
-    /** The declared name of the instance holding it. Absent means this one. */
-    instance: z.string().min(1).optional(),
+    /** The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one. */
+    instance: RepoFullNameSchema.optional(),
     voiceId: z.string().regex(/^[a-z0-9-]+$/, "a voice id is lower-case kebab"),
   })
   .strict();
@@ -241,7 +244,7 @@ export type VoiceRef = z.infer<typeof VoiceRefSchema>;
  *   the only one: a judgement about exposition, read off a named page of a
  *   named paper, is evidence in exactly the sense that matters here — somebody
  *   else can open the page. The apparatus already exists and is REQUIRED by
- *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `kgRef`,
+ *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `path`,
  *   plus the quote. Formalising `evidence` means naming that apparatus as what
  *   the value MEANS, not building a second one.
  * - `house` — a standard THIS PROJECT set for itself. The `milnor` voice is
@@ -314,7 +317,7 @@ export type VoiceProvenance = (typeof VOICE_PROVENANCE)[number];
  *
  * Measured over the five voices this repository ships, 2026-09-21: **one
  * fires.** `technical-writer` declares `assertion` with 3 of 9 rules citing
- * `skills/folio-core/technical-documentation.md`; `milnor` does not fire, by
+ * `skills/authoring/authoring-core/technical-documentation.md`; `milnor` does not fire, by
  * the ruling; the three WHO voices cite only ingested documents. A flag on
  * `technical-writer` is the right outcome rather than a false positive — it is
  * a genuinely mixed voice, and asking whether that makes it `house` is a
@@ -335,10 +338,10 @@ export interface VoiceProvenanceFlag {
  */
 export function voiceProvenanceFlags(
   provenance: string,
-  rules: readonly { id: string; source?: { kgRef?: string } }[],
+  rules: readonly { id: string; source?: { path?: string } }[],
 ): VoiceProvenanceFlag[] {
   if (provenance === "house") return [];
-  const inside = rules.filter((r) => r.source?.kgRef !== undefined).map((r) => r.id);
+  const inside = rules.filter((r) => r.source?.path !== undefined).map((r) => r.id);
   if (inside.length === 0) return [];
   return [
     {
@@ -455,7 +458,7 @@ export type VoiceSupersession = z.infer<typeof VoiceSupersessionSchema>;
  * and `specification` — whole artefacts, not blocks. Declared here so a typo
  * in either vocabulary fails rather than silently auditing nothing.
  */
-export const VOICE_ARTEFACT_KINDS = ["docs", "skill", "readme", "specification"] as const;
+export const VOICE_ARTEFACT_KINDS = ["docs", "skill", "readme", "specification", "code"] as const;
 
 /** One thing a voice audits: a block kind or a declared artefact kind. */
 export const VoiceTargetSchema = z.union([z.enum(BLOCK_KINDS), z.enum(VOICE_ARTEFACT_KINDS)]);
@@ -487,11 +490,11 @@ export const VoiceProfileSchema = z.object({
       z.object({
         title: z.string().min(1),
         /** The instance holding it, when not this one. See `VoiceRuleSourceSchema.instance`. */
-        instance: z.string().min(1).optional(),
-        /** Absent for a house standard — see `VoiceRuleSourceSchema.kgRef`. */
+        instance: RepoFullNameSchema.optional(),
+        /** Absent for a house standard — see `VoiceRuleSourceSchema.path`. */
         libraryId: z.string().min(1).optional(),
         /** The KG node stating the standard, for a voice with no ingested source. */
-        kgRef: z.string().min(1).optional(),
+        path: z.string().min(1).optional(),
         /** Where the document came from, for a reader who wants the original. */
         url: z.string().url().optional(),
         year: z.number().int().optional(),
@@ -656,6 +659,13 @@ function voicesFallbackDir(instanceRoot: string): string {
  * and it is why this name is a convention for humans rather than a second
  * source of truth.
  */
+/**
+ * **Superseded 2026-09-30 (bean `rkqp`)**: the loader no longer descends by
+ * this name. The owner asked for `vendors/` and each `vendors/<id>/` to be
+ * DECLARED sub-graphs, so `voiceFilesIn` follows `voices.json` and
+ * `vendors/vendors.json`. The name stays as the conventional spelling a person
+ * uses when creating the directory.
+ */
 export const VOICE_VENDORS_DIR = "vendors";
 
 /**
@@ -686,25 +696,81 @@ export const VOICE_VENDORS_DIR = "vendors";
  * clean run. Found by reading this function when the layout was chosen, not
  * after shipping into it.
  */
-function voiceFilesIn(dir: string): { id: string; path: string }[] {
+export function voiceFilesIn(dir: string, kind: string = "voices"): { id: string; path: string }[] {
   const out: { id: string; path: string }[] = [];
+  // The directory's own from-within declaration (bean `rkqp`, owner
+  // 2026-09-30: "vendors/<id>/ should be declared subgraphs along with
+  // vendors/"). It names the sub-graphs this directory holds, and it is not a
+  // voice, so it is not read as one.
+  const declFile = defaultGraphKinds.get(kind)?.declarationFile;
+  const subgraphs = declaredSubgraphs(dir, declFile);
   for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
     if (e.isDirectory()) {
       const inner = join(dir, e.name, "voice.json");
+      const sub = subgraphs.get(e.name);
       if (existsSync(inner)) {
+        // Inside a SUB-graph (`vendors/`) the declaration is the member list:
+        // the owner asked for each `vendors/<id>/` to be declared, so an
+        // undeclared one is refused rather than loaded on its shape. At the
+        // top of `voices` a `<id>/voice.json` is the graph itself and needs no
+        // entry.
+        if (kind !== "voices" && sub === undefined) {
+          throw new Error(
+            `voices: ${join(dir, e.name)} is a voice in the "${kind}" sub-graph but is not declared. ` +
+              `Add it to ${declFile ? join(dir, declFile) : `a declaration for kind "${kind}"`}.`,
+          );
+        }
         out.push({ id: e.name, path: inner });
-      } else if (e.name === VOICE_VENDORS_DIR) {
-        // ONE level, not arbitrary recursion. A reserved name is a convention
-        // a reader can state; "any directory, any depth" is a rule nobody can
-        // check, and it would make an unrelated nested directory into a silent
-        // part of the graph.
-        out.push(...voiceFilesIn(join(dir, e.name)));
+      } else if (sub !== undefined) {
+        // Descend only where a declaration says to. Replaces the reserved
+        // name `vendors`: a convention nothing declared, which the owner
+        // asked to be declared instead.
+        out.push(...voiceFilesIn(join(dir, e.name), sub));
+      } else if (voiceFilesPresent(join(dir, e.name))) {
+        // A directory holding voices that nothing declares. Skipping it is
+        // `dh4f` (a consumer scans nothing and calls the read clean), so it is
+        // refused, with the fix named.
+        throw new Error(
+          `voices: ${join(dir, e.name)} holds voice files but is not declared. ` +
+            `Add it to ${declFile ? join(dir, declFile) : `a declaration for kind "${kind}"`} as a sub-graph.`,
+        );
       }
-    } else if (e.isFile() && e.name.endsWith(".json")) {
+    } else if (e.isFile() && e.name.endsWith(".json") && e.name !== declFile) {
       out.push({ id: e.name.replace(/\.json$/, ""), path: join(dir, e.name) });
     }
   }
   return out;
+}
+
+/** The file name of a voices directory's from-within declaration, if the kind has one. */
+export const VOICES_DECLARATION_FILE = defaultGraphKinds.get("voices")?.declarationFile;
+
+/** The sub-graphs `dir`'s declaration names: directory name → its graph kind. */
+function declaredSubgraphs(dir: string, declFile: string | undefined): Map<string, string> {
+  const out = new Map<string, string>();
+  if (declFile === undefined) return out;
+  const p = join(dir, declFile);
+  if (!existsSync(p)) return out;
+  // A declaration that will not parse throws, as a malformed voice does: an
+  // unreadable declaration must not present as a directory with no sub-graphs.
+  const parsed = JSON.parse(readFileSync(p, "utf-8")) as {
+    directories?: Array<{ path?: string; graphKinds?: string[] }>;
+  };
+  for (const d of parsed.directories ?? []) {
+    const name = (d.path ?? "").replace(/^\.\//, "").replace(/\/+$/, "");
+    const kind = d.graphKinds?.[0];
+    if (name !== "" && !name.includes("/") && kind !== undefined) out.set(name, kind);
+  }
+  return out;
+}
+
+/** Does `dir` hold a voice file anywhere beneath it? */
+function voiceFilesPresent(dir: string): boolean {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && e.name === "voice.json") return true;
+    if (e.isDirectory() && voiceFilesPresent(join(dir, e.name))) return true;
+  }
+  return false;
 }
 
 /**

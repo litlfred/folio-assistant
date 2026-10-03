@@ -73,7 +73,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { docsLayers } from "./compose-docs.js";
+import { baseDocsDir } from "./compose-docs.js";
+import { skillPagesOf } from "./lib/skill-pages.ts";
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
 import {
@@ -94,11 +95,6 @@ const VIEWER_TOOL = "processes-viewer";
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
 
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 /** One diagram, as the index sees it. */
 export interface ProcessRow {
@@ -303,7 +299,7 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
     // A report that claims a gap which is not there teaches its reader to
     // discount it, and this repository has paid for that once already
     // (`viewer-undiscovered.test.ts`, the same week).
-    const svgRel = join(baseDocs(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
+    const svgRel = join(baseDocsDir(repo), "assets/img/workflows", `${basename(abs, ".bpmn")}.svg`);
     const svg = existsSync(svgRel) ? relative(repo, svgRel) : undefined;
     // The DECLARATION, asked of the file: is there an enforcement VALUE? A
     // presence check, not a second reading of what the policy means — and a
@@ -464,7 +460,14 @@ export function skillToProcesses(rows: readonly ProcessRow[]): Map<string, strin
 
 const esc = (s: string): string => s.replace(/\|/g, "\\|");
 
-export function page(rows: readonly ProcessRow[]): string {
+/**
+ * `skillPages` is the set of skills with a generated instruction page, as for
+ * {@link processPage}: a skill with one is a LINK, a skill without one stays
+ * code rather than becoming a link that 404s (bean `qgjh` — "emit links
+ * wherever the target resolves"). Empty by default, so a caller that has not
+ * looked renders every skill as code, as this table did before.
+ */
+export function page(rows: readonly ProcessRow[], skillPages: ReadonlySet<string> = new Set()): string {
   const ok = rows.filter((r) => r.loadError === undefined);
   const broken = rows.filter((r) => r.loadError !== undefined);
   const byGroup = new Map<string, number>();
@@ -526,7 +529,17 @@ export function page(rows: readonly ProcessRow[]): string {
   L.push("");
   L.push("| skill | run by |");
   L.push("|---|---|");
-  for (const [s, fs] of join) L.push(`| \`${esc(s)}\` | ${fs.map((f) => `\`${esc(basename(f))}\``).join(", ")} |`);
+  // A diagram in "run by" links to its own page — the one the first table
+  // links — found by FILE, the key `skillToProcesses` joins on. A file with no
+  // loaded row publishes no page, so it stays code.
+  const pageOf = new Map(ok.map((r) => [r.file, r.stem]));
+  const skillCell = (s: string): string =>
+    skillPages.has(s) ? `[\`${esc(s)}\`](../reference/skill-instructions/${s}.html)` : `\`${esc(s)}\``;
+  const runBy = (f: string): string => {
+    const stem = pageOf.get(f);
+    return stem === undefined ? `\`${esc(basename(f))}\`` : `[\`${esc(basename(f))}\`](${stem}.html)`;
+  };
+  for (const [s, fs] of join) L.push(`| ${skillCell(s)} | ${fs.map(runBy).join(", ")} |`);
   L.push("");
 
   L.push("## Who appears in a process?");
@@ -808,8 +821,16 @@ export function pageRelPath(repo = REPO): string | undefined {
  * (#1168 B7a-2) — every instance's declared processes directories, because
  * every instance's diagrams are on it.
  */
-export function publishedIndex(rows: Parameters<typeof page>[0], repo = REPO): string {
-  return withRendersFrontMatter(page(rows), instanceRoots(repo).flatMap((r) => handledDirectories(repo, r, KIND)), VIEWER_TOOL);
+export function publishedIndex(
+  rows: Parameters<typeof page>[0],
+  repo = REPO,
+  skillPages: ReadonlySet<string> = skillPagesOf(repo),
+): string {
+  return withRendersFrontMatter(
+    page(rows, skillPages),
+    instanceRoots(repo).flatMap((r) => handledDirectories(repo, r, KIND)),
+    VIEWER_TOOL,
+  );
 }
 
 if (import.meta.main) {
@@ -819,7 +840,7 @@ if (import.meta.main) {
     console.error("no visualiser declared for the `processes` graph — nothing to write");
     process.exit(1);
   }
-  const out = join(baseDocs(REPO), rel);
+  const out = join(baseDocsDir(REPO), rel);
   const rows = await processRows();
   // VACUITY GUARD. A sweep that found nothing reports a clean corpus, which is
   // the `dh4f` shape this page's own Findings section exists to raise — and the
@@ -830,11 +851,8 @@ if (import.meta.main) {
     console.error("✗ no BPMN diagrams found — refusing to write an index over nothing");
     process.exit(1);
   }
-  const html = publishedIndex(rows);
-  const skillDir = join(baseDocs(REPO), "reference", "skill-instructions");
-  const skillPages = new Set(
-    existsSync(skillDir) ? readdirSync(skillDir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : [],
-  );
+  const skillPages = skillPagesOf(REPO);
+  const html = publishedIndex(rows, REPO, skillPages);
   // Which page sections present each diagram, keyed repository-relative so it
   // matches `row.file` — a page spells its source relative to its OWN instance.
   const presented = new Map<string, Presentation[]>();

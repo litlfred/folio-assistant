@@ -8,10 +8,10 @@
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { resolvableSkillIndex, resolveSkillRef } from "../known-skills.js";
+import { kgRoots, resolvableSkillIndex, resolveSkillRef } from "../known-skills.js";
 import { tools } from "../../tools/discover.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
@@ -51,6 +51,21 @@ describe("the corpus: every skill reference resolves to one skill", () => {
     roles: { id: string; skills?: string[] }[];
   }).roles;
   for (const r of roles) for (const s of r.skills ?? []) refs.push({ where: `role ${r.id}`, ref: s });
+  // A skill's `inherits:` names the skill it shares mechanics with (#1168 B10d,
+  // owner 2026-09-30: "Typed SkillRef"). It was `local/integration-watcher`,
+  // which named no package, in six of seven files.
+  //
+  // Over every skills root of the CHECKOUT, not `skills/` here alone: two of
+  // the seven (`proof-integration-watcher`, `q-usage-watcher`) moved up to
+  // sci with the paper adapter (placement PR1, bean `ybwt`) and inherit DOWN
+  // into the harness, which is exactly the edge this resolves.
+  for (const dir of new Set(kgRoots(ROOT).map((d) => resolve(d)))) {
+    for (const rel of new Glob("**/*.md").scanSync({ cwd: dir })) {
+      const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(dir, rel), "utf-8"))?.[1] ?? "";
+      const m = /^inherits:\s*(\S+)\s*$/m.exec(fm);
+      if (m) refs.push({ where: `${relative(REPO, join(dir, rel))} inherits`, ref: m[1]! });
+    }
+  }
   for (const rel of new Glob("**/summaries.json").scanSync({ cwd: join(ROOT, "library") })) {
     const text = readFileSync(join(ROOT, "library", rel), "utf-8");
     for (const m of text.matchAll(/"skill":\s*"([^"]+)"/g)) refs.push({ where: `library/${rel}`, ref: m[1]! });
@@ -65,6 +80,10 @@ describe("the corpus: every skill reference resolves to one skill", () => {
   test("no bare name is held by two packages", () => {
     const shared = [...index].filter(([, pkgs]) => pkgs.length > 1).map(([n, pkgs]) => `${n}: ${pkgs.join(", ")}`);
     expect(shared).toEqual([]);
+  });
+
+  test("skill inherits: is counted, so its resolution below is not vacuous", () => {
+    expect(refs.filter((r) => r.where.endsWith(" inherits")).length).toBeGreaterThanOrEqual(7);
   });
 
   test("every reference resolves", () => {

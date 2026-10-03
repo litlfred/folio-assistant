@@ -1,12 +1,12 @@
 ---
 # folio-assistant-qrnz
 title: 'SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-21T14:13:32Z
-updated_at: 2026-09-29T18:14:47Z
-parent: folio-assistant-yj32
+updated_at: 2026-10-02T12:27:27Z
+parent: folio-assistant-uhkv
 ---
 
 The generalisation test qsf5 deferred. Until a second DAK-API IG goes through, "generalisable across many IGs" is a design claim.
@@ -54,3 +54,16 @@ litlfred.github.io is 403 policy-denied by this environment's egress proxy. The 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+_2026-09-29_ — **Re-parented `yj32` → `uhkv`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Ingesting a second IG to test the artefact-index pipeline is SMART-stack work.
+
+## Closed 2026-10-02 on evidence (not authorship)
+
+Each Done-when re-derived from main at dae1ab4f (after #1783, stage C of #1767):
+- [x] link-out accounts for pages: fhir-harness/scripts/gen-ig-pages.ts gives a category over INLINE_LIMIT its OWN page listing every artefact (line ~530: 'Every one has its own page: browse all N'), rather than the #717 link-out copy.
+- [x] shared, instance-parameterised generator: gen-ig-pages.ts --instance <dir>; package.json smart-trust:pages, smart-base:pages and smart-immunizations:pages all call it.
+- [x] smart-immunizations ingested: smart-immunizations/fhir-artifact-index/index.json (folio-fhir-artifact-index/v2, 0.2.0, FHIR 4.0.1, provenance block); 748 artefacts known, 200 materialized (smart-immunizations.json description).
+- [x] declared with a docs graph: smart-immunizations-docs (graphKinds docs, instanceRoot) mounted by mount-instance-docs.ts.
+- [x] smart-trust unchanged by the generalisation: smart-trust:pages:check is in the gate set and green on main.
+- [x] gates green: main's Code-quality gates.

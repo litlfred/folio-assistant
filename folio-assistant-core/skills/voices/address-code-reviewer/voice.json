@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `code-reviewer` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
-      "kgRef": "scenarios/roles.json"
+      "instance": "litlfred/cat-harness",
+      "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "code-reviewer"
       }
     ]
@@ -28,8 +28,8 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
-        "kgRef": "scenarios/roles.json",
+        "instance": "litlfred/cat-harness",
+        "path": "scenarios/roles.json",
         "quote": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
       }
     }

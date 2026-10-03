@@ -63,13 +63,13 @@ Flujos de trabajo activos en esta plataforma:
 
 | Flujo de trabajo | Origen BPMN | Se inicia cuando |
 |---|---|---|
-| **Autoría (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | El usuario solicita autoría de contenido en un folio de paper |
-| **Autoría (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | El usuario solicita autoría de contenido en un folio de documento |
-| **Ciclo de vida de contenido** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | El contenido avanza a través de validar → renderizar → publicar |
-| **Ingesta de documentos** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | El usuario deposita un archivo en `uploads/` |
-| **De borrador a publicación** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | El contenido pasa de borrador a publicado |
-| **Requisitos CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | El agente detecta una solicitud de funcionalidad (*feature request*) |
-| **Recuperación de evidencias** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | El agente busca evidencias para respaldar una afirmación |
+| **Autoría (paper)** | [`authoring-a-paper.bpmn`](../../../folio-assistant-sci/processes/content/authoring-a-paper.bpmn) | El usuario solicita autoría de contenido en un folio de paper |
+| **Autoría (document)** | [`authoring-a-document.bpmn`](../../../folio-assistant-core/processes/content/authoring-a-document.bpmn) | El usuario solicita autoría de contenido en un folio de documento |
+| **Ciclo de vida de contenido** | [`content-lifecycle.bpmn`](../../../folio-assistant-core/processes/content/content-lifecycle.bpmn) | El contenido avanza a través de validar → renderizar → publicar |
+| **Ingesta de documentos** | [`document-ingestion.bpmn`](../../processes/library/document-ingestion.bpmn) | El usuario deposita un archivo en `uploads/` |
+| **De borrador a publicación** | [`draft-to-publication.bpmn`](../../../folio-assistant-core/processes/content/draft-to-publication.bpmn) | El contenido pasa de borrador a publicado |
+| **Requisitos CRDM** | [`crdm-requirements.bpmn`](../../processes/process/crdm-requirements.bpmn) | El agente detecta una solicitud de funcionalidad (*feature request*) |
+| **Recuperación de evidencias** | [`evidence-retrieval.bpmn`](../../../folio-assistant-core/processes/content/evidence-retrieval.bpmn) | El agente busca evidencias para respaldar una afirmación |
 
 **Transiciones de estado:** un flujo de trabajo puede **suspenderse** cuando el usuario solicita
 cambiar de contexto. El agente registra dónde se encontraba (la actividad BPMN actual) y
@@ -121,7 +121,7 @@ clasificación determina a qué flujo de trabajo ingresa el agente.
 | **Autoría de contenido** | Escribir, editar, ampliar contenido del folio (capítulos, bloques, secciones) | Flujo de trabajo de autoría (paper o document) |
 | **Revisión de contenido** | Revisar, validar, proporcionar comentarios sobre contenido existente | Ciclo de vida de contenido / flujo de trabajo de HCI de edición |
 | **Ingesta de contenido** | Ingerir un documento fuente en el folio | Flujo de trabajo de ingesta de documentos |
-| **Solicitud de funcionalidad (*feature request*)** | Solicitar una nueva capacidad de la plataforma (ver [crdm-detect](../../skills/crdm/crdm-detect.md)) | Flujo de trabajo de requisitos CRDM |
+| **Solicitud de funcionalidad (*feature request*)** | Solicitar una nueva capacidad de la plataforma (ver [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | Flujo de trabajo de requisitos CRDM |
 | **Solicitud de información** | Preguntar sobre la plataforma, el contenido o el proceso | Sin flujo de trabajo — responder directamente |
 | **Invocación de herramientas** | Ejecutar una herramienta específica (`content_validate`, `qa_sweep`, etc.) | Sin flujo de trabajo — ejecutar e informar |
 | **Gestión del plan de trabajo** | Crear, actualizar o consultar beans | Sin flujo de trabajo — ejecutar e informar |
@@ -131,7 +131,7 @@ clasificación determina a qué flujo de trabajo ingresa el agente.
 
 El límite de clasificación crítico se sitúa entre la **autoría de contenido** y
 la **solicitud de funcionalidad** (*feature request*). La habilidad `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 proporciona las señales detalladas de detección. La regla resumida:
 
 > Si implementar la solicitud requeriría cambios en **folio-assistant**
@@ -261,7 +261,7 @@ propuesta tenga algo con qué contrastarse.
 Cuando una solicitud se clasifica como solicitud de funcionalidad (*feature request*), el agente ingresa al
 **flujo de trabajo de requisitos CRDM**
 ([documentación completa](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/process/crdm-requirements.bpmn)).
 
 El flujo de trabajo de solicitudes de funcionalidad es donde este documento de arnés aporta el mayor
 valor, porque describe un comportamiento que antes era implícito. Los
@@ -270,7 +270,7 @@ flujo de trabajo de requisitos existía únicamente como conversación ad-hoc.
 
 ### Cómo ingresa el agente a CRDM
 
-La lógica de detección se encuentra en [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+La lógica de detección se encuentra en [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 Tres escenarios:
 
 **Nueva sesión, la primera solicitud es una funcionalidad:**
@@ -396,12 +396,12 @@ con sus fuentes autorizadas.
 | Barrido de inicio de sesión | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Protocolo de beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Disciplina de commits y PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
-| Ingesta de documentos | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| Autoría de contenido (paper) | habilidades authoring-math | `skill_list` → `authoring-math` |
+| Autoría de contenido (document) | habilidades folio-document-adapter | `skill_list` → `folio-document-adapter` |
+| Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
+| Ingesta de documentos | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Despacho y coordinación | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Tipos de contenido y adaptadores | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | Autoría de diagramas BPMN | habilidad `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |

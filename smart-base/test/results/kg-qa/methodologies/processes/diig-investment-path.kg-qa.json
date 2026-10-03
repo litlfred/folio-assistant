@@ -5,29 +5,19 @@
     "id": "Process_DIIG",
     "path": "methodologies/processes/diig-investment-path.bpmn"
   },
-  "source_hash": "sha256:68983a41b59e438c7d6d13bfc3d118a0798ba0489f23ca17e6405a26c081230d",
+  "source_hash": "sha256:891df9b9d26ed07590545e5e3f6ce4b8a11009d9b453d03a5265ef2adbe94b13",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
       "findings": []
     },
     "raci-single-accountable": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "raci-accountable-not-consulted": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "convention-ref-resolves": {
       "result": "n/a",
@@ -95,39 +85,24 @@
       "findings": []
     },
     "lane-binds-role": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "variable-performer-declared-alone": {
       "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
-        }
-      ]
+      "result": "n/a",
+      "findings": []
     },
     "call-activity-resolves": {
       "result": "n/a",
@@ -171,9 +146,9 @@
     }
   },
   "totals": {
-    "pass": 12,
+    "pass": 14,
     "fail": 1,
-    "n/a": 7,
-    "unknown": 5
+    "n/a": 10,
+    "unknown": 0
   }
 }

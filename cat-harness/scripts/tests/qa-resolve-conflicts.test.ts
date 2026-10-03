@@ -12,16 +12,19 @@
 
 import { afterAll, describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { isAbsolute, join, relative } from "node:path";
 
 import {
   generatorFor,
   plan,
+  provisionalSide,
   scanConflict,
   scanDocument,
+  takeProvisionalSide,
   unmergedPaths,
+  unmergedStages,
   type SideScan,
 } from "../qa-resolve-conflicts.ts";
 
@@ -116,6 +119,16 @@ describe("the guard refuses what regeneration would destroy", () => {
     const [o] = plan(dir, QA, unmergedPaths(dir));
     expect(o!.action).toBe("refuse");
     expect(o!.reason).toContain("not valid JSON");
+  });
+
+  test("a non-JSON file INSIDE the qa graph is skipped, not refused as unreadable", () => {
+    // #1811 / #1830, 2026-10-02: `test/results/README.md` was refused as "not
+    // valid JSON", and the refusal aborted the whole merge.
+    const path = `${QA}README.md`;
+    const dir = conflicted([{ path, ours: "# results\n\nours\n", theirs: "# results\n\ntheirs\n" }]);
+    const [o] = plan(dir, QA, unmergedPaths(dir));
+    expect(o!.action).toBe("skip");
+    expect(o!.reason).toContain("not a JSON sidecar");
   });
 
   test("a conflict OUTSIDE the declared qa graph is left alone", () => {
@@ -246,5 +259,77 @@ describe("the qa directory is resolved, not assembled", () => {
     const [o] = plan(dir, "cat-harness/test/results/", unmergedPaths(dir));
     expect(o!.action).not.toBe("skip");
     expect(o!.action).toBe("resolve");
+  });
+});
+
+/**
+ * A modify/delete conflict on one sidecar: one side changes it, the other
+ * deletes it. `ours` is the branch being merged INTO, `theirs` the base
+ * merged in (main, under `merge-base.ts`). Issue #1854.
+ */
+function modifyDelete(path: string, deletedBy: "ours" | "theirs", content: string): string {
+  const dir = mkdtempSync(join(tmpdir(), "qa-resolve-md-"));
+  dirs.push(dir);
+  const g = (...args: string[]) => execFileSync("git", args, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
+  g("init", "-q", "-b", "branch");
+  g("config", "user.email", "t@example.invalid");
+  g("config", "user.name", "t");
+  mkdirSync(join(dir, path, ".."), { recursive: true });
+  writeFileSync(join(dir, path), "{}\n");
+  g("add", ".");
+  g("commit", "-qm", "base");
+  g("checkout", "-q", "-b", "main");
+  if (deletedBy === "theirs") g("rm", "-q", path);
+  else writeFileSync(join(dir, path), content);
+  g("commit", "-qam", "main side");
+  g("checkout", "-q", "branch");
+  if (deletedBy === "ours") g("rm", "-q", path);
+  else writeFileSync(join(dir, path), content);
+  g("commit", "-qam", "branch side");
+  try {
+    g("merge", "--no-commit", "main");
+  } catch {
+    /* the conflict is the point */
+  }
+  return dir;
+}
+
+describe("a modify/delete sidecar takes the base's side, never a side that is not there (#1854)", () => {
+  const path = `${QA}kg-qa/skills/x.kg-qa.json`;
+
+  test("the stage set decides: both present → ours; one missing → the base's copy or its deletion", () => {
+    expect(provisionalSide(new Set([1, 2, 3]))).toBe("ours");
+    expect(provisionalSide(new Set([1, 3]))).toBe("theirs");
+    expect(provisionalSide(new Set([1, 2]))).toBe("delete");
+  });
+
+  test("deleted on the branch, changed on the base: the base's copy, where `checkout --ours` threw", () => {
+    const dir = modifyDelete(path, "ours", sidecar("fail", false));
+    expect(unmergedPaths(dir)).toEqual([path]);
+    expect([...unmergedStages(dir, path)].sort()).toEqual([1, 3]);
+    // The crash, reproduced: what the resolver did before.
+    expect(() => execFileSync("git", ["checkout", "--ours", "--", path], { cwd: dir, stdio: "pipe" })).toThrow();
+    expect(plan(dir, QA, [path])[0]!.action).toBe("resolve");
+    takeProvisionalSide(dir, path);
+    expect(readFileSync(join(dir, path), "utf-8")).toBe(sidecar("fail", false));
+    expect(unmergedPaths(dir)).toEqual([]);
+  });
+
+  test("deleted on the base, changed on the branch: the deletion is taken and staged", () => {
+    const dir = modifyDelete(path, "theirs", sidecar("warn", false));
+    expect([...unmergedStages(dir, path)].sort()).toEqual([1, 2]);
+    takeProvisionalSide(dir, path);
+    expect(existsSync(join(dir, path))).toBe(false);
+    expect(unmergedPaths(dir)).toEqual([]);
+    expect(execFileSync("git", ["diff", "--cached", "--name-status"], { cwd: dir, encoding: "utf-8" })).toContain(`D\t${path}`);
+  });
+
+  test("the guard still runs first: a branch-side AGENT verdict the base deleted is refused, not dropped", () => {
+    // The falsification: taking the base's deletion would destroy the
+    // attestation, so `plan` must refuse before any side is taken.
+    const dir = modifyDelete(path, "theirs", sidecar("warn", true));
+    const [o] = plan(dir, QA, [path]);
+    expect(o!.action).toBe("refuse");
+    expect(o!.reason).toContain("agent");
   });
 });

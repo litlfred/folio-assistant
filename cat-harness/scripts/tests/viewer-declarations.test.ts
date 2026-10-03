@@ -114,8 +114,10 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
   for (const root of instanceRootsIn(REPO)) {
     const p = declarationPathIn(root);
     if (!p) continue;
-    const decl = JSON.parse(readFileSync(p, "utf-8")) as { directories?: Dir[] };
-    for (const dir of decl.directories ?? []) dirs.push({ root, instance: root.split("/").pop()!, dir });
+    const decl = JSON.parse(readFileSync(p, "utf-8")) as { name?: string; directories?: Dir[] };
+    // The DECLARED name, not the directory's: the checkout's root instance
+    // (placement PR0) sits in a directory named after the clone.
+    for (const dir of decl.directories ?? []) dirs.push({ root, instance: decl.name ?? root.split("/").pop()!, dir });
   }
 
   test("the corpus is non-empty, so the assertions below are not vacuous", () => {
@@ -128,7 +130,8 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     // It survives only where a page the platform draws cannot say it — each
     // with its reason — and an entry anywhere else is the arrow coming back.
     const ELSEWHERE: Record<string, string> = {
-      "cat-harness/fsh-guts": "never published — no published artefact may carry a path to it",
+      // Declared by the checkout's ROOT instance since placement PR0 (bean `ejye`).
+      "folio-assistant/fsh-guts": "never published — no published artefact may carry a path to it",
       "who-iris/who-iris-catalogue": "drawn by who-iris's own generator, which declares no tools graph",
       "folio-assistant-core/glossary": "drawn by folio-assistant-core's own generator",
     };
@@ -146,13 +149,14 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     };
     expect(resolveFor("cat-harness", "tools")).toBe("cat-harness/docs/tools/index.md");
     expect(resolveFor("cat-harness", "processes")).toBe("cat-harness/docs/processes/index.md");
-    expect(resolveFor("cat-harness", "who-iris-library")).toBe("cat-harness/docs/cat-harness/library/who-iris/index.html");
+    // `who-iris-library` was cat-harness's MIRROR of who-iris's own entry; the
+    // mirror is gone (placement PR0) and the owner's entry resolves the same page.
     expect(resolveFor("who-iris", "library")).toBe("cat-harness/docs/cat-harness/library/who-iris/index.html");
     expect(resolveFor("cat-harness", "skills")).toBe("cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html");
-    expect(resolveFor("cat-harness", "beans")).toBe("cat-harness/docs/beans/index.html");
+    expect(resolveFor("folio-assistant", "beans")).toBe("cat-harness/docs/beans/index.html");
     // An index page that merely LISTS a directory is not its viewer: the
     // docs-auto processes pages draw `cat-harness/processes` too, and lose.
-    expect(resolveFor("cat-harness", "fsh-guts")).toBe("cat-harness/docs/fsh-guts/index.md");
+    expect(resolveFor("folio-assistant", "fsh-guts")).toBe("cat-harness/docs/fsh-guts/index.md");
   });
 
   test("every resolved page exists", () => {

@@ -125,6 +125,7 @@
  * a geometry, not a licence to remove a non-colour channel.
  */
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import { nodeKind } from "./node-kind.js";
 
@@ -376,8 +377,8 @@ export const ThemePartialPaletteSchema = z.object(themePaletteShape).strict().pa
 
 export const ThemeRefSchema = z
   .object({
-    /** Declared instance name. Absent means the citing instance's own. */
-    instance: z.string().min(1).optional(),
+    /** The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own. */
+    instance: RepoFullNameSchema.optional(),
     themeId: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
   })
   .strict();
@@ -707,6 +708,28 @@ export function missingLayouts(value: unknown): ThemeLayout[] {
   return THEME_LAYOUTS.filter((l) => !(l in layouts));
 }
 
+/**
+ * The HUE of a `#rgb` / `#rrggbb` colour, in whole degrees 0–359 — or
+ * `undefined` when the value is not a hex colour or has no hue (a grey).
+ *
+ * Bean `v8n5`. A harness tile and its navbar entry are toned by a hue angle
+ * (`--fa-tile-tone`), and a theme's palette is hex. This is the one bridge
+ * between the two, so a tile can take its tone from its instance's own theme
+ * accent rather than from a hue written down a second time. A grey has no hue
+ * to take, which is a different answer from red (0°), hence `undefined`.
+ */
+export function hexHue(hex: string): number | undefined {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return undefined;
+  const h = m[1]!.length === 3 ? m[1]!.split("").map((c) => c + c).join("") : m[1]!;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255) as [number, number, number];
+  const max = Math.max(r, g, b);
+  const d = max - Math.min(r, g, b);
+  if (d === 0) return undefined;
+  const raw = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return ((Math.round(raw * 60) % 360) + 360) % 360;
+}
+
 /** The CSS custom-property block a theme contributes, as `--fa-sticky-*` roles. */
 export function themeCssVars(theme: ResolvedTheme): string {
   const p = theme.palette;
@@ -727,6 +750,66 @@ export function themeCssVars(theme: ResolvedTheme): string {
   // the laptop's geometry stayed.
   if (theme.backdrop) rows.push(`--fa-sticky-scrim: ${theme.backdrop.scrim};`);
   return rows.join("\n  ");
+}
+
+/**
+ * A WEBPAGE theme's roles, as the custom properties the docs site already reads.
+ *
+ * Bean `7h3u`, on the owner's 2026-09-30 ruling to wire instance webpage themes
+ * at the PLATFORM layer so every ingested IG gets one, rather than in one
+ * instance's page generator.
+ *
+ * ## Why this is not {@link themeCssVars} with a different prefix
+ *
+ * That function emits `--fa-sticky-*`, and `gen-themes-css.ts` says why in its
+ * own words: *"A `webpage` theme shares the geometry but not this stylesheet:
+ * its CSS is the site's, not the note board's. Adding it here would emit sticky
+ * properties for a surface that has no stickies."* Renaming the prefix would
+ * have produced `--fa-page-surface` and so on — correct-looking, and read by
+ * NOTHING, because the site's stylesheet does not use those names.
+ *
+ * ## The names are chosen by MEASUREMENT, not by symmetry
+ *
+ * `docs-ui.css` carries 33 `var(--x, #literal)` sites, and its own header says
+ * why they are all fallbacks today:
+ *
+ * > just-the-docs is Sass and defines NONE of `--sidebar-color`,
+ * > `--border-color` or `--link-color`, so every one of those resolves to its
+ * > literal fallback, always.
+ *
+ * So those three names are **already read and never defined** — declaring them
+ * is the one intervention that changes what the page paints without touching a
+ * rule. Measured 2026-09-30: `--link-color` 18 sites, `--sidebar-color` 9,
+ * `--border-color` 2.
+ *
+ * | site variable | role | why |
+ * |---|---|---|
+ * | `--sidebar-color` | `accent` | The LHS nav is the surface the owner asked to KEEP on the left while taking WHO's styling, and in the source that chrome is `--navbar-bg-color`. |
+ * | `--link-color` | `accent` | Links carry the brand hue on the IG too. |
+ * | `--border-color` | `edge` | `edge` is documented as *"Border and rule colour"*; this is the site's name for the same thing. |
+ *
+ * `surface` and `ink` are deliberately **not** emitted. The site has no
+ * undefined variable for page background or body text — those are just-the-docs'
+ * compiled Sass — so declaring a name nothing reads would be the
+ * correct-looking-and-inert failure this function exists to avoid. They stay in
+ * the theme, where a later change that DOES make the site consume them can pick
+ * them up.
+ *
+ * ## What this therefore does and does not do
+ *
+ * It rethemes the surfaces **this site owns**. It does not retheme
+ * just-the-docs' own compiled chrome, and no amount of custom properties can
+ * until that Sass is taught to read them — which is the *"106 hardcoded hex
+ * colours against 22 custom properties"* problem this module's own header
+ * records, and a separate job from this one.
+ */
+export function pageThemeCssVars(theme: ResolvedTheme): string {
+  const p = theme.palette;
+  return [
+    `--sidebar-color: ${p.accent};`,
+    `--link-color: ${p.accent};`,
+    `--border-color: ${p.edge};`,
+  ].join("\n  ");
 }
 
 /**

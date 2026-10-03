@@ -22,7 +22,7 @@ name: Build Paper Assistant Image
 #
 # TRIGGERS, ACTUAL: `workflow_dispatch` only — the push and twice-weekly
 # triggers described above are NOT wired. Unlike the folio-side workflows,
-# this one CAN run here (`adapters/mcp-server/Dockerfile` is platform code),
+# this one CAN run here (`cat-harness-tools/adapters/mcp-server/Dockerfile` is platform code),
 # and the image it builds is the one publish/lean-build/blueprint all use.
 # So it is a real gap, not a split artefact — but wiring it starts pushing to
 # GHCR, which the folio server auto-deploys, so it needs an owner's decision.
@@ -46,6 +46,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          submodules: true
 
       # ubuntu-latest ships with ~14 GB free disk; the paper-assistant
       # image build needs more once we add TeX Live full, Mathlib
@@ -98,7 +100,7 @@ jobs:
           # owner decision: either the workflow belongs in the content
           # repo, or the Dockerfile is restructured to build from
           # folio-assistant. Not guessed at here.
-          file: adapters/mcp-server/Dockerfile
+          file: cat-harness-tools/adapters/mcp-server/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

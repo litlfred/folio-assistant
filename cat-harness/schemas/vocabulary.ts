@@ -18,9 +18,9 @@
  *
  * ## What is NOT here, deliberately
  *
- * **The graph kinds.** `ToolGraph`, `KGraph`, `BeanGraph` and the rest
- * already carry a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it
- * from there. Restating them here would be a second answer to one question,
+ * **The graph kinds.** `tools`, `cat-harness`, `beans` and the rest are
+ * `GraphKind` individuals, not classes (bean `3r47`), and each already carries
+ * a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
  * free to disagree — the drift this repository keeps paying for. A gloss below
  * for a term the registry already describes is a bug, and the completeness
  * test says so.
@@ -100,7 +100,31 @@ export interface TermGloss {
   readonly gloss: string;
   /** Site-relative page carrying the full treatment, when one exists. */
   readonly seeAlso?: string;
+  /**
+   * The standard property that replaced this term, as a CURIE over
+   * {@link REPLACEMENT_PREFIXES} — a CURIE rather than an IRI because
+   * `namespaces.ts` imports this module, so the namespace constants cannot be
+   * imported back. Set when a term minted
+   * here turned out to restate a published one (owner, 2026-09-30, bean
+   * `xsqm`: "emphasize preexisting standards … now align"). The term stays in
+   * the vocabulary, `owl:deprecated` and `dcterms:isReplacedBy` this IRI, so
+   * data already carrying the old IRI still resolves to a definition that
+   * says where to go — a retired IRI that 404s is a broken link someone else
+   * owns.
+   */
+  readonly replacedBy?: `${keyof typeof REPLACEMENT_PREFIXES}:${string}`;
 }
+
+/**
+ * The prefixes a `replacedBy` may use, and what each names. `processes` is
+ * bootstrap's BPMN extension namespace, resolved by the reader
+ * (`BOOTSTRAP_PROCESSES_NS`), since it moves with bootstrap's release.
+ */
+export const REPLACEMENT_PREFIXES = {
+  dcterms: "http://purl.org/dc/terms/",
+  bpmn: "http://www.omg.org/spec/BPMN/20100524/MODEL#",
+  processes: undefined,
+} as const;
 
 /**
  * The node classes — the things the graph has instances OF.
@@ -111,7 +135,26 @@ export interface TermGloss {
  * vocabulary that disagrees with the file agents read first is worse than no
  * vocabulary.
  */
+/**
+ * One class per bootstrap term, named as the term with its spaces removed
+ * (`Node Schema` → `NodeSchema`), in bootstrap's layer and with bootstrap's
+ * sentence. No `seeAlso`: a bootstrap term links to nothing above it.
+ */
+const BOOTSTRAP_CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = Object.fromEntries(
+  (Object.entries(BOOTSTRAP_TERMS) as [string, string][]).map(([term, gloss]) => [
+    term.replace(/\s+/g, ""),
+    { layer: "bootstrap", gloss },
+  ]),
+);
+
 export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
+  // bootstrap's defined terms, every one, derived rather than listed: a term
+  // bootstrap defines is minted in bootstrap's namespace and glossed with
+  // bootstrap's own sentence (owner, 2026-09-30, bean `xsqm`: the `bs:`
+  // vocabulary is exactly bootstrap's terms). Ten of them used to be written
+  // out here by hand and thirteen were missing, so `bootstrap:Node` could not
+  // be minted at all while `bootstrap:Directory` — no bootstrap term — was.
+  ...BOOTSTRAP_CLASS_GLOSSES,
   FshGutsNode: {
     layer: "harness",
     gloss:
@@ -144,12 +187,6 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A repository SUSHI will build — FSH compiled to a FHIR implementation guide. Minted here because SUSHI publishes no logical model for its own config; this is our name for the membership, not a claim to define SUSHI.",
   },
 
-  Actor: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.Actor,
-  },
   Convention: {
     layer: "harness",
     gloss:
@@ -162,11 +199,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
     seeAlso: "/crdm-methodology.html",
   },
-  Role: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.Role,
+  Lane: {
+    gloss:
+      "A swimlane of one BPMN process: part of that process, binding the Role " +
+      "that acts in it (`bindsRole`). Not itself a role — a role is a " +
+      "registry node, and many lanes in many processes bind it (#1168, B9b).",
   },
   LaneUsage: {
     gloss:
@@ -176,33 +213,9 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "regenerated wholesale and never retired, while a concept is a term " +
       "somebody may have cited.",
   },
-  Skill: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.Skill,
-  },
   SkillPackage: {
     gloss: "A directory of skills shipped and versioned together.",
     seeAlso: "/skills.html",
-  },
-  Process: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.Process,
-  },
-  ProcessNode: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.ProcessNode,
-  },
-  SequenceFlow: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.SequenceFlow,
   },
   Tool: {
     // The harness's own term. Bootstrap defined it until v3 of its terms; the
@@ -230,37 +243,6 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   Capability: {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
   },
-  Directory: {
-    layer: "bootstrap",
-    // bootstrap's word for this is Subgraph: a named directory of a Knowledge
-    // Graph. The class keeps its name, so no published IRI moves.
-    gloss: BOOTSTRAP_TERMS.Subgraph,
-  },
-  Asset: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.Asset,
-  },
-  GraphKind: {
-    layer: "bootstrap",
-    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
-    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
-    gloss: BOOTSTRAP_TERMS.GraphKind,
-  },
-  // `Harness`, not `CatHarness`, and `cat:` not `bs:`. The owner, 2026-09-19:
-  // "but why bs:catharness? shouldnt that be in cat?... and maybe we name the
-  // type scheme harness so it is more readable cat:harness". Right on both:
-  // the declaration is the harness's own object, and `cat:CatHarness`
-  // stuttered the layer into the term.
-  Harness: {
-    // Bootstrap defines it, so bootstrap owns it, IRI included (terms v3,
-    // 2026-09-29). It was harness-layer with bootstrap's definition — a term
-    // published by one layer and minted by another, which the layering rule
-    // forbids. No `seeAlso`: a bootstrap term links to nothing above it.
-    layer: "bootstrap",
-    gloss: BOOTSTRAP_TERMS.Harness,
-  },
   Image: {
     layer: "core",
     gloss: "A declared picture belonging to an instance, carrying its role, its layout and any text region.",
@@ -280,6 +262,14 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "core",
     gloss:
       "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+  },
+  // A DOCUMENT class, not a kind class: it types the published fsh-guts
+  // export, as RoleGraph and PreviewGraph type theirs. It was defined only
+  // through the `fsh-guts` kind's per-kind class until those went (bean
+  // `3r47`); the document still needs its type defined.
+  FshGutsGraph: {
+    gloss:
+      "The published export of an instance's fsh-guts tree: deprecated and throwaway structured content, reachable by name only.",
   },
   PreviewGraph: {
     layer: "core",
@@ -301,7 +291,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
  */
 export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Structure ────────────────────────────────────────────────────────
-  partOf: { gloss: "The node this one belongs to." },
+  partOf: { gloss: "The node this one belongs to.", replacedBy: "dcterms:isPartOf" },
   inPackage: { gloss: "The skill package a skill ships in." },
   inSubgraph: {
     gloss:
@@ -312,6 +302,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "value belongs to no declared directory — vocabulary nodes are minted from the namespace " +
       "rather than from any file — and that absence is reported as its own state rather than " +
       "folded into a default.",
+    replacedBy: "dcterms:isPartOf",
   },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
@@ -348,14 +339,15 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   nodeKind: { gloss: "Which kind of node this is, where the type alone is not specific enough." },
   graphKind: { gloss: "The kind of graph a directory declares it holds." },
-  holdsGraph: { gloss: "A graph kind found in this directory." },
+  holdsGraph: { gloss: "A graph kind found in this directory.", replacedBy: "dcterms:type" },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
   scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
   dependents: {
     gloss:
-      "Whether an instance depending on this one materialises its own copy of a declared directory. " +
-      "Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. " +
+      "Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — " +
+      "and whether a dependent gets one created is its graph kind's `perInstance`.",
   },
 
   // ── The trashcan ─────────────────────────────────────────────────────
@@ -400,7 +392,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   judgementOnly: { gloss: "Whether this role acts by judgement, so no skill can be named for its tasks." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
-  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168)." },
+  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168).", replacedBy: "processes:role" },
   hasLaneUsage: {
     gloss:
       "One appearance of this glossary concept as a swimlane in one process. " +
@@ -412,11 +404,9 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   ofConcept: { gloss: "The glossary concept this lane usage is an appearance of." },
   inProcess: { gloss: "The BPMN process this lane usage appears in." },
   performerVaries: {
-    // `bootstrap`, with `Role`, not `harness` with the glossary machinery: it
-    // is a fact a LANE declares about itself, and the only diagram declaring
-    // it is bootstrap's own. A term in the layer above would make bootstrap's
-    // diagram depend on the harness to say what it means.
-    layer: "bootstrap",
+    // `harness` since 2026-09-30 (bean `xsqm`): no bootstrap diagram declares
+    // it — the glossary export is its one user — and bootstrap's vocabulary is
+    // exactly bootstrap's defined terms, which this is not.
     gloss:
       "Whether this lane declines to name a persona because its performer is " +
       "whoever invoked the process. A term so marked has no definition, and " +
@@ -426,13 +416,19 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   roleName: { gloss: "The role's own name, as a lane binds it." },
   mayTakeRole: { gloss: "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8)." },
   satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
-  performedBy: { gloss: "The role that performs this activity." },
-  implementedBy: { gloss: "The skill that implements this activity." },
+  performedBy: { gloss: "The role that performs this activity: the registry Role its lane binds." },
+  inLane: { gloss: "The BPMN lane this activity sits in, a Lane node of the same process." },
+  implementedBy: { gloss: "The skill that implements this activity.", replacedBy: "processes:skill" },
   assignments: { gloss: "The role-to-lane bindings a diagram carries." },
   permissionName: { gloss: "A permission's name, as an actor holds it." },
   hasCapability: { gloss: "A capability this actor's environment provides." },
   providesCapability: { gloss: "A capability this node makes available." },
   requiresCapability: { gloss: "A capability this node needs before it can run." },
+  setupBySkill: {
+    gloss:
+      "The skill that explains how to set up this capability — install, configure, verify. " +
+      "A pointer from an environment probe to a procedure, not a merge of the two kinds.",
+  },
   fallbackToCapability: {
     gloss:
       "The capability that stands in for this one when it is absent. It must not " +
@@ -462,7 +458,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   maintainedBy: { gloss: "The tool that generates and keeps this artefact current." },
 
   // ── Schemas and the standards a graph conforms to ────────────────────
-  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process." },
+  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process.", replacedBy: "dcterms:conformsTo" },
   validator: { gloss: "The schema node that runtime-validates a node of this kind." },
   validatorRef: { gloss: "The `module#Export` a kind names as its validator, where no schema node for it is in this graph." },
   validatorNotApplicable: { gloss: "Why no runtime validator applies to this kind, and what grades it instead." },
@@ -476,10 +472,10 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Process ──────────────────────────────────────────────────────────
   bpmnType: { gloss: "The BPMN element type a process node was read from." },
   startNode: { gloss: "The node a process begins at." },
-  incoming: { gloss: "A sequence flow arriving at this node." },
-  outgoing: { gloss: "A sequence flow leaving this node." },
-  from: { gloss: "The node a sequence flow leaves." },
-  to: { gloss: "The node a sequence flow arrives at." },
+  incoming: { gloss: "A sequence flow arriving at this node.", replacedBy: "bpmn:incoming" },
+  outgoing: { gloss: "A sequence flow leaving this node.", replacedBy: "bpmn:outgoing" },
+  from: { gloss: "The node a sequence flow leaves.", replacedBy: "bpmn:sourceRef" },
+  to: { gloss: "The node a sequence flow arrives at.", replacedBy: "bpmn:targetRef" },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
   decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
   hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },
@@ -566,38 +562,9 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {
-  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? GRAPH_KIND_TYPE_LAYERS[name] ?? "harness";
+  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
 }
 
-/**
- * Which layer owns each graph kind's TYPE, keyed by the type's local name.
- *
- * The ONE table. It was two, and they disagreed (bean `r3gy`, D1): this file
- * gave every graph kind `harness`, so `termIri("SchemaGraph")` minted a
- * cat-harness IRI, while `ns-export.ts` kept its own map publishing `schemas`
- * as bootstrap's. A term published by one layer and minted by another is the
- * leak the layering rule forbids. `ns-export` now asks {@link termLayer}.
- *
- * Bootstrap's rows are the kinds in `BOOTSTRAP_GRAPH_KINDS` (`graph.ts`), plus
- * `KGraph`, the kind of a Knowledge Graph itself; `graph.test.ts` holds the two
- * lists together. The `core` rows are the folio's own furniture, which the
- * owner named as NOT bootstrap: "we shouldnt need voicegraph or librarygrph or
- * previewgrapjh in bootstrap!!". An absent kind is `harness`, the safe
- * direction, for the reason given on `termLayer`.
- */
-export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
-  KGraph: "bootstrap",
-  SkillGraph: "bootstrap",
-  SchemaGraph: "bootstrap",
-  ScenarioGraph: "bootstrap",
-  ProcessGraph: "bootstrap",
-  ModelGraph: "bootstrap",
-  SwimlaneGlossaryGraph: "bootstrap",
-  VoiceGraph: "core",
-  LibraryGraph: "core",
-  UploadsGraph: "core",
-  TodoGraph: "core",
-  TodoItemsGraph: "core",
-  TodoFeedbackGraph: "core",
-  ReviewVerdictsGraph: "core",
-};
+// There is no per-kind class, so no layer table for one: a graph kind states
+// its own layer (`GraphKindDef.layer`) and is named by its individual,
+// `<ns>graphKind/<name>` (owner, 2026-09-30, bean `3r47`).

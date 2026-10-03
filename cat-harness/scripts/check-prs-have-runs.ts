@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Which open pull requests have NO CI run on their head?
+ * Which open pull requests have no CI run on their head — or none that RAN?
  *
  * @module scripts/check-prs-have-runs
  *
@@ -34,12 +34,25 @@
  * "no run", which a reader disproves in one click — the opposite error,
  * staying silent, is the one that costs.
  *
- * ## Three states, and `unknown` outranks a finding
+ * ## A run that EXISTS is not a gate that RAN
+ *
+ * Bean `1acg`, 2026-10-03. This sweep asked "is there a run", and a
+ * `pull_request` run that completes `action_required` is one: created, never
+ * started, no job run, no gate evaluated. Measured on #1819 and #1808 — three
+ * such runs each, and the sweep marked both `✓ has-run`.
+ *
+ * So `blocked` is a fourth state and a FINDING. It is kept apart from `no-run`
+ * because the two call for opposite actions: an absent run may be a dropped
+ * event worth dispatching, while this one is explained — a `github-actions[bot]`
+ * actor on a non-fork head — and dispatching it is what masked it. The fix is
+ * issue #1829 D1.
+ *
+ * ## Four states, and `unknown` outranks a finding
  *
  * | verdict | means | exit |
  * |---|---|---|
- * | `clean` | every eligible head has a run | 0 |
- * | `findings` | at least one eligible head has none | 1 |
+ * | `clean` | every eligible head has a run that EXECUTED | 0 |
+ * | `findings` | an eligible head has no run (`no-run`) or none that ran (`blocked`) | 1 |
  * | `unknown` | the list or a run query could not be read | 2 |
  *
  * A sweep blind on one pull request has not cleared the others, so a single
@@ -51,7 +64,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { runsForHead } from "./check-head-has-run.js";
+import { executed, runsForHead } from "./check-head-has-run.js";
 import { classifyResponse, withBackoff } from "../src/core/retry.js";
 import { detectRepoUrl, ownerRepo } from "../src/core/git-refs.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
@@ -64,7 +77,14 @@ export interface PrRow {
   sha: string;
   /** Head commit's committer date — the proxy for push time. */
   headAt?: string;
-  state: "has-run" | "no-run" | "too-new" | "unknown";
+  /**
+   * `blocked` is bean `1acg`: the head HAS runs and not one of them executed.
+   * It is a separate state from `no-run` because the remedy differs — a
+   * dropped event may be worth dispatching, while this one is explained and
+   * dispatching it is what hid it — and separate from `has-run` because
+   * counting it there is the false green this sweep exists to prevent.
+   */
+  state: "has-run" | "blocked" | "no-run" | "too-new" | "unknown";
   detail?: string;
 }
 
@@ -73,7 +93,10 @@ export type Verdict = "clean" | "findings" | "unknown";
 /** The verdict a set of rows implies. `unknown` outranks a finding. */
 export function verdictFor(rows: PrRow[]): Verdict {
   if (rows.some((r) => r.state === "unknown")) return "unknown";
-  return rows.some((r) => r.state === "no-run") ? "findings" : "clean";
+  // `blocked` is a finding for the same reason `no-run` is: no gate was
+  // evaluated. Leaving it out of this line was the whole defect — the sweep
+  // called an all-`action_required` head clean because a run object existed.
+  return rows.some((r) => r.state === "no-run" || r.state === "blocked") ? "findings" : "clean";
 }
 
 /**
@@ -93,6 +116,7 @@ export function isEligible(headAt: string | undefined, minAgeMinutes: number, no
 /** Render the report a workflow puts into an issue or a comment. */
 export function render(rows: PrRow[], opts: { minAge: number }): string {
   const bad = rows.filter((r) => r.state === "no-run");
+  const blocked = rows.filter((r) => r.state === "blocked");
   const unknown = rows.filter((r) => r.state === "unknown");
   const tooNew = rows.filter((r) => r.state === "too-new");
   const lines: string[] = [];
@@ -116,6 +140,32 @@ export function render(rows: PrRow[], opts: { minAge: number }): string {
     lines.push(
       "Dispatch the workflow against the branch and read that run. Re-pushing " +
         "may not produce one — on 2026-09-20 two consecutive pushes were both dropped.",
+    );
+    lines.push("");
+  }
+  if (blocked.length > 0) {
+    lines.push(`## ${blocked.length} whose runs EXIST and did not execute`);
+    lines.push("");
+    lines.push(
+      "These are the dangerous ones. Every run on the head completed " +
+        "`action_required` — created, never started, no job run — so the head " +
+        "reads as a finished check set and has been judged by nothing. " +
+        "Bean `1acg`.",
+    );
+    lines.push("");
+    lines.push("| PR | head | pushed | runs |");
+    lines.push("|---|---|---|---|");
+    for (const r of blocked) {
+      lines.push(
+        `| #${r.number} — ${r.title.slice(0, 60)} | \`${r.sha.slice(0, 10)}\` | ${r.headAt ?? "?"} | ${r.detail ?? "?"} |`,
+      );
+    }
+    lines.push("");
+    lines.push(
+      "Do NOT dispatch these to clear them: a dispatch resolves " +
+        "`refs/heads/<branch>` and produces a green that reads like the PR's " +
+        "own gates. The fix is a push credential whose pushes trigger them — " +
+        "issue #1829 D1, bean `0qjq`.",
     );
     lines.push("");
   }
@@ -194,13 +244,29 @@ if (import.meta.main) {
         continue;
       }
       const v = await runsForHead(slug, pr.head.sha);
+      // Bean `1acg`. "There is a run" and "a gate ran" are different claims,
+      // and this sweep only ever asked the first. A head whose every run
+      // completed `action_required` has runs and has been judged by nothing.
+      const anyExecuted = v.state === "has-run" && v.runs.some(executed);
       rows.push({
         number: pr.number,
         title: pr.title,
         sha: pr.head.sha,
         headAt,
-        state: v.state === "has-run" ? "has-run" : v.state === "no-run" ? "no-run" : "unknown",
-        detail: v.state === "cannot-ask" ? v.reason : undefined,
+        state:
+          v.state === "has-run"
+            ? anyExecuted
+              ? "has-run"
+              : "blocked"
+            : v.state === "no-run"
+              ? "no-run"
+              : "unknown",
+        detail:
+          v.state === "cannot-ask"
+            ? v.reason
+            : v.state === "has-run" && !anyExecuted
+              ? `${v.runs.length} run(s), none executed`
+              : undefined,
       });
     }
   } catch (e) {
@@ -220,7 +286,7 @@ if (import.meta.main) {
   if (outFile) writeFileSync(outFile, report);
 
   for (const r of rows) {
-    const mark = { "has-run": "✓", "no-run": "✗", "too-new": "·", unknown: "?" }[r.state];
+    const mark = { "has-run": "✓", blocked: "!", "no-run": "✗", "too-new": "·", unknown: "?" }[r.state];
     console.log(`  ${mark} #${String(r.number).padEnd(5)} ${r.state.padEnd(9)} ${r.title.slice(0, 56)}`);
   }
   const verdict = verdictFor(rows);

@@ -29,7 +29,7 @@ Every field on a waiver exists to keep that true.
 
 ## Landed in this change
 
-- `skills/folio-core/confirmation-waiver.md` — five required fields, the closed
+- `skills/conduct/conduct-core/confirmation-waiver.md` — five required fields, the closed
   gate vocabulary, the three-state read, and the four things an agent may never
   do (grant itself one, widen one, infer one from tone, treat one as a reason
   to skip the work).
@@ -56,7 +56,7 @@ available.
 
 - [~] The skill exists; **five of the six gated skills point at it.**
       `confirmation-waiver`'s own gate table lists `process-reentry` →
-      [`process-state`](../../cat-harness/skills/workflow/process-state.md),
+      [`process-state`](../../cat-harness/skills/process/workflow/process-state.md),
       and that skill carries no pointer to the waiver. Ticked as done until
       2026-09-24, which is what stopped anybody looking. The other five —
       `deletion-requires-confirmation`, `swarm-management`, `issue-working`,

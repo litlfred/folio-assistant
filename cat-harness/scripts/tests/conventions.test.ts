@@ -15,22 +15,26 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
-import { CONVENTION_GROUP, ConventionSchema, conventionsInForce } from "../../schemas/convention.ts";
+import { ConventionSchema, conventionsInForce } from "../../schemas/convention.ts";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { conventionsDir } from "../../schemas/skill-definitions-dir.ts";
+import { workflowFile, workflowFiles } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
-const DIAGRAMS = join(INSTANCE, "processes");
-const BOUND = join(DIAGRAMS, "code-change-review.bpmn");
+const BOUND = workflowFile(HARNESS, "code-change-review.bpmn");
 
 describe("absent binding means NONE, not all", () => {
   test("a diagram that binds nothing gives every step zero conventions", async () => {
     // THE WHOLE DESIGN. If this returned "all", the scoping would be
     // decoration and the bean's problem would be untouched.
-    const m = await loadProcessModel(join(DIAGRAMS, "voice-review.bpmn"));
+    const m = await loadProcessModel(workflowFile(HARNESS, "voice-review.bpmn"));
     const acts = [...m.nodes.values()].filter((n) => n.kind === "activity");
     expect(acts.length).toBeGreaterThan(0); // not vacuous
     expect(acts.filter((n) => n.conventions.length > 0)).toEqual([]);
@@ -78,7 +82,7 @@ describe("the union along the scope chain", () => {
 });
 
 describe("a convention is a declared KG node", () => {
-  const dir = join(REPO, ".claude", "skills", CONVENTION_GROUP);
+  const dir = conventionsDir(REPO)!;
 
   test("the group exists and holds some — otherwise everything below is vacuous", () => {
     expect(existsSync(dir)).toBe(true);
@@ -106,14 +110,14 @@ describe("every bound ref resolves to a convention that exists", () => {
     // The dangling-reference direction. A ref pointing at nothing is the
     // `blv9` shape — a link-shaped value that does not dereference — and it
     // would leave an agent told to follow a rule it cannot read.
-    const dir = join(REPO, ".claude", "skills", CONVENTION_GROUP);
+    const dir = conventionsDir(REPO)!;
     const known = new Set(
       readdirSync(dir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)),
     );
     const dangling: string[] = [];
     let bound = 0;
-    for (const f of readdirSync(DIAGRAMS).filter((f) => f.endsWith(".bpmn"))) {
-      const m = await loadProcessModel(join(DIAGRAMS, f));
+    for (const f of workflowFiles(HARNESS).filter((f) => f.endsWith(".bpmn")).map((p) => relative(HARNESS, p))) {
+      const m = await loadProcessModel(join(HARNESS, f));
       for (const n of m.nodes.values()) {
         for (const c of n.conventions) {
           bound++;

@@ -22,7 +22,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
 import { BEGIN, END, plan, TEMPLATES } from "../../../bootstrap-tools/scripts/subgraph-readmes.ts";
-import { harnessInstances, harnessPlan } from "../subgraph-readmes.ts";
+import { harnessInstances, harnessPlan, subdirDescriptions } from "../subgraph-readmes.ts";
 import { siteDir } from "../../schemas/cat-harness.ts";
 import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
@@ -43,7 +43,9 @@ test("over the real tree, every link in every generated README resolves", async 
     for (const m of region.matchAll(/\]\(([^)]+)\)/g)) {
       const l = m[1]!;
       if (/^[a-z]+:/.test(l) || l.startsWith("#")) continue;
-      if (!existsSync(join(dirname(file), l.split("#")[0]!))) broken.push(`${file}: ${l}`);
+      // A destination is a URL-encoded path (`linkTarget`), so decode it
+      // before asking the filesystem — a name with a space is a real file.
+      if (!existsSync(join(dirname(file), decodeURIComponent(l.split("#")[0]!)))) broken.push(`${file}: ${l}`);
     }
   }
   expect(broken).toEqual([]);
@@ -83,22 +85,20 @@ function processRepo(): string {
       name: "demo",
       title: "Demo",
       directories: [
-        { id: "processes", path: "processes/", graphKinds: ["processes"], dependents: "skip", title: "Processes", description: "The diagrams." },
+        { id: "processes", path: "processes/", graphKinds: ["processes"], title: "Processes", description: "The diagrams." },
         {
           id: "drop",
           path: "drop/",
           graphKinds: ["skills"],
-          dependents: "skip",
           title: "Drop",
           description: "Where files land.",
           coverage: { process: "demo-flow" },
         },
-        { id: "quiet", path: "quiet/", graphKinds: ["skills"], dependents: "skip", title: "Quiet", description: "Declares no process." },
+        { id: "quiet", path: "quiet/", graphKinds: ["skills"], title: "Quiet", description: "Declares no process." },
         {
           id: "claimed",
           path: "claimed/",
           graphKinds: ["skills"],
-          dependents: "skip",
           title: "Claimed",
           description: "Names a diagram that is not there.",
           coverage: { process: "no-such-diagram" },
@@ -107,7 +107,6 @@ function processRepo(): string {
           id: "unrendered",
           path: "unrendered/",
           graphKinds: ["skills"],
-          dependents: "skip",
           title: "Unrendered",
           description: "Names a real diagram nobody rendered.",
           coverage: { process: "unrendered-flow" },
@@ -198,6 +197,74 @@ describe("coverage.process — declared, absent, and could-not-determine", async
   test("the file table is headed only where a section precedes it", () => {
     expect(at("drop")).toContain("\n## Files\n");
     expect(at("quiet")).not.toContain("## Files");
+    rmSync(r, { recursive: true, force: true });
+  });
+});
+
+test("a link destination is percent-encoded per segment, parentheses included", async () => {
+  const { linkTarget } = await import("../../../bootstrap-tools/scripts/subgraph-readmes.ts");
+  expect(linkTarget("PIIS2589750021000388 (2).pdf")).toBe("PIIS2589750021000388%20%282%29.pdf");
+  expect(linkTarget("a b/c(d.md")).toBe("a%20b/c%28d.md");
+  expect(linkTarget("plain.md")).toBe("plain.md");
+  expect(decodeURIComponent(linkTarget("x (1) y.pdf"))).toBe("x (1) y.pdf");
+});
+
+/**
+ * Subdirectory rows (`SubgraphInput.subdirs`): what a row says is read from
+ * the directory's own declaration file — the one its kind names as
+ * `declarationFile` — and only from entries that are NOT `subgraph: true`.
+ * Anything undeclared keeps the file count: absent stays absent.
+ */
+describe("subdirectory rows — described from the declaration, or counted", async () => {
+  const r = mkdtempSync(join(tmpdir(), "subgraph-subdirs-"));
+  const inst = join(r, "demo");
+  const work = join(inst, "work");
+  for (const d of ["parts/deep", "promoted", "nodesc", "undeclared"]) mkdirSync(join(work, d), { recursive: true });
+  for (const d of ["parts", "parts/deep", "promoted", "nodesc", "undeclared"]) writeFileSync(join(work, d, "x.txt"), "x\n");
+  writeFileSync(
+    join(inst, "demo.json"),
+    JSON.stringify({
+      name: "demo",
+      title: "Demo",
+      directories: [{ id: "work", path: "work/", graphKinds: ["beans"], title: "Work", description: "The work plan." }],
+    }),
+  );
+  writeFileSync(join(inst, "README.md"), "# demo\n");
+  writeFileSync(
+    join(work, "beans.json"),
+    JSON.stringify({
+      name: "demo",
+      directories: [
+        { id: "parts", path: "parts", graphKinds: ["bean-defs"], description: "The parts of the plan." },
+        { id: "deep", path: "parts/deep", graphKinds: ["bean-defs"], description: "Not a row of work/." },
+        { id: "promoted", path: "promoted", graphKinds: ["beans"], subgraph: true, description: "Its own subgraph." },
+        { id: "nodesc", path: "nodesc", graphKinds: ["bean-defs"] },
+      ],
+    }),
+  );
+  const instances = harnessInstances(r);
+  const p = await plan(r, instances, TEMPLATES);
+  const readme = p.writes.get(join(work, "README.md"))!;
+
+  test("a declared part's row names it with its description", () => {
+    expect(subdirDescriptions(work, ["beans"])).toEqual({ parts: "The parts of the plan." });
+    expect(readme).toContain("| [`parts/`](parts/) | The parts of the plan. | |");
+  });
+
+  test("a promoted (`subgraph: true`) directory describes itself elsewhere; its row keeps the count", () => {
+    expect(readme).toMatch(/\| \[`promoted\/`\]\([^)]*\) \| 1 file \|/);
+    expect(readme).not.toContain("Its own subgraph.");
+  });
+
+  test("no description, or no declaration at all, stays a count — nothing is invented", () => {
+    expect(readme).toContain("| [`nodesc/`](nodesc/) | 1 file | |");
+    expect(readme).toContain("| [`undeclared/`](undeclared/) | 1 file | |");
+    expect(readme).not.toContain("Not a row of work/.");
+  });
+
+  test("a directory whose kind names no declaration file supplies nothing", () => {
+    expect(subdirDescriptions(work, ["no-such-kind"])).toEqual({});
+    expect(subdirDescriptions(join(work, "undeclared"), ["beans"])).toEqual({});
     rmSync(r, { recursive: true, force: true });
   });
 });

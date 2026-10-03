@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p077-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p077-2.png",
+  "pageStart": 77,
+  "pageEnd": 77,
+  "narrative": {
+    "text": "Figure 3.5 on page 66, the DPI-H reference architecture layered view (section 3.5.3, How the components are organised). It is a reduced form of the integrated view in Figure 3.2 without the goals, governance, stakeholder, capability and technology bands. Titled 'DPI-H Reference Architecture: government-stewarded reusable Digital Public Infrastructure for Health', it shows the Point-of-Service and Functional Applications layer on top, consuming the DPI-H layer through standards-based APIs. The DPI-H layer has Reusable Components (Clinical services with a Computable Decision Support Engine, Supply chain with a Supplier Registry, Health financing with a Benefits Package Registry, Public health and analytics with a PH Surveillance Platform and HMIS, AI-enabled intelligence, and Secondary use) and a Shared Data Layer (Client Registry, Lifelong Health Record, Health Workforce Registry, Facility Registry, Product Registry, Terminology Service, Logical Information Model Repository; the first five are starred as REDDHI components). Beneath is the Foundational DPI Layer (DPI-F): foundational identity, national trust services, payment rails, data exchange fabric, CRVS and other sectors, and geo-location and notification. A cross-cutting Interoperability column on the right holds the Information Mediator (API gateway, HIE), open standards and integration patterns.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-037",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

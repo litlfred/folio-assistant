@@ -71,7 +71,7 @@ A skill is defined across a few layers — not a single file. For any skill:
 |-------|----------|--------|
 | **Definition** (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref) | `.claude/skills/local/<skill>.json` | ✅ all 22 authoring skills — validated in CI by `scripts/validate-skills.ts` |
 | **Typed contract** (input/output JSON Schema) | `schemas/skills/<skill>/` | ✅ all 22 — see [reference](reference/skills/) |
-| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
+| **Instruction body** (prose how-to the LLM loads) — browse them in the [Skill instructions](reference/skill-instructions/) reference | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ lifecycle, agent, platform-bundle and **folio-document-adapter** skills; ⏳ **authoring-math / authoring-who-smart-guidelines bodies are TBD** (those packages ship the manifest + JSON definitions) |
 | **Package** (Docker/runtime deps) | `skills/<package>/package-manifest.json` | ✅ all four packages |
 
 So *yes, the skills exist* — as structured definitions + typed schemas, with prose
@@ -154,7 +154,7 @@ model, not alternatives to choose between.
 | `bean-coordination` | Multi-agent claim/coordination discipline |
 | `todo-manager` | beans-as-todos discipline |
 
-### Platform skill bundles (`skills/folio-core`, `skills/folio-document-adapter`, `skills/folio-paper-adapter`)
+### Platform skill bundles (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Larger **platform bundles**, two of them migrated from the qou content repo (see
 [migration record](migrations/2026-06-29-platform-skills-migration.html) and

@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `platform-authoring-agent` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
-      "kgRef": "scenarios/roles.json"
+      "instance": "litlfred/cat-harness",
+      "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "platform-authoring-agent"
       }
     ]
@@ -28,8 +28,8 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
-        "kgRef": "scenarios/roles.json",
+        "instance": "litlfred/cat-harness",
+        "path": "scenarios/roles.json",
         "quote": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
       }
     }

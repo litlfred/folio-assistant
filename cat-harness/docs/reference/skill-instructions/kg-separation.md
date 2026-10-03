@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/graph-management/kg-separation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/kg-separation.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/graph-management/kg-separation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/kg-separation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/kg-separation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/kg-separation.md){: .fa-edit-source }
 
 {% raw %}
 # Knowledge Graph separation — the method
 
-> Skill id: `kg-separation` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `kg-separation` · Package: `graph-management`
 > Process: [`kg-separation.bpmn`](../../processes/kg-separation.html)
 
 Owner, 2026-09-29: *"need replicable process for when KG gets too large to
@@ -42,7 +42,9 @@ bean before deciding:
 | gate time a content change pays | `bun run gates` (the gate count and wall time) |
 | merge contention | commits per day on `main`; PRs re-conflicted before merge |
 | cohesion and cut of the candidate | `bun run kg:detangle` |
-| wrong-direction edges | `check:partition`, `kg:detangle:check`, `check:reference-direction` |
+| wrong-direction edges **within one instance** — modules bucketed into the proposed repos by path rule | `check:partition` (its root is ONE instance; read the scope it prints) |
+| wrong-direction edges **between instances** — checked against each one's declared `needs` | `bun run kg:detangle:direction`, blocking in CI (bean `p11x`) |
+| wrong-direction **references** — the prose axis, not the import axis | `check:reference-direction` |
 | what the tools would drag along | the import cone of the would-be tools package (`check:tools-closure` once it exists) |
 
 ## Preconditions — each was learned from a failure
@@ -87,6 +89,24 @@ Owner rulings that make the pattern (2026-09-29, bean `xsqm`):
   QA verdicts (`kgQaHomeFor`), translation templates (`translationsHomeFor`),
   exported graph and glossary ledger. The content repository carries only
   what its own checks need.
+
+### Staged content with no tools repository yet — the finding, not the silence
+
+An instance can be planned as a content repository before its `-tools` pair
+is authorised (who-iris, 2026-09-30). Declare it — `separation: "content"` in
+`<name>.json`; the content half of an existing pair is read from the tools
+instance's `supports` and needs nothing — and kg:audit's
+`content-instance-holds-code` records a finding naming every code file still
+inside it. It is a `minor` QA **warning**, not a failure, by owner ruling
+(2026-10-01: *"QA warning. not failure.. ok b/c small # tools"*): the owner
+tolerates the code *for now* (*"iris specific tools for now ok in who-iris/"*),
+and the warrant is that the tolerated set is small. It was `major` until then,
+on the argument that FR-7 has no legitimate exceptions. A warning still names
+each file, so the violation is never silent. The remedy splits by what
+the code is: **generic** code (it works for any instance of its kind — any
+DSpace catalogue, any PDF) moves into the platform and takes the instance root
+as an argument; **instance-specific** code waits for `<name>-tools`. Bean
+`eayu`.
 
 ## The stages
 
@@ -149,8 +169,13 @@ versions of the content."*
 - **At the split, both start at the content's current version** — bootstrap
   was `0.1.0`, so bootstrap-tools starts at `0.1.0`.
 - **After that each is versioned on its own**, by the same rules: semver, the
-  bump computed from the exported surface (`check:version-bump`), tags
-  `<name>-v<major>.<minor>.<patch>`.
+  bump computed from the exported surface (`check:version-bump`).
+- **Tags are plain `v<major>.<minor>.<patch>` in each new repository** (owner,
+  2026-09-30): a standalone repository holds one instance, declared at its
+  root, so the tag needs no name. `check:version-bump` reads the plain form
+  only there; a repository of several instances — the parent while the pair
+  is staged — keeps `<name>-v<major>.<minor>.<patch>`, because a plain tag
+  could not say which instance it released.
 - **A tools release says which content versions it handles** as a list of
   supported MAJOR versions (`bootstrap: [0]`), never a range expression —
   `instance-versioning` rule 2 forbids range syntax, and within one major a

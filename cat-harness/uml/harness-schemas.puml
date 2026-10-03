@@ -29,6 +29,8 @@ package scenario {
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
+    otherNames [0..*] : string[]
+    formerNames [0..*] : {name, retiredOn}[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean
@@ -51,10 +53,10 @@ package scenario {
     id [1] : string
     title [1] : string
     description [1] : string
-    sources [1..*] : {title, instance, libraryId, kgRef, url, year}[]
+    sources [1..*] : {title, instance, libraryId, path, url, year}[]
     rules [1..*] : {id, title, description, category, severity, source, patterns, terminology, judgementOnly}[]
     overlaySeverity [0..1] : critical | major | minor
-    {field} appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification>
+    {field} appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
     provenance [1] : assertion | evidence | house
     extends.instance [0..1] : string
     extends.voiceId [1] : string
@@ -128,6 +130,11 @@ package test {
     cases [0..*] : {input, output}[]
     requirements [0..*] : string[]
     updated_at [1] : string
+    plan.id [1] : string
+    plan.version [1] : string
+    sut.actor [1] : string
+    sut.version [1] : string
+    sut.reach [1] : internet | egress-restricted | air-gapped | unknown
   }
   class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> [[../../../glossary/#cat-harness--platform--kg-qa-report]] #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
@@ -137,7 +144,8 @@ package test {
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
-    pair_attestations [0..*] : {kind, prose, code, prose_hash, code_hash, by, reason}[]
+    pair_attestations [0..1] : any
+    voice_reviews [0..1] : any
   }
 }
 

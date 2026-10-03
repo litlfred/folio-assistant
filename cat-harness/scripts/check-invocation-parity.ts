@@ -49,8 +49,25 @@ import { join, resolve } from "node:path";
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
 
-/** A `bun run cat-harness/scripts/<name>.ts` call and the rest of its line. */
-const INVOCATION = /cat-harness\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g;
+/** A `bun run cat-harness/scripts/<name>.ts` (or `bootstrap-tools/scripts/…`) call and the rest of its line. */
+// bootstrap-tools' scripts count too, under their repository's name: since
+// 2026-09-30 (bean `xsqm`) bootstrap's own graph is written by
+// `bootstrap-tools/scripts/export-graph.ts --root ./bootstrap`, and a matcher
+// that saw only cat-harness would be blind to the one foreign-instance export
+// `3jhq` exists to protect.
+const INVOCATION = /(?:cat-harness\/|(bootstrap-tools\/))scripts\/([a-z0-9-]+)\.ts([^\n]*)/g;
+
+/**
+ * A `bun run check:<name>` call: a CHECK the deploy runs over its built tree.
+ *
+ * Counted as an obligation like a generator (bean `63es`). `check:escaped-markup`
+ * and `check:maintained-artefacts` ran only in the deploy, so the matcher above
+ * (which reads script PATHS) never saw them, and a `<slide>` line that broke
+ * every publish from #1615 on stayed green on each pull request's preview
+ * (#1726). They are invoked by declared script name on purpose (`unrunScripts`
+ * reads names), so the name is the thing to match.
+ */
+const NAMED_CHECK = /\bbun run (check:[a-z0-9:-]+)/g;
 
 /**
  * Generators the deploy runs that a preview is not expected to.
@@ -113,15 +130,21 @@ export function invocations(workflowText: string): Invocation[] {
   const code = withoutComments(workflowText);
   INVOCATION.lastIndex = 0;
   for (const m of code.matchAll(INVOCATION)) {
-    const script = m[1]!;
-    const rest = m[2] ?? "";
-    const inst = /--instance\s+(?:"([^"]+)"|'([^']+)'|(\S+))/.exec(rest);
+    const script = `${m[1] ?? ""}${m[2]!}`;
+    const rest = m[3] ?? "";
+    // `--root` is bootstrap-tools' spelling of the same argument.
+    const inst = /--(?:instance|root)\s+(?:"([^"]+)"|'([^']+)'|(\S+))/.exec(rest);
     const instance = inst ? (inst[1] ?? inst[2] ?? inst[3]) : undefined;
     // Keyed on the PAIR: `kg-export` and `kg-export --instance ./bootstrap`
     // are different obligations, and collapsing them is exactly how `3jhq`
     // hid — staging ran the exporter, just not for the foreign instance.
     const key = `${script}\u0000${instance ?? ""}`;
     if (!out.has(key)) out.set(key, instance === undefined ? { script } : { script, instance });
+  }
+  NAMED_CHECK.lastIndex = 0;
+  for (const m of code.matchAll(NAMED_CHECK)) {
+    const key = `${m[1]!}\u0000`;
+    if (!out.has(key)) out.set(key, { script: m[1]! });
   }
   return [...out.values()].sort((a, b) =>
     `${a.script}${a.instance ?? ""}`.localeCompare(`${b.script}${b.instance ?? ""}`),

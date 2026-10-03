@@ -1,5 +1,5 @@
 {
-  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. A lane binds its role with <folio:role ref=\"...\"/>; the role lists no lanes. Nor does a role name its voice or its stories: a voice profile points at the roles it addresses (`activeIn.roles`) and a user story at the role it is told as (scenarios/stories.json). Each dependent holds the pointer, so the role is added to without being edited (#1168). `bun run kg:audit` reports any role no lane binds and any activity whose skill its lane's role does not carry.",
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in cat-harness/scenarios/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. A lane binds its role with <folio:role ref=\"...\"/>; the role lists no lanes. Nor does a role name its voice or its stories: a voice profile points at the roles it addresses (`activeIn.roles`) and a user story at the role it is told as (scenarios/stories.json). Each dependent holds the pointer, so the role is added to without being edited (#1168). `bun run kg:audit` reports any role no lane binds and any activity whose skill its lane's role does not carry.",
   "name": "folio-assistant",
   "roles": [
     {
@@ -14,6 +14,7 @@
         "dispatch-agent",
         "getting-started",
         "interaction-modality",
+        "kg-subscription",
         "materialize-remote",
         "repo-conversion"
       ],
@@ -65,16 +66,11 @@
       ],
       "skills": [
         "adjudication",
-        "content-block-review",
         "content-feedback",
         "content-review",
-        "content-validation",
         "decision-audit",
-        "document-intake",
         "milnor-exposition-standard",
         "narrative-asserts-code",
-        "rendering-auditor",
-        "semantic-review-scoping",
         "staging-review",
         "translation-manager",
         "visual-diff",
@@ -131,6 +127,7 @@
         "placement",
         "site-presentation-assets",
         "skills-and-tools",
+        "skill-voice-review",
         "test-engineer"
       ],
       "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
@@ -148,8 +145,8 @@
       "skills": [
         "content-publish",
         "evidence-review",
-        "quality-control",
-        "untainted-verification"
+        "untainted-verification",
+        "ig-ast-delta"
       ],
       "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
     },
@@ -208,12 +205,12 @@
       "skills": [
         "content-publish",
         "content-review",
-        "ig-publication",
         "decision-audit",
         "qa-report-signing",
         "publish-verification",
         "instance-publication",
-        "package-release"
+        "package-release",
+        "render-kg-to-cdn"
       ],
       "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
     },
@@ -231,7 +228,6 @@
         "crdm-requirements-workflow",
         "decision-audit",
         "dmn-authoring",
-        "l2-dak-authoring",
         "methodology-adoption",
         "opening-brief"
       ],
@@ -245,7 +241,8 @@
         "person"
       ],
       "skills": [
-        "terminology-management"
+        "code-lists",
+        "vocabulary-authority"
       ],
       "persona": "Owns coded concepts and value sets. Precise by profession; a near-enough code is a wrong code. Cares about provenance and binding strength more than prose."
     },
@@ -256,9 +253,7 @@
       "actorKinds": [
         "person"
       ],
-      "skills": [
-        "l3-fhir-authoring"
-      ],
+      "skills": [],
       "persona": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
     },
     {
@@ -355,6 +350,7 @@
       "skills": [
         "adopt-methodology-from-source",
         "bean-coordination",
+        "before-after-preview",
         "bpmn-authoring",
         "ci-health",
         "confirmation-waiver",
@@ -362,13 +358,12 @@
         "content-graph",
         "content-plan",
         "continual-progress",
+        "coordinate",
         "crdm-detect",
         "crdm-requirements-workflow",
         "decision-audit",
         "deletion-requires-confirmation",
         "delivery-summary",
-        "document-authoring",
-        "document-structure",
         "feature-staging",
         "gate-tree-mutation",
         "github-state-inspection",
@@ -376,14 +371,12 @@
         "issue-working",
         "library-ingestion",
         "methodology-adoption",
-        "normative-statements",
         "opening-brief",
         "placement",
         "platform-gates",
         "prepare-merge",
         "prepare-merge-auto",
         "related-work-coordination",
-        "semantic-review-scoping",
         "session-context",
         "session-state-machine",
         "todo-manager",
@@ -410,8 +403,7 @@
       "skills": [
         "getting-started",
         "interaction-modality",
-        "repo-conversion",
-        "document-intake"
+        "repo-conversion"
       ],
       "persona": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
     },
@@ -423,11 +415,9 @@
         "agent"
       ],
       "skills": [
-        "document-intake",
+        "kg-subscription",
         "library-ingestion",
         "materialize-remote",
-        "paper-importer",
-        "proof-status-tracking",
         "theme-art-intake",
         "theme-ui-review"
       ],
@@ -445,7 +435,6 @@
         "filing-dublin-core",
         "archiving-web-pages",
         "archiving-arxiv",
-        "document-intake",
         "library-ingestion"
       ],
       "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
@@ -453,7 +442,7 @@
     {
       "id": "deep-researcher",
       "title": "Deep researcher",
-      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/library/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
       "actorKinds": [
         "person",
         "agent"
@@ -470,9 +459,7 @@
       "actorKinds": [
         "agent"
       ],
-      "skills": [
-        "document-intake"
-      ],
+      "skills": [],
       "persona": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
     },
     {
@@ -488,6 +475,20 @@
       "persona": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
     },
     {
+      "id": "merge-steward",
+      "title": "Merge steward",
+      "description": "Composes a merge train from the queue, attributes and ejects on red, and lands at the tested SHA. Decides nothing the reprioritisation table or the owner has not: placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries, never GitHub's facts.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "merge-queue",
+        "merge-conflict-patterns",
+        "prepare-merge"
+      ],
+      "persona": "Patient and literal. Would rather eject one PR with evidence than hold a whole train, and would rather re-run than land a SHA CI did not test."
+    },
+    {
       "id": "build-pipeline",
       "title": "Build pipeline",
       "description": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
@@ -498,24 +499,18 @@
         "content-publish",
         "content-test",
         "content-validate",
-        "document-publishing",
         "feature-staging",
         "publish-verification",
-        "fhir-validation",
-        "ig-publication",
-        "l3-fhir-authoring",
-        "latex-authoring",
-        "quality-control",
         "todo-manager",
         "translation-manager",
         "upstream-version-adoption",
         "watch",
-        "build-docs",
-        "build-pdf",
-        "latex-build-cache",
-        "latex-validation",
-        "smart-base-tools",
-        "kg-separation"
+        "kg-separation",
+        "render-kg-to-cdn",
+        "ig-ast-delta",
+        "ci-health",
+        "platform-gates",
+        "prepare-merge"
       ]
     },
     {
@@ -563,10 +558,7 @@
       "actorKinds": [
         "system"
       ],
-      "skills": [
-        "lean-formalization",
-        "proof-verification"
-      ]
+      "skills": []
     },
     {
       "id": "ig-publisher-service",
@@ -575,10 +567,7 @@
       "actorKinds": [
         "system"
       ],
-      "skills": [
-        "fhir-validation",
-        "ig-publication"
-      ]
+      "skills": []
     },
     {
       "id": "attestation-service",
@@ -613,7 +602,7 @@
       ],
       "actedUpon": true,
       "skills": [
-        "document-intake",
+        "kg-subscription",
         "materialize-remote"
       ]
     },
@@ -717,7 +706,9 @@
         "kg-viewer",
         "domain-fencing",
         "kg-separation",
-        "upstream-version-adoption"
+        "upstream-version-adoption",
+        "edge-kinds-and-blast-radius",
+        "graph-rendering"
       ],
       "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
     },
@@ -741,7 +732,8 @@
         "diff",
         "corpus-grep",
         "process-state",
-        "task-authorization"
+        "task-authorization",
+        "communication-language"
       ],
       "persona": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
     },
@@ -764,9 +756,7 @@
         "bib-photo-ingestion-watcher",
         "integration-watch",
         "integration-audit",
-        "integration-backlog",
-        "proof-integration-watcher",
-        "q-usage-watcher"
+        "integration-backlog"
       ],
       "persona": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised."
     },
@@ -780,20 +770,7 @@
       "inherits": [
         "authoring-agent"
       ],
-      "skills": [
-        "formalizer",
-        "chapter-analysis",
-        "lean-generation",
-        "lean-substantive-pass",
-        "lean-build-fix",
-        "lean-cache-restore",
-        "lean-environment-setup",
-        "lean-mathlibext-curator",
-        "lean-formal-graph",
-        "proof-triage",
-        "category-theory",
-        "groebner-basis"
-      ],
+      "skills": [],
       "persona": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
     },
     {
@@ -806,21 +783,7 @@
       "inherits": [
         "reviewer"
       ],
-      "skills": [
-        "lean-proof-review",
-        "lean-proof-vacuity-audit",
-        "proof-gap-audit",
-        "proof-conciseness",
-        "proof-editor",
-        "proof-exposition-review",
-        "proof-simplifier",
-        "proof-narrative-lean-equivalence",
-        "lean-completeness-audit",
-        "remark-audit",
-        "definition-clarity-audit",
-        "proposition-consolidation-audit",
-        "critical-path-analysis"
-      ],
+      "skills": [],
       "persona": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
     },
     {
@@ -833,16 +796,7 @@
       "inherits": [
         "authoring-agent"
       ],
-      "skills": [
-        "compute-audit",
-        "compute-author",
-        "ffi-roundtrip-audit",
-        "lean-witness-audit",
-        "witnessed-values",
-        "verify-local-substrate",
-        "simulator",
-        "simulator-math-audit"
-      ],
+      "skills": [],
       "persona": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
     }
   ]

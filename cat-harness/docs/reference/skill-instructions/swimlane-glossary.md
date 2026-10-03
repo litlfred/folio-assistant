@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/swimlane-glossary.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swimlane-glossary.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/process-core/swimlane-glossary.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/swimlane-glossary.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/swimlane-glossary.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/process-core/swimlane-glossary.md){: .fa-edit-source }
 
 {% raw %}
 # Swimlane Glossary Skill
@@ -152,7 +152,14 @@ re-introduces the leak `instance-graph-isolation.test.ts` exists to stop
 
 - **Declared roles no swimlane draws.** They are still concepts —
   omitting them would be `dh4f`, a glossary silently short of the
-  vocabulary it claims to index.
+  vocabulary it claims to index. The report says **which walk** found
+  nothing ("no swimlane in `<instance>/` draws") and splits the list:
+  a role a lane in ANOTHER instance binds by `<folio:role ref>` is named
+  with that diagram (`drawnElsewhere`), apart from roles no diagram in the
+  repository draws. Bean `nafz`: unsplit, a role drawn in
+  folio-assistant-core read exactly like eleven drawn nowhere — a fact
+  about the walk phrased as a fact about the corpus. Reporting it is not
+  widening the scan: nothing outside the instance is bound or emitted.
 - **A lane binding naming a lane no diagram contains** (`fd6i`). Distinct
   from a role whose lane exists but holds no task, which is not a defect:
   an `actedUpon` lane holds none by construction.

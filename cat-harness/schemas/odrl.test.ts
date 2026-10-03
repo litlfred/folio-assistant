@@ -8,6 +8,7 @@ import { join, resolve } from "node:path";
 
 import {
   ANYONE,
+  FOLIO_DEFAULT_CONFLICT,
   OdrlPolicySchema,
   actionGraph,
   broaderOrSelf,
@@ -19,11 +20,12 @@ import {
 } from "./odrl.ts";
 import { ProvActivitySchema } from "./prov.ts";
 import { readActors, readPermissions } from "./role-graph.ts";
+import { actorsDir } from "./role-graph.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE, "..");
 const POLICY_DIR = join(INSTANCE, "policies");
-const ACTOR_DIR = join(REPO, ".claude", "skills", "actors");
+const ACTOR_DIR = actorsDir(REPO)!;
 
 /**
  * Each actor's `permissions` list as the actor files carried it before the
@@ -165,6 +167,13 @@ describe("permits(): three answers", () => {
     expect(ask(["reviewer"])).toBe("permit");
     expect(ask(["author"])).toBe("deny");
     expect(ask([])).toBe("permit"); // no roles declared = unconstrained (ActorDef.roles)
+  });
+
+  test("the default conflict strategy is prohibit — a ruled profile departure from ODRL's invalid (bean jcet)", () => {
+    // ODRL 2.2 §2.10 defaults to invalid; the owner ruled 2026-10-01 to keep
+    // prohibit. A change here is a policy decision: update the ruling, the
+    // comment on FOLIO_DEFAULT_CONFLICT and methodologies/odrl-policies.md too.
+    expect(FOLIO_DEFAULT_CONFLICT).toBe("odrl:prohibit");
   });
 
   test("permission and prohibition together: prohibit by default, perm when the policy says so, invalid voids", () => {

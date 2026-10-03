@@ -17,10 +17,20 @@
  * that file beside it. The only change made is in the rendered `.html`, where
  * a link to a `.md` file is pointed at its `.html` rendering.
  *
+ * ## What is bootstrap-tools', and what stays here
+ *
+ * Owner, 2026-09-30 (bean `xsqm`): the publisher moved to bootstrap-tools
+ * "without remark", and bootstrap's own site lets GitHub Pages render `.md`.
+ * The COPY is `bootstrap-tools/scripts/publish-files.ts`. What stays here is
+ * the `.md` → `.html` rendering, because cat-harness's site is assembled after
+ * its Jekyll build and Pages renders nothing written into it then — the navbar
+ * tab points at `README.html`. Rendering a hosted copy is the host's job.
+ *
  * Usage: bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out ./_site/bootstrap
  */
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
+import { filesIn, publishFiles } from "../../bootstrap-tools/scripts/publish-files.ts";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
@@ -62,16 +72,6 @@ ${body}
 `;
 }
 
-function filesIn(dir: string): string[] {
-  const out: string[] = [];
-  for (const name of readdirSync(dir).sort()) {
-    if (name.startsWith(".") || name === "node_modules") continue;
-    const p = join(dir, name);
-    if (statSync(p).isDirectory()) out.push(...filesIn(p));
-    else out.push(p);
-  }
-  return out;
-}
 
 /**
  * Copy every file of `instanceDir` into `outDir`, and render each `.md`.
@@ -86,22 +86,21 @@ export async function publishInstanceFiles(
   instanceDir: string,
   outDir: string,
 ): Promise<{ written: string[]; skipped: string[] }> {
-  const written: string[] = [];
-  const skipped: string[] = [];
-  const write = (rel: string, text?: string, from?: string) => {
+  // The files themselves, as they sit: bootstrap-tools' step.
+  const { written, skipped } = publishFiles(instanceDir, outDir);
+  const write = (rel: string, text: string) => {
     const dest = join(outDir, rel);
     if (existsSync(dest)) {
       skipped.push(rel);
       return;
     }
     mkdirSync(dirname(dest), { recursive: true });
-    if (from !== undefined) copyFileSync(from, dest);
-    else writeFileSync(dest, text!);
+    writeFileSync(dest, text);
     written.push(rel);
   };
+  // Then this site's rendering of each `.md`.
   for (const file of filesIn(instanceDir)) {
     const rel = relative(instanceDir, file);
-    write(rel, undefined, file);
     if (!rel.endsWith(".md")) continue;
     const markdown = readFileSync(file, "utf-8").replace(/^---\n[\s\S]*?\n---\n/, "");
     const body = rewriteMdLinks(String(await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(markdown)));
@@ -110,6 +109,23 @@ export async function publishInstanceFiles(
     if (rel === "README.md") write("index.html", html);
   }
   return { written, skipped };
+}
+
+/**
+ * The skips that are COLLISIONS: a file already at the address whose bytes
+ * differ from the one not published. A byte-identical file is the same file
+ * published twice, which is harmless (`ns.jsonld` is copied to its namespace
+ * address before this runs). A collision the workflow has not named in
+ * `--allow-collision` fails the build: two different files wanting one
+ * address is a decision, and the one that loses must be chosen, not whichever
+ * step happened to run first (Phase 4 gate, bean `xsqm`).
+ */
+export function collisions(instanceDir: string, outDir: string, skipped: readonly string[]): string[] {
+  return skipped.filter((rel) => {
+    const src = join(instanceDir, rel);
+    if (!existsSync(src)) return true;
+    return !readFileSync(src).equals(readFileSync(join(outDir, rel)));
+  });
 }
 
 if (import.meta.main) {
@@ -123,7 +139,17 @@ if (import.meta.main) {
     console.error("usage: publish-instance-files.ts --instance <dir> --out <dir>");
     process.exit(2);
   }
+  const allowed = new Set(
+    process.argv.flatMap((a, i) => (process.argv[i - 1] === "--allow-collision" ? a.split(",") : [])),
+  );
   const { written, skipped } = await publishInstanceFiles(instance, out);
   console.log(`Published ${written.length} file(s) from ${instance} to ${out}.`);
   for (const rel of skipped) console.log(`  not published, already there: ${rel}`);
+  const unexpected = collisions(instance, out, skipped).filter((rel) => !allowed.has(rel));
+  if (unexpected.length) {
+    console.error(`\n✗ ${unexpected.length} served-name collision(s) nobody chose — a different file already sits at:`);
+    for (const rel of unexpected) console.error(`    ${rel}`);
+    console.error("  Rename one, or name it in --allow-collision with the reason in the workflow.");
+    process.exit(1);
+  }
 }

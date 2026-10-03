@@ -9,7 +9,7 @@
  * ## Authoritative, and the only authority
  *
  * Zod here, JSON Schema and JSON-LD generated from it — the carrier decision in
- * `skills/folio-core/directory-conventions.md` §"What lives in the `schemas`
+ * `skills/kg/kg-core/directory-conventions.md` §"What lives in the `schemas`
  * graph". The TypeScript type is `z.infer`, never declared alongside, because
  * two declarations of one shape drift and the drift is invisible until
  * something reads the stale one.
@@ -42,7 +42,7 @@
  */
 import { z } from "zod";
 
-import { SkillNameSchema } from "./tool-types.js";
+import { ProcessIdSchema, SkillNameSchema } from "./tool-types.js";
 
 /** A lowercase, hyphenated id. It is also the MCP tool name stem. */
 const ToolId = z
@@ -64,6 +64,69 @@ export const ToolPortSchema = z.object({
   schema: SchemaRef,
   description: z.string().optional(),
 });
+
+/**
+ * How a renderer may put one OUTPUT into a page — bean `q2wm`, R17 (#602).
+ *
+ * The owner, 2026-09-20: *"skill tool hints for XSS restriction"*. A Tool node
+ * said nothing about whether its output is markup, a link or plain words, so
+ * every consumer decided — and the one that decides wrong is a cross-site
+ * scripting hole in a static site with no server to blame.
+ *
+ * | `as` | a renderer must |
+ * |---|---|
+ * | `text` (the DEFAULT, and what absent means) | escape it: never markup, never a link |
+ * | `url` | pass it through `safeHref` (default-deny on scheme) before any `href`, else render it as text |
+ * | `markdown` | render it with raw HTML OFF and every link through `safeHref` |
+ * | `json` | show it escaped, as data — never evaluate, never inject |
+ *
+ * ON THE OUTPUT, not the Tool: one tool may emit a JSON projection and a
+ * markup fragment, and a Tool-level flag would have to lie about one of them.
+ *
+ * Anything but `text` carries a `reason`, because it asks a renderer to do
+ * more than escape, and that is a claim somebody made. `url` and `markdown`
+ * are allowed only on an output whose schema IS `Url` / `Markdown` — a hint
+ * that disagrees with the type it describes is two answers to one question.
+ *
+ * `renderToolOutput` in `schemas/render-output.ts` is the one implementation;
+ * `render-output.test.ts` holds each row of the table above to it.
+ */
+export const RENDER_AS = ["text", "url", "markdown", "json"] as const;
+export type RenderAs = (typeof RENDER_AS)[number];
+
+export const ToolRenderSchema = z
+  .object({
+    as: z.enum(RENDER_AS),
+    reason: z.string().min(1).optional(),
+  })
+  .strict()
+  .refine((r) => r.as === "text" || r.reason !== undefined, {
+    message: "a render hint other than `text` must state its reason — it asks a renderer to do more than escape",
+  });
+export type ToolRender = z.infer<typeof ToolRenderSchema>;
+
+/** The last segment of a schema IRI — `…#Url` or `…/Url` both give `Url`. */
+export function schemaTypeName(iri: string): string {
+  return iri.split(/[#/]/).filter(Boolean).pop() ?? iri;
+}
+
+/** A schema type a hint may only be declared on, where it is restricted. */
+const RENDER_REQUIRES: Partial<Record<RenderAs, string>> = { url: "Url", markdown: "Markdown" };
+
+export const ToolOutputSchema = ToolPortSchema.extend({
+  /** How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}. */
+  render: ToolRenderSchema.optional(),
+}).superRefine((p, ctx) => {
+  const need = p.render ? RENDER_REQUIRES[p.render.as] : undefined;
+  if (need !== undefined && schemaTypeName(p.schema) !== need) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["render", "as"],
+      message: `render \`${p.render!.as}\` is only for an output whose schema is ${need}; this one is ${schemaTypeName(p.schema)}`,
+    });
+  }
+});
+export type ToolOutput = z.infer<typeof ToolOutputSchema>;
 
 /**
  * How one input appears on the command line.
@@ -264,6 +327,54 @@ export const ToolMaintainsSchema = z.object({
 export type ToolMaintains = z.infer<typeof ToolMaintainsSchema>;
 
 /**
+ * A DOWNSTREAM output this Tool keeps current, the inputs it is derived from,
+ * and where its run outcome can be judged.
+ *
+ * ## Why this exists
+ *
+ * Bean `fq5u`, owner 2026-09-29: *"how do we know tools like LSI are run
+ * succesfully... not primary to pieple, but downstream. should be part of QA
+ * process (dependences = stall QA)"*. A downstream tool's failure was
+ * invisible: nothing recorded that it ran — for LSI, only whether its corpus
+ * had moved since. The declaration is what makes a Tool a member of the
+ * `tool-downstream-fresh` criterion family (`schemas/tool-run.ts`), which
+ * reads three states and never renders the absence of a run as green.
+ *
+ * ## Why this is not `maintains`
+ *
+ * `maintains` names a PUBLISHED artefact and `check:maintained-artefacts`
+ * looks for it in the assembled `_site/`. A downstream output is often not
+ * published at all — LSI's index is a committed sidecar under `test/results/`
+ * — so folding it into `maintains` would send that check looking for a file
+ * the site never carries. They answer different questions: "is the published
+ * artefact present" and "did the run that keeps this output current succeed
+ * against the current inputs".
+ *
+ * ## `judgedAt` — the third state, named
+ *
+ * `checkout`: the Tool writes a `folio-tool-run/v1` record and the audit
+ * compares its input fingerprint with the current one. `published`: the output
+ * exists only in an assembled site (the search index Jekyll writes), so from a
+ * checkout the verdict is `unknown` naming `verifier` — the entry in
+ * `publish-verify`'s set that answers it before deployment. Never `pass`.
+ */
+export const ToolDownstreamSchema = z
+  .object({
+    /** What the Tool keeps current — repo-relative for `checkout`, site-relative for `published`. */
+    output: z.string().min(1),
+    /** What it is derived from, so a reader can see what makes it stale. */
+    inputs: z.array(z.string().min(1)).min(1),
+    judgedAt: z.enum(["checkout", "published"]),
+    /** `published` only: the `publish-verify` verifier id that judges the output. */
+    verifier: z.string().min(1).optional(),
+  })
+  .refine((d) => d.judgedAt !== "published" || d.verifier !== undefined, {
+    message: "a downstream output judged only in the published tree must name the verifier that judges it",
+  });
+
+export type ToolDownstream = z.infer<typeof ToolDownstreamSchema>;
+
+/**
  * Why an agent would reach for THIS Tool rather than a substitutable sibling.
  *
  * ## Why this is not `description`
@@ -309,39 +420,18 @@ export const ToolDefinitionSchema = z
     invoke: ToolInvokeSchema,
     io: z.object({
       inputs: z.array(ToolInputSchema),
-      outputs: z.array(ToolPortSchema),
+      outputs: z.array(ToolOutputSchema),
     }),
     /** Skills this Tool can satisfy. One skill may have several Tools. */
     satisfies: z.array(SkillNameSchema).min(1, "a Tool must satisfy at least one skill"),
+    // No `alternativeTo` (#1168, B9a). Which Tools are alternatives is DERIVED
+    // — see `deriveAlternatives` below — so no Tool names another. Owner,
+    // 2026-09-30: *"why tools need alternativeTo? skills and tools are
+    // associated, the alternatives should be derivable"*.
     /**
-     * Other Tools that do the SAME job by a different mechanism.
-     *
-     * ## Why this is declared and not derived from `satisfies`
-     *
-     * Deriving it was the first design, and measurement refuted it. Sharing a
-     * skill does NOT make two Tools substitutable: measured 2026-09-20, 12 of
-     * this instance's 25 skills carry more than one Tool, and nearly all are
-     * COMPLEMENTARY — `workflow-list`, `-start`, `-next`, `-gate` and
-     * `-complete` are five steps of `process-state`, not five ways to perform
-     * it, and the five translation tools are the same shape. Exactly one pair,
-     * `beans-cli` / `beans-manual`, is genuinely substitutable.
-     *
-     * So a rule keyed on "shares a skill" would demand comparative prose on
-     * twelve skills with nothing to compare, and an author obliged to write it
-     * would write noise. Substitutability is a judgement about mechanism, and
-     * judgements get declared.
-     *
-     * ## Symmetric, and checked
-     *
-     * If A names B and B does not name A, a reader arriving at B never learns
-     * a choice exists — which is the whole failure this field prevents, half
-     * the time. `scripts/check-tools.ts` verifies both that each id resolves
-     * and that the relation is mutual.
-     */
-    alternativeTo: z.array(ToolId).optional(),
-    /**
-     * Why to reach for this one. REQUIRED once `alternativeTo` is non-empty —
-     * see {@link ToolSelectionSchema}, and the refinement below.
+     * Why to reach for this one. REQUIRED when the Tool has a derived
+     * alternative ({@link deriveAlternatives}); `check-tools` enforces it,
+     * since whether a Tool has one is a fact about the whole set.
      */
     selection: ToolSelectionSchema.optional(),
     requires: ToolRequiresSchema.optional(),
@@ -355,6 +445,13 @@ export const ToolDefinitionSchema = z
      */
     maintains: z.array(ToolMaintainsSchema).optional(),
     /**
+     * A downstream output this Tool keeps current, with its declared inputs.
+     * See {@link ToolDownstreamSchema}. Optional because most Tools keep no
+     * derived output; a run record or a publish verifier naming a Tool that
+     * does not declare one is a finding (`downstream-tool-declared`).
+     */
+    downstream: ToolDownstreamSchema.optional(),
+    /**
      * The graph KINDS this Tool draws a viewer for — one page per declared
      * directory of the kind, placed by the Tool itself.
      *
@@ -366,6 +463,26 @@ export const ToolDefinitionSchema = z
      * a Tool restating it would be a second list free to drift.
      */
     renders: z.array(z.string().min(1)).optional(),
+    /**
+     * Process ids of the BPMN this Tool's OWN specific procedure is drawn as.
+     *
+     * Owner, 2026-09-30 (placement ruling 6): *"in general tools can describe
+     * their own specific subprocesses if needed to not bog down general
+     * skills"*. A skill states a capability generically; the steps that are
+     * true of ONE way of exercising it — this tool's retries, its staging
+     * directory, its two-pass mode — belong to the Tool, not to the skill
+     * every other Tool also satisfies. So the Tool points at its
+     * subprocess, the way it points at the skills it `satisfies`: the
+     * dependent holds the pointer, and the general process calls the
+     * subprocess (`calledElement`) only where it chose this Tool.
+     *
+     * Each id is the stem of a `.bpmn` the checkout declares;
+     * `check:tools` reports one that resolves to nothing. By convention it
+     * lives under the declaring instance's `processes/tools/` concern group
+     * (placement PR0c), beside the other tools' procedures rather than
+     * among the general processes.
+     */
+    subprocesses: z.array(ProcessIdSchema).optional(),
   })
   .refine(
     (t) =>
@@ -381,23 +498,7 @@ export const ToolDefinitionSchema = z
         "is not that case: the harness calls it directly, and it is the projection source.",
       path: ["invoke"],
     },
-  )
-  // A declared alternative without a reason to choose between them is the
-  // defect this pair of fields exists to remove, half-fixed: the reader now
-  // knows a choice exists and still cannot make it. Enforced here rather than
-  // in `check-tools` because it needs nothing outside the node.
-  .refine((t) => (t.alternativeTo?.length ?? 0) === 0 || t.selection !== undefined, {
-    message:
-      "a Tool that names an alternative must carry `selection` — otherwise a reader " +
-      "learns a choice exists without learning how to make it",
-    path: ["selection"],
-  })
-  // Self-reference would satisfy the symmetry check trivially and tell a
-  // reader nothing.
-  .refine((t) => !(t.alternativeTo ?? []).includes(t.id), {
-    message: "a Tool cannot be an alternative to itself",
-    path: ["alternativeTo"],
-  });
+  );
 
 export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
 export type ToolInput = z.infer<typeof ToolInputSchema>;
@@ -412,4 +513,68 @@ export type ToolPort = z.infer<typeof ToolPortSchema>;
  */
 export function defineTool(t: ToolDefinition): ToolDefinition {
   return ToolDefinitionSchema.parse(t);
+}
+
+// ─── Alternatives, derived ───────────────────────────────────────────────────
+
+/**
+ * What a Tool IS, as far as substituting one for another goes: its full I/O
+ * signature and the things it renders and maintains. Two Tools with the same
+ * signature take the same inputs, produce the same outputs, and act on the
+ * same artefacts — they differ only in mechanism.
+ */
+export function toolSignature(t: Pick<ToolDefinition, "io" | "renders" | "maintains">): string {
+  return JSON.stringify({
+    in: t.io.inputs.map((i) => [i.name, i.schema, i.required ?? false]).sort(),
+    out: t.io.outputs.map((o) => [o.name, o.schema]).sort(),
+    renders: [...(t.renders ?? [])].sort(),
+    maintains: (t.maintains ?? []).map((m) => JSON.stringify(m)).sort(),
+  });
+}
+
+/**
+ * The Tools that do the same job by a different mechanism, derived rather
+ * than declared (#1168, B9a).
+ *
+ * Two Tools are alternatives iff they satisfy a common skill AND have the same
+ * {@link toolSignature}, and that signature is not empty.
+ *
+ * Sharing a skill is not enough, and the declared field existed because of
+ * that: measured 2026-09-20, most skills with several Tools have COMPLEMENTARY
+ * ones — `workflow-start` and `workflow-next` are two steps of one skill, not
+ * two ways to do one step. What separates them is the signature: steps take
+ * and give different things. Measured 2026-09-30 over 118 Tools, the rule
+ * recovers every pair that had been declared by hand and nothing else, once
+ * three Tools whose inputs were typed more loosely than what they read were
+ * given the precise type.
+ *
+ * An empty signature is excluded because it says nothing: two Tools that
+ * declare no ports would otherwise be interchangeable by default.
+ *
+ * Symmetric by construction, so there is nothing to keep in step.
+ */
+export function deriveAlternatives(tools: readonly ToolDefinition[]): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  const sig = new Map(tools.map((t) => [t.id, toolSignature(t)]));
+  for (const a of tools) {
+    if (a.io.inputs.length + a.io.outputs.length === 0) continue;
+    const alts = tools
+      .filter((b) => b.id !== a.id && sig.get(b.id) === sig.get(a.id) && b.satisfies.some((s) => a.satisfies.includes(s)))
+      .map((b) => b.id)
+      .sort();
+    if (alts.length > 0) out.set(a.id, alts);
+  }
+  return out;
+}
+
+/**
+ * Tools with a derived alternative and no `selection` — a choice a reader can
+ * see and cannot make. A fact about the whole set, so `check-tools` asks it
+ * here rather than the schema asking it of one node.
+ */
+export function alternativesWithoutSelection(tools: readonly ToolDefinition[]): Array<{ tool: string; alternatives: string[] }> {
+  const alts = deriveAlternatives(tools);
+  return tools
+    .filter((t) => alts.has(t.id) && t.selection === undefined)
+    .map((t) => ({ tool: t.id, alternatives: alts.get(t.id)! }));
 }

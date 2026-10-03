@@ -1,0 +1,14 @@
+{
+  "name": "@litlfred/cat-harness-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "What implements C@T Harness's Tool definitions: the MCP servers, tool registrars and routes. The definitions stay in cat-harness.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": "https://github.com/litlfred/cat-harness-tools",
+  "scripts": {
+    "mcp:start": "bun run adapters/mcp-server/server.ts",
+    "mcp:start:stdio": "bun run adapters/mcp-server/server.ts --stdio",
+    "test": "bun test ."
+  }
+}

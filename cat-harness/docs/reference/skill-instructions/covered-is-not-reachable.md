@@ -48,11 +48,10 @@ Add the node for the mechanism. Then two things not to do:
 
 - **Do not widen an existing node's `satisfies`** to make the gap look closed.
   That makes the graph assert a node does something it does not.
-- **Do not add `alternativeTo`** between the existing nodes and the new one.
-  Export-then-publish-then-serve are complementary steps, not competing arms, and
-  that field's own note warns against deriving the relation from a shared skill.
-  Exactly one pair in this instance is genuinely substitutable, `beans-cli` /
-  `beans-manual`.
+- **Do not give the new node the same I/O as an existing one** unless it
+  really is a substitute. Alternatives are derived from a shared skill plus an
+  identical I/O signature (`deriveAlternatives`), and export-then-publish-then-
+  serve are complementary steps, not competing arms.
 
 ## Two reasons NOT to write `maintains`, both judgements rather than omissions
 
@@ -63,9 +62,11 @@ name. A declaration naming one file out of tens is false in the way that is wors
 than absent: **it looks like a complete provenance record.**
 
 **A `maintains` claim asserts the artefact is published.** Verify that by reading
-the build, not by assuming. `ns/vocabulary.jsonld` is a real claim because
+the build, not by assuming. `cat-harness/ns.jsonld` is a real claim because
 `.github/workflows/docs-site.yml` writes it, and that was checked before the claim
-was made. An artefact nobody publishes is exactly the 404 the drift check exists
+was made. (The example was `ns/vocabulary.jsonld` until 2026-09-30, when that
+all-layers union was retired and its claim removed in the same change — a
+claim outliving its artefact is the same 404 from the other side.) An artefact nobody publishes is exactly the 404 the drift check exists
 to prevent.
 
 ### And the drift check only covers its own producer
@@ -225,8 +226,8 @@ initiates:
 | a QA sweep axis | **trigger** | the sweep fires it per subject |
 | a schedule or a watcher | **trigger** | time or an event fires it |
 
-`alternativeTo` stays **empty** across them, by the same argument
-`ToolDefinitionSchema` makes about sharing a skill: these are not substitutable
+None of them is an alternative to another, by the same argument
+`deriveAlternatives` makes about sharing a skill: these are not substitutable
 arms, they are different ways the same work gets started.
 
 ### Enumerating the dispatch points is also how you find the ones already built

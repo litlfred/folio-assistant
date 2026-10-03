@@ -22,18 +22,20 @@ import { execFileSync, spawnSync } from "child_process";
 import { createHash } from "crypto";
 
 import { OWNED, fixedPagesOf, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
-import { nodes, pngSize } from "../gen-covers.js";
+import { nodes as nodesOf, pngSize } from "../../../folio-assistant-core/scripts/gen-covers.js";
 import { publicationBlockers } from "../../../folio-assistant-core/schemas/materialization.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
 const DOCS = join(INSTANCE, "docs");
 /**
- * The replica is LIBRARY-side since the owner's ruling of 2026-09-21 — the KG
- * and its rendering are served by `cat-harness/library`, the documentation by
- * `cat-harness/docs`. So a test that wants a replica page reads `library/`,
- * and `read()` routes by what the page IS rather than by where it used to be.
+ * The replica is in `site/` since bean `2b5s` (2026-09-30, the owner's
+ * *"site/ + publish covers"*); it was library-side from 2026-09-21 until then.
+ * `library/` is the CORPUS only — the covers and `withheld.json` the replica
+ * reads — so a test that wants a replica page reads `site/`, and `read()`
+ * routes by what the page IS rather than by where it used to be.
  */
+const SITE = join(INSTANCE, "site");
 const LIB = join(INSTANCE, "library");
 // WHICH SIDE A TEST'S PAGE LIVES ON — a different question from what the
 // generator OWNS, which is why this is not simply `fixedPagesOf("docs")`.
@@ -45,10 +47,10 @@ const LIB = join(INSTANCE, "library");
 // generator's own list rather than written out again, so adding a docs page
 // reaches this router without anybody remembering to edit it.
 const DOC_PAGES = new Set(fixedPagesOf("docs").filter((f) => f !== "index.html"));
-const sideOf = (page: string): string => (DOC_PAGES.has(page) ? DOCS : LIB);
+const sideOf = (page: string): string => (DOC_PAGES.has(page) ? DOCS : SITE);
 /** Every rendered page, both sides, as `read()` would resolve them. */
 const allHtml = (): string[] => [
-  ...readdirSync(LIB).filter((f) => f.endsWith(".html")),
+  ...readdirSync(SITE).filter((f) => f.endsWith(".html")),
   ...readdirSync(DOCS).filter((f) => f.endsWith(".html")),
 ];
 
@@ -148,7 +150,7 @@ describe("the generator owns its filenames, and prunes only those", () => {
     // this test is reached — and what this still pins is that the committed
     // tree holds exactly the pages the declaration says, no more and no less.
     const wanted = new Set([
-      ...fixedPagesOf("library"),
+      ...fixedPagesOf("site"),
       ...fixedPagesOf("docs"),
       ...items,
       ...colls,
@@ -205,8 +207,8 @@ describe("ingestion-notes is a projection of the skill, not a copy of it", () =>
 });
 
 describe("the IRIS home replica", () => {
-  // The REPLICA's home, which is library-side now.
-  const home = readFileSync(join(LIB, "index.html"), "utf-8");
+  // The REPLICA's home, which is in `site/` now (bean `2b5s`).
+  const home = readFileSync(join(SITE, "index.html"), "utf-8");
 
   it("carries no WHO emblem and no photograph", () => {
     // The instruction this page exists under: a replica carrying the real mark
@@ -229,7 +231,7 @@ describe("the IRIS home replica", () => {
     // withheld the `<img>` was never emitted, so a `src` broken by moving these
     // pages (bean `zgba`) sat undetected. Existing on disk is what would not.
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const thumbs = nodes().flatMap((n) => (n.bitstreams ?? []).filter((b) => b.bundle === "THUMBNAIL"));
+    const thumbs = nodesOf(INSTANCE).flatMap((n) => (n.bitstreams ?? []).filter((b) => b.bundle === "THUMBNAIL"));
     const shown = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length === 0);
     const withheld = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length > 0);
     // Both halves non-empty today, or one of the two assertions below is vacuous.
@@ -238,7 +240,10 @@ describe("the IRIS home replica", () => {
     for (const b of shown) {
       const m = new RegExp(`<img[^>]*src="([^"]*${esc(b.name)})"`).exec(home);
       expect(m, `no <img> for ${b.name}`).not.toBeNull();
-      expect(existsSync(join(LIB, m![1]!)), `${m![1]} does not resolve from library/`).toBe(true);
+      expect(existsSync(join(SITE, m![1]!)), `${m![1]} does not resolve from site/`).toBe(true);
+      // The cover is REFERENCED where the catalogue's localPath puts it, not
+      // copied beside the page (bean `2b5s`): one committed binary per image.
+      expect(join(SITE, m![1]!).startsWith(LIB + "/"), `${m![1]} should point into library/`).toBe(true);
     }
     for (const b of withheld) {
       expect(home, `${b.name} is withheld by its gates and must not be shown`).not.toMatch(new RegExp(`src="[^"]*${esc(b.name)}"`));
@@ -251,8 +256,8 @@ describe("the IRIS home replica", () => {
     // were linked from the pages and a CDN. The rule is enforced in one place,
     // `linkOrWithheld`; this reads every page the generator wrote, so a new
     // call site that bypasses it goes red here.
-    const pages = readdirSync(LIB).filter((f) => f.endsWith(".html")).map((f) => readFileSync(join(LIB, f), "utf-8"));
-    const pdfs = nodes().flatMap((n) =>
+    const pages = readdirSync(SITE).filter((f) => f.endsWith(".html")).map((f) => readFileSync(join(SITE, f), "utf-8"));
+    const pdfs = nodesOf(INSTANCE).flatMap((n) =>
       (n.bitstreams ?? []).filter((b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized"),
     );
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -451,7 +456,7 @@ describe("a phone-width reader never pans sideways — bean `xwrt`", () => {
     // 390 px viewport before the rule was in the generator's own stylesheet.
     const pages = [
       ...readdirSync(DOCS).filter((f) => f.endsWith(".html")).map((f) => join(DOCS, f)),
-      ...readdirSync(LIB).filter((f) => f.endsWith(".html")).map((f) => join(LIB, f)),
+      ...readdirSync(SITE).filter((f) => f.endsWith(".html")).map((f) => join(SITE, f)),
     ];
     expect(pages.length).toBeGreaterThan(0);
     const missing = pages.filter((p) => !readFileSync(p, "utf-8").includes(":not(pre) > code { overflow-wrap: anywhere; }"));
@@ -459,10 +464,20 @@ describe("a phone-width reader never pans sideways — bean `xwrt`", () => {
   });
 });
 
+describe("library/ is the corpus only — bean 2b5s", () => {
+  it("holds no page, so no mount copies it", () => {
+    // `mount-instance-docs.ts` mounts a directory that carries an index.html
+    // and copies all of it. An index.html here is what published 1,367
+    // corpus sidecars at two routes; the generator's sweep prunes one, and
+    // this is the committed tree agreeing.
+    expect(readdirSync(LIB).filter((f) => f.endsWith(".html"))).toEqual([]);
+  });
+});
+
 describe("library/withheld.json is the catalogue's gates, for the mount — bean cw35", () => {
   const w = JSON.parse(readFileSync(join(LIB, "withheld.json"), "utf-8")) as { paths: { path: string }[] };
   const listed = new Set(w.paths.map((p) => p.path));
-  const items = nodes().filter((n) => n.libraryId);
+  const items = nodesOf(INSTANCE).filter((n) => n.libraryId);
   const originalBlocked = (n: (typeof items)[number]) =>
     (n.bitstreams ?? []).some(
       (b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized" && publicationBlockers(b.materialization?.gates).length > 0,

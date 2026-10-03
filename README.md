@@ -33,19 +33,51 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Cold start — what an arriving agent does first](#cold-start--what-an-arriving-agent-does-first)
+- [Harness instances](#harness-instances)
+- [Bootstrapping — setting up a repository to write in](#bootstrapping--setting-up-a-repository-to-write-in)
+- [What it does](#what-it-does)
+- [How a change gets published](#how-a-change-gets-published)
+  - [One proposed change to one content block — the HCI validation gate](#one-proposed-change-to-one-content-block--the-hci-validation-gate)
+  - [Corpus → draft → review team → published](#corpus--draft--review-team--published)
+  - [One cycle of a folio, plan → retire](#one-cycle-of-a-folio-plan--retire)
+  - [Per content type](#per-content-type)
+- [Start a new folio](#start-a-new-folio)
+  - [1. Create the repo and scaffold it](#1-create-the-repo-and-scaffold-it)
+  - [2. Open your agent in the folio, not here](#2-open-your-agent-in-the-folio-not-here)
+  - [3. Or let the agent do step 1 too](#3-or-let-the-agent-do-step-1-too)
+  - [Which content type?](#which-content-type)
+- [Working on the platform itself](#working-on-the-platform-itself)
+  - [Common commands](#common-commands)
+- [Use it with your LLM harness](#use-it-with-your-llm-harness)
+  - [Claude Code](#claude-code)
+  - [Antigravity / Gemini CLI](#antigravity--gemini-cli)
+  - [Any MCP client](#any-mcp-client)
+- [The tools the agent gets](#the-tools-the-agent-gets)
+- [Documentation](#documentation)
+- [Work-plan with beans](#work-plan-with-beans)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- readme:toc:end -->
+
 ## Cold start — what an arriving agent does first
 
 <!-- cat-harness:cold-start:begin -->
 
 **Read this before you do anything else.**
 
-**This repository is an ACTIVE knowledge graph.** `cat-harness` declares `beans` and `todos` — work somebody is partway through, which you can pick up.
+**This repository is an ACTIVE knowledge graph.** `folio-assistant` declares `beans` and `todos` — work somebody is partway through, which you can pick up.
 
 | | |
 |---|---|
 | **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
-| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |
-| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |
+| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |
+| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/process/workflow/process-state.md). |
 | **4. It is active, so** | Work out your role, process and task from the BPMN under [`processes/`](cat-harness/processes/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
 
 *Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*
@@ -67,25 +99,22 @@ rename a directory and the links follow.
 
 | Instance | Path | For an agent | For a person |
 |----------|------|--------------|--------------|
-| `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |
-| `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
+| `folio-assistant` | . | [AGENTS.md](AGENTS.md) · [memory](memory/) | [README](README.md) · [docs](docs/) |
 | `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |
 | `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
-| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) · [docs](docs/) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
-| `large-datasets` | large-datasets | [AGENTS.md](./large-datasets/AGENTS.md) | [README](./large-datasets/README.md) |
-| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) |
-| `smart-dak` | smart-dak | [AGENTS.md](./smart-dak/AGENTS.md) | [README](./smart-dak/README.md) |
+| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) · [docs](./smart-base/docs/) |
 | `smart-ig` | smart-ig | [AGENTS.md](./smart-ig/AGENTS.md) | [README](./smart-ig/README.md) |
-| `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
-| `smart-l1` | smart-l1 | [AGENTS.md](./smart-l1/AGENTS.md) | [README](./smart-l1/README.md) |
+| `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) · [docs](./smart-immunizations/docs/) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) · [docs](./smart-trust/docs/) |
-| `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/docs/) |
+| `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 | `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
 
-> **14 of 17** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **8 of 14** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
@@ -188,13 +217,13 @@ editor; only an accepted change is written to the corpus.
 
 <img src="cat-harness/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
-[BPMN source](cat-harness/processes/editing-hci-validation.bpmn)
+[BPMN source](folio-assistant-core/processes/content/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
 <img src="cat-harness/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
-[BPMN source](cat-harness/processes/draft-to-publication.bpmn)
+[BPMN source](folio-assistant-core/processes/content/draft-to-publication.bpmn)
 
 ### One cycle of a folio, plan → retire
 
@@ -205,16 +234,16 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 <img src="cat-harness/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
-[BPMN source](cat-harness/processes/content-lifecycle.bpmn)
+[BPMN source](folio-assistant-core/processes/content/content-lifecycle.bpmn)
 
 ### Per content type
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](cat-harness/processes/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](cat-harness/processes/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](cat-harness/processes/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](cat-harness/processes/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](folio-assistant-core/processes/content/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](folio-assistant-sci/processes/content/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](smart-base/processes/content/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](fhir-harness/processes/content/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 

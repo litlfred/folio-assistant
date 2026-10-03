@@ -10,14 +10,14 @@
  *
  * Now a route names the ACTION it performs and asks the same evaluator the BPMN
  * executor asks. The gateway's three sessions are three declared actors
- * (`viewer`, `collaborator`, `owner` in `.claude/skills/actors/`), and what each
+ * (`viewer`, `collaborator`, `owner` in `cat-harness/scenarios/actors/`), and what each
  * may do is `cat-harness/policies/http-gateway.jsonld` — a policy file, where a
  * reviewer can see it, not a rung compared in code.
  *
  * Authentication is unchanged and is still the auth-gateway's: it injects
  * `X-User-Role`, `X-User-Email`, `X-User-Name`, and may inject `X-User-Actor`
  * once it maps a login to a declared actor. See
- * `skills/folio-core/deployment-auth.md` and `task-authorization.md`.
+ * `skills/sdlc/sdlc-core/deployment-auth.md` and `task-authorization.md`.
  *
  * @module folio-assistant/core/rbac
  */

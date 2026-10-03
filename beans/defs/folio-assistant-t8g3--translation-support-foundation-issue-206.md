@@ -95,7 +95,7 @@ Measured on `main` at `965fa6e`:
 | navbar language icon beside the QR code | `docs/assets/js/docs-ui.js:765` — `tileButton(GLOBE_GLYPH, "Language", "language")` |
 | six UN languages | `translations/{ar,es,fr,ru,zh}` plus English |
 | BPMN representation | **two**: `translation-workflow.bpmn` and `human-translation-workflow.bpmn` |
-| consolidated skill | `skills/folio-core/translation-manager.md` |
+| consolidated skill | `skills/library/library-core/translation-manager.md` |
 | roles | `translation-adjudicator`, `translation-coordinator` |
 
 `translation-workflow.bpmn` models the whole adjudication loop end to end:

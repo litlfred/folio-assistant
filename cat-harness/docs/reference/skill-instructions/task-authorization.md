@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/task-authorization.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/task-authorization.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/process-core/task-authorization.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/task-authorization.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/task-authorization.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/process-core/task-authorization.md){: .fa-edit-source }
 
 {% raw %}
 # Task authorization — four questions before every task
@@ -25,7 +25,7 @@ child of #1180. Owner decisions, 2026-09-23, are quoted where they apply.
 | # | question | answered from | a "no" |
 |---|---|---|---|
 | 1 | **Authenticated** — who is the actor, and how do we know? | the executor's `Principal` (`src/core/access.ts`) | recorded as a finding |
-| 2 | **Assigned** — may this actor take the role the lane binds? | `ActorDef.roles` in `.claude/skills/actors/`; the lane's `roleRef` | **refuses** |
+| 2 | **Assigned** — may this actor take the role the lane binds? | `ActorDef.roles` in `cat-harness/scenarios/actors/`; the lane's `roleRef` | **refuses** |
 | 3 | **Authorized** — may they `perform-task` in this process, for this task, as this role? | ODRL policies in `policies/*.jsonld` | `deny` **refuses**; `unknown` is a finding |
 | 4 | **Access** — the same, on the content (`target`) the task acts on | the same policies, rule `target` | `deny` **refuses**; `unknown` is a finding |
 

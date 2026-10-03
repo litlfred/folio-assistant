@@ -64,7 +64,6 @@ afterAll(() => {
 const dir = (over: Record<string, unknown> = {}) => ({
   id: "t",
   path: "somewhere/",
-  dependents: "reproduce",
   graphKinds: ["schemas"],
   ...over,
 });
@@ -120,6 +119,23 @@ describe("a file at the declared path is not the directory being there", () => {
   });
 });
 
+describe("a repository-scoped entry inside another instance is a mirror", () => {
+  test("refused", () => {
+    const owner = mkdtempSync(join(tmpdir(), "declared-dirs-owner-"));
+    made.push(owner);
+    mkdirSync(join(owner, "library"), { recursive: true });
+    const root = instance([dir({ path: join(owner, "library") + "/", scope: "repository" })]);
+    const f = auditInstance(root, "/", [root, owner]);
+    expect(f.map((x) => x.kind)).toEqual(["mirror"]);
+  });
+
+  test("...but not inside an instance that CONTAINS the declaring one", () => {
+    const root = instance([dir({ path: "x/", scope: "repository", absent: { reason: "fixture" } })]);
+    // The repo root is "/" here, and it contains every instance.
+    expect(auditInstance(root, "/", [root, "/"]).filter((x) => x.kind === "mirror")).toEqual([]);
+  });
+});
+
 describe("the real corpus", () => {
   test("every declared directory in this repository resolves", async () => {
     const { instanceRootsIn } = await import("../../schemas/cat-harness.ts");
@@ -128,7 +144,7 @@ describe("the real corpus", () => {
     // Vacuity guard: an empty discovery would make the assertion below pass
     // over nothing, which is the shape this whole check exists to catch.
     expect(roots.length).toBeGreaterThan(1);
-    const all = roots.flatMap((r) => auditInstance(r, REPO));
+    const all = roots.flatMap((r) => auditInstance(r, REPO, roots));
     expect(all).toEqual([]);
   });
 });

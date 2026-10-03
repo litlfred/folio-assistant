@@ -243,3 +243,49 @@ describe("the LEVEL pages — a route that reads like a section must answer", ()
     expect(h).toContain('href="glossary/"');
   });
 });
+
+describe("a description naming another artefact on the page links to its row (bean qgjh)", () => {
+  const items = [
+    { path: "g/l.json#role/adjudicator", name: "Adjudicator", summary: "Inherits `reviewer`, not `adjudicator` or `ghost`." },
+    { path: "g/l.json#role/reviewer", name: "Reviewer", summary: "Reports." },
+  ];
+  const html = autoDocPage(TYPES[0]!, items, "", undefined, []);
+
+  it("links the one row whose fragment ends in that name", () => {
+    expect(html).toContain('<tr id="a-g-l-json-role-reviewer">');
+    expect(html).toContain('<a href="#a-g-l-json-role-reviewer"><code>reviewer</code></a>');
+  });
+  it("never links a row to itself, nor a name no row carries", () => {
+    expect(html).toContain("not <code>adjudicator</code> or <code>ghost</code>.");
+  });
+  it("a name two rows share stays code", () => {
+    const dup = autoDocPage(TYPES[0]!, [...items, { path: "h/m.json#x/reviewer", name: "R2" }], "", undefined, []);
+    expect(dup).not.toContain('href="#a-g-l-json-role-reviewer"');
+  });
+});
+
+describe("a code span that is not a row here links to a skill page or a file (bean qgjh)", () => {
+  const refs = {
+    skill: (n: string) => (n === "todo-manager" ? "../skill/todo-manager.html" : undefined),
+    file: (p: string) => (p === "a/b.bpmn" ? "https://example.invalid/a/b.bpmn" : undefined),
+  };
+  const html = autoDocPage(
+    TYPES[0]!,
+    [{ path: "g/l.json#role/x", name: "X", summary: "See `todo-manager`, `todo-manager.md`, `a/b.bpmn` and `claim`." }],
+    "",
+    undefined,
+    [],
+    refs,
+  );
+
+  it("a skill name, with or without .md, links to its instruction page", () => {
+    expect(html).toContain('<a href="../skill/todo-manager.html"><code>todo-manager</code></a>');
+    expect(html).toContain('<a href="../skill/todo-manager.html"><code>todo-manager.md</code></a>');
+  });
+  it("a repository path links to its source", () => {
+    expect(html).toContain('<a href="https://example.invalid/a/b.bpmn"><code>a/b.bpmn</code></a>');
+  });
+  it("a name that resolves to neither stays code", () => {
+    expect(html).toContain("and <code>claim</code>.");
+  });
+});

@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p073-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p073-2.png",
+  "pageStart": 73,
+  "pageEnd": 73,
+  "narrative": {
+    "text": "Figure 3.4.3, 'Hierarchical terminology content, from global reference standards to facility-level dictionaries, with top-down customisation and upward feedback', adapted from the OpenHIE National Health Data Dictionary (NHDD) framework (section 3.4.5). Titled 'NHDD Framework: Content Structure', it stacks five layers from top to bottom: Reference/Administrative Code Sets (for example SNOMED, ICD, HL7); Curated Concept Sources/Interface Terminologies (for example CIEL, IMO); Country-level Subsets/Customizations; Organization-level Dictionaries/Customizations; and Facility-level Dictionaries (for example formularies). A downward arrow on the left says that international standards are selected and customised for country use, then adapted further for local implementation. An upward arrow on the right reads 'Submissions / Feedback to Standards' and 'Responsive Local & National Governance'.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-032",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

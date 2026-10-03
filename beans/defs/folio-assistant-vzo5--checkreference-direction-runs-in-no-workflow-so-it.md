@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vzo5
 title: check:reference-direction runs in NO workflow, so its PENDING guard — the half its docblock calls enforced — fires nowhere
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-29T22:16:35Z
-updated_at: 2026-09-29T22:16:35Z
+updated_at: 2026-10-01T17:46:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -112,6 +112,8 @@ the ruling. Four are `docs/architecture/*`, whose subject IS the layering —
 the same shape as `schemas/dak-content-type.ts`, where a file below the
 boundary describes the boundary, and both *move* and *reword* are wrong.
 
-One of the 17 is `skills/folio-core/instance-publication.md`, written in this
+One of the 17 is `skills/kg/kg-core/instance-publication.md`, written in this
 same arc four days ago. The check had no way to say so at the time, because
 nothing ran it.
+
+_2026-10-01T17:46:56Z_ — Claimed by claude/rulings-2026-10-01-late — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # A decision is about to be handed to the person — the rule, at the moment it applies.
 #
-# Bean `ahvw` / the 2026-09-20 miss. `skills/folio-core/interaction-modality.md`
+# Bean `ahvw` / the 2026-09-20 miss. `skills/conduct/conduct-core/interaction-modality.md`
 # §4.1 is STRICT and was broken by the agent implementing its neighbours, for a
 # mechanical reason: the skill is in the knowledge graph, `AGENTS.md` carries a
 # summary of it, and an agent that reads the summary never learns the part the
@@ -67,8 +67,8 @@ cat <<'EOF'
   it. That is what `bean-rendered-decision-records` counts — 1 in the whole
   store on 2026-09-21, which is why this paragraph exists.
 
-  Full rule: cat-harness/skills/folio-core/interaction-modality.md §4
-  The columns: cat-harness/skills/folio-core/decision-comparison.md
+  Full rule: cat-harness/skills/conduct/conduct-core/interaction-modality.md §4
+  The columns: cat-harness/skills/conduct/conduct-core/decision-comparison.md
   The schema:  cat-harness/schemas/decision-request.ts
 ──────────────────────────────────────────────────────────────────────────────
 EOF

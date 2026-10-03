@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-09-19T18:04:06Z
+updated_at: 2026-10-01T18:06:46Z
 parent: folio-assistant-vke6
 ---
 
@@ -231,7 +231,7 @@ generates 251**, and I could not explain the 8. Measured both ways rather than
 assumed — main regenerated from scratch keeps all 251 and its own
 `kg:audit:check` exits 0, so those 8 are audited there and my tree lost them.
 The 8 are all one level deeper than a package (`folio-core/bib-qa/qa-tags`,
-`folio-core/coordinate/protocol`, `folio-paper-adapter/formalizer/*`,
+`sdlc-core/coordinate/protocol`, `folio-paper-adapter/formalizer/*`,
 `folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback`), which
 points at `isPartOfASkill()` in `scripts/kg-audit.ts` classifying them
 differently under the new path. Not chased further.
@@ -535,3 +535,22 @@ with no counterpart here, which the rename pass structurally could not see.
 
 Verified: 3078 tests 0 fail, `bun run gates --all` the whole set, tsc and
 eslint clean.
+
+
+## Owner rulings 2026-10-01 late (~17:30) — Q-A, generator retargeting (epic 7x5n)
+
+Recorded by the separation-arc lead's agent; source: owner, session_01ToWZR4RgTRCWeSsgxsSQfT. Plan: Q-A ("placement rule (a) + file-level overlay (b)").
+
+- **Bootstrap outputs, split by kind.**
+  - kg-qa verdicts (29), glossary ledgers (6 in cat-harness + 5 in core) and detangle (3) **stay in cat-harness** as the auditor's output. Owner: *"a harness may discuss its dependencies."*
+  - UML renders of bootstrap and bootstrap-tools (50) are **rendered at build by bootstrap-tools** for bootstrap's site.
+  - Translations of bootstrap's processes (25) **move INTO bootstrap**. bootstrap's index.html links all 6 languages; its README gets one language line linking to the index's translated pages — no translated README files.
+  - Owner: *"bootstrap has no tools, but can use bootstrap-tools rendered content."*
+- **Committed renderings** (UML pages and SVGs, viewer pages) become **deploy-time output**, rendered at build. Published URLs stay unchanged.
+- **Delete the 37 duplicate sidecars** (8 `_external` + 29 tool kg-qa), keeping one copy per subject in its own instance. (This is the deletion confirmation Q-A PR 4 needed.)
+- **`tools/index.ts` module-union:** a name collision THROWS, keeping the `contributions.ts` rule.
+- **SKOS export URLs (X2):** left out of Q-A until ruled.
+
+**Bearing on this bean:** confirms the inversion — `<stub>/docs`, not `docs/<stub>` — for generated output too. Committed renderings become build output inside each instance's own site; bootstrap's translations move into bootstrap itself.
+
+_2026-10-01T18:06:46Z_ — Claimed by claude/qa-dup-sidecars for Q-A PR 4 (delete the 37 duplicate kg-qa sidecars, narrow kg-audit), assigned by the separation-arc lead (epic 7x5n). `beans:claim` refused only because the bean was in-progress with no holder recorded; cmsl is held by claude/fervent-brahmagupta-rbwhzm.

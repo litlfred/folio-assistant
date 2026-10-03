@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/voice-overlay-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/voice-overlay-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/voice-overlay-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/voice-overlay-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/voice-overlay-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/voice-overlay-review.md){: .fa-edit-source }
 
 {% raw %}
 # Voice overlay review
@@ -27,7 +27,7 @@ bun run check:voices    # the voices, their rule counts, and that every citation
 
 Every voice rule carries a `source` that resolves to a real file — a
 `library/<doc>/sections/<section>.md` for a rule read from an ingested document,
-or a `kgRef` for a house standard. It also carries the `quote` the rule was read
+or a `path` for a house standard. It also carries the `quote` the rule was read
 from.
 
 **Open the citation before upholding a finding.** Two reasons, and the second is

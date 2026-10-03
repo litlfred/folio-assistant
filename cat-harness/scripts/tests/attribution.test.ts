@@ -242,6 +242,10 @@ describe("the real corpus", () => {
     if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     for (const r of reports) {
+      // A `referenced` entry records a source and holds NO blocks, by design
+      // (bean `scfh`); `referenced-record` refuses one that does. There is no
+      // prose here to have a provenance, so the requirement does not apply.
+      if (r.requirements.some((x) => x.name === "referenced-record")) continue;
       const q = r.requirements.find((x) => x.name === "narrative-provenance");
       // `toBe`, not `toContain("met")` — "unmet" CONTAINS "met", so that
       // assertion passed in both directions. Caught by reading it back.
@@ -249,5 +253,19 @@ describe("the real corpus", () => {
       // The zero is REPORTED, not inferred from silence.
       expect(q?.detail).toContain("0 narrative");
     }
+  });
+});
+
+describe("MODEL_NOT_DISCLOSED — the declared non-identifier (owner, 2026-09-30)", () => {
+  test("an agent that may not name its model says so, and must give its session", async () => {
+    const { AttributionSchema, MODEL_NOT_DISCLOSED, modelDisclosed } = await import("../../schemas/attribution.ts");
+    const withSession = { kind: "agent", id: "claude-code", model: MODEL_NOT_DISCLOSED, session: "https://claude.ai/code/session_x" };
+    expect(AttributionSchema.safeParse(withSession).success).toBe(true);
+    expect(AttributionSchema.safeParse({ ...withSession, session: undefined }).success).toBe(false);
+    expect(modelDisclosed(withSession)).toBe(false);
+  });
+  test("model stays REQUIRED for an agent: not-disclosed is an answer, silence is not", async () => {
+    const { AttributionSchema } = await import("../../schemas/attribution.ts");
+    expect(AttributionSchema.safeParse({ kind: "agent", id: "a", session: "s" }).success).toBe(false);
   });
 });

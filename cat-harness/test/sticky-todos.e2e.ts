@@ -181,6 +181,33 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
+/* ── One sticky (#1925) ──────────────────────────────────────────────────
+ *
+ * Every board slot is the closed tile with the icon row under it; the full
+ * card is drawn in the WINDOW a tile opens, and Pin puts the sticky on the
+ * FOLIO GLASS (owner, 2026-10-02: "pin to glass should pin to folio glass").
+ * These helpers say that once, so a test reads as what it checks. */
+const openBoard = async (page: import("@playwright/test").Page) => {
+  await page.locator(".fa-tiles-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+};
+const slotOf = (page: import("@playwright/test").Page, id: string) =>
+  page.locator(`.fa-sticky-slot[data-fa-home-slot="${id}"]`);
+/** Open a todo's window from its tile; the window's card is the full sticky. */
+const openWin = async (page: import("@playwright/test").Page, id: string) => {
+  await slotOf(page, id).locator(".fa-sticky-tile").click();
+  const win = page.locator(`.fa-board-window[data-fa-window="${id}"]`);
+  await expect(win).toBeVisible();
+  return win;
+};
+const folioOf = (page: import("@playwright/test").Page) =>
+  page.evaluate(() => JSON.parse(localStorage.getItem("fa-folio-assets") || "{}"));
+const confirmSend = (page: import("@playwright/test").Page) =>
+  page.locator("dialog.fa-fsh-confirm .fa-fsh-confirm-ok").click();
+const glassCardOf = (page: import("@playwright/test").Page, id: string) =>
+  page.locator(`.fa-sticky-layer .fa-glass-asset[data-fa-asset="todo/${id}"]`);
+const toggleGlass = (page: import("@playwright/test").Page) => page.locator(".fa-glass-handle").click();
+
 test("the launcher grows a Todos tile carrying the count", async ({ page }) => {
   await page.goto(PAGE_URL);
   const tile = page.locator(".fa-tile", { hasText: "Todos" });
@@ -217,11 +244,10 @@ test("opening shows every sticky, summary first and body folded", async ({ page 
 });
 
 test("a sticky expands to its body, and the paragraphs survive", async ({ page }) => {
+  // In the WINDOW its tile opens: the slot is the closed tile (#1925).
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-
-  const first = page.locator(".fa-sticky").first();
+  await openBoard(page);
+  const first = (await openWin(page, "first-todo")).locator(".fa-sticky");
   const toggle = first.locator(".fa-sticky-toggle");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
   await toggle.click();
@@ -233,9 +259,8 @@ test("a todo with no body says so rather than opening blank", async ({ page }) =
   // Third state. An empty card is indistinguishable from one that failed to
   // render, and the reader cannot tell which.
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  const second = page.locator(".fa-sticky").nth(1);
+  await openBoard(page);
+  const second = (await openWin(page, "second-todo")).locator(".fa-sticky");
   await second.locator(".fa-sticky-toggle").click();
   await expect(second.locator(".fa-sticky-empty")).toHaveText("No detail recorded.");
 });
@@ -278,28 +303,25 @@ test("a sticky carries VIEW and EDIT, two controls for two acts", async ({ page 
   // icon)". `/blob/` is reading and `/edit/` opens GitHub's editor — a reader
   // checking what a card says should not land in a text box.
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await openBoard(page);
 
-  // THE ROW MOVED OUT OF THE CARD on 2026-09-21 — owner: *"edit, view links
-  // can be below, not inside stick"*. It is a caption on the SLOT now, which
-  // is also what lets it survive the card being pinned to the glass. The
-  // assertion below is unchanged in substance: two controls, two different
-  // URLs, `/blob/` for reading and `/edit/` for the editor.
-  const tools = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-links");
-  await expect(tools.locator(".fa-sticky-view")).toHaveAttribute(
+  // BELOW the sticky, in the one icon row every sticky has (#1925): view,
+  // edit, pin, send to fsh-guts. Two controls, two different URLs.
+  const row = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-actions");
+  await expect(row.locator(".fa-sticky-act-view")).toHaveAttribute(
     "href",
     "https://github.com/litlfred/folio-assistant/blob/main/todos/items/first-todo.md",
   );
-  await expect(tools.locator(".fa-sticky-edit")).toHaveAttribute(
+  await expect(row.locator(".fa-sticky-act-edit")).toHaveAttribute(
     "href",
     "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
   );
   // Two DIFFERENT URLs. One control pointing at one of them would satisfy any
   // assertion that only checked presence.
-  const hrefs = await tools
-    .locator("a.fa-node-edit")
+  const hrefs = await row
+    .locator("a.fa-sticky-act")
     .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute("href")));
+  expect(hrefs.length).toBe(2);
   expect(new Set(hrefs).size).toBe(hrefs.length);
 });
 
@@ -331,10 +353,10 @@ test("both controls are ABSENT, not broken, when the pipeline has no forge", asy
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
   await expect(page.locator(".fa-sticky")).not.toHaveCount(0); // the board did mount
-  await expect(page.locator(".fa-sticky-view")).toHaveCount(0);
-  await expect(page.locator(".fa-sticky-edit")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky-view, .fa-sticky-act-view")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky-edit, .fa-sticky-act-edit")).toHaveCount(0);
   // ...and nothing disabled or greyed in their place.
-  await expect(page.locator(".fa-sticky-tools a")).toHaveCount(0);
+  await expect(page.locator(".fa-sticky-tools a, .fa-sticky-actions a")).toHaveCount(0);
 });
 
 test("neither link carries a `..` — the old one resolved to a dead path", () => {
@@ -352,39 +374,31 @@ test("neither link carries a `..` — the old one resolved to a dead path", () =
 
 test("the pencil is `.fa-node-edit` pointing at the todo's own file", async ({ page }) => {
   // The owner's rule: the edit affordance is the class-level pattern every
-  // content object on this site already has, not a bespoke editor.
+  // content object on this site already has, not a bespoke editor. On the
+  // open window's bar it is `.fa-node-edit`; under the tile it is the row's
+  // pencil, to the same file.
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  // `.fa-sticky-edit`, not the bare `a.fa-node-edit` this used: bean `pb04`
-  // put a View control beside the pencil, so the class-level selector matches
-  // two links and the assertion would be order-dependent. Naming the control
-  // is what the two classes exist for.
-  //
-  // Scoped to the SLOT rather than the card since 2026-09-21: the row is a
-  // caption below the sticky now, not a tool inside it.
-  const edit = page.locator(".fa-sticky-slot").first().locator("a.fa-sticky-edit");
-  await expect(edit).toHaveAttribute(
-    "href",
-    "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md",
-  );
+  await openBoard(page);
+  const file = "https://github.com/litlfred/folio-assistant/edit/main/todos/items/first-todo.md";
+  await expect(page.locator(".fa-sticky-slot").first().locator("a.fa-sticky-act-edit")).toHaveAttribute("href", file);
+  const win = await openWin(page, "first-todo");
+  await expect(win.locator('a.fa-node-edit[data-fa-control="edit"]')).toHaveAttribute("href", file);
 });
 
-test("pin lifts a sticky onto the page and greys its board slot", async ({ page }) => {
+test("pin puts a sticky on the folio glass and greys its board slot", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await openBoard(page);
 
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(1);
-
-  const slot = page.locator(".fa-sticky-slot").first();
+  const slot = slotOf(page, "first-todo");
+  const pin = slot.locator(".fa-sticky-act-pin");
+  await pin.click();
+  expect((await folioOf(page))["todo/first-todo"]).toMatchObject({ shown: true, kind: "todos" });
   await expect(slot).toHaveClass(/fa-sticky-slot-floating/);
-  // The greyed entry is a REAL button, not a disabled one: `disabled` removes
-  // it from the tab order, and it is the control that brings the sticky back.
-  const recall = slot.locator(".fa-sticky-recall");
-  await expect(recall).toBeVisible();
-  await expect(recall).not.toBeDisabled();
+  // The pressed pin is a REAL button, not a disabled one: `disabled` removes
+  // it from the tab order, and it is the control that takes the sticky back.
+  await expect(pin).toHaveAttribute("aria-pressed", "true");
+  await expect(pin).toBeVisible();
+  await expect(pin).not.toBeDisabled();
 });
 
 /**
@@ -408,22 +422,26 @@ test("pin lifts a sticky onto the page and greys its board slot", async ({ page 
  * `schemas/themes.test.ts` carries the premise that every theme surface is
  * opaque.
  */
-test("a themed sticky keeps its theme across pin AND dock", async ({ page }) => {
+test("a themed sticky keeps its theme across pin AND unpin", async ({ page }) => {
   await page.goto(THEMED_PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await openBoard(page);
 
   const onBoard = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
   await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
 
-  await onBoard.locator(".fa-sticky-pin").click();
-  const floating = page.locator(".fa-sticky-layer .fa-sticky");
-  await expect(floating).toHaveCount(1);
-  await expect(floating).toHaveAttribute("data-fa-sticky-theme", "library");
+  await slotOf(page, "themed-todo").locator(".fa-sticky-act-pin").click();
+  // On the glass, the card is dressed from the published index, theme and all.
+  await page.keyboard.press("Escape");
+  await toggleGlass(page);
+  const onGlass = glassCardOf(page, "themed-todo");
+  await expect(onGlass).toHaveAttribute("data-fa-sticky-theme", "library");
+  await toggleGlass(page);
 
-  // ...and back down. This is the direction the owner reported.
-  await page.locator(".fa-sticky-slot .fa-sticky-recall").click();
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  // ...and back off the glass. This is the direction the owner reported.
+  await page.reload();
+  await openBoard(page);
+  await slotOf(page, "themed-todo").locator(".fa-sticky-act-pin").click();
+  expect((await folioOf(page))["todo/themed-todo"]).toMatchObject({ shown: false });
   await expect(onBoard).toHaveAttribute("data-fa-sticky-theme", "library");
 });
 
@@ -437,7 +455,11 @@ test("a themed todo renders its backdrop art, the way every other sticky does", 
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
 
-  const card = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]');
+  await expect(page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"]')).toHaveClass(/fa-sticky--backdrop/);
+  // The closed tile wears the same faded art (#1925).
+  await expect(slotOf(page, "themed-todo").locator(".fa-sticky-tile")).toHaveClass(/fa-sticky--backdrop/);
+  // Measured in the WINDOW, where the full card is drawn.
+  const card = (await openWin(page, "themed-todo")).locator(".fa-sticky");
   await expect(card).toHaveClass(/fa-sticky--backdrop/);
 
   // THE PICTURE IS THE POSITIONED LAYER, and the `<img>` is its child. The
@@ -477,15 +499,15 @@ test("a todo that NAMES a layout gets that crop instead of the square", async ({
   );
 });
 
-test("the art survives a pin, because the card is rebuilt from the todo", async ({ page }) => {
+test("the art survives a pin, because the glass card is dressed from the todo", async ({ page }) => {
   await page.goto(THEMED_PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo"] .fa-sticky-pin').click();
-
-  const floating = page.locator(".fa-sticky-layer .fa-sticky");
-  await expect(floating).toHaveClass(/fa-sticky--backdrop/);
-  await expect(floating.locator("picture > img.fa-sticky-art")).toHaveCount(1);
+  await openBoard(page);
+  await slotOf(page, "themed-todo").locator(".fa-sticky-act-pin").click();
+  await page.reload();
+  await toggleGlass(page);
+  const onGlass = glassCardOf(page, "themed-todo");
+  await expect(onGlass).toHaveClass(/fa-sticky--backdrop/);
+  await expect(onGlass.locator("picture > img.fa-sticky-art")).toHaveCount(1);
 });
 
 test("an UNTHEMED todo gets no backdrop — the check can fire", async ({ page }) => {
@@ -545,34 +567,37 @@ test("a todo with NO theme still gets the opaque floating treatment", () => {
  *
  * Measured: 2 slots before, 1 after.
  */
-test("discarding a pinned sticky takes it off the page AND off the board", async ({ page }) => {
+test("sending a pinned sticky to fsh-guts takes it off the glass AND off the board", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await openBoard(page);
   await expect(page.locator(".fa-sticky-slot")).toHaveCount(2);
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-pin").click();
 
-  await page.locator(".fa-sticky-layer .fa-sticky-discard").click();
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-discard").click();
+  await confirmSend(page);
+  // Shelved, not forgotten: the entry is still the reader's.
+  expect((await folioOf(page))["todo/first-todo"]).toMatchObject({ shown: false });
   // The COUNT, not `.first()`: that is the assertion the old test should
   // have made, and the one that would have caught this change.
   await expect(page.locator(".fa-sticky-slot")).toHaveCount(1);
 });
 
-test("the discard control says where it goes, and that it comes back", async ({ page }) => {
+test("the send control says where it goes, and the confirmation that it comes back", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  const discard = page.locator(".fa-sticky").first().locator(".fa-sticky-discard");
-  const name = (await discard.getAttribute("aria-label")) ?? "";
-  // A crumpled icon with no words is a guess. "Close" said neither where it
-  // went nor that it was reversible.
-  expect(name).toContain("Discard");
-  expect(name).toContain("trashcan");
-  expect(name).toContain("restorable");
-  // The limitation is in the name too: a reader who thinks they cleared a
-  // todo for the team has been misled by the control.
-  expect(name).toContain("this browser only");
+  await openBoard(page);
+  const send = slotOf(page, "first-todo").locator(".fa-sticky-act-discard");
+  // Owner, 2026-10-02: "[x] is what? send to fsh-guts?" — the name says WHERE.
+  await expect(send).toHaveAttribute("aria-label", "Send Decide the thing to fsh-guts");
+  await expect(send).toHaveAttribute("title", "Send to fsh-guts");
+  // "make sure confirmed by user": the confirmation says it is restorable,
+  // and the limitation — a reader who thinks they cleared a todo for the
+  // team has been misled by the control.
+  await send.click();
+  const dialog = page.locator("dialog.fa-fsh-confirm");
+  await expect(dialog).toContainText("restorable");
+  await expect(dialog).toContainText("this browser only");
+  await dialog.locator(".fa-fsh-confirm-cancel").click();
+  await expect(page.locator(".fa-sticky-slot")).toHaveCount(2);
 });
 
 test("a discarded sticky is RESTORABLE — the rule the crumpled icon stands for", async ({ page }) => {
@@ -582,7 +607,8 @@ test("a discarded sticky is RESTORABLE — the rule the crumpled icon stands for
   await page.goto(PAGE_URL);
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-discard").click();
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-discard").click();
+  await confirmSend(page);
   await expect(page.locator(".fa-sticky-slot")).toHaveCount(1);
 
   // It is listed under Settings → Discarded, in its own labelled section.
@@ -593,10 +619,10 @@ test("a discarded sticky is RESTORABLE — the rule the crumpled icon stands for
   // control entirely when the document was absent, which made the discard
   // one-way — a delete wearing a crumpled icon. This test is what found it.
   await page.locator(".fa-tiles-toggle").click();
-  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Settings"))').click();
+  await page.locator('.fa-tiles-grid .fa-tile:has(.fa-tile-caption:text-is("Page settings"))').click();
   await page.locator(".fa-discarded-open").click();
   const local = page.locator(".fa-discarded-local");
-  await expect(local).toContainText("1 todo you discarded");
+  await expect(local).toContainText("1 sticky you discarded");
   // Stated in WORDS, not by colour or placement.
   await expect(local).toContainText("this browser only");
   await local.locator(".fa-discarded-restore").click();
@@ -612,7 +638,8 @@ test("a discard survives a reload, and the tile count follows it", async ({ page
   await page.goto(PAGE_URL);
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-discard").click();
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-discard").click();
+  await confirmSend(page);
 
   await page.reload();
   await page.locator(".fa-tiles-toggle").click();
@@ -623,33 +650,30 @@ test("a discard survives a reload, and the tile count follows it", async ({ page
   await expect(tile).toHaveAttribute("aria-label", "Todos — 1 outstanding");
 });
 
-test("clicking the greyed slot also returns it", async ({ page }) => {
+test("pressing the pressed pin takes it off the glass — the pin is its own inverse", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
-
-  await page.locator(".fa-sticky-slot").first().locator(".fa-sticky-recall").click();
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  await openBoard(page);
+  const pin = slotOf(page, "first-todo").locator(".fa-sticky-act-pin");
+  await pin.click();
+  await pin.click();
+  await expect(pin).toHaveAttribute("aria-pressed", "false");
+  await expect(slotOf(page, "first-todo")).not.toHaveClass(/fa-sticky-slot-floating/);
+  expect((await folioOf(page))["todo/first-todo"]).toMatchObject({ shown: false });
 });
 
-test("pin and recall are reachable and operable from the keyboard alone", async ({ page }) => {
+test("pin and unpin are reachable and operable from the keyboard alone", async ({ page }) => {
   // The reason "pick up and move" is a BUTTON rather than a drag. This
   // instance's declared interaction profile is low-dexterity, and a pointer
   // drag cannot be operated without reimplementing the whole gesture.
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await openBoard(page);
 
-  const pin = page.locator(".fa-sticky").first().locator(".fa-sticky-pin");
+  const pin = slotOf(page, "first-todo").locator(".fa-sticky-act-pin");
   await pin.focus();
   await page.keyboard.press("Enter");
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(1);
-
-  const recall = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-recall");
-  await recall.focus();
+  await expect(pin).toHaveAttribute("aria-pressed", "true");
   await page.keyboard.press("Enter");
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
+  await expect(pin).toHaveAttribute("aria-pressed", "false");
 });
 
 test("Escape closes the board", async ({ page }) => {
@@ -687,9 +711,13 @@ test("content reaches the DOM as TEXT, never as markup", async ({ page }) => {
     }),
   );
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  const first = page.locator(".fa-sticky").first();
+  await openBoard(page);
+  // The tile's title is text…
+  const tile = slotOf(page, "first-todo").locator(".fa-sticky-tile");
+  await expect(tile.locator(".fa-sticky-tile-title")).toHaveText("<img src=x onerror=alert(1)>");
+  expect(await tile.locator("img:not(.fa-sticky-art)").count()).toBe(0);
+  // …and so is the full card, in its window.
+  const first = (await openWin(page, "first-todo")).locator(".fa-sticky");
   await expect(first.locator(".fa-sticky-summary")).toHaveText("<img src=x onerror=alert(1)>");
   expect(await first.locator("img").count()).toBe(0);
   await first.locator(".fa-sticky-toggle").click();
@@ -835,7 +863,8 @@ test.describe("todos attached to a block", () => {
     await page.goto(PAGE_URL);
     await page.locator(".fa-tiles-toggle").click();
     await page.locator(".fa-tile", { hasText: "Todos" }).click();
-    await expect(page.locator(".fa-sticky-board").getByText("Orphan")).toHaveCount(1);
+    // Once, as its tile — the full card is drawn only in a window.
+    await expect(page.locator(".fa-sticky-board .fa-sticky-tile-title").getByText("Orphan")).toHaveCount(1);
   });
 });
 
@@ -911,7 +940,8 @@ test.describe("board stacking", () => {
     const slot = page.locator(".fa-sticky-slot", {
       has: page.locator(".fa-sticky[data-todo-id='both']"),
     });
-    await expect(slot.locator(".fa-sticky-process")).toHaveText("Process_Lifecycle");
+    // Named ON the tile, so the grid stays a grid (#1925).
+    await expect(slot.locator(".fa-sticky-tile-process")).toHaveText("Process_Lifecycle");
     await expect(slot).toHaveAttribute("data-fa-depth", "0");
   });
 
@@ -932,7 +962,7 @@ test.describe("board stacking", () => {
     const slot = page.locator(".fa-sticky-slot", {
       has: page.locator(".fa-sticky[data-todo-id='untagged']"),
     });
-    await expect(slot.locator(".fa-sticky-process")).toHaveCount(0);
+    await expect(slot.locator(".fa-sticky-process, .fa-sticky-tile-process")).toHaveCount(0);
   });
 
   test("a cycle between two processes does not hang the board", async ({ page }) => {
@@ -1027,100 +1057,99 @@ test.describe("the inline board's close has a reachable inverse", () => {
  */
 test("a pinned sticky can be moved, and by the keyboard alone", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await openBoard(page);
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-pin").click();
+  await page.reload();
+  await toggleGlass(page);
 
-  const floating = page.locator(".fa-sticky-layer .fa-sticky");
-  await expect(floating).toHaveCount(1);
-
-  // It has a position at all. Before `ivfw` the layer was a small
-  // bottom-right box that stacked its children in flow, so the card had no
-  // geometry to read and nowhere to go.
-  const before = await floating.evaluate((el) => ({
+  // ON THE FOLIO GLASS, with the glass's own move (#1925).
+  const card = glassCardOf(page, "first-todo");
+  await expect(card).toBeVisible();
+  const before = await card.evaluate((el) => ({
     left: parseFloat((el as HTMLElement).style.left),
     top: parseFloat((el as HTMLElement).style.top),
   }));
   expect(Number.isFinite(before.left)).toBe(true);
   expect(Number.isFinite(before.top)).toBe(true);
 
-  // NO POINTER FROM HERE ON. `mouse` is never touched below: this instance's
-  // declared interaction profile is low-dexterity, and a move that needs a
-  // drag excludes the person who asked for it.
-  const move = floating.locator(".fa-sticky-move");
+  // NO POINTER FROM HERE ON. This instance's declared interaction profile is
+  // low-dexterity, and a move that needs a drag excludes its owner.
+  const move = card.locator('[data-fa-control="move"]');
   await expect(move).toHaveAttribute("aria-pressed", "false");
   await move.press("Enter");
-  await expect(floating).toHaveAttribute("data-fa-moving", "true");
+  await expect(card).toHaveAttribute("data-fa-moving", "true");
   await expect(move).toHaveAttribute("aria-pressed", "true");
 
   await page.keyboard.press("ArrowLeft");
   await page.keyboard.press("ArrowUp");
-  const after = await floating.evaluate((el) => ({
+  const after = await card.evaluate((el) => ({
     left: parseFloat((el as HTMLElement).style.left),
     top: parseFloat((el as HTMLElement).style.top),
   }));
-  expect(after.left).toBe(before.left - 16);
-  expect(after.top).toBe(before.top - 16);
+  expect(after.left).toBeLessThan(before.left);
+  expect(after.top).toBeLessThan(before.top);
 
-  // And the mode is leavable — `l4zi`: an action whose inverse is not
-  // reachable is not a toggle.
+  // And the mode is leavable — `l4zi`.
   await page.keyboard.press("Escape");
-  await expect(floating).toHaveAttribute("data-fa-moving", "false");
+  await expect(card).not.toHaveAttribute("data-fa-moving", "true");
 });
 
 test("the arrows only move IN the mode — outside it they still scroll", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await openBoard(page);
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-pin").click();
+  await page.reload();
+  await toggleGlass(page);
 
-  const floating = page.locator(".fa-sticky-layer .fa-sticky");
-  const before = await floating.evaluate((el) => (el as HTMLElement).style.left);
-  await floating.evaluate((el) => (el as HTMLElement).focus());
+  const card = glassCardOf(page, "first-todo");
+  const before = await card.evaluate((el) => (el as HTMLElement).style.left);
+  await card.evaluate((el) => (el as HTMLElement).focus());
   await page.keyboard.press("ArrowLeft");
   // Unchanged: a card that moved whenever a reader pressed an arrow while
   // reading it would have stolen the page's own navigation.
-  await expect(floating).toHaveAttribute("style", new RegExp(`left: ${before.replace(".", "\\.")}`));
+  expect(await card.evaluate((el) => (el as HTMLElement).style.left)).toBe(before);
 });
 
 test("a moved sticky comes back where it was, not in the corner", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await openBoard(page);
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-pin").click();
+  await page.reload();
+  await toggleGlass(page);
 
-  const floating = page.locator(".fa-sticky-layer .fa-sticky");
-  await floating.locator(".fa-sticky-move").press("Enter");
+  const card = glassCardOf(page, "first-todo");
+  await card.locator('[data-fa-control="move"]').press("Enter");
   await page.keyboard.press("ArrowLeft");
   await page.keyboard.press("ArrowLeft");
-  const moved = await floating.evaluate((el) => (el as HTMLElement).style.left);
   await page.keyboard.press("Escape");
+  const moved = await card.evaluate((el) => (el as HTMLElement).style.left);
+  await toggleGlass(page);
 
-  // dock DESTROYS the card and float CONSTRUCTS a new one — the same
-  // round-trip that dropped the theme. A reader who moved it and put it back
-  // has not asked for it to jump to the corner.
-  await page.locator(".fa-sticky-slot .fa-sticky-recall").click();
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCount(0);
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveAttribute(
-    "style",
-    new RegExp(`left: ${moved.replace(".", "\\.")}`),
-  );
+  // Unpin and pin again: the folio entry keeps its place (`placeOnGlass`), so
+  // a reader who moved it and put it back has not asked for it to jump.
+  await openBoard(page);
+  const pin = slotOf(page, "first-todo").locator(".fa-sticky-act-pin");
+  await pin.click();
+  await pin.click();
+  await page.reload();
+  await toggleGlass(page);
+  expect(await glassCardOf(page, "first-todo").evaluate((el) => (el as HTMLElement).style.left)).toBe(moved);
 });
 
 test("the layer is a coordinate frame, not a surface that swallows the page", async ({ page }) => {
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await openBoard(page);
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-pin").click();
 
-  // The layer covers the whole viewport now, so if it took pointer events the
-  // page would be unusable the moment one sticky was pinned. This is the one
-  // assertion that would fail catastrophically in production and silently in
-  // a spec that only checked the card.
+  // The layer covers the whole viewport, so if it took pointer events with
+  // the glass put away the page would be unusable the moment one sticky was
+  // pinned. This is the one assertion that would fail catastrophically in
+  // production and silently in a spec that only checked the card.
   const layer = page.locator(".fa-sticky-layer");
   await expect(layer).toHaveCSS("pointer-events", "none");
-  await expect(page.locator(".fa-sticky-layer .fa-sticky")).toHaveCSS("pointer-events", "auto");
+  await page.reload();
+  await toggleGlass(page);
+  await expect(glassCardOf(page, "first-todo")).toHaveCSS("pointer-events", "auto");
 });
 
 /* ── One panel, not two ───────────────────────────────────────────────────
@@ -1278,28 +1307,24 @@ test.describe("todo backdrop art under a baseurl", () => {
  * does not. Only where the second group lives has changed, from a drawer
  * inside to a caption below.
  */
-test("a board sticky's face carries the board gestures, not the forge links", async ({ page }) => {
+test("a board sticky's tile carries no control; the row under it carries them all", async ({ page }) => {
+  // #1925: "icons are a mess on both. make compact underneath". The split
+  // `qefk` made — a gesture on the CARD, a link to the FILE — collapses into
+  // one row under the tile, in one order, because the tile itself is closed.
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  await openBoard(page);
 
   const slot = page.locator(".fa-sticky-slot").first();
+  const tile = slot.locator(".fa-sticky-tile");
+  expect(await tile.locator("button, a").count()).toBe(0);
+  const order = await slot.locator(".fa-sticky-actions [data-fa-act]")
+    .evaluateAll((ns) => ns.map((n) => n.getAttribute("data-fa-act")));
+  expect(order).toEqual(["view", "edit", "pin", "discard"]);
+  // And NOT inside the card at all — a descendant selector, which would catch
+  // a drawer sneaking back in.
   const card = slot.locator(".fa-sticky").first();
-  const tools = card.locator(".fa-sticky-tools");
-
-  // On the face.
-  await expect(tools.locator("> .fa-sticky-pin")).toHaveCount(1);
-  await expect(tools.locator("> .fa-sticky-discard")).toHaveCount(1);
-
-  // NOT IN THE CARD AT ALL now — stronger than main's assertion, which only
-  // held they were off the FACE. A descendant selector is the right one here
-  // precisely because it would catch a drawer sneaking back in.
-  await expect(card.locator("a.fa-sticky-view")).toHaveCount(0);
-  await expect(card.locator("a.fa-sticky-edit")).toHaveCount(0);
-
-  // ...and present, one level OUT, in the slot's caption row.
-  await expect(slot.locator(".fa-sticky-links a.fa-sticky-view")).toHaveCount(1);
-  await expect(slot.locator(".fa-sticky-links a.fa-sticky-edit")).toHaveCount(1);
+  await expect(card.locator("a.fa-sticky-view, a.fa-sticky-act-view")).toHaveCount(0);
+  await expect(card.locator(".fa-sticky-pin, .fa-sticky-discard")).toHaveCount(0);
 });
 
 test("the forge links need no drawer to reach — they are one Tab away", async ({ page }) => {
@@ -1312,9 +1337,9 @@ test("the forge links need no drawer to reach — they are one Tab away", async 
   await page.locator(".fa-tiles-toggle").click();
   await page.locator(".fa-tile", { hasText: "Todos" }).click();
 
-  const links = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-links");
-  const view = links.locator("a.fa-sticky-view");
-  const edit = links.locator("a.fa-sticky-edit");
+  const links = page.locator(".fa-sticky-slot").first().locator(".fa-sticky-actions");
+  const view = links.locator("a.fa-sticky-act-view");
+  const edit = links.locator("a.fa-sticky-act-edit");
 
   // Visible without any prior gesture — the thing the drawer cost.
   await expect(view).toBeVisible();
@@ -1334,27 +1359,22 @@ test("the forge links need no drawer to reach — they are one Tab away", async 
   await expect(edit).toBeFocused();
 });
 
-test("Move joins the face when the card floats, after the other board gestures", async ({ page }) => {
+test("on the glass a pinned sticky gets the glass's tools, and no forge links", async ({ page }) => {
+  // A pinned sticky is a folio-glass card (#1925), so its tools are the
+  // glass's — move, smaller, larger, back to library view — in that order.
   await page.goto(PAGE_URL);
-  await page.locator(".fa-tiles-toggle").click();
-  await page.locator(".fa-tile", { hasText: "Todos" }).click();
-  await page.locator(".fa-sticky").first().locator(".fa-sticky-pin").click();
+  await openBoard(page);
+  await slotOf(page, "first-todo").locator(".fa-sticky-act-pin").click();
+  await page.reload();
+  await toggleGlass(page);
 
-  const tools = page.locator(".fa-sticky-layer .fa-sticky .fa-sticky-tools");
+  const tools = glassCardOf(page, "first-todo").locator(".fa-glass-asset-tools");
   const order = await tools.evaluate((el) =>
-    Array.from(el.children).map((c) => c.className));
-  const moveAt = order.findIndex((c) => c.includes("fa-sticky-move"));
-  expect(moveAt).toBeGreaterThan(-1);
-
-  // Main asserted Move came before the `⋯` drawer. With the drawer gone the
-  // invariant that is left is the one that actually caused the bug: Move
-  // must not jump to the FRONT. It used to go in at `firstChild`, which
-  // reordered the row every time a card floated.
-  expect(moveAt).toBeGreaterThan(0);
-
-  // The forge links are not on the floating card either — the slot keeps
-  // them, which is the whole reason the slot owns them rather than the card.
-  await expect(page.locator(".fa-sticky-layer a.fa-sticky-edit")).toHaveCount(0);
+    Array.from(el.children).map((c) => c.getAttribute("data-fa-control") || c.className));
+  expect(order[0]).toBe("move");
+  expect(order[order.length - 1]).toContain("fa-glass-asset-close");
+  // The forge links stay under the tile, which is why the row owns them.
+  await expect(page.locator(".fa-sticky-layer a.fa-sticky-act-edit")).toHaveCount(0);
 });
 
 /* ── The board's geometry is a MEASUREMENT, not a taste ──────────────────
@@ -1374,19 +1394,26 @@ test.describe("board geometry", () => {
   // glass. 2.5 x 127 = 318px, and 20rem is 320px.
   test.use({ viewport: { width: 1728, height: 1000 } });
 
-  test('a sticky is ~2.5 physical inches on the screen the owner named', async ({ page }) => {
+  test("a closed sticky is the declared tile size, the same on every screen", async ({ page }) => {
+    // SUPERSEDED RULING, kept as history: 2026-09-21 asked for a ~2.5"
+    // card. 2026-10-02 (#1925): *"upper smaller same size closed looks
+    // niceer"* — every sticky is now its closed tile, one declared size
+    // (`--fa-sticky-tile-size`), and the full card opens in a window.
     await page.goto(PAGE_URL);
-    await page.locator(".fa-tiles-toggle").click();
-    await page.locator(".fa-tile", { hasText: "Todos" }).click();
-
-    const card = page.locator(".fa-sticky-grid > *").first();
-    const box = await card.boundingBox();
-    expect(box).not.toBeNull();
-    // 320px exactly, but asserted as a BAND. The tolerance is not slack for
-    // the implementation — it is what "~2.5 inches" means. A spec that
-    // demanded 320.0 would fail on a rounding change nobody could see.
-    expect(box!.width).toBeGreaterThanOrEqual(310);
-    expect(box!.width).toBeLessThanOrEqual(330);
+    await openBoard(page);
+    const want = await page.evaluate(() => {
+      const probe = document.createElement("div");
+      probe.style.width = "var(--fa-sticky-tile-size)";
+      document.body.appendChild(probe);
+      const w = probe.getBoundingClientRect().width;
+      probe.remove();
+      return w;
+    });
+    expect(want).toBeGreaterThan(0);
+    const widths = await page.locator(".fa-sticky-grid > .fa-sticky-slot > .fa-sticky-tile")
+      .evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().width)));
+    expect(widths.length).toBe(2);
+    for (const w of widths) expect(w).toBe(Math.round(want));
   });
 
   test("the cards do not stretch to fill the row", async ({ page }) => {

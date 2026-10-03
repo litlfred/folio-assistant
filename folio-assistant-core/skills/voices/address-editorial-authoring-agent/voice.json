@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `editorial-authoring-agent` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
-      "kgRef": "scenarios/roles.json"
+      "instance": "litlfred/cat-harness",
+      "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "editorial-authoring-agent"
       }
     ]
@@ -28,8 +28,8 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
-        "kgRef": "scenarios/roles.json",
+        "instance": "litlfred/cat-harness",
+        "path": "scenarios/roles.json",
         "quote": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it."
       }
     }

@@ -34,10 +34,11 @@
 # ## What is deliberately NOT here, and it is the whole discipline
 #
 # **Not `cat-harness/test/results/**`**, though 840 generated files live there.
-# `kg-audit` reads its own sidecars back — `readAttestations(sidecarPath(r))` —
-# so a `kg-qa` sidecar carries adjudications that an earlier run or a person
-# recorded. It is not purely generated, and `-merge` on one would discard an
-# attestation with nothing said. `audit-coverage.qa-results.json` is named
+# `kg-audit` reads its prior judgements back — `readAttestations` — so the
+# file holding them carries adjudications that an earlier run or a person
+# recorded. Since bean `2gst` that is `test/attestations/**`, not the `kg-qa`
+# sidecar; neither is marked here. Such a file is not purely generated, and
+# `-merge` on one would discard an attestation with nothing said. `audit-coverage.qa-results.json` is named
 # individually for exactly that reason: its producer reads the committed file
 # only to compare for staleness, and writes a fresh document every time.
 #
@@ -49,6 +50,7 @@
 cat-harness/docs/glossary/index.md                      linguist-generated=true -diff -merge
 cat-harness/docs/cat-harness/docs-auto/**               linguist-generated=true -diff -merge
 cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
+cat-harness/test/results/tool-runs/lsi-index/cat-harness/skills.tool-run.json linguist-generated=true -diff -merge
 
 # Line endings the interpreters require, whatever core.autocrlf says.
 # bash chokes on CRLF; cmd.exe mis-parses some LF-only batch files. Both are
@@ -56,3 +58,38 @@ cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true 
 # cat-harness/scripts/gen-bat-wrappers.sh --check compares like with like on every OS.
 *.sh   text eol=lf
 *.bat  text eol=crlf
+
+# ## Added 2026-10-01, and TWO candidates were refused in the same pass
+#
+# `skills.tool-run.json` qualifies on all three counts. Its producer
+# (`writeToolRun`, `schemas/tool-run.ts`) composes the body from its argument
+# and reads the existing file only as `readFileSync(p) === body`, to skip a
+# pointless write — nothing is carried forward. And `lsi:skills:check`
+# REDDENS on a wrong resolution: measured by corrupting `inputFingerprint`,
+# which took the gate from exit 0 to exit 1.
+#
+# Refused, each by the same measurement rather than by reading:
+#
+#   · `skill-register.qa-results.json` — nothing catches a wrong resolution.
+#     Corrupted its `producer.script_hash` and a family summary:
+#     `skill:register:check` exited 0, and 66 tests across
+#     `skill-register.test.ts` + `qa-results.test.ts` passed.
+#   · `skills.lsi.json` — same result. Corrupted its `fingerprint` and
+#     `lsi:skills:check` exited 0; that gate validates the RUN RECORD's
+#     fingerprint, never the sidecar's own contents.
+#
+# Both pass the carry-forward test and fail the gate test, which is the half
+# that makes an entry safe rather than clever. Bean `eqxp`.
+#
+# ## What this buys, stated honestly, because the first write-up got it wrong
+#
+# `-merge` does NOT reduce the NUMBER of conflicts. Measured in a scratch
+# repository: with `gen.json -merge`, a merge where both sides changed the
+# file still exits 1 with the path unresolved; git declares a conflict and
+# leaves OURS as the tentative result. What it buys is what `oxka` claimed and
+# no more — one clean whole-file conflict to resolve by regenerating, instead
+# of markers buried inside a generated blob, plus a collapsed diff in review.
+# Bean `eqxp` carried the stronger claim (that an entry would have cut a real
+# merge from five conflicts to two); that claim is false and is corrected
+# there. Removing these conflicts, rather than tidying them, needs the files
+# off `main` altogether.

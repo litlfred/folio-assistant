@@ -2,14 +2,14 @@
   "$schema": "folio-voices-index/v1",
   "tile": {
     "voices": {
-      "count": 43,
+      "count": 48,
       "unit": "voices"
     }
   },
   "directories": [
     {
-      "instance": "agent-skills",
-      "dir": "agent-skills/skills/voices",
+      "instance": "cat-harness",
+      "dir": "cat-harness/skills/voices",
       "present": true,
       "voices": [
         "agent-skill-authoring"
@@ -56,6 +56,7 @@
         "address-translation-coordinator",
         "address-translator",
         "address-user",
+        "linked-data",
         "technical-writer"
       ]
     },
@@ -72,7 +73,8 @@
       "dir": "smart-base/skills/voices",
       "present": true,
       "voices": [
-        "who-digital-health"
+        "who-digital-health",
+        "who-digital-transformation-handbook"
       ]
     },
     {
@@ -115,7 +117,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Arrives at a disagreement, not at an artefact. Is given the findings and the checker's output and — deliberately — not the thing being judged, so the verdict measures the disagreement rather than a fresh reading of the source. Needs both sides and the reason each was offered, before needing anything else."
         }
       ]
@@ -148,7 +150,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later."
         }
       ]
@@ -181,7 +183,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not."
         }
       ]
@@ -214,7 +216,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code."
         }
       ]
@@ -247,7 +249,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ."
         }
       ]
@@ -280,7 +282,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Expert in the subject, not in the system. Judges whether the content is clinically right; is not interested in FHIR profiles or schema fields and should not have to be."
         }
       ]
@@ -313,7 +315,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
         }
       ]
@@ -346,7 +348,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
         }
       ]
@@ -379,7 +381,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Cites to a location, not to a document. Distinguishes what a source says from what it implies, and marks a synthesis as a synthesis rather than letting it read as a quotation."
         }
       ]
@@ -412,7 +414,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Writes for somebody who has not read the codebase. Knows which directories are generated and must never be hand-edited; assumes nothing about what the reader already believes."
         }
       ]
@@ -445,7 +447,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument."
         }
       ]
@@ -478,7 +480,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it."
         }
       ]
@@ -511,7 +513,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
         }
       ]
@@ -544,7 +546,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below."
         }
       ]
@@ -577,7 +579,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
         }
       ]
@@ -610,7 +612,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later."
         }
       ]
@@ -643,7 +645,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised."
         }
       ]
@@ -676,7 +678,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
         }
       ]
@@ -709,7 +711,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
         }
       ]
@@ -742,7 +744,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding."
         }
       ]
@@ -775,7 +777,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
         }
       ]
@@ -808,7 +810,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
         }
       ]
@@ -841,7 +843,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank."
         }
       ]
@@ -874,7 +876,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
         }
       ]
@@ -907,7 +909,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
         }
       ]
@@ -940,7 +942,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
         }
       ]
@@ -973,7 +975,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Holding a 300-page change and a handful of reviewers with different expertise. Needs to know where the changes are, who has read what, and what is still open, section by section, without reading every block themselves."
         }
       ]
@@ -1006,7 +1008,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why."
         }
       ]
@@ -1039,7 +1041,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
         }
       ]
@@ -1072,7 +1074,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
         }
       ]
@@ -1105,7 +1107,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Affected by the outcome, not building it. Reviews at defined checkpoints and otherwise is not watching. Needs to re-acquire context each time without reading the history."
         }
       ]
@@ -1138,7 +1140,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Owns coded concepts and value sets. Precise by profession; a near-enough code is a wrong code. Cares about provenance and binding strength more than prose."
         }
       ]
@@ -1171,7 +1173,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Decides between competing translations, usually a subject expert in the target language. Arrives at a disagreement and needs both options and the reason each was offered."
         }
       ]
@@ -1204,7 +1206,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since."
         }
       ]
@@ -1237,7 +1239,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Works in the target language and needs the source's INTENT, not just its words. Context-starved by default: a string with no surrounding meaning gets translated wrong."
         }
       ]
@@ -1270,7 +1272,7 @@
           "judgementOnly": true,
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
-          "citesInstance": "cat-harness",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Has a goal and no interest in the machinery. Types with difficulty and will not read three paragraphs to find a choice. Knows their own domain far better than the system, and will be right about it when the agent is not."
         }
       ]
@@ -1279,8 +1281,8 @@
       "id": "agent-skill-authoring",
       "title": "Agent skill authoring — the base voice, read from two ingested papers",
       "description": "The voice for writing and reviewing agent skills: what a SKILL.md's description must carry to be routed to at all, how much may sit in the body, where references and examples go, and what to do before trusting somebody else's skill. Twelve rules, every one cited to a page of an ingested paper. This is the SHARED BASE — the part the vendors agree on. Anything specific to one vendor's platform belongs in an override under `vendors/`, declaring this voice in its `extends` field.",
-      "instance": "agent-skills",
-      "path": "agent-skills/skills/voices/agent-skill-authoring",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/agent-skill-authoring",
       "provenance": "evidence",
       "overlaySeverity": "major",
       "criterion": "voice-overlay-agent-skill-authoring",
@@ -1309,7 +1311,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-004-writing-the-description",
           "pages": "4-5",
-          "quote": "State both what the skill does and when it should be used, and include the concrete terms a relevant task would contain."
+          "quote": "State both what the skill does and when it should be used, and include the concrete terms a relevant task would contain.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-description-third-person",
@@ -1323,7 +1330,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-004-writing-the-description",
           "pages": "4-5",
-          "quote": "Write it in the third person, since it is read by the model as part of its own context, and a first or second person voice can degrade matching."
+          "quote": "Write it in the third person, since it is read by the model as part of its own context, and a first or second person voice can degrade matching.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-body-under-500-lines",
@@ -1337,7 +1349,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-003-staged-loading",
           "pages": "4",
-          "quote": "The body should stay under about five hundred lines, a few thousand tokens, so that once loaded it does not crowd out the conversation and other context"
+          "quote": "The body should stay under about five hundred lines, a few thousand tokens, so that once loaded it does not crowd out the conversation and other context",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-assume-general-knowledge",
@@ -1351,7 +1368,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-005-anatomy-of-a-well-formed-skill",
           "pages": "5",
-          "quote": "Assume the model already holds general knowledge, and add only what it does not have: project conventions, non-obvious procedures, specific file locations, rules that must hold."
+          "quote": "Assume the model already holds general knowledge, and add only what it does not have: project conventions, non-obvious procedures, specific file locations, rules that must hold.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-references-one-level-deep",
@@ -1365,7 +1387,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-005-anatomy-of-a-well-formed-skill",
           "pages": "5",
-          "quote": "those files should not chain onward to further files, because the model may preview a deeply linked file with a partial read and then act on incomplete information"
+          "quote": "those files should not chain onward to further files, because the model may preview a deeply linked file with a partial read and then act on incomplete information",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-reference-toc-over-100-lines",
@@ -1379,7 +1406,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-005-anatomy-of-a-well-formed-skill",
           "pages": "5",
-          "quote": "For any reference file longer than about one hundred lines, place a short table of contents at the top so the model can see the full scope even on a partial read"
+          "quote": "For any reference file longer than about one hundred lines, place a short table of contents at the top so the model can see the full scope even on a partial read",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-one-default-name-the-exception",
@@ -1393,7 +1425,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-009-patterns-and-faults",
           "pages": "8",
-          "quote": "Offering many alternatives leaves the model to choose without grounds, so give one default and name the exception."
+          "quote": "Offering many alternatives leaves the model to choose without grounds, so give one default and name the exception.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-state-dependencies",
@@ -1407,7 +1444,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-009-patterns-and-faults",
           "pages": "8",
-          "quote": "Assuming a package is installed fails when it is not, so state dependencies explicitly."
+          "quote": "Assuming a package is installed fails when it is not, so state dependencies explicitly.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-evaluations-before-instructions",
@@ -1421,7 +1463,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-008-an-evaluation-driven-authoring-process",
           "pages": "8",
-          "quote": "Write evaluations before writing the skill."
+          "quote": "Write evaluations before writing the skill.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-read-third-party-skills-in-full",
@@ -1435,7 +1482,12 @@
           "citation": "library",
           "cites": "arxiv-2607.25032v1#sec-011-summary-of-guidance",
           "pages": "9",
-          "quote": "a skill from a third party should be read in full before it is used."
+          "quote": "a skill from a third party should be read in full before it is used.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.25032v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.25032v1/README.md",
+            "source": "https://arxiv.org/abs/2607.25032v1"
+          }
         },
         {
           "id": "as-no-name-as-heading",
@@ -1449,7 +1501,12 @@
           "citation": "library",
           "cites": "arxiv-2608.08453v1#sec-012-42-rq1-what-reusability-defects-are-prevalent-in",
           "pages": "4",
-          "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%)."
+          "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%).",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2608.08453v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2608.08453v1/README.md",
+            "source": "https://arxiv.org/abs/2608.08453v1"
+          }
         },
         {
           "id": "as-examples-move-to-references",
@@ -1463,7 +1520,727 @@
           "citation": "library",
           "cites": "arxiv-2608.08453v1#sec-012-42-rq1-what-reusability-defects-are-prevalent-in",
           "pages": "4",
-          "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%)."
+          "quote": "The three most prevalent individual defects are all spec violations: R1.3 miss- ing trigger guidance (52.3%), R2.4 name-as-heading dupli- cation (44.3%), and R3.2 too many inline examples (32.1%).",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Farxiv-2608.08453v1",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2608.08453v1/README.md",
+            "source": "https://arxiv.org/abs/2608.08453v1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-skill-authoring-claude",
+      "title": "Agent skill authoring — Claude override",
+      "description": "What Anthropic's own 'Skill authoring best practices' (Claude Platform Docs) adds to the shared base voice agent-skill-authoring: Claude's front-matter validation, its naming conventions, forward-slash paths, and three authoring methods (plan-validate-execute, no voodoo constants, author with one instance and test with another). MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Rules the base already carries — much of it traceable to this very document (the ~500-line body, one-level references, a table of contents over ~100 lines, third-person descriptions, evaluations before instructions) — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-claude",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-agent-skill-authoring-claude",
+      "sources": [
+        {
+          "title": "Skill authoring best practices | Claude Platform Docs (captured 2026-09-20)",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "cl-frontmatter-limits",
+          "title": "name ≤ 64 characters of lowercase, digits and hyphens; description ≤ 1,024 characters; no XML tags in either",
+          "description": "Claude validates the SKILL.md front matter: name at most 64 characters, lowercase letters, numbers and hyphens only, no XML tags and no reserved words; description non-empty, at most 1,024 characters, no XML tags. A skill that breaks these does not load on Claude, which is why this is a vendor rule — other platforms state different limits or none.",
+          "category": "formatting",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-029",
+          "pages": "29",
+          "quote": "The SKILL.md frontmatter requires name and description fields with specific validation rules: name : Maximum 64 characters, lowercase letters/numbers/hyphens only, no XML tags, no reserved words description : Maximum 1,024 characters, non-empty, no XML tags",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-name-gerund-form",
+          "title": "Prefer a gerund name — processing-pdfs, not pdf-helper",
+          "description": "Anthropic's preferred form is the gerund (processing-pdfs, analyzing-spreadsheets); noun phrases (pdf-processing) and action-oriented names (process-pdfs) are acceptable alternatives. Pick one pattern for a whole collection: inconsistency within a collection is listed among the things to avoid.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-005",
+          "pages": "5",
+          "quote": "Remember that the name field must use lowercase letters, numbers, and hyphens only. Good naming examples (gerund form): processing-pdfs analyzing-spreadsheets managing-databases testing-code writing-documentation Acceptable alternatives: Noun phrases: pdf-processing , spreadsheet-analysis Action-oriented: process-pdfs , analyze-spreadsheets",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-no-vague-or-reserved-names",
+          "title": "No vague, generic or reserved names",
+          "description": "helper, utils and tools say nothing; documents, data and files are too generic to route on; names containing the reserved words (anthropic-helper, claude-tools) are refused.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 1,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-005",
+          "pages": "5",
+          "quote": "Avoid: Vague names: helper , utils , tools Overly generic: documents , data , files Reserved words: anthropic-helper , claude-tools Inconsistent patterns within your skill collection",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-forward-slash-paths",
+          "title": "Forward slashes in every file path, even on Windows",
+          "description": "scripts/helper.py, never scripts\\helper.py: Unix-style paths work on every platform, Windows-style ones fail on Unix systems.",
+          "category": "formatting",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-021",
+          "pages": "21",
+          "quote": "Always use forward slashes in file paths, even on Windows: ✓ Good: scripts/helper.py , reference/guide.md ✗ Avoid: scripts\\helper.py , reference\\guide.md Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-no-voodoo-constants",
+          "title": "Every configuration value in a bundled script says why it is that value",
+          "description": "A magic number in a script is a value Claude cannot reason about: if the author does not know why it is right, the model cannot determine it either. Justify and document each constant (Ousterhout's 'voodoo constants').",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-023",
+          "pages": "23",
+          "quote": "Configuration parameters should also be justified and documented to avoid \"voodoo constants\" (Ousterhout's law). If you don't know the right value, how will Claude determine it?",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-plan-validate-execute",
+          "title": "For a complex, open-ended change: plan in a structured form, validate the plan with a script, then execute",
+          "description": "The intermediate plan is the checkable artefact — mistakes (a non-existent field, a conflicting value, a missed requirement) are caught before anything is changed, not after.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-026",
+          "pages": "26",
+          "quote": "When Claude performs complex, open-ended tasks, it can make mistakes. The \"plan-validate- execute\" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-consistent-terminology",
+          "title": "One term per concept, throughout the skill",
+          "description": "Choose a term — 'API endpoint', 'field', 'extract' — and never alternate it with a synonym inside one skill; a variant reads to the model as a different thing.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-015",
+          "pages": "15",
+          "quote": "Use consistent terminology Choose one term and use it throughout the Skill: Good - Consistent: Always \"API endpoint\" Always \"field\" Always \"extract\"",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-author-with-one-claude-test-with-another",
+          "title": "Write the skill with one Claude instance and test it with another",
+          "description": "Anthropic's authoring loop: 'Claude A' helps design and refine the instructions; 'Claude B', a separate instance with the skill loaded, uses it on real tasks and exposes what is missing. Begin by doing the task once without a skill and noting the context you kept supplying — that is the skill's content.",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-019",
+          "pages": "19",
+          "quote": "Claude (\"Claude A\") to create a Skill that is used by other instances (\"Claude B\"). Claude A helps you design and refine instructions, while Claude B tests them in real tasks.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-skill-authoring-gemini-cli",
+      "title": "Agent skill authoring — Gemini CLI override",
+      "description": "What Gemini CLI's own documentation adds to the shared base voice (agent-skill-authoring): its loading budget in words, its degrees-of-freedom rule, its folder names, script ergonomics and security. MODEL-SPECIFIC by the owner's ruling (bean rkqp, 2026-09-20): a vendor's advice is evidence about that vendor's platform, so it is a separate voice extending the base rather than caveats folded into it — a rule that turns out to be Gemini-only can then be dropped without touching the rest. Provenance is ASSERTION: a publisher describing its own product, revisable without notice. Rules the base already states (description carries function and trigger; read third-party skills before installing) are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate — the owner's instruction, because 'best practice' drifts.",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-agent-skill-authoring-gemini-cli",
+      "sources": [
+        {
+          "title": "Agent Skill best practices | Gemini CLI (captured 2026-09-20, page last updated 2026-04-30)",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "gc-descriptions-do-not-overlap",
+          "title": "A description is distinct from every other skill's — and from what the model does anyway",
+          "description": "Gemini CLI routes on the description alone, so two skills whose descriptions cover the same requests compete for them, and a description that restates a general capability of the model gives the router no reason to load the skill at all. Check a new description against the descriptions already installed, not only against the skill's own body.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-001",
+          "pages": "1",
+          "quote": "Avoid overlap: Ensure your skill descriptions are distinct from one another and from the general capabilities of the model.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-context-budget-in-words",
+          "title": "Budget the three loading levels in WORDS: ~100 always loaded, under 5k on trigger",
+          "description": "Gemini CLI states its budget per level and in words: the name and description are always in context (~100 words), the SKILL.md body is loaded only when the skill triggers (under 5,000 words), and bundled resources only as needed. The base voice's '~500 lines' comes from a different source and a different unit; on Gemini CLI the word budget is the vendor's own figure. Neither is a hard limit the platform enforces — both are the publisher's guidance.",
+          "category": "numbers",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-001",
+          "pages": "1",
+          "quote": "1. Metadata (name + description): Always in context (~100 words). 2. SKILL.md body: Loaded only after the skill triggers (<5k words). 3. Bundled resources: Loaded only as needed by the model.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-degrees-of-freedom",
+          "title": "Match how prescriptive a step is to how fragile it is",
+          "description": "Three levels: text instructions where several approaches are valid, pseudocode or a parameterised script where one pattern is preferred, and a specific script with few parameters where the operation is fragile or the sequence MUST be followed. Writing a fragile step as free prose is the failure this prevents; so is scripting a judgement call.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Degrees of freedom Match the level of instruction specificity to the task’s fragility. High freedom (text-based instructions): Use when multiple approaches are valid or decisions depend heavily on context. Medium freedom (pseudocode or scripts with parameters): Use when a preferred pattern exists but some variation is acceptable. Low freedom (specific scripts, few parameters): Use when operations are fragile and error-prone, or a specific sequence MUST be followed.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-scripts-for-deterministic-tasks",
+          "title": "A task a script can do is a script in scripts/, not prose",
+          "description": "If the step is deterministic — run a linter, fetch from an API — bundle it as a script under scripts/ and have the body call it, rather than describing the commands for the model to reproduce each time.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Use scripts for deterministic tasks: If a task can be automated with a script (for example, running a linter, fetching data from an API), bundle it in the scripts/ folder.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-llm-friendly-script-output",
+          "title": "A bundled script's output is written for a model to read",
+          "description": "Suppress verbose tracebacks and end with a clear, short success or failure message. The reader of a skill script's stdout is the agent, and a stack trace is context it pays for without learning what to do next.",
+          "category": "formatting",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Agentic ergonomics: Ensure scripts output LLM-friendly stdout. Suppress verbose tracebacks and provide clear, concise success/failure messages.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-templates-in-assets",
+          "title": "Boilerplate the agent must reproduce exactly lives in assets/",
+          "description": "Common file headers and boilerplate go in assets/ as templates, so every run produces the same output rather than the model's recollection of it.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Provide templates: Include common file headers or boilerplate code in the assets/ folder to ensure the agent produces consistent output.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-skill-directory-anatomy",
+          "title": "SKILL.md is required; scripts/, references/ and assets/ are the optional sub-folders",
+          "description": "Gemini CLI's layout: SKILL.md (core instructions and metadata) is the only required file; executable logic goes in scripts/, documentation loaded on demand in references/, templates and other non-executable resources in assets/. Other vendors name these folders differently — Antigravity documents examples/ and resources/ — which is why this is a vendor rule and not a base one.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "my-skill/ ├── SKILL.md (Required) Core instructions and metadata ├── scripts/ (Optional) Executable logic (Node.js, Python, etc.) ├── references/ (Optional) Documentation to be loaded as needed └── assets/ (Optional) Templates and non-executable resources",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-reference-material-out-of-the-body",
+          "title": "Keep the body procedural; reference material, schemas and examples go in references/",
+          "description": "The body holds the core procedure. Detailed reference material, schemas and examples move to separate files in references/, loaded only when needed — the vendor's own folder name for what the base voice calls a reference file.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Best practice: Keep the SKILL.md body focused on core procedural instructions. Move detailed reference material, schemas, and examples into separate files in a references/ directory.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-no-hardcoded-secrets",
+          "title": "No API key or password in a skill's scripts or documentation",
+          "description": "A skill is shared and installed by others; a credential written into it is published with it.",
+          "category": "methodology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-003",
+          "pages": "3",
+          "quote": "Avoid hardcoded secrets: Never include API keys or passwords in your skill’s scripts or documentation.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-limit-scope",
+          "title": "Keep a skill as narrow as it can be",
+          "description": "The narrower the skill, the smaller the damage when it is wrong. A skill that does several things fails in several places at once.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-003",
+          "pages": "3",
+          "quote": "Limit scope: Design skills to be as focused as possible to minimize the potential impact of errors.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-skill-authoring-openai",
+      "title": "Agent skill authoring — OpenAI override",
+      "description": "What OpenAI's 'Skills in OpenAI API' cookbook notebook adds to the shared base voice agent-skill-authoring: front matter as the router, explicit use/don't-use routing with negative examples, scripts that behave like tiny CLIs, verification in SKILL.md, what may leave over the network, version pinning, and the platform's upload limits. MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Read from the full notebook (ingested through the notebook rung, MIT-licensed), not the one-page PDF capture skills-in-openai-api, which is almost all code. Rules the base already carries — description states function and trigger, one default, state dependencies — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
+      "instance": "cat-harness",
+      "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-openai",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-agent-skill-authoring-openai",
+      "sources": [
+        {
+          "title": "Skills in OpenAI API — OpenAI Cookbook notebook (fetched 2026-09-30, MIT)",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "oa-frontmatter-is-the-router",
+          "title": "name and description live in the SKILL.md front matter, because that is what OpenAI routes on",
+          "description": "OpenAI reads each skill's name and description from its front matter and puts them in the prompt context, so a skill is found and chosen by those two fields alone. A description written only in the body is invisible to routing. The base voice says WHAT a description must state; this is where OpenAI requires it to be.",
+          "category": "structure",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s007-skill-md-frontmatter",
+          "quote": "OpenAI models expect names and descriptions to come from frontmatter (important for discovery and routing).",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-routing-use-when-dont-use-when",
+          "title": "The body states when to use the skill AND when not to, with a few edge cases",
+          "description": "Explicit routing guidance in SKILL.md: a 'Use when…' list, a 'Don't use when…' list, and the edge cases between them. The negative half is the point: it is what stops a skill being invoked where it does not apply.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "Add explicit routing guidance: “Use when…” vs. “Don’t use when…”, and a few key edge cases, all in `SKILL.md`.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-negative-examples",
+          "title": "Give negative examples beside the positive ones",
+          "description": "Show cases where the skill should NOT be triggered, alongside the cases where it should. OpenAI states this improves routing accuracy.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "Include negative examples (when the skill should *not* be triggered) alongside positive examples to improve routing accuracy.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-fix-routing-in-words-first",
+          "title": "When routing misfires, revise the name, description and examples before the code",
+          "description": "An inconsistently invoked skill is a discovery problem first: iterate on the three things routing reads before changing what the skill does.",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "If routing feels inconsistent, iterate on name, description, and examples before changing code.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-scripts-as-tiny-clis",
+          "title": "A skill's script behaves like a small command-line tool",
+          "description": "It runs from the command line, prints deterministic stdout, fails loudly with a usage message or an error, and writes any outputs to known file paths. The model reads the output to decide what happened, so an ambiguous or silent script is a skill that cannot be verified.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "Prints deterministic stdout",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-worked-examples-inside",
+          "title": "Put concrete templates and worked examples inside the skill: inputs, commands, expected outputs",
+          "description": "The model reads these only when it invokes the skill, while the front matter stays in every prompt, so the detail belongs in the skill's files rather than in its description.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "Add concrete templates and worked examples inside the skill (inputs → commands → expected outputs)",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-verification-in-skill-md",
+          "title": "SKILL.md states explicit verification steps and output checks",
+          "description": "Where execution is multi-step or brittle, the skill itself says how to check that each step worked, rather than trusting that it did.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "add explicit verification steps and output checks in `SKILL.md`.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-no-procedure-in-system-prompt",
+          "title": "Do not restate the skill's procedure in the system prompt",
+          "description": "A system prompt that repeats the whole procedure makes people bypass the skill and move logic into tool schemas, losing reuse, versioning and conditional invocation. The procedure lives in SKILL.md only.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "If the system prompt repeats the entire procedure, people will:",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-network-states-what-may-leave",
+          "title": "A skill that needs network access says what data may leave, beside a strict allowlist",
+          "description": "OpenAI calls skills plus open network access high-risk. When network access is unavoidable, the skill's instructions name what data is allowed to leave, and tool output is treated as untrusted.",
+          "category": "methodology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "If network access is required, pair allowlists with explicit “what data is allowed to leave” guidance.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-pin-versions",
+          "title": "Pin the skill version, and the model with it, in production",
+          "description": "OpenAI keeps default_version and latest_version pointers. Production runs a named version, not whatever is latest, and pins the model beside it for reproducible behaviour.",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "Consider pinning the model and skill version together for reproducible behavior across deployments.",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-platform-limits",
+          "title": "One manifest, at most 500 files, a 50 MB zip, 25 MB per uncompressed file",
+          "description": "OpenAI's upload limits: exactly one SKILL.md (matched case-insensitively), at most 500 files per version, a zip of at most 50 MB, and no uncompressed file over 25 MB. A bundle outside them does not upload, which is why this is a vendor rule.",
+          "category": "formatting",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s011-operational-best-practices",
+          "quote": "Exactly one manifest file allowed (`skill.md`/`SKILL.md`)",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        },
+        {
+          "id": "oa-skill-for-stable-procedures",
+          "title": "A skill is for a procedure that has stabilised; one-offs and live data are not skills",
+          "description": "OpenAI's line: a one-off task belongs inline, live external data or side effects belong to a tool, and a procedure that changes daily is not ready to be a skill.",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skills-in-openai-api-notebook#s003-when-to-use-skills",
+          "quote": "The procedure changes every day (skills shine when the workflow stabilizes).",
+          "links": {
+            "viewer": "cat-harness/library/cat-harness/#cat-harness%2Fskills-in-openai-api-notebook",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/skills-in-openai-api-notebook/README.md"
+          }
+        }
+      ]
+    },
+    {
+      "id": "linked-data",
+      "title": "Linked data — how a coding agent emits and reviews JSON-LD",
+      "description": "The voice for a coding agent writing or reviewing code that EMITS JSON-LD: what makes the output linked data a processor can follow, rather than JSON that merely carries an @context. Six rules, each read from a held W3C text. Owner, 2026-10-01: \"make sure that these issues are part of the one voice for jsonld\" and \"it is a voice for a coding agent, in a code authoring or review task\". Every rule was found broken or fragile in this repository before it was written down (beans jcet, 9y9j): the PROV-O QA/QC reports carried prov:agent, prov:hadRole and prov:hadPlan as plain strings in all 100 activities, and the content context's @base resolves only because jsonld.js applies @base from a remote context.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/linked-data",
+      "provenance": "evidence",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-linked-data",
+      "sources": [
+        {
+          "title": "JSON-LD 1.1 — A JSON-based Serialization for Linked Data (W3C Recommendation, 16 July 2020)",
+          "year": 2020
+        },
+        {
+          "title": "PROV-O: The PROV Ontology (W3C Recommendation, 30 April 2013)",
+          "year": 2013
+        },
+        {
+          "title": "The PROV-JSONLD Serialization (W3C Member Submission, 25 August 2024; acknowledged, not endorsed)",
+          "year": 2024
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "ld-object-property-is-a-link",
+          "title": "A property whose value is a node is emitted as a link, never as a string",
+          "description": "When the vocabulary defines a property as an OBJECT property (its value is another node: prov:agent, prov:hadRole, prov:hadPlan, prov:used), the emitted JSON-LD must make the value an IRI — through a term whose definition says \"@type\": \"@id\", or as {\"@id\": …}. A bare string under an uncoerced key expands to {\"@value\": …}, a literal: valid JSON-LD, but a graph in which the activity was done by the TEXT \"owner\" and nothing joins it to the actor. Review test: expand one emitted document with a real processor and look for @value where a node was meant.",
+          "category": "structure",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2020-json-ld-1-1#sec-053-note",
+          "citesInstance": "litlfred/cat-harness",
+          "quote": "Alternatively, the keyword @id or @vocab may be used as value to indicate that within the body of a JSON-LD document, a string value of a term coerced to @id or @vocab is to be interpreted as an IRI."
+        },
+        {
+          "id": "ld-know-which-properties-are-object-properties",
+          "title": "Read the ontology for which properties take nodes; do not guess from the value's shape",
+          "description": "Whether a value is a node or a literal is decided by the vocabulary, not by what the string looks like. PROV-O marks each property op (object) or dp (data); prov:agent, prov:hadRole and prov:hadPlan are all op, so a role id like \"user\" is still a node reference. Code that decides by shape (\"it has a slash, so it is an IRI\") gets every short id wrong.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2013-prov-o#sec-016-41-starting-point-terms",
+          "citesInstance": "litlfred/cat-harness",
+          "quote": "The superscripts op and dp denote that a property is an OWL object property or data property, respectively."
+        },
+        {
+          "id": "ld-link-is-the-node-release-address",
+          "title": "A link names the node at its dereferenceable address; when it has none, say so instead of minting one",
+          "description": "Coercing a bare id to @id is not enough: \"owner\" then resolves against whatever @base is in force, naming a node that does not exist there. Emit the node's release address — <iriBase><version>/<path in its knowledge graph>[#fragment], the rule check:node-iris enforces — resolved through the OWNING instance's declaration. When the owner declares no iriBase, keep the value as a literal and record a finding naming the instance; an invented address is worse than an honest string.",
+          "category": "structure",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2020-json-ld-1-1#sec-023-note",
+          "citesInstance": "litlfred/cat-harness",
+          "quote": "IRIs are a fundamental concept of Linked Data, for nodes to be truly linked, dereferencing the identifier should result in a representation of that node."
+        },
+        {
+          "id": "ld-no-base-in-a-remote-context",
+          "title": "Do not rely on @base inside a context that documents reference by URL",
+          "description": "A context referenced by URL is an external context, and JSON-LD 1.1 ignores @base there. Measured 2026-10-01: jsonld.js applies it anyway, so this repository's relative @ids resolve today only through that processor's behaviour; a conforming processor resolves them against each document's own location. Emit absolute @ids, or put @base in the document's own (inline) context.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2020-json-ld-1-1#sec-033-413-base-iri",
+          "citesInstance": "litlfred/cat-harness",
+          "quote": "Please note that the @base will be ignored if used in external contexts."
+        },
+        {
+          "id": "ld-no-context-fetched-at-run-time",
+          "title": "Hold every external context locally, pinned by hash; never fetch one while processing",
+          "description": "A context needed to understand a document is part of the document. Code that expands or verifies JSON-LD resolves context URLs through a documentLoader that serves a committed copy (with its sha256 recorded), and refuses anything else — the way publish:verify's localLoader does. A context that can only be had over the network makes the meaning of our data depend on somebody else's server being up and unchanged.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2020-json-ld-1-1#sec-133-11-security-considerations",
+          "citesInstance": "litlfred/cat-harness",
+          "quote": "To protect against this, publishers should consider caching remote contexts for future use, or use the documentLoader to maintain a local version of such contexts."
+        },
+        {
+          "id": "ld-coercion-belongs-to-the-term",
+          "title": "A compact-IRI key does not inherit another term's coercion",
+          "description": "Type coercion lives in a TERM's definition. Writing \"prov:agent\" as a key uses the prov prefix and no term definition, so it is NOT coerced even when the active context defines a term agent with \"@type\": \"@id\". Either use the defined term (agent) or define the compact IRI itself as a term. Mixing the two — PROV-JSONLD's context with prov:-prefixed keys — silently yields literals.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2020-json-ld-1-1#sec-013-terms-imported-from-other-specifications",
+          "citesInstance": "litlfred/cat-harness",
+          "quote": "A compact IRI has the form of prefix:suffix and is used as a way of expressing an IRI without needing to define separate term definitions for each IRI contained within a common vocabulary identified by prefix."
+        },
+        {
+          "id": "ld-prov-in-prov-jsonld-shape",
+          "title": "Emit PROV in PROV-JSONLD's shape, with its terms",
+          "description": "PROV is written with the PROV-JSONLD context and its terms: an Activity node with startTime/endTime, and each qualified relation as its own typed node — an Association carrying activity, agent, role and plan — so the context's coercions and @reverse mappings apply. The context is held locally (see ld-no-context-fetched-at-run-time). PROV-JSONLD is a W3C Member Submission, acknowledged and not endorsed by W3C; it is adopted here by owner decision (2026-10-01) because W3C publishes no JSON-LD context for PROV-O.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "library",
+          "cites": "w3c-2024-prov-jsonld#page-037",
+          "citesInstance": "litlfred/cat-harness",
+          "pages": "37",
+          "quote": "The JSON properties activity and plan map to the object properties prov:qualifiedAssociation and prov:hadPlan, respectively."
         }
       ]
     },
@@ -1497,7 +2274,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177",
-          "quote": "1. Summary — By a link homotopy is meant a deformation of one link onto another, during which each component of the link is allowed to cross itself, but such that no two components are allowed to intersect. The purpose of this paper is to study links under the relation of homotopy. The fundamental tool in this study will be the link group."
+          "quote": "1. Summary — By a link homotopy is meant a deformation of one link onto another, during which each component of the link is allowed to cross itself, but such that no two components are allowed to intersect. The purpose of this paper is to study links under the relation of homotopy. The fundamental tool in this study will be the link group.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h2-concrete-first",
@@ -1511,7 +2292,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177",
-          "quote": "2. The basic theorems — Let M be an open 3-dimensional manifold which possesses a regular triangulation. Let C be a circle. By an n-link L will be meant an ordered collection (l1, …, ln) of maps li: C -> M, where the images l1(C), …, ln(C) are to be disjoint."
+          "quote": "2. The basic theorems — Let M be an open 3-dimensional manifold which possesses a regular triangulation. Let C be a circle. By an n-link L will be meant an ordered collection (l1, …, ln) of maps li: C -> M, where the images l1(C), …, ln(C) are to be disjoint.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h3-why-before-what",
@@ -1525,7 +2310,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177",
-          "quote": "The fundamental tool in this study will be the link group. The link group of a link is a factor group of the fundamental group of its complement, which is invariant under homotopy."
+          "quote": "The fundamental tool in this study will be the link group. The link group of a link is a factor group of the fundamental group of its complement, which is invariant under homotopy.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h4-uncluttered-notation",
@@ -1539,7 +2328,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177",
-          "quote": "Denote the image l1(C) ∪ … ∪ ln(C) of a link L by |L|. For each proper link L let G(L) denote the fundamental group of the complement M - |L|. … Denote the kernel of this homomorphism by Ai(L), and denote the commutator subgroup of Ai by [Ai]. Since the [Ai] are normal subgroups of G(L), their product E = [A1][A2] … [An] is also a normal subgroup."
+          "quote": "Denote the image l1(C) ∪ … ∪ ln(C) of a link L by |L|. For each proper link L let G(L) denote the fundamental group of the complement M - |L|. … Denote the kernel of this homomorphism by Ai(L), and denote the commutator subgroup of Ai by [Ai]. Since the [Ai] are normal subgroups of G(L), their product E = [A1][A2] … [An] is also a normal subgroup.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h5-linear-argument",
@@ -1553,7 +2346,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177",
-          "quote": "Two links L and L' will be called homotopic if there exist homotopies hi between the maps li and the maps l'i so that the sets h1t(C), …, hnt(C) are disjoint for each value of t. Clearly the relation of homotopy is reflexive, symmetric and transitive."
+          "quote": "Two links L and L' will be called homotopic if there exist homotopies hi between the maps li and the maps l'i so that the sets h1t(C), …, hnt(C) are disjoint for each value of t. Clearly the relation of homotopy is reflexive, symmetric and transitive.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h6-strategy-before-execution",
@@ -1567,7 +2364,11 @@
           "citation": "library",
           "cites": "milnorlink#page-179",
           "pages": "179",
-          "quote": "The proof will be valid for any cohomology theory. Let Q0 and Q1 denote the mapping cylinders of h0 and h1. A natural isomorphism between Hr(Z, hi(Y)) and Hr(Qi, Y) will be constructed for i = 0, 1. Since a homotopy between h0 and h1 induces a homotopy equivalence between the pairs (Q0, Y) and (Q1, Y), this will complete the proof."
+          "quote": "The proof will be valid for any cohomology theory. Let Q0 and Q1 denote the mapping cylinders of h0 and h1. A natural isomorphism between Hr(Z, hi(Y)) and Hr(Qi, Y) will be constructed for i = 0, 1. Since a homotopy between h0 and h1 induces a homotopy equivalence between the pairs (Q0, Y) and (Q1, Y), this will complete the proof.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h7-right-tool-framing",
@@ -1581,7 +2382,11 @@
           "citation": "library",
           "cites": "milnorlink#page-179",
           "pages": "179",
-          "quote": "The proof will be valid for any cohomology theory."
+          "quote": "The proof will be valid for any cohomology theory.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-h8-respect-for-the-reader",
@@ -1595,7 +2400,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177-195",
-          "quote": "A study of this group therefore, not only gives a method for distinguishing between links which are not homotopic, but also gives a procedure for obtaining a (possibly redundant) list of all homotopy classes of links with a given number of components."
+          "quote": "A study of this group therefore, not only gives a method for distinguishing between links which are not homotopic, but also gives a procedure for obtaining a (possibly redundant) list of all homotopy classes of links with a given number of components.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-clearly-is-proof-economy",
@@ -1609,7 +2418,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177, 179, 181, 184, 188, 190, 193",
-          "quote": "Clearly the relation of homotopy is reflexive, symmetric and transitive. … The inclusion map (Z, hi(Y)) -> (Qi, Pi) is clearly a homotopy equivalence. … The 2-link illustrated in Figure 3 is clearly trivial. … The single invariant μ(12) is clearly the linking number."
+          "quote": "Clearly the relation of homotopy is reflexive, symmetric and transitive. … The inclusion map (Z, hi(Y)) -> (Qi, Pi) is clearly a homotopy equivalence. … The 2-link illustrated in Figure 3 is clearly trivial. … The single invariant μ(12) is clearly the linking number.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-i-for-the-debt-we-for-the-mathematics",
@@ -1623,7 +2436,11 @@
           "citation": "library",
           "cites": "milnorlink#page-177",
           "pages": "177",
-          "quote": "I am indebted to R. H. Fox for assistance in the preparation of this paper."
+          "quote": "I am indebted to R. H. Fox for assistance in the preparation of this paper.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-sentence-length",
@@ -1637,7 +2454,11 @@
           "citation": "library",
           "cites": "milnorlink#page-190",
           "pages": "190",
-          "quote": "Every link with two components is almost trivial. The single invariant μ(12) is clearly the linking number: hence the linking number is a complete homotopy invariant for 2-links. A link with three components is almost trivial if each pair of components has linking number zero."
+          "quote": "Every link with two components is almost trivial. The single invariant μ(12) is clearly the linking number: hence the linking number is a complete homotopy invariant for 2-links. A link with three components is almost trivial if each pair of components has linking number zero.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         },
         {
           "id": "milnor-brevity-no-repeats",
@@ -1651,7 +2472,11 @@
           "citation": "library",
           "cites": "milnorlink#page-181",
           "pages": "181",
-          "quote": "The proof is easily given: it is only necessary to check this assertion through each stage of the proof of Theorem 1."
+          "quote": "The proof is easily given: it is only necessary to check this assertion through each stage of the proof of Theorem 1.",
+          "links": {
+            "viewer": "cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Fmilnorlink",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md"
+          }
         }
       ]
     },
@@ -1698,7 +2523,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-001",
-          "citesInstance": "agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "1",
           "quote": "1. MUST   This word, or the terms \"REQUIRED\" or \"SHALL\", mean that the definition is an absolute requirement of the specification."
         },
@@ -1713,7 +2538,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-001",
-          "citesInstance": "agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "1",
           "quote": "2. MUST NOT   This phrase, or the phrase \"SHALL NOT\", mean that the definition is an absolute prohibition of the specification."
         },
@@ -1728,7 +2553,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-002",
-          "citesInstance": "agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "2",
           "quote": "3. SHOULD   This word, or the adjective \"RECOMMENDED\", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course."
         },
@@ -1743,7 +2568,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-003",
-          "citesInstance": "agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "3",
           "quote": "Imperatives of the type defined in this memo must be used with care and sparingly.  In particular, they MUST only be used where it is actually required for interoperation or to limit behavior which has potential for causing harm (e.g., limiting retransmisssions)  For example, they must not be used to try to impose a particular method on implementors where the method is not required for interoperability."
         },
@@ -1758,7 +2583,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc8174-uppercase-vs-lowercase-2119-key-words#page-001",
-          "citesInstance": "agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "1",
           "quote": "This document updates RFC 2119 by clarifying that only UPPERCASE usage of the key words have the defined special meanings."
         },
@@ -1773,7 +2598,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "rfc2119-key-words-requirement-levels#page-003",
-          "citesInstance": "agent-skills",
+          "citesInstance": "litlfred/cat-harness",
           "pages": "3",
           "quote": "Document authors should take the time to elaborate the security implications of not following recommendations or requirements as most implementors will not have had the benefit of the experience and discussion that produced the specification."
         },
@@ -1787,8 +2612,8 @@
           "terminology": 0,
           "judgementOnly": false,
           "citation": "kg-node",
-          "cites": "skills/folio-core/technical-documentation.md",
-          "citesInstance": "cat-harness",
+          "cites": "skills/authoring/authoring-core/technical-documentation.md",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Glossary Terms are Capitalized on every use, so a reader can tell a defined Term from the same word used loosely."
         },
         {
@@ -1801,8 +2626,8 @@
           "terminology": 0,
           "judgementOnly": true,
           "citation": "kg-node",
-          "cites": "skills/folio-core/technical-documentation.md",
-          "citesInstance": "cat-harness",
+          "cites": "skills/authoring/authoring-core/technical-documentation.md",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "Have I repeated anything? If so, consolidate. The same fact in two places is free to drift, and the copy a reader finds first is usually the one with no test behind it."
         },
         {
@@ -1815,8 +2640,8 @@
           "terminology": 0,
           "judgementOnly": false,
           "citation": "kg-node",
-          "cites": "skills/folio-core/technical-documentation.md",
-          "citesInstance": "cat-harness",
+          "cites": "skills/authoring/authoring-core/technical-documentation.md",
+          "citesInstance": "litlfred/cat-harness",
           "quote": "When the prose names a schema, link to the schema source and to its UML documentation where one exists. A schema named but not linked forces the reader to guess which file, and the guess is wrong exactly when the schema has moved."
         }
       ]
@@ -1858,7 +2683,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-007",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "7",
           "quote": "The updated Classification of Digital Interventions, Services and Applications in Health (CDISAH) is a set of categorizations that links how digital health interventions"
         },
@@ -1873,7 +2698,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-024",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "24 (printed 12)",
           "quote": "DIGITAL HEALTH INTERVENTION: A discrete technology functionality – or capability – designed to achieve a specific objective addressing a health system challenge. Examples of digital health interventions include decision support, targeted client communications, and stock notifications"
         },
@@ -1888,7 +2713,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-023",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "23 (printed 11)",
           "quote": "BOTTLENECKS: Specific gaps or problems in the workflow of delivering health services specific to a health programme area, persona or process (for example, “health workers have difficulty keeping track of when pregnant women are due for an antenatal care visit”), in contrast to a health system challenge, which is a general representation of the problem across any health programme area (for example, “loss to follow-up”)."
         },
@@ -1903,7 +2728,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-010",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "10",
           "quote": "Interventions for Persons: Persons are members of the public who are potential or current users of health services, including health prevention and wellness activities. Other terms that have been used to describe individuals in this group include ‘patients’, ‘clients’ and ‘health service users’."
         },
@@ -1918,7 +2743,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-011",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "11",
           "quote": "one may implement a digital health intervention, such as “targeted communication to persons”, in order to address a health system challenge, such as “lack of service utilisation,” to achieve an overarching eHealth outcome of “improving individuals’ access to knowledge resources and support for better management of their health”"
         },
@@ -1933,7 +2758,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-024",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "24 (printed 12)",
           "quote": "DIGITAL HEALTH OUTCOME: The desired change in the health system or services by using digital health interventions. May also be known as an eHealth outcome"
         },
@@ -1948,7 +2773,7 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240010567-eng#page-024",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "24 (printed 12)",
           "quote": "accompanied by a governance framework, operational plan, human resources and related activities for its successful execution"
         },
@@ -1963,9 +2788,176 @@
           "judgementOnly": false,
           "citation": "library",
           "cites": "9789240081949-eng#page-004",
-          "citesInstance": "smart-base",
+          "citesInstance": "litlfred/smart-base",
           "pages": "4",
           "quote": "The first edition of this publication was published under the following title “Classification of digital health interventions v1.0: a shared language to describe the uses of digital technology for health” with a WHO reference number - WHO/RHR/18.06. The first edition is being reissued under the correct title"
+        }
+      ]
+    },
+    {
+      "id": "who-digital-transformation-handbook",
+      "title": "WHO Digital Transformation Handbook",
+      "description": "The register of WHO's Digital Transformation Handbooks (DTHs) — the guidance publications that take one area of a health system from paper to digital within the DIIG process: the order of digitization, digitalization and digital transformation, what a registry is against a register, what master data excludes, and how the draft DPI-H Reference Architecture names its own layers. Derived rule by rule from the three DTHs and the draft Reference Architecture ingested in smart-base/library; every rule cites the section it was read from, and a rule resting on the DRAFT says so.",
+      "instance": "smart-base",
+      "path": "smart-base/skills/voices/who-digital-transformation-handbook",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-who-digital-transformation-handbook",
+      "sources": [
+        {
+          "title": "Digital transformation handbook for primary health care: optimizing person-centred point of service systems",
+          "year": 2024
+        },
+        {
+          "title": "Digital transformation handbook for health supply chain architecture",
+          "year": 2024
+        },
+        {
+          "title": "Digital transformation handbook for health product catalogue",
+          "year": 2025
+        },
+        {
+          "title": "Reference Architecture and Guidance for Digital Public Infrastructure for the Health Sector — A Digital Transformation Handbook for Digital Public Infrastructure for Health (DPI-H), DRAFT V1.0",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": true,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "digitization-digitalization-transformation-are-three-steps",
+          "title": "Digitization, digitalization and digital transformation are three different steps",
+          "description": "The handbooks define the three terms narrowly and as an ordered sequence. Digitization is converting paper records into digital format; digitalization is automating and simplifying processes WITHIN individual health programmes; digital transformation is systems-level change across all programme areas. The supply chain handbook states the order outright (digitization is the initial step, digitalization the second), and the product catalogue handbook repeats it as steps 'towards' digital transformation. In ordinary usage 'digitalization' is a loose synonym for going digital at any scale, and the draft DPI-H Reference Architecture itself quotes the World Bank calling DPI 'an approach to digitalization' — a broad, cross-sector sense the earlier handbooks would call digital transformation. The draft also writes 'digitalisation' and 'digitisation' alongside 'digitalization'; the published handbooks use -ization throughout. Because the draft may change, prefer the published handbooks' sense and spelling.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 2,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240101197-eng#page-008",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "vi (PDF p. 8)",
+          "quote": "In the health context, the process of digitally automating and simplifying processes to streamline individual health programmes and reduce manual efforts for greater efficiency. Digitalization is the second step in digital transformation"
+        },
+        {
+          "id": "register-is-not-registry",
+          "title": "A register is a list of service users; a registry is a governed master system",
+          "description": "The primary health care handbook defines the two words separately and they are not variants. A register is a list of health service users compiled to track care, aggregate activity or find people needing an intervention — a paper ANC register is a register. A registry is a governed, authoritative, centralized information system holding the unique attributes and identifiers of facilities, health service users, products and/or the health workforce against a canonical minimum data set; the supply chain and product catalogue handbooks and the draft Reference Architecture carry the same registry definition. Note that the draft groups the terminology service, the logical information model repository and the lifelong health record under 'metadata registries and foundational components'; that heading does not make them registries in this sense.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 2,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240093362-eng#sec-002-glossary",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "x (PDF p. 11)",
+          "quote": "In the context of health care, a list of health service users compiled for the purposes of tracking care, aggregating activities or health outcomes, or identifying health service users who need specific interventions."
+        },
+        {
+          "id": "dpi-h-is-not-dpi",
+          "title": "DPI-H is health-specific infrastructure built on foundational DPI, not DPI itself",
+          "description": "Rests on the DRAFT Reference Architecture (V1.0, for public comment), which may change. DPI-H names digital resources built as a shared means for multiple HEALTH agency functions; it leverages and extends foundational DPI (identity, payments, data exchange — abbreviated DPI-F) and does not replicate it. The draft is explicit that DPI-H is not a collection of programme-specific tools or point-of-service applications. Write DPI-H with the hyphen. The draft is itself inconsistent on the expansion — its acronym list and definition give 'Health Digital Public Infrastructure', its cover 'Digital Public Infrastructure for Health', and one glossary entry writes 'HDPI' — so the abbreviation, not any one expansion, is the stable form.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 2,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-dpi-h-reference-architecture-draft-v1#sec-001-112-understanding-digital-public-infrastructure",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "20",
+          "quote": "Health Digital Public Infrastructure (DPI-H) refers to digital resources that are built as a shared means for fulfilling multiple health agency functions."
+        },
+        {
+          "id": "pcposs-is-a-category-of-systems",
+          "title": "A PCPOSS is a category spanning several application types, not one product",
+          "description": "The primary health care handbook's person-centred point of service system (PCPOSS) is an umbrella: community-based information systems, decision support systems, electronic medical or health record systems and personal health records are all PCPOSS. It is spelled 'person-centred' and, in that handbook, 'point of service' without hyphens (POS is point of service, never point of sale). Do not equate a PCPOSS with an EMR. The DRAFT Reference Architecture uses a different label, 'point-of-service applications' (glossary entry marked [Under review]), and places them outside DPI-H.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 1,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240093362-eng#sec-002-glossary",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "ix (PDF p. 10)",
+          "quote": "PCPOSS encompass various services and application types, including community-based information systems, decision support systems, electronic medical (or health) record systems and personal health records"
+        },
+        {
+          "id": "master-data-excludes-instance-data",
+          "title": "Product master data excludes batch numbers, serial numbers and manufacturing dates",
+          "description": "In the product catalogue handbook, product master data is the information that stays the same for every instance of a product: description, dosage, strength, manufacturer details, shelf life. Batch or lot numbers, manufacturing dates and serial numbers vary per instance and are transactional data. They are the identifiers a traceability discussion reaches for first, which is why they get mislabelled as master data.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240116191-eng#page-010",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "1 (PDF p. 10)",
+          "quote": "In contrast, transactional data—such as batch numbers, manufacturing dates, and serial numbers—varies with each specific instance of the product."
+        },
+        {
+          "id": "generic-product-means-no-manufacturer",
+          "title": "'Generic product' means manufacturer-independent information, not a generic medicine",
+          "description": "The product catalogue handbook gives 'generic product', 'product' and 'product information' a handbook-specific meaning: the general identifying details of a health product, without any manufacturer-specific information. In pharmaceutical usage a 'generic' is an off-patent medicine from a non-originator manufacturer — a different idea. In catalogue prose, 'generic product' is the level above the trade item, not a market category.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240116191-eng#page-008",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "vii (PDF p. 8)",
+          "quote": "In this handbook, the terms ‘generic product,’ ‘product,’ or ‘product information’ pertain to the general identifying details of a health product, excluding any manufacturer-specific information."
+        },
+        {
+          "id": "hscis-can-be-paper",
+          "title": "A health supply chain information system can be paper-based",
+          "description": "The supply chain handbook defines a health supply chain information system (HSCIS) as a paper-based OR software tool, and defines an order management system the same way. 'Information system' therefore does not imply software, and an inventory of current HSCISs includes the paper forms. The handbook notes that the software tools are commonly called electronic logistics management information systems (eLMIS); eLMIS is the narrower term.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 1,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240101197-eng#page-008",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "vi (PDF p. 8)",
+          "quote": "A paper-based or software tool that supports the management and/or operations of the health supply chain."
+        },
+        {
+          "id": "national-product-catalogue-spelling",
+          "title": "'National product catalogue' in prose; 'catalog' survives in tool names and the 2024 handbook",
+          "description": "The product catalogue handbook's title and body use 'catalogue' together with -ize spellings such as 'standardized' (the WHO pairing). Its own abbreviation list nevertheless expands NPC as 'National product catalog', and the earlier supply chain handbook writes 'National Product Catalog', capitalized, in its abbreviations and prose. The Product Catalog Management Tool (PCMT) is a proper name and keeps its spelling. In running prose write 'national product catalogue (NPC)', lower case, as the 2025 handbook does.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 1,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240116191-eng#page-012",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "3 (PDF p. 12)",
+          "quote": "This handbook complements the DIIG by providing a structured approach to implementing a national product catalogue (NPC) for standardized product master data management."
+        },
+        {
+          "id": "integration-is-not-interoperability",
+          "title": "Integration is bespoke; interoperability is standards-based",
+          "description": "Rests on the DRAFT Reference Architecture, whose glossary marks this entry [Under review]. The draft separates integration — a bespoke connection from one application component to another — from interoperability, which it defines as a standards-based capability of heterogeneous systems. The published handbooks define interoperability through shared application interfaces, value sets, concepts and standards, and do not define integration, so the contrast is the draft's. 'Integrated with' is not a synonym for 'interoperable with' in this register.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-dpi-h-reference-architecture-draft-v1#sec-front-matter",
+          "citesInstance": "litlfred/smart-base",
+          "pages": "9",
+          "quote": "Bespoke capability of connecting one application component to another [Under review]"
         }
       ]
     },
@@ -1999,7 +2991,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-014",
           "pages": "14",
-          "quote": "Where there is a choice between using the suffix -ize or -ise (e.g. organize or organise), -ize, derived from the Greek \"-izo\", is preferred, consistent with the first spelling of such words given in The concise Oxford dictionary. For some words, such as surprise, comprise or improvise, where -ise is not a suffix but part of the root of the word, there is no choice."
+          "quote": "Where there is a choice between using the suffix -ize or -ise (e.g. organize or organise), -ize, derived from the Greek \"-izo\", is preferred, consistent with the first spelling of such words given in The concise Oxford dictionary. For some words, such as surprise, comprise or improvise, where -ise is not a suffix but part of the root of the word, there is no choice.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-eponym-no-genitive",
@@ -2013,7 +3009,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-009",
           "pages": "9",
-          "quote": "Eponymous names give no information about the nature of the disease and different names may be used in different countries. They should be avoided whenever possible. The Saxon genitive ('s) is not necessary when using an eponymous name; e.g. Crohn disease, not Crohn's disease, and Down syndrome, not Down's syndrome."
+          "quote": "Eponymous names give no information about the nature of the disease and different names may be used in different countries. They should be avoided whenever possible. The Saxon genitive ('s) is not necessary when using an eponymous name; e.g. Crohn disease, not Crohn's disease, and Down syndrome, not Down's syndrome.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-who-capitalization",
@@ -2027,7 +3027,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-013",
           "pages": "13-14",
-          "quote": "The following words and expressions used frequently within WHO normally require capitalization: Associate Member; Constitution (of WHO); (Eighth) General Programme of Work; Forty-… World Health Assembly; … Member (country); Member State; … the Organization (WHO); Region [of WHO] … / The following words and expressions do not normally require capitalization: commission, committee (unless specifically identified); … health for all; headquarters (WHO); member (of the committee, etc.), but Member (State); … primary health care; … specialized agency"
+          "quote": "The following words and expressions used frequently within WHO normally require capitalization: Associate Member; Constitution (of WHO); (Eighth) General Programme of Work; Forty-… World Health Assembly; … Member (country); Member State; … the Organization (WHO); Region [of WHO] … / The following words and expressions do not normally require capitalization: commission, committee (unless specifically identified); … health for all; headquarters (WHO); member (of the committee, etc.), but Member (State); … primary health care; … specialized agency",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-capitals-sparingly",
@@ -2041,7 +3045,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-013",
           "pages": "13",
-          "quote": "Too many capital letters break the flow of the eye across a sentence and down a column of type. However, proper names, titles and institutions require capitals. Descriptive appellations, such as administrative posts, do not, unless the result would appear odd or confusing. … Generic terms in the Linnaean classification also take an initial capital letter, e.g. Staphylococcus aureus, Trypanosoma, Schistosoma, but trypanosome, schistosome, etc. Article, book and journal titles in references need not be capitalized, e.g. Social science and medicine, except when they contain the name of an association or organization"
+          "quote": "Too many capital letters break the flow of the eye across a sentence and down a column of type. However, proper names, titles and institutions require capitals. Descriptive appellations, such as administrative posts, do not, unless the result would appear odd or confusing. … Generic terms in the Linnaean classification also take an initial capital letter, e.g. Staphylococcus aureus, Trypanosoma, Schistosoma, but trypanosome, schistosome, etc. Article, book and journal titles in references need not be capitalized, e.g. Social science and medicine, except when they contain the name of an association or organization",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-reference-authors",
@@ -2055,7 +3063,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-033",
           "pages": "33",
-          "quote": "1. List all authors when three or fewer; when four or more, give only first author's name and add et al."
+          "quote": "1. List all authors when three or fewer; when four or more, give only first author's name and add et al.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-journal-names-in-full",
@@ -2069,7 +3081,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-033",
           "pages": "33",
-          "quote": "2. Write out journal names in full. This is particularly helpful to readers whose mother tongue is not English."
+          "quote": "2. Write out journal names in full. This is particularly helpful to readers whose mother tongue is not English.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-non-discriminatory-language",
@@ -2083,7 +3099,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-070",
           "pages": "70-72",
-          "quote": "Common discriminatory phrases / Useful solutions / Useful general rules … Delete redundant possessive pronouns … Use the first person plural … Foreman, workman, office girl, policeman → Supervisor, worker, secretary, receptionist, office assistant, police officer → Use neutral or equivalent job titles … Show the mother how to cook nutritious meals → Show members of the family how to cook nutritious meals → Do not assume that women always do the household chores … Ask mothers to bring their children to the clinic each month → Ask parents to bring their children to the clinic each month → Remember that men have responsibility for children too"
+          "quote": "Common discriminatory phrases / Useful solutions / Useful general rules … Delete redundant possessive pronouns … Use the first person plural … Foreman, workman, office girl, policeman → Supervisor, worker, secretary, receptionist, office assistant, police officer → Use neutral or equivalent job titles … Show the mother how to cook nutritious meals → Show members of the family how to cook nutritious meals → Do not assume that women always do the household chores … Ask mothers to bring their children to the clinic each month → Ask parents to bring their children to the clinic each month → Remember that men have responsibility for children too",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-rewriting-stays-concise",
@@ -2097,7 +3117,11 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-069",
           "pages": "69",
-          "quote": "With care, the results of rewriting text to eliminate discriminatory language will be no less concise than the original — but will be unambiguous and will avoid causing offence. … In reporting research of any kind that involves both men and women and/or children of both sexes, both males and females should be mentioned in the results. In statistical reports, gross figures should be broken down by sex unless it has previously been established that there is no significant difference between the sexes."
+          "quote": "With care, the results of rewriting text to eliminate discriminatory language will be no less concise than the original — but will be unambiguous and will avoid causing offence. … In reporting research of any kind that involves both men and women and/or children of both sexes, both males and females should be mentioned in the results. In statistical reports, gross figures should be broken down by sex unless it has previously been established that there is no significant difference between the sexes.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         },
         {
           "id": "who-ed-country-names-are-volatile",
@@ -2111,7 +3135,299 @@
           "citation": "library",
           "cites": "who-pub-tps-931#page-009",
           "pages": "9",
-          "quote": "Webster's new geographical dictionary … can be used as a guide to the spelling of common geographical entities. However, country names and their spelling, in particular, can change at an alarming rate. The Computer-Assisted Translation and Terminology subunit (CTT), which coordinates with the Office of the Legal Counsel (LEG), can provide up-to-date information on the names of United Nations and WHO Member States, including their full, short and adjectival/attributive forms."
+          "quote": "Webster's new geographical dictionary … can be used as a guide to the spelling of common geographical entities. However, country names and their spelling, in particular, can change at an alarming rate. The Computer-Assisted Translation and Terminology subunit (CTT), which coordinates with the Office of the Legal Counsel (LEG), can provide up-to-date information on the names of United Nations and WHO Member States, including their full, short and adjectival/attributive forms.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-general",
+          "title": "Follow The concise Oxford dictionary's first spelling — and Annex 1 where WHO differs",
+          "description": "The general spelling rule the manual's Annex 1 opens with: take the spelling The concise Oxford dictionary gives first, or the one a variant entry refers you to. Annex 1 then lists WHO's own exceptions and the words that most often cause doubt; the rules who-ed-spelling-annex-p088 to p102 carry that list, one rule per printed page, each quoting its page. Where a word is not listed, this rule decides.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 2,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-088",
+          "pages": "88",
+          "quote": "The general rule in WHO is to follow the spelling given in the latest edition of The concise Oxford dictionary; where it gives alternative spellings or forms, use the one given first (e.g. fulfil, fulfill) or the one to which you are referred from an entry giving a variant spelling (e.g. \"tire, US var. of tyre\": use \"tyre\").",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p088",
+          "title": "Annex 1 spellings, printed page 83",
+          "description": "The entries on printed page 83 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 6,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-088",
+          "pages": "88",
+          "quote": "adaptation (not adaption) … adviser (not advisor) … Aedes (not Aëdes) … all right (not alright) … among (not amongst) … acquired immunodeficiency syndrome (not …immune deficiency…)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p089",
+          "title": "Annex 1 spellings, printed page 84",
+          "description": "The entries on printed page 84 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 6,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-089",
+          "pages": "89",
+          "quote": "ancylostomiasis (not ankylo…) … arc, arced, arcing (not arcked, etc.) … artefact (not artifact) … bibliographic (not bibliographical) … blender (not blendor) … calliper (not caliper)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p090",
+          "title": "Annex 1 spellings, printed page 85",
+          "description": "The entries on printed page 85 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 5,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-090",
+          "pages": "90",
+          "quote": "carcass (not carcase) … connection (not connexion) … consensus (not concensus) … cotton wool (not cottonwool) … dare say (not daresay)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p091",
+          "title": "Annex 1 spellings, printed page 86",
+          "description": "The entries on printed page 86 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 12,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-091",
+          "pages": "91",
+          "quote": "dermatotropic (not dermotropic) … disinsection (not disinsectization) … dispatch (not despatch) … dissociate (not disassociate) … Down syndrome (not Down's) … Dr (not Dr.) … dracunculiasis (= guinea-worm disease; avoid dracontiasis) … Economic and Social Council (of the United Nations) (not ECOSOC) … enclose (not inclose) … enzyme-linked immunosorbent assay (ELISA) (not …immuno-absorbent; not Elisa) … etiology (not aetiology)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p092",
+          "title": "Annex 1 spellings, printed page 87",
+          "description": "The entries on printed page 87 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 13,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-092",
+          "pages": "92",
+          "quote": "fibre (not fiber) … fine-tooth comb (not fine tooth-comb) … First World War (not World War I) … flammable (prefer to inflammable) … Food and Agriculture Organization of the United Nations (not…Agricultural; do not omit \"of the United Nations\") … further, furthest (prefer to farther, farthest) … γ-isomer (not gamma isomer) … gauge (n. & vb; not guage) … genetic (not genetical) … geographical (not geographic) … goitre (not goiter) … gonococcus (not Gonococcus; see Neisseria)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p093",
+          "title": "Annex 1 spellings, printed page 88",
+          "description": "The entries on printed page 88 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 4,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-093",
+          "pages": "93",
+          "quote": "grey (colour; not gray) … haematopoietic (not haemopoietic) … heterogeneity, heterogeneous (not heterogenous) … HTLV-III (deprecated abbr. for virus associated with AIDS; prefer HIV)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p094",
+          "title": "Annex 1 spellings, printed page 89",
+          "description": "The entries on printed page 89 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 6,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-094",
+          "pages": "94",
+          "quote": "immunological (not immunologic) … inflection (not inflexion) … insanitary (not unsanitary) … International Labour Organisation (not …Organization) … intersectoral (not intersectorial) … isolatable (not isolable)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p095",
+          "title": "Annex 1 spellings, printed page 90",
+          "description": "The entries on printed page 90 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 9,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-095",
+          "pages": "95",
+          "quote": "liquefaction (not liquifaction) … liquefy (not liquify) … logistic (not logistical) … man-hours, man-months, etc. (prefer work-hours, work-months, etc.) … manoeuvre, manoeuvrable (not maneuver, maneuverable) … marijuana (not marihuana) … meningococcus (not Meningococcus)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p096",
+          "title": "Annex 1 spellings, printed page 91",
+          "description": "The entries on printed page 91 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 16,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-096",
+          "pages": "96",
+          "quote": "misspell, misspelt (not mispell, mispelled) … molarity (deprecated; use mol/litre) … mollusc (not mollusk) … molluscicide (not molluscocide) … mosquitos (not mosquitoes) … mould, mouldy (not mold, moldy) … Muhammad (not Mahomet) … Muslim (not Moslem) … naive (not naïve) … newborn (adj. & abstract sing. n.; avoid newborns – prefer neonates) … none the less (not nonetheless) … normality (not normalcy) … oblivious of (not to) … offence (not offense)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p097",
+          "title": "Annex 1 spellings, printed page 92",
+          "description": "The entries on printed page 92 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 10,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-097",
+          "pages": "97",
+          "quote": "ophthalmic, ophthalmology (not ophtalmic or opthalmic, etc.) … organophosphorus compounds (not …phorous) … orient, oriented (not orientate, orientated) … overseas (not oversea) … overview (prefer survey, outline, review) … participate in (not at or to) … phagocytose (not phagocytize) … pneumococcus, pneumococcal (not Pneumococcus)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p098",
+          "title": "Annex 1 spellings, printed page 93",
+          "description": "The entries on printed page 93 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 12,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-098",
+          "pages": "98",
+          "quote": "predominant(ly) (not predominate(ly)) … primary health worker (prefer community health worker) … progestogen (not progestagen) … provenance (not provenience) … quantify (not quantitate) … racoon (not raccoon) … rarefy, rarefaction (not rarify, rarifaction) … reflection (not reflexion) … regime (not régime) … Region of the Americas (of WHO; not American Region)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p099",
+          "title": "Annex 1 spellings, printed page 94",
+          "description": "The entries on printed page 94 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 5,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-099",
+          "pages": "99",
+          "quote": "role (not rôle) … sanatorium (not sanitarium; pl. sanatoria) … sceptic, sceptical (not skeptic, skeptical) … Second World War (not World War II)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p100",
+          "title": "Annex 1 spellings, printed page 95",
+          "description": "The entries on printed page 95 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 7,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-100",
+          "pages": "100",
+          "quote": "siphon (not syphon) … sulfur (not sulphur) … supersede (not supercede) … supervisor (not superviser) … sylvan (not silvan) … synthesize (not synthetize) … template (not templet)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p101",
+          "title": "Annex 1 spellings, printed page 96",
+          "description": "The entries on printed page 96 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 13,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-101",
+          "pages": "101",
+          "quote": "through (not thru) … tonne (not \"metric ton\" or \"metric tonne\") … towards (not toward) … under way (not underway) … unequivocal, unequivocally (not unequivocable, unequivocably) … United Kingdom (not UK) … United Nations (not UN) … urine analysis (not urinalysis) … Vaseline (trade name, requires cap.; prefer petroleum jelly) … venepuncture (not venipuncture) … vitamin A, etc. (not Vitamin A, etc.) … viz. (prefer namely)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p102",
+          "title": "Annex 1 spellings, printed page 97",
+          "description": "The entries on printed page 97 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 9,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-102",
+          "pages": "102",
+          "quote": "wagon (not waggon) … weal (not wheal) … while (not whilst) … whooping cough (prefer pertussis) … World Health Assembly (may be shortened to Health Assembly, not to Assembly) … World Health Organization (not Organisation) … X-ray (not x-ray) … xerophthalmia (not xerophtalmia or xeropthalmia) … zoonosis, zoonoses (pl.) (not zöo…)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         }
       ]
     },
@@ -2145,7 +3461,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131",
-          "quote": "GRADE recommends using terms or phrases such as \"should\" or \"strongly recommend\" for strong recommendations, and \"suggest\" or \"consider\" for conditional ones."
+          "quote": "GRADE recommends using terms or phrases such as \"should\" or \"strongly recommend\" for strong recommendations, and \"suggest\" or \"consider\" for conditional ones.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-no-not-recommended",
@@ -2159,7 +3479,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131",
-          "quote": "The use of confusing or ambiguous phrases should be avoided. For example, the phrase \"not recommended\" could be interpreted to mean either that no recommendation for or against the intervention has been made, or that the intervention should not be implemented. In the latter instance, \"we recommend against intervention X…\" is the preferred wording."
+          "quote": "The use of confusing or ambiguous phrases should be avoided. For example, the phrase \"not recommended\" could be interpreted to mean either that no recommendation for or against the intervention has been made, or that the intervention should not be implemented. In the latter instance, \"we recommend against intervention X…\" is the preferred wording.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-active-voice",
@@ -2173,7 +3497,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131",
-          "quote": "The language of each recommendation is critically important. Wherever possible, it should be consistent across all recommendations in a guideline, which should be written in the active voice."
+          "quote": "The language of each recommendation is critically important. Wherever possible, it should be consistent across all recommendations in a guideline, which should be written in the active voice.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-no-outcomes-in-the-statement",
@@ -2187,7 +3515,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131",
-          "quote": "Outcomes should generally not be mentioned in the recommendation to avoid the impression that only single outcomes are relevant or were considered."
+          "quote": "Outcomes should generally not be mentioned in the recommendation to avoid the impression that only single outcomes are relevant or were considered.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-pico-and-actionable",
@@ -2201,7 +3533,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131",
-          "quote": "Recommendations need to be clear and actionable, reflect the PICO format and contain an indication of their strength and of the quality of the evidence on which they are based."
+          "quote": "Recommendations need to be clear and actionable, reflect the PICO format and contain an indication of their strength and of the quality of the evidence on which they are based.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-certainty-four-levels",
@@ -2215,7 +3551,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131",
-          "quote": "The quality of the underlying body of evidence (high, moderate, low or very low) should be specified."
+          "quote": "The quality of the underlying body of evidence (high, moderate, low or very low) should be specified.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-justification-and-remarks",
@@ -2229,7 +3569,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-180-106-writing-recommendations",
           "pages": "131-132",
-          "quote": "A recommendation should include a justification as to why it is strong or conditional and why it is for or against a given intervention. It should also contain a set of remarks explaining the conditions and context in which the recommendation applies and the points to bear in mind regarding implementation. … Each recommendation should be linked to a summary of the evidence (e.g. a published systematic review or the systematic review in an online annex), the GRADE evidence profiles and the evidence-to-decision tables."
+          "quote": "A recommendation should include a justification as to why it is strong or conditional and why it is for or against a given intervention. It should also contain a set of remarks explaining the conditions and context in which the recommendation applies and the points to bear in mind regarding implementation. … Each recommendation should be linked to a summary of the evidence (e.g. a published systematic review or the systematic review in an online annex), the GRADE evidence profiles and the evidence-to-decision tables.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         },
         {
           "id": "who-gdl-conditional-states-its-conditions",
@@ -2243,7 +3587,11 @@
           "citation": "library",
           "cites": "9789241548960-eng#sec-177-1042-conditional-or-weak-recommendations",
           "pages": "129",
-          "quote": "Recommendations that are conditional or weak are made when a GDG is less certain about the balance between the benefits and harms or disadvantages of implementing a recommendation. Conditional recommendations generally include a description of the conditions under which the end-user should or should not implement the recommendation."
+          "quote": "Recommendations that are conditional or weak are made when a GDG is less certain about the balance between the benefits and harms or disadvantages of implementing a recommendation. Conditional recommendations generally include a description of the conditions under which the end-user should or should not implement the recommendation.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2F9789241548960-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md"
+          }
         }
       ]
     },
@@ -2277,7 +3625,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-020",
           "pages": "18",
-          "quote": "• Recommended font size 10pts • Avoid combining red and green. Avoid combining blue and yellow. For further information please check \"Accessible Publishing at WHO\""
+          "quote": "• Recommended font size 10pts • Avoid combining red and green. Avoid combining blue and yellow. For further information please check \"Accessible Publishing at WHO\"",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-figure-font-size",
@@ -2291,7 +3643,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-020",
           "pages": "18, 19",
-          "quote": "Graphs and figures sample • Recommended font size 10pts … Table sample • Recommended font size 10pts"
+          "quote": "Graphs and figures sample • Recommended font size 10pts … Table sample • Recommended font size 10pts",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-pagination-roman-then-arabic",
@@ -2305,7 +3661,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-023",
           "pages": "21",
-          "quote": "PAGINATION Preliminary pages have lower-case Roman page numbers • Title page • Copyright + disclaimer + cataloging (behind title page) • Table of contents (list of chapters, figures and tables) • Foreword or Preface • Acknowledgments • List of contributors • List of abbreviations • Executive summary Main pages have Arabic page numbers • Chapters • References or bibliography • Annexes"
+          "quote": "PAGINATION Preliminary pages have lower-case Roman page numbers • Title page • Copyright + disclaimer + cataloging (behind title page) • Table of contents (list of chapters, figures and tables) • Foreword or Preface • Acknowledgments • List of contributors • List of abbreviations • Executive summary Main pages have Arabic page numbers • Chapters • References or bibliography • Annexes",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-logo-integrity",
@@ -2319,7 +3679,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-006",
           "pages": "4",
-          "quote": "The logo for the World Health Organization Regional Office for the Western Pacific (WPRO) should only be used on materials endorsed by WPRO. It should be presented as per guidelines here. This is essential to maintain a consistent presentation of our identity. Do not alter, rotate or modify the logo. It should never be recreated. Do not obstruct the logo. Three versions: The three versions of the WPRO logo are Blue, Black and White on a dark background"
+          "quote": "The logo for the World Health Organization Regional Office for the Western Pacific (WPRO) should only be used on materials endorsed by WPRO. It should be presented as per guidelines here. This is essential to maintain a consistent presentation of our identity. Do not alter, rotate or modify the logo. It should never be recreated. Do not obstruct the logo. Three versions: The three versions of the WPRO logo are Blue, Black and White on a dark background",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-logo-exclusion-zone",
@@ -2333,7 +3697,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-007",
           "pages": "5-6",
-          "quote": "Leave \"exclusion zones\" around the logos (at least 1cm width distance) around the logos to ensure they maintain visual impact. Also the minimum logo size is 3cm (the smallest size at which the logo is still legible in print and on screen) For other sizes, no less than 1/4 width of logo. … Clear space should be equal on all sides."
+          "quote": "Leave \"exclusion zones\" around the logos (at least 1cm width distance) around the logos to ensure they maintain visual impact. Also the minimum logo size is 3cm (the smallest size at which the logo is still legible in print and on screen) For other sizes, no less than 1/4 width of logo. … Clear space should be equal on all sides.",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-brand-blue",
@@ -2347,7 +3715,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-006",
           "pages": "4",
-          "quote": "C: 95 M: 25 Y: 0 K:0 / R: 0 G: 147 B: 213 / C: 0 M: 0 Y: 0 K: 100"
+          "quote": "C: 95 M: 25 Y: 0 K:0 / R: 0 G: 147 B: 213 / C: 0 M: 0 Y: 0 K: 100",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-typeface-family",
@@ -2361,7 +3733,11 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-014",
           "pages": "12-13",
-          "quote": "Consistent fonts across our communications help brand recognition. This helps people recognize WHO publications and communications as part of the same family and gives our products a professional look and feel. News Gothic MT (bold, regular, italic) • DIN OT (bold, medium, regular, italic, condense, condense medium, light, light italic) PT Sans (bold, regular, italic, narrow, narrow regular) • Calibri (bold, regular, italic, light italic, light)"
+          "quote": "Consistent fonts across our communications help brand recognition. This helps people recognize WHO publications and communications as part of the same family and gives our products a professional look and feel. News Gothic MT (bold, regular, italic) • DIN OT (bold, medium, regular, italic, condense, condense medium, light, light italic) PT Sans (bold, regular, italic, narrow, narrow regular) • Calibri (bold, regular, italic, light italic, light)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         },
         {
           "id": "who-des-photo-provenance",
@@ -2375,16 +3751,20 @@
           "citation": "library",
           "cites": "wpr-rdo-2020-003-eng#page-026",
           "pages": "24",
-          "quote": "Photos and credits It is best to use WHO images from the Regional Office or WHO photo library"
+          "quote": "Photos and credits It is best to use WHO images from the Regional Office or WHO photo library",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md"
+          }
         }
       ]
     }
   ],
   "totals": {
-    "voices": 43,
-    "rules": 102,
-    "citingLibrary": 63,
+    "voices": 48,
+    "rules": 164,
+    "citingLibrary": 125,
     "citingKgNode": 39,
-    "mechanical": 12
+    "mechanical": 35
   }
 }

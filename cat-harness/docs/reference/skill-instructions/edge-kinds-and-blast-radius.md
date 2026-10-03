@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/graph-management/edge-kinds-and-blast-radius.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/edge-kinds-and-blast-radius.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/edge-kinds-and-blast-radius.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md){: .fa-edit-source }
 
 {% raw %}
 # Edge kinds and blast radius
 
-> Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `edge-kinds-and-blast-radius` · Package: `graph-management`
 
 These rules were first written for a formal-mathematics corpus — Lean
 declarations, propositions, proof terms. Each one below is the domain-free form,

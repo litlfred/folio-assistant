@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/review-heatmap.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/review-heatmap.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/review-heatmap.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/review-heatmap.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/review-heatmap.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/review-heatmap.md){: .fa-edit-source }
 
 {% raw %}
 # Review heat map — where to look first
 
-> Skill id: `review-heatmap` · Capability: `review` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm`
+> Skill id: `review-heatmap` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm`
 
 The review page (`review/` in a folio's staging preview) opens with a table.
 It has **one row per section**, in reading order, and **one column per

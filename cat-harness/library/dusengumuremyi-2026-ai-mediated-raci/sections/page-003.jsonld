@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/dusengumuremyi-2026-ai-mediated-raci/sections/page-003",
   "@type": [
     "doco:Section"
@@ -10,7 +15,7 @@
   "contains": [
     "library/dusengumuremyi-2026-ai-mediated-raci/blocks/prose-page-003"
   ],
-  "derivedFrom": "library/dusengumuremyi-2026-ai-mediated-raci/manifest",
-  "sourceDocument": "library/dusengumuremyi-2026-ai-mediated-raci/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/dusengumuremyi-2026-ai-mediated-raci/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/dusengumuremyi-2026-ai-mediated-raci/manifest.jsonld",
   "provenance": "ingested"
 }

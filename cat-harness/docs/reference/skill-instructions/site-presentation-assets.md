@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/theming/site-presentation-assets.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/site-presentation-assets.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/theming/site-presentation-assets.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/site-presentation-assets.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/site-presentation-assets.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/theming/site-presentation-assets.md){: .fa-edit-source }
 
 {% raw %}
 # Site presentation assets — the node is the source, the stylesheet is a rendering
@@ -89,7 +89,9 @@ a failure.
 - **Whether a rendered block LOOKS right** — that is a content question, and the
   rendering auditor's.
 - **How a link is spelled** —
-  [`link-style-raw-is-not-the-private-repo-answer`](https://github.com/litlfred/folio-assistant/blob/main/memory/link-style-raw-is-not-the-private-repo-answer.md).
+  [`readme-sections`](readme-sections.md) §"On link style — `raw`
+  is not the private-repo answer" (summarised in the agent-memory entry
+  `link-style-raw-is-not-the-private-repo-answer`).
 
 This skill is only about the direction of authority: **the graph decides, the
 stylesheet reports.**

@@ -37,6 +37,5 @@ The more planning and thought that goes into guideline development at the
 beginning, the more efficient the entire process will be and the better the 
 end product. The principles of good project management and high-quality 
 research apply to guideline development. Careful consideration of the issues 
-raised in this chapter and efforts put into developing a thorough and rea­
-soned planning proposal (see Chapter 4) will reduce the time and resources 
+raised in this chapter and efforts put into developing a thorough and reasoned planning proposal (see Chapter 4) will reduce the time and resources 
 expended on the guideline and result in a superior, more useful final product.

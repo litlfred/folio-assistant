@@ -1,6 +1,8 @@
 {
   "_comment": "SMART IG — the L3 layer. Created 2026-09-22 (issue #975) on the owner's stack ruling. It is what a WHO SMART Guideline's FHIR Implementation Guide instantiates, and it is the layer `smart-trust` and `smart-immunizations` now declare, which is what makes bean `nsbb`'s ruling true in the declarations rather than only in prose: THERE IS NO PER-IG HARNESS. Both of those repositories were declared harness instances (#690, #717) and `smart-immunizations`'s own comment called that 'PROVISIONAL BY DESIGN' pending this restructure. This is the restructure. DECLARES NO DIRECTORIES, per the `folio-assistant-core` precedent: a declared-but-absent directory is the `dh4f` defect. What distinguishes it from `fhir-harness` below it: `fhir-harness` is the bare FHIR IG pipeline with no WHO assumption and serves ANY IG, while this layer carries what a WHO SMART IG specifically owes — the DAK API surface, the smart.who.int canonicals, the conventions a SMART Guideline's L3 follows.",
   "name": "smart-ig",
+  "repository": "litlfred/smart-ig",
+  "livesAt": { "repository": "litlfred/folio-assistant", "path": "smart-ig" },
   "version": "0.1.0",
   "title": "SMART IG",
   "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
@@ -8,7 +10,6 @@
     {
       "id": "qa",
       "path": "test/results/",
-      "dependents": "reproduce",
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"

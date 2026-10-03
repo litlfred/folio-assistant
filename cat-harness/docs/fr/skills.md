@@ -71,7 +71,7 @@ Une compétence est définie à travers plusieurs couches — et non dans un seu
 |--------|-------------|------|
 | **Définition** (rôles, capacités requises, exigences, modèles de routage, étapes du cycle de vie, réf. de schéma) | `.claude/skills/local/<skill>.json` | ✅ les 22 compétences de rédaction — validées en CI par `scripts/validate-skills.ts` |
 | **Contrat typé** (JSON Schema d'entrée/sortie) | `schemas/skills/<skill>/` | ✅ les 22 — voir la [référence](../reference/skills/) |
-| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences](../reference/skill-instructions/) | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
+| **Corps d'instructions** (guide textuel que le LLM charge) — parcourez-les dans la référence des [instructions de compétences](../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ compétences de cycle de vie, d'agent, du lot de plateforme et de **folio-document-adapter** ; ⏳ **les corps pour authoring-math / authoring-who-smart-guidelines sont à venir** (ces paquets fournissent le manifeste + les définitions JSON) |
 | **Paquet** (dépendances Docker / exécution) | `skills/<package>/package-manifest.json` | ✅ les quatre paquets |
 
 Ainsi, *oui, les compétences existent* — sous forme de définitions structurées et de schémas typés, avec des corps
@@ -154,7 +154,7 @@ de contenu, et non des alternatives entre lesquelles choisir.
 | `bean-coordination` | Discipline d'appropriation et de coordination multi-agents |
 | `todo-manager` | Discipline des tâches basées sur les beans (beans-as-todos) |
 
-### Lots de compétences de plateforme (`skills/folio-core`, `skills/folio-document-adapter`, `skills/folio-paper-adapter`)
+### Lots de compétences de plateforme (`skills/folio-core`, `folio-assistant-core/skills/content/folio-document-adapter`, `folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 Des **lots de plateforme** plus importants, dont deux ont été migrés depuis le dépôt de contenu qou (voir le
 [registre de migration](migrations/2026-06-29-platform-skills-migration.html) et

@@ -36,6 +36,17 @@ export default tseslint.config(
   {
     ignores: [
       "node_modules/**",
+      // An agent dispatched with worktree isolation puts a COMPLETE SECOND
+      // CHECKOUT of this repository under `.claude/worktrees/<id>/`. Without
+      // this, `bun run lint` walks into it and typescript-eslint's project
+      // service refuses every file there as outside the tsconfig program.
+      // Measured 2026-09-30 on a branch whose whole diff was three lines of
+      // JSON: 3158 errors, none of them the branch's — and 0 errors with this
+      // pattern added (bean `vpek`). Those files are linted on their own
+      // branch, by their own agent; linting them twice from here reports a
+      // failure that belongs to nobody's diff, which is the one thing a gate
+      // must not do.
+      ".claude/worktrees/**",
       "**/.lake/**",
       // `**/`, not root-anchored: a PUBLISHABLE package builds into its own
       // `dist/`, and since `check:published-packages` builds it (bean `rsi6`),
@@ -62,6 +73,15 @@ export default tseslint.config(
       // gitignored here, so nothing else in the repo had ever put hand-written
       // JavaScript in front of eslint.
       "**/vendor/**",
+      // The theme's own `assets/js/just-the-docs.js`, copied verbatim from the
+      // just-the-docs 0.12.0 gem with two hunks marked `2tfy` (lazy search).
+      // Ignored for both reasons above at once: it is upstream code whose
+      // value is matching its upstream, and it is a Liquid template — Jekyll
+      // front matter and `{% %}` tags — that eslint cannot parse at all
+      // ("Parsing error: Expression expected" at 1:2). Its behaviour is pinned
+      // by `cat-harness/test/search-lazy.e2e.ts`, which renders it through
+      // Liquid and runs it.
+      "cat-harness/docs/assets/js/just-the-docs.js",
     ],
   },
   ...tseslint.configs.recommended,

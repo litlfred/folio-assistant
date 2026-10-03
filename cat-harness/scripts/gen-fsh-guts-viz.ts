@@ -34,9 +34,10 @@
  * not all of it, and the gap decomposes rather than being one number:
  *
  * - a file carrying the tag is **declared**;
- * - a `.py`/`.ts` script cannot carry YAML front matter at all, so when a
- *   tagged `.md` sibling describes it, it is **described by sidecar** — the
- *   contract met by the only mechanism open to it;
+ * - a file whose format cannot carry YAML front matter at all — a script, a
+ *   PDF, a JSON, an HTML page — is **described by sidecar** when a tagged
+ *   `.md` sibling of the same basename describes it: the contract met by the
+ *   only mechanism open to it;
  * - anything else is **undeclared**, and that is a finding.
  *
  * Collapsing those into "tagged / untagged" would file a script that cannot
@@ -53,7 +54,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { docsLayers } from "./compose-docs.js";
+import { fshGutsDirectory } from "../schemas/fsh-guts.js";
+import { baseDocsDir } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
@@ -81,16 +83,20 @@ export interface GutsFile {
  * generator that keeps working after the directory moves, over nothing.
  */
 export function gutsDir(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { id?: string; path?: string; scope?: string; graphKinds?: string[] }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!e.path || !(e.graphKinds ?? []).includes(KIND)) continue;
-    return join(e.scope === "repository" ? repo : join(repo, "cat-harness"), e.path);
+  // The shared resolution (bean 9c7h): the checkout's root instance declares
+  // it since placement PR0a, and `fshGutsDirectories` reads cat-harness's own
+  // declaration after it, as this function did. More than one declared
+  // trashcan is no single answer, so it is `undefined`, never "the first".
+  try {
+    return fshGutsDirectory(repo);
+  } catch {
+    return undefined;
   }
-  return undefined;
+}
+
+/** The declarations that may hold the trashcan: the checkout's root instance, then the platform. */
+function declarers(repo: string): string[] {
+  return [repo, join(repo, "cat-harness")];
 }
 
 /**
@@ -106,18 +112,22 @@ export function gutsDir(repo = REPO): string | undefined {
  * belongs and what the ref is expressed against.
  */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
+  const entries = declarers(repo).flatMap((root) => {
+    const declPath = declarationPathIn(root);
+    if (!declPath || !existsSync(declPath)) return [];
+    return (
+      JSON.parse(readFileSync(declPath, "utf-8")) as {
+        directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
+      }
+    ).directories ?? [];
+  });
+  for (const e of entries) {
     if (!(e.graphKinds ?? []).includes(KIND)) continue;
     const v = e.coverage?.visualiser;
     for (const one of Array.isArray(v) ? v : [v]) {
       const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
       if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
+      const rel = relative(baseDocsDir(repo), resolve(repo, ref));
       // Outside the base docs layer is not a page this generator may write.
       if (rel.startsWith("..") || rel === "") return undefined;
       return rel;
@@ -140,6 +150,15 @@ function walk(dir: string, prefix = ""): string[] {
 
 /** A file's first markdown heading, where it has one. */
 function titleOf(abs: string): string | undefined {
+  // MARKDOWN ONLY. `readFileSync(..., "utf-8")` does not throw on a PDF — it
+  // returns the bytes with every invalid sequence replaced — so the regex
+  // below happily matched inside binary and the page rendered raw PDF
+  // fragments as a file's title. Seen 2026-09-30, the moment 33 archived
+  // sources arrived: four rows of the table came out as mojibake.
+  //
+  // A non-markdown file's title comes from its `.md` sidecar, which the
+  // caller resolves; there was never a reason to open the file itself.
+  if (!abs.endsWith(".md")) return undefined;
   let text: string;
   try {
     text = readFileSync(abs, "utf-8");
@@ -173,7 +192,16 @@ export function gutsFiles(dir: string): GutsFile[] {
     const group = slash === -1 ? "." : rel.slice(0, rel.indexOf("/"));
     let state: DeclState = "undeclared";
     if (tagged.has(rel)) state = "declared";
-    else if (/\.(py|ts|sh)$/.test(rel) && tagged.has(rel.replace(/\.[^.]+$/, ".md"))) state = "sidecar";
+    // ANY non-markdown file, not a hand-listed set of extensions. The rule is
+    // "this format cannot carry YAML front matter", and that is true of a PDF
+    // and a JSON exactly as it is of a `.py`. Listing extensions made the
+    // check answer a narrower question than its own docblock states, and the
+    // 2026-09-30 upload sweep walked straight into it: 40 archived sources and
+    // their extraction companions each have a tagged `.md` sibling and every
+    // one read as `undeclared` — a false finding, in the direction that looks
+    // like a violation. `detangle-schema-viewer.html` had been reading that
+    // way since it arrived.
+    else if (!rel.endsWith(".md") && tagged.has(rel.replace(/\.[^./]+$/, ".md"))) state = "sidecar";
     const title = titleOf(join(dir, rel));
     return { rel, group, state, ...(title ? { title } : {}) };
   });
@@ -188,9 +216,14 @@ const BADGE: Record<DeclState, string> = {
 const CSS = `
 .fg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.fg-ok{color:#0d6e5e}
-.fg-side{color:#6b5b95}
-.fg-gap{color:#a8430f}
+/* Bean rtuo: light-page inks measured 2.19-2.29:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.fg-ok{color:#5cd3bd}    /* 8.23:1 on #27262b */
+.fg-side{color:#b9a8ec}  /* 7.06:1 */
+.fg-gap{color:#f5a070}   /* 7.25:1 */
+:root[data-fa-scheme="light"] .fg-ok{color:#0d6e5e}
+:root[data-fa-scheme="light"] .fg-side{color:#6b5b95}
+:root[data-fa-scheme="light"] .fg-gap{color:#a8430f}
 `;
 
 /** Escape a cell so a filename containing a pipe cannot break the table. */
@@ -278,11 +311,6 @@ export function page(files: GutsFile[], blobBase: string): string {
  * declaration and marks which is which, so asking it is the one answer —
  * and it is the same one the composer withholds against.
  */
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
@@ -307,7 +335,7 @@ if (import.meta.main) {
     console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const out = join(baseDocs(REPO), PAGE);
+  const out = join(baseDocsDir(REPO), PAGE);
 
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";

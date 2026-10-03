@@ -1,5 +1,10 @@
 {
-  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
   "@id": "library/9789241548960-eng/blocks/prose-sec-013",
   "@type": [
     "folio-assistant-core:Prose",
@@ -10,7 +15,7 @@
   "pageStart": 20,
   "pageEnd": 21,
   "text": "../sections/sec-013-174-guidelines-in-response-to-an-emergency-or-ur.md",
-  "derivedFrom": "library/9789241548960-eng/manifest",
-  "sourceDocument": "library/9789241548960-eng/manifest",
+  "derivedFrom": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/9789241548960-eng/manifest.jsonld",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/9789241548960-eng/manifest.jsonld",
   "provenance": "ingested"
 }

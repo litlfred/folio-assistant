@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/technical-documentation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/technical-documentation.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/technical-documentation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/technical-documentation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/technical-documentation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/technical-documentation.md){: .fa-edit-source }
 
 {% raw %}
 # Technical documentation
@@ -45,8 +45,8 @@ the experience that produced it. A SHOULD whose cost is unstated is an
 instruction the reader cannot weigh, and is the commonest reason a correct
 instruction is ignored.
 
-Both RFCs are ingested — `agent-skills/library/rfc2119-key-words-requirement-levels/`
-and `agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words/`.
+Both RFCs are ingested — `cat-harness/library/rfc2119-key-words-requirement-levels/`
+and `cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words/`.
 Quote them from there, not from memory.
 
 ## Check whether the specification has been superseded

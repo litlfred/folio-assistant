@@ -17,7 +17,7 @@ import {
   SessionContextSchema,
   parseSessionContext,
 } from "../../schemas/session-context.js";
-import { defaultGraphKinds, graphLayer, processMayWrite } from "../../schemas/cat-harness.js";
+import { defaultGraphKinds, graphKindIri, graphLayer, processMayWrite } from "../../schemas/cat-harness.js";
 
 /** The smallest record that parses — an idle session, which is the common one. */
 function idle(): unknown {
@@ -81,7 +81,7 @@ describe("session context", () => {
     expect(graphLayer("session-state")).toBe("state");
     expect(processMayWrite("session-state")).toBe(true);
     // The skill names the kind it reads, not the other way (#1168, B3).
-    const skill = readFileSync(join(import.meta.dir, "../../skills/workflow/session-context.md"), "utf-8");
+    const skill = readFileSync(join(import.meta.dir, "../../skills/process/workflow/session-context.md"), "utf-8");
     const frontMatter = skill.startsWith("---\n") ? skill.slice(4, skill.indexOf("\n---", 4)) : "";
     expect(frontMatter).toContain("graph-kinds:\n  - session-state");
   });
@@ -89,7 +89,8 @@ describe("session context", () => {
   test("a session is NOT a process instance — two kinds, both state", () => {
     // `workflow-state` is where ONE instance got to; a session spans
     // processes. Merging them would make the idle session unrepresentable.
-    expect(defaultGraphKinds.get("session-state")?.type)
-      .not.toBe(defaultGraphKinds.get("workflow-state")?.type);
+    expect(defaultGraphKinds.has("session-state") && defaultGraphKinds.has("workflow-state")).toBe(true);
+    expect(graphKindIri("session-state", defaultGraphKinds.get("session-state")))
+      .not.toBe(graphKindIri("workflow-state", defaultGraphKinds.get("workflow-state")));
   });
 });

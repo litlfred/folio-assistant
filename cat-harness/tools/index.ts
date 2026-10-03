@@ -25,6 +25,7 @@ import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
 import { mcpTools } from "./mcp.js";
 import { sessionTools } from "./sessions.js";
+import { vocabMapTools } from "./vocab-map.js";
 import { viewerTools } from "./viewers.js";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 
@@ -124,6 +125,52 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       requires: { runtime: ["bun"], network: false },
     }),
+    // ── `gh-pages`: ONE way of performing `render-kg-to-cdn`.
+    //
+    // Owner, 2026-09-30: "make sure that gh-pages is one specific tool of
+    // general 'publish to CDN' as part of publication/staging process", and
+    // "tools can describe their own specific subprocesses if needed to not
+    // bog down general skills". So the general process names no GitHub step;
+    // this node carries the GitHub half, and its steps are a diagram in
+    // bootstrap-tools (below this harness, so the arrow points down).
+    //
+    // `manual`, honestly: the mechanism is that subprocess — stage with
+    // `site.ts`, deploy with the Pages workflow (or, for this repository's own
+    // site, `docs-site.yml` / `feature-staging.yml` pushing to the `gh-pages`
+    // branch), then report with bootstrap-tools' `pages-status.ts`. There is
+    // no single command that is all of it, and declaring one would assert
+    // machinery that is not there.
+    defineTool({
+      id: "gh-pages",
+      title: "GitHub Pages (gh-pages)",
+      description:
+        "Push a rendered Knowledge Graph to GitHub Pages at a publication root URL — a staging preview (`STAGING/<slug>/`) or the release root, the same steps either way — and report the push: a status (pushed, not pushed, could not determine) and one message carrying the commit merged onto `gh-pages` and the QA result. Its steps are bootstrap-tools' `render-kg-to-github-pages` process, which first provisions the target: an orphan `gh-pages` branch, then Pages switched on to serve it.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "root", schema: t("RepoPath"), required: true, description: "The instance root whose Knowledge Graph is rendered, or a tree a caller already rendered and verified." },
+          { name: "url", schema: t("Url"), required: false, description: "The publication root URL. Default: the declaration's `iriBase`, else `https://<owner>.github.io/<repo>/`." },
+          { name: "subgraph", schema: t("Slug"), required: false, description: "A declared directory id to render; repeatable. Absent: the whole graph." },
+          { name: "sha", schema: t("CommitSha"), required: false, description: "The commit that is live: the commit on `gh-pages`." },
+        ],
+        outputs: [
+          { name: "status", schema: t("Text"), description: "`pushed`, `not-pushed` or `could-not-determine` — never `pushed` over a check that could not look." },
+          { name: "message", schema: t("Text"), description: "One line: the live commit, the root URL, and the QA of both what was staged and what is served." },
+        ],
+      },
+      satisfies: ["render-kg-to-cdn"],
+      // Its own subprocess (ruling 6, 2026-09-30), drawn in bootstrap-tools'
+      // declared `processes/` — an instance this one needs, so the arrow points down.
+      subprocesses: ["render-kg-to-github-pages"],
+      selection: {
+        when: "The CDN target is GitHub Pages: this repository's docs site and its review previews, and every instance whose declaration names a GitHub `repository`.",
+        limits:
+          "GitHub only. Pages cannot serve server-side redirects or custom headers, and a full-replace push to the `gh-pages` branch deletes what the build did not produce unless the caller restores it first (`docs-site-publish`, bean plj1). Another CDN is another Tool satisfying `render-kg-to-cdn`.",
+        cost: "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served.",
+      },
+      requires: { runtime: ["bun"], network: true },
+    }),
     defineTool({
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
@@ -221,7 +268,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "bean-coordination", "todo-manager", "pending-show",
         "session-intent", "continual-progress", "idle-backlog",
       ],
-      alternativeTo: ["beans-manual"],
       selection: {
         when:
           "The normal case, once `scripts/install-beans.sh` has run. It is the only arm that can answer what an item IS or what it waits on — the fallback gives titles and statuses and nothing else — so any work that involves choosing, claiming or reasoning about an item wants this one.",
@@ -258,7 +304,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "bean-coordination", "todo-manager", "pending-show",
         "session-intent", "continual-progress", "idle-backlog",
       ],
-      alternativeTo: ["beans-cli"],
       selection: {
         when:
           "When the CLI is not installed and cannot be — not a rare case: a fresh container has no `beans` on PATH. Equal standing, not a degraded mode. An agent that knows only the CLI reads the plan and touches nothing, which is exactly the 2026-09-18 session that completed two merged PRs' worth of durable work UNCLAIMED.",
@@ -316,7 +361,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         when:
           "A listing needs a cover and the bytes are already held. It renders page 1 by default and calls that the cover, because page 1 is a determined answer and \"the cover\" is not — the same choice `pdf-pages.py` makes about sections.",
         limits:
-          "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the instance's — see `who-iris/scripts/gen-covers.ts`, which refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
+          "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the catalogue's to declare — see `folio-assistant-core/scripts/gen-covers.ts`, which reads them from an instance's catalogue and refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
         cost:
           "One PyMuPDF wheel, no network at run time, and a few milliseconds per page. Deterministic — identical input gives identical bytes, which is what lets a caller gate on `--check` rather than re-deciding.",
       },
@@ -379,7 +424,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "slug", schema: t("Slug"), description: "The library entry written." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["ingest-extended"],
       selection: {
         when:
           "Reach for this first, and in CI always. It is the only one of the pair that runs where nothing has been installed — which is every fresh container and every CI job here, since the workflow installs `ruff` and nothing else. It covers archives, CSV and spreadsheets, technical metadata, and the sniff that decides which rung a file takes, including the OOXML/ODF container check that stops a workbook being listed as a bag of XML parts.",
@@ -412,7 +456,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "slug", schema: t("Slug"), description: "The library entry written." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["ingest-stdlib"],
       selection: {
         when:
           "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run src/index.ts --check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
@@ -443,7 +486,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // `--body-file -`, which is why `stdin` exists as an arg kind.
           { name: "body", schema: t("Markdown"), required: false, arg: { stdin: true } },
         ],
-        outputs: [{ name: "url", schema: t("Url"), description: "The change proposal or comment created." }],
+        outputs: [{ name: "url", schema: t("Url"), description: "The change proposal or comment created.", render: { as: "url", reason: "a reader follows it to the proposal; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["prepare-merge-auto", "pickup", "watch", "coordinate"],
       requires: { network: true },
@@ -461,7 +504,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "directory", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The built tree to publish." },
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base; a preview passes its own." },
         ],
-        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served." }],
+        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["kg-export"],
       requires: { network: true },
@@ -493,7 +536,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "cleanup_slug", schema: t("Slug"), required: false, arg: { flag: "--cleanup-slug" }, description: "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`)." },
           { name: "cleanup_confirm", schema: t("Slug"), required: false, arg: { flag: "--cleanup-confirm" }, description: "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed." },
         ],
-        outputs: [{ name: "preview", schema: t("Url"), description: "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for." }],
+        outputs: [{ name: "preview", schema: t("Url"), description: "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for.", render: { as: "url", reason: "a reviewer opens the preview; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["feature-staging"],
       requires: { network: true },
@@ -535,7 +578,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "directory", schema: t("RepoPath"), required: false, arg: { flag: "--dir" }, description: "Tree to serve; defaults to the built site when present." },
           { name: "port", schema: t("Port"), required: false, arg: { flag: "--port" }, description: "0 binds a free port, which is what the tests use." },
         ],
-        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is being served." }],
+        outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is being served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
       satisfies: ["serving-renderings"],
       // No network: it BINDS one, it does not reach out. `requires.network`
@@ -590,12 +633,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // satisfies the two skills that govern that graph. They live in
       // `bootstrap/skills/`; `check-tools` resolves them across instances.
       satisfies: ["kg-export", "bootstrap-graph-emission", "bootstrap-graph-publication"],
-      // No `alternativeTo`, deliberately. The four siblings sharing this skill
-      // are COMPLEMENTARY steps — export, then publish, then serve — not four
-      // ways to do one thing, and the schema's own note on that field says a
-      // rule keyed on "shares a skill" would demand comparative prose where
-      // there is nothing to compare. Exactly one pair in this instance is
-      // genuinely substitutable, and it is `beans-cli` / `beans-manual`.
+      // Not an alternative to its siblings, and `deriveAlternatives` agrees:
+      // the four sharing this skill are COMPLEMENTARY steps — export, then
+      // publish, then serve — with different I/O, not four ways to do one
+      // thing. A rule keyed on "shares a skill" alone would pair them.
       requires: { runtime: ["bun"], network: false },
     }),
 
@@ -760,8 +801,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
       },
       satisfies: ["latex-validation"],
-      // `alternativeTo` stays EMPTY against its two siblings. They are
-      // complementary rather than substitutable, and the sequence says why:
+      // Not an alternative to its two siblings (their I/O differs, so none is
+      // derived). They are complementary, and the sequence says why:
       // preflight gates the source BEFORE a compile, this parses the snippets
       // IN it, overfull reads the log AFTER. Naming them alternatives would tell
       // a caller that running one covers another.
@@ -1216,7 +1257,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
         ],
-        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated reference directory. Never hand-edited." }],
+        outputs: [{ name: "schemaReference", schema: t("RepoPath"), description: "The generated reference directory. Never hand-edited." }],
       },
       satisfies: ["docs-generation"],
       requires: { runtime: ["bun"], network: false },
@@ -1233,13 +1274,13 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
         ],
-        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated instruction directory. Never hand-edited." }],
+        outputs: [{ name: "skillInstructions", schema: t("RepoPath"), description: "The generated instruction directory. Never hand-edited." }],
       },
       // Sibling of `schema-docs`, not an alternative to it: one renders a
       // skill's CONTRACT and the other its INSTRUCTIONS, and a reader wanting
-      // either is not served by the other. Complementary, so no
-      // `alternativeTo` — the field's own note warns against deriving that
-      // relation from a shared skill.
+      // either is not served by the other. Complementary: the output ports
+      // are named for what each writes, so `deriveAlternatives` does not pair
+      // them on a shared skill (#1168, B9a).
       satisfies: ["docs-generation"],
       requires: { runtime: ["bun"], network: false },
     }),
@@ -1278,9 +1319,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They are separate nodes because they answer different questions. A
     // consumer that meets `folio:Actor` needs the VOCABULARY to learn what it
     // means; a consumer parsing a block needs the CONTEXT to expand its keys.
-    // One document cannot be both: `<base>/ns` has to be a directory for
-    // `ns/content/v1.jsonld` to sit under it, which is why the vocabulary is
-    // `ns/vocabulary.jsonld` and not `ns` itself.
+    // One document cannot be both. The vocabulary is one document per layer
+    // (`<stub>/ns`); the all-layers union at `ns/vocabulary.jsonld` was retired
+    // on 2026-09-30 (owner, bean `xsqm`), and bootstrap's layer document is
+    // bootstrap-tools' to write.
     defineTool({
       id: "ns-vocabulary",
       title: "Namespace vocabulary",
@@ -1303,7 +1345,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // led with "conformance test" would invert that and invite someone to
       // drop the document once CI was satisfied another way.
       maintains: [
-        { source: "schemas/vocabulary.ts", artefact: "ns/vocabulary.jsonld", format: "json-ld" },
+        { source: "schemas/vocabulary.ts", artefact: "cat-harness/ns.jsonld", format: "json-ld" },
+        { source: "schemas/vocabulary.ts", artefact: "folio-assistant-core/ns.jsonld", format: "json-ld" },
       ],
       requires: { runtime: ["bun"], network: false },
     }),
@@ -1441,6 +1484,83 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
     }),
 
+    // ── The merge steward's three commands — bean `blgm` ──────────────────
+    //
+    // Owner-approved 2026-10-02, replacing the steward's scratch scripts. Each
+    // satisfies `merge-conflict-patterns` because each reads its declaration
+    // (what is generated) and none adds a second one. The merge-queue skill
+    // being written on the merge-pipeline epic is the one they serve; when it
+    // lands, it joins `satisfies`.
+    defineTool({
+      id: "merge-train",
+      title: "Merge train",
+      description:
+        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
+      install: { none: true },
+      invoke: { shell: "bun run merge:train" },
+      io: {
+        inputs: [
+          { name: "base", schema: t("CommitSha"), required: true, arg: { flag: "--base" }, description: "The commit the train branch starts from." },
+          { name: "branch", schema: t("Branch"), required: false, arg: { flag: "--branch" }, description: "The train branch to create; default `merge-train/<base>-<time>`." },
+          { name: "dry-run", schema: t("Flag"), required: false, arg: { flag: "--dry-run" }, description: "Simulate with `git merge-tree`: classify each member's conflicts against the simulated train and change nothing." },
+          { name: "no-main", schema: t("Flag"), required: false, arg: { flag: "--no-main" }, description: "Skip merging `origin/main` into the train." },
+          { name: "members", schema: t("Branch"), required: true, repeated: true, arg: { positional: 0 }, description: "PR numbers or branches, in train order. On the command line a PR may be pinned to the head CI saw as `N:<sha>`." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "`merge-train-report/v1` on stdout: members merged, refused with reasons and conflicted paths, the checks run, main's merge, and the head. Exit 0 built, 1 needs a person, 2 could not start." }],
+      },
+      satisfies: ["merge-conflict-patterns", "prepare-merge"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when: "The steward has chosen a batch of green, mutually independent PRs (see merge-overlap) and wants one branch that carries them all, regenerated once.",
+        limits: "Each member's merge commit is not proved on its own; the train is proved at its end by one regen. A refused member is left out and reported — handing it back to its owner is the steward's step. It does not push: CI on the train runs only after the steward pushes it.",
+        cost: "One `merge-base.ts` per member (seconds each), then one regen (5-13 min measured 2026-10-02) and the three checks; a second regen if main had generated conflicts.",
+      },
+    }),
+    defineTool({
+      id: "merge-overlap",
+      title: "Merge overlap (conflict prediction)",
+      description:
+        "For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch `cat-harness/` or `cat-harness-tools/`. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains.",
+      install: { none: true },
+      invoke: { shell: "bun run merge:overlap" },
+      io: {
+        inputs: [
+          { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base each PR is diffed against from its fork point; default `origin/main`." },
+          { name: "branches", schema: t("Branch"), required: false, repeated: true, arg: { positional: 0 }, description: "Branches to compare instead of the open PRs; with none, the open PRs come from `gh`." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "`merge-overlap/v1` on stdout: per member `authored_paths`, `region_paths`, `touches_shared`, the two harness flags; every pair that is not independent, with why." }],
+      },
+      satisfies: ["merge-conflict-patterns", "coordinate"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when: "Before composing a merge train, and whenever deciding which PRs can land together or must be ordered.",
+        limits: "Paths, not semantics (requirements T3): two PRs that change different files can still interact, which the shared-declaration list only partly covers. A README counts as authored when its prose changed, as a region when only generated regions did.",
+        cost: "One REST listing (`gh api …/pulls`; not `gh pr list`, which is GraphQL) and one `git fetch` of every open head, then a `git diff --name-only` per PR. No working tree is touched.",
+      },
+    }),
+    defineTool({
+      id: "merge-leftover",
+      title: "Merge leftover (has a PR's intent landed?)",
+      description:
+        "After a train merged, compare a PR's head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): `landed`, `not-landed` with the authored paths still different, or `could-not-determine`, which is never shown as clean. Only reports; closing the PR stays a steward action.",
+      install: { none: true },
+      invoke: { shell: "bun run merge:leftover" },
+      io: {
+        inputs: [
+          { name: "member", schema: t("Branch"), required: true, arg: { positional: 0 }, description: "The PR number or branch. On the command line a PR may be pinned as `N:<sha>`." },
+          { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base the train landed on; default `origin/main`." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "`merge-leftover/v1` on stdout. Exit 0 landed, 1 not-landed, 2 could not determine." }],
+      },
+      satisfies: ["merge-conflict-patterns"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when: "After a train lands, for each member PR still open, before the steward decides whether to close it.",
+        limits: "An authored path whose lines the base rewrote after the train reads `not-landed`: the reverse patch no longer applies, and only a person can say whether the rewrite kept the intent.",
+        cost: "One fetch, then one `git diff` and one `git apply --check` per authored path, in a throwaway index. No working tree is touched.",
+      },
+    }),
+
     // ── The narrative review queue — what is waiting on a PERSON ──────────
     //
     // Bean `7ajt`, and the node almost did not get written. I had it filed as a
@@ -1573,8 +1693,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // One Tool among several for that skill rather than the whole of it —
     // `mcp-contract` is an equivalence in both directions and this supplies one
     // side. `skills-and-tools` is explicit that several Tools may satisfy one
-    // skill and be complementary rather than alternative, so `alternativeTo`
-    // stays empty.
+    // skill and be complementary rather than alternative; their I/O differs,
+    // so none is derived.
     defineTool({
       id: "mcp-capture",
       title: "What this instance's MCP server serves",
@@ -1669,7 +1789,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice." },
         ],
         outputs: [
-          { name: "report", schema: t("Markdown"), description: "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither."},
+          { name: "report", schema: t("Markdown"), description: "One row per workflow. Five verdicts, not two: green, red, `running`, `superseded` (a red whose workflow file changed after the failing run, so the verdict is against code that no longer exists), and possibly-stale (a red that has not re-run in a week). Three exit codes carry them to a caller that reads no rows: 0 nothing is red, 1 something is, 2 COULD NOT LOOK — the API was unreachable, or `--out` could not be written. A caller must never read 2 as either verdict. `--markdown` and `--warn` always exit 0 by design, so a caller wanting the verdict uses neither.", render: { as: "markdown", reason: "a table a reader reads; rendered with raw HTML off" }},
         ],
       },
       satisfies: ["ci-health"],
@@ -1782,6 +1902,85 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       ],
     }),
 
+    // ── Downstream outputs ─────────────────────────────────────────────
+    //
+    // Bean `fq5u`: a Tool that keeps a derived output current declares it,
+    // with its inputs, so `kg:audit`'s `tool-downstream-fresh` can say whether
+    // the last run SUCCEEDED over the current inputs — and never reads "no
+    // run recorded" as green. See `schemas/tool.ts#ToolDownstreamSchema`.
+    defineTool({
+      id: "lsi-index",
+      title: "Build the Latent Semantic Indexing index of a prose graph",
+      description:
+        "Build the per-graph LSI index sidecar for every declared prose graph (or the one named): input fingerprint, parameters, dimension summaries, nearest neighbours and near-duplicate findings, never the vectors. Records each run's outcome and input fingerprint, success or failure, as a `folio-tool-run/v1` record.",
+      install: { none: true },
+      invoke: { shell: "bun run lsi index" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("Slug"), required: false, arg: { flag: "--instance" }, description: "Instance declaring the graph, e.g. `cat-harness`." },
+          { name: "graph", schema: t("Slug"), required: false, arg: { flag: "--graph" }, description: "Graph id within the instance, e.g. `skills`." },
+        ],
+        outputs: [
+          { name: "index", schema: t("RepoPath"), description: "`test/results/lsi/<instance>/<graph>.lsi.json`, and the run record under `test/results/tool-runs/lsi-index/`." },
+        ],
+      },
+      satisfies: ["lsi-indexing"],
+      requires: { runtime: ["bun"], network: false },
+      downstream: {
+        output: "cat-harness/test/results/lsi/",
+        inputs: ["every declared prose graph (graph kinds library, skills, folio, docs, methodology, memory, policies, glossary)"],
+        judgedAt: "checkout",
+      },
+    }),
+
+    defineTool({
+      id: "site-search-index",
+      title: "Site search index",
+      description:
+        "The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.",
+      install: { none: true },
+      invoke: { shell: "bun run preview:site" },
+      io: {
+        inputs: [],
+        outputs: [
+          { name: "index", schema: t("RepoPath"), description: "`_site/assets/js/search-data.json` in the assembled site." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun", "ruby"], network: false },
+      downstream: {
+        output: "assets/js/search-data.json",
+        inputs: ["the pages of the Jekyll site build (`cat-harness/docs/`)"],
+        judgedAt: "published",
+        verifier: "search-index",
+      },
+    }),
+
+    defineTool({
+      id: "site-search-scopes",
+      title: "Site search scopes",
+      description:
+        "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
+      io: {
+        inputs: [
+          { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
+        ],
+        outputs: [
+          { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+      downstream: {
+        output: "assets/js/search/manifest.json",
+        inputs: ["the site search index (`assets/js/search-data.json`)", "the declared instances and target locales"],
+        judgedAt: "published",
+        verifier: "search-scopes",
+      },
+    }),
+
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
@@ -1820,7 +2019,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         // The entry as rendered, so a caller can quote what it actually wrote
         // rather than reconstructing it from the six fields.
-        outputs: [{ name: "entry", schema: t("Markdown"), description: "The entry as posted." }],
+        outputs: [{ name: "entry", schema: t("Markdown"), description: "The entry as posted.", render: { as: "markdown", reason: "a log entry is prose with formatting; rendered with raw HTML off" } }],
       },
       satisfies: ["log-message"],
       requires: { network: false },
@@ -1830,18 +2029,18 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Groups 6 (`oait`) and 10 (`9x17`) of `d308` both bind `authoring-a-paper ·
     // Task_Validate` and both satisfy `content-validate`. Both beans asked for
-    // `alternativeTo` / `selection` between them "since they share a task", and
-    // **that is the inference `ToolDefinitionSchema` refutes in as many words**:
+    // an alternative relation and `selection` between them "since they share a
+    // task", and **that is the inference `deriveAlternatives` refuses**:
     // sharing a skill does not make two Tools substitutable, measured across 12
-    // of this instance's 25 multi-Tool skills.
+    // of this instance's 25 multi-Tool skills. It also needs the same I/O.
     //
     // These two are the ordinary case, not the exception. One asks whether the
     // content GRAPH is well-formed and well-ordered; the other asks whether a
     // block is valid against its schema. A folio runs both, in that order, and
-    // neither answer substitutes for the other — so an `alternativeTo` edge here
-    // would oblige `selection` prose comparing two things that do not compete,
-    // and an author made to write it writes noise. Left unset deliberately, and
-    // both beans corrected rather than satisfied.
+    // neither answer substitutes for the other — so pairing them would oblige
+    // `selection` prose comparing two things that do not compete, and an
+    // author made to write it writes noise. Their I/O differs, so none is
+    // derived, and both beans were corrected rather than satisfied.
     defineTool({
       id: "content-graph-build",
       title: "Content graph",
@@ -2106,11 +2305,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     //   fhir-validation     requires igRoot                      → SATISFIABLE
     //   ig-publication      requires igRoot + versionIncrement    → refused
-    //   l3-fhir-authoring   requires artifactType + l2Source      → refused
+    //   l3-fhir-authoring   requires artifactType + sourceModel   → refused
     //
     // The refusals are not a gap to close later. `fsh-cone` computes a dependency
     // cone over a FSH graph: it publishes nothing and authors nothing, so it has
-    // no version to increment and no L2 source to render from. Declaring those
+    // no version to increment and no source model to render from. Declaring those
     // edges would put this node forward as the mechanism for two jobs it does not
     // do — the `covered-is-not-reachable` shape, manufactured on purpose.
     //
@@ -2137,6 +2336,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // the bar; one flag wanting a bespoke type is not.
           { name: "top", schema: t("Count"), required: false, arg: { flag: "--top" }, description: "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero." },
           { name: "history", schema: t("Count"), required: false, arg: { flag: "--history" }, description: "Report the blast radius over the last N commits instead of a static cone." },
+          { name: "fileUsers", schema: t("RepoPath"), required: false, arg: { flag: "--file-users" }, description: "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build (bean `a9tx`)." },
           // `--changed f1,f2,…` stays UNDECLARED, and for a reason the new type
           // does not touch: it is a comma-separated list inside ONE argv word.
           // `Slug` forbids the comma, `repeated` would claim the flag may be
@@ -2183,8 +2383,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //   · the Tool node is the one that was missing, and it is this.
     //
     // Which is why the node exists and the other two are recorded as done and as
-    // refused. `alternativeTo` stays empty: a recorder and a decider are not two
-    // ways to do one thing.
+    // refused. Not an alternative (their I/O differs): a recorder and a decider
+    // are not two ways to do one thing.
     defineTool({
       id: "translation-roundtrip-record",
       title: "Record a round-trip translation verdict",
@@ -2256,9 +2456,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
       },
       // `library-ingestion`, whose other two Tools INGEST. This one gates what
-      // they produced, so `alternativeTo` stays EMPTY: `ingest-stdlib` and
-      // `ingest-extended` are substitutable with each other — the one genuinely
-      // substitutable pair in this instance alongside `beans-cli`/`beans-manual` —
+      // they produced, so it is not an alternative to them (its I/O differs):
+      // `ingest-stdlib` and `ingest-extended` are substitutable with each other,
       // and a completeness check is not a third way to ingest.
       //
       // The skill carries no input contract, so `check-tools` cannot verify this
@@ -2286,7 +2485,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { manual: true },
       io: {
         inputs: [
-          { name: "file", schema: t("Text"), required: true, description: "Path to the delimited text file." },
+          { name: "file", schema: t("DelimitedTextPath"), required: true, description: "Path to the delimited text file." },
         ],
         outputs: [
           { name: "record", schema: t("Text"), description: "A `folio-tabular-csvw/v1` document. While stubbed, one table carrying `fac:stub` and NO columns — a half-stub is refused by the schema because it reads as a working extraction." },
@@ -2304,7 +2503,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { manual: true },
       io: {
         inputs: [
-          { name: "file", schema: t("Text"), required: true, description: "Path to the workbook." },
+          { name: "file", schema: t("WorkbookPath"), required: true, description: "Path to the workbook." },
         ],
         outputs: [
           { name: "record", schema: t("Text"), description: "A `folio-tabular-csvw/v1` document, one table per sheet. While stubbed, every table carries `fac:stub` and no columns." },
@@ -2322,6 +2521,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // served over MCP, so it is a sibling module rather than a row in
     // `mcp.ts` — see that file's header on why the two are kept apart.
     ...sessionTools(t),
+
+    // Applying a vocabulary mapping table (bean `k74z`). In-process and not
+    // served, so a sibling module for the same reason as `sessions.ts`.
+    ...vocabMapTools(t),
 
     // The viewer generators, each declaring the graph kinds it renders
     // (#1168 B7a). A sibling module for the same reason as `sessions.ts`.
@@ -2351,20 +2554,24 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
       invoke: { shell: "release-please release-pr" },
       requires: { runtime: ["node", "release-please"], network: true },
+      // The same I/O as `package-release-manual`, stated at the level of the
+      // RELEASE (owner, 2026-09-30: "Align I/O, pair"): a package in, its tag
+      // out. So `deriveAlternatives` pairs the two (#1168, B9a). The release PR
+      // is this mechanism's intermediate step — merging it creates the tag —
+      // and the config file is its own setup, in `selection.limits`.
       io: {
         inputs: [
-          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo-url" }, description: "owner/name of the repository whose packages are released." },
-          { name: "config", schema: t("RepoPath"), required: false, arg: { flag: "--config-file" }, description: "The release config. Must exist: a missing one falls back to defaults that find nothing." },
+          { name: "package", schema: t("PackageName"), required: true, description: "The package being released. release-please proposes every package it is configured for; this is the one whose tag is wanted." },
+          { name: "repo", schema: t("RepoFullName"), required: false, arg: { flag: "--repo-url" }, description: "owner/name of the repository the release is made in; the current one when absent." },
         ],
-        outputs: [{ name: "releasePr", schema: t("Url"), description: "The release PR it opened or updated. Merging it is the approval." }],
+        outputs: [{ name: "tag", schema: t("Text"), description: "The tag created when the release PR merges, `<package>-v<version>`." }],
       },
       satisfies: ["package-release"],
-      alternativeTo: ["package-release-manual"],
       selection: {
         when:
           "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
         limits:
-          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`).",
+          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`). It needs a config file (`--config-file`); a missing one falls back to defaults that find nothing. The tag appears only when its release PR is merged.",
         cost: "Not configured here. One config file and one manifest per repository; each run is a few seconds of API calls.",
       },
     }),
@@ -2378,11 +2585,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "package", schema: t("PackageName"), required: true, description: "The package being released." },
+          { name: "repo", schema: t("RepoFullName"), required: false, description: "owner/name of the repository the release is made in; the current one when absent." },
         ],
         outputs: [{ name: "tag", schema: t("Text"), description: "The tag created, `<package>-v<version>`." }],
       },
       satisfies: ["package-release"],
-      alternativeTo: ["release-please"],
       selection: {
         when: "A first release, a rare one, or a repository whose commit messages carry no conventional prefixes.",
         limits: "Every step is a person's, so each is a place to slip; the skill's rules (build first, no reused version) are checked by nobody.",
@@ -2407,7 +2614,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Timed transcript under the entry's `transcript/`." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["transcribe-faster-whisper", "transcribe-vosk"],
       selection: {
         when:
           "The default candidate: offline, no Python, good accuracy from the tiny model up, and timestamps per segment — what a transcript that can be translated segment by segment needs.",
@@ -2433,7 +2639,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "transcript", schema: t("RepoPath") }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["transcribe-whisper-cpp", "transcribe-vosk"],
       selection: {
         when:
           "When the ingestion pipeline should stay in Python beside the PDF arms and `schemas/python-deps.ts` is the one place dependencies are declared. Same models as whisper.cpp, typically faster on CPU.",
@@ -2459,7 +2664,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Written where `-o` names." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["transcribe-whisper-cpp", "transcribe-faster-whisper"],
       selection: {
         when:
           "When size and speed matter more than accuracy: the lightest offline option, with a separate small model per language.",

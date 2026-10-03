@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md) — do not edit here.
+> Generated from [`smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md`](https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md){: .fa-edit-source }
 
 {% raw %}
 # smart-base Toolchain
 
-> Skill id: `smart-base-tools` · Capability: `smart-base` · Package:
+> Skill id: `smart-base-tools` · Package:
 > `authoring-who-smart-guidelines`
 
 Run WHO's DAK toolchain from a `smart-base` checkout. **Load it; never vendor

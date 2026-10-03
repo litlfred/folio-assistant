@@ -5,7 +5,7 @@
  *
  * Bean `2krx`: every time an instance names a directory as a subgraph, that
  * subgraph owes a **visualiser** and a **documentation entry**. `1hvo` adds
- * `cat-harness/skills/theming/`, so it arrives owing both, and *shipping it without
+ * `cat-harness/skills/ui/theming/`, so it arrives owing both, and *shipping it without
  * them manufactures the finding rather than clearing it*. This is the
  * visualiser; `docs/architecture/theming.md` is the entry.
  *
@@ -50,7 +50,11 @@
  * Usage:  bun run theme:sheet [--out <file>]
  *         bun run theme:page [--check]
  *
- * @covers themes
+ * @covers none — it reads `THEMES` (the platform's own, declared in code)
+ * plus an instance's declared art via `readDeclaration` and `THEME_LAYOUTS`.
+ * Neither is the `themes` graph, and this resolves no directory of that kind.
+ * It declared `@covers themes` until 2026-09-30 (bean `z6xd`);
+ * `check:instance-themes` is the gate that covers the graph.
  * @module scripts/render-theme-sheet
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

@@ -517,7 +517,7 @@ bootstrap DECLARES (7 own skills + 3 diagrams), not from what a run reported.
     skill-in-role-or-process     23 findings
 
 Counts match, so this single leak explains the whole remainder. `smart-base-tools`
-lives at `cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md`
+lives at `cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-base-tools.md`
 and nothing under `bootstrap/` mentions it.
 
 It is in `knownSkills` — the canonical function with many consumers — so it is
@@ -637,7 +637,7 @@ are **FALSE**:
 
 smart-base declares no `skills` and no `scenarios` directory, so its own sets are
 empty — while `Process_DIIG` references `skill ref="methodology-adoption"`,
-which exists at `cat-harness/skills/folio-core/methodology-adoption.md`.
+which exists at `cat-harness/skills/process/process-core/methodology-adoption.md`.
 cat-harness is smart-base's TRANSITIVE DEPENDENCY
 (`smart-base → fhir-harness → folio-assistant-core → cat-harness`), so the
 reference is legitimate and inherited DOWN the `needs` chain.
@@ -797,7 +797,17 @@ so every instance's manifest goes stale the moment `kg-audit.ts` changes, and
 nothing said so because no gate ran bootstrap's audit. That is this bean's
 subject demonstrating itself.
 
-### Still not audited: the ROOT instance
+### The ROOT instance — audited since `pgzn` (2026-10-02, PR #1842)
+
+`pgzn` is completed: `kg-audit.ts` now resolves its repository root through
+`checkoutRootFor`, `kg-audit-all.ts` no longer skips the root instance, and its
+sidecars are committed under `cat-harness/test/results/folio-assistant/`, so
+coverage is **16 of 16**. The history below is kept as it was written. Note that
+its "obvious repair is wrong" paragraph does not hold: for the root instance
+`siblingScopeFor` IS the checkout, which is where `package.json` lives, and it
+agrees with `repoRootFor` for every nested instance (measured over all 18).
+
+### (history) Still not audited: the ROOT instance
 
 `kg:audit --instance .` exits 1 before auditing anything (bean `pgzn`). The
 sweep prints that gap on EVERY run, clean or not — a gap mentioned only when
@@ -825,5 +835,5 @@ existed.
 - [x] resolution follows `needs` downward — skills and roles
 - [x] the loop: every declared instance audited, its sidecars committed, and a
       CI gate that keeps them current
-- [ ] the ROOT instance is audited too — blocked on `pgzn`
+- [x] the ROOT instance is audited too — done by `pgzn` (PR #1842)
 - [ ] the `dh4f` zero-diagram question — no corpus case; guard by construction

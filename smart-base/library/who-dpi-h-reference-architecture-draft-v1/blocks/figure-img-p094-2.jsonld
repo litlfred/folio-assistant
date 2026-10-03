@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p094-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p094-2.png",
+  "pageStart": 94,
+  "pageEnd": 94,
+  "narrative": {
+    "text": "Figure 3.7.2, 'Conformance testing view' (section 3.7.2). The System Under Test, which contains a 'Document Capture UI' interface, realises the Document Source actor. A Simulator realises the opposite Document Repository actor. Both actors are assigned to the interaction 'Provide and Register Document Set [ITI-41]'. The Document Capture UI serves a Test Operator role, which is assigned to the process 'Create and submit document' that triggers the same ITI-41 interaction. This shows that the system can also be tested end to end through its user interface.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

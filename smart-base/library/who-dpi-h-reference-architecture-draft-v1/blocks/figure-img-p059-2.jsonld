@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p059-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p059-2.png",
+  "pageStart": 59,
+  "pageEnd": 59,
+  "narrative": {
+    "text": "Figure 3.2, the DPI-H reference architecture as a layered integrated view (section 3.3, The reference architecture in practice). Top to bottom: Strategic Health Goals G1 to G7 (Trusted data foundations, Health workforce, Quality and continuity of care, Personal health record, Supply chain, Health financing, Climate and epidemic resilience); a Cross-cutting Governance band (Policy, legislation and regulation; Cybersecurity, privacy and consent; Standards, certification and conformance; Semantic governance and stewardship; Auditability, assurance and accountability); Stakeholders, such as citizens, health workforce, government/MoH, facilities, financial entities, suppliers, development agencies and research; and Capabilities, such as identity management, access/consent/trust, health record management, knowledge management, clinical services and care coordination, health workforce management, health financing, supply chain, analytics and BI, and climate and public-health surveillance. Next is the Point-of-Service and Functional Applications layer, which the private sector, donors, NGOs and implementers build: provider systems, case management, pharmacy, CHW and community, citizen/patient apps, supply chain, health coverage and claims, financing and workforce operations, and public health apps. These consume the DPI-H layer through standards-based APIs. The DPI-H layer, government-stewarded reusable infrastructure, holds Reusable Components (Clinical services with a Computable Decision Support Engine, Supply chain with a Supplier Registry, Health financing with a Benefits Package Registry, Public health and analytics with a PH Surveillance Platform and HMIS, AI-enabled intelligence, and Secondary use). It also holds a Shared Data Layer of core registries, several starred as REDDHI components: Client Registry, Lifelong Health Record, Health Workforce Registry, Facility Registry, Product Registry, Terminology Service and Logical Information Model Repository. Below these come the Foundational DPI Layer (DPI-F: foundational identity, national trust services, payment rails, data exchange fabric, CRVS and other sectors, geo-location and notification) and the Technology Layer (hybrid/sovereign cloud, AI/ML platform, security and trust operations, data platform, observability/DevSecOps). A cross-cutting Interoperability column on the right holds an Information Mediator (API gateway, HIE), open standards (such as HL7 FHIR, IHE, openEHR, IPS, SNOMED CT, ICD-11, LOINC, GS1, CDS Hooks, SMART on FHIR, OpenID/OAuth2, DICOM) and integration patterns (REST APIs, event streams, IHE documents, federated query, bulk data, cross-border IHR/IPS). It connects to each layer through interface markers.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-025",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/integration-backlog.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/integration-backlog.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/integration-backlog.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/integration-backlog.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/integration-backlog.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/integration-backlog.md){: .fa-edit-source }
 
 {% raw %}
 # /integration-backlog — drive the backlog to zero, one PR at a time
@@ -172,7 +172,7 @@ the FULL autonomous merge pipeline:
   `merge_method: "rebase"` per AGENTS.md §Branch + PR workflow rule 7
 - **Phase 5**: Post-merge sibling notification
 
-See [`skills/folio-core/prepare-merge-auto.md`](prepare-merge-auto.md)
+See [`skills/sdlc/sdlc-core/prepare-merge-auto.md`](prepare-merge-auto.md)
 for the full workflow specification.
 
 **Note**: the previous §4 + §5 logic (manual review-comment triage +

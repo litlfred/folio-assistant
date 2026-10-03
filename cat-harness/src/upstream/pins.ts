@@ -215,7 +215,7 @@ export function render(verdicts: PinVerdict[]): string {
     "",
     "Moving a pin is the `upstream-version-adoption` process — impact analysis, an MVP",
     "deployed to staging, review, and a **person** deciding. See",
-    "`skills/folio-core/upstream-version-adoption.md`. `unknown` is not `current`:",
+    "`skills/sdlc/sdlc-core/upstream-version-adoption.md`. `unknown` is not `current`:",
     "it means this check could not tell, and it is never reported as green.",
   );
   return lines.join("\n");

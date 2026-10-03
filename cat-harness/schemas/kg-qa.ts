@@ -51,7 +51,7 @@
  */
 
 import { existsSync, readdirSync, readFileSync, type Dirent } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve, sep } from "node:path";
 
 import { z } from "zod";
 
@@ -148,26 +148,32 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * subjects because of it; mirroring keeps that guarantee while moving the
  * files, and keeps the package legible in the path.
  *
- * ## A subject OUTSIDE the instance keeps its own segment, not `..`
+ * ## A subject OUTSIDE the instance has no sidecar here — its owner audits it
  *
- * A repository-scoped directory can sit above the instance root — this
- * repository declares `bootstrap/skills/` and `bootstrap/processes/` that way,
- * from `cat-harness/`. `relative` then answers `../bootstrap/processes`, and
- * joining that CLIMBS BACK OUT: the sidecars landed in
- * `test/results/bootstrap/`, a sibling of `kg-qa/` rather than a subtree of
- * it. Measured 2026-09-20 on bean `7u3g`, the moment those diagrams became
- * visible at all.
+ * **Refused, with {@link ForeignSubjectError}.** Until 2026-10-01 an outside
+ * subject was re-rooted under `_external/` (bean `7u3g`, 2026-09-20), which
+ * fixed a real defect — joining `..` CLIMBED OUT of `kg-qa/`, past the only
+ * tree `sweepOrphans` walks — but kept the wrong premise: that a verdict about
+ * another instance's subject belongs in THIS instance's tree at all.
  *
- * The damage is not cosmetic. `sweepOrphans` walks `KG_QA_RESULTS_DIR`, so an
- * escaped sidecar is outside the only tree that would notice it going stale —
- * the one mechanism written to stop a verdict outliving its subject, blind to
- * the verdicts most likely to. And `kg:audit:check`'s staleness comparison
- * reads the same tree.
+ * It does not. Measured 2026-10-01 (Q-A PR 4, epic `7x5n`): every one of the
+ * eight `_external/` sidecars had a byte-for-byte counterpart under its owner's
+ * own `test/results/kg-qa/`, written by that owner's `kg:audit:all` run. Two
+ * copies of one verdict, about one subject, written by two runs — the second
+ * free to disagree with the first, which is exactly what `resolvableSkills` in
+ * `kg-audit.ts` records happening (`skill-ref-resolves` pass here, fail there,
+ * for one diagram). The owner ruled the duplicates deleted (2026-10-01,
+ * ~17:30: *"Delete them"*), and a writer that could still compose the path
+ * would recreate them on the next run.
  *
- * So an outside subject is re-rooted under `_external/` rather than allowed
- * its `..`: still a mirror, still collision-free, and INSIDE the tree the
- * sweep walks. `..` is dropped rather than encoded, because the segment that
- * matters for collisions is the path below the escape.
+ * So this function now answers "there is no such path" rather than inventing
+ * one, and the CALLER decides: `kg-audit.ts` drops a subject an owning
+ * instance in the checkout audits for itself, and refuses loudly on one no
+ * instance owns; `qa-witness.ts` reads no sidecar for it. Use
+ * {@link subjectEscapes} to ask first.
+ *
+ * A hosted instance (`bootstrap`) is unaffected: its subjects are INSIDE the
+ * instance under audit (`--instance ./bootstrap`), and only the `tree` moves.
  *
  * ## The stem is a COMPOSED name, so it is encoded
  *
@@ -195,9 +201,8 @@ export function kgQaSidecarPath(
   // `relative` rather than string surgery: a subject reached by a different
   // spelling of the same directory must land on the same results path, or the
   // writer and the reader disagree again by another route.
-  const rel = relative(repoRoot, subjectDir);
-  const inside = rel.split(/[\\/]/).filter((seg) => seg !== "" && seg !== "..");
-  const escaped = rel.startsWith("..");
+  if (subjectEscapes(repoRoot, subjectDir)) throw new ForeignSubjectError(repoRoot, subjectDir);
+  const inside = relative(repoRoot, subjectDir).split(/[\\/]/).filter((seg) => seg !== "");
   // The STEM is encoded; the directory segments are not. They mirror a path
   // that is already on disk, so encoding them would make the mirror stop
   // matching the subject it mirrors — and a subject directory that is itself
@@ -207,11 +212,88 @@ export function kgQaSidecarPath(
   // The stem has no such guarantee: it is a filename this function COMPOSES,
   // from an id that never had to be a legal filename. `req:agent-workflow` is
   // what made this repository unclonable on Windows — see `portable-path.ts`.
-  return join(
-    tree,
-    ...(escaped ? ["_external", ...inside] : inside),
-    `${portableSegment(stem)}.kg-qa.json`,
-  );
+  return join(tree, ...inside, `${portableSegment(stem)}.kg-qa.json`);
+}
+
+/**
+ * Does `subjectDir` lie outside the instance at `repoRoot`?
+ *
+ * `relative` rather than a string prefix: `/repo/cat-harness-tools` starts with
+ * `/repo/cat-harness` and is not inside it. An absolute answer from `relative`
+ * (a different drive on Windows) is outside too.
+ */
+export function subjectEscapes(repoRoot: string, subjectDir: string): boolean {
+  const rel = relative(repoRoot, subjectDir);
+  return rel === ".." || rel.startsWith(`..${sep}`) || rel.startsWith("../") || isAbsolute(rel);
+}
+
+/**
+ * Raised by {@link kgQaSidecarPath} for a subject outside the instance: the
+ * owner audits it and holds the one verdict. See that function's docblock.
+ */
+export class ForeignSubjectError extends Error {
+  constructor(
+    readonly instanceRoot: string,
+    readonly subjectDir: string,
+  ) {
+    super(
+      `${subjectDir} is outside ${instanceRoot}: a kg-qa sidecar is written only by the instance that ` +
+        `owns its subject (Q-A PR 4, 2026-10-01). Audit it with \`kg-audit --instance <owner>\`.`,
+    );
+    this.name = "ForeignSubjectError";
+  }
+}
+
+/**
+ * The instance in `instanceRoots` that owns `absPath`: the DEEPEST root
+ * containing it, because the repository root is itself an instance
+ * (`folio-assistant`) and contains every other one. `undefined` when none does.
+ */
+export function owningInstanceOf(absPath: string, instanceRoots: readonly string[]): string | undefined {
+  let best: string | undefined;
+  for (const r of instanceRoots) {
+    const root = resolve(r);
+    if (subjectEscapes(root, absPath)) continue;
+    if (best === undefined || root.length > best.length) best = root;
+  }
+  return best;
+}
+
+/**
+ * Split an audit's reports by who owns their subject — the narrowing that
+ * stops the auditor writing a second copy of another instance's verdict.
+ *
+ * - `kept` — no recorded path (role, requirement, graph, tool: callers narrow
+ *   tools by declaring instance themselves), or a path inside `auditedRoot`.
+ * - `skipped` — a path outside `auditedRoot` that another instance in
+ *   `instanceRoots` owns. That owner's own run writes the verdict.
+ * - `unowned` — a path outside `auditedRoot` that NO instance owns. Not
+ *   dropped quietly: a subject nobody audits is the clean-run-over-nothing
+ *   defect (`dh4f`), so the caller refuses.
+ */
+export function partitionBySubjectOwner<R extends { subject: { path?: string | null } }>(
+  reports: readonly R[],
+  auditedRoot: string,
+  instanceRoots: readonly string[],
+): { kept: R[]; skipped: { report: R; owner: string }[]; unowned: R[] } {
+  const root = resolve(auditedRoot);
+  const out = { kept: [] as R[], skipped: [] as { report: R; owner: string }[], unowned: [] as R[] };
+  for (const r of reports) {
+    const p = r.subject.path;
+    if (!p) {
+      out.kept.push(r);
+      continue;
+    }
+    const abs = resolve(root, p);
+    if (!subjectEscapes(root, abs)) {
+      out.kept.push(r);
+      continue;
+    }
+    const owner = owningInstanceOf(abs, instanceRoots);
+    if (owner !== undefined && owner !== root) out.skipped.push({ report: r, owner });
+    else out.unowned.push(r);
+  }
+  return out;
 }
 
 /** An orphan sidecar, and what its own `subject.path` says about why. */
@@ -428,8 +510,8 @@ export interface KgCriterionDefinition {
    * corpus can decide it*. They are independent, and the graph roll-up proves
    * it: `applies: ["graph"]` covers both `skill-in-role-or-process`, which every
    * instance can answer about its own graph, and `actor-roles-resolve`, which
-   * only the repository can — because an actor is declared once at the
-   * repository root (`.claude/skills/actors/`) while a role is a swimlane inside
+   * only the repository can — because an actor is declared once for the whole
+   * repository (`cat-harness/scenarios/actors/`) while a role is a swimlane inside
    * one instance's diagrams.
    *
    * **Required, deliberately.** A criterion that has not decided its scope does
@@ -510,13 +592,13 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "one projected criterion about what a Tool can be made to DO rather than whether it is wired up.",
   },
   {
-    id: "tool-alternative-resolves",
+    id: "tool-alternative-selectable",
     applies: ["tool"],
     scope: "instance",
     severity: "major",
     summary:
-      "An `alternativeTo` names a Tool that does not exist, or the relation is not symmetric — a choice " +
-      "the agent cannot find, or can find from only one side. `n/a` for a Tool declaring no alternative, " +
+      "A Tool has a derived alternative (a shared skill and the same I/O signature, #1168 B9a) and no " +
+      "`selection` — a choice the agent can see and cannot make. `n/a` for a Tool with no alternative, " +
       "which is most of them.",
   },
   {
@@ -560,6 +642,26 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A Tool's `maintains` artefact is missing from the published tree. Answerable only against an " +
       "assembled `_site/`, so from a checkout this records `unknown` naming `check:maintained-artefacts` " +
       "as where the answer lives — never `pass`. `n/a` for a Tool that maintains nothing.",
+  },
+  {
+    id: "tool-downstream-fresh",
+    applies: ["tool"],
+    scope: "instance",
+    // `minor` for the same reason as `tool-maintains-in-tree`: a member judged
+    // only in the published tree is ALWAYS `unknown` from a checkout, and
+    // `unknown` counts toward `worstSeverity`, so anything higher would put
+    // `kg:audit:strict` beyond the reach of any change to the repository.
+    severity: "minor",
+    // THE FAMILY, generalising `lsi-index-fresh` (bean `fq5u`, owner's design).
+    // A Tool declaring `downstream` records each run's outcome and input
+    // fingerprint (`folio-tool-run/v1`); this reads three states and only one
+    // of them is a pass. No record, or a failed last run, is never green —
+    // a file on disk is not evidence the run that keeps it current succeeded.
+    summary:
+      "A downstream Tool's output is not shown to be current: a target is STALE (a declared input changed since the " +
+      "recorded run), NOT-RUN (no run record) or FAILED (the last run failed). Only a successful run over the current " +
+      "input fingerprint passes. An output judged only in the assembled site records `unknown` naming its publish " +
+      "verifier — never `pass`. `n/a` for a Tool that declares no downstream output, or none of whose targets is judged.",
   },
   {
     id: "skill-ref-resolves",
@@ -644,7 +746,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     severity: "critical",
     summary:
       "A `<cat-harness.processes:convention ref>` on a process, lane or activity names a convention that is not in " +
-      "`.claude/skills/conventions/`. The agent is told a rule applies and cannot read it.",
+      "`cat-harness/skills/conventions/` (`conventionsDir`). The agent is told a rule applies and cannot read it.",
   },
   {
     id: "activity-names-skill",
@@ -916,6 +1018,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A declared prose ↔ code pair — a diagram and the workflow whose `# bpmn:` line names it, or a skill .md beside its same-stem .ts — " +
       "had its CODE change since the prose was last seen or attested, and the prose did not. Re-read it, then " +
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
+  },
+  {
+    id: "skill-voice-review-current",
+    applies: ["skill"],
+    scope: "instance",
+    // `minor` and not gated, by the owner's ruling on bean `rkqp`: an agentic
+    // review of skills against the skill voices, with NO formal gate on rule
+    // content. This asks only whether a current review exists; a rule the
+    // reviewer judged `fail` is recorded in `voice_reviews`, never a finding.
+    severity: "minor",
+    summary:
+      "An ACTIVE voice with rules scoped to skills (`appliesTo: [\"skill\"]`) has no review of this skill, or the " +
+      "review predates a change to the skill or to the voice's skill rules. Review it rule by rule with each citation " +
+      "open, then `bun run voice:review`. `n/a` when no such voice is active; `unknown` when the harness config is unreadable.",
   },
   {
     id: "prose-claims-resolve",
@@ -1220,6 +1336,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "unfalsifiable opt-out.",
   },
   {
+    id: "downstream-tool-declared",
+    applies: ["graph"],
+    scope: "repo",
+    scopeBasis:
+      "Its three sources are repository-level, not per instance: the member readers are code in `scripts/downstream-runs.ts`, the publish " +
+      "verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per " +
+      "instance it would judge the platform's members against an instance's Tools and report every one as undeclared.",
+    // `major`: unlike a stale output, which is expected between runs, an
+    // undeclared downstream tool is a DECLARATION gap that one edit clears.
+    severity: "major",
+    summary:
+      "A downstream tool with no declaration (bean `fq5u`): a member reader, a `folio-tool-run/v1` record or a publish " +
+      "verifier names a Tool that declares no matching `downstream` output. Its runs are then recorded and read by " +
+      "nothing, or read and attributed to nothing — the invisible failure the family exists to end.",
+  },
+  {
     id: "manifest-skill-exists",
     applies: ["graph"],
     scope: "instance",
@@ -1258,7 +1390,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "An actor is declared ONCE at the repository root (`.claude/skills/actors/`) while a role is a " +
+      "An actor is declared ONCE for the whole repository (`cat-harness/scenarios/actors/`) while a role is a " +
       "swimlane inside one instance's diagrams, so this compares a repository-level set against an " +
       "instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for " +
       "almost every one of the 36 repository actors, because they name roles the bootstrap graph does " +
@@ -1273,7 +1405,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "Both sides are repository-level — actors and `.claude/skills/capabilities/` are resolved through " +
+      "Both sides are repository-level — actors and capabilities (`cat-harness/scenarios/`) are resolved through " +
       "`repoRootFor`, so `--instance` does not move either. Re-asking per instance would re-derive the " +
       "root's own answer once per declaration and report the same findings N times.",
     severity: "critical",
@@ -1402,6 +1534,25 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A user story in `scenarios/stories.json` is told as a role the role graph does not declare — a story " +
       "told as nobody, which no author can write for and no reviewer can check against.",
   },
+  {
+    id: "content-instance-holds-code",
+    applies: ["graph"],
+    scope: "instance",
+    // `minor` — a QA WARNING, not a failure — by owner ruling, 2026-10-01:
+    // "QA warning. not failure.. ok b/c small # tools" (bean `eayu`; separation
+    // arc S0, #1770). It was `major` on the argument that FR-7 admits no
+    // exception; the owner overruled that for the tolerated case: the five
+    // IRIS-specific files STAY in who-iris/ and no who-iris-tools repository is
+    // authorised. `minor` still records `fail` and still names every file, so
+    // the detection is kept and the violation stays visible — it simply fails
+    // neither `kg:audit --check` nor `--strict`. The ruling's warrant is that
+    // the tolerated set is SMALL; revisit the severity if it grows.
+    severity: "minor",
+    summary:
+      "An instance declared as a CONTENT repository (`separation: \"content\"`, or the content half a " +
+      "declared tools instance `supports`) holds code. A content repository holds no code (kg-separation, " +
+      "bootstrap FR-7); each file is named, and belongs in the platform or a `<name>-tools` repository.",
+  },
 ] as const;
 
 export const KG_CRITERIA_BY_ID: Readonly<Record<string, KgCriterionDefinition>> = Object.fromEntries(
@@ -1455,24 +1606,12 @@ export interface KgQaReport {
   /** Criterion id → entry. Criteria not applying to this kind are omitted. */
   criteria: Record<string, KgCriterionEntry>;
   totals: Record<KgResult, number>;
-  /**
-   * Declared prose ↔ code pairs and the state each was last accepted in —
-   * carried ACROSS runs, unlike everything above, because it is the baseline
-   * `prose-reviewed-since-code-changed` compares against. Written by
-   * `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.
-   */
-  pair_attestations?: KgPairAttestation[];
-}
-
-/** One declared pair's accepted state. Paths are repo-relative. */
-export interface KgPairAttestation {
-  kind: "implements" | "co-located";
-  prose: string;
-  code: string;
-  prose_hash: string;
-  code_hash: string;
-  by: "baseline" | "agent" | "human";
-  reason?: string;
+  // NO judgements here. `pair_attestations` and `voice_reviews` lived in this
+  // report until bean `2gst` (2026-10-01): they are what an earlier run or a
+  // reviewer recorded, so they cannot be regenerated, and owner ruling D2 (a)
+  // keeps them on main while this derived report moves to the `qa-reports`
+  // branch. They are in the attestation store now —
+  // `schemas/qa-attestations.ts`, `test/attestations/kg-qa/`.
 }
 
 export const KgFindingSchema = z.object({
@@ -1495,19 +1634,11 @@ export const KgQaReportSchema = z.object({
   source_hash: z.string().nullable(),
   criteria: z.record(z.string(), KgCriterionEntrySchema),
   totals: z.record(z.enum(KG_RESULTS), z.number()),
-  pair_attestations: z
-    .array(
-      z.object({
-        kind: z.enum(["implements", "co-located"]),
-        prose: z.string().min(1),
-        code: z.string().min(1),
-        prose_hash: z.string().min(1),
-        code_hash: z.string().min(1),
-        by: z.enum(["baseline", "agent", "human"]),
-        reason: z.string().min(1).optional(),
-      }),
-    )
-    .optional(),
+  // Refused, not merely dropped: a sidecar carrying a judgement is the mixed
+  // file D2 split, and parsing it as clean would hide that it was written by
+  // a writer that never learned about the store. See `schemas/qa-attestations.ts`.
+  pair_attestations: z.never({ error: "pair_attestations belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
+  voice_reviews: z.never({ error: "voice_reviews belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
 });
 
 export const KgQaManifestSchema = z.object({

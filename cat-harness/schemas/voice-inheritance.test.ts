@@ -27,14 +27,14 @@ function voice(id: string, rules: string[], rest: Partial<VoiceProfile> = {}): V
     title: id,
     description: `the ${id} voice`,
     provenance: "assertion",
-    sources: [{ title: "a source", kgRef: "schemas/voices.ts" }],
+    sources: [{ title: "a source", path: "schemas/voices.ts" }],
     rules: rules.map((r) => ({
       id: r,
       title: r,
       description: `rule ${r}`,
       category: "register",
       severity: "minor",
-      source: { kgRef: "schemas/voices.ts", quote: "a quote long enough to check against" },
+      source: { path: "schemas/voices.ts", quote: "a quote long enough to check against" },
     })),
     ...rest,
   });
@@ -119,12 +119,12 @@ describe("the chain has to terminate, and say so when it does not", () => {
   });
 
   test("a voice extending one nothing serves names the id and the instance", () => {
-    const child = voice("child", ["x"], { extends: { instance: "elsewhere", voiceId: "missing" } });
+    const child = voice("child", ["x"], { extends: { instance: "someone/elsewhere", voiceId: "missing" } });
     const r = resolveVoice({ instance: "i", voice: child }, lookupOver({}));
     expect(r.ok).toBe(false);
     if (r.ok) return;
     const said = explainVoiceFailure(r.failure);
-    expect(said).toContain("elsewhere/missing");
+    expect(said).toContain("someone/elsewhere/missing");
     expect(said).toContain("voices");
   });
 });

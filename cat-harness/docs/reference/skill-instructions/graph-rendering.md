@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/graph-management/graph-rendering.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-rendering.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/graph-management/graph-rendering.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-rendering.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/graph-rendering.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/graph-rendering.md){: .fa-edit-source }
 
 {% raw %}
 # Graph rendering: one set of rules for every drawn graph
 
-> Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `graph-rendering` · Package: `graph-management`
 
 This repository draws graphs in at least six places, and until this skill each
 one followed its own conventions. Owner, 2026-09-23 (issue #1137): *"make

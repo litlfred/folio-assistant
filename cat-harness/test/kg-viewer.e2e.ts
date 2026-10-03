@@ -14,8 +14,7 @@
  * @module test/kg-viewer.e2e
  */
 import { test, expect } from "@playwright/test";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -57,12 +56,9 @@ const STUB = artefactStubFor(join(dirname(fileURLToPath(import.meta.url)), "..")
 // `<base>/<stub>` a page Pages can serve. Driving the real relative path is
 // the point: a viewer that resolved its document correctly in a flat fixture
 // and wrongly in the deployed tree is exactly the failure a stand-in hides.
-for (const [file, script] of [
-  [`_kg/${STUB}.jsonld`, "cat-harness/scripts/kg-export.ts"],
-  [`_kg/${STUB}/index.html`, "cat-harness/scripts/kg-viewer.ts"],
-] as const) {
-  if (!existsSync(file)) execFileSync("bun", ["run", script], { stdio: "inherit" });
-}
+// Generated once, before any worker starts, by `e2e-global-setup.ts` (bean
+// `dlqu`): with several workers, a module-level generator here ran in every
+// one of them, concurrently, against the files the others were serving.
 
 /**
  * The page under test, named once.
@@ -316,6 +312,47 @@ test.describe("kg viewer", () => {
     expect(res.status()).toBe(200);
   });
 
+  // Bean yhcq, findings 5, 3/4, 8 and 2 — each asserted on the page as drawn.
+  test("the node list is alphabetical by the name shown, not in document order", async ({ page }) => {
+    await page.goto(PAGE);
+    await expect(page.locator("#list li button").first()).toBeVisible();
+    const names = await page.locator("#list li button").evaluateAll((bs) =>
+      bs.map((b) => (b.firstChild?.textContent ?? "").trim().replace(/^[^\p{L}\p{N}]+/u, "")));
+    const collate = new Intl.Collator("en", { sensitivity: "base", numeric: true });
+    let descending = 0;
+    for (let i = 1; i < names.length; i++) if (collate.compare(names[i - 1], names[i]) > 0) descending++;
+    expect(descending).toBe(0);
+  });
+
+  test("a link into another graph says so, and is not followed by 'no links'", async ({ page }) => {
+    await page.goto(PAGE);
+    const ids = new Set(KG["@graph"].map((m) => m["@id"]));
+    const target = KG["@graph"].find((n) =>
+      ([] as unknown[]).concat(n.satisfies ?? []).some((v) =>
+        typeof v === "string" && /^https?:/.test(v) && !ids.has(v)));
+    test.skip(!target, "the export has no node linking only into another graph");
+    await page.locator("#q").fill(String(target!["@id"]).split("#").pop()!);
+    await page.locator("#list li button").first().click();
+    await expect(page.locator(".detail td .elsewhere").first()).toContainText("in another graph");
+    await expect(page.locator(".detail p.empty")).not.toHaveText("No links to or from this node.");
+  });
+
+  test("the page links back to the docs site, relatively", async ({ page }) => {
+    await page.goto(PAGE);
+    await expect(page.locator("#home")).toHaveAttribute("href", "../");
+    await expect(page.locator("#home")).toContainText("Docs site");
+  });
+
+  test("on one column, choosing a node brings its detail into view", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(PAGE);
+    await page.locator("#list li button").first().click();
+    const top = await page.locator("#detail").evaluate((d) => d.getBoundingClientRect().top);
+    expect(top).toBeLessThan(844);
+    expect(top).toBeGreaterThanOrEqual(0);
+    await expect(page.locator("#detail")).toBeFocused();
+  });
+
   test("the source commit is linked when the export knew it", async ({ page }) => {
     await page.goto(PAGE);
     const commit = KG.sourceCommit;
@@ -330,16 +367,89 @@ test.describe("kg viewer", () => {
 
   test("the interface is in English, because no catalogue is translated yet", async ({ page }) => {
     // The shipped state, asserted rather than assumed. Every
-    // translations/<locale>/kg-viewer.po carries all 38 msgids with an empty msgstr,
-    // so there is nothing to switch TO and no switcher is drawn: a control
-    // with one option is furniture.
+    // translations/<locale>/kg-viewer.po carries every msgid with an empty
+    // msgstr, so there is nothing to switch TO: English is the only choice.
     await page.goto(PAGE);
     await expect(page.locator("#facets-h")).toHaveText("Kind");
     await expect(page.locator("#list-h")).toHaveText("Nodes");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.locator("#langs")).toBeHidden();
+    await expect(page.locator('.lang:not(.planned)')).toHaveCount(1);
+    await expect(page.locator('.lang[lang="en"]')).toHaveAttribute("aria-pressed", "true");
     // No boundary note either: in English there is no boundary to draw.
     await expect(page.locator("#boundary")).toBeHidden();
+  });
+
+  /**
+   * Owner's ruling 2026-10-02 (issue #1838, bean w6fu): SHOW the switcher,
+   * disabled, so readers can see translations are planned.
+   *
+   * "Disabled" is asserted as an accessible state, not a colour: reachable by
+   * keyboard, announced as unavailable, with a reason a phone and a keyboard
+   * can both open. A greyed button with a hover tooltip would pass a
+   * screenshot and fail every one of those.
+   */
+  test("planned languages are shown disabled, with a reason you can open without a mouse", async ({ page }) => {
+    await page.goto(PAGE);
+    const planned = page.locator(".lang.planned");
+    await expect(planned).toHaveCount(5);
+    for (const loc of ["ar", "es", "fr", "ru", "zh"]) {
+      const b = page.locator(`.lang.planned[lang="${loc}"]`);
+      await expect(b).toHaveAttribute("aria-disabled", "true");
+      // aria-disabled rather than the disabled attribute: it stays in the tab order.
+      await expect(b).not.toHaveAttribute("disabled", /.*/);
+      await expect(b).toHaveAttribute("aria-describedby", "langs-why-s");
+    }
+    await expect(page.locator('.lang.planned[lang="ar"]')).toHaveAttribute("dir", "rtl");
+    await expect(page.locator('.lang.planned[lang="zh"]')).toHaveText("中文");
+
+    // The reason is VISIBLE, not hover-only, and is the description of every
+    // planned button.
+    const reason = page.locator("#langs-why-s");
+    await expect(reason).toBeVisible();
+    await expect(reason).toHaveText("Translations coming");
+    await expect(page.locator("#langs-why-t")).toBeHidden();
+
+    // Keyboard: focus a planned language and press it -- the explanation opens
+    // and focus lands on its toggle; nothing about the page's language changes.
+    await page.locator('.lang.planned[lang="fr"]').focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+    await expect(page.locator("#langs-why-t")).toContainText("Français");
+    await expect(page.locator("#langs-why-t")).toContainText("shown in English");
+    await expect(reason).toBeFocused();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    expect(new URL(page.url()).searchParams.get("lang")).toBeNull();
+
+    // ...and the toggle itself closes and reopens with the keyboard.
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#langs-why-t")).toBeHidden();
+    await page.keyboard.press("Space");
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+  });
+
+  test("the disabled switcher's targets clear 24px, and a tap opens the reason", async ({ page }) => {
+    // SC 2.5.8's floor is 24px; this instance's interaction profile is
+    // low-dexterity, so the switcher keeps the facets' 32px.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(PAGE);
+    await page.mouse.move(380, 830);
+    for (const t of await page.locator("#langs .lang, #langs-why-s").all()) {
+      const box = (await t.boundingBox())!;
+      expect(box.height).toBeGreaterThanOrEqual(24);
+      expect(box.width).toBeGreaterThanOrEqual(24);
+    }
+    // A tap on a planned language explains itself rather than doing nothing.
+    // `force`, because Playwright treats aria-disabled as "not enabled" and
+    // would wait forever -- which is exactly the state being tested. So the
+    // hit-test it would have done is done here: the button's centre is the
+    // button, not something drawn over it.
+    const es = page.locator('.lang.planned[lang="es"]');
+    const c = (await es.boundingBox())!;
+    expect(await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.getAttribute("lang"),
+      [c.x + c.width / 2, c.y + c.height / 2])).toBe("es");
+    await es.click({ force: true });
+    await expect(page.locator("#langs-why-t")).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 
   test("asking for a language nobody has translated yet gets English, not a blank page", async ({ page }) => {
@@ -366,7 +476,7 @@ test.describe("kg viewer", () => {
  * exists rather than a shipped translation.
  */
 test.describe("kg viewer — with a catalogue", () => {
-  execFileSync("bun", ["run", "cat-harness/scripts/tests/kg-viewer-fixture.ts"], { stdio: "inherit" });
+  // The fixture page is generated by `e2e-global-setup.ts`, once.
   const FIXTURE = "/_kg/folio-assistant-i18n-fixture/index.html";
 
   test("the switcher appears once there is something to switch to", async ({ page }) => {
@@ -377,6 +487,10 @@ test.describe("kg viewer — with a catalogue", () => {
     await expect(page.locator(".lang").first()).toHaveText("English");
     await expect(page.locator('.lang[lang="qaa"]')).toHaveText("Qaa (fixture)");
     await expect(page.locator('.lang[lang="en"]')).toHaveAttribute("aria-pressed", "true");
+    // A catalogue WITH strings is a choice, never a planned language -- the
+    // enable-on-content path of bean w6fu, with no code change between them.
+    await expect(page.locator('.lang[lang="qaa"]')).not.toHaveAttribute("aria-disabled", /.*/);
+    await expect(page.locator('.lang.planned[lang="qaa"]')).toHaveCount(0);
   });
 
   test("choosing a language translates the chrome and turns the page", async ({ page }) => {

@@ -4,8 +4,9 @@ id: tmpdir-fixtures-cannot-exercise-repo-root-resolution
 label: stable
 summary: "a mkdtemp fixture is outside every instance root, so it cannot test anything using findContentRepoRoot"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+references:
+  - kind: agent
+    id: content-pipeline-navigator
 archived: true
 ---
 > **Archived 2026-09-19, on arrival.** Written for

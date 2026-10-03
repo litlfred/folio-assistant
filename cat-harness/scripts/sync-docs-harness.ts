@@ -32,16 +32,16 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, resolve } from "node:path";
 
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
-import { instanceDeclarationFilename, instanceRootsIn, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { instanceDeclarationFilename, instanceRootsIn, readDeclaration, resolveInherited, siteDirFor } from "../schemas/cat-harness.js";
 import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
-import { graphTiles, withTileCounts } from "./graph-tiles.js";
+import { graphTiles, resolveGlassStrip, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
 import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
-import { withViewers } from "./viewer-declarations.js";
+import { siteDirectories, withViewers } from "./viewer-declarations.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -292,6 +292,7 @@ function navbarRow(
   }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
+  checkout?: string,
 ): {
   icons: string[];
   hrefs: Record<string, string>;
@@ -304,10 +305,17 @@ function navbarRow(
   // none" are different answers and the template must be able to tell them
   // apart; `[]` here would report every un-migrated instance as deliberate.
   if (!mine || mine.navbarIcons === undefined) return null;
-  const byKind = new Map((mine.visualisations ?? []).map((v) => [v.kind, v.path ?? undefined]));
-  const noteByKind = new Map(
-    (mine.visualisations ?? []).flatMap((v) => (v.note ? [[v.kind, v.note] as const] : [])),
-  );
+  // This harness's own graphs FIRST, then the CHECKOUT ROOT's for a kind it
+  // does not hold. An icon names a kind, and since cmsl step 2 (issue #1694)
+  // the shared state — `beans`, `todos` — is declared by the root instance,
+  // so cat-harness's own `navbarIcons: ["todos", "beans", …]` found no tile
+  // and rendered both inert, "reason not recorded" (caught by
+  // `navbar-row.e2e.ts`). Its own tile still wins for a kind it does hold.
+  const root = checkout !== undefined && checkout !== self ? harnesses.find((h) => h.name === checkout) : undefined;
+  const ownKinds = new Set((mine.visualisations ?? []).map((v) => v.kind));
+  const vis = [...(mine.visualisations ?? []), ...(root?.visualisations ?? []).filter((v) => !ownKinds.has(v.kind))];
+  const byKind = new Map(vis.map((v) => [v.kind, v.path ?? undefined]));
+  const noteByKind = new Map(vis.flatMap((v) => (v.note ? [[v.kind, v.note] as const] : [])));
   const hrefs: Record<string, string> = {};
   /**
    * WHY a declared icon has no destination, in the words a reader sees.
@@ -343,10 +351,10 @@ function navbarRow(
     if (at) hrefs[icon] = at;
     else {
       const why = icon === "kg" ? undefined : noteByKind.get(icon);
-      // `close` and `launcher` drive controls on the page and are MEANT to have
+      // `close`, `launcher` and `fsh-guts` drive controls on the page and are MEANT to have
       // no href, so they owe no explanation. An entry for them would make the
       // client render "no viewer yet" on a working button.
-      if (why && icon !== "close" && icon !== "launcher") notes[icon] = why;
+      if (why && icon !== "close" && icon !== "launcher" && icon !== "fsh-guts") notes[icon] = why;
     }
   }
   // THIS INSTANCE'S OWN CONTROLLED FOLDERS — owner: *"next on navbar then is
@@ -385,6 +393,34 @@ function navbarRow(
   return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
 
+/* The tiles, computed once: the payload carries them and the glass strip's
+ * pins are resolved against them. */
+const tileDirs = siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT);
+const tiles = withTileCounts(
+  graphTiles(withViewers(tileDirs, ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+  scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
+);
+const glassStrip = (() => {
+  const decls = instanceRootsIn(REPO_ROOT).flatMap((root) => {
+    const d = readDeclaration(root);
+    return d ? [d] : [];
+  });
+  if (decl && !decls.some((d) => d.name === decl.name)) decls.push(decl);
+  const pins = decl
+    ? resolveInherited(
+        decl.name,
+        new Map(decls.map((d) => [d.name, d.glassStrip])),
+        new Map(decls.map((d) => [d.name, d.needs])),
+      )
+    : undefined;
+  if (pins === undefined) return undefined;
+  const resolved = resolveGlassStrip(pins, tiles, new Map(tileDirs.map((d) => [d.id, d.graphKinds])));
+  for (const k of resolved.unmatched) {
+    console.warn(`glassStrip pins the kind "${k}", and no glass tile on this site holds it.`);
+  }
+  return resolved;
+})();
+
 const payload = {
   // The SOURCE is the declaration, not `_data/harness.json` -- which is
   // Jekyll's own file, keeps that name, and is what this writes.
@@ -416,7 +452,7 @@ const payload = {
   // de-duplicated, because a directory may hold several graphs and two
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
-  declaredKinds: [...new Set((decl.directories ?? []).flatMap((d) => d.graphKinds ?? []))].sort(),
+  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], ROOT, REPO_ROOT).flatMap((d) => d.graphKinds ?? []))].sort(),
   links,
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //
@@ -437,10 +473,17 @@ const payload = {
    * second list. One array for BOTH surfaces — Q11: a tile is declared once
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
-  tiles: withTileCounts(
-    graphTiles(withViewers(decl?.directories ?? [], ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
-    scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
-  ),
+  tiles,
+  /**
+   * THE GLASS STRIP'S PINS, resolved to tile ids — owner, 2026-10-01, bean
+   * `ob3m` finding 10: *"Pinned tiles first, plus '+N more'"*. Declared as
+   * `glassStrip` on the instance and inherited along `needs`, like
+   * `navbarIcons`; resolved HERE so the page reads ids and never re-derives
+   * which tile a kind means. Absent when nothing in the stack declared one —
+   * the page then pins only its own chrome, which is not the same as an
+   * instance that declared `[]`.
+   */
+  ...(glassStrip === undefined ? {} : { glassStrip }),
   harnesses: allHarnesses,
   /**
    * THE NAVBAR ICON ROW for THIS instance — which icons, and where each goes.
@@ -462,7 +505,7 @@ const payload = {
    * the page rather than going anywhere, and giving them one would make them
    * look like navigation.
    */
-  navbar: navbarRow(allHarnesses, decl?.name, links),
+  navbar: navbarRow(allHarnesses, decl?.name, links, readDeclaration(REPO_ROOT)?.name),
   /**
    * EVERY INSTANCE'S VERSION, and its release addresses where it declares an
    * `iriBase` — so a page writes `{{ site.data.harness.releases.bootstrap.version }}`

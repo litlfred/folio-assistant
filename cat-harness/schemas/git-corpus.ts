@@ -31,7 +31,7 @@
  * ## Why it lives in `schemas/` and not beside the scripts that use it
  *
  * It sat in `scripts/` until 2026-09-26. Then a **thirteenth** ignore-blind scan
- * turned up in `skills/graph-management/kg-detangle.ts`, outside the directory
+ * turned up in `skills/kg/graph-management/kg-detangle.ts`, outside the directory
  * `xd1g`'s survey searched — and the one whose output is COMMITTED, so its wrong
  * answer was pinned and then republished: `cat-harness/schemas`'s `size` read
  * **1441** where git accounts for **227**, the difference being
@@ -78,6 +78,26 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
 /**
+ * Room for a whole-checkout `ls-files -z`; node's 1 MiB default is not.
+ *
+ * Measured 2026-09-30, the day it started mattering:
+ *
+ * | | bytes of PATH NAMES |
+ * |---|---:|
+ * | `origin/main` at `874d4c9bfb8` | 1,005,252 |
+ * | the next branch to merge, +740 ingested library files | 1,058,420 |
+ * | node's default | 1,048,576 |
+ *
+ * So `main` was 43 KB from the cliff and one ordinary ingest went over it.
+ * The size of a repository's file list is not something a caller can reason
+ * about, which is why this is a constant rather than a judgement per call
+ * site. `trackedPaths` in `scripts/check-portable-paths.ts` had already been
+ * given the same 64 MiB in isolation — that is the evidence this is a class,
+ * and the reason the fix is a shared constant rather than a third literal.
+ */
+export const GIT_LIST_MAX_BUFFER = 64 * 1024 * 1024;
+
+/**
  * The files git accounts for under {@link dir}, as absolute paths — or
  * `undefined` when git cannot answer.
  *
@@ -89,13 +109,61 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
-    { cwd: dir, encoding: "utf-8" },
+    // On ENOBUFS `spawnSync` sets `error` rather than truncating, so the
+    // symptom is total: every caller reads "git could not answer", a false
+    // could-not-determine. The ones that then FALL BACK to a filesystem walk
+    // are the danger — a walk is a different corpus with different
+    // exclusions (#1609 measured that direction turning 21 archived beans
+    // into findings), so crossing this buffer rescopes a check rather than
+    // stopping it, and nothing reports that.
+    { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER },
   );
   if (r.error !== undefined || r.status !== 0) return undefined;
+  const subs = submodulesUnder(dir);
+  const own = r.stdout
+    .split("\0")
+    .filter((p) => p.length > 0 && !subs.includes(p))
+    .map((p) => join(dir, p));
+  // A submodule's files are listed by ITS repository, and `--recurse-submodules`
+  // refuses `--others`, so each is asked on its own and prefixed. Since
+  // 2026-09-30 `bootstrap/` and `bootstrap-tools/` are submodules (bean `xsqm`),
+  // and a corpus that lost them would have every scanner report a clean run
+  // over files it never saw.
+  for (const s of subs) {
+    const spec = submodulePathspec(s, pathspec);
+    if (spec === undefined) continue;
+    const inner = gitCorpus(join(dir, s), spec);
+    if (inner === undefined) return undefined;
+    own.push(...inner);
+  }
+  return own;
+}
+
+/** The submodules whose gitlinks sit under `dir`, relative to it (mode 160000). */
+function submodulesUnder(dir: string): string[] {
+  const r = spawnSync("git", ["ls-files", "-z", "--stage"], { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER });
+  if (r.error !== undefined || r.status !== 0) return [];
   return r.stdout
     .split("\0")
-    .filter((p) => p.length > 0)
-    .map((p) => join(dir, p));
+    .filter((l) => l.startsWith("160000 "))
+    .map((l) => l.split("\t")[1]!)
+    .filter((p) => existsSync(join(dir, p, ".git")));
+}
+
+/**
+ * The caller's pathspecs as seen from inside submodule `s`: a bare glob
+ * (`*.md`) applies unchanged, one under `s/` loses that prefix, and one
+ * elsewhere does not apply. `undefined` when none apply — skip the submodule.
+ */
+function submodulePathspec(s: string, pathspec: readonly string[]): string[] | undefined {
+  if (pathspec.length === 0) return [];
+  const out: string[] = [];
+  for (const p of pathspec) {
+    if (!p.includes("/")) out.push(p);
+    else if (p.startsWith(`${s}/`)) out.push(p.slice(s.length + 1) || ".");
+    else if (p === s) out.push(".");
+  }
+  return out.length ? out : undefined;
 }
 
 /**

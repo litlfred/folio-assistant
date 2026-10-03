@@ -13,7 +13,7 @@
  * scored 0 similarity and was published as semantic drift. `fail: 21` on the
  * French landing page counted absence. The real round trip is a pair of
  * agents — see `content/pipeline/translation-roundtrip.ts` and
- * `skills/folio-core/translation-manager.md`.
+ * `skills/library/library-core/translation-manager.md`.
  *
  * Usage:
  *   bun run cat-harness/scripts/translation/simulate-translation.ts [path-to-md]

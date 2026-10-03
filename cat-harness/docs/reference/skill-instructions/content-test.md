@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/content-lifecycle/content-test.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-test.md) — do not edit here. Typed contract: [schema reference](../skills/content-test.html).
+> Generated from [`cat-harness/skills/authoring/content-lifecycle/content-test.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/content-lifecycle/content-test.md) — do not edit here. Typed contract: [schema reference](../skills/content-test.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-test.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/content-lifecycle/content-test.md){: .fa-edit-source }
 
 {% raw %}
 # Content Testing
@@ -93,9 +93,9 @@ passed.
 
 | process | step(s) that name it |
 |---|---|
+| [QA report signing](../../processes/qa-report-signing.html) | Build the test run [folio-test-run/v1] |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Run the row's gates tests · e2e · site-links |
 | [Content lifecycle](../../processes/content-lifecycle.html) | Integration test and QA sweep |
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Run publication QA gates |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Build and QA gates |
-| [QA report signing](../../processes/qa-report-signing.html) | Build the test run [folio-test-run/v1] |
-| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Run the row's gates tests · e2e · site-links |
 

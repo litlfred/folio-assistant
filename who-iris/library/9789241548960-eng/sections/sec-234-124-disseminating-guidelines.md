@@ -9,9 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 Dissemination involves making guidelines accessible, advertising their 
-availability and distributing them widely. Guideline developers should con­
-sult with WHO Press on priced and mandatory free distribution. Priced dis­
-tribution is done by WHO Press through sales agents in all regions and by 
+availability and distributing them widely. Guideline developers should consult with WHO Press on priced and mandatory free distribution. Priced distribution is done by WHO Press through sales agents in all regions and by 
 the WHO bookshop. The extent of mandatory free distribution depends on 
 the type of publication but can include depository libraries, schools of public 
 health, schools of medicine, WHO country offices and missions in Geneva. 

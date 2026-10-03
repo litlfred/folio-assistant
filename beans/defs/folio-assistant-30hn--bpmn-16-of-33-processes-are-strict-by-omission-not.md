@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T15:56:22Z
-updated_at: 2026-09-29T20:50:33Z
-parent: folio-assistant-1xhc
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -95,7 +95,7 @@ line the same day and could actually decide.
 
 All six are **strict**, which is what they already were by omission — so
 nothing changes behaviourally, and that is the point: the file now records
-the decision. The rule from [`bpmn-processes`](../../cat-harness/skills/workflow/bpmn-processes.md)
+the decision. The rule from [`bpmn-processes`](../../cat-harness/skills/process/workflow/bpmn-processes.md)
 §"Strict by default" is the axis — base processes are strict, per-content-type
 processes are advisory because their package owns what *adequate* means. These
 six are platform-level CI processes, not content-type variants.
@@ -190,3 +190,4 @@ without recording the decision it was for.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+_2026-09-29_ — **Re-parented `1xhc` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Which BPMN processes are strict by decision is process governance.

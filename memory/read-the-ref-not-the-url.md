@@ -6,8 +6,9 @@ summary: "a 404 or a failed fetch is not evidence — read the publish ref"
 createdAt: 2026-09-19
 roles:
   - build-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 **First check for a deployment or 404 question is the publish ref, not a
 fetch.** `git fetch origin gh-pages && git ls-tree -r --name-only FETCH_HEAD |
@@ -23,7 +24,7 @@ does not reach the site, so a composed URL 404s on a page that is there.
 `pending, total_count 0` on a green PR. Check its `head_sha` against the PR's
 current head.
 
-Skill: `skills/folio-core/github-state-inspection.md`.
+Skill: `skills/sdlc/sdlc-core/github-state-inspection.md`.
 
 <!-- detail -->
 ## The measurements behind each claim

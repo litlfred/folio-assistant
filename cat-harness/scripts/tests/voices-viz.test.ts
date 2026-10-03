@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "../voices-graph.ts";
-import { viewerHtml } from "../gen-voices-viz.ts";
+import { projection, viewerHtml } from "../gen-voices-viz.ts";
 import { shippedVoices, overlaySeverityOf } from "../../content/pipeline/voice-criteria.ts";
 import { overlayCriterionId } from "../../content/pipeline/voice-criteria.ts";
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
@@ -80,7 +80,6 @@ describe("a declared directory that is not there is a ROW, not a silence", () =>
             id: "voices",
             path: "skills/voices/",
             graphKinds: ["voices"],
-            dependents: "skip",
             description: "declared and deliberately absent — the fixture for this test",
           },
         ],
@@ -253,7 +252,10 @@ describe("the provenance QA flag — a question for a person, not a gate", () =>
   });
 });
 
-describe("vendor overrides live in a reserved sub-sub-graph", () => {
+describe("vendor overrides live in DECLARED sub-graphs of voices", () => {
+  // Owner, 2026-09-30 (bean `rkqp`): "vendors/<id>/ should be declared
+  // subgraphs along with vendors/". Superseding the reserved name below: the
+  // loader descends only where `voices.json` / `vendors/vendors.json` say to.
   // Owner, 2026-09-22: "vendor overides go in sub-sub-grahiphs like
   // voice/vendors or voices-vendors". The nested spelling was taken, because
   // the flat one needs a SECOND declared graph for one concept.
@@ -279,7 +281,7 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
           description: "A voice with no rules does not parse, so the fixture carries one.",
           category: "structure",
           severity: "minor",
-          source: { kgRef: "skills/folio-core/technical-documentation.md", quote: "a fixture quote" },
+          source: { path: "skills/authoring/authoring-core/technical-documentation.md", quote: "a fixture quote" },
         },
       ],
     });
@@ -294,6 +296,10 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
       join(voices, "vendors", "base-voice-acme", "voice.json"),
       profile("base-voice-acme", "base-voice"),
     );
+    const decl = (ids: string[]) =>
+      JSON.stringify({ name: "t", directories: ids.map((id) => ({ id, path: id, graphKinds: ["voice-vendors"] })) });
+    writeFileSync(join(voices, "voices.json"), decl(["vendors"]));
+    writeFileSync(join(voices, "vendors", "vendors.json"), decl(["base-voice-acme"]));
     return root;
   }
 
@@ -336,18 +342,70 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
     }
   });
 
-  test("recursion is ONE reserved name deep, not arbitrary", async () => {
-    // "Any directory, any depth" is a rule nobody can check, and it would make
-    // an unrelated nested directory a silent part of the graph.
+  test("an UNDECLARED directory holding voices is refused, loudly", async () => {
+    // Not a silent part of the graph, and not silently skipped either: the
+    // skip is `dh4f`, a clean read over real content. The error names the fix.
     const { loadVoices } = await import("../../schemas/voices.ts");
     const root = fixture();
     const stray = join(root, "skills", "voices", "notes", "draft");
     mkdirSync(stray, { recursive: true });
     writeFileSync(join(stray, "voice.json"), profile("draft"));
     try {
-      expect(loadVoices(root).map((v) => v.id)).not.toContain("draft");
+      expect(() => loadVoices(root)).toThrow(/not declared.*voices\.json/);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+
+  test("a vendor missing from vendors.json is refused, not skipped", async () => {
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    const extra = join(root, "skills", "voices", "vendors", "base-voice-other");
+    mkdirSync(extra, { recursive: true });
+    writeFileSync(join(extra, "voice.json"), profile("base-voice-other"));
+    try {
+      expect(() => loadVoices(root)).toThrow(/vendors\.json/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the declaration files are never loaded AS voices", async () => {
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    try {
+      const ids = loadVoices(root).map((v) => v.id);
+      expect(ids).not.toContain("voices");
+      expect(ids).not.toContain("vendors");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+
+/**
+ * Bean `qgjh`: every citation that resolves carries its links — a library
+ * source through the library resolver, a KG node through the file resolver —
+ * and one that does not resolve carries none.
+ */
+describe("citations carry their links (qgjh)", () => {
+  const rule = (citation: string, cites: string) => ({ id: "r", citation, cites, citesInstance: "x" });
+  const g = {
+    totals: { voices: 1 },
+    voices: [{ rules: [rule("library", "lib-item#s1"), rule("kg-node", "skills/a.md"), rule("kg-node", "gone.md")] }],
+  };
+  const lib = { links: (id: string) => (id === "lib-item" ? { viewer: "v/#x%2Flib-item" } : undefined) };
+  const kg = (ref: string) => (ref === "skills/a.md" ? { source: "https://host/skills/a.md" } : undefined);
+  const out = projection(g as never, lib, kg) as { voices: { rules: { links?: unknown }[] }[] };
+  const [a, b, c] = out.voices[0]!.rules;
+
+  test("a library citation carries the library resolver's links", () => {
+    expect(a!.links).toEqual({ viewer: "v/#x%2Flib-item" });
+  });
+  test("a KG-node citation carries its file link", () => {
+    expect(b!.links).toEqual({ source: "https://host/skills/a.md" });
+  });
+  test("a citation nothing resolves carries no links", () => {
+    expect(c!.links).toBeUndefined();
   });
 });

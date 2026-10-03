@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-paper-adapter/lean-environment-setup.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup.md) — do not edit here.
+> Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md){: .fa-edit-source }
 
 {% raw %}
 # Lean Environment Setup
@@ -178,7 +178,7 @@ that loads the skill. It now sits beside this file. Nothing was deleted.
 | what | where |
 |---|---|
 | FAST ROUTE, architecture, prerequisites, setup, Docker, no-Lean fallback, troubleshooting | **here** |
-| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback.md) |
+| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback.md) |
 
 Go there only once the FAST ROUTE below has actually failed.
 
@@ -512,7 +512,11 @@ when run from a package subdirectory — reporting a good branch as empty.
 instead of rebuilding) — worktree-based, tarball created in-repo:
 ```bash
 WT=/tmp/lake-cache-wt
-SLUG=$(cut -d: -f2 lean-toolchain | tr -d '\r' | tr . -); BR="lake-cache/<package>-$SLUG"
+SLUG=$(cut -d: -f2 lean-toolchain | tr -d '\r' | tr . -)
+# The branch NAME is resolved, never spelled: new name if it exists, else a
+# legacy one that does, else the new name (cat-harness/scripts/special-branches.json).
+# Writing a hardcoded legacy name would bypass that and block the owner's rename.
+BR=$(cat-harness/scripts/lake-cache.sh resolve-branch --key "<package>-$SLUG") || exit 1
 # 1. Pack the built oleans (compressed). Create the tarball where the
 #    worktree can `git add` it — git cannot add a path outside its tree.
 #    ⚠ The paper package build lives in the NESTED Lake dir

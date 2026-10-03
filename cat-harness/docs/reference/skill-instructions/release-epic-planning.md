@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/workflow/release-epic-planning.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-epic-planning.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/workflow/release-epic-planning.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/release-epic-planning.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/release-epic-planning.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/release-epic-planning.md){: .fa-edit-source }
 
 {% raw %}
 # Release epic planning
@@ -145,7 +145,7 @@ The hierarchy and readiness tracking are identical.
 
 - [`release-lifecycle`](release-lifecycle.md) — semver, release types, changelog
 - [`code-review-process`](code-review-process.md) — review within release context
-- [`../../skills/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 4b ordering
-- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean creation protocol
-- [`../../skills/folio-core/bean-coordination.md`](bean-coordination.md) — cross-session coordination
+- [`../../skills/sdlc/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 4b ordering
+- [`../../skills/sdlc/sdlc-core/todo-manager.md`](todo-manager.md) — bean creation protocol
+- [`../../skills/sdlc/sdlc-core/bean-coordination.md`](bean-coordination.md) — cross-session coordination
 {% endraw %}

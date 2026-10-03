@@ -29,7 +29,7 @@ the others is incomplete rather than minimal:
 
 | clause | what it obliges | where it is declared |
 |---|---|---|
-| *adds schematics to the KG* | declare the directories it scans and each one's graph kind | `<name>.json` — [directory conventions](../../skills/folio-core/directory-conventions.md) |
+| *adds schematics to the KG* | declare the directories it scans and each one's graph kind | `<name>.json` — [directory conventions](../../skills/kg/kg-core/directory-conventions.md) |
 | *builds visualisations for it* | a declared subgraph a reader cannot see is a subgraph nobody checks | the renderer, per subgraph |
 | *describes the tools* | a Tool is a KG node, not a shell string somebody remembers | `tools/` |
 
@@ -135,8 +135,8 @@ subgraph, as
 [`bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-emission.md)
 and
 [`bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-publication.md)
-— performed by the `kg-graph-export` Tool and typed by
-`BootstrapGraphDocumentSchema` (bean `n350`).
+— performed since 2026-09-30 by bootstrap-tools' `export-graph.ts` and typed
+by its `GraphExportSchema` (beans `n350`, `xsqm`).
 Until that directory existed the emission discipline lived in a code comment in
 `kg-export.ts` and a YAML comment in `docs-site.yml` — which is why it was
 rediscovered rather than read, and why one of those comments still called the
@@ -154,7 +154,7 @@ bare minimum, `cat-harness/workflows` elaborates — so it is a second instance
 of one rule rather than a new one.
 
 *Tracked: `hfkl` (bootstrap's exemption and its `render/` subgraph — **done**), `ohx6`
-(`cat-harness/folio/`), `1hvo` (`cat-harness/skills/theming/`), `7po1` (the workflow
+(`cat-harness/folio/`), `1hvo` (`cat-harness/skills/ui/theming/`), `7po1` (the workflow
 split this parallels).*
 
 ## Open, and named rather than guessed
@@ -209,5 +209,5 @@ decorating.
   and todos skills)
 - [Minimum `cat-harness`](cat-harness-minimum.html) — the layering this page
   is in tension with
-- [Directory conventions](../../skills/folio-core/directory-conventions.md) —
+- [Directory conventions](../../skills/kg/kg-core/directory-conventions.md) —
   the declaration schema and every graph kind

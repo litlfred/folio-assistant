@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/workflow-state.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/workflow-state.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/workflow-state.md){: .fa-edit-source }
 
 {% raw %}
 # State in a running process
@@ -22,7 +22,7 @@ plan comes to disagree with itself.**
 
 | question | store | graph kind | layer |
 |---|---|---|---|
-| what does this process DO? | `processes/*.bpmn` | `cat-harness` | **content** |
+| what does this process DO? | `processes/**/*.bpmn` | `cat-harness` | **content** |
 | where did this instance GET TO? | the workflow-state node of the bean graph | `workflow-state` | **state** |
 | what is being worked on? | the bean-defs node of the bean graph | `bean-defs` | **state** |
 | what does a PERSON still owe? | `todos/` | `todo-items` | **state** |

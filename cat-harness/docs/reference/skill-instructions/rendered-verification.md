@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/rendered-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/rendered-verification.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/rendered-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/rendered-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/rendered-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/rendered-verification.md){: .fa-edit-source }
 
 {% raw %}
 # /rendered-verification — look at it, then send the picture
@@ -89,6 +89,12 @@ word for what it looked like. `git worktree add <dir> origin/main --detach`
 is the cheap way; symlink `node_modules` and the docs `vendor`/`.bundle`
 into it rather than re-installing.
 
+When the pair goes to a **reviewer** rather than confirming the change to
+yourself, [`before-after-preview`](before-after-preview.md) governs it:
+one build with one variable where possible, stable capture, a *k of n* count
+with its method, the status line, and where the preview sits in the review
+processes. It also covers papers, FHIR IGs and slide decks.
+
 ## Running it here
 
 Building the site is [`preview:site`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/preview-site.sh), whose
@@ -111,7 +117,8 @@ Two environment facts that each cost a round:
    `playwright install` is not available. Launch with
    `executablePath: "/opt/pw-browsers/chromium"`.
 
-**Drive the control a reader would drive.** `page.click(".fa-nav-toggle")`,
+**Drive the control a reader would drive.** `page.click(".side-bar .site-title")`
+(the avatar, which opens and closes the sidebar from 50rem up),
 not `element.classList.add(…)`. A state you set by hand is a state you have
 not tested the way in to.
 
@@ -183,6 +190,25 @@ So every rendered check reports, beside its verdict:
 
 A check that cannot tell a styled page from a bare one is not a check. This
 is `dh4f` in a browser: could-not-determine rendered as a pass.
+
+### A COUNT over the built site needs its instrument validated first
+
+The same failure, scaled from one page to thousands. Before trusting any
+"N of M pages have X", run the instrument on **a known positive AND a known
+negative**, and on one positive of **each** way X can appear.
+
+Measured on bean `oi1y` (2026-09-24): counting navigated pages took five
+instruments, and four gave a confident wrong number. An exact class match
+missed the theme's sidebar. A substring match counted `fa-nav` quoted in
+**prose**. An element match was checked against one positive and no negative.
+A link count took a stylesheet `href` as a way out. The one that held was
+`<nav class="fa-nav"` OR `id="site-nav"`. It was checked on three positives
+(injected rail, mounted page, theme sidebar) and one negative.
+
+For a site-wide count, the `gh-pages` route above scales. Use a
+`--filter=blob:none --sparse` clone of `gh-pages`, with sparse patterns for
+the files counted, and exclude `STAGING/`. All HTML is about 1.7 GB and takes
+minutes; one directory takes seconds.
 
 ## Visible is not usable — hit-test the control's CENTRE
 

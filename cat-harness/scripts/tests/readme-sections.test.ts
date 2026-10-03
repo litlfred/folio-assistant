@@ -14,7 +14,11 @@ import { join, resolve } from "path";
 import { tmpdir } from "os";
 
 import {
+  README_TOC_MARKER,
   SECTIONS,
+  extractHeadings,
+  githubSlug,
+  isSubmoduleRoot,
   leanLibName,
   runReadmeSync,
   syncSections,
@@ -333,5 +337,126 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
     expect(r.skip).toBe(true);
     expect(r.markdown).toBe("");
     rmSync(empty, { recursive: true, force: true });
+  });
+});
+
+describe("readme:toc — the README's own h2/h3 outline", () => {
+  test("GitHub's slug rule: lowercase, punctuation dropped, each space a hyphen", () => {
+    expect(githubSlug("Getting Started")).toBe("getting-started");
+    expect(githubSlug("What's new?")).toBe("whats-new");
+    // Spaces are not collapsed: GitHub renders `A & B` as `#a--b`.
+    expect(githubSlug("A & B")).toBe("a--b");
+    expect(githubSlug("snake_case and kebab-case")).toBe("snake_case-and-kebab-case");
+    expect(githubSlug("Überblick 2")).toBe("überblick-2");
+  });
+
+  test("inline markup is stripped before slugging, as GitHub renders it", () => {
+    const h = extractHeadings(
+      "## `bun run gates` — the one to run\n## [Docs](docs/) and **bold** _it_\n",
+    );
+    expect(h.map((x) => x.text)).toEqual(["bun run gates — the one to run", "Docs and bold it"]);
+    expect(h.map((x) => x.anchor)).toEqual(["bun-run-gates--the-one-to-run", "docs-and-bold-it"]);
+  });
+
+  test("duplicates get -1, -2 across ALL levels, and a literal `x-1` is bumped past", () => {
+    const h = extractHeadings("# Setup\n## Setup\n### Setup\n## Setup-1\n");
+    expect(h.map((x) => x.anchor)).toEqual(["setup", "setup-1", "setup-2", "setup-1-1"]);
+  });
+
+  test("headings inside code fences and HTML comments are not headings", () => {
+    const md = [
+      "## Real",
+      "````md",
+      "## not a heading",
+      "```",
+      "## a shorter fence does not close a longer one",
+      "````",
+      "~~~",
+      "# nor this",
+      "~~~",
+      "<!--",
+      "## commented out",
+      "-->",
+      "    ## indented code",
+      "## Also real",
+    ].join("\n");
+    expect(extractHeadings(md).map((x) => x.text)).toEqual(["Real", "Also real"]);
+  });
+
+  test("a setext heading counts; a `---` after a list or a blank line does not", () => {
+    const md = "Intro\n-----\n\n- item\n---\n\n---\n";
+    const h = extractHeadings(md);
+    expect(h).toHaveLength(1);
+    expect(h[0]).toMatchObject({ level: 2, text: "Intro", anchor: "intro", line: 1 });
+  });
+
+  test("h2/h3 only, nested, h1 left out; the TOC's own region is not an input", async () => {
+    const root = folio();
+    const readme = [
+      "# Title",
+      "",
+      markers(README_TOC_MARKER),
+      "",
+      "## One",
+      "### One a",
+      "#### deep",
+      "## Two [x]",
+      "",
+    ].join("\n");
+    const first = syncSections(readme, ctx(root));
+    expect(first.written).toEqual([README_TOC_MARKER]);
+    expect(first.content).toContain(
+      "- [One](#one)\n  - [One a](#one-a)\n- [Two \\[x\\]](#two-x)\n",
+    );
+    expect(first.content).not.toContain("(#title)");
+    expect(first.content).not.toContain("(#deep)");
+
+    // Idempotent: its own output is excluded, so a second run changes nothing.
+    const second = syncSections(first.content, ctx(root));
+    expect(second.changed).toBe(false);
+  });
+
+  test("headings a section registered earlier generates are in the outline on the same run", async () => {
+    const root = folio();
+    const readme = `# F\n\n${markers(README_TOC_MARKER)}\n\n## Contents\n\n${markers("folio:toc")}\n`;
+    const out = syncSections(readme, ctx(root));
+    // `folio:toc` emits `### Solo` for the fixture's one paper.
+    expect(out.content).toContain("- [Contents](#contents)\n  - [Solo](#solo)");
+    expect(syncSections(out.content, ctx(root)).changed).toBe(false);
+  });
+
+  test("no h2/h3 is a determined empty; no README text is undetermined", () => {
+    const section = SECTIONS.find((s) => s.marker === README_TOC_MARKER)!;
+    const root = folio();
+    expect(section.render({ ...ctx(root), readme: "# Only a title\n" }).markdown).toContain("no sections");
+    expect(section.render(ctx(root)).skip).toBe(true);
+  });
+
+  test("it is registered last, so it sees every other section's output", () => {
+    expect(SECTIONS[SECTIONS.length - 1].marker).toBe(README_TOC_MARKER);
+  });
+});
+
+describe("isSubmoduleRoot — `--all` skips a README another repository owns (bean kye5)", () => {
+  const made: string[] = [];
+  afterEach(() => { for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true }); });
+  const tmp = () => { const d = mkdtempSync(join(tmpdir(), "submodule-")); made.push(d); return d; };
+
+  it("a `.git` FILE (a gitdir pointer) is a submodule", () => {
+    const d = tmp();
+    writeFileSync(join(d, ".git"), "gitdir: ../.git/modules/x\n");
+    expect(isSubmoduleRoot(d)).toBe(true);
+  });
+
+  it("a `.git` DIRECTORY is a checkout of its own, and no `.git` is a plain directory", () => {
+    const own = tmp();
+    mkdirSync(join(own, ".git"));
+    expect(isSubmoduleRoot(own)).toBe(false);
+    expect(isSubmoduleRoot(tmp())).toBe(false);
+  });
+
+  it("this checkout's bootstrap-tools is one (the case the skip exists for)", () => {
+    const bt = resolve(import.meta.dir, "../../../bootstrap-tools");
+    expect(isSubmoduleRoot(bt)).toBe(true);
   });
 });

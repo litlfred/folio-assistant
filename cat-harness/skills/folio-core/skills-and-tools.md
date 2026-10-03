@@ -22,7 +22,7 @@ makes a layer un-portable.
 Decided 2026-09-18 by the repository owner. Schema for the Tool node:
 `docs/architecture/cat-harness-minimum.md` §"Strawperson"; carrier
 convention (Zod authoritative, JSON-LD and JSON Schema generated) in
-[`directory-conventions`](directory-conventions.md) §"What lives in the
+[`directory-conventions`](../kg/kg-core/directory-conventions.md) §"What lives in the
 `schemas` graph".
 
 ## The test, in one line
@@ -46,6 +46,13 @@ of the capability; performing the fallback is a mechanism.** The skill must say
 a fallback exists and when to reach for it, because an agent that does not know
 one exists will stop. What it must not do is spell out the edit.
 
+**When the mechanism is itself a procedure**, it is the Tool's subprocess
+(owner, 2026-09-30: *"tools can describe their own specific subprocesses if
+needed to not bog down general skills"*). The Tool node names the BPMN in
+`subprocesses` (process ids, checked by `check:tools`), conventionally under
+`processes/tools/`; the skill keeps the portable sentence. See
+[`bpmn-processes`](../process/workflow/bpmn-processes.md).
+
 ## Every bean skill has (at least) two Tools
 
 The work-plan skills are the worked example, because the harness has carried
@@ -67,17 +74,30 @@ equal standing, and the skill must present it that way.
 somebody asks whether another project could do a skill's job — Beads for the
 work plan, say — that survey is research, not a proposal and not a skill edit:
 it files under `<instance>/docs/research-and-analysis/` per
-[`placement`](placement.md), dated, with each project's health measured rather
+[`placement`](../kg/kg-core/placement.md), dated, with each project's health measured rather
 than recalled. The first one is `research-and-analysis/prior-art.md`
 (2026-09-23), and the choice it raised is a bean (`b91x`), not a paragraph
-here. Only if a candidate is adopted does it become a Tool node with
-`alternativeTo` and `selection`, below.
+here. Only if a candidate is adopted does it become a Tool node, with the
+`selection` its derived alternatives call for, below.
 
-## Substitutable Tools declare it, and each says how to choose
+## Substitutable Tools are derived, and each says how to choose
 
 A pair like that is **substitutable**: same job, different mechanism, pick one.
-That is declared with `alternativeTo`, and each end then carries `selection` —
-three fields, all required together:
+Nobody declares it. Two Tools are alternatives when they **satisfy a common
+skill AND have the same I/O signature** — the same input names, types and
+required flags, the same outputs, the same `renders` and `maintains`
+(`deriveAlternatives` in `schemas/tool.ts`; #1168, B9a). A shared skill alone
+is not enough: most skills with several Tools have complementary ones, steps
+rather than choices, and their I/O is what tells them apart.
+
+So the discipline moves to the ports. **Type and name a port for what it
+really takes and gives.** A CSV reader and a workbook reader typed `Text`
+would derive as alternatives; `DelimitedTextPath` and `WorkbookPath` keep them
+apart. Two generators whose output is a bare `pages` would too; naming each
+output for what it writes does not.
+
+Each Tool with a derived alternative then carries `selection` —
+three fields, all required together (`check-tools` fails one without it):
 
 | field | answers |
 |---|---|
@@ -191,6 +211,19 @@ stay in `agentic-harness`, stated generically, and a `github` Tool node carries
 the invocations. Adding GitLab later is then a second Tool node satisfying the
 same skills — not a repository, not a fork, and not a rewrite of the prose.
 
+### A Tool may describe its own subprocess
+
+Owner, 2026-09-30: *"in general tools can describe their own specific
+subprocesses if needed to not bog down general skills"*. When one mechanism
+takes several steps, they belong to **the Tool**, not to the general skill: the
+Tool lists `subprocesses` (process ids, each the stem of a `.bpmn` the checkout declares),
+and a general diagram's call activity is bound by it. **General skills name the
+Tool, never its steps.** First case: `render-kg-to-cdn` is the general step
+(render a Knowledge Graph for a CDN at a publication root URL; output a status
+and a message), and `gh-pages` is one Tool for it whose subprocess is
+bootstrap-tools' `render-kg-to-github-pages.bpmn` — declared below the harness,
+so the reference points down.
+
 ### Vocabulary — name the concept, not the vendor's word for it
 
 GitHub calls it a pull request; GitLab calls it a merge request; Gerrit calls it
@@ -213,7 +246,7 @@ not fine for the only statement of what to do to be `gh pr create`.
    being replaced.
 2b. **If an input reaches a command line, give it a type that cannot be a
    payload** — and put free prose on stdin. See
-   [`untrusted-input`](untrusted-input.md); `check:tools` fails CI on a
+   [`untrusted-input`](../conduct/conduct-core/untrusted-input.md); `check:tools` fails CI on a
    violation.
 3. **Say a mechanism exists and where to find it** — never inline it. A Tool is
    reached the same way a skill is: resolve the `kg` graph from the instance's

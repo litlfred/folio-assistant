@@ -3,9 +3,10 @@
 title: 'Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T18:46:11Z
-updated_at: 2026-09-18T18:46:11Z
-parent: folio-assistant-vke6
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-5a3l
 ---
 
 
@@ -24,8 +25,8 @@ Measured on `main` before deciding. The four skills total 1,404 lines.
 `coordinate.md` alone is 731 lines with 94 matches for GitHub-ish terms, of
 which only **12** are concrete invocations:
 
-    grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/folio-core/coordinate.md   # 94
-    grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/folio-core/coordinate.md   # 12
+    grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/sdlc/sdlc-core/coordinate.md   # 94
+    grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/sdlc/sdlc-core/coordinate.md   # 12
 
 The other 82 are conceptual — "pull request", "PR", "GitHub" as a noun. So the
 split would have moved 1,404 lines of already-portable prose to isolate a few
@@ -69,3 +70,6 @@ be installed). Both are already decided and recorded; neither is exercised.
 
 **Not urgent.** Nothing is broken. This is a portability claim the repo now
 makes in its architecture documentation and has not yet tested.
+
+
+_2026-09-29_ — **Re-parented `vke6` → `5a3l`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Forge portability (GitLab, sovereign compute) is a deployment topology; the bean itself rejects the sixth-repo reading that put it under SPLIT.

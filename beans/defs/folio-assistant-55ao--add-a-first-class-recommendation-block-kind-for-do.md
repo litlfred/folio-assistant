@@ -31,7 +31,7 @@ fix.
 
 ## Interim state (works, so this is not urgent)
 
-A labelled, titled `prose` block. `skills/folio-document-adapter/normative-statements.md`
+A labelled, titled `prose` block. `skills/authoring/folio-document-adapter/normative-statements.md`
 states the convention: one statement per block, strength stated in the prose
 (nothing structural encodes it), published number kept out of the label because
 numbers are renumbered between editions and the label must survive that.

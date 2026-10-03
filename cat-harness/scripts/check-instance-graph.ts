@@ -30,16 +30,36 @@
 
  * @covers cat-harness
  */
-import { relative } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
-import { resolveInstanceGraph, type InstanceGraphProblem } from "../schemas/harness-config.js";
+import {
+  orderedDependencies,
+  repositoryMirrors,
+  resolveInstanceGraph,
+  type InstanceGraphProblem,
+} from "../schemas/harness-config.js";
 
 /** The declaration-level findings this gate adds to the graph's own (#1548). */
 export type DeclarationProblem =
   | { kind: "undeclared-needs"; detail: string }
   | { kind: "no-iri"; detail: string }
-  | { kind: "duplicate-iri"; detail: string };
+  | { kind: "duplicate-iri"; detail: string }
+  /**
+   * The checkout's root instance does not reach an instance the checkout
+   * stages (placement PR0a, cmsl option A: "the checkout aggregates"). A
+   * corpus-wide tool resolves over the root's overlay, so an unreached
+   * instance is invisible to every one of them — the `dh4f` shape at the
+   * scale of a whole layer.
+   */
+  | { kind: "unstaged"; detail: string }
+  /**
+   * A NON-root instance declaring a `scope: "repository"` entry — a mirror of
+   * another instance's directory or of checkout-level state. Retired by the
+   * same ruling: only the instance whose root IS the checkout declares at the
+   * checkout's scope, so the platform never names a dependent again.
+   */
+  | { kind: "repository-mirror"; detail: string };
 
 export interface InstanceGraphReport {
   instances: number;
@@ -91,6 +111,38 @@ export function collect(repoRoot: string, iriOf?: IriOf): InstanceGraphReport {
     if (other) {
       problems.push({ instance: name, problem: { kind: "duplicate-iri", detail: `${name} and ${other} share the IRI ${iri}` } });
     } else byIri.set(iri, name);
+  }
+  // THE CHECKOUT AGGREGATES. Only where the repository root is itself an
+  // instance: a checkout of a lone instance has no aggregator to hold to it.
+  const checkout = resolve(repoRoot);
+  if (roots.some((r) => resolve(r) === checkout)) {
+    let reached = new Set<string>();
+    try {
+      reached = new Set(orderedDependencies(checkout).map((d) => resolve(d.rootPath)));
+    } catch {
+      // a cycle is reported below by `resolveInstanceGraph`
+    }
+    for (const root of roots) {
+      const abs = resolve(root);
+      if (abs === checkout || reached.has(abs)) continue;
+      const name = relative(repoRoot, root);
+      problems.push({
+        instance: ".",
+        problem: {
+          kind: "unstaged",
+          detail: `the checkout's root instance does not reach ${name}: add it to the root declaration's \`needs\`, or every corpus-wide tool resolves without it`,
+        },
+      });
+    }
+  }
+  for (const mirror of repositoryMirrors(repoRoot)) {
+    problems.push({
+      instance: mirror.split("#")[0]!,
+      problem: {
+        kind: "repository-mirror",
+        detail: `${mirror} is declared with \`scope: "repository"\` by an instance that is not the checkout's root. Its owner declares it (from within, if it is nested); checkout-level state is declared by the root instance; corpus-wide tools read \`corpusDirectoriesForGraph\`.`,
+      },
+    });
   }
   for (const root of roots) {
     for (const problem of resolveInstanceGraph(root).problems) {

@@ -24,6 +24,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import {
+  EXTERNAL_SCHEMA_TAG,
   ExternalSchemaSchema,
   undeclaredNamespaces,
   unusedNamespaces,
@@ -33,7 +34,8 @@ import {
 import { isOwnExtensionNamespace, OWN_BPMN_EXTENSION_NAMESPACES, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 // Read from the DECLARATION rather than hardcoded, and the reason this
@@ -55,10 +57,26 @@ const REGISTRY: string = (() => {
 /** Every declared record, parsed — a malformed one fails here, not at use. */
 export function loadSpecs(dir = REGISTRY): ExternalSchema[] {
   if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".json"))
-    .sort()
-    .map((f) => ExternalSchemaSchema.parse(JSON.parse(readFileSync(join(dir, f), "utf-8"))));
+  const out: ExternalSchema[] = [];
+  for (const f of readdirSync(dir).filter((n) => n.endsWith(".json")).sort()) {
+    const raw = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { $schema?: unknown };
+    // THE FILE DECLARES WHAT IT IS, and the directory is only a place to
+    // look — `directory-conventions`: "Extension is a coincidence; a
+    // declaration inside the file is the contract." This globbed `*.json`
+    // and parsed every one as an external-schema record until 2026-09-30,
+    // so the directory could never hold anything else: pinning
+    // `who-smart-base` and snapshotting its terminology beside the record
+    // broke the gate on a file that never claimed to be one (bean `7wou`).
+    //
+    // A DIFFERENT declared kind is skipped. Everything else is still parsed
+    // STRICTLY — a record with no `$schema`, or one that says it is an
+    // external schema and is malformed, must still fail here rather than be
+    // filed as "not my kind", which would turn a broken record into a silent
+    // absence.
+    if (typeof raw.$schema === "string" && raw.$schema !== EXTERNAL_SCHEMA_TAG) continue;
+    out.push(ExternalSchemaSchema.parse(raw));
+  }
+  return out;
 }
 
 /** XML namespaces the corpus declares, read from the files that declare them. */
@@ -90,7 +108,7 @@ export function namespacesInUse(root = ROOT): string[] {
  * misstates it.
  */
 export function targetNamespacesInUse(
-  files: readonly string[] = workflowFiles(ROOT),
+  files: readonly string[] = workflowFiles(ROOT, corpusScopeFor(ROOT)),
   base = resolve(ROOT, ".."),
 ): Map<string, string[]> {
   // The DECLARED workflow graph, not a literal `processes/`: that reaches a
@@ -140,7 +158,7 @@ export function jsonLdNamespacesInUse(root = ROOT): Map<string, string[]> {
       else visit(p);
     }
   };
-  const codeDirs = [...directoriesForGraph(root, "code"), ...directoriesForGraph(root, "schemas")];
+  const codeDirs = [...directoriesForGraph(root, "code"), ...corpusDirectoriesForGraph(root, "schemas")];
   for (const d of new Set(codeDirs)) {
     walk(d, (f) => {
       if (!f.endsWith(".ts") || f.endsWith(".test.ts")) return;
@@ -186,7 +204,9 @@ export function bpmnTermsInUse(root = ROOT): string[] {
   const dir = join(root, "processes");
   if (!existsSync(dir)) return [];
   const out = new Set<string>();
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn"))) {
+  // Recursive since placement PR3 (bean `63wl`): the diagrams sit in
+  // `processes/<group>/`, so a top-level read saw none of them.
+  for (const f of (readdirSync(dir, { recursive: true }) as string[]).filter((f) => f.endsWith(".bpmn"))) {
     for (const m of readFileSync(join(dir, f), "utf-8").matchAll(/<(bpmn:[a-zA-Z]+)/g)) {
       out.add(m[1]!);
     }

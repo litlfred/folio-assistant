@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/code-node-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/code-node-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/code-node-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/code-node-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/code-node-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/code-node-review.md){: .fa-edit-source }
 
 {% raw %}
 # Code node review
@@ -117,6 +117,6 @@ expectations on.
 
 | process | step(s) that name it |
 |---|---|
-| [Code change and review](../../processes/code-change-review.html) | Review the change |
 | [Code node review](../../processes/review-code.html) | Run the node audits; Review the schema definition node; Record the verdict on the node |
+| [Code change and review](../../processes/code-change-review.html) | Review the change |
 

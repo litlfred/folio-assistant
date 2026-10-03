@@ -1,10 +1,11 @@
 ---
 # folio-assistant-4wzf
 title: 'RENAME: agent-harness -> cat-harness (computable agentic testing harness)'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T19:24:30Z
-updated_at: 2026-09-18T19:24:30Z
+updated_at: 2026-09-30T10:23:23Z
 parent: folio-assistant-vke6
 ---
 
@@ -34,7 +35,7 @@ new vocabulary term**, and `stripJsonLd`/`forType` round-trip against it. Any
 already-published JSON-LD carrying `fa:AgentHarness` stops resolving. That
 needs a decision: alias the old term, or accept the break and say so.
 
-**In prose** — `AGENTS.md`, `skills/folio-core/directory-conventions.md` and
+**In prose** — `AGENTS.md`, `skills/kg/kg-core/directory-conventions.md` and
 its generated mirror, `docs/`, and the many bean bodies that reference the
 file by name. Bean bodies are history; rewriting them would falsify the
 record of what was decided when.
@@ -63,3 +64,12 @@ declaration under whatever `@type` decision is taken.
 Nothing measured yet. No count of affected files has been taken; the list
 above is from memory of this session's work and should be re-derived with a
 `grep -ri agent.harness` before anyone estimates it.
+
+## Summary of Changes — closed on evidence 2026-09-30
+
+The rename was done by other sessions' work, not by this bean. It is re-derived here against `origin/main`, not assumed:
+
+- **On disk and in code:** `schemas/agent-harness.ts` became `cat-harness/schemas/cat-harness.ts` (`CatHarness` declaration), and `agent-harness.json` became `cat-harness/cat-harness.json`. The rename landed with the split, 2026-09-21/22 (`19bba334da3`, `ebdd1b6393b`). Measured: **0** non-markdown files mention `agent-harness`, `AgentHarness` or `AgentHarnessDeclaration`, outside historical prose, generated pages and QA results.
+- **Decision 1 (the JSON-LD `@type`):** **no alias exists.** `fa:AgentHarness` occurs in 0 non-markdown files, so the break was taken rather than aliased. Recorded as what happened; this bean does not assert it was ruled on.
+- **Decision 2 (the planned split repo):** the partition names were reconciled by `yx9p` (2026-09-26). `REPOS` names the target `cat-harness`, the same as its staging directory, and a test holds them equal.
+- **Decision 3 (history):** bean bodies and merged PR text still say `agent-harness` where they did, as this bean said they should.

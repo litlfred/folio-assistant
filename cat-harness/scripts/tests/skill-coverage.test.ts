@@ -25,7 +25,8 @@
  * - **In `known-skills.ts` it was a latent false-dangling.** Nothing broke,
  *   because all twelve happened to resolve through a SECOND home: eleven have a
  *   `schemas/skills/<name>/` I/O contract, and `smart-base-tools` has
- *   `.claude/skills/local/smart-base-tools.json`. Delete any one of those and
+ *   `.claude/skills/local/smart-base-tools.json` (since bean `rqao`,
+ *   `smart-base/skills/skill-definitions/`). Delete any one of those and
  *   `check-workflow-refs` calls a real, present skill dangling — the failure
  *   its own header says it exists to prevent.
  *
@@ -40,6 +41,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { isSkillMd, knownSkills, skillMdDirs } from "../known-skills.js";
+import { packageDirsIn } from "../skill-topics.js";
 import { buildExport } from "../kg-export.js";
 import { isPublishedSkill, siteDirFor } from "../../schemas/cat-harness.ts";
 import { ownElementPattern } from "../../schemas/namespaces.ts";
@@ -83,15 +85,12 @@ const PUBLISHED = join(ROOT, siteDirFor(ROOT), "reference/skill-instructions");
 function packagesOnDisk(): string[] {
   const root = join(ROOT, "skills");
   if (!existsSync(root)) return [];
-  return readdirSync(root, { withFileTypes: true })
-    .filter(
-      (d) =>
-        d.isDirectory() &&
-        readdirSync(join(root, d.name)).some(
-          (f) => f.endsWith(".md") && isSkillMd(join(root, d.name, f)),
-        ),
-    )
-    .map((d) => d.name)
+  // Through the topic-aware walk, so a package inside a declared topic
+  // (`skills/kg/graph-management/`, bean `9umr`) is on disk too. Keyed by the
+  // path under `skills/`, which is what `skillMdDirs` yields after its root.
+  return packageDirsIn(root)
+    .filter((d) => readdirSync(d.dir).some((f) => f.endsWith(".md") && isSkillMd(join(d.dir, f))))
+    .map((d) => d.rel)
     .sort();
 }
 
@@ -102,7 +101,7 @@ describe("skill coverage", () => {
     // and the reason two packages went missing for as long as they did.
     const discovered = skillMdDirs(ROOT)
       .filter((p) => p[0] === "skills")
-      .map((p) => p[1]!)
+      .map((p) => p.slice(1).join("/"))
       .sort();
     expect(discovered).toEqual(packagesOnDisk());
     // Guard against a scan that finds nothing and reports agreement: an empty

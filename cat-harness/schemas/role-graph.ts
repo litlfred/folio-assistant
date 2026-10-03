@@ -99,11 +99,12 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
-import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
+import { NETWORK_REACHES, directoryForGraph, type NetworkReach } from "./cat-harness";
 import { SkillNameSchema } from "./tool-types";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
@@ -280,6 +281,24 @@ export interface RoleDef {
    * that contradicts its lane is worse than none — it looks authoritative.
    */
   persona?: string;
+  /**
+   * Other names this role goes by today — synonyms, local titles, examples.
+   * The same field, and the same meaning, as `otherNames` on WHO SMART Base's
+   * Generic Persona ("Other names or examples for the persona"); published as
+   * `skos:altLabel`. Owner, 2026-09-30: *"model both retired names and
+   * alternative names"*.
+   */
+  otherNames?: string[];
+  /**
+   * Names this role was known by and no longer is, each with the date it was
+   * retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23.
+   * Published as `skos:hiddenLabel` on this role, and the old name's concept
+   * is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader
+   * holding the old name is sent to the new one. Authored here, beside the
+   * definition, rather than only remembered by the harness's glossary ledger:
+   * a retired name is part of what the role IS to a reader of old text.
+   */
+  formerNames?: FormerName[];
   // No `voice` and no `useCases` (#1168, B2). Both are DEPENDENTS of the
   // role: a voice is addressed TO a reader, and a story is told AS one. Each
   // now points here — a voice profile by `activeIn.roles`, a user story by
@@ -334,7 +353,42 @@ export interface RoleGraph {
   roles: RoleDef[];
   /** Actors, when declared alongside. Usually read from the actor directory. */
   actors?: ActorDef[];
+  /**
+   * Roles of a LOWER instance this graph adds skills to, BY ID (placement
+   * PR0b, bean `ejye`). See {@link RoleExtension}.
+   */
+  extensions?: RoleExtension[];
 }
+
+/**
+ * A higher instance adding skills to a role a lower instance declares.
+ *
+ * The extension POINTS AT the role, the way a voice points at the role it
+ * addresses (`activeIn.roles`) and a user story at the role it is told as
+ * (#1168): the dependent holds the pointer, so the role is added to without
+ * being edited, and the lower instance never names anything above it. That
+ * is what lets a role→skill edge naming a core or sci skill move UP with its
+ * skill (placement PR1–PR4) instead of staying in the harness as an upward
+ * reference.
+ *
+ * It ADDS and overrides nothing: no title, description, `inherits`,
+ * `actorKinds` or persona. The same id-matching rule as a directory override
+ * and as `inherits`. It does NOT restore `roles:` in skill front matter
+ * (beans `tuvg`, `v625`) — the edge lives on the role graph, as before.
+ */
+export interface RoleExtension {
+  /** The id of a role declared by an instance this one depends on. */
+  role: string;
+  /** Skills the role gains in this instance's checkout. */
+  skills: string[];
+}
+
+export const RoleExtensionSchema = z
+  .object({
+    role: z.string().min(1),
+    skills: z.array(SkillNameSchema).min(1),
+  })
+  .strict();
 
 /**
  * @general — a node others depend on: it points only at other general nodes,
@@ -352,6 +406,20 @@ export const ActorDefSchema = z.object({
  * @general — a node others depend on: it points only at other general nodes,
  * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
+/** A name a role no longer goes by, and when it stopped. */
+export interface FormerName {
+  name: string;
+  /** ISO date (YYYY-MM-DD) the name was retired. */
+  retiredOn: string;
+}
+
+export const FormerNameSchema = z
+  .object({
+    name: z.string().min(1),
+    retiredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "an ISO date, YYYY-MM-DD"),
+  })
+  .strict();
+
 export const RoleDefSchema = z.object({
   // Declared in the Zod shape as well as the interface: a field TypeScript
   // accepts and Zod strips is written by an author, type-checks, and vanishes
@@ -365,6 +433,10 @@ export const RoleDefSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   actorKinds: z.array(z.enum(ACTOR_KINDS)).min(1),
+  /** Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`. */
+  otherNames: z.array(z.string().min(1)).optional(),
+  /** Names it no longer goes by, with the retirement date; `skos:hiddenLabel`. */
+  formerNames: z.array(FormerNameSchema).optional(),
   /**
    * Skills available to an actor in this role, before inheritance.
    *
@@ -408,15 +480,15 @@ export const RoleDefSchema = z.object({
  * that reader, a user story told as them.
  *
  * The dependent holds this; the role holds nothing back (data-modelling step
- * 8). `instance` is the declared NAME of the instance whose role graph
- * declares the role, absent for the pointer's own instance — a name, never a
- * path, as `VoiceRuleSourceSchema.instance` spells it.
+ * 8). `instance` is the `owner/repo` of the instance whose role graph
+ * declares the role (bean `6rmv`), absent for the pointer's own instance —
+ * never a path, as `VoiceRuleSourceSchema.instance` spells it.
  *
  * @ref RoleDefSchema
  */
 export const RoleRefSchema = z
   .object({
-    instance: z.string().min(1).optional(),
+    instance: RepoFullNameSchema.optional(),
     role: z.string().min(1),
   })
   .strict();
@@ -426,6 +498,7 @@ export const RoleGraphSchema = z.object({
   name: z.string().min(1),
   roles: z.array(RoleDefSchema).default([]),
   actors: z.array(ActorDefSchema).optional(),
+  extensions: z.array(RoleExtensionSchema).optional(),
 });
 
 // ── Reading ─────────────────────────────────────────────────────
@@ -459,15 +532,61 @@ function withoutComments(raw: unknown): unknown {
   const drop = (o: Record<string, unknown>): Record<string, unknown> =>
     Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith("_")));
   const top = drop(raw as Record<string, unknown>);
-  if (Array.isArray(top.roles)) {
-    top.roles = top.roles.map((r) =>
-      typeof r === "object" && r !== null ? drop(r as Record<string, unknown>) : r,
-    );
+  for (const key of ["roles", "extensions"] as const) {
+    const list = top[key];
+    if (Array.isArray(list)) {
+      top[key] = list.map((r) => (typeof r === "object" && r !== null ? drop(r as Record<string, unknown>) : r));
+    }
   }
   return top;
 }
 
-export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
+/** The actor registry's directory name inside the declared `scenarios` graph. */
+export const ACTORS_DIRNAME = "actors";
+
+/**
+ * Where the actor registry lives: `actors/` inside the declared `scenarios`
+ * graph, beside `roles.json` (bean `rqao`, owner 2026-09-30). It was
+ * `.claude/skills/actors/` from 2026-03-24 (05e72abe92), when the framework
+ * began as a Claude Code skill tree. That was a vendor-named, dot-prefixed,
+ * UNDECLARED directory: the one graph every swimlane binds to was outside
+ * every declaration, so no audit could claim it.
+ *
+ * Resolved from the platform instance's declaration, never spelled as a path,
+ * so that relocating `scenarios/` moves the actors with it. Takes the
+ * REPOSITORY root. `undefined` when the platform declares no
+ * `scenarios` graph: a caller must say it could not determine, never read
+ * that as "no actors".
+ */
+export function actorsDir(repoRoot: string): string | undefined {
+  return scenariosSubdir(repoRoot, ACTORS_DIRNAME);
+}
+
+/** The capability registry's directory name inside the declared `scenarios` graph. */
+export const CAPABILITIES_DIRNAME = "capabilities";
+
+/**
+ * Where the capability registry lives: `capabilities/` inside the declared
+ * `scenarios` graph, beside the actors that HAVE them (bean `rqao`, owner
+ * 2026-09-30, round 4). It was `.claude/skills/capabilities/`. A capability is
+ * an environment probe ("is Bun installed?"), deliberately NOT a skill: the
+ * role model keeps what an actor's environment can run apart from what its
+ * role knows. Same resolution and the same `undefined` contract as
+ * {@link actorsDir}.
+ */
+export function capabilitiesDir(repoRoot: string): string | undefined {
+  return scenariosSubdir(repoRoot, CAPABILITIES_DIRNAME);
+}
+
+/** A registry directory inside the platform's declared `scenarios` graph. */
+function scenariosSubdir(repoRoot: string, name: string): string | undefined {
+  // declared-path-literal: the platform instance, as glossary-page.ts names it.
+  const platform = join(repoRoot, "cat-harness");
+  const scenarios = directoryForGraph(platform, "scenarios");
+  return scenarios === undefined ? undefined : join(scenarios, name);
+}
+
+export function readRoleGraph(kgRoot: string, lower: ReadonlySet<string> = new Set()): RoleGraph | undefined {
   // TWO PLACES, because the role graph became a DECLARED DIRECTORY on
   // 2026-09-21 instead of a subdirectory of one.
   //
@@ -500,9 +619,27 @@ export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
     if (ids.has(r.id)) throw new Error(`${p}: role id "${r.id}" is declared twice.`);
     ids.add(r.id);
   }
+  // One name, one role — current, alternative or retired alike. A retired
+  // name given to a new role would make every old text that used it mean
+  // something it never meant; that is the job the glossary ledger did from
+  // the outside, and here it is held by the authored names themselves.
+  const owner = new Map<string, string>();
+  for (const r of graph.roles) {
+    const names = [r.title, ...(r.otherNames ?? []), ...(r.formerNames ?? []).map((f) => f.name)];
+    for (const n of new Set(names.map((x) => x.trim().toLowerCase()))) {
+      const prev = owner.get(n);
+      if (prev !== undefined && prev !== r.id) {
+        throw new Error(`${p}: the name "${n}" belongs to both role "${prev}" and role "${r.id}" — a title, other name or former name names one role.`);
+      }
+      owner.set(n, r.id);
+    }
+  }
   for (const r of graph.roles) {
     for (const parent of r.inherits ?? []) {
-      if (!ids.has(parent)) {
+      // `lower`: role ids a LOWER instance declares (placement PR0b). A
+      // higher instance's role may inherit one; the lower graph is read first
+      // and can never inherit upward, so a cross-instance cycle cannot form.
+      if (!ids.has(parent) && !lower.has(parent)) {
         throw new Error(`${p}: role "${r.id}" inherits "${parent}", which is not declared.`);
       }
     }
@@ -525,7 +662,7 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
 /**
  * Read the actor registry.
  *
- * Reads `.claude/skills/actors/*.json`. An entry states its kind in `kind`,
+ * Reads `<scenarios>/actors/*.json` ({@link actorsDir}). An entry states its kind in `kind`,
  * against the full {@link ACTOR_KINDS} vocabulary, and an unknown value is
  * **rejected** rather than accepted and ignored — the same rule
  * {@link readRoleGraph} follows for an ACTOR's `kind` — one kind, unlike a role's set. An entry carrying the
@@ -642,6 +779,9 @@ export function readActors(actorsDir: string, grants?: ReadonlyMap<string, reado
     } catch (e) {
       throw new Error(`${p} is not valid JSON: ${e instanceof Error ? e.message : String(e)}`);
     }
+    // An EXTENSION of another instance's actor (placement PR0b) is not an
+    // actor; `overlayActors` in `scenario-overlay.ts` applies it.
+    if (typeof raw.extends === "string") continue;
     out.push({
       id: String(raw.id ?? f.slice(0, -5)),
       title: String(raw.title ?? raw.id ?? f.slice(0, -5)),

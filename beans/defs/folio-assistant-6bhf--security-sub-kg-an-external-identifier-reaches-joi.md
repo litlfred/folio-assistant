@@ -259,7 +259,7 @@ them. Neither is sufficient alone.
 
 ## The `security` package box — a sibling built it; this extended it
 
-`skills/security/` existed before I looked: `security.md`, `path-containment.md`,
+`skills/conduct/security/` existed before I looked: `security.md`, `path-containment.md`,
 `injection-boundaries.md`, manifest listing all three, created 2026-09-26 10:34
 while I was sweeping stale PRs. **Eleventh near-duplication of the session, and
 the first one caught by looking before building rather than after pushing.**
@@ -330,7 +330,7 @@ missed there, one band member missed here, same shape.
 
 ### And it was already written down
 
-`skills/folio-core/untrusted-input.md` §"What counts as attacker-controlled" has
+`skills/conduct/conduct-core/untrusted-input.md` §"What counts as attacker-controlled" has
 listed *"anything derived from them — including a `steps.*.outputs.*` that merely
 passed one through"* since 2026-09-18, with a measured example from this corpus.
 The gate was written 2026-09-22 classifying `steps.*.outputs` safe

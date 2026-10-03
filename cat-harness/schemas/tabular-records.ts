@@ -30,7 +30,7 @@
  */
 import { z } from "zod";
 
-import { CONTENT_CONTEXT_URL } from "./jsonld";
+import { ContentContextSchema } from "./jsonld";
 
 import { NarrativeSchema } from "./narrative";
 
@@ -61,14 +61,18 @@ export const TabularRecordsSchema = z
     /**
      * The published content context — bean `yh6u`. OPTIONAL because folio
      * repositories hold records written before the arm emitted it; when
-     * present it must be that context, since any other would bind these keys
-     * to terms nobody declared.
+     * present it must be that context (bare, or with `@base` beside it —
+     * bean `bh4q`), since any other would bind these keys to terms nobody
+     * declared.
      */
-    "@context": z.literal(CONTENT_CONTEXT_URL).optional(),
+    "@context": ContentContextSchema.optional(),
     $schema: z.literal(TABULAR_RECORDS_SCHEMA_ID),
     "@id": z.string().min(1),
     source: z.record(z.string(), z.unknown()),
-    format: z.enum(["xlsx", "ods", "csv"]),
+    // `fixed-width`: a published text table such as NIST's CODATA allascii,
+    // parsed by `codata-ingest` (bean uyp8). Named for what it is rather than
+    // passed off as CSV, which it is not.
+    format: z.enum(["xlsx", "ods", "csv", "fixed-width"]),
     sheets: z.array(TabularSheetSchema),
     n_sheets: z.number().int().nonnegative(),
     /** Every distinct header across every sheet — what a grep lands in. */

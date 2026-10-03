@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-30T08:57:59Z
+updated_at: 2026-09-30T10:28:59Z
 parent: folio-assistant-vke6
 ---
 
@@ -455,7 +455,7 @@ re-running on the clean base. Not this branch's, not fixed here. The third tranc
 in a row to measure this.
 
 Two files were added to the failing list and both were looked at rather than
-absorbed: `skills/folio-core/asset-extraction.md` (already named `who-iris`; the
+absorbed: `skills/library/library-core/asset-extraction.md` (already named `who-iris`; the
 path edit added `folio-assistant-core` — unavoidable, since the skill documents a
 command by path and the command moved), and the new note in `intake-records.ts`,
 whose FIRST DRAFT named two instances and was rewritten to name one. A note
@@ -468,3 +468,16 @@ enumerating scripts -> 65**. Correct for cat-harness, but core runs no equivalen
 census, so the row is now counted nowhere. The ingest/materialisation tranche
 reported the identical shape at 68 -> 67 — twice now, which makes it a property of
 moving anything up rather than an accident of one file.
+
+
+
+### The coverage loss now has its own bean — `tqv4`
+
+The two "one coverage loss, reported rather than papered over" boxes above
+(68 -> 67, then 66 -> 65) are one defect reported twice. Filed 2026-09-30 as
+`folio-assistant-tqv4`, with the sharper half measured: the census's headline
+family `seeded-at-root-not-git-aware` reads **0 of 0**, and the repository's
+only instance of that shape — `folio-assistant-core/scripts/check-artifact-index.ts`,
+a `readdirSync(ROOT)` with no git call — is in the instance the census does not
+scan. The family is empty because its subject moved out, not because the shape
+was eliminated.

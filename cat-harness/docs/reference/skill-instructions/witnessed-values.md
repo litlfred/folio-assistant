@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-paper-adapter/witnessed-values.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/witnessed-values.md) — do not edit here.
+> Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/witnessed-values.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md){: .fa-edit-source }
 
 {% raw %}
 # Witnessed Values Skill
@@ -21,7 +21,52 @@ quotes for a computed quantity must come from a single source of truth —
 the canonical witness file — so updating a witness automatically
 propagates to every place the value is mentioned.
 
-## How it works
+## The syntax: Liquid `{{ … }}` — `:val` is deprecated
+
+**Since 2026-09-30 (bean `kott`, issue #1564) a value is written as Liquid**, one
+syntax for every target: the PDF, the blueprint, the just-the-docs site and IG
+pages all print the same number, because one resolver
+(`content/pipeline/liquid-values.ts`) substitutes it before Jekyll, the IG
+Publisher or LaTeX sees the text.
+
+```markdown
+The electron mass is {{ qou.computations.codata-masses.data.m_e_MeV | precision: 6 }} MeV.
+$\mathrm{Vol}(4_1) = {{ qou.computations.volumes.data.vol_4_1 | precision: 8 }}$
+This harness is at version {{ cat-harness.version }}.
+```
+
+**The address is a path in the knowledge graph:**
+`<prefix>.<declared-directory-id>.<entry>.<exact JSON path>`.
+
+- `<prefix>` — the instance's `liquid.prefix`, default its `name`.
+- `<declared-directory-id>` — a directory the instance DECLARES. An undeclared
+  directory is not addressable, even if the file is there.
+- `<entry>` — `<entry>.witness.json` or `<entry>.json` in that directory.
+- the JSON path is exact, `data.` included: nothing guesses where a value lives.
+- `{{ <prefix>.<field> }}` is a scalar from the declaration itself (`version`,
+  `canonicalUrl`, …).
+
+**Filters:** none prints the stored value unchanged, as Jekyll prints a
+`site.data` value; `| precision: N` rounds to N significant digits (half-even,
+exact for 50-digit witnesses); `| scientific` emits `\times 10^{e}` and belongs
+inside math.
+
+**`{{ site.data.… }}` is fhir-harness's**, declared as pass-through: Jekyll and
+the IG Publisher resolve it exactly as before, and bean `bamf` populates it for
+just-the-docs. `{{ page.* }}` and anything else not declared is left alone.
+
+**Never silent:** a reference under a resolved prefix that does not resolve
+becomes a visible `⟦unresolved: …⟧` marker and is reported. Left as `{{ … }}`,
+Jekyll would print an undefined variable as the empty string.
+
+**Datasets:** values from an ingested dataset are addressed the same way once
+the dataset carries them, e.g. `{{ qou.library.codata-2022.mass-electron }}`
+(bean `uyp8`: CODATA is still a vendored Python snapshot today).
+
+The rest of this skill describes `:val[…]`, which keeps working on the LaTeX
+path as a **deprecated alias** until a folio migrates its uses.
+
+## How it works (`:val`, deprecated)
 
 A typed registry (e.g. `content/values/registry.ts`) maps short names to
 the canonical witness file and a dotted JSON path. In `.md` content,
@@ -54,7 +99,7 @@ context (the math-mode pass picks it up):
 $\mathrm{Vol}(K) = :val[vol_K]{precision=8}$
 ```
 
-### Why the `:val[…]` syntax (not Liquid `{{…}}`)
+### Why `:val[…]` was chosen over Liquid (superseded 2026-09-30)
 
 The `:directive[arg]{attrs}` form is CommonMark generic-directive
 syntax, already used for `:defterm[…]` / `:refterm[…]` (the glossary
@@ -62,6 +107,14 @@ system). Liquid `{{ … }}` would collide with math's heavy use of `{…}`
 braces. Using `:val[…]` keeps the syntax disjoint from math markup,
 reuses the existing directive infrastructure, and mirrors the muscle
 memory authors already have for term references.
+
+**Why that no longer decides it.** The collision is real only for a `{{`
+that is NOT a value reference, and the resolver matches exactly
+`{{ <declared-prefix>.… }}`: LaTeX's `x^{{1}}` or `∏_{{i,j}}` never matches, so
+the PDF path is unaffected. Jekyll targets still need other `{{` raw-wrapped,
+which qou's docs stager already does by detection. Against that, one syntax
+that Jekyll, the IG Publisher and the platform all read won — owner, 2026-09-30:
+*"why markdown pages not use same as jekyll? ... be consistent"*.
 
 ## Authoring rules
 
@@ -133,6 +186,20 @@ Rules run as a phase of the project validator:
 
 The last is **informational**: the renderer never blocks on it. It lets
 the witness-staleness audit pick up the implicit dependency.
+
+**Liquid references get the same rules** (`val-resolves`,
+`val-precision-bounded`, `val-block-computation`, plus `val-filter` for an
+unknown filter), so migrating from `:val` keeps a folio's validation rather
+than trading it for a `⟦unresolved⟧` marker in the rendered output. A
+dataset value (`<entry>/values.json`) is not a computation and asks for no
+`computation:` link; `site.*`, `page.*` and pass-through prefixes are
+Jekyll's and are not checked here.
+
+**Migrating a folio:** convert a reference only where the platform renders
+it to byte-identical LaTeX both ways. Two cases cannot convert, and stay on
+`:val`: a witness path with characters a dotted key cannot carry, and a
+prose value WITH units — Markdown reads `\,` as an escaped comma, so the
+thin space `:val` emits before a unit has no prose spelling.
 
 ## Codemod (mass migration)
 

@@ -81,7 +81,6 @@ function instance(
         {
           id: "thing",
           path: "thing/",
-          dependents: "reproduce",
           graphKinds: kinds,
           ...(coverage === undefined ? {} : { coverage: rest }),
         },
@@ -362,7 +361,6 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // line as untested intent.
     const registry = new GraphKindRegistry({
       "live-board": {
-        type: "https://example.invalid/ns#LiveBoardGraph",
         renderable: true,
         holds: "state",
         summary: "A state graph that renders itself. Hypothetical, and the point.",
@@ -614,7 +612,6 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
           {
             id: "thing",
             path: "thing/",
-            dependents: "reproduce",
             graphKinds: ["cat-harness"],
             coverage: { visualiser: "viz.html" },
           },
@@ -753,11 +750,10 @@ function processInstance(opts: { process?: string; withDiagram?: boolean }): {
     JSON.stringify({
       name: "inst",
       directories: [
-        { id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] },
+        { id: "processes", path: "processes/", graphKinds: ["processes"] },
         {
           id: "thing",
           path: "thing/",
-          dependents: "reproduce",
           graphKinds: ["cat-harness"],
           ...(opts.process === undefined ? {} : { coverage: { process: opts.process } }),
         },

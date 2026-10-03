@@ -44,7 +44,7 @@ import { join } from "node:path";
 import { BASE_GRAPH_KINDS, GRAPH_KIND_ALIASES, defaultGraphKinds } from "../../schemas/cat-harness.js";
 
 const ROOT = join(import.meta.dir, "../..");
-const DOC = "skills/folio-core/directory-conventions.md";
+const DOC = "skills/kg/kg-core/directory-conventions.md";
 /** The table's header row, verbatim. Renaming a column is a deliberate edit. */
 const HEADER = "| kind | declared by | contents | renderable |";
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-t7fl
 title: uploads/README shows the high-level document-ingestion BPMN, via a DECLARED coverage.process
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-29T23:47:39Z
-updated_at: 2026-09-30T00:25:28Z
+updated_at: 2026-09-30T14:44:36Z
 parent: folio-assistant-slw1
 ---
 
@@ -93,3 +93,15 @@ recorded):
    emits is CONDITIONAL — written only where a section precedes the table, so
    only `uploads/README.md` has one today. Unconditional would be more
    consistent and would churn all 90 subgraph READMEs in one commit.
+
+## Summary of Changes
+
+Closed on evidence 2026-09-30. PR #1529 was merged by the owner on 2026-09-30 and #1526 was closed as completed.
+
+- The `SubgraphCoverageSchema` `process` field is shipped and documented.
+- `uploads/` declares `document-ingestion`.
+- `uploads/README.md` shows the diagram (5 mentions on main).
+- `readme:subgraphs:check` on main reports 0 stale and 0 unresolved processes.
+- The synthetic-tree tests shipped in #1529.
+
+**One question stays open, recorded rather than decided:** #1529's question 1, whether a page generated from Tool documentation is still wanted given the upload is a start event. The owner merged without answering it. It is not a Done-when item of this bean, so it does not hold the bean open. It is the next thing to ask if upload governance comes up.

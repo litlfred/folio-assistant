@@ -23,7 +23,7 @@ import { explainFailure, resolveLibraryRef } from "../schemas/library-ref.js";
 import { join, relative, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../../cat-harness/schemas/voices";
-import { instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../../cat-harness/schemas/cat-harness.ts";
+import { declaresInstance, instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../../cat-harness/schemas/cat-harness.ts";
 import { readRoleGraph, type RoleGraph } from "../../cat-harness/schemas/role-graph";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -117,7 +117,7 @@ function instanceRootFor(instance: string | undefined, ownRoot: string): string 
   if (instance === undefined) return ownRoot;
   const repo = repoRootFor(ownRoot);
   for (const root of instanceRootsIn(repo)) {
-    if (readDeclaration(root)?.name === instance) return root;
+    if (declaresInstance(readDeclaration(root), instance)) return root;
   }
   return undefined;
 }
@@ -245,12 +245,12 @@ function main(): number {
         const from = citedInstance ? `${citedInstance}:` : "";
         problems.push(`${where}: cites ${from}${src.libraryId}/${src.sectionId} — ${res.why}`);
       }
-    } else if (src.kgRef) {
+    } else if (src.path) {
       // A `#anchor` is a section within the file; check the file.
-      const file = src.kgRef.split("#")[0]!;
+      const file = src.path.split("#")[0]!;
       // Resolved through the CITED instance, exactly as the library branch
       // above does. It did not until 2026-09-21, and the asymmetry was
-      // invisible while every kgRef happened to be instance-local: a voice
+      // invisible while every path happened to be instance-local: a voice
       // citing a file in another instance could not pass however correctly it
       // declared where that file was. It surfaced the moment `milnor` moved to
       // folio-assistant-sci carrying one rule that cites a cat-harness module
@@ -258,12 +258,12 @@ function main(): number {
       const citedRoot = instanceRootFor(citedInstance, rootOf.get(voice)!);
       if (citedRoot === undefined) {
         problems.push(
-          `${where}: cites kgRef ${file} in instance "${citedInstance}", which is not an ` +
+          `${where}: cites path ${file} in instance "${citedInstance}", which is not an ` +
             `instance of this repository`,
         );
       } else if (!existsSync(join(citedRoot, file))) {
         const from = citedInstance ? `${citedInstance}:` : "";
-        problems.push(`${where}: cites kgRef ${from}${file}, which does not exist there`);
+        problems.push(`${where}: cites path ${from}${file}, which does not exist there`);
       }
     }
   }
@@ -279,18 +279,18 @@ function main(): number {
         const res = resolveCitation({ instance: s.instance, libraryId: s.libraryId }, rootOf.get(v.id)!);
         if (!res.ok) problems.push(`${v.id}: names source ${s.libraryId} — ${res.why}`);
       }
-      // Against the DECLARING instance: a `kgRef` is a node of the voice's own
+      // Against the DECLARING instance: a `path` is a node of the voice's own
       // knowledge graph, so looking for it under the platform would report a
       // who-style-guide voice's own node as missing.
       // Through the NAMED instance when the source names one, exactly as a
-      // rule's `kgRef` is resolved above: a voice addressing a role cites the
+      // rule's `path` is resolved above: a voice addressing a role cites the
       // role graph that declares it, which is the dependency's, not its own.
-      if (s.kgRef) {
+      if (s.path) {
         const citedRoot = instanceRootFor(s.instance, rootOf.get(v.id)!);
         if (citedRoot === undefined) {
-          problems.push(`${v.id}: names source ${s.kgRef} in instance "${s.instance}", which is not an instance of this repository`);
-        } else if (!existsSync(join(citedRoot, s.kgRef.split("#")[0]!))) {
-          problems.push(`${v.id}: names source ${s.instance ? `${s.instance}:` : ""}${s.kgRef}, which does not exist`);
+          problems.push(`${v.id}: names source ${s.path} in instance "${s.instance}", which is not an instance of this repository`);
+        } else if (!existsSync(join(citedRoot, s.path.split("#")[0]!))) {
+          problems.push(`${v.id}: names source ${s.instance ? `${s.instance}:` : ""}${s.path}, which does not exist`);
         }
       }
     }

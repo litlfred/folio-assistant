@@ -144,16 +144,65 @@ interface DeclEntry {
  * consumer scans nothing and calls it clean, and "the directory is not there"
  * and "the directory is empty" are different facts.
  */
+/**
+ * The INSTANCE-scoped `docs` layer's directory — the base layer a generator
+ * writes its page into, as opposed to the repository overlay.
+ *
+ * This was copy-pasted IDENTICALLY into six callers until 2026-10-03
+ * (`gen-external-schemas-viz`, `gen-fsh-guts-viz`, `gen-processes-viz`,
+ * `gen-tools-viz`, `gen-methodologies-viz`, `lib/skill-pages`), each with this
+ * exact body. It belongs beside `docsLayers` because it is a *reading* of that
+ * resolver, and a reading of a declaration is the thing that must not have six
+ * independent copies: bean `06e3`'s move of derived pages to `docs-auto/`
+ * changes which layer a generator asks for, and six copies is six places to
+ * miss.
+ *
+ * It throws rather than defaulting, and that is deliberate: a generator with
+ * no declared docs layer has nowhere correct to write, and writing to a guessed
+ * path is the `dh4f` defect — a consumer that scans nothing and reports clean.
+ */
+export function baseDocsDir(repo = REPO): string {
+  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
+  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
+  return base.dir;
+}
+
 export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLayer[] } {
   const decl = JSON.parse(readFileSync(declarationPathIn(join(repo, "cat-harness"))!, "utf-8")) as {
     directories?: DeclEntry[];
   };
+  // AND the checkout root's own declaration (bean `cmsl` step 2, issue #1694):
+  // the repository's overlay layer `root-docs` is declared there since the
+  // owner's round-5 ruling, not by cat-harness with `scope: "repository"`. An
+  // entry the root declares sits at the repository root, which is exactly what
+  // the repository scope meant here, so it is marked as such.
+  const rootPath = declarationPathIn(repo);
+  const rootDecl = rootPath && existsSync(rootPath)
+    ? (JSON.parse(readFileSync(rootPath, "utf-8")) as { directories?: DeclEntry[] })
+    : { directories: [] };
+  const entries: DeclEntry[] = [
+    ...(decl.directories ?? []),
+    ...(rootDecl.directories ?? []).map((e) => ({ ...e, scope: "repository" })),
+  ];
   const found: DocsLayer[] = [];
-  for (const e of decl.directories ?? []) {
+  for (const e of entries) {
     if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
     const repositoryScoped = e.scope === "repository";
     const root = repositoryScoped ? repo : join(repo, "cat-harness");
     found.push({ id: e.id, dir: join(root, e.path), repositoryScoped });
+  }
+  // The REPOSITORY overlay is the checkout root instance's `docs` entry since
+  // placement PR0 (bean `ejye`): the root declares the directories at its own
+  // root, so the platform no longer reaches up for `root-docs` with
+  // `scope: "repository"`. Same layer, same order — the overlay goes last.
+  const rootDeclPath = declarationPathIn(repo);
+  if (rootDeclPath !== undefined && existsSync(rootDeclPath)) {
+    const rootDecl = JSON.parse(readFileSync(rootDeclPath, "utf-8")) as { directories?: DeclEntry[] };
+    for (const e of rootDecl.directories ?? []) {
+      if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
+      if (found.some((f) => f.id === e.id)) continue;
+      found.push({ id: e.id, dir: join(repo, e.path), repositoryScoped: true });
+    }
   }
   // Base (instance-scoped) before overlay (repository-scoped): later wins.
   found.sort((a, b) => Number(a.repositoryScoped) - Number(b.repositoryScoped));

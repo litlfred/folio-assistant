@@ -4,7 +4,7 @@
  * ## Why the workflow is PARSED rather than run
  *
  * Because running it would remove a review preview, and that is the one thing
- * this change must not do: `skills/folio-core/deletion-requires-confirmation.md`
+ * this change must not do: `skills/conduct/conduct-core/deletion-requires-confirmation.md`
  * holds that an agent never removes a durable artefact on its own initiative,
  * and a staging preview is named there as durable. The properties that matter
  * here are all about WHICH STEP RUNS AND WHEN — `if:` expressions, `env:`
@@ -109,7 +109,7 @@ describe("the guard", () => {
   });
 
   it("refuses a slug that is a path, or that carries anything the slug pipeline cannot produce", () => {
-    expect(guard?.run).toContain('""|.|..)');
+    expect(guard?.run).toContain('""|.|..|_retired)');
     expect(guard?.run).toContain("*[!A-Za-z0-9._-]*)");
   });
 
@@ -233,7 +233,7 @@ describe("the preflight's verdicts", () => {
   });
 
   it("refuses a slug that is a path or carries an impossible character, before asking anything", () => {
-    for (const bad of ["", ".", "..", "../../etc", "a/b", "a b", "a;rm -rf /", "*"]) {
+    for (const bad of ["", ".", "..", "_retired", "../../etc", "a/b", "a b", "a;rm -rf /", "*"]) {
       expect(slugProblem(bad)).toBeDefined();
       expect(preflight(bad, { state: "ok", value: [] }, branches(), NOW).decision).toBe("refuse-unknown");
     }
@@ -290,5 +290,20 @@ describe("the close-event gate — merged removes, closed-unmerged does not", ()
     // The `plj1` guard. That failure deleted every open PR's preview, and no
     // policy change about MERGED pull requests may reach one.
     expect(closeJob.if).toContain("github.event.action == 'closed'");
+  });
+});
+
+describe("both removal paths can load the platform they run", () => {
+  // The platform's scripts import `bootstrap-tools/` — a submodule. A checkout
+  // without submodules fails at module load, before the preflight or the
+  // retire step can say anything: `cleanup` crashed on every merged PR and
+  // `cleanup-dispatch` refused every dispatch, so 45 merged previews piled up
+  // until `gh-pages` passed GitHub Pages' 10 GB limit and no deploy went live.
+  it.each(["cleanup", "cleanup-dispatch"])("%s checks the platform out WITH its submodules", (name) => {
+    const platform = wf.jobs[name].steps.filter(
+      (s) => (s.uses ?? "").startsWith("actions/checkout@") && s.with?.path === "source",
+    );
+    expect(platform.length).toBeGreaterThan(0);
+    for (const s of platform) expect(s.with?.submodules).toBe(true);
   });
 });

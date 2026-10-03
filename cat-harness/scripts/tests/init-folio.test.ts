@@ -209,17 +209,56 @@ describe("what gets written", () => {
   });
 
   test("the config selects the adapter matching the content type", () => {
+    // `toBe`, not `toContain`, and that is the whole point of this test now.
+    //
+    // It pinned the SUBSTRINGS `adapters/document/index.ts` and
+    // `adapters/paper/index.ts` until 2026-09-30, and both survive a wrong
+    // answer: when `adapters/paper/` moved to `folio-assistant-sci/` (bean
+    // `y5si`), the old composed path
+    // `./folio-assistant/cat-harness/adapters/paper/index.ts` still contained
+    // its substring while naming a file that does not exist. A gate that
+    // cannot tell the right path from the broken one is not covering the
+    // thing it looks like it covers, so each full path is written out.
+    //
+    // The two differ in their INSTANCE, which is the fact worth pinning, and
+    // since 2026-09-30 NEITHER is under `cat-harness/`: `document` under
+    // `folio-assistant-core/` (bean `ybp4`, step 2 of the adapters closure)
+    // and `paper` under `folio-assistant-sci/` (bean `y5si`, step 1). That is
+    // the whole closure — the escape axis reads 0 because the harness no
+    // longer holds an adapter that imports upward.
+    //
+    // This assertion is why `toBe` replaced `toContain`, and it earned that on
+    // the very next move: the document path changed instance, and a substring
+    // pin on `adapters/document/index.ts` would have passed over it silently.
+    // A change that re-composes both from one template breaks this line.
     const doc = tmp();
     initFolio(opts(doc));
     const docCfg = JSON.parse(readFileSync(scaffoldConfigIn(doc), "utf-8"));
     expect(docCfg.contentType).toBe("document");
-    expect(docCfg.adapterModule).toContain("adapters/document/index.ts");
+    expect(docCfg.adapterModule).toBe("./folio-assistant/folio-assistant-core/adapters/document/index.ts");
+    // The document entry's `module` now starts `../` too, exactly as paper's
+    // does, so it has to RESOLVE rather than carry the segment through.
+    expect(docCfg.adapterModule).not.toContain("..");
 
     const pap = tmp();
     initFolio(opts(pap, { contentType: "paper" }));
     const papCfg = JSON.parse(readFileSync(scaffoldConfigIn(pap), "utf-8"));
     expect(papCfg.contentType).toBe("paper");
-    expect(papCfg.adapterModule).toContain("adapters/paper/index.ts");
+    expect(papCfg.adapterModule).toBe("./folio-assistant/folio-assistant-sci/adapters/paper/index.ts");
+  });
+
+  test("the adapter path is normalised, and a non-default link path is honoured", () => {
+    // The paper entry's `module` in `BUILTIN_ADAPTERS` starts `../`, because
+    // it is relative to `cat-harness/`. Joining it to the link path has to
+    // RESOLVE that segment rather than leave it in the string: a config
+    // carrying `vendor/fa/cat-harness/../folio-assistant-sci/...` resolves to
+    // the same file, but it reads as a mistake and would not survive anyone
+    // tidying it by hand.
+    const d = tmp();
+    initFolio(opts(d, { contentType: "paper", assistantPath: "vendor/fa" }));
+    const cfg = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(cfg.adapterModule).toBe("./vendor/fa/folio-assistant-sci/adapters/paper/index.ts");
+    expect(cfg.adapterModule).not.toContain("..");
   });
 
   test("the builder shim is the only place the platform path is written", () => {

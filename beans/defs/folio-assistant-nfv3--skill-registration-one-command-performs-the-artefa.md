@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-26T07:38:20Z
-updated_at: 2026-09-26T14:17:46Z
+updated_at: 2026-09-30T22:33:45Z
 parent: folio-assistant-1xhc
 ---
 
@@ -37,7 +37,7 @@ cost lands on whoever opens the next PR.
   declarations via `kgDirectories`, never a hardcoded `skills/`.
 - `skills:docs` / `skills:docs:check` — `gen-skill-docs.ts` had no package script,
   which is the gap `check:ci-invocations` exists to report. Closed on the way past.
-- `skills/folio-core/skill-registration.md` — the discipline, registered by the
+- `skills/kg/kg-core/skill-registration.md` — the discipline, registered by the
   command it documents (267 → 268 skills).
 - `tests/register-skills.test.ts` — 19 tests, every finder falsified on a synthetic
   package, anti-vacuity floor on the real corpus.
@@ -157,7 +157,7 @@ half-written skill the moment somebody ran it.
 
 `skill-register.ts` is a sibling's **merged** work. Deleting or absorbing it is
 not an agent's call —
-[`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md) — and two
+[`deletion-requires-confirmation`](../../cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md) — and two
 commands one letter apart is a defect that should be closed by a decision rather
 than by whoever pushes next. Both are green side by side, so nothing is broken
 while it waits.
@@ -379,3 +379,19 @@ run after every merge could not restore it. Regenerated in a clean worktree;
 Worth keeping as a rule: taking `--theirs` on a generated file is correct for a
 parseable base, but it needs a regeneration to follow, and the registration chain
 does not cover every generated artefact.
+
+
+## CORRECTION, 2026-09-30 — "the moment the merge queue is on" never arrives
+
+This bean says *"the moment the merge queue is on, an unregistered skill cannot
+reach `main` — automatically, with no further change here"*, and treats `nytj`'s
+last box as an owner's pending flip. Bean `1hjm`: the flip does not exist on
+this repository — `Require merge queue` is absent from the ruleset form, and
+`nytj`'s box is now closed not-done for that reason.
+
+**The reading of `check-merged.ts` was right and is unaffected.** `bun run gates`
+does derive its list from `code-quality-gates.yml`, and `skills:register:check`
+is in it. What is wrong is only the trigger: that protection arrives via the
+queue, so on this repository `skill:register:check` is enforced on `pull_request`
+and `push` alone, and an unregistered skill reaching `main` is still possible
+through merge skew.

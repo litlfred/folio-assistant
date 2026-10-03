@@ -39,6 +39,7 @@
  *   bun run ingest uploads/FILE.pdf
  *   bun run ingest uploads/FILE.pdf --dry-run
  *   bun run ingest uploads/FILE.pdf --refresh-meta   # technical facts only
+ *   bun run ingest uploads/FILE.pdf --refresh-title  # re-resolve the title (w6fu)
  *   bun run ingest uploads/FILE.pdf --library who-iris
  *
  * `--library` is required only when the repository declares more than one, and
@@ -50,14 +51,19 @@
  *
  * @module scripts/ingest-document
  */
-import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
+import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
+import { refreshLibraryIndex } from "./lsi.ts";
+import { IntakeSchema } from "../schemas/intake.ts";
+import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
+import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -139,7 +145,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   //                     first: a WHO publication landing in the science
   //                     library reads as ingested and is in the wrong corpus,
   //                     and nothing downstream can tell.
-  const declared = directoriesForGraph(root, "library");
+  const declared = corpusDirectoriesForGraph(root, "library");
   if (declared.length === 0) {
     throw new Error(
       "this instance declares no `library` graph in its `<name>.json` — " +
@@ -199,10 +205,82 @@ export function libraryChoice(argv: string[]): string | undefined {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "tabular" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "notebook" | "slides" | "referenced" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
+}
+
+/**
+ * The EARLY licence verdict — bean `7bg9`, owner's ruling 2026-09-20: before
+ * any derivation, because `library/` is `holds: content` and anything derived
+ * first is committed, so refusing it afterwards is a deletion nobody may take
+ * unasked.
+ *
+ * It sees only the upload itself, as the ruling requires: the `licence`
+ * record in the `intake.json` beside it (`schemas/source-licence.ts`, the same
+ * record a library manifest carries) and whether a LICENSE file sits beside
+ * it. It never reads a licence out of extracted text — that is a later check's
+ * to find — so with nothing recorded the verdict is `undetermined`, and
+ * undetermined is REPORTED, never rendered as cleared. It does not stop the
+ * pipeline: the ruling lets undetermined proceed, and a refusal needs a
+ * compatibility rule this step does not have.
+ */
+export interface EarlyLicence {
+  verdict: "stated" | "unknown" | "undetermined";
+  detail: string;
+}
+export function earlyLicence(upload: string): EarlyLicence {
+  const dir = dirname(resolve(upload));
+  const intakePath = join(dir, "intake.json");
+  if (existsSync(intakePath)) {
+    const parsed = IntakeSchema.safeParse(JSON.parse(readFileSync(intakePath, "utf-8")));
+    // A malformed intake is not "no licence": say it could not be read.
+    if (!parsed.success) return { verdict: "undetermined", detail: `intake.json does not validate — ${parsed.error.issues[0]?.message ?? "invalid"}` };
+    const l = parsed.data.licence;
+    if (l?.status === "stated") return { verdict: "stated", detail: `${l.id} (${l.basis})` };
+    if (l?.status === "unknown") return { verdict: "unknown", detail: `searched ${l.searched!.length} place(s), none stated one` };
+  }
+  const sibling = ["LICENSE", "LICENCE", "LICENSE.md", "LICENCE.md", "LICENSE.txt", "LICENCE.txt"].find((f) => existsSync(join(dir, f)));
+  if (sibling) return { verdict: "undetermined", detail: `a ${sibling} sits beside the upload — a person reads it and records the licence in intake.json` };
+  return { verdict: "undetermined", detail: "nothing recorded: no intake.json licence and no LICENSE beside the upload" };
+}
+
+/**
+ * Carry the upload's licence into the staged entry (bean `7bg9`, the step
+ * after the early verdict). The early step READ the licence from the upload;
+ * this writes it as the entry's `licence.json` — the AUTHORED sidecar
+ * `gen-library-jsonld` carries verbatim into `manifest.jsonld`'s `meta.licence`
+ * (folio-assistant#1530), which is what `check:source-licence` reads. Not into
+ * the manifest itself: the manifest is generated, and a record written there
+ * is erased by the next `gen:jsonld`.
+ *
+ * Never overwrites. A `licence.json` already beside the entry is a finding
+ * somebody made (issue #1023); if it disagrees with the intake the two are
+ * REPORTED as a conflict and the sidecar is left as it is — which one is right
+ * is a person's call, not this step's.
+ */
+export type LicenceCarry =
+  | { outcome: "carried"; status: string }
+  | { outcome: "kept"; detail: string }
+  | { outcome: "conflict"; detail: string }
+  | { outcome: "nothing"; detail: string };
+export function carryIntakeLicence(upload: string, stagedEntry: string): LicenceCarry {
+  const intakePath = join(dirname(resolve(upload)), "intake.json");
+  if (!existsSync(intakePath)) return { outcome: "nothing", detail: "no intake.json beside the upload" };
+  const parsed = IntakeSchema.safeParse(JSON.parse(readFileSync(intakePath, "utf-8")));
+  if (!parsed.success || parsed.data.licence === undefined)
+    return { outcome: "nothing", detail: parsed.success ? "intake.json records no licence" : "intake.json does not validate" };
+  const from = parsed.data.licence;
+  if (!existsSync(stagedEntry)) return { outcome: "nothing", detail: "no staged entry to carry it into" };
+  const existing = readLicence(stagedEntry);
+  if (existing !== undefined) {
+    return JSON.stringify(existing) === JSON.stringify(from)
+      ? { outcome: "kept", detail: `${LICENCE_FILENAME} already carries the same licence` }
+      : { outcome: "conflict", detail: `${LICENCE_FILENAME} says ${JSON.stringify(existing)}, intake says ${JSON.stringify(from)} — left as ${LICENCE_FILENAME} has it` };
+  }
+  writeFileSync(join(stagedEntry, LICENCE_FILENAME), `${JSON.stringify(from, null, 2)}\n`);
+  return { outcome: "carried", status: from.status };
 }
 
 /**
@@ -244,7 +322,36 @@ export function withDerivedArms(
   staging: string,
   library: string,
 ): Plan {
+  // A notebook gets the ONE arm that reads what a rung wrote rather than the
+  // source: `l1-blocks.ts` builds blocks from `sections/`. The image arms read
+  // a PDF and do not apply; the notebook rung writes its own `images.json`.
+  if (plan.rung === "notebook") {
+    return { ...plan, steps: [...plan.steps, ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]] };
+  }
   const PDF_RUNGS = ["pdf-structure", "pdf-pages", "pdf-ocr+pdf-pages"];
+  // A deck writes the same `structure.json` + `sections/` a paged PDF does, and
+  // its own `images.json` (the images are package members, so there is no
+  // raster layer to recover and no vector labels to read). So it takes the two
+  // arms that read what the rung wrote, and not the two that read a PDF.
+  // Measured on the #1614 deck, not assumed: bean `scfh`.
+  // A RECORDED source holds no text, so there is nothing for the paged arms to
+  // read; its only derived artefact is the manifest (bean `scfh`).
+  if (plan.rung === "referenced") {
+    return {
+      ...plan,
+      steps: [...plan.steps, ["bun", "run", tsHelper("../content/pipeline/gen-library-jsonld.ts"), "--entry", staging]],
+    };
+  }
+  if (plan.rung === "slides") {
+    return {
+      ...plan,
+      steps: [
+        ...plan.steps,
+        ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],
+        ["bun", "run", tsHelper("apply-image-verdicts.ts"), "--staging", staging, "--library", library],
+      ],
+    };
+  }
   if (!PDF_RUNGS.includes(plan.rung)) return plan;
   return {
     ...plan,
@@ -507,6 +614,20 @@ export function tabularDelimiter(file: string): string | null {
   }
 }
 
+/**
+ * Is this file a Jupyter notebook, by its CONTENT? A reason-free boolean,
+ * because an unreadable file or one that is not JSON is simply not a notebook
+ * and falls through to the next question, as a non-CSV does.
+ */
+export function isNotebook(file: string): boolean {
+  try {
+    const j = JSON.parse(readFileSync(file, "utf-8")) as { nbformat?: unknown; cells?: unknown };
+    return typeof j.nbformat === "number" && Array.isArray(j.cells);
+  } catch {
+    return false;
+  }
+}
+
 export function planFor(
   pdf: string,
   p: Probe | undefined = undefined,
@@ -540,6 +661,20 @@ export function planFor(
     };
   }
 
+  // A Jupyter notebook is JSON text, so it has no magic bytes either, and the
+  // same rule applies: ask the content, never the `.ipynb` extension. It is a
+  // notebook when it parses as JSON with a numeric `nbformat` and a `cells`
+  // array. Checked BEFORE the delimited-text test, which a notebook's lines
+  // could satisfy by accident. Bean `rkqp`: the notebook variant of the shared
+  // document-structure base (`schemas/document-structure.ts`).
+  if (mime === null && isNotebook(pdf)) {
+    return {
+      rung: "notebook",
+      why: "JSON with a numeric nbformat and a cells array — a Jupyter notebook, read by its own headings",
+      steps: [["bun", "run", pyHelper("notebook-structure.ts"), "-o", lib, pdf]],
+    };
+  }
+
   // A CSV has NO magic bytes, so routing one is not a sniff and must not
   // become an extension guess. `is_tabular_text` asks the only content
   // question there is: do the first rows split into the same number of fields,
@@ -549,6 +684,17 @@ export function planFor(
       rung: "tabular",
       why: "no magic bytes, but the rows split consistently — delimited text",
       steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
+    };
+  }
+
+  // A deck before an archive, for the same reason a workbook is: a .pptx and
+  // an .odp are zips that DECLARE what they are, and listing one as a bag of
+  // XML parts would file the slides as data. Bean `scfh`, issue #1614.
+  if (mime !== null && (SLIDE_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "slides",
+      why: `the package declares ${mime} — a slide deck, one section per slide, titles read from title placeholders only`,
+      steps: [["python3", pyHelper("slides-structure.py"), "-o", lib, pdf]],
     };
   }
 
@@ -642,7 +788,7 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   const slug = bibSlug(pdf);
   // Against INSTANCE_ROOT, same reason as the promote path below: `libraryRoot`
   // is INSTANCE-relative, and a bare `resolve` reads the CWD.
-  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, "structure.json");
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
   if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
   // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
   // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that
@@ -667,6 +813,34 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
     throw new Error(`refreshing ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
   }
   return `${slug}: ${new TextDecoder().decode(r.stdout).trim()}`;
+}
+
+/**
+ * `--refresh-title`: re-resolve an existing entry's title from its PDF (bean
+ * `w6fu`, owner's ruling 2026-10-02 on #1838).
+ *
+ * The title rule is `_pdf_title.py`'s, shared with both PDF rungs, so a
+ * refresh and a fresh ingest agree. It replaces the title only with one an
+ * independent source corroborates, records every candidate it saw, keeps the
+ * text walk's title as `title_raw` and never touches an editor's
+ * `title_correction`. Like {@link refreshMeta} it reads the file's indent off
+ * the file rather than choosing one.
+ */
+export function refreshTitle(pdf: string, libRoot = libraryRoot()): string {
+  const slug = bibSlug(pdf);
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
+  if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
+  const r = Bun.spawnSync(["python3", pyHelper("_pdf_title.py"), "--refresh", structure, pdf]);
+  if (r.exitCode !== 0) {
+    throw new Error(`refreshing the title of ${slug}: ${new TextDecoder().decode(r.stderr).trim()}`);
+  }
+  const out = JSON.parse(new TextDecoder().decode(r.stdout)) as {
+    before: string | null;
+    after: string | null;
+    source: string;
+    verified: boolean;
+  };
+  return `${slug}: ${JSON.stringify(out.before)} -> ${JSON.stringify(out.after)} [${out.source}${out.verified ? "" : ", unverified"}]`;
 }
 
 /**
@@ -708,7 +882,7 @@ if (import.meta.main) {
   // was boolean; `--library who-iris` breaks it, because `who-iris` does not
   // start with `--` and would be ingested as a filename — producing "who-iris:
   // not there" while the real argument sat untouched two places along.
-  const takesValue = new Set(["--library"]);
+  const takesValue = new Set(["--library", "--reference"]);
   let pdf: string | undefined;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
@@ -729,6 +903,10 @@ if (import.meta.main) {
   }
   if (argv.includes("--refresh-meta")) {
     console.log(refreshMeta(pdf));
+    process.exit(0);
+  }
+  if (argv.includes("--refresh-title")) {
+    console.log(refreshTitle(pdf, libraryRoot(INSTANCE_ROOT, chosenLibrary)));
     process.exit(0);
   }
   const slug = bibSlug(pdf);
@@ -776,8 +954,18 @@ if (import.meta.main) {
   // (bean `8suc`). The refusal it may raise was already required to come
   // before the arms ran, so nothing about the ordering guarantee changes.
   const destination = libraryRoot(INSTANCE_ROOT, chosenLibrary);
+  // `--reference IDENTITY.json`: record the source and hold none of its text
+  // (bean `scfh`). Chosen by the caller, never inferred: whether a licence
+  // permits posting a copy is a reading of the licence, not of the bytes.
+  const reference = argv.includes("--reference") ? argv[argv.indexOf("--reference") + 1] : undefined;
   const plan = withDerivedArms(
-    planFor(pdf, undefined, stagingRoot),
+    reference
+      ? {
+          rung: "referenced",
+          why: "--reference given — recorded with its outline and sha256, text withheld",
+          steps: [["python3", pyHelper("referenced-source.py"), "-o", stagingRoot, pdf, "--identity", reference]],
+        }
+      : planFor(pdf, undefined, stagingRoot),
     pdf,
     stagingRoot,
     staging,
@@ -790,6 +978,9 @@ if (import.meta.main) {
   console.log(`${basename(pdf)} -> ${destination}/${slug}/`);
   console.log(`  rung: ${plan.rung}`);
   console.log(`  why:  ${plan.why}`);
+  // Before any arm runs — the licence step is EARLY by ruling (bean 7bg9).
+  const lic = earlyLicence(pdf);
+  console.log(`  licence: ${lic.verdict} — ${lic.detail}`);
   if (plan.rung === "undetermined") {
     console.error("\nNOT ingested. This is not a pass — a document filed under");
     console.error("the wrong rung reads as ingested while its structure is wrong.");
@@ -821,6 +1012,12 @@ if (import.meta.main) {
   // is what "refuse to promote" has to mean when ingestion is a pipeline
   // rather than a single command.
   if (ingestMode(argv) === "stage") {
+    // The licence the upload recorded becomes the entry's licence.json, which
+    // gen-library-jsonld carries into meta.licence — never overwriting one
+    // already there (bean 7bg9).
+    const carried = carryIntakeLicence(pdf, staging);
+    if (carried.outcome === "carried") console.log(`  licence: carried into the staged entry as licence.json (${carried.status})`);
+    else if (carried.outcome === "conflict") console.log(`  licence CONFLICT: ${carried.detail}`);
     const staged = checkEntry(staging);
     const pending = staged.requirements.filter((r) => r.state === "unmet");
     console.log(`\n✓ staged at ${relative(resolve(INSTANCE_ROOT), staging)}/`);
@@ -894,4 +1091,7 @@ if (import.meta.main) {
   for (const r of verdict.requirements.filter((r) => r.state === "not-derivable")) {
     console.log(`  · ${r.name}: ${r.detail}`);
   }
+  // The library changed, so its LSI index is stale by construction. Advisory:
+  // an index is not part of L1 (skill `lsi-indexing`, option B of bean `ansc`).
+  for (const line of refreshLibraryIndex(resolve(INSTANCE_ROOT, destination), slug)) console.log(line);
 }

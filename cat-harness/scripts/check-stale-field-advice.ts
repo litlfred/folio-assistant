@@ -77,6 +77,7 @@
  *   three kinds that hold one are the skills, the guides and the workflows.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
+import { gitCorpus } from "../schemas/git-corpus.js";
 import { join, relative, resolve } from "node:path";
 
 /** The repository root — this file lives at `<root>/cat-harness/scripts/`. */
@@ -231,8 +232,78 @@ export function scanText(path: string, text: string, field: StaleField): Mention
   return out;
 }
 
-/** Walk the tree, returning advice-bearing files relative to {@link ROOT}. */
+/**
+ * Advice-bearing files relative to {@link ROOT} — **asked of git**, not walked.
+ *
+ * ## Why this asks git rather than reading the disk
+ *
+ * This sweep descends into `.claude/` on purpose: agent instructions live
+ * there and they carry advice strings. But `.claude/worktrees/<id>/` is where
+ * a worktree-isolated agent keeps a **complete second checkout of this
+ * repository**, so a bare walk reads every advice string in the corpus twice
+ * — once at its own path and once under `.claude/worktrees/agent-.../`.
+ *
+ * Measured 2026-09-30 with one agent worktree live: the sweep reported six
+ * findings, **all six** with paths beginning `.claude/worktrees/agent-`, and
+ * `bun test` went red on a branch whose diff did not touch any of them. Bean
+ * `vpek` fixed the same class in `eslint.config.mjs` and left open the general
+ * question — *are there other tools that walk from the root and would find a
+ * worktree there?* This is one of the two that answer it yes.
+ *
+ * `.claude/worktrees/` is **gitignored** (`.gitignore:31`) and untracked, so
+ * `git ls-files --cached --others --exclude-standard` never lists it. Asking
+ * git is therefore both the narrow fix and the rule this repository already
+ * states for corpus sweeps (`xd1g`, `ramz`, `root-scan-census`): a walk is a
+ * guess at what the corpus is, and git knows.
+ *
+ * ## The fallback is NOT silent
+ *
+ * `gitCorpus` returns `undefined` when git cannot answer — not an empty list.
+ * An empty corpus would make this check vacuously pass, which is the `dh4f`
+ * shape: a consumer scanning nothing and reporting a clean run. So the walk
+ * survives as an explicit fallback, and {@link adviceCorpusSource} says which
+ * one ran so a caller can tell "clean" from "could not look".
+ */
+export type CorpusSource = "git" | "filesystem-fallback";
+
+let lastSource: CorpusSource = "git";
+
+/** Which enumeration produced the last {@link adviceFiles} result. */
+export function adviceCorpusSource(): CorpusSource {
+  return lastSource;
+}
+
 export function adviceFiles(root = ROOT): string[] {
+  const listed = gitCorpus(root);
+  if (listed !== undefined) {
+    lastSource = "git";
+    return listed
+      .filter((abs) => ADVICE_EXT.test(abs))
+      // The walk's OWN exclusions, re-applied to git's list. Asking git is a
+      // change of enumeration, not of scope: without this the corpus widens
+      // — `SKIP_DIRS` holds `beans`, which git lists and the walk never
+      // entered, so 21 archived beans became findings the moment the source
+      // changed. A fix that silently rescopes a check is a second defect
+      // wearing the first one's clothes.
+      .filter((abs) => {
+        const segs = relative(root, abs).split(/[\\/]/);
+        const dirs = segs.slice(0, -1);
+        if (dirs.some((d) => SKIP_DIRS.has(d))) return false;
+        return !dirs.some((d) => d.startsWith(".") && d !== ".github" && d !== ".claude");
+      })
+      .filter((abs) => {
+        try {
+          return statSync(abs).size < 2_000_000;
+        } catch {
+          // Listed by git but gone from the disk — a deleted-but-staged path.
+          // Skipping it is right; counting it as advice is not.
+          return false;
+        }
+      })
+      .map((abs) => relative(root, abs))
+      .sort();
+  }
+  lastSource = "filesystem-fallback";
   const out: string[] = [];
   const walk = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {

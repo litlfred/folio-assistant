@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-24T06:06:37Z
-updated_at: 2026-09-24T18:27:03Z
+updated_at: 2026-09-30T22:33:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -78,3 +78,78 @@ number the choice actually turns on.
 were each fixed by running it and committing. **Nothing automates it after a
 merge**: `grep -rn regen .github/workflows/` finds no invocation. Whether that
 should change is part of the same open decision.
+
+
+## The ruling REVERSED, 2026-09-30 — merge queue, not fix-forward
+
+This bean closed with *"the owner chose **fix forward** over a merge queue or an
+up-to-date requirement"*. **That is no longer the ruling.** Asked again on
+2026-09-30 after a day of measured skew, the owner chose **turn on the merge
+queue**. Recorded here rather than in a new bean because a superseded decision
+left standing in a completed bean is exactly how the next agent implements the
+old one.
+
+### What changed between the two rulings is a rate, not an argument
+
+2026-09-24 had **two** skew incidents, each fixed within minutes (#1249, #1257),
+and fix-forward was a proportionate answer to that.
+
+2026-09-30 had **nine** red-`main` incidents in one day. Of those, **five were
+corpus-walking artefacts staled by the merge *sequence*** — each branch green
+alone, the combination stale, which is this bean's mechanism exactly and not a
+new one. Three `Unblock main:` PRs were needed in a week (#1563, #1568, #1570).
+Fix-forward did not stop scaling gracefully; the *number of sequences* did.
+
+Two of the nine were mine, both from merging with `bun run gates` still in
+flight — which is a discipline failure rather than skew, and is not counted
+toward the argument above.
+
+### Why fix-forward specifically cannot catch this class
+
+Bean `ymsu`: a gate that repairs the tree it is being judged on **cannot fail
+inside the runner**. So a branch that would stale a shared artefact reads green
+on its own PR, every time, and the staleness first becomes visible on `main`.
+Fix-forward is by construction the only thing that *can* work once the merge has
+happened — the queue is the only intervention available **before** it does.
+
+### Readiness, measured
+
+The repository is already queue-ready: `merge_group` is declared on both
+`code-quality-gates.yml` and `jsonld-gen-check.yml`, so **no code change is
+required**. What remains is a repository-settings change (branch protection on
+`main` → require merge queue), which no tool available to an agent in this
+session can make — the GitHub MCP server here exposes no branch-protection or
+ruleset tool, checked 2026-09-30. It is the owner's click.
+
+### What does NOT change
+
+`continual-progress`'s section on watching `main` after every merge you make,
+and fixing a red `main` in a small PR of its own. A queue makes that rarer; it
+does not make it unnecessary, and the parent-before-blame rule this bean added
+is unaffected.
+
+
+## CORRECTION, 2026-09-30 — the chosen remedy is not available on this repository
+
+The section above closes *"What remains is a repository-settings change (branch
+protection on `main` → require merge queue) … It is the owner's click."* **There
+is no such click here.** Bean `1hjm` has the measurement: this repository's
+ruleset form offers thirteen rules and `Require merge queue` is not one of them.
+GitHub renders only the rules a repository is eligible for, so the absence is
+the measurement rather than an inference; personal-account ownership is the
+*likely* cause and stays labelled as inference, because `docs.github.com` is
+egress-blocked from the agent container and the eligibility rule could not be
+quoted.
+
+**What this does and does not overturn.** The diagnosis in this bean is
+untouched: merge skew is real, it was measured nine times in a day, and
+`ymsu` still explains why fix-forward cannot catch the class *before* the merge.
+What is overturned is only the availability of the remedy. So the 2026-09-30
+reversal — "merge queue, not fix-forward" — **cannot be carried out**, and the
+operating procedure reverts by necessity rather than by argument to the
+2026-09-24 one: fix forward, watch `main` after every merge you make, check the
+parent before blaming the last merge.
+
+Asked which of the two features that ARE available to turn on instead
+(`allow_auto_merge`, `allow_update_branch`, both `false`), the owner chose
+**neither — leave settings alone**. Recorded so it is not re-proposed.

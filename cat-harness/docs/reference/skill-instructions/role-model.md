@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/role-model.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/process-core/role-model.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/role-model.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/process-core/role-model.md){: .fa-edit-source }
 
 {% raw %}
 # Roles are swimlanes
@@ -21,10 +21,10 @@ Four objects, each with a home:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `cat-harness/scenarios/actors/*.json` (the declared `scenarios` graph, beside the roles; `.claude/skills/actors/` until 2026-09-30, bean `rqao`) |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
-| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`), `.claude/skills/local/` |
-| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
+| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`); JSON `SkillDefinition`s in each owning instance's `skills/skill-definitions/` (bean `rqao`) |
+| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/**/*.bpmn`, `processes/**/decisions/*.dmn` |
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
@@ -278,7 +278,7 @@ how it becomes a rubber stamp.
 ## Three questions about an actor, and only two are answered on the actor
 
 ```jsonc
-// .claude/skills/actors/admin.json
+// cat-harness/scenarios/actors/admin.json
 { "id": "admin",
   "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
   "capabilities": ["git-push"] }
@@ -431,6 +431,38 @@ resolveRoleStack(graph, ["editor", "viewer"]) // scoped: the union for this call
 skill any caller ever had, and a closure that broad cannot fail an audit, which
 is the same as not having one.
 
+## A higher instance EXTENDS a role by id — it never edits it (placement PR0b)
+
+A third relation, across instances rather than within one graph. When a skill
+belongs above the harness (a core cataloguing skill, a sci Lean skill), the
+role→skill edge naming it must not stay in `cat-harness/scenarios/roles.json`
+— that is an upward reference. So the **dependent holds the pointer**, the
+way a voice points at the role it addresses and a story at the role it is
+told as (#1168):
+
+```jsonc
+// folio-assistant-core/scenarios/roles.json
+{ "name": "folio-assistant-core", "roles": [],
+  "extensions": [{ "role": "librarian", "skills": ["filing-dublin-core"] }] }
+```
+
+| a dependent's `scenarios/` may | it may NOT |
+|---|---|
+| add skills to a lower role (`extensions`) | change its title, description, `inherits`, `actorKinds` or persona |
+| add a NEW role, which may `inherits` a lower one | redeclare a lower id — refused, "extend it instead" |
+| extend a lower actor: `actors/<f>.json` with `"extends": "<id>"`, adding `roles` / `capabilities` | carry any other field on an extension |
+| extend a capability: `"extends"` adding `requires`; or add a new probe | point an extension UP or sideways — only at an id declared below it |
+
+`schemas/scenario-overlay.ts` applies it (`checkoutRoleGraph`,
+`checkoutActors`, `checkoutCapabilities`); the layers are the checkout's
+instances that depend on the role's owner, deepest first. Resolved alone, the
+harness sees only its own roles. `kg:audit`, `check:raci`,
+`check:fallback-roles`, `check:actor-reach`, `kg-export` and the
+stakeholder map read the checkout's view on the platform's own run.
+
+It does **not** restore `roles:` in skill front matter (above): the edge is
+still on a role graph — just the graph of the instance that owns the skill.
+
 ## Lanes are free text — which is the problem the role graph solves
 
 Measured across the twenty diagrams on 2026-09-18: **60 distinct lane names for
@@ -506,6 +538,18 @@ reviewer cannot separate a new defect from inherited debt. The 53 sidecars are
 committed, under `kg-qa/` beside whatever they audit, so the diff says exactly
 which findings a change introduced. Same argument and same file shape as the
 block sweep's `*.qa.json` and the script sweep's `*.script-qa.json`.
+
+### Where the sidecars for another instance go — hosted, not written into it
+
+An instance that declares no `qa` directory does not receive sidecars inside
+its own tree: `kgQaHomeFor` (`schemas/cat-harness.ts`) puts them in the
+auditing harness's `qa` directory under the instance's stub —
+`cat-harness/test/results/bootstrap/` for bootstrap. A verdict ABOUT an
+instance is the auditor's output, and bootstrap is the layer that must read
+cleanly with no harness present (owner, 2026-09-29, decision 2 of bean
+`r3gy`). The same holds once bootstrap is its own repository: the verdicts stay
+with the harness that computed them, against the pinned bootstrap
+([`kg-separation`](kg-separation.md) §"The pair").
 
 ### Three states, and what `unknown` costs
 
@@ -631,6 +675,27 @@ uniquely was had no picture.
 
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.
+
+## Renaming a role, and a role's other names
+
+**Never let a name go silently.** A role carries every name it goes by
+(owner, 2026-09-30: *"model both retired names and alternative names"*):
+
+- **`otherNames`** — names in use today: synonyms, a local title, an example.
+  The same field, and meaning, as `otherNames` on WHO SMART Base's Generic
+  Persona. Published as `skos:altLabel`, beside the names the role's lanes are
+  drawn with.
+- **`formerNames`** — `{ "name", "retiredOn" }` for each name it no longer
+  goes by. Published as `skos:hiddenLabel` on the role, and the old name's
+  concept is `owl:deprecated` and `dcterms:isReplacedBy` the role, so a reader
+  holding the old name from older text is sent to the current one.
+
+To rename: change `title`, and add the old one to `formerNames` with today's
+date, in the same commit. `readRoleGraph` refuses a name — title, other or
+former — that two roles share, so a retired name cannot be quietly given to a
+new role. The glossary ledger still records, from the harness's side, every
+name a swimlane has derived; the role's own lists are the authored record a
+README can show (`kg:roles`, written by bootstrap-tools).
 {% endraw %}
 
 ## Processes that run this skill

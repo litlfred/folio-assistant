@@ -74,7 +74,8 @@ import { basename, join, relative } from "node:path";
 
 import ts from "typescript";
 
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * EVERY declared `schemas` directory reachable from this root.
@@ -102,7 +103,7 @@ import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
  * path nothing is at.
  */
 export function schemaRoots(root: string): string[] {
-  const declared = directoriesForGraph(root, "schemas");
+  const declared = corpusDirectoriesForGraph(root, "schemas");
   if (declared.length > 0) return [...declared].sort();
   const conventional = join(root, "schemas");
   return existsSync(conventional) ? [conventional] : [];
@@ -789,9 +790,12 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
   /** Module path → the directory it was read from, for scoped resolution. */
   const dirOfModule = new Map<string, string>();
 
+  const rootName = readDeclaration(repoRoot)?.name ?? basename(repoRoot);
   for (const dir of dirs) {
     const dirRel = rel(dir);
-    const instance = dirRel.includes("/") ? dirRel.split("/")[0]! : basename(repoRoot);
+    // The root's DECLARED name, not the clone's folder name (bean `t5dm`,
+    // the sibling of `library-graph`'s `instanceOf`).
+    const instance = dirRel.includes("/") ? dirRel.split("/")[0]! : rootName;
     for (const f of readdirSync(dir).sort()) {
       if (!f.endsWith(".ts")) continue;
       const moduleRel = `${dirRel}/${f}`;

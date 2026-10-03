@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/wireframe-design-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/wireframe-design-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/ui-core/wireframe-design-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/wireframe-design-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/wireframe-design-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/wireframe-design-review.md){: .fa-edit-source }
 
 {% raw %}
 # Wireframe design review
 
-Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/wiregen.md). Process: [`processes/wireframe-design-review.bpmn`](../../processes/wireframe-design-review.html). Owner, 2026-09-23: *"need both web and mobile layouts in usability reviews. wireframe is part of design process for adjudication"*.
+Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/wiregen.md). Process: [`processes/ui/wireframe-design-review.bpmn`](../../processes/wireframe-design-review.html). Owner, 2026-09-23: *"need both web and mobile layouts in usability reviews. wireframe is part of design process for adjudication"*.
 
 ## Where wireframes live
 

@@ -37,6 +37,24 @@ afterAll(() => {
   } catch {}
 });
 
+/**
+ * A structure WRITTEN TO DISK must conform to a declared variant: the entry
+ * path reads it through the shared accessor (bean rkqp), which refuses an
+ * untagged file rather than guessing. The in-memory fixtures below stay loose
+ * because `buildDocumentNodes` is handed an already-read structure.
+ */
+function asPdfStructureFile(s: { doc_id: string; sections: unknown[]; metadata?: Record<string, unknown> }): string {
+  return JSON.stringify({
+    _schema: "pdf-structure/v1",
+    doc_id: s.doc_id,
+    source: { file: `${s.doc_id}.pdf`, sha256: "e".repeat(64), bytes: 1, mtime: null, mimetype_sniffed: "application/pdf", mimetype_source: "magic-bytes" },
+    metadata: { title: null, docinfo: {}, ...(s.metadata ?? {}) },
+    toc_source: "outline",
+    sections: s.sections,
+    ...(s.sections.length === 0 ? { structure_note: "a fixture with no sections" } : {}),
+  });
+}
+
 const structure = {
   doc_id: "0110001v3",
   source: { file: "0110001v3.pdf", sha256: "f30f603ac1c5", pages: 12 },
@@ -262,7 +280,10 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
     expect(manifest.contains).toEqual(["library/d/blocks/table-001"]);
     expect(manifest.meta.tabular_depth).toBe("table");
     expect(manifest.meta.tabular_record).toBe("folio-tabular-records/v1");
-    expect(manifest.title).toBe("d.csv");
+    // The record's `title` is its FILE name, which is never a title (#1794):
+    // with no catalogue record the slug stands, and says so.
+    expect(manifest.title).toBe("d");
+    expect(manifest.meta.title_source).toBe("slug");
     rmSync(dir, { recursive: true, force: true });
   });
 
@@ -333,9 +354,33 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
     rmSync(dir, { recursive: true, force: true });
   });
 
+  test("a paged entry's title is its PDF /Title, never the page-1 parse (#1794)", () => {
+    const parsed = entry({
+      "structure.json": asPdfStructureFile({ doc_id: "d", sections: [], metadata: { title: "Abies", docinfo: {} } }),
+    });
+    const titled = entry({
+      "structure.json": asPdfStructureFile({
+        doc_id: "d",
+        sections: [],
+        metadata: { title: "JSON-LD 1.1 This version: Latest published version:", docinfo: { Title: "JSON-LD 1.1" } },
+      }),
+    });
+    const manifestOf = (dir: string) => {
+      const out = buildEntryNodes("d", dir);
+      if (out.state !== "built") throw new Error(out.state);
+      return JSON.parse(out.files.find((f) => f.path === "manifest.jsonld")!.content);
+    };
+    expect(manifestOf(parsed).title).toBe("d");
+    expect(manifestOf(parsed).meta.title_source).toBe("slug");
+    expect(manifestOf(titled).title).toBe("JSON-LD 1.1");
+    expect(manifestOf(titled).meta).toMatchObject({ title_source: "pdf-info", title_from: "structure.json metadata.docinfo.Title" });
+    rmSync(parsed, { recursive: true, force: true });
+    rmSync(titled, { recursive: true, force: true });
+  });
+
   test("a paged entry still goes down the paged rung, untouched", () => {
     const dir = entry({
-      "structure.json": { doc_id: "d", title: "A paper", pages: [], sections: [] },
+      "structure.json": asPdfStructureFile({ doc_id: "d", sections: [], metadata: { title: "A paper" } }),
     });
     const out = buildEntryNodes("d", dir);
     expect(out.state).toBe("built");
@@ -428,7 +473,7 @@ describe("the licence record survives regeneration (folio-assistant#1492)", () =
     const dir = mkdtempSync(join(tmpdir(), "lic-entry-"));
     try {
       mkdirSync(join(dir, "sections"), { recursive: true });
-      writeFileSync(join(dir, "structure.json"), JSON.stringify(structure));
+      writeFileSync(join(dir, "structure.json"), asPdfStructureFile(structure));
       writeFileSync(join(dir, LICENCE_FILENAME), JSON.stringify(record));
       const out = buildEntryNodes("d", dir);
       expect(out.state).toBe("built");

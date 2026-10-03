@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/kg-folio-asst-2026-09-30/blocks/figure-img-p002-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../../../docs/assets/img/kg-deck/img-p002-1.webp",
+  "pageStart": 2,
+  "pageEnd": 2,
+  "narrative": {
+    "text": "Infographic titled \"WHO Decoupled Architecture Workflow — secure, automated, trusted, globally accessible\", in three columns joined by arrows. Left, \"Internal secure origin — trusted WHO data sources\": Internal IRIS (DSpace), the WHO institutional repository, and the World Health Data Hub, global health datasets and resources. Middle, \"Automated compile engine — build, sign, snapshot, publish\": folio-assistant (auto-sign and snapshot), feeding \"Cryptographic asset signing\" via the WHO Trust Network Gateway and Swiss Observatory schemas. Right, \"Zero-egress public CDN\": Cloudflare R2 storage (10 TB) of signed static assets, then the Cloudflare CDN edge network for global low-latency delivery, reaching global researchers. The product names are the slide's proposal, not a decision recorded in this repository.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+    },
+    "drafted_at": "2026-09-30"
+  },
+  "derivedFrom": "library/kg-folio-asst-2026-09-30/sections/slide-002",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/kg-folio-asst-2026-09-30/manifest.jsonld",
+  "provenance": "ingested"
+}

@@ -26,26 +26,16 @@
  * local copy goes stale. That is a materialisation and its refresh, built, in
  * production, and named neither.
  *
- * ## Three states, and the third is not a degraded second
+ * ## Three states — the vocabulary lives in the harness
  *
- * The same discipline `readme-sections.ts` enforces over a README region and
- * `repo-partition.ts` over a module, and the argument transfers verbatim:
- *
- *   - **`referenced`** — the node exists, we know where, we hold no bytes.
- *   - **`materialized`** — the bytes are here.
- *   - **`unknown`** — we have not established which.
- *
- * Collapsing `unknown` into `referenced` is how a catalogue reports a clean
- * scan over content nobody ever looked for. Collapsing `referenced` into
- * `materialized` is worse: `corpus-grep` searches `library/` only, so a
- * referenced-but-not-materialised node reads as ABSENT to every consumer, and a
- * clean grep then means "nobody has done this" when the source is sitting on a
- * server. That is the `uploads/` failure one level up, at catalogue scale.
- *
- * There is deliberately **no default**. A node that does not declare its state
- * is invalid, not `unknown` — because "the author did not say" and "the author
- * said they could not tell" are different facts, and only the second is a
- * finding somebody can act on.
+ * `referenced`, `materialized` and `unknown`, and {@link FixitySchema}, are
+ * defined in `cat-harness/schemas/materialization-state.ts` and re-exported
+ * here. Bean `tlat` (placement PR5, owner ruling 2, 2026-09-30, option A) moved
+ * only that VOCABULARY down; the gates, the purposes and the record that binds
+ * them stay in this module, because each gate is a decision about CONTENT. The
+ * argument for three states and no default is in that module's doc, with the
+ * ruling's addition: a remote-KG subscription is a materialization whose
+ * minimum is the chosen subgraphs' metadata under `library/<source>/`.
  *
  * ## The five gates, and why a warning is not a gate
  *
@@ -116,6 +106,17 @@ import {
 export { SignatureSchema, SourceProvenanceSchema };
 export type { Signature, SourceProvenance };
 
+// Bean `tlat`: the state vocabulary and fixity live in the harness. Same
+// direction as the pair above — DOWN — and re-exported for the same reason.
+import {
+  FixitySchema,
+  MATERIALIZATION_STATES,
+  type Fixity,
+  type MaterializationState,
+} from "../../cat-harness/schemas/materialization-state.ts";
+export { FixitySchema, MATERIALIZATION_STATES };
+export type { Fixity, MaterializationState };
+
 export const MATERIALIZATION_SCHEMA_TAG = "folio-materialization/v1";
 
 /**
@@ -136,24 +137,6 @@ export const MATERIALIZATION_SCHEMA_TAG = "folio-materialization/v1";
  */
 export const MATERIALIZATION_PURPOSES = ["working", "archival", "both", "compiled"] as const;
 export type MaterializationPurpose = (typeof MATERIALIZATION_PURPOSES)[number];
-
-/**
- * Proof that an archived blob is the blob that was archived.
- *
- * Required on anything `archival`. An archive that cannot demonstrate it is
- * unchanged is a copy, and the distinction is the whole point of the purpose:
- * a working copy may be re-fetched if it rots, an archival one cannot, because
- * the thing it would be re-fetched from is what it exists to survive.
- */
-export const FixitySchema = z
-  .object({
-    algorithm: z.literal("sha256"),
-    digest: z.string().regex(/^[0-9a-f]{64}$/, "a sha256 digest is 64 lowercase hex characters"),
-    /** When the digest was last RE-COMPUTED against the bytes, not when it was recorded. An unverified digest ages. */
-    verifiedAt: z.string().min(1).optional(),
-  })
-  .strict();
-export type Fixity = z.infer<typeof FixitySchema>;
 
 /**
  * What a COMPILED copy was built from. Its validity is a statement about
@@ -181,16 +164,6 @@ export const CompiledInputsSchema = z
   .strict();
 export type CompiledInputs = z.infer<typeof CompiledInputsSchema>;
 
-
-
-/**
- * Whether the bytes are here.
- *
- * Ordered weakest-to-strongest deliberately: a reader scanning the union sees
- * that `unknown` is not a kind of `referenced`.
- */
-export const MATERIALIZATION_STATES = ["unknown", "referenced", "materialized"] as const;
-export type MaterializationState = (typeof MATERIALIZATION_STATES)[number];
 
 /**
  * A gate's answer.

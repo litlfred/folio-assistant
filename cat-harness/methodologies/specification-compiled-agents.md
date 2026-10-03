@@ -38,6 +38,8 @@ applies-when: >
   claims.
 evidence:
   - library/arxiv-2607.14456v1
+  - library/kg-folio-asst-2026-09-30
+  - library/omg-2013-bpmn-2-0-2
 ---
 
 # Specification-compiled agents
@@ -194,11 +196,30 @@ method here means taking the first three principles, not the code generator.
   *"more heavily optimised baseline configurations"*. That is a fair comparison
   of realistic low-configuration usage and it is not a claim about ceilings.
 
+## The owner's own statement of the two ends
+
+`library/kg-folio-asst-2026-09-30` is the owner's deck of 2026-09-30. It is
+cited as evidence of **intent, not of effect**. Slide 7 draws the axis this node
+sits on: *"BPMN Execution Skill: given a Process, Context, State, Role utilize
+one or more Skills in order [to] execute a Task"*, run by either of two Tools.
+One is an open-source BPMN engine with "state and swimlanes strictly enforced".
+The other is "an agentic swarm with ungoverned state", mitigated by
+mechanical and agentic QA/QC reports. This node is the method for the first
+end. The deck measures nothing, so it says where the owner wants the harness
+to go and nothing about how well either end works. That is what the paper
+above is for.
+
+The diagrams this method executes are OMG BPMN 2.0.2 (formal/2013-12-09),
+recorded as `library/omg-2013-bpmn-2-0-2`. The entry identifies the exact
+specification and its clause outline, so a citation can name a clause and page.
+It holds none of the text, because OMG's licence forbids posting copies on a
+network.
+
 ## See also
 
-- [`specification-compiled-agents`](../skills/workflow/specification-compiled-agents.md)
+- [`specification-compiled-agents`](../skills/process/workflow/specification-compiled-agents.md)
   — the part an agent here acts on.
-- [`deterministic-and-agentic`](../skills/workflow/deterministic-and-agentic.md)
+- [`deterministic-and-agentic`](../skills/process/workflow/deterministic-and-agentic.md)
   — the open research agenda this is evidence for, and the four mechanisms this
   repository already has.
 - [`hybrid-llm-deterministic`](hybrid-llm-deterministic.md) — the same shape at

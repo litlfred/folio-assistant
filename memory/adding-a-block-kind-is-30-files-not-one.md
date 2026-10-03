@@ -4,7 +4,7 @@ id: adding-a-block-kind-is-30-files-not-one
 label: trap
 summary: "adding a block kind is ~30 files, not one"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 ---
 > **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
 > subagent, was retired. Kept rather than deleted: the record of what was
@@ -17,7 +17,7 @@ archived: "true"
 Builder, Zod schema, label prefix, viewer registration, constraint rows, QA
 criteria. **There is no `recommendation` kind**: a normative statement is a
 labelled, titled `prose` block
-(`skills/folio-document-adapter/normative-statements.md`). Enumerate the cost
+(`folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md`). Enumerate the cost
 before starting rather than half-doing it.
 
 Known-wrong and predating the document profile: `document-intake.md` maps

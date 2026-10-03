@@ -38,7 +38,7 @@
  * cross-instance reader over this graph.
  */
 import { existsSync, readdirSync, statSync } from "node:fs";
-import { basename, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import {
   directoriesForGraph,
@@ -52,6 +52,8 @@ import {
   type VoiceProfile,
   type VoiceProvenanceFlag,
   type VoiceRule,
+  VOICES_DECLARATION_FILE,
+  voiceFilesIn,
 } from "../schemas/voices.ts";
 
 /** How a rule's citation resolves — the reader's verdict, never the file's claim. */
@@ -72,7 +74,7 @@ export interface VoiceRuleView {
    * Which KIND of thing the rule cites.
    *
    * `none` is unreachable through the schema — `VoiceRuleSourceSchema`
-   * requires exactly one of (`libraryId` + `sectionId`) or `kgRef` — and is
+   * requires exactly one of (`libraryId` + `sectionId`) or `path` — and is
    * carried anyway, because a reader that cannot represent the state it is
    * checking for cannot report it. If `none` ever appears on this page, the
    * schema stopped being enforced somewhere and the page says so instead of
@@ -162,7 +164,7 @@ export interface VoicesGraph {
 /** How a rule's citation resolves. */
 function citationKindOf(src: VoiceRule["source"]): CitationKind {
   if (src.libraryId !== undefined && src.sectionId !== undefined) return "library";
-  if (src.kgRef !== undefined) return "kg-node";
+  if (src.path !== undefined) return "kg-node";
   return "none";
 }
 
@@ -183,7 +185,7 @@ function ruleView(r: VoiceRule): VoiceRuleView {
       kind === "library"
         ? `${r.source.libraryId}#${r.source.sectionId}`
         : kind === "kg-node"
-          ? r.source.kgRef
+          ? r.source.path
           : undefined,
     citesInstance: r.source.instance,
     pages: r.source.pages,
@@ -202,15 +204,26 @@ function ruleView(r: VoiceRule): VoiceRuleView {
  * answer to "where do I look": the skill is a directory of two files.
  */
 function voicePath(dir: string, id: string, repoRoot: string): string {
-  const asSkill = join(dir, id);
-  const asFile = join(dir, `${id}.json`);
-  const abs = existsSync(join(asSkill, "voice.json")) ? asSkill : asFile;
-  return relative(repoRoot, abs).split("\\").join("/");
+  return relative(repoRoot, voiceLocation(dir, id)).split("\\").join("/");
+}
+
+/**
+ * Where a voice actually is: a skill directory or a bare profile, wherever the
+ * loader found it. Asked of `voiceFilesIn` itself rather than re-probed, so the
+ * two cannot disagree. They did once: the loader read `vendors/` and this did
+ * not, and the first vendor voice was reported at a path that does not exist.
+ * Since bean `rkqp` the sub-graphs are DECLARED (`voices.json`,
+ * `vendors/vendors.json`), and only the walker knows them.
+ */
+function voiceLocation(dir: string, id: string): string {
+  const hit = existsSync(dir) ? voiceFilesIn(dir).find((v) => v.id === id) : undefined;
+  if (hit === undefined) return join(dir, `${id}.json`);
+  return basename(hit.path) === "voice.json" ? dirname(hit.path) : hit.path;
 }
 
 /** Does a `SKILL.md` sit beside the rules? */
 function hasInstructions(dir: string, id: string): boolean {
-  return existsSync(join(dir, id, "SKILL.md"));
+  return existsSync(join(voiceLocation(dir, id), "SKILL.md"));
 }
 
 /** Voice ids found in a directory, by either layout. Sorted; `[]` when absent. */
@@ -222,7 +235,7 @@ function voiceIdsIn(dir: string): string[] {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) {
       if (existsSync(join(p, "voice.json"))) out.push(name);
-    } else if (name.endsWith(".json")) {
+    } else if (name.endsWith(".json") && name !== VOICES_DECLARATION_FILE) {
       out.push(name.slice(0, -".json".length));
     }
   }

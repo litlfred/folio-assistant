@@ -40,7 +40,7 @@ read an unparsed document as an empty one, which is the whole point.
 TWO BACKENDS, BOTH DELIBERATE.
 
   * **pdfplumber** (MIT) — the default.  Small, and it is already the tool
-    `skills/authoring-who-smart-guidelines/smart-base-tools.md` depends on, so
+    `smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md` depends on, so
     it is not a new dependency for this platform so much as a second use of an
     existing one.
   * **camelot-py** (MIT) — preferred when installed.  Camelot **2.0** dropped
@@ -74,7 +74,7 @@ of drawing primitives is emitted as `kind: "vector-cluster"` with a primitive
 count, explicitly a *candidate*, because deciding that fourteen curves are one
 figure is exactly the judgement Docling's layout model exists to make.  It does
 not read a scan.  It does not classify figures.  Those are Stage 3's, and the
-capability probe in `.claude/skills/capabilities/docling.json` is what lets a
+capability probe in `cat-harness/scenarios/capabilities/docling.json` is what lets a
 consumer see that Stage 3 has not run instead of guessing.
 
 Usage:

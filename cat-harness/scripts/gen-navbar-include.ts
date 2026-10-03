@@ -68,6 +68,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.js";
+import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import {
   navbarOpenInputHtml,
   navbarRegionsHtml,
@@ -101,7 +102,7 @@ interface Visualisation {
   note?: string;
   stagingOnly?: true;
 }
-interface Harness {
+export interface Harness {
   name: string;
   title?: string;
   label?: string;
@@ -128,9 +129,15 @@ interface Harness {
 function graphRows(h: Harness, staging: boolean): NavItem[] {
   return (h.visualisations ?? []).map((v) => {
     const withheld = v.stagingOnly === true && !staging;
-    if (v.path && !withheld) return { href: v.path, label: v.kind };
+    // The same distinct glyph and full accessible name the rail gives a kind
+    // row (bean `yag0`) — one answer, from `lib/graph-kind-nav.ts`.
+    // The kind's HUE is left out here: the sidebar paints these small marks
+    // on its own neutral chip in the page's ink, and a dark tone behind a
+    // dark-ink glyph would lose contrast. The shape and the words carry it.
+    const { tone: _tone, ...decor } = graphKindRowDecor(v.kind, h.label ?? h.title ?? h.name);
+    if (v.path && !withheld) return { href: v.path, label: v.kind, ...decor };
     const note = withheld ? "staging only" : v.note;
-    return { label: v.kind, ...(note ? { note } : {}) };
+    return { label: v.kind, ...decor, ...(note ? { note } : {}) };
   });
 }
 
@@ -179,7 +186,13 @@ function harnessRow(h: Harness, staging: boolean): NavItem {
  * **Closed on arrival** — *"harnesses start closed"* — and the count on the
  * summary still says how many there are, so folded is not hidden.
  */
-function model(harnesses: Harness[], title: string, staging: boolean, openControl: "input" | "labels"): NavbarModel {
+function model(
+  harnesses: Harness[],
+  title: string,
+  staging: boolean,
+  openControl: "input" | "labels",
+  fshGuts: boolean,
+): NavbarModel {
   const shown = harnesses.filter((h) => h.instantiated === true);
   const group: NavGroup = {
     label: "Harnesses",
@@ -191,7 +204,14 @@ function model(harnesses: Harness[], title: string, staging: boolean, openContro
     instance: title,
     hrefs: "liquid",
     openControl,
+    // The theme's `.site-title` avatar IS the header here (#1757).
+    head: "none",
     ...(shown.length > 0 ? { harnesses: group } : {}),
+    // fsh-guts in the FIXED top (#1925, owner 2026-10-02: *"also add fsh-guts
+    // icon to LHS top navbar"*), only when this instance DECLARES the
+    // fsh-guts tile: a control for a trashcan nobody declared is a promise
+    // with nothing behind it.
+    ...(fshGuts ? { fshGuts: { label: "fsh-guts, discarded items" } } : {}),
     // Home is last in the fixed bottom, outside the disclosure, so folding the
     // harnesses away cannot take it with it — *"keep home at bottom for who
     // iris."*
@@ -223,9 +243,9 @@ const BANNER =
  * that cannot say it is a preview is treated as canonical, which is the safe
  * direction and the one `isStagingPreview` already takes.
  */
-function render(harnesses: Harness[], title: string): string {
+export function render(harnesses: Harness[], title: string, fshGuts = false): string {
   const region = (staging: boolean): string =>
-    navbarRegionsHtml(model(harnesses, title, staging, "labels"));
+    navbarRegionsHtml(model(harnesses, title, staging, "labels", fshGuts));
   return (
     `${BANNER}\n` +
     `{%- assign fa_nav_copy = fa_nav_copy | default: 0 | plus: 1 -%}\n` +
@@ -240,8 +260,12 @@ function main(): void {
   const data = JSON.parse(readFileSync(DATA, "utf-8")) as {
     harnesses?: Harness[];
     title?: string;
+    tiles?: { id?: string }[];
   };
-  const next = render(data.harnesses ?? [], data.title ?? "folio-assistant");
+  // fsh-guts is NOT emitted into `.fa-nav-top` any more: the owner put it in
+  // the declared icon row, "with the others" (2026-10-02, #1925), which
+  // `mountNavIconRow` draws from `navbarIcons`. One placement, not two.
+  const next = render(data.harnesses ?? [], data.title ?? "folio-assistant", false);
 
   let current: string | undefined;
   try {
@@ -262,4 +286,5 @@ function main(): void {
   console.log(`wrote ${OUT}`);
 }
 
-main();
+// Guarded so a test can import `render` without rewriting the committed include.
+if (import.meta.main) main();

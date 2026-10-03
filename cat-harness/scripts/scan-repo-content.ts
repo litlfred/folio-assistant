@@ -2,7 +2,7 @@
 /**
  * Scan an existing repository for material a folio could take over.
  *
- * This runs on the `overlay` branch of `processes/getting-started.bpmn`,
+ * This runs on the `overlay` branch of `folio-assistant-core/processes/conduct/getting-started.bpmn`,
  * before anything is scaffolded and long before anything is moved. It is the
  * "look first" half of a rule that only works in one order: **scan, show, ask,
  * then move.**
@@ -309,7 +309,7 @@ export function formatScan(r: ScanResult): string {
     );
   }
   out.push("");
-  out.push("This scan wrote nothing. Next: skills/folio-core/repo-conversion.md §2 — three");
+  out.push("This scan wrote nothing. Next: skills/conduct/conduct-core/repo-conversion.md §2 — three");
   out.push("questions (import or not; library or content; leave in place or reorganise).");
   return out.join("\n");
 }

@@ -94,7 +94,32 @@ bun run folio-assistant-sci/content/pipeline/blueprint-export.ts \
 - The formal source is stamped on line 1. `--check` fails unless it is
   elaborated: with no cache, or a `scan` cache, the graph is not publishable.
 - Formal targets not rendered in the document are dropped and listed; so are
-  statements with proof dependencies but no proof environment.
+  statements with proof dependencies but no proof environment. A self-edge
+  is dropped too: plasTeX's dependency graph recurses on it without end.
+
+### The whole `blueprint/src/`, not just its content
+
+`blueprint-layout.ts` writes the directory leanblueprint (and
+`docgen-action` with `blueprint: true`) builds from, from the paper manifest:
+
+```sh
+bun run folio-assistant-sci/content/pipeline/blueprint-layout.ts \
+  --paper <folio>/<paper>/<paper>.ts [--out <folio>/<paper>/lean/blueprint/src]
+```
+
+`content.tex` is the export above over the rendered chapters, with the
+margin annotations stripped once it has read them; `macros/common.tex`
+declares every environment the renderer emits (`ENV_NAMES`) plus the
+manifest's `macros`; the rest is leanblueprint's own template. The folio
+`blueprint.yml` runs it in CI — **do not commit the output**: a committed
+copy is a second answer that goes stale against the manifest.
+
+**plasTeX needs `kpsewhich`.** Without TeX installed it cannot `\input` a
+file in a subdirectory, so `macros/common` is "not found", every theorem
+environment is unrecognised, and plasTeX dies with `TypeError: unhashable
+type: 'definition'` — which reads like a version bug and is not.
+leanblueprint 0.0.20 + plasTeX 3.1 + plastexdepgraph 0.0.5 builds a real
+paper's graph once `kpsewhich` resolves.
 
 ## Known limits
 

@@ -53,7 +53,7 @@ flock 200 2>/dev/null || true
 # question that follows. A preference re-learned each session is a question
 # asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
 # who types with difficulty, "just ask again" is not a small cost.
-# See skills/folio-core/interaction-modality.md.
+# See skills/conduct/conduct-core/interaction-modality.md.
 INTERACTION="$CHECKOUT_ROOT/interaction/interaction.json"
 if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
@@ -74,7 +74,7 @@ fi
 # until bean `46uh`: the skills are English, the corpus is English, so an agent
 # answered in English without ever asking whether that was right. Printed here
 # so "never determined" is visible rather than silent.
-# See skills/folio-core/communication-language.md.
+# See skills/conduct/conduct-core/communication-language.md.
 echo "## Communication language"
 echo
 if command -v jq >/dev/null 2>&1 && [ -f "$INTERACTION" ]; then
@@ -427,7 +427,7 @@ else
   if [ "$wf_n" = "0" ]; then
     echo "**No instance recorded.** If this turn runs a process, start it"
     echo "(\`workflow_start\`) so the state is committed and a sibling session reads the"
-    echo "same position — \`skills/workflow/process-state.md\` §\"Naming it is not the same"
+    echo "same position — \`skills/process/workflow/process-state.md\` §\"Naming it is not the same"
     echo "as recording it\". If it does not, say so in the turn report."
   else
     echo "$wf_n instance(s) recorded:"
@@ -489,6 +489,26 @@ from the listing.
 SESSIONS
 echo
 
+# ── 3.5 The state-branch mount ──────────────────────────────────────────────
+# Bean `2h76` part 4. Printed BEFORE the recommended action because it changes
+# whether the work-plan above can be believed.
+#
+# The proposal names the failure this guards: if the fetch fails silently and
+# `beans list` comes back empty, the agent reads "no work" — an unreachable
+# work-plan and an empty one are indistinguishable from here, and the agent
+# acts on the first reading. So the mount prints its own finding, loudly, and
+# `state-mount.ts` also exits non-zero so a wrapper cannot swallow it.
+#
+# No declaration is tip-keyed yet, so today this says "not enabled" and costs
+# one process. Guarded on `bun` because this sweep is CLI-independent by
+# design and must still work where only git is present.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-mount.ts" ]; then
+  mount_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/state-mount.ts" 2>&1)" || true
+  if [ -n "$mount_out" ]; then
+    printf '%s\n\n' "$mount_out"
+  fi
+fi
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**
@@ -500,7 +520,7 @@ cat <<'EOF'
 2. If you'll do durable work, claim a bean
    (`beans update <id> --status in-progress`) or open one
    (`beans create "<title>"`, after the exact-title existence check in
-   AGENTS.md) — see also `skills/folio-core/bean-coordination.md`, whose
+   AGENTS.md) — see also `skills/sdlc/sdlc-core/bean-coordination.md`, whose
    "A claim is branch-local" says what a claim does NOT buy you.
 3. If the default branch moved, dispatch a **background** subagent to triage the
    new landings + sibling activity above — don't do it in the foreground.

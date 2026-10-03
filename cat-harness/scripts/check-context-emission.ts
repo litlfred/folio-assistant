@@ -68,6 +68,7 @@ import { join, resolve } from "node:path";
 
 import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../schemas/jsonld.js";
 import { stubOfNamespace } from "../schemas/namespaces.js";
+import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -87,7 +88,6 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   deo: "discourse ELEMENTS — `deo:Introduction`, `deo:Conclusion` and the rest, on a paper's rhetorical blocks. Bound with `doco` as its companion vocabulary and waiting on the same thing: a folio with blocks.",
   oa: "Web Annotation — the shape a todo, a review note or a translation comment takes when it is published as an annotation on a block. `bzyu` and the todo-review workflow are where it lands.",
   csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype; its record is plain JSON (`tabular.csvw.json`, bean `792y`) and `toCsvw()` derives a CSVW document carrying CSVW's OWN context, not this one. So nothing in this graph speaks `csvw:` yet — a folio whose table blocks link their CSVW description is what would.",
-  skos: "the glossary — `lqo9` slice 1 shipped 135 `skos:Concept` nodes, but into the NAMESPACE document (`ns-export.ts`), which carries its own context rather than this one. A folio's glossary blocks are what emit it HERE.",
   // NO `fhir` ENTRY, and its removal is the check doing its job.
   //
   // It was forward-declared on the reason "emitted by an IG folio's export,
@@ -374,6 +374,13 @@ export function checkPrefixDeclaration(
   const extend = (c: unknown, scope: Set<string>, where: string, check = true): boolean => {
     if (Array.isArray(c)) return c.map((x) => extend(x, scope, where, check)).every(Boolean);
     if (typeof c === "string") {
+      // PROV-JSONLD's context is HELD, sha-pinned, so it is read rather than
+      // reported unresolvable — the same copy `publish:verify` serves.
+      if (c === PROV_JSONLD_CONTEXT_URL) {
+        const held = heldProvJsonldContext(repo) as { "@context": Record<string, unknown> };
+        for (const k of Object.keys(held["@context"])) if (!k.startsWith("@")) scope.add(k);
+        return true;
+      }
       if (c !== contextUrl) {
         unresolvedUrls.add(c);
         return false;

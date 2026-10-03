@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `translator` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
-      "kgRef": "scenarios/roles.json"
+      "instance": "litlfred/cat-harness",
+      "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "translator"
       }
     ]
@@ -28,8 +28,8 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
-        "kgRef": "scenarios/roles.json",
+        "instance": "litlfred/cat-harness",
+        "path": "scenarios/roles.json",
         "quote": "Works in the target language and needs the source's INTENT, not just its words. Context-starved by default: a string with no surrounding meaning gets translated wrong."
       }
     }

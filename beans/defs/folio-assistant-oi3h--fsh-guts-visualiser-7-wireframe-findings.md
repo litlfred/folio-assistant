@@ -3,12 +3,13 @@
 title: 'fsh-guts visualiser: 7 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-fsh-guts
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-23T10:36:14Z
+updated_at: 2026-09-30T16:12:47Z
 parent: folio-assistant-4ccr
 ---
 
@@ -25,3 +26,27 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/fsh-guts/` (inten
 Related: `folio-assistant-7vhe`
 
 When fixed, re-draw `cat-harness/docs/wireframes/fsh-guts/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 7 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — The two surfaces disagree about the count: Page: '31 file(s) across 2 group(s)'. Viewer (More actions -> Settings -> Discarded): 'Discarded items — 20 items'; fsh-guts.json @graph has 20 nodes. Neither surface mentions the other's number (page text has no 'Settings'/'discarded'/'viewer').
+- **STILL-PRESENT** — Names are shown with raw Markdown: Discarded list shows literal backticks (6), e.g. '`SkillDefinition.roles` — retired', 'The `roles:` field in SKILL front matter'; detail view shows 28 backticks and 5 '#'/'**' markers.
+- **STILL-PRESENT** — The viewer is three interactions deep, behind an unlabelled glyph, with a second nearer Settings that is the wrong one: Path still More actions (icon-only SVG button, no text) -> Settings -> Discarded (3 clicks). Glass 'Folio settings — theme, avatars, opacity' opened: 0 .fa-discarded-open controls, no pointer to the other Settings. Page body never mentions discarded items.
+- **STILL-PRESENT** — The declaration-state tags fail contrast on the default dark scheme: Default dark (data-fa-scheme=dark): .fg-ok rgb(13,110,94) 2.19:1, .fg-side rgb(107,91,149) 2.29:1, .fg-gap rgb(168,67,15) 2.24:1 on rgb(48,45,54) at 12px (10.5px at 390). Light scheme passes (6.16/5.91/6.04).
+- **STILL-PRESENT** — Every file link leaves the site for github.com, and nothing marks this: 31 table links, all to github.com; 0 with target, rel, aria-label/title, icon, or ::after content.
+- **STILL-PRESENT** — Possible dead link on the canonical site: Now confirmed rather than possible: site-new (compose without --staging) has no /fsh-guts/ (HTTP 404), yet the home page renders a visible 'fsh-guts' link and the beans page nav (.fa-nav-sub) a visible 'F fsh-guts' link to /fsh-guts/. Caveat: local preview-site build, not the deployed site.
+- **STILL-PRESENT** — Mobile: two different back controls in one panel: At 390 in the discarded detail both '‹ All actions' and '‹ All discarded items' are visible. File tables: 3 cols, scrollWidth 362/362/369 in 362px wrappers (overflow-x auto); page scrollWidth 390.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 6 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code. /fsh-guts/ is staging-only, so it was measured on a second build of the same commit composed with `compose-docs --staging`, with `fsh-guts-export.ts` run as `docs-site.yml` does. The dead-link finding uses the canonical build.
+
+- **STILL-PRESENT** — The two surfaces disagree about the count: The page says '34 file(s) across 4 group(s)' (was 31/2). The viewer (More actions → Settings → Discarded) says 'Discarded items — 22 items', and fsh-guts.json @graph has 22 nodes. Neither surface mentions the other's number. (rv-fg.mjs, rv-fg3.mjs)
+- **STILL-PRESENT** — Names are shown with raw Markdown: The Discarded list shows 8 literal backticks, e.g. '`SkillDefinition.roles` — retired', 'The `remote-stubs` package — …'. The detail view shows 30 backticks and 5 '#'/'**' markers. (rv-fg3.mjs)
+- **STILL-PRESENT** — The viewer is three interactions deep, behind an unlabelled glyph, with a second nearer Settings that is the wrong one: The path is still More actions (icon-only SVG button, innerText '') → Settings → Discarded, 3 clicks. The glass 'Folio settings — theme, avatars, opacity' has 0 .fa-discarded-open controls and no pointer to the other Settings. (rv-fg3.mjs, rv-fg4.mjs)
+- **FIXED** — The declaration-state tags fail contrast on the default dark scheme: Changed since 2026-09-29. Dark (data-fa-scheme=dark), on rgb(48,45,54): .fg-ok rgb(92,211,189) 7.40:1, .fg-side rgb(185,168,236) 6.35:1, .fg-gap rgb(245,160,112) 6.53:1, at 12px (10.5px at 390). Light is unchanged and passes: 6.16/5.91/6.04. — #1592 / rtuo (rv-fg.mjs)
+- **STILL-PRESENT** — Every file link leaves the site for github.com, and nothing marks this: 34 table links, all to github.com. 0 have target, rel, aria-label/title, an icon or ::after content. (rv-fg4.mjs)
+- **STILL-PRESENT** — Possible dead link on the canonical site: The canonical build (compose without --staging) has no /fsh-guts/ (HTTP 404). The home page still renders a visible 'fsh-guts' link, and the beans page nav (.fa-nav-sub) a visible 'F fsh-guts' link to it. This is a local preview-site build, not the deployed site. (rv-fg4.mjs)
+- **STILL-PRESENT** — Mobile: two different back controls in one panel: At 390 the discarded detail shows both '‹ All actions' and '‹ All discarded items'. The file tables are 3 columns, scrollWidth 362/362/362/362/369 in 362px wrappers; page scrollWidth 390. (rv-fg3.mjs, rv-fg.mjs)

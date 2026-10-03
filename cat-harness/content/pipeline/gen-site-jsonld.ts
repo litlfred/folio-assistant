@@ -41,10 +41,11 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  CONTENT_CONTEXT_URL,
+  SITE_DOCUMENT_CONTEXT,
+  siteNodeSitePath,
   SITE_PAGE_TYPES,
   SITE_NARRATIVE_TYPES,
   SITE_ASSET_TYPES,
@@ -52,9 +53,30 @@ import {
 } from "../../schemas/jsonld.ts";
 import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
 import { portableSegment } from "../../schemas/portable-path";
+import { repoRootFor, siteDirFor, sourceLinks } from "../../schemas/cat-harness.ts";
+import { detectRepoUrl } from "../../src/core/git-refs.js";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
+const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
+// The same fallback `gen-docs-pages.ts` uses, so the two generators name one
+// forge — and so the output does not depend on how this checkout was cloned.
+const REPO_WEB = detectRepoUrl(REPO_ROOT) ?? "https://github.com/litlfred/folio-assistant";
+
+/**
+ * `sourceDocument` as an ADDRESS, not a path — #1772. It is a link-type term
+ * (`@id` in the content context), and `check:context-emission` refuses a file
+ * path there: a reader resolving a relative path against the node's own IRI
+ * lands somewhere that is not the file. The asset's `source` is relative to
+ * this instance, and may now leave it (`../smart-base/processes/…`, since a
+ * content-type process lives with its skill), so it is resolved against the
+ * REPOSITORY and published as the forge's view URL — one rule for every asset,
+ * moved or not.
+ */
+function sourceDocumentIri(source: string): string {
+  const repoPath = relative(REPO_ROOT, resolve(INSTANCE_ROOT, source)).split("\\").join("/");
+  return sourceLinks(REPO_WEB, repoPath, "main")?.viewHref ?? source;
+}
 
 const check = process.argv.includes("--check");
 let written = 0;
@@ -81,9 +103,34 @@ function emit(path: string, doc: Record<string, unknown>): void {
   written++;
 }
 
+/**
+ * The site directory, where each node is ALSO published at the path its `@id`
+ * names — issue #1908. Before this the nodes lived only under `content/docs/`,
+ * which the site does not serve, so every `site/…` IRI (and every todo's
+ * `target` edge to one) named nothing a reader could open.
+ */
+const SITE_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
+/**
+ * Write the node beside its source AND at its published path.
+ *
+ * The published copy is skipped, loudly, for an id that does not encode to
+ * itself: a static host decodes `%3A` before looking for the file, so the
+ * file a percent-encoded IRI names cannot be written portably. Every id in
+ * the corpus today is a slug, so this reports nothing.
+ */
+function emitBoth(source: string, sitePath: string, doc: Record<string, unknown>): void {
+  emit(source, doc);
+  if (sitePath.includes("%")) {
+    console.error(`  ! ${sitePath}: the id does not encode to itself — not published at its IRI`);
+    return;
+  }
+  emit(join(SITE_DIR, sitePath), doc);
+}
+
 function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string, unknown> {
   const doc: Record<string, unknown> = {
-    "@context": CONTENT_CONTEXT_URL,
+    "@context": SITE_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug, node.id),
     "@type": [...(node.asset ? SITE_ASSET_TYPES : SITE_NARRATIVE_TYPES)],
     label: node.id,
@@ -102,7 +149,7 @@ function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string,
     // `sourceDocument` is the EDITABLE source (`.bpmn`), never the rendered
     // `.svg`. The renderer's own rule is that the SVG is never hand-edited, so
     // an edge naming it as the source would point a reader at a build product.
-    doc.sourceDocument = node.asset.source;
+    doc.sourceDocument = sourceDocumentIri(node.asset.source);
     doc.meta = {
       assetKind: node.asset.kind,
       rendered: node.asset.rendered,
@@ -146,8 +193,8 @@ for (const flat of flats) {
   }
   const page = ((await import(manifest)) as { default: WebPage }).default;
 
-  emit(join(SRC_DIR, flat, `${flat}.jsonld`), {
-    "@context": CONTENT_CONTEXT_URL,
+  emitBoth(join(SRC_DIR, flat, `${flat}.jsonld`), siteNodeSitePath(page.slug), {
+    "@context": SITE_DOCUMENT_CONTEXT,
     "@id": siteIri(page.slug),
     "@type": [...SITE_PAGE_TYPES],
     label: page.slug,
@@ -170,7 +217,11 @@ for (const flat of flats) {
     // in the corpus today is a slug and encodes to itself, so no emitted path
     // moves — but the knowledge graph this reads also holds `req:*` ids, and
     // one reaching here would write a name NTFS cannot create.
-    emit(join(SRC_DIR, flat, "nodes", `${portableSegment(node.id)}.jsonld`), nodeDoc(page, node, flat));
+    emitBoth(
+      join(SRC_DIR, flat, "nodes", `${portableSegment(node.id)}.jsonld`),
+      siteNodeSitePath(page.slug, node.id),
+      nodeDoc(page, node, flat),
+    );
     nodes++;
   }
 }

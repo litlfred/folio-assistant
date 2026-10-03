@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/translation-manager.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/library-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/translation-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/translation-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/translation-manager.md){: .fa-edit-source }
 
 {% raw %}
 # Translation manager
 
-> Skill id: `translation-manager` · Capability: `translation` · Package:
+> Skill id: `translation-manager` · Package:
 > `folio-core`
 
 Manage the translation lifecycle for folio content. This skill covers the full
@@ -608,6 +608,16 @@ The `translations/` directory contains **only** three file types:
 Rendered output lives in `docs/<locale>/`; QA and status are properties of
 the TranslationNode manifest.
 
+**An instance with no `translations` directory of its own is hosted.**
+`translationsHomeFor` (`schemas/cat-harness.ts`) puts its templates in the
+extracting harness's `translations/<locale>/<stub>/` —
+`cat-harness/translations/<locale>/bootstrap/processes/*.pot` for bootstrap's
+three diagrams — rather than inside the instance, which holds no translation
+machinery. The templates are extracted from the bootstrap the harness has
+pinned; when bootstrap is its own repository they stay here, since a
+template is the harness's work over bootstrap's text, not part of it
+([`kg-separation`](kg-separation.md) §"The pair").
+
 ## WHO smart-base integration
 
 The WHO `smart-base` repository defines the formal actor
@@ -616,7 +626,7 @@ The WHO `smart-base` repository defines the formal actor
 `SGAuthoring.Skills.ReviewTranslations`.
 
 Follow the principle in
-[`smart-base-tools.md`](smart-base-tools.md):
+`smart-base-tools.md` (smart-base):
 **load it; never vendor it.** The translation subsystem is invoked from the
 smart-base checkout, not copied.
 
@@ -707,7 +717,7 @@ skill to provide before/after URL comparison tables. See
 
 | process | step(s) that name it |
 |---|---|
-| [Human Translation Workflow](../../processes/human-translation-workflow.html) | Identify content and target locale; Assign to qualified human translator; Check translation completeness; Request completion of remaining strings; Receive assignment and materials; Translate strings in preferred tool; Submit completed .po file; Review translation for accuracy; Return for correction with annotations; Sign off translation as official; Extract POT (translatable strings); Prepare domain glossary; Inject PO → translated Markdown; Round-trip translation QA; Append WHO disclaimer (if DAK); Write status.json (official) |
 | [Narrative review](../../processes/review-narrative.html) | Review the translation |
+| [Human Translation Workflow](../../processes/human-translation-workflow.html) | Identify content and target locale; Assign to qualified human translator; Check translation completeness; Request completion of remaining strings; Receive assignment and materials; Translate strings in preferred tool; Submit completed .po file; Review translation for accuracy; Return for correction with annotations; Sign off translation as official; Extract POT (translatable strings); Prepare domain glossary; Inject PO → translated Markdown; Round-trip translation QA; Append WHO disclaimer (if DAK); Write status.json (official) |
 | [Translation Workflow](../../processes/translation-workflow.html) | Extract translatable strings (POT generation); Produce translation (PO file); Inject translations (PO → Markdown); Round-trip translation QA (back-translate); Adjudicate flagged passage (human reviewer) (calls a sub-process); Edit the flagged passage and re-inject; Write status.json (unofficial); Sign off translation (human adjudicator); Write status.json (official); Check staleness (source hash) |
 

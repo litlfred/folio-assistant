@@ -429,19 +429,19 @@ const PENDING: readonly { file: string; names: number }[] = [
   // and has no single destination — so it goes where everything else that
   // qualifies goes.
   { file: "cat-harness/scripts/check-reference-direction.ts", names: 4 },
-  { file: "cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md", names: 8 },
-  { file: "cat-harness/skills/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md", names: 8 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 },
   { file: "cat-harness/docs/cat-harness/published-graphs.md", names: 4 },
   { file: "cat-harness/cat-harness.json", names: 2 },
   { file: "cat-harness/schemas/avatars.ts", names: 6 },
   { file: "cat-harness/scripts/partition/instance-rules.ts", names: 2 },
-  { file: "cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
-  { file: "cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
   { file: "folio-assistant-core/scripts/ingest-ig-artifacts.ts", names: 3 },
-  { file: "cat-harness/schemas/ig-chrome.ts", names: 6 },
+  { file: "fhir-harness/schemas/ig-chrome.ts", names: 5 },
   { file: "cat-harness/schemas/cat-harness.ts", names: 2 },
-  { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
-  { file: "cat-harness/skills/folio-core/directory-conventions.md", names: 2 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
+  { file: "cat-harness/skills/kg/kg-core/directory-conventions.md", names: 2 },
   // declared-path-literal: a FINDING's location, recorded repo-root-relative because that is
   // what `analyse` reports. No declaration can answer where a finding is, and this one does not
   // resolve from THIS instance's root because the file is in another instance — which is the
@@ -450,19 +450,19 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "fhir-harness/fhir-harness.json", names: 6 },
   { file: "cat-harness/schemas/jsonld.ts", names: 2 },
   { file: "fhir-harness/AGENTS.md", names: 4 },
-  { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
-  { file: "cat-harness/skills/folio-core/kg-export.md", names: 2 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
+  { file: "cat-harness/skills/kg/kg-core/kg-export.md", names: 2 },
   { file: "cat-harness/schemas/graph-kind-registry.ts", names: 2 },
   { file: "cat-harness/scripts/dak-pdf.ts", names: 2 },
   { file: "cat-harness/scripts/external-schemas.ts", names: 3 },
   { file: "cat-harness/docs/methodologies/index.md", names: 2 },
   { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md", names: 2 },
-  { file: "cat-harness/schemas/dak.ts", names: 2 },
+  { file: "smart-base/schemas/dak.ts", names: 2 },
   { file: "cat-harness/schemas/namespaces.ts", names: 2 },
   { file: "cat-harness/scripts/kg-export.ts", names: 2 },
   { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
   { file: "cat-harness/tools/discover.ts", names: 2 },
-  { file: "cat-harness/skills/folio-core/harness-tiles.md", names: 2 },
+  { file: "cat-harness/skills/ui/ui-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
   { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
   { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },
@@ -476,7 +476,8 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "smart-base/tools/index.ts", names: 2 },
   { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md", names: 2 },
   { file: "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md", names: 2 },
-  { file: "cat-harness/scripts/ingest-ig-chrome.ts", names: 2 },
+  { file: "fhir-harness/scripts/ingest-ig-chrome.ts", names: 2 },
+  { file: "fhir-harness/scripts/gen-ig-pages.ts", names: 3 },
   { file: "cat-harness/docs/processes/index.md", names: 2 },
   { file: "smart-ig/smart-ig.json", names: 2 },
 ];
@@ -851,7 +852,6 @@ export function buildDirectionResult(args: {
     script,
     scriptAbsPath: args.scriptAbsPath ?? join(import.meta.dir, "check-reference-direction.ts"),
     subject: { kind: "reference-direction", id: "instances" },
-    now: args.now,
     families: {
       "multi-destination-unlisted": {
         summary:
@@ -914,7 +914,7 @@ export function buildDirectionResult(args: {
  * for `health`, and the reason it is a hash rather than an age.
  */
 export function comparableDirection(r: QaResult): string {
-  const { updated_at: _when, total: _total, families, ...rest } = r;
+  const { total: _total, families, ...rest } = r;
   const graded = Object.fromEntries(Object.entries(families).filter(([k]) => k !== CENSUS_FAMILY));
   return JSON.stringify({ ...rest, families: graded });
 }

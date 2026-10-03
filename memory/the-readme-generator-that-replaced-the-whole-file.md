@@ -4,11 +4,12 @@ id: the-readme-generator-that-replaced-the-whole-file
 label: trap
 summary: "the README generator that replaced the whole file"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `scripts/generate-readme.sh` ended in `cp "$OUT" README.md`. It held one
 folio's content **in the platform**: the title `# Quantum Observable
@@ -33,7 +34,7 @@ chapters, simulators and workflows for the same reason a paper folio does,
 and simply never carries the Lean markers.
 
 **Archived 2026-09-19** (bean `folio-assistant-4kiw`). Superseded by
-`skills/folio-core/placement.md` §"The worked failure this skill exists to
+`skills/kg/kg-core/placement.md` §"The worked failure this skill exists to
 prevent", which restates this sentence for sentence — the `cp "$OUT"
 README.md`, the title, the three badges, the Knot Registry, the Project
 Structure table, the CC BY 4.0 block, *"Run it in any other folio and the

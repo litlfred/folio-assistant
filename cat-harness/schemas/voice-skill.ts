@@ -7,7 +7,7 @@
  * do, it is bound to processes by name, and it is versioned with the graph. It
  * was kept as a bare `voices/<id>.json` only because it started as data, and
  * that split has a cost the rest of this file is about — the INSTRUCTIONS for
- * writing in a voice ended up in `skills/folio-core/voice-authoring-guidance.md`
+ * writing in a voice ended up in `skills/authoring/authoring-core/voice-authoring-guidance.md`
  * in the PLATFORM, restating another instance's rules without their citations
  * (bean `btuv`). A voice that is a skill has nowhere to leak to: its
  * instructions and its rules are the same node, owned by the same instance.
@@ -40,6 +40,7 @@
  */
 
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import {
   VoiceRuleSchema,
@@ -197,9 +198,9 @@ export const VoiceSkillSchema = z
       .array(
         z.object({
           title: z.string().min(1),
-          instance: z.string().min(1).optional(),
+          instance: RepoFullNameSchema.optional(),
           libraryId: z.string().min(1).optional(),
-          kgRef: z.string().min(1).optional(),
+          path: z.string().min(1).optional(),
           url: z.string().url().optional(),
           year: z.number().int().optional(),
         }),

@@ -8,12 +8,30 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "who-style-guide/glossary" as pkg_who_style_guide_glossary <<glossary>> {
+  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_who_style_guide_glossary_glossary
+}
+package "who-style-guide/qa" as pkg_who_style_guide_qa <<qa>> {
+  class "kg-qa/v1" as who_style_guide_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa/v1'
+    subject [1] : object
+    source_hash [1] : string | null
+    criteria [1] : map<object>
+    totals [1] : map<number>
+    pair_attestations [0..1] : any
+    voice_reviews [0..1] : any
+  }
+  class "kg-qa-manifest/v1" as who_style_guide_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa-manifest/v1'
+    auditor [1] : object
+  }
+}
 package "who-style-guide/voices" as pkg_who_style_guide_voices <<voices>> {
   class "Source" as who_style_guide_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
     title [1] : string
     instance [0..1] : string
     libraryId [0..1] : string
-    kgRef [0..1] : string
+    path [0..1] : string
     url [0..1] : string<uri>
     year [0..1] : integer
   }
@@ -46,34 +64,11 @@ package "who-style-guide/voices" as pkg_who_style_guide_voices <<voices>> {
     sources [1..*] : Source[]
     rules [1..*] : Rule[]
     overlaySeverity [0..1] : critical | major | minor
-    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification>
+    appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification | code>
     provenance [1] : assertion | evidence | house
     extends [0..1] : object
     activeIn [0..1] : object
     superseded [0..1] : object
-  }
-}
-package "who-style-guide/qa" as pkg_who_style_guide_qa <<qa>> {
-  class "Pair_attestation" as who_style_guide_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
-    kind [1] : implements | co-located
-    prose [1] : string
-    code [1] : string
-    prose_hash [1] : string
-    code_hash [1] : string
-    by [1] : baseline | agent | human
-    reason [0..1] : string
-  }
-  class "kg-qa/v1" as who_style_guide_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa/v1'
-    subject [1] : object
-    source_hash [1] : string | null
-    criteria [1] : map<object>
-    totals [1] : map<number>
-    pair_attestations [0..*] : Pair_attestation[]
-  }
-  class "kg-qa-manifest/v1" as who_style_guide_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa-manifest/v1'
-    auditor [1] : object
   }
 }
 
@@ -81,7 +76,6 @@ who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Source : s
 who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Pattern : patterns
 who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Terminology : terminology
 who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Rule : rules
-who_style_guide_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_style_guide_qa_kg_qa_v1_Pair_attestation : pair_attestations
-' grid: portrait, 1 column(s) — pkg_who_style_guide_voices pkg_who_style_guide_qa
-pkg_who_style_guide_voices -[hidden]down- pkg_who_style_guide_qa
+' grid: portrait, 2 column(s) — pkg_who_style_guide_glossary pkg_who_style_guide_qa pkg_who_style_guide_voices
+pkg_who_style_guide_glossary -[hidden]down- pkg_who_style_guide_voices
 @enduml

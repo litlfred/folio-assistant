@@ -12,6 +12,10 @@ import {
   validateRelaxations,
   type Relaxation,
 } from "../../src/workflow/gate";
+import { workflowFile } from "../known-skills.ts";
+
+/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+const HARNESS = resolve(import.meta.dir, "../..");
 
 /**
  * The decision in bean `bcnl`: **strict at the base, relaxable by content
@@ -27,9 +31,16 @@ import {
  * name the gate itself.
  */
 
-const WF = resolve(import.meta.dir, "../../processes");
+/**
+ * Where a shipped diagram lives. Not one directory: a content-type process is
+ * held by the instance that owns its skills (`l2-dak-authoring` in smart-base,
+ * #1772; the paper and document processes since placement PR3, bean `63wl`),
+ * and each instance groups its diagrams by concern. So a diagram is found by
+ * NAME through the declared `processes` graphs.
+ */
+const processFile = (f: string): string => workflowFile(HARNESS, `${f}.bpmn`);
 const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
-const editing = () => loadProcessModel(join(WF, "editing-hci-validation.bpmn"));
+const editing = () => loadProcessModel(workflowFile(HARNESS, "editing-hci-validation.bpmn"));
 
 const relax = (over: Partial<Relaxation> = {}): Relaxation => ({
   process: "Process_Editing",
@@ -42,18 +53,18 @@ const relax = (over: Partial<Relaxation> = {}): Relaxation => ({
 describe("the base is strict and the content-type processes are not", () => {
   test("the three content-agnostic processes enforce", async () => {
     for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle"]) {
-      expect((await loadProcessModel(join(WF, `${f}.bpmn`))).enforcement).toBe("strict");
+      expect((await loadProcessModel(workflowFile(HARNESS, `${f}.bpmn`))).enforcement).toBe("strict");
     }
   });
 
   test("the three per-content-type processes are advisory", async () => {
     for (const f of ["authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      expect((await loadProcessModel(join(WF, `${f}.bpmn`))).enforcement).toBe("advisory");
+      expect((await loadProcessModel(processFile(f))).enforcement).toBe("advisory");
     }
   });
 
   test("an advisory process allows a step that is not enabled, and says why", async () => {
-    const model = await loadProcessModel(join(WF, "authoring-a-paper.bpmn"));
+    const model = await loadProcessModel(workflowFile(HARNESS, "authoring-a-paper.bpmn"));
     const state = startInstance(model, { id: "g0", subject: "paper" });
     const v = checkGate(model, state, "Task_Publish", []);
     expect(v.allowed).toBe(true);
@@ -119,7 +130,7 @@ describe("what a package may NOT relax", () => {
   });
 
   test("release authorisation cannot be relaxed either", async () => {
-    const model = await loadProcessModel(join(WF, "draft-to-publication.bpmn"));
+    const model = await loadProcessModel(workflowFile(HARNESS, "draft-to-publication.bpmn"));
     const r = relax({ process: "Process_Publication", activity: "Task_AuthorizeRelease" });
     expect(() => validateRelaxations([r], [model])).toThrow(/relaxable="false"/);
   });
@@ -141,6 +152,9 @@ describe("reading the package policy files", () => {
   test("a relaxation with no reason does not load", () => {
     const repo = mkdtempSync(join(tmpdir(), "policy-"));
     mkdirSync(join(repo, "skills", "pkg"), { recursive: true });
+    // A PACKAGE HOLDS A SKILL. The policy files are read from the packages
+    // discovery finds, and a directory holding no skill is not one (bean 9umr).
+    writeFileSync(join(repo, "skills", "pkg", "a-skill.md"), "# A skill\n");
     writeFileSync(
       join(repo, "skills", "pkg", "workflow-policy.json"),
       JSON.stringify({ relaxations: [{ process: "Process_Editing", activity: "Task_SmeReview" }] }),
@@ -154,6 +168,9 @@ describe("reading the package policy files", () => {
   test("a policy file claiming to be a different package does not load", () => {
     const repo = mkdtempSync(join(tmpdir(), "policy-"));
     mkdirSync(join(repo, "skills", "pkg"), { recursive: true });
+    // A PACKAGE HOLDS A SKILL. The policy files are read from the packages
+    // discovery finds, and a directory holding no skill is not one (bean 9umr).
+    writeFileSync(join(repo, "skills", "pkg", "a-skill.md"), "# A skill\n");
     writeFileSync(
       join(repo, "skills", "pkg", "workflow-policy.json"),
       JSON.stringify({ package: "somewhere-else", relaxations: [] }),
@@ -175,7 +192,7 @@ describe("the relaxations this repo actually ships", () => {
     const models = await Promise.all(
       ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
        "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"].map((f) =>
-        loadProcessModel(join(WF, `${f}.bpmn`)),
+        loadProcessModel(processFile(f)),
       ),
     );
     const relaxations = loadRelaxations(INSTANCE_ROOT);

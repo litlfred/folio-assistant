@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/narrative-asserts-code.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/narrative-asserts-code.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/narrative-asserts-code.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md){: .fa-edit-source }
 
 {% raw %}
 # Does the prose say what the code does?
@@ -74,7 +74,7 @@ nothing from you.
 
 For a **proof ↔ Lean** pair, a proof assistant can settle the formal claim
 mechanically, which no other pair kind allows. That work belongs to
-[`proof-narrative-lean-equivalence`](proof-narrative-lean-equivalence.md):
+`proof-narrative-lean-equivalence` (folio-assistant-sci):
 stub-weakening, overreach, hypothesis mismatch and notation drift. This skill
 states the question for every pair kind, and that one answers it for Lean.
 Nothing Lean-specific goes here (requirement R5), so a pair kind added later

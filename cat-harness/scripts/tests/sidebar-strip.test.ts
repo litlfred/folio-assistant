@@ -145,16 +145,6 @@ describe("at rest it is a strip, not an absence", () => {
     }
   });
 
-  it("the [x] anchors to the bar, not to a scroll that no longer exists", () => {
-    // `sticky; top: 0` lifted it to the top of `.side-bar`'s scroll, which
-    // worked only while `.side-bar` WAS the scroll container. It is painted
-    // from `.site-footer`, the last child, so a sticky one now sits at the
-    // BOTTOM of the navbar.
-    const close = ruleWith("width: 1.75rem");
-    expect(close).toContain("position: absolute");
-    expect(close).not.toContain("position: sticky");
-  });
-
   it("is scoped above the theme's breakpoint, never applied to the phone", () => {
     // Below 50rem the theme is not `fixed` and has its own hamburger. Bound to
     // the RULE, not to the presence of the string: a later
@@ -186,32 +176,26 @@ describe("three ways in, one way back", () => {
     expect(opener).toMatch(/z-index:\s*\d+/);
   });
 
-  it("shows the [x] only while pinned — never alone in the strip", () => {
-    // An `[x]` as the only thing in a 3.5rem strip reads as a close button for
-    // the page.
-    expect(block).toContain(".fa-nav-close { display: none; }");
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-close");
-  });
-
-  it("hides the ☰ once pinned — two controls for one state is one too many", () => {
-    // BOTH vocabularies. `sjic` moved the sidebar's markup to `lib/navbar.ts`,
-    // which calls this control `.fa-nav-head`; the hand-written Liquid called
-    // it `.fa-nav-toggle`. One rule, two selectors — asserting only the old
-    // name would have passed while the renderer's control stayed visible.
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-toggle");
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-head");
-    expect(block).toContain("display: none;");
+  it("draws no ☰ and no [x] — the avatar is the one control (ob3m finding 8)", () => {
+    // Owner, 2026-10-01, option 1 of 4: remove them on theme pages as #1762
+    // did on the rail. Every rule that styled them sat inside the 50rem
+    // block, so below 800px a copy rendered unstyled. No rule may name them,
+    // in the block or anywhere else in the file.
+    const bare = read("cat-harness/docs/assets/css/docs-ui.css").replace(/\/\*[\s\S]*?\*\//g, "");
+    expect(bare).not.toContain(".fa-nav-close");
+    expect(bare).not.toContain(".fa-nav-toggle");
+    expect(bare).not.toContain(".fa-nav-head");
   });
 });
 
 describe("the controls live inside the sidebar now", () => {
-  it("all three are in the sidebar's own include", () => {
-    // `fa-nav-head` is what the renderer calls the ☰; `fa-nav-toggle` was the
-    // hand-written name for the same control. The QUESTION — are all three
-    // controls painted from inside the sidebar — is unchanged.
-    for (const cls of ["fa-nav-open", "fa-nav-close", "fa-nav-head"]) {
-      expect({ cls, present: inside.includes(cls) }).toEqual({ cls, present: true });
-    }
+  it("the checkbox is in the sidebar's own include, and no ☰ or [x] (#1757)", () => {
+    // There were three controls: the checkbox, the `☰` (`fa-nav-head`) and the
+    // `[x]` (`fa-nav-close`). The owner asked for the last two to go — they
+    // duplicated the avatar, which `docs-ui.js` makes toggle this checkbox.
+    expect(inside).toContain("fa-nav-open");
+    expect(inside).not.toContain("fa-nav-close");
+    expect(inside).not.toContain("fa-nav-head");
   });
 
   it("and `footer_custom.html` carries none of them", () => {
@@ -221,17 +205,12 @@ describe("the controls live inside the sidebar now", () => {
     expect(outside).not.toContain("fa-nav");
   });
 
-  it("both labels drive the same checkbox", () => {
-    const id = /<input[^>]*class="fa-nav-open"[^>]*id="([^"]+)"/.exec(inside)?.[1];
-    expect(id).toBeDefined();
+  it("no label drives the checkbox from the include — the avatar does", () => {
     // PER RENDERED VARIANT. The generated include carries the canonical and
-    // staging renderings behind one Liquid conditional, so the file holds four
-    // and a PAGE receives two — measured on a real build: one `#fa-nav-open`.
+    // staging renderings behind one Liquid conditional.
     const variants = inside.split("{%- else -%}");
     expect(variants).toHaveLength(2);
-    for (const v of variants) {
-      expect([...v.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
-    }
+    for (const v of variants) expect(v).not.toMatch(/<label[^>]*for="fa-nav-open"/);
   });
 
   it("the checkbox is focusable, not `display: none`", () => {
@@ -244,29 +223,12 @@ describe("the controls live inside the sidebar now", () => {
     expect(block).not.toMatch(/left:\s*-9{3,}px/);
   });
 
-  it("both controls have an accessible name — this is navigation", () => {
-    for (const cls of ["fa-nav-close", "fa-nav-head"]) {
-      const label = new RegExp(`<label[^>]*class="${cls}"[^>]*>([\\s\\S]*?)</label>`).exec(inside)?.[1] ?? "";
-      // THE REQUIREMENT IS A NAME, not a particular class.
-      //
-      // `fa-sr-only` was the template's visually-hidden class and `fa-nav-sr`
-      // is the renderer's. But the renderer names its ☰ a third way, and the
-      // better one: `fa-nav-name` is REAL TEXT — the instance's name, beside
-      // the glyph, visible whenever the navbar is open. A visually-hidden span
-      // is what you reach for when there is no visible text to use; there is.
-      //
-      // Listing the mechanism rather than the property is how this test nearly
-      // taught the wrong lesson: it failed against a control that was named,
-      // and the first fix attempt was to hide that name with `display: none`
-      // — which would have removed it from the accessibility tree and left the
-      // control genuinely nameless, passing a test about naming.
-      const named =
-        label.includes("fa-sr-only") ||
-        label.includes("fa-nav-sr") ||
-        label.includes("fa-nav-text") ||
-        label.includes("fa-nav-name");
-      expect({ cls, named }).toEqual({ cls, named: true });
-    }
+  it("the control that remains has an accessible name — this is navigation", () => {
+    // With the ☰ and [x] gone (#1757), the one control is the theme's avatar
+    // link, and `docs-ui.js` names it by what a click does.
+    const js = readFileSync(join(import.meta.dir, "../../docs/assets/js/docs-ui.js"), "utf8");
+    expect(js).toContain('avatar.title = box.checked ? "Close navigation" : "Open navigation"');
+    expect(js).toContain('avatar.setAttribute("aria-expanded"');
   });
 });
 

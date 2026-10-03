@@ -28,8 +28,47 @@ import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schema
  * one directory along.
  */
 const OWN_INSTANCE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * Which directories a known-skills question is asked over (placement PR0a,
+ * bean `ejye`).
+ *
+ * - `"instance"` — the instance at `root` alone, through its own declaration.
+ *   Since PR0 this sees nothing above it: cat-harness no longer declares its
+ *   dependents' directories.
+ * - `"checkout"` — `root` and every instance the checkout stacks ON it
+ *   (`checkoutDirectories` with `stackedOn`), which is what a CORPUS-WIDE
+ *   tool shipped by `root` asks. Its own dependencies are not added: callers
+ *   that resolve downward already walk `orderedDependencies`. Paths are still
+ *   composed relative to `root`, so a caller's ids do not change shape.
+ *
+ * Before PR0 the corpus-wide answer came from 19 `scope: "repository"`
+ * mirrors in the platform's declaration, so every call with the platform's
+ * root was silently corpus-wide. The DEFAULT is therefore
+ * {@link corpusScopeFor} — that same behaviour, now a rule rather than a
+ * declaration, so no caller shrinks in silence — and the corpus-wide scripts
+ * also say so at the call site. Pass `"instance"` to ask about the platform
+ * alone, which is what the cmsl falsifier ("resolved alone, it sees nothing
+ * above it") is held to.
+ */
+export type CorpusScope = "instance" | "checkout";
+
+/**
+ * The scope a platform tool asks over when it is pointed at `root`: the
+ * CHECKOUT when `root` is the platform instance that ships these tools — the
+ * corpus-wide run, which is what the mirrors made every such run — and the
+ * instance alone otherwise (`kg-audit --instance core` audits core, not core
+ * and everything stacked on it). This is the pre-PR0 behaviour stated as a
+ * rule instead of produced by a declaration, which is the whole of PR0a for a
+ * known-skills caller.
+ */
+export function corpusScopeFor(root: string): CorpusScope {
+  return resolve(root) === OWN_INSTANCE ? "checkout" : "instance";
+}
 import { readRoleGraph, type RoleGraph } from "../schemas/role-graph.js";
-import { orderedDependencies } from "../schemas/harness-config.js";
+import { checkoutDirectories, orderedDependencies } from "../schemas/harness-config.js";
+import { packageDirsIn } from "./skill-topics.js";
+import { checkoutRoleGraph } from "../schemas/scenario-overlay.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -69,7 +108,7 @@ import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-mat
 // holds a different NODE KIND, and a scan that took them for skills would
 // publish a convention as something an activity could implement.
 export const NON_SKILL_GROUPS = new Set([
-  "actors", "capabilities", "roles", "hooks", "requirements", "conventions",
+  "actors", "capabilities", "roles", "hooks", "requirements", "conventions", "skill-definitions",
 ]);
 
 /**
@@ -105,9 +144,12 @@ function holdsMarkdown(abs: string): boolean {
  * `bootstrap/skills/` the generator demanded a heading for a package called
  * "skills".
  */
-export function kgDirectories(root: string): Array<{ id: string; path: string; absPath: string }> {
+export function kgDirectories(
+  root: string,
+  scope: CorpusScope = corpusScopeFor(root),
+): Array<{ id: string; path: string; absPath: string }> {
   try {
-    return resolveDirectories([{ name: "(local)", root, own: true }])
+    return (scope === "checkout" ? checkoutDirectories(root, { stackedOn: root }) : resolveDirectories([{ name: "(local)", root, own: true }]))
       // EXACTLY ONE knowledge-graph kind, not merely including one.
       //
       // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
@@ -183,16 +225,21 @@ export function kgDirectories(root: string): Array<{ id: string; path: string; a
  * first root is the `dh4f` defect arriving through the helper written to
  * prevent it. One root is today's shape, never the contract.
  */
-export function roleGraphFor(root: string): RoleGraph | undefined {
+export function roleGraphFor(root: string, scope: CorpusScope = corpusScopeFor(root)): RoleGraph | undefined {
+  // NOT `kgRoots(root, "checkout")`: that is deepest-first, so its first role
+  // graph is bootstrap's 4 roles rather than this instance's 48 — the `[0]`
+  // hazard above, one level out. The checkout's answer is this instance's
+  // own graph with its DEPENDENTS' extensions overlaid by id (placement PR0b).
+  let own: RoleGraph | undefined;
   for (const r of kgRoots(root)) {
-    const g = readRoleGraph(r);
-    if (g !== undefined) return g;
+    own = readRoleGraph(r);
+    if (own !== undefined) break;
   }
-  return undefined;
+  return scope === "checkout" ? checkoutRoleGraph(root, own)?.graph : own;
 }
 
-export function kgRoots(root: string): string[] {
-  return kgDirectories(root).map((d) => d.absPath);
+export function kgRoots(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
+  return kgDirectories(root, scope).map((d) => d.absPath);
 }
 
 /**
@@ -325,7 +372,8 @@ export function isSkillMd(path: string): boolean {
  * Nothing had broken, and that is the point. All twelve resolved anyway
  * through a SECOND home — eleven because they also have a
  * `schemas/skills/<name>/` I/O contract, and `smart-base-tools` because it
- * also has `.claude/skills/local/smart-base-tools.json`. Delete any one of
+ * also had `.claude/skills/local/smart-base-tools.json` (now under
+ * `smart-base/skills/skill-definitions/`, bean `rqao`). Delete any one of
  * those second homes and `check-workflow-refs` reports a real, present skill
  * as dangling: the "wall of false dangling refs" this module's own header says
  * it exists to prevent, arriving from the module itself.
@@ -351,7 +399,7 @@ export function isSkillMd(path: string): boolean {
  * directory's name, because a name list is the thing this module exists to
  * stop and a directory's contents can be mixed.
  */
-export function skillMdDirs(root: string): string[][] {
+export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(root)): string[][] {
   const dirs: string[][] = [];
 
   // Every directory the instance DECLARES as holding a `cat-harness` graph —
@@ -365,7 +413,7 @@ export function skillMdDirs(root: string): string[][] {
   //
   // `resolveDirectories` supplies the defaults too, so an instance that
   // follows the convention still resolves `skills/` without declaring it.
-  for (const d of kgDirectories(root)) {
+  for (const d of kgDirectories(root, scope)) {
     // RELATIVE TO `root`, computed from the absPath the resolver already
     // produced — not from `d.path`, which is relative to whatever root the
     // entry's SCOPE names. Those were the same directory until the move (bean
@@ -392,10 +440,10 @@ export function skillMdDirs(root: string): string[][] {
     if (holdsMarkdown(d.absPath)) dirs.push(rel(d.absPath));
     // ...and its immediate subdirectories, which is how `skills/` is laid out
     // today: one package per subdirectory.
-    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const inner = join(d.absPath, e.name);
-      if (holdsMarkdown(inner)) dirs.push(rel(inner));
+    // ...or two, inside a topic the directory's `skills.json` declares
+    // (bean `9umr`) — so the package name is the LAST segment, not `p[1]`.
+    for (const p of packageDirsIn(d.absPath)) {
+      if (holdsMarkdown(p.dir)) dirs.push(rel(p.dir));
     }
   }
   // Not under `skills/`, so not reachable by the scan above.
@@ -420,7 +468,17 @@ export function skillMdDirs(root: string): string[][] {
       }
     }
   }
-  return dirs;
+  // ONE entry per directory. Over the checkout a directory can be reached two
+  // ways — sci's `skills/lean/` is a package of the `skills/` member AND a
+  // root declared from within it (placement PR0) — and every caller here walks
+  // what it is given, so a duplicate is every skill in it counted twice.
+  const seen = new Set<string>();
+  return dirs.filter((p) => {
+    const k = p.join("/");
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
 }
 
 
@@ -448,7 +506,7 @@ export function skillMdDirs(root: string): string[][] {
  * `remote-packages/`, so it was a THIRD definition. Under it,
  * `scientific-visualization`, `hypothesis-generation` and
  * `scientific-critical-thinking` read as dangling, and all three were deleted
- * from `skills/authoring-math/package-manifest.json` two hours after bean
+ * from `folio-assistant-sci/skills/content/authoring-math/package-manifest.json` two hours after bean
  * `m4zg` recorded that deleting them would be wrong. The evidence offered was a
  * `git log --diff-filter=A` search finding no file ever added for any of them —
  * which is the wrong question, because a remote skill has no file here by
@@ -487,9 +545,12 @@ export interface RemoteDeclaration {
  */
 export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
   const out: RemoteDeclaration[] = [];
-  const dir = join(kgRoots(root)[0] ?? join(root, "skills"), "remote-packages");
-  if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
+  // EVERY declared skills root, not `kgRoots(root)[0]`: a wrapper sits with
+  // the instance whose skills use it — sci holds `claude-scientific-skills`,
+  // fhir-harness `smarter-fhir` (placement PR1, bean `ybwt`) — and from the
+  // checkout the first root is the deepest instance's, which holds none.
+  const dirs = [...new Set(kgRoots(root).map((d) => resolve(d, "remote-packages")))].filter((d) => existsSync(d));
+  for (const dir of dirs) for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
     try {
       const p = JSON.parse(readFileSync(join(dir, f), "utf-8")) as {
         wrapper?: { skills?: string[] };
@@ -511,8 +572,8 @@ export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
  * a union at each call site, because the union IS the rule and two call sites
  * spelling it out is how they come to disagree.
  */
-export function manifestResolvableSkills(root: string): Set<string> {
-  return new Set([...knownSkills(root), ...remotePackageSkills(root)]);
+export function manifestResolvableSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
+  return new Set([...knownSkills(root, scope), ...remotePackageSkills(root)]);
 }
 
 /**
@@ -552,9 +613,9 @@ export function manifestResolvableSkills(root: string): Set<string> {
  * a lane or a role claims — so a wrong annotation is a finding rather than
  * a quiet exemption.
  */
-export function consultedSkills(root: string): Set<string> {
+export function consultedSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   const out = new Set<string>();
-  for (const parts of skillMdDirs(root)) {
+  for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir)) {
@@ -610,9 +671,9 @@ export function consultedSkills(root: string): Set<string> {
  * stays performed. Here, treating one as publishable would LEAK it, so it
  * stays unpublished.
  */
-export function unpublishedSkills(root: string): Set<string> {
+export function unpublishedSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   const out = new Set<string>();
-  for (const parts of skillMdDirs(root)) {
+  for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir)) {
@@ -631,10 +692,10 @@ export function unpublishedSkills(root: string): Set<string> {
 }
 
 /** Every skill name this instance can resolve. */
-export function knownSkills(root: string): Set<string> {
+export function knownSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   const names = new Set<string>();
 
-  for (const parts of skillMdDirs(root)) {
+  for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir)) {
@@ -738,9 +799,25 @@ export function knownSkills(root: string): Set<string> {
  * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
  * reads files from them rather than composing repo-relative ids.
  */
-export function workflowDirs(root: string): string[] {
+/**
+ * Whether a directory holds a `.bpmn` or `.dmn` at ANY depth.
+ *
+ * Recursive since placement PR3 (bean `63wl`): a declared `processes/` groups
+ * its diagrams by concern (`processes/sdlc/`, `processes/kg/decisions/`, …)
+ * and holds none directly, so the flat test this replaced reported a
+ * 59-diagram directory as empty — and every consumer then scanned nothing.
+ */
+function holdsDiagrams(dir: string): boolean {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && (e.name.endsWith(".bpmn") || e.name.endsWith(".dmn"))) return true;
+    if (e.isDirectory() && holdsDiagrams(joinPath(dir, e.name))) return true;
+  }
+  return false;
+}
+
+export function workflowDirs(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
   const out: string[] = [];
-  for (const d of kgDirectories(root)) {
+  for (const d of kgDirectories(root, scope)) {
     // `processes/`, the convention since 2026-09-21. An instance that has not
     // migrated declares its diagrams directly and is reached by the second
     // branch below, so no legacy name is needed here.
@@ -750,7 +827,7 @@ export function workflowDirs(root: string): string[] {
     // declares its diagrams directly instead.
     const wf = joinPath(d.absPath, "processes");
     if (existsSync(wf)) out.push(wf);
-    else if (readdirSync(d.absPath).some((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
+    else if (holdsDiagrams(d.absPath)) {
       out.push(d.absPath);
     }
   }
@@ -775,7 +852,7 @@ export function workflowDirs(root: string): string[] {
  * One call for the common case, so a caller that only wants the files does not
  * have to re-derive "and their `decisions/` subdirectory too".
  */
-export function workflowFiles(root: string): string[] {
+export function workflowFiles(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
   const out: string[] = [];
   const walk = (dir: string): void => {
     if (!existsSync(dir)) return;
@@ -785,11 +862,32 @@ export function workflowFiles(root: string): string[] {
       else if (e.name.endsWith(".bpmn") || e.name.endsWith(".dmn")) out.push(p);
     }
   };
-  for (const d of workflowDirs(root)) walk(d);
+  for (const d of workflowDirs(root, scope)) walk(d);
   // Belt and braces on top of `workflowDirs`'s own dedupe: a caller may pass
   // overlapping directories this function never chose, and the same file
   // reached twice is a duplicate `@id` downstream either way.
   return [...new Set(out)].sort();
+}
+
+/**
+ * One declared diagram by FILE NAME (`getting-started.bpmn`,
+ * `draft-qa-gate.dmn`), wherever its owner placed it.
+ *
+ * Placement PR3 (bean `63wl`) grouped every instance's diagrams by concern and
+ * moved the content-type ones up to their owners, so a path composed as
+ * `<instance>/processes/<name>` stopped being a fact about the diagram. A
+ * name is: `workflowFiles` already walks every declared `processes` graph in
+ * the corpus scope, so resolving through it survives the next regroup too.
+ * Throws rather than guessing when the name is absent or ambiguous.
+ */
+export function workflowFile(root: string, name: string, scope: CorpusScope = corpusScopeFor(root)): string {
+  const hits = workflowFiles(root, scope).filter((f) => basename(f) === name);
+  if (hits.length === 1) return hits[0]!;
+  throw new Error(
+    hits.length === 0
+      ? `no declared diagram named ${name} under ${root}`
+      : `${hits.length} declared diagrams are named ${name}: ${hits.join(", ")}`,
+  );
 }
 
 /**
@@ -800,9 +898,9 @@ export function workflowFiles(root: string): string[] {
  * {@link resolveSkillRef} say "ambiguous" instead of picking (#1168 B8).
  * A package is the declared directory's last segment, e.g. `folio-core`.
  */
-export function skillIndex(root: string): Map<string, string[]> {
+export function skillIndex(root: string, scope: CorpusScope = corpusScopeFor(root)): Map<string, string[]> {
   const out = new Map<string, string[]>();
-  for (const parts of skillMdDirs(root)) {
+  for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);
     if (!existsSync(dir)) continue;
     const pkg = parts[parts.length - 1] ?? "";

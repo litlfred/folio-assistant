@@ -1,16 +1,6 @@
 classDiagram
   direction TB
   namespace cat_harness__qa {
-    class cat_harness_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
-      <<json: KgQaReportSchema>>
-      kind [1] implements | co-located
-      prose [1] string
-      code [1] string
-      prose_hash [1] string
-      code_hash [1] string
-      by [1] baseline | agent | human
-      reason [0..1] string
-    }
     class cat_harness_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
       $schema [1] 'kg-qa/v1'
@@ -18,7 +8,8 @@ classDiagram
       source_hash [1] string | null
       criteria [1] map~object~
       totals [1] map~number~
-      pair_attestations [0..*] Pair_attestation[]
+      pair_attestations [0..1] any
+      voice_reviews [0..1] any
     }
     class cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
       <<json: KgQaManifestSchema>>
@@ -51,6 +42,8 @@ classDiagram
       cases [0..*] Case[]
       requirements [0..*] string[]
       updated_at [1] string
+      plan [0..1] object
+      sut [0..1] object
     }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
       <<ts: QaWitness>>
@@ -76,7 +69,6 @@ classDiagram
       $schema [1] 'qa-results/v1'
       producer [1]  /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; 
       subject [1]  kind: string; id: string 
-      updated_at [1] string
       families [1] Record~string, QaResultFamily~
       total [1] number
     }
@@ -113,12 +105,40 @@ classDiagram
       wrongDirection [1] number
       undeterminedDirection [1] number
     }
+    class cat_harness_qa_folio_lsi_index_v1["folio-lsi-index/v1"] {
+      <<ts: LsiSidecar>>
+      $schema [1] 'folio-lsi-index/v1'
+      method [1] string
+      instance [1] string
+      graph [1] string
+      path [1] string
+      docs [1] string[] | null
+      fingerprint [1] string
+      options [1] LsiOptions
+      units [1] number
+      terms [1] number
+      k [1] number
+      retained [1] number
+      dimensions [1] Array~ dim: number; sigma: number; positive: string[]; negative: string[] ~
+      findings [1]  nearDuplicates: Array~ a: string; b: string; cosine: number ~; narrowDimensions: Array~ dim: number; units: string[] ~; 
+      neighbours [1] Record~string, Array~[string, number]~~
+    }
+    class cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1["folio-tool-run/v1"] {
+      <<json: ToolRunRecordSchema>>
+      $schema [1] 'folio-tool-run/v1'
+      tool [1] string
+      target [1] string
+      outcome [1] succeeded | failed
+      inputFingerprint [1] string
+      detail [0..1] string
+    }
     class cat_harness_qa_viewer_nav_qa_v1_Page["Page"] {
       <<json: ViewerNavQaSchema>>
       path [1] string
       source [1] string
       verdict [1] railed | declined | missing
       reason [0..1] string
+      flags [0..*] enum(7)[]
     }
     class cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1["viewer-nav-qa/v1"] {
       <<json: ViewerNavQaSchema>>
@@ -128,10 +148,8 @@ classDiagram
       pages [0..*] Page[]
     }
   }
-  cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
   cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
   cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
-  cssClass "cat_harness_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
@@ -142,5 +160,7 @@ classDiagram
   cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_lsi_index_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_viewer_nav_qa_v1_Page" fa_uml_kind_qa
   cssClass "cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1" fa_uml_kind_qa

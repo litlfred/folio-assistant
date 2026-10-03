@@ -10,12 +10,13 @@
  * A green corpus run proves nothing here.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import { loadProcessModel } from "../../src/workflow/process-model.js";
 import { reachability } from "../../src/workflow/reachability.js";
+import { workflowFile, workflowFiles } from "../known-skills.ts";
 
 /** A one-process diagram from the body given. */
 async function model(body: string) {
@@ -25,7 +26,7 @@ async function model(body: string) {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">${body}</bpmn:process>
 </bpmn:definitions>
@@ -146,12 +147,12 @@ describe("the real corpus", () => {
     // Non-vacuous: without the count check this would pass over an empty
     // sweep. Measured 2026-09-23 across the corpus — 0 unreachable, 0 no-exit,
     // and exactly one pre-start gate.
-    const dir = join(import.meta.dir, "../../processes");
-    const files = readdirSync(dir).filter((f) => f.endsWith(".bpmn"));
+    const diagram = (n: string): string => workflowFile(join(import.meta.dir, "../.."), n);
+    const files = workflowFiles(join(import.meta.dir, "../..")).filter((f) => f.endsWith(".bpmn")).map((x) => basename(x));
     expect(files.length, "no diagrams found — this assertion would be vacuous").toBeGreaterThan(20);
     let gates = 0;
     for (const f of files) {
-      const r = reachability(await loadProcessModel(join(dir, f)));
+      const r = reachability(await loadProcessModel(diagram(f)));
       expect(r.unreachable.map((x) => x.where), `${f} has a stranded node`).toEqual([]);
       expect(r.noExit.map((x) => x.where), `${f} has a node with no exit`).toEqual([]);
       gates += r.preStart.length;

@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/evidence-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/evidence-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/evidence-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/evidence-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/evidence-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/evidence-review.md){: .fa-edit-source }
 
 {% raw %}
 # Evidence review — the same rule, a second instance
 
-> Skill id: `evidence-review` · Capability: `quality-assurance` · Package: `folio-core`
+> Skill id: `evidence-review` · Package: `folio-core`
 
 This skill exists to demonstrate a claim rather than to assert it.
 [`untainted-verification`](untainted-verification.md) states a discipline and

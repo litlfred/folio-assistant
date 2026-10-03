@@ -21,9 +21,10 @@ import {
   validateLatexAst,
 } from "./render-latex";
 import { generateMainTex } from "./generate-main-tex";
-import { runPreflight } from "./latex-preflight";
 import { collectReferencedTerms } from "./markdown-ast";
-import { resolveLeanFile, leanFileStatus } from "../../scripts/lean-coverage";
+// The LaTeX preflight and Lean coverage are the science layer's: reached
+// through pipeline slots that folio-assistant-sci fills (bean `squu`).
+import { leanFileStatus, resolveLeanFile, runPreflight } from "./pipeline-plugins";
 import { findContentRepoRoot, findPapers } from "./repo-root";
 
 // ── Build ────────────────────────────────────────────────────────
@@ -396,6 +397,16 @@ if (import.meta.main) {
     const preamblePath = resolve(
       preambleIdx >= 0 ? args[preambleIdx + 1] : join(import.meta.dir, "../../latex/preamble.tex"),
     );
+    // The platform carries no preamble since bean 0uu2 (it was one folio's,
+    // and the folio keeps the corrected copy), so the default above resolves
+    // only in a checkout that still has one. Say that, rather than ENOENT.
+    if (!existsSync(preamblePath)) {
+      console.error(
+        `--generate-main needs a preamble and ${preamblePath} does not exist. ` +
+          "Pass --preamble <the folio's preamble.tex>: the platform no longer carries one (bean 0uu2).",
+      );
+      process.exit(2);
+    }
     // Compute relative chapters dir from the main.tex output location
     const chaptersDirIdx = args.indexOf("--chapters-dir");
     const chaptersDir = chaptersDirIdx >= 0 ? args[chaptersDirIdx + 1] : "chapters/";
