@@ -107,3 +107,31 @@ in-tree write somebody else's race.
 `registry.test.ts` still renames `.claude/skills/registry.json` (untracked,
 generated) and restores it; nothing measured reads it concurrently, so it is
 left and named here rather than changed blind.
+
+## A `bun test --parallel` HANG at 3+ workers — mitigated, not root-caused
+
+CI shard 1/2 on `ca3468d19` ran 13+ minutes against a 2-minute norm (stopped by
+the 20-minute job cap added for exactly this); a local run showed one worker
+at 97 % CPU with every other worker gone. Reproduced on nine test files
+(`block-placement`, `editorial-cycle-detection`, `folio-root`,
+`infrastructure`, `lake-cache`, `latex-lean-coverage`, `lean-projects`,
+`uses-hygiene-remedy`, `vocab-mapping-fhir`), 12-30 s cap per run against a
+~2.5 s norm:
+
+| workers | hangs |
+|---|---|
+| 2 | **0 / 72** |
+| 3 | 8 / 20 |
+| 4 (default) | 7 / 32 |
+| `--isolate`, no workers | 0 / 12 |
+| any single file alone, 4 workers | 0 / 72 (8 per file) |
+
+Dropping each file in turn (3 workers, 12 runs): every removal still hung
+except `uses-hygiene-remedy.test.ts` → 0 / 12. Its tests are all skipped
+without a folio and its imports (`qa-checkers-uses`, `content-graph`,
+`qa-utils` → `block-module`) do no visible module-level looping, so the
+trigger is an interaction at 3+ workers, possibly in Bun itself — NOT yet
+root-caused. **Mitigation:** `bun test --parallel=2` across THREE shards
+(6 workers in all, vs 2 × 4), so the wall-clock holds. Open question for a
+follow-up: what in that import graph spins, and does it reproduce on a newer
+Bun.
