@@ -89,3 +89,62 @@ addressed by the commit it judges, so `route` is the wrong keying for it and
 file-COUNT row inside an otherwise authored README. That is a file both authored
 and derived, which neither `route` nor `main` cleanly owns — flagged here because
 it will not fall out of the mechanism and needs a person's ruling.
+
+## HOW the first Done-when is implemented — the mechanism already exists (2026-10-03)
+
+The first box says the `docs-auto` declaration is *"still unimplemented"*. It is
+— but **nothing has to be designed for it.** Read before building, and the
+registry already carries the exact relation the owner's ruling describes.
+
+`schemas/graph-kind-registry.ts` gives a graph kind three relevant fields:
+
+| field | what it does | precedent already using it |
+|---|---|---|
+| `within` | *"the kind this one is a SUB-GRAPH of"* | declared general by the owner 2026-09-23 (#1164), for `docs/proposals/` |
+| `declarationFile` | the kind's own nested declaration, naming its groups **from within** | `skills` → `skills.json`, `processes` → `processes.json` |
+| `storage` (on the directory) | `{ branch, keyedBy: "route" }` | this arc |
+
+So the owner's *"auto-docs is one declared subgraph, with declared sub-sub-graphs
+per writer"* is:
+
+- a `docs-auto` kind with **`within: "docs"`** — one declared subgraph, sitting
+  inside `docs` rather than beside it;
+- **`declarationFile: "docs-auto.json"`** — the sub-sub-graphs named from within,
+  one per writer;
+- `storage` on that directory, `keyedBy: "route"`.
+
+`check:graph-kind-within` already holds the relation and forbids a cycle, so the
+invariant is gated the day the entry lands.
+
+### This does NOT contradict the correction above, and the distinction matters
+
+§"CORRECTION, 2026-10-03" on `06e3` records that `docs-auto` is deliberately
+**not** a graph kind. Read in full, what it rejects is a kind *handled by
+`state-visualizer.ts`* — a **one-axis viewer generator**, where docs-auto is
+two-axis (TYPE × SUB-GRAPH) and *"there is nowhere to put the second axis
+without it becoming this file anyway"*.
+
+That is a claim about **which generator renders it**. `within` /
+`declarationFile` are about **how the graph is declared and navigated**. A kind
+can be registered, related and declared from within while still being rendered
+by its own generator — `gen-docs-auto.ts` stays exactly as it is, and the
+correction's reasoning is untouched.
+
+**Stated explicitly because the two readings are one word apart**, and taking the
+broader one would mean inventing a parallel mechanism beside a general relation
+the owner already ruled for.
+
+### The one trap, for whoever implements it
+
+`gen-docs-auto.ts` already holds the 11 types in `TYPES`, with `collect()`
+functions that cannot live in JSON. So `docs-auto.json` must be **generated from
+`TYPES`** with a `:check`, never hand-written — a hand-kept copy would be a
+second answer to "what auto-doc types exist", which is the failure this
+repository has paid for most often. The derivable fields are there: a type's
+`id` gives the path segment, `title` the description, and `graph` names the
+source graph it indexes.
+
+**Falsifier, stated before building:** if a sub-sub-graph needs a field that
+cannot be derived from `TYPES`, the manifest needs hand-authored content and the
+one-source claim fails — at which point the right shape is `TYPES` reading the
+manifest rather than the reverse.
