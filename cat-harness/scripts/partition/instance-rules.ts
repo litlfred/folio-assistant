@@ -414,6 +414,20 @@ export const RULES: Rule[] = [
       // same reason as `qa-store` — it reads the declaration and git, and no
       // folio's subject matter could make it answer differently.
       "scripts/branch-store.ts",             // a `keyedBy: "tip"` directory's own branch: one live copy
+      // The declaration-driven face of the same store (bean `2h76` part 3): it
+      // resolves a DIRECTORY ID to the branch its declaration names, so no
+      // caller hardcodes a branch through a rename. Harness-level for the same
+      // reason again: it reads the declaration and git, and no folio subject
+      // matter could make it resolve differently.
+      "scripts/state-store.ts",              // a declared tip-keyed directory, by id: read and splice-write
+      // Its session-start step (bean `2h76` part 4): fetches the declared state
+      // branch and checks it out as a read surface. Harness-level for the same
+      // reason as the three above.
+      "scripts/state-mount.ts",               // the state branch on disk, or a loud finding saying it is not
+      // The write half of that mount: it turns the worktree diff into a splice
+      // through the library rather than a push from the worktree, which is the
+      // lost update. Harness-level for the same reason as its neighbours.
+      "scripts/state-push.ts",                // the mount's edits, spliced onto the tip
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
