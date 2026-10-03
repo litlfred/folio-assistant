@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-10-03T10:38:18Z
 updated_at: 2026-10-03T10:38:18Z
+parent: folio-assistant-vke6
 ---
 
 Owner, 2026-10-03: a process may bind only skills (and through them Tools) from its own instance or one it needs — "general rule, not just fhir-harness". `check:process-bindings` (cat-harness/scripts/, PR #1968) found 33 unique wrong-direction bindings (35 refs) in 9 diagrams on 2026-10-03, all baselined in cat-harness/scripts/process-bindings.baseline.ts. Each fix is EITHER move the process up to the instance holding the skill, OR move the skill down if it is generic — an owner call per group.
