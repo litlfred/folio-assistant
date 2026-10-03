@@ -3894,7 +3894,14 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   display: flex;
   gap: 0.5rem;
   padding: 0 1rem 0.6rem;
-  overflow-x: auto;
+  /* FIT, NOT SCROLL (owner, 2026-10-01, bean `ob3m` finding 10: "no tile may
+     be silently off-screen"). `docs-ui.js` hides the pinned tiles that do not
+     fit and the last tile counts them as "+N more", so nothing here may
+     scroll sideways — a scrolling strip is exactly how 14 of 25 tiles went
+     off-screen with no arrow, count or fade. Not `hidden` either: that would
+     clip the focus ring, and nothing overflows once the fit has run. */
+  overflow: visible;
+  flex-wrap: nowrap;
   /* The panel (the dock) paints the surface and the edge; the strip is the
      row of tiles inside it, so it paints neither -- a second edge here is the
      doubled border the owner saw. */
@@ -3920,6 +3927,30 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   text-decoration: none;
   cursor: pointer;
   position: relative;
+}
+/* A tile the fit could not place. The tiles set `display: flex`, which beats
+   the user agent's `[hidden]`, so the attribute needs saying here. */
+.fa-glass-tiles > [hidden] { display: none !important; }
+/* A phone gets slightly narrower tiles, so four fit at 390 px — Todos,
+   Settings, the first pinned kind and "+N more" — rather than three. */
+@media (max-width: 30rem) {
+  .fa-glass-tiles { gap: 0.4rem; padding-left: 0.75rem; padding-right: 0.75rem; }
+  .fa-glass-tiles .fa-tile,
+  .fa-glass-tiles .fa-glass-chrome-tile { width: 4.75rem; }
+}
+.fa-glass-tiles [data-fa-more] .fa-tile-caption { white-space: nowrap; }
+/* A pinned tile the strip had no room for, waiting first in More. Its note
+   sits where the "↓ Strip" button would, at the tile's width. */
+.fa-glass-more-item[data-fa-overflow] { width: 6.5rem; }
+.fa-glass-more-item .fa-glass-arrange-note {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.15;
+  border: 1px dashed var(--fa-glass-edge);
 }
 .fa-glass-tiles .fa-tile svg { width: 1.6rem; height: 1.6rem; }
 .fa-glass-chrome-tile { font-weight: 700; }

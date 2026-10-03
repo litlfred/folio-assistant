@@ -643,6 +643,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * through a truthiness test.
    */
   navbarIcons?: NavbarIcon[];
+  /** Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits. */
+  glassStrip?: GlassStripPin[];
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /**
@@ -2522,6 +2524,53 @@ export const NavbarIconsSchema = z
   });
 
 /**
+ * The glass's bottom strip — WHICH tiles are pinned to it, and in what order.
+ *
+ * Owner, 2026-10-01, ruling on bean `ob3m` finding 10, option 1 of 4:
+ * **"Pinned tiles first, plus '+N more'"** — the strip shows Todos, Settings
+ * and a few key kinds (library, processes, tools, skills), then one "+N more"
+ * tile that opens the full grid. *No tile may be silently off-screen.*
+ *
+ * ## Declared here, not hard-coded per surface
+ *
+ * The pinned set is a property of the instance, inherited like
+ * {@link NavbarIconsSchema} (absent inherits, `[]` pins nothing), so a folio
+ * that wants a different strip says so in its own declaration rather than in
+ * `docs-ui.js`.
+ *
+ * ## Two kinds of pin, because there are two kinds of tile
+ *
+ * - `{ "chrome": … }` — one of the glass's OWN controls ({@link GLASS_CHROME}),
+ *   which belong to no graph. A closed set: a free string could name a control
+ *   nothing draws.
+ * - `{ "kind": … }` — a graph KIND. It resolves to ONE tile, the first glass
+ *   tile whose directory holds that kind (`resolveGlassStrip` in
+ *   `scripts/graph-tiles.ts`), so a kind several harnesses publish gets one
+ *   slot on the strip and the rest wait in More with their qualifiers.
+ *   A kind is pinned rather than a tile id because ids are per-instance and a
+ *   kind is what the owner named.
+ *
+ * Neither is an ORDER the strip must fit. The strip shows as many as fit, in
+ * this order, and the "+N more" tile counts the rest.
+ */
+export const GLASS_CHROME = ["todos", "filter", "settings"] as const;
+
+export type GlassChrome = (typeof GLASS_CHROME)[number];
+
+export const GlassStripPinSchema = z.union([
+  z.object({ chrome: z.enum(GLASS_CHROME) }).strict(),
+  z.object({ kind: z.string().min(1) }).strict(),
+]);
+
+export type GlassStripPin = z.infer<typeof GlassStripPinSchema>;
+
+export const GlassStripSchema = z
+  .array(GlassStripPinSchema)
+  .refine((xs) => new Set(xs.map((x) => JSON.stringify(x))).size === xs.length, {
+    message: "a pin listed twice is two slots doing one job",
+  });
+
+/**
  * Which icons an instance's navbar row shows, after inheritance.
  *
  * Owner: *"should be in each harness config which are shown (so some could
@@ -2564,6 +2613,23 @@ export function resolveNavbarIcons(
   needs: ReadonlyMap<string, readonly string[] | undefined>,
   floor?: string,
 ): readonly NavbarIcon[] | undefined {
+  return resolveInherited(name, declared, needs, floor);
+}
+
+/**
+ * The walk {@link resolveNavbarIcons} documents, for ANY inherited list.
+ *
+ * Split out when `glassStrip` became the second property inherited the same
+ * way (bean `ob3m` finding 10). A second copy of the walk would be a second
+ * answer to "what is this instance built on", which is the drift the doc
+ * above warns about.
+ */
+export function resolveInherited<T>(
+  name: string,
+  declared: ReadonlyMap<string, T | undefined>,
+  needs: ReadonlyMap<string, readonly string[] | undefined>,
+  floor?: string,
+): T | undefined {
   const seen = new Set<string>();
   const queue: string[] = [name];
   while (queue.length > 0) {
@@ -2667,6 +2733,12 @@ export const CatHarnessDeclarationSchema = z.object({
    * that deliberately wants a bare navbar.
    */
   navbarIcons: NavbarIconsSchema.optional(),
+  /**
+   * Which tiles the glass's bottom strip pins, in order — see
+   * {@link GlassStripSchema}. Same three states as `navbarIcons`: absent
+   * inherits, `[]` pins nothing, a list is this instance's own answer.
+   */
+  glassStrip: GlassStripSchema.optional(),
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
   /**
