@@ -11,7 +11,7 @@
   "families": {
     "bibliographic-missing": {
       "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
-      "count": 61,
+      "count": 63,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -330,6 +330,15 @@
           "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
         },
         {
+          "entry": "omg-2024-spdx-3-0",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "instance": "cat-harness",
           "missing": [
@@ -385,6 +394,15 @@
         },
         {
           "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
           "instance": "cat-harness",
           "missing": [
             "author/publisher",
@@ -760,7 +778,7 @@
     },
     "summary-backlog": {
       "summary": "Prose blocks with no current agent summary, per entry. A count, advisory: the drain is slow on purpose.",
-      "count": 59,
+      "count": 61,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -913,6 +931,12 @@
           "prose": 542
         },
         {
+          "entry": "omg-2024-spdx-3-0",
+          "instance": "cat-harness",
+          "backlog": 400,
+          "prose": 400
+        },
+        {
           "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "instance": "cat-harness",
           "backlog": 21,
@@ -953,6 +977,12 @@
           "instance": "cat-harness",
           "backlog": 12,
           "prose": 12
+        },
+        {
+          "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
+          "instance": "cat-harness",
+          "backlog": 1,
+          "prose": 1
         },
         {
           "entry": "w3c-2013-prov-o",
@@ -1389,5 +1419,5 @@
       ]
     }
   },
-  "total": 158
+  "total": 162
 }
