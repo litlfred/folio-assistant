@@ -46,8 +46,8 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 |---|---|---|
 | [Render a Knowledge Graph to GitHub Pages](render-kg-to-github-pages.html) | 7 | — |
 | [Complete initialization](complete-initialization.html) | 9 | — |
-| [Determine the harness and repositories](discussion.html) | 5 | — |
-| [Human–agent discussion](human-agent-discussion.html) | 9 | — |
+| [Determine the harness and repositories](discussion.html) | 6 | — |
+| [Human–agent discussion](human-agent-discussion.html) | 13 | — |
 | [Initialize a harness](initialize-harness.html) | 8 | — |
 | [Log a message](log-message.html) | 2 | — |
 | [Is the incremental IG AST what a full build would have produced?](ig-ast-delta-review.html) | 4 | — |
@@ -89,7 +89,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Agent bean lifecycle](bean-lifecycle.html) | 8 | — |
 | [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
-| [The gates a change must pass before it can merge](code-quality-gates.html) | 9 | — |
+| [The gates a change must pass before it can merge](code-quality-gates.html) | 10 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
 | [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |
