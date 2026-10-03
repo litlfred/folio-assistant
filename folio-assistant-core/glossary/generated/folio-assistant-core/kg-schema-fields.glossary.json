@@ -546,6 +546,34 @@
       "status": "candidate"
     },
     {
+      "id": "kg-materialization.kgnodesrecordschema.members",
+      "prefLabel": "KgNodesRecordSchema.members",
+      "definition": "Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.members",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgnodesrecordschema.ref",
+      "prefLabel": "KgNodesRecordSchema.ref",
+      "definition": "The pin the file was fetched at — the subscription's `ref` when it was written.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgnodesrecordschema.size",
+      "prefLabel": "KgNodesRecordSchema.size",
+      "definition": "The one gate that applies: MEASURED bytes against `maxBytes`.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.size",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-materialization.kgnodesrecordschema.state",
+      "prefLabel": "KgNodesRecordSchema.state",
+      "definition": "`materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so.",
+      "source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.state",
+      "status": "candidate"
+    },
+    {
       "id": "kg-materialization.kgrefusalschema.purposemissing",
       "prefLabel": "KgRefusalSchema.purposeMissing",
       "definition": "A purpose is asked FIRST; a part with none cannot have its gates judged.",

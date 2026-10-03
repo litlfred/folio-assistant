@@ -41,6 +41,15 @@ export const SUBSTRATE_SNAPSHOT_SCHEMA = "folio-substrate-snapshot/v1";
  */
 export const KG_PART_RECORD_SCHEMA = "folio-kg-materialization/v1";
 
+/**
+ * The tag on a METADATA-MODE record (`kg:materialize --nodes`, bean `c1m4`):
+ * one subgraph's `index.hydrated.jsonld`, fetched at the pin, with its sha256.
+ * Full schema: `KgNodesRecordSchema` in
+ * `folio-assistant-core/schemas/kg-materialization.ts`; the tag lives here for
+ * the same reason as {@link KG_PART_RECORD_SCHEMA}.
+ */
+export const KG_NODES_RECORD_SCHEMA = "folio-kg-nodes/v1";
+
 /** The graph kind of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
 export const SNAPSHOT_GRAPH_KIND = "substrate-snapshot";
 

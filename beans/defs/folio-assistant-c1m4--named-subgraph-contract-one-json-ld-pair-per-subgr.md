@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c1m4
 title: 'NAMED SUBGRAPH CONTRACT: one JSON-LD pair per subgraph (index = pointers, hydrated = inline), directory IRIs, build-time framing, central @context; harness as a subgraph'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T11:17:11Z
+updated_at: 2026-10-03T11:30:46Z
 parent: folio-assistant-whlc
 ---
 
@@ -27,7 +27,7 @@ Assessment of the pasted design note (owner asked "does the discussion apply"): 
 - [x] measured today: can `kg:materialize` (fnx4) / the existing JSON-LD export pull every node of `cat-harness/skills/sdlc` in one step? record the answer with evidence
 - [x] contract written into the KG data-modelling skill and `schemas/` (subgraph manifest type; Harness/Subgraph common base decided)
 - [x] generator emits `index.jsonld` + `hydrated.jsonld` per declared subgraph via framing, with a check gate
-- [ ] remote materialization consumes the same files
+- [x] remote materialization consumes the same files
 
 _2026-10-03T08:07:54Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -60,3 +60,10 @@ The dereferenced file is `index.hydrated.jsonld` (was `hydrated.jsonld`): the pa
 
 ## Owner ruling 2026-10-03 — remote materialization
 Selected 'Add metadata mode': `kg:materialize --nodes <subgraph>` fetches the subgraph's `index.hydrated.jsonld` only (graph metadata, no bytes); the byte copy and its five gates are unchanged. Rejected: index-driven file selection, both, leave as is.
+
+## Summary of Changes
+- **Contract** (`kg-export.md` §"Named subgraphs"): one subgraph IRI `<BASE_URL>/subgraph/<HARNESS>/<PATH>/`, two files under it, `index.jsonld` (pointers) and `index.hydrated.jsonld` (transitive members inline); the root publishes `index.jsonld` only; `@context` by URL, never inlined.
+- **Schema**: `cat-harness/schemas/subgraph-manifest.ts` (`SubgraphIndexSchema`, `SubgraphHydratedSchema`), on the `GraphNodeDirectoryShape` base shared with the harness.
+- **Generator + gate**: `cat-harness/scripts/gen-subgraph-jsonld.ts`, `bun run subgraph:jsonld` / `subgraph:jsonld:check`, framing kg-export's in-memory graph.
+- **Remote materialization consumes the same files** (owner ruling 2026-10-03, metadata mode): `bun run kg:materialize --nodes <subscription> <subgraph-path>` fetches `<docs>/subgraph/<HARNESS>/<path>/index.hydrated.jsonld` at the pin through the injectable `PartFetcher`, validates it with `SubgraphHydratedSchema` plus the root `@id`, and holds it at `<snapshot>/<sub>/nodes/<path>/` beside a `nodes.json` record (`KgNodesRecordSchema`, tag `folio-kg-nodes/v1`) with its sha256; `kg:materialize:check` re-hashes it. A root request is refused, pointing to `index.jsonld`. Same four outcomes; could-not-determine writes nothing. Only `size` applies (measured cap, `--max-bytes`); the four person gates do not, and the reason is in the script header. The byte copy and its five gates are unchanged. Tests over fixtures, including this repo's own generated `skills/sdlc` hydrated file, in `folio-assistant-core/scripts/kg-materialize.test.ts`.
+- Not done: a live `--nodes` run against a remote. No subscribed substrate publishes subgraph files yet.

@@ -4,7 +4,7 @@
 
 # Subscribed substrates
 
-The root declaration of each [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. Written by `bun run kg:materialize`; never edited by hand.
+The root declaration of each [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) this instance subscribes to, cached at the pinned commit: one `<id>.substrate.json` per `subscriptions` entry, holding the upstream bytes, their sha256, and the harnesses and subgraphs the substrate offers. Written by `bun run kg:subscribe`; never edited by hand. Each CHOSEN part a subscriber materialises lands here too, under `<id>/subgraphs/<subgraph>/` or `<id>/assets/<path>/`: the upstream bytes under `tree/` and a `materialization.json` beside them with fixity, provenance and the five gates. A subgraph fetched in metadata mode (`kg:materialize --nodes`) lands under `<id>/nodes/<subgraph path>/`: its published `index.hydrated.jsonld` and a `nodes.json` record with its sha256. Written by `bun run kg:materialize`; never edited by hand.
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `subscriptions`, holding `substrate-snapshot`.
 

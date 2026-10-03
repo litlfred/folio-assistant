@@ -36,11 +36,12 @@
  */
 import { z } from "zod";
 
-import { KG_PART_RECORD_SCHEMA } from "../../cat-harness/schemas/substrate-snapshot.ts";
+import { KG_NODES_RECORD_SCHEMA, KG_PART_RECORD_SCHEMA } from "../../cat-harness/schemas/substrate-snapshot.ts";
 import { RepoFullNameSchema } from "../../cat-harness/schemas/repo-full-name.ts";
-import { GatesSchema, MaterializationSchema } from "./materialization.ts";
+import { SUBGRAPH_HYDRATED_FILE } from "../../cat-harness/schemas/subgraph-manifest.ts";
+import { FixitySchema, GateSchema, GatesSchema, MaterializationSchema } from "./materialization.ts";
 
-export { KG_PART_RECORD_SCHEMA };
+export { KG_NODES_RECORD_SCHEMA, KG_PART_RECORD_SCHEMA };
 
 const RelPathSchema = z
   .string()
@@ -150,3 +151,73 @@ export type KgDecisions = z.infer<typeof KgDecisionsSchema>;
 
 /** 50 MiB: a subgraph is prose and schemas, and anything larger is a dataset that deserves the question asked. */
 export const DEFAULT_MAX_BYTES = 50 * 1024 * 1024;
+
+/**
+ * The record of ONE subgraph fetched in METADATA mode — `kg:materialize
+ * --nodes <subscription> <subgraph-path>` (bean `c1m4`, owner ruling
+ * 2026-10-03): the subgraph's published `index.hydrated.jsonld` at the pin,
+ * graph metadata only, no bytes of the subgraph itself.
+ *
+ * ## Why not a {@link MaterializationSchema} record
+ *
+ * A `materialized` MaterializationSchema record requires all five gates and a
+ * purpose, because it describes somebody else's CONTENT held here. This
+ * describes a description of that content: node ids, types, labels and the
+ * links between them, every heavy body left as a pointer. Wrapping it in that
+ * schema would mean writing four person-gate answers nobody gave — the
+ * fabricated decision `MaterializationSchema` exists to make unrepresentable.
+ * So the record carries what is true of it: the pin, the measured `size` gate
+ * (kept as a safety cap), and the file's sha256. The `materialization` key is
+ * deliberately absent, so `check:materialized-fixity` does not read it as a
+ * held artefact; `kg:materialize:check` re-hashes it instead.
+ */
+export const KgNodesRecordSchema = z
+  .object({
+    $schema: z.literal(KG_NODES_RECORD_SCHEMA),
+    subscription: z.string().min(1),
+    repository: RepoFullNameSchema,
+    /** The pin the file was fetched at — the subscription's `ref` when it was written. */
+    ref: z.string().regex(/^[0-9a-f]{40}$/),
+    subgraph: z
+      .object({
+        /** Instance-relative, as the substrate's own subgraph tree names it: `skills/sdlc`. */
+        path: RelPathSchema,
+        /** The subgraph IRI the fetched file declares as its root `@id`; held records only. */
+        iri: z.string().url().optional(),
+      })
+      .strict(),
+    /** `materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so. */
+    state: z.enum(["materialized", "referenced"]),
+    /** The one gate that applies: MEASURED bytes against `maxBytes`. */
+    size: GateSchema,
+    file: z
+      .object({
+        name: z.literal(SUBGRAPH_HYDRATED_FILE),
+        /** Where upstream publishes it, at the pin. */
+        upstream: z.string().url(),
+        /** Where it is held, relative to the subscriber instance. */
+        localPath: z.string().min(1),
+        bytes: z.number().int().nonnegative(),
+        fetchedAt: z.string().min(1),
+        fixity: FixitySchema,
+      })
+      .strict()
+      .optional(),
+    /** Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file. */
+    members: z.number().int().nonnegative().optional(),
+    subgraphs: z.number().int().nonnegative().optional(),
+    note: z.string().min(1).optional(),
+  })
+  .strict()
+  .superRefine((r, ctx) => {
+    const issue = (message: string): void => ctx.addIssue({ code: z.ZodIssueCode.custom, message });
+    if (r.state === "materialized") {
+      if (!r.file) issue("a held metadata record names its file, with fixity");
+      if (!r.subgraph.iri) issue("a held metadata record carries the subgraph IRI the file declares");
+      if (r.size.verdict !== "permitted") issue("a held metadata record's `size` gate is `permitted`");
+    } else {
+      if (r.file) issue("a metadata record that stayed referenced holds no file");
+      if (r.size.verdict === "permitted") issue("a metadata record stays referenced only because `size` refused it");
+    }
+  });
+export type KgNodesRecord = z.infer<typeof KgNodesRecordSchema>;

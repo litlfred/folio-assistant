@@ -1477,6 +1477,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgnodesrecordschema.members",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgNodesRecordSchema.members"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Nodes in the subgraph's transitive membership, and subgraphs under it, as counted from the file."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.members",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgnodesrecordschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgNodesRecordSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pin the file was fetched at — the subscription's `ref` when it was written."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgnodesrecordschema.size",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgNodesRecordSchema.size"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The one gate that applies: MEASURED bytes against `maxBytes`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.size",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgnodesrecordschema.state",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgNodesRecordSchema.state"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`materialized`: the file is here; `referenced`: the size cap stopped it, and `size` says so."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/kg-materialization.ts#KgNodesRecordSchema.state",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/kg-materialization.kgrefusalschema.purposemissing",
       "@type": "skos:Concept",
       "skos:inScheme": {
