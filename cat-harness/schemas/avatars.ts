@@ -289,6 +289,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 320,
     reads: "a speech bubble — a remark about the work, not the work",
   },
+  attestations: {
+    glyph: "M6 3h12v18H6zM9 8h6M9 12h6M10 17l2 2 3-4",
+    tone: 28,
+    reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
+  },
   "review-verdicts": {
     glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
     tone: 200,
@@ -454,6 +459,22 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 9l8-4 8 4v7l-8 4-8-4zM4 9l8 4m8-4l-8 4m0 0v7M8 7l8 4",
     tone: 24,
     reads: "a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes",
+  },
+  "test-plan": {
+    // A checklist of empty boxes: what must be shown, before anybody has run
+    // it. Deliberately empty — a plan carries no verdicts, and a ticked box
+    // would say it did.
+    glyph: "M6 4h12v16H6zM8 8h2v2H8zM12 9h4M8 12h2v2H8zM12 13h4M8 16h2v2H8zM12 17h4",
+    tone: 140,
+    reads: "a checklist with its boxes empty — what a system must show, before any run",
+  },
+  "test-report": {
+    // The same checklist with its boxes filled in, one ticked and one crossed:
+    // the plan's form, completed by a run. Quotes `test-plan`'s glyph on
+    // purpose, as `ig-metadata-index` quotes its sibling's.
+    glyph: "M6 4h12v16H6zM8 8l1 1 2-2M12 9h4M8 12l2 2m0-2l-2 2M12 13h4M8 16l1 1 2-2M12 17h4",
+    tone: 110,
+    reads: "the plan's checklist filled in — one run's verdicts against one plan, never a tally across plans",
   },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
