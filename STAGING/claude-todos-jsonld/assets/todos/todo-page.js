@@ -12,7 +12,7 @@
   var cfgEl = document.getElementById("fa-todo-page-config");
   if (!cfgEl) return;
   var cfg;
-  try { cfg = JSON.parse(cfgEl.textContent || "{}"); } catch (e) { return; }
+  try { cfg = JSON.parse(cfgEl.textContent || "{}"); } catch (_e) { return; }
 
   function $(id) { return document.getElementById(id); }
   function el(tag, text, cls) {
