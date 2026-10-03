@@ -661,6 +661,12 @@
       "title": "SPAR Ontologies: DoCO, DEO and CiTO"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/spdx-license-list",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "spdx-license-list",
+      "title": "SPDX License List"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-csvw",
       "@type": "cat-harness:ExternalSchema",
       "name": "w3c-csvw",
@@ -1584,6 +1590,12 @@
       "title": "source-provenance"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/spdx-license-expression",
+      "@type": "cat-harness:Schema",
+      "name": "spdx-license-expression",
+      "title": "spdx-license-expression"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/staging",
       "@type": "cat-harness:Schema",
       "name": "staging",
@@ -2194,6 +2206,12 @@
       "@type": "cat-harness:Tool",
       "name": "pdf-cover",
       "title": "PDF page raster"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-spdx-license-list",
+      "@type": "cat-harness:Tool",
+      "name": "pin-spdx-license-list",
+      "title": "Snapshot the SPDX License List at its pinned version"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/processes-viewer",
