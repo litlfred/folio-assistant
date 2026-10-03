@@ -55,7 +55,8 @@ import {
   type QaFamily,
   type QaWitnessDoc,
 } from "../content/pipeline/qa-witness.ts";
-import { readTodoFiles, todoDefaultTheme } from "./todos.js";
+import { todoDefaultTheme } from "./todos.js";
+import { publishedTodoFiles } from "./todo-source.js";
 import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
@@ -1178,7 +1179,7 @@ function processHierarchy(): Record<string, string[]> {
     return target === undefined ? {} : { target };
   };
   const fallbackTheme = todoDefaultTheme();
-  const items = readTodoFiles().map(({ todo, path }) => ({
+  const items = publishedTodoFiles().map(({ todo, path }) => ({
     id: todo.id,
     summary: todo.summary,
     comment: todo.comment,
