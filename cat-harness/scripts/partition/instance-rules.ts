@@ -1404,6 +1404,10 @@ export const RULES: Rule[] = [
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",
+      // The per-scope search split (bean `m7mn`): the publish process runs it
+      // after the build, and publish-verify imports its shapes, so it sits
+      // beside the verifier rather than below it.
+      "scripts/search-split.ts",
       // The downstream-tool criterion family (bean `fq5u`): kg:audit's reader
       // of Tool run records, harness for the same reason as the audit itself.
       "scripts/downstream-runs.ts",
