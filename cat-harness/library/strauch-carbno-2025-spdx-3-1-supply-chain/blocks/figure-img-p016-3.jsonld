@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p016-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p016-3.png",
+  "pageStart": 16,
+  "pageEnd": 16,
+  "narrative": {
+    "text": "A screenshot of a graph-editor canvas with node cards, each showing a type and a name, joined by labelled edges. Organization 'Smart Talk Becom' is reached by a 'createdBy' edge from CreationInfo '3.0.1'. PhysicalHardware 'AMD A10-6700 APU with Rad...' has a 'productAgent' edge to Organization 'AMD' and a 'to' edge to Relationship 'hasOutput'. Relationship 'hasOutput' has a 'from' edge to ManufacturerAction 'Make CPU', which has a 'from' edge to Relationship 'hasInput', which has a 'to' edge to PhysicalHardware 'Wafer'. 'Wafer' has a 'productAgent' edge to Organization 'TMC Technology'. Relationship 'performedBy' has a 'from' edge to 'Make CPU' and a 'to' edge to 'TMC Technology'. The type name 'ManufacturerAction' and the spelling 'Smart Talk Becom' are as drawn.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+  "provenance": "ingested"
+}

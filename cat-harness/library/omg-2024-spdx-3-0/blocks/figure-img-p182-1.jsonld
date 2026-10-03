@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p182-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p182-1.png",
+  "pageStart": 182,
+  "pageEnd": 182,
+  "narrative": {
+    "text": "UML class diagram of the Dataset profile: one class, DatasetPackage, specialising Software/Package. It makes inherited properties mandatory (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, each [1]) and adds anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias and sensor. Enumerations: ConfidentialityLevelType, DatasetAvailabilityType, DatasetType.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+    },
+    "drafted_at": "2026-10-03"
+  },
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-325",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}
