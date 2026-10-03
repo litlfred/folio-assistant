@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 760,
+      "count": 765,
       "unit": "beans"
     }
   },
@@ -1770,7 +1770,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T18:53:17Z",
-      "updatedAt": "2026-10-01T12:50:27Z",
+      "updatedAt": "2026-10-03T18:39:06Z",
       "preview": "Found 2026-09-30 on PR #1633, by CI rather than by `regen`.\n\n`End-to-end + accessibility (hard)` failed on `render:bpmn:check` with three\nstale drawings — `bootstrap/processes/{discussion,initialize-harness,log-message}.svg`\n— on a tree where `bun run regen` had just reported a fixed point.\n\n## This is NOT the same defect as `check:X` (the prefix-convention false clean)\n\nWorth separating, because ",
       "file": "beans/defs/folio-assistant-5qq3--regen-scope-the-browser-jobs-artefacts-are-outside.md"
     },
@@ -2715,6 +2715,20 @@
       "updatedAt": "2026-09-27T10:37:00Z",
       "preview": "Measured 2026-09-27 against this branch's `cat-harness/`, and cross-checked\nagainst qou's committed sidecars at platform pin `37a36ce`.\n\n## Four exported checkers whose entire body is `return { result: \"n/a\", hits: [] }`\n\nFound by parsing every `export function check*` in\n`cat-harness/content/pipeline/qa-checkers*.ts` and keeping those with exactly\none `return` statement, which returns `n/a`:\n\n| c",
       "file": "beans/defs/folio-assistant-89wq--four-qa-checkers-are-unconditional-na-stubs-8949-s.md"
+    },
+    {
+      "id": "folio-assistant-8ao5",
+      "title": "Re-seed FHIR AST caches for smart-trust and smart-base after main merge",
+      "status": "scrapped",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:04:19Z",
+      "updatedAt": "2026-10-02T16:45:00Z",
+      "preview": "Re-seed the FHIR AST cache orphan branches on litlfred/smart-trust (fhir-ast/smart.who.int.trust) and litlfred/smart-base (fhir-ast/smart.who.int.base) from the current main. The previous seeds were from an earlier commit and may be stale after main merge.\n\n## Done when\n- [x] smart-trust re-seeded — `fhir-ast/smart.who.int.trust` @ `2bc91d0`, 678 resources, 671 edges, 677 fsh-index entries, source",
+      "file": "beans/defs/folio-assistant-8ao5--re-seed-fhir-ast-caches-for-smart-trust-and-smart-base.md"
     },
     {
       "id": "folio-assistant-8c6v",
@@ -6043,14 +6057,14 @@
     {
       "id": "folio-assistant-kupb",
       "title": "IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import",
-      "status": "completed",
+      "status": "in-progress",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-yg29",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:14Z",
-      "updatedAt": "2026-09-30T08:26:13Z",
+      "updatedAt": "2026-10-01T02:05:09Z",
       "preview": "Owner ask, 2026-09-20, three messages in one session.\n\nSOURCES, both uploaded to the repo root by the owner and both measured this session:\n- `549fb04` — a saved DSpace ITEM PAGE. The HTML declares `saved from url=https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec`; the sidecar zip carries `client-theme.css`, `styles.e55b0c9926626404.css`, `who_logo.svg`, `who_logo_white.svg`, `iris_l",
       "file": "beans/defs/folio-assistant-kupb--iris-catalogue-a-referenced-import-of-who-iris-int.md"
     },
@@ -6449,6 +6463,22 @@
       "file": "beans/defs/folio-assistant-m8gz--bean-lifecycle-archiving-is-drawn-nowhere-and-proc.md"
     },
     {
+      "id": "folio-assistant-mac1",
+      "title": "Re-seed both fhir-ast caches with the git-tree InputDigest (needs FHIR network)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [
+        "folio-assistant-wnhh"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T15:30:31Z",
+      "updatedAt": "2026-10-02T18:00:00Z",
+      "preview": "## Brief\n\nYou are the EXECUTOR for this bean. A cloud Claude session (the coordinator)\nhanded it to you because it cannot reach `packages.fhir.org`, and you can.\nYou were sent here by one sentence:\n`Do bean mac1 on branch agy/wnhh-sushi-publisher-local of repo litlfred/folio-assistant.`\n\nWHERE\n- Repo:     litlfred/folio-assistant\n- Checkout: `~/space_cats/folio-assistant` (NOT `~/space_cats/folio-",
+      "file": "beans/defs/folio-assistant-mac1--re-seed-both-fhir-ast-caches-with-the-git-tree-inp.md"
+    },
+    {
       "id": "folio-assistant-mc8h",
       "title": "MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs",
       "status": "todo",
@@ -6533,6 +6563,20 @@
       "updatedAt": "2026-09-26T17:58:04Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
+    },
+    {
+      "id": "folio-assistant-mjl3",
+      "title": "artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T17:41:35Z",
+      "updatedAt": "2026-10-03T17:41:53Z",
+      "preview": "A **preventive** record, not a defect: this bean exists so the next agent that\nmeets this refusal twice does not \"fix\" it by widening a glob — which is the\nmistake `merge-conflict-patterns` names in its own opening and which I came within\none step of making.\n\n## Where it came from\n\nSwept the merge-main bot's refusals across all 13 open `merge-main` PRs on\n2026-10-03, while #2029 added the one real",
+      "file": "beans/defs/folio-assistant-mjl3--artefact-verificationjson-merges-are-correctly-ref.md"
     },
     {
       "id": "folio-assistant-mkao",
@@ -7669,6 +7713,20 @@
       "updatedAt": "2026-10-02T12:27:27Z",
       "preview": "The generalisation test qsf5 deferred. Until a second DAK-API IG goes through, \"generalisable across many IGs\" is a design claim.\n\nSubject: `smart.who.int.immunizations` v0.2.0, FHIR **4.0.1** (smart-trust is 5.0.0), gh-pages, 232,040 published files.\n\nMeasured 2026-09-21 before writing any code:\n\n| | smart-trust | smart-immunizations |\n|---|---|---|\n| artefacts (.index.json) | 674 | 712 |\n| canon",
       "file": "beans/defs/folio-assistant-qrnz--second-ig-ingest-smart-immunizations-and-find-out.md"
+    },
+    {
+      "id": "folio-assistant-qsx4",
+      "title": "who-style-guide folds INTO who-iris as a declared subgraph, docs included",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T00:02:14Z",
+      "updatedAt": "2026-10-02T22:18:46Z",
+      "preview": "Owner ruling 2026-09-30, verbatim: \"who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.\" Issue #476.\n\nSupersedes the separate-instance arrangement of `w095` (and the \"own repo/dir\" half of the 2026-09-20 decision recorded in `kupb`/`r1lz`). The `z7ev` cross-instance citation was the price of the split; with the voices and the library they are",
+      "file": "beans/defs/folio-assistant-qsx4--who-style-guide-folds-into-who-iris-as-a-declared.md"
     },
     {
       "id": "folio-assistant-qvxh",
@@ -9646,9 +9704,11 @@
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-mac1"
+      ],
       "createdAt": "2026-10-01T17:11:25Z",
-      "updatedAt": "2026-10-02T12:30:00Z",
+      "updatedAt": "2026-10-03T17:55:00Z",
       "preview": "For a session whose environment allows **`packages.fhir.org`** and **`tx.fhir.org`**. On 2026-10-01 the jut3 session's proxy denied both (403), along with `hl7.org`, `build.fhir.org`, `smart.who.int` and `litlfred.github.io`. Owner: \"bean for agent with more open access\".\n\n**Already possible without it, so do not ask for more:** GitHub over git (every `gh-pages` branch, and WHO's published release",
       "file": "beans/defs/folio-assistant-wnhh--run-sushi-ig-publisher-locally-needs-packagesfhiro.md"
     },
@@ -10040,7 +10100,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-03T13:29:11Z",
+      "updatedAt": "2026-10-03T17:52:50Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -10549,6 +10609,20 @@
       "file": "beans/defs/folio-assistant-z6xd--false-coverage-three-gates-declare-covers-themes-a.md"
     },
     {
+      "id": "folio-assistant-zacz",
+      "title": "Merge train: a refused member gets a bean, a hand-back with a fail condition, or a dispatch",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T16:59:06Z",
+      "updatedAt": "2026-10-02T16:59:06Z",
+      "preview": "Owner, 2026-10-02: \"update skills: if a merge in queue cannot be merged for some reason, create a new bean (under appropriate epic/story…), hand it back to the sibling (use the agent-to-agent handoff process with a fail condition) for resolution, or dispatch an agent as appropriate.\"\n\nUntil now a merge steward handled a refused train member ad hoc, with a PR comment or a message to the owning sess",
+      "file": "beans/defs/folio-assistant-zacz--merge-train-a-refused-member-gets-a-bean-a-hand-ba.md"
+    },
+    {
       "id": "folio-assistant-zdfa",
       "title": "INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio's workflow lands where GitHub never reads it",
       "status": "todo",
@@ -10707,6 +10781,12 @@
       "bean": "folio-assistant-tfo1",
       "blocks": "folio-assistant-d3yq",
       "detail": "blocks `folio-assistant-d3yq` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-mac1",
+      "blocks": "folio-assistant-wnhh",
+      "detail": "is completed but still blocks `folio-assistant-wnhh`, which is in-progress"
     },
     {
       "kind": "blocker-closed",

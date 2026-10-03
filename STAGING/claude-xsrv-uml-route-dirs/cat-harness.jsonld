@@ -312,22 +312,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-03T18:41:34.769Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/931b141034f49ca090015feeb3a8b859a8cde64a",
-  "sourceCommitSha": "931b141034f49ca090015feeb3a8b859a8cde64a",
-  "sourceCommitAt": "2026-10-03T18:37:59Z",
+  "generatedAt": "2026-10-03T22:49:22.026Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5a4d9881b480e1ad28d356b5afb5797022bc2ce3",
+  "sourceCommitSha": "5a4d9881b480e1ad28d356b5afb5797022bc2ce3",
+  "sourceCommitAt": "2026-10-03T22:44:19Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 303,
+    "Skill": 304,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
     "Decision": 10,
-    "Process": 79,
-    "SequenceFlow": 1043,
-    "Lane": 209,
-    "ProcessNode": 986,
+    "Process": 80,
+    "SequenceFlow": 1063,
+    "Lane": 212,
+    "ProcessNode": 1004,
     "Tool": 120,
     "Schema": 166,
     "ExternalSchema": 22,
@@ -2341,6 +2341,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/compiled-artefact-cache",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "compiled-artefact-cache",
+      "title": "Compiled Artefact Cache",
+      "description": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
+      "instructionLines": 111,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/compiled-artefact-cache"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/raci",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "raci",
@@ -3178,12 +3195,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "merge-conflict-patterns",
       "title": "Merge-conflict patterns — what a merge may resolve on its own",
-      "description": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+      "description": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 381,
+      "instructionLines": 588,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4372,7 +4389,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 179,
+      "instructionLines": 193,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4529,7 +4546,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "../folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md",
-      "instructionLines": 157,
+      "instructionLines": 159,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6907,6 +6924,7 @@
       "path": "skills/process/process-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/compiled-artefact-cache",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/decision-methodology-selector",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/methodology-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/role-model",
@@ -30620,6 +30638,642 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork/node/End_RW"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "A refused merge-train member",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/merge-refusal.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Start_Refused"
+      ],
+      "nodeCount": 18,
+      "flowCount": 20,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Start_Refused",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Record",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Comment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Comment",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Owner",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_HandBack",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Owner",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_HandBack",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Fix",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Fix",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_FailCond",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_FailCond",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Retrain",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_FailCond",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AgentFix",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AgentFix",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Authored",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Authored",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AskOwner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r13",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Authored",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Retrain",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r14",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AskOwner",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/End_AwaitOwner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r15",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Retrain",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r16",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "landed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Close",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r17",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "refused again",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r18",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "closed unmerged",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Scrap",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r18"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r19",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Close",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Closed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r19"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r20",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Scrap",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Scrapped",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/flow/r20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Merge steward",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Owning session",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/sibling-session",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Dispatched agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Start_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Member dropped from a train",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Start_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Record",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record the refusal on the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r17"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Comment",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Comment on the PR once, linking the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Comment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Owner",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Owning session live?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_HandBack",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Hand back, with a fail condition",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_HandBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Fix",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Fix the PR, report on the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Owner",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/prepare-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Fix"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_FailCond",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Fixed before the fail condition?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_FailCond"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Dispatch",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Dispatch one agent, recorded on the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/dispatch-agent"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AgentFix",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Merge main in, regenerate, fix mechanical gates",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AgentFix"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Authored",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Needs an authored choice?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r12",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Authored"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AskOwner",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Ask the owner on the PR, both sides quoted",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_AskOwner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/End_AwaitOwner",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Waiting on the owner's ruling",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Dispatched",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/End_AwaitOwner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Retrain",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Re-enter a train on the new head",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Retrain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "The PR's fate?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r16",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r17",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r18"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/GW_Fate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Close",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Close the bean, merge commit as evidence",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/bean-coordination"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r16"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r19"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Close"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Closed",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Landed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r19"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Closed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Scrap",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Scrap the bean, with the reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r18"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r20"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/Task_Scrap"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Scrapped",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "PR closed unmerged",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/lane/Lane_Steward",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_MergeRefusal/flow/r20"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeRefusal/node/End_Scrapped"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-uml-route-dirs/cat-harness.jsonld#process/Process_OptionsAnalysis",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Options analysis",
@@ -51767,8 +52421,8 @@
   ],
   "staging": {
     "branch": "claude/xsrv-uml-route-dirs",
-    "sha": "2289d42bdefbc20683ccb5e6bb1ecbe1918dfbb4",
+    "sha": "274d47ed30cdf59c7ab404c93f13a928b9f9f7cd",
     "pr": "2032/merge",
-    "run": "37144953822"
+    "run": "37159453190"
   }
 }
