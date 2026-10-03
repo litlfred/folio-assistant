@@ -13,11 +13,11 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1732 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1742 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 543 terms and is 307 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 544 terms and is 307 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">543</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">544</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -699,6 +699,13 @@ BeanIndexItemSchema.preview <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>The body, trimmed to its first 400 characters.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.beanindexschema.plan" data-fa-state="extracted" data-fa-gloss="">
+BeanIndexSchema.plan <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because &quot;no plan in the projection&quot; is a state the renderer distinguishes from &quot;a plan with nothing done&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--bean-note.beannotefrontmatterschema.bean" data-fa-state="extracted" data-fa-gloss="">
 BeanNoteFrontMatterSchema.bean <span class="fa-gloss-status">candidate, extracted</span>
