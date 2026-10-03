@@ -243,6 +243,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // THE QUEUE FEEDING A TRAIN. Three queued items on the left converging into
+  // one line that carries on right — the queue's whole shape in one glyph: the
+  // decisions are per pull request, the train they feed is one. Deliberately
+  // NOT a list: a list would read as the store, and what this kind records is
+  // an ORDER somebody decided (bean `hfag`).
+  "merge-queue": {
+    glyph: "M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9",
+    tone: 205,
+    reads: "three queued items converging into one line — a queue feeding a train",
+  },
   // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
   // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
   "bean-notes": {

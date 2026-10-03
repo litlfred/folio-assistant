@@ -16,7 +16,12 @@ Staged per cat-harness/docs/proposals/smart-separation-2026-10-01.md (owner deci
 - [x] A1 gen-smart-trust-pages -> fhir-harness/scripts/gen-ig-pages.ts; smart-trust output byte-identical (681 pages)
 - [x] A2 smart-base docs/ with --summary landing page; tile now /smart-base/
 - [x] A3 split plan written, questions asked and answered
-- [ ] A4 PR #1768 green
+- [x] A4 PR #1768 green  — merged 2026-10-01T16:21:51Z, merge commit `80434b7ec3`.
+  Ticked on a JUDGEMENT that is stated so it can be disputed: its head carried 16
+  check runs with one failure, `cleanup`. That is housekeeping, not a gate — gates
+  here are suffixed `(hard)` or `(warn-only)` and `cleanup` is skipped on most
+  runs — so every gate was green, which is what this box means by green. Had the
+  red been a gate this box would have stayed open.
 - [ ] B fhir-harness takes generic ingest/schemas; wrong-direction edges 1-4 fixed; 4 generic Tool nodes
 - [ ] C fhir-harness visualizer: fhir-artifact-index kind viewer per instance; neutral sidecar overlay
 - [ ] D smart-base consolidated (theme, chrome re-key, needs repointed); L1/DAK kinds = qvxh
