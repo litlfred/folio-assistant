@@ -564,6 +564,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/compiled-artefact-cache",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "compiled-artefact-cache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop."
+        }
+      ],
+      "skos:notation": "compiled-artefact-cache",
+      "dcterms:source": "cat-harness/skills/process/process-core/compiled-artefact-cache.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/compute-integration-watcher",
       "@type": "skos:Concept",
       "skos:inScheme": {
