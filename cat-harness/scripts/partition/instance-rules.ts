@@ -871,6 +871,9 @@ export const RULES: Rule[] = [
       // tools and processes visualisers link a skill only where one is, so the
       // module sits beside the two viewers that read it.
       "scripts/lib/skill-pages.ts",
+      // The raw-block wrapper both of those visualisers emit authored text through
+      // (bean `kjbb`): a closing tag inside the text must not end the block early.
+      "scripts/lib/liquid-raw.ts",
       // Its library twin (bean `qgjh`): where a library reference links — the
       // viewer, the item README, the upstream record — read, never composed.
       "scripts/lib/library-links.ts",

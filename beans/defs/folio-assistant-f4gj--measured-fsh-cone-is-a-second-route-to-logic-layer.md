@@ -1,11 +1,11 @@
 ---
 # folio-assistant-f4gj
 title: 'MEASURED: fsh-cone is a second route to logic-layer edges, but delivers 0 of 458 as merged — skill''s P3 blocker holds as measurement, is too strong as inference'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-23T21:17:32Z
-updated_at: 2026-09-29T20:03:10Z
+updated_at: 2026-10-01T08:02:22Z
 parent: folio-assistant-uhkv
 ---
 
@@ -241,11 +241,22 @@ It takes an IG root and the artefact index and prints every table above.
 - [x] (b) RuleSet parameter substitution in `buildFshGraph`, tagged `insert (parameter expanded)`
 - [x] Re-measure after (b): 458/458 logic edges; extraction reaches every target ground truth names
 - [x] Record that (b)'s fix is itself a partial reimplementation of SUSHI, and what it does not do
-- [ ] Open: does ~24 % rebuild per commit still pay for an incremental build? NOT answered here
-- [ ] Owner review and merge — NOT mine to merge
+- [x] Open: does ~24 % rebuild per commit still pay for an incremental build? NOT answered here; now W7's question in `folio-assistant-a9tx`, which measures the incremental loop on a real IG
+- [x] Owner review and merge — merged (#1546, #1555); `fsh-cone.ts` carries the parameter expansion and its test on `main`
 
 
 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Summary of Changes (closed 2026-10-01, on the owner's instruction)
+
+The measurement and both `fsh-cone` fixes are on `main`:
+- (a) `node.id ?? node.name`
+- (b) RuleSet parameter substitution: 458 of 458 logic-layer edges, `cat-harness/content/pipeline/fsh-cone.ts` plus `scripts/tests/fsh-cone.test.ts`
+- Reproduction script: `cat-harness/scripts/measure-logic-layer-edges.ts`
+
+The one unanswered question, whether rebuilding about 24 % per commit still pays for an incremental build, is W7's question in `folio-assistant-a9tx`. That is a measurement on a real IG, not something this bean could settle.
+
+Closed by session https://claude.ai/code/session_01DnFZtVpff4o7puqWazGvKN.

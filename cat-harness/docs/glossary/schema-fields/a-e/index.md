@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1733 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1733 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 543 terms and is 307 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 549 terms and is 310 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>1957</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1957</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>1985</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>1985</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">543</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">549</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -534,6 +534,41 @@ AssociatedHarness.url <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Where a reader goes: the harness's own published site.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#AssociatedHarness.url</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astmanifestschema.inputs" data-fa-state="extracted" data-fa-gloss="">
+AstManifestSchema.inputs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the AST is valid for, in <code>CompiledInputsSchema</code>'s shape.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.inputs</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astmanifestschema.provisional" data-fa-state="extracted" data-fa-gloss="">
+AstManifestSchema.provisional <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What stays provisional until a full Publisher run.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstManifestSchema.provisional</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.builtat" data-fa-state="extracted" data-fa-gloss="">
+AstResourceSchema.builtAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>On a merged (mixed-provenance) AST: the revision that built this resource.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.builtAt</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.file" data-fa-state="extracted" data-fa-gloss="">
+AstResourceSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The resource's JSON file, relative to the AST directory.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.file</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-schema-fields--ig-ast.astresourceschema.source" data-fa-state="extracted" data-fa-gloss="">
+AstResourceSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The IG source file it was built from, where known.</p>
+<p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/ig-ast.ts"><code>fhir-harness/schemas/ig-ast.ts#AstResourceSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--attribution.attribution.date" data-fa-state="extracted" data-fa-gloss="">
 Attribution.date <span class="fa-gloss-status">candidate, extracted</span>
@@ -2334,6 +2369,13 @@ ContentDirectoryShape.readOnlyBasis <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>WHY, and required whenever <code>readOnly</code> is declared — either value.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.served" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectoryShape.served <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>This directory's BYTES are published verbatim, at <code>/&lt;instance&gt;/&lt;path&gt;</code>, for the site's own pages to fetch.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.served</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.source" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectoryShape.source <span class="fa-gloss-status">candidate, extracted</span>
