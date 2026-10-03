@@ -373,6 +373,17 @@
       "unit": "waiting"
     }
   ],
+  "glassStrip": {
+    "pinned": [
+      "glass-todos",
+      "glass-settings",
+      "library",
+      "processes",
+      "tools",
+      "skills"
+    ],
+    "unmatched": []
+  },
   "harnesses": [
     {
       "name": "folio-assistant",
@@ -981,7 +992,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 12
+          "value": 13
         },
         {
           "id": "kinds",
@@ -1121,6 +1132,14 @@
           ],
           "where": "local",
           "path": "smart-base/document-kinds/"
+        },
+        {
+          "id": "smart-base-findings",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "smart-base/findings/"
         },
         {
           "id": "smart-base-external-schemas",
@@ -2947,6 +2966,15 @@
         ]
       },
       {
+        "key": "glassStrip",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
         "key": "repository",
         "skills": [
           {
@@ -3441,7 +3469,7 @@
           },
           {
             "key": "directories",
-            "summary": "11: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
+            "summary": "12: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
           },
           {
             "key": "needs",
@@ -3762,6 +3790,10 @@
           {
             "key": "navbarIcons",
             "summary": "close, todos, beans, processes, kg, fsh-guts, launcher"
+          },
+          {
+            "key": "glassStrip",
+            "summary": "6 entries"
           },
           {
             "key": "repository",

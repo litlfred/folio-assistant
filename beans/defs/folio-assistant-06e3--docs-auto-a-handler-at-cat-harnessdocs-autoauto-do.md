@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-03T10:59:40Z
+updated_at: 2026-10-03T11:41:35Z
 parent: folio-assistant-0lmb
 ---
 
@@ -69,7 +69,7 @@ it, and refuses rather than rendering an empty table when the source moves.
 - [x] the authoring rule lives in a skill with the reuse-not-restate clause
 - [ ] `<harness>/docs` carries a per-process summary that references the derived
       index rather than duplicating it
-- [ ] a stale or moved source makes the derivation FAIL, never render empty
+- [x] a stale or moved source makes the derivation FAIL, never render empty
 
 ## Not started — and the order is the owner's
 
@@ -700,3 +700,34 @@ The type set as it now stands: `glossary`, `index`, `index/docs`,
 `index/skills`, `index/processes`, `index/schemas`, `index/tools`,
 `index/roles`, `index/dmn`, `index/tasks`, `uml`, `lsi`. Count it from `TYPES`
 rather than from this list.
+
+
+## The refuse item is done — PR #1991, merged 2026-10-03
+
+*"a stale or moved source makes the derivation FAIL, never render empty"* is
+implemented and on `main`. Ticked in the canonical list above rather than
+restated here, which is what `check:bean-bodies` rejected a shadow copy for
+earlier today.
+
+`gen-docs-auto.ts` now refuses when a type collects **nothing** while its
+graph's declared directories **hold files**. The three-way discrimination is
+`dh4f`'s, and it is what keeps the guard from becoming a nuisance:
+
+| state | behaviour |
+|---|---|
+| no declared directory for the graph | silent — a fresh folio with no `processes/` must not fail `index/dmn` |
+| declared directories, all empty | silent — "not there" and "empty" are different facts, neither a defect |
+| declared directories **with files**, type collects nothing | **refuse** |
+
+**It was written after shipping the failure twice in one session**, which is
+why it exists rather than being argued for: `index/tools` filtered `.json` on
+`AGENTS.md`'s "Tool definitions" wording when the directory holds `.ts`, and
+`index/roles` passed `dirname()` where `readRoleGraph` wants the directory
+itself. Both emitted **0 items and printed `✓`**; both were caught by a human
+reading the count.
+
+And the guard runs **before** the orphan prune, because the first draft had it
+after and a buggy run then deleted four sub-graph pages before reporting a
+defect against the tree it had emptied — `deletion-requires-confirmation`
+broken by sequencing. Measured both ways: 1 page surviving with the guard
+after, 5 with it before.

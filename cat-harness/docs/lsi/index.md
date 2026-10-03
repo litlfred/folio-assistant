@@ -60,6 +60,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `smart-base/library` | <span class="lv-pass">pass</span> | fresh |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/smart-base-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs` |
+| `smart-base/smart-base-findings` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-immunizations/smart-immunizations-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-immunizations --graph smart-immunizations-docs` |
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
@@ -110,7 +111,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**216** units · **5820** terms · k = **100** · retains **79.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**216** units · **5823** terms · k = **100** · retains **79.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -118,14 +119,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.72 | instance, kind, session, harness, directory, page, graph, branch | *(none)* |
-| 2 | 21.55 | watcher, queue, sibling, backlog, slot, prs, block, commits | harness, instance, declaration, node, directory, directories, graph, asset |
-| 3 | 17.96 | slot, chapter, block, edges, proof, project, watcher, formal | session, beans, branch, epic, goals, window, sessions, store |
-| 4 | 16.60 | page, tile, block, preview, avatar, theme, blocks, card | sibling, ledger, queue, subdirectory, sessions, plan, items, coordination |
-| 5 | 15.04 | board, tile, page, avatar, card, theme, navbar, surface | edge, edges, lane, forward, actor, logical, backward, graph |
-| 6 | 14.59 | edges, forward, edge, backward, logical, cross-chapter, energy, index | actor, lane, role, task, requirements, requirement, user, process |
-| 7 | 14.49 | tile, avatar, card, glass, sticky, board, slot, art | preview, feature, phase, staging, feedback, github, url, workflow |
-| 8 | 14.25 | translation, locale, translated, french, back-translation, badge, language, back-translator | edges, tile, impact, option, card, glass, theme, avatar |
+| 1 | 43.81 | instance, kind, harness, session, directory, page, graph, branch | *(none)* |
+| 2 | 21.57 | watcher, queue, sibling, backlog, prs, block, commits, slot | harness, instance, declaration, node, directory, directories, graph, asset |
+| 3 | 17.97 | slot, chapter, block, edges, proof, project, watcher, formal | session, beans, branch, epic, goals, window, sessions, push |
+| 4 | 16.77 | tile, page, avatar, glass, card, theme, sticky, block | sibling, ledger, subdirectory, queue, plan, sessions, session, coordination |
+| 5 | 15.21 | tile, glass, board, card, avatar, theme, sticky, surface | edge, edges, forward, lane, chapter, actor, backward, analysis |
+| 6 | 14.68 | preview, staging, translation, locale, url, pages, language, translated | tile, glass, avatar, card, sticky, role, fit, settings |
+| 7 | 14.61 | edges, forward, edge, logical, backward, window, closing, cross-chapter | actor, lane, role, requirements, feedback, phase, task, user |
+| 8 | 14.28 | translation, locale, translated, back-translation, french, badge, back-translator, trip | feature, phase, impact, edges, analysis, preview, sections, option |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

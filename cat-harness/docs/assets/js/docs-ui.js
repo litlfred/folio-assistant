@@ -2657,6 +2657,9 @@
 
   var todoState = { items: [], processes: {}, themeArt: {} };
 
+  /** What a reader filters AND groups the board by — the graph's edges and status. */
+  var BOARD_AXES = ["node", "status", "person", "bean"];
+
   /* ═══ Semantic zoom and windows — TWO mechanisms, kept apart ═══════════
    *
    * |                   | trigger                                   | who       |
@@ -3134,6 +3137,18 @@
     return ALLOWED_URL_SCHEMES.indexOf(scheme) === -1 ? undefined : trimmed;
   }
 
+  /**
+   * A todo's values for one property, as a list. MULTI-VALUED properties — the
+   * assignees and beans `todos.jsonld` gives a todo — are lists already; a
+   * single value is a list of one; absent or empty is the empty list.
+   * Mirrors `haveOf` in `schemas/reader-filter.ts`.
+   */
+  function valuesOf(todo, name) {
+    var v = todo[name];
+    if (Array.isArray(v)) return v.filter(function (x) { return x !== undefined && x !== null && x !== ""; });
+    return v === undefined || v === null || v === "" ? [] : [v];
+  }
+
   /** OR within a property's values, AND across properties — the board's logic. */
   function readerShows(filter, todo) {
     var props = filter.properties || {};
@@ -3141,8 +3156,12 @@
       if (!Object.prototype.hasOwnProperty.call(props, name)) continue;
       var values = props[name];
       if (!values || values.length === 0) continue;
-      // A node that cannot answer has not answered YES.
-      if (values.indexOf(todo[name]) === -1) return false;
+      // A node that cannot answer has not answered YES. A multi-valued one
+      // answers yes when ANY of its values is selected.
+      var have = valuesOf(todo, name);
+      var hit = false;
+      for (var h = 0; h < have.length; h++) if (values.indexOf(have[h]) !== -1) hit = true;
+      if (!hit) return false;
     }
     return true;
   }
@@ -3151,8 +3170,7 @@
   function propertyValues(items, name) {
     var seen = {};
     for (var i = 0; i < items.length; i++) {
-      var v = items[i][name];
-      if (v !== undefined && v !== null && v !== "") seen[v] = true;
+      valuesOf(items[i], name).forEach(function (v) { seen[v] = true; });
     }
     return Object.keys(seen).sort();
   }
@@ -3818,6 +3836,72 @@
   }
 
   /**
+   * THE ONE READER OF `todos.jsonld` — follow-up 2 of #1941.
+   *
+   * The index above carries what a sticky LOOKS like (theme art, process
+   * stacking, the forge links). The graph carries what a todo is CONNECTED
+   * to, as typed edges: `target` (`schema:about`, the content node),
+   * `assignee` (`schema:agent`, a person) and `bean` (`dcterms:isPartOf`).
+   * Those are the axes a reader filters and groups the board by, so they are
+   * read from the graph that states them rather than re-derived from the
+   * index's `relations`, which are display chips and not edges.
+   *
+   * Calls back with `{ <todo id>: edges }`, or `null` when there is no graph
+   * to read. `null` is the third state and is NOT "no edges": the board still
+   * mounts from the index, it simply offers no node, person or bean control,
+   * because a control built from nothing would offer a filter that matches
+   * nothing. Said once on the console, like every other missing input here.
+   *
+   * Each todo's page, `todos/<id>/`, is resolved against the GRAPH's URL and
+   * not taken from its `@id`, which names the production host — a staging
+   * preview's sticky must open the staging preview's page.
+   */
+  function fetchTodoGraph(done) {
+    var src = document.querySelector('meta[name="fa-todo-graph"]');
+    var url = src && src.getAttribute("content");
+    if (!url) return done(null);
+    var base;
+    try { base = new URL(url, document.baseURI); } catch (_e) { return done(null); }
+    fetch(base.href)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        var nodes = doc && Array.isArray(doc["@graph"]) ? doc["@graph"] : null;
+        if (!nodes) throw new Error("no @graph");
+        var out = {};
+        nodes.forEach(function (n) {
+          if (!n || typeof n.identifier !== "string") return;
+          var target = n.target && typeof n.target === "object" ? n.target : null;
+          out[n.identifier] = {
+            node: target ? (target.label || target["@id"]) : undefined,
+            person: edgeIds(n.assignee),
+            bean: edgeIds(n.bean),
+            pageHref: new URL("todos/" + encodeURIComponent(n.identifier) + "/", base).href,
+          };
+        });
+        done(out);
+      })
+      .catch(function (e) {
+        console.warn("docs-ui: could not read " + url + " (" + e.message + "); " +
+                     "the board cannot filter or group by node, person or bean.");
+        done(null);
+      });
+  }
+
+  /** An edge's targets as identifiers: `identifier` where given, else `@id`. */
+  function edgeIds(v) {
+    var list = Array.isArray(v) ? v : v ? [v] : [];
+    var out = [];
+    list.forEach(function (x) {
+      var id = typeof x === "string" ? x : x && (x.identifier || x["@id"]);
+      if (typeof id === "string" && id && out.indexOf(id) === -1) out.push(id);
+    });
+    return out;
+  }
+
+  /**
    * Paragraphs, split on blank lines. Text only -- see the header.
    *
    * `{ markdown: true }` renders the note's MARKDOWN instead, and only a
@@ -4294,6 +4378,12 @@
     '<path d="M14.6 2.6l6.8 6.8-1.9.5-3.6 3.6.4 4.6-1.9 1.9-4.2-4.2L4.6 21l-1.6-1.6 5.2-5.6' +
     '-4.2-4.2 1.9-1.9 4.6.4 3.6-3.6z"/></svg>';
 
+  var PAGE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    // A page with an arrow out of its corner: "go to this one's page".
+    '<path d="M13 3h8v8M21 3l-9 9M18 14v6H4V6h6" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
   /** The closed sticky. `s`: kind, opens, title, theme, art, process, badge, onOpen. */
   function stickyTile(s) {
     var tile = el("button", {
@@ -4335,7 +4425,9 @@
       role: "group",
       "aria-label": "Actions for " + s.title,
     });
-    [["view", EYE_GLYPH], ["edit", PENCIL_GLYPH]].forEach(function (pair) {
+    // `page` FIRST when given: the todo's own page on this site (#1941),
+    // before the two that leave for the forge. Absent, never dead, like them.
+    [["page", PAGE_GLYPH], ["view", EYE_GLYPH], ["edit", PENCIL_GLYPH]].forEach(function (pair) {
       var link = s[pair[0]];
       var href = link && safeHref(link.href);
       if (!href) return;            // absent, never a dead link (`pb04`)
@@ -6817,26 +6909,40 @@
     dock.appendChild(dockHead);
     dock.appendChild(strip);
     sheet.appendChild(dock);
+    /* HIDDEN UNTIL ASKED FOR — owner, 2026-10-01: *"have folio bottom strip
+     * tiles default to hidden away when folio first opened"*. So with no
+     * stored choice the folio opens with the strip slid away and only this
+     * tab showing, which says how many tiles are behind it. The tab is still
+     * the one control both ways (`l4zi`), and a reader's choice either way is
+     * remembered as "1" or "0". Unreadable storage counts as no choice:
+     * hidden, the stated default, rather than a guess at a choice. */
     var STRIP_HIDDEN_KEY = "fa-glass-strip-hidden";
     function stripWasHidden() {
-      try { return localStorage.getItem(STRIP_HIDDEN_KEY) === "1"; } catch (_e) { return false; }
+      try { return localStorage.getItem(STRIP_HIDDEN_KEY) !== "0"; } catch (_e) { return true; }
+    }
+    function labelStripToggle() {
+      var h = dock.getAttribute("data-fa-strip") === "hidden";
+      var total = typeof stripTotal === "function" ? stripTotal() : null;
+      while (stripToggle.firstChild) stripToggle.removeChild(stripToggle.firstChild);
+      stripToggle.appendChild(el("span", { "aria-hidden": "true" }, h ? "\u25B4 " : "\u25BE "));
+      stripToggle.appendChild(document.createTextNode(h ? "Show tiles" : "Hide tiles"));
+      if (h && total !== null) {
+        stripToggle.appendChild(el("span", { class: "fa-glass-strip-count" }, " (" + total + ")"));
+      }
+      stripToggle.title = h ? "Bring the tiles back" : "Slide the tiles away \u2014 this tab brings them back";
     }
     function setStripHidden(h) {
       dock.setAttribute("data-fa-strip", h ? "hidden" : "shown");
       if (h) strip.setAttribute("inert", ""); else strip.removeAttribute("inert");
       stripToggle.setAttribute("aria-expanded", h ? "false" : "true");
-      while (stripToggle.firstChild) stripToggle.removeChild(stripToggle.firstChild);
-      stripToggle.appendChild(el("span", { "aria-hidden": "true" }, h ? "\u25B4 " : "\u25BE "));
-      stripToggle.appendChild(document.createTextNode(h ? "Show tiles" : "Hide tiles"));
-      stripToggle.title = h ? "Bring the tiles back" : "Slide the tiles away \u2014 this tab brings them back";
+      labelStripToggle();
     }
     stripToggle.addEventListener("click", function () {
       var h = dock.getAttribute("data-fa-strip") !== "hidden";
       setStripHidden(h);
       try {
-        if (h) localStorage.setItem(STRIP_HIDDEN_KEY, "1");
-        else localStorage.removeItem(STRIP_HIDDEN_KEY);
-      } catch (_e) { /* a strip that comes back next page is the safe failure */ }
+        localStorage.setItem(STRIP_HIDDEN_KEY, h ? "1" : "0");
+      } catch (_e) { /* next page: hidden, the default */ }
       glassLive.textContent = h ? "Tiles hidden. The Show tiles tab brings them back." : "Tiles shown.";
     });
     setStripHidden(stripWasHidden());
@@ -7026,7 +7132,7 @@
     // opacity" under a tile captioned otherwise was a third name for it.
     //
     // The `id` stays `glass-settings`. Every glass test keys on
-    // `data-fa-glass-chrome="glass-settings"` and `STRIP_DEFAULT` lists it, so
+    // `data-fa-glass-chrome="glass-settings"` and the `glassStrip` pins resolve to it, so
     // the id is the contract and the label is the prose.
     chromeTile("glass-settings", SETTINGS_NAMES.glass, "⚙",
                SETTINGS_NAMES.glass + " \u2014 " + SETTINGS_SCOPES.glass, buildSettings);
@@ -7260,18 +7366,41 @@
      * The arrangement is the READER'S and is remembered in this browser — a
      * view preference like the theme, never a change to the declaration. */
     var STRIP_KEY = "fa-glass-strip";
-    var STRIP_DEFAULT = ["glass-todos", "glass-filter", "glass-settings"];
+    /* THE DEFAULT STRIP IS DECLARED — owner, 2026-10-01, bean `ob3m` finding
+     * 10, option 1 of 4: **"Pinned tiles first, plus '+N more'"**. The
+     * instance's `glassStrip` declaration names the pins (Todos, Settings,
+     * library, processes, tools, skills here), `sync-docs-harness.ts`
+     * resolves each kind to one tile id, and the page reads the ids from
+     * `<meta name="fa-glass-strip">` — or, on a page no Jekyll wrote, from
+     * `assets/harness/glass-strip.json`. Nothing here names a kind.
+     *
+     * `STRIP_CHROME_ONLY` is what a page gets when NOTHING declared a strip:
+     * the glass's own two controls, never a guess at which graphs matter. */
+    var STRIP_CHROME_ONLY = ["glass-todos", "glass-settings"];
+    function stripIdList(v) {
+      return Array.isArray(v)
+        ? v.filter(function (x) { return typeof x === "string" && x !== "glass-more"; })
+        : null;
+    }
+    function declaredStripFromMeta() {
+      var meta = document.querySelector('meta[name="fa-glass-strip"]');
+      if (!meta) return null;
+      try { return stripIdList(JSON.parse(meta.getAttribute("content") || "null")); } catch (_e) { return null; }
+    }
+    // True once the READER has arranged the strip: their arrangement then
+    // wins over the declaration, as the theme does (Q9: declared default,
+    // reader may override).
+    var stripArranged = false;
     function loadStrip() {
       try {
-        var v = JSON.parse(localStorage.getItem(STRIP_KEY) || "null");
-        if (Array.isArray(v)) {
-          return v.filter(function (x) { return typeof x === "string" && x !== "glass-more"; });
-        }
-      } catch (_e) { /* unreadable: the default strip */ }
-      return STRIP_DEFAULT.slice();
+        var v = stripIdList(JSON.parse(localStorage.getItem(STRIP_KEY) || "null"));
+        if (v) { stripArranged = true; return v; }
+      } catch (_e) { /* unreadable: the declared strip */ }
+      return (declaredStripFromMeta() || STRIP_CHROME_ONLY).slice();
     }
     var stripIds = loadStrip();
     function saveStrip() {
+      stripArranged = true;
       try { localStorage.setItem(STRIP_KEY, JSON.stringify(stripIds)); } catch (_e) { /* next page: the default */ }
     }
 
@@ -7320,7 +7449,98 @@
       if (openPanelId && panelButtons[openPanelId]) panelButtons[openPanelId].setAttribute("aria-expanded", "true");
       // A declared tile on the strip needs the list; drawn when it arrives.
       if (waiting) withDeclared(function (t) { if (t) renderStrip(); });
+      // The count needs the list too, even when no declared tile is pinned.
+      else if (!declaredTiles) withDeclared(function (t) { if (t) fitStrip(); });
+      fitStrip();
     }
+
+    /* ── FIT, NOT SCROLL — owner, 2026-10-01, bean `ob3m` finding 10 ──────
+     *
+     * The strip once held 25 tiles in one row and scrolled them sideways
+     * with no arrow, count or fade: 11 visible at 1280 px, about 2½ at 390,
+     * and the rest off-screen with nothing saying so. The ruling: **no tile
+     * may be silently off-screen.** So the strip never scrolls. It shows as
+     * many pinned tiles as fit, in declared order, and the last tile says
+     * "+N more", where N is EXACTLY the number of tiles not on screen —
+     * pinned ones that did not fit at this width plus everything in More.
+     * Shown + N is always the total, which is what the e2e test asserts.
+     *
+     * Refitted whenever the strip's box changes (a resize, the glass
+     * opening), because "what fits" is a fact about this width only. */
+    var overflowIds = [];
+    /** Every tile the glass can draw, chrome and declared — or null while the list is unread. */
+    function stripTotal() {
+      if (!declaredTiles) return null;
+      var n = 0;
+      Object.keys(chromeDefs).forEach(function (id) { if (id !== "glass-more") n++; });
+      declaredTiles.forEach(function (t) { if (declaredTileEl(t)) n++; });
+      return n;
+    }
+    function stripItems() {
+      return Array.prototype.slice.call(strip.querySelectorAll("[data-fa-strip-item]"));
+    }
+    function labelMore() {
+      var total = stripTotal();
+      var shown = stripItems().filter(function (n) { return !n.hasAttribute("hidden"); }).length;
+      var cap = moreBtn.querySelector(".fa-tile-caption");
+      if (total === null) {
+        moreBtn.removeAttribute("data-fa-more-count");
+        moreBtn.setAttribute("aria-label", chromeDefs["glass-more"].title);
+        if (cap) cap.textContent = "More";
+        return;
+      }
+      var n = Math.max(0, total - shown);
+      moreBtn.setAttribute("data-fa-more-count", String(n));
+      moreBtn.setAttribute("aria-label", n === 0 ? "More \u2014 every tile is on the strip"
+        : n + (n === 1 ? " more tile" : " more tiles"));
+      moreBtn.title = chromeDefs["glass-more"].title;
+      if (cap) cap.textContent = n === 0 ? "More" : "+" + n + " more";
+      labelStripToggle();
+    }
+    var lastOverflow = "";
+    function fitStrip() {
+      var items = stripItems();
+      items.forEach(function (n) { n.removeAttribute("hidden"); n.removeAttribute("data-fa-overflow"); });
+      overflowIds = [];
+      labelMore();
+      // Not laid out (the glass is down): nothing to measure, and hiding every
+      // tile because the strip is 0 px wide would be a lie about the width.
+      if (strip.clientWidth > 0) {
+        var cs = getComputedStyle(strip);
+        var rtl = cs.direction === "rtl";
+        var box = strip.getBoundingClientRect();
+        var edge = rtl ? box.left + parseFloat(cs.paddingLeft) : box.right - parseFloat(cs.paddingRight);
+        var past = function () {
+          var r = moreBtn.getBoundingClientRect();
+          return rtl ? r.left < edge - 0.5 : r.right > edge + 0.5;
+        };
+        var shown = items.slice();
+        while (shown.length && past()) {
+          var last = shown.pop();
+          last.setAttribute("hidden", "");
+          last.setAttribute("data-fa-overflow", "");
+          overflowIds.unshift(last.getAttribute("data-fa-strip-item"));
+          labelMore();
+        }
+      }
+      var sig = overflowIds.join(" ");
+      if (sig !== lastOverflow) {
+        lastOverflow = sig;
+        // More lists what the strip cannot show, so it changes with the width.
+        if (openPanelId === "glass-more") {
+          var body = panel.querySelector(".fa-glass-panel-body");
+          if (body) { while (body.firstChild) body.removeChild(body.firstChild); buildMore(body); }
+        }
+      }
+    }
+    var fitQueued = false;
+    function queueFit() {
+      if (fitQueued) return;
+      fitQueued = true;
+      (window.requestAnimationFrame || setTimeout)(function () { fitQueued = false; fitStrip(); });
+    }
+    if (typeof ResizeObserver === "function") new ResizeObserver(queueFit).observe(strip);
+    else window.addEventListener("resize", queueFit);
 
     function moveTile(id, toStrip, index) {
       if (id === "glass-more") return;
@@ -7457,10 +7677,18 @@
       if (tileDrag && e.pointerId === tileDrag.pointerId) endTileDrag();
     });
 
-    function moreItem(id, node) {
+    function moreItem(id, node, overflowed) {
       var wrap = el("div", { class: "fa-glass-more-item", "data-fa-more-item": id });
       wireTileDrag(node, id);
       wrap.appendChild(node);
+      if (overflowed) {
+        // PINNED, and there is no room for it at this width. Its place on the
+        // strip is kept; a "↓ Strip" button here would promise a move the
+        // width cannot honour.
+        wrap.setAttribute("data-fa-overflow", "");
+        wrap.appendChild(el("span", { class: "fa-glass-arrange-note" }, "Pinned \u00b7 no room at this width"));
+        return wrap;
+      }
       var b = el("button", {
         type: "button",
         class: "fa-glass-arrange",
@@ -7488,6 +7716,11 @@
       body.appendChild(grid);
       var onStrip = el("div", { class: "fa-glass-on-strip" });
       body.appendChild(onStrip);
+      // FIRST, the pinned tiles the strip had no room for, in pinned order:
+      // they are what "+N more" counted ahead of everything else.
+      overflowIds.forEach(function (id) {
+        if (chromeDefs[id]) grid.appendChild(moreItem(id, makeChromeTile(id, false), true));
+      });
       Object.keys(chromeDefs).forEach(function (id) {
         if (id === "glass-more" || stripIds.indexOf(id) !== -1) return;
         grid.appendChild(moreItem(id, makeChromeTile(id, false)));
@@ -7497,6 +7730,12 @@
           status.textContent = "The list of visualisations could not be read. That is not the same as there being none.";
         } else {
           var n = 0;
+          var first = grid.querySelector(".fa-glass-more-item:not([data-fa-overflow])");
+          overflowIds.forEach(function (id) {
+            var t = declaredById(id);
+            var node = t && declaredTileEl(t);
+            if (node) grid.insertBefore(moreItem(id, node, true), first);
+          });
           tiles.forEach(function (t) {
             var node = declaredTileEl(t);
             if (!node) return;
@@ -7513,7 +7752,8 @@
           stripIds.forEach(function (id) {
             if (!chromeDefs[id] && !declaredById(id)) return;
             var li = el("li", { class: "fa-glass-arrange-row", "data-fa-strip-row": id });
-            li.appendChild(el("span", { class: "fa-glass-arrange-name" }, labelOf(id)));
+            li.appendChild(el("span", { class: "fa-glass-arrange-name" },
+              labelOf(id) + (overflowIds.indexOf(id) !== -1 ? " (no room at this width)" : "")));
             var b = el("button", {
               type: "button",
               class: "fa-glass-arrange",
@@ -7533,8 +7773,20 @@
     chromeTile("glass-more", "More", "⋯", "More — every visualisation this folio declares, and where each tile lives", buildMore);
     // MORE IS FIXED, and last: the one tile that is always on the strip.
     var moreBtn = makeChromeTile("glass-more", true);
+    moreBtn.setAttribute("data-fa-more", "");
     strip.appendChild(moreBtn);
     renderStrip();
+    // A page no Jekyll wrote has no meta: read the published pins, unless the
+    // reader has arranged the strip in the meantime.
+    if (!stripArranged && !document.querySelector('meta[name="fa-glass-strip"]')) {
+      fetch(withBase("/assets/harness/glass-strip.json"))
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (v) {
+          var ids = stripIdList(v);
+          if (ids && !stripArranged) { stripIds = ids; renderStrip(); }
+        })
+        .catch(function () { /* no declared strip: the glass's own chrome stays */ });
+    }
 
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
@@ -8242,6 +8494,8 @@
       if (Object.keys(slots).length === 0 && !grid.querySelector(".fa-sticky-empty")) {
         grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
       }
+      // A group whose last sticky just left loses its heading too.
+      applyReaderFilter();
       // Focus would otherwise land on <body>, which tells a reader nothing.
       heading.focus();
     }
@@ -8287,6 +8541,9 @@
       slot.appendChild(buildSticky(todo));
       slot.appendChild(stickyActions({
         title: todo.summary,
+        // Its own page, `todos/<id>/`, from the graph (`fetchTodoGraph`).
+        page: todo.pageHref && { href: safeHref(todo.pageHref), title: "Open this todo's page",
+                                 label: "Open the page for " + todo.summary },
         view: todo.viewHref && { href: safeHref(todo.viewHref), title: "View this todo's source on GitHub",
                                  label: "View the source of " + todo.summary },
         edit: todo.editHref && { href: safeHref(todo.editHref), title: "Edit this todo's markdown on GitHub",
@@ -8325,6 +8582,20 @@
         if (keep) { slot.removeAttribute("hidden"); shown++; }
         else slot.setAttribute("hidden", "hidden");
       }
+      // A group heading with nothing visible under it is hidden with its
+      // group: a heading over an empty run reads as "this group is empty",
+      // which is the filter's doing, not the group's.
+      var heads = grid.querySelectorAll(".fa-sticky-group-head");
+      for (var gi = 0; gi < heads.length; gi++) {
+        var any = false;
+        for (var sib = heads[gi].nextElementSibling;
+             sib && !sib.classList.contains("fa-sticky-group-head");
+             sib = sib.nextElementSibling) {
+          if (sib.hasAttribute("data-fa-home-slot") && !sib.hasAttribute("hidden")) { any = true; break; }
+        }
+        if (any) heads[gi].removeAttribute("hidden");
+        else heads[gi].setAttribute("hidden", "hidden");
+      }
       board.setAttribute("data-fa-filtered", String(shown));
       var none = grid.querySelector(".fa-sticky-filtered-out");
       if (shown === 0 && rows.length > 0 && !none) {
@@ -8341,7 +8612,9 @@
 
     // One select per property a todo carries. Built from the corpus, so a
     // folio whose todos never set a priority simply gets no priority control.
-    ["status", "priority"].forEach(function (name) {
+    // `node`, `person` and `bean` are the graph's edges (`fetchTodoGraph`);
+    // with no graph they are absent from every todo, so they get no control.
+    BOARD_AXES.concat(["priority"]).forEach(function (name) {
       var values = propertyValues(live, name);
       if (values.length < 2) return;   // nothing to choose between
       var id = "fa-filter-" + name;
@@ -8357,6 +8630,63 @@
       filterRow.appendChild(label);
       filterRow.appendChild(select);
     });
+
+    /* ── Grouping, the reader's too ───────────────────────────────────────
+     *
+     * Re-ORDERS the slots under one heading per value and changes nothing
+     * else — the same rule as the filter: a view, committed nowhere. "none"
+     * puts back the board's own order, process stacking included.
+     *
+     * A todo with several values on the axis (two assignees, two beans) is
+     * filed ONCE, under all of them joined: the slot is the todo's home slot
+     * and a second copy would be a second home. A todo with none is filed
+     * under "no <axis>", last, because "nobody" and "not loaded" differ and
+     * the heading says which axis is empty.
+     */
+    var groupAxes = BOARD_AXES.filter(function (a) { return propertyValues(live, a).length > 0; });
+    var groupBy = "";
+    function applyGrouping() {
+      var olds = grid.querySelectorAll(".fa-sticky-group-head");
+      for (var oi = 0; oi < olds.length; oi++) grid.removeChild(olds[oi]);
+      var order = rows.map(function (r) { return r.todo; })
+        .filter(function (t) { return slots[t.id]; });
+      if (!groupBy) {
+        order.forEach(function (t) { grid.appendChild(slots[t.id]); });
+      } else {
+        var groups = {};
+        var keys = [];
+        order.forEach(function (t) {
+          var k = valuesOf(t, groupBy).join(", ");
+          if (!Object.prototype.hasOwnProperty.call(groups, k)) { groups[k] = []; keys.push(k); }
+          groups[k].push(t);
+        });
+        keys.sort(function (a, b) { return a === "" ? 1 : b === "" ? -1 : a < b ? -1 : a > b ? 1 : 0; });
+        keys.forEach(function (k) {
+          grid.appendChild(el("h3", { class: "fa-sticky-group-head", "data-fa-group": k },
+            k || "no " + groupBy));
+          groups[k].forEach(function (t) { grid.appendChild(slots[t.id]); });
+        });
+      }
+      // The determined-empty notes stay last, after every group.
+      [".fa-sticky-empty", ".fa-sticky-filtered-out"].forEach(function (sel) {
+        var n = grid.querySelector(sel);
+        if (n) grid.appendChild(n);
+      });
+      board.setAttribute("data-fa-grouped", groupBy || "none");
+      applyReaderFilter();
+    }
+    if (groupAxes.length) {
+      var gLabel = el("label", { class: "fa-board-filter-label", for: "fa-group-by" }, "group by");
+      var gSelect = el("select", { class: "fa-board-filter-select", id: "fa-group-by" });
+      gSelect.appendChild(el("option", { value: "" }, "none"));
+      groupAxes.forEach(function (a) { gSelect.appendChild(el("option", { value: a }, a)); });
+      gSelect.addEventListener("change", function () {
+        groupBy = gSelect.value;
+        applyGrouping();
+      });
+      filterRow.appendChild(gLabel);
+      filterRow.appendChild(gSelect);
+    }
     applyReaderFilter();
 
 
@@ -8815,6 +9145,20 @@
     fetchZoom(function () {
     fetchTodoIndex(function (items) {
       if (items === null) return;
+    fetchTodoGraph(function (edges) {
+      // The graph's edges onto the index's items, by id. Written onto the
+      // item itself so every surface that already takes a todo — the board,
+      // its windows, the page stickies — has them without a second lookup.
+      if (edges) {
+        items.forEach(function (t) {
+          var e = edges[t.id];
+          if (!e) return;
+          t.node = e.node;
+          t.person = e.person;
+          t.bean = e.bean;
+          t.pageHref = e.pageHref;
+        });
+      }
       todoState.items = items;
       var board = mountTodoBoard(items);
       if (!board) return;
@@ -8822,6 +9166,7 @@
       collapseFloor(items.length);
       window.__faTodoBoard = board;
       document.dispatchEvent(new CustomEvent("fa:todos-ready", { detail: board }));
+    });
     });
     });
   }

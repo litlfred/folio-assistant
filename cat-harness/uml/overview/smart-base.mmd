@@ -661,6 +661,11 @@ classDiagram
       generatedBy [1] string
     }
   }
+  namespace smart_base__smart_base_findings {
+    class n_smart_base_smart_base_findings_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace smart_base__smart_base_external_schemas {
     class smart_base_smart_base_external_schemas_folio_external_schema_v1_Term["Term"] {
       <<json: ExternalSchemaSchema>>
@@ -834,6 +839,8 @@ classDiagram
   cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section" fa_uml_kind_document_kinds
   cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced" fa_uml_kind_document_kinds
   cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1" fa_uml_kind_document_kinds
+  cssClass "n_smart_base_smart_base_findings_docs" fa_uml_kind_docs
+  cssClass "n_smart_base_smart_base_findings_docs" fa_uml_undetermined
   smart_base_smart_base_external_schemas_folio_external_schema_v1_folio_external_schema_v1 *-- "0..*" smart_base_smart_base_external_schemas_folio_external_schema_v1_Term : terms
   smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 *-- "0..*" smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_Concept : concepts
   cssClass "smart_base_smart_base_external_schemas_folio_external_schema_v1_Term" fa_uml_kind_external_schema

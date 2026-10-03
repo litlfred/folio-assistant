@@ -376,6 +376,9 @@
      file's front matter, which is not served. -->
 <meta name="fa-site-index-src" content="{{ '/assets/harness/site.json' | relative_url }}">
 <meta name="fa-todo-src" content="{{ '/assets/todos/index.json' | relative_url }}">
+<!-- The todo GRAPH (#1941): the typed edges — node, person, bean — the board
+     filters and groups by, and each todo's own page. -->
+<meta name="fa-todo-graph" content="{{ '/todos.jsonld' | relative_url }}">
 
 <!--
   THE SEMANTIC-ZOOM DECLARATION — when the card stops rendering its words and
@@ -415,6 +418,15 @@
   something this comment has to be right about.
 -->
 <meta name="fa-tiles" content="{{ site.data.harness.tiles | jsonify | escape }}">
+<!--
+  THE GLASS STRIP'S PINNED TILES, in order (owner, 2026-10-01, bean `ob3m`
+  finding 10: "Pinned tiles first, plus '+N more'"). Resolved from the
+  instance's `glassStrip` declaration by `sync-docs-harness.ts`; absent when
+  nothing declared one. Replica pages read `assets/harness/glass-strip.json`.
+-->
+{%- if site.data.harness.glassStrip %}
+<meta name="fa-glass-strip" content="{{ site.data.harness.glassStrip.pinned | jsonify | escape }}">
+{%- endif %}
 
 <!--
   THE SITE'S BASEURL, for the tiles above.
