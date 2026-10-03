@@ -4,7 +4,7 @@
 - `cat-harness/docs/cat-harness/voices/index.html` (declared by `agent-skills/agent-skills.json`)
 - `cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html` (`folio-assistant-core/folio-assistant-core.json`)
 - `cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html` (`folio-assistant-sci/folio-assistant-sci.json`)
-- `cat-harness/docs/cat-harness/voices/who-style-guide/index.html` (`who-style-guide/who-style-guide.json`)
+- `cat-harness/docs/cat-harness/voices/who-iris/index.html` (`who-iris/skills/skills.json`; this was `voices/who-style-guide/`, declared by `who-style-guide/who-style-guide.json`, until the style guide was folded into who-iris on 2026-10-01, bean `qsx4`. The observations below were made on the `who-style-guide` page and are kept as made)
 
 All four are written by `cat-harness/scripts/gen-voices-viz.ts`, "a zero-dependency viewer … that fetches the projection relative to its own location" (`assets/voices/`). A per-instance page is the same viewer with the instance filter preset. For example, `voices/who-style-guide/` opens with "who-style-guide" selected and 3 voices showing.
 

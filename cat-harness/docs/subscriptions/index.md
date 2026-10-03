@@ -28,7 +28,6 @@ Derived from the declarations wherever a fact exists: a staged instance's planne
 | **smart-immunizations** `smart-immunizations` | [`litlfred/smart-immunizations`](https://github.com/litlfred/smart-immunizations) | 🧱 planned | — | staged instance | — |
 | **smart-trust** `smart-trust` | [`litlfred/smart-trust`](https://github.com/litlfred/smart-trust) | 🧱 planned | — | staged instance | — |
 | **WHO IRIS** `who-iris` | [`litlfred/who-iris`](https://github.com/litlfred/who-iris) | 📦 exists | — | hand-entered | Repository created 2026-09-30 and empty; the staged instance is who-iris/. Seeding is held (kg-separation stage 10) until the owner says so. The WHO voices style guide merges into it as a subgraph. |
-| **who-style-guide** `who-style-guide` | [`litlfred/who-style-guide`](https://github.com/litlfred/who-style-guide) | 🧱 planned | — | staged instance | — |
 | **WHO World Health Data Hub** `who-world-health-data-hub` | — | 💡 proposed | — | hand-entered | Proposed by the owner 2026-09-30 as a repository per large KG asset type; no instance or repository yet. |
 
 ## Subscriptions
