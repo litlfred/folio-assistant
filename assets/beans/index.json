@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 675,
+      "count": 676,
       "unit": "beans"
     }
   },
@@ -2567,12 +2567,12 @@
       "title": "Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:20:17Z",
-      "updatedAt": "2026-10-03T00:50:36Z",
+      "updatedAt": "2026-10-03T01:06:35Z",
       "preview": "Owner, 2026-10-02, verbatim: \"bean: as pre-requistie as part of separation, fsh-guts content gets its own named branch, cat/cat-harness/fsh-guts and the contents of fsh-guts/ dir goes there. will need to update the tools associated to this, like with other special named branches.\"\n\nBranch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<name>` (note on `fs43`). The owner aske",
       "file": "beans/defs/folio-assistant-9c7h--move-fsh-guts-to-its-own-special-branch-cat-fsh-gu.md"
     },
@@ -2617,6 +2617,20 @@
       "updatedAt": "2026-09-29T20:50:34Z",
       "preview": "## Progress — 2026-09-18\n\nStep 1 landed on `claude/festive-galileo-s7ibx0` ([PR #280](https://github.com/litlfred/folio-assistant/pull/280)), two commits.\n\n**`schemas/qa-review.ts`** — `Finding`, `Decision`, `AuditNote` as three\nentities. The two severity vocabularies are kept as orthogonal axes:\n`critical | major | minor` is what kind of breakage (a machine can assign it),\n`blocking | suggestion ",
       "file": "beans/defs/folio-assistant-9gyz--qa-review-schemas-finding-decision-and-auditnote-a.md"
+    },
+    {
+      "id": "folio-assistant-9io2",
+      "title": "lake-cache family to cat/folio-assistant-sci/lake-cache/ (declaration, 8 mirrors, folio-repo renames)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-03T00:51:43Z",
+      "updatedAt": "2026-10-03T00:51:43Z",
+      "preview": "The last special branch still declared under the interim `cat-<name>` scheme. Owner, 2026-10-02: special branches are `cat/<harness>/<name>`; and (confirmed 2026-10-02, Parcel B brief) folio-assistant-sci is the lake-cache harness. So the family becomes `cat/folio-assistant-sci/lake-cache/<pkg>-<slug>`.\n\nSplit out of 9c7h on 2026-10-03 because it touches 8 CI and script files that run INSIDE folio",
+      "file": "beans/defs/folio-assistant-9io2--lake-cache-family-to-catfolio-assistant-scilake-ca.md"
     },
     {
       "id": "folio-assistant-9ofm",
@@ -3799,14 +3813,14 @@
     {
       "id": "folio-assistant-dlqu",
       "title": "SPEED-UP 4: CI sharding, BPMN render cache and shallow checkout",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:24Z",
-      "updatedAt": "2026-10-02T22:08:54Z",
+      "updatedAt": "2026-10-03T02:35:39Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 4 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, parallel checks, CI merge:main (`d33q` part B).\n\n## What\nThree CI changes to `.github/workflows/code-quality-gates.yml` (and the other gate workflows):\n1. **Sharding** — split the long `gates` job (and `bun test`) into parallel sh",
       "file": "beans/defs/folio-assistant-dlqu--speed-up-4-ci-sharding-bpmn-render-cache-and-shall.md"
     },
