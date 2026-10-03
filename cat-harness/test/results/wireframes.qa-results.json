@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-wireframes.ts",
-    "script_hash": "9e815adb50fa"
+    "script_hash": "e43af8f4af34"
   },
   "subject": {
     "kind": "corpus",
@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 47,
+      "count": 48,
       "entries": [
         {
           "ref": "cat-harness/docs/beans/index.html",
@@ -35,6 +35,10 @@
         },
         {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-base-docs/index.html",
+          "wireframe": "docs-index"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-base-findings/index.html",
           "wireframe": "docs-index"
         },
         {
@@ -229,5 +233,5 @@
       "entries": []
     }
   },
-  "total": 47
+  "total": 48
 }
