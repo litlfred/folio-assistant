@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { MANIFEST_SCHEMA } from "../branch-store.ts";
-import { candidatesOf, driftOf, exitCodeFor, type DriftRow } from "../state-drift.ts";
+import { brief, candidatesOf, driftOf, exitCodeFor, type DriftRow } from "../state-drift.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -147,6 +147,22 @@ describe("the three answers that are not drift", () => {
     expect(rows(r)[0]).toMatchObject({ state: "authoritative" });
   });
 
+  test("`status: retired` is NAMED and not compared, even with real drift under it", () => {
+    const r = remote();
+    seed(r, "cat/x/beans", { ...SEED, status: "retired", retiredReason: "superseded by the per-graph branches" });
+    // Real drift on the source ref, which a seed row would report.
+    writeFileSync(join(r.work, "beans", "defs", "a.md"), "moved on\n");
+    run(r.work, "commit", "-aqm", "main moves on");
+    run(r.work, "push", "-q", "origin", "main");
+
+    const row = rows(r)[0]!;
+    expect(row.state).toBe("retired");
+    expect(row.files).toBeUndefined();
+    // The reason travels with the branch, verbatim — a superseded seed is more
+    // dangerous than a stale one, so WHY it is retired is the useful part.
+    expect(row.detail).toBe("superseded by the per-graph branches");
+  });
+
   test("a branch that is not on the remote is `unknown` — never reported as in-sync", () => {
     const r = remote();
     const row = rows(r, "cat/x/absent")[0]!;
@@ -166,6 +182,30 @@ describe("the three answers that are not drift", () => {
     const row = rows(r)[0]!;
     expect(row.state).toBe("unknown");
     expect(row.detail).toContain("nowhere is not on");
+  });
+});
+
+describe("brief — the session-start form", () => {
+  const row = (state: DriftRow["state"], extra: Partial<DriftRow> = {}): DriftRow => ({ id: "beans", branch: "b", path: "beans", state, ...extra });
+
+  test("silent when every seed is current: a section printed every time is a section people skip", () => {
+    expect(brief([row("in-sync"), row("retired"), row("not-a-seed")])).toBe("");
+  });
+
+  test("counts, not paths — the superseded branch alone carried 159 and would bury the sweep", () => {
+    const b = brief([row("drift", { files: new Array(159).fill("M\tx"), detail: "state@aaa vs main@bbb" })]);
+    expect(b).toContain("159 file(s) behind main@bbb");
+    expect(b).not.toContain("M\tx");
+  });
+
+  test("says `main` is still the store, so a reader does not over-read a stale seed as a broken work-plan", () => {
+    const b = brief([row("drift", { files: ["M\tx"] })]);
+    expect(b).toContain("`main` is still the store");
+    expect(b).toContain("It breaks the cutover");
+  });
+
+  test("an `unknown` is carried too — it is a finding, not a quiet pass", () => {
+    expect(brief([row("unknown", { detail: "could not reach it" })])).toContain("could not determine: could not reach it");
   });
 });
 

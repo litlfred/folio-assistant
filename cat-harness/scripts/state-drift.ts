@@ -67,6 +67,8 @@ interface SpecialBranch {
 interface SeedManifest {
   $schema?: string;
   status?: string;
+  /** Why, when `status` is `retired` — reported verbatim so the reason travels with the branch. */
+  retiredReason?: string;
   authoritative?: boolean;
   subgraph?: string;
   source?: { ref?: string; sha?: string };
@@ -86,9 +88,16 @@ export interface DriftRow {
    *   must no longer track the path) is `check:declared-dirs`'s `not-cut-over`.
    * - `not-a-seed` — no `state-manifest/v1` at the root. `gh-pages` and the
    *   commit-keyed `qa-reports` are not seeds of anything.
+   * - `retired` — `status: "retired"`. A SUPERSEDED seed, which is worse than
+   *   a stale one: it still carries a valid manifest over real graphs, so a
+   *   cutover tool that found it would use it. `cat/cat-harness/state` is the
+   *   case (owner, 2026-10-03, D4 option (b)): per-graph branches replaced it,
+   *   and the beans graph's branch is `cat/cat-harness/beans`. Reporting its
+   *   drift would be crying wolf over a branch nothing should read; reporting
+   *   it as a seed would be worse. So it is named, and not compared.
    * - `unknown` — could not be determined. **Never folded into `in-sync`.**
    */
-  state: "in-sync" | "drift" | "authoritative" | "not-a-seed" | "unknown";
+  state: "in-sync" | "drift" | "authoritative" | "not-a-seed" | "retired" | "unknown";
   detail?: string;
   /** On `drift`, `git diff-tree --name-status` between the two trees. */
   files?: string[];
@@ -167,6 +176,9 @@ export function driftOf(b: SpecialBranch, opts: DriftOptions = {}): DriftRow[] {
     return [row({ branch: here.branch, state: "unknown", detail: `${MANIFEST_FILE} on ${here.branch} does not parse: ${(e as Error).message}` })];
   }
   if (m.$schema !== MANIFEST_SCHEMA) return [row({ branch: here.branch, state: "not-a-seed", detail: `root manifest is ${m.$schema ?? "untyped"}, not ${MANIFEST_SCHEMA}` })];
+  if (m.status === "retired") {
+    return [row({ branch: here.branch, state: "retired", detail: m.retiredReason ?? "the manifest says this branch is retired; nothing should read it" })];
+  }
   if (m.authoritative === true) return [row({ branch: here.branch, state: "authoritative", detail: "the manifest says this branch IS the store" })];
 
   const ref = m.source?.ref;
@@ -231,13 +243,45 @@ export function exitCodeFor(rows: readonly DriftRow[]): number {
   return 0;
 }
 
+export const MARK = { "in-sync": "✓", drift: "✗", unknown: "?", authoritative: "·", "not-a-seed": "·", retired: "·" } as const;
+
+/**
+ * The session-start form: the finding and nothing else.
+ *
+ * The full report prints every differing path, and the superseded
+ * `cat/cat-harness/state` alone carried **159** of them — which in a sweep
+ * whose job is to be read would bury the rest of the sweep. So `--brief`
+ * prints one line per drifted graph with its COUNT, and says where the list
+ * is. Silent when every seed is current, because a sweep that prints a clean
+ * section every time trains people to skip the section.
+ */
+export function brief(rows: readonly DriftRow[]): string {
+  const drifted = rows.filter((r) => r.state === "drift");
+  const unknown = rows.filter((r) => r.state === "unknown");
+  if (!drifted.length && !unknown.length) return "";
+  const lines = ["## Seeded state branches"];
+  for (const r of drifted) lines.push(`  ✗ ${r.id}:${r.path} — ${r.files?.length ?? "?"} file(s) behind ${r.detail?.replace(/^.*vs /, "") ?? "its source ref"}`);
+  for (const r of unknown) lines.push(`  ? ${r.id}${r.path ? `:${r.path}` : ""} — could not determine: ${r.detail ?? ""}`);
+  lines.push(
+    "",
+    "These are SEEDS: `main` is still the store, so drift here breaks nothing today.",
+    "It breaks the cutover: a cutover from a stale seed resurrects what the seed holds",
+    "and loses what landed since, in one subtree replacement with no diff to read.",
+    "Full list: `bun run state:drift`.",
+  );
+  return lines.join("\n");
+}
+
 if (import.meta.main) {
   const json = process.argv.includes("--json");
   const rows = driftRows({ log: (l) => process.argv.includes("--verbose") && console.error(l) });
   if (json) {
     console.log(JSON.stringify(rows, null, 2));
+  } else if (process.argv.includes("--brief")) {
+    const b = brief(rows);
+    if (b) console.log(b);
   } else {
-    const mark = { "in-sync": "✓", drift: "✗", unknown: "?", authoritative: "·", "not-a-seed": "·" } as const;
+    const mark = MARK;
     for (const r of rows) {
       console.log(`  ${mark[r.state]} ${r.id}${r.path ? `:${r.path}` : ""} — ${r.state}${r.detail ? `: ${r.detail}` : ""}`);
       for (const f of r.files ?? []) console.log(`      ${f}`);
