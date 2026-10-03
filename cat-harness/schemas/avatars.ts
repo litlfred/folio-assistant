@@ -460,6 +460,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 190,
     reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
   },
+  openapi: {
+    // Curly braces around a two-way arrow: a machine-readable description
+    // (the braces) of something you call and that answers (the arrow out and
+    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
+    // document is one node holding operations, not an index of things held
+    // elsewhere. Bean `s4ta`.
+    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
+    tone: 136,
+    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+  },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under
@@ -535,6 +545,29 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
     tone: 212,
     reads: "a page with a folded corner — documentation about the graph itself",
+  },
+  "docs-auto": {
+    // A page of BULLETED ENTRIES, not a page of prose. A sub-graph of `docs`
+    // (bean `xsrv`), so it keeps that kind's folded-corner outline — the family
+    // resemblance is the point, since these pages ARE docs pages — and then
+    // says the one thing that distinguishes it: every line has a marker before
+    // it, because an index is a list of other things rather than an argument.
+    //
+    // Deliberately NOT a gear or a refresh arrow, the obvious glyphs for
+    // "generated". Those say how the page was made; the reader of a tile wants
+    // to know what it IS. `docs` does not depict a writer either.
+    glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h.01M11.5 12h5M9 15h.01M11.5 15h5M9 18h.01M11.5 18h3",
+    // 340, and the first choice of 164 was WRONG — found by rendering it beside
+    // its siblings rather than by reading the table. 164 is green, and so is
+    // `requirements` at 148, with 156 and 168 also taken: two page-shaped
+    // glyphs in near-identical greens, told apart only by bullets against
+    // ticks, which is not a distinction that survives tile size.
+    //
+    // 340 is the largest clearance left in the table — 20° from both 320 and
+    // 0, where every other gap is 16° or less. Measured over the 45 distinct
+    // tones in use, not estimated.
+    tone: 340,
+    reads: "a page of bulleted entries — an index of what another graph holds",
   },
   proposals: {
     // A lightbulb over a page — an idea argued on paper, not yet agreed.

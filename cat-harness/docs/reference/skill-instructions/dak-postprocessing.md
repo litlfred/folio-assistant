@@ -155,6 +155,51 @@ not-found; and `running` is never a pass — a script that died before writing
 anything has zero errors, and `qaReportVerdict` returns `unknown` for it rather
 than `ok`.
 
+## Binary artefacts on deploy and on release
+
+Measured 2026-10-02, owner: *"see what happens on smart-base with binary
+artefacts on release"*. The generic rule and the measuring Tool are
+[`ig-binary-artefacts`](ig-binary-artefacts.md)
+and `ig-binary-audit`. What follows is what the WHO workflows actually do, read
+from `litlfred/smart-base@e151a4d` and `WorldHealthOrganization/smart-html@main`.
+
+**On every push, `ghbuild.yml` deploys `output/` with its binaries.** The only
+binary step is *"Delete files >100MB before deployment"*, and no Publisher
+binary is that large. A branch build deploys to `branches/<branch>/`, so each
+branch gets another full copy: 966.5 MB of binaries on `gh-pages`, 907.1 MB of
+them in 29 previews, `full-ig.zip` 644.7 MB in 30 copies.
+
+**On a GitHub release, `release.yml` hands off to smart-html.** It runs only
+if `publication-request.json` exists, then calls
+`WorldHealthOrganization/smart-html/.github/workflows/release.yml@main`.
+That workflow runs `scripts/ig_publisher.py` from smart-html's `main`, which:
+
+1. builds and publishes into the smart-html webroot;
+2. leaves `ig-build-zips/` out of the `sitepreview` copy and untracks it;
+3. moves **only files over 100 MB** into `release-assets/`, plus a copy of
+   `output/package.tgz`;
+4. uploads `release-assets/` to the release whose tag is `GITHUB_REF_NAME`.
+
+So a release gets `package.tgz` and, in practice, nothing else. Every other
+binary goes to the webroot.
+
+**`create_package_release.py` is not called by any workflow.** It is the
+script that would cut a release and move the 19 named binaries out of
+`output/`, so they don't bloat `gh-pages`. Nothing in `.github/` calls it.
+The two releases that exist on `litlfred/smart-base`, `v0.2.0` and
+`v0.2.0.0`, are from a March branch (`claude/fhir-package-binary-releases-4ngGj`)
+and carry 5 assets: `package.db`, `package.tgz`, `package.r4.tgz`,
+`package.r4b.tgz` and `ai.zip`.
+
+**`downloads.md` promises 19 release assets that no release carries.** It
+also leaves out `full-ig.zip`, which is the largest of them.
+`fix_release_links.py` rewrites its hard-coded
+`WorldHealthOrganization/smart-base` release links to the building repository,
+which is correct. The page's list is the part that drifted.
+
+None of this is changed here: the workflows live in the WHO repositories. Bean
+`b8ip` holds the proposed changes for the owner.
+
 ## Where the counterparts are
 
 [`dak-preprocessing`](dak-preprocessing.md) — the six invocations before the

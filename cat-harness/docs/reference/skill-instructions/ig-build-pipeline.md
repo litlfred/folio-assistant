@@ -84,12 +84,17 @@ must contain no reference to:
 - `dak.config.json` (`dak.json` as upstream still spells it), the DAK logical
   model, or any DAK component
 - `smart.who.int` canonicals, or any WHO publisher metadata
-- DAK **naming** of the IG API: the "DAK API" label, `dak-api.html`,
-  `dak-views`, and any file named for the DAK. The API surface itself — a
-  `.schema.json`, `.displays.json` and `.openapi.json` per artefact, and a
-  hub page listing them — is the generic **FHIR IG API** and belongs here.
-  Owner, 2026-10-03: *"should be FHIR-IG-API, no DAK label/names"*. The WHO
-  layer supplies its own label (`--sidecar-label "DAK API"`).
+- the DAK API's NAMES and its PRODUCTION — the label "DAK API", the
+  `dak-api.html` hub page and its `DAK_API_*` markers, and the
+  post-processing that writes the sidecars. **Rendering** the sidecars an IG
+  publishes is generic and IS here, as the **IG API** (`ig-api-views.ts`):
+  owner, 2026-10-03, *"can we rename dakapi hub to someting more ig generic.
+  split up/generifize code. relabel?"* (bean `d313`). A WHO instance passes
+  its names in as configuration (`--sidecar-label`, `--api-hub-page`,
+  `--api-hub-markers`, `--api-placeholder`); nothing here writes them down.
+  Same ruling, put the other way: *"should be FHIR-IG-API, no DAK
+  label/names"* (owner, 2026-10-03). The per-artefact `.schema.json`,
+  `.displays.json` and `.openapi.json` sidecars are that API, not DAK's.
 - the DAK pre- and post-processing steps, in either direction
 - anything in the `authoring-who-smart-guidelines` package
 

@@ -1,0 +1,16 @@
+{
+  "$schema": "skill-topics/v1",
+  "_comment": "The labelling node of this instance's skills/ (#980: nesting is described FROM WITHIN). Two lists, one node: `topics` names subdirectories that hold skill PACKAGES (bean 9umr, read by scripts/skill-topics.ts); `directories` names INSTANCE directories declared inside skills/ (bean cmsl, owner 2026-09-30, round 4), resolved exactly as if <instance>.json declared them, which it did until this change. Paths are relative to this file's directory.",
+  "topics": [],
+  "directories": [
+    {
+      "id": "voices",
+      "path": "voices",
+      "subgraph": true,
+      "description": "THE WHO STYLE GUIDE: three `folio-voice-skill/v1` voice skills, one per WHO publication in this instance's own library, each a directory holding `voice.json` (the RULES, every one carrying the quote it was read from and a citation naming `{ libraryId, sectionId }`) and `SKILL.md` (how to USE them in authoring, review and QA). Under `skills/` because a voice IS a skill: it tells an actor what to do, it is bound to processes by name, and keeping its instructions anywhere else is what let the PLATFORM carry these rules as uncited prose (bean `btuv`). A voice is DERIVED FROM a publication and is not the publication, so these live beside the library rather than inside it -- and since 2026-10-01 in the SAME instance as it: they were the separate staged instance `who-style-guide`, citing `{ instance: 'who-iris', ... }` across a boundary (bean `z7ev`), until the owner ruled on 2026-09-30, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`). Every citation is now the bare form, which resolves against this instance. `bun run check:voices` resolves each one.",
+      "graphKinds": [
+        "voices"
+      ]
+    }
+  ]
+}

@@ -104,7 +104,7 @@ This is the same line `content-profiles` draws for block kinds and
   it first; this skill adds only what evidence review instantiates.
 - [`translation-manager`](../../library/library-core/translation-manager.md) §"The agentic round trip" —
   the other instance, deliberately unrelated to this one.
-- `voice-who-guideline-development` in `who-style-guide` — how a recommendation
+- `voice-who-guideline-development` in `who-iris`'s style guide — how a recommendation
   is **worded**. It states its own boundary: it governs the language of
   normative statements, *not the process that produces them*. This skill is on
   the other side of that line, and the two do not overlap.

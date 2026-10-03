@@ -56,6 +56,41 @@ export const BASELINE: readonly BaselineEntry[] = [
     "bean": "folio-assistant-veiu"
   },
   {
+    "file": "fhir-harness/scripts/ig-api-views.test.ts",
+    "rule": "dak-naming",
+    "count": 1,
+    "reason": "Owner, 2026-10-03, on #1766: merge first and baseline, \"should be FHIR-IG-API, no DAK label/names\". Arrived with #1766 after its own rename (bean d313). A test title says 'DAK views'. Rename to 'IG API views'.",
+    "bean": "folio-assistant-izx8"
+  },
+  {
+    "file": "fhir-harness/scripts/ig-api-views.test.ts",
+    "rule": "who-layer-path",
+    "count": 2,
+    "reason": "Owner, 2026-10-03, on #1766: merge first and baseline, \"should be FHIR-IG-API, no DAK label/names\". Arrived with #1766 after its own rename (bean d313). Two test strings use `smart-base/` as the separated-IG example path. Use a neutral fixture name.",
+    "bean": "folio-assistant-izx8"
+  },
+  {
+    "file": "fhir-harness/scripts/ig-api-views.ts",
+    "rule": "dak-step",
+    "count": 1,
+    "reason": "Owner, 2026-10-03, on #1766: merge first and baseline, \"should be FHIR-IG-API, no DAK label/names\". Arrived with #1766 after its own rename (bean d313). A string cites `generate_dak_api_hub.py` as the WHO overlay source of the hub markers. Say 'the instance overlay' instead.",
+    "bean": "folio-assistant-izx8"
+  },
+  {
+    "file": "fhir-harness/scripts/ig-api-views.ts",
+    "rule": "who-layer-path",
+    "count": 1,
+    "reason": "Owner, 2026-10-03, on #1766: merge first and baseline, \"should be FHIR-IG-API, no DAK label/names\". Arrived with #1766 after its own rename (bean d313). A string names the separated layout `smart-base/` (bean rbz3). Name the layout generically or pass it in.",
+    "bean": "folio-assistant-izx8"
+  },
+  {
+    "file": "fhir-harness/scripts/ig-binary-audit.test.ts",
+    "rule": "who-canonical",
+    "count": 1,
+    "reason": "Owner, 2026-10-03, on #1766: merge first and baseline, \"should be FHIR-IG-API, no DAK label/names\". Arrived with #1766 after its own rename (bean d313). A fixture blob name carries `smart.who.int.base`. Use a non-WHO package id.",
+    "bean": "folio-assistant-izx8"
+  },
+  {
     "file": "fhir-harness/scripts/ig-site-data.test.ts",
     "rule": "who-canonical",
     "count": 2,

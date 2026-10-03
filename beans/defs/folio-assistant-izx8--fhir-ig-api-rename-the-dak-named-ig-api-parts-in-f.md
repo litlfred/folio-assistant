@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-10-03T13:59:33Z
-updated_at: 2026-10-03T13:59:33Z
+updated_at: 2026-10-03T20:12:05Z
 parent: folio-assistant-wm63
 ---
 
@@ -20,3 +20,13 @@ Measured on #1766's head, 2026-10-03, under the narrowed dak-naming rule: ~55 co
 - [ ] the 'DAK API' label is passed in from smart-base (package.json --sidecar-label), so WHO pages stay byte-identical
 - [ ] the dak-naming baseline entries for these files are shrunk to zero
 - [ ] gates green
+
+## 2026-10-03, after #1766 merged — most of this was done by #1766 itself
+
+#1766 renamed its own DAK-named parts before merging (bean d313): dak-views.ts became ig-api-views.ts, the DAK-named templates are gone, and the WHO names are passed in as configuration (--sidecar-label, --api-hub-page, --api-hub-markers, --api-placeholder). About 55 hits became **6 hits in 3 files**, baselined in #1968 against this bean under the owner's merge-first exception:
+
+- ig-api-views.ts: a string naming the `smart-base/` layout, and one citing `generate_dak_api_hub.py`
+- ig-api-views.test.ts: a test title saying "DAK views", and two `smart-base/` example paths
+- ig-binary-audit.test.ts: a fixture blob name with `smart.who.int.base`
+
+What remains is these six small rewordings, then `--shrink`.
