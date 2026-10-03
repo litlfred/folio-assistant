@@ -193,7 +193,7 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
  * Verify/write pairs that are NOT gates but whose artefacts something gated
  * READS — bean `5qq3`, owner's option 1 (2026-10-01).
  *
- * `library:viz` and `schema:viz` are ungated by the owner's 2026-09-20 ruling
+ * `library:viz`, `schema:viz` and `uploads:viz` are ungated by the owner's 2026-09-20 ruling
  * (they derive from the whole repository, so a red would mean "somebody else
  * merged"; see the NOT GATED comment in code-quality-gates.yml). That ruling
  * stands: they are still not gates. But their OUTPUT is an input to things that
@@ -209,6 +209,14 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
 export const UNGATED_INPUTS: readonly { check: string; writer: string }[] = [
   { check: "library:viz:check", writer: "library:viz" },
   { check: "schema:viz:check", writer: "schema:viz" },
+  // uploads:viz is ungated for library:viz's reason (it renders the same
+  // projection), but every page it writes carries the viewer RAIL, and
+  // `check:nav-names:check` — a gate — reads railed pages. Without it here a
+  // merge that changes a rail label leaves /cat-harness/uploads/ stale, and
+  // regen reports check:nav-names as "a real defect, not staleness".
+  // Measured 2026-10-03: merge-main refused #1804 and #1958 on exactly that,
+  // and `bun run uploads:viz` alone turned the check green.
+  { check: "uploads:viz:check", writer: "uploads:viz" },
 ];
 
 /**
