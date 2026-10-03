@@ -29,6 +29,12 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 
 | file | what it is | used by |
 |---|---|---|
+| [`2403.09442v1.pdf`](2403.09442v1.pdf) | a file |  |
+| [`2409.00038v1.pdf`](2409.00038v1.pdf) | a file |  |
+| [`2505.07664v1.pdf`](2505.07664v1.pdf) | a file |  |
+| [`2506.20759v1.pdf`](2506.20759v1.pdf) | a file |  |
+| [`2603.10808v1.pdf`](2603.10808v1.pdf) | a file |  |
+| [`2609.07340v1.pdf`](2609.07340v1.pdf) | a file |  |
 | [`9789240093362-eng.pdf`](9789240093362-eng.pdf) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_33_23-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_23-PM.png) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-03_33_28-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_28-PM.png) | a file |  |
@@ -51,6 +57,8 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`arxiv-2507.23348v1/`](arxiv-2507.23348v1/) | 2 files | |
 | [`arxiv-2601.04544v1/`](arxiv-2601.04544v1/) | 2 files | |
 | [`arxiv-2607.00053v1/`](arxiv-2607.00053v1/) | 2 files | |
+| [`arxiv-licence-assumed-1991-2003/`](arxiv-licence-assumed-1991-2003/) | 2 files | |
+| [`arxiv-license-information/`](arxiv-license-information/) | 2 files | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/) | 2 files | |
 <!-- kg:subgraph:end -->

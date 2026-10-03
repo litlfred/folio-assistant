@@ -1,0 +1,39 @@
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "arxiv-license-information",
+  "title": "arXiv License Information (arXiv policy page)",
+  "_comment": "Uploaded by the owner 2026-10-02 (bean yc74) as the source for the arXiv licence vocabulary in skills/library/library-core/archiving-arxiv.md. A print-to-PDF capture of a web page, so the rendering is archived here and `source.upstream` carries the canonical URL — `archiving-web-pages` is why the URL rather than the PDF is the identity. Its own `licence` is `unknown`, not absent: arXiv's CC0 dedication on that page applies to ARTICLE METADATA, not to the policy page itself, and conflating the two is the misreading this record exists to prevent.",
+  "source": {
+    "upstream": "https://info.arxiv.org/help/license/index.html",
+    "local": "uploads/arxiv-license-information/arxiv-license-information.pdf",
+    "capturedAt": "2026-10-03T01:31:00",
+    "capturedBy": "owner (litlfred), browser print-to-PDF"
+  },
+  "files": [
+    {
+      "path": "arxiv-license-information.pdf",
+      "bytes": 349612,
+      "sha256": "901a1b46a75768c1675df75e2674fa8772db92a8861bd99ace06a9d946ac8621",
+      "mimetype_sniffed": "application/pdf",
+      "type": "publication",
+      "role": "original-bitstream",
+      "note": "4 printed pages. Page 2 carries 'How to choose a license' and the start of the licence list; page 3 the remainder, the metadata licence and the copyright-notice policy; page 4 reuse requests."
+    }
+  ],
+  "licence": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the captured page itself (https://info.arxiv.org/help/license/index.html), all 4 printed pages",
+        "result": "states the licences available to SUBMITTERS for their articles, and dedicates article METADATA to CC0 1.0; says nothing about the licence of this policy page",
+        "on": "2026-10-03"
+      },
+      {
+        "where": "the page's own footer link row (About, Help, Contact, Subscribe, Copyright, Privacy, Accessibility)",
+        "result": "a 'Copyright' link exists but its target was not part of this capture, so it was not read",
+        "on": "2026-10-03"
+      }
+    ],
+    "note": "Not guessed. The CC0 dedication on this page governs article metadata, not arXiv's own website text. Nothing of this page is reproduced in the corpus — the skill it informs states the licence facts in its own words and cites this URL — so no licence condition is exercised by holding the capture."
+  }
+}

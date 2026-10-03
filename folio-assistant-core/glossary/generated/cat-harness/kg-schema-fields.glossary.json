@@ -6818,6 +6818,139 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue.ejectionschema.evidenceurl",
+      "prefLabel": "EjectionSchema.evidenceUrl",
+      "definition": "The run, comment or log that shows it.",
+      "source": "cat-harness/schemas/merge-queue.ts#EjectionSchema.evidenceUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.ejectionschema.reason",
+      "prefLabel": "EjectionSchema.reason",
+      "definition": "What the steward concluded, e.g. \"own CI red on `docs:harness:check`\".",
+      "source": "cat-harness/schemas/merge-queue.ts#EjectionSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.beans",
+      "prefLabel": "EntryObjectSchema.beans",
+      "definition": "Beans and epics this PR serves. Epics are beans, so one list.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.beans",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.decidedby",
+      "prefLabel": "EntryObjectSchema.decidedBy",
+      "definition": "Who decided — a session URL, `owner`, or an actor id.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.decidedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.reason",
+      "prefLabel": "EntryObjectSchema.reason",
+      "definition": "Why this placement, in a sentence. For `computed`, the rule's description will do.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.repository",
+      "prefLabel": "EntryObjectSchema.repository",
+      "definition": "`owner/name` — a PR number means nothing without its repository.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.trainid",
+      "prefLabel": "EntryObjectSchema.trainId",
+      "definition": "Assigned once the PR is taken into a train; the train-run instance's id.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.trainId",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.authoredpaths",
+      "prefLabel": "MemberFactsSchema.authoredPaths",
+      "definition": "Changed paths a declared merge pattern would REFUSE — the authored ones (T3, R7).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.authoredPaths",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.conflictrisk",
+      "prefLabel": "MemberFactsSchema.conflictRisk",
+      "definition": "Shares an AUTHORED path with another live queued PR — input (d), T3.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.conflictRisk",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.headshamatchesci",
+      "prefLabel": "MemberFactsSchema.headShaMatchesCi",
+      "definition": "Did CI run on the head that would be merged (T2; bean `u7be` item 3).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.headShaMatchesCi",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.mvp",
+      "prefLabel": "MemberFactsSchema.mvp",
+      "definition": "Tagged MVP / feature-priority, by epic or label — input (c).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.mvp",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.overlapkind",
+      "prefLabel": "MemberFactsSchema.overlapKind",
+      "definition": "WHICH KIND of collision this PR has with the rest of the live queue.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.overlapKind",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.ownci",
+      "prefLabel": "MemberFactsSchema.ownCi",
+      "definition": "The PR's own CI on its head: T2's first evidence.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.ownCi",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.refused",
+      "prefLabel": "MemberFactsSchema.refused",
+      "definition": "A declared merge pattern refuses a conflicted path, or GitHub reports it dirty.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.refused",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.seedsstaging",
+      "prefLabel": "MemberFactsSchema.seedsStaging",
+      "definition": "Input (a): `touchesHarness` AND a linked bean descends from the separation goal — the PR seeds the staging repos, which is the reason the owner gave for (a). See `merge-priority.dmn`'s note.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.seedsStaging",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.sizeband",
+      "prefLabel": "MemberFactsSchema.sizeBand",
+      "definition": "Changed files plus changed lines, banded — input (d).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.sizeBand",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.touchesharness",
+      "prefLabel": "MemberFactsSchema.touchesHarness",
+      "definition": "An authored path under `cat-harness/` or `cat-harness-tools/`. The raw measurement behind input (a) — NOT input (a) itself: measured 2026-10-02, it was true for 11 of the 11 PRs in that day's queue.",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesHarness",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.touchesshared",
+      "prefLabel": "MemberFactsSchema.touchesShared",
+      "definition": "Touches a shared declaration: a schema, generator, `<instance>.json`, BPMN or DMN (T3, R6).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.touchesShared",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.unblocks",
+      "prefLabel": "MemberFactsSchema.unblocks",
+      "definition": "Open PRs or beans this unblocks, or tangle edges it removes — input (b).",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.unblocks",
+      "status": "candidate"
+    },
+    {
       "id": "methodology.methodologyfrontmatterschema.applies-when",
       "prefLabel": "MethodologyFrontMatterSchema.applies-when",
       "definition": "When this methodology applies, phrased so `methodology-adoption`'s selection question can reach it — and saying what it is NOT for.",
@@ -7497,6 +7630,20 @@
       "status": "candidate"
     },
     {
+      "id": "referenced-source.publishedsourceschema.read_from",
+      "prefLabel": "PublishedSourceSchema.read_from",
+      "definition": "The repo-relative file the identity above was read from.",
+      "source": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema.read_from",
+      "status": "candidate"
+    },
+    {
+      "id": "referenced-source.publishedsourceschema.url",
+      "prefLabel": "PublishedSourceSchema.url",
+      "definition": "Where a reader goes to read it — the publisher's own address.",
+      "source": "cat-harness/schemas/referenced-source.ts#PublishedSourceSchema.url",
+      "status": "candidate"
+    },
+    {
       "id": "render-log.renderlogentryschema.branch",
       "prefLabel": "RenderLogEntrySchema.branch",
       "definition": "Branch the render came from.",
@@ -8141,10 +8288,24 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.libraryindexentryschema.links",
+      "prefLabel": "LibraryIndexEntrySchema.links",
+      "definition": "Where else to go for a `referenced` entry — an absolute URL, or a site-root path with a leading `/` that the viewer composes against its own base (owner, 2026-10-02: the smart-trust IG as an external reference).",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.links",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.referencedby",
       "prefLabel": "LibraryIndexEntrySchema.referencedBy",
       "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
       "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.view",
+      "prefLabel": "LibraryIndexEntrySchema.view",
+      "definition": "The page that RENDERS this entry, site-root path with a leading `/` and no base (the avatar's convention): another instance's declared root for a referenced entry it renders, else the entry's own library page. GENERATED by `gen-library-viz`, never stored in the asset (#1881).",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.view",
       "status": "candidate"
     },
     {
