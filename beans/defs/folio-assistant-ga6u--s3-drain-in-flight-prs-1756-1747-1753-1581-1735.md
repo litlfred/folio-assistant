@@ -12,9 +12,15 @@ blocked_by:
 ---
 
 ## Done when
-- [ ] #1756 merged (fnx4 slices 5+6)
+- [x] #1756 merged (fnx4 slices 5+6)  — merged 2026-10-02T23:12:43Z, merge commit
+  `edc167d24a`. Its head carried 20 check runs: 14 success, 6 skipped, **0 failure**.
 - [ ] #1747 merged (cmsl step 3)
-- [ ] #1753 merged (i2kp)
+- [x] #1753 merged (i2kp)  — merged 2026-10-01T19:34:35Z, merge commit `b5f83541a4`.
+  Its head carried 16 check runs, one of them a FAILURE: `cleanup`, which is
+  housekeeping rather than a gate (every gate here is suffixed `(hard)` or
+  `(warn-only)`, and `cleanup` is skipped on most runs). This box asks only
+  whether it merged, and it did; the red `cleanup` is recorded so nobody has to
+  re-derive it.
 - [ ] #1581 closed as superseded or rebased
 - [ ] #1735 owner ruling on dependents -> subgraph:true, then merged
 
