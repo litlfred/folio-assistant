@@ -1066,6 +1066,21 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
 }
 
 /**
+ * What a push of `id` would send, without sending it — {@link localChanges}
+ * for a mounted directory, or `undefined` when `id` is not mounted here.
+ *
+ * Exported for the `--dry-run` of a caller that fans out over several
+ * mounts (`state-push.ts`): the alternative is each such caller re-deriving
+ * the diff from the marker, and a second implementation of "what changed"
+ * is how a dry run comes to disagree with the push it is previewing.
+ */
+export function pendingMountChanges(id: string, opts: MountOptions = {}): Change[] | undefined {
+  const repoRoot = opts.repoRoot ?? gitTopLevel();
+  const m = readMarker(repoRoot, id);
+  return m ? localChanges(m, repoRoot) : undefined;
+}
+
+/**
  * Splice the mount's local edits onto the tip. Every change carries `expect`
  * from the mounted tip, so an edit a sibling made to the same file since is a
  * `conflict` and nothing is pushed. On `pushed`, the marker moves to the new

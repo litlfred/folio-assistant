@@ -2415,6 +2415,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.source",
+      "prefLabel": "ContentDirectory.source",
+      "definition": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`), which applies the instance config's override by id.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.source",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.storage",
       "prefLabel": "ContentDirectory.storage",
       "definition": "This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}.",
@@ -2475,6 +2482,13 @@
       "prefLabel": "ContentDirectoryShape.readOnlyBasis",
       "definition": "WHY, and required whenever `readOnly` is declared — either value.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.source",
+      "prefLabel": "ContentDirectoryShape.source",
+      "definition": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.source",
       "status": "candidate"
     },
     {
@@ -5775,6 +5789,27 @@
       "status": "candidate"
     },
     {
+      "id": "harness-config.declaredsubgraph.instancename",
+      "prefLabel": "DeclaredSubgraph.instanceName",
+      "definition": "That instance's declared `name`.",
+      "source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceName",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.declaredsubgraph.instanceroot",
+      "prefLabel": "DeclaredSubgraph.instanceRoot",
+      "definition": "The root of the instance whose OWN declaration carries the entry.",
+      "source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.declaredsubgraph.repository",
+      "prefLabel": "DeclaredSubgraph.repository",
+      "definition": "The instance's declared `repository` (`owner/repo`), when it has one.",
+      "source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.repository",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.folioassistantdependency.derivedfromneeds",
       "prefLabel": "FolioAssistantDependency.derivedFromNeeds",
       "definition": "Was this dependency DERIVED from the declaration's `needs` rather than authored in the config?",
@@ -5894,6 +5929,13 @@
       "status": "candidate"
     },
     {
+      "id": "harness-config.harnessconfig.subgraphsources",
+      "prefLabel": "HarnessConfig.subgraphSources",
+      "definition": "Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}.",
+      "source": "cat-harness/schemas/harness-config.ts#HarnessConfig.subgraphSources",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.harnessconfig.translation",
       "prefLabel": "HarnessConfig.translation",
       "definition": "Translation pipeline configuration.",
@@ -5912,6 +5954,13 @@
       "prefLabel": "HarnessConfigSchema.interactivity",
       "definition": "Is this folio's content static, or does it carry interfaces?",
       "source": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema.interactivity",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.harnessconfigschema.subgraphsources",
+      "prefLabel": "HarnessConfigSchema.subgraphSources",
+      "definition": "Per-instantiation override of where a declared subgraph gets its content, keyed by the directory's `id` (never its path). The owner, 2026-10-03: *\"That same information can be overwritten by the harness instance config.\"* Applied by `resolveSubgraphSource` and nowhere else (`schemas/subgraph-source.ts`, bean `l4ay`).",
+      "source": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema.subgraphSources",
       "status": "candidate"
     },
     {
@@ -8950,6 +8999,13 @@
       "prefLabel": "StickyTextSchema.scale",
       "definition": "Multiply the words' size. `1` is normal; `0.8` fits more in.",
       "source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-source.sourcedentry.storage",
+      "prefLabel": "SourcedEntry.storage",
+      "definition": "#1764's field, if a declaration carries it. Read only to map it.",
+      "source": "cat-harness/schemas/subgraph-source.ts#SourcedEntry.storage",
       "status": "candidate"
     },
     {
