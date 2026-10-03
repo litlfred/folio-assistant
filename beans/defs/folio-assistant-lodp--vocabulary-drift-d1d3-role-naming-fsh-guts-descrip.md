@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lodp
 title: 'Vocabulary drift D1–D3: role naming, fsh-guts description, sl9u condition onto mapping tables'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T18:56:29Z
-updated_at: 2026-10-02T18:56:43Z
+updated_at: 2026-10-02T21:37:45Z
 parent: folio-assistant-zzmr
 ---
 
@@ -29,8 +29,10 @@ Owner, 2026-10-02, chose "2. Make it like the others": a schema module's first d
 - [x] D2 fsh-guts reads kg-export's row
 - [x] D1 condition declared and enforced by the applier
 - [x] D5 question reported
-- [ ] PR green on a head containing current main
+- [x] PR green on a head containing current main
 
 _2026-10-02T18:56Z_ — Claimed by claude/vocab-drift-d1-d3 (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH). Issue #1910.
 
 _2026-10-02T21:40Z_ — Steward (session https://claude.ai/code/session_01ToWZR4RgTRCWeSsgxsSQfT): ticked D1–D3 on evidence (kg-export + vocab-mapping-apply tests 73/73 pass locally on 41ddc8f plus D5; vocab-mappings:check, ns:check green). D5 asked, ruled, implemented. Remaining: PR green on current main.
+
+_2026-10-02T21:45Z_ — Steward: #1911 green on 93ebba7 (all hard checks), merged as 909678c. Every box ticked; closed on that evidence. D4 stays open under issue #1910 (overlaps #1899).

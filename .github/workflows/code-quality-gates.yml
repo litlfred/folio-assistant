@@ -904,6 +904,15 @@ jobs:
       - name: KG subscriptions have their snapshots, and each holds
         run: bun run kg:subscribe:check
 
+      # Issue #1719, slices 5-6: every materialised part of a subscription --
+      # a subgraph, or one asset -- still hashes to its record (a tree digest,
+      # so a file ADDED in place is caught, which the per-file
+      # `check:materialized-fixity` walk cannot see), is still chosen and
+      # declared, sits at its subscription's pin, and no bytes sit in a
+      # subscription's directory without a record. Offline; never fetches.
+      - name: KG materialised parts hold, and nothing sits unrecorded
+        run: bun run kg:materialize:check
+
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
       # on the same reasoning as `check:skills`: it locks in a property this tree

@@ -13,6 +13,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`kg/`](kg/) | 7 files | |
 | [`library/`](library/) | 14 files | |
 | [`process/`](process/) | 12 files | |
-| [`sdlc/`](sdlc/) | 22 files | |
+| [`sdlc/`](sdlc/) | 23 files | |
 | [`ui/`](ui/) | 4 files | |
 <!-- kg:subgraph:end -->

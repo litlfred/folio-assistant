@@ -535,3 +535,56 @@ describe("lake-cache.sh — contribute (agentic loop)", () => {
     rmSync(bare, { recursive: true, force: true });
   });
 });
+
+describe("lake-cache.sh — cat-lake-cache/ rename (bean 32f6)", () => {
+  // The family moves from `lake-cache/` to `cat-lake-cache/`. Until the
+  // remotes are renamed a key resolves new-name-first, then legacy — for
+  // writes as well as reads, so nothing creates a `cat-` branch beside a
+  // legacy one and blocks the owner's rename. The fixture branch above is
+  // LEGACY, so every earlier test in this file is the legacy-read case.
+  const cacheWt = () => join(root, "cachewt");
+  const KEY = `otherpkg-${SLUG}`;
+
+  test("a key that exists only under the legacy name resolves to it", () => {
+    const r = run(["resolve-branch", "--key", `${PKG}-${SLUG}`], lakeRoot);
+    expect(r.code).toBe(0);
+    expect(r.out.trim()).toBe(BRANCH);
+  });
+
+  test("a key that exists nowhere resolves to the cat- name", () => {
+    const r = run(["resolve-branch", "--key", "nope-v9-9-9"], lakeRoot);
+    expect(r.out.trim()).toBe("cat-lake-cache/nope-v9-9-9");
+  });
+
+  test("when both exist the cat- name wins, and status reports it", () => {
+    git(["push", "-q", "origin", `HEAD:refs/heads/lake-cache/${KEY}`], cacheWt());
+    git(["push", "-q", "origin", `HEAD:refs/heads/cat-lake-cache/${KEY}`], cacheWt());
+    try {
+      expect(run(["resolve-branch", "--key", KEY], lakeRoot).out.trim()).toBe(`cat-lake-cache/${KEY}`);
+      const s = run(["status", "--package", "otherpkg"], lakeRoot);
+      expect(s.out).toContain(`cat-lake-cache/${KEY}`);
+    } finally {
+      // Fixture cleanup in the test's own temporary remote: a second
+      // package would make package inference ambiguous for later tests.
+      git(["push", "-q", "origin", "--delete", `lake-cache/${KEY}`, `cat-lake-cache/${KEY}`], cacheWt());
+    }
+  });
+
+  test("restore reads a cache that exists only under the cat- name", () => {
+    git(["push", "-q", "origin", `HEAD:refs/heads/cat-lake-cache/${KEY}`], cacheWt());
+    const fresh = mkdtempSync(join(tmpdir(), "lakecache-cat-"));
+    try {
+      execFileSync("bash", ["-c", `cp '${lakeRoot}'/lakefile.toml '${lakeRoot}'/lean-toolchain '${fresh}/'`], { stdio: "pipe" });
+      const r = run(["restore", "--package", "otherpkg", "--lake-root", fresh], lakeRoot);
+      expect(r.code).toBe(0);
+      expect(existsSync(join(fresh, ".lake"))).toBe(true);
+    } finally {
+      git(["push", "-q", "origin", "--delete", `cat-lake-cache/${KEY}`], cacheWt());
+      rmSync(fresh, { recursive: true, force: true });
+    }
+  });
+
+  test("resolve-branch without --key is a usage error", () => {
+    expect(run(["resolve-branch"], lakeRoot).code).toBe(2);
+  });
+});
