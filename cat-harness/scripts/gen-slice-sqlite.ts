@@ -709,13 +709,14 @@ export function libraryData(
     for (const r of e.referencedBy ?? []) refs.push({ entry: e.id, kind: r.kind, instance: r.instance, from_path: r.from, count: r.count });
   }
   refs.sort((a, b) => cmp(String(a.entry), String(b.entry)) || cmp(String(a.from_path), String(b.from_path)) || cmp(String(a.kind), String(b.kind)));
-  const known = bRows.find((b, i) => phraseIn(String(b.title)) && (fts[i]![1] as string).length > 0);
+  // The probe phrase comes from a block's TEXT, the column that is indexed and not stored.
+  const k = fts.findIndex((t) => phraseIn(String(t[1])));
   return {
     rows: { entries: eRows, blocks: bRows, entry_ref: refs },
     fts,
     payloads: plan,
     findings,
-    probe: known ? { phrase: phraseIn(String(known.title))!, column: "id", value: String(known.id) } : undefined,
+    probe: k >= 0 ? { phrase: phraseIn(String(fts[k]![1]))!, column: "id", value: String(bRows[k]!.id) } : undefined,
   };
 }
 
