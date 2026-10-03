@@ -79,8 +79,10 @@ GPT-4's flags went unconfirmed**.
       RED FLAG as a finding that "blocks the merge"
 - [x] the warn form names `dependency-advisories` as its pattern and the three
       distinct output states
-- [x] `xqdi` (compile gates) deliberately NOT changed, with the interpretation
-      flagged in `nok9` for the owner to correct in one line if it is wrong
+- [x] `xqdi` (compile gates) deliberately NOT changed — flagged in `nok9` as an
+      interpretation, and **confirmed by the owner 2026-10-03: "g5-g7 blocking
+      is right, leave it."** The hedge is now a recorded decision, so the next
+      agent does not reopen it
 - [x] the promotion criterion is split out rather than left hanging here — it
       is its own bean under `nok9`, because it needs a warn-only phase to run
       first and so cannot be done by this reconciliation
@@ -147,4 +149,17 @@ marked `completed` while it still carried an unchecked Done-when item. The
 beans guide permits completion only with none left. Corrected by moving that
 item into `h1uq`, which is where it belonged anyway — it cannot be done by this
 reconciliation.
+
+## Addendum, 2026-10-03 — the scope reading was confirmed
+
+The one judgement this reconciliation had to make was how far the warn-only
+ruling reached. It was recorded as an interpretation rather than acted on
+silently, and the owner then confirmed it: **"g5-g7 blocking is right, leave
+it."**
+
+Worth keeping because it names the boundary: **deterministic-vs-judged, not
+blocking-vs-warning.** A compile gate has one right answer a machine settles;
+an adversarial review has an unknown error rate (`h1uq`). Collapsing them
+would have demoted the compile gates along with the review — which is what
+"soften the merge gate" would have produced, and is not what was ruled.
 

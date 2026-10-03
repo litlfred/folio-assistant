@@ -74,7 +74,16 @@ and a blocking gate inverts the order.
 |---|---|
 | **G3, G4** — the adversarial review verdict and its RED FLAGs | **warn.** Reported on the PR, never holding a merge |
 | **G1, G2, G8, H** — CI green per job, the head HAS a run, `regen` on the train result, the owner's "merge it" | **unchanged, still blocking.** These are deterministic and already enforced; the ruling was about agentic review, not about whether CI ran |
-| **G5, G6, G7** — Lean builds, SUSHI compiles, JSON-LD renders | **unchanged as proposed.** Read narrowly on purpose: these are deterministic compile checks, the original ask named them separately from the review, and the backlog reason does not apply to whether Lean compiles. **If the owner meant the ruling to cover these too, this is the line to correct** — it is an interpretation, not an instruction |
+| **G5, G6, G7** — Lean builds, SUSHI compiles, JSON-LD renders | **unchanged, and CONFIRMED by the owner 2026-10-03: "g5-g7 blocking is right, leave it".** These are deterministic compile checks, the original ask named them separately from the review, and the backlog reason does not reach whether Lean compiles. This row was written as an interpretation to be corrected; it is now a ruling in its own right |
+
+**So the ruling has a boundary, and the boundary is deterministic-vs-judged,
+not blocking-vs-warning.** A compile gate answers a question with one right
+answer that a machine settles: the module builds or it does not. An adversarial
+review answers a question whose error rate is unknown — §1.1's closing
+paragraph is about exactly that unknown — so the two cannot carry the same
+enforcement on the same evidence. Reading the warn-only ruling as "soften the
+merge gate" would have demoted G5–G7 along with G3/G4 and lost the distinction
+the owner was drawing.
 
 **A warn is not a weaker block; it is a different instrument, and it is the
 only one that can produce the number this decision needs.** No paper in the

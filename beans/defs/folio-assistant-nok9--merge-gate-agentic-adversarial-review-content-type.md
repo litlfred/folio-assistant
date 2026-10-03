@@ -74,13 +74,25 @@ so the first PR after it landed would inherit every unresolved finding in the
 paths it touches. The per-block backfill (`lvlv`) has to come first; a
 blocking gate inverts that order.
 
-**Scope of the ruling, read narrowly and flagged as an interpretation.** It
-covers child (a) `w8jq` (the review as a required check) and the gate
-behaviour of (c) `abmq` (RED FLAGs). It does NOT change child (b) `xqdi` — the
-content-type compile gates — because those are deterministic, the ask named
-them separately from the review, and "backlog on content nodes" is not an
-argument about whether Lean compiles. **If the owner meant compile gates too,
-this is the line to correct.**
+**Scope of the ruling — settled, not inferred.** It covers child (a) `w8jq`
+(the review as a required check) and the gate behaviour of (c) `abmq` (RED
+FLAGs). It does **not** change child (b) `xqdi`, the content-type compile
+gates.
+
+That was first written as an interpretation to be corrected, and the owner
+confirmed it on 2026-10-03: **"g5-g7 blocking is right, leave it."** So
+`xqdi` proceeds as proposed — Lean builds, SUSHI compiles and JSON-LD renders
+remain required checks scoped by changed path, with downstream site renders
+advisory.
+
+**The boundary is deterministic-vs-judged, not blocking-vs-warning**, and that
+is the thing worth carrying forward. A compile gate answers a question with
+one right answer a machine settles: the module builds or it does not. An
+adversarial review answers a question whose own error rate is unknown — no
+paper reports a false-positive rate for any LLM judge, which is `h1uq`. Those
+two cannot carry the same enforcement on the same evidence. An agent reading
+the warn-only ruling as "soften the merge gate" would demote `xqdi` too and
+lose the distinction the owner was drawing.
 
 **A warn is not a weaker block — it is the only instrument that can produce
 the number a later promotion needs.** No paper in the 2026-10-02 reading sweep
