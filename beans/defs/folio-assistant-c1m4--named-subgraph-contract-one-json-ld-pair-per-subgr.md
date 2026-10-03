@@ -1,10 +1,10 @@
 ---
 # folio-assistant-c1m4
 title: 'NAMED SUBGRAPH CONTRACT: one JSON-LD pair per subgraph (index = pointers, hydrated = inline), directory IRIs, build-time framing, central @context; harness as a subgraph'
-status: todo
+status: in-progress
 type: feature
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-02T20:42:54Z
+updated_at: 2026-10-03T08:07:57Z
 parent: folio-assistant-whlc
 ---
 
