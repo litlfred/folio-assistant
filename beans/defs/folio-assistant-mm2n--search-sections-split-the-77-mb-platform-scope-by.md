@@ -1,7 +1,7 @@
 ---
 # folio-assistant-mm2n
 title: 'SEARCH SECTIONS: split the 7.7 MB platform scope by section over a declared budget (#1972)'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-03T13:53:25Z
 updated_at: 2026-10-03T13:53:25Z
@@ -31,7 +31,7 @@ section scopes, platform remainder 0.95 MB.
 - [x] the client loads a section page's own section scope; other platform pages the remainder; "Search everywhere" unchanged
 - [x] tests: section rule at a small budget, partition still exact, client picks the section — mutation-checked
 - [x] measured: first search on a `/reference/` page and on `/`
-- [ ] green on CI, PR ready
+- [x] green on CI, PR ready — #2004 merged (`ready: 95e024044`, 21/23 success + 2 intended skips; staging built with the section scopes)
 
 ## Measured with the change (2026-10-03, local build, median of 3)
 
@@ -47,3 +47,20 @@ index page counts as part of it — `sectionOfPath`.)
 | `/smart-trust/` | `smart-trust` 1.50 MB | 0.57 s | 436 ms | 48 MB |
 
 Before this bean `/` loaded the whole 7.8 MB platform scope: 3.65 s, 194 MB.
+
+## Summary of Changes
+
+#2004 (merged). `search-split.ts` cuts any platform section — a page's first
+path segment, for pages below it or its index (`sectionOfPath`) — whose
+entries exceed `SECTION_BUDGET_BYTES` = 512 KiB into a `section-<name>`
+scope; the site copy of the theme's `just-the-docs.js` applies the same rule
+in `scopeForPage`. A budget, not a list: the site's sections are pages inside
+the one declared `docs` graph, so there is nothing to read them from, and
+which cross it is recorded in the manifest. First search on `/`: 3.65 s /
+194 MB → 0.68 s / 50 MB; on a `/reference/` page 1.88 s.
+
+What it measured about #1972 step 2 (per-graph scopes): instance scopes are
+~93 % one `artifact/` subsection, and `/reference/` is 99 % flat
+`skill-instructions` (305 pages, none over 100 KB), so no smaller per-graph
+unit exists by URL. The next lever is a prebuilt lunr index, proposed on
+#1972 and not built.
