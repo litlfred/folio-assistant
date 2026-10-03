@@ -423,6 +423,13 @@ export function artifactPageName(a: { resourceType: string; id: string }): strin
   return `${a.resourceType}-${a.id}`.replace(/[^A-Za-z0-9._-]/g, "_");
 }
 
+/**
+ * In the Publisher's order, read off `listedAt` rather than restated (#1901):
+ * categories by their first artefact's position on `artifacts.html`, artefacts
+ * within one by their own, the uncategorised bucket last. An alphabetical sort
+ * put Terminology: Code Systems ahead of Requirements on smart-trust, which is
+ * the opposite of the page it mirrors. Ties (no `listedAt`) keep input order.
+ */
 export function byCategory(artifacts: FhirArtifact[]): Map<string | undefined, FhirArtifact[]> {
   const out = new Map<string | undefined, FhirArtifact[]>();
   for (const a of artifacts) {
@@ -430,5 +437,12 @@ export function byCategory(artifacts: FhirArtifact[]): Map<string | undefined, F
     bucket.push(a);
     out.set(a.category, bucket);
   }
-  return out;
+  const at = (a: FhirArtifact) => a.listedAt ?? Number.POSITIVE_INFINITY;
+  const first = (list: FhirArtifact[]) => Math.min(...list.map(at));
+  for (const list of out.values()) list.sort((x, y) => at(x) - at(y));
+  return new Map(
+    [...out.entries()].sort(([ka, a], [kb, b]) =>
+      ka === undefined ? (kb === undefined ? 0 : 1) : kb === undefined ? -1 : first(a) - first(b),
+    ),
+  );
 }

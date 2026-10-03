@@ -359,6 +359,36 @@ function categoryName(label: string | undefined): string {
 }
 
 /**
+ * The index's in-page anchor for a category, which the Contents box links to.
+ *
+ * The uncategorised bucket gets its own id rather than `Other`'s: the IG HAS a
+ * literal "Other" category (see `byCategory`), and two sections answering to
+ * one fragment would send the Contents link to whichever came first.
+ */
+function categoryAnchor(label: string | undefined): string {
+  return label === undefined ? "cat--uncategorised" : `cat-${categoryName(label)}`;
+}
+
+/**
+ * The "Contents" box the Publisher puts at the top of `artifacts.html` (#1901):
+ * one row per category, in the same order as the sections below it, each
+ * linking to its section. A category listed off the index links to the
+ * section too, whose summary names the count and points on to its own page —
+ * one target per row, so the box and the sections cannot disagree.
+ */
+function contentsBox(ordered: [string | undefined, FhirArtifact[]][]): string {
+  return [
+    `<nav class="ig-toc" aria-label="Contents" markdown="1">`,
+    ``,
+    `**Contents**`,
+    ``,
+    ...ordered.map(([label, list]) => `- [${mdText(label ?? "Uncategorised")}](#${categoryAnchor(label)}) — ${list.length}`),
+    ``,
+    `</nav>`,
+  ].join("\n");
+}
+
+/**
  * Above this many artefacts a category is SUMMARISED and linked out rather
  * than listed inline.
  *
@@ -409,7 +439,13 @@ const CSS = `
 .st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .st-stat b{display:block;font-size:1.25rem;line-height:1.2}
 .st-stat span{font-size:.75rem;opacity:.75}
+.ig-toc{border:2px solid var(--toc-box-border,rgba(128,128,128,.35));background:var(--toc-box-bg-color,transparent);padding:.5rem 1rem;margin:1rem 0;display:inline-block}
+.ig-toc ul{margin:.25rem 0 0}
 `;
+// `.ig-toc` reads the mirrored chrome's `--toc-box-*` tokens, the Publisher's
+// own Contents-box colours, and WHO's `2px solid` reading of the border token
+// (see `ig-chrome.ts` on its shape conflict). Without an ingested chrome the
+// fallbacks give a neutral box, never a hand-typed palette.
 
 /**
  * A page for the JUST-THE-DOCS pipeline: front matter, then the body.
@@ -572,11 +608,9 @@ function repLinks(a: FhirArtifact): string {
 function indexPage(ix: FhirArtifactIndex): string {
   const census = materializationCensus(ix.artifacts);
   const sc = sidecarCensus(ix.artifacts);
-  const cats = byCategory(ix.artifacts);
-  // Deterministic: named categories by name, the uncategorised bucket last.
-  const ordered = [...cats.entries()].sort(([a], [b]) =>
-    a === undefined ? 1 : b === undefined ? -1 : a.localeCompare(b),
-  );
+  // The Publisher's order, as `byCategory` returns it — the same traversal the
+  // sidebar's category pages are numbered by, so the two cannot disagree.
+  const ordered = [...byCategory(ix.artifacts).entries()];
 
   const stat = (v: string | number, label: string) =>
     `<div class="st-stat"><b>${esc(String(v))}</b><span>${label}</span></div>`;
@@ -584,6 +618,7 @@ function indexPage(ix: FhirArtifactIndex): string {
   const sections = ordered
     .map(([label, list]) => {
       const name = label ?? "Other";
+      const id = ` id="${categoryAnchor(label)}"`;
       if (list.length > INLINE_LIMIT) {
         // Too many to inline; say so and say where they are, rather than
         // rendering a table nobody can read or silently dropping them.
@@ -598,7 +633,7 @@ function indexPage(ix: FhirArtifactIndex): string {
         // came to 524KB with one category 90% of it — so the list moves to a
         // page of its own rather than inline.
         return [
-          `<details markdown="1">`,
+          `<details markdown="1"${id}>`,
           `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
           ``,
           `${list.length} artefacts — too many to list here without the index becoming`,
@@ -612,7 +647,7 @@ function indexPage(ix: FhirArtifactIndex): string {
       // whole artefact table shipped as raw text on the live index — found by
       // `check:escaped-markup`'s leaked-table scan (bean `7w1a`, 2026-09-24).
       return [
-        `<details markdown="1">`,
+        `<details markdown="1"${id}>`,
         `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
         ``,
         ...artifactTable(list, "."),
@@ -633,7 +668,7 @@ function indexPage(ix: FhirArtifactIndex): string {
   const body = [
     `The artefact index of the ${LABEL} Implementation Guide, rebuilt from what the IG`,
     `publishes. Most of it is catalogued **by reference**: the index records where each artefact`,
-    `lives and holds none of its bytes. A ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)} row`,
+    `lives and holds none of its bytes. An artefact page marked ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)}`,
     `is not a broken one — it means upstream, not here.`,
     ``,
     `<div class="st-grid">`,
@@ -672,8 +707,11 @@ function indexPage(ix: FhirArtifactIndex): string {
     ...(ix.dakApiHub?.localPath && dakViewServing().ok ? [`The IG's own [DAK API hub](dak-api.html) lists them as the Publisher's \`dak-api.html\` does.`, ``] : []),
     `## Every artefact, by category`,
     ``,
-    `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a ${SIDECAR_LABEL} sidecar links`,
-    `through to its own page; the rest link out to the published representations.`,
+    `Grouped and ordered as the IG's own \`artifacts.html\` groups them, with each artefact's name and`,
+    `description. Its canonical URL, published representations and whether it is held here are on`,
+    `its own page.`,
+    ``,
+    contentsBox(ordered),
     ``,
     sections,
     ``,
@@ -721,14 +759,21 @@ function indexPage(ix: FhirArtifactIndex): string {
  * reads the href out of the page and resolves it back to a file.
  */
 function artifactTable(list: FhirArtifact[], base: string): string[] {
+  // The Publisher's two columns (#1901): the name, linked to the artefact's
+  // page, and its description. The technical columns this table carried —
+  // canonical URL, published representations, materialization — are on that
+  // page already, so dropping them here loses nothing; the key stays under the
+  // name because two artefacts can share a title and the key is what tells them apart.
   return [
-    `| Artefact | Canonical URL | Published as | Bytes |`,
-    `|---|---|---|---|`,
+    `| Artefact | Description |`,
+    `|---|---|`,
     ...list.map((a) => {
       const nm = a.title ?? a.name ?? a.id;
       const linked = `[${mdCell(nm)}](${base}/artifact/${pageName(a)}.html)`;
-      const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
-      return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
+      // `mdText`, not `mdCell`: a FHIR description is markdown, and a stray
+      // `*` or `<` in one would otherwise restyle or swallow the row.
+      const desc = a.description ? mdText(a.description).replace(/\r?\n+/g, " ") : "";
+      return `| ${linked}<br>\`${mdCell(a.key)}\` | ${desc} |`;
     }),
   ];
 }
@@ -763,7 +808,7 @@ function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: Fh
 
   return shell(
     `${name} — ${LABEL}`,
-    `The ${list.length} ${LABEL} artefacts in the ${name} category, with canonical URLs and published representations.`,
+    `The ${list.length} ${LABEL} artefacts in the ${name} category, with their descriptions.`,
     body,
     { kind: "section", order },
   );

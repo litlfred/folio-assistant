@@ -248,9 +248,11 @@ describe("representation links are separated", () => {
    */
   for (const [label, src] of pages) {
     const b = body(src);
-    // A DAK view page carries no `repLinks` row; its only `</a>` is the
-    // banner's, so this defect cannot occur on it.
-    if (!b.includes("</a>") || isView(label)) continue;
+    // Only a page with a `repLinks` row can carry this defect. A DAK view
+    // page has none, and since #1901 neither has the index: its tables are
+    // the Publisher's name + description, and the representations moved to
+    // each artefact's own page, where this still checks them.
+    if (!/>(json|xml|ttl|html)<\/a>/.test(b) || isView(label)) continue;
 
     it(`${label} puts a separator between adjacent links`, () => {
       expect(b).not.toContain("</a><a ");
@@ -350,7 +352,9 @@ describe("materialization state is stated, never implied by styling", () => {
     const css = SITE_CSS;
     expect(css).toContain(".st-held");
     expect(css).toContain(".st-ref");
-    expect(indexSrc).toMatch(/class="st-tag st-held">materialized</);
+    // On the artefact pages — the index's tables stopped carrying the state
+    // in #1901 (it is a technical column, and the artefact page states it).
+    expect(pages.some(([, src]) => /class="st-tag st-held">materialized</.test(src))).toBe(true);
   });
 
   for (const [label, src] of pages) {
