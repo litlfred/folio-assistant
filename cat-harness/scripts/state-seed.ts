@@ -225,7 +225,21 @@ export function refreshSeed(row: SpecialBranch, opts: SeedOptions = {}): SeedRes
   tree = store.setPath(tree, [MANIFEST_FILE], { mode: "100644", type: "blob", sha: blob, name: "" } as TreeEntry)!;
 
   const drifted = graphs.filter((g) => g.had !== g.want);
-  if (tree === rootTree) {
+  // `current` is decided on the GRAPH SUBTREES, not on the spliced root tree.
+  //
+  // The manifest carries `refreshedAt` and `source.sha`, so the root tree
+  // differs on every run even when not one file of the subgraph has moved —
+  // which meant a second `state:seed` pushed a commit whose only content was
+  // a new timestamp. Found by this module's own test asserting `current`, and
+  // worth more than the commit it saves: the drift gate reads nothing but the
+  // live trees, so those pushes buy no provenance anybody consults, while
+  // `beans/README.md`'s count line is already this repository's most-cited
+  // example (`y7b3`, 76 of 235 conflicted merges) of a generated line that
+  // churned a branch for no reader.
+  //
+  // `--authoritative` is the exception and is NOT a refresh: it changes what
+  // the branch IS, so it pushes even when every subtree already matches.
+  if (drifted.length === 0 && !opts.authoritative) {
     return { state: "current", branch: tip.branch, ref, sha: srcTip.tip, graphs, verified: true, reason: `${tip.branch} already holds ${ref}@${srcTip.tip.slice(0, 12)}` };
   }
   if (opts.dryRun) {

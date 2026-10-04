@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T06:32:50Z
+updated_at: 2026-10-04T07:12:36Z
 parent: folio-assistant-fs43
 ---
 
@@ -31,3 +31,10 @@ It did not land in PR #2052, for two reasons:
 Everything else is ready: the branch is current and verified (`cat/cat-harness/beans` @ 67265200d0ff, subtree 05fbb6a90bc1, 1442 files = main's 1442), `state:seed --id beans --authoritative` performs the branch half, CI mounts the graph before any gate reads it, and the engine resolves its directory instead of composing it.
 
 The exact five-step commit, the file counts on both sides, and the measurement that `.beans.yml` needs no change are in the bean note `beans/notes/folio-assistant-9ofm--2026-10-04--claude-beans-off-main-9ofm.md`.
+
+## 2026-10-04, later: the blocker list is now exact
+
+1. **The claim writer** — bean `h8ig`. #2042 landed a REFUSAL, not a writer, so after the cutover `beans:claim` returns `unknown` for every session, while AGENTS.md, `bean-coordination` and the session-start sweep all require a claim before durable work. It carries a design question that is not a port: `fell-back` means "the claim is on this branch only", and after the cutover the pull-request branch has no `beans/` to hold it.
+2. **The permission to remove the files.** `git rm -r beans` was refused in the dispatched session as irreversible local destruction, and the refusal covers reaching the same outcome another way.
+
+Everything else is ready and verified. `bun run state:seed --id beans --authoritative` is the branch half, and it is idempotent: a second run over an unchanged subgraph reports `current` and pushes nothing (fixed on PR #2052 after that module's own test caught it pushing a commit whose only content was a new manifest timestamp).
