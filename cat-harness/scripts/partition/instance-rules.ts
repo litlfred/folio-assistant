@@ -769,6 +769,7 @@ export const RULES: Rule[] = [
       // tool's scope. Nothing under `cat-harness/` imports them.
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
+      "scripts/lib/json-shape.ts",           // its verdict projections' SHAPE gate (bean `324x`): a committed copy lacking a top-level key the generator now writes is stale
       // CORE, not harness beside gen-uml-overview: it needs a folio to have
       // anything to do, and its input is the core content model
       // (`content/pipeline/content-graph.ts`). The shared PlantUML machinery it
