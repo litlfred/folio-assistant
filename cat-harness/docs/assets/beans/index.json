@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 781,
+      "count": 784,
       "unit": "beans"
     }
   },
@@ -39,14 +39,14 @@
     {
       "id": "folio-assistant-06e3",
       "title": "docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T20:54:07Z",
-      "updatedAt": "2026-10-04T06:09:36Z",
+      "updatedAt": "2026-10-04T06:26:14Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
       "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
     },
@@ -235,14 +235,14 @@
     {
       "id": "folio-assistant-0s6w",
       "title": "MERGE VERIFICATION: reading merge-tree's rc through a command substitution reports the WRONG exit status, and it reads as clean",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:07:04Z",
-      "updatedAt": "2026-10-03T02:07:04Z",
+      "updatedAt": "2026-10-04T06:03:36Z",
       "preview": "A merge steward verifies mergeability with `git merge-tree --write-tree` and reads the exit\ncode: **rc=0 clean, rc=1 CONFLICT, rc>=2 an ERROR that is not clean**. On 2026-10-03 that\nread was wrong for a whole session, in one specific shell form, and it reported **clean**.\n\n## The defect\n\n```sh\ngit merge-tree --write-tree origin/main \"$sha\" >/dev/null 2>&1\necho \"merge-tree rc=$?\"                   ",
       "file": "beans/defs/folio-assistant-0s6w--merge-verification-reading-merge-trees-rc-through.md"
     },
@@ -1987,14 +1987,14 @@
     {
       "id": "folio-assistant-65oe",
       "title": "library:viz is not reproducible across environments: refScan.filesRead embeds a count of the files on disk",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:40:27Z",
-      "updatedAt": "2026-10-03T15:40:47Z",
+      "updatedAt": "2026-10-04T06:08:20Z",
       "preview": "## The defect\n\n`cat-harness/docs/assets/library/index.json` ends with\n\n    \"refScan\": { \"filesRead\": 2663, \"unreadable\": [] }\n\n`filesRead` is a COUNT OF THE FILES THE SCAN READ ON DISK. It is therefore a\nproperty of the checkout, not of the library, and it is committed. Any two\nenvironments whose trees differ by even one scanned file disagree, so\n`library:viz:check` reports stale whenever the last",
       "file": "beans/defs/folio-assistant-65oe--libraryviz-is-not-reproducible-across-environments.md"
     },
@@ -2545,6 +2545,20 @@
       "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "Queued 2026-09-19 while the `skill-not-a-document` split was in flight; not\nstarted. Requested as: *\"move MEMORY.md into kg and make sure in right skill /\ntask pairings\"*.\n\n## What is there now\n\n`.claude/agents/` defines three subagents carrying `memory: project`, each with\na `MEMORY.md` under `.claude/agent-memory/<agent>/`:\n\n- `platform-boundary-guard` — folio-vs-platform boundary, adapter vs pr",
       "file": "beans/defs/folio-assistant-7sf1--move-memorymd-into-the-kg-graph-with-correct-skill.md"
+    },
+    {
+      "id": "folio-assistant-7te5",
+      "title": "who-iris's 12 generated pages are counted as authored — gen-iris-pages marks nothing it writes",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:25:09Z",
+      "updatedAt": "2026-10-04T06:25:09Z",
+      "preview": "Found by running bean `06e3`'s who-iris exercise end to end, 2026-10-04 (PR #2049).\n\n## The measurement\n\n`check:docs-populated` reports for who-iris:\n\n> `✓ who-iris   who-iris/docs/kg-to-portal.html — 1491 words of prose`\n> `  14 authored, 0 generated  ·  who-iris/docs, who-iris/site`\n\nThe true split of those 14 pages is **2 authored, 12 generated**:\n\n| writer | pages |\n|---|---|\n| `who-iris/scrip",
+      "file": "beans/defs/folio-assistant-7te5--who-iriss-12-generated-pages-are-counted-as-author.md"
     },
     {
       "id": "folio-assistant-7uao",
@@ -6775,6 +6789,20 @@
       "file": "beans/defs/folio-assistant-mm2n--search-sections-split-the-77-mb-platform-scope-by.md"
     },
     {
+      "id": "folio-assistant-mw5z",
+      "title": "who-iris's two AUTHORED docs pages render as raw markdown and nothing links them",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:25:33Z",
+      "updatedAt": "2026-10-04T06:25:33Z",
+      "preview": "Found by running bean `06e3`'s who-iris exercise end to end, 2026-10-04 (PR #2049).\n\n## The declaration states the rule that is now broken\n\n`who-iris.json`, on the `who-iris-catalogue` entry:\n\n> *\"HTML rather than markdown because who-iris declares no `composed` directory\n> -- its docs are MOUNTED after Jekyll, so a .md here would be copied verbatim\n> and never rendered.\"*\n\nBean `qsx4` (owner, 202",
+      "file": "beans/defs/folio-assistant-mw5z--who-iriss-two-authored-docs-pages-render-as-raw-ma.md"
+    },
+    {
       "id": "folio-assistant-mwzd",
       "title": "INGEST trust + origin sources (#1614 item 4): WHO SMART Trust IG, C2PA spec, DSpace 7 REST contract",
       "status": "in-progress",
@@ -10217,6 +10245,20 @@
       "file": "beans/defs/folio-assistant-xm31--om30-residual-masking-measured-five-gate-failures.md"
     },
     {
+      "id": "folio-assistant-xp5j",
+      "title": "gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:49:11Z",
+      "updatedAt": "2026-10-04T06:49:36Z",
+      "preview": "## How this surfaced\n\n`bun run check:ci-health` on `main`, 2026-10-04. The Pages half of that report\nexists precisely because a Pages build outcome is a fact GitHub holds *about*\nthis repository rather than one the repository holds, so it is asked fresh and\ncached nowhere. It said:\n\n    - ✓ 27 succeeded\n    - ❔ 72 cancelled — neither shipped nor broken\n    - ✗ 0 failed\n    The newest deployment to",
+      "file": "beans/defs/folio-assistant-xp5j--gh-pages-is-starved-staging-previews-and-the-publi.md"
+    },
+    {
       "id": "folio-assistant-xp72",
       "title": "SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget",
       "status": "todo",
@@ -11082,8 +11124,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 302,
-    "openTotal": 466,
+    "orphanOpen": 303,
+    "openTotal": 467,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
