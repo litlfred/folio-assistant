@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 858,
+      "count": 859,
       "unit": "beans"
     }
   },
@@ -5252,6 +5252,22 @@
       "updatedAt": "2026-10-01T17:42:23Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 1 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: parallel checks, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.\n\n## What\nEach verify/write pair that `bun run regen` / `bun run gates` runs records a hash of its declared INPUTS (the files it reads plus its own script)",
       "file": "beans/defs/folio-assistant-f017--speed-up-1-input-hash-skip-a-check-whose-declared.md"
+    },
+    {
+      "id": "folio-assistant-f16o",
+      "title": "GH-PAGES MIGRATION (xp5j child): the 5 producers write through route-family keying, and the steward opens windows",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [
+        "folio-assistant-xp5j"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T16:18:18Z",
+      "updatedAt": "2026-10-04T16:18:18Z",
+      "preview": "A child of `xp5j` in all but the field: the beans CLI refuses a task as a parent, so this is a sibling under `1xhc` that **blocks** `xp5j`. Split out of PR #2063 on the owner's ruling of 2026-10-04 (*\"Withdraw, land now\"*, answered to session_01BccmnVFbtRpKxM39kyVw9q, which took over #2063 from the stalled session_01GgRQnL9LTo1Hf6QWSB7w9n). #2063 lands the declaration: the named-ref steward recast",
+      "file": "beans/defs/folio-assistant-f16o--gh-pages-migration-xp5j-child-the-5-producers-writ.md"
     },
     {
       "id": "folio-assistant-f1qz",
@@ -11251,9 +11267,11 @@
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
-      "blockedBy": [],
+      "blockedBy": [
+        "folio-assistant-f16o"
+      ],
       "createdAt": "2026-10-04T06:49:11Z",
-      "updatedAt": "2026-10-04T08:00:34Z",
+      "updatedAt": "2026-10-04T08:02:37Z",
       "preview": "## How this surfaced\n\n`bun run check:ci-health` on `main`, 2026-10-04. The Pages half of that report\nexists precisely because a Pages build outcome is a fact GitHub holds *about*\nthis repository rather than one the repository holds, so it is asked fresh and\ncached nowhere. It said:\n\n    - ✓ 27 succeeded\n    - ❔ 72 cancelled — neither shipped nor broken\n    - ✗ 0 failed\n    The newest deployment to",
       "file": "beans/defs/folio-assistant-xp5j--gh-pages-is-starved-staging-previews-and-the-publi.md"
     },
@@ -12177,6 +12195,12 @@
     },
     {
       "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-f16o",
+      "blocks": "folio-assistant-xp5j",
+      "detail": "blocks `folio-assistant-xp5j` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-hfag",
       "blocks": "folio-assistant-7x5n",
       "detail": "blocks `folio-assistant-7x5n` and states no expiry, so the block cannot be told from abandoned work"
@@ -12298,14 +12322,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 393,
+        "total": 394,
         "closed": 145,
-        "open": 248,
+        "open": 249,
         "inProgress": 95,
-        "todo": 152,
+        "todo": 153,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.36895674300254455
+        "share": 0.3680203045685279
       },
       {
         "id": "folio-assistant-vuip",
@@ -12339,8 +12363,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 506,
-    "coveredOpen": 501,
+    "openTotal": 507,
+    "coveredOpen": 502,
     "duplicateIds": 1
   }
 }

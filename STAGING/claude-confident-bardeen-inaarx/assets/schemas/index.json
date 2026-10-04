@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 211,
+      "count": 214,
       "unit": "modules"
     }
   },
@@ -1001,6 +1001,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/ref-window.test.ts",
+      "instance": "cat-harness",
+      "name": "ref-window.test",
+      "graphNode": "undeclared",
+      "summary": "A ref window's reason to exist is that a HANDOVER must not double-push, so",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/ref-window.ts",
+      "instance": "cat-harness",
+      "name": "ref-window",
+      "graphNode": "schema",
+      "summary": "A COALESCING WINDOW over a watched ref — the writes a steward batched into",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/refactor-strategy.ts",
       "instance": "cat-harness",
       "name": "refactor-strategy",
@@ -1088,6 +1104,14 @@
       "graphNode": "schema",
       "summary": "Actors, Roles and Skills — who does a BPMN task, and what they need to know.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/route-member.test.ts",
+      "instance": "cat-harness",
+      "name": "route-member.test",
+      "graphNode": "undeclared",
+      "summary": "`RouteMemberSchema` validates UNTRUSTED input, so these are adversarial",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/safe-url.test.ts",
@@ -1953,6 +1977,14 @@
       "name": "materialization",
       "graphNode": "schema",
       "summary": "Materialising remote content — the three states, and the five gates.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "instance": "folio-assistant-core",
+      "name": "public-comment",
+      "graphNode": "schema",
+      "summary": "A comment returned during a PUBLIC REVIEW of a frozen, line-numbered draft:",
       "isTest": false
     },
     {
@@ -11013,6 +11045,12 @@
           "type": "z.array(z.string().min(1))",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "lead",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -26255,6 +26293,212 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/ref-window.ts#Instant",
+      "name": "Instant",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "undetermined",
+      "note": "z.iso.datetime({ offset: true })",
+      "doc": "An ISO-8601 timestamp with a zone, as everywhere else in the work plan.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#NonBlank",
+      "name": "NonBlank",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#RefWindow",
+      "name": "RefWindow",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "name": "RefWindowObjectSchema",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(REF_WINDOW_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "WatchedRefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "heldBy",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Who holds the window — a session URL, `owner`, or an actor id."
+        },
+        {
+          "name": "since",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "expires",
+          "type": "Instant",
+          "optional": false,
+          "array": false,
+          "doc": "The hard close. Set once, at open: there is no extend, because a window"
+        },
+        {
+          "name": "handoff",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Who takes this window if the holder stops — the field that makes a"
+        },
+        {
+          "name": "requests",
+          "type": "z.array(WriteRequestSchema).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "closedAt",
+          "type": "Instant.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When the steward actually performed the single write, if it has."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/ref-window.ts#Instant",
+        "cat-harness/schemas/ref-window.ts#NonBlank",
+        "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
+        "cat-harness/schemas/ref-window.ts#WriteRequestSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "REF_WINDOW_TAG",
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#RefWindowSchema",
+      "name": "RefWindowSchema",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
+      "name": "WatchedRefSchema",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "zod-object",
+      "doc": "A watched ref, as `scripts/special-branches.json` spells it.",
+      "fields": [],
+      "extendsNames": [
+        "NonBlank"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/ref-window.ts#NonBlank"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#WriteRequest",
+      "name": "WriteRequest",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
+      "name": "WriteRequestSchema",
+      "module": "cat-harness/schemas/ref-window.ts",
+      "kind": "zod-object",
+      "doc": "One write somebody asked for while the window was open.",
+      "fields": [
+        {
+          "name": "route",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "The route this write owns — `/` for the published site, `STAGING/<slug>/`"
+        },
+        {
+          "name": "requestedBy",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false,
+          "doc": "Who asked — a workflow file, a session URL, or an actor id."
+        },
+        {
+          "name": "requestedAt",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authored",
+          "type": "z.boolean().default(false)",
+          "optional": true,
+          "array": false,
+          "doc": "Whether an AUTHOR wrote this route's content, as opposed to a generator"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/ref-window.ts#Instant",
+        "cat-harness/schemas/ref-window.ts#NonBlank"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/refactor-strategy.ts#LeanVersionRange",
       "name": "LeanVersionRange",
       "module": "cat-harness/schemas/refactor-strategy.ts",
@@ -32799,13 +33043,14 @@
       "name": "KeyedBySchema",
       "module": "cat-harness/schemas/subgraph-source.ts",
       "kind": "zod-enum",
-      "doc": "How entries are keyed on a branch: one per `commit`, one live copy at the",
+      "doc": "The ONE keying enum. `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`",
       "fields": [],
       "extendsNames": [],
       "values": [
         "commit",
         "tip",
-        "route"
+        "route",
+        "route-family"
       ],
       "refs": [],
       "unresolved": [],
@@ -32847,6 +33092,33 @@
       "name": "ResolvedSubgraphSource",
       "module": "cat-harness/schemas/subgraph-source.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#RouteMember",
+      "name": "RouteMember",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#RouteMemberSchema",
+      "name": "RouteMemberSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-scalar",
+      "doc": "A `route-family` MEMBER key — one path segment, from untrusted input.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -41358,6 +41630,13 @@
           "type": "string",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "lead",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "A chapter's LEAD: the text between the chapter heading and its first"
         },
         {
           "name": "blocks",
@@ -50284,6 +50563,834 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/public-comment.ts#Anchor",
+      "name": "Anchor",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#AnchorMethod",
+      "name": "AnchorMethod",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema",
+      "name": "AnchorSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "targetLabel",
+          "type": "z.string().min(1).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "A block or section label in the folio; null when unplaced."
+        },
+        {
+          "name": "method",
+          "type": "z.enum(ANCHOR_METHODS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.enum([\"high\", \"medium\", \"low\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "candidates",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "Other plausible targets, for triage to choose between."
+        },
+        {
+          "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why, in a sentence a triager can check."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ANCHOR_METHODS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema",
+      "name": "ChangeSetRefSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "branch",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "stagingUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The staging preview of the change set."
+        },
+        {
+          "name": "before",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Before/after deep links to the comment's anchor."
+        },
+        {
+          "name": "after",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#Citation",
+      "name": "Citation",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#CitationSchema",
+      "name": "CitationSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "doc": "As the reviewer wrote it. Never rewritten; the anchor is the judgement.",
+      "fields": [
+        {
+          "name": "section",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "lines",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "caption",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "\"Table 3.1\" / \"Figure 2.2\" as parsed from the line or comment."
+        },
+        {
+          "name": "raw",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The cell or phrase exactly as given."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#DecisionCode",
+      "name": "DecisionCode",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
+      "name": "DecisionSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "code",
+          "type": "z.enum(DECISION_CODES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().default(\"\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "changeSet",
+          "type": "ChangeSetRefSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the change is made, for a decision that changes the document."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DECISION_CODES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#HistoryEntrySchema",
+      "name": "HistoryEntrySchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "transition",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "task",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ProcessTask",
+      "name": "ProcessTask",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicComment",
+      "name": "PublicComment",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicCommentKind",
+      "name": "PublicCommentKind",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "nodeKind"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicCommentSchema",
+      "name": "PublicCommentSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "PublicCommentKind"
+      ],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/public-comment.ts#PublicCommentKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicCommentStatus",
+      "name": "PublicCommentStatus",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicCommentTransition",
+      "name": "PublicCommentTransition",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "from",
+          "type": "readonly (PublicCommentStatus | null)[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "PublicCommentStatus | \"same\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "ProcessTask & { file: string }",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/public-comment.ts#ProcessTask",
+        "folio-assistant-core/schemas/public-comment.ts#PublicCommentStatus"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicCommentType",
+      "name": "PublicCommentType",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicFields",
+      "name": "PublicFields",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "name": "PublicFieldsSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^PC-\\d{4,}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "\"PC-0042\": the number a committee and a commenter refer to."
+        },
+        {
+          "name": "source",
+          "type": "SourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewer",
+          "type": "ReviewerSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "citation",
+          "type": "CitationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "anchor",
+          "type": "AnchorSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.enum(PUBLIC_COMMENT_TYPES).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The comment as written."
+        },
+        {
+          "name": "suggestedRevision",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assignees",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "recommendations",
+          "type": "z.array(RecommendationSchema).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "decision",
+          "type": "DecisionSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "duplicateOf",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "discussion",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "GitHub issue holding this comment's discussion, once one is opened."
+        },
+        {
+          "name": "history",
+          "type": "z.array(HistoryEntrySchema).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/public-comment.ts#AnchorSchema",
+        "folio-assistant-core/schemas/public-comment.ts#CitationSchema",
+        "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
+        "folio-assistant-core/schemas/public-comment.ts#HistoryEntrySchema",
+        "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema",
+        "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema",
+        "folio-assistant-core/schemas/public-comment.ts#SourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "PUBLIC_COMMENT_TYPES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema",
+      "name": "RecommendationSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "GitHub login of the committee member."
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1).default(\"review-committee-member\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "code",
+          "type": "z.enum(DECISION_CODES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().default(\"\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The issue or PR comment it was given in."
+        },
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "DECISION_CODES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema",
+      "name": "ReviewerSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable pseudonym: a hash of the normalised email or name."
+        },
+        {
+          "name": "name",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Only when `acknowledge` is true."
+        },
+        {
+          "name": "organisation",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "country",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "acknowledge",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "github",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#SourceSchema",
+      "name": "SourceSchema",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "channel",
+          "type": "z.enum(INTAKE_CHANNELS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "batch",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The intake batch: a file name, a form export, a letter."
+        },
+        {
+          "name": "sha256",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "sha256 of the intake file, so a re-import is recognised."
+        },
+        {
+          "name": "sheet",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "row",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "segment",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "For a narrative: which passage of the letter this comment is."
+        },
+        {
+          "name": "url",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "For a GitHub comment: its URL."
+        },
+        {
+          "name": "receivedAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "INTAKE_CHANNELS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/public-comment.ts#TransitionInput",
+      "name": "TransitionInput",
+      "module": "folio-assistant-core/schemas/public-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "by",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "anchor",
+          "type": "Anchor",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assignees",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "recommendation",
+          "type": "Omit<z.input<typeof RecommendationSchema>, \"at\"> & { at?: string }",
+          "optional": true,
+          "array": false,
+          "doc": "`at` defaults to the transition's."
+        },
+        {
+          "name": "decision",
+          "type": "Omit<z.input<typeof DecisionSchema>, \"at\" | \"by\"> & { at?: string; by?: string }",
+          "optional": true,
+          "array": false,
+          "doc": "`at` and `by` default to the transition's."
+        },
+        {
+          "name": "type",
+          "type": "PublicCommentType",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "priority",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "duplicateOf",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "changeSet",
+          "type": "z.input<typeof ChangeSetRefSchema>",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/public-comment.ts#Anchor",
+        "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema",
+        "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
+        "folio-assistant-core/schemas/public-comment.ts#PublicCommentType",
+        "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/review-comment.ts#AnchorChange",
       "name": "AnchorChange",
       "module": "folio-assistant-core/schemas/review-comment.ts",
@@ -55912,6 +57019,94 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#Instant",
+      "via": "closedAt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#Instant",
+      "via": "expires",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#Instant",
+      "via": "since",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
+      "via": "handoff",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
+      "via": "heldBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
+      "via": "ref",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema",
+      "to": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
+      "via": "requests",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#WatchedRefSchema",
+      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
+      "to": "cat-harness/schemas/ref-window.ts#Instant",
+      "via": "requestedAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
+      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
+      "via": "requestedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/ref-window.ts#WriteRequestSchema",
+      "to": "cat-harness/schemas/ref-window.ts#NonBlank",
+      "via": "route",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/refactor-strategy.ts#RefactorStrategy",
       "to": "cat-harness/schemas/refactor-strategy.ts#LeanVersionRange",
       "via": "lean",
@@ -59547,6 +60742,142 @@
       "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
       "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema",
+      "via": "changeSet",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicCommentSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#PublicCommentKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicCommentTransition",
+      "to": "folio-assistant-core/schemas/public-comment.ts#ProcessTask",
+      "via": "by",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicCommentTransition",
+      "to": "folio-assistant-core/schemas/public-comment.ts#PublicCommentStatus",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicCommentTransition",
+      "to": "folio-assistant-core/schemas/public-comment.ts#PublicCommentStatus",
+      "via": "to",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema",
+      "via": "anchor",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#CitationSchema",
+      "via": "citation",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
+      "via": "decision",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#HistoryEntrySchema",
+      "via": "history",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema",
+      "via": "recommendations",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema",
+      "via": "reviewer",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema",
+      "to": "folio-assistant-core/schemas/public-comment.ts#SourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#TransitionInput",
+      "to": "folio-assistant-core/schemas/public-comment.ts#Anchor",
+      "via": "anchor",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#TransitionInput",
+      "to": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema",
+      "via": "changeSet",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#TransitionInput",
+      "to": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema",
+      "via": "decision",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#TransitionInput",
+      "to": "folio-assistant-core/schemas/public-comment.ts#PublicCommentType",
+      "via": "type",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/public-comment.ts#TransitionInput",
+      "to": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema",
+      "via": "recommendation",
       "kind": "field",
       "optional": true,
       "array": false
