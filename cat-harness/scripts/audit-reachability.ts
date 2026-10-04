@@ -164,7 +164,7 @@ import { basename, dirname, join, normalize, relative } from "node:path";
 import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
 import { corpusScopeFor, workflowFiles } from "./known-skills.js";
-import { processFiles } from "../src/tools/workflow.js";
+import { processFiles } from "../src/workflow/process-files.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import {
   listDecisions,
