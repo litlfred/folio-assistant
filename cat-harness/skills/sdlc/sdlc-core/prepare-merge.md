@@ -307,6 +307,41 @@ still fails after its writer ran is a real defect, not staleness, and the
 command exits non-zero rather than claiming a repair it did not make. So is a
 check with **no writer**.
 
+### Submodules: check the pointers BEFORE you stage the merge (STRICT)
+
+**A base merge can roll a submodule back without a conflict, and `git add -A`
+is how.** Measured on PR #1968, 2026-10-03:
+
+1. Early in the session, `git submodule update --init bootstrap-tools` checked
+   out the submodule at the branch's pointer (`c5e5e254`).
+2. `git merge origin/main` brought in a NEWER pointer (`30464126`). Git updates
+   the gitlink in the index but **not the submodule's working checkout**, so
+   the checkout still sat at `c5e5e254`.
+3. During conflict resolution, `git add -A` staged that stale checkout as the
+   submodule's state, rolling **both** submodules back in the merge commit.
+4. `bun run regen` then ran against the old tools and "repaired" ~130
+   generated files to their pre-bump form, stripping the generator banners
+   `main` had just added. CI went red on a typecheck error
+   (`generatedBanner` is not exported) in code the PR never touched.
+
+Nothing in that sequence conflicted, and every local check that ran against
+the stale submodule passed. So, after any base merge and **before** staging:
+
+```sh
+git submodule update --init --recursive   # move each checkout to the merged pointer
+git diff --cached --submodule=short -- bootstrap bootstrap-tools   # must be empty unless YOU bumped it
+```
+
+Then regenerate. **Stage paths by name during a merge, never `git add -A`**,
+and before pushing confirm the merge carries only your change:
+
+```sh
+git diff --stat origin/<base> HEAD   # should list your files, not hundreds
+```
+
+A diff against the base far larger than your PR is the signal. On #1968 it was
+146 files for a 16-file change.
+
 **Why it is not `qa:resolve-conflicts`, and not bean `520m`.** That command
 only ever inspects UNMERGED paths, and here there were none; `520m` is about
 generated artefacts that *conflict*, which is noisy but git stops you. This is
