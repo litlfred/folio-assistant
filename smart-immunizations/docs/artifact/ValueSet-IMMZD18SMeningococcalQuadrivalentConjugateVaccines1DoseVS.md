@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld` · [view](ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines1DoseVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD18SMeningococcalPolysaccharideVaccinesVS.html" data-next="ValueSet-IMMZD18SMeningococcalQuadrivalentConjugateVaccines2DosesVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -162,7 +162,10 @@ describe("the fallback is measured, not graded", () => {
   // PLANTED, not read off the corpus: since `ob3m` finding 11 every declared
   // tile names a glyph, so a test that waited for the real corpus to have a
   // miss would pass by finding nothing to report.
-  const unnamed = (src: string): string => src.replace(/("title": "Tools"),\s*"icon": "tools"/, "$1");
+  // The tools tile is `{ "icon": "tools" }` since bean `ob3m` finding 6 took
+  // its redundant `title` out (the kind's display name is the one name), so
+  // the plant empties the tile rather than dropping one of two fields.
+  const unnamed = (src: string): string => src.replace(/("tile": \{)\s*"icon": "tools"\s*\}/, "$1}");
 
   test("tiles naming no glyph are reported per instance, with a denominator", () => {
     withEdit(DECL, unnamed, () => {

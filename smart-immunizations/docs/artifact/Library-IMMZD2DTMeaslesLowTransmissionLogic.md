@@ -37,3 +37,6 @@ This library defines decision support logic for the IMMZ.D2.DT.Measles.Low trans
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Library-IMMZD2DTMeaslesEncounterElements.html" data-next="Library-IMMZD2DTMeaslesMCVDose0Logic.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.jsonld` · [view](ValueSet-IMMZD18SHib2DosesWithBoosterDoseVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD18SHepatitisALiveAttenuatedHAV1DoseVS.html" data-next="ValueSet-IMMZD18SHib3DosesVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
