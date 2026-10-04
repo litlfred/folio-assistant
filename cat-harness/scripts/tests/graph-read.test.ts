@@ -18,6 +18,7 @@ import { readBeanFiles, readBeanStore } from "../bean-store-read.ts";
 import { fallbackStoreDir, listBeans, readStoreConfig } from "../beans-fallback.ts";
 import { beanDefsDir, readBeans, resolveBeanDefs } from "../beans.ts";
 import { graphReadPath, mustReadGraph } from "../graph-read.ts";
+import { WORKFLOW_DIR, listInstances, workflowDir } from "../../src/workflow/store.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -331,5 +332,40 @@ describe("beans-fallback: the CLI-absent reader relocates, and refuses", () => {
     writeFileSync(join(root, ".beans.yml"), "path: somewhere/else\n");
     const cfg = readStoreConfig(root);
     expect(fallbackStoreDir(root, cfg)).toEqual({ at: join(root, "somewhere", "else") });
+  });
+});
+
+// ── The ENGINE row: where a running process instance is (bean `9ofm` §4) ────
+//
+// `beans/workflows/` is the store whose whole purpose (bean `vlhk`) is to make
+// a turn's position auditable, so "unreachable read as empty" costs more here
+// than anywhere else: the session-start sweep's finding for an empty directory
+// is **"no instance recorded"** — word for word what it would say if the
+// process had never been recorded at all.
+describe("the workflow store resolves through the declaration", () => {
+  test("not moved: the compiled-in default, which is where the files are", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+    mkdirSync(join(root, "beans", "workflows"), { recursive: true });
+    expect(workflowDir(root)).toBe(join(root, WORKFLOW_DIR));
+  });
+
+  test("mounted: the instances follow the graph, not the repository root", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const into = join(root, "mounted-wf");
+    mkdirSync(join(into, "workflows"), { recursive: true });
+    mount(root, "beans", into);
+    expect(workflowDir(root)).toBe(join(into, "workflows"));
+  });
+
+  test("unreachable: THROWS, because `[]` here is reported as 'no instance recorded'", () => {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    expect(() => workflowDir(root)).toThrow(/cannot reach the workflow-state graph[\s\S]*state:mount/);
+    expect(() => listInstances(root)).toThrow(/cannot reach the workflow-state graph/);
+  });
+
+  test("undeclared: an unmigrated folio keeps the compiled-in default", () => {
+    const bare = repo([]);
+    expect(workflowDir(bare)).toBe(join(bare, WORKFLOW_DIR));
+    expect(listInstances(bare)).toEqual([]);
   });
 });

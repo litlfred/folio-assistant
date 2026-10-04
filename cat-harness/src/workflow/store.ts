@@ -15,6 +15,7 @@
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
+import { graphReadPath } from "../../scripts/graph-read.js";
 import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
 
 /**
@@ -37,8 +38,59 @@ import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
 // because the store is on the hot path of every workflow call.
 export const WORKFLOW_DIR = join("beans", "workflows");
 
+/** The segment of {@link WORKFLOW_DIR} that lies INSIDE the `beans` graph. */
+const WITHIN_GRAPH = "workflows";
+
+/**
+ * Memoised per checkout root. {@link graphReadPath} spawns `git ls-files` and
+ * reads the declarations, and this is the hot path the constant above exists
+ * for: `workflow_next` resolves the directory on every call. The answer can
+ * only change when the graph is mounted or unmounted, which does not happen
+ * inside one process.
+ */
+const resolved = new Map<string, string>();
+
+/**
+ * WHERE the workflow instances are — the checkout, or the mount.
+ *
+ * Bean `9ofm`, the §4 `engine` row: *"resolve from the declaration, not a
+ * constant"*. The constant is kept as the declared, repository-relative
+ * default (`check:harness-dirs` still checks it against `beans/beans.json`),
+ * and the DIRECTORY is resolved through the same `graphReadPath` every other
+ * reader of `beans/` uses, so the cutover moves the instances without this
+ * module changing again.
+ *
+ * It would "work" without this. A mount lands at the graph's declared path, so
+ * `join(repoRoot, "beans/workflows")` finds the instances either way — and
+ * that is exactly the trap: when the mount has NOT happened, the same join
+ * yields a directory that is simply absent, {@link listInstances} returns `[]`,
+ * and the session-start sweep reports **"no instance recorded"** — the finding
+ * that the process you are in was never recorded, indistinguishable from the
+ * truth that it was recorded somewhere this checkout cannot see. That is bean
+ * `dh4f` over the one store whose whole purpose (bean `vlhk`) is to make a
+ * turn's position auditable. So an unreachable graph THROWS, carrying the
+ * remedy, rather than reading as an empty store.
+ */
+export function workflowDir(repoRoot: string): string {
+  const hit = resolved.get(repoRoot);
+  if (hit !== undefined) return hit;
+  const g = graphReadPath("beans", repoRoot);
+  // `undeclared` keeps the convention every other reader follows: a folio with
+  // no `beans` entry at all has no store, and the compiled-in default is the
+  // right answer for it.
+  const dir = g.state === "ok" ? join(g.at, WITHIN_GRAPH) : g.state === "undeclared" ? join(repoRoot, WORKFLOW_DIR) : null;
+  if (dir === null) {
+    throw new Error(
+      `cannot reach the workflow-state graph: ${g.reason} — until it is mounted, "no instance recorded" would be ` +
+        `reported for every running process, which is not the same answer as there being none`,
+    );
+  }
+  resolved.set(repoRoot, dir);
+  return dir;
+}
+
 const pathFor = (repoRoot: string, id: string): string =>
-  join(repoRoot, WORKFLOW_DIR, `${id}.json`);
+  join(workflowDir(repoRoot), `${id}.json`);
 
 /**
  * Instance ids are derived from the subject, not random: re-running a step for
@@ -106,7 +158,7 @@ export function relativiseSource(repoRoot: string, state: InstanceState): Instan
 }
 
 export function saveInstance(repoRoot: string, state: InstanceState): string {
-  const dir = join(repoRoot, WORKFLOW_DIR);
+  const dir = workflowDir(repoRoot);
   mkdirSync(dir, { recursive: true });
   const p = pathFor(repoRoot, state.id);
   // `$schema` FIRST, and written on every save rather than only on create, so
@@ -124,7 +176,7 @@ export function saveInstance(repoRoot: string, state: InstanceState): string {
 }
 
 export function listInstances(repoRoot: string): InstanceState[] {
-  const dir = join(repoRoot, WORKFLOW_DIR);
+  const dir = workflowDir(repoRoot);
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
