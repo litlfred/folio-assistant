@@ -73,3 +73,12 @@ regen each). #2066 removes the LSI trio from main but is handed back (lb8h).
 Owner: **"Prioritise #2066 (Recommended)"**. A Merge Manager takeover agent
 finishes #2066 (merge main, CI green, sign); session 01VfkKoc lands it, since
 my session's agent did the work (guard check 2).
+
+## 2026-10-04 ~19:58Z — owner standing release for 8 hours
+
+Owner: **"for next 8 hours, all thats green can merge. keep prodding siblings
+(direct message) to keep the merge queue stoked"**. Standing release until
+~2026-10-05 04:00Z: any PR that is signed, green, clean against main and passes
+merge:guard may land without a per-PR yes. merge:guard is still never bypassed;
+PRs my session or its agents authored are still landed by another session
+(check 2).
