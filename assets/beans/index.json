@@ -321,15 +321,15 @@
     {
       "id": "folio-assistant-0w7q",
       "title": "VIEWER RAIL: avatar header, per-visualiser section, drop redundant ☰/[x], QA flags (#1757)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T07:25:35Z",
-      "updatedAt": "2026-10-01T07:25:35Z",
-      "preview": "Owner report 2026-10-01, issue #1757 (session_01Cw8JgZEDT5VqQ5ergjdMjB).\n\n## Done when\n- [ ] rail header is the instance avatar or initial, clickable pin toggle; ☰ and [x] removed (rail + Jekyll footer)\n- [ ] NavbarModel carries a per-visualiser section, open by default; Graphs collapsed when present\n- [ ] /todos/ visualiser section: todos grouped by attached KG node\n- [ ] viewer-nav QA flags: hea",
+      "updatedAt": "2026-10-04T19:56:18Z",
+      "preview": "Owner report 2026-10-01, issue #1757 (session_01Cw8JgZEDT5VqQ5ergjdMjB).\n\n## Done when\n- [x] rail header is the instance avatar or initial, clickable pin toggle; ☰ and [x] removed (rail + Jekyll footer)\n- [x] NavbarModel carries a per-visualiser section, open by default; Graphs collapsed when present\n- [x] ~~/todos/ visualiser section: todos grouped by attached KG node~~ — **struck by the owner, 2",
       "file": "beans/defs/folio-assistant-0w7q--viewer-rail-avatar-header-per-visualiser-section-d.md"
     },
     {
@@ -2127,14 +2127,14 @@
     {
       "id": "folio-assistant-603s",
       "title": "LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T12:32:20Z",
-      "updatedAt": "2026-09-26T03:51:27Z",
+      "updatedAt": "2026-10-04T19:55:08Z",
       "preview": "Owner, 2026-09-20, verbatim — the structure is specific enough that paraphrase\nwould lose the parts that constrain the design:\n\n> then landing page rendering is now cleaer... scan the root of the repo, look\n> for <harness>.config.json as named instances. do their rendering (in\n> depdendcy ordering). on LHS navbar, there is global section (w/ themed color)\n> for each harness. when collapsed on LHS ",
       "file": "beans/defs/folio-assistant-603s--landing-the-lhs-navbar-is-one-themed-section-per-i.md"
     },
@@ -4974,14 +4974,14 @@
     {
       "id": "folio-assistant-dxje",
       "title": "STICKIES ONE COMPONENT (#1925): one sticky for landing + todo, faded theme, compact icon row underneath, confirmed discard to fsh-guts",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:16:11Z",
-      "updatedAt": "2026-10-02T21:16:16Z",
+      "updatedAt": "2026-10-04T19:55:09Z",
       "preview": "Issue #1925. Owner ruling 2026-10-02: \"dont treat stickies differently. combine best of each. lower faded avatar/theme looks nicer. upper smaller same size closed looks niceer. icons are a mess on both. make compact underneath. [x] is what? send to fsh-guts? make sure confirmed by user\"\n\n## Done when\n- one renderer for landing and todo stickies; same size closed; faded avatar/theme on all\n- one ic",
       "file": "beans/defs/folio-assistant-dxje--stickies-one-component-1925-one-sticky-for-landing.md"
     },
@@ -8281,7 +8281,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:48:29Z",
-      "updatedAt": "2026-09-20T18:48:29Z",
+      "updatedAt": "2026-10-04T19:47:04Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> get LHS navbar working w/ instantiated harness and showing folios (w/\n> bootstrap/ exception), stickyes that move around on folio (need reorderion\n> of folio/miro objects).\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `yj32` | HARNE",
       "file": "beans/defs/folio-assistant-p5wm--goal-2-lhs-navbar-working-with-instantiated-harnes.md"
     },
@@ -9666,15 +9666,15 @@
     {
       "id": "folio-assistant-t6ht",
       "title": "STICKIES BOARD: remove the Visualisations tile strip (owner 2026-10-02, reverses v0jv) — issue #1905",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T18:39:58Z",
-      "updatedAt": "2026-10-02T19:06:02Z",
-      "preview": "Owner, 2026-10-02: \"stickies panel shouldnt have all those icons\". Remove .fa-board-strip from every sticky board; tiles stay reachable via navbar + glass. Issue #1905.",
+      "updatedAt": "2026-10-04T19:55:09Z",
+      "preview": "Owner, 2026-10-02: \"stickies panel shouldnt have all those icons\". Remove .fa-board-strip from every sticky board; tiles stay reachable via navbar + glass. Issue #1905.\n\n\n## Closed on evidence, 2026-10-04\n\nLanded via #1907, merged in train #1924 (`225b7cf`); issue #1905 is closed. Re-derived on `main` (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): `fa-board-strip` appears in no",
       "file": "beans/defs/folio-assistant-t6ht--stickies-board-remove-the-visualisations-tile-stri.md"
     },
     {
@@ -12308,13 +12308,13 @@
         "status": "in-progress",
         "epics": 6,
         "total": 122,
-        "closed": 41,
-        "open": 81,
-        "inProgress": 23,
+        "closed": 45,
+        "open": 77,
+        "inProgress": 19,
         "todo": 58,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.3360655737704918
+        "share": 0.36885245901639346
       },
       {
         "id": "folio-assistant-rwmf",
@@ -12363,8 +12363,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 507,
-    "coveredOpen": 502,
+    "openTotal": 503,
+    "coveredOpen": 498,
     "duplicateIds": 1
   }
 }
