@@ -62,6 +62,7 @@ import { TODO_GRAPH_SITE_PATH, serialiseJsonld, todoDocument, todoGraphDocument,
 import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, readBeans } from "./beans.js";
 import { milestoneRollup } from "./milestone-rollup.js";
+import { missingTopLevelKeys } from "./lib/json-shape.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -887,6 +888,18 @@ function emit(path: string, content: string, kind: "page" | "data" | "verdict" =
       // whole of this change at the file level.
       if (!present) {
         console.error(`  ✗ ${path} is missing`);
+        stale++;
+        return;
+      }
+      // Content moving is news, but a SHAPE that moved is an omission: the
+      // generator now writes a top-level field the committed copy lacks.
+      // Measured on #1955, 2026-10-04 (bean `324x`): a main merge took main's
+      // `assets/beans/index.json` (no `edges`, bean `vhqq`) by the site-data
+      // pattern, `check:kind-validators` went red, and this check said
+      // current — so regen, the merge bot's included, never rewrote it.
+      const missing = missingTopLevelKeys(current, content);
+      if (missing.length) {
+        console.error(`  ✗ ${path} is stale: lacks ${missing.map((k) => `\`${k}\``).join(", ")}, which the generator now writes`);
         stale++;
       } else {
         refreshed++;
