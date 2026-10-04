@@ -218,7 +218,7 @@ describe("verdicts", () => {
   });
 
   test("the same script WITH the cat-harness prefix resolves", () => {
-    const [inv] = invocationsFrom("f.yml", wf("bun run cat-harness/scripts/check-ci-health.ts"));
+    const [inv] = invocationsFrom("f.yml", wf("bun run cat-harness-tools/scripts/check-ci-health.ts"));
     expect(inv.verdict).toBe(Verdict.Resolves);
   });
 
