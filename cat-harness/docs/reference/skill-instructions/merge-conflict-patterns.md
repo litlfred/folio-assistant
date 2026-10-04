@@ -195,7 +195,7 @@ kept for the branches still carrying it. See §"A pattern is not always the
 answer": this family is the measured case where the declaration was correct,
 did what it claimed, and removed no conflicts.
 
-### `docs-auto` — take the base, regenerate (352)
+### `auto-docs` — take the base, regenerate (352)
 
 The generated docs index pages, already `-merge` in `.gitattributes`. One page
 per directory, so a new file anywhere changes one.
@@ -277,8 +277,8 @@ refused.
 pages `gen-library-viz`, `gen-folio-viz` and `gen-schema-viz` place through
 `viewerPlacement`, each rewritten whole from the corpus and checked by its
 `:viz --check`. Same false positive as above: its `uploads/` pages render
-uploads rather than being them (#1775). `docs-auto/` under the same prefix
-keeps its own `docs-auto` entry.
+uploads rather than being them (#1775). `auto-docs/` under the same prefix
+keeps its own `auto-docs` entry.
 
 ### `navbar-include` — take the base, regenerate
 
@@ -577,8 +577,8 @@ drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
 executes what happens to the dropped member. The author's side, the queue
 and the bounce-back are the merge-manager SOP in
 [#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
-12). The hand-back format is the `agent-handoff` skill in
-[#1884](https://github.com/litlfred/folio-assistant/pull/1884).
+12). The hand-back format is the
+[`agent-handoff`](agent-handoff.md) skill.
 
 **Why this exists.** Owner, 2026-10-02: *"if a merge in queue cannot be merged
 for some reason, create a new bean (under appropriate epic/story…), hand it
