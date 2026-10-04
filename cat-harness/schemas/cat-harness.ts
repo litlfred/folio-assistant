@@ -6271,8 +6271,26 @@ export function nestedDirectories(
   root: string,
   decl: CatHarnessDeclaration,
   registry: GraphKindRegistry = defaultGraphKinds,
-): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
-  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+): Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> {
+  const out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> = [];
   for (const d of decl.directories ?? []) {
     const parent = d.path.replace(/\/+$/, "");
     walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
@@ -6295,7 +6313,16 @@ function walkNested(
   id: string,
   kinds: readonly string[],
   registry: GraphKindRegistry,
-  out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }>,
+  out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}>,
   seen: Set<string>,
 ): void {
   if (seen.has(abs)) return;
@@ -6304,7 +6331,17 @@ function walkNested(
   for (const f of [...new Set(files)]) {
     const p = join(abs, f);
     if (!existsSync(p)) continue;
-    let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+    let nested: {
+      directories?: Array<{
+        id?: string;
+        path?: string;
+        graphKinds?: string[];
+        description?: string;
+        absent?: { reason: string };
+        storage?: unknown;
+        source?: unknown;
+      }>;
+    };
     try {
       nested = JSON.parse(readFileSync(p, "utf-8"));
     } catch {
@@ -6318,6 +6355,20 @@ function walkNested(
         path: `${rel}/${sub}/`,
         graphKinds: nd.graphKinds ?? [],
         ...(nd.description ? { description: nd.description } : {}),
+        // Carried through, not dropped. `absent`, `storage` and `source` each
+        // say that the directory is NOT where its path says, or is not meant
+        // to be there at all — so a consumer that loses them asks "is it on
+        // disk?" and gets the wrong answer with no way to tell. Measured
+        // 2026-10-03 (bean `xsrv`): `check:declared-dirs`, extended to reach
+        // these entries, reported a nested entry carrying `absent.reason` as
+        // an unexplained absence, because the reason never arrived. The same
+        // loss would make an eventual `storage: { keyedBy: "route" }` on a
+        // nested entry read as a missing directory — `contentIsOffCheckout`
+        // cannot see a field it was not given. Latent until that test: no
+        // nested entry carries any of the three today.
+        ...(nd.absent ? { absent: nd.absent } : {}),
+        ...(nd.storage ? { storage: nd.storage } : {}),
+        ...(nd.source ? { source: nd.source } : {}),
         parentId: id,
       };
       out.push(entry);
