@@ -354,6 +354,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+| [public-comment](public-comment.html) | `public-comment` | — | > Skill id: `public-comment` · Package: `folio-document-adapter` · Process: |
 
 ## Catalogue records — Dublin Core renderings (catalogue)
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v26p
 title: 'PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:09:45Z
-updated_at: 2026-09-22T21:09:52Z
+updated_at: 2026-10-04T20:03:46Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
@@ -29,3 +29,25 @@ The page/line provenance for INGEST is xtpc (the other half of #197).
 - [ ] a CSV and an XLSX of comments import as Findings, with unplaced rows kept
 - [ ] the five operations are Tool nodes, each with a test
 - [ ] the Public Comment sub-process is in the lifecycle BPMN, and #197 is updated each round
+
+_2026-10-04T19:15:46Z_ — Claimed by claude/confident-bardeen-inaarx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Round 1: 2026-10-04 (branch claude/confident-bardeen-inaarx, session_016Ej2sTFaSjpubb2B3Uy6MN)
+
+First customer: the DPI-H Reference Architecture public review in litlfred/smart-ra.
+
+**Built**
+- `folio-assistant-core/scripts/pdf-line-map.py`: a line-numbered review PDF → page/line map, plus alignment of a .docx extraction to it (in order, then out of order between aligned neighbours, then tables by first cell). On the DPI-H draft: 255 pages, 5890 numbered lines; of 1108 items, 632 aligned in order and 286 out of order, 23 by start only, 58 by unnumbered page, 82 inheriting a neighbour's page, and **27 unaligned** (reported, never guessed).
+- `folio-assistant-core/schemas/public-comment.ts` (`folio-public-comment/v1`): a todo kind with a closed lifecycle, received → triaged → assigned → recommended → decided → editing → incorporated (+ duplicate, withdrawn). Five owner-ruled decision codes, and a reason required for every code but accepted. Email never stored; name only on acknowledgement.
+- `folio-assistant-core/scripts/public-comment.ts`: import (WHO comment matrix .xlsx / form .csv, via stdlib `intake-rows.py`), import-narrative, list by page/line/block/section/unplaced, and the operations triage, reassign, assign, recommend, decide, edit (author, human or agentic; owner 2026-10-04), incorporate, duplicate, withdraw. Also GitHub `pc:` / `recommend:` / `decide:` tags, honoured only from logins in config.json.
+- `public-comment.bpmn` (Process_PublicComment), with lanes commenter, intake, coordinator, committee, editor, author, change set. The change set calls Process_ContentChangeReview (reused, not forked). `draft-to-publication.bpmn` gains a Public review lane: a third parallel branch of "Draft under review".
+- Skill `public-comment` (folio-document-adapter).
+- Tests: 21 in public-comment.test.ts; every transition's task exists in the diagram.
+
+**Done when, status**
+- [x] a line-numbered draft render emits the page/line → block map (from the frozen PDF the reviewers read, rather than a render)
+- [x] an XLSX and a CSV import as Findings, with unplaced rows kept
+- [x] the operations each have a test (one CLI tool, `public-comment.ts`; separate Tool nodes not yet declared)
+- [x] the Public Comment sub-process is in the lifecycle BPMN
+- [ ] the review/ page and heat map show imported comments (smart-ra dashboard first; platform review page next round)
