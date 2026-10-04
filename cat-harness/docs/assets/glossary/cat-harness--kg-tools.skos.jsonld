@@ -1254,6 +1254,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pdf-viewer-embed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Embed a PDF inline in a page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it."
+        }
+      ],
+      "skos:notation": "pdf-viewer-embed",
+      "dcterms:source": "cat-harness/tools/index.ts#pdf-viewer-embed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pdf-viewer-install",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Install the inline PDF viewer into a built site"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site."
+        }
+      ],
+      "skos:notation": "pdf-viewer-install",
+      "dcterms:source": "cat-harness/tools/index.ts#pdf-viewer-install",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pin-spdx-license-list",
       "@type": "skos:Concept",
       "skos:inScheme": {

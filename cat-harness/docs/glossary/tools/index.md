@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 120 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 122 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 23 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 154 terms and is 107 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 156 terms and is 109 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>154</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>154</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>156</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>156</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">154</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">156</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -226,6 +226,13 @@ Editorial content-graph analysis <span class="fa-gloss-status">candidate, extrac
 <p>Build the block- and section-level editorial dependency graph of one paper from its <code>.ts</code> manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads <code>uses[]</code>/<code>interprets</code> only — the editorial relation, never the formal one.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#content-graph-analysis</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--pdf-viewer-embed" data-fa-state="extracted" data-fa-gloss="">
+Embed a PDF inline in a page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-viewer-embed</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-tools--ig-ast-jsonld" data-fa-state="extracted" data-fa-gloss="">
 Export an IG AST as JSON-LD <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -416,6 +423,13 @@ Inject translations <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#translation-inject</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--pdf-viewer-install" data-fa-state="extracted" data-fa-gloss="">
+Install the inline PDF viewer into a built site <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into <code>&lt;site&gt;/assets/vendor/pdfjs/</code>, and add the shim that opens <code>?src=</code> only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-viewer-install</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--cat-harness-schema" data-fa-state="extracted" data-fa-gloss="">
 Instance declaration schema <span class="fa-gloss-status">candidate, extracted</span>

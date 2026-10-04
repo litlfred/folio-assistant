@@ -300,7 +300,14 @@ function all(argv: string[], flag: string): string[] {
 }
 
 /**
+ * Two modes, one script — the two Tool nodes `pdf-viewer-install` and
+ * `pdf-viewer-embed` in `cat-harness/tools/index.ts`:
+ *
  * `bun run cat-harness/scripts/pdf-viewer.ts --site ./_site --allow <prefix> [--allow …] [--zip <file>]`
+ *
+ * `echo '{"src":…,"title":…,"route":…,"page":3}' | bun run cat-harness/scripts/pdf-viewer.ts --embed`
+ * prints the fragment {@link embed} returns, for a generator that is not
+ * TypeScript or a person pasting it into a page by hand.
  *
  * Exit 2 on a usage error. An empty allowlist is a usage error, not a
  * default: a viewer that may open only same-origin files is a legitimate
@@ -309,6 +316,33 @@ function all(argv: string[], flag: string): string[] {
  * CDN document on every page while the build reports success.
  */
 async function main(argv: string[]): Promise<number> {
+  if (argv.includes("--embed")) {
+    // The options arrive as ONE JSON object on stdin, not as words: a title
+    // and a regular expression are free text, and free text on a command line
+    // is a shell payload (`check:tools` refuses such a port).
+    let o: Partial<EmbedOptions & { route: string }>;
+    try {
+      o = JSON.parse(await Bun.stdin.text());
+    } catch (e) {
+      console.error(`pdf-viewer --embed: stdin is not JSON: ${(e as Error).message}`);
+      return 2;
+    }
+    const { src, title, route, page } = o;
+    if (typeof src !== "string" || typeof title !== "string" || typeof route !== "string" ||
+        (page !== undefined && !(Number.isInteger(page) && page >= 1))) {
+      console.error('usage: echo \'{"src":"<pdf-url>","title":"<text>","route":"<regex, group 1 = site root>","page":<n ≥ 1>}\' | pdf-viewer.ts --embed');
+      return 2;
+    }
+    let re: RegExp;
+    try {
+      re = new RegExp(route);
+    } catch (e) {
+      console.error(`pdf-viewer --embed: route is not a regular expression: ${(e as Error).message}`);
+      return 2;
+    }
+    console.log(embed({ src, title, route: re, page }));
+    return 0;
+  }
   const site = arg(argv, "--site");
   const allow = all(argv, "--allow");
   if (!site || allow.length === 0) {
