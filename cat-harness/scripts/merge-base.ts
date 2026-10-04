@@ -42,6 +42,7 @@ import { join } from "node:path";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { classify, resolveGeneratedRegions, type Classified } from "./merge-conflict-patterns.js";
 import { relate } from "./git-ancestry.js";
+import { REGEN_VERDICT_TAG, regenExitMeaning } from "./regen-after-merge.js";
 
 export interface Plan {
   resolvable: Classified[];
@@ -369,7 +370,24 @@ if (import.meta.main) {
   if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
-  if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
+  // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
+  // three distinct verdicts and this line used to assert "regen reported
+  // unrepaired checks" for all of them — false for exit 2 (which reports no
+  // unrepaired check at all, only that it could not settle), false for a
+  // `no-browser`-only exit 1 (which regen itself calls could-not-determine),
+  // and false for a crash (where nothing was measured). The ABORT is right in
+  // every case: none of them may push. Only the recorded reason was wrong, and
+  // the abort line is the one place the reason is written down — it is what
+  // the PR comment's signature is built from and what a person reads in the
+  // log. `regenExitMeaning` is the inverse of `exitCodeFor` and carries the
+  // evidence.
+  if (regen.status !== 0) {
+    const m = regenExitMeaning(regen.status);
+    abort(
+      `the gate set did not prove the resolution — ${REGEN_VERDICT_TAG} ${m.verdict}\n` +
+        `  ${m.why}`,
+    );
+  }
   git(root, "add", "-A");
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
