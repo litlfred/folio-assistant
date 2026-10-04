@@ -4,8 +4,10 @@ title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prov
 status: todo
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-18T17:24:16Z
-updated_at: 2026-09-30T21:47:18Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-vke6
 blocked_by:
     - folio-assistant-mer2
