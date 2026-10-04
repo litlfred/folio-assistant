@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mer2
 title: folio_init takes no layer argument, so the ruled MVP definition is not expressible
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T21:47:07Z
-updated_at: 2026-10-01T06:51:19Z
+updated_at: 2026-10-04T09:52:31Z
 parent: folio-assistant-vke6
 blocking:
     - folio-assistant-zmdo
@@ -159,3 +159,5 @@ primitive serves both, which was the reason to look for one.
        that resolve — rather than inferring success from exit 0.
 4. [ ] `x3bd`'s bootstrap-only test and `zmdo`'s per-layer MVP both run through
        it.
+
+_2026-10-04T09:52:31Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

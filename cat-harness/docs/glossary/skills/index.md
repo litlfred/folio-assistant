@@ -12,7 +12,7 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 222 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 223 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 319 terms and is 241 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -684,12 +684,12 @@ document-authoring <span class="fa-gloss-status">candidate, extracted</span>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md"><code>folio-assistant-core/skills/content/folio-document-adapter/document-authoring.md</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-skills--document-intake" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--document-intake" data-fa-state="extracted" data-fa-gloss="">
 document-intake <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/document-intake.md"><code>folio-assistant-core/skills/library/ingestion/document-intake.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/document-intake.md"><code>cat-harness/skills/library/library-core/document-intake.md</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-skills--document-publishing" data-fa-state="extracted" data-fa-gloss="">
 document-publishing <span class="fa-gloss-status">candidate, extracted</span>
