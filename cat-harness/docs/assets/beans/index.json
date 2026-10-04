@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 783,
+      "count": 785,
       "unit": "beans"
     }
   },
@@ -1987,14 +1987,14 @@
     {
       "id": "folio-assistant-65oe",
       "title": "library:viz is not reproducible across environments: refScan.filesRead embeds a count of the files on disk",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:40:27Z",
-      "updatedAt": "2026-10-03T15:40:47Z",
+      "updatedAt": "2026-10-04T06:08:20Z",
       "preview": "## The defect\n\n`cat-harness/docs/assets/library/index.json` ends with\n\n    \"refScan\": { \"filesRead\": 2663, \"unreadable\": [] }\n\n`filesRead` is a COUNT OF THE FILES THE SCAN READ ON DISK. It is therefore a\nproperty of the checkout, not of the library, and it is committed. Any two\nenvironments whose trees differ by even one scanned file disagree, so\n`library:viz:check` reports stale whenever the last",
       "file": "beans/defs/folio-assistant-65oe--libraryviz-is-not-reproducible-across-environments.md"
     },
@@ -9191,6 +9191,20 @@
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
     },
     {
+      "id": "folio-assistant-uoij",
+      "title": "kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T05:32:27Z",
+      "updatedAt": "2026-10-04T05:32:48Z",
+      "preview": "Owner chose this on 2026-10-04, as item 2 of three (\"1 2 3\") after #2032 went green.\n\n## The measurement that makes it a bean rather than an idea\n\nAdding the `docs-auto` kind on #2022, I ran **six hand-picked `check:*` commands** and\nthey all passed. `bun run gates` then found **5 failures across 217**, and `bun test`\nfound two more:\n\n| obligation | found by | generated? |\n|---|---|---|\n| `readme:",
+      "file": "beans/defs/folio-assistant-uoij--kindregister-one-command-performs-the-seven-artefa.md"
+    },
+    {
       "id": "folio-assistant-uoob",
       "title": "MERGE GATE (f): refuse an unfinished PR — no current ready marker, or a base branch whose PR already merged",
       "status": "in-progress",
@@ -10245,6 +10259,20 @@
       "file": "beans/defs/folio-assistant-xm31--om30-residual-masking-measured-five-gate-failures.md"
     },
     {
+      "id": "folio-assistant-xp5j",
+      "title": "gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:49:11Z",
+      "updatedAt": "2026-10-04T06:49:36Z",
+      "preview": "## How this surfaced\n\n`bun run check:ci-health` on `main`, 2026-10-04. The Pages half of that report\nexists precisely because a Pages build outcome is a fact GitHub holds *about*\nthis repository rather than one the repository holds, so it is asked fresh and\ncached nowhere. It said:\n\n    - ✓ 27 succeeded\n    - ❔ 72 cancelled — neither shipped nor broken\n    - ✗ 0 failed\n    The newest deployment to",
+      "file": "beans/defs/folio-assistant-xp5j--gh-pages-is-starved-staging-previews-and-the-publi.md"
+    },
+    {
       "id": "folio-assistant-xp72",
       "title": "SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget",
       "status": "todo",
@@ -10310,7 +10338,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-03T17:52:50Z",
+      "updatedAt": "2026-10-04T05:37:22Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -11110,8 +11138,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 303,
-    "openTotal": 467,
+    "orphanOpen": 304,
+    "openTotal": 468,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
