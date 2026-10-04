@@ -4,8 +4,10 @@ title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prov
 status: todo
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-18T17:24:16Z
-updated_at: 2026-09-30T21:47:18Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-vke6
 blocked_by:
     - folio-assistant-mer2
@@ -192,3 +194,16 @@ grow its own.
 content type is already in core, and the harness layer has no content type at
 all until something is decided about that. Recorded, not decided — which
 content type a bare harness should scaffold, if any, is a scope call.
+
+## RESTATED 2026-10-04 — the forks already exist; the proof runs in throwaway repos
+
+Owner, 2026-10-04 (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): *"https://github.com/litlfred/folio-assistant-core exists — why do we need agentic-harness? isnt that just cat-harness?"*
+
+Both points hold, checked against the store and GitHub that day:
+
+- **`agentic-harness` IS `cat-harness`.** It is the partition's pre-rename name (`4wzf`: agent-harness → cat-harness; `yx9p`: `REPOS` target reconciled to `cat-harness`). Likewise `folio-assist-core` is `folio-assistant-core`.
+- **The repositories already exist:** `litlfred/cat-harness` (last push 2026-09-29), `litlfred/cat-harness-tools`, `litlfred/folio-assistant-core` (2026-10-01), plus `bootstrap`, `bootstrap-tools`, `folio-assistant-sci`. They were created as plain repos, not forks, so the "fork to keep history" argument above no longer decides anything. **No repository is to be created by this bean.**
+
+**What remains is the falsifier.** Choice made from three options: run it in the existing throwaway repos **`litlfred/cat-harness-test`** and **`litlfred/folio-test`** — instance-init (bean `mer2`) against `cat-harness` alone, and against `folio-assistant-core` alone, then evaluate the four per-layer conditions in `tndo`. The real layer repositories are not touched by the proof. Rejected: temp directories only (never exercises a real clone); reading the layer repos first (deferred, not needed to run the proof).
+
+Still blocked on `mer2` (PR #2073) merging.
