@@ -31,6 +31,7 @@ import { spawnSync } from "node:child_process";
 
 import { readBeanStore } from "./bean-store-read.ts";
 import { classify } from "./merge-conflict-patterns.ts";
+import { readyMarkers, type GhComment } from "./merge-guard.ts";
 import {
   deriveFacts,
   loadPriorityTable,
@@ -162,7 +163,7 @@ async function main(): Promise<void> {
   }
 
   const open = gh(`repos/${REPO}/pulls?state=open&per_page=100`) as
-    | { number: number; draft: boolean; title: string; body: string | null; head: { sha: string }; labels: { name: string }[] }[]
+    | { number: number; draft: boolean; title: string; body: string | null; head: { sha: string }; base: { ref: string }; labels: { name: string }[] }[]
     | null;
   if (open === null) {
     console.error("merge:steward — COULD NOT ASK: the pulls endpoint did not answer. This is not an empty queue.");
@@ -183,6 +184,8 @@ async function main(): Promise<void> {
     conflictState.set(p.number, r);
     if (r === "refused" || r === "unknown") refusedSet.add(p.number);
     const { ownCi, missing } = ciFor(p.head.sha);
+    const comments = gh(`repos/${REPO}/issues/${p.number}/comments?per_page=100`) as GhComment[] | null;
+    const marker = readyMarkers(comments ?? []).at(-1);
     missingByPr.set(p.number, missing);
     prs.push({
       pr: p.number,
@@ -193,6 +196,16 @@ async function main(): Promise<void> {
       labels: p.labels.map((l) => l.name),
       ownCi,
       headShaMatchesCi: ownCi === "green",
+      // Readiness inputs for `Rule_NotReady` (bean `uoob`): the latest
+      // `ready:` comment and who signed it. `headSha` is deliberately NOT
+      // passed: `readinessOf` would call every marker followed by a
+      // merge-main bot merge `stale-marker`, and the bot merges main into
+      // nearly every open PR. `merge:guard` asks the full question, bot
+      // merges allowed, at the moment of merging.
+      draft: p.draft,
+      baseRef: p.base.ref,
+      readySha: marker?.sha,
+      readyBy: marker?.session,
     });
   }
 
