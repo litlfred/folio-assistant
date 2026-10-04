@@ -1388,7 +1388,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 10
+          "value": 11
         },
         {
           "id": "kinds",
@@ -1398,7 +1398,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 6
         }
       ],
       "visualisations": [
@@ -1439,7 +1439,8 @@
         },
         {
           "kind": "skills",
-          "note": "no viewer yet",
+          "path": "/cat-harness/auto-docs/index/skills/folio-assistant-sci-skills/",
+          "readOnly": false,
           "label": "Skills"
         },
         {
@@ -1464,6 +1465,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-sci/methodologies/"
+        },
+        {
+          "id": "skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/skills/"
         },
         {
           "id": "sci-adapters",
@@ -1531,7 +1540,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 3 graph(s) with no published viewer — attestations, code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -3922,7 +3931,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
+            "summary": "8: library, sci-methodologies, skills, sci-adapters, sci-sources, sci-processes, qa, attesta…"
           },
           {
             "key": "needs",
