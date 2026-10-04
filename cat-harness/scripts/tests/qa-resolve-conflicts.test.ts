@@ -434,3 +434,17 @@ describe("a modify/delete sidecar takes the base's side, never a side that is no
     expect(o!.reason).toContain("agent");
   });
 });
+
+describe("an unmerged sidecar under a directory the branch ignores (#1801)", () => {
+  test("takeProvisionalSide stages it; a plain `git add` would refuse", () => {
+    const p = "results/kg-qa/a.kg-qa.json";
+    const files = [{ path: p, ours: sidecar("warn", false), theirs: sidecar("fail", false) }];
+    // Ignore the directory in the working tree, with the file still tracked.
+    const [crash, dir] = [conflicted(files), conflicted(files)];
+    for (const d of [crash, dir]) writeFileSync(join(d, ".gitignore"), "results/\n");
+    expect(() => execFileSync("git", ["add", "--", p], { cwd: crash, stdio: "pipe" })).toThrow();
+    expect(unmergedPaths(dir)).toEqual([p]);
+    takeProvisionalSide(dir, p);
+    expect(unmergedPaths(dir)).toEqual([]);
+  });
+});
