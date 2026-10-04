@@ -1,88 +1,13 @@
 ---
 title: "WHO SMART Trust — artefact index"
-description: "All 674 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output."
+description: "All 678 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output."
 has_children: true
 renders:
   - smart-trust/fhir-artifact-index
 rendered-by: ig-pages
 ---
-<style>
-.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
-  font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.st-held{color:#0d6e5e}
-.st-ref{color:#6b5b95}
-.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
-.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
-.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
-.st-stat span{font-size:.75rem;opacity:.75}
-
-.st-ig {
-  --breadcrumb-bg-color: #f5f5f5;
-  --breadcrumb-text-color: ##555555; /* shape conflict — see chrome.json */
-  --btn-active-color: #0078d4;
-  --btn-gradient-end-color: #357ebd;
-  --btn-gradient-end-color-alpha: #ff357ebd;
-  --btn-gradient-start-color: #428bca;
-  --btn-gradient-start-color-alpha: #ff428bca;
-  --btn-hover-color: #0070A1;
-  --btn-text-color: #e6e6e6;
-  --display-todo: none;
-  --dragon-background-color: #fffbf7;
-  --dragon-text-color: #101020;
-  --footer-bg-color: #505050;
-  --footer-container-bg-color: #00477d;
-  --footer-highlight-text-color: #ffff77;
-  --footer-hyperlink-text-color: #81BEF7;
-  --footer-nav-bg-color: #f5f5f5;
-  --footer-text-color: #ffffff;
-  --ig-header-color: #f6f7f9;
-  --ig-header-container-color: #ffffff;
-  --ig-status-text-color: #00376d;
-  --link-color: #428bca;
-  --link-hover-color: #2a6496;
-  --may-color: #00004d;
-  --must-color: #4d0000;
-  --navbar-bg-color: #00477d;
-  --publish-box-bg-color: yellow;
-  --publish-box-border: 1px solid #0A0008;
-  --should-color: #4d4000;
-  --showtodo: "off";
-  --stripe-bg-color: #999999;
-  --stu-note-background-color: #fff2ff;
-  --stu-note-border-left-color: #ffa0ff;
-  --toc-box-bg-color: #f6f7f9;
-  --toc-box-border: navy; /* shape conflict — see chrome.json */
-}
-
-.st-ig #ig-status.ig-status-draft {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 50) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>DRAFT</text></svg>");
-  background-size: calc(50% / 5) 100px;
-  background-repeat: repeat-x;
-}
-
-.st-ig #ig-status.ig-status-retired {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 60) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>RETIRED</text></svg>");
-  background-size: calc(50% / 5) 100px;
-  background-repeat: repeat-x;
-}
-
-.st-ig #ig-status p {
-  background-color: white;
-  padding: 10px 17px;
-  border-radius: 5px;
-  position: relative;
-  z-index: 2;
-}
-
-.st-ig #publish-box {
-  background-color: var(--publish-box-bg-color);
-  border: var(--publish-box-border);
-  padding: 5px;
-}
-.st-ig .st-ig-bar{background:var(--navbar-bg-color);padding:.5rem .8rem;border-radius:4px 4px 0 0}
-.st-ig .st-ig-bar a{color:#fff;font-weight:600;text-decoration:none}
-.st-ig .st-ig-title{font-size:12pt;font-weight:bold;color:var(--ig-status-text-color)}
-</style>
+<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -94,12 +19,12 @@ rendered-by: ig-pages
 
 The artefact index of the WHO SMART Trust Implementation Guide, rebuilt from what the IG
 publishes. Most of it is catalogued **by reference**: the index records where each artefact
-lives and holds none of its bytes. A <span class="st-tag st-ref">referenced</span> row
+lives and holds none of its bytes. An artefact page marked <span class="st-tag st-ref">referenced</span>
 is not a broken one — it means upstream, not here.
 
 <div class="st-grid">
-<div class="st-stat"><b>674</b><span>artefacts indexed</span></div>
-<div class="st-stat"><b>655</b><span>referenced — bytes upstream</span></div>
+<div class="st-stat"><b>678</b><span>artefacts indexed</span></div>
+<div class="st-stat"><b>659</b><span>referenced — bytes upstream</span></div>
 <div class="st-stat"><b>19</b><span>materialized here</span></div>
 <div class="st-stat"><b>1.8.0</b><span>IG version</span></div>
 <div class="st-stat"><b>5.0.0</b><span>FHIR version</span></div>
@@ -119,12 +44,12 @@ enumeration response, carrying an `example` that happens to hold the list. So th
 | packageIndex | `package.tgz!package/.index.json` |
 | artifactsHtml | `artifacts.html` |
 | sidecarEnumerations | `LogicalModels.schema.json, ValueSets.schema.json` |
-| source | `gh-pages` — `https://worldhealthorganization.github.io/smart-trust` (read 2026-09-21) |
+| source | `gh-pages` — `https://litlfred.github.io/smart-trust` (read 2026-10-01) |
 | canonical base | `http://smart.who.int/trust` |
 
 ## DAK API surface
 
-The IG publishes a DAK API for 19 of its artefacts. The four sidecars are issued
+The IG publishes its DAK API for 19 of its artefacts. The four sidecars are issued
 independently — every ValueSet gets all four, the logical models get two — which is why they
 are counted separately rather than as one "has DAK API" tally.
 
@@ -135,141 +60,147 @@ are counted separately rather than as one "has DAK API" tally.
 <div class="st-stat"><b>14</b><span>JSON-LD</span></div>
 </div>
 
+The IG's own [DAK API hub](dak-api.html) lists them as the Publisher's `dak-api.html` does.
+
 ## Every artefact, by category
 
-Grouped as the IG's own `artifacts.html` groups them. An artefact with a DAK API sidecar links
-through to its own page; the rest link out to the published representations.
+Grouped and ordered as the IG's own `artifacts.html` groups them, with each artefact's name and
+description. Its canonical URL, published representations and whether it is held here are on
+its own page.
 
-<details markdown="1">
-<summary><strong>Other</strong> — 604</summary>
-
-604 artefacts — too many to list here without the index becoming
-unreadable. Every one has its own page: **[browse all 604](./category/Other.html)**.
-
-</details>
-
-<details markdown="1">
+<details markdown="1" id="cat-Requirements__Actor_Definitions">
 <summary><strong>Requirements: Actor Definitions</strong> — 5</summary>
 
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [Holder](./artifact/ActorDefinition-Holder.html)<br>`ActorDefinition/Holder` | `http://smart.who.int/trust/ActorDefinition/Holder` | <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Holder.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Holder.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Holder.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Holder.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Issuer](./artifact/ActorDefinition-Issuer.html)<br>`ActorDefinition/Issuer` | `http://smart.who.int/trust/ActorDefinition/Issuer` | <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Issuer.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Issuer.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Issuer.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Issuer.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receiver](./artifact/ActorDefinition-Receiver.html)<br>`ActorDefinition/Receiver` | `http://smart.who.int/trust/ActorDefinition/Receiver` | <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Receiver.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Receiver.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Receiver.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-Receiver.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Trust Network Anchor](./artifact/ActorDefinition-TrustNetworkAnchor.html)<br>`ActorDefinition/TrustNetworkAnchor` | `http://smart.who.int/trust/ActorDefinition/TrustNetworkAnchor` | <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkAnchor.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkAnchor.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkAnchor.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkAnchor.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Trust Network Participant](./artifact/ActorDefinition-TrustNetworkParticipant.html)<br>`ActorDefinition/TrustNetworkParticipant` | `http://smart.who.int/trust/ActorDefinition/TrustNetworkParticipant` | <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.html">html</a> | <span class="st-tag st-ref">referenced</span> |
+| Artefact | Description |
+|---|---|
+| [Holder](./artifact/ActorDefinition-Holder.html)<br>`ActorDefinition/Holder` | A Holder is an individual that has Verifiable Digtial Health Certificate in their possesion, received from an Issuer. The Holder may choose to share the Verifiable Digital Health Certificate with a Receiver. |
+| [Issuer](./artifact/ActorDefinition-Issuer.html)<br>`ActorDefinition/Issuer` | An Issuer a system authorized by a Trust Network Participant to generate Verifiable Digital Health Certificates which are provided to a Holder. An Issuer is responsible for generating the content that is digitally signed within the Verifiable Digital Health Certificate. In order to sign this content, an Issuer should either itself be a Document Signer or utilize a Document Signer service, as authorized by the jurisdicitonal policy. |
+| [Receiver](./artifact/ActorDefinition-Receiver.html)<br>`ActorDefinition/Receiver` | A Reciever is a system authorized by a Trust Network Participant to receive from a Holder a Veritifable, verify and utilize the content within. |
+| [Trust Network Anchor](./artifact/ActorDefinition-TrustNetworkAnchor.html)<br>`ActorDefinition/TrustNetworkAnchor` | Trust Anchor which receives and distributes PKI-material within a Trust Network |
+| [Trust Network Participant](./artifact/ActorDefinition-TrustNetworkParticipant.html)<br>`ActorDefinition/TrustNetworkParticipant` | Trust Network Participant which publishes and or receives PKI-material within a Trust Network |
 
 </details>
 
-<details markdown="1">
+<details markdown="1" id="cat-Requirements__Formal_Requirements">
 <summary><strong>Requirements: Formal Requirements</strong> — 29</summary>
 
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [Distribute business rules](./artifact/Requirements-DistributeBusinessRules.html)<br>`Requirements/DistributeBusinessRules` | `http://smart.who.int/trust/Requirements/DistributeBusinessRules` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRules.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRules.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRules.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRules.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Distribute CertLogic business rules](./artifact/Requirements-DistributeBusinessRulesCertLogic.html)<br>`Requirements/DistributeBusinessRulesCertLogic` | `http://smart.who.int/trust/Requirements/DistributeBusinessRulesCertLogic` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesCertLogic.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesCertLogic.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesCertLogic.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesCertLogic.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Distribute FHIR business rules](./artifact/Requirements-DistributeBusinessRulesFHIR.html)<br>`Requirements/DistributeBusinessRulesFHIR` | `http://smart.who.int/trust/Requirements/DistributeBusinessRulesFHIR` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesFHIR.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesFHIR.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesFHIR.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributeBusinessRulesFHIR.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Distribute PKI material](./artifact/Requirements-DistributePKIMaterial.html)<br>`Requirements/DistributePKIMaterial` | `http://smart.who.int/trust/Requirements/DistributePKIMaterial` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterial.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterial.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterial.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterial.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Distribute PKI material via API](./artifact/Requirements-DistributePKIMaterialAPI.html)<br>`Requirements/DistributePKIMaterialAPI` | `http://smart.who.int/trust/Requirements/DistributePKIMaterialAPI` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialAPI.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialAPI.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialAPI.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialAPI.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Distribute PKI material as DID](./artifact/Requirements-DistributePKIMaterialDID.html)<br>`Requirements/DistributePKIMaterialDID` | `http://smart.who.int/trust/Requirements/DistributePKIMaterialDID` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialDID.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialDID.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialDID.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-DistributePKIMaterialDID.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Issue Verifiable Digital Health Certificate](./artifact/Requirements-IssuerVDHC.html)<br>`Requirements/IssuerVDHC` | `http://smart.who.int/trust/Requirements/IssuerVDHC` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-IssuerVDHC.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-IssuerVDHC.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-IssuerVDHC.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-IssuerVDHC.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Provide Verifiable Digital Health Certificate](./artifact/Requirements-ProvideVDHC.html)<br>`Requirements/ProvideVDHC` | `http://smart.who.int/trust/Requirements/ProvideVDHC` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Publish business rules](./artifact/Requirements-PublishBusinessRules.html)<br>`Requirements/PublishBusinessRules` | `http://smart.who.int/trust/Requirements/PublishBusinessRules` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRules.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRules.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRules.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRules.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Publish Cert Logic business rules](./artifact/Requirements-PublishBusinessRulesCertLogic.html)<br>`Requirements/PublishBusinessRulesCertLogic` | `http://smart.who.int/trust/Requirements/PublishBusinessRulesCertLogic` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesCertLogic.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesCertLogic.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesCertLogic.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesCertLogic.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Publish HL7 FHIR business rules](./artifact/Requirements-PublishBusinessRulesFHIR.html)<br>`Requirements/PublishBusinessRulesFHIR` | `http://smart.who.int/trust/Requirements/PublishBusinessRulesFHIR` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesFHIR.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesFHIR.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesFHIR.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishBusinessRulesFHIR.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Publish PKI material](./artifact/Requirements-PublishPKIMaterial.html)<br>`Requirements/PublishPKIMaterial` | `http://smart.who.int/trust/Requirements/PublishPKIMaterial` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterial.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterial.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterial.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterial.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Publish PKI material via API](./artifact/Requirements-PublishPKIMaterialAPI.html)<br>`Requirements/PublishPKIMaterialAPI` | `http://smart.who.int/trust/Requirements/PublishPKIMaterialAPI` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialAPI.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialAPI.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialAPI.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialAPI.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Publish PKI material as DID](./artifact/Requirements-PublishPKIMaterialDID.html)<br>`Requirements/PublishPKIMaterialDID` | `http://smart.who.int/trust/Requirements/PublishPKIMaterialDID` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialDID.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialDID.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialDID.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-PublishPKIMaterialDID.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive business rules](./artifact/Requirements-ReceiveBusinessRules.html)<br>`Requirements/ReceiveBusinessRules` | `http://smart.who.int/trust/Requirements/ReceiveBusinessRules` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRules.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRules.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRules.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRules.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive CertLogic business rules](./artifact/Requirements-ReceiveBusinessRulesCertLogic.html)<br>`Requirements/ReceiveBusinessRulesCertLogic` | `http://smart.who.int/trust/Requirements/ReceiveBusinessRulesCertLogic` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesCertLogic.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesCertLogic.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesCertLogic.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesCertLogic.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive HL7 FHIR business rules](./artifact/Requirements-ReceiveBusinessRulesFHIR.html)<br>`Requirements/ReceiveBusinessRulesFHIR` | `http://smart.who.int/trust/Requirements/ReceiveBusinessRulesFHIR` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesFHIR.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesFHIR.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesFHIR.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveBusinessRulesFHIR.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive PKI material](./artifact/Requirements-ReceivePKUMaterial.html)<br>`Requirements/ReceivePKUMaterial` | `http://smart.who.int/trust/Requirements/ReceivePKUMaterial` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterial.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterial.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterial.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterial.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive PKI material via API](./artifact/Requirements-ReceivePKUMaterialAPI.html)<br>`Requirements/ReceivePKUMaterialAPI` | `http://smart.who.int/trust/Requirements/ReceivePKUMaterialAPI` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialAPI.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialAPI.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialAPI.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialAPI.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive PKI material as DID](./artifact/Requirements-ReceivePKUMaterialDID.html)<br>`Requirements/ReceivePKUMaterialDID` | `http://smart.who.int/trust/Requirements/ReceivePKUMaterialDID` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialDID.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialDID.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialDID.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceivePKUMaterialDID.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Receive Verifiable Digital Health Certificate](./artifact/Requirements-ReceiveVDHC.html)<br>`Requirements/ReceiveVDHC` | `http://smart.who.int/trust/Requirements/ReceiveVDHC` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveVDHC.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveVDHC.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveVDHC.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ReceiveVDHC.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Request Verifiable Digital Health Certificate](./artifact/Requirements-RequestVDHC.html)<br>`Requirements/RequestVDHC` | `http://smart.who.int/trust/Requirements/RequestVDHC` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RequestVDHC.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RequestVDHC.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RequestVDHC.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RequestVDHC.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Retrieve business rules](./artifact/Requirements-RetrieveBusinessRules.html)<br>`Requirements/RetrieveBusinessRules` | `http://smart.who.int/trust/Requirements/RetrieveBusinessRules` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRules.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRules.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRules.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRules.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Retrieve Cert Logic compatible business rules](./artifact/Requirements-RetrieveBusinessRulesCertLogic.html)<br>`Requirements/RetrieveBusinessRulesCertLogic` | `http://smart.who.int/trust/Requirements/RetrieveBusinessRulesCertLogic` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesCertLogic.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesCertLogic.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesCertLogic.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesCertLogic.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Retrieve HL7 FHIR compatible business rules](./artifact/Requirements-RetrieveBusinessRulesFHIR.html)<br>`Requirements/RetrieveBusinessRulesFHIR` | `http://smart.who.int/trust/Requirements/RetrieveBusinessRulesFHIR` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesFHIR.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesFHIR.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesFHIR.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrieveBusinessRulesFHIR.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Retrieve PKI material](./artifact/Requirements-RetrievePKIMaterial.html)<br>`Requirements/RetrievePKIMaterial` | `http://smart.who.int/trust/Requirements/RetrievePKIMaterial` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterial.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterial.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterial.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterial.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Retrieve PKI material via API](./artifact/Requirements-RetrievePKIMaterialAPI.html)<br>`Requirements/RetrievePKIMaterialAPI` | `http://smart.who.int/trust/Requirements/RetrievePKIMaterialAPI` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialAPI.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialAPI.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialAPI.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialAPI.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Retrieve PKI material as DID](./artifact/Requirements-RetrievePKIMaterialDID.html)<br>`Requirements/RetrievePKIMaterialDID` | `http://smart.who.int/trust/Requirements/RetrievePKIMaterialDID` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialDID.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialDID.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialDID.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-RetrievePKIMaterialDID.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [Utilize a Verifiable Digital Health Certificate](./artifact/Requirements-UtilizeVDHC.html)<br>`Requirements/UtilizeVDHC` | `http://smart.who.int/trust/Requirements/UtilizeVDHC` | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-UtilizeVDHC.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-UtilizeVDHC.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-UtilizeVDHC.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-UtilizeVDHC.html">html</a> | <span class="st-tag st-ref">referenced</span> |
+| Artefact | Description |
+|---|---|
+| [Distribute CertLogic business rules](./artifact/Requirements-DistributeBusinessRulesCertLogic.html)<br>`Requirements/DistributeBusinessRulesCertLogic` | Make received CertLoigc business rules available through a distrubution point to a Receiver |
+| [Distribute FHIR business rules](./artifact/Requirements-DistributeBusinessRulesFHIR.html)<br>`Requirements/DistributeBusinessRulesFHIR` | Make received business rules available through a distrubution point to a Receiver through HL7 FHIR standards |
+| [Distribute PKI material](./artifact/Requirements-DistributePKIMaterial.html)<br>`Requirements/DistributePKIMaterial` | Make received trust material available through a distrubution point to a Trust Network Participant |
+| [Distribute PKI material as DID](./artifact/Requirements-DistributePKIMaterialDID.html)<br>`Requirements/DistributePKIMaterialDID` | Make received trust material available through a distrubution point to a Trust Network Participant as DID |
+| [Distribute PKI material via API](./artifact/Requirements-DistributePKIMaterialAPI.html)<br>`Requirements/DistributePKIMaterialAPI` | Make received trust material available through a distrubution point to a Trust Network Participant via API |
+| [Distribute business rules](./artifact/Requirements-DistributeBusinessRules.html)<br>`Requirements/DistributeBusinessRules` | Make received business rules available through a distrubution point to a Receiver |
+| [Issue Verifiable Digital Health Certificate](./artifact/Requirements-IssuerVDHC.html)<br>`Requirements/IssuerVDHC` | Issue a Verifiable Digital Health Certificate to a Holder |
+| [Provide Verifiable Digital Health Certificate](./artifact/Requirements-ProvideVDHC.html)<br>`Requirements/ProvideVDHC` | Provide a Verifiable Digital Health Certificate to a Receiver |
+| [Publish Cert Logic business rules](./artifact/Requirements-PublishBusinessRulesCertLogic.html)<br>`Requirements/PublishBusinessRulesCertLogic` | Publish Cert Logic business rules to a Trust Anchor |
+| [Publish HL7 FHIR business rules](./artifact/Requirements-PublishBusinessRulesFHIR.html)<br>`Requirements/PublishBusinessRulesFHIR` | Publish business rules to a Trust Anchor using HL7 FHIR |
+| [Publish PKI material](./artifact/Requirements-PublishPKIMaterial.html)<br>`Requirements/PublishPKIMaterial` | Publish trust material to a Trust Anchor |
+| [Publish PKI material as DID](./artifact/Requirements-PublishPKIMaterialDID.html)<br>`Requirements/PublishPKIMaterialDID` | Publish trust material to a Trust Anchor as DID |
+| [Publish PKI material via API](./artifact/Requirements-PublishPKIMaterialAPI.html)<br>`Requirements/PublishPKIMaterialAPI` | Publish trust material to a Trust Anchor via API |
+| [Publish business rules](./artifact/Requirements-PublishBusinessRules.html)<br>`Requirements/PublishBusinessRules` | Publish business rules to a Trust Anchor |
+| [Receive CertLogic business rules](./artifact/Requirements-ReceiveBusinessRulesCertLogic.html)<br>`Requirements/ReceiveBusinessRulesCertLogic` | Receive CertLogic business rules from a Trust Network Participant, for distribution within the Trust Network |
+| [Receive HL7 FHIR business rules](./artifact/Requirements-ReceiveBusinessRulesFHIR.html)<br>`Requirements/ReceiveBusinessRulesFHIR` | Receive business rules from a Trust Network Participant, for distribution within the Trust Network using HL7 FHIR standard |
+| [Receive PKI material](./artifact/Requirements-ReceivePKUMaterial.html)<br>`Requirements/ReceivePKUMaterial` | Receive trust material from a Trust Network Participant, for distribution within the Trust Network |
+| [Receive PKI material as DID](./artifact/Requirements-ReceivePKUMaterialDID.html)<br>`Requirements/ReceivePKUMaterialDID` | Receive trust material from a Trust Network Participant, for distribution within the Trust Network as DID |
+| [Receive PKI material via API](./artifact/Requirements-ReceivePKUMaterialAPI.html)<br>`Requirements/ReceivePKUMaterialAPI` | Receive trust material from a Trust Network Participant, for distribution within the Trust Network via API |
+| [Receive Verifiable Digital Health Certificate](./artifact/Requirements-ReceiveVDHC.html)<br>`Requirements/ReceiveVDHC` | Receive a Verifiable Digital Health Certificate from an Issuer |
+| [Receive business rules](./artifact/Requirements-ReceiveBusinessRules.html)<br>`Requirements/ReceiveBusinessRules` | Receive business rules from a Trust Network Participant, for distribution within the Trust Network |
+| [Request Verifiable Digital Health Certificate](./artifact/Requirements-RequestVDHC.html)<br>`Requirements/RequestVDHC` | Request a Verifiable Digital Health Certificate from an Issuer |
+| [Retrieve Cert Logic compatible business rules](./artifact/Requirements-RetrieveBusinessRulesCertLogic.html)<br>`Requirements/RetrieveBusinessRulesCertLogic` | Retrieve Cert Logic business rules from a distribution point |
+| [Retrieve HL7 FHIR compatible business rules](./artifact/Requirements-RetrieveBusinessRulesFHIR.html)<br>`Requirements/RetrieveBusinessRulesFHIR` | Retrieve business rules from a distribution point using HL7 FHIR standards |
+| [Retrieve PKI material](./artifact/Requirements-RetrievePKIMaterial.html)<br>`Requirements/RetrievePKIMaterial` | Retrieve PKI material from a distribution point |
+| [Retrieve PKI material as DID](./artifact/Requirements-RetrievePKIMaterialDID.html)<br>`Requirements/RetrievePKIMaterialDID` | Retrieve PKI material from a distribution point as DID |
+| [Retrieve PKI material via API](./artifact/Requirements-RetrievePKIMaterialAPI.html)<br>`Requirements/RetrievePKIMaterialAPI` | Retrieve PKI material from a distribution point via API |
+| [Retrieve business rules](./artifact/Requirements-RetrieveBusinessRules.html)<br>`Requirements/RetrieveBusinessRules` | Retrieve business rules from a distribution point using |
+| [Utilize a Verifiable Digital Health Certificate](./artifact/Requirements-UtilizeVDHC.html)<br>`Requirements/UtilizeVDHC` | Utilize a Verifiable Digital Health Certificate that was provided by a Holder |
 
 </details>
 
-<details markdown="1">
+<details markdown="1" id="cat-Structures__Logical_Models">
 <summary><strong>Structures: Logical Models</strong> — 5</summary>
 
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [COSE Headers (DRAFT)](./artifact/StructureDefinition-COSEHeader.html)<br>`StructureDefinition/COSEHeader` | `http://smart.who.int/trust/StructureDefinition/COSEHeader` | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [CBOR Web Token (CWT) Claim](./artifact/StructureDefinition-CWT.html)<br>`StructureDefinition/CWT` | `http://smart.who.int/trust/StructureDefinition/CWT` | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWT.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [CBOR Web Token (CWT) Payload (Common)](./artifact/StructureDefinition-CWTPayload.html)<br>`StructureDefinition/CWTPayload` | `http://smart.who.int/trust/StructureDefinition/CWTPayload` | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [Health Certificate](./artifact/StructureDefinition-HCert.html)<br>`StructureDefinition/HCert` | `http://smart.who.int/trust/StructureDefinition/HCert` | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-HCert.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [Scheme Information](./artifact/StructureDefinition-SchemeInformation.html)<br>`StructureDefinition/SchemeInformation` | `http://smart.who.int/trust/StructureDefinition/SchemeInformation` | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-SchemeInformation.html">html</a> | <span class="st-tag st-held">materialized</span> |
+| Artefact | Description |
+|---|---|
+| [CBOR Web Token (CWT) Claim](./artifact/StructureDefinition-CWT.html)<br>`StructureDefinition/CWT` | Logical Model for Data elements in CBOR Web Token (CWT) https://www.iana.org/assignments/cwt/cwt.xhtml |
+| [CBOR Web Token (CWT) Payload (Common)](./artifact/StructureDefinition-CWTPayload.html)<br>`StructureDefinition/CWTPayload` | Logical Model for CBOR Web Token (CWT) Payload Logical Modelin CWT Payload https://www.iana.org/assignments/cwt/cwt.xhtml |
+| [COSE Headers (DRAFT)](./artifact/StructureDefinition-COSEHeader.html)<br>`StructureDefinition/COSEHeader` | Data elements for COSE Headers https://www.iana.org/assignments/cose/cose.xhtml#header-parameters |
+| [Health Certificate](./artifact/StructureDefinition-HCert.html)<br>`StructureDefinition/HCert` | Logical Model for the HCERT |
+| [Scheme Information](./artifact/StructureDefinition-SchemeInformation.html)<br>`StructureDefinition/SchemeInformation` | Logical Model for Information on the trusted list and its issuing scheme |
 
 </details>
 
-<details markdown="1">
-<summary><strong>Terminology: Code Systems</strong> — 15</summary>
-
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [WHO GDHCN Trust Actors CodeSystem](./artifact/CodeSystem-Actors.html)<br>`CodeSystem/Actors` | `http://smart.who.int/trust/CodeSystem/Actors` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Actors.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Actors.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Actors.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Actors.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Connection Types](./artifact/CodeSystem-ConnectionTypes.html)<br>`CodeSystem/ConnectionTypes` | `http://smart.who.int/trust/CodeSystem/ConnectionTypes` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-ConnectionTypes.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-ConnectionTypes.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-ConnectionTypes.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-ConnectionTypes.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Trust Domains](./artifact/CodeSystem-Domains.html)<br>`CodeSystem/Domains` | `http://smart.who.int/trust/CodeSystem/Domains` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Trust Domains - DEV](./artifact/CodeSystem-Domains-DEV.html)<br>`CodeSystem/Domains-DEV` | `http://smart.who.int/trust/CodeSystem/Domains-DEV` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-DEV.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Trust Domains - UAT](./artifact/CodeSystem-Domains-UAT.html)<br>`CodeSystem/Domains-UAT` | `http://smart.who.int/trust/CodeSystem/Domains-UAT` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Domains-UAT.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Key Usage CodeSystem](./artifact/CodeSystem-KeyUsage.html)<br>`CodeSystem/KeyUsage` | `http://smart.who.int/trust/CodeSystem/KeyUsage` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Key Usage CodeSystem - DEV](./artifact/CodeSystem-KeyUsage-DEV.html)<br>`CodeSystem/KeyUsage-DEV` | `http://smart.who.int/trust/CodeSystem/KeyUsage-DEV` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-DEV.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Key Usage CodeSystem - UAT](./artifact/CodeSystem-KeyUsage-UAT.html)<br>`CodeSystem/KeyUsage-UAT` | `http://smart.who.int/trust/CodeSystem/KeyUsage-UAT` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Trust Network Participants CodeSystem](./artifact/CodeSystem-Participants.html)<br>`CodeSystem/Participants` | `http://smart.who.int/trust/CodeSystem/Participants` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Trust Network Participant - DEV](./artifact/CodeSystem-Participants-DEV.html)<br>`CodeSystem/Participants-DEV` | `http://smart.who.int/trust/CodeSystems/Participants-DEV` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-DEV.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Trust Network Participant - UAT](./artifact/CodeSystem-Participants-UAT.html)<br>`CodeSystem/Participants-UAT` | `http://smart.who.int/trust/CodeSystems/Participants-UAT` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Participants-UAT.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Payload Types](./artifact/CodeSystem-PayloadTypes.html)<br>`CodeSystem/PayloadTypes` | `http://smart.who.int/trust/CodeSystem/PayloadTypes` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-PayloadTypes.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-PayloadTypes.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-PayloadTypes.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-PayloadTypes.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO RefMart Jurisidiction List](./artifact/CodeSystem-RefMartCountryList.html)<br>`CodeSystem/RefMartCountryList` | `http://smart.who.int/refmart/CodeSystems/REF_COUNTRY` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-RefMartCountryList.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-RefMartCountryList.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-RefMartCountryList.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-RefMartCountryList.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO GDHCN Transactions CodeSystem](./artifact/CodeSystem-Transactions.html)<br>`CodeSystem/Transactions` | `http://smart.who.int/trust/CodeSystem/Transactions` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Transactions.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Transactions.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Transactions.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-Transactions.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-| [WHO Regional Offices CodeSystem](./artifact/CodeSystem-WHORegionalOffices.html)<br>`CodeSystem/WHORegionalOffices` | `http://smart.who.int/trust/CodeSystem/WHORegionalOffices` | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-WHORegionalOffices.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-WHORegionalOffices.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-WHORegionalOffices.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-WHORegionalOffices.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-
-</details>
-
-<details markdown="1">
-<summary><strong>Terminology: Concept Maps</strong> — 1</summary>
-
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [GDHCN Participants to WHO Regional Offices](./artifact/ConceptMap-ParticipantsToWHORegionalOffices.html)<br>`ConceptMap/ParticipantsToWHORegionalOffices` | `http://smart.who.int/trust/ConceptMap/ParticipantsToWHORegionalOffices` | <a href="https://worldhealthorganization.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.html">html</a> | <span class="st-tag st-ref">referenced</span> |
-
-</details>
-
-<details markdown="1">
+<details markdown="1" id="cat-Terminology__Value_Sets">
 <summary><strong>Terminology: Value Sets</strong> — 14</summary>
 
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [WHO GDHCN Actor ValueSet of actor codes](./artifact/ValueSet-Actors.html)<br>`ValueSet/Actors` | `http://smart.who.int/trust/ValueSet/Actors` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Actors.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Actors.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Actors.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Actors.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Connection Types](./artifact/ValueSet-ConnectionTypes.html)<br>`ValueSet/ConnectionTypes` | `http://smart.who.int/trust/ValueSet/ConnectionTypes` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-ConnectionTypes.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-ConnectionTypes.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-ConnectionTypes.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-ConnectionTypes.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Trust Domains](./artifact/ValueSet-Domains.html)<br>`ValueSet/Domains` | `http://smart.who.int/trust/ValueSet/Domains` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Trust Domains - DEV](./artifact/ValueSet-Domains-DEV.html)<br>`ValueSet/Domains-DEV` | `http://smart.who.int/trust/ValueSet/Domains-DEV` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Trust Domains - UAT](./artifact/ValueSet-Domains-UAT.html)<br>`ValueSet/Domains-UAT` | `http://smart.who.int/trust/ValueSet/Domains-UAT` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-UAT.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Key Usage ValueSet](./artifact/ValueSet-KeyUsage.html)<br>`ValueSet/KeyUsage` | `http://smart.who.int/trust/ValueSet/KeyUsage` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Key Usage ValueSet - DEV](./artifact/ValueSet-KeyUsage-DEV.html)<br>`ValueSet/KeyUsage-DEV` | `http://smart.who.int/trust/ValueSet/KeyUsage-DEV` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-DEV.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Key Usage ValueSet - UAT](./artifact/ValueSet-KeyUsage-UAT.html)<br>`ValueSet/KeyUsage-UAT` | `http://smart.who.int/trust/ValueSet/KeyUsage-UAT` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-KeyUsage-UAT.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Trust Network Participant](./artifact/ValueSet-Participants.html)<br>`ValueSet/Participants` | `http://smart.who.int/trust/ValueSet/Participants` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Trust Network Participant - DEV](./artifact/ValueSet-Participants-DEV.html)<br>`ValueSet/Participants-DEV` | `http://smart.who.int/trust/ValueSet/Participants-DEV` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-DEV.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Trust Network Participant - UAT](./artifact/ValueSet-Participants-UAT.html)<br>`ValueSet/Participants-UAT` | `http://smart.who.int/trust/ValueSet/Participants-UAT` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Participants-UAT.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Payload Types](./artifact/ValueSet-PayloadTypes.html)<br>`ValueSet/PayloadTypes` | `http://smart.who.int/trust/ValueSet/PayloadTypes` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-PayloadTypes.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO GDHCN Transaction Codes](./artifact/ValueSet-Transactions.html)<br>`ValueSet/Transactions` | `http://smart.who.int/trust/ValueSet/Transactions` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Transactions.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Transactions.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Transactions.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Transactions.html">html</a> | <span class="st-tag st-held">materialized</span> |
-| [WHO Regional Offices](./artifact/ValueSet-WHORegionalOffices.html)<br>`ValueSet/WHORegionalOffices` | `http://smart.who.int/trust/ValueSet/WHORegionalOffices` | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.html">html</a> | <span class="st-tag st-held">materialized</span> |
+| Artefact | Description |
+|---|---|
+| [WHO GDHCN Key Usage ValueSet](./artifact/ValueSet-KeyUsage.html)<br>`ValueSet/KeyUsage` | ValueSet of codes for key usage codes for Production environment |
+| [WHO GDHCN Key Usage ValueSet - DEV](./artifact/ValueSet-KeyUsage-DEV.html)<br>`ValueSet/KeyUsage-DEV` | ValueSet of codes for key usage codes for Development environment |
+| [WHO GDHCN Key Usage ValueSet - UAT](./artifact/ValueSet-KeyUsage-UAT.html)<br>`ValueSet/KeyUsage-UAT` | ValueSet of codes for key usage codes for User Acceptance Testing environment |
+| [WHO GDHCN Actor ValueSet of actor codes](./artifact/ValueSet-Actors.html)<br>`ValueSet/Actors` | ValueSet of codes for actor codes |
+| [WHO GDHCN Connection Types](./artifact/ValueSet-ConnectionTypes.html)<br>`ValueSet/ConnectionTypes` | ValueSet of GDHCN Trust Network Connection Types |
+| [WHO GDHCN Payload Types](./artifact/ValueSet-PayloadTypes.html)<br>`ValueSet/PayloadTypes` | ValueSet of GDHCN Trust Network Payload Types |
+| [WHO GDHCN Transaction Codes](./artifact/ValueSet-Transactions.html)<br>`ValueSet/Transactions` | ValueSet of WHO GDHCN Transaction Codes |
+| [WHO GDHCN Trust Domains](./artifact/ValueSet-Domains.html)<br>`ValueSet/Domains` | ValueSet of WHO GDHCN Trust Domains for Production environment |
+| [WHO GDHCN Trust Domains - DEV](./artifact/ValueSet-Domains-DEV.html)<br>`ValueSet/Domains-DEV` | ValueSet of WHO GDHCN Trust Domains for Development environment |
+| [WHO GDHCN Trust Domains - UAT](./artifact/ValueSet-Domains-UAT.html)<br>`ValueSet/Domains-UAT` | ValueSet of WHO GDHCN Trust Domains for User Acceptance Testing environment |
+| [WHO GDHCN Trust Network Participant](./artifact/ValueSet-Participants.html)<br>`ValueSet/Participants` | ValueSet of GDHCN Trust Network Participants for Production environment |
+| [WHO GDHCN Trust Network Participant - DEV](./artifact/ValueSet-Participants-DEV.html)<br>`ValueSet/Participants-DEV` | ValueSet of GDHCN Trust Network Participants for Development environment |
+| [WHO GDHCN Trust Network Participant - UAT](./artifact/ValueSet-Participants-UAT.html)<br>`ValueSet/Participants-UAT` | ValueSet of GDHCN Trust Network Participants for User Acceptance Testing environment |
+| [WHO Regional Offices](./artifact/ValueSet-WHORegionalOffices.html)<br>`ValueSet/WHORegionalOffices` | ValueSet of WHO Regional Offices |
 
 </details>
 
-<details markdown="1">
-<summary><strong>Other</strong> — 1</summary>
+<details markdown="1" id="cat-Terminology__Code_Systems">
+<summary><strong>Terminology: Code Systems</strong> — 15</summary>
 
-| Artefact | Canonical URL | Published as | Bytes |
-|---|---|---|---|
-| [Trust](./artifact/ImplementationGuide-smart.who.int.trust.html)<br>`ImplementationGuide/smart.who.int.trust` | `http://smart.who.int/trust/ImplementationGuide/smart.who.int.trust` | <a href="https://worldhealthorganization.github.io/smart-trust/ImplementationGuide-smart.who.int.trust.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ImplementationGuide-smart.who.int.trust.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ImplementationGuide-smart.who.int.trust.ttl">ttl</a> | <span class="st-tag st-ref">referenced</span> |
+| Artefact | Description |
+|---|---|
+| [WHO GDHCN Connection Types](./artifact/CodeSystem-ConnectionTypes.html)<br>`CodeSystem/ConnectionTypes` | CodeSystem for GDHCN connection types |
+| [WHO GDHCN Key Usage CodeSystem](./artifact/CodeSystem-KeyUsage.html)<br>`CodeSystem/KeyUsage` | CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the certificate governance for Production environment |
+| [WHO GDHCN Key Usage CodeSystem - DEV](./artifact/CodeSystem-KeyUsage-DEV.html)<br>`CodeSystem/KeyUsage-DEV` | CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the certificate governance for Development environment |
+| [WHO GDHCN Key Usage CodeSystem - UAT](./artifact/CodeSystem-KeyUsage-UAT.html)<br>`CodeSystem/KeyUsage-UAT` | CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the certificate governance for User Acceptance Testing environment |
+| [WHO GDHCN Payload Types](./artifact/CodeSystem-PayloadTypes.html)<br>`CodeSystem/PayloadTypes` | CodeSystem for GDHCN Payload types |
+| [WHO GDHCN Transactions CodeSystem](./artifact/CodeSystem-Transactions.html)<br>`CodeSystem/Transactions` | CodeSystem for GDHCN transactions that has usage codes for verification keys published to the Trust Network as defined by the certificate governance |
+| [WHO GDHCN Trust Actors CodeSystem](./artifact/CodeSystem-Actors.html)<br>`CodeSystem/Actors` | CodeSystem for SMART Trust actors that has usage codes for verification keys published to the Trust Network as defined by the certificate governance |
+| [WHO GDHCN Trust Domains](./artifact/CodeSystem-Domains.html)<br>`CodeSystem/Domains` | CodeSystem for define WHO GDHCN Trust Domains for Production environment. |
+| [WHO GDHCN Trust Domains - DEV](./artifact/CodeSystem-Domains-DEV.html)<br>`CodeSystem/Domains-DEV` | CodeSystem for define WHO GDHCN Trust Domains for Development environment. |
+| [WHO GDHCN Trust Domains - UAT](./artifact/CodeSystem-Domains-UAT.html)<br>`CodeSystem/Domains-UAT` | CodeSystem for define WHO GDHCN Trust Domains for User Acceptance Testing environment. |
+| [WHO GDHCN Trust Network Participant - DEV](./artifact/CodeSystem-Participants-DEV.html)<br>`CodeSystem/Participants-DEV` | CodeSystem for GDHCN Trust Network Participants for Development environment |
+| [WHO GDHCN Trust Network Participant - UAT](./artifact/CodeSystem-Participants-UAT.html)<br>`CodeSystem/Participants-UAT` | CodeSystem for GDHCN Trust Network Participants for User Acceptance Testing environment |
+| [WHO GDHCN Trust Network Participants CodeSystem](./artifact/CodeSystem-Participants.html)<br>`CodeSystem/Participants` | CodeSystem for GDHCN Trust Network Participants which are not already included in the ISO-3166 three letter code system for Production environment |
+| [WHO RefMart Jurisidiction List](./artifact/CodeSystem-RefMartCountryList.html)<br>`CodeSystem/RefMartCountryList` | CodeSystem for WHO Refmart Country and Jurisidiction List available at https://xmart-api-public.who.int/REFMART/REF\_COUNTRY for Production environment |
+| [WHO Regional Offices CodeSystem](./artifact/CodeSystem-WHORegionalOffices.html)<br>`CodeSystem/WHORegionalOffices` | CodeSystem for WHO Regional Offices |
 
 </details>
+
+<details markdown="1" id="cat-Terminology__Concept_Maps">
+<summary><strong>Terminology: Concept Maps</strong> — 1</summary>
+
+| Artefact | Description |
+|---|---|
+| [GDHCN Participants to WHO Regional Offices](./artifact/ConceptMap-ParticipantsToWHORegionalOffices.html)<br>`ConceptMap/ParticipantsToWHORegionalOffices` | ConceptMap from GDHCN Trust Network Production Participants to WHO Regional Offices. Participants that are not WHO Member States or State Parties (e.g. international organizations or non-member territories) have no mapping and are grouped under Other Participants. |
+
+</details>
+
+<details markdown="1" id="cat-Other">
+<summary><strong>Other</strong> — 608</summary>
+
+608 artefacts — too many to list here without the index becoming
+unreadable. Every one has its own page: **[browse all 608](./category/Other.html)**.
+
+</details>
+
+<details markdown="1" id="cat--uncategorised">
+<summary><strong>Uncategorised</strong> — 1</summary>
+
+| Artefact | Description |
+|---|---|
+| [Trust](./artifact/ImplementationGuide-smart.who.int.trust.html)<br>`ImplementationGuide/smart.who.int.trust` |  |
+
+</details>
+
+<footer id="ig-footer" data-next="artifact/ActorDefinition-Holder.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

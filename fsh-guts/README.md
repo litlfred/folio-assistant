@@ -10,8 +10,8 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `fsh-guts`, holding `
 
 | file | what it is | used by |
 |---|---|---|
-| [`retired/`](retired/) | 22 files | |
+| [`retired/`](retired/) | 23 files | |
 | [`samples/`](samples/) | 1 file | |
 | [`scripts/`](scripts/) | 16 files | |
-| [`uploads/`](uploads/) | 104 files | |
+| [`uploads/`](uploads/) | 106 files | |
 <!-- kg:subgraph:end -->

@@ -28,12 +28,14 @@
  * @module fhir-harness/scripts/stage-ig-sites
  */
 
+import { igApiHubFill } from "./ig-api-views.ts";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
-import { describeStage, stageIgSite, type IgMenu, type SitePalette } from "./build-ig-site";
+import { describeStage, stageIgSite, type IgMenu, type IndexedArtifact, type SitePalette, type StageOptions } from "./build-ig-site";
+import { IgReleasesSchema, type IgReleases } from "../schemas/ig-releases.ts";
 
 interface MenuFile extends IgMenu {
   source?: { kind?: string; of?: string; ref?: string };
@@ -41,6 +43,8 @@ interface MenuFile extends IgMenu {
 
 export interface IgToBuild {
   instance: string;
+  /** The instance's root directory. */
+  root: string;
   menuPath: string;
   repo: string;
   ref: string;
@@ -58,6 +62,33 @@ export function webpagePalette(repoRoot: string, instance: string): { palette?: 
   return { palette: web[0].palette as SitePalette, note: `${instance}: webpage theme ${web[0].id}` };
 }
 
+/**
+ * The instance's artefact index and where its artefact pages are, for the IG
+ * site's `artifacts` page — or undefined when it holds either half not.
+ * The pages are the instance's `docs/artifact/`, published one level above
+ * the IG site (`/<instance>/artifact/` beside `/<instance>/ig/`), so a link
+ * from the IG site is `../artifact/`. Read off the disk, not assumed: an
+ * instance with an index and no artefact pages gets no `artifacts` page.
+ */
+export function artifactsFor(root: string): StageOptions["artifacts"] {
+  const index = join(root, "fhir-artifact-index", "index.json");
+  // declared-path-literal: the staged IG instance's own docs/artifact/ under `root`, not folio-assistant's docs/
+  if (!existsSync(index) || !existsSync(join(root, "docs", "artifact"))) return undefined;
+  const ix = JSON.parse(readFileSync(index, "utf-8")) as { artifacts: IndexedArtifact[] };
+  return { list: ix.artifacts, pagesHref: "../artifact/" };
+}
+
+/**
+ * The instance's recorded GitHub releases (`fhir-artifact-index/releases.json`),
+ * validated, for the IG site's `releases` page; undefined when none was
+ * recorded. A file that does not validate throws: a wrong download link is
+ * worse than none.
+ */
+export function releasesFor(root: string): IgReleases | undefined {
+  const at = join(root, "fhir-artifact-index", "releases.json");
+  return existsSync(at) ? IgReleasesSchema.parse(JSON.parse(readFileSync(at, "utf-8"))) : undefined;
+}
+
 /** Every instance whose IG menu records a cloneable sushi-config source. */
 export function igsToBuild(repoRoot: string): { build: IgToBuild[]; skipped: string[] } {
   const build: IgToBuild[] = [];
@@ -71,7 +102,7 @@ export function igsToBuild(repoRoot: string): { build: IgToBuild[]; skipped: str
       skipped.push(`${instance}: menu.json records no sushi-config source repository and commit`);
       continue;
     }
-    build.push({ instance, menuPath, repo: m.source.of, ref: m.source.ref, declaredAs: readDeclaration(root)?.name ?? instance });
+    build.push({ instance, root, menuPath, repo: m.source.of, ref: m.source.ref, declaredAs: readDeclaration(root)?.name ?? instance });
   }
   return { build, skipped };
 }
@@ -104,6 +135,10 @@ if (import.meta.main) {
       plantumlJar: opt("--plantuml-jar"),
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,
       remoteTheme: opt("--remote-theme"),
+      artifacts: artifactsFor(ig.root),
+      releases: releasesFor(ig.root),
+      // The IG's post-processing output, where its source holds only a marker.
+      fills: [igApiHubFill(ig.root)].filter((x) => x !== undefined),
     });
     console.error(`${ig.instance} (${ig.repo}@${ig.ref.slice(0, 7)}):\n${describeStage(r)}`);
     if (r.siteData.refused.length) process.exit(1);

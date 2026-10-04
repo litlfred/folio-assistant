@@ -69,6 +69,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-binary-artefacts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-binary-artefacts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit."
+        }
+      ],
+      "skos:notation": "ig-binary-artefacts",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-build-pipeline",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -161,6 +181,26 @@
       ],
       "skos:notation": "ig-render-jekyll",
       "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-site-theme",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-site-theme"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed."
+        }
+      ],
+      "skos:notation": "ig-site-theme",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-site-theme.md",
       "skos:note": "candidate"
     },
     {

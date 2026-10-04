@@ -80,6 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
+import { SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -529,8 +530,19 @@ export interface ContentDirectory extends GraphNodeDirectory {
   theme?: ThemeRef;
 
   /**
+   * Where this subgraph gets its content. Absent is `{ kind: "directory" }`.
+   * Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`),
+   * which applies the instance config's override by id.
+   */
+  source?: SubgraphSource;
+
+  /**
    * This directory's contents are STORED on a branch, keyed by commit or tip, and the
    * checkout holds at most a working copy. See {@link DirectoryStorageSchema}.
+   *
+   * The LEGACY spelling of `source: { kind: "branch", branch, keyedBy }`
+   * (bean `l4ay`): `resolveSubgraphSource` reads either and refuses both on
+   * one entry. New declarations use `source`.
    */
   storage?: DirectoryStorage;
 }
@@ -1666,6 +1678,29 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   composed: z.boolean().optional(),
   /**
+   * This directory's BYTES are published verbatim, at `/<instance>/<path>`, for
+   * the site's own pages to fetch.
+   *
+   * Owner, 2026-10-01: *"other goals of justthedocs rendering is to reduce the
+   * .html bloat.... lots of it can be loaded client side from the KG"*, then
+   * choosing to publish the graph directory itself rather than copy its files
+   * into `docs/` beside the pages that fetch them (bean `680p`,
+   * [`visualizer-loading`]). A copy is a second answer free to drift from the
+   * first; a served directory is the one answer, at a stable URL.
+   *
+   * **Served is not rendered.** `composed` puts markdown through Jekyll and a
+   * mount publishes a directory with its own front door; this publishes DATA,
+   * untouched — no Liquid, no layout, no index page — after Jekyll, by
+   * `mount-instance-docs.ts`. Nothing about the directory becomes navigable;
+   * a page that wants it fetches it.
+   *
+   * **Declared, never inferred**, and opt-in: publishing is outward-facing, so
+   * a directory's bytes reach the site only because its declaration says so.
+   * `withheld.json` still governs, as it does for every mount. Absent means
+   * not served.
+   */
+  served: z.boolean().optional(),
+  /**
    * Which theme this subgraph renders on.
    *
    * The owner, 2026-09-20: *"theme for analyst apply to the methodlogies
@@ -1706,6 +1741,15 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * cross-instance theme now says whose theme it is.
    */
   theme: ThemeRefSchema.optional(),
+  /**
+   * Where this subgraph gets its CONTENT — the checkout's own directory (the
+   * default, so absent means `{ kind: "directory" }`) or a declared repository
+   * branch, with room for a later kind. The instance config may override it
+   * by id. Resolve it with `resolveSubgraphSource`, never by reading this
+   * field: the override and #1764's `storage` are folded in there, once.
+   * See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.
+   */
+  source: SubgraphSourceSchema.optional(),
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
@@ -5247,7 +5291,8 @@ export function materialiseDirectories(
     // Creating it empty here would manufacture the `dh4f` shape — a reader
     // scanning an empty directory and reporting a clean run — and its absence
     // is not "missing", so `--check` does not list it either.
-    if (dir.storage?.branch) continue;
+    // Any source off the checkout, not only `storage` (bean `l4ay`).
+    if (contentIsOffCheckout(dir)) continue;
     const base = rootForScope(rootAbs, dir.scope);
     const abs = resolve(base, dir.path);
     const rel = relative(base, abs);
@@ -6125,8 +6170,26 @@ export function nestedDirectories(
   root: string,
   decl: CatHarnessDeclaration,
   registry: GraphKindRegistry = defaultGraphKinds,
-): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
-  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+): Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> {
+  const out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> = [];
   for (const d of decl.directories ?? []) {
     const parent = d.path.replace(/\/+$/, "");
     walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
@@ -6149,7 +6212,16 @@ function walkNested(
   id: string,
   kinds: readonly string[],
   registry: GraphKindRegistry,
-  out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }>,
+  out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}>,
   seen: Set<string>,
 ): void {
   if (seen.has(abs)) return;
@@ -6158,7 +6230,17 @@ function walkNested(
   for (const f of [...new Set(files)]) {
     const p = join(abs, f);
     if (!existsSync(p)) continue;
-    let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+    let nested: {
+      directories?: Array<{
+        id?: string;
+        path?: string;
+        graphKinds?: string[];
+        description?: string;
+        absent?: { reason: string };
+        storage?: unknown;
+        source?: unknown;
+      }>;
+    };
     try {
       nested = JSON.parse(readFileSync(p, "utf-8"));
     } catch {
@@ -6172,6 +6254,20 @@ function walkNested(
         path: `${rel}/${sub}/`,
         graphKinds: nd.graphKinds ?? [],
         ...(nd.description ? { description: nd.description } : {}),
+        // Carried through, not dropped. `absent`, `storage` and `source` each
+        // say that the directory is NOT where its path says, or is not meant
+        // to be there at all — so a consumer that loses them asks "is it on
+        // disk?" and gets the wrong answer with no way to tell. Measured
+        // 2026-10-03 (bean `xsrv`): `check:declared-dirs`, extended to reach
+        // these entries, reported a nested entry carrying `absent.reason` as
+        // an unexplained absence, because the reason never arrived. The same
+        // loss would make an eventual `storage: { keyedBy: "route" }` on a
+        // nested entry read as a missing directory — `contentIsOffCheckout`
+        // cannot see a field it was not given. Latent until that test: no
+        // nested entry carries any of the three today.
+        ...(nd.absent ? { absent: nd.absent } : {}),
+        ...(nd.storage ? { storage: nd.storage } : {}),
+        ...(nd.source ? { source: nd.source } : {}),
         parentId: id,
       };
       out.push(entry);

@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-03T13:29:11Z
+updated_at: 2026-10-03T17:52:50Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -103,3 +103,182 @@ addressed by the commit it judges, so `route` is the wrong keying for it and
 file-COUNT row inside an otherwise authored README. That is a file both authored
 and derived, which neither `route` nor `main` cleanly owns — flagged here because
 it will not fall out of the mechanism and needs a person's ruling.
+
+## HOW the first Done-when is implemented — the mechanism already exists (2026-10-03)
+
+The first box says the `docs-auto` declaration is *"still unimplemented"*. It is
+— but **nothing has to be designed for it.** Read before building, and the
+registry already carries the exact relation the owner's ruling describes.
+
+`schemas/graph-kind-registry.ts` gives a graph kind three relevant fields:
+
+| field | what it does | precedent already using it |
+|---|---|---|
+| `within` | *"the kind this one is a SUB-GRAPH of"* | declared general by the owner 2026-09-23 (#1164), for `docs/proposals/` |
+| `declarationFile` | the kind's own nested declaration, naming its groups **from within** | `skills` → `skills.json`, `processes` → `processes.json` |
+| `storage` (on the directory) | `{ branch, keyedBy: "route" }` | this arc |
+
+So the owner's *"auto-docs is one declared subgraph, with declared sub-sub-graphs
+per writer"* is:
+
+- a `docs-auto` kind with **`within: "docs"`** — one declared subgraph, sitting
+  inside `docs` rather than beside it;
+- **`declarationFile: "docs-auto.json"`** — the sub-sub-graphs named from within,
+  one per writer;
+- `storage` on that directory, `keyedBy: "route"`.
+
+`check:graph-kind-within` already holds the relation and forbids a cycle, so the
+invariant is gated the day the entry lands.
+
+### This does NOT contradict the correction above, and the distinction matters
+
+§"CORRECTION, 2026-10-03" on `06e3` records that `docs-auto` is deliberately
+**not** a graph kind. Read in full, what it rejects is a kind *handled by
+`state-visualizer.ts`* — a **one-axis viewer generator**, where docs-auto is
+two-axis (TYPE × SUB-GRAPH) and *"there is nowhere to put the second axis
+without it becoming this file anyway"*.
+
+That is a claim about **which generator renders it**. `within` /
+`declarationFile` are about **how the graph is declared and navigated**. A kind
+can be registered, related and declared from within while still being rendered
+by its own generator — `gen-docs-auto.ts` stays exactly as it is, and the
+correction's reasoning is untouched.
+
+**Stated explicitly because the two readings are one word apart**, and taking the
+broader one would mean inventing a parallel mechanism beside a general relation
+the owner already ruled for.
+
+### The one trap, for whoever implements it
+
+`gen-docs-auto.ts` already holds the 11 types in `TYPES`, with `collect()`
+functions that cannot live in JSON. So `docs-auto.json` must be **generated from
+`TYPES`** with a `:check`, never hand-written — a hand-kept copy would be a
+second answer to "what auto-doc types exist", which is the failure this
+repository has paid for most often. The derivable fields are there: a type's
+`id` gives the path segment, `title` the description, and `graph` names the
+source graph it indexes.
+
+**Falsifier, stated before building:** if a sub-sub-graph needs a field that
+cannot be derived from `TYPES`, the manifest needs hand-authored content and the
+one-source claim fails — at which point the right shape is `TYPES` reading the
+manifest rather than the reverse.
+
+## The eventual scope is ALREADY ENUMERATED — `merge-conflict-patterns.ts` (2026-10-03)
+
+The §"eventual set is wider" note above lists six writers I happened to hit on
+#1996. That was the wrong source: `scripts/merge-conflict-patterns.ts` is a
+**maintained catalogue of 24 patterns**, each a family whose merge conflicts
+somebody has already declared mechanically resolvable — and `merge-main.yml`'s
+own header says the resolution is *"mechanical BY DECLARATION"*, so the patterns
+ARE that declaration. Observed live on #1935 the same day: one bot push resolved
+`docs-auto` ×1, `readme-generated-regions` ×1 and `site-data` ×3.
+
+**And the catalogue carries its own discriminator.** `strategy` separates exactly
+what `route` separates:
+
+| `strategy` | n | what it means | keying |
+|---|---|---|---|
+| `take-base` | **20** | the newer generation is right; nothing to settle | **`route`** |
+| `refuse` | **2** | a person must settle it — `beans`, `uploads` | `tip`, or stays on `main` |
+| `qa-sidecar` | 1 | `kg-qa-sidecar`, merged by its own rule | `commit` (arc `3fva`) |
+| `generated-regions` | 1 | `readme-generated-regions` — generated regions inside AUTHORED prose | **neither, and see below** |
+
+That is not a coincidence. `take-base` and `route` are the same assertion made in
+two places: *the content is a pure function of its source, so the newer one wins.*
+`refuse` and `tip` are the other same assertion: *somebody decided this, so a
+collision is theirs to settle.* The catalogue reached it from merge behaviour and
+this arc reached it from storage; they agree, which is the strongest evidence
+either is right.
+
+### What this changes for this bean
+
+- **The family list is not mine to invent.** `docs/uml/` stays first (one
+  generator, one gate, bisectable), and the eventual set is the `take-base`
+  twenty — read from that file, not restated here, because a list in a bean is a
+  second answer that drifts.
+- **`beans` and `uploads` are explicitly OUT**, with reasons already written:
+  bean defs are *"authored work-plan state, so it is resolved by a person"*;
+  uploads are *"provenance-bearing input, never regenerated"*.
+- **`readme-generated-regions` is the genuinely hard one**, and the catalogue
+  says why better than my earlier note did: *"their generated regions carry file
+  counts and listings that every concurrent addition changes; the prose around
+  them is authored, so only a hunk INSIDE a region resolves."* A file that is
+  authored and derived at different offsets cannot be keyed as a whole by either
+  mechanism. Still a person's ruling; now with the precise reason.
+
+### A measurement this suggests, not yet taken
+
+If route-keying removes the `take-base` twenty from `main`, those twenty patterns
+have nothing left to resolve. **Whether the patterns should then be retired is
+NOT this bean's call** — they would become harmless no-ops rather than wrong, and
+a pattern that fires on nothing is the `xom7` shape this arc keeps meeting. Worth
+asking the owner at cutover rather than deciding here.
+
+
+## INVENTORY CORRECTED 2026-10-03, before the seed was built — 666 files, not 126, and `uml/` is an OUTPUT
+
+Counted on `origin/main` before seeding, because a seed built from a wrong
+inventory verifies its own mistake. The table in §"Why docs/uml/ and not the other
+48" is wrong in both of its load-bearing rows.
+
+`gen-uml-overview.ts` declares **three** output roots — `gen-uml-overview.ts:70`,
+`:74`, `:76` — and its own run line says so: *"wrote 401 file(s) under
+`cat-harness/uml/overview` and `cat-harness/docs/uml/overview`"*.
+
+| root | const | files | a route? | declared? |
+|---|---|---|---|---|
+| `cat-harness/uml/overview` | `UML_ROOT` | 266 | no | yes — directory `uml`, kind `uml`, `cat-harness.json:583` |
+| `cat-harness/docs/uml/overview` | `DOCS_ROOT` | 134 | **yes** | no |
+| `cat-harness/docs/assets/img/uml/overview` | `SVG_ROOT` | 266 | **yes** | no |
+
+So: **"files | 126" → 666 across three roots**, and **"the source is `uml/`" → `uml/`
+is an OUTPUT of this same generator**, with a declared kind of its own. The real
+source is the declarations the generator reads.
+
+### What this does and does not change
+
+**The premise holds and is strengthened.** "One route, one writer" was the reason
+this family was chosen over the other 48; one writer owns all three roots, so the
+`1j3q` falsifier ("a family with two writers would be the premise failing") is
+further from being met, not closer.
+
+**The cutover is a different shape.** Done-when 1 is asking for the two
+**undeclared** roots, both of which are routes:
+
+- two sibling entries in `cat-harness/docs/docs.json` — `path: "uml/overview"` and
+  `path: "assets/img/uml/overview"` — reusing `graphKinds: ["docs-auto"]`, on the
+  shared-kind precedent already cited in #2022 (`beans.json`'s `defs` and `archive`
+  both declare `bean-defs`);
+- then `storage: { branch: …, keyedBy: "route" }` on each.
+
+**`cat-harness/uml/overview` stays on `main` — for a different reason than this
+bean gave.** Not because it is authored (it is not), but because **it is not a
+route**, which makes `keyedBy: "route"` wrong for it by definition: a route-keyed
+write refuses `expect` on the grounds that a rendered page has one writer, and
+`uml/` is a graph other generators read. If it is ever moved off `main` it is a
+`tip` question, under `9ofm`, not this bean.
+
+### Two things checked rather than assumed
+
+**`docs.json` paths are relative to the declaring directory.** `proposals` declares
+`path: "proposals"` and resolves to `cat-harness/docs/proposals` (38 files);
+`requirements` likewise (1). So #2022's `path: "cat-harness/docs-auto"` resolves to
+`cat-harness/docs/cat-harness/docs-auto`, which **exists and is populated** — as
+that entry's own description explains via `viewerPlacement`. I had briefly read it
+as repo-relative and so as absent, which would have been the `dh4f` defect. It is
+not one.
+
+**No `../` is needed, and none is available.** `GraphNodeDirectory.scope` carries
+the note *"why it is a field rather than a `../` in the path"*, and its enum is
+`instance | repository` — neither reaches a sibling of the declaring directory.
+Both uml routes are inside `docs/`, so `docs.json` is the right declaring file and
+both paths are plain.
+
+### Where Done-when 1 actually stands
+
+#2022 declared the `docs-auto` KIND and the `docs-auto` directory with its 11
+sub-sub-graphs — one per `gen-docs-auto.ts` TYPE. Measured: its `uml` sub-sub-graph
+holds **2 files**, the docs-auto index pages *about* the uml graph, which are not the
+134 pages this bean is about. So Done-when 1 is **half done**: the kind exists and
+is judged, the two route directories are still undeclared and carry no `storage`.
+Not ticked.

@@ -42,6 +42,7 @@ import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
 import { siteDirectories, withViewers } from "./viewer-declarations.js";
+import { resolveLandingInstance } from "../schemas/harness-config.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -62,9 +63,55 @@ function siteRelative(src: string): string {
   return src.startsWith("docs/") ? `/${src.slice("docs/".length)}` : src;
 }
 
-const decl = readDeclaration(ROOT);
+/**
+ * WHICH HARNESS `/` IS: asked of the resolver, never of this file's location
+ * (issue #1904). This generator lives in `cat-harness/`, and until 2026-10-02
+ * that was the whole reason `/` was cat-harness's page: `ROOT` above was both
+ * "where the site is built" and "whose landing it shows". They are two
+ * questions. `ROOT` keeps the first (where the site is built is the
+ * `siteDirFor` follow-up recorded on #1904); the second is the owner's ruling,
+ * which `resolveLandingInstance` is the only reader of.
+ *
+ * - `instance`: that harness's declaration supplies the title, the words, the
+ *   marks and the landing art.
+ * - `hub`: two or more are flagged, so `/` is a neutral hub listing the
+ *   harnesses and the todos. The chrome (title, marks) is the checkout root's
+ *   own declaration when it has one, else the site owner's, because a hub is
+ *   no harness's page and a sidebar still needs a title.
+ * - `ambiguous`: several harnesses, none flagged. This REFUSES rather than
+ *   picking one, and `check:landing-instance` says the same thing as a gate.
+ * - `none`: nothing is instantiated, so there is no landing to render.
+ */
+const landingChoice = resolveLandingInstance(REPO_ROOT);
+if (landingChoice.kind === "ambiguous") {
+  console.error(
+    `sync-docs-harness: cannot decide the site's landing page (${landingChoice.reason}) over ` +
+      `${landingChoice.names.join(", ")}. Run \`bun run check:landing-instance\` (issue #1904).`,
+  );
+  process.exit(1);
+}
+if (landingChoice.kind === "none") {
+  console.error(`sync-docs-harness: nothing is instantiated at ${REPO_ROOT} (no <name>.config.json). Nothing to sync.`);
+  process.exit(2);
+}
+/** The landing harness's own directory: where its declaration and its directories are. */
+const LANDING_DIR =
+  landingChoice.kind === "instance"
+    ? instanceRootsIn(REPO_ROOT).find((r) => readDeclaration(r)?.name === landingChoice.name)
+    : readDeclaration(REPO_ROOT) !== undefined
+      ? REPO_ROOT
+      : ROOT;
+if (LANDING_DIR === undefined) {
+  console.error(
+    `sync-docs-harness: the landing harness \`${landingChoice.kind === "instance" ? landingChoice.name : ""}\` ` +
+      `has no local declaration under ${REPO_ROOT}, so there is nothing to render its landing from.`,
+  );
+  process.exit(2);
+}
+
+const decl = readDeclaration(LANDING_DIR);
 if (!decl) {
-  console.error(`No declaration at ${ROOT}. Nothing to sync.`);
+  console.error(`No declaration at ${LANDING_DIR}. Nothing to sync.`);
   process.exit(2);
 }
 
@@ -287,7 +334,10 @@ const config = harnessPanel(
 function navbarRow(
   harnesses: readonly {
     name: string;
+    title?: string;
     navbarIcons?: string[];
+    href?: string;
+    hrefKind?: "folio" | "viewer" | "handled";
     visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
   }[],
   self: string | undefined,
@@ -298,7 +348,7 @@ function navbarRow(
   hrefs: Record<string, string>;
   /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
   notes: Record<string, string>;
-  folders: { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
+  folders: NavFolder[];
 } | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
@@ -384,20 +434,73 @@ function navbarRow(
   // only the page knows which deploy it is on.
   // `within` RIDES ALONG TOO (issue #1164): a sub-graph is drawn inside its
   // parent's row, folded, by every client — one answer to where it sits.
-  const folders = (mine.visualisations ?? []).map((v) => {
+  const folders = foldersOf(mine.visualisations);
+  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
+}
+
+type NavFolder = { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true };
+
+/** One instance's visualisations as folder rows — see the note in `navbarRow`. */
+function foldersOf(
+  vis: readonly { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[] | undefined,
+): NavFolder[] {
+  return (vis ?? []).map((v) => {
     const within = v.within ? { within: v.within } : {};
     return v.path
       ? { kind: v.kind, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
       : { kind: v.kind, ...within, ...(v.note ? { note: v.note } : {}) };
   });
-  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
+}
+
+/**
+ * THE INSTANCES A PAGE CAN BE INSIDE, for the rail's PAGES and FOLDERS
+ * (issue #1902). Owner, viewing `/smart-trust/`: *"there are also 101 pages
+ * under .../smart-trust/, which I would have expected only those in the IG
+ * TOC. i think it is showing all the folio pages, not the harnessed
+ * smart-trust's pages ... same for 'folders'."*
+ *
+ * A scope is an instance whose tile goes to its OWN THEMED ROOT
+ * (`hrefKind: "folio"`) at a path of its own. Two kinds of href are not a
+ * scope and are left out, each for a reason a reader could check:
+ *
+ * - `viewer` / `handled` — the href is a page some OTHER thing publishes
+ *   (`/processes/` is bootstrap's tile and the whole site's process viewer),
+ *   so "every page under it belongs to this instance" would be false.
+ * - an anchor (`/#harness-…`) or `/` — the instance's root IS the site's
+ *   landing, so every page would be inside it, which is the unscoped answer
+ *   the client already gives.
+ *
+ * SORTED LONGEST HREF FIRST, so `head_custom.html` can take the first prefix
+ * of `page.url` that matches and stop: a nested instance wins over the one
+ * that holds it. Nothing here names an instance.
+ *
+ * NOT IN `navbar`, and that is a byte budget rather than tidiness: `navbar` is
+ * inlined into every page's head, and the whole list is ~1.8 KB that only the
+ * pages inside one instance need ~250 B of. Liquid resolves `page.url` --
+ * which carries no baseurl, so a staging prefix cannot make it miss -- and
+ * emits the ONE matching scope as `#fa-rail-scope`, or nothing.
+ */
+type RailScope = { name: string; title: string; href: string; folders: NavFolder[] };
+function railScopes(
+  harnesses: readonly {
+    name: string;
+    title?: string;
+    href?: string;
+    hrefKind?: "folio" | "viewer" | "handled";
+    visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+  }[],
+): RailScope[] {
+  return harnesses
+    .filter((h) => h.hrefKind === "folio" && typeof h.href === "string" && h.href.startsWith("/") && h.href !== "/" && !h.href.includes("#"))
+    .map((h) => ({ name: h.name, title: h.title ?? h.name, href: h.href!, folders: foldersOf(h.visualisations) }))
+    .sort((a, b) => b.href.length - a.href.length || a.name.localeCompare(b.name));
 }
 
 /* The tiles, computed once: the payload carries them and the glass strip's
  * pins are resolved against them. */
-const tileDirs = siteDirectories(decl?.directories ?? [], ROOT, REPO_ROOT);
+const tileDirs = siteDirectories(decl?.directories ?? [], LANDING_DIR, REPO_ROOT);
 const tiles = withTileCounts(
-  graphTiles(withViewers(tileDirs, ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+  graphTiles(withViewers(tileDirs, LANDING_DIR), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
   scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
 );
 const glassStrip = (() => {
@@ -439,6 +542,16 @@ const payload = {
     ? { src: siteRelative(smallIcon.src), title: smallIcon.title ?? "", description: smallIcon.description ?? "" }
     : null,
   landing,
+  /**
+   * WHAT `/` IS (issue #1904): `instance` with the landing harness's `name`,
+   * or `hub` with every instantiated harness. `landing.html` branches on
+   * `kind` and nothing else, so the hub marker and the list it renders are one
+   * field rather than a flag and a second list free to disagree.
+   */
+  landingInstance:
+    landingChoice.kind === "hub"
+      ? { kind: "hub", names: landingChoice.names, flagged: landingChoice.flagged }
+      : { kind: "instance", name: landingChoice.name, by: landingChoice.by },
   // THE KINDS THIS INSTANCE DECLARES — for the avatar fan (bean `4kj4`).
   //
   // Owner: *"shows the DECLared kinds for that instance, not inheritance."*
@@ -452,7 +565,7 @@ const payload = {
   // de-duplicated, because a directory may hold several graphs and two
   // directories may hold the same one — `schemas/` declares both `schemas`
   // and `cat-harness`.
-  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], ROOT, REPO_ROOT).flatMap((d) => d.graphKinds ?? []))].sort(),
+  declaredKinds: [...new Set(siteDirectories(decl.directories ?? [], LANDING_DIR, REPO_ROOT).flatMap((d) => d.graphKinds ?? []))].sort(),
   links,
   // ONE FAT TILE PER INITIATED HARNESS, for the left sidebar.
   //
@@ -506,6 +619,8 @@ const payload = {
    * look like navigation.
    */
   navbar: navbarRow(allHarnesses, decl?.name, links, readDeclaration(REPO_ROOT)?.name),
+  /** The instances a page can be inside, for the rail's PAGES and FOLDERS (#1902). See {@link railScopes}. */
+  railScopes: railScopes(allHarnesses),
   /**
    * EVERY INSTANCE'S VERSION, and its release addresses where it declares an
    * `iriBase` — so a page writes `{{ site.data.harness.releases.bootstrap.version }}`

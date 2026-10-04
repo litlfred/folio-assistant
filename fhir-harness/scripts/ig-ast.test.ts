@@ -10,7 +10,9 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 
-import { astValidity, diffAst, inputDigest, listAst, readAst, renderDelta } from "./ig-ast";
+import { astJsonLd, astValidity, diffAst, igAstSchemaFiles, inputDigest, listAst, readAst, renderDelta } from "./ig-ast";
+import { igAstJsonSchemas } from "../schemas/ig-ast.ts";
+import Ajv from "ajv";
 
 const made: string[] = [];
 afterAll(() => {
@@ -65,6 +67,24 @@ describe("inputDigest — the same algorithm as the Java InputDigest", () => {
     put(ig, "input/pagecontent/index.md", "# Hi\n");
     put(ig, "output/x.html", "noise");
     expect(inputDigest(ig)).toBe("58871352384745e1d7fd68f7ea918b0e2febbd86cf36a9cb5f0c7ce9d13a82f1");
+  });
+
+  test("in a git work tree, an ignored file is not an input but an untracked one is", () => {
+    const ig = tmp("gitdigest-");
+    put(ig, "sushi-config.yaml", "id: x\n");
+    put(ig, "input/fsh/a.fsh", "Profile: A\n");
+    put(ig, ".gitignore", ".DS_Store\n");
+    const git = (...a: string[]) => spawnSync("git", a, { cwd: ig, encoding: "utf-8" });
+    git("init", "-q");
+    git("-c", "user.email=t@t", "-c", "user.name=t", "add", ".");
+    git("-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "base");
+    const clean = inputDigest(ig);
+
+    put(ig, "input/.DS_Store", "finder noise");
+    expect(inputDigest(ig)).toBe(clean);
+
+    put(ig, "input/fsh/b.fsh", "Profile: B\n");
+    expect(inputDigest(ig)).not.toBe(clean);
   });
 });
 
@@ -222,5 +242,41 @@ describe("an incomplete AST is cannot-tell, never a clean diff", () => {
     rmSync(join(b, "resources/Library/A.json"));
     rmSync(join(h, "resources/Library/A.json"));
     expect(() => diffAst(readAst(b), readAst(h))).toThrow(/missing/);
+  });
+});
+
+describe("the formats, declared once — JSON Schema and JSON-LD for downstream (bean l0lq)", () => {
+  test("a valid AST validates against the GENERATED JSON Schemas too, so the published schema accepts what the reader does", () => {
+    const dir = ast([libA(), libB("1.1.0"), pd], [[X + "PlanDefinition/PD|1.0.0", "library", X + "Library/A", null]]);
+    // draft-07: what the installed validator (and most Java ones) read.
+    const ajv = new Ajv();
+    const schemas = igAstJsonSchemas() as Record<string, object>;
+    expect(ajv.validate(schemas["ig-ast.schema.json"]!, JSON.parse(readFileSync(join(dir, "manifest.json"), "utf-8")))).toBe(true);
+    expect(ajv.validate(schemas["ig-ast-dependencies.schema.json"]!, JSON.parse(readFileSync(join(dir, "dependencies.json"), "utf-8")))).toBe(true);
+    // ...and refuses what the reader refuses.
+    expect(ajv.validate(schemas["ig-ast.schema.json"]!, { $schema: "ig-ast/v1", authority: "full", provisional: [], resources: [] })).toBe(false);
+  });
+
+  test("a manifest that does not say it is a cache is refused", () => {
+    const dir = ast([libA()], [], { authority: "full" });
+    expect(() => readAst(dir)).toThrow(/authority/);
+  });
+
+  test("JSON-LD: a resource is its canonical URL, a canonical-less one a urn, an edge a link", () => {
+    const dir = ast([libA(), pat], [[X + "Library/A|1.0.0", "relatedArtifact", X + "Library/B", "1.1.0"]]);
+    const doc = astJsonLd(readAst(dir)) as { "@context": object; "@graph": Array<Record<string, unknown>>; authority: string };
+    expect(doc["@context"]).toBeDefined();
+    expect(doc.authority).toBe("cache");
+    const a = doc["@graph"].find((n) => n.key === X + "Library/A|1.0.0")!;
+    expect(a["@id"]).toBe(X + "Library/A");
+    expect(a.resourceType).toBe("fhir:Library");
+    expect(a.dependsOn).toEqual([{ kind: "relatedArtifact", target: X + "Library/B", origin: "ast-export" }]);
+    expect(doc["@graph"].find((n) => n.key === "Patient/p1")!["@id"]).toBe("urn:fhir:Patient/p1");
+  });
+
+  test("the committed JSON Schemas and context are what the Zod generates", () => {
+    for (const [name, text] of Object.entries(igAstSchemaFiles())) {
+      expect(readFileSync(join(import.meta.dir, "..", "schemas", name), "utf-8")).toBe(text);
+    }
   });
 });
