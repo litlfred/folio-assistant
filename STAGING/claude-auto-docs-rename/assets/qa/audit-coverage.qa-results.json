@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "489518fcb63f"
+    "script_hash": "210698b89d33"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -36,7 +36,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run docs:auto:check"
+            "bun run auto:docs:check"
           ],
           "typed": false,
           "hasFiles": false
@@ -206,7 +206,6 @@
             "bun run check:version-bump",
             "bun run check:wireframes:check",
             "bun run harness:dirs:check",
-            "bun run iri:sync:check",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
@@ -326,6 +325,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run auto:docs:check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
@@ -343,7 +343,6 @@
             "bun run check:viewer-backticks",
             "bun run check:viewer-nav",
             "bun run check:wireframes:check",
-            "bun run docs:auto:check",
             "bun run docs:harness:check",
             "bun run docs:pages:check",
             "bun run gen:jsonld:check",
@@ -436,7 +435,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "undetermined",
+          "state": "empty",
           "directories": [
             "fsh-guts"
           ],
@@ -1207,8 +1206,15 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "fsh-guts",
+          "directories": [
+            "fsh-guts"
+          ]
+        }
+      ]
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1218,7 +1224,7 @@
           "kind": "auto-docs",
           "criteria": 0,
           "gates": [
-            "bun run docs:auto:check"
+            "bun run auto:docs:check"
           ]
         },
         {
@@ -1356,5 +1362,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 79
 }
