@@ -28446,7 +28446,7 @@
         },
         {
           "name": "refScan",
-          "type": "z.object({ filesRead: Count, unreadable: StringList }).strict().optional()",
+          "type": "z.object({ unreadable: StringList }).strict().optional()",
           "optional": true,
           "array": false
         }
@@ -55170,14 +55170,6 @@
       "kind": "field",
       "optional": false,
       "array": true
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "refScan",
-      "kind": "field",
-      "optional": true,
-      "array": false
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
