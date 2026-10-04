@@ -62,6 +62,12 @@
         "_visualiser_comment": "THE LIST FORM, for one visualisation, so it can carry `icon`. A bare string still parses and 26 other entries here are one; this is not the start of a migration. Owner, 2026-09-21, having gone looking for the board and landed on the origin: they asked for a tile for it and sent the bean art. `icon` names a glyph in `docs-ui.js`'s registry rather than carrying markup, because `tileLink` assigns its glyph with innerHTML and a declaration is INHERITED by dependent instances — see VisualisationSchema.icon. An unknown name falls back to the generic glyph."
       },
       "path": "beans/",
+      "source": {
+        "kind": "branch",
+        "branch": "cat/cat-harness/beans",
+        "keyedBy": "tip"
+      },
+      "_source_comment": "THE CUTOVER, bean `p3ny` (arc fs43 Phase 3), on the owner's explicit go of 2026-10-04 (\"go on cutover\"). The work plan is kept at the tip of `cat/cat-harness/beans` and is no longer tracked on main. Same shape as `fsh-guts` above, whose cutover (`9c7h`) is the worked precedent. `keyedBy: \"tip\"` and not `commit`: there is ONE live work plan, and a commit-keyed store would make `beans:claim` write a new key per claim rather than contend for one — the contention is the point, because bean `35nj` is two sessions claiming one bean 61 seconds apart. THIS FLIP AND THE `git rm -r beans` ARE ONE STEP: `mountTip` refuses a path the checkout still tracks, so a commit carrying only this leaves every reader refusing, and a commit carrying only the removal leaves every reader undeclared.",
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphKinds": [
         "beans"

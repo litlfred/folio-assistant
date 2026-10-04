@@ -273,6 +273,19 @@ smart-trust/test/results/
 who-iris/test/results/
 who-style-guide/test/results/
 
+# The work plan (bean `p3ny`, arc fs43 Phase 3; owner's go 2026-10-04). Since
+# the cutover `beans/` is kept at the tip of `cat/cat-harness/beans`, not on
+# main. `bun run state:mount` puts it back at `beans/` so the third-party
+# `beans` CLI can read `beans/defs` off a disk, and writes go through
+# `claim-bean.ts`'s branch-store path, which splices with `expect` so a sibling
+# that claimed first is a `conflict` rather than a lost write (bean `35nj`).
+# The WHOLE directory is ignored for the reason `fsh-guts/**` above is: a
+# mounted copy committed to main would be a second, diverging work plan, and
+# two work plans is the one thing AGENTS.md forbids outright.
+# `/**` and NOT `/beans/`: a directory rule stops git at the directory, which
+# would hide any narrower rule added under it later.
+/beans/**
+
 # The state-branch mount (bean `2h76` part 4). A git worktree of the `state`
 # branch, put here by `bun run state:mount` so the third-party `beans` CLI can
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this

@@ -60,8 +60,8 @@
       "shape": "branch",
       "name": "cat/cat-harness/beans",
       "legacy": [],
-      "holds": "the work plan (beans/), one live copy at the tip (`storage.keyedBy: tip`); seeded, not authoritative until the steward-run flip on #1850 (arc fs43, bean 2h76)",
-      "writers": ["scripts/branch-store.ts, on PR #1937 — not on main yet"],
+      "holds": "the work plan (beans/), one live copy at the tip (`storage.keyedBy: tip`); AUTHORITATIVE since the p3ny cutover (2026-10-04, on the owner's explicit go): `folio-assistant.json` declares the directory with `source.kind: branch` and main no longer tracks `beans/`. Read it mounted (`bun run state:mount`); readers refuse an unmounted copy rather than reading it as empty (bean dh4f)",
+      "writers": ["cat-harness/scripts/claim-bean.ts over scripts/branch-store.ts splice-write — every `bun run beans:claim` (PR #2061)", "cat-harness/scripts/state-push.ts over branch-store pushMount — an agent editing a bean def or note"],
       "repos": "this repository"
     },
     {
