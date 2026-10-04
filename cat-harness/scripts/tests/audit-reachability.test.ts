@@ -57,8 +57,17 @@ function tableWith(inputEntry: string, outputEntry = '"ok"'): string {
 }
 
 describe("evaluability is not loadability", () => {
-  test("a table that LOADS can still be unevaluable, and `not(...)` is the case that cost two months", async () => {
-    const p = tableWith('not("green")');
+  test("a table that LOADS can still be unevaluable — the whole premise, in one table", async () => {
+    // A RANGE, not `not("green")`. The defect that started this was
+    // `not("green")` in `merge-priority.dmn`, and #1952 implemented `not(...)`
+    // — which broke an earlier version of this very test, the one asserting
+    // that expression unreadable. That was the test pinning a DEFECT instead
+    // of the MECHANISM, which this file's own header warns against, and it is
+    // worth the paragraph: a fixture must exercise the BOUNDARY of the subset,
+    // never the one expression somebody is about to move inside it. Ranges are
+    // refused by `decision-table.ts`'s documented subset and are on nobody's
+    // roadmap.
+    const p = tableWith("[1..5]");
     try {
       // The loader is happy: nothing in it looks inside a rule's cells.
       const table = await loadDecisionTable(p, "Decision_Probe");
@@ -77,7 +86,10 @@ describe("evaluability is not loadability", () => {
   });
 
   test("the supported subset is clean — otherwise this check would fail every table", async () => {
-    for (const entry of ["-", '"green"', "> 0", "<= 2", "= 5", "true", '"a", "b"', "1, 2, 3"]) {
+    // `not("green")` is in this list as of #1952, which implemented it. The
+    // subset is whatever `decision-table.ts` says it is TODAY, and this list
+    // moves with it rather than freezing yesterday's answer.
+    for (const entry of ["-", '"green"', "> 0", "<= 2", "= 5", "true", '"a", "b"', "1, 2, 3", 'not("green")', 'not("a", "b")']) {
       const p = tableWith(entry);
       try {
         expect(unreadableExpressions(await loadDecisionTable(p, "Decision_Probe"))).toEqual([]);
