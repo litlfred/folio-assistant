@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Business Process Workflow Source API",
+    "description": "Source reference for Business Process Workflow - exactly one of the following must be provided:\n- url (url data type): URL to retrieve BusinessProcessWorkflow definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the BusinessProcessWorkflow definition\n- instance: Inline BusinessProcessWorkflow instance data",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-BusinessProcessWorkflowSource.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-BusinessProcessWorkflowSource",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-BusinessProcessWorkflowSource.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-BusinessProcessWorkflowSource",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-BusinessProcessWorkflowSource.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-BusinessProcessWorkflowSource": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-BusinessProcessWorkflowSource.schema.json",
+        "title": "Business Process Workflow Source",
+        "description": "Source reference for Business Process Workflow - exactly one of the following must be provided:\n- url (url data type): URL to retrieve BusinessProcessWorkflow definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the BusinessProcessWorkflow definition\n- instance: Inline BusinessProcessWorkflow instance data",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "BusinessProcessWorkflowSource",
+            "description": "Resource type identifier for BusinessProcessWorkflowSource logical model"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to retrieve BusinessProcessWorkflow definition from input/ or external source"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URI pointing to the BusinessProcessWorkflow definition"
+          },
+          "instance": {
+            "$ref": "http://smart.who.int/base/StructureDefinition-BusinessProcessWorkflow.schema.json",
+            "description": "Inline BusinessProcessWorkflow instance data"
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/BusinessProcessWorkflowSource",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}
