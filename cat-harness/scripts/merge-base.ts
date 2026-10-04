@@ -328,6 +328,13 @@ if (import.meta.main) {
   }
 
   if (noRegen) {
+    // Sync the submodule checkouts to the merged gitlinks BEFORE staging.
+    // `add -A` stages a gitlink from the submodule's checked-out HEAD, so
+    // without this the merge commit silently reverts the base's
+    // `bootstrap`/`bootstrap-tools` pins — the trap `merge-queue` names, and
+    // what broke `readme:subgraphs` on an unblocker's merge of #2062
+    // (2026-10-04).
+    syncSubmodules(root);
     git(root, "add", "-A");
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
@@ -351,6 +358,16 @@ if (import.meta.main) {
     const inst = spawnSync("bun", ["install", "--frozen-lockfile"], { cwd: root, stdio: "inherit" });
     if (inst.status !== 0) abort("bun install against the merged lockfile failed");
   }
+  // And the branch-kept graphs (bean 9c7h). The merge can bring in a
+  // declaration the branch did not have — fsh-guts kept on
+  // `cat/cat-harness/fsh-guts` — so a mount made BEFORE the merge mounted
+  // nothing, and regen then reads the graph as unmounted: `fsh-guts:viz` exits
+  // 2 and `audit:coverage:strict` fails. Measured 2026-10-04 on merge-main run
+  // 37193546694: #2059, #2043 and #1829, every head predating 88da63c2d6, all
+  // refused the same way. Mount against the MERGED declarations. Idempotent,
+  // and the mounted paths are ignored, so the final `add -A` stays clean.
+  const mount = spawnSync("bun", ["run", "state:mount"], { cwd: root, stdio: "inherit" });
+  if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
   // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
