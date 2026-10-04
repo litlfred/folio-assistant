@@ -4,7 +4,8 @@ description: >
   Order the ready PRs and land them as a train: read each PR's live facts,
   let the reprioritisation table place it, merge the members together, run the
   gate set on the combination, and on red attribute and eject the culprit
-  rather than reject the train. Use for "merge the ready PRs", "what lands
+  rather than reject the train. Every merge goes through `merge:guard`. Use
+  for "merge the ready PRs", "land this PR", "what lands
   next", "run a merge train", "why was my PR ejected", "move this PR up", and
   when tuning the train's order or size.
 user_invocable: false
@@ -345,11 +346,180 @@ per-checkout `git config`.
    rest re-run without it. The owning session fixes and re-signals ready; it
    is never merged on its behalf.
 
+## A PR lands only through `merge:guard` (STRICT)
+
+**Every merge a steward makes goes through `bun run merge:guard <pr> --merge
+--session <your session id>`.** Never `gh api -X PUT …/pulls/<n>/merge`,
+never the web button, never `merge_pull_request` from an MCP tool, and never
+by marking a PR ready or labelling it yourself first. The script
+(`cat-harness/scripts/merge-guard.ts`, bean `uoob`, child (f) of `nok9`) is
+the merge: it evaluates seven checks over GitHub's live facts, and performs
+the PUT, pinned to the head it evaluated, only when every one passes.
+
+Owner ruling 2026-10-03, after three PRs were landed unfinished by a steward
+calling the PUT directly on the same day:
+
+| PR | landed with | check that refuses it |
+|---|---|---|
+| #1937 | base = #1764's head branch, after #1764 had merged; head newer than its `ready:` (a hand merge and two claim commits since); an unsigned `ready:`; `needs-merge-human` on; its own `pull_request` runs failed, only a dispatch green | 1, 2, 3, 4, 5 |
+| #1960 | no `ready-to-merge`, no `ready:` comment, `- [ ] CI green` in the body | 3, 4, 6 |
+| #1957 | the steward itself called `ready_for_review` and added `ready-to-merge` 75 s before merging; no `ready:` comment | 2, 3 |
+
+The seven checks, each named in a refusal by number and id:
+
+1. **`base`** — open, based on `main`, and the base is not the head branch of
+   a merged PR. A stacked PR is retargeted by its owning session first.
+2. **`ready-for-review`** — not a draft, and the latest `ready_for_review`
+   event is attributable to the PR's **own** session, never to yours.
+3. **`ready-marker`** — a `ready: <sha>` comment **signed with the PR's own
+   session link** (the one in its body), naming the head, or with only
+   merge-main bot merges after it.
+4. **`labels`** — `ready-to-merge` present, `needs-merge-human` absent.
+5. **`ci`** — every `pull_request` run on the head is `success` or `skipped`,
+   and every workflow owed for that event ran. A `workflow_dispatch` run
+   counts **only** as the stand-in for a `pull_request` run GitHub held for
+   approval (`action_required`, bean `0qjq`) on a head that is a merge-main
+   bot merge: merge-main has already merged main into that head, so the head
+   IS the merge, and a dispatch on it judges the tree that would land. The
+   latest dispatch of the same workflow on the head decides — green counts,
+   running is not-ready, red is a defect. Held with no dispatch: not-ready if
+   `merge-main.yml`'s `for wf in … ; do gh workflow run` line names that
+   workflow's file (the dispatch is still owed), reported **not judged** if
+   it does not (Feature Staging, preview-only), and `unknown` if that line
+   cannot be parsed. A green dispatch never rescues a `pull_request` run that
+   executed and went red (#1937), and anywhere else it is reported and **not**
+   counted.
+6. **`checklist`** — no unticked `- [ ]` in the body.
+7. **`open-question`** — no comment after the marker asks the owner or the
+   Merge Manager a question (a heuristic; its limits are on `openQuestions`
+   in the script — a fresh `ready:` after the answer moves the window).
+
+Exit 0 is pass (or merged), 1 refused, **2 could not determine — never a
+pass.** A refusal is handed back to the owning session through
+`merge-refusal.bpmn` with the check's text; the steward does not fix the PR
+to make it pass, which is the move all three incidents made.
+
+**What the OWNING session does, so a finished PR passes:** mark it ready,
+then post `ready: <head sha>` signed with its session link —
+`https://claude.ai/code/session_…` in the footer — within ten minutes of
+each other, and apply `ready-to-merge`. Every session acts with the owner's
+token, so the timeline's actor is always the owner and cannot tell sessions
+apart; **the signature is the only thing that can**. An unsigned marker,
+like #1937's, is refused.
+
+**The status has four states, and red means wrong, not unfinished.** A PR
+that is merely not ready yet (a draft, no marker, no label, an unticked box,
+CI still running, an open question) posts `pending`. Only a defect posts
+`failure`: a base that is not `main` or is dead, `needs-merge-human`, red CI
+on the head, or a marker or ready-flip by a session other than the PR's own.
+`success` is pass and `error` is could-not-determine. The status is posted on
+every open PR, and red on every draft would teach readers to ignore red. A
+required check blocks the merge in every state but `success`.
+
+**The status is the backstop, not the gate.** `.github/workflows/merge-guard.yml`
+runs the evaluate mode on label, draft, body, comment and CI-completion
+events and posts a `merge-guard` commit status on the head. Making that
+context REQUIRED is a ruleset the owner adds; this skill does not, and no
+agent changes repository settings.
+
+`Rule_NotReady` in
+[`merge-priority.dmn`](../../../processes/sdlc/decisions/merge-priority.dmn)
+applies the cheap half of checks 1-3 at placement (`readiness`, from
+`LivePr.draft`, `baseRef`, `readySha`, `readyBy`), so an unfinished PR is
+handed back before it is put in a train rather than at the PUT.
+
+## When the authors stall: the steward dispatches unblockers
+
+Owner, 2026-10-04, verbatim: *"dispatch agent to handle where CI isnt green.
+make sure you dont use up all github workspace"* and *"if there is something
+small an agent can handle that unblocks, then do so"*. Authors' sessions hit
+usage limits together, so the whole hand-back column can go quiet for an hour
+while every member in it is one small fix away from admission.
+
+**This adds a second actor to step 4 above. It changes nothing else.** An
+unblocker fixes the head. It **never merges, never adds `ready-to-merge`, and
+never posts a `ready:` marker.** The author still vouches for the PR, and the
+steward still lands it only after the author signals ready, or under the
+owner's explicit release.
+
+**Who goes:** the PRs `merge:steward` routes to hand-back. Leave out drafts,
+PRs whose author was active in the last 15 minutes, PRs another session has
+claimed, and PRs under an owner block (a ruling such as "this blocks the PR"
+is a judgement about content, and fixing the code does not lift it). Group
+them into a few agents, each in its own worktree. The general swarm rules are
+in [`swarm-management`](swarm-management.md).
+
+**Every unblocker gets the same rules, written once and handed to all of
+them:**
+
+| rule | why |
+|---|---|
+| **at most ONE push per PR**, after `bun run gates` locally | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
+| no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
+| merge commits only: no rebase, amend or force-push | it is somebody else's branch |
+| authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
+| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz` exits non-zero and `audit:coverage:strict` goes red |
+| delete the worktree's `node_modules` at the end | four parallel installs run out of the container's disk |
+| one comment per PR: root cause, the commit it pushed or the reason it stood down | the author comes back to an explanation, not a mystery commit |
+
+**`missing-required` is often a head that CI never started, not a slow
+one.** The causes to check, in order:
+- the PR edits a workflow file and GitHub cannot parse it, so no run is
+  created at all;
+- the head was pushed with `GITHUB_TOKEN`, which starts no `pull_request`
+  run;
+- the run is held at `action_required`.
+
+The first one is not visible in the check list, so look at the YAML.
+
 ## Landing
 
+**Re-run `merge:steward` after every merge, before the next one.** Each merge
+moves `main`. A member admitted against the old `main` can turn `dirty` and
+then cannot land at all. Measured 2026-10-04: #2059 was admitted at
+`f8e1006d`, then reported `dirty` once #2069 landed. Its tested head is still
+green, but GitHub refuses to merge a conflicted PR, so it waits for its
+`merge:main` round and fresh CI on the new head.
+
 Only with the owner's release (`Task_Release`): explicit, or a standing ruling
-quoted verbatim with its date. What lands is exactly the SHA CI tested; if
-`main` moved after the train's CI started, re-run rather than land.
+quoted verbatim with its date, and **only through `bun run merge:guard <pr>
+--merge --session <id>`** (section above). What lands is exactly the SHA CI
+tested — the guard pins the PUT to the head it evaluated, so GitHub refuses it
+if the head moved; if `main` moved after the train's CI started, re-run
+rather than land.
+
+**A standing release covers the queue AS IT STOOD, not every PR that arrives
+later.** Owner, 2026-10-04, verbatim: *"my approcal - that counts for the PRs
+that are in queue. new PRs need my approval exp-licity (through you or
+siblign)"*. So on every sweep the steward lists the PRs opened since the
+release, and puts them to the owner in one question, with the table's verdict
+on each. One answer ("approve all 6") may cover the whole batch.
+
+## ACK every PR that enters the queue, on its bean (STRICT)
+
+Owner, 2026-10-04: *"as part of merge manager skill you need to ACK a new PR
+in queue on its bean"*. A submitter who hears nothing cannot tell "queued"
+from "lost", and the bean is where the next session looks.
+
+When a PR enters the queue (first seen on a sweep, or approved by the
+owner), the steward writes three things in the same change:
+
+1. **The queue entry**, `beans/queue/<owner>--<repo>--<pr>.json`. It holds the
+   table's placement, a `reason` that begins `ACK:` and says what the PR waits
+   on, and **`beans`**, copied from the PR body. Validate it against
+   `MergeQueueEntrySchema`.
+2. **A note on each bean the PR serves**, one file per bean per branch:
+   `beans/notes/<bean>--<date>--<branch>.md`. A note, never an append to the
+   bean def; [`bean-coordination`](bean-coordination.md) says why. Then run
+   `bun run beans:notes`, or CI's `beans:notes:check` goes red.
+3. **One comment on the PR** naming the entry and the beans. Before the beans
+   cutover, items 1 and 2 reach `main` only through the steward's own PR, a
+   cycle late, so the comment is the ACK the author sees now. After the
+   cutover, write 1 and 2 with `state:push`; the comment then just points at
+   them.
+
+A PR whose body names no bean gets the entry with `beans: []` and a comment
+asking the author to name one. The steward does not invent the association.
 
 ## Your merge cadence is an input to the bot's throughput
 

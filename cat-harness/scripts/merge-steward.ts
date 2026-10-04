@@ -28,9 +28,13 @@
  * @covers none — a steward's reader over GitHub and the bean store; it judges no declared graph
  */
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { GITHUB_WORKFLOW_DIR, triggerFor } from "../src/core/workflow-events.ts";
 
 import { readBeanStore } from "./bean-store-read.ts";
 import { classify } from "./merge-conflict-patterns.ts";
+import { readyMarkers, type GhComment } from "./merge-guard.ts";
 import {
   deriveFacts,
   loadPriorityTable,
@@ -115,6 +119,17 @@ function refusalFor(base: string, pr: number): "clean" | "declared" | "refused" 
   return conflicted.some((p) => classify(p).strategy === "refuse") ? "refused" : "declared";
 }
 
+/** Whether a gating workflow is behind a `paths`/`branches`/`types` filter for `pull_request`. */
+function conditional(wf: string): boolean {
+  const root = run("git", ["rev-parse", "--show-toplevel"]).out.trim();
+  const file = join(GITHUB_WORKFLOW_DIR, wf);
+  try {
+    return triggerFor(file, readFileSync(join(root, file), "utf-8"), "pull_request").requirement === "conditional";
+  } catch {
+    return false; // unreadable: keep it owed, never silently waive a gate
+  }
+}
+
 /**
  * The PR's own CI on its head, by the five values `LivePr.ownCi` names.
  *
@@ -137,7 +152,17 @@ function ciFor(headSha: string): { ownCi: NonNullable<LivePr["ownCi"]>; missing:
   for (const wf of GATING) {
     const mine = all.filter((r) => (r.path ?? "").endsWith(wf) && r.status === "completed");
     if (mine.some((r) => r.conclusion === "failure")) red = true;
-    else if (!mine.some((r) => r.conclusion === "success")) missing.push(wf);
+    else if (!mine.some((r) => r.conclusion === "success")) {
+      // A `paths`-filtered workflow is owed only when the PR touches its
+      // paths. With no run of it at all on this head, GitHub did not start
+      // one, which is the filter's answer, not a missing gate. Measured
+      // 2026-10-04: #2083 and #2084 (bean-only) read `missing-required` on
+      // `jsonld-gen-check` while `check-head-has-run`, which reads triggers,
+      // called them green. Same rule as its "conditional — not judged".
+      const anyRun = all.some((r) => (r.path ?? "").endsWith(wf));
+      if (!anyRun && conditional(wf)) continue;
+      missing.push(wf);
+    }
   }
   if (red) return { ownCi: "red", missing };
   return { ownCi: missing.length > 0 ? "missing-required" : "green", missing };
@@ -162,7 +187,7 @@ async function main(): Promise<void> {
   }
 
   const open = gh(`repos/${REPO}/pulls?state=open&per_page=100`) as
-    | { number: number; draft: boolean; title: string; body: string | null; head: { sha: string }; labels: { name: string }[] }[]
+    | { number: number; draft: boolean; title: string; body: string | null; head: { sha: string }; base: { ref: string }; labels: { name: string }[] }[]
     | null;
   if (open === null) {
     console.error("merge:steward — COULD NOT ASK: the pulls endpoint did not answer. This is not an empty queue.");
@@ -183,6 +208,8 @@ async function main(): Promise<void> {
     conflictState.set(p.number, r);
     if (r === "refused" || r === "unknown") refusedSet.add(p.number);
     const { ownCi, missing } = ciFor(p.head.sha);
+    const comments = gh(`repos/${REPO}/issues/${p.number}/comments?per_page=100`) as GhComment[] | null;
+    const marker = readyMarkers(comments ?? []).at(-1);
     missingByPr.set(p.number, missing);
     prs.push({
       pr: p.number,
@@ -193,6 +220,16 @@ async function main(): Promise<void> {
       labels: p.labels.map((l) => l.name),
       ownCi,
       headShaMatchesCi: ownCi === "green",
+      // Readiness inputs for `Rule_NotReady` (bean `uoob`): the latest
+      // `ready:` comment and who signed it. `headSha` is deliberately NOT
+      // passed: `readinessOf` would call every marker followed by a
+      // merge-main bot merge `stale-marker`, and the bot merges main into
+      // nearly every open PR. `merge:guard` asks the full question, bot
+      // merges allowed, at the moment of merging.
+      draft: p.draft,
+      baseRef: p.base.ref,
+      readySha: marker?.sha,
+      readyBy: marker?.session,
     });
   }
 
