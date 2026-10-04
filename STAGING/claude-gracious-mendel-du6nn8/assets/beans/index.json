@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 825,
+      "count": 826,
       "unit": "beans"
     }
   },
@@ -3908,14 +3908,14 @@
       "title": "Merge refused: #1898 owed CI not green on its head",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [
         "folio-assistant-apcg"
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-04T14:30:43Z",
+      "updatedAt": "2026-10-04T16:41:00Z",
       "preview": "PR #1898, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--1898.json`, status `blocked`): The vqlp HOLD IS LIFTED. The owner",
       "file": "beans/defs/folio-assistant-b8de--merge-refused-1898-owed-ci-not-green-on-its-head.md"
     },
@@ -9666,6 +9666,20 @@
       "file": "beans/defs/folio-assistant-u3cd--ig-site-theme-build-ig-site-dresses-each-igs-own-j.md"
     },
     {
+      "id": "folio-assistant-u4up",
+      "title": "merge:train drops gitignored-but-tracked test/results files",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-d33q",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T16:44:20Z",
+      "updatedAt": "2026-10-04T16:44:20Z",
+      "preview": "Measured 2026-10-04 building merge-train-2026-10-04a (#2113):\n\n1. The built train tree omitted `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` and its tool-run sidecar (tracked on main, gitignored), so `lsi:skills:check` and `lsi:viz:check` went red in CI while green locally. Restored by hand in 1635342194. Same family as 8j9e (#2090 fixed `merge-base.ts`, not the train tool).\n2. Take-b",
+      "file": "beans/defs/folio-assistant-u4up--mergetrain-drops-gitignored-but-tracked-testresult.md"
+    },
+    {
       "id": "folio-assistant-u63y",
       "title": "B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed",
       "status": "completed",
@@ -11861,8 +11875,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 322,
-    "openTotal": 487,
+    "orphanOpen": 323,
+    "openTotal": 488,
     "coveredOpen": 161,
     "duplicateIds": 1
   }
