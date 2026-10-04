@@ -8,5 +8,7 @@ The graph kinds folio-assistant-sci owns, one folio-graph-kind/v1 node per file 
 
 Part of [folio-assistant-sci](../README.md) 0.1.0, declared as `folio-assistant-sci-kinds`, holding `kinds`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`lake-cache.json`](lake-cache.json) | Lake build cache |  |
 <!-- kg:subgraph:end -->
