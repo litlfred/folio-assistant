@@ -282,6 +282,122 @@ export function unaryTest(test: string, value: unknown): boolean {
   return value === literal(t);
 }
 
+/**
+ * Every expression in `table` that this evaluator CANNOT READ — the difference
+ * between a table that loads and a table that can answer.
+ *
+ * ## Load is not evaluability, and that cost two months
+ *
+ * `merge-priority.dmn` carried `not("green")` in `Rule_HeadNotGreen` from the
+ * day it was drawn. {@link loadDecisionTable} read it without complaint —
+ * nothing in the loader looks inside a rule's cells — and
+ * {@link possibleOutcomes} reads the OUTPUT column only. So `kg-audit`'s
+ * `decision-outcomes-used` criterion, which calls exactly those two, recorded
+ * `"result": "pass"` for a table no caller could evaluate. Measured 2026-10-04,
+ * bean `dxqm`.
+ *
+ * That is `1xhc` one level deeper: **a declared executable artefact that
+ * nothing can reach is indistinguishable, from outside, from a decision nobody
+ * takes.** The property that made it findable at all is {@link unaryTest}
+ * throwing rather than returning false, and this function exists so something
+ * ASKS, instead of waiting for a caller to arrive.
+ *
+ * ## It lives here, not in the gate
+ *
+ * The FEEL subset is this module's own definition of itself. A checker that
+ * restated the grammar would be a second spelling free to disagree with the
+ * first — green on a table the engine refuses, or red on one it accepts — so
+ * the question is asked by RUNNING the evaluator over a probe rather than by
+ * re-deriving what it accepts.
+ *
+ * ## Why atom by atom, and why the probe is `0`
+ *
+ * `unaryTest` on a whole comma-separated test cannot be used for this: it is
+ * `parts.some(…)`, so the first atom that matches ends the walk and an
+ * unreadable atom after it is never reached. A list is therefore split with the
+ * same {@link splitTop} the evaluator uses and each atom asked separately.
+ *
+ * The probe is the number `0` because it is the one value that reaches every
+ * branch without a type complaint: a comparison needs a numeric fact, and an
+ * equality or literal test simply returns false. So a `DecisionError` under
+ * this probe is not "wrong fact type" — it is a rule that can never evaluate
+ * for ANY fact, such as `> "a"`, and it is reported alongside the
+ * `UnsupportedDmn` cases rather than swallowed.
+ *
+ * Output cells are checked too. {@link evaluate} calls {@link literal} on every
+ * output column, and `possibleOutcomes` reads only the first — so an unreadable
+ * literal in the second output column of a multi-output table is invisible to
+ * every existing reader.
+ *
+ * An empty list is the only clean answer; the caller decides what to do with a
+ * non-empty one.
+ */
+export function unreadableExpressions(table: DecisionTable): UnreadableExpression[] {
+  const out: UnreadableExpression[] = [];
+  const why = (e: unknown): string | undefined =>
+    e instanceof UnsupportedDmn || e instanceof DecisionError
+      ? e.message
+      : // Anything else is a defect in this function, not a finding about the
+        // table, and swallowing it would turn a crash into a clean report.
+        undefined;
+
+  for (const rule of table.rules) {
+    rule.when.forEach((test, i) => {
+      const t = test.trim();
+      if (t === "" || t === "-") return;
+      for (const atom of splitTop(t)) {
+        try {
+          unaryTest(atom, 0);
+        } catch (e) {
+          const message = why(e);
+          if (message === undefined) throw e;
+          out.push({
+            rule: rule.id,
+            side: "input",
+            column: i + 1,
+            of: table.inputs[i]?.expression ?? `input${i + 1}`,
+            expression: atom === t ? t : `${atom}  (in \`${t}\`)`,
+            message,
+          });
+        }
+      }
+    });
+    rule.then.forEach((cell, i) => {
+      try {
+        literal(cell);
+      } catch (e) {
+        const message = why(e);
+        if (message === undefined) throw e;
+        out.push({
+          rule: rule.id,
+          side: "output",
+          column: i + 1,
+          of: table.outputs[i] ?? `output${i + 1}`,
+          expression: cell,
+          message,
+        });
+      }
+    });
+  }
+  return out;
+}
+
+/** One cell of a decision table that {@link unreadableExpressions} could not read. */
+export interface UnreadableExpression {
+  /** The rule the cell belongs to. */
+  rule: string;
+  /** Which half of the table: a unary test, or an output literal. */
+  side: "input" | "output";
+  /** 1-based column, as a reader counts them on the page. */
+  column: number;
+  /** The fact an input column reads, or the name of an output column. */
+  of: string;
+  /** The cell as written — or the offending atom, naming the list it sits in. */
+  expression: string;
+  /** The evaluator's OWN message, never a restatement of it. */
+  message: string;
+}
+
 export interface DecisionResult {
   /** The single output value, for the common single-output table. */
   outcome: string | number | boolean;

@@ -1075,6 +1075,35 @@ jobs:
       - name: every kind with files is judged, not merely typed
         run: bun run audit:coverage:strict
 
+      # `audit:coverage` asks which audits reach which KIND of node. This asks
+      # which DECLARED EXECUTABLE ARTEFACTS can be reached at all — bean
+      # `dxqm`, under `1xhc`. Two defects on 2026-10-04 passed all 217 gates in
+      # this file: `scripts/merge-queue.ts` ordered the merge queue and nothing
+      # called it, and `merge-priority.dmn` used `not("green")`, which this
+      # repo's FEEL evaluator refuses, so the table was unevaluable by ANY
+      # caller — while its committed `kg-qa` sidecar read `"result": "pass"`,
+      # because the criterion that judges it calls `loadDecisionTable` and
+      # `possibleOutcomes` and NEITHER parses a unary test. **Load is not
+      # evaluability.**
+      #
+      # `--check` and NOT `--strict`, and the split is not the same one
+      # `audit:coverage` makes two steps above. There, `--check` fails on
+      # staleness alone because every finding is an unmet ambition. Here the
+      # hard families — a decision table nothing can evaluate, a diagram the
+      # resolver cannot reach, two diagrams answering to one name — are BROKEN
+      # ARTEFACTS, so they fail in the step that runs on every push. What
+      # `--strict` adds is the self-declared entry points nothing runs — a
+      # backlog rather than a defect, and a count left out of this comment on
+      # purpose, because a number in prose is the next thing to go stale. The
+      # sidecar holds it.  Bean `dxqm` holds the day `--strict` is wired.
+      #
+      # The staleness half is what makes the backlog bite without a red gate: an
+      # eighth orphan makes the committed sidecar disagree with the tree, this
+      # step fails, and the author's regeneration puts the new module in the
+      # diff where a reviewer sees it.
+      - name: every declared executable artefact can be reached
+        run: bun run audit:reachability:check
+
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
       # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
