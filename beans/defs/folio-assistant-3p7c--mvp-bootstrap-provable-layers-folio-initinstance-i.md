@@ -1,7 +1,7 @@
 ---
 # folio-assistant-3p7c
 title: 'MVP: bootstrap-provable layers — folio_init/instance-init against one layer alone, in an empty repo'
-status: in-progress
+status: completed
 type: epic
 priority: high
 tags:
@@ -42,4 +42,18 @@ Created at the owner's request, 2026-10-04 (session https://claude.ai/code/sessi
 
 ## Done when
 
-- [ ] `zmdo`'s four per-layer conditions hold for `cat-harness` and `folio-assistant-core` (the layers `zmdo` calls by their pre-rename names `agentic-harness` and `folio-assist-core`, beans `4wzf`, `yx9p`), each run in an empty repository.
+- [x] `zmdo`'s four per-layer conditions hold for `cat-harness` and `folio-assistant-core` (the layers `zmdo` calls by their pre-rename names `agentic-harness` and `folio-assist-core`, beans `4wzf`, `yx9p`), each run in an empty repository.
+
+## Summary of Changes — MVP met, 2026-10-04
+
+The MVP the owner ruled in `tndo` holds for both layers, proven in real empty repositories: the zmdo proof runs on 2026-10-04: litlfred/cat-harness-test run 37206112987 (cat-harness alone) and litlfred/folio-test `zmdo-proof` run 37206115053 (folio-assistant-core alone, document folio), both green against folio-assistant@8ea9e47.
+
+Closed: `tndo` (definition met), `zmdo` (falsifier passed). Still open from this epic's list, and why — none of them is the MVP itself:
+
+| bean | why still open |
+|---|---|
+| `mer2` | `x3bd`'s bootstrap-only test does not run through instance-init yet |
+| `ho66` | the layer's OWN suite standalone: 472 failing for cat-harness (10-03) |
+| `txue`, `vj2p`, `ybsz`, `pyds`, `wggr`, `izqr`, `b5f0`, `zlmp` | separation stages toward SEEDING, not the MVP |
+
+**Next phase: seeding** — `smbc` (owner authorises seeding `litlfred/cat-harness`), gated by `hcpz`'s `seed:ready`.

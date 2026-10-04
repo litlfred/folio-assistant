@@ -1,7 +1,7 @@
 ---
 # folio-assistant-zmdo
 title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prove an empty-repo bootstrap'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,8 +9,6 @@ tags:
 created_at: 2026-09-18T17:24:16Z
 updated_at: 2026-10-04T12:12:34Z
 parent: folio-assistant-vke6
-blocked_by:
-    - folio-assistant-mer2
 ---
 
 ## The ask
@@ -267,3 +265,14 @@ Run 1 of each failed in `actions/checkout` before any check ran — persisted cr
 - [x] Per-layer MVP evaluated in an empty repository, for both layers — green.
 - [ ] The two layer repositories seeded (blocked on `seed:ready`, not this bean).
 - [ ] The proof re-pointed at the seeded layer repositories once they exist, instead of a sparse checkout of folio-assistant.
+
+## Summary of Changes — closed 2026-10-04
+
+The falsifier ran and passed: a new instance stands on each layer alone, in an empty repository (§"PROVEN 2026-10-04"). What it took, on the way:
+
+- **#2073** — `initInstance`: the instance-level scaffold with no content type (`mer2`).
+- **#2077** — a scaffold writes the layer it stands on (before it, every scaffolded instance AND folio reached 0 skill directories), and the server serves the tools its KG declares (before it, `cat-harness` alone could not start its MCP server).
+- **#2092** — this record.
+- The proof: `zmdo-check.ts` + a workflow in `litlfred/cat-harness-test` (`main`) and `litlfred/folio-test` (`zmdo-proof`).
+
+**The two open boxes above are not this bean's**, and move rather than close: seeding the layer repositories is `smbc` (stage 3, owner-authorised), and re-pointing the proof at the seeded repositories follows from it. The sibling-discovery gap `seed:ready` reports is a new bean, opened with this close.
