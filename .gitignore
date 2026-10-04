@@ -265,6 +265,16 @@ smart-trust/test/results/
 who-iris/test/results/
 who-style-guide/test/results/
 
+# The merge queue's mount (bean `najo`). `beans/queue/` is CUT OVER to
+# `cat/cat-harness/merge-queue` — the one state graph whose branch is already
+# authoritative, because the steward that writes it may not open a pull request
+# to `main`. `bun run state:mount` puts the branch's files here; a write goes
+# back through `branch-store`'s splice (`bun run state:push --id queue`), never
+# as a commit on this branch. Ignored for the reason every mount is: a mounted
+# file staged here would be a second copy of the graph, which is the state
+# `check:declared-dirs` reports as `not-cut-over`.
+/beans/queue/
+
 # The state-branch mount (bean `2h76` part 4). A git worktree of the `state`
 # branch, put here by `bun run state:mount` so the third-party `beans` CLI can
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this

@@ -49,6 +49,7 @@ import {
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
 
@@ -106,10 +107,24 @@ export function subdirDescriptions(
   return out;
 }
 
-/** Does a directory declaration carry `storage` — its record lives on a branch, not in the checkout? */
+/**
+ * Does this declaration put its content somewhere other than the checkout?
+ *
+ * Asked of {@link contentIsOffCheckout}, which honours BOTH spellings — the
+ * modern `source: { kind: "branch", … }` and the legacy `storage` (#1987, bean
+ * `l4ay`). It read `storage` alone until bean `najo`, and the drift was not
+ * cosmetic: the `queue` entry, cut over with a `source`, was treated as a
+ * directory in the checkout and contributed a `no-title` and a
+ * `long-description` finding about a README that lives on its branch — two
+ * findings about a directory this writer is not meant to look at, which is the
+ * state bean `f3bh` removed for the twelve `qa` directories.
+ *
+ * One question, one resolver: the alternative is this predicate and the
+ * presence checks disagreeing about what "off the checkout" means, decided by
+ * which field an author happened to write.
+ */
 export function isStored(d: unknown): boolean {
-  const s = (d as { storage?: { branch?: unknown } }).storage;
-  return typeof s === "object" && s !== null && typeof s.branch === "string" && s.branch !== "";
+  return contentIsOffCheckout(d as { source?: SubgraphSource; storage?: unknown });
 }
 
 /**

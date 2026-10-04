@@ -390,6 +390,8 @@
     "regen": "bun run cat-harness/scripts/regen-after-merge.ts",
     "merge:main": "bun run cat-harness/scripts/merge-base.ts --base origin/main",
     "merge:steward": "bun run cat-harness/scripts/merge-steward.ts",
+    "merge:queue:read": "bun run cat-harness/scripts/merge-queue-cli.ts read",
+    "merge:queue:record": "bun run cat-harness/scripts/merge-queue-cli.ts record",
     "merge:train": "bun run cat-harness/scripts/merge-train.ts",
     "merge:overlap": "bun run cat-harness/scripts/merge-overlap.ts",
     "merge:leftover": "bun run cat-harness/scripts/merge-leftover.ts",

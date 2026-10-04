@@ -31,6 +31,7 @@ import { spawnSync } from "node:child_process";
 
 import { readBeanStore } from "./bean-store-read.ts";
 import { classify } from "./merge-conflict-patterns.ts";
+import { holdInForce, readQueueEntries } from "./merge-queue-store.ts";
 import {
   deriveFacts,
   loadPriorityTable,
@@ -200,12 +201,40 @@ async function main(): Promise<void> {
   const parents = new Map<string, string>();
   if (store.state === "read") for (const b of store.beans) if (b.parent) parents.set(b.id, b.parent);
 
+  // THE RECORDED DECISIONS, read back into the sweep. `placeAll` and
+  // `orderQueue` have taken `overridden` and `positions` since they were
+  // written, and this command passed NEITHER (measured 2026-10-04, bean
+  // `najo`): an owner override recorded in the queue changed nothing about the
+  // order this printed, so the store was write-only and the table's
+  // `ownerOverride` input was permanently false. A decision nobody reads back
+  // is a decision nobody took.
+  //
+  // THROWS when the queue cannot be reached, rather than ordering the queue as
+  // if no decision had ever been made — `dh4f`. An absent queue (`null`) is a
+  // different and legitimate answer.
+  const queue = readQueueEntries(process.cwd()) ?? [];
+  const overridden = new Set<number>();
+  const positions = new Map<number, number>();
+  const heldUntil = new Map<number, string>();
+  for (const { entry: e } of queue) {
+    if (e.placement.kind === "override") {
+      overridden.add(e.pr);
+      positions.set(e.pr, e.placement.position);
+    }
+    // An ejection with no later placement keeps the PR out of a train: that is
+    // `FactContext.refused`'s own second clause, "or with an un-cleared
+    // ejection". Cleared by recording a new entry for the PR.
+    if (e.ejection !== undefined) refusedSet.add(e.pr);
+    if (holdInForce(e)) heldUntil.set(e.pr, e.hold!.expires);
+  }
+
   const facts = deriveFacts(prs, {
     parentOf: (id) => parents.get(id),
     refused: refusedSet,
+    overridden,
     mvpLabels: ["mvp", "milestone:status", "ready-to-merge"],
   });
-  const ordered = orderQueue(placeAll(await loadPriorityTable(), facts));
+  const ordered = orderQueue(placeAll(await loadPriorityTable(), facts, overridden), positions);
 
   if (json) {
     console.log(
@@ -214,11 +243,14 @@ async function main(): Promise<void> {
           base,
           baseSha,
           beanStore: store.state,
+          recordedDecisions: queue.length,
           queue: ordered.map((p) => ({
             ...p,
             conflict: conflictState.get(p.pr),
             ownCi: prs.find((q) => q.pr === p.pr)?.ownCi,
             missingGating: missingByPr.get(p.pr) ?? [],
+            ...(positions.has(p.pr) ? { overridePosition: positions.get(p.pr) } : {}),
+            ...(heldUntil.has(p.pr) ? { heldUntil: heldUntil.get(p.pr) } : {}),
           })),
         },
         null,
@@ -232,12 +264,19 @@ async function main(): Promise<void> {
   if (store.state !== "read") {
     console.log(`  ! the bean store reads \`${store.state}\`, so input (a) seedsStaging could not be computed from ancestry`);
   }
+  // Printed even when zero, because "no decision has been recorded" and "the
+  // decisions were not read" are different facts and this is where a steward
+  // would notice the second. `readQueueEntries` throws for the unreachable
+  // case, so a zero here is a determined zero.
+  console.log(`  ${queue.length} recorded queue decision(s) read back: ${overridden.size} override(s), ${heldUntil.size} live hold(s)`);
   console.log("");
   console.log("  #     route      class        rank  train  conflict   CI               rule");
   for (const p of ordered) {
     const ci = prs.find((q) => q.pr === p.pr)?.ownCi ?? "unknown";
     const miss = missingByPr.get(p.pr) ?? [];
     const ciText = ci === "missing-required" ? `missing-required(${miss.length})` : ci;
+    const held = heldUntil.get(p.pr);
+    if (held !== undefined) console.log(`  ${p.pr} is HELD until ${held} by a recorded decision — not taken into a train`);
     console.log(
       `  ${String(p.pr).padEnd(6)}${String(p.route).padEnd(11)}${String(p.class).padEnd(13)}${String(p.rank).padEnd(6)}${String(p.train ?? "-").padEnd(7)}${String(conflictState.get(p.pr)).padEnd(11)}${ciText.padEnd(17)}${p.rule}`,
     );

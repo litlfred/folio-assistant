@@ -122,7 +122,15 @@ export interface DirFinding {
   instance: string;
   id: string;
   path: string;
-  kind: "absent" | "stale-exemption" | "mirror" | "not-cut-over" | "unmounted";
+  /**
+   * `unmountable` — the entry's content is declared on a branch TIP and no
+   * mount can be keyed on it, because it is declared from within another
+   * directory and is not `"subgraph": true`. Its own state, not a spelling of
+   * `unmounted`: that one's remedy is `bun run state:mount`, and here that
+   * command cannot reach the entry at all, so printing it would send a reader
+   * to run something that does nothing. Bean `najo`.
+   */
+  kind: "absent" | "stale-exemption" | "mirror" | "not-cut-over" | "unmounted" | "unmountable";
   detail: string;
   /**
    * Set on a NESTED entry: the declaration that holds it, instance-relative
@@ -184,6 +192,13 @@ export function tipPresence(
   loc: { id: string; branch: string; keyedBy: string },
   abs: string,
   repoRoot: string,
+  /**
+   * The id the MOUNT MARKER is keyed on. Defaults to `loc.id`, which is right
+   * for an instance's own entry and wrong for one declared from within: there
+   * the composed `beans/queue` is the reader's id and `queue` is the mount's,
+   * and `markerPath` refuses the former outright (bean `najo`).
+   */
+  markerId: string = loc.id,
 ): { state: "mounted"; into: string } | { state: "not-cut-over" | "unmounted"; detail: string } {
   const rel = relative(repoRoot, abs).split(sep).join("/") || ".";
   const tracked = spawnSync("git", ["ls-files", "--", rel], { cwd: repoRoot, encoding: "utf-8" });
@@ -201,7 +216,7 @@ export function tipPresence(
   }
   let marker;
   try {
-    marker = readMarker(repoRoot, loc.id);
+    marker = readMarker(repoRoot, markerId);
   } catch (err) {
     return {
       state: "unmounted",
@@ -413,6 +428,24 @@ function offCheckoutFindings(
   abs: string,
   instanceRoot: string,
   repoRoot: string,
+  /**
+   * The id a MOUNT of this directory is keyed on, when that is not `e.id`.
+   *
+   * `undefined` means "no mount can be keyed on this entry at all" — a nested
+   * entry that is not `"subgraph": true`, which `resolveDirectories` does not
+   * list, so `tipLocations` never sees it and `state:mount` cannot reach it.
+   * That is a DIFFERENT finding from an unmounted one, because "mount it" is
+   * not a remedy that exists: see {@link DirFinding}'s `unmountable`.
+   *
+   * It is passed rather than derived because the two spellings of a nested
+   * entry's id are both legitimate — `nestedDirectories` composes
+   * `beans/queue` so a reader can see who declares it, and
+   * `promoteFromWithin` lists it as `queue` so an instance-level consumer can
+   * find it — and only the caller knows which it is holding. Deriving the
+   * marker id here from `e.id` is what produced the `najo` measurement: a
+   * mounted graph read as `unmounted` because `markerPath` refuses a slash.
+   */
+  mountId: string | undefined = e.id,
 ): DirFinding[] {
   let src: ResolvedSubgraphSource;
   try {
@@ -425,7 +458,24 @@ function offCheckoutFindings(
     return [{ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message }];
   }
   if (src.kind !== "branch" || src.keyedBy !== "tip") return [];
-  const t = tipPresence(src, abs, repoRoot);
+  if (mountId === undefined) {
+    return [
+      {
+        instance: instanceRoot,
+        id: e.id,
+        path: e.path,
+        kind: "unmountable",
+        detail:
+          `declares its content on \`${src.branch}\` (keyed by tip) and is declared FROM WITHIN another ` +
+          `directory WITHOUT \`"subgraph": true\`, so \`resolveDirectories\` does not list it, ` +
+          `\`tipLocations\` never sees it and \`bun run state:mount\` cannot reach it. A mount is keyed ` +
+          `on a directory ID, and this entry has none at instance level. Mark it \`"subgraph": true\` ` +
+          `(bean \`cmsl\`), or move the \`source\` onto the directory that declares it. Reporting this as ` +
+          `\`unmounted\` would print a remedy that does not exist.`,
+      },
+    ];
+  }
+  const t = tipPresence(src, abs, repoRoot, mountId);
   return t.state === "mounted" ? [] : [{ instance: instanceRoot, id: e.id, path: e.path, kind: t.state, detail: t.detail }];
 }
 
@@ -448,8 +498,23 @@ export function auditNested(
     const e = n as typeof n & { absent?: { reason: string }; storage?: { branch: string }; source?: SubgraphSource };
     const abs = join(instanceRoot, n.path);
     if (contentIsOffCheckout(e)) {
-      // The same three answers a top-level entry gets, from the same function.
-      findings.push(...offCheckoutFindings({ ...e, id: n.id, path: n.path }, abs, instanceRoot, repoRoot));
+      // The same answers a top-level entry gets, from the same function — but
+      // keyed on the id the MOUNT uses, which for a from-within entry is its
+      // own id and not the composed one this walk reports under. A
+      // `"subgraph": true` entry is listed by `resolveDirectories` under
+      // `ownId` (bean `cmsl`), so that is what `state:mount` wrote its marker
+      // as; an entry without the marker has no instance-level id at all, and
+      // `undefined` is how `offCheckoutFindings` is told to say so rather
+      // than to print a remedy that cannot work. Bean `najo`.
+      findings.push(
+        ...offCheckoutFindings(
+          { ...e, id: n.id, path: n.path },
+          abs,
+          instanceRoot,
+          repoRoot,
+          n.subgraph === true ? n.ownId : undefined,
+        ),
+      );
       continue;
     }
     const present = existsSync(abs) && statSync(abs).isDirectory();

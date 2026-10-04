@@ -5685,6 +5685,28 @@ export function directoriesForGraph(
 }
 
 /**
+ * {@link directoriesForGraph}, with the fields a path alone cannot carry — the
+ * entry's `id` and its declared `source`.
+ *
+ * Both are needed the moment a graph's content can be somewhere other than the
+ * checkout. A consumer holding only `absPath` cannot ask `graphReadPath` where
+ * to READ (that is keyed on the id), and cannot tell an empty directory from a
+ * graph kept at a branch tip that this checkout has not mounted. Measured on
+ * bean `najo`: `check:kind-validators` reported *"EXAMINED NOTHING"* over the
+ * merge queue in all three states — absent, unmounted, and mounted-and-empty —
+ * because a path is the same path in each.
+ *
+ * The same resolution as its sibling, so the two cannot answer differently.
+ */
+export function directoryEntriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  return matchingDirectories(root, graph, registry);
+}
+
+/**
  * Where a folio's authored content lives — **asked, not assumed**.
  *
  * Bean `hs08`. The owner's ruling, 2026-09-20: *"content/ shouldnt be expected
@@ -6153,6 +6175,43 @@ export function declaredKinds(
 }
 
 
+/**
+ * One entry a declaration names FROM WITHIN another — {@link nestedDirectories}'s row.
+ *
+ * `id` is COMPOSED (`beans/queue`), so a reader can see which declaration holds
+ * it; `ownId` is the id the entry gives itself, which is the id every OTHER
+ * mechanism keys on — `promoteFromWithin` lists a `subgraph: true` entry under
+ * `nd.id` verbatim, so that is what `resolveDirectories`, `tipLocations` and a
+ * mount marker spell. Both are carried because conflating them is silent and
+ * wrong in both directions.
+ *
+ * Measured 2026-10-04 (bean `najo`), on the first nested entry ever to carry a
+ * branch `source`: `check:declared-dirs` asked `readMarker(root, "beans/queue")`
+ * for a graph mounted under the id `queue`, and `markerPath` refuses an id with
+ * a slash — so the gate reported a MOUNTED graph as `unmounted`, with "could
+ * not determine" as the reason. A from-within graph could therefore never read
+ * as mounted, which is the state the whole cutover produces.
+ *
+ * `subgraph` says whether the entry is an instance subgraph at all
+ * (bean `cmsl`). Without it a consumer cannot tell "mounted under its own id"
+ * from "no mount can reach this entry, because nothing lists it".
+ */
+export interface NestedDirectory {
+  /** `<parent id>/<own id>` — unique across the instance, and says who declares it. */
+  id: string;
+  /** The entry's OWN id, as `resolveDirectories` and a mount marker spell it. */
+  ownId: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  /** `true` when the entry declares itself an instance subgraph (bean `cmsl`). */
+  subgraph?: boolean;
+  parentId: string;
+}
+
 /** Where a declared directory actually is, honouring `scope`. */
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
   const base = d.scope === "repository" ? repoRootFor(root) : root;
@@ -6178,26 +6237,8 @@ export function nestedDirectories(
   root: string,
   decl: CatHarnessDeclaration,
   registry: GraphKindRegistry = defaultGraphKinds,
-): Array<{
-  id: string;
-  path: string;
-  graphKinds: string[];
-  description?: string;
-  absent?: { reason: string };
-  storage?: unknown;
-  source?: unknown;
-  parentId: string;
-}> {
-  const out: Array<{
-  id: string;
-  path: string;
-  graphKinds: string[];
-  description?: string;
-  absent?: { reason: string };
-  storage?: unknown;
-  source?: unknown;
-  parentId: string;
-}> = [];
+): NestedDirectory[] {
+  const out: NestedDirectory[] = [];
   for (const d of decl.directories ?? []) {
     const parent = d.path.replace(/\/+$/, "");
     walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
@@ -6220,16 +6261,7 @@ function walkNested(
   id: string,
   kinds: readonly string[],
   registry: GraphKindRegistry,
-  out: Array<{
-  id: string;
-  path: string;
-  graphKinds: string[];
-  description?: string;
-  absent?: { reason: string };
-  storage?: unknown;
-  source?: unknown;
-  parentId: string;
-}>,
+  out: NestedDirectory[],
   seen: Set<string>,
 ): void {
   if (seen.has(abs)) return;
@@ -6247,6 +6279,7 @@ function walkNested(
         absent?: { reason: string };
         storage?: unknown;
         source?: unknown;
+        subgraph?: unknown;
       }>;
     };
     try {
@@ -6257,8 +6290,10 @@ function walkNested(
     for (const nd of nested.directories ?? []) {
       if (!nd.id || !nd.path) continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
-      const entry = {
+      const entry: NestedDirectory = {
         id: `${id}/${nd.id}`,
+        // The id every OTHER mechanism keys on — see {@link NestedDirectory}.
+        ownId: nd.id,
         path: `${rel}/${sub}/`,
         graphKinds: nd.graphKinds ?? [],
         ...(nd.description ? { description: nd.description } : {}),
@@ -6271,11 +6306,14 @@ function walkNested(
         // an unexplained absence, because the reason never arrived. The same
         // loss would make an eventual `storage: { keyedBy: "route" }` on a
         // nested entry read as a missing directory — `contentIsOffCheckout`
-        // cannot see a field it was not given. Latent until that test: no
-        // nested entry carries any of the three today.
+        // cannot see a field it was not given. Latent until bean `najo`, which
+        // gave the `queue` entry a branch `source` and found the next loss one
+        // field over: `subgraph`, without which a consumer cannot tell a graph
+        // mounted under its own id from one no mount can reach.
         ...(nd.absent ? { absent: nd.absent } : {}),
         ...(nd.storage ? { storage: nd.storage } : {}),
         ...(nd.source ? { source: nd.source } : {}),
+        ...(nd.subgraph === true ? { subgraph: true as const } : {}),
         parentId: id,
       };
       out.push(entry);
