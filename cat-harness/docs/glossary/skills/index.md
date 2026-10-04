@@ -1378,7 +1378,7 @@ merge-conflict-patterns <span class="fa-gloss-status">candidate, extracted</span
 merge-queue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for &quot;merge the ready PRs&quot;, &quot;what lands next&quot;, &quot;run a merge train&quot;, &quot;why was my PR ejected&quot;, &quot;move this PR up&quot;, and when tuning the train's order or size.</p>
+<p>Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through <code>merge:guard</code>. Use for &quot;merge the ready PRs&quot;, &quot;land this PR&quot;, &quot;what lands next&quot;, &quot;run a merge train&quot;, &quot;why was my PR ejected&quot;, &quot;move this PR up&quot;, and when tuning the train's order or size.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-queue.md"><code>cat-harness/skills/sdlc/sdlc-core/merge-queue.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--methodology-adoption" data-fa-state="extracted" data-fa-gloss="">

@@ -21722,6 +21722,13 @@
           "optional": false,
           "array": false,
           "doc": "Did CI run on the head that would be merged (T2; bean `u7be` item 3)."
+        },
+        {
+          "name": "readiness",
+          "type": "z.enum(READINESS)",
+          "optional": false,
+          "array": false,
+          "doc": "Has the OWNING session signalled this PR is finished, against `main`?"
         }
       ],
       "extendsNames": [],
@@ -21729,6 +21736,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "READINESS",
         "z"
       ],
       "exported": true
@@ -21822,6 +21830,19 @@
       "name": "PriorityClassSchema",
       "module": "cat-harness/schemas/merge-queue.ts",
       "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Readiness",
+      "name": "Readiness",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
       "values": [],
