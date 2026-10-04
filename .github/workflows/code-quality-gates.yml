@@ -938,6 +938,18 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
+      # The same obligation one level out, for a graph KIND (bean `uoij`). Added
+      # 2026-10-04 with the command, because an unenforced chain is exactly the
+      # state it exists to leave: adding `docs-auto` on #2022, six hand-picked
+      # `check:*` commands all passed while `bun run gates` found 5 failures
+      # across 217 and `bun test` found two more.
+      #
+      # It is HERE, in the registered-never-run job, for the reason that job
+      # exists: a gate no workflow runs cannot fail, which is bean `xom7` one
+      # level down.
+      - name: every graph kind's artefacts are current, and its authored two exist
+        run: bun run kind:register:check
+
       # The skills graph's LSI index is written by the registration chain
       # (`lsi:skills`) and read by kg:audit's `tool-downstream-fresh`. Checked on its
       # own so an edited skill with a stale index names THIS step, not a
