@@ -31,9 +31,48 @@
  */
 import { z } from "zod";
 
+/**
+ * A `.pipe()` chain's LAST stage, which is the one that describes the node.
+ *
+ * `io: "input"` is right for everything else and must not change — it is what
+ * makes a `.default()` field render as optional, as every published schema
+ * here already does. But for `A.pipe(B)` the input side is `A`, and the
+ * guard-then-parse idiom this repository uses makes `A` a bare
+ * `z.looseObject({})`:
+ *
+ *     z.looseObject({})
+ *       .superRefine(refuseForbiddenKeys)   // names the key in the message
+ *       .pipe(EntryObjectSchema)            // the actual shape
+ *
+ * So converting the input yields `{ type: "object" }` with NO properties,
+ * while the eleven real fields sit on the output. Measured on
+ * `MergeQueueEntrySchema`: input side 0 properties, pipe output 11.
+ *
+ * `gen-uml-overview` catches that as a converter failure rather than an empty
+ * shape — correctly, and the throw is why this was found at all. The schema is
+ * not wrong: a reader of the published contract wants the fields, and the
+ * guard is a refusal rather than a shape. So the converter follows the pipe.
+ *
+ * Loops rather than unwrapping once, because `A.pipe(B).pipe(C)` nests.
+ *
+ * Bean `xp5j`: mapping the merge-queue `$schema` family made the first node of
+ * that kind convertible, and `uml:overview:check` went red. `RefWindowSchema`
+ * is built the same way and would have hit this the moment ITS family was
+ * mapped, so this is the class rather than the instance.
+ */
+function lastPipeStage(schema: z.ZodType): z.ZodType {
+  let s = schema as unknown as { _zod?: { def?: { type?: string; out?: unknown } } };
+  // Bounded: a hand-written chain is a handful deep, and a bound beats
+  // trusting that no schema is ever cyclic.
+  for (let i = 0; i < 16 && s?._zod?.def?.type === "pipe" && s._zod.def.out; i++) {
+    s = s._zod.def.out as typeof s;
+  }
+  return s as unknown as z.ZodType;
+}
+
 /** Convert, inlining every shared definition. */
 export function toJsonSchema(schema: z.ZodType): Record<string, unknown> {
-  return z.toJSONSchema(schema, { io: "input", reused: "inline" }) as Record<string, unknown>;
+  return z.toJSONSchema(lastPipeStage(schema), { io: "input", reused: "inline" }) as Record<string, unknown>;
 }
 
 /**
