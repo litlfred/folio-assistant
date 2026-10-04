@@ -100,6 +100,33 @@ moves no diagram out of reach; the rules are in
 [`directory-conventions`](directory-conventions.md) §"Concern
 groups", checked by `check:concern-groups`.
 
+### A process binds only skills its instance can reach (STRICT)
+
+Owner, 2026-10-03: a process may bind only skills (and, through them, Tools)
+from **its own instance or one it `needs`**, transitively, *"general rule, not
+just fhir-harness"*. A `<bootstrap.processes:skill ref>` to a skill that only
+a HIGHER instance holds is a wrong-direction edge, the same as an upward
+import: the diagram cannot be lifted into its own repository without the layer
+above it.
+
+`bun run check:process-bindings` gates it, with the same `allowedFromNeeds`
+direction as `check:import-direction` and `check:reference-direction`.
+**`skill-ref-resolves` does not catch this, and that is why the gate exists:**
+it resolves against `knownSkills(root)`, which in a pre-split checkout is
+checkout-scoped, so "resolves" means "exists somewhere". On 2026-10-03 that
+hid 33 wrong-direction bindings in 9 diagrams behind a green audit. They are
+in a ratchet baseline, cleared under bean `mlux`.
+
+When it fires there are two fixes, and choosing between them is a placement
+decision, not a mechanical one:
+
+- **move the process up** to the instance that holds the skill, when the
+  process is about that layer's concern;
+- **move the skill down**, when the skill is generic and only happens to live
+  too high.
+
+Never widen the baseline to admit a new binding.
+
 ### Binding the extension namespaces
 
 **An element's prefix names the Subgraph that declares it** (owner, 2026-09-24,

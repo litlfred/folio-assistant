@@ -222,6 +222,12 @@ export const RULES: Rule[] = [
       // `p11x`). Harness for the same reason: it reads declarations and module
       // specifiers, consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-import-direction.ts",
+      // The PROCESS-BINDING half of that arrow (owner, 2026-10-03): which
+      // instance a BPMN's `<skill ref>` reaches. Harness for the same reason —
+      // it reads declarations, BPMN extension elements and skill file names,
+      // consumes the same `layer-direction.ts`, and no folio content.
+      "scripts/check-process-bindings.ts",
+      "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
