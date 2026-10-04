@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 856,
+      "count": 858,
       "unit": "beans"
     }
   },
@@ -11846,6 +11846,20 @@
       "file": "beans/defs/folio-assistant-yxob--formal-edge-extractor-in-folio-assistant-sci-gener.md"
     },
     {
+      "id": "folio-assistant-yzp9",
+      "title": "Preview cap by size: rotate STAGING previews to a 3 GB total, not a count of 10",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:10:18Z",
+      "updatedAt": "2026-10-04T17:26:07Z",
+      "preview": "Owner, 2026-10-04 (session 01LW3Zx): replace the #1868 count cap (MAX_PREVIEWS = 10) with a byte budget, 3 GB. Previews grew from ~88 MiB (2026-09-22) to 200-780 MB, so 10 previews rotate off in 1-2 h. Keep the current preview + the most recently updated others while the total fits; remove the rest oldest-first, same records as today.\n\n- [x] staging-rotate.ts: MAX_PREVIEW_BYTES, planRotation by by",
+      "file": "beans/defs/folio-assistant-yzp9--preview-cap-by-size-rotate-staging-previews-to-a-4.md"
+    },
+    {
       "id": "folio-assistant-z1x6",
       "title": "PAGE WEIGHT: post-build HTML minification, and nav_exclude for the generated reference sections (#1885)",
       "status": "in-progress",
@@ -12072,6 +12086,20 @@
       "file": "beans/defs/folio-assistant-zru7--accessibility-all-70-translated-pages-serve-html-l.md"
     },
     {
+      "id": "folio-assistant-zxvh",
+      "title": "Special-branch size budgets: declared in special-branches.json, checked by bun run health",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:49:43Z",
+      "updatedAt": "2026-10-04T17:26:07Z",
+      "preview": "Owner, 2026-10-04: \"also update healthchecks for limits on the other specal branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)\"; lean cache = whole family; auto-docs = cat/cat-harness/auto-docs/* each <= 1gb (bean 06e3 / #2049 owns the branch and the docs-auto -> auto-docs rename, told 2026-10-04); qa-reports = own branch, 500 MB.\n\n- [x] budget field on special-branches.json r",
+      "file": "beans/defs/folio-assistant-zxvh--special-branch-size-budgets-declared-in-special-br.md"
+    },
+    {
       "id": "folio-assistant-zzmr",
       "title": "KG: the knowledge graph's own structure, declaration and publication",
       "status": "in-progress",
@@ -12285,14 +12313,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 221,
-        "closed": 86,
+        "total": 223,
+        "closed": 88,
         "open": 135,
         "inProgress": 75,
         "todo": 59,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3891402714932127
+        "share": 0.39461883408071746
       },
       {
         "id": "folio-assistant-yg29",

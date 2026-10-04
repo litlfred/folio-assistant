@@ -312,10 +312,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T20:24:43.278Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
-  "sourceCommitSha": "2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
-  "sourceCommitAt": "2026-10-04T22:16:45+02:00",
+  "generatedAt": "2026-10-04T20:57:00.379Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/167a180704c5f1260c10f2507fa0c7991c3b7f6a",
+  "sourceCommitSha": "167a180704c5f1260c10f2507fa0c7991c3b7f6a",
+  "sourceCommitAt": "2026-10-04T22:48:40+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1115,7 +1115,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
-      "instructionLines": 303,
+      "instructionLines": 308,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2762,7 +2762,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 652,
+      "instructionLines": 659,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3128,7 +3128,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 247,
+      "instructionLines": 249,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -50781,7 +50781,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 273,
+      "fileCount": 329,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -50798,7 +50798,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 283,
+      "fileCount": 287,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -51005,7 +51005,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1958,
+      "fileCount": 2057,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
