@@ -640,6 +640,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # Ported from main (#2052) into this branch stacked on #2065: the queue
+        # is cut over to cat/cat-harness/merge-queue, so check:declared-dirs
+        # fails "unmounted" without this. No-op once the base carries main's.
+        run: bun run state:mount
+
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
       # relaxable="false". This fails when a relaxation names something that no
