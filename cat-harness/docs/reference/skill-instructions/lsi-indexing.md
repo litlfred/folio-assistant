@@ -121,14 +121,33 @@ rebuilds the index in memory and judges that run, writing nothing, and
 `lsi:viz` reads the indexes by ref through `qa-store` (`--ref`, default `main`)
 — anything but a hit exits 2 and writes no page about zero indexes.
 
-**The viewer page is not committed either, and the reason is not the same
-one.** A sidecar comes off `main` because its record is on the branch. The page
-comes off because of what it IS: an aggregate over every index, so one
-sentence added to one of 229 skills restaged it — 319 of the last 400 commits
-on `main`. It is written during the docs-site build, after that workflow's
-`qa:fetch`, from the entry pinned to that build's sha; `lsi:viz:check` asks
-whether the page can be **drawn**, which is the only question left once there
-is no stored copy to compare with.
+**The viewer page is SPLIT, and the cut is by what each value is a function
+of.** A sidecar comes off `main` because its record is on the branch. The page
+cannot come off whole — its front matter is what declares the harness tile for
+`/lsi/`, so a page that is not committed is a page with no way in. So:
+
+| part of `docs/lsi/index.md` | a function of | committed |
+|---|---|---|
+| front matter, prose, method links | the generator | **yes** |
+| which graphs need an index, and each verdict | the **tree** | **yes** |
+| units, terms, retained, σ, pole terms, cosines | an index's **content** | no |
+
+The committed half reads **no index at all**: the verdict table is computed
+with a source that holds nothing, so `graphVerdict` takes its compute-and-judge
+branch over the current tree. That is not a detail. Were the table read from a
+stored index, the same commit would say `fresh` on a container holding a
+working copy and `stale` in CI reading `qa-reports` at `main` — which resolves
+to the LATEST published entry, so the value would depend on when the gate ran
+rather than on the tree. **That is bean `in5a`'s loop arriving over the
+network**, and it is the trap to avoid when taking any committed page off a
+store: the page stops being a function of the tree.
+
+`bun run lsi:viz -- --detail` adds the per-index sections and is run by the
+docs-site build, after that workflow's `qa:fetch` pins the entry to the
+build's own sha. So the published page carries everything a reader wants and
+`main` carries nothing a one-sentence skill edit moves. `lsi:viz:check` keeps
+its ordinary meaning against the committed half, so it is still a gate that
+fails.
 
 ### Why a declared merge pattern was not enough, measured
 
