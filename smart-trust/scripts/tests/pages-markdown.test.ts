@@ -25,6 +25,7 @@
  * @module smart-trust/scripts/tests/pages-markdown.test
  */
 import { describe, expect, it } from "bun:test";
+import { VIEW_PAGE } from "../../../fhir-harness/scripts/resource-views.ts";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
 
@@ -40,11 +41,20 @@ const categoryFiles = existsSync(CATEGORIES)
       .sort()
   : [];
 
+/**
+ * A VIEW page — a DAK sidecar's (`<Name>.schema.json.md`, `<Name>.jsonld.md`) or a JSON view (`<Name>.json.md`) — sits
+ * beside its artefact page, as the Publisher's does, but is a different page
+ * KIND: one per held sidecar, not one per artefact (bean `jut3`).
+ */
+const isView = (f: string) => VIEW_PAGE.test(f);
+
 const artifactFiles = existsSync(ARTIFACTS)
   ? readdirSync(ARTIFACTS)
-      .filter((f) => f.endsWith(".md"))
+      .filter((f) => f.endsWith(".md") && !isView(f))
       .sort()
   : [];
+
+const dakViewFiles = existsSync(ARTIFACTS) ? readdirSync(ARTIFACTS).filter(isView).sort() : [];
 
 /**
  * The artefact index the generator reads. Loaded here so a test can assert
@@ -59,10 +69,21 @@ const indexSrc = existsSync(join(DOCS, "index.md"))
   ? readFileSync(join(DOCS, "index.md"), "utf-8")
   : "";
 
+/**
+ * The pages' CSS — linked, not inlined (bean `680p`): the shared rules and,
+ * where the chrome was ingested, the mirrored chrome. The style tests below
+ * read these files; every page must link them.
+ */
+const cssFile = (f: string) => (existsSync(join(DOCS, "assets", f)) ? readFileSync(join(DOCS, "assets", f), "utf-8") : "");
+const SITE_CSS = `${cssFile("ig-pages.css")}\n${cssFile("ig-chrome.css")}`;
+
 /** Every generated page, index first, as `[label, source]`. */
 const pages: [string, string][] = [
   ["index.md", indexSrc],
   ...artifactFiles.map(
+    (f) => [`artifact/${f}`, readFileSync(join(ARTIFACTS, f), "utf-8")] as [string, string],
+  ),
+  ...dakViewFiles.map(
     (f) => [`artifact/${f}`, readFileSync(join(ARTIFACTS, f), "utf-8")] as [string, string],
   ),
 ];
@@ -134,21 +155,31 @@ describe("smart-trust pages are generated at all", () => {
   });
 });
 
+describe("the CSS is linked once, never inlined per page", () => {
+  it("the shared stylesheet exists", () => {
+    expect(SITE_CSS).toContain(".st-tag");
+  });
+  for (const [label, src] of pages) {
+    it(`${label} links it and inlines none`, () => {
+      expect(src).toContain("assets/ig-pages.css");
+      expect(src).not.toContain("<style>");
+    });
+  }
+});
+
 describe("the pages carry no theme CSS of their own", () => {
   /**
    * `body`, a colour scheme and `prefers-color-scheme` are the THEME's to
    * declare. A page that restates them is a page that silently stops matching
    * — and it is what made these pages render light plates in dark mode.
    */
-  for (const [label, src] of pages) {
-    it(`${label} does not redeclare the theme`, () => {
-      const css = /<style>([\s\S]*?)<\/style>/.exec(src)?.[1] ?? "";
-      expect(css).not.toContain("body{");
-      expect(css).not.toContain("body {");
-      expect(css).not.toContain("prefers-color-scheme");
-      expect(css).not.toContain("background:#0d1117");
-    });
-  }
+  // One stylesheet every page links (checked above), so one assertion.
+  it("the linked stylesheet does not redeclare the theme", () => {
+    expect(SITE_CSS).not.toContain("body{");
+    expect(SITE_CSS).not.toContain("body {");
+    expect(SITE_CSS).not.toContain("prefers-color-scheme");
+    expect(SITE_CSS).not.toContain("background:#0d1117");
+  });
 
   /**
    * The AUTHORED half stays small — and this used to be a bare line count over
@@ -167,7 +198,7 @@ describe("the pages carry no theme CSS of their own", () => {
    * what somebody typed here, and that is what must stay readable.
    */
   it("the hand-written half of the style block is still small enough to read in one screen", () => {
-    const css = /<style>([\s\S]*?)<\/style>/.exec(indexSrc)?.[1] ?? "";
+    const css = SITE_CSS;
     const authored = css
       .trim()
       .split("\n")
@@ -185,10 +216,7 @@ describe("the pages carry no theme CSS of their own", () => {
    * opened a single artefact page.
    */
   it("every mirrored declaration is scoped — no bare :root anywhere", () => {
-    for (const [label, src] of pages) {
-      const css = /<style>([\s\S]*?)<\/style>/.exec(src)?.[1] ?? "";
-      expect(`${label}: ${/(^|[\s,}]):root\s*\{/.test(css)}`).toBe(`${label}: false`);
-    }
+    expect(/(^|[\s,}]):root\s*\{/.test(SITE_CSS)).toBe(false);
   });
 });
 
@@ -202,7 +230,9 @@ describe("the pages are markdown, not HTML wearing front matter", () => {
     });
 
     it(`${label} uses markdown tables`, () => {
-      expect(b).toMatch(/^\|---/m);
+      // A DAK view page holds no tabular data — a file and its links — so it
+      // is held only to the half of this rule that forbids HTML tables.
+      if (!isView(label)) expect(b).toMatch(/^\|---/m);
       expect(b).not.toMatch(/<table\b/);
       expect(b).not.toMatch(/<tr\b/);
       expect(b).not.toMatch(/<td\b/);
@@ -218,7 +248,11 @@ describe("representation links are separated", () => {
    */
   for (const [label, src] of pages) {
     const b = body(src);
-    if (!b.includes("</a>")) continue;
+    // Only a page with a `repLinks` row can carry this defect. A DAK view
+    // page has none, and since #1901 neither has the index: its tables are
+    // the Publisher's name + description, and the representations moved to
+    // each artefact's own page, where this still checks them.
+    if (!/>(json|xml|ttl|html)<\/a>/.test(b) || isView(label)) continue;
 
     it(`${label} puts a separator between adjacent links`, () => {
       expect(b).not.toContain("</a><a ");
@@ -315,10 +349,12 @@ describe("materialization state is stated, never implied by styling", () => {
    * classes carry a colour and nothing else; the WORD is what is read.
    */
   it("both state tags are defined and both are used with their word", () => {
-    const css = /<style>([\s\S]*?)<\/style>/.exec(indexSrc)?.[1] ?? "";
+    const css = SITE_CSS;
     expect(css).toContain(".st-held");
     expect(css).toContain(".st-ref");
-    expect(indexSrc).toMatch(/class="st-tag st-held">materialized</);
+    // On the artefact pages — the index's tables stopped carrying the state
+    // in #1901 (it is a technical column, and the artefact page states it).
+    expect(pages.some(([, src]) => /class="st-tag st-held">materialized</.test(src))).toBe(true);
   });
 
   for (const [label, src] of pages) {
@@ -392,5 +428,66 @@ describe("left-hand nav — three roles, one per page kind", () => {
     for (const a of leaves) {
       expect(fm(readFileSync(join(ARTIFACTS, a), "utf-8"))).toContain("nav_exclude: true");
     }
+  });
+});
+
+describe("the DAK API section is on exactly the pages the Publisher puts it on", () => {
+  /**
+   * smart-base's post-processing appends "API Information" / "Endpoints" to a
+   * ValueSet's page and skips logical models (`generate_dak_api_hub.py`), so
+   * the section belongs on the ValueSets whose OpenAPI sidecar is held — and
+   * on nothing else, since an extra section is a difference from the
+   * standard render too (bean `jut3`).
+   */
+  const full = ix as unknown as { artifacts: { resourceType: string; id: string; sidecars?: { openapi?: { localPath?: string } } }[] };
+  const expected = full.artifacts
+    .filter((a) => a.resourceType === "ValueSet" && a.sidecars?.openapi?.localPath)
+    .map((a) => `${a.resourceType}-${a.id}.md`)
+    .sort();
+  const carrying = artifactFiles.filter((f) => readFileSync(join(ARTIFACTS, f), "utf-8").includes("data-ig-api-openapi-src")).sort();
+
+  it("the set matches, and is not empty", () => {
+    expect(carrying).toEqual(expected);
+    expect(carrying.length).toBeGreaterThan(0);
+  });
+});
+
+// #1901, owner 2026-10-02: the IG's table of contents lives only in the
+// left-hand rail, and every page ends in the Publisher's footer, whose facts
+// come from the IG's own metadata.
+describe("the Publisher footer, and no in-page Contents box", () => {
+  it("the index carries no Contents box", () => {
+    expect(indexSrc).not.toContain('aria-label="Contents"');
+    expect(indexSrc).not.toContain("ig-toc");
+  });
+
+  it("the footer's data is the IG's own, written once", () => {
+    const d = JSON.parse(readFileSync(join(DOCS, "assets", "ig-footer.json"), "utf-8"));
+    expect(d.packageId).toBe(ix.packageId);
+    expect(d.version).toBe(ix.version);
+    expect(existsSync(join(DOCS, "assets", "ig-footer.js"))).toBe(true);
+  });
+
+  // The <prev | next> chain: index, then every artefact page in the order the
+  // index lists them. Followed from the index, it must visit every artefact
+  // page once and only resolve to pages that exist — a broken hop is a 404
+  // in a footer on every page.
+  it("prev/next walk index -> every artefact page once, each hop resolving", () => {
+    const attr = (src: string, name: string) => src.match(new RegExp(`<footer id="ig-footer"[^>]*\\b${name}="([^"]+)"`))?.[1];
+    const read = (rel: string) => readFileSync(join(DOCS, rel), "utf-8");
+    const seen: string[] = [];
+    let at = "index.md";
+    for (let next = attr(indexSrc, "data-next"); next !== undefined; ) {
+      const target = join(at === "index.md" ? "" : "artifact", next).replace(/\.html$/, ".md");
+      expect(existsSync(join(DOCS, target))).toBe(true);
+      const src = read(target);
+      const back = attr(src, "data-prev")!;
+      expect(join("artifact", back).replace(/\.html$/, ".md").replace(/^\.\/?$/, "index.md")).toBe(at === "index.md" ? "index.md" : at);
+      seen.push(target);
+      at = target;
+      next = attr(src, "data-next");
+    }
+    expect(seen.length).toBe(ix.artifacts.length);
+    expect(new Set(seen).size).toBe(seen.length);
   });
 });

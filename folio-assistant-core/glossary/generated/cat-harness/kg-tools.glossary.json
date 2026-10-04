@@ -503,6 +503,14 @@
       "status": "candidate"
     },
     {
+      "id": "pin-spdx-license-list",
+      "prefLabel": "Snapshot the SPDX License List at its pinned version",
+      "definition": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
+      "notation": "pin-spdx-license-list",
+      "source": "cat-harness/tools/index.ts#pin-spdx-license-list",
+      "status": "candidate"
+    },
+    {
       "id": "processes-viewer",
       "prefLabel": "Processes viewer",
       "definition": "Render the declared BPMN processes as an index page and one page per diagram.",
@@ -623,6 +631,14 @@
       "status": "candidate"
     },
     {
+      "id": "site-search-scopes",
+      "prefLabel": "Site search scopes",
+      "definition": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      "notation": "site-search-scopes",
+      "source": "cat-harness/tools/index.ts#site-search-scopes",
+      "status": "candidate"
+    },
+    {
       "id": "skill-docs",
       "prefLabel": "Skill instruction reference",
       "definition": "Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.",
@@ -668,6 +684,14 @@
       "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       "notation": "subgraph-readmes",
       "source": "cat-harness/tools/index.ts#subgraph-readmes",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-resolve",
+      "prefLabel": "Resolve a declared subgraph's content source",
+      "definition": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "notation": "subgraph-resolve",
+      "source": "cat-harness/tools/index.ts#subgraph-resolve",
       "status": "candidate"
     },
     {

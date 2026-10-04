@@ -18,6 +18,7 @@ Derived from the declarations wherever a fact exists: a staged instance's planne
 |---|---|---|---|---|---|
 | **cat-harness** `cat-harness` | [`litlfred/cat-harness`](https://github.com/litlfred/cat-harness) | 🧱 planned | — | staged instance | — |
 | **cat-harness-tools** `cat-harness-tools` | [`litlfred/cat-harness-tools`](https://github.com/litlfred/cat-harness-tools) | 🧱 planned | — | staged instance | — |
+| **cat-openapi** `cat-openapi` | [`litlfred/cat-openapi`](https://github.com/litlfred/cat-openapi) | 🧱 planned | — | staged instance | — |
 | **fhir-harness** `fhir-harness` | [`litlfred/fhir-harness`](https://github.com/litlfred/fhir-harness) | 🧱 planned | — | staged instance | — |
 | **folio-assistant-core** `folio-assistant-core` | [`litlfred/folio-assistant-core`](https://github.com/litlfred/folio-assistant-core) | 🧱 planned | — | staged instance | — |
 | **folio-assistant-sci** `folio-assistant-sci` | [`litlfred/folio-assistant-sci`](https://github.com/litlfred/folio-assistant-sci) | 🧱 planned | — | staged instance | — |
@@ -27,7 +28,6 @@ Derived from the declarations wherever a fact exists: a staged instance's planne
 | **smart-immunizations** `smart-immunizations` | [`litlfred/smart-immunizations`](https://github.com/litlfred/smart-immunizations) | 🧱 planned | — | staged instance | — |
 | **smart-trust** `smart-trust` | [`litlfred/smart-trust`](https://github.com/litlfred/smart-trust) | 🧱 planned | — | staged instance | — |
 | **WHO IRIS** `who-iris` | [`litlfred/who-iris`](https://github.com/litlfred/who-iris) | 📦 exists | — | hand-entered | Repository created 2026-09-30 and empty; the staged instance is who-iris/. Seeding is held (kg-separation stage 10) until the owner says so. The WHO voices style guide merges into it as a subgraph. |
-| **who-style-guide** `who-style-guide` | [`litlfred/who-style-guide`](https://github.com/litlfred/who-style-guide) | 🧱 planned | — | staged instance | — |
 | **WHO World Health Data Hub** `who-world-health-data-hub` | — | 💡 proposed | — | hand-entered | Proposed by the owner 2026-09-30 as a repository per large KG asset type; no instance or repository yet. |
 
 ## Subscriptions

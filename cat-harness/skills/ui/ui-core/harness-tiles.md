@@ -47,6 +47,41 @@ is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
 nowhere, because nothing of it is published here, and a snapshot that cannot
 be read is a finding on the tile rather than an empty one. Issue #1719.
 
+## Which harness `/` is: a flag, a default, and a hub (issue #1904)
+
+The site's landing page is one of the **instantiated** harnesses, the same set
+as the tiles. It is never the instance the generator happens to live in, and
+never the repository's name. The owner's ruling, 2026-10-02, verbatim:
+
+> Flag it, with a default (recommended). The chosen instance's own
+> `<name>.config.json` carries `"site": { "landing": true }`. If exactly one
+> harness is instantiated, it is the landing page and no flag is needed. That
+> covers smart-trust. If there are several and none is flagged, a gate fails.
+> If more than one is flagged, then neutral hub with listing of harnesses,
+> todos,
+
+| instantiated (`<name>.config.json` at the root) | flagged | `/` is |
+|---|---|---|
+| 0 | n/a | nothing to land on (`none`): a state of its own, not a default |
+| 1 | n/a | that harness's landing, with no flag needed |
+| several | exactly 1 | the flagged harness's landing |
+| several | 0 | **`check:landing-instance` fails**: never guess |
+| several | 2 or more | the **neutral hub**: the harness listing (`harness_details.html`, these tiles) and the todo panel (the landing sticky panel, not a second board) |
+
+`resolveLandingInstance(repoRoot)` in `schemas/harness-config.ts` is the
+**only** reader of the flag. `sync-docs-harness.ts` writes its answer to
+`_data/harness.json` as `landingInstance`, `landing.html` branches on its
+`kind`, and `library-graph.ts` / `schema-graph.ts` name an undeclared root
+through `rootInstanceName`, which uses the same answer. A config that cannot
+be read, or whose `site.landing` is not a boolean, makes the answer
+`ambiguous` too: its flag might decide the case.
+
+The flag is on the **config**, not the declaration, because the declaration
+travels with the harness into every checkout that uses it, and the landing is
+a fact about one checkout. A folio `folio_init` writes has one harness and
+needs no flag; the second harness instantiated beside it is the moment to add
+one. This repository flags `cat-harness` in `cat-harness.config.json`.
+
 ## "Harness" carries TWO senses, and only one of them is this rule
 
 **Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*
@@ -307,11 +342,20 @@ the list lives: *"should be in each harness config which are shown (so some
 could show none, but make this default in cat-harness that is inherited)."*
 
 `navbarIcons` on the instance declaration. A **closed** set — `close`,
-`todos`, `beans`, `processes`, `kg`, `launcher` — because a free string lets an
-instance name an icon nothing draws, and the failure is a silent gap in a row
-capped at six. Six is the cap and it is **refused, never truncated**: an
-instance that declared seven has made a decision, and silently dropping its
-last entry overrules that decision without saying so.
+`todos`, `beans`, `processes`, `kg`, `fsh-guts`, `launcher` — because a free
+string lets an instance name an icon nothing draws, and the failure is a silent
+gap in a row capped at seven. Seven is the cap and it is **refused, never
+truncated**: an instance that declared eight has made a decision, and silently
+dropping its last entry overrules that decision without saying so.
+
+The cap was six until 2026-10-02, when the owner put the fsh-guts trashcan in
+the row *"with the others"* (#1925) rather than in place of one. `fsh-guts` is
+a control, like `launcher`: a button that opens the discarded-items list and
+carries its live count, not a link. It is also the **way back** the discard
+confirmation names — *"make sure confirmed by user"* (owner, 2026-10-02) — so
+that dialog says "the fish in the icon row" only when this icon is on the page,
+and points at Page settings otherwise. The confirmation itself is
+`board-windows` §"Send to fsh-guts asks first".
 
 **The three states are the part to get right, and two of them look the same:**
 
@@ -410,6 +454,53 @@ Theming comes from the avatar's **declared hue**: one hue, both schemes
 derived, so no tile can be authored legible in one mode and invisible in the
 other. A per-instance palette would be a second colour vocabulary beside
 `theme.ts` — the drift that file exists to have ended.
+
+## The glass strip — pinned first, and "+N more" counts the rest
+
+**No tile may be silently off-screen.** That is the rule, and the owner's
+ruling on bean `ob3m` finding 10 (2026-10-01, option 1 of 4, *"Pinned tiles
+first, plus '+N more'"*) is how the glass's bottom strip keeps it. The strip
+once held 25 tiles in one row and scrolled them sideways with no arrow, count
+or fade: 11 were visible at 1280 px and about 2½ at 390, and on a phone
+library, processes and tools were all off it. A reader cannot tell a tile
+scrolled out of view from a tile that does not exist.
+
+- **The pinned set is DECLARED, never written into a surface.** `glassStrip`
+  on the instance's declaration lists the pins in order: `{ "chrome": … }` for
+  the glass's own controls (`todos`, `filter`, `settings`) and
+  `{ "kind": … }` for a graph kind. It is inherited along `needs` like
+  `navbarIcons`, so absent inherits and `[]` pins nothing.
+  `sync-docs-harness.ts` resolves each kind to ONE tile (`resolveGlassStrip`):
+  the directory named for the kind, else the first glass tile that holds it.
+  A kind several harnesses publish gets one slot, and the others wait in More,
+  where their qualifiers tell them apart. A pinned kind that no tile holds is
+  reported in `glassStrip.unmatched` and never skipped silently.
+- **Fit, not scroll.** The strip shows as many pins as fit at the current
+  width, in declared order, and refits whenever its box changes. It never
+  scrolls sideways (`scrollWidth <= clientWidth` is asserted at 1280×800 and
+  390×844).
+- **The last tile says "+N more", and N is exact.** N counts every tile not on
+  screen: pins with no room at this width, plus everything the reader keeps in
+  More. Shown + N is always the total. The tile is a button named "N more
+  tiles"; it opens More and moves focus into it. Pins that did not fit come
+  first in More, marked as pinned, so a narrow screen loses their place on the
+  strip but never the tiles themselves.
+- **The reader may still arrange.** A strip the reader has arranged, by
+  dragging or with the Strip and More buttons, overrides the declared default
+  in that browser. The fit and the count apply to their arrangement too.
+
+- **It starts HIDDEN** (owner, 2026-10-01: *"have folio bottom strip tiles
+  default to hidden away when folio first opened"*). With no stored choice,
+  the folio opens with the strip slid away. Only its tab shows, and it says
+  "Show tiles (N)" so the reader knows what is behind it. The tab is the one
+  control both ways (`l4zi`, [`board-windows`](board-windows.md)) and carries
+  `aria-expanded`. The reader's choice is remembered in this browser as `1`
+  or `0`, and storage that cannot be read counts as no choice: hidden. This
+  is the glass's own strip. The BOARD's tile strip, above, still starts open.
+
+`glass-strip-fit.e2e.ts` holds the four fit assertions and
+`glass-strip-default-hidden.e2e.ts` the default. Both fail against the strip
+as it was before the ruling.
 
 ## `summary` and `alsoWritten` — what a reader sees, kept apart from why it was named
 

@@ -47,6 +47,8 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { graphReadPath } from "./graph-read.ts";
+
 export interface StoreConfig {
   dir: string;
   prefix: string;
@@ -129,8 +131,49 @@ function parseBean(path: string): Bean | undefined {
   };
 }
 
+/**
+ * `.beans.yml`'s `path`, relocated onto wherever the `beans` graph ACTUALLY is.
+ *
+ * Bean `9ofm` row D. `.beans.yml` carries a repository-relative path because
+ * the `beans` binary is third-party and reads it that way, and that path stops
+ * being in the checkout the moment the graph is cut over to its branch. So the
+ * part of it the graph accounts for is rebased onto the graph's read path, and
+ * the rest is kept — `beans/defs` under a graph at `beans` becomes
+ * `<mount>/defs`.
+ *
+ * The declared prefix comes from {@link graphReadPath}'s `path` rather than
+ * from `at`: those agree in the checkout and differ for a mount, and deriving
+ * it from `at` would work until the day it mattered.
+ *
+ * A path OUTSIDE the declared graph is returned unchanged. That is not a
+ * fallback hiding a failure: `.beans.yml` is free to point somewhere the
+ * `beans` declaration says nothing about, and relocating such a path onto the
+ * graph would be inventing an answer.
+ */
+export function fallbackStoreDir(root: string, cfg: StoreConfig): { at: string } | { refused: string } {
+  const g = graphReadPath("beans", root);
+  const plain = resolve(root, cfg.dir);
+  if (g.state === "undeclared") return { at: plain };
+  const rel = cfg.dir.split("\\").join("/").replace(/^\.\//, "").replace(/\/+$/, "");
+  // IS MY PATH EVEN INSIDE THIS GRAPH — asked BEFORE inheriting a refusal.
+  // Asking afterwards made an unreachable `beans` graph refuse a `.beans.yml`
+  // pointing somewhere else entirely, which the tests here caught.
+  const inside = g.path !== undefined && (rel === g.path || rel.startsWith(`${g.path}/`));
+  if (!inside) return { at: plain };
+  if (g.state === "refused") return { refused: g.reason };
+  return { at: rel === g.path ? g.at : join(g.at, rel.slice(g.path.length + 1)) };
+}
+
 export function listBeans(root: string, cfg = readStoreConfig(root)): Bean[] {
-  const dir = resolve(root, cfg.dir);
+  const where = fallbackStoreDir(root, cfg);
+  // THROWS rather than returning `[]`. This module exists because an agent in
+  // a container where the CLI would not install must still be able to work the
+  // plan; `[]` from here reads as "there is no work", and bean `35nj` records
+  // what that cost once already — two merged PRs' worth of work done
+  // unclaimed. "Could not reach the store" and "the store is empty" must not
+  // arrive as the same value.
+  if ("refused" in where) throw new Error(`cannot read the bean store: ${where.refused}`);
+  const dir = where.at;
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".md"))
@@ -185,7 +228,11 @@ export function createBean(root: string, opts: CreateOptions): { bean: Bean; dup
     if (dup) return { bean: dup, duplicateOf: dup };
   }
 
-  const dir = resolve(root, cfg.dir);
+  const where = fallbackStoreDir(root, cfg);
+  // A create must never land in the checkout once the store is on its branch:
+  // the file would be invisible to every reader and lost at the next clone.
+  if ("refused" in where) throw new Error(`cannot write to the bean store: ${where.refused}`);
+  const dir = where.at;
   mkdirSync(dir, { recursive: true });
   const id = mintId(cfg, new Set(existing.map((b) => b.id)));
   const stamp = nowStamp();

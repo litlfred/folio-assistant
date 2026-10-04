@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g43f
 title: 'WORKTREE-CONTAMINATED SWEEPS: two more root-walking checks descend into .claude/worktrees and redden bun test for every concurrent session — vpek''s general question, answered yes'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-09-30T14:35:43Z
+updated_at: 2026-10-03T14:06:30Z
 parent: folio-assistant-1xhc
 ---
 
@@ -215,3 +215,5 @@ That residue is why the box below stays open rather than being ticked.
       **55 of 69 enumerating scripts do not ask git** — and deliberately does
       not presume the answer, because most of those 55 are walking a directory
       they own, where a walk is fine.
+
+_2026-10-03T14:06:30Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -10,8 +10,8 @@
   },
   "families": {
     "enumerating-scripts": {
-      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 80 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
-      "count": 80,
+      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 82 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
+      "count": 82,
       "entries": [
         {
           "file": "cat-harness/scripts/agent-memory.ts",
@@ -117,6 +117,11 @@
           "file": "cat-harness/scripts/check-module-scope-resolution.ts",
           "seededAtRoot": false,
           "gitAware": false
+        },
+        {
+          "file": "cat-harness/scripts/check-process-bindings.ts",
+          "seededAtRoot": false,
+          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/check-process-documentation.ts",
@@ -241,7 +246,7 @@
         {
           "file": "cat-harness/scripts/gen-docs-auto.ts",
           "seededAtRoot": false,
-          "gitAware": false
+          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/gen-docs-pages.ts",
@@ -319,7 +324,7 @@
           "gitAware": false
         },
         {
-          "file": "cat-harness/scripts/mvp-status.ts",
+          "file": "cat-harness/scripts/milestone-status.ts",
           "seededAtRoot": false,
           "gitAware": false
         },
@@ -404,6 +409,11 @@
           "gitAware": false
         },
         {
+          "file": "fhir-harness/scripts/stage-ast-sites.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
           "file": "folio-assistant-core/scripts/check-voices.ts",
           "seededAtRoot": false,
           "gitAware": false
@@ -416,7 +426,7 @@
       ]
     },
     "scope": {
-      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 8 of 14 declared instance(s) have a scripts/ directory.",
+      "summary": "Which instances this census covered — the denominator, so a drop in enumerating scripts can be told from a drop in scope (bean `tqv4`). Every declared instance is a row: `scanned` with its count, or `no-scripts-dir`, which is neither a finding nor a pass. 9 of 14 declared instance(s) have a scripts/ directory.",
       "count": 14,
       "entries": [
         {
@@ -441,7 +451,7 @@
           "instance": "cat-harness",
           "path": "cat-harness/scripts",
           "state": "scanned",
-          "enumerating": 76
+          "enumerating": 77
         },
         {
           "instance": "cat-harness-tools",
@@ -450,10 +460,16 @@
           "enumerating": 0
         },
         {
+          "instance": "cat-openapi",
+          "path": "cat-openapi/scripts",
+          "state": "scanned",
+          "enumerating": 0
+        },
+        {
           "instance": "fhir-harness",
           "path": "fhir-harness/scripts",
           "state": "scanned",
-          "enumerating": 2
+          "enumerating": 3
         },
         {
           "instance": "folio-assistant-core",
@@ -496,20 +512,14 @@
           "path": "who-iris/scripts",
           "state": "scanned",
           "enumerating": 1
-        },
-        {
-          "instance": "who-style-guide",
-          "path": "who-style-guide/scripts",
-          "state": "no-scripts-dir",
-          "enumerating": 0
         }
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 80 enumerating scripts in all, across 8 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, smart-base, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 82 enumerating scripts in all, across 9 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, smart-base, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
       "count": 0,
       "entries": []
     }
   },
-  "total": 94
+  "total": 96
 }

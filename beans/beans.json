@@ -35,6 +35,14 @@
       "description": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`."
     },
     {
+      "id": "queue",
+      "path": "queue",
+      "graphKinds": [
+        "merge-queue"
+      ],
+      "description": "A merge steward's decisions about open pull requests — one JSON file each, carrying `\"$schema\": \"folio-merge-queue-entry/v1\"`. Beside `workflows/` deliberately: this holds the DECISIONS (priority, hold, ejection, the train joined, each with its reason), and a finished train run under `workflows/` holds the EVIDENCE those decisions met. A reader asking why one pull request went into a given train needs both, and should look in one store. It records no fact GitHub owns — CI, mergeability, labels and the head SHA are read live at decision time and refused by name in the schema, because a stored copy is a second answer that goes stale on the next push. Bean `hfag`."
+    },
+    {
       "id": "surveys",
       "path": "surveys",
       "graphKinds": [

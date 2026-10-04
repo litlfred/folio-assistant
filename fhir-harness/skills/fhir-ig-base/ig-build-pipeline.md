@@ -82,8 +82,17 @@ must contain no reference to:
 - `dak.config.json` (`dak.json` as upstream still spells it), the DAK logical
   model, or any DAK component
 - `smart.who.int` canonicals, or any WHO publisher metadata
-- the DAK API surface — `.schema.json`, `.displays.json`, `.openapi.json`, the
-  `dak-api.html` hub
+- the DAK API's NAMES and its PRODUCTION — the label "DAK API", the
+  `dak-api.html` hub page and its `DAK_API_*` markers, and the
+  post-processing that writes the sidecars. **Rendering** the sidecars an IG
+  publishes is generic and IS here, as the **IG API** (`ig-api-views.ts`):
+  owner, 2026-10-03, *"can we rename dakapi hub to someting more ig generic.
+  split up/generifize code. relabel?"* (bean `d313`). A WHO instance passes
+  its names in as configuration (`--sidecar-label`, `--api-hub-page`,
+  `--api-hub-markers`, `--api-placeholder`); nothing here writes them down.
+  Same ruling, put the other way: *"should be FHIR-IG-API, no DAK
+  label/names"* (owner, 2026-10-03). The per-artefact `.schema.json`,
+  `.displays.json` and `.openapi.json` sidecars are that API, not DAK's.
 - the DAK pre- and post-processing steps, in either direction
 - anything in the `authoring-who-smart-guidelines` package
 
@@ -92,7 +101,23 @@ this layer; this layer may not reference the WHO package. A violation fails
 nothing on its own — the build stays green and the layer simply stops being
 usable for a non-WHO IG, which is the failure this list exists to make visible.
 
-## Two steps that came DOWN from the WHO build
+**It is a gate now: `bun run check:fhir-harness-exclusions`** (bean `wm63`).
+The checker lives in the layer that owns the excluded names, not here, because
+a copy of this list inside `fhir-harness` would be its own first violation. A
+mention is not a dependency. Comments, markdown, and JSON `_comment` or
+`description` values are counted and never graded. Code (string literals
+included), other JSON values, and BPMN outside `<documentation>` are graded.
+The DAK step names are read from the WHO layer's own pre/post-processing
+tables, so this list does not restate them.
+
+It is a **ratchet**. The layer was not clean on 2026-10-03, so its hits are
+in a committed baseline, each with a reason. A new hit fails, and so does a
+cleared one the baseline still allows, until `--shrink` lowers it. Never
+widen the baseline to admit a hit: move the WHO-specific part up, or have the
+WHO layer pass it in as a parameter (the IG page generator's `--sidecar-label`
+is that shape already).
+
+## Five steps that came DOWN from the WHO build
 
 `strip_library_binaries.py` and `strip_library_content.py` strip base64 payloads
 and inline CQL/ELM out of `Library` resources. They arrived labelled *"DAK
@@ -105,6 +130,19 @@ They belong here. Recorded because this is the layering rule
 ([`smart-stack-layering`](../../../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md))
 producing a result its own step names contradicted — which is the only kind of
 evidence that a split is doing work.
+
+**Three more followed, on the owner's ruling of 2026-10-03:**
+`generate_logical_model_schemas.py` (a JSON Schema per logical model),
+`generate_valueset_schemas.py` (a JSON Schema per ValueSet, plus the
+enumeration-response schemas) and `generate_jsonld_vocabularies.py` (JSON-LD
+from ValueSet expansions). The ruling: *"it is only transforming existing
+(meta)data, not adding any new constraints or profiles (e.g. like smart
+guidelines does). It is generic."* That is the test for this layer. A step
+that reshapes what the Publisher already emitted belongs here. A step that adds
+a constraint, a profile or a WHO-specific name stays in the overlay. The
+per-artefact API sidecars and their hub are not WHO-specific: they are the
+FHIR IG API above, and only their DAK label stays in the overlay. The Tools are
+declared in `fhir-harness/tools/`.
 
 ## Upgrading to the overlay
 

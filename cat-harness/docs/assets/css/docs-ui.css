@@ -2669,6 +2669,16 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 }
 
 .fa-tile-caption { display: block; }
+/* The harness a tile belongs to, APPENDED beside its one name rather than
+ * folded into it (bean `ob3m` finding 6). Smaller, so the base label still
+ * reads first. The colour is inherited and not faded, so it keeps the tile's
+ * contrast in both schemes. */
+.fa-tile-qualifier {
+  display: block;
+  font-size: 0.72em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
 
 /* ── A tile's view ────────────────────────────────────────────────────── */
 
@@ -3894,7 +3904,14 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   display: flex;
   gap: 0.5rem;
   padding: 0 1rem 0.6rem;
-  overflow-x: auto;
+  /* FIT, NOT SCROLL (owner, 2026-10-01, bean `ob3m` finding 10: "no tile may
+     be silently off-screen"). `docs-ui.js` hides the pinned tiles that do not
+     fit and the last tile counts them as "+N more", so nothing here may
+     scroll sideways — a scrolling strip is exactly how 14 of 25 tiles went
+     off-screen with no arrow, count or fade. Not `hidden` either: that would
+     clip the focus ring, and nothing overflows once the fit has run. */
+  overflow: visible;
+  flex-wrap: nowrap;
   /* The panel (the dock) paints the surface and the edge; the strip is the
      row of tiles inside it, so it paints neither -- a second edge here is the
      doubled border the owner saw. */
@@ -3920,6 +3937,30 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   text-decoration: none;
   cursor: pointer;
   position: relative;
+}
+/* A tile the fit could not place. The tiles set `display: flex`, which beats
+   the user agent's `[hidden]`, so the attribute needs saying here. */
+.fa-glass-tiles > [hidden] { display: none !important; }
+/* A phone gets slightly narrower tiles, so four fit at 390 px — Todos,
+   Settings, the first pinned kind and "+N more" — rather than three. */
+@media (max-width: 30rem) {
+  .fa-glass-tiles { gap: 0.4rem; padding-left: 0.75rem; padding-right: 0.75rem; }
+  .fa-glass-tiles .fa-tile,
+  .fa-glass-tiles .fa-glass-chrome-tile { width: 4.75rem; }
+}
+.fa-glass-tiles [data-fa-more] .fa-tile-caption { white-space: nowrap; }
+/* A pinned tile the strip had no room for, waiting first in More. Its note
+   sits where the "↓ Strip" button would, at the tile's width. */
+.fa-glass-more-item[data-fa-overflow] { width: 6.5rem; }
+.fa-glass-more-item .fa-glass-arrange-note {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.15;
+  border: 1px dashed var(--fa-glass-edge);
 }
 .fa-glass-tiles .fa-tile svg { width: 1.6rem; height: 1.6rem; }
 .fa-glass-chrome-tile { font-weight: 700; }
@@ -5510,6 +5551,39 @@ html:has(body > .fa-glass-handle) {
   transition: transform .12s ease;
 }
 .fa-nav-pages[aria-expanded="false"]::before { transform: rotate(-90deg); }
+
+/* ONE CARET FOR EVERY DISCLOSURE IN THE COLUMN (#1902). Owner: *"all three are
+ * collapsible but only one has the arrow thing"* -- the summaries are
+ * `display: flex`, which drops the native marker, so only the Pages button
+ * (whose caret is drawn above) showed one. The same glyph, the same turn, the
+ * same timing, keyed on the element's own open state rather than on a class a
+ * script has to keep in step. */
+.fa-doc-index__heading,
+.fa-nav-graphs-group__heading,
+.fa-nav-folders__heading { list-style: none; }
+.fa-doc-index__heading::-webkit-details-marker,
+.fa-nav-graphs-group__heading::-webkit-details-marker,
+.fa-nav-folders__heading::-webkit-details-marker { display: none; }
+.fa-doc-index__heading::before,
+.fa-nav-graphs-group__heading::before,
+.fa-nav-folders__heading::before {
+  content: "\25be";
+  display: inline-block;
+  transition: transform .12s ease;
+}
+.fa-doc-index:not([open]) > .fa-doc-index__heading::before,
+.fa-nav-graphs-group:not([open]) > .fa-nav-graphs-group__heading::before,
+.fa-nav-folders:not([open]) > .fa-nav-folders__heading::before { transform: rotate(-90deg); }
+.fa-doc-index__heading:focus-visible,
+.fa-nav-graphs-group__heading:focus-visible,
+.fa-nav-folders__heading:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: -2px;
+}
+
+/* PAGES, SCOPED to the instance being viewed (#1902): `scopeSiteNav` marks the
+ * rows outside the instance's own subtree, and they are not drawn. */
+.site-nav [data-fa-out-of-scope] { display: none !important; }
 .fa-nav-pages:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: -2px;
@@ -6935,6 +7009,16 @@ a.fa-harness-tab__body:focus-visible {
   line-height: 1;
   text-decoration: none;
 }
+/* The window bar's icons are the row's icons (#1925): the same inline SVGs,
+ * filled by the text colour, at the row's size. The fish draws a little
+ * larger, as it does in the row, because its outline is thin. */
+.fa-board-window-control svg { width: 1.05rem; height: 1.05rem; fill: currentColor; }
+.fa-board-window-control[data-fa-control="discard"] svg { width: 1.3rem; height: 1.3rem; }
+/* Pressed is said by the border AND the fill, as the row's pin says it. */
+.fa-board-window-control[data-fa-control="pin"][aria-pressed="true"] {
+  border-color: currentColor;
+  background: rgba(128, 128, 128, 0.22);
+}
 
 /* THE NODE BADGE, on the avatar and on the open window — one query, two
  * surfaces (R7). Sized so the chip reads at avatar scale without covering the
@@ -7073,6 +7157,9 @@ a.fa-harness-tab__body:focus-visible {
 .fa-board-filter-select {
   /* Low-dexterity profile: a select is a target like any other. */
   min-height: 2.25rem;
+  /* A node label is long (`sec:publication-workflow-…`) and a select sizes
+   * to its widest option, which pushed the node filter off a phone screen. */
+  max-width: 100%;
   padding: 0 0.375rem;
   border: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.45));
   border-radius: var(--fa-folio-radius, 0.25rem);
@@ -7084,6 +7171,19 @@ a.fa-harness-tab__body:focus-visible {
   font-size: 0.8125rem;
   opacity: 0.8;
 }
+
+/* A group heading when the reader groups the board (node, status, person,
+ * bean). It spans the whole grid row, so the stickies under it start a fresh
+ * row and every tile keeps its size. */
+.fa-sticky-group-head {
+  grid-column: 1 / -1;
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.fa-sticky-group-head:first-child { margin-top: 0; }
+.fa-sticky-group-head[hidden] { display: none; }
 
 /* ── No tile strip on the sticky board (issue #1905, bean `t6ht`) ─────────
  *
@@ -8067,53 +8167,247 @@ a.fa-harness-tab__body:focus-visible {
 }
 .fa-glass-more .fa-tile svg { width: 1.6rem; height: 1.6rem; }
 
-/* ── Landing stickies as TILES — bean `z1ug` ───────────────────────────────
+/* ── ONE STICKY: the tile and the icon row under it — issue #1925 ──────────
  *
- * Owner: *"they should be closed/tiled to start"*, and on 2026-09-23,
- * **"Opens as a window"**. The card stays in its slot (it is the sticky's
- * home, and Pin clones it) but is not drawn while the cell is a tile; the tile
- * opens a copy of it as a board window. The class is added by the script, so
- * with no script the full cards show — the linear floor. */
+ * Owner, 2026-10-02: *"dont treat stickies differently. combine best of
+ * each. lower faded avatar/theme looks nicer. upper smaller same size closed
+ * looks niceer. icons are a mess on both. make compact underneath."*
+ *
+ * So a landing sticky and a todo sticky are the same box: a SQUARE tile of one
+ * declared size (`--fa-sticky-tile-size`), the theme's art behind the theme's
+ * scrim — the same `.fa-sticky--backdrop` rules the full card uses, so the
+ * fade is `--fa-sticky-scrim` and not a second number — and one row of icons
+ * of one size beneath it. The card stays in its slot (its home: Pin clones
+ * it, the window renders it) but is not drawn while the slot is a tile; the
+ * class is added by the script, so with no script the landing cards show
+ * whole, which is the floor (bean `z1ug`).
+ *
+ * A FIXED track, not `1fr`: the landing board and the todo grid inside it are
+ * different widths, and `minmax(…, 1fr)` would stretch each to its own
+ * container — two sizes of one component, the thing being fixed. */
+:root { --fa-sticky-tile-size: 9rem; }
 .fa-sticky-cell--tile > .fa-sticky { display: none; }
 .fa-landing-board { position: relative; }
-.fa-landing-board:has(> .fa-sticky-cell--tile) {
-  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+.fa-landing-board:has(> .fa-sticky-cell--tile),
+.fa-sticky-grid:has(> .fa-sticky-cell--tile) {
+  grid-template-columns: repeat(auto-fill, var(--fa-sticky-tile-size));
+  gap: 0.5rem;
 }
-.fa-landing-tile {
+.fa-sticky-cell--tile {
+  width: var(--fa-sticky-tile-size);
+  align-items: stretch;
+}
+/* A sticky sent to fsh-guts is `hidden`, and the cell's own `display` would
+ * otherwise beat the user agent's `[hidden]` rule (see `.fa-tiles-grid`). */
+.fa-sticky-cell[hidden],
+.fa-sticky-slot[hidden] { display: none; }
+/* The process depth's left rule would push one tile right of its neighbours;
+ * a tile names its process in words instead (`.fa-sticky-tile-process`). */
+.fa-sticky-cell--tile.fa-sticky-slot-in-process { border-left: 0; padding-left: 0; }
+.fa-sticky-tile.fa-sticky-avatar {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 0.35rem;
-  width: 100%;
-  aspect-ratio: 1;
-  padding: 0;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  width: var(--fa-sticky-tile-size);
+  height: var(--fa-sticky-tile-size);
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0.45rem 0.5rem;
   overflow: hidden;
+  isolation: isolate;
   border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.4));
-  border-radius: var(--fa-folio-radius, 0);
+  border-top: 3px solid var(--fa-sticky-accent, var(--fa-sticky-edge, rgba(128, 128, 128, 0.45)));
+  border-radius: var(--fa-folio-radius, 0.375rem);
   /* The theme's surface AND ink, together, never one without the other: a
      themed surface under an inherited foreground is `23bc` again. With no
      theme, the page's own Canvas and CanvasText pair. */
   background: var(--fa-sticky-surface, Canvas);
   color: var(--fa-sticky-ink, CanvasText);
   font: inherit;
-  cursor: pointer;
   text-align: left;
+  cursor: pointer;
 }
-.fa-landing-tile-art {
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
-.fa-landing-tile-title {
-  padding: 0.3rem 0.45rem 0.4rem;
+/* The square crop, whole and faded — `cover` here because a tile IS square and
+ * its crop is the square one; the full card keeps `contain` for its own shape. */
+.fa-sticky-tile.fa-sticky--backdrop > picture > .fa-sticky-art { object-fit: cover; }
+.fa-sticky-tile-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
   font-size: 0.8rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
-.fa-landing-tile:focus-visible { outline: 3px solid var(--link-color, #7253ed); outline-offset: 2px; }
+.fa-sticky-tile-process {
+  overflow: hidden;
+  font-family: var(--fa-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0.85;
+}
+.fa-sticky-tile .fa-node-badge--avatar { top: 0.25rem; right: 0.25rem; }
+.fa-sticky-tile:hover { border-color: var(--fa-sticky-accent, var(--fa-rule, rgba(128, 128, 128, 0.7))); }
+.fa-sticky-tile:focus-visible { outline: 3px solid var(--link-color, #7253ed); outline-offset: 2px; }
+/* ON THE GLASS, the slot it left greys: the row's pressed pin says why. */
+.fa-sticky-cell--tile.fa-sticky-slot-floating > .fa-sticky-tile { opacity: 0.45; }
+
+/* THE ROW: four icons, one size, one order — view, edit, pin, send to
+ * fsh-guts. 1.75rem is the target size the old View/Edit caption held (28px:
+ * above the 24px SC 2.5.8 floor, at the comfort this file holds elsewhere for
+ * a low-dexterity profile), and four of them fit under the tile. */
+.fa-sticky-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* No fixed gap: `space-between` spaces them. A todo carries FIVE controls
+   * (page, view, edit, pin, fsh-guts — #1941), and 5 × 1.75rem plus four
+   * 0.25rem gaps is wider than the 9rem tile, which pushed fsh-guts under
+   * the next tile and below the 24px target size (axe `target-size`). */
+  gap: 0;
+  width: var(--fa-sticky-tile-size);
+  margin: 0.25rem 0 0;
+}
+.fa-sticky-act {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  opacity: 0.7;
+  text-decoration: none;
+  cursor: pointer;
+}
+.fa-sticky-act svg { width: 1.05rem; height: 1.05rem; }
+.fa-sticky-act-discard svg { width: 1.3rem; height: 1.3rem; }
+.fa-sticky-act-view svg,
+.fa-sticky-act-edit svg,
+.fa-sticky-act-pin svg { fill: currentColor; }
+.fa-sticky-act:hover,
+.fa-sticky-act:focus-visible {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.18);
+}
+.fa-sticky-act:focus-visible { outline: 2px solid var(--link-color, #7253ed); outline-offset: 2px; }
+/* Pressed is said by the border AND the fill, not by colour alone. */
+.fa-sticky-act-pin[aria-pressed="true"] {
+  opacity: 1;
+  border-color: currentColor;
+  background: rgba(128, 128, 128, 0.22);
+}
+
+/* ── The confirmation before fsh-guts, and the fsh-guts list ───────────────
+ * Native `<dialog>`s, opened modal, so the browser supplies the top layer,
+ * the focus trap and Escape. Opaque and bordered in both schemes. */
+.fa-fsh-confirm,
+.fa-fsh-guts-dialog {
+  max-width: min(32rem, calc(100vw - 2rem));
+  padding: 1rem 1.1rem;
+  border: 1px solid #5a5670;
+  border-radius: var(--fa-folio-radius, 0.375rem);
+  background: #1f1e24;
+  color: #e8eaed;
+}
+:root[data-fa-scheme="light"] .fa-fsh-confirm,
+:root[data-fa-scheme="light"] .fa-fsh-guts-dialog {
+  background: #ffffff;
+  color: #1b1b1f;
+  border-color: #8a8699;
+}
+.fa-fsh-confirm::backdrop,
+.fa-fsh-guts-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.fa-fsh-confirm-title { margin: 0 0 0.5rem; font-size: 1.05rem; }
+.fa-fsh-confirm p { margin: 0 0 0.6rem; font-size: 0.9rem; line-height: 1.4; }
+.fa-fsh-confirm-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; }
+.fa-fsh-confirm-actions button,
+.fa-fsh-guts-dialog-close {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.fa-fsh-confirm-ok { font-weight: 600; }
+.fa-fsh-confirm-actions button:focus-visible,
+.fa-fsh-guts-dialog-close:focus-visible { outline: 2px solid var(--link-color, #7253ed); outline-offset: 2px; }
+.fa-fsh-guts-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.fa-fsh-guts-dialog-head h2 { margin: 0; font-size: 1.05rem; }
+
+/* ── fsh-guts in the navbar's top (#1925) ─────────────────────────────────
+ * The same row shape as ⌂ Home at the bottom: the glyph in the mark column,
+ * the word and the count after it. The count is a pill that reads in both
+ * schemes; its four states are text, so none is carried by colour. */
+.fa-nav-fsh-guts {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--fa-nav-pad, 0.5rem);
+  border: 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.fa-nav-fsh-guts[hidden] { display: none; }
+.fa-nav-fsh-guts:hover,
+.fa-nav-fsh-guts:focus-visible { background: rgba(128, 128, 128, 0.18); }
+.fa-nav-fsh-guts > .fa-nav-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-right: 0;
+}
+.fa-nav-fsh-guts > .fa-nav-glyph svg { width: 1.15rem; height: 1.15rem; }
+.fa-nav-fsh-guts .fa-nav-count {
+  margin-left: auto;
+  min-width: 1.25rem;
+  padding: 0 0.3rem;
+  border-radius: 0.625rem;
+  background: rgba(128, 128, 128, 0.3);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+/* fsh-guts IN THE ICON ROW (#1925, owner 2026-10-02: "with the others"): the
+ * count rides as a small badge on the fish so the row keeps one glyph width. */
+.fa-nav-icon--fsh-guts { position: relative; }
+.fa-nav-icon--fsh-guts .fa-nav-count {
+  position: absolute;
+  right: -0.35rem;
+  top: -0.3rem;
+  min-width: 1rem;
+  padding: 0 0.2rem;
+  border-radius: 0.5rem;
+  background: rgba(128, 128, 128, 0.85);
+  color: #fff;
+  font-size: 0.625rem;
+  line-height: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  pointer-events: none;
+}
 /* The copy inside a window is shaped to the window, not to the square dock. */
 .fa-landing-window .fa-landing-sticky--fixed { aspect-ratio: auto; min-height: 16rem; }
 /* THE LANDING WINDOWS OPEN BELOW THE TILES, not over them. On the todo board
@@ -8122,6 +8416,10 @@ a.fa-harness-tab__body:focus-visible {
  * opened — measured, the second tile could not be clicked. So the layer is
  * anchored to the board's BOTTOM edge with no height of its own, and the
  * windows (and their cascade) hang beneath the tile row, over the page. */
+/* ONE STICKY, ONE WINDOW PLACE (#1925): a todo window on the inline board
+ * opens below the board exactly as a landing window does, so an open window
+ * never covers the tiles next to the one that opened it. */
+.fa-sticky-board--inline > .fa-board-windows,
 .fa-landing-windows {
   top: 100%;
   bottom: auto;
@@ -8129,6 +8427,7 @@ a.fa-harness-tab__body:focus-visible {
   overflow: visible;
   z-index: 20;
 }
+.fa-sticky-board--inline > .fa-board-windows > .fa-board-window { max-height: 70vh; }
 .fa-landing-windows .fa-board-window { top: 0.5rem; max-height: 70vh; }
 .fa-landing-windows .fa-board-window[data-fa-z="2"] { top: 3.5rem; }
 .fa-landing-windows .fa-board-window[data-fa-z="3"] { top: 6.5rem; }

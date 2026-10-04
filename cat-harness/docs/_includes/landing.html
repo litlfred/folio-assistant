@@ -187,6 +187,7 @@
   <div class="fa-sticky-cell" data-fa-home-slot="{{ st.id }}">
   <article class="fa-sticky fa-landing-sticky{% if has_art %} fa-sticky--backdrop fa-landing-sticky--fixed{% endif %}"
            data-fa-sticky-theme="{{ st.theme }}"
+           {% if st.art.card %}data-fa-art-card="{{ st.art.card.src | relative_url }}"{% endif %}
            {%- if has_art %} data-fa-shape="{{ st.shape }}" style="
              {%- comment -%}
                RAW PER-LAYOUT VALUES ONLY. Which layout's aspect and cloud are
@@ -393,4 +394,17 @@
 <div class="folio-landing folio-landing--plain">
   {{ h.description | markdownify }}
 </div>
+{%- endif -%}
+{%- comment -%}
+  THE NEUTRAL HUB (issue #1904). Owner, 2026-10-02: *"If more than one is
+  flagged, then neutral hub with listing of harnesses, todos,"*. The todos are
+  the sticky panel above, which `docs-ui.js` already mounts the todo board
+  into, so the hub reuses it rather than building a second board. The harness
+  listing is `harness_details.html`, the tiles `harness-tiles.ts` generates
+  for the sidebar. `landingInstance` is written by `sync-docs-harness.ts` from
+  `resolveLandingInstance`; with one landing harness it is `instance` and this
+  renders nothing.
+{%- endcomment -%}
+{%- if h.landingInstance.kind == "hub" -%}
+{% include harness_details.html %}
 {%- endif -%}

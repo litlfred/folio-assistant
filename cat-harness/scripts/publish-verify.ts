@@ -48,6 +48,7 @@
  * index, say): counted and reported, never silently passed, and never able to
  * block our release. The same scoping the owner approved for bean `2j09`.
  */
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
@@ -58,6 +59,7 @@ import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
 import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.ts";
 import { duplicateIds } from "./check-duplicate-ids";
+import { ID_LOOKUP_DIR, SCOPES_DIR, type SearchManifest } from "./search-split.ts";
 
 export interface Finding {
   verifier: string;
@@ -566,8 +568,124 @@ export const SEARCH_INDEX: Verifier = {
   },
 };
 
+/**
+ * The per-scope search indices `search-split.ts` cuts from the site index
+ * (bean `m7mn`, issue #1972). A reader's search loads ONE scope instead of
+ * the whole, so a scope that is missing, stale or overlapping is a search
+ * that silently finds less — or finds pages twice — and nothing else would
+ * notice.
+ *
+ * Asks, in order: when the site index is present, the manifest is too; its
+ * `source.sha256` is the hash of the index actually in this tree (a stale
+ * split of an older index is the failure this exists for — staging borrows
+ * the published index, and must split THAT one); every scope file it names
+ * parses to the stated number of entries; and the scopes PARTITION the index
+ * — their counts sum to the source's and no entry key appears in two.
+ *
+ * A tree with no site index is out of scope here: `search-index` reports it.
+ */
+/**
+ * Bean `lrzn`: a scope's PREBUILT lunr index is loaded instead of built, so it
+ * must index exactly that scope's entries under the theme's fields — an index
+ * of a stale or different split finds pages its results cannot render, and
+ * misses ones it can. Read from the serialized form (`fieldVectors` keys are
+ * `<field>/<ref>`) rather than by loading it, which costs half a second on
+ * the largest scope.
+ */
+export function prebuiltIndexFindings(dir: string, scope: string, path: string, keys: readonly string[]): Finding[] {
+  const id = "search-scopes";
+  let idx: { version?: unknown; fields?: unknown; fieldVectors?: [string, unknown][] };
+  try {
+    idx = JSON.parse(readFileSync(join(dir, path), "utf-8")) as typeof idx;
+  } catch (e) {
+    return [{ verifier: id, file: path, detail: `prebuilt index of ${scope} unreadable: ${(e as Error).message.slice(0, 120)}` }];
+  }
+  const out: Finding[] = [];
+  if (idx.version !== LUNR_VERSION) out.push({ verifier: id, file: path, detail: `prebuilt index of ${scope} is lunr ${String(idx.version)}, the theme loads ${LUNR_VERSION}` });
+  if (JSON.stringify(idx.fields) !== JSON.stringify(PREBUILT_FIELDS)) {
+    out.push({ verifier: id, file: path, detail: `prebuilt index of ${scope} has fields ${JSON.stringify(idx.fields)}, the theme's are ${JSON.stringify(PREBUILT_FIELDS)}` });
+  }
+  const refs = new Set((idx.fieldVectors ?? []).map(([fr]) => fr.slice(fr.indexOf("/") + 1)));
+  const want = new Set(keys);
+  const extra = [...refs].filter((r) => !want.has(r));
+  const missing = [...want].filter((k) => !refs.has(k));
+  if (extra.length || missing.length) {
+    out.push({ verifier: id, file: path, detail: `prebuilt index of ${scope} does not cover its entries: ${missing.length} missing (${missing.slice(0, 3).join(", ")}), ${extra.length} not in the scope (${extra.slice(0, 3).join(", ")})` });
+  }
+  return out;
+}
+
+/** The lunr the theme vendors (just-the-docs 0.12.0) — `lunr.Index.load` warns on any other. */
+const LUNR_VERSION = "2.3.9";
+/** The fields the theme's `buildSearchIndex` declares, in its order. */
+const PREBUILT_FIELDS = ["title", "content", "relUrl"];
+
+export const SEARCH_SCOPES: Verifier = {
+  id: "search-scopes",
+  tool: "site-search-scopes",
+  asks:
+    "Does the per-scope search manifest match the site index in this tree, do its scope indices parse and " +
+    "partition that index exactly, does each prebuilt index cover exactly its scope, and is every identifier " +
+    "lookup it links to in the tree?",
+  async run(dir) {
+    const id = "search-scopes";
+    const source = join(dir, SEARCH_INDEX_PATH);
+    if (!existsSync(source)) return { checked: 0, outOfScope: 1, findings: [] };
+    const manifestAt = `${SCOPES_DIR}/manifest.json`;
+    const mp = join(dir, manifestAt);
+    if (!existsSync(mp)) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: manifestAt, detail: "missing — the site index was never split, so scoped search loads nothing" }] };
+    }
+    let manifest: SearchManifest;
+    try {
+      manifest = JSON.parse(readFileSync(mp, "utf-8")) as SearchManifest;
+    } catch (e) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: manifestAt, detail: `not JSON: ${(e as Error).message}` }] };
+    }
+    const findings: Finding[] = [];
+    const text = readFileSync(source, "utf-8");
+    const hash = createHash("sha256").update(text).digest("hex");
+    if (manifest.source?.sha256 !== hash) {
+      findings.push({ verifier: id, file: manifestAt, detail: `split from a different index (manifest ${String(manifest.source?.sha256).slice(0, 12)}, tree ${hash.slice(0, 12)}) — re-run search-split on this tree` });
+    }
+    const sourceKeys = Object.keys(JSON.parse(text) as Record<string, unknown>);
+    const seen = new Map<string, string>();
+    let total = 0;
+    for (const s of manifest.scopes ?? []) {
+      let keys: string[];
+      try {
+        keys = Object.keys(JSON.parse(readFileSync(join(dir, s.path), "utf-8")) as Record<string, unknown>);
+      } catch (e) {
+        findings.push({ verifier: id, file: s.path, detail: `scope ${s.id} unreadable: ${(e as Error).message.slice(0, 120)}` });
+        continue;
+      }
+      if (keys.length !== s.entries) findings.push({ verifier: id, file: s.path, detail: `scope ${s.id} holds ${keys.length} entries, the manifest says ${s.entries}` });
+      total += keys.length;
+      if (s.index) findings.push(...prebuiltIndexFindings(dir, s.id, s.index.path, keys));
+      for (const k of keys) {
+        const other = seen.get(k);
+        if (other !== undefined) findings.push({ verifier: id, file: s.path, detail: `entry ${k} is in both ${other} and ${s.id}` });
+        else seen.set(k, s.id);
+      }
+    }
+    if (total !== sourceKeys.length) {
+      findings.push({ verifier: id, file: manifestAt, detail: `scopes hold ${total} entries, the site index ${sourceKeys.length} — they do not partition it` });
+    }
+    // Bean `1br0`: every identifier lookup the search box links to is in the
+    // tree — the page and the index it opens. A link to an index the build did
+    // not publish reads to a reader as "could not be read".
+    for (const r of manifest.remote ?? []) {
+      const page = join(dir, ID_LOOKUP_DIR, "index.html");
+      const idx = join(dir, ID_LOOKUP_DIR, r.id, "manifest.json");
+      if (!existsSync(page)) findings.push({ verifier: id, file: manifestAt, detail: `remote ${r.id} links to ${ID_LOOKUP_DIR}/, which holds no lookup page` });
+      if (!existsSync(idx)) findings.push({ verifier: id, file: manifestAt, detail: `remote ${r.id} names an index that is not in the tree (${ID_LOOKUP_DIR}/${r.id}/manifest.json)` });
+    }
+    return { checked: (manifest.scopes ?? []).length + (manifest.remote ?? []).length + 1, outOfScope: 0, findings: findings.slice(0, 40) };
+  },
+};
+
 /** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, HTML_UNIQUE_IDS, SEARCH_INDEX];
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, HTML_UNIQUE_IDS, SEARCH_INDEX, SEARCH_SCOPES];
 
 export async function verify(
   dir: string,

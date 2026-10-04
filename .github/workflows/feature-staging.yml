@@ -36,6 +36,12 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
+      # The identifier lookup this workflow publishes (bean `1br0`): the
+      # script, its client, and each instance's generated index — a changed
+      # index must redeploy, or the search box links to a stale one.
+      - 'cat-harness-tools/scripts/**'
+      - 'cat-harness-tools/id-lookup/**'
+      - '*/id-lookup/**'
       # EVERY script, for the reason bean `tyyc` measured on `docs-site.yml`:
       # a named list of generators drifts, and the drift is invisible because
       # a preview that was never built looks exactly like one nobody opened.
@@ -296,7 +302,18 @@ jobs:
         run: |
           ref=yes; api=yes; why="no pull request — carrying everything"
           if [ -n "$PR" ]; then
-            if files="$(gh pr view "$PR" --json files --jq '.files[].path' 2>/dev/null)" && [ -n "$files" ]; then
+            # `gh pr view --json files` returns at most the FIRST 100 files,
+            # silently. PR #1766 touched 2,523 and no `smart-trust/` path was
+            # in the first 100, so its preview dropped smart-trust's 2,000-odd
+            # artefact pages: a truncated list read as "nothing here touches
+            # them". The REST listing paginates (to the API's own 3,000 cap),
+            # and the list is used only when its length equals the PR's
+            # `changed_files` count; a list that is short of it is no evidence
+            # of absence and falls through to carrying everything.
+            total="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.changed_files' 2>/dev/null || true)"
+            files="$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files?per_page=100" --jq '.[].filename' 2>/dev/null || true)"
+            got="$(printf '%s\n' "$files" | grep -c . || true)"
+            if [ -n "$files" ] && [ -n "$total" ] && [ "$got" = "$total" ]; then
               # Written out for `compose-docs.ts --changed-files`, so the
               # composed-instance cut (bean `ga8a`) asks the API once rather
               # than twice. ONE lookup means ONE fall-through: if this step
@@ -315,7 +332,7 @@ jobs:
                 api=yes
               fi
             else
-              why="could not read the pull request's files — carrying everything"
+              why="could not read all of the pull request's files (read ${got:-0} of ${total:-?}) — carrying everything"
             fi
           fi
           echo "reference=$ref" >> "$GITHUB_OUTPUT"
@@ -563,6 +580,38 @@ jobs:
             bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
           fi
 
+      # THE FULL IG PUBLISHER AST PIPELINE, rendered (bean wnhh, owner
+      # 2026-10-02: "build an updated web interface for smart trust testing
+      # full ast pipeline"). For each IG instance whose source repository
+      # carries a seeded `fhir-ast/*` cache, restore it, check it, derive its
+      # artefact index and draw the SAME pages the published-output index
+      # gets, at `/<instance>/ast/`, with the parity and validity reports
+      # beside them. Which IGs is DATA (`stage-ast-sites.ts`), so this names
+      # none. Best effort: the preview never fails on it, and every skip is
+      # printed by the lister.
+      - name: Render each IG from its IG Publisher AST cache
+        continue-on-error: true
+        run: |
+          bun run fhir-harness/scripts/stage-ast-sites.ts > ./_ast-list.txt
+          while IFS=$'\t' read -r INSTANCE URL LABEL CHROME; do
+            [ -n "$INSTANCE" ] || continue
+            SRC="./_ast-src/${INSTANCE}"
+            OUT="./_ast-out/${INSTANCE}"
+            rm -rf "$SRC" "$OUT"
+            GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 "$URL" "$SRC" || { echo "clone failed: $URL"; continue; }
+            CHROME_ARGS=()
+            [ "$CHROME" != "-" ] && CHROME_ARGS=(--chrome-owner "$CHROME")
+            bash fhir-harness/scripts/ig-ast-site.sh --ig-root "$SRC" --instance "$INSTANCE" \
+              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
+            mkdir -p "./_docs/${INSTANCE}/ast"
+            cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
+            # The resources the pages load in the browser, beside the pages.
+            rm -rf "./_docs/${INSTANCE}/ast-data" && cp -R "$OUT/ast-data" "./_docs/${INSTANCE}/ast-data"
+            cp "$OUT/validity.json" "./_docs/${INSTANCE}/ast/validity.json"
+            [ -f "$OUT/parity.json" ] && cp "$OUT/parity.json" "./_docs/${INSTANCE}/ast/parity.json"
+            echo "rendered ${INSTANCE} from its AST -> /${INSTANCE}/ast/"
+          done < ./_ast-list.txt
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
@@ -599,6 +648,18 @@ jobs:
             echo '{}' > "$DEST"
             echo "search-data.json: EMPTY — the page's banner says search is unavailable on this preview"
           fi
+
+      # The identifier lookup, as on deploy (bean `1br0`): before the split,
+      # which links the search box to it.
+      - name: Publish the identifier lookup
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+
+      # Split the index THIS preview serves — the published one, or `{}` —
+      # never one built here: a preview's scopes must be cut from the same
+      # index its pages search, or `search-scopes` reports the split stale
+      # (issue #1972, bean `m7mn`).
+      - name: Split the served search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
 
       # Mount every OTHER instance's rendered content under the built site.
       #
@@ -949,6 +1010,15 @@ jobs:
           # The `.json` alias is copied AFTER the export, so the two documents
           # cannot disagree about which build they came from.
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+
+          # The CHECKOUT ROOT instance's graph, as the deploy publishes it (bean
+          # `l4ay`): it declares `todos`, and `todos.jsonld`'s container IS its
+          # declared Subgraph node, so a preview without it names a node the
+          # preview does not serve.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #

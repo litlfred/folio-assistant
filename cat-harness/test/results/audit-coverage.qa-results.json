@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "a056c5ff7f44"
+    "script_hash": "31f86e8a18be"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 55 of 55 declared kind(s), 216 gate(s), 73 criteria.",
-      "count": 55,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 227 gate(s), 73 criteria.",
+      "count": 58,
       "entries": [
         {
           "kind": "attestations",
@@ -126,6 +126,7 @@
             "bootstrap-tools/schemas",
             "cat-harness-tools/schemas",
             "cat-harness/schemas",
+            "cat-openapi/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
@@ -174,6 +175,7 @@
             "bun run check:instance-config",
             "bun run check:instance-graph",
             "bun run check:instance-render",
+            "bun run check:landing-instance",
             "bun run check:layout-norms:check",
             "bun run check:publishable",
             "bun run check:published-instance-exports",
@@ -198,6 +200,7 @@
             "bun run kg:locale:check:bootstrap",
             "bun run kg:schema:check",
             "bun run kg:subscribe:check",
+            "bun run kind:register:check",
             "bun run library:readmes:check",
             "bun run ns:check",
             "bun run readme:subgraphs:check",
@@ -243,6 +246,8 @@
             "cat-harness/src",
             "cat-harness/templates",
             "cat-harness/test",
+            "cat-openapi/scripts",
+            "fhir-harness/scripts",
             "folio-assistant-core/adapters",
             "folio-assistant-core/scripts",
             "folio-assistant-sci/adapters",
@@ -260,6 +265,8 @@
             "bun run check:cat-harness-standalone",
             "bun run check:code-accounting",
             "bun run check:dependency-advisories",
+            "bun run check:fhir-harness-exclusions",
+            "bun run check:foreign-paths",
             "bun run check:import-direction --all",
             "bun run check:lockfile-pinning",
             "bun run check:module-scope-resolution",
@@ -294,6 +301,7 @@
             "cat-harness/docs",
             "docs",
             "smart-base/docs",
+            "smart-base/findings",
             "smart-immunizations/docs",
             "smart-trust/docs",
             "who-iris/docs",
@@ -333,11 +341,24 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
+            "bun run smart-base:dth-terms:check",
             "bun run subscriptions:viz:check",
             "bun run translated-links:check"
           ],
           "typed": true,
           "hasFiles": true
+        },
+        {
+          "kind": "docs-auto",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run docs:auto:check"
+          ],
+          "typed": false,
+          "hasFiles": false
         },
         {
           "kind": "document-kinds",
@@ -382,6 +403,7 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:artifact-index",
+            "bun run p2:refusals:check",
             "bun run smart-base:pages:check",
             "bun run smart-immunizations:pages:check",
             "bun run smart-trust:pages:check"
@@ -428,7 +450,7 @@
           "state": "covered",
           "directories": [
             "folio-assistant-core/glossary",
-            "who-style-guide/glossary"
+            "who-iris/glossary"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -541,6 +563,16 @@
           "hasFiles": true
         },
         {
+          "kind": "merge-queue",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
+        },
+        {
           "kind": "methodology",
           "state": "covered",
           "directories": [
@@ -570,6 +602,21 @@
           "gates": [
             "bun run bootstrap:validate",
             "bun run check:model-languages"
+          ],
+          "typed": true,
+          "hasFiles": true
+        },
+        {
+          "kind": "openapi",
+          "state": "covered",
+          "directories": [
+            "smart-trust/openapi"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run smart-trust:openapi:check",
+            "bun run smart-trust:openapi:pages:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -638,6 +685,7 @@
           ],
           "gates": [
             "bun run check:lane-documentation:check",
+            "bun run check:process-bindings",
             "bun run check:process-documentation",
             "bun run check:raci",
             "bun run check:stale-field-advice",
@@ -681,8 +729,7 @@
             "smart-ig/test/results",
             "smart-immunizations/test/results",
             "smart-trust/test/results",
-            "who-iris/test/results",
-            "who-style-guide/test/results"
+            "who-iris/test/results"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -693,6 +740,7 @@
             "bun run kg:export:check",
             "bun run kg:export:judge",
             "bun run lsi:viz:check",
+            "bun run p2:refusals:check",
             "bun run translation:block-qa:check"
           ],
           "typed": true,
@@ -777,6 +825,7 @@
             "bootstrap/schemas",
             "cat-harness-tools/schemas",
             "cat-harness/schemas",
+            "cat-openapi/schemas",
             "fhir-harness/schemas",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
@@ -795,6 +844,7 @@
             "bun run check:node-iris",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
+            "bun run ig-ast:schema:check",
             "bun run kg:export:check",
             "bun run kg:export:judge",
             "bun run kg:schema:check"
@@ -835,8 +885,7 @@
             "folio-assistant-sci/skills/data",
             "folio-assistant-sci/skills/lean",
             "smart-base/skills",
-            "who-iris/skills",
-            "who-style-guide/skills"
+            "who-iris/skills"
           ],
           "criteria": [
             "prose-claims-resolve",
@@ -861,6 +910,7 @@
             "bun run check:agents-xref:strict",
             "bun run check:bean-restates-skill",
             "bun run check:escaped-markup:source",
+            "bun run check:process-bindings",
             "bun run check:remote-skills",
             "bun run check:skills",
             "bun run check:stale-field-advice",
@@ -1106,7 +1156,7 @@
             "folio-assistant-core/skills/voices",
             "folio-assistant-sci/skills/voices",
             "smart-base/skills/voices",
-            "who-style-guide/skills/voices"
+            "who-iris/skills/voices"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -1158,7 +1208,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 18,
+      "count": 20,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1202,7 +1252,19 @@
           ]
         },
         {
+          "kind": "docs-auto",
+          "criteria": 0,
+          "gates": [
+            "bun run docs:auto:check"
+          ]
+        },
+        {
           "kind": "ig-metadata-index",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "merge-queue",
           "criteria": 0,
           "gates": []
         },
@@ -1280,10 +1342,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 216 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 227 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 73
+  "total": 78
 }

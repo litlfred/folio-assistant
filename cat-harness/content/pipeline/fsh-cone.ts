@@ -127,6 +127,13 @@ export interface FshGraph {
    * no dependency edge at all. `fileUsers` folds this in (review on #1708).
    */
   aliasUsers: Map<string, Set<string>>;
+  /**
+   * All parsed blocks, including those whose node was overwritten by a
+   * later declaration with the same name but a different kind (e.g.,
+   * `CodeSystem: Domains` overwritten by `ValueSet: Domains`). `fileResources`
+   * needs these to produce a complete forward map.
+   */
+  allBlocks: Block[];
 }
 
 function walkDir(dir: string, ext: string, out: string[] = []): string[] {
@@ -145,7 +152,7 @@ function walkDir(dir: string, ext: string, out: string[] = []): string[] {
 const DECL_RE = /^(Profile|Extension|Logical|Resource|ValueSet|CodeSystem|Instance|Mapping|RuleSet|Invariant):\s*([^\s(]+)(?:\s*\(([^)]*)\))?/;
 const ALIAS_RE = /^Alias:\s*(\$?\S+)\s*=\s*(\S+)/;
 
-interface Block {
+export interface Block {
   node: FshNode;
   lines: string[];
   instanceOf?: string;
@@ -459,7 +466,7 @@ export function buildFshGraph(root: string): FshGraph {
       }
     }
   }
-  return { root, canonical, nodes, dependents, edgeKinds, fshFiles: fshFiles.length, cqlFiles: cqlFiles.length, aliasUsers };
+  return { root, canonical, nodes, dependents, edgeKinds, fshFiles: fshFiles.length, cqlFiles: cqlFiles.length, aliasUsers, allBlocks: blocks };
 }
 
 function bump(m: Map<string, number>, k: string): void {
@@ -540,6 +547,43 @@ export function fileUsers(g: FshGraph): Record<string, string[]> {
     for (const u of users) out.get(file)!.add(u);
   }
   return Object.fromEntries([...out].sort(([a], [b]) => a.localeCompare(b)).map(([f, us]) => [f, [...us].sort()]));
+}
+
+/**
+ * File-level resource declarations: for each source file, the FHIR resource
+ * keys (`<canonical>` or `<Type>/<id>`) the file produces. This is the FORWARD
+ * map that `fileUsers` does not supply — `fileUsers` tells you who depends on a
+ * file, this tells you what the file itself produces.
+ *
+ * `AstPlanCli` needs this to map a changed FSH file to the AST resources it
+ * must rebuild. Without it, a file that declares a resource but has no
+ * dependents triggers a full-build fallback — the planner knows the file
+ * changed but cannot tell WHICH resource was affected (bean `a9tx`, measured
+ * 2026-10-01 on smart-trust: Domains.fsh → full build).
+ *
+ * Emitted alongside `fsh-file-users/v1` as `fsh-file-resources/v1`.
+ */
+export function fileResources(g: FshGraph): Record<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const block of g.allBlocks) {
+    const node = block.node;
+    // RuleSets, Invariants, Mappings, and CQL libraries are not FHIR resources
+    const rt = KIND_TO_TYPE[node.kind];
+    if (!rt && node.kind !== "Instance") continue;
+    // Build the resource key: canonical URL or Instance/id
+    const id = node.id ?? node.name;
+    let key: string;
+    if (rt) {
+      // Conformance resource: canonical URL
+      key = `${g.canonical}/${rt}/${id}`;
+    } else {
+      // Instance: Type/id
+      key = `Instance/${id}`;
+    }
+    if (!out.has(node.file)) out.set(node.file, []);
+    out.get(node.file)!.push(key);
+  }
+  return Object.fromEntries([...out].sort(([a], [b]) => a.localeCompare(b)).map(([f, rs]) => [f, rs.sort()]));
 }
 
 export interface ConeSizes {
@@ -722,7 +766,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const root = args.find((a) => !a.startsWith("--"));
   if (!root) {
-    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…] [--file-users out.json]");
+    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…] [--file-users out.json] [--file-resources out.json]");
     process.exit(2);
   }
   const opt = (name: string): string | undefined => {
@@ -754,5 +798,10 @@ if (import.meta.main) {
   if (fu) {
     writeFileSync(fu, JSON.stringify({ $schema: "fsh-file-users/v1", root: g.root, users: fileUsers(g) }, null, 2) + "\n");
     console.log(`\nwrote ${fu}`);
+  }
+  const fr = opt("--file-resources");
+  if (fr) {
+    writeFileSync(fr, JSON.stringify({ $schema: "fsh-file-resources/v1", root: g.root, resources: fileResources(g) }, null, 2) + "\n");
+    console.log(`\nwrote ${fr}`);
   }
 }

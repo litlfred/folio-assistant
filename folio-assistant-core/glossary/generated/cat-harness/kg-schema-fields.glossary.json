@@ -882,6 +882,69 @@
       "status": "candidate"
     },
     {
+      "id": "bean-graph.milestoneplanschema.coveredopen",
+      "prefLabel": "MilestonePlanSchema.coveredOpen",
+      "definition": "SUMMED from the closures, never `openTotal - orphanOpen`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.coveredOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.duplicateids",
+      "prefLabel": "MilestonePlanSchema.duplicateIds",
+      "definition": "Bean ids held by more than one file. A store defect, reported.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.duplicateIds",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.orphanopen",
+      "prefLabel": "MilestonePlanSchema.orphanOpen",
+      "definition": "Open beans with no milestone anywhere above them.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.orphanOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.epics",
+      "prefLabel": "MilestoneRollupSchema.epics",
+      "definition": "Direct children typed `epic`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.epics",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.file",
+      "prefLabel": "MilestoneRollupSchema.file",
+      "definition": "Repository-relative path of the milestone's bean file.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.share",
+      "prefLabel": "MilestoneRollupSchema.share",
+      "definition": "`closed / (closed + open)`; `null` when nothing is classified, which is NOT the same as 0 — see the module note on `milestone-rollup.ts`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.share",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.status",
+      "prefLabel": "MilestoneRollupSchema.status",
+      "definition": "The milestone's OWN status — not derived from its subtree.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.status",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.total",
+      "prefLabel": "MilestoneRollupSchema.total",
+      "definition": "Transitive descendants, excluding the milestone itself.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.total",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.unclassified",
+      "prefLabel": "MilestoneRollupSchema.unclassified",
+      "definition": "In neither status set — reported alone, folded into neither figure.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.unclassified",
+      "status": "candidate"
+    },
+    {
       "id": "bean-note.beannotefrontmatterschema.bean",
       "prefLabel": "BeanNoteFrontMatterSchema.bean",
       "definition": "The bean this note adds to. It must exist in the bean store.",
@@ -2093,6 +2156,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.glassstrip",
+      "prefLabel": "CatHarnessDeclaration.glassStrip",
+      "definition": "Which tiles the glass's bottom strip pins, in order — see `GlassStripSchema`. Absent inherits.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.glassStrip",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.icon",
       "prefLabel": "CatHarnessDeclaration.icon",
       "definition": "The id of the {@link images} entry to use as the browser icon.",
@@ -2261,6 +2331,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.glassstrip",
+      "prefLabel": "CatHarnessDeclarationSchema.glassStrip",
+      "definition": "Which tiles the glass's bottom strip pins, in order — see {@link GlassStripSchema}. Same three states as `navbarIcons`: absent inherits, `[]` pins nothing, a list is this instance's own answer.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.glassStrip",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.id",
       "prefLabel": "CatHarnessDeclarationSchema.id",
       "definition": "The package identity an EXTERNAL consumer depends on — reverse-DNS.",
@@ -2401,9 +2478,16 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.source",
+      "prefLabel": "ContentDirectory.source",
+      "definition": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/subgraph-source.ts`), which applies the instance config's override by id.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.source",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.storage",
       "prefLabel": "ContentDirectory.storage",
-      "definition": "This directory's contents are STORED on a branch, keyed by commit, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}.",
+      "definition": "This directory's contents are STORED on a branch, keyed by commit or tip, and the checkout holds at most a working copy. See {@link DirectoryStorageSchema}.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.storage",
       "status": "candidate"
     },
@@ -2461,6 +2545,20 @@
       "prefLabel": "ContentDirectoryShape.readOnlyBasis",
       "definition": "WHY, and required whenever `readOnly` is declared — either value.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.served",
+      "prefLabel": "ContentDirectoryShape.served",
+      "definition": "This directory's BYTES are published verbatim, at `/<instance>/<path>`, for the site's own pages to fetch.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.served",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.source",
+      "prefLabel": "ContentDirectoryShape.source",
+      "definition": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.source",
       "status": "candidate"
     },
     {
@@ -2522,7 +2620,7 @@
     {
       "id": "cat-harness.directorystorageschema.keyedby",
       "prefLabel": "DirectoryStorageSchema.keyedBy",
-      "definition": "How entries are keyed on the branch. Only `commit` exists.",
+      "definition": "How entries are keyed on the branch: one entry per `commit`, one live copy at the `tip`, or one entry per published `route`. See {@link DirectoryStorageSchema}'s docblock for why `route` is not a synonym for `tip`.",
       "source": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema.keyedBy",
       "status": "candidate"
     },
@@ -2921,7 +3019,7 @@
     {
       "id": "cat-harness.visualisationschema.title",
       "prefLabel": "VisualisationSchema.title",
-      "definition": "What a tile calls it. Absent falls back to the directory's id.",
+      "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
       "status": "candidate"
     },
@@ -4162,6 +4260,27 @@
       "prefLabel": "PlacementSchema.page",
       "definition": "The page it sits on, 1-based as a reader counts.",
       "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.thresholdbasisschema.coverage",
+      "prefLabel": "ThresholdBasisSchema.coverage",
+      "definition": "Placed area over page area — the number compared against `value`.",
+      "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.coverage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.thresholdbasisschema.suppliedby",
+      "prefLabel": "ThresholdBasisSchema.suppliedBy",
+      "definition": "Always the caller. Recorded so the provenance is read, not inferred.",
+      "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.suppliedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.thresholdbasisschema.value",
+      "prefLabel": "ThresholdBasisSchema.value",
+      "definition": "The cutoff, exactly as supplied. Images below it were filed `furniture`.",
+      "source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value",
       "status": "candidate"
     },
     {
@@ -5705,6 +5824,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.title",
+      "prefLabel": "GraphKindDef.title",
+      "definition": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.validator",
       "prefLabel": "GraphKindDef.validator",
       "definition": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.",
@@ -5758,6 +5884,27 @@
       "prefLabel": "ClosedRepositoryDescription.disagreements",
       "definition": "Disagreements WITHIN one instance, each tagged with the instance.",
       "source": "cat-harness/schemas/harness-config.ts#ClosedRepositoryDescription.disagreements",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.declaredsubgraph.instancename",
+      "prefLabel": "DeclaredSubgraph.instanceName",
+      "definition": "That instance's declared `name`.",
+      "source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceName",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.declaredsubgraph.instanceroot",
+      "prefLabel": "DeclaredSubgraph.instanceRoot",
+      "definition": "The root of the instance whose OWN declaration carries the entry.",
+      "source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.instanceRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.declaredsubgraph.repository",
+      "prefLabel": "DeclaredSubgraph.repository",
+      "definition": "The instance's declared `repository` (`owner/repo`), when it has one.",
+      "source": "cat-harness/schemas/harness-config.ts#DeclaredSubgraph.repository",
       "status": "candidate"
     },
     {
@@ -5880,6 +6027,20 @@
       "status": "candidate"
     },
     {
+      "id": "harness-config.harnessconfig.site",
+      "prefLabel": "HarnessConfig.site",
+      "definition": "What this instance asks of the published SITE — today only whether it is the landing page (issue #1904). See {@link HarnessSiteSchema}.",
+      "source": "cat-harness/schemas/harness-config.ts#HarnessConfig.site",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.harnessconfig.subgraphsources",
+      "prefLabel": "HarnessConfig.subgraphSources",
+      "definition": "Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}.",
+      "source": "cat-harness/schemas/harness-config.ts#HarnessConfig.subgraphSources",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.harnessconfig.translation",
       "prefLabel": "HarnessConfig.translation",
       "definition": "Translation pipeline configuration.",
@@ -5898,6 +6059,13 @@
       "prefLabel": "HarnessConfigSchema.interactivity",
       "definition": "Is this folio's content static, or does it carry interfaces?",
       "source": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema.interactivity",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.harnessconfigschema.subgraphsources",
+      "prefLabel": "HarnessConfigSchema.subgraphSources",
+      "definition": "Per-instantiation override of where a declared subgraph gets its content, keyed by the directory's `id` (never its path). The owner, 2026-10-03: *\"That same information can be overwritten by the harness instance config.\"* Applied by `resolveSubgraphSource` and nowhere else (`schemas/subgraph-source.ts`, bean `l4ay`).",
+      "source": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema.subgraphSources",
       "status": "candidate"
     },
     {
@@ -7182,6 +7350,13 @@
       "status": "candidate"
     },
     {
+      "id": "pinned-terminology.pinnedconceptschema.deprecated",
+      "prefLabel": "PinnedConceptSchema.deprecated",
+      "definition": "The edition itself marks the code deprecated: still valid to read, not to write anew. Absent means the edition says nothing, not \"current\". First user: the SPDX License List (`isDeprecatedLicenseId`), bean `sd5v`.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.deprecated",
+      "status": "candidate"
+    },
+    {
       "id": "pinned-terminology.pinnedconceptschema.display",
       "prefLabel": "PinnedConceptSchema.display",
       "definition": "The human label, and the ONLY field a glossary candidate can match on.",
@@ -8330,6 +8505,13 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexschema.plan",
+      "prefLabel": "BeanIndexSchema.plan",
+      "definition": "The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because \"no plan in the projection\" is a state the renderer distinguishes from \"a plan with nothing done\".",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.extractedtitle",
       "prefLabel": "LibraryIndexEntrySchema.extractedTitle",
       "definition": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`).",
@@ -8558,6 +8740,20 @@
       "prefLabel": "SourceProvenanceSchema.upstream",
       "definition": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\".",
       "source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream",
+      "status": "candidate"
+    },
+    {
+      "id": "spdx-license-expression.expressioncheck.deprecated",
+      "prefLabel": "ExpressionCheck.deprecated",
+      "definition": "Listed ids the edition marks deprecated, canonical spelling.",
+      "source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.deprecated",
+      "status": "candidate"
+    },
+    {
+      "id": "spdx-license-expression.expressioncheck.recased",
+      "prefLabel": "ExpressionCheck.recased",
+      "definition": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported.",
+      "source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
       "status": "candidate"
     },
     {
@@ -8908,6 +9104,13 @@
       "prefLabel": "StickyTextSchema.scale",
       "definition": "Multiply the words' size. `1` is normal; `0.8` fits more in.",
       "source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-source.sourcedentry.storage",
+      "prefLabel": "SourcedEntry.storage",
+      "definition": "#1764's field, if a declaration carries it. Read only to map it.",
+      "source": "cat-harness/schemas/subgraph-source.ts#SourcedEntry.storage",
       "status": "candidate"
     },
     {
@@ -11302,6 +11505,104 @@
       "prefLabel": "UserStorySchema.want",
       "definition": "What the reader wants to do, in their terms — \"I want to …\".",
       "source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.assemblybasisschema.by",
+      "prefLabel": "AssemblyBasisSchema.by",
+      "definition": "The script, as a `script` attribution — what looked.",
+      "source": "cat-harness/schemas/vector-figure.ts#AssemblyBasisSchema.by",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.background",
+      "prefLabel": "VectorAssemblySchema.background",
+      "definition": "Of those, page-sized backgrounds that joined no component.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.background",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.between",
+      "prefLabel": "VectorAssemblySchema.between",
+      "definition": "Lines inside the region but in no component — the white space `a8wy` found real labels in.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.between",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.drawings",
+      "prefLabel": "VectorAssemblySchema.drawings",
+      "definition": "Drawing operations on the page. Reported, never graded.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.drawings",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.outside",
+      "prefLabel": "VectorAssemblySchema.outside",
+      "definition": "Lines outside the rendered region: furniture, and sometimes figure titles. The crop's stated limit.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.outside",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorassemblyschema.unlabelledclosedshapes",
+      "prefLabel": "VectorAssemblySchema.unlabelledClosedShapes",
+      "definition": "Closed shapes holding no label — arrowheads, bullets, swatches. Counted, not listed.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorAssemblySchema.unlabelledClosedShapes",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorboxschema.parent",
+      "prefLabel": "VectorBoxSchema.parent",
+      "definition": "The smallest other labelled box containing this one, or null.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorBoxSchema.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorconnectorschema.from",
+      "prefLabel": "VectorConnectorSchema.from",
+      "definition": "Box the stroke starts in, or null when it lands in none.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorConnectorSchema.from",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.captionlabels",
+      "prefLabel": "VectorFigureSchema.captionLabels",
+      "definition": "Figure numbers from the page's caption candidates — candidates, not claims.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.captionLabels",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.file",
+      "prefLabel": "VectorFigureSchema.file",
+      "definition": "The render, relative to the entry; null when nothing was rendered, with the reason.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.id",
+      "prefLabel": "VectorFigureSchema.id",
+      "definition": "`vfig-p034` — one per qualifying page; a verdict keys on it.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.region",
+      "prefLabel": "VectorFigureSchema.region",
+      "definition": "The rendered rectangle, visible frame.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.region",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfigureschema.shows",
+      "prefLabel": "VectorFigureSchema.shows",
+      "definition": "Which declared figures the render shows. Inspection only — see the module docblock.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFigureSchema.shows",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-figure.vectorfiguressidecarschema.figures",
+      "prefLabel": "VectorFiguresSidecarSchema.figures",
+      "definition": "`null` is could-not-determine, never \"draws no figures\" — the `dh4f` rule.",
+      "source": "cat-harness/schemas/vector-figure.ts#VectorFiguresSidecarSchema.figures",
       "status": "candidate"
     },
     {

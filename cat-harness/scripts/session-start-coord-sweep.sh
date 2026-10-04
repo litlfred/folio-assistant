@@ -489,6 +489,50 @@ from the listing.
 SESSIONS
 echo
 
+# ── 3.5 The state-branch mount ──────────────────────────────────────────────
+# Bean `2h76` part 4. Printed BEFORE the recommended action because it changes
+# whether the work-plan above can be believed.
+#
+# The proposal names the failure this guards: if the fetch fails silently and
+# `beans list` comes back empty, the agent reads "no work" — an unreachable
+# work-plan and an empty one are indistinguishable from here, and the agent
+# acts on the first reading. So the mount prints its own finding, loudly, and
+# `state-mount.ts` also exits non-zero so a wrapper cannot swallow it.
+#
+# No declaration is tip-keyed yet, so today this says "not enabled" and costs
+# one process. Guarded on `bun` because this sweep is CLI-independent by
+# design and must still work where only git is present.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-mount.ts" ]; then
+  mount_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/state-mount.ts" 2>&1)" || true
+  if [ -n "$mount_out" ]; then
+    printf '%s\n\n' "$mount_out"
+  fi
+fi
+
+# ── 3.6 The seeds' freshness ────────────────────────────────────────────────
+# Bean `9ofm`, row C. Owner, 2026-10-03: wire it here rather than into CI.
+#
+# Reading the branch is the whole job, so this needs the network — which is
+# why it is HERE and not a gate: `check:declared-dirs` and `audit:coverage`
+# are offline by construction, and a gate that can go red because a fetch
+# failed teaches people to re-run gates until they pass. This sweep already
+# does network work and already tolerates-and-reports.
+#
+# `--brief` prints the finding and nothing else, and nothing at all when every
+# seed is current. The full report lists every differing path, and the
+# superseded `cat/cat-harness/state` alone carried 159 of them — in a sweep
+# whose whole job is to be read, that would bury the rest of it.
+#
+# Unlike 3.5 this is NOT a reason to disbelieve the work-plan above: `main` is
+# still the store, so a stale seed breaks nothing today. It breaks the
+# cutover. The printed block says so, so a reader does not over-read it.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-drift.ts" ]; then
+  drift_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/state-drift.ts" --brief 2>&1)" || true
+  if [ -n "$drift_out" ]; then
+    printf '%s\n\n' "$drift_out"
+  fi
+fi
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**

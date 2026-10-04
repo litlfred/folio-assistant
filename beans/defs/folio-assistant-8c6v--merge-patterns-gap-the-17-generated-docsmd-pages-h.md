@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8c6v
 title: 'MERGE PATTERNS GAP: the 17 generated docs/*.md pages have no declared merge-conflict pattern, so merge:main refuses them although their own front matter says do-not-hand-edit'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T08:55:15Z
-updated_at: 2026-10-03T09:17:35Z
+updated_at: 2026-10-03T11:20:40Z
 parent: folio-assistant-d33q
 ---
 
@@ -104,3 +104,21 @@ Related: `8rff` (the three families this is the fourth of, completed),
 `d33q` (parent), `ba9e` (the other chronically-conflicting generated family).
 
 _2026-10-03T09:17:35Z_ — Claimed by claude/docs-pages-merge-pattern-declare-8c6v — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+_2026-10-03_ — PR #1971 (`claude/docs-pages-merge-pattern-declare-8c6v`), head `cc1b199`. Declared `docs-pages` in `merge-conflict-patterns.ts` — NOT `.gitattributes`: `merge-pipeline-paths.ts` imports `classify` from the PATTERNS array, which its own docblock calls the single answer. Followed #1943's shape: one entry, a test pair, a skill section.
+
+The 17 slugs are ENUMERATED, not globbed: `cat-harness/docs/*.md` is a mix — 13 of 31 generated at top level, 4 of 9 in `guides/` — so a directory glob would take a side on 23 authored pages. A test derives the subjects from the pages' own FRONT MATTER so the enumeration cannot go stale.
+
+Measured on the merged tree: under `origin/main`'s 23 patterns all 17 refuse; under this branch's 24 all 17 classify to `docs-pages`; 0 false positives over 22,636 tracked paths, 0 of 789 `cat-harness/content/**` files, 0 of 23 authored docs siblings.
+
+**The test caught drift on its first merge, and the drift was self-inflicted.** The first cut tested the whole file and counted an 18th page: `docs/reference/skill-instructions/merge-conflict-patterns.md`, the generated body of the skill documenting this pattern, which quotes the `generated:` marker in a code fence — 'a docblock that documents a tag necessarily contains the tag' (`audit-coverage`). Merge behaviour was never wrong (its front matter names `gen-skill-docs.ts` and `skill-instructions` is declared first), but the detector was. Now front-matter-only, with a test pinning all three facts.
+
+Gates: 215 of 216 passed; the one failure is `bun test` whose 15 failures are ALL 5000ms timeouts (15 timeouts / 15 failures, zero assertion failures), and all four files involved pass in isolation. `merge-base.test.ts` 28/28. `skill:register:check` exit 0 on its own (bean `ymsu`).
+
+NOT closed: CI has produced zero runs because `main` moved four times during the session and the head keeps re-conflicting on the same three generated LSI artefacts (all `take-base`-covered). Handed to the Merge Manager; #1966 supersedes this entry if it lands.
+
+
+_2026-10-03_ — **All four `## Done when` items satisfied.** PR #1971 merged to main by litlfred at 11:14:38Z, merge commit `76cdd687a20`, with the `merge-main` label applied by the Merge Manager (not by this session). `origin/main` now carries 24 PATTERNS entries including `docs-pages`, and all 17 pages classify to it under the BASE's own patterns.
+
+Item 4 verified rather than assumed: `bun run merge:overlap` re-run after the merge lists **none** of the 17 generated pages as an authored path, while the authored source `content/docs/publication-workflow/every-workflow-in-the-repo.md` still appears 16 times — which is correct and deliberate, since that half genuinely needs a person.

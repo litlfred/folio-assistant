@@ -56,6 +56,12 @@
  */
 
 import { z } from "zod";
+import {
+  SubgraphSourceOverridesSchema,
+  resolveSubgraphSource,
+  type ResolvedSubgraphSource,
+  type SubgraphSourceOverrides,
+} from "./subgraph-source";
 
 // ── Dependency types ────────────────────────────────────────────
 
@@ -177,6 +183,14 @@ export interface HarnessConfig {
 
   /** Cross-folio dependencies. */
   dependencies?: HarnessConfigDependencies;
+
+  /**
+   * What this instance asks of the published SITE — today only whether it is
+   * the landing page (issue #1904). See {@link HarnessSiteSchema}.
+   */
+  site?: HarnessSite;
+  /** Where a declared subgraph's content comes from in THIS instantiation, by directory id. See {@link HarnessConfigSchema}. */
+  subgraphSources?: SubgraphSourceOverrides;
 }
 
 // ── Zod schemas ─────────────────────────────────────────────────
@@ -283,6 +297,33 @@ export const HarnessDirsSchema = z.object({
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
 
+/**
+ * `site` in `<name>.config.json` — what an instantiated harness asks of the
+ * published site (issue #1904).
+ *
+ * `landing: true` makes this harness the site's landing page. The owner's
+ * ruling, 2026-10-02, verbatim:
+ *
+ * > "Flag it, with a default (recommended). The chosen instance's own
+ * > `<name>.config.json` carries `"site": { "landing": true }`. If exactly one
+ * > harness is instantiated, it is the landing page and no flag is needed.
+ * > That covers smart-trust. If there are several and none is flagged, a gate
+ * > fails. If more than one is flagged, then neutral hub with listing of
+ * > harnesses, todos,"
+ *
+ * On the CONFIG rather than the declaration because the question is about
+ * INSTANTIATION — which harnesses this checkout instantiates, and which of
+ * them it puts at `/` — and the config is the file that records it. The
+ * declaration travels with the harness into every checkout that uses it; a
+ * landing flag there would follow it into checkouts where it is not the
+ * landing. {@link resolveLandingInstance} is the only reader.
+ */
+export const HarnessSiteSchema = z.object({
+  landing: z.boolean().optional(),
+});
+
+export type HarnessSite = z.infer<typeof HarnessSiteSchema>;
+
 export const HarnessConfigSchema = z.object({
   contentType: z.string().optional(),
   /**
@@ -324,11 +365,20 @@ export const HarnessConfigSchema = z.object({
   harness: HarnessDirsSchema.optional(),
   translation: TranslationConfigSchema.optional(),
   dependencies: HarnessConfigDependenciesSchema.optional(),
+  site: HarnessSiteSchema.optional(),
+  /**
+   * Per-instantiation override of where a declared subgraph gets its content,
+   * keyed by the directory's `id` (never its path). The owner, 2026-10-03:
+   * *"That same information can be overwritten by the harness instance
+   * config."* Applied by `resolveSubgraphSource` and nowhere else
+   * (`schemas/subgraph-source.ts`, bean `l4ay`).
+   */
+  subgraphSources: SubgraphSourceOverridesSchema.optional(),
 });
 
 // ── Dependency resolution ───────────────────────────────────────
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import {
@@ -338,6 +388,7 @@ import {
   type ContentTypeRegistry,
 } from "./content-type";
 import {
+  CONFIG_SUFFIX,
   ExactVersionSchema,
   instanceConfigFilename,
   findInstanceRoot,
@@ -575,6 +626,118 @@ export function readHarnessConfig(dir: string): HarnessConfig | null {
       return null;
     }
   }
+}
+
+// ── The site's landing instance (issue #1904) ───────────────────
+
+/**
+ * Which harness the published site puts at `/`.
+ *
+ * | state | when |
+ * |---|---|
+ * | `instance` | exactly one harness is instantiated (`by: "sole"`, no flag needed), or several are and exactly one is flagged (`by: "flag"`) |
+ * | `hub` | several are instantiated and two or more are flagged: a neutral hub listing the harnesses and the todos |
+ * | `ambiguous` | several are instantiated and none is flagged (`reason: "none-flagged"`), or a config whose flag decides the answer cannot be read (`reason: "unreadable"`). `check:landing-instance` fails on it |
+ * | `none` | nothing is instantiated here: no `<name>.config.json` at this root. Not a default guessed at: there is no harness to land on, and saying so is the answer |
+ *
+ * `names` is always EVERY instantiated harness, sorted, so a hub and an error
+ * message list the same set.
+ */
+export type LandingInstance =
+  | { kind: "instance"; name: string; by: "sole" | "flag"; names: string[] }
+  | { kind: "hub"; names: string[]; flagged: string[] }
+  | { kind: "ambiguous"; names: string[]; reason: "none-flagged" | "unreadable"; unreadable: string[] }
+  | { kind: "none"; names: [] };
+
+/**
+ * Every instantiated harness at `repoRoot`: the stem of each
+ * `<name>.config.json` there, sorted.
+ *
+ * Instantiation is the CONFIG, not the declaration: a subscribed harness
+ * (issue #1719) has a config at the root and no local declaration, and is
+ * instantiated all the same. The retired global `harness.config.json` is not
+ * an instance called `harness`; `check:instance-config` reports it.
+ */
+export function instantiatedHarnessNames(repoRoot: string): string[] {
+  let entries: string[];
+  try {
+    entries = readdirSync(repoRoot);
+  } catch {
+    return [];
+  }
+  return entries
+    .filter((f) => f.endsWith(CONFIG_SUFFIX) && f !== LEGACY_HARNESS_CONFIG)
+    .map((f) => f.slice(0, -CONFIG_SUFFIX.length))
+    .filter((n) => n.length > 0)
+    .sort();
+}
+
+/**
+ * THE ONE ANSWER to "which harness is the site's landing page" (issue #1904).
+ *
+ * The owner's ruling, 2026-10-02, verbatim: *"Flag it, with a default
+ * (recommended). The chosen instance's own `<name>.config.json` carries
+ * `"site": { "landing": true }`. If exactly one harness is instantiated, it is
+ * the landing page and no flag is needed. That covers smart-trust. If there
+ * are several and none is flagged, a gate fails. If more than one is flagged,
+ * then neutral hub with listing of harnesses, todos,"*
+ *
+ * It replaces two answers that were each a guess: the docs generator took the
+ * instance it happened to live in, and two graph generators fell back to the
+ * clone's folder name. Neither the repository's name nor a generator's
+ * location is consulted here.
+ *
+ * Reads each config's `site` raw rather than through {@link readHarnessConfig},
+ * which walks OUTWARD from an instance root and could read a parent's file;
+ * this question is about the files at THIS root and nothing above it.
+ */
+export function resolveLandingInstance(repoRoot: string): LandingInstance {
+  const names = instantiatedHarnessNames(repoRoot);
+  if (names.length === 0) return { kind: "none", names: [] };
+  if (names.length === 1) return { kind: "instance", name: names[0]!, by: "sole", names };
+
+  const flagged: string[] = [];
+  const unreadable: string[] = [];
+  for (const name of names) {
+    let raw: unknown;
+    try {
+      raw = JSON.parse(readFileSync(join(repoRoot, instanceConfigFilename(name)), "utf-8"));
+    } catch {
+      unreadable.push(name);
+      continue;
+    }
+    const site = HarnessSiteSchema.safeParse((raw as { site?: unknown } | null)?.site ?? {});
+    if (!site.success) unreadable.push(name);
+    else if (site.data.landing === true) flagged.push(name);
+  }
+  // UNREADABLE outranks a finding: a config that cannot be read might carry a
+  // flag, so neither "exactly one" nor "none" is determined. One readable
+  // flag beside an unreadable file could be a hub, and answering "instance"
+  // would be a guess.
+  if (unreadable.length > 0) return { kind: "ambiguous", names, reason: "unreadable", unreadable };
+  if (flagged.length === 1) return { kind: "instance", name: flagged[0]!, by: "flag", names };
+  if (flagged.length >= 2) return { kind: "hub", names, flagged };
+  return { kind: "ambiguous", names, reason: "none-flagged", unreadable: [] };
+}
+
+/**
+ * The instance a path directly at `repoRoot` belongs to: the root's DECLARED
+ * name, else the landing instance when that is one harness, else `undefined`.
+ *
+ * Never the clone's folder name (bean `t5dm`, issue #1904): a worktree's
+ * basename is wherever it was cloned, and a repository that instantiates only
+ * `smart-base` is not an instance named after the repository.
+ */
+export function rootInstanceName(repoRoot: string): string | undefined {
+  let declared: string | undefined;
+  try {
+    declared = readDeclaration(repoRoot)?.name;
+  } catch {
+    declared = undefined;
+  }
+  if (declared !== undefined) return declared;
+  const landing = resolveLandingInstance(repoRoot);
+  return landing.kind === "instance" ? landing.name : undefined;
 }
 
 /**
@@ -1237,6 +1400,77 @@ export function corpusDirectoryForGraph(instanceRoot: string, kind: string): str
     );
   }
   return all[0];
+}
+
+// ── A declared subgraph, with its resolved content source (bean `l4ay`) ──
+
+/** A declared subgraph: who declares it, its entry, and where its content comes from. */
+export interface DeclaredSubgraph {
+  id: string;
+  /** The root of the instance whose OWN declaration carries the entry. */
+  instanceRoot: string;
+  /** That instance's declared `name`. */
+  instanceName: string;
+  /** The instance's declared `repository` (`owner/repo`), when it has one. */
+  repository?: string;
+  entry: ResolvedDirectory;
+  source: ResolvedSubgraphSource;
+}
+
+/**
+ * The instance-config overrides that apply to a subgraph declared by
+ * `declarer`: the declarer's own config, then the CHECKOUT ROOT's on top —
+ * the checkout root is the instantiation, so its word is last. Both matched on
+ * directory id.
+ */
+export function subgraphSourceOverrides(declarer: string, start: string = declarer): SubgraphSourceOverrides {
+  const checkout = checkoutRootFor(start);
+  const out: SubgraphSourceOverrides = {};
+  for (const root of [...new Set([resolve(declarer), checkout])]) {
+    const cfg = readHarnessConfig(root)?.subgraphSources;
+    if (cfg) Object.assign(out, SubgraphSourceOverridesSchema.parse(cfg));
+  }
+  return out;
+}
+
+/**
+ * THE lookup a publisher, the KG export and a mount/push tool use: the
+ * declared subgraph with this `id`, found from any instance in the checkout,
+ * with its source resolved (config override → `source` → legacy `storage` →
+ * `directory`).
+ *
+ * `start`'s own chain is asked first, so an instance redeclaring an inherited
+ * id is answered with its own entry. Otherwise the checkout's instances are
+ * searched for one whose OWN declaration carries the id. `undefined` when no
+ * instance declares it; throws when several unrelated instances do, because
+ * picking one would be a guess.
+ */
+export function declaredSubgraph(start: string, id: string): DeclaredSubgraph | undefined {
+  const here = resolve(start);
+  const graph = checkoutGraph(checkoutRootFor(here));
+  const owners: string[] = [];
+  const candidates = [here, ...graph.order.filter((r) => r !== here)];
+  for (const root of candidates) {
+    const decl = readDeclaration(root);
+    if (decl?.directories.some((d) => d.id === id)) owners.push(root);
+    if (root === here && owners.length > 0) break;
+  }
+  if (owners.length === 0) return undefined;
+  if (owners.length > 1 && owners[0] !== here) {
+    throw new Error(`subgraph "${id}" is declared by ${owners.length} instances (${owners.join(", ")}) — ask from the one you mean`);
+  }
+  const instanceRoot = owners[0]!;
+  const decl = readDeclaration(instanceRoot)!;
+  const entry = resolveDirectories(chainIn(graph, instanceRoot)).find((d) => d.id === id && d.own)
+    ?? resolveDirectories(declarationChain(instanceRoot)).find((d) => d.id === id)!;
+  return {
+    id,
+    instanceRoot,
+    instanceName: decl.name,
+    ...(decl.repository ? { repository: decl.repository } : {}),
+    entry,
+    source: resolveSubgraphSource(entry, subgraphSourceOverrides(instanceRoot, here)),
+  };
 }
 
 /**

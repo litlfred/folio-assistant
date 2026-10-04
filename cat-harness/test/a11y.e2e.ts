@@ -581,11 +581,28 @@ test.describe("the sticky todo board", () => {
         // actually on screen when axe looks at it.
         // Open the per-block badge first, so its inline sticky renders too.
         await page.locator(".fa-sticky-badge").first().click();
-        await page.locator(".fa-sticky-board .fa-sticky").first().locator(".fa-sticky-toggle").click();
-        await page.locator(".fa-sticky-board .fa-sticky").first().locator(".fa-sticky-pin").click();
+        // Since #1925 a board slot is its closed tile with one icon row
+        // under it, and the full card opens in a window: open one, expand
+        // its body, and pin the sticky to the folio glass from the row.
+        await page.locator('.fa-sticky-slot[data-fa-home-slot="a"] .fa-sticky-tile').click();
+        await page.locator('.fa-board-window[data-fa-window="a"] .fa-sticky-toggle').click();
+        await page.locator('.fa-sticky-slot[data-fa-home-slot="a"] .fa-sticky-act-pin').click();
 
         const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
         expect(violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+
+        // And the two new surfaces: the confirmation before fsh-guts, and the
+        // pinned sticky as a card on the pulled-down folio glass.
+        await page.locator('.fa-sticky-slot[data-fa-home-slot="b"] .fa-sticky-act-discard').click();
+        await expect(page.locator("dialog.fa-fsh-confirm")).toBeVisible();
+        const confirm = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+        expect(confirm.violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
+        await page.locator("dialog.fa-fsh-confirm .fa-fsh-confirm-cancel").click();
+        await page.reload();
+        await page.locator(".fa-glass-handle").click();
+        await expect(page.locator('.fa-glass-asset[data-fa-asset="todo/a"]')).toBeVisible();
+        const glass = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+        expect(glass.violations.map((v) => `${v.id} (${v.nodes.length})`)).toEqual([]);
         await ctx.close();
       });
     }

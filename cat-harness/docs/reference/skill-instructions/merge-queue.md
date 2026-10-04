@@ -183,6 +183,199 @@ Only with the owner's release (`Task_Release`): explicit, or a standing ruling
 quoted verbatim with its date. What lands is exactly the SHA CI tested; if
 `main` moved after the train's CI started, re-run rather than land.
 
+## Your merge cadence is an input to the bot's throughput
+
+**Pacing and concurrency are one question, not two.** `merge-main.yml` sweeps
+the `merge-main`-labelled PRs on every push to `main`, so each merge you land
+starts a sweep — and the per-PR `merge` job's concurrency group decides what
+happens to the sweep already running.
+
+Measured 2026-10-03 over the last 100 runs of that workflow (bean `o8s9`):
+
+| trigger | success | cancelled |
+|---|---|---|
+| `push` | 20 | **21** |
+| `pull_request_target` | 14 | 2 |
+| `workflow_dispatch` | 0 | 2 |
+
+Half of every push-triggered sweep was discarded. Run `37111610566` is the
+worked case: twelve per-PR jobs, six cancelled inside ten seconds of each
+other by the next sweep, and five of those six PRs still conflicted when
+re-probed minutes later. Sweep wall time is 1-15 min while a steward draining
+the queue lands a merge every 5-10, so under `cancel-in-progress: true` a
+sweep rarely survived to finish.
+
+The rule, now that `cancel-in-progress` is trigger-dependent and a push sweep
+QUEUES rather than kills:
+
+- **A sweep in flight is work in progress — do not count a PR as unmergeable
+  while its merge job is queued behind your last landing.** Re-read it after
+  the sweep settles.
+- **When you are landing faster than the sweep completes, you are the reason
+  the behind-PRs are not catching up.** The concurrency fix bounds the loss at
+  zero rather than half, but a merge still carries only `main@T(n-1) -> T(n)`
+  per sweep; a burst of landings leaves a backlog of steps to carry.
+
+## A hold has an EXPIRY and a trigger, or it outlives its reason
+
+A hold is a decision, and like every queue entry it records what the steward
+decided — not a fact. Facts move. **So a hold is only valid while the condition
+that justified it is still true, and the steward re-derives that condition at
+every sweep rather than inheriting it.**
+
+Write a hold with three parts or do not write one:
+
+| part | why |
+|---|---|
+| **what it waits on** | the condition, stated so it can be checked mechanically |
+| **what ends it** | the observation that lifts it, not a time |
+| **what it costs** | which PRs are being held, so the price is visible |
+
+**Measured, 2026-10-03.** A steward froze merges so a `merge-main` sweep could
+finish without being cancelled — correct at the time, and the owner confirmed
+the order. The sweep finished. The hold did not. It then survived three more
+sweeps, and the steward kept reporting "held for ordering" while four PRs sat
+clean and green for roughly forty minutes. The owner had to ask *"what is
+blocker on merging?"* to end it. The answer was the steward.
+
+Two specific failures worth naming, because both look like diligence:
+
+- **Inheriting a hold across its own justification.** The premise was "a merge
+  now cancels the in-flight job". Once that job completed — and once bean
+  `o8s9`'s fix made push sweeps queue instead of cancel — the premise was
+  simply false, and nothing re-checked it. A hold whose reason you cannot
+  restate from current facts is not a hold, it is a habit.
+- **Holding to protect a PR that was already conflicted.** The train head was
+  `rc=1` and needed a forward merge whatever happened, so holding other merges
+  protected nothing. **If the thing you are protecting already needs the work
+  your hold is avoiding, the hold is free of benefit and not free of cost.**
+
+## Sweep the whole queue; a tracked handful is not the queue
+
+**Compute the mergeable set from the open-PR list every time, never from the
+PRs you happen to be following.** The same session that held four green PRs
+was also unaware of two others that had opened and gone green in the
+meantime — they were not in its mental list, so they were in no list at all.
+
+The sweep is cheap and mechanical: for every open non-draft PR, read
+`base.ref`, run `git merge-tree --write-tree origin/main <head>` for the rc,
+and read the check runs on that exact head. Three columns, one pass. A PR with `base == main` and
+`rc == 0` is a *candidate*; whether it is mergeable is still the OWED question
+above, not a count of failures.
+
+**`no failures and nothing pending` is NOT green, and this rule got that wrong
+on its first use.** The sweep that followed it marked #1953 mergeable on
+`ok=1 bad=0 wait=0` — one completed check, the `.jsonld siblings` one, against
+the 23 that a full suite produces here. Nothing had failed and nothing was
+pending because **almost nothing had been asked**. That is bean `1xhc` inside
+the sweep itself: a gate that did not fire is indistinguishable from one that
+passed, and a tally of failures cannot tell them apart.
+
+So the third column is the owed SET, never a count: compare the check-run
+*names* on that head against the set owed for its event, and treat a missing
+name exactly as a red one. A steward that cannot say why it is not merging a PR
+which is green **on the owed set** is holding it by accident; one that merges on
+`bad=0 wait=0` alone is merging unverified.
+
+## Read `base.ref` BEFORE anything else: a stacked PR is not a main-queue member
+
+**`merge-tree origin/main <head>` answers a question nobody asked when the
+PR's base is not `main`.** Mergeability, independence and placement are all
+computed against the base, so a stacked PR measured against `main` is measured
+against the wrong tree — and the merge button lands it on the wrong tree too.
+
+**Measured, 2026-10-03.** PR #1937 was based on `claude/quirky-davinci-ixuymr`,
+another PR's branch. Every check the steward ran was against `origin/main`:
+`rc=0`, 16/16 green, all true and all irrelevant. The merge went to the stacked
+base, the PR closed as merged, and its nine commits were not on `main`. It took
+a second PR to re-land, and a sibling agent independently misdiagnosed the
+absence as a force-push eating a merge — a scarier cause than the truth, with a
+destructive remedy attached.
+
+The tell is cheap and it is first: `gh api repos/<o>/<r>/pulls/<n> --jq .base.ref`.
+In one sweep of 30 open PRs here, **four** had a base other than `main`. A
+queue sweep that does not print the base will mis-handle roughly one PR in
+eight.
+
+A stacked PR is not admitted to the main queue. Either its base lands first and
+the PR is re-measured against `main`, or it is rebased onto `main` by its
+author. The steward's job is to notice, not to resolve it.
+
+## `git add -A` after a merge silently reverts the submodule gitlinks
+
+**And `git submodule status` does not catch it.** This is bean `ygga` one layer
+deeper, and it defeats the check that bean prescribes.
+
+A merge resolves a submodule gitlink like any other path. `git add -A` then
+re-records every submodule at **whatever the working tree happens to have
+checked out**, overwriting the resolution. If you initialised submodules
+*before* merging, and the base advanced them, you have just reverted them to
+the merge base — and `git submodule status` shows **no `+` and no `-`**, because
+the index and the working tree agree with each other. They are simply both
+wrong.
+
+**Measured, 2026-10-03, on #1819.** Main had moved `bootstrap` to `ebfa406` and
+`bootstrap-tools` to `3046412`; the branch never touched either, so the
+three-way merge correctly took main's side, and `git add -A` undid it. The
+symptom was not a submodule error — it was `regen` reporting **five checks as
+"a real defect, not staleness"** (`readme:sync` in its four spellings plus
+`translate-bpmn:bootstrap`), all of them one module-load failure:
+
+```
+SyntaxError: Export named 'generatedBanner' not found in
+  .../bootstrap-tools/scripts/generated-by.ts
+```
+
+`generatedBanner` exists only from `3046412`. With the pins right, all five
+pass untouched and regen settles at 0 unrepaired. The agent had run
+`bun install`, so this is not the missing-dependencies case either.
+
+Two rules follow:
+
+- **Stage explicitly after a merge**, never `git add -A`, while any submodule is
+  in the tree.
+- **Verify the pins against the ref, not against the working tree.**
+  `git ls-tree <ref> bootstrap bootstrap-tools` is what exposes this;
+  `git submodule status` cannot, and reporting it as clean on that basis is the
+  `1xhc` failure — a check that cannot see the defect is not evidence of its
+  absence.
+
+## A local gate run in a contended container is not evidence — and here is the ratio
+
+**Measured 2026-10-03.** A full `bun test` shard in this container: **14,625
+tests across 715 files in 1438.88 s**. The workflow's own comment puts the same
+shard at **2 m 07 s – 2 m 21 s** on a dedicated runner. That is roughly **ten
+times slower**, at load average **11** with three concurrent `bun test` runs and
+a `regen` belonging to other sessions.
+
+At that ratio the default 5 s per-test budget stops measuring the code:
+
+```
+14554 pass · 57 skip · 14 fail
+grep -c "timed out after 5000ms"                    -> 14
+grep -cE "^error:|Expected:|Received:|toBe|toEqual" ->  0
+```
+
+**Fourteen failures, every one a timeout, not one assertion failure**, at real
+durations of 5.0–10.9 s. The same shard was green on the dedicated runner.
+
+So the signature is cheap to check and worth checking before you believe a red
+local run: **all failures are `timed out after Nms` and the assertion-failure
+count is zero.** That is contention. Report it as *inconclusive under
+contention* — never as green, and never as a defect — and let CI on the exact
+sha be the authority. What you must not do is "fix" a test that is not broken,
+and `never skip, disable or quarantine a test to get green` applies with full
+force here, because the temptation is strongest when the failure is not real.
+
+**Two ways this measurement was nearly got wrong, both bean `0s6w`:**
+
+- The agent first reported "exactly one failure" from a partial log, then the
+  run finished at 14. A count read before the run ends is not a count.
+- It read the run's exit code as 0 — but `echo` and `tail` were chained after
+  the test command in the same invocation, so **the 0 was `tail`'s**. A
+  compound command's exit status is the last command's, and a test runner's
+  status has to be captured before anything else runs.
+
 ## What this does not do yet
 
 The train's size is a fixed cap. Sizing it by risk waits for this process's

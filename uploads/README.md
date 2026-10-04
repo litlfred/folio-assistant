@@ -55,9 +55,15 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`9789240101197-eng/`](9789240101197-eng/) | 2 files | |
 | [`9789240116191-eng/`](9789240116191-eng/) | 2 files | |
+| [`arxiv-2402.02172v5/`](arxiv-2402.02172v5/) | 2 files | |
+| [`arxiv-2404.04834v4/`](arxiv-2404.04834v4/) | 2 files | |
+| [`arxiv-2507.23348v1/`](arxiv-2507.23348v1/) | 2 files | |
+| [`arxiv-2601.04544v1/`](arxiv-2601.04544v1/) | 2 files | |
+| [`arxiv-2607.00053v1/`](arxiv-2607.00053v1/) | 2 files | |
 | [`arxiv-licence-assumed-1991-2003/`](arxiv-licence-assumed-1991-2003/) | 2 files | |
 | [`arxiv-license-information/`](arxiv-license-information/) | 2 files | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
+| [`spdx-3-1-rc1-machine-readable/`](spdx-3-1-rc1-machine-readable/) | 3 files | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/) | 2 files | |
 <!-- kg:subgraph:end -->
 

@@ -275,3 +275,28 @@ The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,
 **Changeover ledger:** #1850 (protocol comment `5962515204`; 3fva's gap answer `5962532789`). Active sessions told: 01PricYF, 01WmQ8, 013Wb, 01CVVoav, 01DnFZtV, 01KC89, 01LKpuPo.
 
 **Unpushed / at risk:** none in this session's checkouts beyond the agents' own worktrees. Each agent follows prepare-for-handover. Scratch scripts are reproducible: `ready-once.sh` (now marks drafts ready via the CCR route) and `subbr/mk.sh` (seeds a subgraph branch from main).
+
+### Update 2026-10-04 06:45Z: the arc has landed
+
+Every PR this session drove is merged on `main`:
+
+| PR | what | merged |
+|---|---|---|
+| #1808 | navbar wireframes | 2026-10-03 |
+| #1819 | wireframe findings (`ob3m`) | 2026-10-03 |
+| #1926 | one sticky component; Pin → folio glass; fsh-guts in the top icon row (#1925) | 2026-10-03 |
+| #1937 | `keyedBy: "tip"` + generic `branch-store.ts` (state-branch storage) | 2026-10-03 |
+| #1941 | todos as one JSON-LD graph, a page per todo (#1908) | 2026-10-03 |
+| #2020 | LHS rail scoped to the instance being viewed; PAGES before FOLDERS; one disclosure arrow (#1902) | 2026-10-03 |
+| #1934 | site landing flag + hub (#1904) | 2026-10-04 |
+| #1804 | one name per harness; tile labels qualified by owning harness | 2026-10-04 |
+
+**Lesson for the next session:** `main` moved faster than the steward merged, so the last two PRs spent a day being re-merged. The merge-main bot cannot push a merge that touches `.github/workflows/*` (no `workflows` scope, #1829), but a session's own push can — merge by hand when the bot reports that refusal. Run `readme:subgraphs` and `skill:register` LAST after any hand merge; both stale generated files caught the hand merges here.
+
+**Open owner questions (none blocking):**
+1. #1902 follow-ups: an "all pages" escape from an instance-scoped rail (default: no — ⌂ and ▦ suffice); FOLDERS out of the Graphs wrapper; what is "not quite" about ON THIS PAGE; the ▦ Harnesses arrow.
+2. `dlqu` / `fnx4` adjudication for the beans rollover (#1850) — default: the Merge Manager asks the owning sessions to union.
+
+**Beans changeover (#1850):** owned by session `01EKB1gh` (fs43); `cat/cat-harness/beans` re-seeded at `e79e6f1` per the owner's D4 ruling. Nothing in flight here.
+
+**Unpushed / at risk:** none. The session's scratch worktrees under its scratchpad hold only pushed or merged work; the disk allowance is near full, so a fresh session is the cheaper place for the next arc.

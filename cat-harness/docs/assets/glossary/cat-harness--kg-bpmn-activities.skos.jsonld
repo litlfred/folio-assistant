@@ -914,26 +914,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_advisories",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Dependency advisories (WARN-ONLY)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule."
-        }
-      ],
-      "skos:notation": "Task_Advisories",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Advisories",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_e2e",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -954,43 +934,23 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_lean",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_hygiene",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean: no bare `import Mathlib` (HARD)"
+          "@value": "Import hygiene (HARD) and advisories (WARN-ONLY)"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently."
+          "@value": "FOUR QUESTIONS, ONE RUNNER — bean `7fu5`. They were four jobs (`lean-bare-import`, `python-imports`, `rust-wildcard`, `dependency-advisories`), each about a second of work behind a ~13 s checkout and a runner request; measured on `main` run 37133247484 (2026-10-03), the run took 21.7 min while its longest job executed for 174 s, the rest waiting for runners. Now they are steps of the `hygiene` job, and every step after the first gate runs `if: !cancelled()`, so a red one masks none of the others — the `om30` rule kept inside one job rather than by splitting it. (1) Lean, HARD: fail on any bare `import Mathlib` in content/**/*.lean; in this platform repo there is no content/, so the step prints SKIP and states that nothing was scanned. (2) Python, HARD: ruff F401 (unused) and F403 (wildcard) over the Python trees that exist, then the Python tests; an absent tree is dropped rather than passed to ruff, and an empty set says SKIP. (3) Dependency advisories, WARN-ONLY by the owner's ruling on bean `j41m`: is anything in the resolved tree KNOWN-VULNERABLE? The script exits 0 in every state and keeps them apart in its output; `.github/dependabot.yml` is the other half of that ruling and is not drawn here. (4) Rust wildcard imports, WARN-ONLY: report non-test `use …::*;` in tools/**/*.rs; `continue-on-error`, and therefore the job's LAST step, where it masks nothing."
         }
       ],
-      "skos:notation": "Task_Lean",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Lean",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_python",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Python: unused and wildcard imports (HARD)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass."
-        }
-      ],
-      "skos:notation": "Task_Python",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Python",
+      "skos:notation": "Task_Hygiene",
+      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Hygiene",
       "skos:note": "candidate"
     },
     {
@@ -1031,26 +991,6 @@
       ],
       "skos:notation": "Task_RepositoryGates",
       "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_RepositoryGates",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_rust",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Rust wildcard imports (WARN-ONLY)"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs."
-        }
-      ],
-      "skos:notation": "Task_Rust",
-      "dcterms:source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_Rust",
       "skos:note": "candidate"
     },
     {
@@ -4904,6 +4844,196 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_agentfix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge main in, regenerate, fix mechanical gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge commits only; never a force-push."
+        }
+      ],
+      "skos:notation": "Task_AgentFix",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AgentFix",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_askowner",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ask the owner on the PR, both sides quoted"
+        }
+      ],
+      "skos:notation": "Task_AskOwner",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AskOwner",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_close",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the bean, merge commit as evidence"
+        }
+      ],
+      "skos:notation": "Task_Close",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Close",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Comment on the PR once, linking the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One comment per refused PR, edited in place on every later event."
+        }
+      ],
+      "skos:notation": "Task_Comment",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_dispatch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Dispatch one agent, recorded on the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before the agent starts: the date, why the fail condition fired, the agent's id, its budget. Never while the first writer may still be live. Two failed attempts with the same cause go to the owner instead."
+        }
+      ],
+      "skos:notation": "Task_Dispatch",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Dispatch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_fix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fix the PR, report on the PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Claims the refusal bean, brings main in with `merge:main`, settles what it refused, pushes. Completed with the outcome `fail condition` by the steward when the condition fires first."
+        }
+      ],
+      "skos:notation": "Task_Fix",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Fix",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_handback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand back, with a fail condition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `agent-handoff` format (#1884): Roles, Report to (the PR), Done when, Fails if. The fail condition: no `started` line within 4 h, no push within 24 h, the session gone, or `blocked` on something it cannot settle. One line to the session; the instructions are in the bean."
+        }
+      ],
+      "skos:notation": "Task_HandBack",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_HandBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the refusal on the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PR, the head sha the train used, the train and its other members, each refused path or failing gate and why. A repeat refusal goes under `## Attempts` with `--body-append`."
+        }
+      ],
+      "skos:notation": "Task_Record",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_retrain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-enter a train on the new head"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The next train is the verifier: the executor's own log is evidence, not the close."
+        }
+      ],
+      "skos:notation": "Task_Retrain",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Retrain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergerefusal.task_scrap",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Scrap the bean, with the reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent's own `beans update --status scrapped`; never deleted."
+        }
+      ],
+      "skos:notation": "Task_Scrap",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Scrap",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergetrain.call_checkspresent",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5376,6 +5506,86 @@
       ],
       "skos:notation": "O_Review",
       "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#O_Review",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_mountbranchtip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mount the branch tip at the declared path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted."
+        }
+      ],
+      "skos:notation": "Task_MountBranchTip",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_refuseunknownkind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refuse: no flow for this source kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the `dh4f` defect."
+        }
+      ],
+      "skos:notation": "Task_RefuseUnknownKind",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_RefuseUnknownKind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_resolvesource",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve the subgraph's content source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`declaredSubgraph(start, id)`: the declaring instance, the entry, and the resolved source with `declaredIn` saying which layer answered. Never read `source` off the declaration directly — the config override and the legacy `storage` field are folded in by the resolver and nowhere else. A contradiction (both `source` and `storage`; a `qa` subgraph keyed by tip) throws here, before anything is mounted."
+        }
+      ],
+      "skos:notation": "Task_ResolveSource",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_ResolveSource",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mountsubgraph.task_usecheckoutpath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Use the checkout path in place"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A `directory` source IS its declared path. Nothing is mounted; a write is an ordinary commit on the working branch, which is why `branch-store push` answers \"commit through git\" for it rather than pushing anything."
+        }
+      ],
+      "skos:notation": "Task_UseCheckoutPath",
+      "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_UseCheckoutPath",
       "skos:note": "candidate"
     },
     {

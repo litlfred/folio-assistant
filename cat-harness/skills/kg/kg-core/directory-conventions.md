@@ -132,6 +132,7 @@ decides it.
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
 | `bean-notes` | **harness** | one pull request's addendum to a bean — one Markdown file per branch per bean, `$schema: folio-bean-note/v1` in its front matter, named `<bean>--<date>--<branch>.md` so two pull requests never write one path; `README.md` beside them is the generated index. Bean `m61r`: `ob3m` cost five hand-merges in one afternoon while every finding was appended to the bean. `state`, and `recordsWork: false` because a note is a record about a bean, whose work is counted on the bean. Convention: [`bean-coordination`](../../sdlc/sdlc-core/bean-coordination.md) §"Adding to a bean — a note, not an append". | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
+| `merge-queue` | **harness** | a merge steward's DECISIONS about an open pull request — one JSON each, `"$schema": "folio-merge-queue-entry/v1"`: priority class, rank or override with its reason, a hold with its expiry, the train it joined, an ejection with its evidence. **Never a fact GitHub owns** — CI, mergeability, labels and the head SHA are read live at decision time and refused BY NAME by the schema, because a stored copy is a second answer that goes stale on the next push. The one exception is an evidence snapshot on a FINISHED train run, which is history rather than a claim about now. Declared at `beans/queue/`, beside `workflow-state`: this holds the decisions, a finished run next door holds the evidence they met. `state` because a steward writes it as the train proceeds; `recordsWork: true` because a held entry is open work. Shape in `schemas/merge-queue.ts`; read with [`merge-queue`](../../sdlc/sdlc-core/merge-queue.md). Bean `hfag`. | no |
 | `session-survey` | **harness** | published surveys of a commit window — one JSON each, `"$schema": "folio-session-survey/v1"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through. | no |
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
 | `boards` | **harness** | boards — one file each, `"$schema": "folio-board/v1"`. A board is a **diagram OF** a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — *"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter."* | no |
@@ -150,6 +151,7 @@ decides it.
 | `fhir-artifact-index` | **harness** | the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of `catalogue`, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a `resourceType` at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares `MaterializationSchema` with `catalogue`. Read with the `ig-artifact-ingestion` (smart-base) skill; shape in `folio-assistant-core/schemas/fhir-artifact-index.ts`. | no |
 | `ig-metadata-index` | **harness** | the IG Publisher's OWN metadata exports for one published IG, harvested verbatim — `valueset-ref-list.json`, `codesystem-ref-list.json` and `usage-stats.json`. A SIBLING of `fhir-artifact-index`, not an extension of it, and the line between them is the line between a RECONSTRUCTION and a TRANSCRIPTION: that index answers *what artefacts does this IG contain*, assembled from four partial views because no IG publishes such an index, while this answers *what did the toolchain say about them*, read from three files the IG does publish. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option B); Option A would have hung a `metadataExports` block off the index, and the bean's own objection to it is why it lost — *"Risks making the index a bag."* `derived`: it does not stand on its own, and re-harvesting an unchanged IG gives the same file back — the clause that separates it from `binary-release`, where re-running produces a different release. Two measured findings from bean `nsbb` are carried as SHAPE rather than prose, because both are absences that must not read as zeros: `uses` is declared-and-never-populated in both IGs measured (a three-state `usesState`, where a bare array would erase the finding), and nothing exports Library / PlanDefinition / Measure edges at all (`IG_METADATA_UNREACHED_TYPES`, so silence over the decision-logic core reads as uninformative rather than clean). Shape in `schemas/ig-metadata-index.ts`. | no |
 | `binary-release` | **harness** | published binary releases — one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. **Never the bytes**: the schema is strict throughout. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option A); Option B was reusing `materialization`, and bean `gpdo`'s `compiled` purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. `state`: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not `derived` although `ig-metadata-index` above is. `recordsWork: false` — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its >100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in `schemas/binary-release.ts`. | no |
+| `openapi` | **harness** | OpenAPI 3 documents an instance holds — each ingested verbatim beside a `folio-openapi-source/v1` provenance node carrying its materialization record — and, as nodes of the same graph, every OPERATION in them: `<doc>/<operationId>.jsonld` (its IRI) and a thin page at `<doc>/<operationId>/`, drawn in the browser from the served document. Owner, 2026-10-03: *"kind is an OpenAPI node. need page + IRI for each operation"* (bean `s4ta`). Ingested and rendered by the `cat-openapi` harness; shapes in `cat-openapi/schemas/openapi.ts`. | no |
 | `test-plan` | **harness** | test plans — one `test-plan/v1` document per plan, shaped after the held FHIR R5 TestPlan source: the system-under-test kind and version range, the `req:` requirements it is evidence for, test cases whose assertion ids are criterion ids, test data that is either FIXED (committed, and evidence once reviewed) or GENERATED (template + params + seed, never stored materialised — bean `vm6m`), and the certification rule as a DMN reference. Strawperson, bean `ygzh`. `content`: a process reads a plan and never writes it, and it still says what is required when detached from every run. The run points at the plan and never the reverse, because a plan listing its runs would be rewritten by every execution. Declared, no directory. Shape in `schemas/test-plan.ts`. | no |
 | `test-report` | **harness** | test reports — one `test-report/v1` document per run of a plan against a system under test, per-case verdicts in the block-qa entry shape, and a rollup for that ONE plan. **Never a total across plans** — the owner's `py74` ruling, enforced by a strict top level that has no field for a second plan or a total. Strawperson, bean `ygzh`. `state`: the run writes it, and re-running produces a new report rather than the same one. A separate kind from `qa-report` because the subject differs — that is a tool's account of its OWN run, this is a tester's finding about SOMEBODY ELSE, which is why the system under test may not write its own verdict. The rollup may not disagree with the cases, and `running` is never a pass. Written to the `qa-reports` branch under `tests/<plan-id>/<sut>/<run-id>/`; declared, no directory. Shape in `schemas/test-report.ts`. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
@@ -161,6 +163,7 @@ decides it.
 | `docs` | **harness** | documentation **about** the knowledge graph — how the harness works, what its directories hold, how a process runs. Distinct from `folio` by its SUBJECT, not its format. Added 2026-09-20: this table carried no renderable harness kind until the harness gained a plain just-the-docs renderer, and the rule reads in its true form — a layer owns the kinds it CAN render. | **yes** — the plain just-the-docs pipeline, no extensions |
 | `proposals` | **harness** | proposals for the harness's own features — initial analysis, MVP, options — argued before they are agreed. A **sub-graph of `docs`** (`within: "docs"`), declared from within by `docs/docs.json`; the navbar folds it under Docs. Issue #1164. | no — its pages are built by `docs` |
 | `requirements` | **harness** | what the harness promises, one page per shipped feature: a proposal MOVED here on ship, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. A **sub-graph of `docs`**, declared from within. Issue #1164. | no — its pages are built by `docs` |
+| `docs-auto` | **harness** | derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches, written by `scripts/gen-docs-auto.ts` and never by hand. A **sub-graph of `docs`** (`within: "docs"`), declared from within by `docs/docs.json`; its own sub-sub-graphs are named one level further down by `docs-auto.json`, which is GENERATED from that script's `TYPES` because they carry `collect()` functions that cannot live in JSON. `derived`, and the question that settles it against its parent is the same one everywhere: a `docs` page is RE-AUTHORED, an index is REGENERATED. Bean `xsrv`, owner 2026-10-03. | no — its pages are built by `docs` |
 | `folio` | **`folio-assist-core`** | authored content an AUTHOR creates using the graph — a note, a visualization, a paper. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`. | **yes** — just-the-docs renders it to a website |
 
 > ### `test/` is the one test tree — resolved 2026-09-19
@@ -766,6 +769,118 @@ declaration several sessions are editing at once:
    reconcile — main added entries, this branch added a field — and the result
    was still unparseable. Verify the merged tree, never the merge.
 
+## Where a subgraph gets its content — `source` (owner, 2026-10-03)
+
+> *"It's the same pattern. One of them is mounting the directory while one of
+> them is mounting a branch. Another mount type could come in the future. A sub
+> graph declares where it's getting its content.. It could also be a graph
+> database in the future. That same information can be overwritten by the
+> harness instance config."*
+
+A "directory subgraph" and a "branch subgraph" are **one thing with two
+sources**, so there is one field and one resolver, never a branch concept
+beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
+
+- **`source`** on a `directories[]` entry is a discriminated union on `kind`.
+  `{ "kind": "directory" }` — the default, so absent means it — says the
+  content IS the checkout at `path`. `{ "kind": "branch", "branch":
+  "cat/cat-harness/todos", "keyedBy": "tip" }` says the content lives on a
+  declared repository branch and `path` is where a mount of it lands. A later
+  kind (a graph database) is a new member of the union: additive, and a
+  compile error at every consumer that has not decided what to do with it.
+- **The branch NAME is declared once**, in `cat-harness/scripts/special-branches.json`
+  (with its legacy spellings and its mirrors). A branch source names its
+  branch; the resolver attaches the matching row, and a branch no row
+  declares is a finding (`subgraph-source.test.ts`), never a guess at what to
+  fetch.
+- **The instance config overrides it, by id.** `<instance>.config.json` →
+  `"subgraphSources": { "<dir-id>": <source> }`. The declaration says what the
+  subgraph IS; the config says how THIS instantiation is set up, and where
+  content is mounted from is that kind of fact. Matched on `id`, never `path`
+  — §"Inheritance". The checkout root's config has the last word.
+- **One resolver, and every consumer asks it**: `declaredSubgraph(start, id)`
+  in `schemas/harness-config.ts`, through `resolveSubgraphSource`. Precedence:
+  config override → `source` → a legacy `storage` → `directory`. The answer
+  carries `declaredIn`, so an override is never silent. Never read `source`
+  off the declaration yourself — that skips the override.
+- **`storage` (arc `3fva`, #1764/#1937) maps exactly**: `storage: { branch,
+  keyedBy }` is `source: { kind: "branch", branch, keyedBy }`. The resolver
+  reads either and refuses an entry carrying both — two answers to one
+  question. A `qa` subgraph keyed by `tip` is refused whichever field says it.
+  `storage` is the LEGACY spelling: write `source` in a new entry. The
+  presence checks (`materialiseDirectories`, `check:declared-dirs`,
+  `audit:coverage`) ask `contentIsOffCheckout`, which honours both.
+- **Mounting dispatches on the kind**, and the process is
+  `processes/kg/mount-subgraph.bpmn`: `directory` is the checkout path in place
+  (a write is a commit); `branch` + `tip` is mounted from the tip and spliced
+  back without force (`branch-store mount`/`push`); a kind with no flow is
+  refused with its own exit code rather than read as an empty directory.
+- **The KG export publishes the resolved source** on the Subgraph node, as
+  `contentSource` — `dcterms:source`, with `kind` (`dcterms:type`), `branch`
+  (`dcterms:identifier`), `keyedBy` and `declaredIn` scoped inside it. A
+  GitHub-hosted branch gets an `@id` that is its tree URL.
+
+**Which layer a kind is in does not follow from its source.** `todos` is
+`state` on `main` and still `state` on `cat/cat-harness/todos`; a `context`
+graph could be mounted from a branch and stays read-only. See
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md).
+
+### Publishing a subgraph's contents — the declared Subgraph node is the container (STRICT)
+
+Owner, 2026-10-03: *"todos = subgraph node + todo content nodes"*. A generator
+that publishes the contents of a declared subgraph (a `todos.jsonld`, a beans
+graph, a library index) does NOT mint its own collection node for them. It:
+
+1. uses the **declared Subgraph node's IRI** as the container `@id` —
+   `<declaring instance>.jsonld#directory/<id>`, from `declaredSubgraphNode`
+   in `kg-export.ts`, which is the same function the node itself is minted by
+   — typed `Subgraph`, with `hasPart` to each member;
+2. gives **every member `inSubgraph`** → that IRI (`dcterms:isPartOf`, the
+   same term the KG export uses for the same edge);
+3. carries the subgraph's resolved **`contentSource`**, so a branch-sourced
+   subgraph names its branch;
+4. **mints nothing parallel** — no `schema:Collection`, no `<Kind>Graph`.
+
+The helpers are `subgraphContainer` and `memberOf` in `scripts/subgraph-node.ts`,
+and `subgraphPublicationFindings` is the check: `subgraph-node.test.ts` runs it
+over every adopting publisher. **Converting a publisher adds its row there.**
+The declaring instance's document must be published for the `@id` to
+dereference — `docs-site.yml` exports the checkout root's graph for exactly
+that reason.
+
+One trap, measured while building it: do not restate the subgraph's `name` on
+a container written to `<dir>/<id>.json`. A file whose `name` equals its stem
+is what `findDeclarationFile` reads as an INSTANCE declaration, and the site
+directory became an instance root that hid the checkout from every resolver.
+
+### A consumer never spells a declared directory's path (bean `gz47`, ENFORCED)
+
+Because a subgraph's source can move — from a directory to a branch, and then
+somewhere else, overridable per instance — a literal `"fsh-guts/…"` or
+`join(root, "beans", "defs")` breaks on the move, or goes vacuous and reads
+nothing. So read the location through its resolver (`directoryForGraph`,
+`fshGutsDirectory`, `beanDefsDir`, `declaredSubgraph`, …). Two ratchets
+enforce this, and neither fails just because a count goes down:
+
+| gate | what it scans | baseline |
+|---|---|---|
+| `check:declared-paths` | an instance's literals into its OWN declared directories | `cat-harness/scripts/declared-path-baseline.json` |
+| `check:foreign-paths` | an instance's literals into ANOTHER instance's directories, across the whole checkout | `cat-harness/scripts/foreign-path-baseline.json` — **empty since 2026-10-03** |
+
+- **Classify a hit by what it READS, not by how it is spelled.** A name counts
+  as foreign only if the scanning instance does not declare the same name. A
+  `docs/` joined onto a STAGED instance's root, or matched inside that
+  instance's own declaration, belongs to that instance even though the name
+  coincides.
+- **A site that cannot read a declaration says why**, on the line above:
+  `// declared-path-literal: <reason>`. The reason is required. A marked site
+  is still reported, just not counted. Legitimate cases: the convention
+  fallback for an instance that declares nothing, an ignore file, and a path
+  inside another instance's declaration.
+- **The known blind spot:** only the first literal of a path call is read, so
+  `resolve(opt("todos") ?? "todos")` hides its default. Review such a default
+  by hand.
+
 ## Three states, as everywhere else here
 
 - **No declaration** → `readDeclaration` returns `undefined`. An
@@ -817,6 +932,9 @@ one is argued.
    the entries already use) — `_` keys are annotations every loader drops
    (§"Node schemas, one per `$schema` family").
 4. **Declare only what exists**, or say why not with `absent: { reason }`.
+   **Where its content comes from** is `source` — omit it for the checkout
+   directory; a branch source names a branch declared in
+   `special-branches.json` (§"Where a subgraph gets its content").
 5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
    for, the `visualiser` that renders it; an opt-out carries its reason
    (`SubgraphCoverageSchema`). Without a skill the directory is unreachable

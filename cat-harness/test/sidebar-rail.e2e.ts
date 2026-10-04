@@ -50,8 +50,10 @@ const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
 const BASEURL = "/folio-assistant";
 
+type Folder = { kind: string; label?: string; path?: string; note?: string };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
-  navbar: unknown;
+  navbar: { folders?: Folder[] } | null;
+  railScopes?: { name: string; title: string; href: string; folders: Folder[] }[];
 };
 if (HARNESS.navbar === null || HARNESS.navbar === undefined) {
   throw new Error("docs/_data/harness.json has no navbar row. Run `bun run docs:harness`.");
@@ -77,7 +79,24 @@ const NAV_ITEMS = Array.from(
   (_, i) => '<li class="nav-list-item"><a class="nav-list-link" href="#p' + i + '">Page ' + i + "</a></li>",
 ).join("");
 
-function page(): string {
+/**
+ * THE SCOPE UNDER TEST (#1902), taken from the generated data rather than
+ * named: the first instance `railScopes` lists. The fixture page sits at that
+ * instance's root, and its page list holds the instance's root row with a
+ * table of contents under it, among the site's 60 other pages.
+ */
+const SCOPE = (HARNESS.railScopes ?? [])[0];
+const TOC = ["Home", "Business Requirements", "Deployment"];
+function scopedNavItem(): string {
+  if (!SCOPE) return "";
+  const kids = TOC.map(
+    (t, i) => '<li class="nav-list-item"><a class="nav-list-link" href="' + BASEURL + SCOPE.href + "toc-" + i + '.html">' + t + "</a></li>",
+  ).join("");
+  return '<li class="nav-list-item"><button class="nav-list-expander" aria-expanded="false"></button>' +
+    '<a class="nav-list-link" href="' + BASEURL + SCOPE.href + '">' + SCOPE.title + '</a><ul class="nav-list">' + kids + "</ul></li>";
+}
+
+function page(scoped = false): string {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <meta name="fa-baseurl" content="${BASEURL}">
   <meta name="fa-staging" content="">
@@ -98,12 +117,16 @@ function page(): string {
   .d-none { display: none !important; }
   @media (min-width: 50rem) { .d-md-block { display: block !important; } .d-md-none { display: none !important; } }
   .main { margin-left: 16.5rem; }
+  /* The theme folds a row's children until it is active; the fixture keeps that rule. */
+  .nav-list .nav-list-item > .nav-list { display: none; }
+  .nav-list .nav-list-item.active > .nav-list { display: block; }
   ${CSS}
 </style></head><body>
   <script type="application/json" id="fa-navbar-row">${JSON.stringify(HARNESS.navbar)}<\/script>
+  ${scoped && SCOPE ? '<script type="application/json" id="fa-rail-scope">' + JSON.stringify(SCOPE) + "<\/script>" : ""}
   <div class="side-bar">
     <div class="site-header"><a class="site-title" href="/folio-assistant/"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
-    <nav aria-label="Main" id="site-nav" class="site-nav"><ul class="nav-list">${NAV_ITEMS}</ul></nav>
+    <nav aria-label="Main" id="site-nav" class="site-nav"><ul class="nav-list">${NAV_ITEMS}${scoped ? scopedNavItem() : ""}</ul></nav>
     <div class="d-md-block d-none site-footer">${footer()}</div>
   </div>
   <div class="main"><div class="main-header"></div><div class="main-content">${MAIN}</div></div>
@@ -115,13 +138,13 @@ function page(): string {
 </body></html>`;
 }
 
-async function load(p: Page): Promise<string[]> {
+async function load(p: Page, scoped = false): Promise<string[]> {
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
   // Served from an origin rather than set as content, so localStorage works.
-  await p.route("http://sidebar.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: page() }));
+  await p.route("http://sidebar.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: page(scoped) }));
   await p.setViewportSize({ width: 1280, height: 800 });
-  await p.goto("http://sidebar.fixture/page", { waitUntil: "load" });
+  await p.goto("http://sidebar.fixture" + (scoped && SCOPE ? BASEURL + SCOPE.href : "/page"), { waitUntil: "load" });
   // PINNED OPEN, the state the ruling is about, by the control a reader uses:
   // from 50rem up the avatar opens and closes the bar (#1757).
   await p.locator(".side-bar .site-title").click();
@@ -307,5 +330,100 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
     await page.keyboard.press("Enter");
     await expect(page.locator("#fa-nav-open")).toBeChecked();
     await expect(avatar).toHaveAttribute("aria-expanded", "true");
+  });
+});
+
+test.describe("the rail is scoped to the instance being viewed (#1902)", () => {
+  test.skip(!SCOPE, "docs/_data/harness.json declares no railScopes -- run `bun run docs:harness`");
+
+  test("PAGES lists the instance's own table of contents, not the whole site", async ({ page }) => {
+    const errors = await load(page, true);
+    expect(errors).toEqual([]);
+    await expect(page.locator(".side-bar .site-nav")).toHaveAttribute("data-fa-scope", SCOPE!.name);
+    // The instance's root row and its TOC -- and nothing of the site's other 60.
+    await expect(page.locator(".fa-nav-pages__count")).toHaveText(String(1 + TOC.length));
+    const shown = await page
+      .locator(".side-bar .site-nav a.nav-list-link")
+      .evaluateAll((as) => as.filter((a) => a.getClientRects().length > 0).map((a) => (a.textContent ?? "").trim()));
+    expect(shown).toEqual([SCOPE!.title, ...TOC]);
+  });
+
+  test("FOLDERS lists the instance's own declared graphs", async ({ page }) => {
+    await load(page, true);
+    const folders = page.locator(".side-bar .fa-nav-folders");
+    await expect(folders).toHaveAttribute("data-fa-scope", SCOPE!.name);
+    await expect(page.locator(".fa-nav-folders__count")).toHaveText(String(SCOPE!.folders.length));
+    const kinds = await folders
+      .locator(":scope > .fa-nav-folders__list > .fa-nav-folders__item")
+      .evaluateAll((ls) => ls.map((l) => (l.firstElementChild?.firstChild?.textContent ?? "").trim()));
+    // The row prints the label `harness-tiles.ts` set, falling back to the kind
+    // word (bean `ob3m` finding 6) -- the same rule as `docs-ui.js`.
+    expect(kinds.sort()).toEqual(SCOPE!.folders.map((f) => f.label || f.kind).sort());
+  });
+
+  test("PAGES comes before FOLDERS", async ({ page }) => {
+    await load(page, true);
+    const order = await page
+      .locator(".side-bar > .fa-nav-middle > *")
+      .evaluateAll((ns) => ns.map((n) => n.className.split(" ")[0]));
+    expect(order.indexOf("fa-nav-pages")).toBeGreaterThanOrEqual(0);
+    expect(order.indexOf("fa-nav-pages")).toBeLessThan(order.indexOf("fa-nav-graphs-group"));
+  });
+
+  test("outside every instance the whole site is listed, as before", async ({ page }) => {
+    await load(page, false);
+    await expect(page.locator(".side-bar .site-nav")).not.toHaveAttribute("data-fa-scope", /.*/);
+    await expect(page.locator(".fa-nav-pages__count")).toHaveText("60");
+    await expect(page.locator(".fa-nav-folders__count")).toHaveText(String(HARNESS.navbar?.folders?.length ?? 0));
+  });
+});
+
+test.describe("every disclosure in the column wears the same caret and states (#1902)", () => {
+  const HEADINGS = [
+    ".fa-doc-index > summary",
+    ".fa-nav-pages",
+    ".fa-nav-graphs-group > summary",
+    ".fa-nav-folders > summary",
+  ];
+
+  test("one glyph, turned the same way when folded and when open", async ({ page }) => {
+    await load(page);
+    const caret = (sel: string) =>
+      page.locator(".side-bar " + sel).evaluate((e) => {
+        const s = getComputedStyle(e, "::before");
+        return { content: s.content, transform: s.transform };
+      });
+    // Open the Graphs group so Folders' heading is rendered at all.
+    await page.locator(".side-bar .fa-nav-graphs-group > summary").click();
+    await page.waitForTimeout(300);
+    const pages = await caret(".fa-nav-pages");
+    expect(pages.content).not.toBe("none");
+    for (const sel of HEADINGS) {
+      const c = await caret(sel);
+      expect(c.content, sel).toBe(pages.content);
+    }
+    // Pages arrives open; fold it. Folded carets must all match each other.
+    await page.locator(".side-bar .fa-nav-pages").click();
+    await page.waitForTimeout(300); // the caret turns over 120ms
+    const folded = await caret(".fa-nav-pages");
+    expect((await caret(".fa-doc-index > summary")).transform).toBe(folded.transform);
+    expect((await caret(".fa-nav-folders > summary")).transform).toBe(folded.transform);
+    const open = await caret(".fa-nav-graphs-group > summary");
+    expect(open.transform).not.toBe(folded.transform);
+  });
+
+  test("each heading states aria-expanded and toggles from the keyboard", async ({ page }) => {
+    await load(page);
+    await page.locator(".side-bar .fa-nav-graphs-group > summary").click();
+    for (const sel of HEADINGS) {
+      const h = page.locator(".side-bar " + sel);
+      const before = await h.getAttribute("aria-expanded");
+      expect(before === "true" || before === "false", sel + " aria-expanded=" + before).toBe(true);
+      await h.focus();
+      await page.keyboard.press("Enter");
+      await expect(h, sel).toHaveAttribute("aria-expanded", before === "true" ? "false" : "true");
+      await page.keyboard.press("Space");
+      await expect(h, sel).toHaveAttribute("aria-expanded", before!);
+    }
   });
 });

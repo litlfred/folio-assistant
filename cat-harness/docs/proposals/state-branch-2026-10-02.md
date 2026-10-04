@@ -11,7 +11,9 @@ summary: >-
 # State graphs on a declared branch
 {: .no_toc }
 
-**Status:** proposal; D1–D4 ruled 2026-10-02, all defaults (§6). **Nothing has moved yet.** Epic bean
+**Status:** proposal; D1–D4 ruled 2026-10-02, all defaults (§6), **and D4 amended
+2026-10-03 to option (b), a branch per graph** — see the amendment under the D4
+row. **Nothing has moved yet.** Epic bean
 `folio-assistant-fs43`. Generalises arc `3fva` (issue
 [#1763](https://github.com/litlfred/folio-assistant/issues/1763), PRs
 [#1764](https://github.com/litlfred/folio-assistant/pull/1764) and
@@ -116,20 +118,49 @@ write loop must splice, never replace.
 ### 3.2 The declaration — one field, shared with 3fva
 
 Arc 3fva proposes `storage` on `ContentDirectory`. This proposal **reuses that
-field** rather than adding a second one, and widens its key:
+field** rather than adding a second one, and widens its key.
+
+**One ref per state subgraph, not one shared `state` branch.** The owner,
+2026-10-02, verbatim:
+
+> "go with cat/cat-harness/todos and cat/cat-harness/beans as their own named sub-graph branches"
+>
+> "(not all named subgraphs get own branch, especially not semi-static KG content)"
+>
+> "once beans. moves over, neeed to move active beans and update tools"
+>
+> "keep workong. fix gaps"
+
+So the intended declarations (bean `2h76`) are:
 
 ```jsonc
-// beans/beans.json
-{ "id": "defs", "path": "defs", "graphs": ["bean-defs"],
-  "storage": { "branch": "state", "keyedBy": "tip" } }
+// folio-assistant.json (the root instance declares both) — beans, one live copy at the tip of its own branch
+{ "id": "beans", "path": "beans/", "graphKinds": ["beans"],
+  "storage": { "branch": "cat/cat-harness/beans", "keyedBy": "tip" } }
+
+// todos — likewise
+{ "id": "todos", "path": "todos/", "graphKinds": ["todos"],
+  "storage": { "branch": "cat/cat-harness/todos", "keyedBy": "tip" } }
 
 // test/results — 3fva, unchanged
-{ "id": "qa", "path": "test/results", "graphs": ["qa"],
-  "storage": { "branch": "qa-reports", "keyedBy": "commit" } }
+{ "id": "qa", "path": "test/results", "graphKinds": ["qa"],
+  "storage": { "branch": "cat/cat-harness/qa-reports", "keyedBy": "commit" } }
 ```
 
-- `keyedBy: "tip"` (state) or `"commit"` (derived, rendered). The write library
-  branches on it; nothing else does.
+**Not declared yet, on purpose.** `DirectoryStorageSchema.keyedBy` accepts
+`"tip"` as of the `claude/state-branch-store` PR (stacked on #1764), and `branch-store.ts` exists, but no
+declaration sets `storage` on beans or todos and no reader or writer changed.
+**`main` stays authoritative** until the steward-run flip on #1850, which is
+then a one-line change per directory: add the `storage` member shown above.
+
+- `keyedBy: "tip"` (one live copy — state) or `"commit"` (one entry per commit
+  — derived, rendered). A `qa` directory refuses `"tip"`: its readers compare a
+  commit against a baseline, and `qa-store.ts` implements only that layout.
+- **Semi-static KG content stays on `main`.** Skills, schemas, processes, roles
+  and the declarations themselves change by PR and are reviewed as content; a
+  branch of their own would take them out of review. Only process-written
+  state gets a ref, and not even all of that: the owner's "(not all named
+  subgraphs get own branch)".
 - **Every node written to a non-`main` ref carries a back-link** —
   `{ "source": { "ref": "main", "sha": "<commit>" } }` in the branch's manifest
   — to the content commit it describes. That is the owner's "rendered content
@@ -159,11 +190,28 @@ field** rather than adding a second one, and widens its key:
 The mechanism is 3fva's, proven by its spike `3ds9` (CI push, fresh container
 push, two concurrent disjoint writers both surviving, cold read latency).
 
-- **One library, two key shapes.** `branch-store.ts`: `read(graph, path)`,
-  `write(graph, files, message)`. Write = fetch tip → `hash-object` →
-  `mktree` splice onto the *new* tip → `commit-tree -p tip` → push; on a
-  rejected push, refetch and splice again, up to 3 attempts with
-  `backoff-sleep.ts`, **never `-f`**.
+- **One tip-keyed library; qa-store keeps its own for now.**
+  `cat-harness/scripts/branch-store.ts` (bean `2h76`) is generic over any
+  declared directory whose `storage.keyedBy` is `"tip"`:
+  `BranchStore.open(branch | candidates[])`, then `readFile` / `readJson` /
+  `listDir` / `readTree` and `write(changes, message)`. Reads answer
+  **hit / miss / corrupt / unknown**, the same four states as qa-store, and a
+  branch without a `state-manifest/v1` root manifest with `keyedBy: "tip"` is
+  `corrupt`, never a hit. Write = fetch tip → `hash-object` → `mktree` splice
+  onto the *new* tip (every other file carried across by id) →
+  `commit-tree -p tip` → push; on a rejected push, refetch and splice again,
+  up to 3 attempts with `backoff-sleep.ts`, **never `-f`**. A change may carry
+  `expect` (the blob id its author read). If the tip disagrees, the result is
+  `conflict` and nothing is pushed. That is what makes "two sessions edit the
+  same bean" detectable rather than last-writer-wins. The library never
+  creates a branch: seeding one carries the manifest and is a steward act.
+  `qa-store.ts` has the same loop for commit-keyed entries. Whether it adopts
+  `branch-store.ts` is arc 3fva's call, and a later bean.
+- **Layout: paths mirror the checkout.** The seeds `cat/cat-harness/beans` @
+  `b3709ad` and `cat/cat-harness/todos` @ `7ad5854` are orphans. Each holds
+  `README.md`, `manifest.json` (`state-manifest/v1`, `keyedBy: "tip"`,
+  `authoritative: false`) and the subgraph at the same path as on `main`
+  (`beans/**`, `todos/**`).
 - **A working mount for tools that need a directory.** The `beans` CLI is
   third-party and reads `beans/defs` off disk. The session-start hook mounts the
   `state` branch as a git worktree at `state/` (ignored on `main`), and
@@ -294,6 +342,28 @@ work proceeds on it.**
   directories inside it (recommended)** — one fetch, one mount, one gate
   workflow; (b) one branch per graph (`state/beans`, `state/todos`) — finer
   retention, more mounts. *Default: (a).*
+
+  > **Amended by the owner, 2026-10-03 — D4 is now option (b).** *"Keep
+  > per-graph branches"*, and the principle behind it: *"i dont think we need
+  > a speciifc "state" branch or mount, several potnential subgraphs can be a
+  > part of state"*.
+  >
+  > This reverses the 2026-10-02 ruling on **D4 only**. D1, D2 and D3 are
+  > unchanged — beans, workflow instances, todos, issue-marks and health
+  > results all still move; only their DESTINATION changed, from directories
+  > inside one `state` branch to a `cat/<harness>/<name>` branch each. The
+  > "more mounts" cost named in option (b) is what bean `2h76`'s fan-out pays:
+  > `state:mount` and `state:push` iterate the declared tip-keyed directories
+  > and mount or splice each from the branch its own declaration names, so
+  > "one mount" was never load-bearing — "one fetch" is still true per graph.
+  >
+  > `cat/cat-harness/state`, seeded under option (a), is **superseded rather
+  > than deleted**: retiring that name is bean `oycs`, and nothing here
+  > removes it (`deletion-requires-confirmation`).
+  >
+  > The ruling, with its measurements, is the bean note
+  > `beans/notes/folio-assistant-2h76--2026-10-03--claude-festive-galileo-s7ibx0.md`.
+  > The options above are kept as the record of what was weighed.
 
 ## 7. What would falsify this
 
