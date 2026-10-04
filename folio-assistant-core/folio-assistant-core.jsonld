@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T15:52:34.552Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/27893853ac39ffb340d2f4ed952aeafeafffe98e",
-  "sourceCommitSha": "27893853ac39ffb340d2f4ed952aeafeafffe98e",
-  "sourceCommitAt": "2026-10-04T17:45:15+02:00",
+  "generatedAt": "2026-10-04T17:13:20.849Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9019e4c99a1072b56c8c7b7693d402bd48febca1",
+  "sourceCommitSha": "9019e4c99a1072b56c8c7b7693d402bd48febca1",
+  "sourceCommitAt": "2026-10-04T19:07:50+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -332,7 +332,7 @@
     "Lane": 45,
     "ProcessNode": 181,
     "GraphKind": 12,
-    "Subgraph": 11,
+    "Subgraph": 12,
     "Asset": 2
   },
   "@graph": [
@@ -6692,6 +6692,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-adapters"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "core-src",
+      "path": "src/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+      ],
+      "description": "Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). Moved up from `cat-harness/src/routes/` when the server moved to `cat-harness-tools` (bean `70lx`, B1; owner, 2026-10-04: a content package's server half lives with its content). The server declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.",
+      "readmePath": "src/README.md",
+      "fileCount": 4,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-scripts",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "core-scripts",
@@ -6817,8 +6834,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "27893853ac39ffb340d2f4ed952aeafeafffe98e",
+    "sha": "9019e4c99a1072b56c8c7b7693d402bd48febca1",
     "pr": "main",
-    "run": "37214184193"
+    "run": "37219338946"
   }
 }

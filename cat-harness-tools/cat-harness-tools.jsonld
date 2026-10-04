@@ -318,15 +318,15 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T15:52:27.869Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/27893853ac39ffb340d2f4ed952aeafeafffe98e",
-  "sourceCommitSha": "27893853ac39ffb340d2f4ed952aeafeafffe98e",
-  "sourceCommitAt": "2026-10-04T17:45:15+02:00",
+  "generatedAt": "2026-10-04T17:13:16.278Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9019e4c99a1072b56c8c7b7693d402bd48febca1",
+  "sourceCommitSha": "9019e4c99a1072b56c8c7b7693d402bd48febca1",
+  "sourceCommitAt": "2026-10-04T19:07:50+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "GraphKind": 1,
-    "Subgraph": 5,
+    "Subgraph": 6,
     "Asset": 2
   },
   "@graph": [
@@ -385,7 +385,7 @@
       ],
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
       "readmePath": "scripts/README.md",
-      "fileCount": 11,
+      "fileCount": 21,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-scripts"
     },
     {
@@ -423,6 +423,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-tests"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-src",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "cat-harness-tools-src",
+      "path": "src/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+      ],
+      "description": "The MCP and HTTP server — what `bun run start` and `.mcp.json` start, from `src/index.ts`: the composition roots (`server.ts`, `route-groups.ts`, `tool-groups.ts`), the plug-in contract `types.ts`, the MCP tool registrars (`tools/`), the harness's own routes (`routes/branches.ts`, `routes/chat.ts`), authentication (`auth/`, `core/github-auth.ts`), access control (`core/rbac.ts`), the MCP projection (`mcp/`) and the no-content adapter. Moved from `cat-harness/src/` in stage 1a's first batch (bean `70lx`, B1). The Tool nodes it serves stay DECLARED in `cat-harness/tools/` with their original `src/tools/*` paths, and the loader finds each module here through `needs` (owner ruling \"Trap 1\"); the content routes (feedback, glossary, relevance) went UP to the content layer that owns their content instead, and the route loader finds them the same way (owner, 2026-10-04).",
+      "readmePath": "src/README.md",
+      "fileCount": 35,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-src"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
       "name": "agent-instructions",
@@ -443,8 +460,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "27893853ac39ffb340d2f4ed952aeafeafffe98e",
+    "sha": "9019e4c99a1072b56c8c7b7693d402bd48febca1",
     "pr": "main",
-    "run": "37214184193"
+    "run": "37219338946"
   }
 }
