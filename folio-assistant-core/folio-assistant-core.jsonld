@@ -318,19 +318,19 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T21:35:50.177Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b35d74eaf94bc4381cf4775bee84a50ca991d59",
-  "sourceCommitSha": "1b35d74eaf94bc4381cf4775bee84a50ca991d59",
-  "sourceCommitAt": "2026-10-04T23:28:23+02:00",
+  "generatedAt": "2026-10-04T21:52:44.021Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a7c7cd2501f23f0ca587310ac72018dcee3ec14f",
+  "sourceCommitSha": "a7c7cd2501f23f0ca587310ac72018dcee3ec14f",
+  "sourceCommitAt": "2026-10-04T23:45:58+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 7,
+    "Skill": 8,
     "Decision": 4,
-    "Process": 11,
-    "SequenceFlow": 201,
-    "Lane": 45,
-    "ProcessNode": 181,
+    "Process": 12,
+    "SequenceFlow": 219,
+    "Lane": 53,
+    "ProcessNode": 199,
     "GraphKind": 12,
     "Subgraph": 12,
     "Asset": 2
@@ -380,6 +380,18 @@
       "title": "document-structure",
       "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
       "instructionLines": 64,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "public-comment",
+      "title": "public-comment",
+      "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
+      "instructionLines": 142,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3062,6 +3074,559 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Public comment on a review draft",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/public-comment.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested"
+      ],
+      "nodeCount": 17,
+      "flowCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIngest",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Triage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriageGateway",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "duplicate",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Duplicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAssign",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "to be weighed",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Assign",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "plain editorial",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_EditorDecides",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToRecommend",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Assign",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_CommitteeRecommends",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToDecide",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_CommitteeRecommends",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_EditorDecides",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangesGateway",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_EditorDecides",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no: not accepted, noted, deferred",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Decided",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes: accepted",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_AuthorEdits",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_AuthorEdits",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Incorporate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Incorporate",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Incorporated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToWithdraw",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Withdraw",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToWithdrawn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Withdraw",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Withdrawn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Public commenter",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/feedback-provider",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Intake",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Intake agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/ingestion-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Review coordinator",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Committee",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Review committee",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Editor",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/editor",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Author (human or agentic)",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/author",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Change set — feature branch and staging",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Comments returned on the review version",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/feedback-provider",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIngest"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Ingest and place each comment",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Intake",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIngest"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriage"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Triage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Triage: confirm the anchor, type and priority",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriage"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriageGateway"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Duplicate, plain editorial, or to be weighed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriageGateway"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAssign",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Duplicate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Closed as a duplicate",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_Duplicate"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Assign",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Assign to committee members",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAssign"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToRecommend"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_CommitteeRecommends",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Recommend a decision, with a rationale",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Committee",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToRecommend"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToDecide"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_EditorDecides",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Decide, weighing the recommendations",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/editor",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToDecide"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangesGateway"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Does the decision change the document?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/editor",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangesGateway"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Decided",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Decided, answer recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/editor",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_NoChange"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_AuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Edit the document as decided, on a feature branch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Author",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Review the change set on its staging preview",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Incorporate",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Mark incorporated when the change set merges",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Incorporated",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Incorporated in the document",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Commenter withdraws a comment",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/feedback-provider",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToWithdraw"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Withdraw",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record the withdrawal",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/feedback-provider",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToWithdraw"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToWithdrawn"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/EndEvent_Withdrawn",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Withdrawn",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/feedback-provider",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToWithdrawn"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_EvidenceRetrieval",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Evidence for a recommendation",
@@ -4476,8 +5041,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated"
       ],
-      "nodeCount": 18,
-      "flowCount": 20,
+      "nodeCount": 19,
+      "flowCount": 22,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
@@ -4587,6 +5152,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G21",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Gateway_ReviewFork",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/CallActivity_PublicComment",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G22",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/CallActivity_PublicComment",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/Gateway_ReviewJoin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G14",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
@@ -4682,6 +5263,14 @@
       "name": "Review team (content · QC · technical officer)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
       "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_PublicReview",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Public review (commenters, review committee, editor)",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
@@ -4893,7 +5482,30 @@
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G10",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G11"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G11",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G21"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/node/CallActivity_PublicComment",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Public comment on the review version",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/lane/Lane_PublicReview",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G21"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G22"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
@@ -4955,7 +5567,8 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G12",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G13"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G13",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G22"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_Publication/flow/G14"
@@ -6620,7 +7233,7 @@
       ],
       "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
       "readmePath": "schemas/README.md",
-      "fileCount": 33,
+      "fileCount": 36,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-schemas"
     },
     {
@@ -6722,7 +7335,7 @@
       ],
       "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and — since bean `yj6r`, 2026-09-30 — two tranches of escapes that moved UP out of `cat-harness/`. The materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`) came first, to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. The glossary CLUSTER followed — `build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`, and all three of their tests — because walking a paper's blocks to collect `defines[]` and emit a `folio-glossary/v1` scheme is CONTENT machinery, and the harness (`needs: [\"bootstrap\"]`) was importing upward into this instance's `schemas/glossary.ts` and `scripts/glossary-page.ts` — an import against its own declaration, and a circular dependency between repositories after the split. The partition rules already classified `content/pipeline/` as core, so the classification did not change; the DIRECTORY caught up with it. They are still addressed as pipeline scripts by id, and `resolvePipelineScript` searches the folio, then the platform, then here. The LAST FOUR clusters followed on the same day and in the same tranche, taking the `cat-harness ->` sibling-import count from 5 to 2: `extract-assets.ts` (a container a folio was given → a `folio-extraction/v1` record, reading `schemas/extraction.ts` — both moved DOWN again on 2026-10-02 by owner ruling 2 of the placement proposal, bean `tlat`: the script to `cat-harness-tools/scripts/`, the schema to `cat-harness/schemas/`, as the tool behind the harness's own `asset-extraction` skill), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), and `build-document-site.ts` WITH its test, which reads `schemas/changeset.ts`. The last is the one with an invocation surface: a DOCUMENT folio's generated staging workflow names it by path, so `init-folio.ts` now writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins that string — the same instance-relative property this entry records for `review-comments.ts`, arrived at from the other direction. The partition rules had already classified all four `core` by exact entry, so again only the DIRECTORY moved; each dead entry was removed with its reasoning kept in place, because a rule naming a path its own scan can no longer see fires on nothing while reading as an adjudication. The adapters closure followed on the same day: `adapters/document/` and its SIX consuming tests are now here and in `adapters/`, taking the count 2 -> 0 (bean `ybp4`). This sentence previously read \"What did NOT move, and deliberately\" of those two files, and recorded that the closure \"needs its own ruling\" — it got one, and `r0tm`'s re-derivation also corrected the deterrent measurement: the 15 created escapes were 16, and paper-first is FREE, which is what turned an all-or-nothing three-instance move into two ordinary steps. This sentence listed only the review-comment pair until then, by which point four other tools were already here — a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 50,
+      "fileCount": 59,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-scripts"
     },
     {
@@ -6773,7 +7386,7 @@
       ],
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
       "readmePath": "skills/README.md",
-      "fileCount": 64,
+      "fileCount": 65,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
     {
@@ -6790,7 +7403,7 @@
       ],
       "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
       "readmePath": "processes/README.md",
-      "fileCount": 17,
+      "fileCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
@@ -6834,8 +7447,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "1b35d74eaf94bc4381cf4775bee84a50ca991d59",
+    "sha": "a7c7cd2501f23f0ca587310ac72018dcee3ec14f",
     "pr": "main",
-    "run": "37236230228"
+    "run": "37237408663"
   }
 }
