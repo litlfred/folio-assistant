@@ -168,6 +168,18 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
+    // job that reads the repository mounts it after `bun install`. A SETUP
+    // step: it fetches over the network and has no verdict of its own; the
+    // readers it serves refuse an unmounted copy (exit 2), and the mount
+    // logic is asserted by state-mount.test.ts and branch-mount.test.ts.
+    match: "bun run state:mount",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it mounts the subgraphs kept on branches (fsh-guts) so the gates that follow " +
+      "read real content; a contributor's session-start hook runs the same command",
+  },
+  {
     // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
     // cache is rendered from it into the preview at `/<instance>/ast/`. The
     // lister asks each IG repository over the network (`git ls-remote`).

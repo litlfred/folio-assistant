@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**230** units · **6084** terms · k = **100** · retains **77.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**230** units · **6085** terms · k = **100** · retains **77.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -125,12 +125,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 |---|---|---|---|
 | 1 | 46.06 | instance, kind, directory, harness, page, session, graph, declaration | *(none)* |
 | 2 | 21.72 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, directories, directory, iri, subgraph |
-| 3 | 18.23 | chapter, block, slot, edges, project, formal, watcher, proof | session, conflict, green, push, epic, beans, minutes, window |
-| 4 | 17.26 | page, tile, text, avatar, block, glass, card, pdf | sibling, subgraph, ledger, subdirectory, plan, sessions, session, prs |
-| 5 | 15.61 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, archive, sniff, zip, pdf, ingest, archived, arxiv |
+| 3 | 18.22 | chapter, block, slot, edges, project, formal, watcher, proof | session, conflict, green, push, epic, beans, minutes, window |
+| 4 | 17.25 | page, tile, text, avatar, block, glass, card, pdf | sibling, subgraph, ledger, subdirectory, plan, sessions, session, prs |
+| 5 | 15.61 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, sniff, zip, pdf, ingest, archived, arxiv |
 | 6 | 15.18 | lane, actor, requirements, task, role, process, analysis, skills | sha, queue, tile, backlog, steward, board, member, slot |
-| 7 | 14.98 | preview, merge, staging, translation, forward, steward, base, locale | rung, arm, withheld, glass, licence, backlog, tile, queue |
-| 8 | 14.61 | edges, forward, edge, logical, backward, cross-chapter, energy, tile | feedback, post, language, phase, url, pdf, feature, staging |
+| 7 | 14.97 | preview, merge, staging, translation, forward, steward, base, locale | rung, arm, withheld, glass, licence, backlog, tile, queue |
+| 8 | 14.60 | edges, forward, edge, logical, backward, cross-chapter, energy, tile | feedback, post, language, phase, url, pdf, feature, staging |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
