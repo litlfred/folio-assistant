@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.22 | instance, kind, directory, harness, page, session, graph, declaration | *(none)* |
-| 2 | 21.71 | watcher, sibling, prs, queue, commits, slot, backlog, coordination | harness, instance, declaration, node, directories, directory, iri, subgraph |
+| 1 | 46.23 | instance, kind, directory, harness, page, session, graph, declaration | *(none)* |
+| 2 | 21.70 | watcher, sibling, queue, prs, commits, slot, backlog, coordination | harness, instance, declaration, node, directories, directory, iri, subgraph |
 | 3 | 18.33 | chapter, block, slot, project, formal, edges, proof, watcher | session, conflict, green, merge, steward, push, beans, merges |
-| 4 | 17.35 | page, text, pdf, tile, avatar, images, card, glass | subgraph, subdirectory, ledger, sibling, train, plan, steward, prs |
+| 4 | 17.34 | page, text, pdf, tile, avatar, images, card, glass | subgraph, subdirectory, ledger, sibling, train, plan, steward, prs |
 | 5 | 15.69 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, pdf, archive, upload, arxiv, sniff, zip, licence |
 | 6 | 15.16 | actor, lane, requirements, task, process, role, methodology, skills | sha, steward, head, queue, train, tile, merge, board |
-| 7 | 14.97 | preview, forward, merge, steward, staging, translation, edges, base | rung, arm, withheld, licence, queue, backlog, library, glass |
-| 8 | 14.67 | phase, feedback, feature, url, pdf, staging, language, post | edges, forward, slot, edge, tile, logical, claim, glass |
+| 7 | 14.97 | preview, forward, merge, steward, staging, translation, edges, base | rung, arm, withheld, licence, queue, library, backlog, glass |
+| 8 | 14.67 | phase, feedback, feature, url, pdf, staging, post, language | edges, forward, slot, edge, tile, logical, claim, glass |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
