@@ -182,6 +182,22 @@ export function checkLayoutNorms(repoRoot = REPO_ROOT, baselineFile = BASELINE):
         // fact about the place.
         const within = withinOf.get(child);
         if (within !== undefined && pathOf.get(within) === parentPath) continue;
+        // SIBLINGS in one declaration file are the same sanctioned shape. The
+        // rule above only recognises a child whose `within` IS the parent, so
+        // it missed the case where both were declared by the same file and one
+        // path happens to sit under the other — `beans/beans.json` naming
+        // `defs` at `defs/` and `archive` at `defs/archive/`, both
+        // `within: "beans"`. That is a path choice inside ONE declaration, not
+        // "a root declaration reaching down", which is what this check says it
+        // guards against.
+        //
+        // It surfaced only when `subgraph: true` stopped gating promotion: the
+        // pair had never resolved, so the nesting was real and invisible. The
+        // alternative was moving `beans/defs/archive/` to `beans/archive/`, and
+        // that cannot hold — `beans archive` has no path flag and derives the
+        // directory as `<path>/archive` from `.beans.yml`, so the third-party
+        // CLI would recreate it (bean `wekz` recorded the same dependency).
+        if (within !== undefined && within === withinOf.get(rel.parent)) continue;
         r.found.push(pairKey(name, parentPath, childPath));
       }
     }
