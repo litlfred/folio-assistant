@@ -30,7 +30,24 @@
   .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
   .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
   ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
-  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  /* display:flow-root CONTAINS the floated count, and it is not cosmetic.
+     .n is float:right and is emitted AFTER the name and the path, so it is
+     floated onto whichever line box it is reached on. At 390 px the longer
+     ids wrap, the float lands on the second line, and a plain block li does
+     not contain a float — so it overflowed into the NEXT row.
+
+     Measured 2026-10-04 on /cat-harness/docs-auto/index/docs/who-iris-docs/
+     at 390 px: the smart-trust-docs li occupied y 721-756 while its own count
+     2153 rendered at y 750-775, i.e. 19 px inside the who-iris-docs row
+     beneath it, beside THAT row's count. Two readings wrong from one overflow
+     — smart-trust showed no count, and who-iris appeared to show "6 2153".
+     overflowX was 0 and no gate was red; only a browser at phone width showed
+     it, which is the gjli lesson again.
+
+     The phone-width block below already fixed the same class of defect for the
+     #da-index TABLE (bean n5be, finding 4). This list was not covered by it
+     and kept the float. */
+  ul.subs li { display: flow-root; padding: .3rem 0; border-bottom: 1px solid var(--edge); }
   .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
   .fa-table-filter label { font-weight: 600; }
   .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
@@ -148,7 +165,7 @@
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">64</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">63</span></li>
 <li><strong>sci-processes</strong> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -160,11 +177,11 @@
 <tbody>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn"><code>Is AtomicMass.lean still in sync with its data table?</code></a><br><span class="p">folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn</span></td>
-  <td>Check that <code>AtomicMass.lean</code> is still in sync with the data table it is generated from.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div></td>
+  <td>THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>Authoring a paper</code></a><br><span class="p">folio-assistant-sci/processes/content/authoring-a-paper.bpmn</span></td>
-  <td>How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Author (person) · Work plan — beans (shared by humans and agents) · Authoring agent (system) · Lean toolchain (lean-mcp) · Build pipeline — validate · render · publish · Reviewer / SME</div><div class="f"><span class="k">skills</span> content-author, content-plan, content-publish, content-review, content-validate, latex-authoring, lean-formalization, proof-verification, todo-manager</div></td>
+  <td>folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Author (person) · Work plan — beans (shared by humans and agents) · Authoring agent (system) · Lean toolchain (lean-mcp) · Build pipeline — validate · render · publish · Reviewer / SME</div><div class="f"><span class="k">skills</span> content-author, content-plan, content-publish, content-review, content-validate, latex-authoring, lean-formalization, proof-verification, todo-manager</div></td>
 </tr>
 </tbody>
 </table>

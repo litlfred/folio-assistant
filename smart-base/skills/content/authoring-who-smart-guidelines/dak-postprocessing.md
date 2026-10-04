@@ -41,6 +41,13 @@ Docker container** (`docker exec -w /work ig-run python3 …`), against `output/
 
 Steps 1–2 are two workflow steps with near-identical names; 3–4 share one step.
 
+**Steps 1–5 belong to `fhir-harness`, not to this overlay.** They only
+transform what the Publisher already emitted and add no constraint or profile.
+The two strippers were placed there first, and 3–5 followed on the owner's
+ruling of 2026-10-03. They stay in this table because upstream still runs them
+in this phase. `check:fhir-harness-exclusions` reads the table and lets the
+base name exactly these five. Steps 6–8 are the WHO surface.
+
 ## Step 8 is the seam, and it already does what we want
 
 `generate_smart_liquid.py` declares its own source of truth as *"IG Publisher

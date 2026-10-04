@@ -63,6 +63,15 @@ export const BeanIndexItemSchema = z
   })
   .strict();
 
+// Declared in `bean-graph.ts`, the HARNESS layer, and imported here. The
+// rollup is a bean-store concept, and `cat-harness` may not import
+// `folio-assistant-core` — core depends on harness, so the declaration has to
+// sit on the side that `scripts/milestone-rollup.ts` can reach. Measured by
+// `check:partition`, which refused the other direction outright.
+import { MilestonePlanSchema, MilestoneRollupSchema } from "./bean-graph.ts";
+
+export { MilestonePlanSchema, MilestoneRollupSchema };
+
 export const BeanIndexSchema = z
   .object({
     ...envelope("folio-bean-index/v1"),
@@ -94,6 +103,13 @@ export const BeanIndexSchema = z
         })
         .strict(),
     ),
+    /**
+     * The milestone rollup the board renders. OPTIONAL, because an index
+     * written before this field existed is still a valid index — and because
+     * "no plan in the projection" is a state the renderer distinguishes from
+     * "a plan with nothing done".
+     */
+    plan: MilestonePlanSchema.optional(),
   })
   .strict();
 

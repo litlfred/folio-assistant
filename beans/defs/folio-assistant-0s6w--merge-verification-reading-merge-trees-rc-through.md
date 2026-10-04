@@ -65,3 +65,43 @@ substitution has the bug — a timing `$(date)`, a sha `$(git rev-parse …)`, a
       future change to the reporting cannot silently reintroduce a constant 0
 - [ ] stated plainly that GitHub's 405 is a backstop and not a substitute: a steward who
       relies on it learns of a conflict only at merge time, after announcing the PR clean
+
+## The same root in a second shape — a COMPOUND command's exit status
+
+2026-10-03, while absorbing `main` into #1943. The regeneration was launched as
+
+```sh
+bun run regen > log 2>&1; RC=$?; echo "REGEN_EXIT=$RC" >> log; tail -20 log
+```
+
+and the harness reported **"completed (exit code 0)"**. `bun run regen` had
+exited **1** — `Cannot find module '../../bootstrap-tools/schemas/graph'`,
+because a fresh `git worktree` does not populate submodules. A shell's exit
+status is its LAST command's, so the status that reached the caller was
+`tail`'s, and the failing build was announced as a success.
+
+This is this bean's defect, not a new one: a status read from the wrong
+command. The original shape takes it from a command substitution inside the
+same word (`echo "rc=$(cmd) ... $?"`); this shape takes it from the last link
+of a `;`-chain. In both the number is well-formed, plausible and about
+something else — which is why neither is caught by reading the output.
+
+**The rule covers both and is one sentence:** the status must be the only thing
+the command produces, or it is not that command's status.
+
+```sh
+# wrong — reports `tail`'s status
+cmd > log 2>&1; echo done; tail log
+# right — nothing after it, and the status is re-raised deliberately
+cmd > log 2>&1
+RC=$?
+exit $RC
+```
+
+Re-running it that way gave the true `REGEN_EXIT`, which is how the submodule
+failure was found at all.
+
+Measured here, unchanged: no `.ts` script in this repository reads a status
+this way — they all use `spawnSync` and read `.status`. The exposure is in
+**shell invocations an agent composes in a turn**, which no gate sees, so this
+entry is the whole mitigation and the reason it is written down.

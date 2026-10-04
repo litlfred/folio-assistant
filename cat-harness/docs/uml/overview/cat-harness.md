@@ -1010,6 +1010,7 @@ classDiagram
       items [0..*] Item[]
       edges [0..*] Edge[]
       findings [0..*] Finding[]
+      plan [0..1] object
     }
     class cat_harness_docs_folio_translation_status_v1_Locale["Locale"] {
       <<json: TranslationStatusSchema>>

@@ -30,7 +30,24 @@
   .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
   .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
   ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
-  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  /* display:flow-root CONTAINS the floated count, and it is not cosmetic.
+     .n is float:right and is emitted AFTER the name and the path, so it is
+     floated onto whichever line box it is reached on. At 390 px the longer
+     ids wrap, the float lands on the second line, and a plain block li does
+     not contain a float — so it overflowed into the NEXT row.
+
+     Measured 2026-10-04 on /cat-harness/docs-auto/index/docs/who-iris-docs/
+     at 390 px: the smart-trust-docs li occupied y 721-756 while its own count
+     2153 rendered at y 750-775, i.e. 19 px inside the who-iris-docs row
+     beneath it, beside THAT row's count. Two readings wrong from one overflow
+     — smart-trust showed no count, and who-iris appeared to show "6 2153".
+     overflowX was 0 and no gate was red; only a browser at phone width showed
+     it, which is the gjli lesson again.
+
+     The phone-width block below already fixed the same class of defect for the
+     #da-index TABLE (bean n5be, finding 4). This list was not covered by it
+     and kept the float. */
+  ul.subs li { display: flow-root; padding: .3rem 0; border-bottom: 1px solid var(--edge); }
   .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
   .fa-table-filter label { font-weight: 600; }
   .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
@@ -146,7 +163,7 @@
 </div>
 
 <ul class="subs">
-<li><a href="../docs/">docs</a> <span class="p">cat-harness/docs</span> <span class="n">416</span></li>
+<li><a href="../docs/">docs</a> <span class="p">cat-harness/docs</span> <span class="n">414</span></li>
 <li><strong>root-docs</strong> <span class="p">docs</span> <span class="n">1</span></li>
 <li><a href="../smart-base-docs/">smart-base-docs</a> <span class="p">smart-base/docs</span> <span class="n">300</span></li>
 <li><a href="../smart-base-findings/">smart-base-findings</a> <span class="p">smart-base/findings</span> <span class="n">4</span></li>

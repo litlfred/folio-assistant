@@ -479,3 +479,48 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
 @media (max-width: 40rem) {
   .fa-workplan-bar-toggle { grid-template-columns: minmax(5rem, 1fr) 1fr 2.2rem; }
 }
+
+/* ── Milestone bars ─────────────────────────────────────────────────────
+   A PART-TO-WHOLE bar: 100% means every bean beneath the milestone is
+   closed. The epic chart above shares the track and fill elements but its
+   bars are a magnitude comparison scaled to the largest, so the two must not
+   read as one scale — this row is modified rather than restyling the shared
+   classes, because the epic rows wrap theirs in a <button> that owns their
+   layout.
+
+   The counts sit beside the percentage because the share is bean-weighted
+   and the counts are what a reader can reconcile against the bar. */
+
+.fa-workplan-bar-row--progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label value"
+    "track track"
+    "note  note";
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  padding: 0.35rem 0 0.5rem;
+}
+
+.fa-workplan-bar-row--progress .fa-workplan-bar-label { grid-area: label; }
+.fa-workplan-bar-row--progress .fa-workplan-bar-track { grid-area: track; }
+.fa-workplan-bar-row--progress .fa-workplan-bar-value { grid-area: value; }
+.fa-workplan-bar-row--progress .fa-workplan-bar-note { grid-area: note; }
+
+.fa-workplan-bar-note {
+  font-size: 0.75rem;
+  color: var(--fa-wp-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The coverage denominator, under the list rather than in a footnote: three
+   shares with no denominator invite the reading that they describe the whole
+   work plan. */
+.fa-workplan-chart-note {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fa-wp-muted);
+  margin: 0.75rem 0 0;
+  max-width: 62ch;
+}

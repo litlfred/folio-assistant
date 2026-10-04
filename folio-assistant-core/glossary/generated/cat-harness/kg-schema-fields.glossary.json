@@ -882,6 +882,69 @@
       "status": "candidate"
     },
     {
+      "id": "bean-graph.milestoneplanschema.coveredopen",
+      "prefLabel": "MilestonePlanSchema.coveredOpen",
+      "definition": "SUMMED from the closures, never `openTotal - orphanOpen`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.coveredOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.duplicateids",
+      "prefLabel": "MilestonePlanSchema.duplicateIds",
+      "definition": "Bean ids held by more than one file. A store defect, reported.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.duplicateIds",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.orphanopen",
+      "prefLabel": "MilestonePlanSchema.orphanOpen",
+      "definition": "Open beans with no milestone anywhere above them.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.orphanOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.epics",
+      "prefLabel": "MilestoneRollupSchema.epics",
+      "definition": "Direct children typed `epic`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.epics",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.file",
+      "prefLabel": "MilestoneRollupSchema.file",
+      "definition": "Repository-relative path of the milestone's bean file.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.share",
+      "prefLabel": "MilestoneRollupSchema.share",
+      "definition": "`closed / (closed + open)`; `null` when nothing is classified, which is NOT the same as 0 — see the module note on `milestone-rollup.ts`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.share",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.status",
+      "prefLabel": "MilestoneRollupSchema.status",
+      "definition": "The milestone's OWN status — not derived from its subtree.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.status",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.total",
+      "prefLabel": "MilestoneRollupSchema.total",
+      "definition": "Transitive descendants, excluding the milestone itself.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.total",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.unclassified",
+      "prefLabel": "MilestoneRollupSchema.unclassified",
+      "definition": "In neither status set — reported alone, folded into neither figure.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.unclassified",
+      "status": "candidate"
+    },
+    {
       "id": "bean-note.beannotefrontmatterschema.bean",
       "prefLabel": "BeanNoteFrontMatterSchema.bean",
       "definition": "The bean this note adds to. It must exist in the bean store.",
@@ -6267,7 +6330,7 @@
     {
       "id": "intake.intakeschema.licence",
       "prefLabel": "IntakeSchema.licence",
-      "definition": "The licence the uploader established, as the SAME record a library manifest carries as `licenceRecord` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.",
+      "definition": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.",
       "source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
       "status": "candidate"
     },
@@ -8442,10 +8505,10 @@
       "status": "candidate"
     },
     {
-      "id": "site-indexes.beanindexschema.edges",
-      "prefLabel": "BeanIndexSchema.edges",
-      "definition": "The block graph as ONE edge set, `blocker → blocked`, over both front-matter declarations (`blocking:` on the blocker, `blocked_by:` on the blocked), deduplicated — `blockEdges` in `scripts/beans.ts`, bean `vhqq`. An end may name no bean in `items`: that edge is kept here and reported as a `blocking-unknown` finding, never dropped.",
-      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.edges",
+      "id": "site-indexes.beanindexschema.plan",
+      "prefLabel": "BeanIndexSchema.plan",
+      "definition": "The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because \"no plan in the projection\" is a state the renderer distinguishes from \"a plan with nothing done\".",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan",
       "status": "candidate"
     },
     {
@@ -9041,20 +9104,6 @@
       "prefLabel": "StickyTextSchema.scale",
       "definition": "Multiply the words' size. `1` is normal; `0.8` fits more in.",
       "source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
-      "status": "candidate"
-    },
-    {
-      "id": "subgraph-manifest.subgraphnodebase.holdsgraph",
-      "prefLabel": "SubgraphNodeBase.holdsGraph",
-      "definition": "Links to the GraphKind nodes this subgraph holds.",
-      "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph",
-      "status": "candidate"
-    },
-    {
-      "id": "subgraph-manifest.subgraphnodebase.name",
-      "prefLabel": "SubgraphNodeBase.name",
-      "definition": "The subgraph's label: the harness name at the root, the instance-relative path below it.",
-      "source": "cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name",
       "status": "candidate"
     },
     {
