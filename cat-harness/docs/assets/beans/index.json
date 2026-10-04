@@ -5475,14 +5475,14 @@
     {
       "id": "folio-assistant-gz47",
       "title": "Audit every declared subgraph for literal paths in tests and consumers: check:declared-paths sees only cat-harness's own declarations and code",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:51:59Z",
-      "updatedAt": "2026-10-03T08:51:59Z",
+      "updatedAt": "2026-10-04T13:34:36Z",
       "preview": "Owner, 2026-10-03: \"audit other declared sub-graphs. may have same issue with tests or other consumers\". The trigger was fsh-guts (9c7h): five tests and one writer named `fsh-guts/` by path, and #1945 and #1948 moved them onto the declaration (`fshGutsDirectory`). The owner's 2026-10-03 content-source ruling makes the class general: ANY declared subgraph's source may move (directory → branch → gra",
       "file": "beans/defs/folio-assistant-gz47--audit-every-declared-subgraph-for-literal-paths-in.md"
     },
@@ -5694,7 +5694,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:02Z",
-      "updatedAt": "2026-10-04T12:17:52Z",
+      "updatedAt": "2026-10-04T09:56:45Z",
       "preview": "Stage 2 of the split plan: rehearse standalone. New `cat-harness-tools/scripts/rehearse-standalone.ts` (a copy of bootstrap-tools'): copies only the tracked files of `cat-harness/`, `cat-harness-tools/`, `bootstrap/`, `bootstrap-tools/` into an empty temp dir, `git init` each, links `node_modules`, then runs closure, `check:import-direction` scoped to the two instances, every generator's `--check`",
       "file": "beans/defs/folio-assistant-ho66--separation-stage-2-rehearse-cat-harness-cat-harnes.md"
     },
@@ -11422,13 +11422,13 @@
         "status": "in-progress",
         "epics": 8,
         "total": 145,
-        "closed": 43,
-        "open": 102,
-        "inProgress": 56,
+        "closed": 44,
+        "open": 101,
+        "inProgress": 55,
         "todo": 45,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.296551724137931
+        "share": 0.30344827586206896
       },
       {
         "id": "folio-assistant-yg29",
@@ -11447,8 +11447,8 @@
       }
     ],
     "orphanOpen": 310,
-    "openTotal": 472,
-    "coveredOpen": 158,
+    "openTotal": 471,
+    "coveredOpen": 157,
     "duplicateIds": 1
   }
 }

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xsrv
 title: 'ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-04T05:37:22Z
+updated_at: 2026-10-04T13:50:14Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -399,3 +399,72 @@ One more thing the writer question will reach: `offCheckoutFindings` in
 `not-cut-over` state `9ofm` added for `tip` — two copies and nothing saying which is
 authoritative. Extending it to `route` belongs with the flip, and the extraction done
 on #2032 means there is one place to do it.
+
+_2026-10-04T13:47:14Z_ — Claimed by claude/lucid-shannon-o8zop1-gz47-ruling — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+---
+
+## Measurements from another session, 2026-10-04 — NOT a claim
+
+Appended by a sibling session that read this bean, found it claimed 13 minutes
+earlier ("Claim only, no work"), and stood down. The claim is yours; this is
+only what I measured before stopping, so you do not re-derive it. Status and
+holder untouched.
+
+**1. The branch is already fully seeded — Done-when "the branch is seeded with
+a hash-verified manifest" is satisfied and unticked.**
+`git ls-tree -r --name-only origin/cat/cat-harness/uml-overview | wc -l` = 396:
+133 `.md`, 262 `.svg`, 1 `.json` (a manifest) and a README. Against `main`:
+`cat-harness/docs/uml/overview` = 132 `.md`, and
+`cat-harness/docs/assets/img/uml/overview` = 262 `.svg` — 394 files, 6.8 MB.
+So every byte already exists at the destination, which `docs/docs.json` says is
+deliberate: "BOTH during the window where the same bytes live in two places on
+purpose."
+
+**2. `gen-uml-overview.ts`'s comment about the SVGs is STALE, and it is
+load-bearing for this arc.** Its `--check` block says:
+
+> "Everything OUTSIDE the pages — the .puml model and the SVGs — stays an
+> on-disk comparison: neither is a published route, so neither is route-keyed."
+
+But the route branch carries all **262** SVGs. Somebody seeded them as a route,
+so that sentence and the seeded branch disagree, and the sentence is the one
+that is wrong. Consequence: the flip is TWO declarations
+(`uml-overview-pages` and `uml-overview-svgs`), not one, and `compareRoute` is
+called for the pages only (line 926) — there is no
+`compareRoute("uml-overview-svgs", …)`.
+
+**3. There is no `authoritative` field.** `DirectoryStorageSchema` is
+`{ branch, keyedBy }` and `.strict()`, so a declaration carrying
+`authoritative: true` throws rather than being ignored. Recorded because a
+subagent report in my session asserted "set `storage` plus
+`authoritative: true`" as the next step, which is a plausible-sounding field
+that does not exist. The one live example on `main` is `cat-harness.json`'s
+`qa`: `{"branch": "cat/cat-harness/qa-reports", "keyedBy": "commit"}`.
+
+**4. `docs/docs.json` quotes a docblock section that no longer exists.** Its
+`uml-overview-svgs` entry cites `DirectoryStorageSchema`'s
+§"Not yet set on any declaration". That docblock now reads
+§"Set on every `qa` directory since bean `5hox`". The ORDER it states
+("declare, seed the branch, migrate `uml:overview:check`, and only then flip")
+still holds and is still the right sequence; only the "not yet set anywhere"
+premise is stale.
+
+### Two things I did NOT establish
+
+- Whether flipping `storage` while the 394 files remain tracked is acceptable
+  as an intermediate step. `directory-storage.test.ts` ("not-cut-over: route
+  gets the two-copies finding, because two copies is two copies") says it is a
+  FINDING, so declaration and deletion look like one change — which is what
+  `check-declared-dirs`'s own remedy text calls "ONE change". I did not run the
+  gate to confirm.
+- Anything about the declaration restructure your first Done-when names (the
+  owner's "auto-docs is one declared subgraph, with declared sub-sub-graphs per
+  writer", still unimplemented because `cat-harness.json` declares ONE `docs`
+  directory). I stopped before touching it.
+
+### One neighbour that is stale, if you are updating beans anyway
+
+`xu0t` still says "auto-docs branch: none yet". `cat/cat-harness/uml-overview`
+exists on origin at `ae5fb4d6`. Not edited here — it is not this bean.

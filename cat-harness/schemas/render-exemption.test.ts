@@ -153,7 +153,7 @@ describe("isExemptFrom is what the QA axis calls", () => {
     // which states a rule true only for the instance somebody remembered —
     // and a vendored or renamed bootstrap would silently reacquire the
     // obligation it was excused from.
-    const checker = readFileSync(join(ROOT, "scripts", "check-instance-render.ts"), "utf-8");
+    const checker = readFileSync(join(REPO, "cat-harness-tools", "scripts", "check-instance-render.ts"), "utf-8");
     expect(checker).toContain("renderExemptionProblems");
     expect(checker).not.toContain('=== "bootstrap"');
   });

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 212,
+      "count": 210,
       "unit": "modules"
     }
   },
@@ -644,14 +644,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/landing-instance.test.ts",
-      "instance": "cat-harness",
-      "name": "landing-instance.test",
-      "graphNode": "undeclared",
-      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
       "instance": "cat-harness",
       "name": "landing-sticky.test",
@@ -935,14 +927,6 @@
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/qa-attestations-criteria.test.ts",
-      "instance": "cat-harness",
-      "name": "qa-attestations-criteria.test",
-      "graphNode": "undeclared",
-      "summary": "The attestation store's block-qa and translation-qa families (bean `8wj1`,",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/qa-attestations.test.ts",
@@ -6837,6 +6821,13 @@
           "doc": "Which half of a kg-separation pair the planned {@link repository} is —"
         },
         {
+          "name": "seedsWith",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Instances this one is seeded together with — see `seedsWith` on"
+        },
+        {
           "name": "stub",
           "type": "string",
           "optional": true,
@@ -7060,6 +7051,13 @@
           "optional": true,
           "array": false,
           "doc": "Which half of a kg-separation pair this instance's planned `repository`"
+        },
+        {
+          "name": "seedsWith",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Instances this one is SEEDED TOGETHER with: the same seeding step creates"
         },
         {
           "name": "stub",
@@ -21495,6 +21493,13 @@
           "array": false
         },
         {
+          "name": "status",
+          "type": "QueueStatusSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed."
+        },
+        {
           "name": "beans",
           "type": "z.array(BeanIdSchema).default([])",
           "optional": true,
@@ -21510,7 +21515,8 @@
         "cat-harness/schemas/merge-queue.ts#HoldSchema",
         "cat-harness/schemas/merge-queue.ts#Instant",
         "cat-harness/schemas/merge-queue.ts#NonBlank",
-        "cat-harness/schemas/merge-queue.ts#PlacementSchema"
+        "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+        "cat-harness/schemas/merge-queue.ts#QueueStatusSchema"
       ],
       "unresolved": [],
       "external": [
@@ -21698,6 +21704,13 @@
           "optional": false,
           "array": false,
           "doc": "Did CI run on the head that would be merged (T2; bean `u7be` item 3)."
+        },
+        {
+          "name": "readiness",
+          "type": "z.enum(READINESS)",
+          "optional": false,
+          "array": false,
+          "doc": "Has the OWNING session signalled this PR is finished, against `main`?"
         }
       ],
       "extendsNames": [],
@@ -21705,6 +21718,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "READINESS",
         "z"
       ],
       "exported": true
@@ -21798,6 +21812,45 @@
       "name": "PriorityClassSchema",
       "module": "cat-harness/schemas/merge-queue.ts",
       "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#QueueStatus",
+      "name": "QueueStatus",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#QueueStatusSchema",
+      "name": "QueueStatusSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Readiness",
+      "name": "Readiness",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -42258,7 +42311,8 @@
         "single-open",
         "no-redundant-toggle",
         "rail-tips",
-        "harnesses-at-rest"
+        "harnesses-at-rest",
+        "declared-mark"
       ],
       "refs": [],
       "unresolved": [],
@@ -54857,6 +54911,14 @@
       "via": "placement",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#QueueStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

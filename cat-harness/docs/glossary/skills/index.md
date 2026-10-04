@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 223 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 227 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 319 terms and is 241 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 323 terms and is 245 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>319</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>319</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>323</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>323</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">319</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">323</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -56,6 +56,13 @@ adopt-methodology-from-source <span class="fa-gloss-status">candidate, extracted
 <p>The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/adopt-methodology-from-source.md"><code>cat-harness/skills/library/library-core/adopt-methodology-from-source.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--agent-handoff" data-fa-state="extracted" data-fa-gloss="">
+agent-handoff <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, &quot;give me a branch and bean for them&quot;, relay, the other agent.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/agent-handoff.md"><code>cat-harness/skills/sdlc/sdlc-core/agent-handoff.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--agent-memory" data-fa-state="extracted" data-fa-gloss="">
 agent-memory <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -76,6 +83,13 @@ archiving-web-pages <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/archiving-web-pages.md"><code>cat-harness/skills/library/library-core/archiving-web-pages.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--artefact-reachability" data-fa-state="extracted" data-fa-gloss="">
+artefact-reachability <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/artefact-reachability.md"><code>cat-harness/skills/kg/kg-core/artefact-reachability.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--asset-extraction" data-fa-state="extracted" data-fa-gloss="">
 asset-extraction <span class="fa-gloss-status">candidate, extracted</span>
@@ -213,6 +227,13 @@ bpmn-processes <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-processes.md"><code>cat-harness/skills/process/workflow/bpmn-processes.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--branch-archaeology" data-fa-state="extracted" data-fa-gloss="">
+branch-archaeology <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering &quot;which branches can go?&quot; or &quot;what work never landed?&quot;.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md"><code>cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--branch-freshness" data-fa-state="extracted" data-fa-gloss="">
 branch-freshness <span class="fa-gloss-status">candidate, extracted</span>
@@ -1178,7 +1199,7 @@ latex-authoring <span class="fa-gloss-status">candidate, extracted</span>
 latex-build-cache <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter <code>report</code> build (a ~35-chapter / ~2900-block <code>report</code> with a heavy <code>pgf</code>/<code>tikz</code>/<code>tikz-cd</code>/<code>hyperref</code> preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (<code>cat-harness/scripts/install-tex.sh</code>) and quick changed-chapter feature builds (<code>cat-harness/scripts/feature-build.sh</code>). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.</p>
+<p>LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter <code>report</code> build (a ~35-chapter / ~2900-block <code>report</code> with a heavy <code>pgf</code>/<code>tikz</code>/<code>tikz-cd</code>/<code>hyperref</code> preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool <code>tex-install</code>), quick changed-chapter feature builds with latexdiff (Tool <code>paper-feature-build</code>), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.</p>
 <p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--latex-validation" data-fa-state="extracted" data-fa-gloss="">
@@ -1378,7 +1399,7 @@ merge-conflict-patterns <span class="fa-gloss-status">candidate, extracted</span
 merge-queue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for &quot;merge the ready PRs&quot;, &quot;what lands next&quot;, &quot;run a merge train&quot;, &quot;why was my PR ejected&quot;, &quot;move this PR up&quot;, and when tuning the train's order or size.</p>
+<p>Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through <code>merge:guard</code>. Use for &quot;merge the ready PRs&quot;, &quot;land this PR&quot;, &quot;what lands next&quot;, &quot;run a merge train&quot;, &quot;why was my PR ejected&quot;, &quot;move this PR up&quot;, and when tuning the train's order or size.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/merge-queue.md"><code>cat-harness/skills/sdlc/sdlc-core/merge-queue.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--methodology-adoption" data-fa-state="extracted" data-fa-gloss="">
@@ -2344,6 +2365,13 @@ witnessed-values <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md"><code>folio-assistant-sci/skills/content/folio-paper-adapter/witnessed-values.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--work-plan-restructure" data-fa-state="extracted" data-fa-gloss="">
+work-plan-restructure <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md"><code>cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--workflow-state" data-fa-state="extracted" data-fa-gloss="">
 workflow-state <span class="fa-gloss-status">candidate, extracted</span>

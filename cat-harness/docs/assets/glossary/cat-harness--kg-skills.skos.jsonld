@@ -69,6 +69,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-handoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "agent-handoff"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent."
+        }
+      ],
+      "skos:notation": "agent-handoff",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-memory",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -126,6 +146,26 @@
       ],
       "skos:notation": "archiving-web-pages",
       "dcterms:source": "cat-harness/skills/library/library-core/archiving-web-pages.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/artefact-reachability",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "artefact-reachability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals."
+        }
+      ],
+      "skos:notation": "artefact-reachability",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/artefact-reachability.md",
       "skos:note": "candidate"
     },
     {
@@ -421,6 +461,26 @@
       ],
       "skos:notation": "bpmn-processes",
       "dcterms:source": "cat-harness/skills/process/workflow/bpmn-processes.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/branch-archaeology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "branch-archaeology"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\"."
+        }
+      ],
+      "skos:notation": "branch-archaeology",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md",
       "skos:note": "candidate"
     },
     {
@@ -2406,7 +2466,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
+          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
         }
       ],
       "skos:notation": "merge-queue",
@@ -4306,6 +4366,26 @@
       ],
       "skos:notation": "wireframe-design-review",
       "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/work-plan-restructure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "work-plan-restructure"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once."
+        }
+      ],
+      "skos:notation": "work-plan-restructure",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md",
       "skos:note": "candidate"
     },
     {

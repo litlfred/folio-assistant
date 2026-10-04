@@ -28,7 +28,8 @@
  *
  * Usage:
  *   bun run fhir-harness/scripts/build-ig-site.ts --ig-src <IG repo> --out <jekyll source> \
- *     [--baseurl /<site>/<ig>] [--plantuml-jar <plantuml.jar>] [--menu <menu.json>] [--remote-theme <owner/repo@ref>]
+ *     [--baseurl /<site>/<ig>] [--plantuml-jar <plantuml.jar>] [--menu <menu.json>] [--remote-theme <owner/repo@ref>] \
+ *     [--artifacts <dir>] [--artifacts-href <path>]
  *   bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids <built site>   # after jekyll build
  *
  * @module fhir-harness/scripts/build-ig-site
@@ -153,11 +154,11 @@ export interface StageResult {
 const files = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isFile()) : []);
 
 /**
- * `{% include x %}` targets the pages name, so a missing one is found before
- * Jekyll aborts on it.
+ * `{% include x %}` and `{% lang-fragment x %}` target includes, so a missing
+ * one is found before Jekyll aborts on it.
  */
 export function includeTargets(md: string): string[] {
-  return [...md.matchAll(/\{%-?\s*include\s+([^\s%]+)/g)].map((m) => m[1]!);
+  return [...md.matchAll(/\{%-?\s*(?:include|lang-fragment)\s+([^\s%]+)/g)].map((m) => m[1]!);
 }
 
 /** What stands in for a diagram nothing rendered: visible, never an empty include. */
@@ -487,6 +488,8 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       n = { title: name, navOrder: 1000 + unlisted.length, ...(fromMenu ? { navExclude: true } : {}) };
     }
     let body = readFileSync(join(pagecontent, f), "utf-8");
+    // Standard HL7 IG Publisher macro for localized includes: {% lang-fragment <file> %}
+    body = body.replace(/\{%-?\s*lang-fragment\s+([^\s%]+)\s*-?%\}/g, "{% include $1 %}");
     let data: Record<string, unknown> = {};
     for (const fill of opts.fills ?? []) {
       if (!body.includes(fill.marker)) continue;
@@ -578,6 +581,12 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
         rendered.push(name);
         continue;
       }
+    }
+    const tempInclude = join(src, "temp", "pages", "_includes", name);
+    if (existsSync(tempInclude)) {
+      copyFileSync(tempInclude, join(out, "_includes", name));
+      rendered.push(name);
+      continue;
     }
     writeFileSync(join(out, "_includes", name), notRenderedMarker(name, existsSync(puml) ? `input/images-source/${basename(puml)}` : "a source this build does not hold"));
     notRendered.push(name);
@@ -694,11 +703,52 @@ if (import.meta.main) {
     process.exit(2);
   }
   const menuPath = opt("--menu");
+  const artifactsDir = opt("--artifacts");
+  let artifactsOpt: StageOptions["artifacts"];
+  if (artifactsDir) {
+    const artResolved = resolve(artifactsDir);
+    const ixPath = existsSync(join(artResolved, "fhir-artifact-index", "index.json"))
+      ? join(artResolved, "fhir-artifact-index", "index.json")
+      : existsSync(join(artResolved, "index.json"))
+        ? join(artResolved, "index.json")
+        : undefined;
+    if (ixPath) {
+      const ix = JSON.parse(readFileSync(ixPath, "utf-8")) as { artifacts: IndexedArtifact[] };
+      const pagesHref = opt("--artifacts-href") ?? "artifact/";
+      artifactsOpt = { list: ix.artifacts, pagesHref };
+      // declared-path-literal: the external artifacts directory's own docs/artifact/ under artResolved, not folio-assistant's docs/
+      const docArtifact = existsSync(join(artResolved, "docs", "artifact"))
+        ? join(artResolved, "docs", "artifact")
+        : existsSync(join(artResolved, "artifact"))
+          ? join(artResolved, "artifact")
+          : undefined;
+      if (docArtifact) {
+        mkdirSync(join(resolve(out), "artifact"), { recursive: true });
+        for (const af of files(docArtifact)) {
+          copyFileSync(join(docArtifact, af), join(resolve(out), "artifact", af));
+        }
+      }
+
+      // declared-path-literal: the external artifacts directory's own docs/assets/ under artResolved, not folio-assistant's docs/
+      const docAssets = existsSync(join(artResolved, "docs", "assets"))
+        ? join(artResolved, "docs", "assets")
+        : existsSync(join(artResolved, "assets"))
+          ? join(artResolved, "assets")
+          : undefined;
+      if (docAssets) {
+        mkdirSync(join(resolve(out), "assets"), { recursive: true });
+        for (const asf of files(docAssets)) {
+          copyFileSync(join(docAssets, asf), join(resolve(out), "assets", asf));
+        }
+      }
+    }
+  }
   const r = stageIgSite(igSrc, resolve(out), {
     baseurl: opt("--baseurl") ?? "",
     plantumlJar: opt("--plantuml-jar"),
     menu: menuPath ? (JSON.parse(readFileSync(menuPath, "utf-8")) as IgMenu) : undefined,
     remoteTheme: opt("--remote-theme"),
+    artifacts: artifactsOpt,
   });
   console.log(describeStage(r));
   console.log(`staged ${out}`);

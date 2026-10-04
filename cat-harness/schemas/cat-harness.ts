@@ -701,6 +701,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * not said". Bean `eayu`.
    */
   separation?: "content" | "tools";
+  /**
+   * Instances this one is seeded together with — see `seedsWith` on
+   * {@link CatHarnessDeclarationSchema}. Absent is "seeds alone".
+   */
+  seedsWith?: string[];
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -2853,6 +2858,22 @@ export const CatHarnessDeclarationSchema = z.object({
    * instance `supports` is content too, and is read as such without this.
    */
   separation: z.enum(["content", "tools"]).optional(),
+  /**
+   * Instances this one is SEEDED TOGETHER with: the same seeding step creates
+   * both repositories, so neither ever stands alone in a checkout (bean
+   * `smbc` seeds `cat-harness` and `cat-harness-tools` at once).
+   *
+   * Declared by the HIGHER instance, naming the lower one, because a lower
+   * instance naming one above it is the wrong direction
+   * (`check:reference-direction`). `seed:ready` reads it: a path declared in
+   * a lower instance that resolves only into an instance seeding with it is
+   * not "upward" — it cannot break on a seeding day that creates both.
+   * Owner, 2026-10-04: cat-harness's Tool nodes resolving into
+   * cat-harness-tools are a seeding pair, not a seeding risk.
+   *
+   * Absent means "seeds alone", which is the strict reading.
+   */
+  seedsWith: z.array(z.string().min(1)).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -4470,7 +4491,27 @@ function declaredFromWithin(
       continue;
     }
     for (const nd of nested.directories ?? []) {
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      // `nd.subgraph !== true` was a third condition here until 2026-10-04.
+      // It withheld 29 directories from EVERY store-side consumer —
+      // `branch-store`, `graph-read`, `audit-coverage`, `state-mount` — while
+      // `nestedDirectories` (the other walk over the same declaration files,
+      // read by `check:declared-dirs` and `check:requirements`) ignored it. One
+      // fact, two readers, opposite answers: the shape of #2069's enum drift.
+      //
+      // It was never in the schema. No `subgraph: z.boolean()`, no `subgraph?:`
+      // field — it was read off an untyped object here and nowhere else, so
+      // nothing validated it and nothing required it. It appeared in 5 files,
+      // all `skills/skills.json`, and was absent from `beans/beans.json`,
+      // `docs/docs.json` and `auto-docs.json`. Removing it resolved 144 -> 173
+      // directories, including `auto-docs.json`'s ten sub-sub-graphs: the
+      // owner's 2026-10-03 ruling was implemented and unreachable.
+      //
+      // Measured consequences, all repaired in the same change because an
+      // exposed finding is still a finding: `check:layout-norms` saw
+      // `beans/defs contains beans/defs/archive` (siblings in one declaration
+      // file, now sanctioned there) and `check:subgraphs` saw one genuinely
+      // broken link in `docs/proposals/` that it could not previously reach.
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
       out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
@@ -4542,7 +4583,7 @@ function promoteFromWithin(
       // (beans.json's `defs`, docs.json's `proposals`). It answered the retired
       // `dependents` question until 2026-09-30 (option A); the fact it carried
       // here was never about dependents, so it is now stated as what it is.
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       // An instance-level DECLARATION with this id wins; a built-in DEFAULT
       // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
       // a from-within declaration is stronger than a convention.

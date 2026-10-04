@@ -44,7 +44,7 @@ which is the only kind of evidence that a split is doing work.
 - [x] `ig-build-pipeline` states the run and the refusal list
 - [x] `ig-render-jekyll` states the three render contracts
 - [x] the two Library strippers are actually placed here, not just described
-- [ ] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
+- [x] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
 - [ ] gates green
 
 

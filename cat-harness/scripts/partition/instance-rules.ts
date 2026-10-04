@@ -345,6 +345,11 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // The ONE conversion from a harness row's resolved mark to that
+      // navbar's fields (bean `2vpn`). HARNESS beside `navbar.ts`: every
+      // surface that draws a harness's mark calls it, so a folio owning it
+      // would let one instance decide how every other instance's mark is read.
+      "scripts/lib/harness-mark.ts",
       // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the
@@ -495,6 +500,7 @@ export const RULES: Rule[] = [
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
       "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
+      "scripts/merge-guard.ts",              // the single way a steward lands a PR: seven checks, then the pinned PUT (bean uoob)
       "scripts/merge-steward.ts",            // the command that CALLS merge-queue.ts — the entry point it was written for and never had
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
@@ -1378,6 +1384,15 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // WHICH declared executable artefacts can be reached at all (bean `dxqm`).
+      // Harness machinery for the same reason as the coverage report beside it:
+      // its subjects are the declared `.bpmn`/`.dmn` corpus, the engine's own
+      // resolver and the module graph — never a folio's vocabulary. A folio
+      // could not make it reach a different verdict, only give it more
+      // artefacts to ask about. Assigned in the same change that added the
+      // script, because `unassigned` is exactly what the partition's own report
+      // says must not be read as clean.
+      "scripts/audit-reachability.ts",
       // LSI over the declared prose graphs, and the epic-filing proposal it
       // drives (bean `ansc`). Harness for the same reason as the audit: its
       // subjects are the declarations and the work plan, and the engine it
@@ -1670,6 +1685,7 @@ export const RULES: Rule[] = [
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
+      "scripts/check-state-on-main.ts",  // the same registry's `holds: state`, asked of DECLARED directories
       "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
       "scripts/check-instance-graph.ts",  // every instance's dependency graph resolves (bean `a1lq`)
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)

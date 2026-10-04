@@ -755,6 +755,23 @@ jobs:
       - name: declared directories exist, or say why not
         run: bun run check:declared-dirs
 
+      # A declared directory whose graph kind `holds: "state"` is kept OFF
+      # `main`, or it is recorded debt that may only go down.
+      #
+      # RATCHETED, not gated from zero, and the number is the reason: 19 of the
+      # 28 state-holding directories in this checkout are still on `main`. Some
+      # are mid-arc (`beans` is `p3ny`'s, `queue` is `najo`'s) and some may
+      # never move — `swimlane-glossary` is regenerated from `main`'s own
+      # content by a declared writer, so a branch would buy it nothing. A gate
+      # that failed 19 times on the commit it landed in is a gate somebody
+      # switches off, so the baseline records today's debt and may only SHRINK.
+      # Both directions fail: an unrecorded state directory on `main`, AND a
+      # baseline line that no longer describes one — the second because a line
+      # that has stopped describing anything is an exemption for whatever next
+      # takes that id.
+      - name: state directories are off main, or recorded as debt
+        run: bun run check:state-on-main
+
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
       # which every other sweep skips because the root is deliberately not an
@@ -1356,6 +1373,19 @@ jobs:
       # the import and prose axes. Ratchet over a baseline of 33 (bean mlux).
       - name: a process binds only skills its instance can reach
         run: bun run check:process-bindings
+
+      # The PROSE half of the same arrow: a lower instance may not NAME one
+      # built on top of it. A ratchet, not a backlog gate (owner Q-B,
+      # 2026-10-01, A.10): the sidecar records one entry per file and per
+      # instance above it that the file names, single- and multi-destination
+      # alike, and `--check` fails only on a pair NEW against `main`'s entry on
+      # `qa-reports` — which is the commit's own committed sidecar (qa:refresh
+      # "tracked" mode), so regenerate and commit it with the change. Without
+      # `--against` the working copy of a stored directory is not a record and
+      # the comparison is UNKNOWN. Fix a finding by rewording in place (Q1).
+      # Beans 1bvx, vzo5, zhg2.
+      - name: no file newly names an instance built on top of its own
+        run: bun run check:reference-direction:check --against main
 
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until

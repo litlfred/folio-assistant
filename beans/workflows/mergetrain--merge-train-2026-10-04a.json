@@ -1,0 +1,1161 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "mergetrain--merge-train-2026-10-04a",
+  "processId": "Process_MergeTrain",
+  "source": "cat-harness/processes/sdlc/merge-train.bpmn",
+  "subject": "merge-train-2026-10-04a",
+  "bean": "folio-assistant-hfag",
+  "tokens": [
+    "Call_EjectHandBack"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-10-04T15:51:24.152Z",
+      "node": "Start_Train",
+      "note": "instance started"
+    },
+    {
+      "at": "2026-10-04T15:51:28.799Z",
+      "node": "Task_ReadLive",
+      "actor": "merge-steward",
+      "note": "merge:steward at 15:30Z over origin/main 0b7b9e44, plus merge:guard (evaluate) and git merge-tree per candidate. Owner chose 'Run a merge train' to break the regen-conflict treadmill. Dry run over the approved members: #2043, #2100, #2102, #2105, #2108 and #2109 would merge; #1955 would be refused (authored conflicts).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#1",
+        "prov:startedAtTime": "2026-10-04T15:51:28.799Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_ReadLive"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:51:33.343Z",
+      "node": "Task_TakeNext",
+      "actor": "merge-steward",
+      "note": "The approved candidates, in table order: #2043, #2100, #2102, #2105, #2108, #2109 (#1955 is refused, authored conflicts).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#2",
+        "prov:startedAtTime": "2026-10-04T15:51:33.343Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_TakeNext"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:51:48.203Z",
+      "node": "GW_Placement",
+      "outcome": "admit",
+      "actor": "merge-steward",
+      "note": "#2043 at b493bba: signed by the takeover session, guard 7/7, owner yes given. Conflicts with main only in declared generated paths (LSI trio, glossary page), which the train resolves. Unblocks 1 PR (#2071, same bean dxqm). · Decision_MergePriority → admit by Rule_UnblockHighRisk ((b) Unblocks other work, predicted to conflict (T3): its own train.)",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#3",
+        "prov:startedAtTime": "2026-10-04T15:51:48.203Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_Placement"
+        },
+        "prov:used": [
+          "#2043"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:52:02.587Z",
+      "node": "Task_Admit",
+      "actor": "merge-steward",
+      "note": "#2043 at b493bba79e admitted to train merge-train-2026-10-04a. The train waits for more signed members (#2100, #2105, #2108, #2109, #2102 are approved but not yet signed) before it is built.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#4",
+        "prov:startedAtTime": "2026-10-04T15:52:02.587Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_Admit"
+        },
+        "prov:used": [
+          "#2043"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:52:41.746Z",
+      "node": "GW_More",
+      "outcome": "more",
+      "actor": "merge-steward",
+      "note": "#2100 signed by its owning session (sibling session_01VfkKoc) at cd6386b.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#5",
+        "prov:startedAtTime": "2026-10-04T15:52:41.746Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_More"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:52:46.134Z",
+      "node": "Task_TakeNext",
+      "actor": "merge-steward",
+      "note": "#2100 (merge-guard.yml throttle), owner-approved, signed at cd6386b; guard 7/7.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#6",
+        "prov:startedAtTime": "2026-10-04T15:52:46.134Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_TakeNext"
+        },
+        "prov:used": [
+          "#2100"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:52:50.623Z",
+      "node": "GW_Placement",
+      "outcome": "admit",
+      "actor": "merge-steward",
+      "note": "#2100 at cd6386b: signed, guard 7/7. Conflicts with main only in 4 declared generated paths. · Decision_MergePriority → admit by Rule_MvpSmallClean ((c) MVP / feature-priority, small, no predicted conflict.)",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#7",
+        "prov:startedAtTime": "2026-10-04T15:52:50.623Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_Placement"
+        },
+        "prov:used": [
+          "#2100"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:52:57.243Z",
+      "node": "Task_Admit",
+      "actor": "merge-steward",
+      "note": "#2100 at cd6386b34b admitted to merge-train-2026-10-04a. Members so far: #2043, #2100. Waiting on #2105, #2108, #2109 (takeover session signing) and #1898 (sibling, ~16:05Z+).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#8",
+        "prov:startedAtTime": "2026-10-04T15:52:57.243Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_Admit"
+        },
+        "prov:used": [
+          "#2100"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:20:43.374Z",
+      "node": "GW_More",
+      "outcome": "more",
+      "actor": "merge-steward",
+      "note": "#1898 signed by its takeover session (session_01VfkKoc) at 0f70ad8; the CI merge-guard status reads 'all seven checks pass' (run 37215955154).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#9",
+        "prov:startedAtTime": "2026-10-04T16:20:43.374Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_More"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:20:46.990Z",
+      "node": "Task_TakeNext",
+      "actor": "merge-steward",
+      "note": "#1898 (placement PR6), owner-approved; the vqlp hold is lifted; the mlux placement ruled as option (a).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#10",
+        "prov:startedAtTime": "2026-10-04T16:20:46.990Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_TakeNext"
+        },
+        "prov:used": [
+          "#1898"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:20:51.416Z",
+      "node": "GW_Placement",
+      "outcome": "admit",
+      "actor": "merge-steward",
+      "note": "#1898 at 0f70ad8: the CI guard passes all 7 checks. The dry run with #2043 and #2100 would merge. · Decision_MergePriority → admit by Rule_UnblockHighRisk ((b) Unblocks other work, predicted to conflict (T3): its own train.)",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#11",
+        "prov:startedAtTime": "2026-10-04T16:20:51.416Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_Placement"
+        },
+        "prov:used": [
+          "#1898"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:20:58.086Z",
+      "node": "Task_Admit",
+      "actor": "merge-steward",
+      "note": "#1898 at 0f70ad8d1b admitted. Members: #2043, #2100, #1898. The takeover session's #2105, #2108 and #2109 have not been signed yet.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#12",
+        "prov:startedAtTime": "2026-10-04T16:20:58.086Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_Admit"
+        },
+        "prov:used": [
+          "#1898"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:22:49.789Z",
+      "node": "GW_More",
+      "outcome": "full",
+      "actor": "merge-steward",
+      "note": "Built with the 3 signed members, at the owner's poke: #2043@b493bba79e, #2100@cd6386b34b, #1898@0f70ad8d1b. #2105, #2108 and #2109 are not signed and go in the next train.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#13",
+        "prov:startedAtTime": "2026-10-04T16:22:49.789Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_More"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:23:07.988Z",
+      "node": "Call_ChecksPresent",
+      "actor": "build-pipeline",
+      "note": "subprocess Process_PrChecksPresent completed"
+    },
+    {
+      "at": "2026-10-04T16:40:46.143Z",
+      "node": "Call_MergeMembers",
+      "actor": "build-pipeline",
+      "note": "subprocess Process_MergeBase completed"
+    },
+    {
+      "at": "2026-10-04T16:40:51.171Z",
+      "node": "GW_AllMerged",
+      "outcome": "refused",
+      "actor": "build-pipeline",
+      "note": "#1898 was refused (a tool defect on the gitignored-but-tracked LSI sidecar); #2043 and #2100 merged.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "build-pipeline",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#16",
+        "prov:startedAtTime": "2026-10-04T16:40:51.171Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "build-pipeline",
+          "prov:hadPlan": "merge-train#GW_AllMerged"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T16:41:04.695Z",
+      "node": "Task_Eject",
+      "actor": "merge-steward",
+      "note": "#1898 ejected: the ejection is on its queue entry (evidence #2113), and the attempt is appended to hand-back bean b8de. Cause: the take-base resolution tool crashed on a gitignored-but-tracked LSI sidecar (class 8j9e), not the PR. The train continues with #2043 and #2100.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#17",
+        "prov:startedAtTime": "2026-10-04T16:41:04.695Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_Eject"
+        },
+        "prov:used": [
+          "#1898"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    }
+  ],
+  "status": "running",
+  "startedAt": "2026-10-04T15:51:24.152Z",
+  "updatedAt": "2026-10-04T16:44:25.893Z",
+  "children": {
+    "Call_ChecksPresent": {
+      "id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent",
+      "processId": "Process_PrChecksPresent",
+      "source": "cat-harness/processes/sdlc/pr-checks-present.bpmn",
+      "subject": "merge-train-2026-10-04a",
+      "bean": "folio-assistant-hfag",
+      "tokens": [],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-10-04T16:22:49.789Z",
+          "node": "Start_Sweep",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-10-04T16:22:53.864Z",
+          "node": "Task_Sweep",
+          "actor": "build-pipeline",
+          "note": "Every member head has its owed pull_request runs, green: #2043 b493bba (3 pull_request workflows, all success); #2100 cd6386b (16 success, 2 skipped); #1898 0f70ad8 (16 success, 1 skipped; merge-guard success).",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent#1",
+            "prov:startedAtTime": "2026-10-04T16:22:53.864Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "pr-checks-present#Task_Sweep"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:22:57.619Z",
+          "node": "GW_Determined",
+          "outcome": "yes",
+          "actor": "build-pipeline",
+          "note": "Determined from the GitHub check-runs API and merge-guard statuses.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent#2",
+            "prov:startedAtTime": "2026-10-04T16:22:57.619Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "pr-checks-present#GW_Determined"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:23:01.418Z",
+          "node": "Task_Label",
+          "actor": "build-pipeline",
+          "note": "No member lacks CI on its head, so no tracking label is applied.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent#3",
+            "prov:startedAtTime": "2026-10-04T16:23:01.418Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "pr-checks-present#Task_Label"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:23:04.501Z",
+          "node": "GW_Finding",
+          "outcome": "none",
+          "actor": "build-pipeline",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent#4",
+            "prov:startedAtTime": "2026-10-04T16:23:04.501Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "pr-checks-present#GW_Finding"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:23:07.988Z",
+          "node": "Task_Close",
+          "actor": "build-pipeline",
+          "note": "No tracking issue is open for this train, because no member lacked CI. Nothing to close.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent#5",
+            "prov:startedAtTime": "2026-10-04T16:23:07.988Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "pr-checks-present#Task_Close"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:23:07.988Z",
+          "node": "End_Clean",
+          "note": "end event reached"
+        }
+      ],
+      "status": "completed",
+      "startedAt": "2026-10-04T16:22:49.789Z",
+      "updatedAt": "2026-10-04T16:23:07.988Z"
+    },
+    "Call_MergeMembers": {
+      "id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers",
+      "processId": "Process_MergeBase",
+      "source": "cat-harness/processes/sdlc/merge-base.bpmn",
+      "subject": "merge-train-2026-10-04a",
+      "bean": "folio-assistant-hfag",
+      "tokens": [],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-10-04T16:23:07.988Z",
+          "node": "Start_Merge",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-10-04T16:40:20.229Z",
+          "node": "Task_Merge",
+          "actor": "build-pipeline",
+          "note": "merge:train (--no-regen per member) on base main@26c5d37b91: #2043@b493bba79e merged (7a373a3e55), #2100@cd6386b34b merged (b27a3e62c4). #1898@0f70ad8d1b refused: take-base on the gitignored-but-tracked skills.lsi.json failed ('in the index, but not at stage 2'), a tool defect of the 8j9e class, not an authored conflict.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#1",
+            "prov:startedAtTime": "2026-10-04T16:40:20.229Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#Task_Merge"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:24.091Z",
+          "node": "GW_Conflicts",
+          "outcome": "yes",
+          "actor": "build-pipeline",
+          "note": "#2043 and #2100: generated paths only, resolved by declared patterns. #1898: the resolution failed (see above).",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#2",
+            "prov:startedAtTime": "2026-10-04T16:40:24.091Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#GW_Conflicts"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:27.884Z",
+          "node": "Task_Classify",
+          "actor": "build-pipeline",
+          "note": "Every conflicted path classified against merge-conflict-patterns: generated (derived-results, glossary, auto-docs, skos-glossary-export, kg-qa-sidecar). No authored path on any member.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#3",
+            "prov:startedAtTime": "2026-10-04T16:40:27.884Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#Task_Classify"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:31.665Z",
+          "node": "GW_AllDeclared",
+          "outcome": "yes",
+          "actor": "build-pipeline",
+          "note": "Yes for #2043 and #2100, which were resolved by declared patterns. #1898's declared resolution crashed in the tool and it was removed from the train (a hand-back follows).",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#4",
+            "prov:startedAtTime": "2026-10-04T16:40:31.665Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#GW_AllDeclared"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:35.457Z",
+          "node": "Task_Resolve",
+          "actor": "build-pipeline",
+          "note": "Resolved by declared strategy (take-base / qa-sidecar), then one regen over the train: regen, check:l1-complete, smart-kg-l1 and kg:audit:all:check all passed. Train head c05087bd51 pushed as PR #2113.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#5",
+            "prov:startedAtTime": "2026-10-04T16:40:35.457Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#Task_Resolve"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:39.134Z",
+          "node": "Task_Regen",
+          "actor": "build-pipeline",
+          "note": "One regen over the whole train (regen-after-merge, all 111 verify/write pairs): passed; commit c05087bd51 'merge-train: regenerate after 2 member(s)'.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#6",
+            "prov:startedAtTime": "2026-10-04T16:40:39.134Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#Task_Regen"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:42.789Z",
+          "node": "GW_Proved",
+          "outcome": "yes",
+          "actor": "build-pipeline",
+          "note": "regen exit 0, plus l1-complete, smart-kg-l1 and kg-audit-all all exit 0 (merge-train report).",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#7",
+            "prov:startedAtTime": "2026-10-04T16:40:42.789Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#GW_Proved"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:46.142Z",
+          "node": "Task_Commit",
+          "actor": "build-pipeline",
+          "note": "Committed c05087bd51 and pushed claude/gracious-mendel-du6nn8-train-a; train PR #2113 opened.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "build-pipeline",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_MergeMembers#8",
+            "prov:startedAtTime": "2026-10-04T16:40:46.142Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "build-pipeline",
+              "prov:hadPlan": "merge-base#Task_Commit"
+            },
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:40:46.143Z",
+          "node": "End_Merged",
+          "note": "end event reached"
+        }
+      ],
+      "status": "completed",
+      "startedAt": "2026-10-04T16:23:07.988Z",
+      "updatedAt": "2026-10-04T16:40:46.143Z"
+    },
+    "Call_EjectHandBack": {
+      "id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack",
+      "processId": "Process_MergeRefusal",
+      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn",
+      "subject": "merge-train-2026-10-04a",
+      "bean": "folio-assistant-hfag",
+      "tokens": [
+        "Task_Fix"
+      ],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-10-04T16:41:04.695Z",
+          "node": "Start_Refused",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-10-04T16:41:08.301Z",
+          "node": "Task_Record",
+          "actor": "merge-steward",
+          "note": "The refusal is recorded under '## Attempts' in hand-back bean b8de (Merge refused: #1898), which blocks apcg.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "session-coordinator",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack#1",
+            "prov:startedAtTime": "2026-10-04T16:41:08.301Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "session-coordinator",
+              "prov:hadPlan": "merge-refusal#Task_Record"
+            },
+            "prov:used": [
+              "folio-assistant-b8de"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:41:19.425Z",
+          "node": "Task_Comment",
+          "actor": "merge-steward",
+          "note": "One comment on #1898 linking hand-back bean b8de and the ejection cause.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "session-coordinator",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack#2",
+            "prov:startedAtTime": "2026-10-04T16:41:19.425Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "session-coordinator",
+              "prov:hadPlan": "merge-refusal#Task_Comment"
+            },
+            "prov:used": [
+              "#1898"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:42:26.937Z",
+          "node": "GW_Owner",
+          "outcome": "yes",
+          "actor": "merge-steward (session_019gRX6w8kzAX6wpHbgdyu3s)",
+          "note": "#1898's owning session (session_01VfkKocGaQW7Msro2t5S66U) is live; ejection handed back on b8de with a PR comment.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "session-coordinator",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack#3",
+            "prov:startedAtTime": "2026-10-04T16:42:26.937Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "session-coordinator",
+              "prov:hadPlan": "merge-refusal#GW_Owner"
+            },
+            "prov:used": [
+              "1898"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:44:25.892Z",
+          "node": "Task_HandBack",
+          "actor": "merge-steward (session_019gRX6w8kzAX6wpHbgdyu3s)",
+          "note": "#1898 handed back on hand-back bean b8de with fail condition: take-base on gitignored-tracked skills.lsi.json fails (tool defect u4up); re-admit after u4up or #2066. Train #2113 also needed 1635342194 to restore the two LSI files merge:train dropped.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "session-coordinator",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack#4",
+            "prov:startedAtTime": "2026-10-04T16:44:25.892Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "session-coordinator",
+              "prov:hadPlan": "merge-refusal#Task_HandBack"
+            },
+            "prov:used": [
+              "folio-assistant-b8de"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        }
+      ],
+      "status": "running",
+      "startedAt": "2026-10-04T16:41:04.695Z",
+      "updatedAt": "2026-10-04T16:44:25.893Z"
+    }
+  }
+}
