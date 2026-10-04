@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 409 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 420 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 630 terms and is 511 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 641 terms and is 518 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>630</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>630</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>641</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>641</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">630</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">641</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -557,6 +557,13 @@ Ask ONE question <span class="fa-gloss-status">candidate, extracted</span>
 <p>One question, answerable by picking. With several decisions open, ask one in full and give a count for the rest. Uses whatever channel the caller is in — in bootstrap, the conversation the person is already in.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/human-agent-discussion.bpmn"><code>bootstrap/processes/human-agent-discussion.bpmn#A_PutQuestion</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_askowner" data-fa-state="extracted" data-fa-gloss="">
+Ask the owner on the PR, both sides quoted <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AskOwner</code></a></p>
+</dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_askperson" data-fa-state="extracted" data-fa-gloss="">
 Ask the person to do what only they can <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -971,6 +978,13 @@ Close issue ONLY on BA authorisation <span class="fa-gloss-status">candidate, ex
 <p>Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-close.bpmn"><code>cat-harness/processes/process/crdm-close.bpmn#A_Close</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_close" data-fa-state="extracted" data-fa-gloss="">
+Close the bean, merge commit as evidence <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Close</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.task_closealert" data-fa-state="extracted" data-fa-gloss="">
 Close the publication manager's alert, if open <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1061,6 +1075,13 @@ Comment on the open issue, naming the step <span class="fa-gloss-status">candida
 <dd>
 <p>Add this failure to the open issue as a comment (which notifies), and refresh the body to the latest state.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/publish-alert.bpmn"><code>cat-harness/processes/sdlc/publish-alert.bpmn#A_Comment</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_comment" data-fa-state="extracted" data-fa-gloss="">
+Comment on the PR once, linking the bean <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One comment per refused PR, edited in place on every later event.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Comment</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_comment" data-fa-state="extracted" data-fa-gloss="">
 Comment ONCE per (PR, head sha) <span class="fa-gloss-status">candidate, extracted</span>
@@ -1472,6 +1493,13 @@ Discard one entry by id <span class="fa-gloss-status">candidate, extracted</span
 <p>Remove one entry by its stable id, with emptyLog(&#123; id }). Logs are the one exception to the never-delete rule because an entry records no decision; the exception covers files that declare folio-log/v1, not the directory.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/activity-log.bpmn"><code>cat-harness/processes/sdlc/activity-log.bpmn#A_EmptyOne</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_dispatch" data-fa-state="extracted" data-fa-gloss="">
+Dispatch one agent, recorded on the bean <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Before the agent starts: the date, why the fail condition fired, the agent's id, its budget. Never while the first writer may still be live. Two failed attempts with the same cause go to the owner instead.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Dispatch</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_adjudication.a_dispatch" data-fa-state="extracted" data-fa-gloss="">
 Dispatch with adjudicator_sees — never the artefact <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1506,6 +1534,13 @@ Draft, review and publish [content-publish] <span class="fa-gloss-status">candid
 <dd>
 <p>See draft-to-publication.bpmn.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-lifecycle.bpmn"><code>folio-assistant-core/processes/content/content-lifecycle.bpmn#CallActivity_Publication</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_drain" data-fa-state="extracted" data-fa-gloss="">
+Drain: land, close or re-target the open PRs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Work the PRs <code>seed:ready</code> named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Drain</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_boardrelocate.a_updatelayer" data-fa-state="extracted" data-fa-gloss="">
 Drop its positions and sweep orphans <span class="fa-gloss-status">candidate, extracted</span>
@@ -1767,6 +1802,13 @@ Find the footprint <span class="fa-gloss-status">candidate, extracted</span>
 <p>handover notes (beans/notes, title 'handover:'), open PRs and branches by session or time window, in-progress beans, workflow instances, last PR and issue comments. REST, one batched pass.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/stalled-agent-triage.bpmn"><code>cat-harness/processes/sdlc/stalled-agent-triage.bpmn#A_Footprint</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_fix" data-fa-state="extracted" data-fa-gloss="">
+Fix the PR, report on the PR <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Claims the refusal bean, brings main in with <code>merge:main</code>, settles what it refused, pushes. Completed with the outcome <code>fail condition</code> by the steward when the condition fires first.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Fix</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mergetrain.task_siblingfix" data-fa-state="extracted" data-fa-gloss="">
 Fix the PR, then re-signal ready <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1859,6 +1901,13 @@ Grant or revoke a permission <span class="fa-gloss-status">candidate, extracted<
 
 <h2 id="letter-H">H</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_handback" data-fa-state="extracted" data-fa-gloss="">
+Hand back, with a fail condition <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The <code>agent-handoff</code> format (#1884): Roles, Report to (the PR), Done when, Fails if. The fail condition: no <code>started</code> line within 4 h, no push within 24 h, the session gone, or <code>blocked</code> on something it cannot settle. One line to the session; the instructions are in the bean.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_HandBack</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mergetrain.call_handback" data-fa-state="extracted" data-fa-gloss="">
 Hand it back [merge-refusal] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2354,6 +2403,13 @@ Merge each member onto the base [merge-base] <span class="fa-gloss-status">candi
 <dd>
 <p><code>merge-base.bpmn</code> once per member, in order, <code>--no-regen</code>; then ONE <code>bun run regen</code> over the result. Tool: <code>merge:train</code>. Always onto the current base, never a cached one (R5).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-train.bpmn"><code>cat-harness/processes/sdlc/merge-train.bpmn#Call_MergeMembers</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_agentfix" data-fa-state="extracted" data-fa-gloss="">
+Merge main in, regenerate, fix mechanical gates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Merge commits only; never a force-push.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_AgentFix</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_igincremental.task_merge" data-fa-state="extracted" data-fa-gloss="">
 Merge restored and rebuilt records <span class="fa-gloss-status">candidate, extracted</span>
@@ -2935,6 +2991,13 @@ Raise the window the reader selected <span class="fa-gloss-status">candidate, ex
 <p>Raise the selected window to the top. Selecting ANY part raises it, not just a title bar. Z-order is session-only by stated default: no z is written to the layout, so a raise is never a file write.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-open-close.bpmn"><code>folio-assistant-core/processes/ui/board-open-close.bpmn#A_Raise</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_retrain" data-fa-state="extracted" data-fa-gloss="">
+Re-enter a train on the new head <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The next train is the verifier: the executor's own log is evidence, not the close.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Retrain</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_preflight" data-fa-state="extracted" data-fa-gloss="">
 Re-evaluate liveness AT REMOVAL TIME <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3221,6 +3284,13 @@ Record the recommendation AND the rejected options <span class="fa-gloss-status"
 <dd>
 <p>The rejected options and why they lost are part of the output, not an appendix. A rejected option with no record is a dead end nobody marked, and the next agent walks into it — the same argument <code>bean-coordination</code> makes for <code>scrapped</code> over deleted. In a bean context the form is MADR's. Which methodology was followed is named here, so a reader can check the method rather than take the conclusion.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/options-analysis.bpmn"><code>cat-harness/processes/sdlc/options-analysis.bpmn#A_Record</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_record" data-fa-state="extracted" data-fa-gloss="">
+Record the refusal on the bean <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The PR, the head sha the train used, the train and its other members, each refused path or failing gate and why. A repeat refusal goes under <code>## Attempts</code> with <code>--body-append</code>.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Record</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_recordstep" data-fa-state="extracted" data-fa-gloss="">
 Record the step in its state <span class="fa-gloss-status">candidate, extracted</span>
@@ -4002,6 +4072,13 @@ Scope the sample: which items, which store, and is it PERMANENT? <span class="fa
 <dd>
 <p>Three answers, recorded before anything is fetched. WHICH ITEMS: named by the source's identifiers, or by a subset strategy its descriptor supports. WHICH STORE: the knowledge graph or other structured store the import is tested against. PERMANENT OR TRIAL: a permanent sample lands in library/ and is refreshed; a trial lands in fsh-guts/ and is not. The purpose materialize-remote asks for (working or archival) is asked there, not here.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/sample-import.bpmn"><code>cat-harness/processes/library/sample-import.bpmn#Task_Scope</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_scrap" data-fa-state="extracted" data-fa-gloss="">
+Scrap the bean, with the reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The agent's own <code>beans update --status scrapped</code>; never deleted.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>cat-harness/processes/sdlc/merge-refusal.bpmn#Task_Scrap</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_beanlifecycle.task_scrap" data-fa-state="extracted" data-fa-gloss="">
 Scrap with reasons NEVER delete <span class="fa-gloss-status">candidate, extracted</span>

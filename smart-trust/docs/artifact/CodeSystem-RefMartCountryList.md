@@ -37,3 +37,6 @@ CodeSystem for WHO Refmart Country and Jurisidiction List available at https://x
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
+
+<footer id="ig-footer" data-prev="CodeSystem-Participants.html" data-next="CodeSystem-WHORegionalOffices.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

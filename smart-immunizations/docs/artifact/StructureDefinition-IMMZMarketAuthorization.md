@@ -37,3 +37,6 @@ Name of the market authorization holder of the vaccine received. If market autho
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="StructureDefinition-IMMZLiveVaccine.html" data-next="StructureDefinition-IMMZOtherMedicalEvent.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -134,15 +134,19 @@ export function listAst(ast: Ast): AstListing {
  * under `input/`. Files in byte order of their relative path; each
  * contributes its path, a NUL, its bytes, a NUL. Must equal the Java
  * `InputDigest` byte for byte; see the golden vector in the tests.
+ *
+ * Inside a git work tree the file set is what git counts as the tree:
+ * tracked files plus untracked ones that are not ignored. Without that, a
+ * gitignored `.DS_Store` or Publisher scratch file under `input/` makes the
+ * digest of a working checkout differ from a clean clone of the same commit,
+ * and a seeded cache can never verify anywhere else (bean wnhh, 2026-10-02:
+ * smart-trust recorded `b2bbbfc4…`, a clean clone computes `c1023d82…`).
+ * Outside a work tree every file is hashed, as before. The Java
+ * `InputDigest` must apply the same filter.
  */
 export function inputDigest(igRoot: string): string {
-  const files: string[] = [];
-  for (const top of ["sushi-config.yaml", "ig.ini", "input"]) {
-    const p = join(igRoot, top);
-    if (!existsSync(p)) continue;
-    if (statSync(p).isFile()) files.push(p);
-    else walk(p, files);
-  }
+  const tops = ["sushi-config.yaml", "ig.ini", "input"];
+  const files = gitTreeFiles(igRoot, tops) ?? walkTops(igRoot, tops);
   const rel = files.map((f) => relative(igRoot, f).split("\\").join("/"));
   const order = rel.map((r, i) => [Buffer.from(r, "utf-8"), i] as const).sort((a, b) => Buffer.compare(a[0], b[0]));
   const h = createHash("sha256");
@@ -154,6 +158,38 @@ export function inputDigest(igRoot: string): string {
     h.update(NUL);
   }
   return h.digest("hex");
+}
+
+function walkTops(igRoot: string, tops: string[]): string[] {
+  const files: string[] = [];
+  for (const top of tops) {
+    const p = join(igRoot, top);
+    if (!existsSync(p)) continue;
+    if (statSync(p).isFile()) files.push(p);
+    else walk(p, files);
+  }
+  return files;
+}
+
+/** The files under `tops` git counts as the work tree, or null outside one. */
+function gitTreeFiles(igRoot: string, tops: string[]): string[] | null {
+  const inside = spawnSync("git", ["rev-parse", "--is-inside-work-tree"], { cwd: igRoot, encoding: "utf-8" });
+  if (inside.status !== 0 || inside.stdout.trim() !== "true") return null;
+  const ls = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...tops], {
+    cwd: igRoot,
+    encoding: "utf-8",
+  });
+  if (ls.status !== 0) return null;
+  const seen = new Set<string>();
+  const files: string[] = [];
+  for (const r of ls.stdout.split("\0")) {
+    if (!r || seen.has(r)) continue;
+    seen.add(r);
+    const p = join(igRoot, r);
+    // A tracked file deleted in the work tree is not an input any more.
+    if (existsSync(p) && statSync(p).isFile()) files.push(p);
+  }
+  return files;
 }
 
 function walk(dir: string, out: string[]): void {
@@ -171,7 +207,7 @@ function walk(dir: string, out: string[]): void {
  * A compiled copy can never discharge `sourceLoss`: it is derived, not the
  * source.
  */
-const AST_GATES = {
+export const AST_GATES = {
   size: { verdict: "unknown", basis: "ig-ast validity does not measure the AST's size" },
   restrictions: { verdict: "unknown", basis: "derived from the IG's own source; inherits its terms, not assessed here" },
   copyright: { verdict: "unknown", basis: "derived from the IG's own source; inherits its terms, not assessed here" },

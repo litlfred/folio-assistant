@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DAK.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-DAK.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
+
+<footer id="ig-footer" data-prev="StructureDefinition-CoreDataElementSource.html" data-next="StructureDefinition-DecisionSupportLogic.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T18:53:17Z
-updated_at: 2026-10-01T12:50:27Z
+updated_at: 2026-10-03T18:39:06Z
 parent: folio-assistant-2upx
 ---
 
@@ -66,3 +66,9 @@ _2026-10-01T12:36:11Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — push
 - The last lines now carry the denominator: 'NOT covered: N verify/write pair(s) outside this run … bun run regen --all asks them too: <names>' (today: render:bpmn:check, bat:sync:check).
 - Tests: every UNGATED_INPUTS pair names real scripts; none is a gate (fails the day one becomes one); asked-first settles a dependent in one pass. regen-after-merge.test.ts 23 pass.
 - First real run: 80 current, 3 regenerated (schema:viz stale on main, and two checks that read it).
+
+
+
+## Follow-up 2026-10-03 — uploads:viz was the third ungated input
+
+`uploads:viz` is ungated for library:viz's reason, but its pages carry the viewer rail and `check:nav-names:check` (gated) reads railed pages. merge-main refused #1804 and #1958 with check:nav-names 'STILL fails … a real defect'; `bun run uploads:viz` alone turned it green. Added to `UNGATED_INPUTS` in regen-after-merge.ts.

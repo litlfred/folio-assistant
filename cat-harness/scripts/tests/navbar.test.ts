@@ -40,6 +40,7 @@ import {
 import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
+import { kindTitle } from "../lib/nav-label.js";
 
 // Typed WITH its middle region, because this fixture is a mounted page's
 // navbar and a mounted page always has one. `graphs` became optional for the
@@ -398,6 +399,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
   // cannot see the producer cannot see this defect.
   const kinds = (linked: Record<string, string> = {}) =>
     declaredGraphs("who-iris", new Map(Object.entries(linked))).map((i) => i.label);
+  // Rows say the kind's DISPLAY name since bean `ob3m` finding 6 ("One name
+  // everywhere"), so a kind word is compared through the same function.
+  const K = (kind: string): string => kindTitle(kind);
 
   it("lists every kind the instance declares, not only the published ones", () => {
     // SEVEN declared, and the seventh arrived by this test doing its job.
@@ -415,15 +419,18 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // `bjzs`). The list grew because the instance did, exactly as it did for
     // `code`; pinning it at seven would make the assertion a statement about
     // 2026-09-26 rather than about the declaration.
-    // NINE since 2026-10-01: `schemas` joined when who-iris took its own
+    // ELEVEN since 2026-10-01: `schemas` joined when who-iris took its own
     // source descriptor (`sources/`) and generated lookup (`id-lookup/`, kind
-    // `code`) from large-datasets (bean `j7ql`). Same reason as both above.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "qa", "schemas", "skills", "themes", "uploads"]);
+    // `code`) from large-datasets (bean `j7ql`); `glossary` and `voices` joined
+    // when the WHO style guide was folded into who-iris as a subgraph (bean
+    // `qsx4`) — the voices declared from within `skills/skills.json`, the
+    // glossary in who-iris.json. Same reason as both above.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "uploads", "voices"].map(K));
   });
 
   it("links exactly the kinds it was told are published", () => {
     const got = declaredGraphs("who-iris", new Map([["docs", "../docs/who-iris/"]]));
-    expect(got.find((i) => i.label === "docs")?.href).toBe("../docs/who-iris/");
+    expect(got.find((i) => i.label === K("docs"))?.href).toBe("../docs/who-iris/");
     // ...and everything else carries no href, which the renderer draws as a
     // non-link. `harness-tiles`: declared and not rendered is a GAP.
     expect(got.filter((i) => i.href === undefined).map((i) => i.label)).toEqual([
@@ -431,6 +438,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       // `code` is declared and publishes no page — which is exactly the state
       // this assertion exists to keep visible, rather than a gap to hide.
       "code",
+      // `glossary` and `voices` arrived with the style guide (bean `qsx4`); no
+      // page is passed in here, so both are declared-and-unlinked.
+      "glossary",
       "library",
       // `qa` is declared and publishes no page, like `code` above: the audit
       // writes sidecars, and the viewer for them is the QA index rather than a
@@ -442,7 +452,8 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "skills",
       "themes",
       "uploads",
-    ]);
+      "voices",
+    ].map(K));
   });
 
   it("is sorted, so the order is a function of the declaration", () => {
@@ -458,14 +469,14 @@ describe("every declared graph reaches the navbar, linked or not", () => {
         ["themes", { note: "staging only" }],
       ]),
     );
-    expect(got.find((i) => i.label === "catalogue")?.note).toBe("no viewer yet");
+    expect(got.find((i) => i.label === K("catalogue"))?.note).toBe("no viewer yet");
     // TWO ROWS, TWO REASONS. One wording for every inert row is the defect
     // this replaced — `title="declared, with no published viewer"` was wrong
     // for the staging-only and render-exempt cases, which are not gaps.
-    expect(got.find((i) => i.label === "themes")?.note).toBe("staging only");
+    expect(got.find((i) => i.label === K("themes"))?.note).toBe("staging only");
     // A kind the generator said nothing about renders as it always did: grey,
     // and making no claim about why. The honest third state.
-    expect(got.find((i) => i.label === "skills")?.note).toBeUndefined();
+    expect(got.find((i) => i.label === K("skills"))?.note).toBeUndefined();
   });
 
   it("never labels a row that OPENS, even if a stale reason is passed for it", () => {
@@ -477,7 +488,7 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       new Map([["docs", "../docs/who-iris/"]]),
       new Map([["docs", { note: "no viewer yet" }]]),
     );
-    expect(got.find((i) => i.label === "docs")?.note).toBeUndefined();
+    expect(got.find((i) => i.label === K("docs"))?.note).toBeUndefined();
   });
 
   it("links a kind whose viewer the HANDLER published — `pk2s`", () => {
@@ -494,9 +505,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       new Map([["docs", "../docs/who-iris/"]]),
       new Map([["catalogue", { href: "../cat-harness/catalogue/who-iris/" }]]),
     );
-    expect(got.find((i) => i.label === "catalogue")?.href).toBe("../cat-harness/catalogue/who-iris/");
+    expect(got.find((i) => i.label === K("catalogue"))?.href).toBe("../cat-harness/catalogue/who-iris/");
     // And it is a LINK, so it owes no explanation.
-    expect(got.find((i) => i.label === "catalogue")?.note).toBeUndefined();
+    expect(got.find((i) => i.label === K("catalogue"))?.note).toBeUndefined();
   });
 
   it("the MOUNT TABLE wins where it has an answer — the owner's order, not a tie-break", () => {
@@ -509,7 +520,7 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       new Map([["library", "../who-iris/"]]),
       new Map([["library", { href: "../cat-harness/library/who-iris/" }]]),
     );
-    expect(got.find((i) => i.label === "library")?.href).toBe("../who-iris/");
+    expect(got.find((i) => i.label === K("library"))?.href).toBe("../who-iris/");
   });
 
   it("returns EMPTY for an instance that declares nothing readable", () => {
@@ -1041,8 +1052,9 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
   });
 
   it("docs and library carry a drawn glyph and distinct hues, not initials", () => {
-    const docs = rows.find((r) => r.label === "docs")!;
-    const library = rows.find((r) => r.label === "library")!;
+    // The rows say the kind's display name since bean `ob3m` finding 6.
+    const docs = rows.find((r) => r.label === "Docs")!;
+    const library = rows.find((r) => r.label === "Library")!;
     expect(docs.glyphPath).toBeDefined();
     expect(library.glyphPath).toBeDefined();
     expect(docs.icon).toBeUndefined();
@@ -1059,8 +1071,8 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
       // same text as its tooltip.
       expect(html).toContain(`${r.label}<span class="fa-nav-sr"> — ${r.description!.replace(/&/g, "&amp;")}`);
     }
-    expect(rows.find((r) => r.label === "library")!.description).toBe("L1 source content, who-iris");
-    expect(html).toContain('title="library — L1 source content, who-iris"');
+    expect(rows.find((r) => r.label === "Library")!.description).toBe("L1 source content, who-iris");
+    expect(html).toContain('title="Library — L1 source content, who-iris"');
   });
 
   it("the glyph is an SVG hidden from assistive technology — the words are the name", () => {

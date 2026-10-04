@@ -94,7 +94,7 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.ts";
-import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -367,14 +367,14 @@ if (import.meta.main) {
     { label: "Queues", id: "body" },
   ];
   const subjects = [...new Set(g.queues.map((q) => q.instance))].sort();
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "uploads")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   // One page per SUBJECT — read from the QUEUES rather than from the declared
   // directory list, so a declared-but-empty uploads directory gets no page
   // claiming to show it. `dh4f`, one layer along.
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, "library");
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "uploads")) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
   if (!check) {

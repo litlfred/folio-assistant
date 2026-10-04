@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 210,
+      "count": 211,
       "unit": "modules"
     }
   },
@@ -642,6 +642,14 @@
       "graphNode": "schema",
       "summary": "Resolving a graph kind's **validator** — the one parameter that turns",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/landing-instance.test.ts",
+      "instance": "cat-harness",
+      "name": "landing-instance.test",
+      "graphNode": "undeclared",
+      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
@@ -3875,6 +3883,176 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#Count",
+      "name": "Count",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-scalar",
+      "doc": "A non-negative whole number of beans.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "name": "MilestonePlanSchema",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-object",
+      "doc": "The milestone rollup as a whole, plus what the per-milestone shares omit.",
+      "fields": [
+        {
+          "name": "milestones",
+          "type": "z.array(MilestoneRollupSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "orphanOpen",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Open beans with no milestone anywhere above them."
+        },
+        {
+          "name": "openTotal",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "coveredOpen",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "SUMMED from the closures, never `openTotal - orphanOpen`."
+        },
+        {
+          "name": "duplicateIds",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Bean ids held by more than one file. A store defect, reported."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bean-graph.ts#Count",
+        "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "name": "MilestoneRollupSchema",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-object",
+      "doc": "One milestone, rolled up over the closure of beans beneath it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repository-relative path of the milestone's bean file."
+        },
+        {
+          "name": "status",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The milestone's OWN status — not derived from its subtree."
+        },
+        {
+          "name": "epics",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Direct children typed `epic`."
+        },
+        {
+          "name": "total",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Transitive descendants, excluding the milestone itself."
+        },
+        {
+          "name": "closed",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "open",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inProgress",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "todo",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "draft",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "unclassified",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "In neither status set — reported alone, folded into neither figure."
+        },
+        {
+          "name": "share",
+          "type": "z.number().min(0).max(1).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "`closed / (closed + open)`; `null` when nothing is classified, which is"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bean-graph.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -8642,7 +8820,7 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "What a tile calls it. Absent falls back to the directory's id."
+          "doc": "What a tile calls it. Absent, the tile takes the display name of the"
         },
         {
           "name": "surfaces",
@@ -17343,6 +17521,13 @@
           "array": false
         },
         {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "What every navigation surface CALLS a destination of this kind: the"
+        },
+        {
           "name": "schema",
           "type": "string",
           "optional": true,
@@ -17795,6 +17980,13 @@
           "doc": "Cross-folio dependencies."
         },
         {
+          "name": "site",
+          "type": "HarnessSite",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance asks of the published SITE — today only whether it is"
+        },
+        {
           "name": "subgraphSources",
           "type": "SubgraphSourceOverrides",
           "optional": true,
@@ -17806,6 +17998,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependencies",
+        "cat-harness/schemas/harness-config.ts#HarnessSite",
         "cat-harness/schemas/harness-config.ts#TranslationConfig",
         "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides"
       ],
@@ -17917,6 +18110,12 @@
           "array": false
         },
         {
+          "name": "site",
+          "type": "HarnessSiteSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "subgraphSources",
           "type": "SubgraphSourceOverridesSchema.optional()",
           "optional": true,
@@ -17929,6 +18128,7 @@
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependenciesSchema",
         "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
+        "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
         "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
         "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema"
       ],
@@ -17961,6 +18161,42 @@
         {
           "name": "interaction",
           "type": "z.string().default(\"interaction/interaction.json\")",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSite",
+      "name": "HarnessSite",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "name": "HarnessSiteSchema",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "zod-object",
+      "doc": "`site` in `<name>.config.json` — what an instantiated harness asks of the",
+      "fields": [
+        {
+          "name": "landing",
+          "type": "z.boolean().optional()",
           "optional": true,
           "array": false
         }
@@ -18024,6 +18260,20 @@
       "module": "cat-harness/schemas/harness-config.ts",
       "kind": "type-alias",
       "doc": "Something wrong with an instance's dependency graph.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#LandingInstance",
+      "name": "LandingInstance",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Which harness the published site puts at `/`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -27925,11 +28175,19 @@
           "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: BeanIdSchema…",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "plan",
+          "type": "MilestonePlanSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The milestone rollup the board renders. OPTIONAL, because an index"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
         "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
         "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
@@ -28366,7 +28624,7 @@
         },
         {
           "name": "refScan",
-          "type": "z.object({ filesRead: Count, unreadable: StringList }).strict().optional()",
+          "type": "z.object({ unreadable: StringList }).strict().optional()",
           "optional": true,
           "array": false
         }
@@ -36759,6 +37017,28 @@
       "fields": [],
       "extendsNames": [],
       "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#IgCacheActionSchema",
+      "name": "IgCacheActionSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "status",
+        "restore",
+        "seed",
+        "contribute",
+        "verify",
+        "list",
+        "doctor",
+        "An ig-cache verb: restore AST, seed it, or diagnose."
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -51158,6 +51438,110 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "coveredOpen",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "duplicateIds",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "openTotal",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "orphanOpen",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "via": "milestones",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "closed",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "draft",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "epics",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "inProgress",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "open",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "todo",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "total",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "unclassified",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema",
       "to": "cat-harness/schemas/bean-note.ts#BeanId",
       "via": "bean",
@@ -53431,6 +53815,14 @@
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSite",
+      "via": "site",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfig",
       "via": "translation",
       "kind": "field",
@@ -53473,6 +53865,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
       "to": "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
       "via": "harness",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "via": "site",
       "kind": "field",
       "optional": true,
       "array": false
@@ -54895,6 +55295,14 @@
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "via": "plan",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "via": "items",
       "kind": "field",
@@ -55052,14 +55460,6 @@
       "kind": "field",
       "optional": false,
       "array": true
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "refScan",
-      "kind": "field",
-      "optional": true,
-      "array": false
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",

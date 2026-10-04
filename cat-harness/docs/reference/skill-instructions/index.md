@@ -184,6 +184,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Compiled Artefact Cache](compiled-artefact-cache.html) | `compiled-artefact-cache` | — | This skill documents the generalisable pattern for caching compiled artefacts (such as Lean caches a |
 | [Decision methodology selector](decision-methodology-selector.html) | `decision-methodology-selector` | — | **Input**: a decision context — what is being decided, how many alternatives, |
 | [Adopting a methodology, and choosing between them](methodology-adoption.html) | `methodology-adoption` | — | **A methodology is somebody else's work, adopted whole.** It is not a house |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
@@ -416,7 +417,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
 | [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
-| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | cat-harness/scripts/lake-cache.sh contribute   # give the build back |
+| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | > This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/p |
 | [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
 | [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | A proven workaround for one specific failure: `lake exe cache get` returning |
 | [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |
