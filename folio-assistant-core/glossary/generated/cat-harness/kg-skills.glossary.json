@@ -30,6 +30,14 @@
       "status": "candidate"
     },
     {
+      "id": "agent-handoff",
+      "prefLabel": "agent-handoff",
+      "definition": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+      "notation": "agent-handoff",
+      "source": "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md",
+      "status": "candidate"
+    },
+    {
       "id": "agent-memory",
       "prefLabel": "agent-memory",
       "definition": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
@@ -178,6 +186,14 @@
       "definition": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
       "notation": "bpmn-processes",
       "source": "cat-harness/skills/process/workflow/bpmn-processes.md",
+      "status": "candidate"
+    },
+    {
+      "id": "branch-archaeology",
+      "prefLabel": "branch-archaeology",
+      "definition": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+      "notation": "branch-archaeology",
+      "source": "cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md",
       "status": "candidate"
     },
     {
@@ -1759,6 +1775,14 @@
       "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
       "notation": "wireframe-design-review",
       "source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "work-plan-restructure",
+      "prefLabel": "work-plan-restructure",
+      "definition": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "notation": "work-plan-restructure",
+      "source": "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md",
       "status": "candidate"
     },
     {

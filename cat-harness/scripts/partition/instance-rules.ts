@@ -348,6 +348,11 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // The ONE conversion from a harness row's resolved mark to that
+      // navbar's fields (bean `2vpn`). HARNESS beside `navbar.ts`: every
+      // surface that draws a harness's mark calls it, so a folio owning it
+      // would let one instance decide how every other instance's mark is read.
+      "scripts/lib/harness-mark.ts",
       // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the

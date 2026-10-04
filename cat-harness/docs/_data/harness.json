@@ -106,7 +106,6 @@
     "translation-sources",
     "uml",
     "uploads",
-    "validators",
     "vocab-mapping",
     "waiver"
   ],
@@ -141,7 +140,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 831,
+      "count": 804,
       "unit": "beans"
     },
     {
@@ -300,7 +299,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 216,
+      "count": 210,
       "unit": "modules"
     },
     {
@@ -684,17 +683,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 5
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 2
         }
       ],
       "visualisations": [
@@ -716,17 +715,6 @@
           "sameAs": "smart-trust"
         },
         {
-          "kind": "ig-ast",
-          "note": "no viewer yet",
-          "label": "IG AST"
-        },
-        {
-          "kind": "ig-pages",
-          "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/",
-          "label": "Docs",
-          "sameAs": "docs"
-        },
-        {
           "kind": "openapi",
           "readOnly": true,
           "note": "no viewer yet",
@@ -739,14 +727,6 @@
         }
       ],
       "subgraphs": [
-        {
-          "id": "smart-trust-ast",
-          "kinds": [
-            "ig-ast"
-          ],
-          "where": "local",
-          "path": "smart-trust/fhir-ast/"
-        },
         {
           "id": "smart-trust-artifact-index",
           "kinds": [
@@ -766,8 +746,7 @@
         {
           "id": "smart-trust-docs",
           "kinds": [
-            "docs",
-            "ig-pages"
+            "docs"
           ],
           "where": "local",
           "path": "smart-trust/docs/"
@@ -790,7 +769,7 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 4 graph(s) with no published viewer — code, ig-ast, openapi, qa. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 3 graph(s) with no published viewer — code, openapi, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 2 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index, openapi. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -814,10 +793,14 @@
         "smart-ig"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M18 3l3 3M16 5l3 3M17.5 6.5L9 15l-3 1 1-3 8.5-8.5M10 10l4 4M6 18l-3 3",
+        "title": "a syringe — the immunization guide"
+      },
+      "tone": 352,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "a syringe — the immunization guide",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/smart-immunizations/",
       "hrefKind": "folio",
@@ -830,12 +813,12 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 3
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 2
         }
       ],
       "visualisations": [
@@ -852,12 +835,6 @@
           "sameAs": "smart-immunizations"
         },
         {
-          "kind": "ig-pages",
-          "path": "/cat-harness/auto-docs/index/docs/smart-immunizations-docs/",
-          "label": "Docs",
-          "sameAs": "docs"
-        },
-        {
           "kind": "qa",
           "note": "no viewer yet",
           "label": "QA"
@@ -865,21 +842,20 @@
       ],
       "subgraphs": [
         {
+          "id": "smart-immunizations-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "smart-immunizations/docs/"
+        },
+        {
           "id": "smart-immunizations-artifact-index",
           "kinds": [
             "fhir-artifact-index"
           ],
           "where": "local",
           "path": "smart-immunizations/fhir-artifact-index/"
-        },
-        {
-          "id": "smart-immunizations-docs",
-          "kinds": [
-            "docs",
-            "ig-pages"
-          ],
-          "where": "local",
-          "path": "smart-immunizations/docs/"
         },
         {
           "id": "qa",
@@ -892,8 +868,7 @@
       ],
       "findings": [
         "smart-immunizations: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
-        "smart-immunizations: no avatar declared for this instance — showing the generic mark."
+        "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
       ],
       "navbarIcons": [
         "close",
@@ -915,10 +890,14 @@
         "smart-base"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M6 3h9l3 3v15H6zM15 3v3h3M9 11h6M9 15h6",
+        "title": "a published guide page — the IG built on the SMART base"
+      },
+      "tone": 229,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "a published guide page — the IG built on the SMART base",
+      "genericAvatar": false,
       "instantiated": false,
       "stats": [
         {
@@ -955,8 +934,7 @@
         }
       ],
       "findings": [
-        "smart-ig: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "smart-ig: no avatar declared for this instance — showing the generic mark."
+        "smart-ig: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -978,6 +956,10 @@
         "fhir-harness"
       ],
       "icon": null,
+      "mark": {
+        "glyph": "M3 18h18M6 14h12M9 10h6M11 6h2",
+        "title": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue"
+      },
       "tone": 199,
       "toneFrom": "avatar",
       "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
@@ -994,12 +976,12 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 12
+          "value": 11
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 8
+          "value": 7
         }
       ],
       "visualisations": [
@@ -1024,12 +1006,6 @@
           "readOnly": true,
           "label": "SMART Base",
           "sameAs": "smart-base"
-        },
-        {
-          "kind": "ig-pages",
-          "path": "/cat-harness/auto-docs/index/docs/smart-base-docs/",
-          "label": "Docs",
-          "sameAs": "docs"
         },
         {
           "kind": "library",
@@ -1068,6 +1044,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "smart-base-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "smart-base/docs/"
+        },
         {
           "id": "library",
           "kinds": [
@@ -1133,15 +1117,6 @@
           "path": "smart-base/themes/"
         },
         {
-          "id": "smart-base-docs",
-          "kinds": [
-            "docs",
-            "ig-pages"
-          ],
-          "where": "local",
-          "path": "smart-base/docs/"
-        },
-        {
           "id": "smart-base-document-kinds",
           "kinds": [
             "document-kinds"
@@ -1198,7 +1173,32 @@
       "needs": [
         "folio-assistant-core"
       ],
-      "icon": null,
+      "icon": {
+        "src": "/docs/who-iris/assets/img/who-emblem.svg",
+        "title": "WHO emblem",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "w": 0.3064,
+          "h": 1
+        }
+      },
+      "mark": {
+        "src": "/docs/who-iris/assets/img/who-emblem.svg",
+        "title": "WHO emblem",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "w": 0.3064,
+          "h": 1
+        },
+        "crop": {
+          "width": 326.3708,
+          "height": 100,
+          "left": 0,
+          "top": 0
+        }
+      },
       "tone": 198,
       "toneFrom": "theme",
       "reads": "an open book — a repository of published documents, in WHO blue",
@@ -1412,10 +1412,14 @@
         "folio-assistant-core"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3M7 15h10",
+        "title": "a laboratory flask — folios that are scientific papers"
+      },
+      "tone": 56,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "a laboratory flask — folios that are scientific papers",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/cat-harness/library/folio-assistant-sci/",
       "hrefKind": "viewer",
@@ -1428,12 +1432,12 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 10
+          "value": 9
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 6
         }
       ],
       "visualisations": [
@@ -1446,11 +1450,6 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1479,7 +1478,8 @@
         },
         {
           "kind": "skills",
-          "note": "no viewer yet",
+          "path": "/cat-harness/auto-docs/index/skills/folio-assistant-sci-skills/",
+          "readOnly": false,
           "label": "Skills"
         },
         {
@@ -1489,14 +1489,6 @@
         }
       ],
       "subgraphs": [
-        {
-          "id": "folio-assistant-sci-kinds",
-          "kinds": [
-            "kinds"
-          ],
-          "where": "local",
-          "path": "folio-assistant-sci/kinds/"
-        },
         {
           "id": "library",
           "kinds": [
@@ -1512,6 +1504,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-sci/methodologies/"
+        },
+        {
+          "id": "skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/skills/"
         },
         {
           "id": "sci-adapters",
@@ -1579,8 +1579,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 5 graph(s) with no published viewer — attestations, code, kinds, qa, skills. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
+        "folio-assistant-sci: declares 3 graph(s) with no published viewer — attestations, code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1603,10 +1602,14 @@
         "folio-assistant-core"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M12 3c1 4 5 6 5 11a5 5 0 01-10 0c0-3 2-4 2-7 1 1 2 2 3 4 0-3 0-5 0-8z",
+        "title": "a flame — the FHIR implementation-guide harness"
+      },
+      "tone": 10,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "a flame — the FHIR implementation-guide harness",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/cat-harness/library/fhir-harness/",
       "hrefKind": "viewer",
@@ -1614,12 +1617,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 8
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 6
         },
         {
           "id": "views",
@@ -1632,11 +1635,6 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1662,30 +1660,9 @@
           "kind": "tools",
           "note": "no viewer yet",
           "label": "Tools"
-        },
-        {
-          "kind": "validators",
-          "note": "no viewer yet",
-          "label": "Validators"
         }
       ],
       "subgraphs": [
-        {
-          "id": "fhir-harness-validators",
-          "kinds": [
-            "validators"
-          ],
-          "where": "local",
-          "path": "fhir-harness/validators/"
-        },
-        {
-          "id": "fhir-harness-kinds",
-          "kinds": [
-            "kinds"
-          ],
-          "where": "local",
-          "path": "fhir-harness/kinds/"
-        },
         {
           "id": "library",
           "kinds": [
@@ -1736,9 +1713,8 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 5 graph(s) with no published viewer — code, kinds, qa, tools, validators. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — code, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
-        "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1805,12 +1781,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 15
+          "value": 13
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 14
+          "value": 12
         },
         {
           "id": "views",
@@ -1839,11 +1815,6 @@
           "kind": "glossary",
           "path": "/glossary/",
           "label": "Glossary"
-        },
-        {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1881,33 +1852,12 @@
           "label": "Tools"
         },
         {
-          "kind": "validators",
-          "note": "no viewer yet",
-          "label": "Validators"
-        },
-        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-core/",
           "label": "Voices"
         }
       ],
       "subgraphs": [
-        {
-          "id": "folio-assistant-core-validators",
-          "kinds": [
-            "validators"
-          ],
-          "where": "local",
-          "path": "folio-assistant-core/validators/"
-        },
-        {
-          "id": "folio-assistant-core-kinds",
-          "kinds": [
-            "kinds"
-          ],
-          "where": "local",
-          "path": "folio-assistant-core/kinds/"
-        },
         {
           "id": "core-schemas",
           "kinds": [
@@ -2015,7 +1965,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, kinds, qa, tools, validators. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 4 graph(s) with no published viewer — code, folio, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2038,10 +1988,14 @@
         "cat-harness"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
+        "title": "braces — an API described as data"
+      },
+      "tone": 76,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "braces — an API described as data",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/cat-harness/schemas/cat-openapi/",
       "hrefKind": "viewer",
@@ -2049,12 +2003,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 2
         },
         {
           "id": "views",
@@ -2069,38 +2023,12 @@
           "label": "Code"
         },
         {
-          "kind": "kinds",
-          "note": "no viewer yet",
-          "label": "Graph kinds"
-        },
-        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/cat-openapi/",
           "label": "Schemas"
-        },
-        {
-          "kind": "validators",
-          "note": "no viewer yet",
-          "label": "Validators"
         }
       ],
       "subgraphs": [
-        {
-          "id": "cat-openapi-validators",
-          "kinds": [
-            "validators"
-          ],
-          "where": "local",
-          "path": "cat-openapi/validators/"
-        },
-        {
-          "id": "cat-openapi-kinds",
-          "kinds": [
-            "kinds"
-          ],
-          "where": "local",
-          "path": "cat-openapi/kinds/"
-        },
         {
           "id": "cat-openapi-schemas",
           "kinds": [
@@ -2119,8 +2047,7 @@
         }
       ],
       "findings": [
-        "cat-openapi: declares 3 graph(s) with no published viewer — code, kinds, validators. Declared and not rendered is a gap, not a dead link.",
-        "cat-openapi: no avatar declared for this instance — showing the generic mark.",
+        "cat-openapi: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
         "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2144,10 +2071,14 @@
         "bootstrap-tools"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M14.5 5.5a4 4 0 005 5L11 19a2.1 2.1 0 01-3-3l8.5-8.5a4 4 0 01-2-2zM8.5 16.5h.01",
+        "title": "a wrench, in cat-harness's colour — the code that implements its tools"
+      },
+      "tone": 268,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "a wrench, in cat-harness's colour — the code that implements its tools",
+      "genericAvatar": false,
       "instantiated": false,
       "stats": [
         {
@@ -2224,8 +2155,7 @@
         }
       ],
       "findings": [
-        "cat-harness-tools: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
-        "cat-harness-tools: no avatar declared for this instance — showing the generic mark."
+        "cat-harness-tools: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2301,12 +2231,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 34
+          "value": 33
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 28
+          "value": 27
         },
         {
           "id": "views",
@@ -2446,11 +2376,6 @@
           "label": "Uploads"
         },
         {
-          "kind": "validators",
-          "note": "no viewer yet",
-          "label": "Validators"
-        },
-        {
           "kind": "vocab-mapping",
           "note": "no viewer yet",
           "label": "Vocab mapping"
@@ -2462,14 +2387,6 @@
         }
       ],
       "subgraphs": [
-        {
-          "id": "cat-harness-validators",
-          "kinds": [
-            "validators"
-          ],
-          "where": "local",
-          "path": "cat-harness/validators/"
-        },
         {
           "id": "tools",
           "kinds": [
@@ -2737,7 +2654,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 9 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2759,10 +2676,14 @@
         "bootstrap"
       ],
       "icon": null,
-      "tone": 0,
+      "mark": {
+        "glyph": "M12 3v9M8 12h8l-1 5a3 3 0 01-6 0z",
+        "title": "a trowel, in bootstrap's colour — the code that implements bootstrap's tools"
+      },
+      "tone": 96,
       "toneFrom": "avatar",
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "reads": "a trowel, in bootstrap's colour — the code that implements bootstrap's tools",
+      "genericAvatar": false,
       "instantiated": false,
       "href": "/processes/",
       "hrefKind": "viewer",
@@ -2854,7 +2775,6 @@
       ],
       "findings": [
         "bootstrap-tools: declares 4 graph(s) with no published viewer — code, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
         "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -3158,11 +3078,6 @@
         "path": "/uploads/"
       },
       {
-        "kind": "validators",
-        "label": "Validators",
-        "note": "no viewer yet"
-      },
-      {
         "kind": "vocab-mapping",
         "label": "Vocab mapping",
         "note": "no viewer yet"
@@ -3206,11 +3121,6 @@
           "kind": "docs",
           "label": "Docs",
           "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/"
-        },
-        {
-          "kind": "ig-ast",
-          "label": "IG AST",
-          "note": "no viewer yet"
         },
         {
           "kind": "openapi",
@@ -3854,7 +3764,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: smart-trust-ast, smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart…"
+            "summary": "5: smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart-trust-scripts, qa"
           },
           {
             "key": "stickies",
@@ -3900,7 +3810,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: smart-immunizations-artifact-index, smart-immunizations-docs, qa"
+            "summary": "3: smart-immunizations-docs, smart-immunizations-artifact-index, qa"
           },
           {
             "key": "needs",
@@ -3996,7 +3906,7 @@
           },
           {
             "key": "directories",
-            "summary": "12: library, methodologies, processes, smart-base-house-processes, smart-base-artifact-index,…"
+            "summary": "12: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
           },
           {
             "key": "needs",
@@ -4035,6 +3945,10 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "icon",
+            "summary": "who-emblem"
           },
           {
             "key": "repository",
@@ -4096,7 +4010,7 @@
           },
           {
             "key": "directories",
-            "summary": "8: folio-assistant-sci-kinds, library, sci-methodologies, sci-adapters, sci-sources, sci-pro…"
+            "summary": "8: library, sci-methodologies, skills, sci-adapters, sci-sources, sci-processes, qa, attesta…"
           },
           {
             "key": "needs",
@@ -4150,7 +4064,7 @@
           },
           {
             "key": "directories",
-            "summary": "8: fhir-harness-validators, fhir-harness-kinds, library, fhir-ig-skills, fhir-ig-tools, fhir…"
+            "summary": "6: library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, fhir-harness-processes, qa"
           },
           {
             "key": "needs",
@@ -4200,7 +4114,7 @@
           },
           {
             "key": "directories",
-            "summary": "14: folio-assistant-core-validators, folio-assistant-core-kinds, core-schemas, folios, glossa…"
+            "summary": "12: core-schemas, folios, glossary, core-tools, core-adapters, core-src, core-scripts, core-l…"
           },
           {
             "key": "stickies",
@@ -4258,7 +4172,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: cat-openapi-validators, cat-openapi-kinds, cat-openapi-schemas, cat-openapi-scripts"
+            "summary": "2: cat-openapi-schemas, cat-openapi-scripts"
           },
           {
             "key": "needs",
@@ -4402,7 +4316,7 @@
           },
           {
             "key": "directories",
-            "summary": "28: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "27: tools, external-schemas, subscriptions, code-lists, vocab-mappings, schemas, uml, skills,…"
           },
           {
             "key": "associatedHarnesses",

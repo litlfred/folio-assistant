@@ -78,6 +78,16 @@
       ]
     },
     {
+      "id": "skills",
+      "readOnly": false,
+      "readOnlyBasis": "NOT frozen, for the reason cat-harness gives for its own `skills` entry: most of this graph is authored here and edited, and the packages in it that are MATERIALIZED from a remote at a pinned commit each carry their own `materialization.json` with a sha256 per file, so `check:materialized-fixity` already fails an edit in place, file by file. Freezing the whole directory because some packages in it are materialized would freeze the skills this layer writes.",
+      "path": "skills/",
+      "description": "The skills this layer owns: the paper content adapter's skills (`content/folio-paper-adapter/`, with `authoring-math`, `hypothesis-generation`, `scientific-critical-thinking` and `scientific-visualization` beside it), plus `lean/`, `data/` and the `voices/` subgraph, which `skills/skills.json` declares from within. Declared here explicitly on 2026-10-04 (bean `g2sv`, issue #2106). The directory was already reachable through the `skills` entry of `DEFAULT_DIRECTORIES`, which `ownDirectories` seeds for every instance and marks `declaredBy: (default)`, so `skill_list` already served its packages. A read-only analysis of the qou folio nonetheless reported it as undeclared and reachable only through `known-skills.ts`, because the declaration file was the only place the analysis looked, and that file said nothing. A convention is not visible from the declaration a reader opens, and a reader should not have to know the fallback to learn that this instance's largest graph exists. The id is `skills`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it. The reason is the one the `library` entry above gives: overrides match on id and never on path, so a distinct id at the same path would make two entries for one directory.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
       "id": "sci-adapters",
       "path": "adapters/",
       "description": "The PAPER content adapter — `PaperContentAdapter` and its Lean tool registrar. It arrived here 2026-09-30 (bean y5si, step 1 of 2 on the owner's Option A ruling on issue #1558), and the destination was not a judgement made at the time: `cat-harness/src/builtin-adapters.ts` already declared this adapter `layer: \"sci\"`, and `cat-harness/scripts/partition/instance-rules.ts` already listed the prefix `adapters/paper/` in its `repo: \"sci\"` block. Two existing machine-readable classifications that the DIRECTORY had simply never matched; the directory caught up with them. This is the first EXECUTABLE TypeScript this instance holds beyond `contributions.ts`, which is why `tsconfig.json`'s `include` gained `folio-assistant-sci/adapters/**/*.ts` in the same commit as the move — bean `lvoa` measured what happens when it does not: a file crossing an instance boundary leaves the typecheck program and no gate reports a shrinking one. `dependents: skip` because a dependent gets its adapter by DECLARING a `contentType`, resolved through `BUILTIN_ADAPTERS` by variable path, rather than by inheriting this directory to scan. `adapters/document/` is NOT here and is not coming in this change: it is step 2, and moving it alongside is what takes the instance-boundary import axis through 16 instead of leaving it at 2.",
