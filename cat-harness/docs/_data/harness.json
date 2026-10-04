@@ -140,7 +140,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 809,
+      "count": 804,
       "unit": "beans"
     },
     {
@@ -239,6 +239,38 @@
       "theme": "analyst"
     },
     {
+      "id": "processes",
+      "directory": "processes",
+      "title": "Processes",
+      "qualifier": "C@T Harness",
+      "ref": "cat-harness/docs/processes/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/processes/",
+      "hidden": false,
+      "icon": "processes"
+    },
+    {
+      "id": "qa",
+      "directory": "qa",
+      "title": "Latent semantic indexes",
+      "qualifier": "C@T Harness",
+      "ref": "cat-harness/docs/lsi/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/lsi/",
+      "hidden": false,
+      "icon": "index",
+      "count": 1006,
+      "unit": "documents"
+    },
+    {
       "id": "root-docs",
       "directory": "root-docs",
       "title": "Docs",
@@ -269,6 +301,22 @@
       "icon": "schemas",
       "count": 212,
       "unit": "modules"
+    },
+    {
+      "id": "skills",
+      "directory": "skills",
+      "title": "Skills",
+      "qualifier": "C@T Harness",
+      "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/auto-docs/index/skills/skills/",
+      "hidden": false,
+      "readOnly": false,
+      "icon": "skills"
     },
     {
       "id": "swimlane-glossary",
@@ -354,12 +402,11 @@
       "glass-todos",
       "glass-settings",
       "library",
-      "tools"
-    ],
-    "unmatched": [
       "processes",
+      "tools",
       "skills"
-    ]
+    ],
+    "unmatched": []
   },
   "harnesses": [
     {
@@ -924,7 +971,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 6
+          "value": 7
         }
       ],
       "visualisations": [
@@ -962,7 +1009,7 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer yet",
+          "path": "/processes/",
           "label": "Processes"
         },
         {
@@ -1093,7 +1140,7 @@
         }
       ],
       "findings": [
-        "smart-base: declares 5 graph(s) with no published viewer — external-schema, processes, qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 4 graph(s) with no published viewer — external-schema, qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: a viewer is published at /cat-harness/schemas/smart-base/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it."
       ],
@@ -1138,7 +1185,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 6
+          "value": 7
         }
       ],
       "visualisations": [
@@ -1180,7 +1227,7 @@
         },
         {
           "kind": "skills",
-          "note": "no viewer yet",
+          "path": "/cat-harness/auto-docs/index/skills/who-iris-skills/",
           "label": "Skills"
         },
         {
@@ -1307,7 +1354,7 @@
         }
       ],
       "findings": [
-        "who-iris: declares 5 graph(s) with no published viewer — code, glossary, qa, skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 4 graph(s) with no published viewer — code, glossary, qa, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
       ],
       "navbarIcons": [
@@ -1351,7 +1398,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 4
+          "value": 5
         }
       ],
       "visualisations": [
@@ -1377,7 +1424,7 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer yet",
+          "path": "/processes/",
           "label": "Processes"
         },
         {
@@ -1484,7 +1531,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 5 graph(s) with no published viewer — attestations, code, processes, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1529,7 +1576,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 3
         }
       ],
       "visualisations": [
@@ -1545,7 +1592,7 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer yet",
+          "path": "/processes/",
           "label": "Processes"
         },
         {
@@ -1555,7 +1602,7 @@
         },
         {
           "kind": "skills",
-          "note": "no viewer yet",
+          "path": "/cat-harness/auto-docs/index/skills/fhir-ig-skills/",
           "label": "Skills"
         },
         {
@@ -1615,7 +1662,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 5 graph(s) with no published viewer — code, processes, qa, skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — code, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
@@ -1694,7 +1741,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 6
+          "value": 8
         }
       ],
       "visualisations": [
@@ -1731,7 +1778,7 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer yet",
+          "path": "/processes/",
           "label": "Processes"
         },
         {
@@ -1746,7 +1793,7 @@
         },
         {
           "kind": "skills",
-          "note": "no viewer yet",
+          "path": "/cat-harness/auto-docs/index/skills/core-skills/",
           "label": "Skills"
         },
         {
@@ -1860,7 +1907,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, processes, qa, skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 4 graph(s) with no published viewer — code, folio, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2122,7 +2169,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 18
+          "value": 19
         }
       ],
       "visualisations": [
@@ -2222,8 +2269,8 @@
         },
         {
           "kind": "skills",
+          "path": "/cat-harness/auto-docs/index/skills/skills/",
           "readOnly": false,
-          "note": "no viewer yet",
           "label": "Skills"
         },
         {
@@ -2535,7 +2582,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 9 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, skills, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2562,6 +2609,8 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/processes/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
@@ -2576,7 +2625,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
@@ -2587,7 +2636,7 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer yet",
+          "path": "/processes/",
           "label": "Processes"
         },
         {
@@ -2649,8 +2698,9 @@
         }
       ],
       "findings": [
-        "bootstrap-tools: declares 5 graph(s) with no published viewer — code, processes, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark."
+        "bootstrap-tools: declares 4 graph(s) with no published viewer — code, scenarios, schemas, skills. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
+        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -2723,7 +2773,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
@@ -2734,7 +2784,7 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer by design",
+          "path": "/processes/",
           "label": "Processes"
         },
         {
@@ -2796,7 +2846,7 @@
         }
       ],
       "findings": [
-        "bootstrap: 5 graph(s) render no viewer — models, processes, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 4 graph(s) render no viewer — models, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: has no docs/ of its own, so the tile opens its section of the landing (/#harness-bootstrap) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2920,7 +2970,7 @@
       {
         "kind": "skills",
         "label": "Skills",
-        "note": "no viewer yet"
+        "path": "/cat-harness/auto-docs/index/skills/skills/"
       },
       {
         "kind": "substrate-snapshot",
@@ -3042,7 +3092,7 @@
         {
           "kind": "processes",
           "label": "Processes",
-          "note": "no viewer yet"
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -3109,7 +3159,7 @@
         {
           "kind": "skills",
           "label": "Skills",
-          "note": "no viewer yet"
+          "path": "/cat-harness/auto-docs/index/skills/who-iris-skills/"
         },
         {
           "kind": "themes",

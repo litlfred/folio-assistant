@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rc1e
 title: 'RENAME: docs-auto -> auto-docs, the kind and every derived artefact (owner ruling)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T12:13:48Z
-updated_at: 2026-10-04T12:13:59Z
+updated_at: 2026-10-04T12:52:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -95,4 +95,56 @@ at the step's own indent). Doing that found the one real failure immediately.
 - [x] local site build verified: 57 HTML pages at the new route, old route
       absent, `href="#auto-docs"` so heading ids are real (bean `gjli` class clear)
 - [x] green: 17 success, 2 skipped, 0 failures; `bun test` 21418 pass / 0 fail
-- [ ] merged
+- [x] merged — #2070, `8da7438209`, 2026-10-04T12:42:48Z
+
+## Landed, and how — the merge queue worked in 8 minutes
+
+Submitted to the queue 12:34:41Z, merged **12:42:48Z**, with four PRs already
+carrying `ready-to-merge` ahead of it (#2071, #2043, #1955, #1898).
+
+Worth recording because this session spent hours before that treating the merge
+as blocked and waiting on the owner. It was not blocked, it was **unsubmitted**.
+The permission classifier stops THIS session calling `pulls/N/merge`; it was
+never the only route, and `merge-queue`'s author-side handover is.
+
+The six submission points, each measured against the signed head rather than
+remembered: `check:head-has-run` exit 0 AND every check completed (18 success, 2
+skipped, 0 failure, 0 in flight); `draft=false`; `ready-to-merge`; signed
+`ready: ccced4a84d…`; no `needs-merge-human`; 0 unticked boxes and no open
+question. `mt_exit=0` by exit code, never `mergeable_state`.
+
+### Two traps on the way in
+
+**`check:head-has-run` exit 0 is NOT `ownCi == green`.** It answers
+*ran / blocked / absent* — it exists to catch the `action_required`-with-zero-runs
+case (bean `0qjq`) where counting failures returns zero over suites that executed
+nothing. Its own line 555 says *"a `null` conclusion is still in flight, which is
+not a no"*. Measured here: exit 0 while **12 runs were in_progress**. The success
+half is a separate read, and signing on that exit alone would have handed the
+steward a head with twelve jobs running.
+
+**A conflicted PR does not report red — it reports almost nothing.** Two heads
+(`af219a539f`, `ef6cbe2718`) never ran `Code-quality gates` AT ALL: GitHub cannot
+build a `pull_request` merge ref for a conflicted PR, so the workflow was never
+QUEUED, and the `github-actions` check suite read `completed success` with
+`latest_check_runs_count: 1`. Anything counting failures sees zero. Caught only
+by listing WHICH runs existed.
+
+## The bean channel is still NOT live — measured after #2052
+
+`merge-queue` §"The steward answers in the queue" makes bean-as-channel
+conditional on the state-branch cutover, and says to read the manifest rather
+than the prose. Read 2026-10-04T12:45Z, AFTER #2052 merged:
+
+    status: seed · authoritative: false · refreshedAt: 2026-10-04T07:12:03Z
+
+So #2052 landed the TOOLING (`state-seed.ts`, `state-drift.ts`,
+`check-workflows.ts`) and not the flip. A bean on a feature branch is still
+invisible until its PR lands, so it still cannot carry a merge request, and the
+PR remains the whole handover. The cutover's declaration half is #2072 — written,
+owner-authorised (*"go on cutover"*), and deliberately held as a draft with
+`do-not-merge` because it is half an irreversible step offered to #2052 rather
+than claimed (bean `35nj` is the cost of two sessions working one claimed bean).
+
+**Stated because speculating the other way was tempting:** #2052 merging looked
+like the cutover. The manifest says it was not.

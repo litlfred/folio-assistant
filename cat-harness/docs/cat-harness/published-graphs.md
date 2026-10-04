@@ -229,16 +229,16 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-1 of 7 published.
+7 of 7 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
-- Bootstrap tools — *declared, not published*
+- [Bootstrap]({{ '/processes/' | relative_url }})
+- [Bootstrap tools]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
-- FHIR IG Harness — *declared, not published*
-- folio-assistant-core — *declared, not published*
-- folio-assistant-sci — *declared, not published*
-- SMART Base — *declared, not published*
+- [FHIR IG Harness]({{ '/processes/' | relative_url }})
+- [folio-assistant-core]({{ '/processes/' | relative_url }})
+- [folio-assistant-sci]({{ '/processes/' | relative_url }})
+- [SMART Base]({{ '/processes/' | relative_url }})
 
 ### `proposals`
 
@@ -293,16 +293,16 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-0 of 7 published.
+4 of 7 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - Bootstrap tools — *declared, not published*
-- C@T Harness — *declared, not published*
-- FHIR IG Harness — *declared, not published*
-- folio-assistant-core — *declared, not published*
+- [C@T Harness]({{ '/cat-harness/auto-docs/index/skills/skills/' | relative_url }})
+- [FHIR IG Harness]({{ '/cat-harness/auto-docs/index/skills/fhir-ig-skills/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/auto-docs/index/skills/core-skills/' | relative_url }})
 - folio-assistant-sci — *declared, not published*
-- WHO IRIS — *declared, not published*
+- [WHO IRIS]({{ '/cat-harness/auto-docs/index/skills/who-iris-skills/' | relative_url }})
 
 ### `substrate-snapshot`
 
