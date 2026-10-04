@@ -11,6 +11,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | file | what it is | used by |
 |---|---|---|
 | [`audit-coverage.qa-results.json`](audit-coverage.qa-results.json) | data |  |
+| [`audit-reachability.qa-results.json`](audit-reachability.qa-results.json) | data |  |
 | [`avatar-coverage.qa-results.json`](avatar-coverage.qa-results.json) | data |  |
 | [`crdm-detect-eval.test-run.json`](crdm-detect-eval.test-run.json) | data |  |
 | [`harness-state.qa-results.json`](harness-state.qa-results.json) | data |  |
@@ -40,7 +41,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`cat-openapi/`](cat-openapi/) | 2 files | |
 | [`detangle/`](detangle/) | 68 files | |
 | [`folio-assistant/`](folio-assistant/) | 2 files | |
-| [`kg-qa/`](kg-qa/) | 467 files | |
+| [`kg-qa/`](kg-qa/) | 468 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
 | [`library-qa/`](library-qa/) | 66 files | |
 | [`lsi/`](lsi/) | 4 files | |
