@@ -177,6 +177,13 @@ export interface BeanEvidence {
    * children answers that the same either way.
    */
   parent?: string;
+  /**
+   * The bean's `type:` front matter — `milestone`, `epic`, `feature`, `task`,
+   * `bug` — or `undefined` when the probe predates the field or the file
+   * carries none. Read only by `bean-session-log-roots`, which treats
+   * `undefined` as "not a root", never as a match.
+   */
+  type?: string;
 }
 
 export interface TodoEvidence {
@@ -1111,6 +1118,21 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "day found 7 more of the 39 live that way, and none of that is computable from the store.",
   },
   {
+    metric: "bean-session-log-roots",
+    value: 0,
+    unit: "count",
+    severity: "minor",
+    basis:
+      "Zero, because the condition has no tolerant form: a session is a LOG, and a roadmap root is a claim " +
+      "about where to look for a SUBJECT (`todo-manager` §\"A session is a log, not a parent\"). Measured in " +
+      "the `qou` folio 2026-10-04: 292 of 353 `type: epic` beans were session logs, minted because " +
+      "`todo-manager` Core Directive 1 and `session-intent` step 4b told every session to run " +
+      "`beans create \"Session: …\" --type milestone` (bean `8unf`, issue #2106). Measured on this store the " +
+      "same day: 0 open, so this locks in a property the store has. MINOR because a mis-typed log misleads " +
+      "the roadmap rather than breaking a consumer. OPEN beans only — a completed session epic is history, " +
+      "and back-filling it changes no plan, the same scope `check-bean-parents` takes.",
+  },
+  {
     metric: "bean-resolved-inline",
     value: BEAN_RESOLVED_INLINE_LIMIT,
     unit: "count",
@@ -1239,11 +1261,41 @@ export function claimPopulations(
   return { claimed, stale, quiet, quietButParenting };
 }
 
+/**
+ * Bean types that are ROOTS of the roadmap — what `beans roadmap` draws as a
+ * heading. The same pair `check-bean-parents`' `ROOT_TYPES` names.
+ */
+const ROADMAP_ROOT_TYPES = new Set(["epic", "milestone"]);
+
+/**
+ * A title that says the bean records ONE SITTING rather than a subject:
+ * `Session: …`, `Session 3 — …`, `SESSION …`, `Handoff: …`, `Handover …`.
+ * Anchored at the start, because "session" mid-title is usually a subject
+ * ("session-start sweep", "sibling sessions") and is not a log.
+ */
+export const SESSION_LOG_TITLE = /^\s*(session|hand-?off|hand-?over)\b/i;
+
+/**
+ * Open beans typed `epic`/`milestone` whose title marks them as a session or
+ * handover log — bean `8unf`. Pure, so a second consumer (a restructure plan
+ * generator) cannot disagree with the health finding about what one is.
+ */
+export function sessionLogRootBeans(beans: BeanEvidence[]): BeanEvidence[] {
+  return beans.filter(
+    (b) =>
+      OPEN_BEAN_STATUSES.has(b.status) &&
+      b.type !== undefined &&
+      ROADMAP_ROOT_TYPES.has(b.type) &&
+      SESSION_LOG_TITLE.test(b.title),
+  );
+}
+
 export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "bean-store";
   const summary =
     "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, " +
-    "the size of the open backlog, and decision records that list fewer than two real options.";
+    "the size of the open backlog, decision records that list fewer than two real options, and session " +
+    "logs typed as roadmap roots.";
   if (ctx.beans.state === "unknown") return unknownResult(id, summary, BEAN_THRESHOLDS, ctx.beans.reason);
   const beans = ctx.beans.value;
 
@@ -1292,6 +1344,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
   const rendered = beans.filter((b) => b.renderedDecision === true);
   const { claimed, stale, quiet, quietButParenting } = claimPopulations(beans, ctx.now);
+  const sessionLogRoots = sessionLogRootBeans(beans);
 
   // A CLAIM THAT ITS OWN CRITERIA SAY IS FINISHED — bean `fkjo`.
   //
@@ -1351,6 +1404,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
       command: cmd,
     },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
+    { metric: "bean-session-log-roots", value: sessionLogRoots.length, unit: "count", command: cmd },
     // The DENOMINATOR, reported so the next number is legible. "12 quiet" means
     // nothing without it; "12 of 60 claimed" is a finding a person can act on,
     // and `fgnw` is the bean that measured why — 43 of 60 read very differently
@@ -1498,6 +1552,19 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
         "in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: " +
         "this check reports, and a person or the session taking the work acts. " +
         "See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\".",
+    });
+  }
+  for (const b of sessionLogRoots) {
+    findings.push({
+      metric: "bean-session-log-roots",
+      severity: "minor",
+      summary: `\`${b.id}\` is an open \`${b.type}\` whose title says it is a session log ("${b.title}").`,
+      action:
+        "A session is a LOG, not a roadmap root (`todo-manager` §\"A session is a log, not a parent\"). " +
+        "Re-parent each open child to the epic whose SUBJECT it is, move the narrative into a bean note " +
+        "(`bun run beans:note`) or the PR body, then set this bean to `completed` or `scrapped` with a note " +
+        "naming where its children went. For many at once, use a reviewed `work-plan-restructure` plan. " +
+        "This check reports and never acts; never `beans delete` it — commits and other beans cite its id.",
     });
   }
   if (resolved.length > BEAN_RESOLVED_INLINE_LIMIT) {
