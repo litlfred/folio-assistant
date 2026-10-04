@@ -248,3 +248,22 @@ Measured:
 - `tool-groups.test.ts`: each module registers exactly the MCP names its Tool nodes declare — so a tool can be neither declared-and-unserved nor served-and-undeclared.
 
 Next: the real empty-repo run in `litlfred/cat-harness-test` / `litlfred/folio-test`.
+
+## PROVEN 2026-10-04 — in real empty repositories on GitHub Actions, against folio-assistant@8ea9e47 (#2077 merged)
+
+The owner chose the method from three options: a CI workflow that sparse-checks-out ONLY the layer and its `needs` closure from `folio-assistant` — because the layer's own repository, `litlfred/cat-harness`, is **empty** (never seeded) — runs the init in a freshly `git init`ed repository beside it, and asserts the four `tndo` conditions with `zmdo-check.ts`. Nothing pre-existing was touched: `cat-harness-test` was empty, and `folio-test` got a new orphan branch `zmdo-proof` (its `main`, an 08-29 folio, is unchanged).
+
+| layer alone | repository | run | 1 init | 2 graphs | 3 working | 4 closure |
+|---|---|---|---|---|---|---|
+| `cat-harness` (+ bootstrap, bootstrap-tools) — instance | [`litlfred/cat-harness-test`](https://github.com/litlfred/cat-harness-test) `main` | [run 2](https://github.com/litlfred/cat-harness-test/actions/runs/37206112987) ✅ | ✅ | ✅ | ✅ 4 skill dirs, beans, MCP 23 tools | ✅ `bootstrap ← bootstrap-tools ← cat-harness ← (root)` |
+| `folio-assistant-core` (+ cat-harness, cat-harness-tools, bootstrap, bootstrap-tools) — document folio | [`litlfred/folio-test`](https://github.com/litlfred/folio-test/tree/zmdo-proof) `zmdo-proof` | [run 2](https://github.com/litlfred/folio-test/actions/runs/37206115053) ✅ | ✅ | ✅ | ✅ 5 skill dirs, beans, MCP 45 tools, renders | ✅ `… ← cat-harness-tools ← folio-assistant-core ← (root)` |
+
+Run 1 of each failed in `actions/checkout` before any check ran — persisted credentials made a sparse partial clone send its auth header twice fetching submodules (HTTP 400). Fixed with `persist-credentials: false` and submodules by plain git; the platform is public.
+
+**What this does and does not prove.** It proves a NEW instance can stand on each layer alone. It does not prove the layer's OWN suite is green standalone — that is `ho66` / `seed:ready --rehearse` (472 failing for `cat-harness`, measured 10-03) — and it does not seed `litlfred/cat-harness` or `litlfred/folio-assistant-core`, which stays `seed:ready`'s call.
+
+## Done when — status
+
+- [x] Per-layer MVP evaluated in an empty repository, for both layers — green.
+- [ ] The two layer repositories seeded (blocked on `seed:ready`, not this bean).
+- [ ] The proof re-pointed at the seeded layer repositories once they exist, instead of a sparse checkout of folio-assistant.
