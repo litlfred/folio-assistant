@@ -235,6 +235,11 @@ export function signatureOf(i: CommentInput, body: string): string {
   const volatile = body
     .replace(SIGNATURE_RE, "")
     .replace(/\[Run\]\([^)]*\)/g, "")
+    // Main's own failing checks are information ABOUT MAIN, not about this
+    // failure — the same reason main's sha is not an input. They flap between
+    // runs while the PR's condition is unchanged, and an input that flaps is a
+    // signature that never matches, which is the spam back again.
+    .replace(/Failing on main right now:[^\n]*/g, "")
     .replace(/\b[0-9a-f]{7,40}\b/g, "<sha>");
   // NOT normalised: `normalise` is what makes two runs of one condition look
   // the same, and it collapses every sha — so running the head through it would

@@ -356,6 +356,18 @@ describe("the comment carries the signature of what it reports", () => {
     expect(one.signature).not.toBe(two.signature);
   });
 
+  test("main's own red does not change the signature — it flaps, and it is main's", () => {
+    const log = "    ✗ check:x STILL fails";
+    const one = composeComment({ ...BASE, log, mainFailing: () => "TypeScript" });
+    const two = composeComment({ ...BASE, log, mainFailing: () => "TypeScript, Repository gates, e2e 2/3" });
+    if (one.action !== "write" || two.action !== "write") throw new Error("expected comments");
+    // The comment still SAYS what is failing on main; the signature does not
+    // count it, or an unchanged PR condition would notify on every flap.
+    expect(one.body).toContain("Failing on main right now: TypeScript.");
+    expect(two.body).toContain("Repository gates");
+    expect(one.signature).toBe(two.signature);
+  });
+
   test("the salient lines are normalised, sorted and bounded", () => {
     const log = [
       "  ✓ x.md  [glossary: take-base]",
