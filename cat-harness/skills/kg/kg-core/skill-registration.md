@@ -35,7 +35,16 @@ wrote:
 |---|---|---|
 | a `skills` entry | the package's `package-manifest.json` | **you** — see below |
 | a published reference page | the site's `reference/skill-instructions/<name>` | `skills:docs` |
-| a `kg-qa` sidecar | `test/results/kg-qa/skills/<pkg>/<name>.kg-qa.json` | `kg:audit` |
+| a `kg-qa` sidecar | `test/results/kg-qa/skills/<pkg>/<name>.kg-qa.json` — the working copy | `kg:audit` |
+
+**The `kg-qa` sidecar is a derived QA result, and its record is no longer the
+committed file.** The CI job `qa-publish` stores every run's `test/results/`
+on the orphan `qa-reports` branch under `main/<sha>/` or `pr/<n>/<sha>/` (arc
+`3fva`). The file is still committed on `main` until bean `5hox` removes it,
+and `kg:audit:check` still reads it, so `skill:register` still writes it —
+but a judgement about your skill (an agent's voice review, a pair
+attestation) does not go in it: that is `test/attestations/kg-qa/…`, on `main`,
+because no writer can regenerate it.
 
 Then a cascade: the schema reference, the glossary and its SKOS export, the
 docs-auto index and the detangle measurements all read something that just

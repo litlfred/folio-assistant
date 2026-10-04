@@ -35,11 +35,21 @@
  * it would be the wall somebody switches off (`2krx`'s reasoning, and it is
  * right).
  *
- * But the sidecar is COMMITTED and `--check` fails when it is stale. That is a
- * real failure about a real thing: the number changed and nobody looked. It is
- * `audit-coverage`'s arrangement exactly, and it is what "cannot drift"
- * requires — a printed verdict is gone the moment the log scrolls, and cannot
- * tell "never measured" from "measured clean".
+ * But `--check` fails when a scan that is SEEDED AT A ROOT and NOT GIT-AWARE is
+ * new against a baseline. That is a real failure about a real thing: the
+ * number changed and nobody looked. It is `audit-coverage`'s arrangement
+ * exactly, and it is what "cannot drift" requires — a printed verdict is gone
+ * the moment the log scrolls, and cannot tell "never measured" from "measured
+ * clean".
+ *
+ * It used to fail on the committed sidecar being STALE, and that stopped being
+ * a question when QA results left `main` for the `qa-reports` branch (owner
+ * rulings D1/D4, bean `0dav`): nothing committed is left to be stale. The
+ * baseline is the committed working copy until then and `--against <ref>`
+ * after; a baseline that is not there is UNKNOWN, reported and not gated
+ * (proposal §2.3). Only the drift that was ever a finding — a new exposed
+ * scan — fails; a new git-aware scanner, which also staled the old sidecar,
+ * does not.
  *
  * ## A FLOOR, stated in the output, never a count
  *
@@ -51,7 +61,8 @@
  *
  * Usage:
  *   bun run root-scan-census            # report, write the sidecar
- *   bun run root-scan-census -- --check # fail only if the sidecar is stale
+ *   bun run root-scan-census -- --check # judge, write nothing; fail on a NEW exposed scan
+ *   bun run root-scan-census -- --check --against main   # ...new against qa-reports
  *
  * @module scripts/root-scan-census
  * @covers cat-harness
@@ -63,7 +74,7 @@ import { basename, join, relative, resolve } from "node:path";
 import * as gitCorpusModule from "../schemas/git-corpus.ts";
 import { gitCorpus } from "../schemas/git-corpus.ts";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
-import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
+import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, writeQaResult, type QaResult } from "./qa-results.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(INSTANCE_ROOT);
@@ -238,20 +249,6 @@ export function censusRepository(repo: string): { rows: ScanRow[]; scope: Instan
   return { rows, scope };
 }
 
-function comparable(r: QaResult): string {
-  return JSON.stringify(r);
-}
-
-function sidecarState(fresh: QaResult): "absent" | "stale" | "current" {
-  const p = join(INSTANCE_ROOT, QA_RESULTS_DIR, "root-scan-census.qa-results.json");
-  if (!existsSync(p)) return "absent";
-  try {
-    return comparable(JSON.parse(readFileSync(p, "utf-8")) as QaResult) === comparable(fresh) ? "current" : "stale";
-  } catch {
-    return "stale";
-  }
-}
-
 export function build(rows: readonly ScanRow[], scope: readonly InstanceScope[] = []): QaResult {
   const scanned = scope.filter((s) => s.state === "scanned");
   const where = `across ${scanned.length} instance(s)' scripts/ (${scanned.map((s) => s.instance).join(", ")})`;
@@ -268,7 +265,7 @@ export function build(rows: readonly ScanRow[], scope: readonly InstanceScope[] 
           `constant, that does not ask git. ${exposed.length} of ${seeded.length} such scans, ` +
           `${rows.length} enumerating scripts in all, ${where}. Reported and NEVER failed — the owner's ` +
           `ruling of 2026-09-27, over the objection that a check which cannot fail is the ` +
-          `1xhc pattern; what CAN fail here is the sidecar going stale.`,
+          `1xhc pattern; what CAN fail here is a NEW one against a baseline (bean \`0dav\`).`,
         entries: exposed.map((r) => ({ file: r.file })),
       },
       "enumerating-scripts": {
@@ -295,8 +292,17 @@ export function build(rows: readonly ScanRow[], scope: readonly InstanceScope[] 
   });
 }
 
+const GATE = "root-scan-census";
+
 if (import.meta.main) {
-  const check = process.argv.includes("--check");
+  const argv = process.argv.slice(2);
+  const check = argv.includes("--check");
+  if (check) {
+    const usage = judgeUsage(GATE, argv, ["--against"]);
+    if (usage !== undefined) process.exit(usage);
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, argv);
+  if (badRef !== undefined) process.exit(badRef);
   const { rows, scope } = censusRepository(REPO);
 
   // A sweep prints its own denominator. A census over zero scripts passes
@@ -324,18 +330,22 @@ if (import.meta.main) {
   );
 
   const result = build(rows, scope);
-  const state = sidecarState(result);
-  if (!check) writeQaResult(INSTANCE_ROOT, "root-scan-census", result);
-  if (state !== "current") {
-    const where = relative(REPO, join(INSTANCE_ROOT, QA_RESULTS_DIR, "root-scan-census.qa-results.json"));
-    const msg = state === "absent" ? `no committed sidecar at ${where}` : `the committed sidecar at ${where} disagrees with this run`;
-    // THE ONE THING THIS FAILS ON, and it is a real failure about a real
-    // thing: the census moved and nobody looked. The findings above are
-    // advisory; drift is not.
-    console.log(check ? `\n✗ ${msg} — run \`bun run root-scan-census\` and commit it.` : `\n· ${msg} — written.`);
-    if (check) process.exit(1);
-  } else if (check) {
-    console.log("\n✓ the committed census is current");
+  if (!check) {
+    const out = writeQaResult(INSTANCE_ROOT, GATE, result);
+    console.log(`\n· ${relative(REPO, out)} — written.`);
+    process.exit(0);
   }
-  process.exit(0);
+  // COMPUTE AND JUDGE, write nothing (bean `0dav`). The findings above stay
+  // advisory (the owner's ruling of 2026-09-27); what fails is the one thing
+  // that always did — the exposed set moving without anybody looking — now
+  // measured as NEW entries against a baseline rather than as a stale file.
+  console.log("");
+  process.exit(
+    judgeQaResult({
+      gate: `${GATE}:check`,
+      fresh: result,
+      failOnNew: ["seeded-at-root-not-git-aware"],
+      baseline: { root: INSTANCE_ROOT, stem: GATE, writer: GATE, against },
+    }).exit,
+  );
 }

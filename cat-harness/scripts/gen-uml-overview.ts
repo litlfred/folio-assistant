@@ -42,6 +42,13 @@
  * Usage:
  *   bun run cat-harness/scripts/gen-uml-overview.ts           # write
  *   bun run cat-harness/scripts/gen-uml-overview.ts --check   # stale or orphaned?
+ *   ... --ref main|<sha>|pr/<n>   # which qa-reports entry a qa directory missing from the checkout is drawn from
+ *
+ * Two inputs are QA results (bean `oq1j`). The detangle numbers are read
+ * from the pinned record, or computed when none is in the checkout. A `qa`
+ * directory missing from the checkout is drawn as stored on the `qa-reports`
+ * branch. Anything that cannot be determined stops the run with exit 2,
+ * writing nothing ({@link UNDETERMINED}).
  *
  * @module scripts/gen-uml-overview
  * @covers uml
@@ -59,7 +66,10 @@ import { instanceDirectoryForGraph, instanceRootsIn, instanceDirectories, readDe
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
 import { readUmlPalette } from "./uml-palette.js";
 import { bothViews, gridLinks, renderSvgs, safeId, sha256, svgStamp, views, type RenderJob } from "./plantuml-render.js";
-import { detangleResultsDir } from "../schemas/detangle-sidecar.js";
+import { detangleResultsDir, sidecarFor } from "../schemas/detangle-sidecar.js";
+import { readQaManifest, readQaTree } from "./qa-store.ts";
+import { JUDGEMENT_EXIT } from "./qa-results.ts";
+import { spawnSync } from "node:child_process";
 import { glossaryLinksMd, schemasViewPuml } from "./gen-object-model-uml.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
@@ -287,6 +297,56 @@ function tagsUnder(dir: string): Set<string> {
   return new Set(filesByTag(dir).keys());
 }
 
+/** Which `qa-reports` entry a `qa` directory missing from the checkout is drawn from. `--ref`, default `main`. */
+const QA_REF = (() => {
+  const at = process.argv.indexOf("--ref");
+  return at > 0 && process.argv[at + 1] ? process.argv[at + 1]! : "main";
+})();
+
+/**
+ * The `$schema` families a sub-graph holds, or `null` when that cannot be
+ * determined (the cause is recorded in {@link UNDETERMINED}).
+ *
+ * Bean `oq1j` (`R19`). For every kind but `qa`, and for a `qa` directory that
+ * is in the checkout, the answer is the files on disk, as it always was. A
+ * `qa` directory that is NOT in the checkout has left for the `qa-reports`
+ * branch (owner rulings D1/D4), so it is drawn as stored there, at
+ * {@link QA_REF}. The four store states map like this:
+ *
+ * - **hit**: the families the stored files carry.
+ * - **miss**, with an entry whose manifest published a root covering this
+ *   path: a determined empty, drawn exactly as an empty directory on disk is.
+ * - **miss** with no such entry or root, **corrupt**, **unknown**: not
+ *   determined. Drawing "no node here" for these would be the `dh4f` defect,
+ *   a miss read as clean.
+ */
+function tagsForSection(path: string, kind: string): Set<string> | null {
+  const abs = join(REPO, path);
+  if (kind !== "qa" || existsSync(abs)) return tagsUnder(abs);
+  const where = `${path}/ is not in the checkout, and qa-reports at ${QA_REF}`;
+  const m = readQaManifest(QA_REF);
+  if (m.state !== "hit") {
+    UNDETERMINED.push(`${where}: ${m.state} — ${m.reason}`);
+    return null;
+  }
+  const tree = readQaTree(QA_REF, path);
+  if (tree.state === "hit") {
+    const tags = new Set<string>();
+    for (const text of tree.files.values()) {
+      try {
+        const tag = (JSON.parse(text) as { $schema?: unknown })?.$schema;
+        if (typeof tag === "string") tags.add(tag);
+      } catch {
+        // not a node: the same rule `filesByTag` keeps on disk
+      }
+    }
+    return tags;
+  }
+  if (tree.state === "miss" && m.manifest.roots.some((r) => path === r || path.startsWith(`${r}/`))) return new Set();
+  UNDETERMINED.push(`${where}: ${tree.state} — ${tree.reason}`);
+  return null;
+}
+
 /** The JSON files under `dir`, grouped by the `$schema` tag each carries. */
 /**
  * The `$schema`-tagged JSON nodes under {@link dir}, by tag.
@@ -429,7 +489,8 @@ async function sectionsOf(instanceRoot: string): Promise<Section[]> {
         // Only the families THIS sub-graph holds. The map is the kind's, across
         // every harness; drawing all of it put cat-harness's voice schemas in
         // bootstrap/skills, which holds none of them.
-        const here = tagsUnder(join(REPO, section.path));
+        const here = tagsForSection(section.path, kind);
+        if (!here) continue; // could not determine: recorded in UNDETERMINED, and the run stops before writing
         const present = families.filter((f) => here.has(f.tag));
         for (const f of present) drawFamily(f, kind, prefix, acc, section);
         if (present.length === 0) {
@@ -570,9 +631,57 @@ const DETANGLE_RESULTS: string | null = (() => {
   return existsSync(dir) ? dir : null;
 })();
 
+/**
+ * Why this run cannot draw what it was asked to, one line per cause.
+ *
+ * Bean `oq1j`. A page drawn over QA that could not be read is not a page with
+ * "not measured" in it. "Not measured" says the detangler does not scan a
+ * directory, and "no node here carries a family" says a directory holds
+ * none. Both would be false claims. So any cause here stops the run with
+ * exit 2, in check mode and write mode alike, before anything is compared or
+ * written.
+ */
+const UNDETERMINED: string[] = [];
+
+/**
+ * The detangle numbers COMPUTED from the tree, used when no record is pinned
+ * in the checkout (`R19`): `kg-detangle.ts --check --json`, which writes
+ * nothing.
+ *
+ * Computed, not read from the `qa-reports` branch. A stored record describes
+ * the commit it was published for. On any branch that moved a group it would
+ * draw the base's numbers and present them as this tree's. When the
+ * detangle gate is green, the computed numbers are the pinned ones
+ * (`staleFields` compares exactly these fields), so the page does not depend
+ * on where they came from.
+ */
+let computedDetangle: Map<string, DetangleNumbers> | null | undefined;
+
+/** Lazily, once: importing this module must not run the detangler. */
+function computeDetangle(): Map<string, DetangleNumbers> | null {
+  if (computedDetangle === undefined) computedDetangle = runDetangle();
+  return computedDetangle;
+}
+
+function runDetangle(): Map<string, DetangleNumbers> | null {
+  // Run the detangler by its package script, which is the one place its path
+  // is declared; a path literal here would restate it (check:declared-paths).
+  const r = spawnSync(process.execPath, ["run", "kg:detangle", "--check", "--json"], { cwd: REPO, encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  try {
+    const { results } = JSON.parse(r.stdout) as { results: Parameters<typeof sidecarFor>[0][] };
+    return new Map(results.map((m) => [m.group, sidecarFor(m)]));
+  } catch {
+    UNDETERMINED.push(
+      `no detangle record in the checkout (${relative(REPO, detangleResultsDir(HARNESS))}/ is absent), and computing one failed ` +
+        `(exit ${r.status}): ${(r.stderr || r.stdout || "").trim().split("\n").slice(-3).join(" | ")}`,
+    );
+    return null;
+  }
+}
+
 /** The pinned numbers for the detangle group at `path`, or null: not every directory is scanned. */
 function detangleOf(path: string): DetangleNumbers | null {
-  if (!DETANGLE_RESULTS) return null;
+  if (!DETANGLE_RESULTS) return computeDetangle()?.get(path.replace(/\/$/, "")) ?? null;
   const file = join(DETANGLE_RESULTS, `${path.replace(/\/$/, "")}.detangle.json`);
   if (!existsSync(file)) return null;
   const j = JSON.parse(readFileSync(file, "utf8")) as Partial<DetangleNumbers>;
@@ -784,6 +893,14 @@ function walk(dir: string): string[] {
 async function main(): Promise<void> {
   const check = process.argv.includes("--check");
   const files = await build();
+  if (UNDETERMINED.length) {
+    // Neither "stale" nor "current", and nothing written: a page drawn over QA
+    // that could not be read would claim what nobody looked at (bean `oq1j`).
+    console.error(`UML overview: UNKNOWN — could not determine what ${UNDETERMINED.length} part(s) hold; this is NOT a pass, and nothing was written:`);
+    for (const u of UNDETERMINED) console.error(`  ${u}`);
+    console.error("  `bun run qa:fetch` materialises the QA results; `--ref <main|sha|pr/n>` reads another qa-reports entry.");
+    process.exit(JUDGEMENT_EXIT.unknown);
+  }
   const pumls = [...files].filter(([p]) => p.endsWith(".puml"));
   if (!existsSync(OBJECT_MODEL_PUML)) throw new Error(`${relative(REPO, OBJECT_MODEL_PUML)} is missing: run gen-object-model-uml.ts`);
   pumls.push([OBJECT_MODEL_PUML, readFileSync(OBJECT_MODEL_PUML, "utf8")]);
