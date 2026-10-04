@@ -2779,6 +2779,27 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.nesteddirectory.id",
+      "prefLabel": "NestedDirectory.id",
+      "definition": "`<parent id>/<own id>` — unique across the instance, and says who declares it.",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.ownid",
+      "prefLabel": "NestedDirectory.ownId",
+      "definition": "The entry's OWN id, as `resolveDirectories` and a mount marker spell it.",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.ownId",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.nesteddirectory.subgraph",
+      "prefLabel": "NestedDirectory.subgraph",
+      "definition": "`true` when the entry declares itself an instance subgraph (bean `cmsl`).",
+      "source": "cat-harness/schemas/cat-harness.ts#NestedDirectory.subgraph",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.publication.host",
       "prefLabel": "Publication.host",
       "definition": "WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.",

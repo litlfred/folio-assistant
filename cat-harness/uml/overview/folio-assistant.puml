@@ -142,15 +142,19 @@ package "folio-assistant/issue-marks" as pkg_folio_assistant_issue_marks <<issue
 package "folio-assistant/root-docs" as pkg_folio_assistant_root_docs <<docs>> {
   note "docs: no node schema declared\n(no node here carries a $schema family docs names (11 named): could not determine)" as n_folio_assistant_root_docs_docs
 }
+package "folio-assistant/queue" as pkg_folio_assistant_queue <<merge-queue>> {
+  note "merge-queue: no node schema declared\n(no node here carries a $schema family merge-queue names (1 named): could not determine)" as n_folio_assistant_queue_merge_queue
+}
 
 folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
 folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_beans_folio_session_survey_v1_Axe : axes
 folio_assistant_memory_MemoryNode *-- "0..*" folio_assistant_memory_AlsoAbout : alsoAbout
-' grid: portrait, 3 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_memory pkg_folio_assistant_interaction pkg_folio_assistant_issue_marks pkg_folio_assistant_root_docs
+' grid: portrait, 3 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_memory pkg_folio_assistant_interaction pkg_folio_assistant_issue_marks pkg_folio_assistant_root_docs pkg_folio_assistant_queue
 pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_beans
 pkg_folio_assistant_root_tools -[hidden]down- pkg_folio_assistant_todos
 pkg_folio_assistant_fsh_guts -[hidden]down- pkg_folio_assistant_memory
 pkg_folio_assistant_beans -[hidden]down- pkg_folio_assistant_interaction
 pkg_folio_assistant_todos -[hidden]down- pkg_folio_assistant_issue_marks
 pkg_folio_assistant_memory -[hidden]down- pkg_folio_assistant_root_docs
+pkg_folio_assistant_interaction -[hidden]down- pkg_folio_assistant_queue
 @enduml
