@@ -196,7 +196,8 @@
     var table = el("table", { class: "fa-process-index-table" });
     table.appendChild(el("caption", null, group.label + " — " + group.rows.length));
     var head = el("tr");
-    ["Process", other, "What it is for", "Diagram"].forEach(function (h) {
+    var labels = ["Process", other, "What it is for", "Diagram"];
+    labels.forEach(function (h) {
       head.appendChild(el("th", { scope: "col" }, h));
     });
     table.appendChild(el("thead")).appendChild(head);
@@ -224,6 +225,9 @@
       if (links.svg && links.source) links_td.appendChild(document.createTextNode(" · "));
       if (links.source) links_td.appendChild(el("a", { href: links.source }, "BPMN"));
       tr.appendChild(links_td);
+      // Each cell carries its column's name, so the narrow-viewport layout can
+      // stack a row into a labelled card instead of scrolling four columns.
+      Array.prototype.forEach.call(tr.children, function (td, i) { td.setAttribute("data-label", labels[i]); });
       body.appendChild(tr);
     });
     table.appendChild(body);
