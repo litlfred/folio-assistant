@@ -60,6 +60,31 @@ function gh(path: string): unknown | null {
 }
 
 /**
+ * The path out of one of `git merge-tree`'s CONFLICT lines, or `null` when the
+ * form is one this function does not know.
+ *
+ * Three forms are emitted, not one, and they do not share a shape:
+ *
+ *   CONFLICT (content): Merge conflict in <path>
+ *   CONFLICT (submodule): Merge conflict in <path>
+ *   CONFLICT (modify/delete): <path> deleted in <rev> and modified in <rev>. ...
+ *
+ * `null` rather than the raw line, because the caller's next move is to ask
+ * `merge-conflict-patterns` whether the path is authored — and a line read as a
+ * path matches no pattern, so a parser gap would present as an authored
+ * conflict in somebody's PR.
+ */
+export function conflictPath(line: string): string | null {
+  const inForm = /^CONFLICT \([^)]*\): Merge conflict in (.+)$/.exec(line);
+  if (inForm) return inForm[1].trim();
+  const modifyDelete = /^CONFLICT \(modify\/delete\): (.+?) deleted in .+ and modified in /.exec(line);
+  if (modifyDelete) return modifyDelete[1].trim();
+  const renamed = /^CONFLICT \(rename\/[^)]*\): .*?\brenamed to (.+?) in /.exec(line);
+  if (renamed) return renamed[1].trim();
+  return null;
+}
+
+/**
  * Does this PR merge cleanly enough for the queue to consider it?
  *
  * Three states, never two. `git merge-tree --write-tree` exits 0 clean, 1 on
@@ -74,12 +99,19 @@ function refusalFor(base: string, pr: number): "clean" | "declared" | "refused" 
   const mt = run("git", ["merge-tree", "--write-tree", base, `refs/tmp/steward${pr}`]);
   if (mt.status === 0) return "clean";
   if (mt.status !== 1) return "unknown";
-  const conflicted = mt.out
-    .split("\n")
-    .filter((l) => l.startsWith("CONFLICT"))
-    .map((l) => l.replace(/^CONFLICT \([^)]*\): Merge conflict in /, "").trim())
-    .filter(Boolean);
-  if (conflicted.length === 0) return "unknown";
+  const lines = mt.out.split("\n").filter((l) => l.startsWith("CONFLICT"));
+  if (lines.length === 0) return "unknown";
+  const conflicted: string[] = [];
+  for (const line of lines) {
+    const path = conflictPath(line);
+    // An unrecognised CONFLICT form must NOT be handed to `classify` as if the
+    // whole line were a path: it matches no declared pattern, so it would be
+    // counted a refusal and the PR blamed for a parser gap. Measured
+    // 2026-10-04 on #1790, where 8 of 11 reported refusals were
+    // `CONFLICT (modify/delete)` lines read as filenames.
+    if (path === null) return "unknown";
+    conflicted.push(path);
+  }
   return conflicted.some((p) => classify(p).strategy === "refuse") ? "refused" : "declared";
 }
 
@@ -218,4 +250,8 @@ async function main(): Promise<void> {
   console.log("Nothing here merges anything. The order is the table's answer, not this file's.");
 }
 
-await main();
+// Only when RUN, never when imported. `conflictPath` is exported for its tests,
+// and a bare `await main()` made importing this module execute the whole
+// command — the parser test took 38s and called the GitHub API before it
+// asserted anything.
+if (import.meta.main) await main();
