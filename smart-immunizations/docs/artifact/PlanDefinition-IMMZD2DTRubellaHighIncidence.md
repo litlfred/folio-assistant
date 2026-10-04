@@ -37,3 +37,6 @@ IMMZ.D2.DT.Rubella.High incidence Countries with high incidence and mortality fr
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTRotavirus.html" data-next="PlanDefinition-IMMZD2DTRubellaLowIncidence.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
