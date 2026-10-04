@@ -1,0 +1,155 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "mergetrain--merge-train-2026-10-04a",
+  "processId": "Process_MergeTrain",
+  "source": "cat-harness/processes/sdlc/merge-train.bpmn",
+  "subject": "merge-train-2026-10-04a",
+  "bean": "folio-assistant-hfag",
+  "tokens": [
+    "GW_More"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-10-04T15:51:24.152Z",
+      "node": "Start_Train",
+      "note": "instance started"
+    },
+    {
+      "at": "2026-10-04T15:51:28.799Z",
+      "node": "Task_ReadLive",
+      "actor": "merge-steward",
+      "note": "merge:steward at 15:30Z over origin/main 0b7b9e44, plus merge:guard (evaluate) and git merge-tree per candidate. Owner chose 'Run a merge train' to break the regen-conflict treadmill. Dry run over the approved members: #2043, #2100, #2102, #2105, #2108 and #2109 would merge; #1955 would be refused (authored conflicts).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#1",
+        "prov:startedAtTime": "2026-10-04T15:51:28.799Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_ReadLive"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:51:33.343Z",
+      "node": "Task_TakeNext",
+      "actor": "merge-steward",
+      "note": "The approved candidates, in table order: #2043, #2100, #2102, #2105, #2108, #2109 (#1955 is refused, authored conflicts).",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#2",
+        "prov:startedAtTime": "2026-10-04T15:51:33.343Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_TakeNext"
+        },
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:51:48.203Z",
+      "node": "GW_Placement",
+      "outcome": "admit",
+      "actor": "merge-steward",
+      "note": "#2043 at b493bba: signed by the takeover session, guard 7/7, owner yes given. Conflicts with main only in declared generated paths (LSI trio, glossary page), which the train resolves. Unblocks 1 PR (#2071, same bean dxqm). · Decision_MergePriority → admit by Rule_UnblockHighRisk ((b) Unblocks other work, predicted to conflict (T3): its own train.)",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#3",
+        "prov:startedAtTime": "2026-10-04T15:51:48.203Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#GW_Placement"
+        },
+        "prov:used": [
+          "#2043"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-04T15:52:02.587Z",
+      "node": "Task_Admit",
+      "actor": "merge-steward",
+      "note": "#2043 at b493bba79e admitted to train merge-train-2026-10-04a. The train waits for more signed members (#2100, #2105, #2108, #2109, #2102 are approved but not yet signed) before it is built.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "merge-steward",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "mergetrain--merge-train-2026-10-04a#4",
+        "prov:startedAtTime": "2026-10-04T15:52:02.587Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "merge-steward",
+          "prov:hadPlan": "merge-train#Task_Admit"
+        },
+        "prov:used": [
+          "#2043"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    }
+  ],
+  "status": "running",
+  "startedAt": "2026-10-04T15:51:24.152Z",
+  "updatedAt": "2026-10-04T15:52:02.588Z"
+}
