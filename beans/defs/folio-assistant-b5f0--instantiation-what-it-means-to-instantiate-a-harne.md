@@ -3,8 +3,11 @@
 title: 'INSTANTIATION: what it means to instantiate a harness — the config file, the slot, and the process that cannot be started'
 status: todo
 type: task
+priority: normal
+tags:
+    - mvp
 created_at: 2026-09-20T15:23:54Z
-updated_at: 2026-09-20T15:23:54Z
+updated_at: 2026-10-04T09:56:46Z
 parent: folio-assistant-zzmr
 ---
 
