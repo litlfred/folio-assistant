@@ -38,11 +38,11 @@ import {
   type Judgement,
 } from "../../../cat-harness/scripts/qa-results.ts";
 import { checkWireframes, judgeWireframes, type WireframeReport } from "../../../cat-harness/scripts/check-wireframes.ts";
-import { checkLayoutNorms, judgeLayoutNorms } from "../../../cat-harness/scripts/check-layout-norms.ts";
+import { checkLayoutNorms, judgeLayoutNorms } from "../check-layout-norms.ts";
 import { checkRenderedLabels, judgeRenderedLabels } from "../../../cat-harness/scripts/check-rendered-labels.ts";
 import { checkSourceLicence, judgeSourceLicence } from "../../../cat-harness/scripts/check-source-licence.ts";
 import { checkMethodologyEvidence, judgeMethodologyEvidence } from "../../../cat-harness/scripts/check-methodology-evidence.ts";
-import { checkLanes, judgeLaneDocumentation } from "../../../cat-harness/scripts/check-lane-documentation.ts";
+import { checkLanes, judgeLaneDocumentation } from "../check-lane-documentation.ts";
 import { judgeKgExport } from "../../../cat-harness/scripts/kg-export.ts";
 import { coverage, judgeAvatarCoverage, trashDerivationPresent } from "../check-avatar-coverage.ts";
 import {
@@ -52,7 +52,7 @@ import {
   judgeHarnessState,
   todoProcessRefs,
   type Family,
-} from "../../../cat-harness/scripts/check-harness-state.ts";
+} from "../check-harness-state.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
 import { implementingRootFor } from "../../../cat-harness/schemas/harness-config.ts";
 
