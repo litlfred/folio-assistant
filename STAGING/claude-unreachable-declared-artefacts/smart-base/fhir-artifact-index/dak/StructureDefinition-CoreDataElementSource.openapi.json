@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Core Data Element Source API",
+    "description": "Source reference for Core Data Element - exactly one of the following must be provided:\n- url (url data type): URL to retrieve CoreDataElement definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the CoreDataElement definition\n- instance: Inline CoreDataElement instance data",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-CoreDataElementSource.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-CoreDataElementSource",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-CoreDataElementSource.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-CoreDataElementSource",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-CoreDataElementSource.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-CoreDataElementSource": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-CoreDataElementSource.schema.json",
+        "title": "Core Data Element Source",
+        "description": "Source reference for Core Data Element - exactly one of the following must be provided:\n- url (url data type): URL to retrieve CoreDataElement definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the CoreDataElement definition\n- instance: Inline CoreDataElement instance data",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "CoreDataElementSource",
+            "description": "Resource type identifier for CoreDataElementSource logical model"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to retrieve CoreDataElement definition from input/ or external source"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URI pointing to the CoreDataElement definition"
+          },
+          "instance": {
+            "$ref": "http://smart.who.int/base/StructureDefinition-CoreDataElement.schema.json",
+            "description": "Inline CoreDataElement instance data"
+          }
+        },
+        "required": [
+          "resourceType"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/CoreDataElementSource",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}
