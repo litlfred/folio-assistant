@@ -5091,10 +5091,10 @@
         },
         {
           "name": "profile",
-          "type": "z.enum([\"document\", \"paper\"])",
-          "optional": false,
+          "type": "z.enum([\"document\", \"paper\"]).optional()",
+          "optional": true,
           "array": false,
-          "doc": "The NARROWEST content profile that admits the kind. Profiles nest"
+          "doc": "The NARROWEST content profile that admits the kind (paper-adapter kinds"
         },
         {
           "name": "builder",
@@ -5140,15 +5140,15 @@
         },
         {
           "name": "heading",
-          "type": "z.string()",
-          "optional": false,
+          "type": "z.string().optional()",
+          "optional": true,
           "array": false,
           "doc": "The English heading, singular — the translation graph's source string. Empty for a kind shown without one (`prose`)."
         },
         {
           "name": "headingPlural",
-          "type": "z.string().min(1)",
-          "optional": false,
+          "type": "z.string().min(1).optional()",
+          "optional": true,
           "array": false,
           "doc": "The English heading, plural, for an index that groups by kind."
         },
@@ -51281,20 +51281,6 @@
       "exported": true
     },
     {
-      "id": "smart-base/schemas/dak-blocks.ts#_MutuallyExhaustive",
-      "name": "_MutuallyExhaustive",
-      "module": "smart-base/schemas/dak-blocks.ts",
-      "kind": "type-alias",
-      "doc": "Compile-time proof that `DAK_BLOCK_KINDS` and `DakBlock[\"kind\"]` cover each",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
       "id": "smart-base/schemas/dak-blocks.ts#ActorDefinitionBlock",
       "name": "ActorDefinitionBlock",
       "module": "smart-base/schemas/dak-blocks.ts",
@@ -52019,6 +52005,7 @@
       "name": "DakBlockKind",
       "module": "smart-base/schemas/dak-kinds.ts",
       "kind": "type-alias",
+      "doc": "A DAK kind: the TYPE the `DakBlock` union declares (a type-only import, erased at runtime).",
       "fields": [],
       "extendsNames": [],
       "values": [],
