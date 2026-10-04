@@ -21,9 +21,9 @@ Owner, 2026-10-04: *"bean up missing dependency logic on derived graphs (e.g. ig
 Use the ORDER in which subgraphs are declared as the rendering order. That is cheap and visible, but it is an assumption and not a checked edge: a dependency declared after its consumer renders stale silently.
 
 ## Done when
-- [ ] the schema carries an edge between directories: a derived/rendered subgraph names the graphs it is computed FROM, by directory id, resolvable across `needs` the way computedFrom is checked
+- [x] the schema carries an edge between directories: a derived/rendered subgraph names the graphs it is computed FROM, by directory id, resolvable across `needs` the way computedFrom is checked
 - [ ] fhir-ast, ig-docs, gh-pages and lean-cache are declared as graphs with those edges (fhir-ast -> ig-docs -> gh-pages)
-- [ ] a gate refuses an edge naming an undeclared id, and a cycle
+- [x] a gate refuses an edge naming an undeclared id, and a cycle
 - [ ] the rendering order is DERIVED from the edges (topological). Until then, declaration order is used, and a check flags a consumer declared before its source
 - [ ] consumers walk it: regen, the main publish workflow (lbz8) and the staging cone (sibling bean)
 

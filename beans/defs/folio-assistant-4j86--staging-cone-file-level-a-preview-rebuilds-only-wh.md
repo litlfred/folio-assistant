@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-04T13:49:53Z
+updated_at: 2026-10-04T15:04:45Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-nama
@@ -33,3 +33,7 @@ When the cone cannot be computed (no changed-file list, an API failure, an unkno
 - [ ] the cone is computed from changed files, generator import closures and the derived-graph edges, replacing the prefix match
 - [ ] measured: a skill-only PR carries no IG, and a gen-ig-pages.ts change carries every IG
 - [ ] per-IG Jekyll and AST sites rebuild only when in the cone
+
+## 2026-10-04: owner ruling — the generator is declared as `writer` on the directory
+
+Asked where the cone learns which generator writes a directory, the owner chose **`writer` on the directory declaration** (option 1 of 3; rejected: inferring it from regen's script pairs, reading it from route-branch manifests). An optional list of repo-relative script files, or directories ending in `/` for what a generator READS rather than imports (templates). A gate checks each path exists, and a route branch manifest's `writer` must agree with it. The edges half of the cone exists: nama step 3 declared `derivedFrom` on the three IG page sets, and `downstreamOf` is drafted.
