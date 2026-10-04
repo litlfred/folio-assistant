@@ -129,7 +129,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 4 | 17.37 | page, text, tile, pdf, avatar, images, card, glass | subgraph, subdirectory, ledger, sibling, train, steward, plan, prs |
 | 5 | 15.70 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, pdf, archive, upload, arxiv, sniff, zip, licence |
 | 6 | 15.19 | actor, lane, requirements, task, process, role, methodology, skills | steward, sha, head, train, tile, merge, queue, board |
-| 7 | 14.99 | preview, forward, merge, steward, staging, translation, edges, base | rung, arm, withheld, queue, licence, backlog, glass, library |
+| 7 | 14.98 | preview, forward, merge, steward, staging, translation, edges, base | rung, arm, withheld, queue, backlog, licence, glass, library |
 | 8 | 14.66 | forward, edges, edge, slot, logical, tile, backward, cross-chapter | phase, feedback, feature, url, pdf, post, language, staging |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
