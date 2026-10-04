@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ig-ast-delta-review\n"
-"POT-Creation-Date: 2026-10-03T09:58:08.277Z\n"
+"POT-Creation-Date: 2026-10-04T12:26:41.679Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,157 +14,157 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/content/ig-ast-delta-review.bpmn:75
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:75
 #. Diagram element documentation
 msgid "`ig-ast.ts diff <base> <head> --plan plan.json --site <site>/ast-delta/`: resources added, removed, changed (with an element-level differential) and version-changed; edges added and removed; the plan's decision. Every page opens with the provisional mark and is wrapped in raw so narrative Liquid is not executed."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:57
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:57
 #. Diagram element documentation
 msgid "`ig-ast.ts validity <base> --ig <root>`: folio-assistant-core's compiledValidity on the manifest's inputs, with the input digest recomputed by the same algorithm as the Java writer. Exit 0 valid, 1 stale-inputs (names which input), 2 cannot-tell. Run against the BASE revision's checkout."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:65
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:65
 #. Diagram element documentation
 msgid "Answered by Task_Validity's exit code. 0 takes `yes`, into the diff. 1 (stale-inputs) and 2 (cannot-tell) both take `no`: cannot-tell is never a pass, and a delta against a base that may not be what it claims explains nothing."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:91
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:91
 #. Diagram element documentation
 msgid "Answered by the reviewer in Task_Review. `yes` when every added, removed and changed resource is accounted for by the change. `no` when any is not, including a resource that SHOULD have changed and did not, which the delta shows as absent rather than as a row."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:101
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:101
 #. Diagram element documentation
 msgid "Append to bean `a9tx` (W8): the resource key, the differential path, and why it is unexplained. Check before creating: beans create is not idempotent. A note, not a new bean, unless the owner asks for one."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:52
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:52
 #. Diagram label
 msgid "Base AST and merged head AST exist"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:64
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:64
 #. Diagram label
 msgid "Base AST valid for its inputs?"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:70
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:70
 #. Diagram label
 msgid "Base stale — run a full build"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:56
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:56
 #. Diagram label
 msgid "Check the base AST against the IG's inputs [ig-ast-delta]"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:30
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:30
 #. Diagram element documentation
 msgid "Checks that the base AST still matches the IG's inputs, then diffs base against head and renders the delta pages. Both steps are mechanical and read files only; neither decides anything a person has to own. A stale or undeterminable base ends here, before any delta is shown, because a delta against the wrong base explains nothing."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:109
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:109
 #. Diagram label
 msgid "Coupling filed — run a full build"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:96
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:96
 #. Diagram label
 msgid "Delta accepted — on to the QC gates"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:74
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:74
 #. Diagram label
 msgid "Diff base → head and render the delta pages [ig-ast-delta]"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:90
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:90
 #. Diagram label
 msgid "Every difference explained?"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:97
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:97
 #. Diagram element documentation
 msgid "Hands back to ig-incremental-build at Task_Qa. The merged AST is still a cache; its pages keep the provisional mark."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:29
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:29
 #. Diagram label
 msgid "Incremental build (system)"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:11
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:11
 #. Diagram label
 msgid "Is the incremental IG AST what a full build would have produced?"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:120
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:120
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:116
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:116
 #. Diagram label
 msgid "no — stale or cannot tell"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:71
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:71
 #. Diagram element documentation
 msgid "No delta is shown. The caller runs a full build, whose AST becomes the next base."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:100
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:100
 #. Diagram label
 msgid "Note the missed coupling on the bean [todo-manager]"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:38
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:38
 #. Diagram label
 msgid "QC reviewer"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:53
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:53
 #. Diagram element documentation
 msgid "Reached after an incremental build (IncrementalBuildCli) has merged the rebuilt cone into the base, or after a full build when comparing the two for W8."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:82
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:82
 #. Diagram label
 msgid "Read the rendered delta [ig-ast-delta]"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:39
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:39
 #. Diagram element documentation
 msgid "Reads the rendered delta and answers one question: is every difference explained by the change? This is the only judgement in the subprocess, and it is a person's (or a reviewing agent acting in this role) because \"explained\" depends on what the change was meant to do, which no tool knows."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:83
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:83
 #. Diagram element documentation
 msgid "Start at the delta index; open each changed resource's page. Check `builtAt` before judging: a resource carried from the base was not rebuilt, so a difference there is the change itself or a missed coupling, never noise. The differential is structural: a reordered repeating element shows at every index."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:110
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:110
 #. Diagram element documentation
 msgid "The incremental result is not used. A full build produces the next base, and the filed coupling is what W8 fixes in the cone rules."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:14
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:14
 #. Diagram element documentation
 msgid "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: \"list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering\"). WHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §\"Where this sits in a process\" states the placement until it is. WHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling rather than as a curiosity. WHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4)."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:46
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:46
 #. Diagram element documentation
 msgid "Where an unexplained difference is recorded before the run falls back to a full build: a note on bean `a9tx` under W8, naming the resource and the path, so the cone rules get fixed rather than the difference being forgotten when the full build comes back green."
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:45
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:45
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/content/ig-ast-delta-review.bpmn:115
+#: ../fhir-harness/processes/content/ig-ast-delta-review.bpmn:115
 #. Diagram label
 msgid "yes"
 msgstr ""

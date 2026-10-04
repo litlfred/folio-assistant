@@ -1375,38 +1375,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_igastdeltareview.task_diff",
-      "prefLabel": "Diff base → head and render the delta pages [ig-ast-delta]",
-      "definition": "`ig-ast.ts diff <base> <head> --plan plan.json --site <site>/ast-delta/`: resources added, removed, changed (with an element-level differential) and version-changed; edges added and removed; the plan's decision. Every page opens with the provisional mark and is wrapped in raw so narrative Liquid is not executed.",
-      "notation": "Task_Diff",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Diff",
-      "status": "candidate"
-    },
-    {
-      "id": "process_igastdeltareview.task_filecoupling",
-      "prefLabel": "Note the missed coupling on the bean [todo-manager]",
-      "definition": "Append to bean `a9tx` (W8): the resource key, the differential path, and why it is unexplained. Check before creating: beans create is not idempotent. A note, not a new bean, unless the owner asks for one.",
-      "notation": "Task_FileCoupling",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_FileCoupling",
-      "status": "candidate"
-    },
-    {
-      "id": "process_igastdeltareview.task_review",
-      "prefLabel": "Read the rendered delta [ig-ast-delta]",
-      "definition": "Start at the delta index; open each changed resource's page. Check `builtAt` before judging: a resource carried from the base was not rebuilt, so a difference there is the change itself or a missed coupling, never noise. The differential is structural: a reordered repeating element shows at every index.",
-      "notation": "Task_Review",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Review",
-      "status": "candidate"
-    },
-    {
-      "id": "process_igastdeltareview.task_validity",
-      "prefLabel": "Check the base AST against the IG's inputs [ig-ast-delta]",
-      "definition": "`ig-ast.ts validity <base> --ig <root>`: folio-assistant-core's compiledValidity on the manifest's inputs, with the input digest recomputed by the same algorithm as the Java writer. Exit 0 valid, 1 stale-inputs (names which input), 2 cannot-tell. Run against the BASE revision's checkout.",
-      "notation": "Task_Validity",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Validity",
-      "status": "candidate"
-    },
-    {
       "id": "process_ingestion.callactivity_buildkg",
       "prefLabel": "Build the L1 knowledge graph [document-intake]",
       "definition": "See ingest-build-l1-kg.bpmn.",

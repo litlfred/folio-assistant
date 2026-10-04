@@ -228,7 +228,7 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `cat-harness/processes/kg/*.bpmn (6)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
@@ -237,7 +237,7 @@ graph. That is a determined zero, not an unfilled field.
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
-| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
@@ -290,14 +290,14 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/content/*.bpmn (4)` | `xmlns` binding |
+| `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `cat-harness/processes/kg/*.bpmn (6)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (14)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
-| `fhir-harness/processes/content/*.bpmn (2)` | `xmlns` binding |
+| `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |

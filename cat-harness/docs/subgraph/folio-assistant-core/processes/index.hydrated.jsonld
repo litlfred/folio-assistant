@@ -1385,7 +1385,6 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview/node/Task_DetectScope",
           "@type": "bootstrap:ProcessNode",
           "bpmnType": "bpmn:Task",
-          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/semantic-review-scoping",
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview/lane/Lane_Agent",
           "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview/flow/a1",
           "name": "Detect change scope & impact",
@@ -3947,7 +3946,6 @@
           "bpmnType": "bpmn:ServiceTask",
           "implementedBy": [
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
-            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publication",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-kg-to-cdn"
           ],
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/lane/Lane_PubMgr",

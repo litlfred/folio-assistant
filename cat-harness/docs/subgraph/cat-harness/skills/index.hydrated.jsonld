@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 278,
+      "fileCount": 279,
       "holdsGraph": [
         "bootstrap:graphKind/skills"
       ],
@@ -2128,6 +2128,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
@@ -2318,6 +2319,25 @@
                 "sha256": "6653b52382b04b008ddcac69a3bf51bbec32e5b39d25a1a06db8781504ed4a39"
               },
               "title": "Acquisition is the step before ingestion, and it had no home"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 460,
+              "instructionsPath": "skills/library/library-core/document-intake.md",
+              "name": "document-intake",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3240df35df8a834cf66cbd875304db16ea5590dcf2d202036e577e09224759bb",
+                "bytes": 20853,
+                "sha256": "3240df35df8a834cf66cbd875304db16ea5590dcf2d202036e577e09224759bb"
+              },
+              "title": "Document Intake"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
@@ -3809,13 +3829,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 385,
+              "instructionLines": 554,
               "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
               "name": "merge-queue",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cfda6f1daa9f59c10215104fa54d0201fa5171e016331d3489d4716ef37a7053",
-                "bytes": 19630,
-                "sha256": "cfda6f1daa9f59c10215104fa54d0201fa5171e016331d3489d4716ef37a7053"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86fd8b68125bc827ea6a3905ef882bd1d877fff45100a5da4ebc2ea940489d84",
+                "bytes": 28343,
+                "sha256": "86fd8b68125bc827ea6a3905ef882bd1d877fff45100a5da4ebc2ea940489d84"
               },
               "title": "Merge queue — what lands next, and as what"
             },
@@ -3980,13 +4000,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 552,
+              "instructionLines": 559,
               "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
               "name": "prepare-merge",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c2963868f94a05c1aa66e3aeaf30d221b453a3429c805c34574a46aa8a1ddf58",
-                "bytes": 31552,
-                "sha256": "c2963868f94a05c1aa66e3aeaf30d221b453a3429c805c34574a46aa8a1ddf58"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3106f711b3f6cf8a9f43dae125c9b61d9e0c559dc8fecd673c28e75db6d8158c",
+                "bytes": 31970,
+                "sha256": "3106f711b3f6cf8a9f43dae125c9b61d9e0c559dc8fecd673c28e75db6d8158c"
               },
               "title": "Prepare-merge — get a feature branch ready to land"
             },
