@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-step-summaries/skills/content-feedback/input.schema.json",
+  "title": "Content Feedback Input",
+  "description": "Input schema for feedback collection and triage.",
+  "type": "object",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "github-issues",
+        "survey",
+        "implementation-report",
+        "clinical-review"
+      ],
+      "description": "Source of feedback."
+    },
+    "publishedVersion": {
+      "type": "string",
+      "description": "Version the feedback relates to."
+    },
+    "feedbackItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "enhancement"
+            ]
+          },
+          "component": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/step-summaries",
+    "sha": "05d4d9d507f4e10dc922aa53292e1c914b2c5af9",
+    "pr": "2016/merge",
+    "run": "37184517601"
+  }
+}

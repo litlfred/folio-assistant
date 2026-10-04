@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-step-summaries/skills/content-publish/output.schema.json",
+  "title": "Content Publish Output",
+  "description": "Output schema for content publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "status"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "published",
+        "failed"
+      ]
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    }
+  },
+  "staging": {
+    "branch": "claude/step-summaries",
+    "sha": "05d4d9d507f4e10dc922aa53292e1c914b2c5af9",
+    "pr": "2016/merge",
+    "run": "37184517601"
+  }
+}
