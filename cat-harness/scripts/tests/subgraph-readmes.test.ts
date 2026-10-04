@@ -216,7 +216,7 @@ test("a link destination is percent-encoded per segment, parentheses included", 
  * `declarationFile` — and only from entries that are NOT `subgraph: true`.
  * Anything undeclared keeps the file count: absent stays absent.
  */
-describe("subdirectory rows — described from the declaration, or counted", async () => {
+describe("subdirectory rows — described from the declaration, or saying nothing does (no count, bean ba9e)", async () => {
   const r = mkdtempSync(join(tmpdir(), "subgraph-subdirs-"));
   const inst = join(r, "demo");
   const work = join(inst, "work");
@@ -252,14 +252,15 @@ describe("subdirectory rows — described from the declaration, or counted", asy
     expect(readme).toContain("| [`parts/`](parts/) | The parts of the plan. | |");
   });
 
-  test("a promoted (`subgraph: true`) directory describes itself elsewhere; its row keeps the count", () => {
-    expect(readme).toMatch(/\| \[`promoted\/`\]\([^)]*\) \| 1 file \|/);
+  test("a promoted (`subgraph: true`) directory describes itself elsewhere; its row borrows nothing", () => {
+    expect(readme).toContain("| [`promoted/`](promoted/) | _nothing declares what this holds_ | |");
     expect(readme).not.toContain("Its own subgraph.");
   });
 
-  test("no description, or no declaration at all, stays a count — nothing is invented", () => {
-    expect(readme).toContain("| [`nodesc/`](nodesc/) | 1 file | |");
-    expect(readme).toContain("| [`undeclared/`](undeclared/) | 1 file | |");
+  test("no description, or no declaration at all, says so — nothing is invented, and nothing is counted", () => {
+    expect(readme).toContain("| [`nodesc/`](nodesc/) | _nothing declares what this holds_ | |");
+    expect(readme).toContain("| [`undeclared/`](undeclared/) | _nothing declares what this holds_ | |");
+    expect(readme).not.toContain("1 file");
     expect(readme).not.toContain("Not a row of work/.");
   });
 
