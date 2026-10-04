@@ -176,15 +176,15 @@ describe("chromeFileFor", () => {
   });
 
   test("a PATH reaches an instance the one-level scan cannot: the platform as a submodule in a fork (n3ni stage E)", () => {
-    // In litlfred/smart-trust, smart-base lives at folio-assistant/smart-base, two levels down.
+    // In an IG fork the platform is a submodule, so the chrome's owner sits two levels down.
     const d = deps(
-      ["/fork/folio-assistant", "/fork/smart-base"],
-      { "/fork/folio-assistant": "folio-assistant", "/fork/smart-base": "smart-trust", "/fork/folio-assistant/smart-base": "smart-base" },
-      { "/fork/folio-assistant/smart-base": ["/fork/folio-assistant/smart-base/themes"] },
-      ["/fork/folio-assistant/smart-base/themes/chrome.json"],
+      ["/fork/platform", "/fork/ig-data"],
+      { "/fork/platform": "platform", "/fork/ig-data": "some-ig", "/fork/platform/base-harness": "base-harness" },
+      { "/fork/platform/base-harness": ["/fork/platform/base-harness/themes"] },
+      ["/fork/platform/base-harness/themes/chrome.json"],
     );
-    expect(chromeFileFor("/fork", "smart-base", d)).toBeUndefined();
-    expect(chromeFileFor("/fork", "folio-assistant/smart-base", d)).toBe("/fork/folio-assistant/smart-base/themes/chrome.json");
+    expect(chromeFileFor("/fork", "base-harness", d)).toBeUndefined();
+    expect(chromeFileFor("/fork", "platform/base-harness", d)).toBe("/fork/platform/base-harness/themes/chrome.json");
   });
 
   test("a path to a directory that declares no instance yields undefined, never a guess", () => {
