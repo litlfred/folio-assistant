@@ -67,11 +67,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`methodologies/`](methodologies/) | _nothing declares what this holds_ | |
 | [`payload/`](payload/) | _nothing declares what this holds_ | |
 | [`processes/`](processes/) | _nothing declares what this holds_ | |
-| [`proposals/`](proposals/) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
+| [`proposals/`](proposals/README.md) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | _nothing declares what this holds_ | |
 | [`qa/`](qa/) | _nothing declares what this holds_ | |
 | [`reference/`](reference/) | _nothing declares what this holds_ | |
-| [`requirements/`](requirements/) | What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. | |
+| [`requirements/`](requirements/README.md) | What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. | |
 | [`research-and-analysis/`](research-and-analysis/) | _nothing declares what this holds_ | |
 | [`ru/`](ru/) | _nothing declares what this holds_ | |
 | [`site/`](site/) | _nothing declares what this holds_ | |

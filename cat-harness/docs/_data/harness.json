@@ -474,12 +474,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 19
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 10
+          "value": 19
         },
         {
           "id": "views",
@@ -489,9 +489,29 @@
       ],
       "visualisations": [
         {
+          "kind": "bean-defs",
+          "note": "no viewer yet",
+          "label": "Bean definitions"
+        },
+        {
+          "kind": "bean-notes",
+          "note": "no viewer yet",
+          "label": "Bean notes"
+        },
+        {
           "kind": "beans",
           "path": "/beans/",
           "label": "Beans"
+        },
+        {
+          "kind": "board-positions",
+          "note": "no viewer yet",
+          "label": "Board positions"
+        },
+        {
+          "kind": "boards",
+          "note": "no viewer yet",
+          "label": "Boards"
         },
         {
           "kind": "code",
@@ -525,6 +545,26 @@
           "label": "Memory"
         },
         {
+          "kind": "merge-queue",
+          "note": "no viewer yet",
+          "label": "Merge queue"
+        },
+        {
+          "kind": "session-survey",
+          "note": "no viewer yet",
+          "label": "Session surveys"
+        },
+        {
+          "kind": "todo-feedback",
+          "note": "no viewer yet",
+          "label": "Todo feedback"
+        },
+        {
+          "kind": "todo-items",
+          "note": "no viewer yet",
+          "label": "Todo items"
+        },
+        {
           "kind": "todos",
           "path": "/todos/",
           "label": "Todos"
@@ -538,6 +578,11 @@
           "kind": "waiver",
           "note": "no viewer yet",
           "label": "Waivers"
+        },
+        {
+          "kind": "workflow-state",
+          "note": "no viewer yet",
+          "label": "Workflow state"
         }
       ],
       "subgraphs": [
@@ -613,10 +658,90 @@
           ],
           "where": "local",
           "path": "docs/"
+        },
+        {
+          "id": "defs",
+          "kinds": [
+            "bean-defs"
+          ],
+          "where": "local",
+          "path": "beans/defs/"
+        },
+        {
+          "id": "archive",
+          "kinds": [
+            "bean-defs"
+          ],
+          "where": "local",
+          "path": "beans/defs/archive/"
+        },
+        {
+          "id": "notes",
+          "kinds": [
+            "bean-notes"
+          ],
+          "where": "local",
+          "path": "beans/notes/"
+        },
+        {
+          "id": "workflows",
+          "kinds": [
+            "workflow-state"
+          ],
+          "where": "local",
+          "path": "beans/workflows/"
+        },
+        {
+          "id": "queue",
+          "kinds": [
+            "merge-queue"
+          ],
+          "where": "local",
+          "path": "beans/queue/"
+        },
+        {
+          "id": "surveys",
+          "kinds": [
+            "session-survey"
+          ],
+          "where": "local",
+          "path": "beans/surveys/"
+        },
+        {
+          "id": "items",
+          "kinds": [
+            "todo-items"
+          ],
+          "where": "local",
+          "path": "todos/items/"
+        },
+        {
+          "id": "feedback",
+          "kinds": [
+            "todo-feedback"
+          ],
+          "where": "local",
+          "path": "todos/feedback/"
+        },
+        {
+          "id": "boards",
+          "kinds": [
+            "boards"
+          ],
+          "where": "local",
+          "path": "todos/boards/"
+        },
+        {
+          "id": "positions",
+          "kinds": [
+            "board-positions"
+          ],
+          "where": "local",
+          "path": "todos/boards/"
         }
       ],
       "findings": [
-        "folio-assistant: declares 4 graph(s) with no published viewer — code, interaction, memory, waiver. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: declares 13 graph(s) with no published viewer — bean-defs, bean-notes, board-positions, boards, code, interaction, memory, merge-queue, session-survey, todo-feedback, todo-items, waiver, workflow-state. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
@@ -2244,12 +2369,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 33
+          "value": 51
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 27
+          "value": 28
         },
         {
           "id": "views",
@@ -2392,6 +2517,12 @@
           "kind": "vocab-mapping",
           "note": "no viewer yet",
           "label": "Vocab mapping"
+        },
+        {
+          "kind": "voice-vendors",
+          "within": "voices",
+          "note": "no viewer yet",
+          "label": "Voice vendors"
         },
         {
           "kind": "voices",
@@ -2664,10 +2795,154 @@
           ],
           "where": "local",
           "path": "cat-harness/skills/voices/"
+        },
+        {
+          "id": "vendors",
+          "kinds": [
+            "voice-vendors"
+          ],
+          "where": "local",
+          "path": "cat-harness/skills/voices/vendors/"
+        },
+        {
+          "id": "agent-skill-authoring-claude",
+          "kinds": [
+            "voice-vendors"
+          ],
+          "where": "local",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-claude/"
+        },
+        {
+          "id": "agent-skill-authoring-gemini-cli",
+          "kinds": [
+            "voice-vendors"
+          ],
+          "where": "local",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli/"
+        },
+        {
+          "id": "agent-skill-authoring-openai",
+          "kinds": [
+            "voice-vendors"
+          ],
+          "where": "local",
+          "path": "cat-harness/skills/voices/vendors/agent-skill-authoring-openai/"
+        },
+        {
+          "id": "proposals",
+          "kinds": [
+            "proposals"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/proposals/"
+        },
+        {
+          "id": "requirements",
+          "kinds": [
+            "requirements"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/requirements/"
+        },
+        {
+          "id": "auto-docs",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/"
+        },
+        {
+          "id": "glossary",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/glossary/"
+        },
+        {
+          "id": "index-dmn",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/dmn/"
+        },
+        {
+          "id": "index-docs",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/docs/"
+        },
+        {
+          "id": "index-processes",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/processes/"
+        },
+        {
+          "id": "index-roles",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/roles/"
+        },
+        {
+          "id": "index-schemas",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/schemas/"
+        },
+        {
+          "id": "index-skills",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/"
+        },
+        {
+          "id": "index-tasks",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/tasks/"
+        },
+        {
+          "id": "index-tools",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/cat-harness/auto-docs/index/tools/"
+        },
+        {
+          "id": "uml-overview-pages",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/uml/overview/"
+        },
+        {
+          "id": "uml-overview-svgs",
+          "kinds": [
+            "auto-docs"
+          ],
+          "where": "local",
+          "path": "cat-harness/docs/assets/img/uml/overview/"
         }
       ],
       "findings": [
-        "cat-harness: declares 8 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 9 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3093,6 +3368,12 @@
       {
         "kind": "vocab-mapping",
         "label": "Vocab mapping",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "voice-vendors",
+        "label": "Voice vendors",
+        "within": "voices",
         "note": "no viewer yet"
       },
       {
