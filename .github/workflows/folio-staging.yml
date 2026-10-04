@@ -293,6 +293,38 @@ jobs:
             --folio "$FOLIO_DIR" --base "origin/$BASE_REF" --head worktree \
             --out "$SITE_DIR/changeset.json" --text-out "$SITE_DIR/changeset-text.json"
 
+      - name: Fetch the folio's QA results from its qa-reports branch
+        # Bean `tfqf`, reader audit R60. The folio's derived QA verdicts are
+        # published to ITS OWN `qa-reports` branch (keyed `pr/<n>/<sha>`, the
+        # same layout as the platform's), and once they leave the folio's
+        # checkout this is the only way the sweep below sees the verdicts it
+        # merges into and the summary below sees the verdicts it reports.
+        # Run from the FOLIO's root, so the store is the folio's remote.
+        #
+        # A miss is said, never read as clean, and never fails the preview:
+        # a folio that has not adopted the store has no branch, and its
+        # committed verdicts (if any) are what the summary reads. The summary
+        # itself records whether it found a corpus (`corpus.state`), so a
+        # preview with none says "QA not available" rather than "unaudited".
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -u
+          if [ -z "$PR" ]; then
+            echo "::notice title=qa fetch::not a pull request; no pr/<n> entry to fetch — the checkout's verdicts (if any) are used"
+            exit 0
+          fi
+          set +e
+          bun run "$PLATFORM_DIR/cat-harness/scripts/qa-store.ts" fetch --ref "pr/$PR"
+          rc=$?
+          set -e
+          case "$rc" in
+            0) echo "fetched the folio's QA results for pr/$PR" ;;
+            1) echo "::notice title=qa fetch::no qa-reports entry for pr/$PR — a miss is not a clean result; the checkout's verdicts (if any) are used" ;;
+            *) echo "::warning title=qa fetch::could not read the folio's qa-reports branch (exit $rc) — NOT a pass; the checkout's verdicts (if any) are used" ;;
+          esac
+
       - name: Sweep the folio's QA
         # The owner's ask: "setup proper QA on init" (bean `tw61`). Without it a
         # new folio's preview read "unaudited" on every block, because nothing

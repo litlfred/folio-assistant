@@ -11,9 +11,10 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *
  * Bean `g6yr` shipped the icon as a dead `<span>` with counts in a tooltip, and
  * closed with the honest note that how it looks was never verified. This spec
- * is the missing half: a real browser, the real `docs-ui.js`, and the real
- * `qa-witness/v1` files the generator wrote — not a hand-made fixture that can
- * agree with the code while the code disagrees with the corpus.
+ * is the missing half: a real browser, the real `docs-ui.js`, and
+ * `qa-witness/v1` files the generator wrote (copied into a fixture, with the
+ * shape checked) — not a hand-made fixture that can agree with the code while
+ * the code disagrees with what the generator writes.
  *
  * Every assertion below is about a fact a reader would otherwise have to take
  * on trust:
@@ -28,9 +29,15 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *  - a fetch that fails says so, naming the file. A panel that opens empty is
  *    indistinguishable from a subject with nothing to report.
  *
- * The page is served through `page.route` rather than from a committed fixture:
- * the harness is the theme's structure plus one icon, and the JSON is read off
- * disk, so nothing here can drift from what the generator produces.
+ * The page is served through `page.route`: the harness is the theme's
+ * structure plus one icon. The `qa-witness/v1` JSON is a COMMITTED FIXTURE
+ * under `test/support/fixtures/qa-e2e/` — copies of what the generator wrote
+ * for these two subjects. Until bean `cxcn` (reader audit R73) it was read
+ * from `test/results/witnesses/`, a derived tree that is leaving `main`
+ * (bean `5hox`), so the spec failed on any checkout without it. What keeps the
+ * copy honest about SHAPE is `scripts/tests/qa-e2e-fixtures.test.ts`, which
+ * checks it against the `QaWitnessDoc` contract; verdicts were never taken
+ * from it — they are pinned below.
  */
 
 // `import.meta.dir` is a Bun extension and undefined under Node, which is what
@@ -40,11 +47,11 @@ const SITE = siteDirFor(ROOT);
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
-/** A block sidecar from the corpus, and two states derived from it. */
-const CORPUS_PATH = join(
-  ROOT,
-  "test/results/witnesses/crdm-methodology/what-is-not-built-yet.block.json",
-);
+/**
+ * A block witness doc — the fixture copy of the generator's projection for
+ * `crdm-methodology/what-is-not-built-yet` — and two states derived from it.
+ */
+const CORPUS_PATH = join(ROOT, "test/support/fixtures/qa-e2e/block-witness.json");
 
 /**
  * The same document with one criterion made to FAIL.
@@ -92,10 +99,13 @@ const LOUD_ID = "voice-status-leak";
  * DOCUMENT order, so a panel that sorted nothing at all would pass; that is
  * precisely how the original verbatim fixture managed to assert nothing here.
  *
- * The witness stays the corpus's own rather than being written out as a
- * literal: test 2 asserts the witness's own `scriptHash` (see {@link SCRIPT_HASH}),
- * and a frozen copy keeps passing after the voice checker changes — a fixture
- * drifting from the corpus is the exact defect this section exists to fix.
+ * The witness is the generator's own output, copied into the fixture rather
+ * than written out as a literal: test 2 asserts the witness's own `scriptHash`
+ * read off that copy (see {@link SCRIPT_HASH}), so the assertion is about the
+ * panel SHOWING the recorded hash, whatever it is. The copy no longer tracks
+ * the live corpus (bean `cxcn`, R73) — that tree leaves `main` with bean
+ * `5hox` — and its SHAPE is held to the `QaWitnessDoc` contract by
+ * `scripts/tests/qa-e2e-fixtures.test.ts`.
  *
  * Built through `test/support/qa-fixture.ts`, which throws by name if
  * `LOUD_ID` ever leaves the sidecar. Bean `iumj`.
@@ -177,9 +187,7 @@ const STALE_JSON = applyVerdicts(BLOCK_JSON, [{ id: LOUD_ID, stale: { changed: [
  * `scripts/tests/e2e-corpus-coupling.test.ts` fails a raw `readFileSync` of a
  * corpus path in any e2e spec, so the helper is the declaration of intent.
  */
-const KG_JSON = sidecar(
-  join(ROOT, "test/results/witnesses/publication-workflow/editing-and-the-hci-validation-gate.kg.json"),
-);
+const KG_JSON = sidecar(join(ROOT, "test/support/fixtures/qa-e2e/kg-witness.json"));
 
 const PAGE_URL = "http://qa.test/page.html";
 

@@ -27,10 +27,16 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
  *   - **could-not-determine** — the index would not load, or holds no row for
  *     this badge. Rendered `unknown`, never as either of the above.
  *
- * A fourth state is server-rendered and never reaches the painter: a subject
- * with NO sidecar is an inert `<span class="fa-qa-unswept">`. "Nobody checked"
- * and "somebody checked and nothing applied" are different facts and this repo
- * has paid for collapsing that kind of pair before.
+ * Two more are INERT, and since bean `4l4d` the index decides them too, not
+ * the page: the committed page carries one uniform placeholder whatever the QA
+ * corpus says, so that it is the same with `test/results/` fetched or absent.
+ *
+ *   - **not swept** — the key is in the index's `unswept` list: no sidecar,
+ *     nobody has ruled. "Nobody checked" and "somebody checked and nothing
+ *     applied" are different facts and this repo has paid for collapsing that
+ *     kind of pair before;
+ *   - **not available in this build** — the index says `corpus: "absent"`:
+ *     the build had no QA results, so whether anything was swept is unknown.
  *
  * **The markup is the generator's own, lifted out of `docs/publication-workflow.md`.**
  * The verdicts are NOT the corpus's: `qa-badge-fixture.ts` sets them, and
@@ -46,7 +52,16 @@ const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 const PAGE_MD = join(ROOT, SITE, "publication-workflow.md");
-const INDEX_JSON = join(ROOT, "test/results/witnesses/publication-workflow/qa-index.json");
+/**
+ * The page's badge index, as a COMMITTED FIXTURE — a copy of the generator's
+ * `folio-qa-index/v1` output for this page. It was read from
+ * `test/results/witnesses/…` until bean `cxcn` (reader audit R72): that tree
+ * is a derived artefact leaving `main` (bean `5hox`), so a spec reading it
+ * fails on a checkout that does not carry it. `qa-e2e-fixtures.test.ts`
+ * validates the fixture against `QaIndexSchema`, and `indexWithRows` still
+ * throws by name if a node this spec drives is not in it.
+ */
+const INDEX_JSON = join(ROOT, "test/support/fixtures/qa-e2e/badge-index.json");
 
 /**
  * The nodes this spec drives, named once. Each is asserted to still exist —
@@ -209,7 +224,7 @@ test.describe("the index loads", () => {
     await expect(glyph).toBeVisible();
     await expect(glyph).toHaveText("?");
     await expect(b).toHaveAccessibleName(
-      "Content QA: could not determine — this page's verdict index could not be read",
+      "Content QA: could not determine — this page's verdict index has no row for this block",
     );
   });
 
@@ -226,12 +241,12 @@ test.describe("the index loads", () => {
     );
   });
 
-  test("a never-swept subject is server-rendered and the painter leaves it alone", async ({
+  test("a never-swept subject is painted inert from the index's `unswept` list", async ({
     page,
   }) => {
-    // Structure, not a verdict: whether a sidecar EXISTS is a file-existence
-    // question the generator can answer, and answering it in the browser would
-    // have collapsed "nobody checked" into "the fetch found nothing".
+    // Whether a sidecar EXISTS is a fact about the fetched QA corpus, so the
+    // index says it (bean `4l4d`) — as its own list, never as a missing row,
+    // which would collapse "nobody checked" into "the fetch found nothing".
     await page.goto(PAGE_URL);
     const tr = page.locator(".fa-qa-badge.fa-qa-fam-translation").first();
     await expect(tr).toHaveClass(/fa-qa-unswept/);
@@ -272,6 +287,9 @@ test.describe("the index does not load", () => {
       await expect(b).not.toHaveClass(/fa-qa-pending/);
       await expect(b.locator(".fa-qa-glyph")).toHaveText("?");
     }
+    await expect(page.locator(badge(LOUD))).toHaveAccessibleName(
+      "Content QA: could not determine — this page's verdict index is not available in this build",
+    );
   });
 
   test("a badge that could not be painted still opens, and the panel names the file", async ({
@@ -289,5 +307,48 @@ test.describe("the index does not load", () => {
     await expect(panel).toBeVisible();
     await expect(panel).toContainText("Could not load the QA detail");
     await expect(panel).toContainText("overview.block.json");
+  });
+});
+
+test.describe("the index says the build had no QA corpus", () => {
+  // Bean `4l4d`. With `test/results/` not fetched, the generator still writes
+  // the page's index, saying `corpus: "absent"` with no rows. Every badge must
+  // then read "not available in this build" — never "not swept" (that is a
+  // claim nobody checked) and never a verdict.
+  const ABSENT = JSON.stringify({
+    $schema: "folio-qa-index/v1",
+    page: "publication-workflow",
+    corpus: "absent",
+    badges: {},
+    unswept: [],
+  });
+
+  test.beforeEach(async ({ page }) => {
+    await page.route("http://qa.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) {
+        return route.fulfill({ contentType: "text/html", body: harness(ALL) });
+      }
+      if (url.endsWith(INDEX_URL)) {
+        return route.fulfill({ contentType: "application/json", body: ABSENT });
+      }
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+  });
+
+  test("every badge reads 'not available in this build', inert, and none a verdict", async ({ page }) => {
+    await page.goto(PAGE_URL);
+    for (const key of ALL) {
+      const b = page.locator(badge(key));
+      await expect(b).toHaveClass(/fa-qa-unavailable/);
+      for (const wrong of ["fa-qa-pass", "fa-qa-fail", "fa-qa-warn", "fa-qa-empty", "fa-qa-pending"]) {
+        await expect(b).not.toHaveClass(new RegExp(wrong));
+      }
+      expect(await b.evaluate((n) => n.tagName)).toBe("SPAN");
+      await expect(b).not.toHaveAttribute("data-qa-src", /./);
+    }
+    await expect(page.locator(badge(LOUD))).toHaveAccessibleName(
+      "Content QA: not available in this build — the QA results were not fetched, so whether this was swept is unknown",
+    );
   });
 });
