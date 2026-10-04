@@ -39,10 +39,10 @@ through <a href="human-agent-discussion.html"><code>human-agent-discussion</code
 step written out.</p><p><strong>Do not create an empty declared directory to make its step pass.</strong> Git
 does not track an empty directory, so the check would pass on your machine
 and fail on every clone. Put its first file in it, or ask whether the entry
-should go.</p><h2>Where tools are available</h2><p>A toolset may perform the checks for you. bootstrap-tools' <code>init</code> command
+should go.</p><h2>Where tools are available</h2><p>A toolset may perform the checks for you — for example <a href="https://github.com/litlfred/bootstrap-tools">https://github.com/litlfred/bootstrap-tools</a>, whose <code>init</code> command
 reads the same declarations, does what a tool can (regenerating README
 sections; switching Pages on when an authenticated <code>gh</code> is present), and
-prints each step in these four states with what to do next:</p><pre><code class="language-sh">bun run scripts/init.ts --root ../&#x3C;instance>        # from a bootstrap-tools checkout beside it
+prints each step in these four states with what to do next:</p><pre><code class="language-sh">bun run scripts/init.ts --root ../&#x3C;instance>        # from a toolset checkout beside it
 bun run scripts/init.ts --root ../&#x3C;instance> --dry-run   # check only
 </code></pre><p>Where no tools are available, do the same by reading files. The diagram is
 the same either way, and so is the report.</p><h2>The report</h2><p>One report through <a href="log-message.html"><code>log-message</code></a>, <strong>led by the primary

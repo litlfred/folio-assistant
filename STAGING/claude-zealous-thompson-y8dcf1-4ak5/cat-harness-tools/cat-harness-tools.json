@@ -218,6 +218,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
     },
+    "fileCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
     "hasInstructions": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasInstructions",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -314,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T08:44:06.277Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b89b2296d24522411c51a453371adf583d677cdd",
-  "sourceCommitSha": "b89b2296d24522411c51a453371adf583d677cdd",
-  "sourceCommitAt": "2026-10-04T08:39:56Z",
+  "generatedAt": "2026-10-04T09:01:11.703Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/368cb53cb3ad94df0adcd251aa19c98e4a979315",
+  "sourceCommitSha": "368cb53cb3ad94df0adcd251aa19c98e4a979315",
+  "sourceCommitAt": "2026-10-04T08:54:10Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -347,6 +351,7 @@
       ],
       "description": "The standalone MCP server (`adapters/mcp-server/`): its tool registrars, the declared tool groups that load them, and the Dockerfile that packages it. Moved from `cat-harness/adapters/mcp-server/` (bean `w2gr`, step 3a) because it is a server, and the owner ruled that tool implementations live here while their definitions stay in cat-harness.",
       "readmePath": "adapters/README.md",
+      "fileCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-adapters"
     },
     {
@@ -363,6 +368,7 @@
       ],
       "description": "Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `content/pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition.",
       "readmePath": "schemas/README.md",
+      "fileCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-schemas"
     },
     {
@@ -379,6 +385,7 @@
       ],
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
       "readmePath": "scripts/README.md",
+      "fileCount": 8,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-scripts"
     },
     {
@@ -395,6 +402,7 @@
       ],
       "description": "The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (`who-iris/id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).",
       "readmePath": "id-lookup/README.md",
+      "fileCount": 4,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-id-lookup"
     },
     {
@@ -411,6 +419,7 @@
       ],
       "description": "Tests of the code this layer holds, moved with their subjects so the harness keeps no test importing upward into this layer: `composition-roots` (the declared tool groups and route mounting) and `mcp-graph-tools`.",
       "readmePath": "test/README.md",
+      "fileCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-tests"
     },
     {
@@ -434,8 +443,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-thompson-y8dcf1-4ak5",
-    "sha": "51abeb0dc6c5ad8369e9dafea80f55baa2e134dd",
+    "sha": "994b21ad156b38f8af54efe180984b3823aee068",
     "pr": "2067/merge",
-    "run": "37189660091"
+    "run": "37190570229"
   }
 }

@@ -15,10 +15,10 @@ that trade under `renderExemption`, and its `owes` field names this Skill. An
 exemption with nothing owed in its place would be a gap.
 
 bootstrap runs nothing (FR-7 of the [README](../README.md)), so the file is
-written by bootstrap-tools, bootstrap's own tools repository. It is the one
+written by bootstrap's toolset, a separate repository. It is the one
 file bootstrap publishes that names what wrote it, and it says so inside
 itself: an `rdfs:comment` that it is generated and not to be edited, and
-`prov:wasAttributedTo` naming bootstrap-tools. This Skill states what the file
+`prov:wasAttributedTo` naming the toolset's repository. This Skill states what the file
 must hold. Its shape is fixed by a schema, and the tool is tested against it.
 
 ## In whose terms

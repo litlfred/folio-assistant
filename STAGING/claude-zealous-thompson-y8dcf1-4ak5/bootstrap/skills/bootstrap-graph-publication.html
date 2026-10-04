@@ -16,7 +16,7 @@ differs, the <code>@id</code> leads nowhere, in the one file whose purpose is to
 up. So the publisher derives the published path from the <code>@id</code>, never the
 other way round, and there is exactly <strong>one</strong> publisher. Two publishers at
 one address means whichever runs last wins, and nobody can see it happen.
-That publisher is bootstrap-tools. Only the published build adds the commit
+That publisher is bootstrap's toolset, never bootstrap itself (FR-7). Only the published build adds the commit
 and time it was made from (PROV, at the top level); a build for a check leaves
 them out, so two checks of one tree agree.</p><p>The address follows the general pattern for anything a Harness publishes:
 <code>&#x3C;base>/&#x3C;harness name>/&#x3C;file></code>, with <code>bootstrap</code> as the Harness name.</p><h2>The <code>.json</code> copy</h2><pre><code>&#x3C;base>/bootstrap/bootstrap.json

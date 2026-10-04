@@ -218,6 +218,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
     },
+    "fileCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
     "hasInstructions": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasInstructions",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -314,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T08:44:08.402Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b89b2296d24522411c51a453371adf583d677cdd",
-  "sourceCommitSha": "b89b2296d24522411c51a453371adf583d677cdd",
-  "sourceCommitAt": "2026-10-04T08:39:56Z",
+  "generatedAt": "2026-10-04T09:01:13.482Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/368cb53cb3ad94df0adcd251aa19c98e4a979315",
+  "sourceCommitSha": "368cb53cb3ad94df0adcd251aa19c98e4a979315",
+  "sourceCommitAt": "2026-10-04T08:54:10Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -354,6 +358,7 @@
       ],
       "description": "The harness's shapes: `cat-openapi.config.json` (what an instance names), the ingest's provenance node, the subset of OpenAPI 3 the pages read, and how an operation's id is derived.",
       "readmePath": "schemas/README.md",
+      "fileCount": 2,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-schemas"
     },
     {
@@ -370,6 +375,7 @@
       ],
       "description": "The rendering sub-pipeline: `ingest-openapi.ts` copies a configured document in verbatim with its provenance; `gen-openapi-pages.ts` writes a JSON-LD node and a thin page per document and per operation; `templates/` holds the one shared loader that draws them in the browser.",
       "readmePath": "scripts/README.md",
+      "fileCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-openapi/cat-openapi.jsonld#directory/cat-openapi-scripts"
     },
     {
@@ -393,8 +399,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-thompson-y8dcf1-4ak5",
-    "sha": "51abeb0dc6c5ad8369e9dafea80f55baa2e134dd",
+    "sha": "994b21ad156b38f8af54efe180984b3823aee068",
     "pr": "2067/merge",
-    "run": "37189660091"
+    "run": "37190570229"
   }
 }
