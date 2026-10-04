@@ -3481,6 +3481,445 @@
           "touchesWorkPlan": false
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/public-comment.svg",
+          "description": "A frozen, line-numbered draft went out for public review. This is what\nhappens to ONE comment that comes back: placed on the block it cites,\ntriaged, weighed by the review committee, decided by the editor and, if\nthe decision changes the document, made on a feature branch whose\nstaging preview shows the text before and after. The change set is\nreviewed by the same process as any content change\n(Process_ContentChangeReview); only the intake is new. Skill:\npublic-comment.",
+          "enforcement": "strict",
+          "flowCount": 16,
+          "name": "Public comment on a review draft",
+          "nodeCount": 17,
+          "sourcePath": "../folio-assistant-core/processes/content/public-comment.bpmn",
+          "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn",
+          "startNode": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested"
+          ],
+          "summary": "A frozen, line-numbered draft went out for public review."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+          "name": "duplicate",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Duplicate"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+          "name": "plain editorial",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_EditorDecides"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+          "name": "no: not accepted, noted, deferred",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Decided"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToAssign",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+          "name": "to be weighed",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Assign"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+          "name": "yes: accepted",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_AuthorEdits"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_AuthorEdits",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToChangesGateway",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_EditorDecides",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToDecide",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_CommitteeRecommends",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_EditorDecides"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Incorporate"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Incorporate",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Incorporated"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIngest",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Ingest"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToRecommend",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Assign",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_CommitteeRecommends"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriage",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Ingest",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriageGateway",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_Triage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToWithdraw",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Withdraw"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToWithdrawn",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Withdraw",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Withdrawn"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Author",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author",
+          "name": "Author (human or agentic)",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider",
+          "name": "Public commenter",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Committee",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/reviewer",
+          "name": "Review committee",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
+          "name": "Review coordinator",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
+          "name": "Editor",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Intake",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
+          "name": "Intake agent",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "name": "Change set — feature branch and staging",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/CallActivity_ChangeSet",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet",
+          "name": "Review the change set on its staging preview",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Decided",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
+          "name": "Decided, answer recorded",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Duplicate",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
+          "name": "Closed as a duplicate",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Incorporated",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated",
+          "name": "Incorporated in the document",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/EndEvent_Withdrawn",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToWithdrawn",
+          "name": "Withdrawn",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_ChangesDocument",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToChangesGateway",
+          "name": "Does the decision change the document?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_NoChange",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_Triage",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriageGateway",
+          "name": "Duplicate, plain editorial, or to be weighed?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToAssign",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+          "name": "Comments returned on the review version",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIngest",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+          "name": "Commenter withdraws a comment",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToWithdraw",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Assign",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToAssign",
+          "name": "Assign to committee members",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToRecommend",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_AuthorEdits",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Author",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToAuthorEdits",
+          "name": "Edit the document as decided, on a feature branch",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToChangeSet",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_CommitteeRecommends",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Committee",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToRecommend",
+          "name": "Recommend a decision, with a rationale",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToDecide",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/reviewer",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_EditorDecides",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Editor",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_EditorialDirect",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToDecide"
+          ],
+          "name": "Decide, weighing the recommendations",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToChangesGateway",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Incorporate",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Pipeline",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporate",
+          "name": "Mark incorporated when the change set merges",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIncorporated",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Ingest",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Intake",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToIngest",
+          "name": "Ingest and place each comment",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriage",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Triage",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Coordinator",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriage",
+          "name": "Triage: confirm the anchor, type and priority",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToTriageGateway",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Task_Withdraw",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToWithdraw",
+          "name": "Record the withdrawal",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_ToWithdrawn",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/feedback-provider",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication",
           "@type": "bootstrap:Process",
           "conformsTo": [
@@ -3490,9 +3929,9 @@
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/draft-to-publication.svg",
           "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
           "enforcement": "strict",
-          "flowCount": 20,
+          "flowCount": 22,
           "name": "Draft, review and publish",
-          "nodeCount": 18,
+          "nodeCount": 19,
           "sourcePath": "../folio-assistant-core/processes/content/draft-to-publication.bpmn",
           "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/draft-to-publication.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/StartEvent_CorpusUpdated",
@@ -3643,6 +4082,20 @@
           "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/EndEvent_Published"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G21",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/Gateway_ReviewFork",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/CallActivity_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G22",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/CallActivity_PublicComment",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/Gateway_ReviewJoin"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/lane/Lane_Build",
           "@type": "cat-harness:Lane",
           "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
@@ -3668,6 +4121,13 @@
           "@type": "cat-harness:Lane",
           "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
           "name": "Publication manager",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/lane/Lane_PublicReview",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
+          "name": "Public review (commenters, review committee, editor)",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication"
         },
         {
@@ -3710,6 +4170,22 @@
           "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G07",
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/editor",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/node/CallActivity_PublicComment",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment",
+          "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/public-comment",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/lane/Lane_PublicReview",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G21",
+          "name": "Public comment on the review version",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G22",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/review-coordinator",
           "relaxable": true,
           "touchesWorkPlan": false
         },
@@ -3772,7 +4248,8 @@
           "nodeKind": "parallel",
           "outgoing": [
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G10",
-            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G11"
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G11",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G21"
           ],
           "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication",
           "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
@@ -3786,7 +4263,8 @@
           "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/lane/Lane_PubMgr",
           "incoming": [
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G12",
-            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G13"
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G13",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/flow/G22"
           ],
           "name": "Gateway_ReviewJoin",
           "nodeKind": "parallel",
