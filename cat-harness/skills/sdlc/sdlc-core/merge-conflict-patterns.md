@@ -123,6 +123,22 @@ So the question to ask is not *which strategy*, it is:
   in step by a gate. Then **take it off `main`**, and keep the declaration for
   the branches still carrying it, where the base has deleted the file and
   take-base resolves that too (see the next section).
+- **Part of it is, and part is not** — the common case, and the one to look for
+  before concluding either of the above. Cut by **what each value is a function
+  of**: a value the TREE determines stays committed and is reviewable; a value
+  determined by some other artefact's CONTENT is produced where that artefact
+  lives. `docs/lsi/index.md` is the worked example — front matter, prose and
+  the verdict table stay, each index's size, poles and findings go — and the
+  front matter is *why* it could not be taken off whole: it declares the
+  harness tile, so an uncommitted page is a page with no way in.
+
+**The trap on the way out.** Taking a page off its store and leaving it
+committed can make it *worse*: once `lsi:viz` had no sidecar in the checkout it
+read `qa-reports` at `main`, which resolves to the **latest published entry**,
+so the committed page would have gone stale whenever anyone else pushed — a
+value depending on when the gate ran rather than on the tree. **`in5a`'s loop,
+arriving over the network.** Whatever stays committed must be computed from the
+tree, deliberately and not by luck.
 
 `.gitattributes` reached the same conclusion from the `-merge` side and states
 it plainly: *"Removing these conflicts, rather than tidying them, needs the
@@ -216,12 +232,13 @@ would be a hand-kept list able to drift from the workflow.
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
 term additions always collide.
 
-The **LSI page** is untracked on `main` since bean `tqjj` — written during the
-docs-site build — and its glob is kept for the branches still carrying it. The
-glossary page is **not** eligible for the same move, and the difference is the
-test in §"A pattern is not always the answer": `main` IS the glossary page's
-record, because a reader navigates to it by name and no per-commit publish
-holds a copy.
+The **LSI page** still conflicts, but much less often since bean `tqjj`: its
+per-index detail — the half a one-sentence skill edit moved — is added by the
+docs-site build rather than committed, and what is left is a function of the
+tree. The glossary page has no equivalent split: every number on it is a term
+count over the whole corpus, so there is no half that only the tree moves. That
+is the second branch of §"A pattern is not always the answer" — `main` is still
+the glossary page's record, and declaring the strategy is all there is to do.
 
 ### `translated-glossary` — take the base, regenerate
 

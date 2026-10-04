@@ -35,40 +35,63 @@
  * `qa-reports` branch ({@link readIndexes}). When that read is not a hit, both
  * exit 2 (could not determine) and write nothing.
  *
- * ## The page is BUILT, not committed — and what `--check` therefore asks
+ * ## Two pages from one generator: the committed one, and `--detail`
  *
- * Bean `tqjj`. It was committed until 2026-10-04, and that cost 319 of the
- * last 400 commits on `main`: the page is an aggregate of every index, so a
- * one-sentence edit to one of 229 skills restaged it. `skill-register.ts`
- * recorded the same thing from the other side — adding one skill left this
+ * Bean `tqjj`. Until 2026-10-04 this wrote ONE page and committed all of it,
+ * and that cost 319 of the last 400 commits on `main`. `skill-register.ts`
+ * recorded the same finding from the other side: adding one skill left the
  * page stale and reddened `main` through this gate.
  *
- * Untracking the index sidecars does not fix that on its own, it moves it.
- * With no sidecar in the checkout this reads `qa-reports` at `main`, which
- * `qa-store` resolves to the LATEST published main entry — so a committed page
- * would go stale whenever anything else pushed to `main`, which is a value
- * that depends on WHEN the gate ran rather than on the tree. That is bean
- * `in5a`'s loop, and a declared merge pattern cannot settle it.
+ * The split is by **what a value is a function of**, and the test is whether a
+ * corpus edit moves it:
  *
- * So the page is written during the docs-site build, after that workflow's
- * `qa:fetch`, from THAT build's evidence — the same shape as
- * `state:visualizer` one step above it. `cat-harness/docs/lsi/` is ignored.
+ * | part | a function of | committed |
+ * |---|---|---|
+ * | front matter, prose, the method links | this file | yes |
+ * | which graphs NEED an index | the TREE (`needOf`) | yes |
+ * | each index's freshness verdict | the STORE | no |
+ * | units, terms, retained, σ, pole terms, cosines | an index's CONTENT | no |
  *
- * `--check` therefore asks the question that remains answerable: **can the
- * page be drawn from this commit's evidence?** It cannot ask whether a
- * committed copy matches, because there is no committed copy; and a gate that
- * cannot fail is bean `xom7`, so it is not dropped either. It still fails on
- * the thing worth catching — an unreadable, missing or corrupt store, which is
- * how this whole arc breaks quietly.
+ * The committed page reads **no index at all**, and the line between rows 2
+ * and 3 is where the first draft of this got it wrong. Computing the verdict
+ * from the tree instead (`graphVerdict` with an absent source takes its
+ * compute-and-judge branch) does make the answer machine-independent — and
+ * turns the page's only finding into a lie: `cat-harness/docs` went from
+ * "needs an LSI index and has none" to **pass**, because an index recomputed
+ * in the run is fresh by construction. The tile went 4 → 0. A value that is
+ * stable because it can no longer say anything is not a measurement.
+ *
+ * Whether a graph NEEDS one is a different question and genuinely tree-
+ * determined: `needOf` counts the graph's units and words against the
+ * thresholds, reads nothing else, and a graph crossing one is a change worth
+ * seeing in a diff. Whether the index it needs is FRESH is irreducibly about
+ * the store, so it is drawn with the detail. Keeping it committed was the trap
+ * on the way out: with no sidecar in the checkout the same commit would say
+ * "fresh" on a container holding a working copy and "stale" in CI reading
+ * `qa-reports` at `main`, which `qa-store` resolves to the LATEST published
+ * entry — a value depending on when the gate ran rather than on the tree,
+ * which is bean `in5a`'s loop arriving over the network.
+ *
+ * `--detail` adds the per-index sections and is run by the docs-site build,
+ * after that workflow's `qa:fetch` pins the entry to the build's own sha. So
+ * the published page carries everything a reader wants and `main` carries
+ * nothing that a one-sentence skill edit moves. The same shape as
+ * `state:visualizer` one step above it in that workflow.
+ *
+ * `--check` keeps its ordinary meaning — is the committed page current — and
+ * is therefore still a gate that fails (bean `xom7`). `--detail --check`
+ * additionally reports whether the detail could be drawn at all; anything but
+ * a hit is exit 2, never a pass.
  */
 
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import {
   CHECKOUT_SOURCE,
   graphVerdict,
   INDEX_DIR,
   indexesInCheckout,
+  needOf,
   proseGraphs,
   RUN_RECORD_DIR,
   sourceFromFiles,
@@ -141,24 +164,40 @@ export function readIndexes(ref = "main"): IndexesRead {
   };
 }
 
-/** The page, or why it could not be drawn. */
+/** The DETAIL page, or why it could not be drawn. */
 export function renderFrom(read: IndexesRead): { state: "hit"; page: string } | { state: "miss" | "corrupt" | "unknown"; reason: string } {
   if (read.state !== "hit") return read;
   return { state: "hit", page: draw(read) };
 }
 
-/** The page over the checkout's indexes. Throws when it cannot be drawn: a test or a caller must not get an empty page back. */
+/**
+ * The COMMITTED page. It reads no index, so it cannot fail for want of one and
+ * takes no `ref`: everything on it is derived from this tree.
+ */
+export function renderCommitted(): string {
+  return draw();
+}
+
+/** The detail page over whatever indexes are reachable. Throws when it cannot be drawn: a test or a caller must not get an empty page back. */
 export function render(): string {
   const r = renderFrom(readIndexes());
   if (r.state !== "hit") throw new Error(`lsi viewer: ${r.state.toUpperCase()} — ${r.reason}`);
   return r.page;
 }
 
-function draw(read: Extract<IndexesRead, { state: "hit" }>): string {
-  const indexes = read.files.map((f) => ({ file: f, s: JSON.parse(read.src.read(relative(REPO, f).split("\\").join("/"))!) as LsiSidecar }));
-  const verdicts = proseGraphs().map((t) => ({ t, v: graphVerdict(t, read.src) }));
-  const needing = verdicts.filter(({ v }) => v.result === "fail").length;
-  const units = indexes.reduce((n, { s }) => n + s.units, 0);
+function draw(read?: Extract<IndexesRead, { state: "hit" }>): string {
+  // No index is read unless `--detail` supplied one. The verdict table is
+  // computed from the tree either way, so the committed page and the built
+  // page agree on it line for line and differ only by the detail sections.
+  const indexes = (read?.files ?? []).map((f) => ({ file: f, s: JSON.parse(read!.src.read(relative(REPO, f).split("\\").join("/"))!) as LsiSidecar }));
+  // Committed: `needOf` only — the tree. With `--detail`: `graphVerdict` over
+  // the indexes that were read, which adds the freshness column. See the
+  // module docblock for why those are two questions and not one.
+  const rows = proseGraphs().map((t) => {
+    const need = needOf(t);
+    return { t, need, v: read ? graphVerdict(t, read.src) : undefined };
+  });
+  const needing = read ? rows.filter((r) => r.v!.result === "fail").length : rows.filter((r) => r.need.needed).length;
 
   const L: string[] = [];
   L.push("---");
@@ -180,17 +219,20 @@ function draw(read: Extract<IndexesRead, { state: "hit" }>): string {
   L.push("A **latent semantic index** places every unit of a prose graph — a library");
   L.push("section, a skill, a bean — in a space built from which words occur");
   L.push("together, so units that discuss the same thing in *different words* sit");
-  L.push("close. It is a retrieval aid: every neighbour and finding below is a");
+  L.push("close. It is a retrieval aid: every neighbour and finding it reports is a");
   L.push("**proposal**, never a relation the graph asserts.");
   L.push("");
   L.push("The method is [Latent Semantic Indexing](../methodologies/) (node " + code("lsi") + "), with");
   L.push("[correspondence analysis](../methodologies/) (node " + code("correspondence-analysis") + ") as its parallel track;");
   L.push("how to build, query and audit an index is the skill " + code("lsi-indexing") + ".");
   L.push("");
+  // ONE tile, and the two that went are the point of bean `tqjj`: "committed
+  // indexes" and "units indexed" both move when any file is added to any
+  // indexed graph, which is the `y7b3` class. What is left is a verdict count
+  // — it moves when a graph crosses the threshold or a verdict flips, which is
+  // a change worth seeing in a diff.
   L.push('<div class="lv-grid">');
-  L.push('<div class="lv-stat"><b>' + indexes.length + "</b><span>committed indexes</span></div>");
-  L.push('<div class="lv-stat"><b>' + units + "</b><span>units indexed</span></div>");
-  L.push('<div class="lv-stat"><b>' + needing + "</b><span>graphs that need an index and lack a fresh one</span></div>");
+  L.push('<div class="lv-stat"><b>' + needing + "</b><span>" + (read ? "graphs that need an index and lack a fresh one" : "graphs that need an index") + "</span></div>");
   L.push("</div>");
   L.push("");
   L.push("## Which graphs need an index");
@@ -199,11 +241,29 @@ function draw(read: Extract<IndexesRead, { state: "hit" }>): string {
   L.push("basis in " + code("scripts/lsi.ts") + ". Below it a graph is **not judged**, which is not");
   L.push("the same as fine. The same verdict is " + code("kg:audit") + "'s " + code("tool-downstream-fresh") + " for the " + code("lsi-index") + " Tool.");
   L.push("");
-  L.push("| graph | verdict | detail |");
-  L.push("|---|---|---|");
-  for (const { t, v } of verdicts) {
-    const cls = v.result === "pass" ? "lv-pass" : v.result === "fail" ? "lv-fail" : "lv-na";
-    L.push("| " + code(t.instance + "/" + t.id) + ' | <span class="' + cls + '">' + v.result + "</span> | " + esc(v.stableDetail) + " |");
+  if (!read) {
+    L.push("Whether an index is **fresh** is a question about the store, not about");
+    L.push("this tree, so it is not on this committed page — the published one carries");
+    L.push("it, drawn from the evidence that build fetched.");
+    L.push("");
+  }
+  L.push(read ? "| graph | needs one | verdict | detail |" : "| graph | needs one |");
+  L.push(read ? "|---|---|---|---|" : "|---|---|");
+  for (const { t, need, v } of rows) {
+    // `needOf` returns the n/a verdict itself when a graph does not need one,
+    // so its own words are used rather than restated here.
+    // Plain bold, NOT `lv-fail`. Needing an index is not a failure — the
+    // failure is needing one and lacking a fresh one, which is the `verdict`
+    // column and only exists with `--detail`. Colouring this one red would
+    // read as 8 defects on a page whose own threshold prose says a graph below
+    // it is *not judged*, which is not the same as fine.
+    const needs = need.needed ? "**yes**" : '<span class="lv-na">' + esc(need.verdict.stableDetail) + "</span>";
+    const cells = [code(t.instance + "/" + t.id), needs];
+    if (v) {
+      const cls = v.result === "pass" ? "lv-pass" : v.result === "fail" ? "lv-fail" : "lv-na";
+      cells.push('<span class="' + cls + '">' + v.result + "</span>", esc(v.stableDetail));
+    }
+    L.push("| " + cells.join(" | ") + " |");
   }
   L.push("");
   for (const { file, s } of indexes) {
@@ -245,10 +305,21 @@ function draw(read: Extract<IndexesRead, { state: "hit" }>): string {
   }
   L.push("---");
   L.push("");
-  // Named from the READ rather than hardcoded: the page says which evidence it
-  // was drawn from, because "the checkout" and a `qa-reports` entry are
+  // Named from the READ rather than hardcoded: the page says which evidence the
+  // detail came from, because "the checkout" and a `qa-reports` entry are
   // different claims and a reader cannot tell them apart from the prose.
-  L.push("Generated by " + code("bun run lsi:viz") + " during the docs-site build, from " + read.from + ". Committed nowhere: " + code("lsi:viz:check") + " asks whether this page can be drawn, not whether a stored copy matches (bean " + code("tqjj") + ").");
+  if (read) {
+    L.push(
+      "Generated by " + code("bun run lsi:viz -- --detail") + " during the docs-site build, with each index's freshness and detail read from " + read.from + ". " +
+        "The committed page in the repository carries the first two columns only — those are a function of the tree, and these are a function of the store. Bean " + code("tqjj") + ".",
+    );
+  } else {
+    L.push(
+      "Generated by " + code("bun run lsi:viz") + ", and this is the committed half: the front matter, the prose, and which graphs need an index — every part of it a function of the TREE. " +
+        "Each index's freshness is a question about the store, and its size, retained share, dimension poles and findings are a function of the index's CONTENT, which a one-sentence edit to any indexed graph moves. " +
+        "The docs-site build adds both with " + code("--detail") + ", from the evidence it fetched for its own commit. Bean " + code("tqjj") + ".",
+    );
+  }
   // The page names the directory it draws and the Tool that drew it (#1168
   // B7a-2b): the `qa` tree the sidecars live in, read from the declaration
   // rather than spelled here. The directory no longer names this page; a
@@ -261,32 +332,48 @@ if (import.meta.main) {
   const refAt = process.argv.indexOf("--ref");
   const ref = refAt > 0 ? process.argv[refAt + 1] : undefined;
   if (refAt > 0 && !ref) {
-    console.error("usage: gen-lsi-viz.ts [--check] [--ref main|<sha>|pr/<n>]");
+    console.error("usage: gen-lsi-viz.ts [--check] [--detail] [--ref main|<sha>|pr/<n>]");
     process.exit(JUDGEMENT_EXIT.error);
   }
-  const read = readIndexes(ref);
-  const drawn = renderFrom(read);
-  if (drawn.state !== "hit") {
-    // Neither "stale" nor "current", and never a page written from nothing.
-    console.error(
-      `lsi viewer: ${drawn.state.toUpperCase()} — could not determine; this is NOT a pass, and nothing was written.\n` +
-        `  ${drawn.reason}\n` +
-        "  The page draws the indexes, and none could be read. `bun run qa:fetch` materialises them, or `bun run lsi index` rebuilds them.",
-    );
-    process.exit(JUDGEMENT_EXIT.unknown);
+  const check = process.argv.includes("--check");
+  const detail = process.argv.includes("--detail");
+
+  let page: string;
+  if (detail) {
+    const read = readIndexes(ref);
+    const drawn = renderFrom(read);
+    if (drawn.state !== "hit") {
+      // Neither "stale" nor "current", and never a page written from nothing.
+      console.error(
+        `lsi viewer: ${drawn.state.toUpperCase()} — could not determine; this is NOT a pass, and nothing was written.\n` +
+          `  ${drawn.reason}\n` +
+          "  `--detail` draws the indexes, and none could be read. `bun run qa:fetch` materialises them, or `bun run lsi index` rebuilds them.",
+      );
+      process.exit(JUDGEMENT_EXIT.unknown);
+    }
+    page = drawn.page;
+    console.log(`lsi viewer: per-index detail read from ${read.from}`);
+  } else {
+    // No index is read, so there is nothing to be unavailable: the committed
+    // page is a function of the tree alone (module docblock).
+    page = renderCommitted();
   }
-  const page = drawn.page;
-  if (read.state === "hit" && read.from !== "the checkout") console.log(`lsi viewer: indexes read from ${read.from}`);
-  if (process.argv.includes("--check")) {
-    // Not a comparison. The page is not committed (see the module docblock),
-    // so there is nothing to compare it WITH; the unknown branch above is the
-    // failing one, and reaching here means the evidence was read and the page
-    // composed. The byte count is printed so a run that drew an empty page
-    // would be visible rather than merely green.
-    console.log(`lsi viewer: ${relative(REPO, OUT)} can be drawn from ${read.from} (${page.length} bytes); it is written by the docs-site build`);
+
+  if (check) {
+    const cur = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
+    if (cur !== page) {
+      console.error(
+        relative(REPO, OUT) +
+          (detail
+            ? " differs from the DETAIL page — that is expected: the detail is added by the docs-site build and is not committed."
+            : " is stale — run `bun run lsi:viz` and commit it."),
+      );
+      process.exit(detail ? JUDGEMENT_EXIT.pass : 1);
+    }
+    console.log("lsi viewer: " + relative(REPO, OUT) + " is current");
   } else {
     mkdirSync(dirname(OUT), { recursive: true });
     writeFileSync(OUT, page);
-    console.log("lsi viewer → " + relative(REPO, OUT));
+    console.log("lsi viewer → " + relative(REPO, OUT) + (detail ? " (with per-index detail)" : ""));
   }
 }

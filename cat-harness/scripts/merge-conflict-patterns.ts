@@ -118,7 +118,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     strategy: "take-base",
     why:
       "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide. " +
-      "The LSI page is UNTRACKED on `main` since bean `tqjj` — written during the docs-site build instead — and its glob is kept for the branches still carrying it, where the base has deleted the file and `take-base` resolves that too. The glossary page is not eligible for the same move: it is a destination a reader links to by name, and nothing publishes it per commit.",
+      "The LSI page still conflicts but much less often since bean `tqjj`: its per-index detail — the half a one-sentence skill edit moved — is added by the docs-site build rather than committed, and what is left is a function of the tree. The glossary page has no equivalent split: every number on it is a term count over the whole corpus, and there is no half that only the tree moves.",
   },
   {
     id: "translated-glossary",

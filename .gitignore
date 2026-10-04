@@ -265,22 +265,6 @@ smart-trust/test/results/
 who-iris/test/results/
 who-style-guide/test/results/
 
-# The LSI viewer page (bean `tqjj`). Not a `qa` directory and not stored on
-# `qa-reports` — a PAGE, written during the docs-site build from the evidence
-# that build fetched, which is why it is here and not in the block above.
-#
-# It is the only generated page under `cat-harness/docs/` that is ignored
-# rather than committed, so the reason has to be stronger than "it is
-# generated", and it is: the page is an aggregate over EVERY index, so a
-# one-sentence edit to one of 229 skills restaged it — 319 of the last 400
-# commits on `main`, measured 2026-10-04. The committed-and-also-regenerated
-# contract its neighbours use (`docs/qa/`, `schema:viz`, `library:viz`) cannot
-# apply: with the index sidecars off `main`, `lsi:viz` reads `qa-reports` at
-# `main`, which resolves to the LATEST published entry, so the value depends on
-# WHEN the gate ran rather than on the tree (bean `in5a`). A page like that
-# cannot be kept current by a gate, only chased.
-cat-harness/docs/lsi/
-
 # The state-branch mount (bean `2h76` part 4). A git worktree of the `state`
 # branch, put here by `bun run state:mount` so the third-party `beans` CLI can
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T08:21:22Z
-updated_at: 2026-10-04T08:21:32Z
+updated_at: 2026-10-04T09:01:31Z
 parent: folio-assistant-hfag
 ---
 
@@ -80,3 +80,42 @@ NOT the 1,186-file removal: its (A)-(E) gate blockers are other QA families.
 Held by session https://claude.ai/code/session_01SjvqTkDQsqa6SLLFjBwoD3, branch
 worktree-agent-a51863e62bc94a374. beans:claim reported the bean is new on this
 branch so no sibling can see it; claimed locally, visible when the PR opens.
+
+
+## Progress 2026-10-04 — PRs #2066 and #2068
+
+Split, because a diff touching `.github/workflows/` cannot be resolved by the
+merge bot (no `workflows` token scope; owner ruling on #2043):
+
+- **#2068** (one file + its required gates.ts exemption): the docs-site build
+  step that draws the viewer page. Safe to merge FIRST — while the page is
+  still committed the step rewrites an ephemeral build tree.
+- **#2066**: everything else.
+
+### Measured since the bean was written
+
+- `qa:refresh` mode was per CHECKOUT, not per writer. Untracking one family
+  while 1,020 siblings stayed tracked left mode=`tracked`, so no writer ran,
+  nothing produced the family, and `qa-reports` stopped carrying it with NO
+  step failing. Fixed to decide per writer from each writers declared paths
+  (`mixed` mode). This is also what makes 5hox landable one family at a time.
+- Untracking the sidecars does not fix the PAGE, it moves the defect: with no
+  sidecar in the checkout `lsi:viz` reads `qa-reports` at `main`, which
+  `parseQaRef` resolves to `main-latest`. A committed page would then go stale
+  whenever anyone else pushed to main -- in5a loop, via the network. So the
+  page is drawn in the docs-site build after its `qa:fetch`, which pins the
+  entry to the build sha.
+- `lsi:viz:check` now asks whether the page can be DRAWN. Falsified against
+  `--ref pr/999999`: exit 2, "MISS ... this is NOT a pass".
+- The docs-auto `lsi` type is REMOVED. `filesOfGraph` reads the committed tree
+  by contract, so it collected nothing while the qa dirs held 1,215 other
+  files and the dh4f guard refused -- correctly.
+- Corroboration of the ba9e class, live: untracking 8 files moved two README
+  counts (`cat-harness/test/README.md` 1028 -> 1020, `docs/README.md`
+  153 -> 151).
+
+### Still open
+
+[ ] `bun run gates` green on #2066
+[ ] #2068 needs the `STEP_EXEMPTIONS` entry for `bun run lsi:viz`
+    ("no step CI runs is unclassified", gates.test.ts)

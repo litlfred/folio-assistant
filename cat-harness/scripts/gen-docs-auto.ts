@@ -550,10 +550,11 @@ export const TYPES: AutoDocType[] = [
   //     check standing between an empty index and a vacuous `✓`.
   //
   // And the page it drew was already a second answer to a question that has
-  // one: `cat-harness/docs/lsi/index.md` IS the index of the indexes, drawn
-  // from the record on the branch and written during the docs-site build. A
-  // docs-auto type over a family `main` does not carry can only ever report
-  // zero, and a docs-auto index is for the committed tree.
+  // one: `cat-harness/docs/lsi/index.md` IS the index of the indexes — its
+  // committed half lists every declared prose graph and whether it needs one,
+  // and the docs-site build adds each index's detail from the record on the
+  // branch. A docs-auto type over a family `main` does not carry can only ever
+  // report zero, and a docs-auto index is for the committed tree.
   {
     id: "index/roles",
     title: "Roles",
