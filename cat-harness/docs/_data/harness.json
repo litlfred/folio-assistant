@@ -1778,12 +1778,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 12
+          "value": 13
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 12
+          "value": 13
         },
         {
           "id": "views",
@@ -1812,6 +1812,11 @@
           "kind": "glossary",
           "path": "/glossary/",
           "label": "Glossary"
+        },
+        {
+          "kind": "kinds",
+          "note": "no viewer yet",
+          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1855,6 +1860,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "folio-assistant-core-kinds",
+          "kinds": [
+            "kinds"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/kinds/"
+        },
         {
           "id": "core-schemas",
           "kinds": [
@@ -1954,7 +1967,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 4 graph(s) with no published viewer — code, folio, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 5 graph(s) with no published viewer — code, folio, kinds, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1988,12 +2001,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -2008,12 +2021,25 @@
           "label": "Code"
         },
         {
+          "kind": "kinds",
+          "note": "no viewer yet",
+          "label": "Graph kinds"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/cat-openapi/",
           "label": "Schemas"
         }
       ],
       "subgraphs": [
+        {
+          "id": "cat-openapi-kinds",
+          "kinds": [
+            "kinds"
+          ],
+          "where": "local",
+          "path": "cat-openapi/kinds/"
+        },
         {
           "id": "cat-openapi-schemas",
           "kinds": [
@@ -2032,7 +2058,7 @@
         }
       ],
       "findings": [
-        "cat-openapi: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
+        "cat-openapi: declares 2 graph(s) with no published viewer — code, kinds. Declared and not rendered is a gap, not a dead link.",
         "cat-openapi: no avatar declared for this instance — showing the generic mark.",
         "cat-openapi: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-openapi/) rather than the instance's own themed root."
       ],
@@ -4066,7 +4092,7 @@
           },
           {
             "key": "directories",
-            "summary": "11: core-schemas, folios, glossary, core-tools, core-adapters, core-scripts, core-library, co…"
+            "summary": "12: folio-assistant-core-kinds, core-schemas, folios, glossary, core-tools, core-adapters, co…"
           },
           {
             "key": "stickies",
@@ -4124,7 +4150,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: cat-openapi-schemas, cat-openapi-scripts"
+            "summary": "3: cat-openapi-kinds, cat-openapi-schemas, cat-openapi-scripts"
           },
           {
             "key": "needs",

@@ -194,10 +194,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `kinds`
 
-0 of 1 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
+- C@T OpenAPI — *declared, not published*
 - FHIR IG Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
 
 ### `library`
 

@@ -11,7 +11,7 @@
  * lazily by `graph-kind-registry.ts` on first use, and a name declared by two
  * files is refused, naming both.
  *
- * The fields are `GraphKindDef`'s, one for one, plus `name` (the file says what
+ * The fields are `GraphKindDef`'s, one for one, plus `kind` (the file says what
  * it declares) and `avatar` (so the kind's mark travels with the kind, rather
  * than in a second central table). A compile-time check below keeps the two in
  * step: a field added to `GraphKindDef` and not here fails to typecheck.
@@ -44,8 +44,14 @@ export const KindAvatarSchema = z
 export const GraphKindNodeSchema = z
   .object({
     $schema: z.literal(GRAPH_KIND_NODE_TAG),
-    /** The kind's word, as a directory's `graphKinds` names it. */
-    name: z.string().regex(/^[a-z][a-z0-9-]*$/, "a lower-case kind word, e.g. ig-ast"),
+    /**
+     * The kind's word, as a directory's `graphKinds` names it. `kind`, NOT
+     * `name`: a JSON file whose `name` equals its filename stem is how
+     * `findDeclarationFile` recognises an INSTANCE declaration, so a node
+     * spelled with `name` made `kinds/` read as a directory of four instances
+     * (measured on the first move, 2026-10-04).
+     */
+    kind: z.string().regex(/^[a-z][a-z0-9-]*$/, "a lower-case kind word, e.g. ig-ast"),
     title: z.string().min(1).optional(),
     layer: z.literal("core").optional(),
     perInstance: z.literal(true).optional(),
@@ -69,7 +75,7 @@ export type GraphKindNode = z.infer<typeof GraphKindNodeSchema>;
 
 /** The registry entry a node declares: everything but its own name and tag. */
 export function kindDefOf(node: GraphKindNode): GraphKindDef {
-  const { $schema: _tag, name: _name, rationale: _why, ...def } = node;
+  const { $schema: _tag, kind: _kind, rationale: _why, ...def } = node;
   return def as GraphKindDef;
 }
 

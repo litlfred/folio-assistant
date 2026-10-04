@@ -11,6 +11,14 @@
   "description": "The OpenAPI harness: holds OpenAPI 3 documents as nodes of graph kind `openapi`, and gives every operation in them a page and an IRI, rendered in the browser from the served document.",
   "directories": [
     {
+      "id": "cat-openapi-kinds",
+      "path": "kinds/",
+      "description": "The graph kinds cat-openapi owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
+      "graphKinds": [
+        "kinds"
+      ]
+    },
+    {
       "id": "cat-openapi-schemas",
       "path": "schemas/",
       "description": "The harness's shapes: `cat-openapi.config.json` (what an instance names), the ingest's provenance node, the subset of OpenAPI 3 the pages read, and how an operation's id is derived.",

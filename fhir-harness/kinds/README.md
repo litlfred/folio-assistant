@@ -8,5 +8,8 @@ The graph kinds fhir-harness owns, one folio-graph-kind/v1 node per file (bean d
 
 Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-harness-kinds`, holding `kinds`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`ig-ast.json`](ig-ast.json) | IG AST |  |
+| [`ig-pages.json`](ig-pages.json) | IG pages |  |
 <!-- kg:subgraph:end -->

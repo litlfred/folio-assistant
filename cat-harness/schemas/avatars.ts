@@ -306,11 +306,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 28,
     reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
-  "review-verdicts": {
-    glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
-    tone: 200,
-    reads: "a page with a tick — somebody read this version and judged it",
-  },
+
   kinds: {
     // A stack of three cards, the top one tagged: a graph whose nodes are the
     // KINDS of the other graphs. Bean dmx1.
@@ -436,51 +432,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 168,
     reads: "a clipboard carrying a tick and a cross — one run's own account of what it did, both outcomes on the same sheet",
   },
-  uploads: {
-    glyph: "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14",
-    tone: 200,
-    reads: "an arrow onto a line — something arriving",
-  },
-  catalogue: {
-    // A card index: drawers of cards standing for things that are elsewhere.
-    // Deliberately NOT books on a shelf — that is `library`, and the difference
-    // between "we have it" and "we know of it" is the point of the kind.
-    glyph: "M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3",
-    tone: 258,
-    reads: "a card index — what is known to exist, mostly not held",
-  },
-  "fhir-artifact-index": {
-    // A card index with a braced tail: the `catalogue` drawer, plus the
-    // JSON-Schema brace that is the whole reason this kind exists. It quotes
-    // `catalogue`'s glyph deliberately — the two are siblings sharing a
-    // materialisation model, and an unrelated mark would hide that.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M19 7c-1 0-1 2-2 2 1 0 1 2 2 2",
-    tone: 168,
-    reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
-  },
 
 
-  "ig-metadata-index": {
-    // The `fhir-artifact-index` drawer with an arrow LEAVING it. It quotes
-    // that glyph on purpose, as that one quotes `catalogue`'s: the three are
-    // a family, and an unrelated mark would hide the relation the kind was
-    // registered to keep. What the arrow adds is the distinction itself —
-    // the index says what an IG HOLDS, this says what its toolchain REPORTED
-    // about what it holds.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M18 13h4m-2-2l2 2-2 2",
-    tone: 190,
-    reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
-  },
-  openapi: {
-    // Curly braces around a two-way arrow: a machine-readable description
-    // (the braces) of something you call and that answers (the arrow out and
-    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
-    // document is one node holding operations, not an index of things held
-    // elsewhere. Bean `s4ta`.
-    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
-    tone: 136,
-    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
-  },
+
+
+
+
+
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under

@@ -17,7 +17,7 @@ afterAll(() => {
 
 const node = (name: string, holds = "derived") => ({
   $schema: "folio-graph-kind/v1",
-  name,
+  kind: name,
   renderable: false,
   holds,
   summary: `the ${name} kind`,
@@ -31,7 +31,7 @@ function checkout(instances: Record<string, Record<string, unknown>[]>): string 
     const dir = join(root, name);
     mkdirSync(join(dir, "kinds"), { recursive: true });
     writeFileSync(join(dir, `${name}.json`), JSON.stringify({ name, directories: [{ id: `${name}-kinds`, path: "kinds/", graphKinds: ["kinds"] }] }));
-    kinds.forEach((k, i) => writeFileSync(join(dir, "kinds", `${(k as { name?: string }).name ?? i}.json`), JSON.stringify(k)));
+    kinds.forEach((k, i) => writeFileSync(join(dir, "kinds", `${(k as { kind?: string }).kind ?? i}.json`), JSON.stringify(k)));
   }
   return root;
 }
@@ -56,12 +56,17 @@ describe("a declared kind", () => {
     expect(() => new GraphKindRegistry({ widget: { renderable: false, holds: "content", summary: "x" } }, root).names()).toThrow(/base layer/);
   });
   test("a node that does not parse throws with its path", () => {
-    const root = checkout({ alpha: [{ $schema: "folio-graph-kind/v1", name: "widget" }] });
+    const root = checkout({ alpha: [{ $schema: "folio-graph-kind/v1", kind: "widget" }] });
     expect(() => new GraphKindRegistry({}, root).has("widget")).toThrow(/widget\.json/);
   });
 });
 
 describe("the node schema", () => {
+  test("a node is never mistaken for an instance declaration (it carries no `name`)", async () => {
+    const root = checkout({ alpha: [node("widget")] });
+    const { findDeclarationFile } = await import("./instance-roots");
+    expect(findDeclarationFile(join(root, "alpha", "kinds"))).toBeUndefined();
+  });
   test("refuses an unknown field and an upper-case name", () => {
     expect(GraphKindNodeSchema.safeParse({ ...node("widget"), extra: 1 }).success).toBe(false);
     expect(GraphKindNodeSchema.safeParse(node("Widget")).success).toBe(false);

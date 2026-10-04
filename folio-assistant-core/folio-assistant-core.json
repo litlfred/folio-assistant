@@ -78,6 +78,14 @@
   ],
   "directories": [
     {
+      "id": "folio-assistant-core-kinds",
+      "path": "kinds/",
+      "description": "The graph kinds folio-assistant-core owns, one folio-graph-kind/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-kind-registry.ts, with each entry's code comments kept as its rationale.",
+      "graphKinds": [
+        "kinds"
+      ]
+    },
+    {
       "id": "core-schemas",
       "path": "schemas/",
       "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",

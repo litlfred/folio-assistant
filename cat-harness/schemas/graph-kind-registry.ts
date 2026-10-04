@@ -1699,42 +1699,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
       "Authored by people and by agents on their behalf.",
   },
-  // The two stages of the document-ingestion pipeline. They are declared as
-  // SEPARATE kinds rather than one `sources` kind because the whole point of
-  // the pair is that they are not interchangeable: the corpus-grep checklist
-  // searches `library/` and not `uploads/`, so a source still in `uploads/`
-  // makes a clean grep read as "nobody has done this" while the file sits on
-  // disk. Collapsing them into one kind would erase exactly the distinction
-  // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
-  // exists to state.
-  uploads: {
-    title: "Uploads",
-    perInstance: true,
-    layer: "core",
-    renderable: false,
-    // A QUEUE, and a queue is a position in a pipeline. The declaration
-    // already says these files are NOT L1 and read as absent to every corpus
-    // consumer: the file is on disk and the content does not exist yet.
-    holds: "state",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    nodeSchemas: {
-      // Local since bean `tlat` moved the extraction contract down (placement PR5).
-      "folio-extraction/v1": { validator: "schemas/extraction.ts#ExtractionSchema" },
-      "folio-intake/v1": { validator: "schemas/intake.ts#IntakeSchema" },
-      // The document adapter writes an upload's description beside its intake
-      // (bean `d4lb`), in the same family the IRIS catalogue records use.
-      "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
-      // A queued source may itself BE a JSON Schema: the SPDX 3.1-RC1 schema
-      // held in uploads/spdx-3-1-rc1-machine-readable/ (bean `sd5v`) declares
-      // the meta-schema as its `$schema`. It conforms to a specification
-      // nobody here types, so it is `external`, as on `schemas` and `docs`.
-      "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
-    },
-    recordsWork: false, // live state, but nothing anybody is partway through
-    summary:
-      "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not " +
-      "greppable as corpus: a document here reads as absent to every consumer.",
-  },
+
   library: {
     title: "Library",
     perInstance: true,
@@ -1812,224 +1777,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "knowledge-graph reference to a source resolves through here, never to a loose path " +
       "or a bare URL.",
   },
-  // A REMOTE catalogue modelled in the graph without being held. Distinct from
-  // `library`, and the distinction is the whole point: `library` is L1 content
-  // that IS here, `catalogue` is the shape of a collection of which almost
-  // nothing is. A who-iris node says 1,057,223 files exist and that three of
-  // them are materialized; folding that into `library` would make a consumer
-  // asking "what have we got" receive an answer about what EXISTS.
-  //
-  // Every node declares a materialization state and there is no default — see
-  // folio-assistant-core/schemas/materialization.ts.
-  catalogue: {
-    title: "Catalogue",
-    renderable: false,
-    // `content`, on the same reasoning that makes `library` content: it is
-    // DERIVED from an external source by an import process, and being derived
-    // rather than typed is not what the axis asks about. Detach a catalogue
-    // node and it still says something standing on its own — this item exists,
-    // at this handle, in this collection — so it is not the empty-when-detached
-    // shape that marks state. Contrast `uploads`, which is `state`: a queue
-    // says nothing once the thing has moved through it.
-    //
-    // THE TENSION, stated rather than hidden, per the skill's own rule: one
-    // FIELD of a catalogue node — `materialization.state` — genuinely is
-    // written by a running process, when `materialize-remote` moves a node from
-    // `referenced` to `materialized`. That does not make the graph state, for
-    // the same reason re-ingesting a PDF does not make `library` state: the
-    // axis classifies the KIND, not every field on it. If a consumer ever needs
-    // to ask "may a process write this field", that is a question about the
-    // field and belongs on `materialization.ts`, not a reclassification here.
-    holds: "content",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    nodeSchemas: {
-      "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
-      "folio-catalogue-node/v1": { validator: "folio-assistant-core:schemas/catalogue.ts#CatalogueNodeSchema" },
-      "folio-catalogue/v1": { validator: "folio-assistant-core:schemas/catalogue.ts#CatalogueSchema" },
-    },
-    summary:
-      "A remote catalogue modelled by reference — communities, collections and items " +
-      "of a corpus the instance does not hold. Every node declares whether its bytes " +
-      "are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), " +
-      "with no default. Distinct from `library`, which is content that IS here.",
-  },
-  // The artefact index of a published FHIR Implementation Guide — one graph
-  // per IG, keyed by the IG's own canonical URLs.
-  //
-  // A SIBLING of `catalogue`, not a `flavour` of it, and the reason is the
-  // test AGENTS.md sets for a content type applied one level down: different
-  // CODE, or only different RULES? A catalogue node is a container or an item;
-  // a FHIR artefact is a `resourceType` at a canonical URL, published in
-  // several representations at once, in a versioned package, against a FHIR
-  // version. None of those five facts has a home on `CatalogueNode`, and a
-  // `flavour: "fhir"` smuggling them into free text would be a catalogue that
-  // cannot answer the only questions anybody asks of an IG.
-  //
-  // What the two DO share is `MaterializationSchema`, imported rather than
-  // restated — the same move `bean-graph.ts` makes with `ContentDirectorySchema`.
-  //
-  // `derived` since the owner's ruling of 2026-10-04 (bean `nama`). This
-  // entry used to argue `content`, on `catalogue`'s reasoning: the corpus
-  // stays where it is (655 of smart-trust's 674 artefacts are `referenced`).
-  // That is true of the ARTEFACTS, and still why this is not a `library`. But
-  // the graph is the index FILES, and those are produced here by `ingest:ig`
-  // and regenerated rather than re-authored, which is `library`'s test, not
-  // `catalogue`'s. A `catalogue` is curated by hand; this index never is.
-  "fhir-artifact-index": {
-    title: "FHIR artefact index",
-    renderable: false,
-    // `derived` — the owner's ruling of 2026-10-04 (bean `nama`, ruling 2 of
-    // 3), which overturns the `catalogue` reasoning this entry gave before. A
-    // node still reads on its own, but every file here is re-derived by
-    // `ingest:ig` from the IG's published output and never edited in place, so
-    // a finding against one is a finding against the ingestion — `library`'s
-    // argument (bean `hqku`), and the `ingest:ig:check` gate already grades it
-    // that way. It also feeds `ig-pages`, which `derivedFrom` now says.
-    holds: "derived",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    nodeSchemas: {
-      "folio-fhir-artifact-index/v2": { validator: "fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },
-      // The IG's own NAVIGATION, read from its `sushi-config.yaml` — a second
-      // family in this directory because it comes from a second SOURCE. The
-      // index is harvested from the IG's published OUTPUT; a menu exists only
-      // in its SOURCE config, at a commit. Two provenances, so two documents:
-      // folding the menu into the index would give one file two answers to
-      // "where did this come from" (bean `0818`).
-      "folio-ig-menu/v1": { validator: "fhir-harness:schemas/ig-menu.ts#IgMenuSchema" },
-      // The IG's own CHROME — its palette, its status watermark, its publish
-      // box — resolved from the `fhir.template` chain its `ig.ini` names. A
-      // THIRD family in this directory because it comes from a third SOURCE,
-      // and this one is not even a single source: the index is harvested from
-      // the IG's published output, the menu from its `sushi-config.yaml`, and
-      // the chrome from separate template repositories the IG merely depends
-      // on. Three provenances, three documents (bean `ajx9`).
-      // v2 (stage D, #1767): keyed by the chain's TOP template, not by the IG
-      // it was ingested beside — every IG building with the chain wears it.
-      "folio-ig-chrome/v2": { validator: "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema" },
-      // An IG's own id, canonical and status, read from ITS `sushi-config.yaml`.
-      // A FOURTH family in this directory because status is a fact about one
-      // IG, and the chrome it used to ride in is shared by many.
-      "folio-ig-identity/v1": { validator: "fhir-harness:schemas/ig-identity.ts#IgIdentitySchema" },
-      // The IG's GitHub RELEASES, as pointers to their binary assets — a
-      // fourth source (the GitHub API) and so a fourth document. Pointers,
-      // never bytes: previews carry no binaries, releases do (owner,
-      // 2026-10-02; bean `b8ip`).
-      "ig-releases/v1": { validator: "fhir-harness:schemas/ig-releases.ts#IgReleasesSchema" },
-      "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
-    },
-    summary:
-      "The artefact index of a published FHIR Implementation Guide, reconstructed from its " +
-      "published output — every artefact by canonical URL and published representation, with " +
-      "the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. " +
-      "No IG publishes such an index itself, so every field records which file it came out of.",
-    // NO `schema`/`validator`, and that is the same omission `catalogue` makes
-    // two entries up rather than an oversight. Both fields resolve under the
-    // DECLARING instance's root — here `cat-harness/` — and this kind's schema
-    // lives in `folio-assistant-core/schemas/fhir-artifact-index.ts`, one layer
-    // up. `check:kind-validators` catches a path that does not resolve, which
-    // is how this was found.
-    //
-    // The harness must not reach up into core: nothing under `cat-harness/`
-    // imports from `folio-assistant-core/`, and a declared path pointing there
-    // would be that dependency in all but name. When this repository splits,
-    // the kind moves to core with its schema and both fields come back — the
-    // `folio` kind is the worked example, registered by core through a
-    // load-time side effect rather than declared here.
-    //
-    // Until then `kg_validate` reports "could not determine" for this graph,
-    // and saying so here is the point: an undeclared validator that nobody
-    // wrote down reads exactly like a graph with nothing to check.
-  },
-  // The IG Publisher's OWN metadata exports — `valueset-ref-list.json`,
-  // `codesystem-ref-list.json` and `usage-stats.json`, the three files an IG
-  // publishes ABOUT what it built.
-  //
-  // Registered on the owner's ruling, 2026-09-30 — OPTION B of bean `rjug`:
-  // *"a sibling kind `ig-metadata-index`, `holds: "derived"`. Keeps 'what
-  // artefacts exist' apart from 'what the toolchain reported'."* Option A
-  // would have hung a `metadataExports` block off `fhir-artifact-index` one
-  // entry up, and the bean's own objection to it is why it lost: *"Risks
-  // making the index a bag."*
-  //
-  // A SIBLING of `fhir-artifact-index`, and the line between them is the line
-  // between a reconstruction and a transcription. That index answers *what
-  // artefacts does this IG contain*, assembled from four partial published
-  // views because NO IG PUBLISHES SUCH AN INDEX — which is why every field
-  // there records the file it came out of. This kind answers *what did the
-  // toolchain say about them*, read verbatim from three files the IG does
-  // publish. One document holding both would leave a consumer unable to tell
-  // a fact this repository assembled from a fact the Publisher asserted.
-  //
-  // `derived` by the axis's own two questions, and they agree here. It does
-  // NOT stand on its own — every record is an edge or a count about artefacts
-  // named elsewhere, so detached it asserts nothing. And you would REGENERATE
-  // it: re-harvest an unchanged published IG and the same file comes back.
-  // That last clause is exactly what separates it from `binary-release`
-  // below, where re-running produces a different release, which is why one is
-  // `derived` and the other `state` although both are downstream of a build.
-  //
-  // What `derived` buys, concretely, is what it bought `library/`: a QA
-  // finding against one of these documents is a finding against the HARVEST
-  // that made it, never against an author, so the content sweep is right to
-  // skip it and `walkBlocks` does.
-  //
-  // NOT renderable, on `fhir-artifact-index`'s reasoning one entry up. These
-  // are machine-readable edge lists and usage counts harvested from somebody
-  // else's published site; nothing in the docs build makes pages from them,
-  // and `renderable` asks whether the graph is wired to the SITE BUILD, not
-  // whether a human could be shown it. Saying `true` would promise a page per
-  // export for every IG ever harvested. The IG's own rendering is the IG's,
-  // and it is already published — at the URL `source.harvestedFrom` names.
-  //
-  // The schema carries bean `nsbb`'s two measured findings as SHAPE rather
-  // than prose, because both are absences that must not read as zeros: `uses`
-  // is declared-and-never-populated in both IGs measured (hence a three-state
-  // `usesState`, where a bare array would erase the finding), and nothing
-  // exports Library / PlanDefinition / Measure edges at all (hence
-  // `IG_METADATA_UNREACHED_TYPES` and `dependencyReach`, so an empty edge
-  // list over the decision-logic core reads as uninformative rather than
-  // clean).
-  openapi: {
-    renderable: false,
-    // `derived`, on `library`'s reasoning (bean `hqku`): the documents are
-    // INGESTED from an upstream source that still exists, and a change is made
-    // by re-running the ingest, never by editing the copy — a QA finding
-    // against one is a finding against its source or its ingest. Not
-    // `content`: this repository did not author the API. Bean `s4ta`.
-    holds: "derived",
-    // Not renderable for the reason `fhir-artifact-index` gives: the site
-    // build does not read this directory. Its pages — one per OPERATION, each
-    // with its own IRI (owner, 2026-10-03: "need page + IRI for each
-    // operation") — are written into the instance's `docs` by
-    // `cat-openapi/scripts/gen-openapi-pages.ts`, and their loader fetches the
-    // document from here, which is why a directory of this kind is `served`.
-    nodeSchemas: {
-      // The ingest's provenance node, one per document.
-      "folio-openapi-source/v1": { validator: "cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema" },
-    },
-    summary:
-      "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the " +
-      "repository, path and commit it was ingested from (the cat-openapi harness). Every operation " +
-      "in a document is a node of its own: a page and an IRI under the instance's docs.",
-  },
 
-  "ig-metadata-index": {
-    title: "IG metadata index",
-    renderable: false,
-    holds: "derived",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    // The schema lives in `fhir-harness/`, beside `ig-menu.ts` and
-    // `ig-chrome.ts`: it describes any FHIR IG's Publisher exports and nothing
-    // in it is the platform's (#1767, stage B). So the pointer is
-    // instance-qualified, as `fhir-artifact-index`'s already are, and
-    // `check:kind-validators` resolves it under fhir-harness's root.
-    validator: "fhir-harness:schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
-    summary:
-      "The IG Publisher's own metadata exports for one published IG, harvested verbatim — " +
-      "ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. " +
-      "Each export declares whether it was present, absent or never looked for, and a " +
-      "`uses` field that upstream declared and left empty is recorded as exactly that.",
-  },
+
+
+
+
   // Binary releases — WHAT WAS PUBLISHED, under what version, with what
   // digest. Never the bytes.
   //
@@ -2212,22 +1964,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
   },
-  "review-verdicts": {
-    title: "Review verdicts",
-    layer: "core",
-    renderable: false,
-    // Written by a running review: the coordinator's step commits each
-    // verdict as it is ingested. A record OF a review, like `todo-feedback`,
-    // and not a todo: it asks for nothing.
-    holds: "state",
-    // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "folio-assistant-core:schemas/review-verdict.ts#ReviewVerdictSchema",
-    recordsWork: false, // a verdict is a finished judgement, not work anybody is partway through
-    summary:
-      "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the " +
-      "block's content hash and committed on the edit-set's feature branch. Read by the review " +
-      "coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
-  },
+
   // ── The one kind that is not-rendered ON PURPOSE ──────────────────────
   //
   // Every other kind above is `renderable: false` because it is a graph a
@@ -2679,13 +2416,13 @@ export class GraphKindRegistry {
     if (this.loaded || this.declaredUnder === undefined) return;
     this.loaded = true;
     for (const { file, node } of declaredKindNodes(this.declaredUnder)) {
-      const prior = this.declaredIn.get(node.name);
+      const prior = this.declaredIn.get(node.kind);
       if (prior === file) continue;
-      if (prior !== undefined || this.kinds.has(node.name)) {
-        throw new GraphKindConflictError(node.name, `declared by ${prior ?? "the base layer's code"} and by ${file}`);
+      if (prior !== undefined || this.kinds.has(node.kind)) {
+        throw new GraphKindConflictError(node.kind, `declared by ${prior ?? "the base layer's code"} and by ${file}`);
       }
-      this.kinds.set(node.name, kindDefOf(node));
-      this.declaredIn.set(node.name, file);
+      this.kinds.set(node.kind, kindDefOf(node));
+      this.declaredIn.set(node.kind, file);
     }
   }
 
