@@ -7375,6 +7375,13 @@
           "optional": true,
           "array": true,
           "doc": "What this directory's content is COMPUTED FROM: the declared directory ids"
+        },
+        {
+          "name": "writer",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "The GENERATOR that writes this directory: repo-relative script files, and"
         }
       ],
       "extendsNames": [
@@ -7488,6 +7495,13 @@
           "optional": true,
           "array": true,
           "doc": "What this directory's content is COMPUTED FROM: the declared directory ids"
+        },
+        {
+          "name": "writer",
+          "type": "z .array(z.string().min(1)) .min(1) .refine((ps) => new Set(ps).size === ps.length, { message: \"writer names a path twi…",
+          "optional": true,
+          "array": true,
+          "doc": "The generator that writes this directory: repo-relative script files, and"
         },
         {
           "name": "composed",
