@@ -13,9 +13,9 @@ import { loadContributionsSync } from "../../../cat-harness/schemas/harness-conf
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
 import { PIPELINE_IMPLEMENTATIONS } from "./plugin-slots";
 
-const PLATFORM = resolve(import.meta.dir, "..", "..", "..");
-const withSci = loadContributionsSync(PLATFORM, new ContributionRegistry());
-const withoutSci = loadContributionsSync(resolve(PLATFORM, "folio-assistant-core"), new ContributionRegistry());
+const REPO_ROOT = resolve(import.meta.dir, "..", "..", "..");
+const withSci = loadContributionsSync(REPO_ROOT, new ContributionRegistry());
+const withoutSci = loadContributionsSync(resolve(REPO_ROOT, "folio-assistant-core"), new ContributionRegistry());
 
 describe("sci's contributions arrive as nodes, through the dependency tree", () => {
   test("every slot in the table is filled, with the table's own implementation", () => {
