@@ -12,6 +12,14 @@
   "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
   "directories": [
     {
+      "id": "fhir-harness-translations",
+      "path": "translations/",
+      "description": "The gettext side of fhir-harness's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",
+      "graphKinds": [
+        "translation-sources"
+      ]
+    },
+    {
       "id": "fhir-harness-validators",
       "path": "validators/",
       "description": "The validators fhir-harness's code provides, one folio-validator/v1 node each naming the graph kind and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family. The registry joins each onto its kind.",
