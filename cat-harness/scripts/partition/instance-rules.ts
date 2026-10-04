@@ -462,6 +462,13 @@ export const RULES: Rule[] = [
       // folio's subject matter cannot add a row to it or change what a tree
       // comparison concludes.
       "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
+      // `state-drift`'s remedy, performed: refresh a seeded state branch from
+      // the ref its own manifest names, and verify by re-reading the pushed
+      // tip. Harness-level for its neighbour's reason exactly — the row it is
+      // keyed by comes from `scripts/special-branches.json`, the harness's
+      // table, and no folio's subject matter decides which ref a seed is
+      // refreshed from or whether a tree comparison agrees.
+      "scripts/state-seed.ts",                // refresh a seeded state branch, and the cutover's `--authoritative` half
       // What every reader of a moved graph needs, written once (bean `9ofm`
       // row D): given a declared directory id, which directory to actually
       // read — the checkout, the mount, or a refusal. Harness-level for the
