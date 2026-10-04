@@ -1,0 +1,24 @@
+classDiagram
+  direction TB
+  namespace folio_assistant__feedback {
+    class folio_assistant_feedback_FeedbackItem["FeedbackItem"] {
+      <<json: FeedbackItemSchema>>
+      id [1] string
+      summary [1] string
+      comment [1] string
+      status [1] open | in_progress | blocked | resolved | wontfix
+      priority [1] critical | high | medium | low
+      origin [1] agent | human | qc | extracted
+      targetLabel [0..1] string
+      assignee [0..1] string
+      createdAt [1] string
+      updatedAt [0..1] string
+      updatedBy [0..1] string
+      data [0..1] map~any~
+      related [0..*] string[]
+      theme [0..1] string
+      author [0..1] string
+      authorEmail [0..1] string
+    }
+  }
+  cssClass "folio_assistant_feedback_FeedbackItem" fa_uml_kind_todo_feedback

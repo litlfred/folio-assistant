@@ -1,14 +1,22 @@
 #!/usr/bin/env bun
 /**
- * The four harness graphs that a schema TYPES and nothing JUDGED — one criterion each.
+ * The harness graphs that a schema TYPES and nothing else JUDGED — one criterion each.
  *
  * @module scripts/check-harness-state
- * @covers health, todos, interaction, issue-marks
+ * @covers health, todos, interaction, issue-marks, merge-queue, session-survey, todo-items, todo-feedback, board-positions
  *
  * Bean `h1wq`, from `audit-coverage`'s `typed-only` finding: `health`, `todos`,
  * `interaction` and `issue-marks` each declare a validator that parses their
  * nodes, and no criterion and no gate had an opinion about what those nodes
  * SAY. The owner asked for all four (2026-09-24).
+ *
+ * Five more joined on PR #2094 (owner, 2026-10-04): `merge-queue`,
+ * `session-survey`, `todo-items`, `todo-feedback` and `board-positions`, the
+ * inner directories `beans/beans.json` and `todos/todos.json` declare. They
+ * read `typed-only` the moment nested declarations were admitted, and the
+ * reasoning above carried over unchanged: each is a `state` graph, and each
+ * family asks something no other gate asks. See the section above
+ * `declaredDirs` for the five.
  *
  * ## Why one script and not four, and not `kg-audit`
  *
@@ -66,6 +74,8 @@ import {
 import { readQaTree } from "../../cat-harness/scripts/qa-store.js";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.ts";
 import { HARNESS_ROOT } from "./lib/roots.ts";
+import { parse as parseYaml } from "yaml";
+import { BOARD_POSITIONS_SCHEMA_TAG, BoardPositionsSchema, renderPositions } from "../../cat-harness/schemas/board-positions.ts";
 
 const ROOT = HARNESS_ROOT;
 const REPO = repoRootFor(ROOT);
@@ -78,6 +88,12 @@ export interface Family {
   /** How many subjects were looked at. `0` is could-not-determine, not clean. */
   examined: number;
   findings: { where: string; detail: string }[];
+  /**
+   * The directories walked, when the family walks declared directories. With
+   * `examined: 0` this is what makes the result a DETERMINED empty — the
+   * declared directory exists and holds no node — rather than a blind one.
+   */
+  walked?: string[];
   /** Set when the graph could not be read at all. */
   unreadable?: string;
   /**
@@ -465,6 +481,419 @@ export function interactionProfilesRead(): Family {
   return f;
 }
 
+// ── The five kinds the nested declarations surfaced (PR #2094) ────────────
+//
+// `beans/beans.json` and `todos/todos.json` declare their inner directories as
+// kinds of their own. Once `resolveDirectories` admitted nested declarations,
+// `audit-coverage` counted `merge-queue`, `session-survey`, `todo-items`,
+// `todo-feedback` and `board-positions` separately — each TYPED by a declared
+// validator and JUDGED by nothing. One family each below, in the shape of the
+// four above: each asks something the schema structurally cannot (a fact
+// about a file's NAME, or about another node), each was checked against the
+// gates that already cover the parent kind, and each prints what it walked,
+// because three of the five are determined empties or near it on this tree.
+
+/**
+ * The declared directories of one kind that exist, or `undefined` when no
+ * instance declares one that does. A declared-but-absent directory is
+ * `check:declared-dirs`'s finding; here it means there is nothing to walk, and
+ * a family that walked nothing must say so rather than pass.
+ */
+function declaredDirs(kind: string): string[] | undefined {
+  const dirs = new Set<string>();
+  for (const inst of instanceRootsIn(REPO)) {
+    for (const dir of directoriesForGraph(inst, kind)) if (existsSync(dir)) dirs.add(resolve(dir));
+  }
+  return dirs.size === 0 ? undefined : [...dirs].sort();
+}
+
+/** The files directly in `dirs` ending `ext` — not a recursive walk, since each kind here is declared per directory. */
+function filesIn(dirs: readonly string[], ext: string): string[] {
+  const out = new Set<string>();
+  for (const d of dirs) {
+    let entries: string[];
+    try {
+      entries = readdirSync(d);
+    } catch {
+      continue;
+    }
+    for (const e of entries) {
+      const p = join(d, e);
+      if (!e.startsWith(".") && e.endsWith(ext) && !isDirectoryReadme(p) && statSync(p).isFile()) out.add(resolve(p));
+    }
+  }
+  return [...out].sort();
+}
+
+/** Where a family looked, for the line it prints — relative, so it reads the same in CI. */
+function walkedLabel(dirs: readonly string[]): string {
+  return dirs.map((d) => relative(REPO, d) || ".").join(", ");
+}
+
+/**
+ * Every bean id in the store, read off the file names (`<id>--<slug>.md`, the
+ * layout the `beans` CLI writes) across every declared `bean-defs` directory —
+ * `defs` AND `defs/archive`, because bean `e8m3` made archiving a view: an
+ * archived bean is still a bean, and a reference to one still resolves.
+ */
+export function beanIdsInStore(): Set<string> {
+  const ids = new Set<string>();
+  for (const p of nodesOf("bean-defs", ".md")) {
+    const name = p.slice(p.lastIndexOf("/") + 1);
+    const cut = name.indexOf("--");
+    if (cut > 0) ids.add(name.slice(0, cut));
+  }
+  return ids;
+}
+
+/**
+ * `merge-queue` — an entry is filed under the pull request it decides about,
+ * and the beans it serves exist.
+ *
+ * `MergeQueueEntrySchema` documents the layout — *"one entry, one file:
+ * `<merge-queue>/<owner>--<repo>--<pr>.json`"* — and cannot enforce it, because
+ * a schema sees the document and never its path. An entry whose name and
+ * content disagree is two answers to "which PR is this about": the steward
+ * looks one up by NAME, so an entry named for #2075 carrying `pr: 2078` is a
+ * decision about #2078 that nobody consulting #2078 will find, and a second
+ * entry for #2078 can then sit beside it holding the opposite decision.
+ *
+ * And `beans[]` is a list of ids the schema can only check the SHAPE of: a
+ * well-formed id that names no bean says this PR serves work that does not
+ * exist — `dh4f` at one remove. Archived beans count as present (bean `e8m3`).
+ *
+ * No other gate reads `beans/queue/`: `merge-queue.ts` declares `@covers none`
+ * and the steward reads entries without judging them. Measured 2026-10-04: 8
+ * entries, 14 bean references, 0 findings.
+ */
+export function mergeQueueEntriesNamed(opts: { dirs?: string[]; beans?: ReadonlySet<string> } = {}): Family {
+  const f: Family = {
+    id: "merge-queue-entry-is-named-for-its-pr",
+    summary:
+      "A merge-queue entry is filed under a name that is not `<owner>--<repo>--<pr>.json` for the " +
+      "repository and PR it records, so a steward looking the PR up by name finds nothing — or finds a " +
+      "second entry with the opposite decision — or it names a bean the store does not hold.",
+    examined: 0,
+    findings: [],
+  };
+  const dirs = opts.dirs ?? declaredDirs("merge-queue");
+  if (dirs === undefined) {
+    f.unreadable = "no instance declares a `merge-queue` directory that exists — could not determine";
+    return f;
+  }
+  f.walked = dirs;
+  const beans = opts.beans ?? beanIdsInStore();
+  const files = filesIn(dirs, ".json");
+  for (const p of files) {
+    const where = relative(REPO, p);
+    let n: { $schema?: string; repository?: string; pr?: number; beans?: string[] };
+    try {
+      n = JSON.parse(readFileSync(p, "utf-8")) as typeof n;
+    } catch (e) {
+      f.findings.push({ where, detail: `does not parse as JSON: ${String(e)}` });
+      f.examined++;
+      continue;
+    }
+    // The file declares what it is; an untagged JSON here is not an entry.
+    if (n.$schema !== "folio-merge-queue-entry/v1") continue;
+    f.examined++;
+    const [owner, repo] = (n.repository ?? "").split("/");
+    const expected = `${owner}--${repo}--${n.pr}.json`;
+    const name = p.slice(p.lastIndexOf("/") + 1);
+    if (name !== expected) {
+      f.findings.push({
+        where,
+        detail: `records ${n.repository}#${n.pr}, so it belongs at \`${expected}\` — under this name a steward looking up the PR will not find it`,
+      });
+    }
+    if (beans.size === 0) continue; // no store to resolve against: reported once, below
+    for (const b of n.beans ?? []) {
+      if (!beans.has(b)) f.findings.push({ where, detail: `serves bean \`${b}\`, which no declared \`bean-defs\` directory holds` });
+    }
+  }
+  if (beans.size === 0 && files.length > 0) {
+    f.unreadable = "no bean ids were found in any declared `bean-defs` directory, so no reference could resolve — could not determine";
+  }
+  return f;
+}
+
+/**
+ * `session-survey` — a survey is filed under its own upper edge, and its edges
+ * agree with its commit count.
+ *
+ * `survey.ts` writes `<to[0..12]>.json`, and that name is the INDEX: `owed`
+ * picks the survey whose `to` is furthest along, and a second survey of the
+ * same window lands on the same path and replaces the first. A survey filed
+ * under another name escapes both — it can sit beside the survey of its own
+ * window, giving two answers to "what does this window still owe", and nothing
+ * looking by name sees it.
+ *
+ * The edges are the second half. `from` is exclusive, so `from === to` is an
+ * empty window and `commits > 0` over it is a survey claiming to have read
+ * commits it could not contain; `from !== to` with `commits: 0` is the
+ * converse. Either way the document contradicts itself, and the schema checks
+ * each field alone.
+ *
+ * No other gate reads `beans/surveys/`. Measured 2026-10-04: 1 survey, 0 findings.
+ */
+export function surveysFiledByEdge(opts: { dirs?: string[] } = {}): Family {
+  const f: Family = {
+    id: "survey-is-filed-under-its-upper-edge",
+    summary:
+      "A session survey is not filed as `<to[0..12]>.json`, so it escapes the index `survey:owed` reads " +
+      "and can sit beside a second survey of the same window — or its `from`/`to` edges contradict its " +
+      "own `commits` count.",
+    examined: 0,
+    findings: [],
+  };
+  const dirs = opts.dirs ?? declaredDirs("session-survey");
+  if (dirs === undefined) {
+    f.unreadable = "no instance declares a `session-survey` directory that exists — could not determine";
+    return f;
+  }
+  f.walked = dirs;
+  for (const p of filesIn(dirs, ".json")) {
+    const where = relative(REPO, p);
+    let n: { $schema?: string; from?: string; to?: string; commits?: number };
+    try {
+      n = JSON.parse(readFileSync(p, "utf-8")) as typeof n;
+    } catch (e) {
+      f.findings.push({ where, detail: `does not parse as JSON: ${String(e)}` });
+      f.examined++;
+      continue;
+    }
+    if (n.$schema !== "folio-session-survey/v1") continue;
+    f.examined++;
+    const name = p.slice(p.lastIndexOf("/") + 1);
+    if (typeof n.to !== "string" || name !== `${n.to.slice(0, 12)}.json`) {
+      f.findings.push({ where, detail: `its upper edge is ${String(n.to)}, so it belongs at \`${String(n.to).slice(0, 12)}.json\`` });
+    }
+    if (n.from !== undefined && n.to !== undefined && typeof n.commits === "number") {
+      if (n.from === n.to && n.commits > 0) {
+        f.findings.push({ where, detail: `\`from\` equals \`to\` — an empty window — yet it records ${n.commits} commit(s)` });
+      } else if (n.from !== n.to && n.commits === 0) {
+        f.findings.push({ where, detail: "`from` and `to` differ, yet it records 0 commits — the window cannot be empty" });
+      }
+    }
+  }
+  return f;
+}
+
+/** The YAML front matter of a Markdown node, or `undefined` when it has none or it will not parse. */
+function frontMatterOf(text: string): Record<string, unknown> | undefined {
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!m) return undefined;
+  try {
+    const v = parseYaml(m[1]!) as unknown;
+    return v !== null && typeof v === "object" ? (v as Record<string, unknown>) : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * `todo-items` — a todo's bean references resolve.
+ *
+ * A todo is a PERSON's item; a bean is the agent work plan. The bridge between
+ * the two is `references: [{kind: bean, id}]`, and it is the only edge in the
+ * todo node that points into the agent store. The schema types it as a string,
+ * so a todo can say "tracked by `folio-assistant-h32d`" about a bean that was
+ * never created, and a person following the link finds nothing — while the
+ * agent half, looking from the bean, never knew the person was waiting.
+ *
+ * Asked of `todo-items` and not of `todos`: `todo-process-references-resolve`
+ * already reads the same files for `processes:`, a different edge into a
+ * different graph. Archived beans count as present (bean `e8m3`). Measured
+ * 2026-10-04: 3 items, 4 bean references, 0 findings.
+ */
+export function todoBeanRefs(opts: { dirs?: string[]; beans?: ReadonlySet<string> } = {}): Family {
+  const f: Family = {
+    id: "todo-item-bean-references-resolve",
+    summary:
+      "A todo item's `references:` names a bean the store does not hold, so the one edge from a person's " +
+      "item into the agent work plan points at nothing — and the schema cannot tell, because a missing " +
+      "bean id is still a well-formed string.",
+    examined: 0,
+    findings: [],
+  };
+  const dirs = opts.dirs ?? declaredDirs("todo-items");
+  if (dirs === undefined) {
+    f.unreadable = "no instance declares a `todo-items` directory that exists — could not determine";
+    return f;
+  }
+  f.walked = dirs;
+  const beans = opts.beans ?? beanIdsInStore();
+  if (beans.size === 0) {
+    f.unreadable = "no bean ids were found in any declared `bean-defs` directory — could not determine";
+    return f;
+  }
+  for (const p of filesIn(dirs, ".md")) {
+    const fm = frontMatterOf(readFileSync(p, "utf-8"));
+    if (fm?.["$schema"] !== "folio-todo/v1") continue;
+    f.examined++;
+    const refs = Array.isArray(fm["references"]) ? (fm["references"] as Array<{ kind?: unknown; id?: unknown }>) : [];
+    for (const r of refs) {
+      if (r?.kind !== "bean") continue;
+      if (typeof r.id !== "string" || !beans.has(r.id)) {
+        f.findings.push({ where: relative(REPO, p), detail: `references bean \`${String(r.id)}\`, which no declared \`bean-defs\` directory holds` });
+      }
+    }
+  }
+  return f;
+}
+
+/**
+ * `todo-feedback` — every feedback file reads back as the list it was written as.
+ *
+ * `FeedbackStore.read` answers `[]` for a file that does not parse, and every
+ * write path over it is read-modify-write of the whole file
+ * (`src/core/feedback.ts`). So a feedback file that is not a JSON array is not
+ * a parse error anybody sees: it reads as empty, and the next feedback raised
+ * against that block OVERWRITES it — every item in it deleted, silently, by an
+ * unrelated edit. A duplicate `id` is the quieter half: the routes find an item
+ * by `findIndex`, so the second of two items sharing an id can never be updated
+ * or resolved.
+ *
+ * The validator types one ITEM; nothing asks whether the FILE is readable as the
+ * store reads it. A determined empty on this tree — the directory holds no
+ * feedback yet — and printed as one.
+ */
+export function feedbackFilesReadable(opts: { dirs?: string[] } = {}): Family {
+  const f: Family = {
+    id: "feedback-file-reads-back-as-a-list",
+    summary:
+      "A feedback file the store would read as EMPTY (it is not a JSON array), so the next feedback on that " +
+      "block overwrites every item in it — or two items share an id, so the second can never be updated.",
+    examined: 0,
+    findings: [],
+  };
+  const dirs = opts.dirs ?? declaredDirs("todo-feedback");
+  if (dirs === undefined) {
+    f.unreadable = "no instance declares a `todo-feedback` directory that exists — could not determine";
+    return f;
+  }
+  f.walked = dirs;
+  // `<feedbackDir>/<itemId>/<rootName>.json` — the store's own layout, one level down.
+  const files = nodesUnder(dirs, ".json");
+  for (const p of files) {
+    f.examined++;
+    const where = relative(REPO, p);
+    let items: unknown;
+    try {
+      items = JSON.parse(readFileSync(p, "utf-8"));
+    } catch (e) {
+      f.findings.push({ where, detail: `does not parse as JSON (${String(e)}) — the store reads it as empty and the next write deletes it` });
+      continue;
+    }
+    if (!Array.isArray(items)) {
+      f.findings.push({ where, detail: "is not a JSON array — the store reads it as a list, and the next write replaces it" });
+      continue;
+    }
+    const seen = new Set<string>();
+    for (const it of items as Array<{ id?: unknown }>) {
+      const id = typeof it?.id === "string" ? it.id : undefined;
+      if (id === undefined) continue; // an id-less item is the validator's finding
+      if (seen.has(id)) f.findings.push({ where, detail: `two items share id \`${id}\`, so the second can never be updated or resolved` });
+      seen.add(id);
+    }
+  }
+  return f;
+}
+
+/** Every file ending `ext` at any depth under `dirs`, minus directory READMEs. */
+function nodesUnder(dirs: readonly string[], ext: string): string[] {
+  const out = new Set<string>();
+  const walk = (d: string): void => {
+    let entries: string[];
+    try {
+      entries = readdirSync(d);
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      if (e.startsWith(".")) continue;
+      const p = join(d, e);
+      if (statSync(p).isDirectory()) walk(p);
+      else if (p.endsWith(ext) && !isDirectoryReadme(p)) out.add(resolve(p));
+    }
+  };
+  for (const d of dirs) walk(d);
+  return [...out].sort();
+}
+
+/**
+ * `board-positions` — the layout layer points at boards that exist, and is
+ * written in the order that keeps it mergeable.
+ *
+ * The arrow is folio → board → position → note, and the layer may point only
+ * forwards. A positions document keyed by a board id that no `folio-board/v1`
+ * file declares is layout for a board that was deleted or renamed: an orphan
+ * in the LAYER, which `board-diagram-interchange` says is swept from the layer
+ * — and nothing reported one. `orphanPositions` asks the note half and has no
+ * caller outside its tests; the board half was asked nowhere.
+ *
+ * Canonical order is the second half. `schemas/board-positions.ts` calls it
+ * *"the mergeability guarantee, not a tidiness pass"*: two sessions placing two
+ * notes merge cleanly only while the line order is a function of the content.
+ * A hand edit or a writer that skipped `renderPositions` breaks that, and the
+ * schema parses the result happily.
+ *
+ * A determined empty on this tree: `todos/boards/` holds five boards and no
+ * positions document yet — no note has been moved.
+ */
+export function boardPositionsPointAtBoards(opts: { dirs?: string[]; boardDirs?: string[] } = {}): Family {
+  const f: Family = {
+    id: "board-positions-point-at-declared-boards",
+    summary:
+      "A board-positions document lays out a board no `folio-board/v1` file declares — an orphan in the " +
+      "layout layer — or is not written in canonical order, which breaks the guarantee that two sessions " +
+      "moving two notes merge cleanly.",
+    examined: 0,
+    findings: [],
+  };
+  const dirs = opts.dirs ?? declaredDirs("board-positions");
+  if (dirs === undefined) {
+    f.unreadable = "no instance declares a `board-positions` directory that exists — could not determine";
+    return f;
+  }
+  f.walked = dirs;
+  const boardIds = new Set<string>();
+  for (const p of filesIn(opts.boardDirs ?? declaredDirs("boards") ?? [], ".json")) {
+    try {
+      const b = JSON.parse(readFileSync(p, "utf-8")) as { $schema?: string; id?: string };
+      if (b.$schema === "folio-board/v1" && typeof b.id === "string") boardIds.add(b.id);
+    } catch {
+      /* a malformed board is the validator's finding */
+    }
+  }
+  for (const p of filesIn(dirs, ".json")) {
+    const where = relative(REPO, p);
+    const text = readFileSync(p, "utf-8");
+    let doc: unknown;
+    try {
+      doc = JSON.parse(text);
+    } catch {
+      continue; // not parseable: not declaring itself a positions document; the validator's to report
+    }
+    if ((doc as { $schema?: string }).$schema !== BOARD_POSITIONS_SCHEMA_TAG) continue;
+    f.examined++;
+    const parsed = BoardPositionsSchema.safeParse(doc);
+    if (!parsed.success) {
+      f.findings.push({ where, detail: `does not parse as a positions document: ${parsed.error.issues[0]?.message ?? "invalid"}` });
+      continue;
+    }
+    for (const board of Object.keys(parsed.data.boards).sort()) {
+      if (!boardIds.has(board)) {
+        f.findings.push({ where, detail: `lays out board \`${board}\`, which no \`folio-board/v1\` file declares — an orphan in the layer` });
+      }
+    }
+    if (renderPositions(parsed.data) !== text) {
+      f.findings.push({ where, detail: "is not in canonical order (`renderPositions`), so two sessions placing two notes no longer merge cleanly" });
+    }
+  }
+  return f;
+}
+
 /**
  * Does this run write the committed QA sidecar?
  *
@@ -484,7 +913,10 @@ export function harnessStateDocument(families: readonly Family[]): QaResult {
   return buildQaResult({
     script: relative(REPO, import.meta.path),
     scriptAbsPath: import.meta.path,
-    subject: { kind: "harness-state", id: "health+todos+interaction+issue-marks" },
+    subject: {
+      kind: "harness-state",
+      id: "health+todos+interaction+issue-marks+merge-queue+session-survey+todo-items+todo-feedback+board-positions",
+    },
     families: Object.fromEntries(
       families.map((f) => [
         f.id,
@@ -493,7 +925,7 @@ export function harnessStateDocument(families: readonly Family[]): QaResult {
             ? `${f.summary} COULD NOT DETERMINE: ${f.unreadable}`
             : f.stored
               ? `${f.summary} UNKNOWN (stored record not here): ${f.stored}`
-              : `${f.summary} Examined ${f.examined}.`,
+              : `${f.summary} Examined ${f.examined}${f.walked ? ` across ${walkedLabel(f.walked)}` : ""}.`,
           entries: f.findings,
         },
       ]),
@@ -522,12 +954,25 @@ function main(): number {
   }
   const { against, exit: badRef } = againstOrUsage("check:harness-state", process.argv.slice(2));
   if (badRef !== undefined) return badRef;
-  const families = [healthProducerCurrent({ against }), todoProcessRefs(), issueMarkEdits(), interactionProfilesRead()];
+  const families = [
+    healthProducerCurrent({ against }),
+    todoProcessRefs(),
+    issueMarkEdits(),
+    interactionProfilesRead(),
+    mergeQueueEntriesNamed(),
+    surveysFiledByEdge(),
+    todoBeanRefs(),
+    feedbackFilesReadable(),
+    boardPositionsPointAtBoards(),
+  ];
 
   const unreadable = families.filter((f) => f.unreadable);
   const total = families.reduce((a, f) => a + f.findings.length, 0);
 
-  console.log(`Harness state graphs  (${families.length} famil(ies) over health, todos, interaction, issue-marks)`);
+  console.log(
+    `Harness state graphs  (${families.length} famil(ies) over health, todos, interaction, issue-marks, ` +
+      "merge-queue, session-survey, todo-items, todo-feedback, board-positions)",
+  );
   for (const f of families) {
     if (f.unreadable) {
       console.log(`  ⚠ ${f.id}: ${f.unreadable}`);
@@ -538,10 +983,13 @@ function main(): number {
       continue;
     }
     // The denominator, always — a family that examined nothing has not passed.
+    // Where it walked declared directories it says which, so a determined
+    // empty reads as one rather than as a clean pass over nothing.
+    const across = f.walked ? ` across ${walkedLabel(f.walked)}` : "";
     console.log(
       f.findings.length === 0
-        ? `  ✓ ${f.id}: ${f.examined} examined, 0 findings`
-        : `  ✗ ${f.id}: ${f.examined} examined, ${f.findings.length} finding(s)`,
+        ? `  ✓ ${f.id}: ${f.examined} examined${across}, 0 findings${f.examined === 0 && f.walked ? " (determined empty: the declared directory holds no node of this kind)" : ""}`
+        : `  ✗ ${f.id}: ${f.examined} examined${across}, ${f.findings.length} finding(s)`,
     );
     for (const x of f.findings) console.log(`      · ${x.where} — ${x.detail}`);
   }

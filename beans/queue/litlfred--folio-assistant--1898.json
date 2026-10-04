@@ -11,11 +11,18 @@
   },
   "reason": "The vqlp HOLD IS LIFTED. The owner chose 'Agent adds the section' (fix, then release). #1898's author fixed it in 03d645180 and closed bean vqlp at 12:19Z; the Merge Manager's agent verified its presenting section, the 'Presented on' link and the unpresented count of 71. Still blocked: (1) an authored placement conflict with #2009 (mlux): document-intake must stay in cat-harness library-core, with main's Task_Citeable kept. The rework is owned by #1898's own session (session_01EKB1gh), handed over by the owner. (2) It conflicts with main, so no gating CI has run on its head. (3) Per its own commit, check:wireframes fails locally with 8 undeclared refs, cause not yet found. (4) It has no ready marker.",
   "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
-  "decidedAt": "2026-10-04T14:05:00Z",
-  "status": "blocked",
+  "decidedAt": "2026-10-04T16:45:00Z",
+  "status": "waiting-on-author",
   "beans": [
     "folio-assistant-apcg",
     "folio-assistant-b8de",
     "folio-assistant-zlmp"
-  ]
+  ],
+  "trainId": "merge-train-2026-10-04a",
+  "ejection": {
+    "trainId": "merge-train-2026-10-04a",
+    "reason": "merge-base's declared take-base resolution of the gitignored-but-tracked cat-harness/test/results/lsi/cat-harness/skills.lsi.json crashed ('is in the index, but not at stage 2'). A tool defect of the 8j9e class, not an authored conflict; the PR itself is signed and guard-green at 0f70ad8.",
+    "evidenceUrl": "https://github.com/litlfred/folio-assistant/pull/2113",
+    "at": "2026-10-04T16:40:00Z"
+  }
 }
