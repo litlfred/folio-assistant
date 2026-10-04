@@ -105,8 +105,8 @@ describe("staging one IG as one just-the-docs site", () => {
     expect(cfg).toContain("theme: just-the-docs");
   });
 
-  test("include targets are read from the page", () => {
-    expect(includeTargets("{% include a.svg %} x {%- include b.md -%}")).toEqual(["a.svg", "b.md"]);
+  test("include targets are read from the page, including lang-fragment", () => {
+    expect(includeTargets("{% include a.svg %} x {%- include b.md -%} y {% lang-fragment table.xhtml %}")).toEqual(["a.svg", "b.md", "table.xhtml"]);
   });
 
   test("a repeated id keeps its first copy and the rest are renamed, each reported", () => {
