@@ -420,19 +420,7 @@
       "title": "QC reviewer",
       "notation": "qc-reviewer",
       "definition": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
-      "usage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Review"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Review",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "label": "QC reviewer",
-      "scopeNote": "Reads the rendered delta and answers one question: is every difference explained by the change? This is the only judgement in the subprocess, and it is a person's (or a reviewing agent acting in this role) because \"explained\" depends on what the change was meant to do, which no tool knows.",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn"
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/clinical-sme",
@@ -1400,13 +1388,11 @@
         "CI/CD Pipeline",
         "CI/CD pipeline",
         "Graph audit (system)",
-        "Incremental build (system)",
         "Scheduled log sweep",
         "merge:main command"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
@@ -1430,15 +1416,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_Build",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "label": "Incremental build (system)",
-      "scopeNote": "Checks that the base AST still matches the IG's inputs, then diffs base against head and renders the delta pages. Both steps are mechanical and read files only; neither decides anything a person has to own. A stale or undeterminable base ends here, before any delta is shown, because a delta against the wrong base explains nothing.",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
@@ -1780,18 +1757,8 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "actedUpon": true,
       "usage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_WorkPlan",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_2"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgAstDeltaReview/Lane_WorkPlan",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "label": "Work plan — beans (shared by humans and agents)",
-      "scopeNote": "Where an unexplained difference is recorded before the run falls back to a full build: a note on bean `a9tx` under W8, naming the resource and the path, so the cone rules get fixed rather than the difference being forgotten when the full build comes back green.",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_2",

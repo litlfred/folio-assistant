@@ -312,17 +312,17 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T09:22:05.376Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c8c5740f184afc0868b427b997edc2cfaff27f3a",
-  "sourceCommitSha": "c8c5740f184afc0868b427b997edc2cfaff27f3a",
-  "sourceCommitAt": "2026-10-04T11:16:36+02:00",
+  "generatedAt": "2026-10-04T09:55:02.432Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9426a1fa2cd502f0eb74af36f2e8995b97abb289",
+  "sourceCommitSha": "9426a1fa2cd502f0eb74af36f2e8995b97abb289",
+  "sourceCommitAt": "2026-10-04T11:49:39+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "Skill": 306,
     "Actor": 36,
     "Capability": 28,
-    "SkillPackage": 35,
+    "SkillPackage": 34,
     "Decision": 12,
     "Process": 82,
     "SequenceFlow": 1103,
@@ -2058,6 +2058,22 @@
       ],
       "instructionsPath": "skills/library/library-core/ontologist.md",
       "instructionLines": 233,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "document-intake",
+      "title": "Document Intake",
+      "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/document-intake.md",
+      "instructionLines": 460,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3976,21 +3992,6 @@
       ],
       "instructionsPath": "../folio-assistant-core/skills/library/catalogue/dublin-core-renderings.md",
       "instructionLines": 164,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "document-intake",
-      "title": "Document Intake",
-      "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ingestion"
-      ],
-      "instructionsPath": "../folio-assistant-core/skills/library/ingestion/document-intake.md",
-      "instructionLines": 460,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -6206,13 +6207,6 @@
       "hasManifest": true
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ingestion",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
-      "name": "ingestion",
-      "path": "../folio-assistant-core/skills/library/ingestion",
-      "hasManifest": true
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-authoring",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
       "name": "fhir-ig-authoring",
@@ -6539,6 +6533,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/filing-dublin-core",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
@@ -18400,8 +18395,6 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/corpus",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_3",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-intake"
       ],
       "touchesWorkPlan": false,
@@ -31494,335 +31487,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
-      "name": "Is the incremental IG AST what a full build would have produced?",
-      "enforcement": "advisory",
-      "sourcePath": "processes/content/ig-ast-delta-review.bpmn",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready"
-      ],
-      "nodeCount": 10,
-      "flowCount": 9,
-      "conformsTo": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_2",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_3",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": {
-        "@value": "sí",
-        "@language": "es"
-      },
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Diff",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_4",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": "no — stale or\ncannot tell",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Stale",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_5",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Diff",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_6",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_7",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": {
-        "@value": "sí",
-        "@language": "es"
-      },
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Accepted",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_8",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "name": {
-        "@value": "no",
-        "@language": "es"
-      },
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_FileCoupling",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_9",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_FileCoupling",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_FullBuild",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Incremental build (system)",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "QC reviewer",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
-      "name": "Work plan — beans (shared by humans and agents)",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Base AST and merged head AST exist",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Check the base AST against the IG's inputs",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_2"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Base AST valid for its inputs?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_3",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_4"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Stale",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Base stale — run a full build",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_4"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Diff",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Diff base → head and render the delta pages",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Read the rendered delta",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Every difference explained?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_7",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Accepted",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Delta accepted — on to the QC gates",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_7"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_FileCoupling",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Note the missed coupling on the bean",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager"
-      ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "note",
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_8"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_9"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_FullBuild",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Coupling filed — run a full build",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_9"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Voice overlay review",
@@ -36922,7 +36586,6 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication/lane/Lane_PubMgr",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/render-kg-to-cdn"
       ],
       "touchesWorkPlan": false,
@@ -37553,9 +37216,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview/lane/Lane_Agent",
-      "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/semantic-review-scoping"
-      ],
+      "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -39199,6 +38860,312 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/flow/F27"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Is the incremental IG AST what a full build would have produced?",
+      "enforcement": "advisory",
+      "sourcePath": "../fhir-harness/processes/content/ig-ast-delta-review.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready"
+      ],
+      "nodeCount": 10,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "sí",
+        "@language": "es"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Diff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no — stale or\ncannot tell",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Stale"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Diff",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "sí",
+        "@language": "es"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Accepted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "no",
+        "@language": "es"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_FileCoupling"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_FileCoupling",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_FullBuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Incremental build (system)",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "QC reviewer",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Work plan — beans (shared by humans and agents)",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Start_Ready",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Base AST and merged head AST exist",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Validity",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Check the base AST against the IG's inputs",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_2"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Valid",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Base AST valid for its inputs?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_3",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_4"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Stale",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Base stale — run a full build",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_4"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Diff",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Diff base → head and render the delta pages",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_5"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_Review",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Read the rendered delta",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_6"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/GW_Explained",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Every difference explained?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_8"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_Accepted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Delta accepted — on to the QC gates",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/qc-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_Review",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_7"
+      ],
+      "outgoing": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/Task_FileCoupling",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Note the missed coupling on the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_9"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/node/End_FullBuild",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Coupling filed — run a full build",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgAstDeltaReview/flow/Flow_9"
       ],
       "outgoing": []
     },
@@ -50763,7 +50730,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 278,
+      "fileCount": 279,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -50814,7 +50781,7 @@
       ],
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. GROUPED BY CONCERN since placement PR3 (bean `63wl`): `processes.json` names the groups, each diagram sits in `processes/<group>/` and a DMN in `processes/<group>/decisions/` beside the diagrams that read it; the content-type diagrams moved up to the instances that own their skills (folio-assistant-core, folio-assistant-sci, fhir-harness), whose same-named `processes/<group>/` are members of these groups.",
       "readmePath": "processes/README.md",
-      "fileCount": 75,
+      "fileCount": 74,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -50851,7 +50818,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1028,
+      "fileCount": 1027,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
     {
@@ -51055,7 +51022,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1144,
+      "fileCount": 1143,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
