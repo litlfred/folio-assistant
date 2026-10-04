@@ -58,7 +58,7 @@
  * Nothing is minted in this project's namespaces.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join, posix, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { DOCS_SITE_BASE } from "../../cat-harness/schemas/jsonld.ts";
 import { escHtml, thinPageConfigOf, thinPageHtml } from "../../cat-harness/scripts/thin-page.ts";
 import { OpenApiDocumentSchema, OpenApiProvenanceSchema, operationsOf, type OpenApiOperation } from "../schemas/openapi.ts";
