@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 808,
+      "count": 809,
       "unit": "beans"
     }
   },
@@ -1486,6 +1486,20 @@
       "updatedAt": "2026-09-29T18:14:49Z",
       "preview": "Owner: *\"and then manage review comments etc.\"*\n\n**The real obstacle, measured.** `docs-ui.js` states it outright: *\"A\npublished page cannot write back to the repo\"* (lines 2077 and 2592). The\nreview page is static on gh-pages, so \"manage comments\" needs a WRITE PATH,\nand choosing it is the owner's decision:\n\n| option | anchors to | cost |\n|---|---|---|\n| A. GitHub PR review comments | a line of a",
       "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
+    },
+    {
+      "id": "folio-assistant-42u5",
+      "title": "#1955 hand-off to the merge manager: kept merged with main by its session, by hand",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T12:31:39Z",
+      "updatedAt": "2026-10-04T12:31:39Z",
+      "preview": "**For the merge manager — #1955 is kept merged with `main` by its owning session, by hand.**\n\nThe `merge-main` bot cannot land `main` into this branch:\n- it refuses two **authored** conflicts, which have no declared pattern, correctly so (`merge-conflict-patterns`):\n  - `cat-harness/scripts/check-retired-front-matter.ts` — both sides added an import; both are kept (this branch's `checkoutRootFor`,",
+      "file": "beans/defs/folio-assistant-42u5--1955-hand-off-to-the-merge-manager-kept-merged-wit.md"
     },
     {
       "id": "folio-assistant-4475",
@@ -12806,8 +12820,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 308,
-    "openTotal": 469,
+    "orphanOpen": 309,
+    "openTotal": 470,
     "coveredOpen": 157,
     "duplicateIds": 0
   }
