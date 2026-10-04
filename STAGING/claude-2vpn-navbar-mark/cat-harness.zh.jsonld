@@ -316,14 +316,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T18:59:18.811Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/27267443bd8820a76f92dae863bb65fef69dbdbc",
-  "sourceCommitSha": "27267443bd8820a76f92dae863bb65fef69dbdbc",
-  "sourceCommitAt": "2026-10-04T18:53:24Z",
+  "generatedAt": "2026-10-04T19:08:03.182Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5343da14f9a8278c880f3749b57b2f100c3010b0",
+  "sourceCommitSha": "5343da14f9a8278c880f3749b57b2f100c3010b0",
+  "sourceCommitAt": "2026-10-04T19:03:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 308,
+    "Skill": 310,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 34,
@@ -2951,7 +2951,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/session-intent.md",
-      "instructionLines": 269,
+      "instructionLines": 273,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3136,7 +3136,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 827,
+      "instructionLines": 887,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3289,7 +3289,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
-      "instructionLines": 593,
+      "instructionLines": 661,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3328,6 +3328,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deployment-auth"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/work-plan-restructure",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "work-plan-restructure",
+      "title": "Restructuring a work plan — a reviewed plan, not a bulk edit",
+      "description": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/work-plan-restructure.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/work-plan-restructure"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/delivery-summary",
@@ -3599,6 +3616,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-plan-execution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/branch-archaeology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "branch-archaeology",
+      "title": "Branch archaeology: what each branch holds that main does not",
+      "description": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/branch-archaeology.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/gate-tree-mutation",
@@ -7089,6 +7123,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/branch-archaeology",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/coordinate",
@@ -7138,7 +7173,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/watch",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/where-a-proposal-goes"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/where-a-proposal-goes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#skill/work-plan-restructure"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -53604,7 +53640,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 269,
+      "fileCount": 271,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/uml",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
@@ -53622,7 +53658,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 281,
+      "fileCount": 283,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -53841,7 +53877,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1949,
+      "fileCount": 1954,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-2vpn-navbar-mark/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
