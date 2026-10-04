@@ -94,6 +94,12 @@
  *   bun run regen --jobs 3       # pool size (default: CPUs - 1)
  *   bun run regen --no-cache     # ask every pair; neither read nor update the hash cache
  *   bun run regen --explain      # say, per pair, why it ran or was skipped
+ *   bun run regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
+ *
+ * Exit (one decision, in {@link exitCodeFor}):
+ *   0  every pair is current or was regenerated, and the run SETTLED
+ *   1  at least one check is `unrepaired` or `no-writer` — not staleness
+ *   2  the run did not reach a fixed point: COULD NOT DETERMINE, never clean
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -240,6 +246,56 @@ export const NO_WRITER: Readonly<Record<string, string>> = {
   // as a repair. It is the one case where a writer exists and must not be run.
   "check:viewer-nav": "its writer re-baselines, which would hide the regression the gate exists to report",
 };
+
+/**
+ * How many passes a fixpoint run may take before it gives up — bean `g5kt`.
+ *
+ * ## Why it is not 3, which is what it was
+ *
+ * A pass is reported settled only when it ran NO writer, so a cap of N admits
+ * at most **N − 1** writer-running passes. 3 therefore allowed two, and that
+ * is below the measured need: the merge sweep of 2026-10-04 found
+ * `skill:register` wanting a THIRD writer pass before its chain settled —
+ * `skill:register` writes artefacts that other writers read, and
+ * `skill-registration.md` records the chain being three deep. Under the old
+ * default that run could not converge, and (bean `g5kt` defect 1) said so
+ * while exiting 0.
+ *
+ * ## Why it is a bound at all, rather than "until it settles"
+ *
+ * Two writers can undo each other — `regen-after-merge.test.ts` has the case
+ * — and an unbounded loop over that pair never returns. The bound is what
+ * turns a hang into a reported refusal.
+ *
+ * ## Why this number
+ *
+ * It is a SANE BOUND, not a derived one, and saying so is the honest version.
+ * The derivable bound is the longest chain of writer-reads-writer among the
+ * pairs, which this tool cannot compute: `task-io.ts` declarations are
+ * partial by design (a pair with no declaration is always asked), so a
+ * computed depth would be an underestimate presented as a limit. 6 admits
+ * five writer passes — twice the deepest chain ever measured here — and
+ * `--max-passes` raises it for anyone who hits it. A run that needs more says
+ * so and fails, which is the state this is allowed to leave behind.
+ */
+export const DEFAULT_MAX_PASSES = 6;
+
+/** `--max-passes N` / `--max-passes=N`, defaulting to {@link DEFAULT_MAX_PASSES}. */
+export function maxPassesFromArgv(argv: readonly string[], fallback = DEFAULT_MAX_PASSES): number {
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]!;
+    let v: string | undefined;
+    if (a === "--max-passes") v = argv[i + 1];
+    else if (a.startsWith("--max-passes=")) v = a.slice("--max-passes=".length);
+    else continue;
+    const n = Number(v);
+    if (!Number.isInteger(n) || n < 1) {
+      throw new Error(`--max-passes needs a positive integer, got ${JSON.stringify(v)}`);
+    }
+    return n;
+  }
+  return fallback;
+}
 
 export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer";
 
@@ -392,11 +448,15 @@ export async function regenPass(
  * The same argument is what makes the worker pool safe: the settling pass ran
  * no writer, so every verdict it reports was read from a tree nobody was
  * writing.
+ *
+ * The cap is {@link DEFAULT_MAX_PASSES}; `--max-passes` raises it. A run that
+ * reaches it returns `settled: false`, and that is a REFUSAL, not a pass —
+ * see {@link exitCodeFor}.
  */
 export async function regenToFixpoint(
   pairs: readonly Pair[],
   runner: Runner,
-  maxPasses = 3,
+  maxPasses = DEFAULT_MAX_PASSES,
   opts: Omit<PassOptions, "dryRun"> & { onPass?: (pass: number) => void } = {},
 ): Promise<{ results: Result[]; passes: number; settled: boolean }> {
   const final = new Map<string, Result>();
@@ -416,6 +476,76 @@ export async function regenToFixpoint(
     }
   }
   return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
+}
+
+/** Why a run exited as it did — one of these, never a bare number. */
+export type ExitReason = "dry-run" | "clean" | "not-settled" | "not-staleness";
+
+/** {@link exitCodeFor}'s verdict: the code, which reason earned it, and the line to print. */
+export interface ExitVerdict {
+  code: number;
+  reason: ExitReason;
+  message?: string;
+}
+
+/**
+ * The run's exit code — bean `g5kt` defect 1.
+ *
+ * ## The false clean this replaces
+ *
+ * This was inline in the CLI and consulted `unrepaired` and `no-writer` only.
+ * `settled` was computed, printed as *"CAP REACHED: the last pass still ran a
+ * writer, so the tree may not be settled"*, and then **dropped** — so a run
+ * that could not reach a fixed point exited 0. Every reader of an exit code
+ * (a pre-push sweep, `prepare-merge`, a CI step, an agent) was told the tree
+ * was regenerated when the tool's own last line said it did not know.
+ *
+ * That is the standing could-not-determine rule — *"a sweep blind on one
+ * check has not cleared the others"* — broken by one of the tools that
+ * reports it, which is why it is a function with a name and a test rather
+ * than three lines at the bottom of a script.
+ *
+ * ## Why not-settled outranks a clean count
+ *
+ * An unsettled run's verdicts were read from a tree a writer was still
+ * changing, so `0 unrepaired` over it is not a finding of zero — it is a
+ * count nobody can stand behind. The order below is therefore deliberate:
+ * `not-staleness` first because it names specific checks a person must read,
+ * then `not-settled`, and `clean` only when neither holds.
+ *
+ * `--dry-run` ran no writer by construction, so it cannot settle anything and
+ * is not judged on it.
+ */
+export function exitCodeFor(run: {
+  results: readonly Result[];
+  settled: boolean;
+  dryRun?: boolean;
+  passes?: number;
+}): ExitVerdict {
+  if (run.dryRun === true) return { code: 0, reason: "dry-run" };
+  const bad = run.results.filter((r) => r.outcome === "unrepaired" || r.outcome === "no-writer");
+  if (bad.length > 0) {
+    return {
+      code: 1,
+      reason: "not-staleness",
+      message:
+        `${bad.length} check(s) are NOT explained by staleness. Read them: a generator ` +
+        "cannot fix a defect in what it is generating from.",
+    };
+  }
+  if (!run.settled) {
+    return {
+      code: 2,
+      reason: "not-settled",
+      message:
+        `COULD NOT DETERMINE: the run did not reach a fixed point within ` +
+        `${run.passes ?? DEFAULT_MAX_PASSES} pass(es) — the last one still ran a writer. ` +
+        "Every verdict above was read from a tree a writer was still changing, so this " +
+        "is NOT a clean regeneration. Re-run with `--max-passes` raised; if it still will " +
+        "not settle, two writers are undoing each other and that is the defect to fix.",
+    };
+  }
+  return { code: 0, reason: "clean" };
 }
 
 /** The cache key of a pair: both script names, so a re-paired check starts fresh. */
@@ -464,6 +594,7 @@ if (import.meta.main) {
     scripts?: Record<string, string>;
   }).scripts ?? {};
   const jobs = jobsFromArgv(process.argv);
+  const maxPasses = maxPassesFromArgv(process.argv);
   const useCache = cacheEnabled(process.argv, process.env);
   const t0 = performance.now();
 
@@ -520,7 +651,7 @@ if (import.meta.main) {
   if (dryRun) {
     results = (await regenPass(repairable, asyncRun, { dryRun: true, jobs, skip, report })).results;
   } else {
-    const fx = await regenToFixpoint(repairable, asyncRun, 3, {
+    const fx = await regenToFixpoint(repairable, asyncRun, maxPasses, {
       jobs,
       skip,
       report,
@@ -533,7 +664,9 @@ if (import.meta.main) {
     settled = fx.settled;
     console.log(
       `  ${fx.passes} pass(es)` +
-        (fx.settled ? "" : " — CAP REACHED: the last pass still ran a writer, so the tree may not be settled"),
+        (fx.settled
+          ? ""
+          : ` of ${maxPasses} — CAP REACHED: the last pass still ran a writer, so the tree is NOT settled`),
     );
   }
   if (cache !== undefined && !dryRun) {
@@ -580,19 +713,15 @@ if (import.meta.main) {
       );
     }
   }
-  if (dryRun) {
-    console.log("--dry-run: nothing was changed.");
-    process.exit(0);
-  }
-  const bad = by("unrepaired").length + by("no-writer").length;
-  if (bad > 0) {
-    console.error(
-      `\n${bad} check(s) are NOT explained by staleness. Read them: a generator ` +
-        "cannot fix a defect in what it is generating from.",
-    );
-    process.exit(1);
-  }
-  if (by("regenerated").length > 0) {
+  if (dryRun) console.log("--dry-run: nothing was changed.");
+  // One decision, in one tested place — bean `g5kt`. `settled` used to be
+  // printed and then dropped, so a run that could not reach a fixed point
+  // exited 0.
+  const verdict = exitCodeFor({ results, settled, dryRun, passes: maxPasses });
+  if (verdict.message !== undefined) console.error(`\n${verdict.message}`);
+  if (verdict.code !== 0) process.exit(verdict.code);
+  // `--dry-run` changed nothing, so there is nothing to review or commit.
+  if (!dryRun && by("regenerated").length > 0) {
     console.log("\nReview `git diff`, then commit the regenerated artefacts with your merge.");
   }
 }
