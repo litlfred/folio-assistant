@@ -2,84 +2,10 @@
 title: "Digital Health Interventions for Health Management and Support Personnel — WHO SMART Base artefact"
 description: "ValueSet/CDHIv2.3 in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_api_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-CDHIv2.3.openapi.json","script":"../assets/ig-api-openapi.js"}
 ---
-<style>
-.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
-  font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.st-held{color:#0d6e5e}
-.st-ref{color:#6b5b95}
-.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
-.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
-.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
-.st-stat span{font-size:.75rem;opacity:.75}
-
-.st-ig {
-  --breadcrumb-bg-color: #f5f5f5;
-  --breadcrumb-text-color: ##555555; /* shape conflict — see chrome.json */
-  --btn-active-color: #0078d4;
-  --btn-gradient-end-color: #357ebd;
-  --btn-gradient-end-color-alpha: #ff357ebd;
-  --btn-gradient-start-color: #428bca;
-  --btn-gradient-start-color-alpha: #ff428bca;
-  --btn-hover-color: #0070A1;
-  --btn-text-color: #e6e6e6;
-  --display-todo: none;
-  --dragon-background-color: #fffbf7;
-  --dragon-text-color: #101020;
-  --footer-bg-color: #505050;
-  --footer-container-bg-color: #00477d;
-  --footer-highlight-text-color: #ffff77;
-  --footer-hyperlink-text-color: #81BEF7;
-  --footer-nav-bg-color: #f5f5f5;
-  --footer-text-color: #ffffff;
-  --ig-header-color: #f6f7f9;
-  --ig-header-container-color: #ffffff;
-  --ig-status-text-color: #00376d;
-  --link-color: #428bca;
-  --link-hover-color: #2a6496;
-  --may-color: #00004d;
-  --must-color: #4d0000;
-  --navbar-bg-color: #00477d;
-  --publish-box-bg-color: yellow;
-  --publish-box-border: 1px solid #0A0008;
-  --should-color: #4d4000;
-  --showtodo: "off";
-  --stripe-bg-color: #999999;
-  --stu-note-background-color: #fff2ff;
-  --stu-note-border-left-color: #ffa0ff;
-  --toc-box-bg-color: #f6f7f9;
-  --toc-box-border: navy; /* shape conflict — see chrome.json */
-}
-
-.st-ig #ig-status.ig-status-draft {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 50) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>DRAFT</text></svg>");
-  background-size: calc(50% / 5) 100px;
-  background-repeat: repeat-x;
-}
-
-.st-ig #ig-status.ig-status-retired {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 60) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>RETIRED</text></svg>");
-  background-size: calc(50% / 5) 100px;
-  background-repeat: repeat-x;
-}
-
-.st-ig #ig-status p {
-  background-color: white;
-  padding: 10px 17px;
-  border-radius: 5px;
-  position: relative;
-  z-index: 2;
-}
-
-.st-ig #publish-box {
-  background-color: var(--publish-box-bg-color);
-  border: var(--publish-box-border);
-  padding: 5px;
-}
-.st-ig .st-ig-bar{background:var(--navbar-bg-color);padding:.5rem .8rem;border-radius:4px 4px 0 0}
-.st-ig .st-ig-bar a{color:#fff;font-weight:600;text-decoration:none}
-.st-ig .st-ig-title{font-size:12pt;font-weight:bold;color:var(--ig-status-text-color)}
-</style>
+<link rel="stylesheet" href="{{ '/smart-base/assets/ig-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/smart-base/assets/ig-chrome.css' | relative_url }}">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div>
@@ -114,7 +40,24 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.3.schema.json> | `fhir-artifact-index/dak/ValueSet-CDHIv2.3.schema.json` |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.3.schema.json> | `fhir-artifact-index/dak/ValueSet-CDHIv2.3.schema.json` · [view](ValueSet-CDHIv2.3.schema.json.html) |
 | Displays | <https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.3.displays.json> | `fhir-artifact-index/dak/ValueSet-CDHIv2.3.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/ValueSet-CDHIv2.3.openapi.json> | `fhir-artifact-index/dak/ValueSet-CDHIv2.3.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-base/ValueSet-CDHIv2.3.jsonld> | `fhir-artifact-index/dak/ValueSet-CDHIv2.3.jsonld` |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-base/ValueSet-CDHIv2.3.jsonld> | `fhir-artifact-index/dak/ValueSet-CDHIv2.3.jsonld` · [view](ValueSet-CDHIv2.3.jsonld.html) |
+
+
+{% comment %}
+An artefact page's IG API section ("API Information", "Endpoints"), appended to the page by `gen-ig-pages.ts`.
+Reads `page.ig_api_openapi`: `src` (the artefact's OpenAPI sidecar in the served artefact-index graph) and
+`script` (the loader). The section is built in the browser by `ig-api-openapi.js` from that file, as
+smart-base's post-processing builds it into the Publisher's page; nothing of it is baked in here.
+No whitespace control on these tags, unlike a template that IS a page: this one is APPENDED to an
+artefact page, and a whitespace-stripping opening tag ate the blank line after that page's last table row, so the
+<div> became part of the row and kramdown printed it as text (`liquid-templates` §"Whitespace").
+{% endcomment %}
+<div class="ig-api-openapi-host" data-ig-api-openapi-src="{{ page.ig_api_openapi.src }}"><p>Loading the API information…</p></div>
+<noscript><p>The API information needs JavaScript; the <a href="{{ page.ig_api_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
+<script src="{{ page.ig_api_openapi.script }}" defer></script>
+
+<footer id="ig-footer" data-prev="ValueSet-CDHIv2.2.html" data-next="ValueSet-CDHIv2.4.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

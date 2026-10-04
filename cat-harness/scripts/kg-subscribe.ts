@@ -93,7 +93,7 @@
  *   bun run kg:subscribe:check
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
@@ -109,6 +109,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { RepoFullNameSchema } from "../schemas/repo-full-name.js";
 import {
+  KG_PART_RECORD_SCHEMA,
   SNAPSHOT_GRAPH_KIND,
   SNAPSHOT_SUFFIX,
   SUBSTRATE_SNAPSHOT_SCHEMA,
@@ -339,7 +340,8 @@ export interface SubscribeOptions {
   fetch?: RootFetcher;
 }
 
-function snapshotDirOf(instanceRoot: string, raw: Record<string, unknown>): string | undefined {
+/** The instance's declared `substrate-snapshot` directory, resolved; `undefined` when it declares none. */
+export function snapshotDirOf(instanceRoot: string, raw: Record<string, unknown>): string | undefined {
   const dirs = (raw["directories"] ?? []) as { path: string; graphKinds?: string[]; scope?: "repository" }[];
   const d = dirs.find((x) => (x.graphKinds ?? []).includes(SNAPSHOT_GRAPH_KIND));
   return d ? resolve(rootForScope(instanceRoot, d.scope), d.path) : undefined;
@@ -491,6 +493,214 @@ export function checkSubscriptions(instanceRoot: string): string[] {
     }
   }
   return out;
+}
+
+// ── Materialised parts: the layout the writer and every reader share ─────────
+
+/**
+ * Slices 5 and 6 copy a CHOSEN subgraph, or one asset, of a subscribed
+ * substrate into the subscriber. The writer is
+ * `folio-assistant-core/scripts/kg-materialize.ts`, and it lives in core
+ * rather than here for one reason: its record embeds core's
+ * `MaterializationSchema`, and this instance needs only bootstrap, so a
+ * writer here would import up the dependency arrow (`check:partition`).
+ *
+ * What lives HERE is what the readers below core need without importing up:
+ * where a part's bytes and record sit, how a tree is digested, and a
+ * STRUCTURAL view of a record that the subscriptions page draws from. One
+ * layout, stated once, read by the writer, its `--check`, that page and
+ * `check:materialized-fixity`.
+ *
+ * ## The layout
+ *
+ * Under the subscriber's own `substrate-snapshot` directory — the same place
+ * the snapshot is cached, because a materialised part is the same layer:
+ * somebody else's bytes at the pin, written by a command, never by hand.
+ *
+ * ```text
+ * <snapshot dir>/<subscription>/subgraphs/<subgraph id>/materialization.json
+ * <snapshot dir>/<subscription>/subgraphs/<subgraph id>/tree/…      the upstream directory's contents
+ * <snapshot dir>/<subscription>/assets/<upstream path>/materialization.json
+ * <snapshot dir>/<subscription>/assets/<upstream path>/tree/<file>
+ * ```
+ *
+ * The bytes sit under `tree/`, apart from the record, so a digest over the
+ * tree never has to exclude the record that carries it, and so a scanner can
+ * be told "do not read upstream's own files as ours" with one directory name
+ * (`check:materialized-fixity` honours it: upstream's materialization records
+ * describe upstream's checkout, not this one).
+ */
+export const PART_RECORD_FILE = "materialization.json";
+export const PART_TREE = "tree";
+
+export type KgPart = { kind: "subgraph"; id: string; path: string } | { kind: "asset"; path: string };
+
+/** Where a part's record and `tree/` live. */
+export function partDirOf(
+  snapshotDir: string,
+  subscription: string,
+  part: { kind: "subgraph"; id: string } | { kind: "asset"; path: string },
+): string {
+  return part.kind === "subgraph"
+    ? join(snapshotDir, subscription, "subgraphs", part.id)
+    : join(snapshotDir, subscription, "assets", ...part.path.split("/"));
+}
+
+/**
+ * A repository-relative POSIX path that stays where it is joined, or why not.
+ * No absolute path, no `..`, no empty or dot-prefixed segment — the last is
+ * the dot-prefix guard every declared path here already meets.
+ */
+export function safeRelPath(p: string): { ok: true; path: string } | { ok: false; why: string } {
+  const path = p.replace(/\/+$/, "");
+  if (!path) return { ok: false, why: "an empty path names the whole repository, not a part of it" };
+  if (path.startsWith("/") || path.includes("\\") || /^[A-Za-z]:/.test(path)) {
+    return { ok: false, why: `\`${p}\` is not a repository-relative POSIX path` };
+  }
+  for (const s of path.split("/")) {
+    if (s === "" || s === "." || s === "..") return { ok: false, why: `\`${p}\` has a \`${s || "//"}\` segment` };
+    if (s.startsWith(".")) return { ok: false, why: `\`${p}\` has a dot-prefixed segment \`${s}\`` };
+  }
+  return { ok: true, path };
+}
+
+/** Every file under `dir`, relative and sorted; symbolic links reported apart, never followed. */
+export function treeEntries(dir: string): { files: string[]; links: string[] } {
+  const files: string[] = [];
+  const links: string[] = [];
+  const walk = (d: string): void => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      const rel = relative(dir, p).split("\\").join("/");
+      if (e.isSymbolicLink()) links.push(rel);
+      else if (e.isDirectory()) walk(p);
+      else if (e.isFile()) files.push(rel);
+    }
+  };
+  if (existsSync(dir)) walk(dir);
+  return { files: files.sort(), links: links.sort() };
+}
+
+export const sha256File = (p: string): string => createHash("sha256").update(readFileSync(p)).digest("hex");
+
+/**
+ * One digest over a whole tree: sha256 of the `sha256sum` listing of its
+ * files — `<digest>  <relative path>\n`, sorted by path. It moves when a byte
+ * changes and when a file is added, removed or renamed, which is what lets a
+ * single `fixity` on a directory record mean something. Empty directories are
+ * not content (git holds none).
+ */
+export function treeDigest(dir: string, files: readonly string[] = treeEntries(dir).files): string {
+  const listing = files.map((f) => `${sha256File(join(dir, f))}  ${f}\n`).join("");
+  return createHash("sha256").update(listing).digest("hex");
+}
+
+/**
+ * A STRUCTURAL view of one part record — enough to draw it, and to say
+ * whether its bytes still hash to what it records. It reads fields and parses
+ * nothing against core's schema; that is the writer's `--check`. A record it
+ * cannot read is `unreadable`, never skipped.
+ */
+export interface PartView {
+  /** The part's directory, absolute. */
+  dir: string;
+  /**
+   * Which part the LAYOUT says this directory holds. Known even when the
+   * record is unreadable, so a broken record is drawn on its part's row
+   * instead of falling off the page.
+   */
+  slot: { kind: "subgraph"; id: string } | { kind: "asset"; path: string };
+  /** Which part the RECORD says it is; the writer's `--check` holds the two equal. */
+  part?: KgPart;
+  ref?: string;
+  state: "materialized" | "referenced" | "unreadable";
+  /** Why it is unreadable. */
+  why?: string;
+  /** For a part that stayed referenced: the gates that came back `refused`, and those not answered. */
+  refused: string[];
+  unanswered: string[];
+  /** For a part that stayed referenced: no purpose was stated, so no gate could be judged. */
+  purposeMissing?: boolean;
+  purpose?: string;
+  bytes?: number;
+  fileCount?: number;
+  /** A held part only: whether the bytes under `tree/` still hash to the record. */
+  fixity?: "verified" | "mismatch" | "absent";
+}
+
+function viewOf(dir: string, slot: PartView["slot"]): PartView {
+  const base: PartView = { dir, slot, state: "unreadable", refused: [], unanswered: [] };
+  let r: Record<string, unknown>;
+  try {
+    r = JSON.parse(readFileSync(join(dir, PART_RECORD_FILE), "utf8")) as Record<string, unknown>;
+  } catch (e) {
+    return { ...base, why: `not readable as JSON: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  if (r["$schema"] !== KG_PART_RECORD_SCHEMA) return { ...base, why: `not a \`${KG_PART_RECORD_SCHEMA}\` record` };
+  const m = (r["materialization"] ?? {}) as Record<string, unknown>;
+  const part = r["part"] as KgPart | undefined;
+  const view: PartView = {
+    ...base,
+    ...(part ? { part } : {}),
+    ...(typeof r["ref"] === "string" ? { ref: r["ref"] } : {}),
+    ...(typeof m["purpose"] === "string" ? { purpose: m["purpose"] } : {}),
+    ...(typeof m["bytes"] === "number" ? { bytes: m["bytes"] } : {}),
+  };
+  if (m["state"] === "referenced") {
+    const refusal = (r["refusal"] ?? {}) as Record<string, unknown>;
+    const gates = (refusal["gates"] ?? {}) as Record<string, { verdict?: string }>;
+    return {
+      ...view,
+      state: "referenced",
+      ...(refusal["purposeMissing"] === true ? { purposeMissing: true } : {}),
+      refused: Object.keys(gates).filter((k) => gates[k]?.verdict === "refused").sort(),
+      unanswered: Object.keys(gates).filter((k) => gates[k]?.verdict !== "refused" && gates[k]?.verdict !== "permitted").sort(),
+    };
+  }
+  if (m["state"] !== "materialized") return { ...view, why: `state \`${String(m["state"])}\` is neither held nor referenced` };
+  const tree = join(dir, PART_TREE);
+  const { files } = treeEntries(tree);
+  const want = ((m["fixity"] ?? {}) as { digest?: unknown }).digest;
+  let fixity: PartView["fixity"];
+  if (files.length === 0) fixity = "absent";
+  else if (part?.kind === "asset") fixity = files.length === 1 && sha256File(join(tree, files[0]!)) === want ? "verified" : "mismatch";
+  else fixity = treeDigest(tree, files) === want ? "verified" : "mismatch";
+  return { ...view, state: "materialized", fileCount: files.length, fixity };
+}
+
+/**
+ * Every part record under one subscription's directory, and every STRAY: a
+ * file, or a part directory with no record — bytes nobody accounts for.
+ * `strays` are relative to the snapshot directory.
+ */
+export function partRecordsIn(snapshotDir: string, subscription: string): { parts: PartView[]; strays: string[] } {
+  const base = join(snapshotDir, subscription);
+  const parts: PartView[] = [];
+  const strays: string[] = [];
+  if (!existsSync(base)) return { parts, strays };
+  const rel = (p: string): string => relative(snapshotDir, p).split("\\").join("/");
+  for (const e of readdirSync(base, { withFileTypes: true })) {
+    const p = join(base, e.name);
+    if (e.name === "subgraphs" && e.isDirectory()) {
+      for (const g of readdirSync(p, { withFileTypes: true })) {
+        const gd = join(p, g.name);
+        if (g.isDirectory() && existsSync(join(gd, PART_RECORD_FILE))) parts.push(viewOf(gd, { kind: "subgraph", id: g.name }));
+        else strays.push(rel(gd));
+      }
+    } else if (e.name === "assets" && e.isDirectory()) {
+      const walk = (d: string): void => {
+        for (const a of readdirSync(d, { withFileTypes: true })) {
+          const ad = join(d, a.name);
+          if (a.isDirectory() && !lstatSync(ad).isSymbolicLink()) {
+            if (existsSync(join(ad, PART_RECORD_FILE))) parts.push(viewOf(ad, { kind: "asset", path: relative(p, ad).split("\\").join("/") }));
+            else walk(ad);
+          } else strays.push(rel(ad));
+        }
+      };
+      walk(p);
+    } else strays.push(rel(p));
+  }
+  return { parts: parts.sort((a, b) => a.dir.localeCompare(b.dir)), strays: strays.sort() };
 }
 
 function flag(argv: string[], name: string): string | undefined {

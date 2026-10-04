@@ -41,6 +41,9 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     subprocesses [0..*] : string[]
   }
 }
+package "fhir-harness/fhir-ig-scripts" as pkg_fhir_harness_fhir_ig_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_fhir_harness_fhir_ig_scripts_code
+}
 package "fhir-harness/fhir-harness-processes" as pkg_fhir_harness_fhir_harness_processes <<processes>> {
   class "Business Process Model and Notation (BPMN)" as fhir_harness_fhir_harness_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
     bpmn:callActivity [0..*] : element
@@ -68,37 +71,14 @@ package "fhir-harness/fhir-harness-processes" as pkg_fhir_harness_fhir_harness_p
   }
 }
 package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
-  class "Pair_attestation" as fhir_harness_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
-    kind [1] : implements | co-located
-    prose [1] : string
-    code [1] : string
-    prose_hash [1] : string
-    code_hash [1] : string
-    by [1] : baseline | agent | human
-    reason [0..1] : string
-  }
-  class "Verdict" as fhir_harness_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
-    rule [1] : string
-    result [1] : pass | fail | n/a
-    note [0..1] : string
-  }
-  class "Voice_review" as fhir_harness_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
-    voice [1] : string
-    instance [1] : string
-    skill_hash [1] : string
-    voice_hash [1] : string
-    by [1] : agent | human
-    at [1] : string
-    verdicts [0..*] : Verdict[]
-  }
   class "kg-qa/v1" as fhir_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
-    pair_attestations [0..*] : Pair_attestation[]
-    voice_reviews [0..*] : Voice_review[]
+    pair_attestations [0..1] : any
+    voice_reviews [0..1] : any
   }
   class "kg-qa-manifest/v1" as fhir_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
@@ -107,11 +87,9 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
 }
 
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
-fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
-fhir_harness_qa_kg_qa_v1_Voice_review *-- "0..*" fhir_harness_qa_kg_qa_v1_Verdict : verdicts
-fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Voice_review : voice_reviews
-' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
+' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
 pkg_fhir_harness_library -[hidden]down- pkg_fhir_harness_fhir_ig_tools
-pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_harness_processes
-pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_qa
+pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_ig_scripts
+pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_fhir_harness_processes
+pkg_fhir_harness_fhir_ig_scripts -[hidden]down- pkg_fhir_harness_qa
 @enduml

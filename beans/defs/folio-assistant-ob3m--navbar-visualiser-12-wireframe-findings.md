@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T18:14:39Z
+updated_at: 2026-10-01T18:55:06Z
 parent: folio-assistant-4ccr
 ---
 
@@ -308,6 +308,30 @@ Owner: "keep going". On `claude/quirky-hypatia-k3aoh4` (PR #1762).
 Still open here: 1, 3 (sticky half), 6, 7, 12 (needs an editorial call: rename or cross-link the two Settings).
 
 
+## Finding 6: owner's ruling and implementation (2026-10-01)
+
+**Ruling.** On 2026-10-01 the owner chose option 1 of 4, **"One name everywhere"**. Each destination gets ONE label, used identically on every surface: the viewer rail, the Jekyll sidebar and FOLDERS, the landing's "visualisations you can open", the glass tiles and More panel, and the Stickies "Visualisations" row. Where the harness matters, a surface appends it as a qualifier ("Skills · C@T Harness") and never uses a different base name.
+
+**Implemented** in PR #1804, which is stacked on #1762:
+
+- `cat-harness/scripts/lib/nav-label.ts` is the one label source:
+  - a kind's display name comes from the new `GraphKindDef.title`;
+  - a harness is named by its declared `title`;
+  - a tile uses its declared title with any harness suffix stripped, and never the directory id.
+- The suffixed tile titles were removed from the declarations.
+- Bootstrap's row now opens its own landing section instead of `/processes/`.
+- The IRIS sticky link says "WHO IRIS".
+- New gate: `check:nav-names:check`, with a committed sidecar.
+
+**After, measured** with Playwright on a preview build, served on a dedicated port, over the same six surfaces:
+
+| | destinations | on two or more surfaces | with two names, exact | with two names, case and plural folded |
+|---|---|---|---|---|
+| before (644d04b) | 56 | 39 | 9 | 7 |
+| after | 58 | 40 | **0** | **0** |
+
+The gate reads 76 destinations statically, across 61 railed pages, the include, `harness.json` and the stickies. On the 644d04b tree it fails with 36 multi-named destinations; on this branch it passes.
+
 _2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked on #1762).** Owner, choosing option 2 of 4: *"Rename: 'Glass settings' and 'Page settings', each with a link to the other."*
 
 - The glass ⚙ panel is now **Glass settings**: its caption and heading read "Glass settings — theme, avatars, opacity, blur" (the heading used to be "Theme, avatars, opacity"). The ▦ Actions panel is now **Page settings**, in its caption and view heading. Both names come from `SETTINGS_NAMES` in docs-ui.js, declared once.
@@ -315,7 +339,6 @@ _2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked 
 - **After state, measured on a local build** at 1280×800 and at 390×844: page→glass gives glass open with the glass-settings panel visible, and glass→page gives the launcher open with the "Page settings" heading visible and in the viewport.
 - Tests: `test/settings-crosslinks.e2e.ts` (10/10 pass; 9/10 fail on #1762's head) and `scripts/tests/settings-labels-distinct.test.ts` (6/6 pass; 5/6 fail on the head). Skill: `board-windows` §"Two settings panels, two names, each points to the other".
 - Found, not fixed (also on the head): at 1280×800 the glass panel opens at y≈591, and most of its body sits under the bottom tile strip until the glass is scrolled.
-
 
 ## Finding 3: ruling and after state (2026-10-01, PR #1807, stacked on #1762)
 
@@ -352,3 +375,71 @@ _2026-10-01_ — **Finding 12: owner's ruling implemented, in PR #1810 (stacked 
 - New QA flags `rail-tips` and `harnesses-at-rest` in `check-viewer-nav.ts`: `layoutFlags` for viewer pages and `stripFlags` for the docs site's script-built strip.
 
 **Scoped deliberately:** a rail row that has a visible `.fa-nav-label` gets no tooltip. Hover and keyboard focus open the rail, and that label then reads beside its mark.
+
+## Re-verified 2026-10-01 on PR #1762 head 644d04b9959
+
+Re-measured the four findings still open: 1, 3, 6 and 7. Built with `preview-site.sh` from `claude/quirky-hypatia-k3aoh4` at 644d04b9959, which includes main as of today plus the new viewer rail. Served at `/folio-assistant/` and driven by Playwright at 1280×800 and 390×844. Pages: the landing, `/cat-harness/schemas/` and `/todos/`. Every verdict comes from the built page, not from reading code. "Visible" means hit-tested with `elementFromPoint`, because the closed strip clips labels that are still in the DOM. The screenshots are local only (`.screens/ob3m-v-*.png`, git-excluded).
+
+The PR #1762 sections on this bean (2, 4, 5, 8, 9 and 11 fixed) live on that branch. This note sits on main and does not repeat them.
+
+| # | verdict | evidence |
+|---|---|---|
+| 1 | **CHANGED** | Two surfaces now behave differently. **Landing (theme sidebar), 1280:** the strip is 56 px and shows 6 icon controls (Todos, Beans, Processes, Knowledge graph, More actions, scheme). All have innerText `''`, with the name only in aria-label. `▦ Harnesses` is at **opacity 0** at rest, so no harness is visible on the strip. A hover widens it to 264 px and one click on ▦ shows the harness links, so it takes 2 actions. **Viewer rail (schemas/, todos/), 1280 and 390:** at rest it is 56 px and shows avatar, `§`, `▤`, `▦` and `⌂`. `▦` is opaque but unlabelled. One tap opens the rail (264 px / 248 px) with the 6 harnesses listed (F Folio Assistant, S smart-trust, S SMART Base, W WHO IRIS, C@T Harness, B Bootstrap). So harnesses are now reachable from the rail in 1 tap plus the link, but at rest it is still marks with no labels. **Landing at 390:** the theme's inline menu shows labelled `ON THIS PAGE 19 / FOLDERS 23 / PAGES 66 / ▦ HARNESSES`, and one tap shows 14 harness links. |
+| 3 | **CHANGED, landing half fixed, sticky half still present** | `p.fa-harness-section__description` now reads 'This repository as a working instance: the platform and the folios it hosts.' and 'Computable adjudication and agentic test harness.', followed by `.fa-harness-section__also` 'Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness'. The **Stickies** reader (`.fa-landing-sticky__body`, opened by clicking the card) still shows, at both widths, 'The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` … ambiguous …' (1 `<p>`, code spans). The C@T sticky still opens 'computable adjudication and agentic test harness caaat-harness ca&at-harness .c&at-harness c@t-harness' (7 `<p>`). That half was left as authored on purpose (see the 4–5 note on #1762). |
+| 6 | **STILL-PRESENT, widened from 4 places to 6** | Harness graph kinds now appear in: (A) the sidebar divider kids, 59 links; (B) `FOLDERS`, 23 rows / 17 hrefs; (C) landing 'visualisations you can open', 35 links; (D) **new**, a 'Visualisations' tile row inside the landing Stickies panel; (E) glass `⋯ More`, 15 tiles; (F) **new**, the viewer rail's `▤ Graphs` and `▦ Harnesses`, 27 links on schemas/. 10 destinations appear in all 6, and 6 more in 4. Of the 34 destinations in two or more places, **7 carry more than one name**, ignoring case and plural: `docs/docs/` 'docs' (A,B,C,F) vs 'Docs — cat-harness' (D,E); `skills/skills/` 'skills' vs 'Skills — cat-harness'; `root-docs/` 'docs' (A,C) vs 'root-docs' (D,E); `methodologies/` 'methodology' vs 'Methodologies'; `schemas/cat-harness/` reached as both 'cat-harness' and 'schemas'; `processes/` also as 'Bootstrap' on the rail; `who-iris/` 'The IRIS replica' vs 'WHO IRIS'. The plural fold also hides `external-schemas/` 'external-schema' vs 'External schemas'. Harness names differ too: the sidebar says 'C@T Harness' and the rail's kind descriptions say 'cat-harness'. |
+| 7 | **STILL-PRESENT on theme pages; CHANGED on the viewer rail** | Landing at 1280, sidebar open (264 px), all 4 groups unfolded: **531 links** in `.side-bar` (524 on 2026-09-30). `.fa-nav-middle` is at its **128 px floor** (`min-height: 128px`) with scrollHeight **3682**, or 17634 with every theme subtree forced open. `nav.site-nav` is 2852 px tall with 430 links, and **0 of them are visible** in the middle region without scrolling, because `FOLDERS` (789 px) sits above it in the same region. `.side-bar` also scrolls (2108 / 800), so there are two nested scroll regions. The theme page list is still the squeezed region. **Viewer rail:** 28 links (schemas/) and 27 (todos/), with one scroller, `.fa-nav-graphs` (418 of 1872 px at 1280, 462 of 1872 at 390), and no theme page list. |
+
+Session: https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB
+
+## RULED 2026-10-01: findings 7 and 8, the theme sidebar takes the viewer rail's layout (PR #1808, stacked on #1762)
+
+**Finding 7.** The owner chose option 1 of 4: *"Use the viewer-rail layout on Jekyll pages."* `mountSidebarRail` (docs-ui.js) now moves three things into the one `.fa-nav-middle` scroller, in this order:
+
+1. "On this page", folded.
+2. The page list, the only group open on arrival.
+3. A new **Graphs** disclosure, folded, holding FOLDERS and the harness group moved out of the footer. Each keeps its own fold.
+
+Home stays pinned in the footer. The folded Graphs heading is sticky to the scroller's bottom edge, so it is always one row away.
+
+**Finding 8.** The owner chose option 1 of 4: remove the sidebar's own ☰/×, as #1762 did on the rail. #1762 had already dropped the markup from the generated include (0 in the built page before this change). This change removes the rules and handlers that were left behind:
+- every `.fa-nav-toggle`, `.fa-nav-close` and `.fa-nav-head` rule in docs-ui.css;
+- the `[x]` row move and the ☰/× handlers in docs-ui.js.
+
+The avatar is the one control. It opens and closes the bar, and it sets and lifts stay-closed, by pointer and by keyboard (Enter).
+
+**Measured on local builds** with `preview-site.sh`, served at `/folio-assistant/`, using Playwright with hit-tested visibility. Base is 644d04b9959; after is this branch.
+
+| landing, 1280×800, sidebar pinned open | before | after |
+|---|---|---|
+| scroll regions on arrival | 1 (`fa-nav-middle` 549/2936) | 1 (`fa-nav-middle` 627/2977) |
+| scroll regions, every group open | **2** (`fa-nav-middle` 128/3682, `details.fa-nav-group` 328/1716) | **1** (`fa-nav-middle` 627/6747) |
+| `.side-bar` clipping, every group open | **800/2108** | none |
+| page links visible on arrival | 14 | 15 |
+| page links visible, every group open, scrolled to top | **0** (on the guide 4 of 3228 px) | 0 on the landing (19 open index rows fill the first screen), 6 on the guide. Nothing is clipped, and one scroll reaches the list. |
+| Graphs/FOLDERS on arrival | FOLDERS folded, above the page list | Graphs folded, heading in view at the scroller's bottom |
+| ☰ / × controls, 1280 and 390 | 0 / 0 (markup gone in #1762, CSS left) | 0 / 0, and no rule names them |
+
+At 390×844 there is no fixed scroller, so the phone menu is unchanged in kind. The order is now On this page, Pages, Graphs, and Graphs sits at the end of the menu (it is not sticky on a phone).
+
+**Check:** `cat-harness/test/sidebar-rail.e2e.ts` uses the real generated footer include. It fails on:
+- more than one scroll region, or any clipping inside the sidebar or its regions;
+- Graphs open on arrival, or FOLDERS/harnesses outside it;
+- zero visible page links;
+- a ☰/× by class or by glyph at 1280 or 390.
+
+**Falsified:** 4 of the 5 finding-7 tests fail on 644d04b9959's CSS/JS. The finding-8 tests fail when a ☰ label is injected into the include. `sidebar-strip.test.ts` fails on 644d04b9959's CSS.
+
+## 2026-10-01 — finding 10: owner ruling implemented (option 1 of 4, "Pinned tiles first, plus +N more")
+
+Branch `claude/quirky-hypatia-k3aoh4-strip-pinned`, which is stacked on #1762. Session https://claude.ai/code/session_01Cw8JgZEDT5VqQ5ergjdMjB.
+
+- **Declared, not hard-coded.** The instance declaration gains `glassStrip` (`GlassStripSchema`: `{chrome}` or `{kind}` pins, inherited along `needs` like `navbarIcons`). `cat-harness.json` pins Todos, Settings, library, processes, tools and skills. `sync-docs-harness.ts` resolves each kind to one tile (`resolveGlassStrip`; one slot per kind, and the others stay in More). The page reads the pins from `<meta name="fa-glass-strip">`, or from `assets/harness/glass-strip.json` on replica pages.
+- **Fit, not scroll.** The strip never scrolls. It shows as many pins as fit and refits on resize. Its last tile reads "+N more" (accessible name "N more tiles"), where N is exact. Pins that do not fit wait first in More.
+- **Measured on a local build.** Before (#1762 head): the strip held Todos, Filter, Settings and More. 15 tiles sat behind More with no count, and none of library/processes/tools/skills was on the strip. After: at 1280×800, the 6 pins plus "+12 more", with scrollWidth equal to clientWidth (1280/1280). At 390×844, Todos, Folio settings, library and processes plus "+14 more" (390/390). Shown + N = 18 = total at both widths.
+- **Test.** `glass-strip-fit.e2e.ts`: 10 specs pass. Against #1762 head 8 fail, for real reasons: shown+N was 3 against 25, scrollWidth was 408 against a 390 limit, the pin order did not match, and the strip used overflow-x auto. The 2 keyboard specs pass on both, because More was already a button.
+
+
+
+- **Scope addition (owner, 2026-10-01): "have folio bottom strip tiles default to hidden away when folio first opened".** With no stored choice, the strip now starts slid away. Its tab reads "Show tiles (N)", carries `aria-expanded`, and toggles both ways (`l4zi`). The choice is remembered in this browser as `1`/`0`, and storage that cannot be read falls back to hidden. Test: `glass-strip-default-hidden.e2e.ts`, 7 specs at 1280×800 and 390×844. All 7 fail against #1762 head.
+
+_2026-10-02_ — **Merge of main (#1810) into the strip branch.** The strip pins the chrome tile by id `glass-settings`, so it now shows #1810's caption **Glass settings**. "Folio settings" in the 390×844 measurement above is the caption at the time of that measurement.

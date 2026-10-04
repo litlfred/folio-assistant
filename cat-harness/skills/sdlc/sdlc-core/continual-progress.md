@@ -43,10 +43,9 @@ while you work.
    update the checklist (invariant 3) for routine progress; comment only
    for genuine coordination (overlap, a blocker, a handoff-relevant
    finding). Defer to [`/coordinate`](coordinate.md) for the full
-   cross-PR triage protocol. A **platform refactor** (shared layout,
-   generators, schemas, processes) posts its intent only after the
-   collision review in `coordinate` §"Before a platform refactor" has
-   been run and recorded in the workplan bean.
+   cross-PR triage protocol. New work posts its intent only after the
+   collision review in `coordinate` §"Starting new work" has been run
+   and recorded in the workplan bean.
 
 ## The fifth invariant, and the one agents get wrong
 
@@ -204,6 +203,30 @@ gate can see.
   not re-ask on a timer, and **do not let "not merged yet" become a reason to
   stop pushing.**
 
+### Green means handed to the Merge Steward — an agent never merges to `main` here
+
+**The owner's merge policy for folio-assistant, 2026-10-01 (arc `3fva`).** It
+is the "explicit merge permission" case above, made into a hand-off rather
+than a question:
+
+1. **Never merge to `main` yourself** — not with `gh pr merge`, not with the
+   MCP merge tool, not after a green run, not under a standing "merge it"
+   from earlier in the session.
+2. **When CI is green on EVERY job** (the run list, not the PR page — see
+   `prepare-merge` §"NO CHECKS IS NOT GREEN"): mark the PR **Ready for
+   review**, add the label **`ready-to-merge`**, and comment
+   **`ready: <head sha>`** — the full sha of the head that went green, so a
+   push after it is visibly not what was declared ready.
+3. **The Merge Steward session ("Separation") merges.** It brings `main` in,
+   runs `regen`, re-checks and merges. That is its lane, not yours.
+4. **If it reports red, it is yours again**: fix, push, wait for green on
+   every job, then re-label and comment `ready: <new head sha>`.
+
+So "merge anyway" in §"What to do with the thing you could not verify" reads
+here as **mark it ready anyway**, and "merge it as soon as it is green" in the
+fix-forward section below reads as **hand it over as soon as it is green**.
+The point of both is unchanged: a green PR is not held back.
+
 ### Two green PRs can merge into a red main, and the answer is to fix forward
 
 A PR is tested against the main it last merged, not the main it lands on.
@@ -216,7 +239,8 @@ have seen it (bean `391j`).
 **The owner's policy is to fix forward, not to add a merge queue or an
 "up to date" requirement** (2026-09-24). So:
 
-- **Watch main's CI after every merge you make**, not only your PR's.
+- **Watch main's CI after every merge of yours**, not only your PR's —
+  whoever pressed the button.
   "My PR was green" does not mean main is green.
 - **A red main whose failure your diff did not cause is still yours to fix
   when you find it.** Establish the cause from the failing run and each

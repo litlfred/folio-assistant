@@ -66,6 +66,15 @@
 <script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script>
 <style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style>
 <!-- fa-first-paint:end -->
+<!-- PROSE HERE IS NOT FREE: these are HTML comments, so every byte ships on
+     every page (2356 of them). A comment in this file is a POINTER; the
+     reasoning goes in the artefact. Measured, with the cost this change paid
+     before measuring, in assets/harness/site.json's front matter. -->
+<!-- THE RENDER STATE. pending here; ready/failed from assets/js/kg-render.js,
+     which carries the contract. No attribute = no dynamic region on this page.
+     The number is a MINIMUM cross-checking registrations, not a count. -->
+<meta name="fa-render-regions" content="1">
+<script>document.documentElement.setAttribute("data-fa-render","pending");</script>
 <!--
   The browser-tab icon, from the same declared mark the sidebar title
   (`title.html`) renders — reused rather than looked up by its own
@@ -236,10 +245,9 @@
   `baseurl` travels with it because the client has no other way to strip the
   site prefix off a nav `href` before matching it.
 -->
-<script type="application/json" id="fa-translation-index">{
-  "baseurl": "{{ site.baseurl }}",
-  "index": {{ site.data.translations | jsonify }}
-}</script>
+<!-- MOVED 2026-10-02 to assets/harness/site.json: fetched once instead of
+     inlined 2356x (9482 B/page, 22.34 MB, ONE payload). The three states above
+     are unchanged; a fourth — the file is unreachable — is data-fa-render. -->
 <!--
   Translation metadata for this page, consumed by docs-ui.js to auto-render
   language coverage and QA badges. The translation pipeline stamps front matter;
@@ -254,14 +262,18 @@
   "translationQa": {%- comment -%}
     The page-level Translation QA badge for a HAND-AUTHORED page, as PATHS only.
 
-    A generated page gets its badge written into its own markup by
-    `gen-docs-pages.ts`, because whether its blocks carry a verdict is structure
-    it already knows. An authored page has no generator, so the same structural
-    fact is published as `_data/translation-qa-pages.json` -- the list of slugs
-    that HAVE a projection -- and the badge is emitted only for those. A badge
-    emitted unconditionally would 404 where no projection exists, and
-    `paintQaBadges` renders a failed fetch as `unknown`, "could not determine":
-    a different answer from "not swept", and collapsing the two is a false pass.
+    A generated page gets its badge placeholder written into its own markup by
+    `gen-docs-pages.ts`. An authored page has no generator, so these are the
+    PATHS for one, and `docs-ui.js` builds the badge only if `list` -- the
+    published `/assets/qa/translation-qa-pages.json`, which names the pages
+    that HAVE a projection -- says this page has one. It used to be a Jekyll
+    data file read here at build time, which baked a fact about the QA corpus
+    into every page: with the corpus absent it read `[]` and the committed site
+    went stale (bean `4l4d`). A list saying `corpus: "absent"`, or one that will
+    not load, makes the badge read "not available in this build"; a list that
+    does not name the page means no projection and no badge. A badge emitted
+    for every page would 404 where no projection exists and paint "could not
+    determine", which is a different answer from "not swept".
 
     Never the verdict itself. The state and counts are fetched at load from
     `qa-index.json`, the way every other badge on the site gets them -- bean
@@ -276,13 +288,13 @@
   {%- endcomment -%}
   {%- assign _tr_src = page.translation_source | default: page.path -%}
   {%- assign _tr_slug = _tr_src | remove: '.md' | replace: '/', '-' -%}
-  {%- if site.data.translation-qa-pages contains _tr_slug -%}
   {
     "key": "page.translation",
+    "slug": "{{ _tr_slug }}",
     "src": "{{ '/assets/qa/' | append: _tr_slug | append: '/page.translation.json' | relative_url }}",
-    "index": "{{ '/assets/qa/' | append: _tr_slug | append: '/qa-index.json' | relative_url }}"
-  }
-  {%- else -%}null{%- endif -%},
+    "index": "{{ '/assets/qa/' | append: _tr_slug | append: '/qa-index.json' | relative_url }}",
+    "list": "{{ '/assets/qa/translation-qa-pages.json' | relative_url }}"
+  },
   "sweep": {
     "run": {% if site.data.translation-qa %}true{% else %}false{% endif %},
     "sweptAt": "{{ site.data.translation-qa.sweptAt | default: '' }}",
@@ -332,7 +344,25 @@
   or in JavaScript.
 -->
 <script type="application/json" id="fa-navbar-row">{{ site.data.harness.navbar | jsonify }}</script>
+{%- comment -%}
+  THE INSTANCE THIS PAGE IS INSIDE, for the rail's PAGES and FOLDERS (#1902).
+  `railScopes` is sorted longest href first by `sync-docs-harness.ts`, so the
+  first prefix of `page.url` that matches is the innermost instance. `page.url`
+  carries no baseurl, so a staging prefix cannot make it miss. Nothing is
+  emitted on a page inside no instance: the rail then lists the whole site.
+{%- endcomment -%}
+{%- assign _fa_scope = nil -%}
+{%- for _s in site.data.harness.railScopes -%}
+{%- assign _n = _s.href | size -%}
+{%- assign _pre = page.url | slice: 0, _n -%}
+{%- if _pre == _s.href -%}{%- assign _fa_scope = _s -%}{%- break -%}{%- endif -%}
+{%- endfor -%}
+{%- if _fa_scope %}
+<script type="application/json" id="fa-rail-scope">{{ _fa_scope | jsonify }}</script>
+{%- endif %}
 
+<!-- NOT MOVED, deliberately. Measured, with the reason and the condition for
+     moving it, in assets/harness/site.json's front matter. -->
 <script type="application/json" id="fa-site-links">{
 {%- assign sep = "" -%}
 {%- for l in site.data.harness.links -%}
@@ -361,7 +391,14 @@
   permitted. A browser hoists a stray `<div>` into `<body>` and the code still
   works, which is exactly what makes the mistake survive review.
 -->
+<!-- THE SITE INDEX, published once. docs-ui.js reads an ISLAND FIRST where a
+     page has one and falls back to this. Rationale and measurement are in that
+     file's front matter, which is not served. -->
+<meta name="fa-site-index-src" content="{{ '/assets/harness/site.json' | relative_url }}">
 <meta name="fa-todo-src" content="{{ '/assets/todos/index.json' | relative_url }}">
+<!-- The todo GRAPH (#1941): the typed edges — node, person, bean — the board
+     filters and groups by, and each todo's own page. -->
+<meta name="fa-todo-graph" content="{{ '/todos.jsonld' | relative_url }}">
 
 <!--
   THE SEMANTIC-ZOOM DECLARATION — when the card stops rendering its words and
@@ -401,6 +438,15 @@
   something this comment has to be right about.
 -->
 <meta name="fa-tiles" content="{{ site.data.harness.tiles | jsonify | escape }}">
+<!--
+  THE GLASS STRIP'S PINNED TILES, in order (owner, 2026-10-01, bean `ob3m`
+  finding 10: "Pinned tiles first, plus '+N more'"). Resolved from the
+  instance's `glassStrip` declaration by `sync-docs-harness.ts`; absent when
+  nothing declared one. Replica pages read `assets/harness/glass-strip.json`.
+-->
+{%- if site.data.harness.glassStrip %}
+<meta name="fa-glass-strip" content="{{ site.data.harness.glassStrip.pinned | jsonify | escape }}">
+{%- endif %}
 
 <!--
   THE SITE'S BASEURL, for the tiles above.
@@ -417,11 +463,13 @@
   the ORIGIN, so the beans tile pointed at `litlfred.github.io/beans/`. The
   owner found it by going looking for the board and landing there.
 
-  A meta of its own rather than reading `#fa-translation-index`, which already
-  carries a `baseurl`: that block is absent when `_data/translations.json` was
-  not built, and its reader returns `null` for it. Composing links out of an
-  optional block means the day it goes missing every tile silently points at
-  the origin again — which is this defect, with a second way to reach it.
+  A meta of its own rather than reading the site index, which also carries a
+  `baseurl`: that document reads as `null` when `_data/translations.json` was
+  not built, and since 2026-10-02 it is FETCHED, so it is also absent until a
+  request resolves and may never arrive. Composing links out of an optional
+  block means the day it goes missing every tile silently points at the origin
+  again — which is this defect, with a second way to reach it. Two reasons for
+  one answer now.
 -->
 <meta name="fa-baseurl" content="{{ site.baseurl }}">
 
@@ -571,9 +619,12 @@
   document: this is a dozen short strings, it is needed to render the fan at
   all, and a fetch for that would put a spinner in front of a badge.
 -->
+<!-- NOT MOVED: same reason as fa-site-links above. -->
 <script type="application/json" id="fa-declared-kinds">{{ site.data.harness.declaredKinds | jsonify }}</script>
 <script src="{{ '/assets/js/vendor/qrcode.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/vendor/qrcode_UTF8.js' | relative_url }}" defer></script>
+<!-- BEFORE docs-ui.js and work-plan.js: both read window.faRender. -->
+<script src="{{ '/assets/js/kg-render.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/docs-ui.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 
 <!--

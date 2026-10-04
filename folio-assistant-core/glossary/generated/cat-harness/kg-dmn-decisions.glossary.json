@@ -21,6 +21,20 @@
       "status": "candidate"
     },
     {
+      "id": "decision_mergepriority",
+      "prefLabel": "Where does this PR go?",
+      "notation": "Decision_MergePriority",
+      "source": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+      "status": "candidate"
+    },
+    {
+      "id": "decision_seedreadiness",
+      "prefLabel": "Ready to seed?",
+      "notation": "Decision_SeedReadiness",
+      "source": "cat-harness/processes/kg/decisions/seed-readiness-gate.dmn#Decision_SeedReadiness",
+      "status": "candidate"
+    },
+    {
       "id": "decision_signingroute",
       "prefLabel": "Which signing route?",
       "notation": "Decision_SigningRoute",
@@ -32,6 +46,13 @@
       "prefLabel": "Declared in place?",
       "notation": "Decision_SubgraphDeclaredGate",
       "source": "cat-harness/processes/kg/decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate",
+      "status": "candidate"
+    },
+    {
+      "id": "decision_testcertification",
+      "prefLabel": "Are the plan's exit criteria met?",
+      "notation": "Decision_TestCertification",
+      "source": "cat-harness/processes/sdlc/decisions/test-certification.dmn#Decision_TestCertification",
       "status": "candidate"
     }
   ]

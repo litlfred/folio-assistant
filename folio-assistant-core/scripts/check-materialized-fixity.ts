@@ -71,6 +71,8 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
+import { KG_PART_RECORD_SCHEMA } from "../../cat-harness/schemas/substrate-snapshot.js";
+import { PART_RECORD_FILE, PART_TREE } from "../../cat-harness/scripts/kg-subscribe.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -133,6 +135,20 @@ function instanceDeclarations(repo: string): string[] {
   return out;
 }
 
+/**
+ * Is `dir` a materialised PART of a subscribed Knowledge Graph — a directory
+ * whose `materialization.json` declares the `folio-kg-materialization/v1`
+ * family? Its `tree/` is then somebody else's checkout, byte for byte.
+ */
+export function isKgPartDir(dir: string): boolean {
+  try {
+    const r = JSON.parse(readFileSync(join(dir, PART_RECORD_FILE), "utf-8")) as { $schema?: unknown };
+    return r.$schema === KG_PART_RECORD_SCHEMA;
+  } catch {
+    return false;
+  }
+}
+
 /** Every `.json` beneath a directory, bounded so a deep tree cannot hang the gate. */
 function jsonFilesUnder(dir: string, depth = 0): string[] {
   if (depth > 6) return [];
@@ -142,9 +158,17 @@ function jsonFilesUnder(dir: string, depth = 0): string[] {
   } catch {
     return [];
   }
+  // A SUBSCRIBED PART's tree is not read (epic `fnx4`, slice 5). Its bytes are
+  // vouched for by the part's own record beside it, file by file; the `.json`
+  // INSIDE it is upstream's, and a materialization record there describes
+  // upstream's checkout — read as ours, every `localPath` in it would resolve
+  // into this instance and report "bytes absent" for content that was never
+  // claimed here.
+  const skipTree = isKgPartDir(dir);
   const out: string[] = [];
   for (const e of entries) {
     if (e.name.startsWith(".") || e.name === "node_modules") continue;
+    if (skipTree && e.name === PART_TREE) continue;
     const p = join(dir, e.name);
     if (e.isDirectory()) out.push(...jsonFilesUnder(p, depth + 1));
     else if (e.name.endsWith(".json")) out.push(p);

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# DRAFT V1.0
+# who-dpi-h-reference-architecture-draft-v1
 
 ingested source material — attributed to its document, not folio content
 

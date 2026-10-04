@@ -3,8 +3,9 @@
 title: 'MERGE GATE (e): four merge-steward gaps - regen pairs for l1-complete/smart-kg-l1, gitlink fast-forward, no-CI heads in trains, stale needs-merge-human'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-02T16:29:16Z
-updated_at: 2026-10-02T16:29:16Z
+updated_at: 2026-10-04T06:10:07Z
 parent: folio-assistant-nok9
 ---
 
@@ -20,3 +21,9 @@ Child (e) of the merge-gate epic. These are merge-steward gaps measured 2026-10-
 - [ ] (2) a gitlink conflict takes the descendant pin when one side fast-forwards the other, and refuses when the pins diverge; tested both ways
 - [ ] (3) the merge train refuses a PR whose head has no completed CI run (reusing `check:head-has-run`)
 - [ ] (4) a successful merge:main run removes `needs-merge-human`
+
+## Reconciled with `wczm` (2026-10-04)
+
+Items (1), (2) and (4) here are the same three gaps as `wczm`'s (1), (2) and (3), which carries the evidence and sits under the pipeline epic `hfag`. **They are tracked there, not here**, as `wczm` recommended. Item (4) is fixed on `wczm`'s PR: merge-main now removes `needs-merge-human` after a clean run.
+
+**This bean keeps item (3) only**: the merge train refuses a PR whose head has no completed CI run. `wczm` does not cover it.

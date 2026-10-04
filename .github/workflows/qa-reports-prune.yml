@@ -1,0 +1,88 @@
+# bpmn: cat-harness/processes/sdlc/qa-publish.bpmn
+# qa-reports prune — retention for the orphan `qa-reports` branch.
+#
+# Bean `16ei`, arc `3fva`, proposal §2.2 "Retention": keep every `main/<sha>`
+# for 90 days, one per day after that, and drop `pr/<n>` 7 days after the PR
+# closes. The rule itself is `planPrune` in `cat-harness/scripts/qa-store.ts`,
+# pinned by `scripts/tests/qa-store.test.ts`.
+#
+# ## The trigger is `schedule`, because the lake-cache prune never ran
+#
+# That prune is guarded on `push` inside a dispatch-only workflow, so its
+# condition can never be true and it has never pruned anything. A retention
+# rule with no trigger that fires is a rule nobody applies. This one runs
+# daily; `workflow_dispatch` is for a person looking first, and it is a DRY
+# RUN unless `apply` is ticked.
+#
+# ## It removes entries from the TIP, and rewrites no history
+#
+# `qa:prune` writes one new commit whose tree lacks the pruned entries, parented
+# on the current tip (`commit-tree -p`), through the same fetch → rebuild →
+# push loop as every publish: no `-f`, three attempts, backoff from
+# `backoff-sleep.ts`. Old commits still hold old entries until git gc reclaims
+# unreachable objects — which it does not, because they stay reachable through
+# history. That is accepted for now: the branch's growth is bounded by blob
+# dedup, and truncating history is a deletion of a different order, which is
+# the owner's call (`deletion-requires-confirmation`), not a scheduled job's.
+#
+# A PR whose state cannot be read is KEPT. Could-not-determine never deletes.
+#
+# TRIGGERS, ACTUAL: `schedule` and `workflow_dispatch`. The PRs named above are
+# what it READS (their state, through `gh pr list`); no pull request triggers it,
+# because retention is a property of the platform's branch over time, not of
+# any one change.
+name: qa-reports prune
+
+on:
+  schedule:
+    # Daily, off the hour, so it does not queue behind the :00 herd.
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Actually prune. Unticked (the default) is a dry run that prints the plan."
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: qa-reports-prune
+  cancel-in-progress: false
+
+jobs:
+  prune:
+    # bpmn-node: Start_Daily
+    name: Prune qa-reports (retention)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Every PR's state, open and closed, so `pr/<n>` can be judged against
+      # when it closed. A PR missing from this list is `unknown` and kept.
+      - name: Read PR states
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr list --repo "$GITHUB_REPOSITORY" --state all --limit 10000 \
+            --json number,state,closedAt > "$RUNNER_TEMP/pr-states.json"
+
+      - name: Prune (dry run unless scheduled or `apply` is ticked)
+        env:
+          APPLY: ${{ github.event_name == 'schedule' || inputs.apply == true }}
+        run: |
+          mode=""
+          if [ "$APPLY" = "true" ]; then mode="--apply"; fi
+          bun run qa:prune $mode --pr-states "$RUNNER_TEMP/pr-states.json"

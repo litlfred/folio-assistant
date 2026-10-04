@@ -12,14 +12,14 @@ permalink: /glossary/dmn-decisions/
 
 Candidate terms extracted from every DMN decision: `name` as the label, its own `<description>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 4 (<a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 1 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 7 (<a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 1 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 9 terms and is 9 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 12 terms and is 10 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>9</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>9</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>12</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>12</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,9 +29,20 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">9</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">12</span> shown</p>
 
-<nav aria-label="Letters"><a href="#letter-B">B</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-I">I</a> <a href="#letter-S">S</a> <a href="#letter-W">W</a></nav>
+<nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-I">I</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-W">W</a></nav>
+
+<h2 id="letter-A">A</h2>
+<dl class="fa-gloss">
+<dt id="cat-harness--kg-dmn-decisions--decision_testcertification" data-fa-state="extracted" data-fa-gloss="">
+Are the plan's exit criteria met? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">DMN decisions of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/test-certification.dmn"><code>cat-harness/processes/sdlc/decisions/test-certification.dmn#Decision_TestCertification</code></a></p>
+</dd>
+</dl>
 
 <h2 id="letter-B">B</h2>
 <dl class="fa-gloss">
@@ -91,6 +102,17 @@ Is the published site answering? <span class="fa-gloss-status">candidate, extrac
 </dd>
 </dl>
 
+<h2 id="letter-R">R</h2>
+<dl class="fa-gloss">
+<dt id="cat-harness--kg-dmn-decisions--decision_seedreadiness" data-fa-state="extracted" data-fa-gloss="">
+Ready to seed? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">DMN decisions of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/decisions/seed-readiness-gate.dmn"><code>cat-harness/processes/kg/decisions/seed-readiness-gate.dmn#Decision_SeedReadiness</code></a></p>
+</dd>
+</dl>
+
 <h2 id="letter-S">S</h2>
 <dl class="fa-gloss">
 <dt id="cat-harness--kg-dmn-decisions--decision_isolationgate" data-fa-state="extracted" data-fa-gloss="">
@@ -110,6 +132,13 @@ What is the user asking for? <span class="fa-gloss-status">candidate, extracted<
 <dd>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">DMN decisions of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/conduct/decisions/folio-intent.dmn"><code>folio-assistant-core/processes/conduct/decisions/folio-intent.dmn#Decision_FolioIntent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-dmn-decisions--decision_mergepriority" data-fa-state="extracted" data-fa-gloss="">
+Where does this PR go? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><em>The asset carries no description.</em></p>
+<p class="fa-gloss-meta">DMN decisions of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-priority.dmn"><code>cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority</code></a></p>
 </dd>
 <dt id="cat-harness--kg-dmn-decisions--decision_signingroute" data-fa-state="extracted" data-fa-gloss="">
 Which signing route? <span class="fa-gloss-status">candidate, extracted</span>

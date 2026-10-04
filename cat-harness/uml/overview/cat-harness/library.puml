@@ -75,6 +75,7 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     outline_source [1] : embedded | none
     materialization [1] : object
     withheld [1] : object
+    links [0..*] : object[]
   }
 }
 

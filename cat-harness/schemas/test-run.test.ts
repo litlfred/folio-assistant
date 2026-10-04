@@ -228,10 +228,76 @@ describe("the schema refuses what it cannot mean", () => {
     ).toThrow();
   });
 
-  test("the recorded run on disk parses as what it declares", () => {
-    const file = join(ROOT, "test/results/crdm-detect-eval.test-run.json");
+  test("a recorded run, written and read back, parses as what it declares", () => {
+    // A FRESH run through the writer's own serialisation, not the committed
+    // `crdm-detect-eval.test-run.json`: that file is derived QA output on its
+    // way to the `qa-reports` branch, and a test must not assert on the
+    // corpus (bean `cxcn`, reader audit F7 R70).
+    const root = fixture({ "corpus.json": "[1]", "runner.ts": "//" });
+    const run = buildTestRun({ root, skill: "s", subject: "s", dataInputs: ["corpus.json"], processInputs: ["runner.ts"], outcome: { f1: 1 } });
+    const file = join(root, "s.test-run.json");
+    writeFileSync(file, JSON.stringify(run, null, 2) + "\n");
     const parsed = TestRunSchema.parse(JSON.parse(readFileSync(file, "utf-8")));
     expect(parsed.$schema).toBe(TEST_RUN_SCHEMA_ID);
     expect(basisOverlap(parsed.data, parsed.process)).toEqual([]);
+  });
+});
+
+describe("a run may name the plan it executed and the system under test (bean ygzh)", () => {
+  const base = () => {
+    const root = fixture({ "d.json": "[]", "p.ts": "//" });
+    return buildTestRun({ root, skill: "s", subject: "s", dataInputs: ["d.json"], processInputs: ["p.ts"], outcome: {} });
+  };
+  const sut = { actor: "claude-code", version: "2.1.0", reach: "internet" as const };
+
+  test("a run recorded before plans existed still parses, with neither field", () => {
+    // The shape `crdm-detect-eval.test-run.json` was recorded in, as a
+    // fixture rather than read from the committed corpus (bean `cxcn`).
+    const legacy = {
+      $schema: TEST_RUN_SCHEMA_ID,
+      skill: "crdm-detect",
+      subject: "crdm-detect phrase signals against the issue corpus",
+      data: { hash: "2e3ab7fa317f", inputs: ["scripts/eval/crdm-detect-corpus.json"] },
+      process: { hash: "cac2af445036", inputs: ["scripts/eval-crdm-detect.ts", "src/crdm/detect-signals.ts"] },
+      outcome: { population: 27, precision: 0.9545, recall: 0.9545, f1: 0.9545 },
+      cases: [{ input: { text: "t" }, output: { fires: false, categories: [], excluded: false } }],
+      updated_at: "2026-09-19T00:00:00.000Z",
+    };
+    const parsed = TestRunSchema.parse(JSON.parse(JSON.stringify(legacy)));
+    expect(parsed.plan).toBeUndefined();
+    expect(parsed.sut).toBeUndefined();
+  });
+
+  test("plan and sut are carried through buildTestRun and parse", () => {
+    const root = fixture({ "d.json": "[]", "p.ts": "//" });
+    const run = buildTestRun({
+      root,
+      skill: "s",
+      subject: "s",
+      dataInputs: ["d.json"],
+      processInputs: ["p.ts"],
+      outcome: {},
+      plan: { id: "crdm-detect", version: "1" },
+      sut,
+    });
+    const parsed = TestRunSchema.parse(run);
+    expect(parsed.plan).toEqual({ id: "crdm-detect", version: "1" });
+    expect(parsed.sut).toEqual(sut);
+  });
+
+  test("a plan with no system under test is refused — a plan is run AGAINST something", () => {
+    const r = TestRunSchema.safeParse({ ...base(), plan: { id: "p", version: "1" } });
+    expect(r.success).toBe(false);
+    expect(r.error?.issues[0]?.path).toEqual(["sut"]);
+  });
+
+  test("reach is the actor-reach vocabulary plus `unknown`, and nothing else", () => {
+    const plan = { id: "p", version: "1" };
+    expect(TestRunSchema.safeParse({ ...base(), plan, sut: { ...sut, reach: "unknown" } }).success).toBe(true);
+    expect(TestRunSchema.safeParse({ ...base(), plan, sut: { ...sut, reach: "online" } }).success).toBe(false);
+  });
+
+  test("the plan ref carries a version, because a case id means nothing across plan versions", () => {
+    expect(TestRunSchema.safeParse({ ...base(), plan: { id: "p" }, sut }).success).toBe(false);
   });
 });

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# PUBLICATION AND INFORMATION PRODUCTS STYLE GUIDE
+# Publication and information products style guide
 
 ingested source material — attributed to its document, not folio content
 

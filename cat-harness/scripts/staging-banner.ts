@@ -46,13 +46,16 @@
  *
  * ## What is deliberately NOT fixed here
  *
- * Causes 2 and 3 in `g196`: Jekyll's `relative_url` prepends `baseurl` to
- * ~235 hrefs per page, and the `fa-translation-index` island publishes
- * `site.baseurl` to JavaScript. Pages therefore still differ **between**
- * previews by slug. They no longer differ **across rebuilds of one preview**,
- * which is the unbounded half. The two are coupled to the language switcher
- * (`navKey()` strips the baseurl; the switcher rebuilds hrefs from it), so
- * they are one change and not this one.
+ * Cause 2 in `g196`: Jekyll's `relative_url` prepends `baseurl` to ~235 hrefs
+ * per page. Pages therefore still differ **between** previews by slug. They no
+ * longer differ **across rebuilds of one preview**, which is the unbounded
+ * half.
+ *
+ * Cause 3 — the `fa-translation-index` island publishing `site.baseurl` to
+ * JavaScript — is **done** as of 2026-10-02: the island is gone and the facts
+ * are fetched once from `assets/harness/site.json`, the same move this file
+ * made for the banner. Measured on a local build the day it landed: 2356 pages
+ * carried it at 9482 B each, 22.34 MB on ONE distinct payload.
  *
  * ## The footer carries the same stamp, and it is filled the same way
  *
@@ -177,9 +180,44 @@ const BANNER_STYLE =
  * publish the value as a custom property, on load and on resize — and now
  * also after the fetch fills it in, which is a THIRD moment the height
  * changes and the bash version never had.
+ *
+ * ## Two things this used to assume about the page, and both were wrong
+ *
+ * Reported by the owner 2026-10-02 with a screenshot: the banner was **not at
+ * the top**. Measured in Chromium against the served bytes of
+ * `STAGING/…/cat-harness/library/smart-base/smart-trust/`, the banner rendered
+ * at `top: 8, left: 64` where it should have been `0, 56`.
+ *
+ * **It assumed the page resets `body`'s margin.** `position: sticky; top: 0`
+ * resolves against the element's flow position INSIDE the margin box, so the
+ * browser's default `body { margin: 8px }` holds the banner 8px off every
+ * edge. The arithmetic is the proof: that page sets `body{padding-left:56px}`
+ * for its rail, and the banner measured `left: 64` — 56 + 8. just-the-docs
+ * ships `body{margin:0` in `just-the-docs-default.css`, which is the only
+ * reason this was invisible for ~2,400 pages; a layout that does not use the
+ * theme never had it. So `body{margin:0}` is a NO-OP on the theme pages and
+ * the fix everywhere else.
+ *
+ * **It assumed the fixed chrome is called `.side-bar`.** That is
+ * just-the-docs' name for it. The library viewer's chrome is `.fa-nav`
+ * (`position: fixed; top: 0; z-index: 2147483000`), which this rule never
+ * matched, so the rail was never pushed down and sat level with the banner —
+ * the exact defect the section above says this rule exists to prevent, on a
+ * layout written after it. Naming both is the narrow fix; the general lesson
+ * is that a selector list is a list of the layouts somebody remembered.
+ *
+ * Measured after, same page: banner `top: 0, left: 56, right: 1280` and
+ * `.fa-nav` `top: 32` — pushed down by exactly the banner's height.
  */
 export const OFFSET_STYLE =
-  "<style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style>";
+  "<style>:root{--fa-staging-offset:0px}" +
+  // The UA default is 8px; a page that does not reset it holds the banner off
+  // every edge. No-op wherever a theme already resets it.
+  "body{margin:0}" +
+  // Every fixed top chrome this repository ships. `.side-bar` is
+  // just-the-docs'; `.fa-nav` is the viewer rail.
+  ".side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}" +
+  "</style>";
 
 /** Where the preview root is, given a page's pathname. Exported to be tested. */
 export function previewRootOf(pathname: string): string | null {

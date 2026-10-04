@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`folio-assistant-core/skills/library/ingestion/document-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/document-intake.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/library-core/document-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/document-intake.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/document-intake.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/document-intake.md){: .fa-edit-source }
 
 {% raw %}
 # Document Intake
@@ -213,7 +213,7 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
+| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline or inferred from heading patterns, per-section text split. The page-1 guess is **never** the entry's title: `library-ingestion` §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
 | [`cat-harness/scripts/pdf-ocr.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
 | [`cat-harness/scripts/extract-candidates.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 

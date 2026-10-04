@@ -67,7 +67,9 @@ describe("the route is the policy, not this generator's choice", () => {
 describe("each page reads the projection that already exists", () => {
   test("relative to itself, at the depth its own route implies", () => {
     expect(read("beans")).toContain('content="../assets/beans/index.json"');
-    expect(read("todos")).toContain('content="../assets/todos/index.json"');
+    // `todos` is a THEMED page (#1906): its `fa-todo-src` is the site's own,
+    // written by `head_custom.html` through `relative_url`, so the page
+    // carries no path of its own to get wrong.
   });
 
   test("and that projection is really there", () => {
@@ -86,7 +88,9 @@ describe("each page reads the projection that already exists", () => {
     const meta = (html: string, name: string) => new RegExp(`<meta name="${name}"`).test(html);
     expect(meta(read("beans"), "fa-beans-src")).toBe(true);
     expect(meta(read("beans"), "fa-todo-src")).toBe(false);
-    expect(meta(read("todos"), "fa-todo-src")).toBe(true);
+    // The todos page names NEITHER: it is themed, and the layout's head
+    // supplies `fa-todo-src` — the same meta every site page carries.
+    expect(meta(read("todos"), "fa-todo-src")).toBe(false);
     expect(meta(read("todos"), "fa-beans-src")).toBe(false);
   });
 });
@@ -111,13 +115,18 @@ describe("what a page may claim", () => {
     // There is no index above these: `<base>/` is the documentation site's.
     // The way across is on each page, which is what makes them registered
     // sub-visualisations rather than six unrelated pages.
-    for (const id of ["beans", "todos", "qa"]) {
+    //
+    // EXCEPT `todos`, by the owner's ruling (#1906, 2026-10-02): "not sure why
+    // all the graphs are listed on the todos page. cluttery". The other
+    // dashboards keep it until the owner rules on them.
+    for (const id of ["beans", "qa", "health", "uploads"]) {
       expect(read(id)).toContain("State graphs this harness declares");
     }
     // The link to beans is on every page EXCEPT the beans page, which is the
-    // next assertion and the reason this one cannot simply check all three.
-    expect(read("todos")).toContain('href="../beans/"');
+    // next assertion and the reason this one cannot simply check all of them.
     expect(read("qa")).toContain('href="../beans/"');
+    // And the others still reach todos, which is still a page.
+    expect(read("beans")).toContain('href="../todos/"');
   });
 
   test("a page never links to itself", () => {
@@ -134,6 +143,32 @@ describe("what a page may claim", () => {
     expect(html).toContain("--fa-wp-surface");
     expect(html).not.toContain("<script src=");
     expect(html).not.toContain("cdn.");
+  });
+
+  test("the todos page is the landing's sticky panel, open, on a themed page (#1906)", () => {
+    const html = read("todos");
+    // Themed: Jekyll front matter on the default layout, so the site chrome,
+    // docs-ui.js and the no-JS floor come from the layout — not a doctype
+    // shell with its own inlined renderer.
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype html>/i);
+    expect(html).not.toContain("mountWorkPlan");
+    // The SAME panel as the landing page: its own include, not a second board.
+    expect(html).toContain("{% include landing.html open=true %}");
+    // And no clutter: neither the registry nor the plain-text by-node list.
+    expect(html).not.toContain("State graphs this harness declares");
+    expect(html).not.toContain("Todos by the node they are attached to");
+    // The renders declaration moved into the front matter with the page.
+    expect(html).toMatch(/^renders:\n {2}- todos$/m);
+    expect(html).toContain("rendered-by: state-viewer");
+  });
+
+  test("the landing include opens the panel only when asked", () => {
+    const inc = readFileSync(join(SITE, "_includes", "landing.html"), "utf-8");
+    expect(inc).toContain('<details class="fa-sticky-panel"{% if include.open %} open{% endif %}>');
+    // The landing page itself includes it bare, so it stays slid away there.
+    const index = readFileSync(join(SITE, "index.md"), "utf-8");
+    expect(index).toContain("{% include landing.html %}");
   });
 
   test("every page carries the do-not-hand-edit notice", () => {
@@ -384,7 +419,7 @@ describe("orphan dashboards — a page that answers to no declaration", () => {
     // The strongest statement available: ask for the worst case — nothing is
     // wanted — and assert the answer is exactly this generator's own pages,
     // never one of the site's other directories.
-    const ours = ["beans", "todos", "qa", "health", "issue-marks", "uploads", "swimlane-glossary"];
+    const ours = ["beans", "todos", "qa", "attestations", "health", "issue-marks", "uploads", "swimlane-glossary"];
     const selected = prunableDashboards(SITE, []);
     expect(selected.sort()).toEqual(ours.map((g) => join(g, "index.html")).sort());
   });
@@ -411,7 +446,12 @@ describe("the renderer is chosen by the projection's `$schema`, not by the graph
 
   test("beans and todos still get theirs, so the dispatch did not simply stop working", () => {
     expect(/<meta name="fa-beans-src"/.test(read("beans"))).toBe(true);
-    expect(/<meta name="fa-todo-src"/.test(read("todos"))).toBe(true);
+    // The todo projection still gets ITS renderer — the sticky board, by way
+    // of the landing panel on a themed page (#1906) — rather than falling
+    // through to the "no renderer" or `declared` sentence.
+    const todos = read("todos");
+    expect(todos).toContain("{% include landing.html open=true %}");
+    expect(todos).not.toContain("has no renderer for");
   });
 
   test("the qa page renders one panel per family, server-side", () => {

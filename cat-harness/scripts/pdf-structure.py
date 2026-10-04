@@ -27,6 +27,15 @@ text for arXiv papers, both new-style (`arXiv:0706.2213v3 [math.GT]`) and
 old-style (`arXiv:hep-th/0001202v2`). DocInfo is recorded as a
 cross-check, never as the source of truth.
 
+THE TITLE IS THE EXCEPTION (issue #1794, owner's ruling 2026-10-01).
+`metadata.title`, the page-1 front-matter guess, is NEVER a library entry's
+title. It guessed "Abies" for the WHO editorial style manual. The manifest
+title is taken from the catalogue record, then `referenced.json`, then this
+artefact's `metadata.docinfo.Title` (junk-filtered), then the slug. See
+`content/pipeline/library-title.ts`. The guess is still written, for search
+and for the section files' `doc_title`. Keep writing `docinfo`: for a title
+it outranks the guess.
+
 Table of contents comes from the PDF outline when there is one (194 of
 339, 57%) and is otherwise inferred from heading patterns in the text.
 Which route was used is recorded per entry, so a consumer can weight it.

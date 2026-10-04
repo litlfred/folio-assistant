@@ -243,6 +243,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // THE QUEUE FEEDING A TRAIN. Three queued items on the left converging into
+  // one line that carries on right — the queue's whole shape in one glyph: the
+  // decisions are per pull request, the train they feed is one. Deliberately
+  // NOT a list: a list would read as the store, and what this kind records is
+  // an ORDER somebody decided (bean `hfag`).
+  "merge-queue": {
+    glyph: "M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9",
+    tone: 205,
+    reads: "three queued items converging into one line — a queue feeding a train",
+  },
   // A NOTE pinned to a bean: the bean's outline with a slip beside it, because
   // a note is an addendum to a bean and never a bean of its own (bean `m61r`).
   "bean-notes": {
@@ -288,6 +298,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h16v9H9l-4 4v-4H4zM9 10h6",
     tone: 320,
     reads: "a speech bubble — a remark about the work, not the work",
+  },
+  attestations: {
+    glyph: "M6 3h12v18H6zM9 8h6M9 12h6M10 17l2 2 3-4",
+    tone: 28,
+    reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
   "review-verdicts": {
     glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
@@ -358,6 +373,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
     tone: 180,
     reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
+  },
+  // A CROSSWALK — a column of source rows, lines crossing to a column of
+  // target rows. Bean `k74z`: one value carried into several vocabularies.
+  // `tone: 120` was unused, and is far from `code-list`'s 180 so the two
+  // "tables of codes" kinds are not confused at a glance.
+  "vocab-mapping": {
+    glyph: "M3 6h4M3 12h4M3 18h4M8 6l8 6M8 12l8-6M8 18h8M17 6h4M17 12h4M17 18h4",
+    tone: 120,
+    reads: "a crosswalk — source rows on the left, lines crossing to target rows on the right — one value carried into another vocabulary",
   },
   // A CLASS BOX — a title compartment over an attribute compartment, with an
   // association line leaving it. The one glyph that says "a diagram of shapes"
@@ -436,6 +460,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 190,
     reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
   },
+  openapi: {
+    // Curly braces around a two-way arrow: a machine-readable description
+    // (the braces) of something you call and that answers (the arrow out and
+    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
+    // document is one node holding operations, not an index of things held
+    // elsewhere. Bean `s4ta`.
+    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
+    tone: 136,
+    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+  },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under
@@ -445,6 +479,22 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 9l8-4 8 4v7l-8 4-8-4zM4 9l8 4m8-4l-8 4m0 0v7M8 7l8 4",
     tone: 24,
     reads: "a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes",
+  },
+  "test-plan": {
+    // A checklist of empty boxes: what must be shown, before anybody has run
+    // it. Deliberately empty — a plan carries no verdicts, and a ticked box
+    // would say it did.
+    glyph: "M6 4h12v16H6zM8 8h2v2H8zM12 9h4M8 12h2v2H8zM12 13h4M8 16h2v2H8zM12 17h4",
+    tone: 140,
+    reads: "a checklist with its boxes empty — what a system must show, before any run",
+  },
+  "test-report": {
+    // The same checklist with its boxes filled in, one ticked and one crossed:
+    // the plan's form, completed by a run. Quotes `test-plan`'s glyph on
+    // purpose, as `ig-metadata-index` quotes its sibling's.
+    glyph: "M6 4h12v16H6zM8 8l1 1 2-2M12 9h4M8 12l2 2m0-2l-2 2M12 13h4M8 16l1 1 2-2M12 17h4",
+    tone: 110,
+    reads: "the plan's checklist filled in — one run's verdicts against one plan, never a tally across plans",
   },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
@@ -495,6 +545,29 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
     tone: 212,
     reads: "a page with a folded corner — documentation about the graph itself",
+  },
+  "auto-docs": {
+    // A page of BULLETED ENTRIES, not a page of prose. A sub-graph of `docs`
+    // (bean `xsrv`), so it keeps that kind's folded-corner outline — the family
+    // resemblance is the point, since these pages ARE docs pages — and then
+    // says the one thing that distinguishes it: every line has a marker before
+    // it, because an index is a list of other things rather than an argument.
+    //
+    // Deliberately NOT a gear or a refresh arrow, the obvious glyphs for
+    // "generated". Those say how the page was made; the reader of a tile wants
+    // to know what it IS. `docs` does not depict a writer either.
+    glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h.01M11.5 12h5M9 15h.01M11.5 15h5M9 18h.01M11.5 18h3",
+    // 340, and the first choice of 164 was WRONG — found by rendering it beside
+    // its siblings rather than by reading the table. 164 is green, and so is
+    // `requirements` at 148, with 156 and 168 also taken: two page-shaped
+    // glyphs in near-identical greens, told apart only by bullets against
+    // ticks, which is not a distinction that survives tile size.
+    //
+    // 340 is the largest clearance left in the table — 20° from both 320 and
+    // 0, where every other gap is 16° or less. Measured over the 45 distinct
+    // tones in use, not estimated.
+    tone: 340,
+    reads: "a page of bulleted entries — an index of what another graph holds",
   },
   proposals: {
     // A lightbulb over a page — an idea argued on paper, not yet agreed.

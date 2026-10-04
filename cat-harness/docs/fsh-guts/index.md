@@ -25,7 +25,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**140 file(s)** across 5 group(s). Each links to the file itself —
+**147 file(s)** across 5 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -38,8 +38,8 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 77 | carries the tag itself |
-| <span class="fg-tag fg-side">via sidecar</span> | 55 | a script, described by a tagged `.md` sibling |
+| <span class="fg-tag fg-ok">declared</span> | 81 | carries the tag itself |
+| <span class="fg-tag fg-side">via sidecar</span> | 58 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 8 | **neither** — a gap, not a format limit |
 
 The 8 undeclared are listed below with the rest rather than in a
@@ -56,12 +56,13 @@ summary count is the failure this table exists to avoid.
 
 ## retired
 
-22 file(s).
+23 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
 | [bootstrap-split.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/bootstrap-split.md) | bootstrap and bootstrap-tools, as staged | <span class="fg-tag fg-ok">declared</span> |
 | [bootstrap-split.tar.gz](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/bootstrap-split.tar.gz) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [cat-harness-orphan-ig-tool-sidecars.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/cat-harness-orphan-ig-tool-sidecars.md) | Three orphaned IG-tool sidecars | <span class="fg-tag fg-ok">declared</span> |
 | [detangle-schema-viewer.html](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/detangle-schema-viewer.html) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [detangle-schema-viewer.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/detangle-schema-viewer.md) | detangle's schema viewer page — retired 2026-09-23 | <span class="fg-tag fg-ok">declared</span> |
 | [external-schema-w3c-dcat-3.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/external-schema-w3c-dcat-3.md) | The record, as it was | <span class="fg-tag fg-ok">declared</span> |
@@ -116,7 +117,7 @@ summary count is the failure this table exists to avoid.
 
 ## uploads
 
-100 file(s).
+106 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
@@ -172,6 +173,8 @@ summary count is the failure this table exists to avoid.
 | [Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md) | `Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json` | <span class="fg-tag fg-ok">declared</span> |
+| [Home-_-folio-assistant.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Home-_-folio-assistant.md) | `Home-_-folio-assistant.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [Home-_-folio-assistant.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Home-_-folio-assistant.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [PIIS2589750021000388-2.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/PIIS2589750021000388-2.md) | `PIIS2589750021000388-2.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [PIIS2589750021000388-2.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/PIIS2589750021000388-2.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [Skill-authoring-best-practices-Claude-Platform-Docs.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md) | `Skill authoring best practices - Claude Platform Docs.pdf` | <span class="fg-tag fg-ok">declared</span> |
@@ -204,6 +207,8 @@ summary count is the failure this table exists to avoid.
 | [milnorlink.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/milnorlink.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [neubauer-2025-ai-assisted-schema-creation.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md) | `neubauer-2025-ai-assisted-schema-creation.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [neubauer-2025-ai-assisted-schema-creation.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [omg-2024-spdx-3-0.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/omg-2024-spdx-3-0.md) | `omg-2024-spdx-3-0.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [omg-2024-spdx-3-0.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/omg-2024-spdx-3-0.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [qi-hessen-vanderheijden-2023-ca-vs-lsa.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md) | `qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [rfc2119-key-words-requirement-levels.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/rfc2119-key-words-requirement-levels.md) | `rfc2119-key-words-requirement-levels.pdf` | <span class="fg-tag fg-ok">declared</span> |
@@ -212,6 +217,8 @@ summary count is the failure this table exists to avoid.
 | [rfc8174-uppercase-vs-lowercase-2119-key-words.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [sammut-bonnici-galea-2015-swot-analysis.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md) | `sammut-bonnici-galea-2015-swot-analysis.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [sammut-bonnici-galea-2015-swot-analysis.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [strauch-carbno-2025-spdx-3-1-supply-chain.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md) | `strauch-carbno-2025-spdx-3-1-supply-chain.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [strauch-carbno-2025-spdx-3-1-supply-chain.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [w3c-2013-prov-o.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2013-prov-o.md) | `w3c-2013-prov-o.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [w3c-2013-prov-o.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2013-prov-o.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [w3c-2018-odrl-model-2-2.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2018-odrl-model-2-2.md) | `w3c-2018-odrl-model-2-2.pdf` | <span class="fg-tag fg-ok">declared</span> |

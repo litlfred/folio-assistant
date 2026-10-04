@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
+updated_at: 2026-10-01T08:00:56Z
 parent: folio-assistant-5a3l
 ---
 
@@ -52,3 +52,6 @@ adapter. That question has been got wrong here before and is written up.
 `TEST MODE: a test run is repeatable only if its data and process are hashable
 and signable` — a generated set is only usable as evidence if regenerating it
 gives the same bytes, so the hashing story constrains the generator's design.
+
+
+_2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`).

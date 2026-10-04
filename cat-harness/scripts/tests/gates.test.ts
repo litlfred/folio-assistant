@@ -13,6 +13,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import {
+  carriesUnexpandedVariable,
   GATES_WORKFLOW,
   NoCheckScriptsFound,
   NoGatesFound,
@@ -22,7 +23,10 @@ import {
   commandRunsScript,
   commandsCiRuns,
   gatesFrom,
+  runnableGatesFrom,
+  unresolvedGatesFrom,
   loadGates,
+  loadUnresolved,
   otherWorkflowSteps,
   scriptExemptionFor,
   unclassifiedSteps,
@@ -79,7 +83,12 @@ describe("the gates come from the workflow, not from a list", () => {
     // Order matters: `bun test` before the slower graph audits is what makes
     // the runner usable, and it is the workflow's order rather than a sort.
     const cmds = gates.map((g) => g.command);
-    expect(cmds.indexOf("bun test")).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
+    // Found by prefix, never by exact string: the step became
+    // `bun test --parallel` (bean `dlqu`), and an exact `indexOf` would then
+    // return -1, which is less than any index — a vacuous pass.
+    const test = cmds.findIndex((c) => /^bun test\b/.test(c));
+    expect(test).toBeGreaterThanOrEqual(0);
+    expect(test).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
   });
 
   test("each gate carries the step name the Actions UI shows", () => {
@@ -113,9 +122,17 @@ describe("the gates come from the workflow, not from a list", () => {
     // shrinkage fails.
     const gates = loadGates(ROOT);
     const jobs = new Set(gates.map((g) => g.job));
-    expect(jobs.has("typescript")).toBe(true);
+    // Bean `dlqu` split `typescript` into `typescript-static` (lint, types)
+    // and `typescript-test` (sharded `bun test`) under an aggregate that runs
+    // no `bun` line, and moved the browser steps into `e2e-shard` the same
+    // way. So the jobs named here are the ones that CARRY commands; naming the
+    // aggregates would assert membership of jobs that contribute nothing, and
+    // `e2e` would pass the browser exclusion for the wrong reason.
+    expect(jobs.has("typescript-static")).toBe(true);
+    expect(jobs.has("typescript-test")).toBe(true);
     expect(jobs.has("gates")).toBe(true);
-    expect(jobs.has("e2e")).toBe(false);
+    expect(jobs.has("gates-unrun")).toBe(true);
+    expect(jobs.has("e2e-shard")).toBe(false);
     expect(gates.length).toBeGreaterThan(100);
   });
 });
@@ -223,8 +240,43 @@ describe("a strict reader and a loose one agree", () => {
     // with the strict one about the half it never looked at. The floor below
     // is what turned that into a failure instead of a green cross-check.
     const loose = [...yaml.matchAll(/^\s*(?:run:\s*)?(bunx? .+?)\s*$/gm)].map((m) => m[1]!);
-    const found = new Set(loadGates(ROOT, { all: true }).map((g) => g.command));
-    expect(loose.filter((c) => !found.has(c))).toEqual([]);
+    // ACCOUNTED FOR, not merely runnable. `loadGates` is the runner's list and
+    // deliberately omits commands carrying a shell variable this reader
+    // discarded (bean `9zok`); those are REPORTED instead, so the property
+    // this test guards is that every loose-scanned line lands in one of the
+    // stated buckets — never in none. Comparing against `loadGates` alone would
+    // have made a deliberate, printed omission look identical to the silent
+    // drop this test exists to catch, which is the distinction it is for.
+    const found = new Set([
+      ...loadGates(ROOT, { all: true }).map((g) => g.command),
+      ...loadUnresolved(ROOT, { all: true }).map((g) => g.command),
+    ]);
+    // A PUBLISHER job's lines are dropped on purpose, by `publishes` (bean
+    // `16ei`): a job holding `contents: write` is not a gate, and `bun run
+    // gates` must never push. They are named here, so the drop is a stated
+    // one rather than the silent kind this test exists to catch.
+    const published = new Set(
+      gatesFrom(readFileSync(join(ROOT, GATES_WORKFLOW), "utf-8"), { all: true })
+        .filter((g) => !found.has(g.command))
+        .map((g) => g.command),
+    );
+    // The publish itself, and the step that PRODUCES what it publishes — bean
+    // `0utt`: the bootstrap kg-export sidecar is regenerated in that job, and
+    // `check:published-instance-exports` (a gate) already runs the same export.
+    // And the step that READS BACK what was published (bean `cxcn`):
+    // `check:qa-corpus --github` judges the stored entry, which exists only
+    // after the publish, so it cannot run in `bun run gates`; locally the same
+    // check is `check:qa-corpus --dir <tree>` over a `qa:fetch`.
+    // And the step that produces the working copy the publish stores (bean
+    // `3hk4`): `qa:refresh` RUNS the QA writers when nothing is tracked, so it
+    // is a producer, not a judge; its rule is pinned by qa-refresh.test.ts.
+    const named = (c: string) =>
+      c.includes("qa:publish") ||
+      c.includes("qa:refresh") ||
+      /kg-export\.ts --instance \.\/bootstrap\b/.test(c) ||
+      c === "bun run check:qa-corpus --github";
+    expect([...published].filter((c) => !named(c))).toEqual([]);
+    expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.
     expect(loose.length).toBeGreaterThan(30);
@@ -362,5 +414,87 @@ describe("every check script is accounted for — the direction nothing asked", 
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+});
+
+describe("a command whose shell variable this reader discarded is NOT a gate", () => {
+  // Bean `9zok`. The extraction keeps `bun …` lines and drops the shell that
+  // gave them their variables, so a command referencing one was being run with
+  // the variable's NAME. Measured: that made `bun run gates` report `✗ 1 of
+  // 210` on a clean tree, which made the STRICT pre-push rule in `AGENTS.md`
+  // unsatisfiable on every branch.
+  const WORKFLOW = `name: w
+on: [push]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: catalogue
+        run: |
+          base="$(git merge-base origin/main HEAD)"
+          bun run translation:catalogue:check
+          bun run translation:catalogue:check -- --base "$base"
+`;
+
+  test("it is diverted out of the RUNNABLE set, and only that set", () => {
+    // `gatesFrom` still carries it, deliberately. That function answers "what
+    // does CI run", which `unclassifiedSteps` and the `STEP_EXEMPTIONS`
+    // staleness check both read — filtering there made 14 exemptions look
+    // stale and asserted something false about CI, which is how the first
+    // draft of this fix was caught.
+    expect(gatesFrom(WORKFLOW, { all: true }).map((g) => g.command)).toContain(
+      'bun run translation:catalogue:check -- --base "$base"',
+    );
+    const runnable = runnableGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
+    expect(runnable).toContain("bun run translation:catalogue:check");
+    expect(runnable).not.toContain('bun run translation:catalogue:check -- --base "$base"');
+  });
+
+  test("the two sets PARTITION the extraction — nothing falls out of both", () => {
+    const all = gatesFrom(WORKFLOW, { all: true }).map((g) => g.command).sort();
+    const split = [
+      ...runnableGatesFrom(WORKFLOW, { all: true }),
+      ...unresolvedGatesFrom(WORKFLOW, { all: true }),
+    ]
+      .map((g) => g.command)
+      .sort();
+    expect(split).toEqual(all);
+  });
+
+  test("and reported rather than dropped — the whole point", () => {
+    // A silent skip and a pass are indistinguishable from the exit code, which
+    // is this file's own `NoGatesFound` doctrine applied one command at a time.
+    const skipped = unresolvedGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
+    expect(skipped).toEqual(['bun run translation:catalogue:check -- --base "$base"']);
+  });
+
+  test("the script keeps its coverage, because CI invokes it BOTH ways", () => {
+    // The reason skipping is safe here rather than merely convenient: the bare
+    // invocation is in the same workflow and is still extracted. If that ever
+    // stops being true this test fails, which is the point of asserting it
+    // rather than noting it in a comment.
+    const runnable = runnableGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
+    expect(runnable.filter((c) => c.includes("translation:catalogue"))).toHaveLength(1);
+  });
+
+  test("the predicate catches both spellings and leaves ordinary commands alone", () => {
+    expect(carriesUnexpandedVariable('bun run x -- --base "$base"')).toBe(true);
+    expect(carriesUnexpandedVariable("bun run x -- --base ${BASE}")).toBe(true);
+    expect(carriesUnexpandedVariable("bun run gates --all")).toBe(false);
+    // A literal dollar that is not a variable reference must not be caught.
+    expect(carriesUnexpandedVariable("bun run x -- --label '$'")).toBe(false);
+  });
+
+  test("the real workflow carries exactly one, and it is that one", () => {
+    // Pinned deliberately: if a second appears, somebody has written another
+    // command this tool silently will not run, and that should be a decision
+    // rather than a discovery.
+    const real = readFileSync(resolve(import.meta.dir, "../../..", GATES_WORKFLOW), "utf-8");
+    // Publishers excluded, as `loadUnresolved` excludes them: the
+    // `qa-publish` job's `$GATES_RESULT` line is not a gate at all (bean
+    // `16ei`), so it is neither run nor counted as unrunnable here.
+    const skipped = unresolvedGatesFrom(real, { all: true, skipPublishers: true });
+    expect(skipped).toHaveLength(1);
+    expect(skipped[0]?.command).toContain("translation:catalogue:check");
   });
 });

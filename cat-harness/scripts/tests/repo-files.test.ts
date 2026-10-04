@@ -9,22 +9,48 @@
  * test that stubs git would have passed against the broken version.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { codeWithoutComments, repoFiles, repoFilesWithExt } from "../repo-files.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
-/** Run `fn` with a real untracked file in the tree, and always remove it. */
-function withUntrackedFile(rel: string, body: string, fn: () => void): void {
-  const abs = join(ROOT, rel);
-  mkdirSync(join(abs, ".."), { recursive: true });
-  writeFileSync(abs, body);
+/**
+ * Run `fn` with a real untracked file in a real git repository, and always
+ * remove the repository.
+ *
+ * The repository is a THROWAWAY one under the system temp directory, not this
+ * checkout. It planted the probe in this checkout's `scripts/` until bean
+ * `dlqu`, which was safe only while test files ran one at a time: under
+ * `bun test --parallel`, `ns-export-skos.test.ts` enumerates the same tree, and
+ * paired with this file it failed 4 runs in 4 (alone: 0 in 3) — a different
+ * test reading a file this one was creating or removing. Still a REAL file in
+ * a REAL repository asked through the real `repoFiles`, so the property — an
+ * uncommitted file is seen, and a bare `ls-files` misses it — is asserted
+ * exactly as before; only where the probe lives changed. `fn` gets the root.
+ */
+function withUntrackedFile(rel: string, body: string, fn: (root: string) => void): void {
+  const root = mkdtempSync(join(tmpdir(), "repo-files-"));
+  const git = (...args: string[]) => {
+    const r = Bun.spawnSync(["git", "-c", "user.email=t@t", "-c", "user.name=t", ...args], { cwd: root });
+    if (r.exitCode !== 0) throw new Error(`git ${args.join(" ")}: ${new TextDecoder().decode(r.stderr)}`);
+  };
   try {
-    fn();
+    git("init", "-q");
+    // A tracked sibling, so `scripts/` is a directory git already knows and
+    // the untracked probe is the only thing a bare `ls-files` cannot see.
+    mkdirSync(join(root, "scripts"), { recursive: true });
+    writeFileSync(join(root, "scripts", "tracked.ts"), "export const tracked = 0;\n");
+    git("add", "scripts/tracked.ts");
+    git("commit", "-q", "-m", "seed");
+    const abs = join(root, rel);
+    mkdirSync(join(abs, ".."), { recursive: true });
+    writeFileSync(abs, body);
+    fn(root);
   } finally {
-    rmSync(abs, { force: true });
+    rmSync(root, { recursive: true, force: true });
   }
 }
 
@@ -34,10 +60,13 @@ describe("a gate can see work that is not committed yet", () => {
     // reported 0 fail because `git ls-files` could not see them, and CI —
     // after the commit — was the earliest possible detection.
     const rel = "scripts/__bgle-untracked-probe.ts";
-    withUntrackedFile(rel, "export const probe = 1;\n", () => {
-      expect(repoFiles(ROOT, ["scripts"])).toContain(rel);
+    let probeRoot = "";
+    withUntrackedFile(rel, "export const probe = 1;\n", (root) => {
+      probeRoot = root;
+      expect(repoFiles(root, ["scripts"])).toContain(rel);
     });
-    // And it is gone again, so the probe cannot leak into another test's view.
+    // And it is gone again, and it was never in this checkout at all.
+    expect(existsSync(join(probeRoot, rel))).toBe(false);
     expect(existsSync(join(ROOT, rel))).toBe(false);
   });
 
@@ -46,12 +75,13 @@ describe("a gate can see work that is not committed yet", () => {
     // `ls-files`, the test above goes red; this one says why that matters by
     // showing the two answers differ on the same tree.
     const rel = "scripts/__bgle-untracked-probe2.ts";
-    withUntrackedFile(rel, "export const probe = 2;\n", () => {
+    withUntrackedFile(rel, "export const probe = 2;\n", (root) => {
       const trackedOnly = new TextDecoder()
-        .decode(Bun.spawnSync(["git", "ls-files", "scripts"], { cwd: ROOT }).stdout)
+        .decode(Bun.spawnSync(["git", "ls-files", "scripts"], { cwd: root }).stdout)
         .split("\n");
+      expect(trackedOnly).toContain("scripts/tracked.ts"); // git DID answer
       expect(trackedOnly).not.toContain(rel);
-      expect(repoFiles(ROOT, ["scripts"])).toContain(rel);
+      expect(repoFiles(root, ["scripts"])).toContain(rel);
     });
   });
 

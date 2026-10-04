@@ -57,16 +57,29 @@ export const FOLIO_ASSISTANT_REPO = "https://github.com/litlfred/folio-assistant
  */
 export type LinkMode = "submodule" | "sibling";
 
-export interface InitFolioOptions {
-  /** Folio repo root to scaffold into. */
+/**
+ * What every harness instance needs, whether or not it holds a folio.
+ *
+ * Bean `mer2`, owner's ruling 2026-10-01: `folio_init` conflated two
+ * operations. The declaration, config, work plan, agent guidance and MCP wiring
+ * need NO content type; only `folio/`, its builder shim and the source-material
+ * directories need an adapter. A harness layer (`bootstrap`, `cat-harness` — the partition once called it `agentic-harness`)
+ * declares no `folio` kind and carries no adapter, so the MVP the owner ruled
+ * for it — *"`folio_init` creates a working folio against that layer ALONE, in
+ * an empty repository"* (`tndo`) — was not expressible while the two were one
+ * call. `initInstance` is the contentless half; `initFolio` is it plus the
+ * adapter's scaffold.
+ *
+ * A `--layer` flag was considered and rejected: it forces an answer to "which
+ * content type does a contentless layer scaffold?", which has none.
+ */
+export interface InitInstanceOptions {
+  /** Repo root to scaffold into. */
   targetDir: string;
-  /** Content type — selects the adapter and the profile. */
-  contentType: "paper" | "document";
   // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
-  /** Document slug: the directory under `folio/` and the manifest's name. */
+  /** Instance name: `<slug>.json`, and for a folio the directory under `folio/` and the manifest's name. */
   slug: string;
   title: string;
-  authors: string[];
   link: LinkMode;
   /**
    * Path to the folio-assistant checkout, relative to the folio root.
@@ -80,6 +93,16 @@ export interface InitFolioOptions {
   /** Skip `git submodule add` / `git init`. */
   skipVcs?: boolean;
 }
+
+/** An instance that holds a folio: the instance, plus what its adapter scaffolds. */
+export interface InitFolioOptions extends InitInstanceOptions {
+  /** Content type — selects the adapter and the profile. */
+  contentType: "paper" | "document";
+  authors: string[];
+}
+
+/** The content type, when the instance being scaffolded holds a folio. */
+type MaybeFolio = InitInstanceOptions & { contentType?: InitFolioOptions["contentType"] };
 
 export interface InitFolioResult {
   created: string[];
@@ -154,16 +177,49 @@ function platformDir(assistant: string): string {
 function adapterModulePath(assistant: string, contentType: string): string {
   const declared = BUILTIN_ADAPTERS.find((a) => a.contentType === contentType);
   const rel = declared ? declared.module : `adapters/${contentType}/index.ts`;
-  // POSIX-normalised by hand: this string goes into a JSON config read on
-  // every platform, and `join` from `node:path` would emit backslashes on
-  // Windows.
+  return `./${posixSegments(`${platformDir(assistant)}/${rel}`).join("/")}`;
+}
+
+/**
+ * A path's segments, `.` and `..` folded, POSIX by hand: these strings go into
+ * a JSON config read on every platform, and `join` from `node:path` would emit
+ * backslashes on Windows.
+ */
+function posixSegments(path: string): string[] {
   const segments: string[] = [];
-  for (const part of `${platformDir(assistant)}/${rel}`.split("/")) {
+  for (const part of path.split("/")) {
     if (part === "." || part === "") continue;
     if (part === ".." && segments.length > 0 && segments[segments.length - 1] !== "..") segments.pop();
     else segments.push(part);
   }
-  return `./${segments.join("/")}`;
+  return segments;
+}
+
+/**
+ * The layer a new instance STANDS ON, as a config dependency (bean `zmdo`).
+ *
+ * Without it the scaffolded instance's declaration chain is the instance alone:
+ * measured 2026-10-04 in a sibling layout, a fresh instance — and a fresh
+ * document folio — reached **0** skill directories, so it could not read the
+ * conventions it was scaffolded to follow. One entry is enough: the layer's own
+ * `needs` carry the rest of the stack (`bootstrap ← bootstrap-tools ←
+ * cat-harness ← …`), measured the same day.
+ *
+ * Which layer is DERIVED, never asked for: a folio stands on its adapter's
+ * instance (`BUILTIN_ADAPTERS[].instance`), and a contentless instance on the
+ * harness whose scaffolder wrote it. A `--layer` flag was rejected for `mer2`
+ * and is not reintroduced here.
+ */
+function standsOn(assistant: string, contentType: InitFolioOptions["contentType"] | undefined): { name: string; path: string } {
+  const harness = { name: HARNESS_SUBDIR, path: posixSegments(platformDir(assistant)).join("/") };
+  if (contentType === undefined) return harness;
+  const declared = BUILTIN_ADAPTERS.find((a) => a.contentType === contentType);
+  if (!declared) return harness;
+  // The adapter's module is relative to the harness directory and passes
+  // through its instance's directory: `../folio-assistant-core/adapters/…`.
+  const segments = posixSegments(`${platformDir(assistant)}/${declared.module}`);
+  const at = segments.lastIndexOf(declared.instance);
+  return at < 0 ? harness : { name: declared.instance, path: segments.slice(0, at + 1).join("/") };
 }
 
 // ── Templates ────────────────────────────────────────────────────
@@ -210,12 +266,15 @@ function adapterModulePath(assistant: string, contentType: string): string {
  * `name` is what makes this file a declaration rather than a plain config, and
  * the filename stem must equal it — `findDeclarationFile` checks exactly that.
  */
-function instanceDeclaration(o: InitFolioOptions): string {
+function instanceDeclaration(o: MaybeFolio): string {
   return JSON.stringify(
     {
       name: o.slug,
       title: o.title,
-      directories: [
+      // A contentless instance declares no `folio` directory: declaring one it
+      // does not hold would be the `dh4f` defect (a consumer scans nothing and
+      // reports a clean run). Bean `mer2`.
+      directories: o.contentType === undefined ? [] : [
         {
           id: "folio",
           // declared-path-literal: THE BASE CASE, same as `DEFAULT_DIRECTORIES`.
@@ -232,13 +291,30 @@ function instanceDeclaration(o: InitFolioOptions): string {
   ) + "\n";
 }
 
-/** The scaffolded instance's CONFIG — `<slug>.config.json`, beside its declaration. */
-function instanceConfig(o: InitFolioOptions, assistant: string): string {
+/**
+ * The scaffolded instance's CONFIG — `<slug>.config.json`, beside its declaration.
+ *
+ * NO `site.landing` FLAG, on purpose (issue #1904). A scaffolded folio is the
+ * one harness instantiated at its root, and the owner's ruling makes that the
+ * landing page with no flag: *"If exactly one harness is instantiated, it is
+ * the landing page and no flag is needed."* The flag becomes necessary the day
+ * a SECOND `<name>.config.json` lands beside this one: then exactly one of
+ * them carries `"site": { "landing": true }` (two or more give a neutral hub),
+ * and `check:landing-instance` fails until one does. Writing it now would be
+ * a decision nobody has made yet. Rule: the `harness-tiles` skill.
+ */
+function instanceConfig(o: MaybeFolio, assistant: string): string {
   return JSON.stringify(
     {
-      contentType: o.contentType,
-      adapter: o.contentType,
-      adapterModule: adapterModulePath(assistant, o.contentType),
+      // Omitted, not defaulted, for a contentless instance (bean `mer2`):
+      // naming an adapter here would be inventing a content type for a layer
+      // that has none.
+      ...(o.contentType === undefined ? {} : {
+        contentType: o.contentType,
+        adapter: o.contentType,
+        adapterModule: adapterModulePath(assistant, o.contentType),
+      }),
+      dependencies: { folioAssistant: [standsOn(assistant, o.contentType)] },
       feedbackDir: ".folio-feedback",
       skills: ".claude/skills/local",
       viewer: { dir: `${platformDir(assistant)}/viewer`, port: 8080 },
@@ -530,7 +606,7 @@ function claudeSettings(assistant: string): string {
   ) + "\n";
 }
 
-function gitignore(o: InitFolioOptions): string {
+function gitignore(o: MaybeFolio): string {
   return `# Build output
 build/
 _site/
@@ -857,6 +933,63 @@ ${o.authors.join(", ")}
 `;
 }
 
+/**
+ * A contentless instance's README (bean `mer2`).
+ *
+ * Only the workflows markers: `folio:toc` lists a folio's contents, and an
+ * instance that holds none would carry a region nothing can fill.
+ */
+function instanceReadme(o: InitInstanceOptions): string {
+  return `# ${o.title}
+
+A harness instance with no content type: its declaration (\`${instanceDeclarationFilename(o.slug)}\`),
+work plan (\`beans/\`, \`todos/\`) and agent wiring. It holds no folio.
+
+<!-- Regions between a \`folio:*:begin\` / \`folio:*:end\` pair are generated:
+     refresh them with \`readme_sync\` (MCP) or \`bun run readme:sync\` from the
+     platform checkout. Edits inside a pair are overwritten; everything else in
+     this file is yours and is never touched. -->
+
+## Workflows
+
+<!-- folio:workflows:begin -->
+<!-- folio:workflows:end -->
+`;
+}
+
+/**
+ * A contentless instance's AGENTS.md (bean `mer2`).
+ *
+ * Says what the instance is and is not, and where the platform is — the folio
+ * version's block-kind rules would be rules about content this instance does
+ * not hold.
+ */
+function instanceAgentsMd(o: InitInstanceOptions, assistant: string): string {
+  return `# AGENTS.md — ${o.title}
+
+This is a **harness instance with no content type**. It declares itself in
+\`${instanceDeclarationFilename(o.slug)}\`, keeps its work plan in \`beans/\` and
+\`todos/\`, and reaches the platform — skills, schemas, MCP tools — through
+[folio-assistant](${FOLIO_ASSISTANT_REPO}), checked out at \`${assistant}/\`.
+
+This file is the **agent-generic** source of truth. \`CLAUDE.md\` and
+\`GEMINI.md\` are thin stubs pointing here.
+
+## It holds no folio
+
+There is no \`folio/\` here and no adapter is configured, on purpose: a
+contentless instance scaffolds the instance and nothing an adapter would own.
+Adding a folio to an existing instance in place is **not supported yet**:
+\`init-folio\` skips files that exist, so this instance's declaration and
+config would go on saying it holds no content.
+
+## Work plan
+
+\`beans\` is the todo mechanism: \`beans prime\`, \`beans list\`,
+\`beans create "<title>"\`.
+`;
+}
+
 function uploadsReadme(): string {
   return `# uploads/
 
@@ -925,27 +1058,33 @@ function defaultAssistantPath(link: LinkMode): string {
  * it twice on a live folio must not silently replace an author's `AGENTS.md`
  * with the template.
  */
-export function initFolio(options: InitFolioOptions): InitFolioResult {
-  const o: InitFolioOptions = { ...options };
-  const result: InitFolioResult = { created: [], skipped: [], notes: [] };
+/** The writer and context one scaffold run shares across its steps. */
+interface Scaffold {
+  o: MaybeFolio;
+  root: string;
+  assistant: string;
+  result: InitFolioResult;
+  write: (relPath: string, content: string) => void;
+}
 
-  if (!isValidSlug(o.slug)) {
+function checkSlug(slug: string): void {
+  if (!isValidSlug(slug)) {
     throw new Error(
-      `Invalid slug '${o.slug}'. Use lowercase words joined by single hyphens ` +
+      `Invalid slug '${slug}'. Use lowercase words joined by single hyphens ` +
       `(e.g. 'antenatal-care-guidance') — the slug is a directory name, a TS ` +
       `module name and a URL path at once.`,
     );
   }
-  if (RESERVED_SLUGS.has(o.slug)) {
+  if (RESERVED_SLUGS.has(slug)) {
     throw new Error(
-      `Slug '${o.slug}' is reserved: folio/${o.slug}/ has a platform meaning ` +
+      `Slug '${slug}' is reserved: folio/${slug}/ has a platform meaning ` +
       `and would not be discovered as a document.`,
     );
   }
-  if (o.authors.length === 0) {
-    throw new Error("At least one author is required — the manifest's `authors` may not be empty.");
-  }
+}
 
+function startScaffold(o: MaybeFolio): Scaffold {
+  const result: InitFolioResult = { created: [], skipped: [], notes: [] };
   const root = resolve(o.targetDir);
   const assistant = o.assistantPath ?? defaultAssistantPath(o.link);
 
@@ -962,13 +1101,17 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
     result.created.push(relPath);
   };
 
-  // Checked before anything is written: whether this folio is the root of
-  // its repository decides where its workflow can go (bean `zdfa`).
-  const enclosing = enclosingRepoRoot(root);
-  if (!o.dryRun) mkdirSync(root, { recursive: true });
+  return { o, root, assistant, result, write };
+}
 
-  // 1. Configuration and the platform link.
-  // Named after the folio, not after the harness: the config the scaffold
+/**
+ * The instance-level writes — everything that needs no content type (bean
+ * `mer2`). Shared by `initInstance` and `initFolio`, so a folio's instance half
+ * cannot drift from a bare instance's.
+ */
+function writeInstanceFiles(s: Scaffold): void {
+  const { o, assistant, write } = s;
+  // Named after the instance, not after the harness: the config the scaffold
   // writes is THIS instance's, and `folio_init` is where a new instance's
   // name first becomes a filename (2026-09-20).
   // The declaration comes FIRST, because it is what gives the next line's
@@ -980,6 +1123,104 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
+  // declared-path-literal: the scaffolder CREATES the layout. There is no
+  // declaration to read in a repo that does not exist yet — this is the
+  // write that makes one possible.
+  write("beans/.gitkeep", "");
+  // The todos graph, and both directories it declares: declaring a directory
+  // that does not exist is the `dh4f` defect (a consumer scans nothing and
+  // reports a clean run). declared-path-literal: scaffolding the layout, as above.
+  write("todos/todos.json", todosGraph(o.slug));
+  write("todos/items/.gitkeep", "");
+  write("todos/feedback/.gitkeep", "");
+  write("todos/verdicts/.gitkeep", "");
+  write("CLAUDE.md", `# CLAUDE.md\n\nThis ${o.contentType ? "folio" : "instance"}'s agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\n@AGENTS.md\n`);
+  write("GEMINI.md", `# GEMINI.md\n\nThis ${o.contentType ? "folio" : "instance"}'s agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\nSee [AGENTS.md](./AGENTS.md).\n`);
+}
+
+/** Link the platform, then create every declared or inherited directory. Last, for both. */
+function finishScaffold(s: Scaffold): void {
+  const { o, root, assistant, result } = s;
+
+  // Version control.
+  const platformPresent = existsSync(join(root, assistant));
+  if (!o.skipVcs && !o.dryRun) {
+    linkPlatform(root, assistant, o, result);
+  } else if (o.link === "submodule" && !platformPresent) {
+    // Only when it is actually absent. Emitting this unconditionally told a
+    // caller who had already added the submodule (and passed --skip-vcs
+    // precisely because of that) to add it again.
+    result.notes.push(`Add the platform: git submodule add ${FOLIO_ASSISTANT_REPO} ${assistant}`);
+  }
+
+  if (o.contentType !== undefined && !existsSync(join(root, assistant))) {
+    result.notes.push(
+      `The builder shim in folio/schema/ points at '${assistant}', which does not exist yet. ` +
+      `Nothing will import until the platform is there.`,
+    );
+  }
+
+  // Every directory this instance DECLARES or INHERITS, created if absent.
+  //
+  // Last, and after the platform link, because the inherited half of the answer
+  // comes from walking the dependency tree — an instance whose platform is not
+  // checked out yet inherits nothing, and this then correctly creates only what
+  // the instance itself declares. Re-running with `--force` re-runs this,
+  // which is safe: it is idempotent and never overwrites a keep-marker.
+  //
+  // Placed here rather than left to the session-start sweep because the two
+  // answer different moments and `AGENTS.md` is explicit that a resolver with
+  // no caller is the defect to avoid — `resolveSkillDirs` has had none since it
+  // was written, and `resolveDirectories` had none before this change.
+  if (!o.dryRun) {
+    for (const d of materialiseDeclaredDirectories(root)) {
+      if (d.created) result.created.push(`${relative(root, d.absPath)}/`);
+      if (d.markerWritten) result.created.push(relative(root, join(d.absPath, ".gitignore")));
+    }
+  }
+}
+
+/**
+ * Scaffold a harness instance with NO content type (bean `mer2`).
+ *
+ * Writes the declaration (with no `folio` directory), the config (with no
+ * adapter), the work plan, agent guidance and MCP wiring, and links the
+ * platform. Writes nothing an adapter owns: no `folio/`, no builder shim, no
+ * `uploads/` or `library/`, no staging or QA workflows. This is the operation
+ * the owner's MVP ruling (`tndo`) needs for a layer that has no adapter.
+ */
+export function initInstance(options: InitInstanceOptions): InitFolioResult {
+  const o: MaybeFolio = { ...options, contentType: undefined };
+  checkSlug(o.slug);
+  const s = startScaffold(o);
+  if (!o.dryRun) mkdirSync(s.root, { recursive: true });
+  writeInstanceFiles(s);
+  s.write("README.md", instanceReadme(o));
+  s.write("AGENTS.md", instanceAgentsMd(o, s.assistant));
+  finishScaffold(s);
+  return s.result;
+}
+
+/** Scaffold a folio: `initInstance`'s writes, plus the adapter's folio scaffold. */
+export function initFolio(options: InitFolioOptions): InitFolioResult {
+  const o: InitFolioOptions = { ...options };
+  checkSlug(o.slug);
+  if (o.authors.length === 0) {
+    throw new Error("At least one author is required — the manifest's `authors` may not be empty.");
+  }
+
+  const s = startScaffold(o);
+  const { root, assistant, result, write } = s;
+
+  // Checked before anything is written: whether this folio is the root of
+  // its repository decides where its workflow can go (bean `zdfa`).
+  const enclosing = enclosingRepoRoot(root);
+  if (!o.dryRun) mkdirSync(root, { recursive: true });
+
+  // 1. The instance half — configuration, work plan, agent stubs.
+  writeInstanceFiles(s);
+
+  // 1b. The staging and QA workflows — folio-level: each builds or audits content.
   if (enclosing) {
     // GitHub reads workflows only at the repository root, and the reusable
     // workflow builds from the repository root. A caller written here would
@@ -1020,17 +1261,6 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
       (o.contentType === "paper" ? " and Lean workflows (blueprint, lean-build, lean-build-sidecar, lean_ci)" : "") +
       " are written dispatch-only: enable their triggers in .github/workflows/ when you want them to run.",
   );
-  // declared-path-literal: the scaffolder CREATES the layout. There is no
-  // declaration to read in a repo that does not exist yet — this is the
-  // write that makes one possible.
-  write("beans/.gitkeep", "");
-  // The todos graph, and both directories it declares: declaring a directory
-  // that does not exist is the `dh4f` defect (a consumer scans nothing and
-  // reports a clean run). declared-path-literal: scaffolding the layout, as above.
-  write("todos/todos.json", todosGraph(o.slug));
-  write("todos/items/.gitkeep", "");
-  write("todos/feedback/.gitkeep", "");
-  write("todos/verdicts/.gitkeep", "");
 
   // 2. The builder shim — the one place the platform path is written down.
   // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
@@ -1067,48 +1297,10 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   // are also the documentation of which sections exist.
   write("README.md", folioReadme(o));
 
-  // 5. Agent guidance: AGENTS.md is authoritative, the other two are stubs.
+  // 5. Agent guidance: AGENTS.md is authoritative; the stubs are instance-level.
   write("AGENTS.md", agentsMd(o, assistant));
-  write("CLAUDE.md", `# CLAUDE.md\n\nThis folio's agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\n@AGENTS.md\n`);
-  write("GEMINI.md", `# GEMINI.md\n\nThis folio's agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\nSee [AGENTS.md](./AGENTS.md).\n`);
 
-  // 6. Version control.
-  const platformPresent = existsSync(join(root, assistant));
-  if (!o.skipVcs && !o.dryRun) {
-    linkPlatform(root, assistant, o, result);
-  } else if (o.link === "submodule" && !platformPresent) {
-    // Only when it is actually absent. Emitting this unconditionally told a
-    // caller who had already added the submodule (and passed --skip-vcs
-    // precisely because of that) to add it again.
-    result.notes.push(`Add the platform: git submodule add ${FOLIO_ASSISTANT_REPO} ${assistant}`);
-  }
-
-  if (!existsSync(join(root, assistant))) {
-    result.notes.push(
-      `The builder shim in folio/schema/ points at '${assistant}', which does not exist yet. ` +
-      `Nothing will import until the platform is there.`,
-    );
-  }
-
-  // 7. Every directory this folio DECLARES or INHERITS, created if absent.
-  //
-  // Last, and after the platform link, because the inherited half of the answer
-  // comes from walking the dependency tree — a folio whose platform is not
-  // checked out yet inherits nothing, and this then correctly creates only what
-  // the folio itself declares. Re-running `init-folio --force` re-runs this,
-  // which is safe: it is idempotent and never overwrites a keep-marker.
-  //
-  // Placed here rather than left to the session-start sweep because the two
-  // answer different moments and `AGENTS.md` is explicit that a resolver with
-  // no caller is the defect to avoid — `resolveSkillDirs` has had none since it
-  // was written, and `resolveDirectories` had none before this change.
-  if (!o.dryRun) {
-    for (const d of materialiseDeclaredDirectories(root)) {
-      if (d.created) result.created.push(`${relative(root, d.absPath)}/`);
-      if (d.markerWritten) result.created.push(relative(root, join(d.absPath, ".gitignore")));
-    }
-  }
-
+  finishScaffold(s);
   return result;
 }
 
@@ -1123,7 +1315,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
 function linkPlatform(
   root: string,
   assistant: string,
-  o: InitFolioOptions,
+  o: InitInstanceOptions,
   result: InitFolioResult,
 ): void {
   const isRepo = existsSync(join(root, ".git"));
@@ -1260,12 +1452,19 @@ export function seedMainIfEmpty(root: string, slug: string): SeedOutcome {
 }
 
 /** Render a result as the report a human or an agent reads. */
-export function formatInitResult(result: InitFolioResult, o: InitFolioOptions): string {
-  const lines = [
-    `Initialized a ${o.contentType} folio: ${o.title}`,
-    `  folio/${o.slug}/  ·  ${result.created.length} file(s) written`,
-    "",
-  ];
+export function formatInitResult(result: InitFolioResult, o: InitFolioOptions | InitInstanceOptions): string {
+  const folio = "contentType" in o ? o : undefined;
+  const lines = folio
+    ? [
+        `Initialized a ${folio.contentType} folio: ${o.title}`,
+        `  folio/${o.slug}/  ·  ${result.created.length} file(s) written`,
+        "",
+      ]
+    : [
+        `Initialized a harness instance with no content type: ${o.title}`,
+        `  ${instanceDeclarationFilename(o.slug)}  ·  ${result.created.length} file(s) written`,
+        "",
+      ];
   for (const f of result.created) lines.push(`  + ${f}`);
   if (result.skipped.length) {
     lines.push("", `Left alone (already present — pass force to overwrite):`);
@@ -1275,12 +1474,13 @@ export function formatInitResult(result: InitFolioResult, o: InitFolioOptions): 
     lines.push("", "Notes:");
     for (const n of result.notes) lines.push(`  · ${n}`);
   }
+  if (!folio) return lines.join("\n");
   lines.push(
     "",
     "Next:",
     `  1. Edit folio/${o.slug}/introduction/overview.md — it is a placeholder.`,
     `  2. Ask your agent to "add a chapter on <topic>".`,
-    `  3. Run content_validate, then ${o.contentType === "document" ? "document_render_md" : "content_build"}.`,
+    `  3. Run content_validate, then ${folio.contentType === "document" ? "document_render_md" : "content_build"}.`,
   );
   return lines.join("\n");
 }
@@ -1294,10 +1494,12 @@ Usage:
 
 Options:
   --dir <path>        Folio root to scaffold into            (default: .)
+  --instance          A harness instance with NO content type: no folio/,
+                      no adapter, no --type or --author (bean mer2)
   --type <type>       paper | document                       (default: document)
   --slug <slug>       Document slug under folio/           (default: from --title)
   --title <title>     Document title                         (required)
-  --author <name>     Author. Repeat for several.            (required)
+  --author <name>     Author. Repeat for several.            (required for a folio)
   --link <mode>       submodule | sibling                    (default: submodule)
   --assistant <path>  Path to folio-assistant, relative to the folio root
   --force             Overwrite files that already exist
@@ -1314,7 +1516,11 @@ export function slugify(title: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-function parseArgs(argv: string[]): InitFolioOptions | "help" {
+type ParsedArgs =
+  | { kind: "folio"; options: InitFolioOptions }
+  | { kind: "instance"; options: InitInstanceOptions };
+
+function parseArgs(argv: string[]): ParsedArgs | "help" {
   const authors: string[] = [];
   let dir = ".";
   let contentType: "paper" | "document" = "document";
@@ -1325,6 +1531,8 @@ function parseArgs(argv: string[]): InitFolioOptions | "help" {
   let force = false;
   let dryRun = false;
   let skipVcs = false;
+  let instance = false;
+  let typeGiven = false;
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -1336,7 +1544,9 @@ function parseArgs(argv: string[]): InitFolioOptions | "help" {
     switch (a) {
       case "--help": case "-h": return "help";
       case "--dir": dir = next(); break;
+      case "--instance": instance = true; break;
       case "--type": {
+        typeGiven = true;
         const t = next();
         if (t !== "paper" && t !== "document") throw new Error(`--type must be paper or document, got '${t}'`);
         contentType = t;
@@ -1360,12 +1570,16 @@ function parseArgs(argv: string[]): InitFolioOptions | "help" {
   }
 
   if (!title) throw new Error("--title is required");
+  const common = { targetDir: dir, slug: slug ?? slugify(title), title, link, assistantPath, force, dryRun, skipVcs };
+  if (instance) {
+    // Refused rather than ignored: a content type passed to a contentless
+    // init is a caller who wanted a folio and would silently not get one.
+    if (typeGiven) throw new Error("--instance takes no --type: an instance with a content type is a folio");
+    return { kind: "instance", options: common };
+  }
   if (authors.length === 0) throw new Error("--author is required (repeat for several)");
 
-  return {
-    targetDir: dir, contentType, slug: slug ?? slugify(title), title,
-    authors, link, assistantPath, force, dryRun, skipVcs,
-  };
+  return { kind: "folio", options: { ...common, contentType, authors } };
 }
 
 if (import.meta.main) {
@@ -1375,8 +1589,8 @@ if (import.meta.main) {
       console.log(USAGE);
       process.exit(0);
     }
-    const result = initFolio(parsed);
-    console.log(formatInitResult(result, parsed));
+    const result = parsed.kind === "instance" ? initInstance(parsed.options) : initFolio(parsed.options);
+    console.log(formatInitResult(result, parsed.options));
     process.exit(0);
   } catch (e) {
     console.error(`init-folio: ${e instanceof Error ? e.message : String(e)}`);

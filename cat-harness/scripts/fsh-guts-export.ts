@@ -43,10 +43,12 @@ import { dirname, join, relative, resolve } from "node:path";
 import {
   artefactStub,
   readDeclaration,
-  resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+  repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
-import { readFshGutsNode } from "../schemas/fsh-guts.js";
-import { checkoutDirectories } from "../schemas/harness-config.js";
+import { fshGutsDirectories, readFshGutsNode } from "../schemas/fsh-guts.js";
+import { exitUnlessMounted } from "./branch-store.js";
+import { contextBindings, vocabMapping } from "../schemas/vocab-mapping.js";
+import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -125,16 +127,11 @@ export interface FshGutsDir {
 
 /** Every declared `fsh-guts` directory — not the literal path. */
 export function fshGutsDirs(root: string): FshGutsDir[] {
-  try {
-    // Own declaration first; then the checkout's (placement PR0a: the
-    // repository's `fsh-guts/` is declared by the ROOT instance).
-    const own = resolveDirectories([{ name: "(local)", root, own: true }]).filter((d) => d.graphKinds.includes("fsh-guts"));
-    return (own.length > 0 ? own : checkoutDirectories(root, { stackedOn: root }).filter((d) => d.graphKinds.includes("fsh-guts")))
-      .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
-      .filter((d) => existsSync(d.absPath));
-  } catch {
-    return [];
-  }
+  // One resolution for every reader and writer (bean 9c7h): the seam the
+  // move to `cat/cat-harness/fsh-guts` changes.
+  return fshGutsDirectories(root)
+    .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
+    .filter((d) => existsSync(d.absPath));
 }
 
 function walk(dir: string, out: string[] = []): string[] {
@@ -223,12 +220,25 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
   return {
     "@context": {
       ...NS_PREFIXES,
-      // `rdfs:label` / `rdfs:comment`, exactly as the main export maps them.
-      // Minting `fac:name` here would have been a second term for a concept
-      // RDF already names — and `ns:check` caught it, which is the gate
-      // doing precisely its job twice in one session.
-      name: "rdfs:label",
-      description: "rdfs:comment",
+      // `name` and `description` exactly as the main export maps them, and
+      // now structurally so: both bindings are DERIVED from the row
+      // kg-export's own context is derived from, table `kg-node-naming`
+      // (bean `lodp`, finding D2). This said "exactly as the main export"
+      // while writing `rdfs:comment` for a `description` kg-export had
+      // moved to `dcterms:description` (bean `xsqm`). Minting `fac:name`
+      // here would have been a second term for a concept RDF already names
+      // — and `ns:check` caught it, which is the gate doing precisely its
+      // job twice in one session.
+      //
+      // Expanded to full IRIs because this context declares no `rdfs` or
+      // `dcterms` prefix: the literal `"rdfs:label"` it carried until then
+      // expanded to an absolute IRI with the scheme `rdfs`, not to RDFS's
+      // label (measured with the `jsonld` processor).
+      ...contextBindings([vocabMapping(ROOT, "kg-node-naming")], {
+        inContext: NS_PREFIXES,
+        prefixes: { ...STANDARD_PREFIXES, ...NS_PREFIXES },
+        only: ["name", "description"],
+      }),
       nodeKind: termIri("nodeKind"),
       sourcePath: termIri("sourcePath"),
       movedOn: termIri("movedOn"),
@@ -265,6 +275,7 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
 }
 
 if (import.meta.main) {
+  exitUnlessMounted("fsh-guts", "fsh-guts-export", resolve(ROOT, ".."));
   const argv = process.argv.slice(2);
   const arg = (flag: string): string | undefined => {
     const i = argv.indexOf(flag);

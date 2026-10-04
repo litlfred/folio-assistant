@@ -30,6 +30,13 @@ Four objects, each with a home:
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
+**WHO's "actor" is this model's Role.** An actor in the WHO DPI-H Reference
+Architecture's conformance model (§3.7.2, an abstract information-processing
+role) and a DAK generic persona each map to a folio-assistant **Role**, never
+to an Actor. The RA's system *realising* an actor maps to a mechanical Actor
+taking on that role. Owner, 2026-10-03 (#1984); the comparison is on
+`smart-base/findings/dth-terms.md`.
+
 Schema: [`schemas/role-graph.ts`](../../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../../scripts/kg-audit.ts), sidecar schema
 [`schemas/kg-qa.ts`](../../../schemas/kg-qa.ts).
@@ -546,7 +553,9 @@ block sweep's `*.qa.json` and the script sweep's `*.script-qa.json`.
 An instance that declares no `qa` directory does not receive sidecars inside
 its own tree: `kgQaHomeFor` (`schemas/cat-harness.ts`) puts them in the
 auditing harness's `qa` directory under the instance's stub —
-`cat-harness/test/results/bootstrap/` for bootstrap. A verdict ABOUT an
+`cat-harness/test/results/bootstrap/` for bootstrap (a working copy, stored
+on the `qa-reports` branch with the rest of that `qa` directory; a JUDGEMENT
+about it is hosted the same way, under `test/attestations/`). A verdict ABOUT an
 instance is the auditor's output, and bootstrap is the layer that must read
 cleanly with no harness present (owner, 2026-09-29, decision 2 of bean
 `r3gy`). The same holds once bootstrap is its own repository: the verdicts stay
@@ -673,7 +682,9 @@ uniquely was had no picture.
    A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
-4. `bun run kg:audit` and commit the sidecars.
+4. `bun run kg:audit`. The kg-qa sidecars it writes are derived results whose
+   record the CI job `qa-publish` stores on the `qa-reports` branch; they are
+   committed only until bean `5hox` takes them off `main`.
 
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.

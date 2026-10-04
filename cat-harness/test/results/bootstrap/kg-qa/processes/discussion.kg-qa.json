@@ -5,7 +5,7 @@
     "id": "Process_Discussion",
     "path": "processes/discussion.bpmn"
   },
-  "source_hash": "sha256:779fcf32d1c7dc00c817d902e307f8f3a9b7033093849edb85b112be1e4abfa1",
+  "source_hash": "sha256:beccd4b439378d1e3051da662fd7e754a65b1db93abc91332a47538c6de79fe4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -34,6 +34,10 @@
     "activity-skill-has-tool": {
       "result": "fail",
       "findings": [
+        {
+          "where": "A_DetermineWhere",
+          "detail": "names skill \"human-agent-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
         {
           "where": "A_ListHarnesses",
           "detail": "names skill \"confirm-harness\", which no Tool declares `satisfies` for — the step's mechanism is still prose."

@@ -40,6 +40,8 @@ import {
   readBlockManifest,
   resolveCanonicalLean,
 } from "../content/pipeline/qa-utils";
+import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../schemas/qa-attestations.ts";
 import type {
   BlockQaReport,
   QaCriterionEntry,
@@ -160,7 +162,19 @@ if (!leanPath) {
   );
   leanPath = resolveCanonicalLean(refMatch?.[1], REPO_ROOT);
 }
-const qaPath = `${base}.qa.json`;
+// Read where the readers look; write where they look FIRST (bean r7v6, R50).
+//
+// This used to read and write `${base}.qa.json` beside the block, the legacy
+// path. Every reader goes through `existingBlockQaPath`, which prefers the
+// results tree, so once a block had a results-tree verdict an agent verdict
+// written here was shadowed and never read. Now it is load-then-write, the
+// same as `qa-agent-entry.ts` and `qa-sweep.ts`: the read falls back to the
+// legacy sibling, so an unmigrated block keeps its history, and the write
+// never does. The anchor is the block's own content repo, found the way
+// qa-sweep finds it, so the recorded path does not depend on the cwd.
+const contentRepoRoot = findContentRepoRoot(resolve(base), REPO_ROOT);
+const qaReadPath = existingBlockQaPath(contentRepoRoot, resolve(base));
+const qaPath = blockQaPath(contentRepoRoot, resolve(base));
 
 const paths = { ts: tsPath, md: mdPath, lean: leanPath };
 const currentHashes = hashBlockFiles(paths);
@@ -178,7 +192,19 @@ const relPaths = {
   lean: leanPath ? relative(REPO_ROOT, leanPath) : undefined,
 };
 
-let report: BlockQaReport | undefined = loadQaReport(qaPath);
+// An agent verdict is an ATTESTATION (bean `8wj1`, D2): written to the store
+// first, with the block's other attestations read from the store rather than
+// from the prior report (C11). An unreadable store means nothing is written.
+const attested = resolvePrior(
+  contentRepoRoot,
+  blockAttestationKey(contentRepoRoot, resolve(base)),
+  qaReadPath === undefined ? undefined : loadQaReport(qaReadPath),
+);
+if (!attested.ok) {
+  console.error(refusalLine("qa-agent-write", relative(contentRepoRoot, resolve(base)), attested));
+  process.exit(4);
+}
+let report: BlockQaReport | undefined = attested.prior;
 if (!report) {
   report = {
     $schema: "block-qa/v1",
@@ -186,7 +212,7 @@ if (!report) {
     kind,
     paths: relPaths,
     source_hashes: currentHashes,
-    criteria: {},
+    criteria: composeCriteria({}, attested.attestations) as BlockQaReport["criteria"],
     updated_at: nowIso,
   };
 }
@@ -222,6 +248,16 @@ const kept = existing.filter(
   (e) => !(e.reviewer.kind === "agent" && e.reviewer.id === skill),
 );
 report.criteria[criterion] = [...kept, entry];
+try {
+  report.criteria = finalizeCriteria(attested, report.criteria, "attesting");
+} catch (err) {
+  console.error(refusalLine("qa-agent-write", relative(contentRepoRoot, resolve(base)), {
+    state: "unknown",
+    path: attested.path,
+    reason: err instanceof Error ? err.message : String(err),
+  }));
+  process.exit(4);
+}
 
 saveQaReport(qaPath, report);
 console.log(

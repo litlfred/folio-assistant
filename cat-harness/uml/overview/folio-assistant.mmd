@@ -23,6 +23,10 @@ classDiagram
       files [0..*] File[]
       licence [0..1] object
     }
+    class folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json["spdx-3-1-rc1-machine-readable/schema.json"] {
+      <<schema: spdx-3-1-rc1-machine-readable/schema.json>>
+      @context [1] 'https://spdx.github.io/spdx-spec/v3.1-RC1/rdf/spdx-context.jsonld'
+    }
   }
   namespace folio_assistant__root_tools {
     class n_folio_assistant_root_tools_code["code: no node schema"] {
@@ -75,6 +79,20 @@ classDiagram
       by [1] string
       commits [1] integer
       axes [1..*] Axe[]
+    }
+    class folio_assistant_beans_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1["folio-merge-queue-entry/v1"] {
+      <<json: MergeQueueEntrySchema>>
+      $schema [1] 'folio-merge-queue-entry/v1'
+      repository [1] string
+      pr [1] integer
+      placement [1] object
+      reason [1] string
+      decidedBy [1] string
+      decidedAt [1] string~date-time~
+      hold [0..1] object
+      trainId [0..1] string
+      ejection [0..1] object
+      beans [0..*] string[]
     }
   }
   namespace folio_assistant__todos {
@@ -150,6 +168,7 @@ classDiagram
   folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
   cssClass "folio_assistant_uploads_folio_intake_v1_File" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_intake_v1_folio_intake_v1" fa_uml_kind_uploads
+  cssClass "folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json" fa_uml_kind_uploads
   cssClass "n_folio_assistant_root_tools_code" fa_uml_kind_code
   cssClass "n_folio_assistant_root_tools_code" fa_uml_undetermined
   cssClass "folio_assistant_fsh_guts_FshGutsNode" fa_uml_kind_fsh_guts
@@ -157,6 +176,7 @@ classDiagram
   cssClass "folio_assistant_beans_folio_workflow_instance_v1" fa_uml_kind_beans
   cssClass "folio_assistant_beans_folio_session_survey_v1_Axe" fa_uml_kind_beans
   cssClass "folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1" fa_uml_kind_beans
+  cssClass "folio_assistant_beans_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1" fa_uml_kind_beans
   cssClass "folio_assistant_todos_folio_board_v1_folio_board_v1" fa_uml_kind_todos
   folio_assistant_memory_MemoryNode *-- "0..*" folio_assistant_memory_AlsoAbout : alsoAbout
   cssClass "folio_assistant_memory_AlsoAbout" fa_uml_kind_memory

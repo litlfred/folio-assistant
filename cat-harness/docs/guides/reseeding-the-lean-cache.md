@@ -11,6 +11,13 @@ nav_order: 5
 The cache branches are currently unusable for builds. This is the exact
 procedure to rebuild them.
 
+> **Branch names are changing.** The family is moving from `lake-cache/` to
+> `cat-lake-cache/` (bean `folio-assistant-32f6`). Until each repository's
+> branches are renamed, the scripts resolve a key to `cat-lake-cache/<key>`
+> if it exists, otherwise to `lake-cache/<key>` if that exists — for a
+> seed as well as a restore. The commands below name the legacy branches
+> explicitly; drop `--branch` and the script resolves the right one.
+
 > **Step 1 no longer needs elan, or unrestricted network.** elan's hosts
 > (`elan.lean-lang.org`, `release.lean-lang.org`) are unreachable from
 > the cloud authoring container, but elan is only a fetcher and the same

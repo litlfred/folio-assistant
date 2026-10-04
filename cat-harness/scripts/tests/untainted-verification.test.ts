@@ -9,6 +9,11 @@
  */
 
 import { describe, expect, test } from "bun:test";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, relative } from "node:path";
+
+import { attestationPath, blockAttestationKey, readCriteriaAttestations } from "../../schemas/qa-attestations.ts";
 
 import { COMPANION_ROLES, untaintedPartitionDefects } from "../../schemas/block-qa.ts";
 import { ROUNDTRIP_DISPATCH, TRANSLATION_ARTEFACTS } from "../../content/pipeline/translation-block-qa.ts";
@@ -18,6 +23,7 @@ import {
   isCouldNotDispatch,
   isVerified,
   mergeUntainted,
+  recordUntainted,
   untaintedEntries,
 } from "../../content/pipeline/untainted-verification.ts";
 import type { QaCriterionEntry } from "../../schemas/block-qa.ts";
@@ -218,5 +224,98 @@ describe("mergeUntainted", () => {
     const merged = mergeUntainted([staleAgent, human], fresh);
     // The human ruling survives; the earlier agent pair does not.
     expect(merged.map((e) => e.reviewer?.id)).toEqual(["adjudicator", "checker", "litlfred"]);
+  });
+});
+
+/**
+ * Bean `8iqt`: the recorder writes the attestation store, not the derived
+ * report. Every case runs in a throwaway instance with no declaration, so its
+ * store is the convention path `test/attestations/`.
+ */
+describe("recordUntainted — the attestation store is the home", () => {
+  const fresh = () =>
+    untaintedEntries(
+      {
+        subject: "content/b.md",
+        criterion: "c",
+        intermediate: "i",
+        checker: { id: "checker" },
+        adjudicator: { id: "adjudicator" },
+        verdict: "fail",
+      },
+      FIELD_HASH,
+    );
+
+  function instance(): { root: string; derived: string; cleanup: () => void } {
+    const root = mkdtempSync(join(tmpdir(), "untainted-"));
+    mkdirSync(join(root, "content"), { recursive: true });
+    writeFileSync(join(root, "content", "b.md"), "subject\n");
+    const derived = join(root, "test", "results", "block-qa", "content", "b.qa.json");
+    return { root, derived, cleanup: () => rmSync(root, { recursive: true, force: true }) };
+  }
+
+  test("with the derived report ABSENT, the verdict lands in the store and no report is invented", () => {
+    const t = instance();
+    try {
+      expect(existsSync(t.derived)).toBe(false);
+      const wrote = recordUntainted(t.derived, "c", fresh(), t.root);
+      const key = blockAttestationKey(t.root, join(t.root, "content", "b"));
+      expect(wrote).toBe(relative(t.root, attestationPath(t.root, key)));
+      const read = readCriteriaAttestations(t.root, key);
+      expect(read.state).toBe("hit");
+      if (read.state !== "hit") return;
+      expect(read.criteria.c!.map((e) => (e.reviewer as { id: string }).id)).toEqual(["adjudicator", "checker"]);
+      expect(existsSync(t.derived)).toBe(false);
+    } finally {
+      t.cleanup();
+    }
+  });
+
+  test("with the derived report present, the store is written and the projection keeps script entries", () => {
+    const t = instance();
+    try {
+      const scriptEntry: QaCriterionEntry = {
+        field_hash: FIELD_HASH,
+        result: "pass",
+        reviewer: { kind: "script", id: "sweep" },
+        reviewed_at: "2026-09-21T00:00:00Z",
+      };
+      mkdirSync(join(t.derived, ".."), { recursive: true });
+      writeFileSync(t.derived, JSON.stringify({ $schema: "block-qa/v1", criteria: { c: [scriptEntry] } }, null, 2));
+      recordUntainted(t.derived, "c", fresh(), t.root);
+      const key = blockAttestationKey(t.root, join(t.root, "content", "b"));
+      const read = readCriteriaAttestations(t.root, key);
+      expect(read.state).toBe("hit");
+      const report = JSON.parse(readFileSync(t.derived, "utf-8"));
+      expect(report.criteria.c.map((e: QaCriterionEntry) => e.reviewer?.id)).toEqual(["adjudicator", "checker", "sweep"]);
+    } finally {
+      t.cleanup();
+    }
+  });
+
+  test("a corrupt store is UNKNOWN: refused, and neither file is written", () => {
+    const t = instance();
+    try {
+      const key = blockAttestationKey(t.root, join(t.root, "content", "b"));
+      const path = attestationPath(t.root, key);
+      mkdirSync(join(path, ".."), { recursive: true });
+      writeFileSync(path, "{ not json");
+      expect(() => recordUntainted(t.derived, "c", fresh(), t.root)).toThrow(/UNKNOWN .*corrupt/);
+      expect(readFileSync(path, "utf-8")).toBe("{ not json");
+      expect(existsSync(t.derived)).toBe(false);
+    } finally {
+      t.cleanup();
+    }
+  });
+
+  test("a subject that does not exist is refused", () => {
+    const t = instance();
+    try {
+      rmSync(join(t.root, "content", "b.md"));
+      expect(() => recordUntainted(t.derived, "c", fresh(), t.root)).toThrow(/does not exist/);
+      expect(existsSync(join(t.root, "test", "attestations"))).toBe(false);
+    } finally {
+      t.cleanup();
+    }
   });
 });

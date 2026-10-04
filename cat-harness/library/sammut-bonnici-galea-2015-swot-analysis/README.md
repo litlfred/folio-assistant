@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# SWOT analysis
+# "SWOT analysis" in: Wiley Encyclopedia of Management Online
 
 ingested source material — attributed to its document, not folio content
 

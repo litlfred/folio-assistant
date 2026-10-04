@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T23:35:24Z
-updated_at: 2026-09-30T23:35:58Z
+updated_at: 2026-10-01T08:00:56Z
 parent: folio-assistant-1swy
 ---
 
@@ -238,3 +238,6 @@ proposal of moving QA reports off `main` to a content-addressed orphan branch
 the only route on the table that removes these conflicts rather than tidying
 them. That is written up separately; this bean's remaining value is the
 measurements and the three negative results (`beans/README.md` and these two).
+
+
+_2026-10-01_ — Now feeds arc `3fva` (issue #1763, `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`).

@@ -3,6 +3,8 @@
  * Every declared kind has an avatar — and every gap is a finding.
  *
  * @module scripts/check-avatar-coverage
+ * @covers cat-harness — it reads the instance declaration's graph kinds and asks each for art; the
+ *   avatars themselves are code in `schemas/avatars.ts`, as `gen-avatars-css` records
  *
  * Owner, 2026-09-19: *"QA sidescares if avatar thems not fully done."*
  *
@@ -27,7 +29,15 @@
  * This asserts the derivation is in place ONCE, and spends its per-kind
  * attention on the cell that can actually be empty.
  *
- * Exit codes: 0 clean · 1 a declared kind has no avatar (under `--check`).
+ * Usage:
+ *   bun run check:avatar-coverage          # report, write the sidecar, exit 0
+ *   bun run check:avatar-coverage:check    # JUDGE: compute and judge, write nothing (the gate)
+ *
+ * Exit codes: the writer exits 0. Judge mode (`--check`, bean `bo44`): 0 clean
+ * · 1 a declared kind has no avatar, or the trash state is not derived · 2 no
+ * kind required at all (could not determine), an unknown flag, or a run that
+ * threw. Before `bo44`, `--check` ALSO wrote the sidecar, and no package
+ * script or CI step ran it at all.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -40,7 +50,16 @@ import {
   readDeclaration,
 } from "../schemas/cat-harness.js";
 import { avatarsCssPath } from "./gen-avatars-css.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import {
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -120,45 +139,70 @@ export function trashDerivationPresent(root: string = ROOT): boolean {
   return css.includes('[data-fa-trash="true"]') && css.includes("--fa-avatar-glyph");
 }
 
-if (import.meta.main) {
-  const check = process.argv.includes("--check");
-  const c = coverage(ROOT);
-  const derived = trashDerivationPresent(ROOT);
-
-  writeQaResult(
-    ROOT,
-    "avatar-coverage",
-    buildQaResult({
-      script: "scripts/check-avatar-coverage.ts",
-      scriptAbsPath: join(ROOT, "scripts/check-avatar-coverage.ts"),
-      subject: { kind: "avatars", id: "avatar-coverage" },
-      families: {
-        "kind-has-avatar": {
-          summary:
-            `Every declared kind has an avatar of its own. A kind with none renders as ` +
-            `the generic question mark — deliberately a gap rather than a neutral mark, ` +
-            `because a reader must be able to tell "no art yet" from "this is what it looks like".`,
-          entries: c.missing,
-        },
-        "avatar-has-kind": {
-          summary:
-            `An avatar for a kind nothing declares. Not a defect — the vocabulary is open and ` +
-            `a folio may declare it — but it is how a registry drifts away from the instances ` +
-            `that use it, so it is reported rather than pruned.`,
-          entries: c.orphaned.map((kind) => ({ kind, note: "declared by no directory in this instance" })),
-        },
-        "trash-state-derived": {
-          summary:
-            `The trash state is composed from the base glyph rather than drawn per kind, so ` +
-            `its coverage cannot lag. Asserted ONCE: a per-kind criterion here could never ` +
-            `fail, which would read as coverage while measuring nothing.`,
-          entries: derived
-            ? []
-            : [{ note: "avatars.css carries no [data-fa-trash] rule — run `bun run avatars:css`" }],
-        },
+/** The sidecar document. Pure, so the judge and the writer render ONE computation. */
+export function avatarCoverageDocument(c: Coverage, derived: boolean): QaResult {
+  return buildQaResult({
+    script: "scripts/check-avatar-coverage.ts",
+    scriptAbsPath: join(ROOT, "scripts/check-avatar-coverage.ts"),
+    subject: { kind: "avatars", id: "avatar-coverage" },
+    families: {
+      "kind-has-avatar": {
+        summary:
+          `Every declared kind has an avatar of its own. A kind with none renders as ` +
+          `the generic question mark — deliberately a gap rather than a neutral mark, ` +
+          `because a reader must be able to tell "no art yet" from "this is what it looks like".`,
+        entries: c.missing,
       },
-    }),
-  );
+      "avatar-has-kind": {
+        summary:
+          `An avatar for a kind nothing declares. Not a defect — the vocabulary is open and ` +
+          `a folio may declare it — but it is how a registry drifts away from the instances ` +
+          `that use it, so it is reported rather than pruned.`,
+        entries: c.orphaned.map((kind) => ({ kind, note: "declared by no directory in this instance" })),
+      },
+      "trash-state-derived": {
+        summary:
+          `The trash state is composed from the base glyph rather than drawn per kind, so ` +
+          `its coverage cannot lag. Asserted ONCE: a per-kind criterion here could never ` +
+          `fail, which would read as coverage while measuring nothing.`,
+        entries: derived
+          ? []
+          : [{ note: "avatars.css carries no [data-fa-trash] rule — run `bun run avatars:css`" }],
+      },
+    },
+  });
+}
+
+/**
+ * Bean `bo44`'s four states. A kind with no avatar, or a trash state that is
+ * not derived, is a finding; an EMPTY required set is `unknown` — a coverage
+ * of nothing is not full coverage. Orphaned avatars are reported, never gated.
+ */
+export function judgeAvatarCoverage(c: Coverage, derived: boolean): Judgement {
+  return judgementOf({ failing: c.missing.length + (derived ? 0 : 1), undetermined: c.required.length === 0 });
+}
+
+if (import.meta.main) {
+  const check = judging();
+  const GATE = "check:avatar-coverage";
+  if (check) {
+    const usage = judgeUsage(GATE, process.argv.slice(2), []);
+    if (usage !== undefined) process.exit(usage);
+  }
+  let c: Coverage;
+  let derived: boolean;
+  try {
+    c = coverage(ROOT);
+    derived = trashDerivationPresent(ROOT);
+  } catch (e) {
+    if (!check) throw e;
+    process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+  }
+
+  const doc = avatarCoverageDocument(c, derived);
+  // Judge mode writes NOTHING (bean `bo44`). Until then `--check` wrote the
+  // sidecar too, so the gate form was also a writer.
+  if (!check) writeQaResult(ROOT, "avatar-coverage", doc);
 
   console.log(`Avatar coverage  (${c.required.length} kinds required, ${Object.keys(AVATARS).length} declared)`);
   console.log(`  ✓ ${c.required.length - c.missing.length} covered`);
@@ -172,5 +216,14 @@ if (import.meta.main) {
   }
   console.log(derived ? "  ✓ the trash state is derived" : "  ✗ the trash state is NOT derived");
 
-  if (check && (c.missing.length > 0 || !derived)) process.exit(1);
+  if (check) {
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeAvatarCoverage(c, derived),
+        detail: `${c.required.length} kind(s) required, ${c.missing.length} missing, trash ${derived ? "derived" : "NOT derived"}`,
+        committed: { root: ROOT, stem: "avatar-coverage", fresh: doc, writer: "check:avatar-coverage" },
+      }),
+    );
+  }
 }

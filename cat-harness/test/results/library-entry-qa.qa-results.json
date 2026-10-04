@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/check-library-qa.ts",
-    "script_hash": "9611e6ecc3e3"
+    "script_hash": "0d4e26476027"
   },
   "subject": {
     "kind": "library",
@@ -11,7 +11,7 @@
   "families": {
     "bibliographic-missing": {
       "summary": "No author/publisher, or no year, among the fields the entry itself declares (manifest meta, referenced.json identity, tabular.jsonld source), and no `meta.bibliographic_not_in_source` reason. `readableIn` lists where the value IS on disk but not carried — what a fix would read.",
-      "count": 61,
+      "count": 63,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -330,6 +330,15 @@
           "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
         },
         {
+          "entry": "omg-2024-spdx-3-0",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
           "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "instance": "cat-harness",
           "missing": [
@@ -385,6 +394,15 @@
         },
         {
           "entry": "skills-in-openai-api-notebook",
+          "instance": "cat-harness",
+          "missing": [
+            "author/publisher",
+            "year"
+          ],
+          "field": "manifest.jsonld meta; referenced.json identity; tabular.jsonld source"
+        },
+        {
+          "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
           "instance": "cat-harness",
           "missing": [
             "author/publisher",
@@ -760,7 +778,7 @@
     },
     "summary-backlog": {
       "summary": "Prose blocks with no current agent summary, per entry. A count, advisory: the drain is slow on purpose.",
-      "count": 59,
+      "count": 61,
       "entries": [
         {
           "entry": "agent-skill-best-practices---gemini-cli",
@@ -913,6 +931,12 @@
           "prose": 542
         },
         {
+          "entry": "omg-2024-spdx-3-0",
+          "instance": "cat-harness",
+          "backlog": 400,
+          "prose": 400
+        },
+        {
           "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
           "instance": "cat-harness",
           "backlog": 21,
@@ -953,6 +977,12 @@
           "instance": "cat-harness",
           "backlog": 12,
           "prose": 12
+        },
+        {
+          "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
+          "instance": "cat-harness",
+          "backlog": 1,
+          "prose": 1
         },
         {
           "entry": "w3c-2013-prov-o",
@@ -1119,323 +1149,275 @@
       ]
     },
     "title-implausible": {
-      "summary": "A title that is present but not believable: a single short token, a doubled word, or one that disagrees with the source's own metadata (Dublin Core dc.title, referenced.json identity.title, then PDF Info /Title — authority first). Only titles that passed title-missing are judged here.",
-      "count": 14,
+      "summary": "A title that is present but not believable: a single short token, a doubled word, no recorded meta.title_source, or not the title the authority order (Dublin Core dc.title → referenced.json identity.title → PDF Info /Title or text heading → slug) gives from the entry's files today. Only titles that passed title-missing are judged here.",
+      "count": 1,
       "entries": [
-        {
-          "entry": "agent-skill-best-practices---gemini-cli",
-          "instance": "cat-harness",
-          "title": "Agent Skill best practices",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "Agent Skill best practices | Gemini CLI",
-          "similarity": 0.72
-        },
-        {
-          "entry": "agent-skills---google-antigravity-docs",
-          "instance": "cat-harness",
-          "title": "Agent Skills",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "Agent Skills | Google Antigravity Docs",
-          "similarity": 0.34
-        },
-        {
-          "entry": "arxiv-0909.4061v2",
-          "instance": "cat-harness",
-          "title": "Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "arXiv:0909.4061v2  [math.NA]  14 Dec 2010",
-          "similarity": 0.1
-        },
-        {
-          "entry": "best-practices---google-antigravity-docs",
-          "instance": "cat-harness",
-          "title": "Best practices for Antigravity CLI",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "Best Practices | Google Antigravity Docs",
-          "similarity": 0.74
-        },
-        {
-          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
-          "instance": "cat-harness",
-          "title": "Equipping agents for the real world with Agent Skills",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "Equipping agents for the real world with Agent Skills \\ Anthropic",
-          "similarity": 0.83
-        },
         {
           "entry": "hmans-2026-beans-readme",
           "instance": "cat-harness",
           "title": "beans",
           "field": "manifest.jsonld title",
           "why": "a single short token"
-        },
-        {
-          "entry": "landauer-foltz-laham-1998-intro-lsa",
-          "instance": "cat-harness",
-          "title": "An Introduction to Latent Semantic Analysis",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "(Microsoft Word - dp1.LSA_Intr\\311)",
-          "similarity": 0.24
-        },
-        {
-          "entry": "rfc2119-key-words-requirement-levels",
-          "instance": "cat-harness",
-          "title": "Key words for use in RFCs to Indicate Requirement Levels",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "RFC 2119: Key words for use in RFCs to Indicate Requirement Levels | RFC Editor",
-          "similarity": 0.75
-        },
-        {
-          "entry": "rfc8174-uppercase-vs-lowercase-2119-key-words",
-          "instance": "cat-harness",
-          "title": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words | RFC Editor",
-          "similarity": 0.75
-        },
-        {
-          "entry": "sammut-bonnici-galea-2015-swot-analysis",
-          "instance": "cat-harness",
-          "title": "SWOT analysis",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "\"SWOT analysis\" in: Wiley Encyclopedia of Management Online",
-          "similarity": 0.24
-        },
-        {
-          "entry": "skill-authoring-best-practices---claude-platform-docs",
-          "instance": "cat-harness",
-          "title": "Skill authoring best practices",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "structure.json metadata.docinfo.Title",
-          "sourceTitle": "Skill authoring best practices - Claude Platform Docs",
-          "similarity": 0.6
-        },
-        {
-          "entry": "9789241548960-eng",
-          "instance": "who-iris",
-          "title": "Handbook forGuideline Development 2nd edition",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "catalogue/records/9789241548960-eng.dc.json dc.title",
-          "sourceTitle": "WHO handbook for guideline development",
-          "similarity": 0.68
-        },
-        {
-          "entry": "who-pub-tps-931",
-          "instance": "who-iris",
-          "title": "Abies",
-          "field": "manifest.jsonld title",
-          "why": "a single short token"
-        },
-        {
-          "entry": "who-pub-tps-931",
-          "instance": "who-iris",
-          "title": "Abies",
-          "field": "manifest.jsonld title",
-          "why": "disagrees with the source's own metadata",
-          "source": "catalogue/records/who-pub-tps-931.dc.json dc.title",
-          "sourceTitle": "WHO editorial style manual",
-          "similarity": 0.09
         }
       ]
     },
     "title-missing": {
-      "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title`.",
-      "count": 4,
+      "summary": "The manifest's title is absent, the slug, or the source's file name — the entry has no title a reader can use. Read from manifest.jsonld `title` and `meta.title_source`: `slug` means no source offered one, which the owner's ruling of 2026-10-01 says is shown as the slug and flagged here, never filled from the page-1 parse.",
+      "count": 5,
       "entries": [
         {
           "entry": "kg-folio-asst-2026-09-30",
           "instance": "cat-harness",
           "title": "kg-folio-asst-2026-09-30",
-          "field": "manifest.jsonld title",
-          "why": "equals the slug"
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "codata-2022",
           "instance": "folio-assistant-sci",
-          "title": "allascii-codata-2022.txt",
-          "field": "manifest.jsonld title",
-          "why": "equals the source file name (tabular.jsonld source.file)"
+          "title": "codata-2022",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "9789240101197-eng",
           "instance": "smart-base",
           "title": "9789240101197-eng",
-          "field": "manifest.jsonld title",
-          "why": "equals the slug"
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         },
         {
           "entry": "9789240116191-eng",
           "instance": "smart-base",
           "title": "9789240116191-eng",
-          "field": "manifest.jsonld title",
-          "why": "equals the slug"
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
+        },
+        {
+          "entry": "who-dpi-h-reference-architecture-draft-v1",
+          "instance": "smart-base",
+          "title": "who-dpi-h-reference-architecture-draft-v1",
+          "field": "manifest.jsonld meta.title_source",
+          "why": "no source offers a title (no editorial correction, catalogue record, referenced.json, usable PDF /Title, text heading or corroborated extraction), so the slug stands"
         }
       ]
     },
-    "title-source-absent": {
-      "summary": "The source carries no title of its own, so the agreement test in title-implausible was NOT made. Listed so that 'not checked' cannot read as 'agrees'. Only entries that passed title-missing are listed.",
-      "count": 23,
+    "title-self-declared": {
+      "summary": "The title is the source's own word for itself (PDF Info /Title, or a text/notebook heading) and no catalogue record or referenced.json corroborates it. Listed so that 'nothing to check it against' cannot read as 'checked'. Only entries that passed title-missing are listed.",
+      "count": 30,
       "entries": [
         {
-          "entry": "arxiv-2504.07199v3",
+          "entry": "agent-skill-best-practices---gemini-cli",
           "instance": "cat-harness",
-          "title": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "Agent Skill best practices | Gemini CLI",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "arxiv-2504.21474v1",
+          "entry": "agent-skills---google-antigravity-docs",
           "instance": "cat-harness",
-          "title": "Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "Agent Skills | Google Antigravity Docs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "deerwester-1990-indexing-by-lsa",
+          "entry": "arxiv-2202.02427v1",
           "instance": "cat-harness",
-          "title": "Indexing by Latent Semantic Analysis",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "Lightweight Compositional Embeddings for Incremental Streaming Recommendation",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "dusengumuremyi-2026-ai-mediated-raci",
+          "entry": "arxiv-2312.07755v1",
           "instance": "cat-harness",
-          "title": "How AI-Mediated RACI Matrix in the Organisational Boardroom Reshapes Real-Time Operational Efficiency, Error-Free Sensemaking of Strategic Decision-Making, Management Effectiveness, and Organisational Defensibility",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "gurel-tat-2017-swot-analysis",
+          "entry": "arxiv-2504.19675v2",
           "instance": "cat-harness",
-          "title": "SWOT Analysis: A Theoretical Review",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2508.05192v2",
+          "instance": "cat-harness",
+          "title": "AI-assisted JSON Schema Creation and Mapping",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2508.21620v2",
+          "instance": "cat-harness",
+          "title": "Introduction to the Analysis of Probabilistic Decision-Making Algorithms",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2602.12670v4",
+          "instance": "cat-harness",
+          "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2605.03537v1",
+          "instance": "cat-harness",
+          "title": "A Skill-Based AI Agentic Pipeline for Library of Congress Subject Indexing",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2606.04382v1",
+          "instance": "cat-harness",
+          "title": "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2607.14456v1",
+          "instance": "cat-harness",
+          "title": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2607.20636v1",
+          "instance": "cat-harness",
+          "title": "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2607.25032v1",
+          "instance": "cat-harness",
+          "title": "Authoring Agent Skills: A Software-Engineering Approach",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2608.08453v1",
+          "instance": "cat-harness",
+          "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+          "instance": "cat-harness",
+          "title": "Equipping agents for the real world with Agent Skills \\ Anthropic",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
           "entry": "hmans-2026-beans-readme",
           "instance": "cat-harness",
           "title": "beans",
-          "why": "the source (README.md) is not a PDF and no catalogue record names this entry"
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
           "entry": "mcp-2026-specification-2026-07-28",
           "instance": "cat-harness",
           "title": "Model Context Protocol Specification, version 2026-07-28",
-          "why": "the source (modelcontextprotocol docs/specification/2026-07-28) is not a PDF and no catalogue record names this entry"
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
-          "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
+          "entry": "sammut-bonnici-galea-2015-swot-analysis",
           "instance": "cat-harness",
-          "title": "Improving information retrieval through correspondence analysis instead of latent semantic analysis",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "\"SWOT analysis\" in: Wiley Encyclopedia of Management Online",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "skill-authoring-best-practices---claude-platform-docs",
+          "instance": "cat-harness",
+          "title": "Skill authoring best practices - Claude Platform Docs",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
           "entry": "skills-in-openai-api-notebook",
           "instance": "cat-harness",
           "title": "Skills in OpenAI API",
-          "why": "the source (skills-in-openai-api-notebook.ipynb) is not a PDF and no catalogue record names this entry"
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
-          "entry": "w3c-2024-prov-jsonld",
+          "entry": "w3c-2013-prov-o",
           "instance": "cat-harness",
-          "title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "PROV-O: The PROV Ontology",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "wang-rangaiah-2026-mcdm-aggregation",
+          "entry": "w3c-2018-odrl-model-2-2",
           "instance": "cat-harness",
-          "title": "Multi-Criteria Decision-Making: Aggregation-Type Methods",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "ODRL Information Model 2.2",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "w3c-2020-json-ld-1-1",
+          "instance": "cat-harness",
+          "title": "JSON-LD 1.1",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
           "entry": "cucumber-2024-gherkin-reference",
           "instance": "fhir-harness",
           "title": "Gherkin Reference",
-          "why": "the source (reference.md) is not a PDF and no catalogue record names this entry"
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
           "entry": "hl7-2023-fhir-r5-testplan",
           "instance": "fhir-harness",
           "title": "FHIR R5 (5.0.0) — TestPlan resource",
-          "why": "the source (HL7/fhir source/testplan at v5.0.0) is not a PDF and no catalogue record names this entry"
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
           "entry": "isaitb-2026-interoperability-test-bed-readme",
           "instance": "fhir-harness",
           "title": "Interoperability Test Bed",
-          "why": "the source (README.md) is not a PDF and no catalogue record names this entry"
+          "source": "text-heading",
+          "field": "structure.json metadata.title"
         },
         {
-          "entry": "arxiv-2406.01940v2",
+          "entry": "arxiv-2510.21603v1",
+          "instance": "folio-assistant-core",
+          "title": "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
+        },
+        {
+          "entry": "arxiv-2602.16554v1",
           "instance": "folio-assistant-sci",
-          "title": "Process-Driven Autoformalization in Lean 4",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "9789240010567-eng",
-          "instance": "smart-base",
-          "title": "Digital implementation investment guide (DIIG): integrating digital interventions into health programmes",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "entry": "milnorlink",
+          "instance": "folio-assistant-sci",
+          "title": "Link Groups",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         },
         {
-          "entry": "9789240081949-eng",
+          "entry": "mehl-2021-who-smart-guidelines",
           "instance": "smart-base",
-          "title": "Classification of digital interventions, services and applications in health: a shared language to describe the uses of digital technology for health",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
-        },
-        {
-          "entry": "9789240093362-eng",
-          "instance": "smart-base",
-          "title": "Digital transformation handbook for primary health care",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
-        },
-        {
-          "entry": "9789240120747-eng",
-          "instance": "smart-base",
-          "title": "Digital transformation handbook for reporting substandard and falsified medical products",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
-        },
-        {
-          "entry": "9789241509510-eng",
-          "instance": "smart-base",
-          "title": "The MAPS Toolkit: mHealth Assessment and Planning for Scale",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
-        },
-        {
-          "entry": "9789241511766-eng",
-          "instance": "smart-base",
-          "title": "Monitoring and Evaluating Digital Health Interventions: A practical guide to conducting research and assessment",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
-        },
-        {
-          "entry": "who-dpi-h-reference-architecture-draft-v1",
-          "instance": "smart-base",
-          "title": "DRAFT V1.0",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
-        },
-        {
-          "entry": "who-rhr-1806-eng",
-          "instance": "smart-base",
-          "title": "Classification of Digital Health Interventions v1.0",
-          "why": "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry"
+          "title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age",
+          "source": "pdf-info",
+          "field": "structure.json metadata.docinfo.Title"
         }
       ]
     }
   },
-  "total": 163
+  "total": 162
 }

@@ -40,15 +40,30 @@
  * `generalise-the-fix`: a sweep that cannot tell an empty walk from a clean one
  * is not a check.
  *
- * Exit codes: 0 clean · 1 a finding (under `--check`) · 2 a graph could not be read.
+ * Exit codes: 0 clean · 1 a finding (under `--check`) · 2 a graph could not be read,
+ * or (under `--check`) an unknown flag. `--check` is the JUDGE form (bean
+ * `bo44`): it computes, judges and writes nothing; the bare form writes the
+ * sidecar and exits 0 on findings.
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
 // The producer's OWN hash, not a re-derivation. See `healthProducerCurrent`.
 import { checkerHash } from "../test/health/run.js";
-import { buildQaResult, writeQaResult } from "./qa-results.js";
+import {
+  againstOrUsage,
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  judging,
+  mayLeaveMain,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.js";
+import { readQaTree } from "./qa-store.js";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -64,6 +79,15 @@ export interface Family {
   findings: { where: string; detail: string }[];
   /** Set when the graph could not be read at all. */
   unreadable?: string;
+  /**
+   * Set when the subject is a STORED record that is not here — the health
+   * report once it leaves `main` for the `qa-reports` branch (bean `0dav`) —
+   * and no `--against <ref>` was given, or the branch had no answer. Reported
+   * UNKNOWN and never a pass, but not gated: proposal §2.3, an unwritten
+   * baseline is not this change's defect. Distinct from `unreadable`, which
+   * is a blind spot in the run itself and does fail (2).
+   */
+  stored?: string;
 }
 
 /**
@@ -148,7 +172,7 @@ function nodesOf(kind: string, ext: string): string[] {
  * a check that cannot pass is indistinguishable from a corpus that cannot be
  * fixed — which is worse than no check, because somebody eventually deletes it.
  */
-export function healthProducerCurrent(): Family {
+export function healthProducerCurrent(opts: { against?: string } = {}): Family {
   const f: Family = {
     id: "health-result-is-from-the-current-producer",
     summary:
@@ -158,30 +182,70 @@ export function healthProducerCurrent(): Family {
     examined: 0,
     findings: [],
   };
-  const results = nodesOf("health", ".json");
+  const local = nodesOf("health", ".json");
+  // ── Where the report is: here, or on the `qa-reports` branch (bean `0dav`) ──
+  //
+  // A result in the checkout is judged as it always was. With none here and a
+  // declared `health` directory that may leave `main`, the report is a STORED
+  // record: read through qa-store with `--against <ref>`, or reported UNKNOWN.
+  // It is never "no results, so nothing is stale".
+  let results: { where: string; text: () => string }[] = local.map((p) => ({
+    where: relative(REPO, p),
+    text: () => readFileSync(p, "utf-8"),
+  }));
+  if (results.length === 0) {
+    const declared = new Set<string>();
+    for (const inst of instanceRootsIn(REPO)) for (const dir of directoriesForGraph(inst, "health")) declared.add(resolve(dir));
+    // `health` is a kind the arc moves off `main` (`OFF_MAIN_KINDS`), so a
+    // declared directory that is not here is a stored record, not a blind spot.
+    const leaves = mayLeaveMain({ graphKinds: ["health"] });
+    const movable = leaves ? [...declared].filter((d) => !existsSync(d)) : [];
+    if (declared.size === 0 || movable.length === 0) {
+      f.unreadable = "no instance declares a `health` directory holding a result — could not determine";
+      return f;
+    }
+    if (opts.against === undefined) {
+      f.stored =
+        `no health report in this checkout (${movable.map((d) => relative(REPO, d)).join(", ")}) — it leaves \`main\` ` +
+        "with the qa-reports arc. Pass --against <ref> to judge the stored one";
+      return f;
+    }
+    const stored: { where: string; text: () => string }[] = [];
+    for (const d of movable) {
+      const t = readQaTree(opts.against, d);
+      if (t.state !== "hit") {
+        f.stored = `qa-reports:${opts.against} — ${t.state}: ${t.reason}`;
+        return f;
+      }
+      for (const [path, text] of t.files) {
+        if (path.endsWith(".json") && !isDirectoryReadme(path)) stored.push({ where: `qa-reports:${t.key}/${path}`, text: () => text });
+      }
+    }
+    results = stored;
+  }
   f.examined = results.length;
   const current = checkerHash();
   if (results.length === 0) {
-    f.unreadable = "no instance declares a `health` directory holding a result — could not determine";
+    f.stored = `qa-reports:${opts.against} holds no health report under the declared directories`;
     return f;
   }
-  for (const p of results) {
+  for (const r of results) {
     let node: { producer?: { script?: string; script_hash?: string } };
     try {
-      node = JSON.parse(readFileSync(p, "utf-8")) as typeof node;
+      node = JSON.parse(r.text()) as typeof node;
     } catch (e) {
-      f.findings.push({ where: relative(REPO, p), detail: `does not parse as JSON: ${String(e)}` });
+      f.findings.push({ where: r.where, detail: `does not parse as JSON: ${String(e)}` });
       continue;
     }
     const script = node.producer?.script;
     const recorded = node.producer?.script_hash;
     if (!script || !recorded) {
-      f.findings.push({ where: relative(REPO, p), detail: "records no producer, so it cannot be told from a result nobody produced" });
+      f.findings.push({ where: r.where, detail: "records no producer, so it cannot be told from a result nobody produced" });
       continue;
     }
     if (recorded !== current) {
       f.findings.push({
-        where: relative(REPO, p),
+        where: r.where,
         detail: `written by \`${script}\` at ${recorded}; the checker is now ${current}. Re-run \`bun run health\` and commit, or the remedies in it are the old producer's.`,
       });
     }
@@ -400,9 +464,64 @@ export function interactionProfilesRead(): Family {
   return f;
 }
 
+/**
+ * Does this run write the committed QA sidecar?
+ *
+ * Never under `--check` (bean `r7v6`, the write-in-check half of reader-audit
+ * rows R11/R21). The gate form CI runs judges and writes nothing. Measured
+ * 2026-10-01, a `--check` run over an absent results tree RECREATED
+ * `harness-state.qa-results.json`. A gate that writes the record it reports
+ * into is the `ymsu` gate-tree-mutation defect. This mirrors `writesReport` in
+ * `skill-register.ts` (bean `bo44`), so the two gates answer it the same way.
+ */
+export function writesSidecar(argv: readonly string[]): boolean {
+  return !argv.includes("--check");
+}
+
+/** The sidecar document. Pure, so the judge and the writer render ONE computation. */
+export function harnessStateDocument(families: readonly Family[]): QaResult {
+  return buildQaResult({
+    script: relative(REPO, join(ROOT, "scripts", "check-harness-state.ts")),
+    scriptAbsPath: join(ROOT, "scripts", "check-harness-state.ts"),
+    subject: { kind: "harness-state", id: "health+todos+interaction+issue-marks" },
+    families: Object.fromEntries(
+      families.map((f) => [
+        f.id,
+        {
+          summary: f.unreadable
+            ? `${f.summary} COULD NOT DETERMINE: ${f.unreadable}`
+            : f.stored
+              ? `${f.summary} UNKNOWN (stored record not here): ${f.stored}`
+              : `${f.summary} Examined ${f.examined}.`,
+          entries: f.findings,
+        },
+      ]),
+    ),
+  });
+}
+
+/**
+ * Bean `bo44`'s four states. Any family that could not be read is `unknown`
+ * and outranks a finding; under the gate form any finding fails. A family
+ * whose stored record is not here (`stored`, bean `0dav`) is reported UNKNOWN
+ * by the caller and decides nothing (proposal §2.3).
+ */
+export function judgeHarnessState(families: readonly Family[]): Judgement {
+  return judgementOf({
+    failing: families.reduce((a, f) => a + f.findings.length, 0),
+    undetermined: families.some((f) => f.unreadable),
+  });
+}
+
 function main(): number {
-  const check = process.argv.includes("--check");
-  const families = [healthProducerCurrent(), todoProcessRefs(), issueMarkEdits(), interactionProfilesRead()];
+  const check = judging();
+  if (check) {
+    const usage = judgeUsage("check:harness-state", process.argv.slice(2), ["--against"]);
+    if (usage !== undefined) return usage;
+  }
+  const { against, exit: badRef } = againstOrUsage("check:harness-state", process.argv.slice(2));
+  if (badRef !== undefined) return badRef;
+  const families = [healthProducerCurrent({ against }), todoProcessRefs(), issueMarkEdits(), interactionProfilesRead()];
 
   const unreadable = families.filter((f) => f.unreadable);
   const total = families.reduce((a, f) => a + f.findings.length, 0);
@@ -411,6 +530,10 @@ function main(): number {
   for (const f of families) {
     if (f.unreadable) {
       console.log(`  ⚠ ${f.id}: ${f.unreadable}`);
+      continue;
+    }
+    if (f.stored) {
+      console.log(`  ? ${f.id}: UNKNOWN — ${f.stored}`);
       continue;
     }
     // The denominator, always — a family that examined nothing has not passed.
@@ -422,24 +545,22 @@ function main(): number {
     for (const x of f.findings) console.log(`      · ${x.where} — ${x.detail}`);
   }
 
-  writeQaResult(
-    ROOT,
-    "harness-state",
-    buildQaResult({
-      script: relative(REPO, join(ROOT, "scripts", "check-harness-state.ts")),
-      scriptAbsPath: join(ROOT, "scripts", "check-harness-state.ts"),
-      subject: { kind: "harness-state", id: "health+todos+interaction+issue-marks" },
-      families: Object.fromEntries(
-        families.map((f) => [
-          f.id,
-          {
-            summary: f.unreadable ? `${f.summary} COULD NOT DETERMINE: ${f.unreadable}` : `${f.summary} Examined ${f.examined}.`,
-            entries: f.findings,
-          },
-        ]),
-      ),
-    }),
-  );
+  // The gate form (`--check`, wired in CI) judges and writes NOTHING — bean
+  // `bo44`. Measured 2026-10-01 with every committed `qa-results/v1` sidecar
+  // hand-staled: `check:harness-state:check` rewrote
+  // `test/results/harness-state.qa-results.json`, so the gate was a writer of
+  // the record it reports into. The bare form is the author's command.
+  const doc = harnessStateDocument(families);
+  if (!check) writeQaResult(ROOT, "harness-state", doc);
+  else {
+    return concludeJudgement({
+      gate: "check:harness-state",
+      judgement: judgeHarnessState(families),
+      detail: `${total} finding(s), ${unreadable.length} famil(ies) could not be determined`,
+      committed: { root: ROOT, stem: "harness-state", fresh: doc, writer: "check:harness-state" },
+      unknowns: families.filter((f) => f.stored).map((f) => `${f.id}: ${f.stored}`),
+    });
+  }
 
   if (unreadable.length > 0) {
     // Could-not-determine outranks a finding: a sweep blind on one family has

@@ -70,7 +70,13 @@ function dashboards(): string[] {
       const page = join(site, name, "index.html");
       if (!existsSync(page)) return false;
       try {
-        return readFileSync(page, "utf8").includes(MARKER);
+        const html = readFileSync(page, "utf8");
+        // STANDALONE pages only — the ones this test server can serve as a
+        // browser would see them. Since #1906 `todos/` is a THEMED page
+        // (Jekyll front matter, Liquid includes), and its unbuilt source is
+        // not what a reader gets; it is audited after rendering, with the
+        // same tags, in `todos-page-board.e2e.ts`.
+        return html.includes(MARKER) && /^\s*<!doctype html>/i.test(html);
       } catch {
         return false;
       }

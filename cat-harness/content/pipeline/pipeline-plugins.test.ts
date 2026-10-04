@@ -11,7 +11,8 @@
  * 4. Generic pipeline code names none of the files that fill the slots.
  */
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "bun:test";
-import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import {
@@ -30,7 +31,10 @@ import {
   usePipelinePluginRegistry,
 } from "./pipeline-plugins";
 
-const TMP = join(import.meta.dir, "__test_pipeline_plugins__");
+// Under the system temp directory, not beside this file (bean `dlqu`): an
+// in-tree scratch directory is visible to every test that enumerates the
+// checkout, and under `bun test --parallel` those run at the same time.
+const TMP = mkdtempSync(join(tmpdir(), "test_pipeline_plugins-"));
 
 /** A fixture dependency whose contributes module fills `lean-lexer`. */
 function writeDep(name: string, body: string): string {

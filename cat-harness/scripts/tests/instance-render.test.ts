@@ -165,6 +165,8 @@ describe("this repository's own instances", () => {
       // option-A ruling. It sorts after `cat-harness` ("cat-harness" <
       // "cat-harness-tools").
       "cat-harness-tools",
+      // Added 2026-10-03 with bean `s4ta`: the OpenAPI harness.
+      "cat-openapi",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
@@ -205,7 +207,8 @@ describe("this repository's own instances", () => {
       "smart-immunizations",
       "smart-trust",
       "who-iris",
-      "who-style-guide",
+      // `who-style-guide` was listed here until 2026-10-01, when the owner
+      // folded it into who-iris as a subgraph (bean qsx4). It fired as designed.
     ]);
     // Named individually rather than only as a list: these two are the ones
     // the old literal omitted, so if a future edit narrows the set again, the

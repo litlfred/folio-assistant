@@ -2,7 +2,7 @@
 #
 # Bean `folio-assistant-1swy`. Measured 2026-09-24 over three days:
 #
-#   106 commits  cat-harness/docs/cat-harness/docs-auto/index/index.html
+#   106 commits  cat-harness/docs/cat-harness/auto-docs/index/index.html
 #    45 commits  cat-harness/docs/glossary/index.md            (1.5 MB)
 #    18 commits  cat-harness/test/results/audit-coverage.qa-results.json
 #
@@ -26,7 +26,7 @@
 #
 # ## Why this is safe, and it rests on a checked fact rather than on care
 #
-# All three are gated in CI — `check:glossary`, `docs:auto:check` and
+# All three are gated in CI — `check:glossary`, `auto:docs:check` and
 # `audit:coverage:require-all`. A resolution that takes the wrong side therefore
 # CANNOT SHIP: it reddens, and the repair is one regeneration command. Without
 # those gates this entry would be a way to lose work quietly.
@@ -34,10 +34,11 @@
 # ## What is deliberately NOT here, and it is the whole discipline
 #
 # **Not `cat-harness/test/results/**`**, though 840 generated files live there.
-# `kg-audit` reads its own sidecars back — `readAttestations(sidecarPath(r))` —
-# so a `kg-qa` sidecar carries adjudications that an earlier run or a person
-# recorded. It is not purely generated, and `-merge` on one would discard an
-# attestation with nothing said. `audit-coverage.qa-results.json` is named
+# `kg-audit` reads its prior judgements back — `readAttestations` — so the
+# file holding them carries adjudications that an earlier run or a person
+# recorded. Since bean `2gst` that is `test/attestations/**`, not the `kg-qa`
+# sidecar; neither is marked here. Such a file is not purely generated, and
+# `-merge` on one would discard an attestation with nothing said. `audit-coverage.qa-results.json` is named
 # individually for exactly that reason: its producer reads the committed file
 # only to compare for staleness, and writes a fresh document every time.
 #
@@ -47,7 +48,7 @@
 # `scripts/tests/gitattributes.test.ts` holds that line.
 
 cat-harness/docs/glossary/index.md                      linguist-generated=true -diff -merge
-cat-harness/docs/cat-harness/docs-auto/**               linguist-generated=true -diff -merge
+cat-harness/docs/cat-harness/auto-docs/**               linguist-generated=true -diff -merge
 cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
 cat-harness/test/results/tool-runs/lsi-index/cat-harness/skills.tool-run.json linguist-generated=true -diff -merge
 

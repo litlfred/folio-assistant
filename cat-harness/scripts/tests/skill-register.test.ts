@@ -41,6 +41,7 @@ import {
   audit,
   parseFlags,
   writeReport,
+  writesReport,
   dangling,
   frontMatterKeys,
   missingScripts,
@@ -379,6 +380,17 @@ describe("flags", () => {
       json: false,
       noReport: false,
     });
+  });
+
+  // Bean `bo44`. Measured 2026-10-01: `skill:register:check`, the form CI runs,
+  // rewrote `test/results/skill-register.qa-results.json` whenever it
+  // differed, so the gate was a writer of the record it reports into. The gate
+  // form writes nothing; the sidecar is the author's command's to write.
+  test("the gate form (--check) never writes the sidecar; the author's form does", () => {
+    expect(writesReport(parseFlags(["--check"]))).toBe(false);
+    expect(writesReport(parseFlags(["--check", "--json"]))).toBe(false);
+    expect(writesReport(parseFlags([]))).toBe(true);
+    expect(writesReport(parseFlags(["--no-report"]))).toBe(false);
   });
 });
 

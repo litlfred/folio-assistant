@@ -105,8 +105,9 @@ import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
-import { injectRail, type NavItem } from "./lib/harness-rail.js";
+import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
+import { kindTitle } from "./lib/nav-label.js";
 import { viewersOf } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -381,6 +382,8 @@ export function declaredGraphs(
   instanceDirName: string,
   linked: ReadonlyMap<string, string>,
   site: ReadonlyMap<string, GraphFallback> = new Map(),
+  /** The harness's display name, from `harness.json`. Absent falls back to the directory name. */
+  harnessName?: string,
 ): NavItem[] {
   const decl = declarationPathIn(join(REPO, instanceDirName));
   if (decl === undefined || !existsSync(decl)) return [];
@@ -398,11 +401,18 @@ export function declaredGraphs(
   }
   const seen = new Set<string>();
   const out: NavItem[] = [];
+  // The harness the rows belong to, by the name every other surface uses for
+  // it (`C@T Harness`, not the directory name `cat-harness`) — bean `ob3m`
+  // finding 6. Read from the same `harness.json` as the rows' hrefs.
+  const who = harnessName ?? instanceDirName;
   for (const entry of d.directories ?? []) {
     for (const kind of entry.graphKinds ?? []) {
       if (seen.has(kind)) continue;
       seen.add(kind);
       const fallback = site.get(kind);
+      // ONE NAME PER DESTINATION: a kind whose page is another kind's row is
+      // the same destination again, and is not listed twice.
+      if (fallback?.sameAs !== undefined) continue;
       const href = linked.get(kind) ?? fallback?.href;
       // A row that opens owes no explanation, and `publishedGraphs` never
       // returns both — but the guard stays, because `href` may come from the
@@ -413,8 +423,8 @@ export function declaredGraphs(
       // `docs` and `library` were adjacent one-letter marks, and the owner
       // clicked the wrong one.
       out.push({
-        label: kind,
-        ...graphKindRowDecor(kind, instanceDirName),
+        label: fallback?.label ?? kindTitle(kind),
+        ...graphKindRowDecor(kind, who),
         ...(href ? { href } : {}),
         ...(note ? { note } : {}),
       });
@@ -451,7 +461,14 @@ export function declaredGraphs(
  *   root.
  */
 /** Where a kind opens, or why it does not. Never both — see the loop below. */
-export type GraphFallback = { href?: string; note?: string };
+export type GraphFallback = {
+  href?: string;
+  note?: string;
+  /** The row's ONE label, as `harness-tiles.ts` set it (bean `ob3m` finding 6). */
+  label?: string;
+  /** Set when this kind's page is another kind's row — skip it. */
+  sameAs?: string;
+};
 
 /**
  * WHAT THE PUBLISHED SITE KNOWS about each of an instance's declared kinds —
@@ -518,7 +535,7 @@ export function publishedGraphs(built: string, instanceName: string, toRoot: str
   if (prefix === undefined) return out;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return out;
-  let d: { harnesses?: { name?: string; visualisations?: { kind?: string; path?: string; note?: string }[] }[] };
+  let d: { harnesses?: { name?: string; visualisations?: { kind?: string; path?: string; note?: string; label?: string; sameAs?: string }[] }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
@@ -537,8 +554,10 @@ export function publishedGraphs(built: string, instanceName: string, toRoot: str
     // the root, so it is re-based exactly as `instantiatedHarnesses` re-bases
     // a harness href. Composing it any other way here would be a second answer
     // to "where does this page live".
-    if (v.path) out.set(v.kind, { href: `${toRoot}${v.path}` });
-    else if (v.note) out.set(v.kind, { note: v.note });
+    const named = { ...(v.label ? { label: v.label } : {}), ...(v.sameAs ? { sameAs: v.sameAs } : {}) };
+    if (v.path) out.set(v.kind, { href: `${toRoot}${v.path}`, ...named });
+    else if (v.note) out.set(v.kind, { note: v.note, ...named });
+    else out.set(v.kind, named);
   }
   return out;
 }
@@ -585,6 +604,33 @@ export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] 
         ...(h.tone ? { tone: h.tone } : {}),
       };
     });
+}
+
+/**
+ * The NAMES the rail shows, read off the same `_data/harness.json` every other
+ * surface reads: the harness's own display name (`C@T Harness`, for the header
+ * and the rows' descriptions) and the site's title (for the home row).
+ *
+ * Bean `ob3m` finding 6, "One name everywhere": the rail called the harness by
+ * its directory name and the site home `folio-assistant`, while the sidebar
+ * called them `C@T Harness`. Both now come from the data, so the two cannot
+ * differ. Each is ABSENT when the file cannot say, and the caller keeps its
+ * old fallback.
+ */
+export function railNames(built: string, instance: string): { harness?: string; site?: string } {
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return {};
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return {};
+  let d: { title?: string; harnesses?: { name?: string; label?: string; title?: string }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return {};
+  }
+  const h = d.harnesses?.find((x) => x.name === instance);
+  const harness = h?.label ?? h?.title;
+  return { ...(harness ? { harness } : {}), ...(d.title ? { site: d.title } : {}) };
 }
 
 /**
@@ -700,9 +746,12 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
       // The instance's own themed root, first — it is the instance rather
       // than one of its graphs, so it is not inside the graphs group.
       const own = (byInstance.get(m.name) ?? []).filter((o) => o.route === o.name);
+      // Called what the harness row calls the same page (`WHO IRIS`, not
+      // `who-iris`) — bean `ob3m` finding 6, one name per destination.
+      const rootName = railNames(built, m.name).harness ?? m.name;
       const root: NavItem[] = own.map((o) => ({
         href: `${toRoot}/${o.route}/`,
-        label: o.name,
+        label: o.name === m.name ? rootName : o.name,
         icon: "◆",
         current: o.route === m.route,
       }));
@@ -717,13 +766,15 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
       }
 
-      const links: NavItem[] = declaredGraphs(m.name, linked, publishedGraphs(built, m.name, toRoot));
+      const named = railNames(built, m.name);
+      const links: NavItem[] = declaredGraphs(m.name, linked, publishedGraphs(built, m.name, toRoot), named.harness);
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
       const mark = instanceMark(built, m.name, toRoot);
       const after = injectRail(before, {
-        instance: m.name,
+        instance: named.harness ?? m.name,
+        ...(named.site ? { homeLabel: named.site } : {}),
         toRoot,
         ...(mark ? { mark } : {}),
         ...(root[0] ? { root: root[0] } : {}),
@@ -828,11 +879,12 @@ export function railStandalonePages(
   built: string,
   instanceName: string,
   mountRoutes: readonly string[],
-): { injected: number; alreadyNavigated: number; redirects: number; skipped: string[] } {
+): { injected: number; alreadyNavigated: number; redirects: number; declined: number; skipped: string[] } {
   const skipped: string[] = [];
   let injected = 0;
   let alreadyNavigated = 0;
   let redirects = 0;
+  let declined = 0;
 
   const owned = (rel: string): boolean =>
     mountRoutes.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
@@ -863,14 +915,24 @@ export function railStandalonePages(
         redirects++;
         continue;
       }
+      // A page that DECLINED the rail in its own markup keeps that decision
+      // here too (#1881). The generator honoured it; this post-build walk did
+      // not, so every library entry shell was railed in CI only — 2.8 KB
+      // committed, 25 KB published.
+      if (declinesNavbar(before)) {
+        declined++;
+        continue;
+      }
       // `..` per directory the page sits under; the filename is not one.
       const depth = rel.split("/").length - 1;
       const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
-      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot));
+      const named = railNames(built, instanceName);
+      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot), named.harness);
       const harnesses = instantiatedHarnesses(built, toRoot);
       const mark = instanceMark(built, instanceName, toRoot);
       const after = injectRail(before, {
-        instance: instanceName,
+        instance: named.harness ?? instanceName,
+        ...(named.site ? { homeLabel: named.site } : {}),
         toRoot,
         ...(mark ? { mark } : {}),
         links,
@@ -885,7 +947,7 @@ export function railStandalonePages(
     }
   };
   if (existsSync(siteAbs)) walk(siteAbs);
-  return { injected, alreadyNavigated, redirects, skipped };
+  return { injected, alreadyNavigated, redirects, declined, skipped };
 }
 
 /**
@@ -919,6 +981,7 @@ interface DeclaredEntry {
   instanceRoot?: boolean;
   kindRouteRedirect?: boolean;
   composed?: boolean;
+  served?: boolean;
   scope?: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
 }
@@ -955,6 +1018,26 @@ function declaredEntries(): { name: string; instanceDir: string; entry: Declared
     }
   }
   return out;
+}
+
+/** A directory whose bytes are published verbatim for pages to fetch (`served: true`, bean `680p`). */
+export interface Served {
+  name: string;
+  dir: string;
+  /** `<instance>/<path>`, no leading or trailing slash. */
+  route: string;
+}
+
+/**
+ * Every directory declared `served`, with its route — `/<instance>/<path>`,
+ * the same place the instance's composed pages sit under, so a page reaches
+ * the data with a path that does not depend on where the site is hosted
+ * (`visualizer-loading` §"How to fetch").
+ */
+export function servedDirectories(entries: { name: string; entry: DeclaredEntry & { path: string }; abs: string }[] = declaredEntries()): Served[] {
+  return entries
+    .filter((x) => x.entry.served === true)
+    .map((x) => ({ name: x.name, dir: x.abs, route: `${x.name}/${x.entry.path.replace(/^\/+|\/+$/g, "")}` }));
 }
 
 /** The directory's own declared viewer, repo-relative, or `undefined` (#1168 B7a-2b). */
@@ -1341,6 +1424,27 @@ function main(): number {
     if (mine.size) assetsPublished.set(m.route, mine.size);
   }
 
+  // SERVED DIRECTORIES — data, published verbatim for pages to fetch (bean
+  // `680p`). After the mounts and before the redirects, and REFUSED over
+  // anything already published: two sources answering at one URL is the
+  // defect the walk rule exists to prevent.
+  const servedProblems: string[] = [];
+  const servedDone: { route: string; files: number }[] = [];
+  for (const sv of servedDirectories()) {
+    const dest = join(siteAbs, sv.route);
+    if (existsSync(dest)) {
+      servedProblems.push(`/${sv.route}/ is declared served, but the site already publishes something there`);
+      continue;
+    }
+    if (!existsSync(sv.dir)) {
+      servedProblems.push(`/${sv.route}/ is declared served, but ${sv.dir.slice(REPO.length + 1)} does not exist`);
+      continue;
+    }
+    const withheld = withheldPaths(sv.dir);
+    cpSync(sv.dir, dest, { recursive: true, filter: withheldFilter(sv.dir, withheld) });
+    servedDone.push({ route: sv.route, files: countFiles(dest) });
+  }
+
   // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
   //
   // These directories are copied verbatim and deliberately not run through
@@ -1393,7 +1497,14 @@ function main(): number {
     written.push(r);
   }
 
+  for (const d of servedDone) console.log(`  served /${d.route}/ — ${d.files} file(s), verbatim, for pages to fetch`);
+  if (servedProblems.length) {
+    console.error(`\n${servedProblems.length} served director(ies) REFUSED:`);
+    for (const p of servedProblems) console.error(`  ${p}`);
+  }
+
   if (mounts.length === 0 && refused.length === 0 && written.length === 0) {
+    if (servedProblems.length) return 1;
     console.log("mount-instance-docs: nothing declared has rendered content to mount.");
     return 0;
   }
@@ -1435,6 +1546,7 @@ function main(): number {
     console.error(`\n${assetProblems.length} embedded reference(s) NOT published:`);
     for (const p of assetProblems) console.error(`  ${p}`);
   }
+  if (servedProblems.length) failed = true;
   if (redirectProblems.length) {
     failed = true;
     console.error(`\n${redirectProblems.length} kind-route redirect(s) REFUSED:`);

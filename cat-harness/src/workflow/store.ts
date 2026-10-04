@@ -16,6 +16,8 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
+// `src/` may import `scripts/`; the reverse is what the layering forbids.
+import { resolveBeanGraphNode } from "../../scripts/beans.ts";
 
 /**
  * The `workflow-state` node of the bean graph — `beans/workflows/`.
@@ -37,8 +39,52 @@ import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
 // because the store is on the hot path of every workflow call.
 export const WORKFLOW_DIR = join("beans", "workflows");
 
+/**
+ * WHERE the instances are, as opposed to {@link WORKFLOW_DIR}'s what-the-
+ * layout-says. Bean `9ofm` row D.
+ *
+ * `WORKFLOW_DIR` stays exactly as it was, and so does the gate that checks it
+ * (`check:harness-dirs` fails when it and `beans/beans.json` disagree). It is
+ * still the right thing for its own job: catching a LAYOUT disagreement, cheap
+ * and compiled in, on the hot path of every workflow call.
+ *
+ * What it cannot do is follow the graph when `beans` is cut over to its branch
+ * — then the instances are in a mount, and `join(repoRoot, WORKFLOW_DIR)` is a
+ * directory that is not there. `listInstances` would return `[]` and
+ * `loadInstance` `undefined`: every running workflow would read as never
+ * started, and `saveInstance` would write where nothing looks.
+ *
+ * So the relocation is a separate function rather than a change to the
+ * constant, and it is **memoised per repository root** — the hot path was the
+ * stated reason for the constant, so this pays the resolution once rather than
+ * per call. The cache is keyed on `repoRoot` and lives for the process; a
+ * cutover does not happen inside one.
+ *
+ * Refuses rather than falling back: see {@link resolveBeanGraphNode}.
+ */
+const dirCache = new Map<string, string>();
+export function workflowDir(repoRoot: string): string {
+  const hit = dirCache.get(repoRoot);
+  if (hit !== undefined) return hit;
+  const r = resolveBeanGraphNode(repoRoot, "workflow-state");
+  if (r.unreachable) {
+    throw new Error(`cannot resolve the workflow instance directory: ${r.unreachable}`);
+  }
+  // `null` is "the bean graph declares no `workflow-state` node", which for an
+  // instance store means the conventional layout — the same fallback
+  // `WORKFLOW_DIR` has always been.
+  const dir = r.dir ?? join(repoRoot, WORKFLOW_DIR);
+  dirCache.set(repoRoot, dir);
+  return dir;
+}
+
+/** Drop the memo — for tests that move a graph under a root they reuse. */
+export function clearWorkflowDirCache(): void {
+  dirCache.clear();
+}
+
 const pathFor = (repoRoot: string, id: string): string =>
-  join(repoRoot, WORKFLOW_DIR, `${id}.json`);
+  join(workflowDir(repoRoot), `${id}.json`);
 
 /**
  * Instance ids are derived from the subject, not random: re-running a step for
@@ -106,7 +152,7 @@ export function relativiseSource(repoRoot: string, state: InstanceState): Instan
 }
 
 export function saveInstance(repoRoot: string, state: InstanceState): string {
-  const dir = join(repoRoot, WORKFLOW_DIR);
+  const dir = workflowDir(repoRoot);
   mkdirSync(dir, { recursive: true });
   const p = pathFor(repoRoot, state.id);
   // `$schema` FIRST, and written on every save rather than only on create, so
@@ -124,7 +170,7 @@ export function saveInstance(repoRoot: string, state: InstanceState): string {
 }
 
 export function listInstances(repoRoot: string): InstanceState[] {
-  const dir = join(repoRoot, WORKFLOW_DIR);
+  const dir = workflowDir(repoRoot);
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json"))

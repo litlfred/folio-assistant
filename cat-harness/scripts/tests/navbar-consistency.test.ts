@@ -29,8 +29,9 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, siteDirFor } from "../../schemas/cat-harness.js";
 
@@ -47,30 +48,64 @@ const ROOT_DECL = join(REPO, "folio-assistant.json");
 
 /** Run the check, returning its exit status and combined output. */
 function run(...args: string[]): { status: number; out: string } {
-  const r = spawnSync("bun", ["run", SCRIPT, ...args], {
-    cwd: REPO,
+  const r = spawnSync("bun", ["run", join(REPO, SCRIPT), ...args], {
+    cwd: CWD,
     encoding: "utf-8",
   });
   return { status: r.status ?? -1, out: `${r.stdout ?? ""}${r.stderr ?? ""}` };
 }
 
 /**
- * Plant a defect, run, restore — **restoring from a byte copy and not with
- * `git checkout --`**, which in the session that wrote this reverted seven
- * unrelated declarations in one stroke.
+ * The root the script runs against. The repository itself, except inside
+ * {@link withEdit}, where it is a planted copy.
+ */
+let CWD = REPO;
+
+/**
+ * Plant a defect in a COPY of the tree, run against the copy, discard it.
+ *
+ * It edited the real declaration and restored it from a byte copy until bean
+ * `dlqu`. That was safe only while test files ran one at a time: under
+ * `bun test --parallel` every other worker reads `cat-harness/cat-harness.json`
+ * and `folio-assistant.json` too, and one that read them inside the window
+ * saw `"icon": "no-such-image"` — measured, three MCP tool-group tests and two
+ * implementing-path tests failed that way, a different set per run, which is
+ * the shape a reviewer calls a flake. The defect is planted where no other
+ * reader can see it instead.
+ *
+ * The copy is cheap because almost all of it is symlinks. The directories that
+ * must be REAL are the root, every instance root (`instanceRootsIn` takes
+ * `isDirectory()`, which is false for a symlink, so a symlinked instance would
+ * silently vanish from the scan) and every directory on the way to an edited
+ * file; the edited file itself is a copy. Everything else links back.
  */
 function withEdit(file: string, edit: (s: string) => string, body: () => void): void {
-  const backup = `${file}.navbar-test.bak`;
-  copyFileSync(file, backup);
+  const target = relative(REPO, file);
+  const realDirs = new Set<string>([""]);
+  for (const r of instanceRootsIn(REPO)) realDirs.add(relative(REPO, r));
+  for (let d = dirname(target); d !== "." && d !== ""; d = dirname(d)) realDirs.add(d);
+
+  const tmp = mkdtempSync(join(tmpdir(), "navbar-plant-"));
+  const build = (rel: string): void => {
+    mkdirSync(join(tmp, rel), { recursive: true });
+    for (const name of readdirSync(join(REPO, rel))) {
+      const child = rel === "" ? name : join(rel, name);
+      if (realDirs.has(child)) build(child);
+      else if (child === target) {
+        const before = readFileSync(file, "utf-8");
+        const after = edit(before);
+        expect(after).not.toBe(before); // the plant must actually change something
+        writeFileSync(join(tmp, child), after);
+      } else symlinkSync(join(REPO, child), join(tmp, child));
+    }
+  };
   try {
-    const before = readFileSync(file, "utf-8");
-    const after = edit(before);
-    expect(after).not.toBe(before); // the plant must actually change something
-    writeFileSync(file, after);
+    build("");
+    CWD = tmp;
     body();
   } finally {
-    copyFileSync(backup, file);
-    spawnSync("rm", ["-f", backup]);
+    CWD = REPO;
+    rmSync(tmp, { recursive: true, force: true });
   }
 }
 
@@ -127,7 +162,10 @@ describe("the fallback is measured, not graded", () => {
   // PLANTED, not read off the corpus: since `ob3m` finding 11 every declared
   // tile names a glyph, so a test that waited for the real corpus to have a
   // miss would pass by finding nothing to report.
-  const unnamed = (src: string): string => src.replace(/("title": "Tools"),\s*"icon": "tools"/, "$1");
+  // The tools tile is `{ "icon": "tools" }` since bean `ob3m` finding 6 took
+  // its redundant `title` out (the kind's display name is the one name), so
+  // the plant empties the tile rather than dropping one of two fields.
+  const unnamed = (src: string): string => src.replace(/("tile": \{)\s*"icon": "tools"\s*\}/, "$1}");
 
   test("tiles naming no glyph are reported per instance, with a denominator", () => {
     withEdit(DECL, unnamed, () => {

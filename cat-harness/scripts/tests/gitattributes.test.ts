@@ -11,9 +11,11 @@
  * The test of whether a file belongs there is **not** "is it generated" — it is
  * **"does its producer carry anything forward from the existing file"**.
  *
- * `kg-audit` reads its own sidecars back (`readAttestations(sidecarPath(r))`), so
- * a `kg-qa` sidecar holds adjudications an earlier run or a person recorded.
- * `-merge` on one would discard an attestation with nothing said. 840 generated
+ * `kg-audit` reads its prior judgements back (`readAttestations`), so the
+ * file holding them carries adjudications an earlier run or a person recorded.
+ * `-merge` on one would discard an attestation with nothing said. Since bean
+ * `2gst` that file is the attestation store (`test/attestations/kg-qa/`), not
+ * the `kg-qa` sidecar — and BOTH stay textually mergeable here. 840 generated
  * files live under `test/results/`, which makes a glob there the obvious and
  * wrong widening — and the reason this test exists rather than a comment.
  */
@@ -36,7 +38,7 @@ describe(".gitattributes exists and is read by git", () => {
     expect(existsSync(ATTRS)).toBe(true);
     for (const p of [
       "cat-harness/docs/glossary/index.md",
-      "cat-harness/docs/cat-harness/docs-auto/index/index.html",
+      "cat-harness/docs/cat-harness/auto-docs/index/index.html",
       "cat-harness/test/results/audit-coverage.qa-results.json",
       // Added 2026-10-01, bean `eqxp`. Producer `writeToolRun` composes the
       // body from its argument and reads the existing file only to skip a
@@ -60,6 +62,8 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
     for (const p of [
       "cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json",
       "cat-harness/test/results/kg-qa/skills/kg/kg-core/audit-coverage.kg-qa.json",
+      // The judgement half itself (bean `2gst`) — the file that must never be `-merge`.
+      "cat-harness/test/attestations/kg-qa/processes/ci-health-watch.attestations.json",
     ]) {
       expect(mergeAttr(p), `${p} is marked -merge, which would discard an attestation`).not.toBe("unset");
     }
@@ -84,10 +88,10 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
 describe("every -merge path is gated in CI", () => {
   test("a wrong resolution reddens rather than ships", () => {
     // This is what makes the whole entry safe rather than clever. The three
-    // files are covered by `check:glossary`, `docs:auto:check` and
+    // files are covered by `check:glossary`, `auto:docs:check` and
     // `audit:coverage:require-all`, so taking the wrong side cannot ship.
     const wf = readFileSync(join(REPO, ".github", "workflows", "code-quality-gates.yml"), "utf-8");
-    for (const gate of ["check:glossary", "docs:auto:check", "audit:coverage:require-all", "lsi:skills:check"]) {
+    for (const gate of ["check:glossary", "auto:docs:check", "audit:coverage:require-all", "lsi:skills:check"]) {
       expect(wf, `${gate} is not in CI, so a -merge path it covers is unguarded`).toContain(gate);
     }
   });

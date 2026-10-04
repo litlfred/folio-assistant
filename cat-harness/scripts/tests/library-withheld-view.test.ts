@@ -15,7 +15,7 @@
 import { describe, expect, test } from "bun:test";
 
 import { WITHHELD_VIEW_JS } from "../lib/library-withheld-view.ts";
-import { viewerHtml } from "../gen-library-viz.ts";
+import { VIEWER_JS } from "../gen-library-viz.ts";
 
 interface View {
   blockBody(b: unknown, e: unknown): string;
@@ -125,7 +125,8 @@ describe("the withheld banner", () => {
 });
 
 describe("the generated viewer uses this code", () => {
-  const page = viewerHtml("../../assets/library/index.json", "inst");
+  // The page is a thin shell (#1881); the code is the shared script it loads.
+  const page = VIEWER_JS;
   test("embeds it verbatim", () => {
     expect(page).toContain(WITHHELD_VIEW_JS);
   });

@@ -41,6 +41,8 @@ import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { classify, resolveGeneratedRegions, type Classified } from "./merge-conflict-patterns.js";
+import { relate } from "./git-ancestry.js";
+import { REGEN_VERDICT_TAG, regenExitMeaning } from "./regen-after-merge.js";
 
 export interface Plan {
   resolvable: Classified[];
@@ -69,7 +71,7 @@ function syncSubmodules(root: string): void {
  * What a take-base resolution does with one conflicted path, from the stages
  * git holds for it (`ls-files -u`: 1 base, 2 ours, 3 theirs).
  *
- * Measured 2026-10-02 on #1805: main DELETED generated files (docs-auto pages
+ * Measured 2026-10-02 on #1805: main DELETED generated files (auto-docs pages
  * under a folded instance) that the branch had modified. There is no stage 3,
  * so `checkout --theirs` threw "does not have their version" and the run ended
  * in "Error". Taking the base's side of a deletion IS the deletion: generated
@@ -91,14 +93,102 @@ export function unmergedStages(root: string, path: string): Set<number> {
   return out;
 }
 
+/**
+ * Stage a path that was CONFLICTED. `-f` because git checks an unmerged path
+ * against `.gitignore` as if it were new: measured 2026-10-03 on #1801, which
+ * ignores `cat-harness/test/results/` while the files there stay tracked on
+ * both sides, and `git add` refused every conflicted sidecar under it ("The
+ * following paths are ignored"), crashing merge-main on each push to main.
+ * Only ever called with a path git itself listed as unmerged, so it was
+ * tracked on at least one side and `-f` cannot sweep in an untracked file.
+ */
+export function stageConflicted(root: string, path: string): void {
+  git(root, "add", "-f", "--", path);
+}
+
 /** Take the base's side of `path`, deletion included; stages the result. */
 export function takeBase(root: string, path: string): void {
   if (takeBaseAction(unmergedStages(root, path)) === "delete") {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
-    git(root, "add", "--", path);
+    stageConflicted(root, path);
   }
+}
+
+/** The resolution of one conflicted submodule GITLINK — bean `wczm` item 2. */
+export type GitlinkResolution =
+  | { take: "ours" | "theirs"; pin: string; why: string }
+  | { refuse: string };
+
+/**
+ * A conflicted gitlink (mode 160000) is resolved by ANCESTRY, never by side.
+ *
+ * Train 1 (#1869): #1764's pins fast-forwarded main's, and taking main's side
+ * silently reverted them. Which side is "newer" is not a property of the
+ * branch or of main; it is whether one pin descends from the other, and only
+ * the submodule's own history can say. So: the descendant wins when one pin
+ * fast-forwards the other; DIVERGED pins are refused, since picking either
+ * drops the other's commits; and a pin the submodule does not have locally
+ * (a shallow checkout) is refused as could-not-determine, never guessed.
+ *
+ * Ours is the branch being updated (stage 2), theirs is the base merged in
+ * (stage 3) — the sides `takeBase` uses.
+ */
+export function resolveGitlink(root: string, path: string): GitlinkResolution | undefined {
+  const pins = new Map<number, string>();
+  for (const line of git(root, "ls-files", "-u", "-s", "--", path).split("\n").filter(Boolean)) {
+    const [mode, oid, stage] = line.split(/\s+/);
+    if (mode !== "160000") return undefined;
+    pins.set(Number(stage), oid!);
+  }
+  const ours = pins.get(2);
+  const theirs = pins.get(3);
+  if (!ours || !theirs) return pins.size ? { refuse: "one side removed the submodule" } : undefined;
+  const sub = join(root, path);
+  // The ancestry question — including the deepen-before-answering and the
+  // could-not-determine that this resolver has always needed — now lives in
+  // `git-ancestry`, so there is ONE implementation of it. It was a set of
+  // closures here, which meant four other call sites asked the bare question
+  // and read a missing object as "not an ancestor" (measured 2026-10-04: a
+  // `--depth 1` clone exits **128**, and `.ok` / `try`/`catch` callers all
+  // turn that into a negative). `relate` is this logic, lifted and named.
+  const rel = relate(sub, ours, theirs);
+  switch (rel.rel) {
+    // `ours` descends from `theirs`: the branch moved the pin forward.
+    case "a-descends":
+      return { take: "ours", pin: ours, why: "the branch's pin fast-forwards the base's" };
+    case "b-descends":
+      return { take: "theirs", pin: theirs, why: "the base's pin fast-forwards the branch's" };
+    // Identical pins do not conflict, so this is unreachable through the index;
+    // handled rather than defaulted, because an unhandled case here would fall
+    // through to "diverged" and send a non-conflict to a person.
+    case "same":
+      return { take: "ours", pin: ours, why: "both sides pin the same commit" };
+    case "unknown":
+      return { refuse: `could not determine: ${rel.reason}` };
+    case "diverged":
+      return {
+        refuse: `the pins diverged (${ours.slice(0, 9)} vs ${theirs.slice(0, 9)}); either side drops the other's commits`,
+      };
+  }
+}
+
+/** Stage a resolved gitlink pin. */
+export function stageGitlink(root: string, path: string, pin: string): void {
+  git(root, "update-index", "--cacheinfo", `160000,${pin},${path}`);
+}
+
+/**
+ * The refusal line for a path whose declared resolution FAILED. It has the
+ * shape of a planned refusal (`  ✗ <path>  [<pattern>: …]`), which is what
+ * merge-main.yml and merge-main-comment.ts read: the job stays green and the
+ * bot's comment names the path and why, instead of a red job with
+ * "exited 1 without a refusal". The error's first line is kept verbatim.
+ */
+export function resolutionFailure(path: string, patternId: string, err: unknown): string {
+  const first = String((err as { stderr?: unknown })?.stderr || (err as Error)?.message || err).split("\n").find((l) => l.trim()) ?? "unknown error";
+  return `  ✗ ${path}  [${patternId}: could not resolve] — ${first.trim()}`;
 }
 
 function describe(c: Classified): string {
@@ -145,8 +235,22 @@ if (import.meta.main) {
     }
   }
 
-  const p = plan(conflicted);
+  // Submodule pins first, by ancestry (bean `wczm` item 2). A resolved pin is
+  // staged and leaves the list; a refused one stays, so `plan` refuses it.
+  const gitlinks: string[] = [];
+  const gitlinkRefused = new Map<string, string>();
+  for (const path of conflicted) {
+    const r = resolveGitlink(root, path);
+    if (r === undefined) continue;
+    if ("refuse" in r) { gitlinkRefused.set(path, r.refuse); continue; }
+    stageGitlink(root, path, r.pin);
+    gitlinks.push(`  ✓ ${path}  [gitlink: ${r.take}] — ${r.why}`);
+  }
+  const resolvedLinks = new Set(gitlinks.map((l) => l.trim().slice(2).split("  ")[0]!));
+  const p = plan(conflicted.filter((c) => !resolvedLinks.has(c)));
   console.log(`merge-base: ${conflicted.length} conflicted path(s) merging ${base}`);
+  for (const l of gitlinks) console.log(l);
+  for (const [path, why] of gitlinkRefused) console.log(`    (gitlink ${path}: ${why})`);
   for (const c of p.resolvable) console.log(`  ✓ ${describe(c)}`);
   for (const c of p.refused) console.log(`  ✗ ${describe(c)}${c.pattern ? ` — ${c.pattern.why}` : ""}`);
 
@@ -190,25 +294,47 @@ if (import.meta.main) {
     const qa = spawnSync("bun", ["run", "qa:resolve-conflicts"], { cwd: root, stdio: "inherit" });
     const still = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
     const qaLeft = p.resolvable.filter((c) => c.strategy === "qa-sidecar" && still.includes(c.path));
-    if (qa.status !== 0 || qaLeft.length) abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
+    if (qa.status !== 0 || qaLeft.length) {
+      // Report as refusals (see resolutionFailure), so the bot's comment names them.
+      for (const c of qaLeft) console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      if (!qaLeft.length) console.log(`  ✗ qa:resolve-conflicts  [qa-sidecar: could not resolve] — exited ${qa.status} (see its output above)`);
+      abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
+    }
   }
   for (const c of p.resolvable) {
     // A README one side deleted has no hunks to resolve: it is a take-base
     // case whichever pattern named it.
     const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
-    if (c.strategy === "take-base" || oneSided) {
-      takeBase(root, c.path);
-      continue;
-    } else if (c.strategy === "generated-regions") {
-      const text = readFileSync(join(root, c.path), "utf-8");
-      const resolved = resolveGeneratedRegions(text);
-      if (resolved === undefined) abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
-      writeFileSync(join(root, c.path), resolved);
-    } else continue;
-    git(root, "add", "--", c.path);
+    let resolved: string | undefined;
+    try {
+      if (c.strategy === "take-base" || oneSided) {
+        takeBase(root, c.path);
+        continue;
+      } else if (c.strategy === "generated-regions") {
+        resolved = resolveGeneratedRegions(readFileSync(join(root, c.path), "utf-8"));
+        if (resolved !== undefined) {
+          writeFileSync(join(root, c.path), resolved);
+          stageConflicted(root, c.path);
+        }
+      }
+    } catch (err) {
+      console.log(resolutionFailure(c.path, c.pattern?.id ?? c.strategy, err));
+      abort(`${c.path}: its declared resolution failed (✗ above)`);
+    }
+    if (c.strategy === "generated-regions" && !oneSided && resolved === undefined) {
+      console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? c.strategy}: could not resolve] — a hunk lies outside a generated region`);
+      abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
+    }
   }
 
   if (noRegen) {
+    // Sync the submodule checkouts to the merged gitlinks BEFORE staging.
+    // `add -A` stages a gitlink from the submodule's checked-out HEAD, so
+    // without this the merge commit silently reverts the base's
+    // `bootstrap`/`bootstrap-tools` pins — the trap `merge-queue` names, and
+    // what broke `readme:subgraphs` on an unblocker's merge of #2062
+    // (2026-10-04).
+    syncSubmodules(root);
     git(root, "add", "-A");
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
@@ -232,9 +358,36 @@ if (import.meta.main) {
     const inst = spawnSync("bun", ["install", "--frozen-lockfile"], { cwd: root, stdio: "inherit" });
     if (inst.status !== 0) abort("bun install against the merged lockfile failed");
   }
+  // And the branch-kept graphs (bean 9c7h). The merge can bring in a
+  // declaration the branch did not have — fsh-guts kept on
+  // `cat/cat-harness/fsh-guts` — so a mount made BEFORE the merge mounted
+  // nothing, and regen then reads the graph as unmounted: `fsh-guts:viz` exits
+  // 2 and `audit:coverage:strict` fails. Measured 2026-10-04 on merge-main run
+  // 37193546694: #2059, #2043 and #1829, every head predating 88da63c2d6, all
+  // refused the same way. Mount against the MERGED declarations. Idempotent,
+  // and the mounted paths are ignored, so the final `add -A` stays clean.
+  const mount = spawnSync("bun", ["run", "state:mount"], { cwd: root, stdio: "inherit" });
+  if (mount.status !== 0) abort("state:mount against the merged declarations failed");
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
-  if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
+  // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
+  // three distinct verdicts and this line used to assert "regen reported
+  // unrepaired checks" for all of them — false for exit 2 (which reports no
+  // unrepaired check at all, only that it could not settle), false for a
+  // `no-browser`-only exit 1 (which regen itself calls could-not-determine),
+  // and false for a crash (where nothing was measured). The ABORT is right in
+  // every case: none of them may push. Only the recorded reason was wrong, and
+  // the abort line is the one place the reason is written down — it is what
+  // the PR comment's signature is built from and what a person reads in the
+  // log. `regenExitMeaning` is the inverse of `exitCodeFor` and carries the
+  // evidence.
+  if (regen.status !== 0) {
+    const m = regenExitMeaning(regen.status);
+    abort(
+      `the gate set did not prove the resolution — ${REGEN_VERDICT_TAG} ${m.verdict}\n` +
+        `  ${m.why}`,
+    );
+  }
   git(root, "add", "-A");
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);

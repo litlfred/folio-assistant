@@ -5,15 +5,20 @@
     "id": "content-context-and-state-graphs",
     "path": "skills/kg/kg-core/content-context-and-state-graphs.md"
   },
-  "source_hash": "4627515acf4d",
+  "source_hash": "99ac2de1162c",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/kg/kg-core/content-context-and-state-graphs.md",
+          "detail": "368 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -42,8 +47,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 1,
+    "pass": 3,
+    "fail": 2,
     "n/a": 2,
     "unknown": 0
   }

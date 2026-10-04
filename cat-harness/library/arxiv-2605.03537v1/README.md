@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing
+# A Skill-Based AI Agentic Pipeline for Library of Congress Subject Indexing
 
 ingested source material — attributed to its document, not folio content
 

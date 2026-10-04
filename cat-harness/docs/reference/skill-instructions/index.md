@@ -166,6 +166,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Code lists](code-lists.html) | `code-lists` | — | Owner, 2026-09-23: *"we need an expandable option, not just declared in code. |
 | [Acquisition is the step before ingestion, and it had no home](content-acquisition.html) | `content-acquisition` | — | `document-ingestion.bpmn` begins at **`StartEvent_Dropped` — "a file lands in |
+| [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
 | [Filing a source: what Dublin Core carries, and what it does not](filing-dublin-core.html) | `filing-dublin-core` | — | This is the **librarian's** half of intake, not the ingestion engine's. A file |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Glossary terms](glossary-terms.html) | `glossary-terms` | — | The owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should |
@@ -183,6 +184,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Compiled Artefact Cache](compiled-artefact-cache.html) | `compiled-artefact-cache` | — | This skill documents the generalisable pattern for caching compiled artefacts (such as Lean caches a |
 | [Decision methodology selector](decision-methodology-selector.html) | `decision-methodology-selector` | — | **Input**: a decision context — what is being decided, how many alternatives, |
 | [Adopting a methodology, and choosing between them](methodology-adoption.html) | `methodology-adoption` | — | **A methodology is somebody else's work, adopted whole.** It is not a house |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
@@ -248,12 +250,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Generalise the fix, then attack the generalisation](generalise-the-fix.html) | `generalise-the-fix` | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Package: `sdlc-core` |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
+| [Handover report](handover-report.html) | `handover-report` | — | An agent's state lives in three places that do not survive it: the chat, its |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the |
+| [Merge queue](merge-queue.html) | `merge-queue` | — | `processes/sdlc/merge-train.bpmn` is the process. The ORDER is computed by |
 | [Does the prose say what the code does?](narrative-asserts-code.html) | `narrative-asserts-code` | — | Issue #1042, feature bean `flbx`, stage C. The owner, 2026-09-21: *"need to see |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |
@@ -261,17 +265,21 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [The platform's own gates](platform-gates.html) | `platform-gates` | — | **One command:** |
 | [pr-description](pr-description.html) | `pr-description` | — | Owner, 2026-10-02, on litlfred/fhir-ig-publisher#8: *"PR should be readable |
+| [Prepare for a handover](prepare-for-handover.html) | `prepare-for-handover` | — | When a session stalls, what survives is what is **on the remote**: commits on |
 | [/prepare-merge-auto](prepare-merge-auto.html) | `prepare-merge-auto` | — | Runs the full `/prepare-merge` workflow PLUS: |
 | [Prepare-merge](prepare-merge.html) | `prepare-merge` | — | Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch |
 | [Publish verification, and the one alert](publish-verification.html) | `publish-verification` | — | Bean `vigi`. Owner, 2026-09-23: *"a set of post processing tools for |
 | [QA report signing](qa-report-signing.html) | `qa-report-signing` | — | A QA report becomes **evidence** when a third party can establish what was |
+| [QA reports](qa-reports.html) | `qa-reports` | — | **A QA result is either reproducible or it is not, and that decides where it |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
 | [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `sdlc-core` |
+| [Stalled-agent triage](stalled-agent-triage.html) | `stalled-agent-triage` | — | A stall is not an event anyone records. The agent simply stops, and what it |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
+| [Running a test plan](test-plan-execution.html) | `test-plan-execution` | — | > Skill id: `test-plan-execution` · Package: `sdlc-core` · Process: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Package: `sdlc-core` |
@@ -303,9 +311,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [auto-docs](auto-docs.html) | `auto-docs` | — | `<base>/<handler>/auto-docs/<auto-doc-type>/<sub-graph>/` is an index of what |
 | [Relationship first, visualisation later](board-diagram-interchange.html) | `board-diagram-interchange` | — | **One sentence, and it is the owner's:** |
 | [Start in the avatar, open into a window](board-windows.html) | `board-windows` | — | The owner, 2026-09-20 and 2026-09-21: |
-| [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [A tile is the harness's, not the node's](harness-tiles.html) | `harness-tiles` | — | The owner, 2026-09-20, correcting the question rather than answering it: |
 | [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
@@ -319,6 +327,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
+| [Visualizer loading](visualizer-loading.html) | `visualizer-loading` | — | > Skill id: `visualizer-loading` · Package: `ui-core` · Beans `680p`, `s32v`, |
 | [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
 ## Content layer (folio-assistant-core)
@@ -348,12 +357,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
 
-## Document ingestion methods (ingestion)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
-
 ## FHIR IG authoring (fhir-ig-authoring)
 
 | Skill | Id | Schema | Summary |
@@ -375,10 +378,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [ig-ast-delta](ig-ast-delta.html) | `ig-ast-delta` | — | > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance: |
+| [ig-binary-artefacts](ig-binary-artefacts.html) | `ig-binary-artefacts` | — | > Skill id: `ig-binary-artefacts` · Package: `fhir-ig-base` · Instance: |
 | [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
 | [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
+| [ig-site-theme](ig-site-theme.html) | `ig-site-theme` | — | > Skill id: `ig-site-theme` · Package: `fhir-ig-base` · Instance: |
 
 ## WHO IRIS (catalogue instance)
 
@@ -414,7 +419,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
 | [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
-| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | cat-harness/scripts/lake-cache.sh contribute   # give the build back |
+| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | > This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/p |
 | [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
 | [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | A proven workaround for one specific failure: `lake exe cache get` returning |
 | [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |

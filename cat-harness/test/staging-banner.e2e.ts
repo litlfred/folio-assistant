@@ -169,6 +169,86 @@ test("the banner pushes the fixed sidebar down, after the fetch changes its heig
   expect(parseFloat(offset)).toBeCloseTo(height, 0);
 });
 
+/**
+ * A page that does NOT reset `body`'s margin and whose fixed chrome is
+ * `.fa-nav` rather than `.side-bar` — i.e. the library viewer, and any layout
+ * written without the theme.
+ *
+ * Deliberately NOT a copy of `PAGE` with a class swapped: the defect was that
+ * the banner's rule assumed BOTH facts about the page at once, so a fixture
+ * that fixes either one cannot falsify it.
+ */
+const BARE_PAGE =
+  `<!doctype html><html lang="en"><head><meta charset="utf-8">` +
+  `<style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000}</style>` +
+  `</head><body>${FRAGMENT}<nav class="fa-nav"></nav><h1>page</h1>${FOOTER}</body></html>`;
+
+async function serveBare(page: import("@playwright/test").Page, path: string) {
+  await page.route("**/*", async (route) => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith("staging.json")) {
+      return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(FACTS) });
+    }
+    return route.fulfill({ status: 200, contentType: "text/html", body: BARE_PAGE });
+  });
+  await page.goto(`http://127.0.0.1:8080${path}`);
+  await page.waitForLoadState("networkidle");
+}
+
+test("the banner is FLUSH on a page that never reset body's margin", async ({ page }) => {
+  // Owner, 2026-10-02, with a screenshot: "statging status bar is not at top".
+  // `position: sticky; top: 0` resolves against the flow position INSIDE the
+  // margin box, so the UA default `body{margin:8px}` held it 8px off every
+  // edge. Measured on the served bytes before the fix: `top: 8, left: 64` on a
+  // page whose own `padding-left` is 56 — 56 + 8, which is what identified the
+  // cause.
+  //
+  // just-the-docs ships `body{margin:0`, which is the only reason this was
+  // invisible across ~2,400 pages. Asserting zero rather than "less than
+  // before": a banner 1px off the top is the same defect, smaller.
+  await serveBare(page, `${ROOT}index.html`);
+  const box = await page.locator("[data-fa-staging-banner]").evaluate((b) => {
+    const r = b.getBoundingClientRect();
+    return {
+      top: r.top,
+      left: r.left,
+      right: r.right,
+      vw: document.documentElement.clientWidth,
+      // The fixture's OWN `padding-left`, which is design rather than the
+      // defect. Read from the page so the assertion cannot drift from it.
+      padLeft: parseFloat(getComputedStyle(document.body).paddingLeft),
+    };
+  });
+  expect(box.top).toBe(0);
+  // `padLeft`, NOT zero — the first draft of this test asserted 0 and failed
+  // against the fix, because the banner correctly sits inside the body's
+  // content box. The defect was `padLeft + 8`; the margin is what is being
+  // falsified here, not the padding.
+  expect(box.left).toBe(box.padLeft);
+  expect(box.right).toBe(box.vw);
+});
+
+test("it pushes `.fa-nav` down too, not only just-the-docs' `.side-bar`", async ({ page }) => {
+  // The rule named `.side-bar` alone, which is just-the-docs' name for its
+  // fixed chrome. The viewer rail is `.fa-nav` at `top: 0` with a z-index far
+  // above the banner's, so it was never pushed down and sat level with the
+  // banner — the very defect the rule exists to prevent, on a layout written
+  // after it was written.
+  await serveBare(page, `${ROOT}index.html`);
+  const r = await page.evaluate(() => {
+    const nav = document.querySelector(".fa-nav");
+    const banner = document.querySelector("[data-fa-staging-banner]");
+    return {
+      navTop: nav ? nav.getBoundingClientRect().top : null,
+      bannerHeight: banner ? banner.getBoundingClientRect().height : null,
+    };
+  });
+  expect(r.bannerHeight).toBeGreaterThan(0);
+  // Pushed down by exactly the measured banner height — the same contract the
+  // `.side-bar` test above asserts, now held for the second layout.
+  expect(r.navTop).toBeCloseTo(r.bannerHeight as number, 0);
+});
+
 test("a branch name containing markup is rendered as TEXT", async ({ page }) => {
   // Git ref names may contain `<`, `>` and `"` — they are not in git's
   // forbidden set, which stops at space, `~`, `^`, `:`, `?`, `*`, `[`, `\`

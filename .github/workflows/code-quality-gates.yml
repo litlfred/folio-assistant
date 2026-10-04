@@ -6,7 +6,11 @@
 #
 # TWO of the four jobs gate THIS repo; two scan trees only a folio has. Which
 # is which is stated in each job, and a job with nothing to scan says so
-# rather than printing OK — see the note on `lean-bare-import`.
+# rather than printing OK — see the Lean step of the `hygiene` job.
+#
+# Since bean `7fu5`, 1, 2 and 4 below — and the dependency advisories — are
+# STEPS of one job, `hygiene`, rather than jobs of their own: each was a second
+# of work behind a runner request. The numbered list is what they ask.
 #
 #   1. Lean bare-import gate — HARD FAIL on `import Mathlib` (the whole
 #      library). A bare `import Mathlib` pulls the entire Mathlib build cone
@@ -93,14 +97,72 @@ permissions:
   contents: read
 
 jobs:
-  lean-bare-import:
-    # bpmn-node: Task_Lean
-    name: Lean bare-import gate (hard)
+  hygiene:
+    # bpmn-node: Task_Hygiene
+    name: Import hygiene (hard) and dependency advisories (warn-only)
+    #
+    # ## Four questions, one runner — bean `7fu5`
+    #
+    # These were four jobs: `lean-bare-import`, `python-imports`,
+    # `rust-wildcard` and `dependency-advisories`. Each did about a second of
+    # work after a ~13 s checkout, and each was a runner request. Measured on
+    # `main` run 37133247484 (2026-10-03): the run took 21.7 min while its
+    # longest job executed for 174 s — the rest was WAITING for runners, with
+    # 18 requested per run. Folding them makes it 15.
+    #
+    # Not folded into `gates`, for the reason that job exists (bean `om30`): a
+    # job stops at its first failing step, so a red step masks every one after
+    # it. Here the same rule is kept INSIDE the job instead: every step after
+    # the first gate runs `if: !cancelled()`, so a red Lean scan does not stop
+    # ruff, the Python tests or the advisories being asked — each still fails
+    # the job, and each still shows as its own red step. The Rust report is
+    # `continue-on-error`, so it goes last, where it can mask nothing.
+    #
+    # The Lean and Rust steps scan folio trees this repository does not have,
+    # and say so (SKIP — … Nothing scanned); they are here for folios that
+    # vendor this workflow.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
           submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -153,21 +215,11 @@ jobs:
           fi
           echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
-  python-imports:
-    # bpmn-node: Task_Python
-    name: Python unused/wildcard imports (hard)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
 
       - name: Install ruff
+        if: ${{ !cancelled() }}
         run: pip install "ruff>=0.5"
+
 
       # The Python backends the scripts actually import, from the file
       # `schemas/python-deps.ts` generates. Bean `68dt`: nothing declared them
@@ -181,13 +233,16 @@ jobs:
       # lean set — for one script. That is a cost statement, not a
       # deprecation; `pdf-tables.py` is live and its tests run outside CI.
       - name: Install Python dependencies
+        if: ${{ !cancelled() }}
         run: pip install -r requirements.txt
+
 
       # HARD GATE, promoted from warn-only. Same rule as eslint: a check is an
       # error only once its count is zero, and this repo's count is zero — the
       # 24 live F401s were drained in the same commit that repointed the scan.
       # `continue-on-error` is gone with it; a new unused import fails here.
       - name: ruff F401,F403
+        if: ${{ !cancelled() }}
         #
         # Was pointed at `folio-assistant/computations tools`. Neither exists
         # here: `tools/` is a folio tree, and `folio-assistant/computations` is
@@ -214,6 +269,7 @@ jobs:
             --exclude '**/_deprecated/**' \
             $targets
 
+
       # THIS STEP IS FOR THIS REPOSITORY'S OWN SCRIPTS, NOT FOR PACKAGES IT
       # PUBLISHES. A publishable package's Python tests run in the `typescript`
       # job, under `bun run check:published-packages`, which discovers them
@@ -236,6 +292,7 @@ jobs:
       # Discovered rather than listed, so a new one is picked up by
       # existing; a listed set is a set that goes stale.
       - name: Python tests (cat-harness/scripts/tests/*.test.py)
+        if: ${{ !cancelled() }}
         run: |
           set -uo pipefail
           shopt -s nullglob
@@ -251,10 +308,100 @@ jobs:
           done
           exit $rc
 
-  typescript:
+
+      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
+      # worth keeping next to the step: a HARD gate on advisories hands a
+      # transitive advisory nobody can patch the power to red every PR until
+      # somebody adds a suppression — and the suppression is what rots.
+      # `.github/dependabot.yml` is the other half: it turns the same
+      # advisories into reviewable PRs rather than into a gate.
+      #
+      # `bun audit` needs the registry, not the modules, so there is no
+      # install step. Adding one would make a dependency resolve a
+      # precondition of asking whether dependencies are safe.
+      #
+      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
+      # state on purpose, and keeps the three states apart in its OUTPUT
+      # instead — which is the only place they can be kept apart once the exit
+      # code carries no information. `|| true` is exactly how "could not
+      # determine" becomes "fine", and this workflow has paid for that once
+      # already: see the ruff note at the top of this file, where a step
+      # "warned about the missing paths and exited 0, so it reported a clean
+      # baseline it had never computed."
+      - name: Known advisories against the resolved tree
+        if: ${{ !cancelled() }}
+        run: bun run check:dependency-advisories
+
+
+      # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
+      # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
+      # of the legitimate baseline, so they're reported but not failed.
+      - name: Wildcard `use ...::*;` report
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          # Same distinction as the Lean gate: there are ZERO .rs files in this
+          # repo, so "OK — no non-test wildcard imports" was reporting a clean
+          # result for a scan of nothing. `tools/` is a folio tree; this job is
+          # here for folios that vendor this workflow.
+          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
+            exit 0
+          fi
+          # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
+          # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
+          matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
+            tools --include='*.rs' 2>/dev/null | grep -vE 'use super::\*;' || true)
+          if [ -n "$matches" ]; then
+            echo "::warning::Non-test wildcard imports in tools/ (ratchet — narrow when touched):"
+            echo "$matches" | while IFS= read -r line; do
+              echo "::warning::$line"
+              echo "  $line"
+            done
+          else
+            echo "OK — no non-test wildcard imports in $count Rust file(s)"
+          fi
+
+  typescript-static:
     # bpmn-node: Task_TypeScript
-    name: TypeScript — tests, lint, types (hard)
+    name: TypeScript — lint and types (hard)
+    #
+    # Lint and typecheck, in a job of their own since bean `dlqu`. They used to
+    # share a job with `bun test`, which forced an ordering rule on that job:
+    # Actions stops at the first failing step, so `bun test` — red on `main` by
+    # the owner's decision while the `t8g3` drift stood — had to run LAST or it
+    # masked lint and typecheck (bean `om30`). In separate jobs nothing can mask
+    # anything, so the rule is no longer something an author has to remember.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -267,19 +414,11 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # ## Order matters here, and it is not stylistic
-      #
-      # Actions stops a job at its first failing step, so ANYTHING after a red
-      # step does not run. `bun test` is red on `main` by the owner's decision
-      # (the `t8g3` drift), and while it sat FIRST in this job, lint and
-      # typecheck were masked behind it — `main` had not been linted or
-      # typechecked in CI for as long as that test had been failing. Bean
-      # `om30`, whose split moved the 43 repository gates into their own job;
-      # this reordering is the same defect inside what remains.
-      #
-      # So the two checks that cannot fail for a reason outside their own
-      # subject go FIRST, and `bun test` goes LAST, with nothing behind it to
-      # mask. Adding a step to this job means adding it ABOVE `bun test`.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
@@ -297,13 +436,141 @@ jobs:
       - name: tsc --noEmit
         run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
-      # Each step is a separate gate so the Actions UI names the one that
-      # broke, rather than a single opaque "quality" failure. LAST on purpose —
-      # see the ordering note above.
+  typescript-test:
+    # bpmn-node: Task_TypeScript
+    name: TypeScript — bun test, shard ${{ matrix.shard }}/4
+    #
+    # Bean `dlqu`. `bun test` was 7m30s-7m45s sequential (three `main` runs,
+    # 2026-10-02); `--parallel` (one isolated worker per core) took it to
+    # 3m28s-5m01s, which still made this the workflow's slowest job once e2e
+    # was sharded. So the suite is split across four jobs on separate machines,
+    # each SEQUENTIAL inside (see the step for why not `--parallel`).
+    #
+    # THE SHARD TRAVELS IN `BUN_OPTIONS`, which Bun prepends to every
+    # invocation, and NOT as `--shard=${{ matrix.shard }}/4` on the command
+    # line: `gatesFrom` runs a `bun` line locally with no shell, so an
+    # interpolation there would reach the local gate run as literal text (bean
+    # `9zok`). The command stays `bun test --parallel`, which locally — with no
+    # `BUN_OPTIONS` — is the whole suite, as it should be. Measured before
+    # relying on it: the two shards of a 4-file sample ran 50 + 54 tests, the
+    # unsharded run 104; and a plain `bun run` ignores `--shard`, so the
+    # scripts the tests spawn are unaffected. Nothing under test spawns
+    # `bun test` itself, which is the one place the flag would be inherited
+    # and halve a run silently — keep it that way.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    # A cap, because a parallel worker that spins (measured once locally:
+    # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
+    # not stopped by a per-test timeout, and the Actions default is six hours.
+    # a shard measured 2m07s-2m21s; 20 is ~9x that, so a red here is a hang, never a slow day.
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # The same mount as the gates job, for the same reason one level down:
+      # the test files that read the LIVE store (`bean-store-hygiene`,
+      # `bean-front-matter`, `survey`, `merge-train`, …) assert over whatever
+      # `resolveBeanDefs` hands them, and after the cutover that is the mount.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
+      # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
+      # Bun's in-process worker pool (1.3.14) left one worker spinning at
+      # ~97 % CPU until the job cap: on 2026-10-03 shard 1/2 of a 4-worker run
+      # (`ca3468d19`) and shard 2/3 of a 2-WORKER run (`ff9d8ebb4`, run 2, after
+      # 0/72 on a nine-file local sample had made 2 workers look safe). A plain
+      # sequential `bun test` has never hung here (three `main` runs, a 903 s
+      # local run). So the parallelism comes from SHARDING ACROSS MACHINES
+      # instead: four jobs, each a sequential `bun test` over a quarter of the
+      # files. Separate machines also share no working tree, so the in-tree
+      # write races `--parallel` exposed cannot recur (bean `dlqu`).
       - name: bun test
+        env:
+          BUN_OPTIONS: --shard=${{ matrix.shard }}/4
         run: bun test
 
-
+  typescript:
+    # bpmn-node: Task_TypeScript
+    name: TypeScript — tests, lint, types (hard)
+    #
+    # The check NAME that branch protection and the beans cite, kept on a job
+    # that is green only when the static job and EVERY test shard succeeded.
+    # `if: always()` so a failed or cancelled part turns this red rather than
+    # SKIPPING it: a skipped required check reads as neither red nor green,
+    # the vacuous pass bean `0qjq` measured.
+    needs: [typescript-static, typescript-test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: lint, types and every test shard succeeded
+        env:
+          STATIC: ${{ needs.typescript-static.result }}
+          TESTS: ${{ needs.typescript-test.result }}
+        # No `gate-shell.sh` here: this job never checks out, so the wrapper
+        # does not exist for it. It needs none — the diagnosis is already in
+        # the two env vars, so it writes its own summary and the whole of
+        # WHICH part failed reaches `output.summary` (bean `yqc4`).
+        run: |
+          echo "lint+types: $STATIC   tests: $TESTS"
+          if [ "$STATIC" != "success" ] || [ "$TESTS" != "success" ]; then
+            {
+              echo "### ✗ TypeScript — tests, lint, types"
+              echo
+              echo "| part | result |"
+              echo "| --- | --- |"
+              echo "| lint and types | \`$STATIC\` |"
+              echo "| test shards | \`$TESTS\` |"
+              echo
+              echo "This job runs nothing itself — it is red because a part above is."
+              echo "\`cancelled\` or \`skipped\` is NOT a pass: a skipped required check"
+              echo "reads as neither red nor green, which is the vacuous pass bean"
+              echo "\`0qjq\` measured. Open the named job for its own summary."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   gates:
     # bpmn-node: Task_RepositoryGates
@@ -339,6 +606,33 @@ jobs:
     # `typescript` is the three checks its name promises; everything else is a
     # repository gate and belongs in this job.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -362,6 +656,36 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # EVERY declared tip-keyed graph on disk before any gate reads one —
+      # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
+      # covering the store when it moves".
+      #
+      # Nine bean gates run in this job (`check:bean-parents`, `bean-blocks`,
+      # `bean-rollup`, `bean-bodies`, `bean-front-matter`, `bean-issue-links`,
+      # `bean-archive`, `bean-parent-prose`, `bean-restates-skill`), and so do
+      # `check:harness-dirs`, `check:harness-state`, `kg:audit` and
+      # `audit:coverage`. Once `beans/` is kept at the tip of its own branch
+      # the checkout no longer carries it, and a gate that joined the path
+      # would judge an absent directory — `1xhc`, a step that did not fire
+      # looking exactly like one that passed, over the store eight of those
+      # gates exist to judge.
+      #
+      # It is INERT today and that is deliberate: while no declaration keeps a
+      # graph at a branch tip, `state:mount` reports `not-enabled` and exits 0
+      # (measured). It is added BEFORE the cutover rather than with it so that
+      # the one irreversible commit is the declaration and the `git rm`, and
+      # not also the CI change that has to be right for them.
+      #
+      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
+      # not determine" apart from "determined absent" and exits non-zero for
+      # either, so the gates below never run over a store this runner could
+      # not reach.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -431,6 +755,23 @@ jobs:
       - name: declared directories exist, or say why not
         run: bun run check:declared-dirs
 
+      # A declared directory whose graph kind `holds: "state"` is kept OFF
+      # `main`, or it is recorded debt that may only go down.
+      #
+      # RATCHETED, not gated from zero, and the number is the reason: 19 of the
+      # 28 state-holding directories in this checkout are still on `main`. Some
+      # are mid-arc (`beans` is `p3ny`'s, `queue` is `najo`'s) and some may
+      # never move — `swimlane-glossary` is regenerated from `main`'s own
+      # content by a declared writer, so a branch would buy it nothing. A gate
+      # that failed 19 times on the commit it landed in is a gate somebody
+      # switches off, so the baseline records today's debt and may only SHRINK.
+      # Both directions fail: an unrecorded state directory on `main`, AND a
+      # baseline line that no longer describes one — the second because a line
+      # that has stopped describing anything is an exemption for whatever next
+      # takes that id.
+      - name: state directories are off main, or recorded as debt
+        run: bun run check:state-on-main
+
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
       # which every other sweep skips because the root is deliberately not an
@@ -491,7 +832,7 @@ jobs:
       # UNDETERMINED rather than counted as passing, and zero diagrams is a
       # finding rather than a clean run (`6tkl`).
       - name: swimlane definitions
-        run: bun run check:lane-documentation
+        run: bun run check:lane-documentation:check
 
       # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
       # level up. `gen-docs-auto`'s index took the first `<documentation>`
@@ -628,7 +969,7 @@ jobs:
       # consequence. Known counts are baselined; a NEW file, or a baselined file
       # GAINING a label, fails.
       - name: no rendered label shows a character reference as literal text
-        run: bun run check:rendered-labels
+        run: bun run check:rendered-labels:check
 
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
@@ -788,6 +1129,18 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
+      # The same obligation one level out, for a graph KIND (bean `uoij`). Added
+      # 2026-10-04 with the command, because an unenforced chain is exactly the
+      # state it exists to leave: adding `docs-auto` on #2022, six hand-picked
+      # `check:*` commands all passed while `bun run gates` found 5 failures
+      # across 217 and `bun test` found two more.
+      #
+      # It is HERE, in the registered-never-run job, for the reason that job
+      # exists: a gate no workflow runs cannot fail, which is bean `xom7` one
+      # level down.
+      - name: every graph kind's artefacts are current, and its authored two exist
+        run: bun run kind:register:check
+
       # The skills graph's LSI index is written by the registration chain
       # (`lsi:skills`) and read by kg:audit's `tool-downstream-fresh`. Checked on its
       # own so an edited skill with a stale index names THIS step, not a
@@ -904,6 +1257,15 @@ jobs:
       - name: KG subscriptions have their snapshots, and each holds
         run: bun run kg:subscribe:check
 
+      # Issue #1719, slices 5-6: every materialised part of a subscription --
+      # a subgraph, or one asset -- still hashes to its record (a tree digest,
+      # so a file ADDED in place is caught, which the per-file
+      # `check:materialized-fixity` walk cannot see), is still chosen and
+      # declared, sits at its subscription's pin, and no bytes sit in a
+      # subscription's directory without a record. Offline; never fetches.
+      - name: KG materialised parts hold, and nothing sits unrecorded
+        run: bun run kg:materialize:check
+
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
       # on the same reasoning as `check:skills`: it locks in a property this tree
@@ -991,6 +1353,26 @@ jobs:
       # `import(expr)` calls it cannot read as could-not-determine, never as 0.
       - name: no module imports from an instance built on top of its own
         run: bun run check:import-direction --all
+
+      # fhir-harness knows nothing about WHO (bean `wm63`). The import check
+      # above cannot see this: a `smart.who.int` canonical, a DAK API sidecar
+      # name or a DAK step invoked from a Tool is a string, not a module. The
+      # gate lives in smart-base, which OWNS those names, so the list itself
+      # is not a breach. Ratchet over a committed baseline (owner, 2026-10-03):
+      # a hit above it fails, and so does a cleared hit the baseline still
+      # allows — clearing it is bean `veiu`.
+      - name: fhir-harness stays WHO-free
+        run: bun run check:fhir-harness-exclusions
+
+      # A process binds only skills it can reach: its own instance's, or one it
+      # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
+      # import axis above cannot see it, because a BPMN `<skill ref>` is a name
+      # rather than a module. kg-audit's skill-ref-resolves cannot either: in
+      # this pre-split checkout it resolves against the whole checkout, so
+      # "resolves" meant "exists somewhere". Same allowedFromNeeds direction as
+      # the import and prose axes. Ratchet over a baseline of 33 (bean mlux).
+      - name: a process binds only skills its instance can reach
+        run: bun run check:process-bindings
 
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
@@ -1114,12 +1496,9 @@ jobs:
       - name: Every instance README's generated sections are current
         run: bun run readme:sync:all:check
 
-      # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
-      # `kg:files` (every file it holds), both generated from its declaration
-      # (owner, 2026-09-29). The pictures themselves are checked by
-      # `render:bpmn:check`; this checks the README that shows them.
-      - name: bootstrap's README generated sections are current
-        run: bun run readme:sync:bootstrap:check
+      # bootstrap's README is NOT checked here: owner ruling 2026-10-01, "each
+      # repo owns its README" — bootstrap's own CI checks it (litlfred/bootstrap#1,
+      # check.yml). `readme:sync:all:check` above skips submodule roots (bean kye5).
 
       # One README per LIBRARY ITEM, from its own manifest (bean `qgjh`, owner
       # 2026-09-30: "like bootstrap readmes"). BEFORE the directory READMEs:
@@ -1354,6 +1733,194 @@ jobs:
               exit 2
             fi
           fi
+
+      - name: voices projection and viewer are current
+        run: bun run voices:viz:check
+
+      # THE VOICES SHAPE, NOT THE LIBRARY SHAPE, and that distinction is the
+      # whole reason this is gated while `library:viz:check` twenty lines
+      # below is not. The folio projection derives from the declared `folio`
+      # directories and the JSON nodes in them — three stickies in one
+      # directory today — so it changes when somebody edits or adds a landing
+      # sticky, and NOT when somebody else merges. A red here is an omission
+      # by the author of the diff, every time, which is the test the comment
+      # above states. Bean `7ofc`.
+      - name: folio projection and viewer are current
+        run: bun run folio:viz:check
+
+      # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
+      # than an exception to it. The viewer-nav audit walks the whole docs
+      # tree, so its sidecar goes stale the moment anybody adds a generated
+      # page anywhere — gating on staleness would make a red mean "somebody
+      # else merged", which is the shape the owner ruled ungated on
+      # 2026-09-20. A page that WAS railed and is not any more is the author
+      # of the diff, every time. Staleness and the still-unwired pages are
+      # `bun run viewer:nav:strict`, which the author of a new generator runs.
+      # Bean `edx7`.
+      - name: viewer pages keep the navbar they had
+        run: bun run check:viewer-nav
+
+      # The handler namespace's own index. Gated on the same ground as the
+      # voices projection: it derives from the DECLARATIONS (which kinds each
+      # instance declares, and whether a `coverage.visualiser` names a
+      # published path), not from the whole repository — so a red means
+      # somebody changed a declaration and did not regenerate.
+      #
+      # It is also the one page a navbar tile points at: `siteLinks` publishes
+      # `kg` as `/<stub>/`, and `verifySiteLinks` reports `unknown` rather
+      # than `dead` on an unbuilt tree, so nothing else here would notice it
+      # going missing until production (bean `8h42`).
+      - name: handler namespace index is current
+        run: bun run handler:index:check
+
+      # NOT GATED: the schema and library projections.
+      #
+      # `schema:viz:check` and `library:viz:check` exist and are worth running
+      # locally, but they are deliberately NOT in this gate set. Owner's call,
+      # 2026-09-20, after the gate went red twice on PR #583 for a reason that
+      # was never the author's doing.
+      #
+      # Both projections are derived from the WHOLE repository, so any branch
+      # alive for more than a few minutes finds them stale against the merge
+      # ref. Measured across one session: `main` moved four times — 120, 2, 2
+      # and 11 commits — and twice that was enough to redden this gate on a
+      # branch whose own tree was correct. A red that means "somebody else
+      # merged while you worked" is not an omission by whoever sees it, and it
+      # fails the standard stated eight lines above: "a real omission, every
+      # time."
+      #
+      # Nothing published goes stale. `docs-site.yml` runs the WRITERS at
+      # deploy, so the page a reader opens is regenerated from the tree being
+      # published. What can lag is the committed copy on `main`, which exists
+      # to be browsable on GitHub — and a browsable copy one merge behind is a
+      # far smaller cost than a gate contributors learn to re-run without
+      # reading.
+      #
+      # The other `--check` gates here stay, and the difference is their
+      # INPUTS: each derives from a narrow set of files, so its red really does
+      # mean the author of the diff forgot to regenerate.
+
+      # The translation index is what the navbar's locale filter reads. It is
+      # derived from what each page DECLARES — `lang`, and `translation_source`
+      # naming what it expresses — never from a directory whose name looks like
+      # a language subtag. Three outcomes, and the third is why this is not a
+      # plain diff: exit 2 means the translation set could NOT BE DETERMINED
+      # (no Jekyll site where one was expected, or a page whose front matter
+      # will not parse and that something translates), which must never be
+      # published as "this folio has no translations".
+      #
+      # It also catches the one thing that is easy to forget and invisible
+      # locally: a translated page with no `nav_exclude: true` goes into the
+      # statically built navbar for EVERY reader, whatever locale they chose.
+      - name: translation index is current
+        run: bun run translation:index:check
+
+      # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
+      #
+      # `translation:drift:check` is the one gate in this job that has been red
+      # BY DECISION (bean `ngxj`, issue #206) rather than by defect. It used to
+      # be the THIRD of 107 `bun run` lines inside "gates that were registered
+      # and never run" — one `run: |` block under `set -e` — so while it was red
+      # the 104 invocations after it never executed, on any PR or any push to
+      # `main`.
+      #
+      # Measured 2026-09-26 (bean `cpss`): of those 104, eighteen have no test
+      # anywhere that references the same script, so for those eighteen the
+      # masked gate was the only thing watching. The other 86 had a test twin,
+      # which is a second line of defence rather than an excuse — and both
+      # figures are BOUNDS, not counts, because the twin was matched on script
+      # basename.
+      #
+      # The cost was measured too, twice. `check:partition` (in the masked
+      # region) reported an unclassified module the hour the batch first ran
+      # through. And "translation index is current", three steps above, is the
+      # gate that would have caught a stale `docs/_data/translations.json` —
+      # which had to be repaired BY HAND on 2026-09-26 after CI reported green
+      # on the branch carrying it. The gate existed the whole time.
+      #
+      # So the invariant is now STRUCTURAL rather than remembered: a gate that
+      # may be deliberately red belongs last, where the set it masks is empty.
+      # Anything added after this step re-creates the defect, and the reason it
+      # is safe here is only that nothing follows.
+      #
+      # Three earlier changes moved ONE gate each to just above the batch
+      # (`ee964c7411` for `translated-links:check`, then `docs:pages:check` and
+      # `check:available-locales`). Each was correct and none of them scaled:
+      # "put your gate above the drift" is a rule every future author has to be
+      # told, while "the deliberate red is last" is a rule the file enforces.
+      - name: translations have not drifted from their source
+        run: bun run translation:drift:check
+
+  gates-unrun:
+    # bpmn-node: Task_UnrunGates
+    name: Repository gates — registered, never run elsewhere (hard)
+    #
+    # Split out of `gates` by bean `dlqu`. This one step measured 1m46s-2m28s
+    # over four runs (2026-10-02), four times the next-longest step, and a
+    # job's steps run one after another, so it alone set a quarter of the
+    # `gates` job's wall-clock. In a job of its own it runs BESIDE the other
+    # repository gates instead of after them.
+    #
+    # Moved whole and unchanged: the same `set -e` block, the same commands,
+    # the same setup as `gates`. No `needs:` on `gates` and none from it, for
+    # the reason `gates` gives about `typescript` — independent questions,
+    # asked independently, so one red cannot stop the other being asked.
+    runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # THE job that runs the nine bean gates — they moved here with the rest
+      # of the block when `dlqu` split this job out of `gates`, so this is
+      # where the mount has to be. I put it in `gates` and the test shards
+      # first and `check:workflows`' new `bean-gate-unmounted` rule caught the
+      # miss on the first run, which is the whole argument for the rule being
+      # a rule rather than a careful reading: the mount is PER JOB, and a job
+      # named for what it runs rather than for what it reads does not say so.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       - name: gates that were registered and never run
         run: |
@@ -1601,7 +2168,7 @@ jobs:
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
-          bun run check:l1-complete -- --check
+          bun run check:l1-complete:check
           # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
           # PRODUCED each artefact; this asks whether it is any good -- a
           # title that is the slug, or "Abies" off a scanned cover, passes
@@ -1625,6 +2192,12 @@ jobs:
           # reason the check exists rather than a file-exists test.
           bun run check:docs-populated
           bun run check:declared-paths
+          # Its cross-instance half (bean `gz47`): no instance's source spells a
+          # path into a directory ANOTHER instance declares (the root's beans/,
+          # todos/, fsh-guts/, uploads/ — the ones moving to branches). A one-way
+          # ratchet over scripts/foreign-path-baseline.json: a rise is red, a
+          # fall is reported and never red.
+          bun run check:foreign-paths
           bun run check:fallback-roles
           # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
           # is meant to be closed" and could NEVER have passed: all seven kinds it
@@ -1648,13 +2221,41 @@ jobs:
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
           bun run smart-base:pages:check
           bun run smart-immunizations:pages:check
+          # The OpenAPI harness (cat-openapi, bean s4ta): every document an
+          # instance's cat-openapi.config.json names is held verbatim and matches
+          # its provenance, and its per-operation pages and IRIs are current.
+          bun run smart-trust:openapi:check
+          bun run smart-trust:openapi:pages:check
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
           bun run smart-base:document-kinds:check
+          # A section's computedFrom names a graph its instance declares or
+          # inherits (bean qvxh): "computable from these assets" is a claim,
+          # and a claim nothing checks is prose.
+          bun run check:document-kind-sources
           # smart-kg L1 documents kept beside library entries (bean 8pzh):
           # stale the moment a section text or structure.json they read changes.
           bun run smart-base:smart-kg-l1:check
+          # The DTH terminology findings page (#1984): stale the moment the
+          # candidate list or the authored alternatives change, and red when a
+          # quote no longer matches the section it cites.
+          bun run smart-base:dth-terms:check
+          # DIIG Fig. 1.1.1 as SVG (bean 70zt), the one rendering the DTHs point at.
+          # CI has no source PDF, so this checks what it can without one: the
+          # crop still matches vector-figures.json and the drawing is unedited.
+          # Byte-identical regeneration runs wherever the PDF is present.
+          bun run smart-base:diig-figure:check
           bun run document-kinds:viz:check
+          # P2's refusal record (bean ntyj): every published XML/Turtle
+          # representation this pipeline does not render, per IG, generated
+          # from the artefact index -- so it goes stale the moment the index
+          # is re-ingested, and a stale record misstates what was refused.
+          bun run p2:refusals:check
+          # The IG AST's JSON Schemas and JSON-LD context are generated from
+          # the Zod declaration readAst validates through (bean l0lq), so a
+          # field added to the Zod without regenerating leaves downstream
+          # consumers validating against a stale contract.
+          bun run ig-ast:schema:check
           # The fsh-guts index is generated from the graph, so it goes stale the
           # moment a file is relocated there -- which is the ONE operation that
           # graph exists for. Gated here rather than trusted, same as every
@@ -1678,6 +2279,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # One NAME per navigation destination, across the rail, the sidebar
+          # include, harness.json (harness rows, landing viewers, FOLDERS, the
+          # glass and Stickies tiles) and the sticky links. Owner, 2026-10-01,
+          # bean `ob3m` finding 6, "One name everywhere": a surface may only
+          # APPEND the harness as a qualifier. `:check` writes nothing and
+          # also fails a stale `nav-names.qa-results.json` sidecar.
+          bun run check:nav-names:check
           # Every instance declaring a `themes` graph: does it load, and does
           # each theme validate? The gate that TRULY covers the `themes` kind —
           # three others declared `@covers themes` while resolving no themes
@@ -1755,6 +2363,16 @@ jobs:
           # computed and read by nobody, so `folio-assistant` rendered a
           # question mark until the owner saw it. Bean `zc7m`.
           bun run check:avatar-instances
+          # ...and the KIND axis, which no package script or CI step ran until
+          # bean `bo44` (2026-10-01): `check-avatar-coverage --check` existed,
+          # still wrote its sidecar, and nothing called it. The `:check` form
+          # judges and writes nothing.
+          bun run check:avatar-coverage:check
+          # The site's `/` is a DECIDED harness, never the generator's own
+          # directory or the repository's name (issue #1904): one instantiated
+          # harness lands without a flag, several need `site.landing` on one
+          # (or two or more, for a hub), and several with none fail here.
+          bun run check:landing-instance
           # A reader's folio must be the SAME folio in every library they
           # browse (F8/F9). A page that forgets the mount is a folio that
           # silently disappears when they follow a link — the page renders,
@@ -1878,7 +2496,7 @@ jobs:
           # or whose `evidence` points at a bib-slug no library holds —
           # a citation that claims to resolve and does not is worse than
           # none, because every listing reads it as backed.
-          bun run check:methodology-evidence
+          bun run check:methodology-evidence:check
           # The layout norm, ENFORCED AS A RATCHET rather than as a gate
           # on the whole corpus: no declared directory sits inside another
           # declared directory, with the four `skills/voices` nestings that
@@ -1886,7 +2504,7 @@ jobs:
           # `cat-harness` — which reached zero on 2026-09-22 and has no
           # baseline entry — cannot regress. Owner: "follow established
           # norms on layout. qa to enforce."
-          bun run check:layout-norms
+          bun run check:layout-norms:check
           # Every ingested source records its licence, or records that nobody
           # could find it and where they looked (issue #1023). It REPORTS
           # absence and `unknown`, because the field is new, and fails only on
@@ -1898,9 +2516,27 @@ jobs:
           # AND a mobile viewport (issue #1023; owner: "need both web and
           # mobile layouts in usability reviews"). Gated: a visualiser added
           # without a wireframe, or a wireframe checked at one width, fails.
-          bun run check:wireframes
+          bun run check:wireframes:check
+          # The four above run in their JUDGE form (`:check`, bean `bo44`):
+          # compute, judge, write nothing. Their bare forms rewrite their own
+          # QA sidecar on every run, so the gate CI ran was also the writer of
+          # the record it reported into — a gate that cannot fail on its
+          # sidecar's content, and that leaves the tree dirty. Exit 2 is
+          # could-not-determine and is never a pass.
+          #
+          # The KG export, judged in memory: a root field or term outside the
+          # `@context`, or a keyword/alias collision, fails; an unread source
+          # is exit 2. Until `bo44` only the deploy ran the exporter, so a
+          # fatal export finding surfaced at publish time rather than on the PR.
+          # `kg:export:judge`, not `:check`: `kg:export:check` is the sidecar
+          # currency gate above (bean `v556`); the owner kept both (2026-10-02).
+          bun run kg:export:judge
           bun run check:xml-comments
           bun run check:orphan-verdicts
+          # Every QA judgement is held in the attestation store (beans `2gst`,
+          # `8wj1`, D2): no kg-qa sidecar still carries one, and every non-script
+          # block/translation verdict in a derived report is held there too.
+          bun run qa:attestations:migrate:check
           bun run check:partition
           # Every XML namespace the corpus declares is reconciled against a
           # specification record naming its EDITION. Added with the registry
@@ -1913,6 +2549,10 @@ jobs:
           # source per code, not a string in an attribute. Owner, 2026-09-23.
           # Refuses a malformed list, and an adjudication naming no list.
           bun run code-lists:check
+          # Vocabulary mapping tables (bean k74z): each parses, each derived
+          # target copies an authoritative one, each system resolves, and each
+          # can be produced as a FHIR ConceptMap. Owner, 2026-10-02.
+          bun run vocab-mappings:check
           bun run docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any
@@ -1927,7 +2567,7 @@ jobs:
           # because it reads as current. It also reports an ORPHAN -- a
           # sub-graph page whose sub-graph now contributes nothing -- which is
           # `ankg`'s helper doing its job in a third generator.
-          bun run docs:auto:check
+          bun run auto:docs:check
           bun run gen:jsonld:check
           bun run readme:sync:check
           bun run avatars:css:check
@@ -2040,122 +2680,6 @@ jobs:
       # a voice. A red here means a voice was added or a rule was edited and
       # the page was not regenerated — an omission by the author of the diff,
       # every time, which is exactly the test stated twenty lines above.
-      - name: voices projection and viewer are current
-        run: bun run voices:viz:check
-
-      # THE VOICES SHAPE, NOT THE LIBRARY SHAPE, and that distinction is the
-      # whole reason this is gated while `library:viz:check` twenty lines
-      # below is not. The folio projection derives from the declared `folio`
-      # directories and the JSON nodes in them — three stickies in one
-      # directory today — so it changes when somebody edits or adds a landing
-      # sticky, and NOT when somebody else merges. A red here is an omission
-      # by the author of the diff, every time, which is the test the comment
-      # above states. Bean `7ofc`.
-      - name: folio projection and viewer are current
-        run: bun run folio:viz:check
-
-      # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
-      # than an exception to it. The viewer-nav audit walks the whole docs
-      # tree, so its sidecar goes stale the moment anybody adds a generated
-      # page anywhere — gating on staleness would make a red mean "somebody
-      # else merged", which is the shape the owner ruled ungated on
-      # 2026-09-20. A page that WAS railed and is not any more is the author
-      # of the diff, every time. Staleness and the still-unwired pages are
-      # `bun run viewer:nav:strict`, which the author of a new generator runs.
-      # Bean `edx7`.
-      - name: viewer pages keep the navbar they had
-        run: bun run check:viewer-nav
-
-      # The handler namespace's own index. Gated on the same ground as the
-      # voices projection: it derives from the DECLARATIONS (which kinds each
-      # instance declares, and whether a `coverage.visualiser` names a
-      # published path), not from the whole repository — so a red means
-      # somebody changed a declaration and did not regenerate.
-      #
-      # It is also the one page a navbar tile points at: `siteLinks` publishes
-      # `kg` as `/<stub>/`, and `verifySiteLinks` reports `unknown` rather
-      # than `dead` on an unbuilt tree, so nothing else here would notice it
-      # going missing until production (bean `8h42`).
-      - name: handler namespace index is current
-        run: bun run handler:index:check
-
-      # NOT GATED: the schema and library projections.
-      #
-      # `schema:viz:check` and `library:viz:check` exist and are worth running
-      # locally, but they are deliberately NOT in this gate set. Owner's call,
-      # 2026-09-20, after the gate went red twice on PR #583 for a reason that
-      # was never the author's doing.
-      #
-      # Both projections are derived from the WHOLE repository, so any branch
-      # alive for more than a few minutes finds them stale against the merge
-      # ref. Measured across one session: `main` moved four times — 120, 2, 2
-      # and 11 commits — and twice that was enough to redden this gate on a
-      # branch whose own tree was correct. A red that means "somebody else
-      # merged while you worked" is not an omission by whoever sees it, and it
-      # fails the standard stated eight lines above: "a real omission, every
-      # time."
-      #
-      # Nothing published goes stale. `docs-site.yml` runs the WRITERS at
-      # deploy, so the page a reader opens is regenerated from the tree being
-      # published. What can lag is the committed copy on `main`, which exists
-      # to be browsable on GitHub — and a browsable copy one merge behind is a
-      # far smaller cost than a gate contributors learn to re-run without
-      # reading.
-      #
-      # The other `--check` gates here stay, and the difference is their
-      # INPUTS: each derives from a narrow set of files, so its red really does
-      # mean the author of the diff forgot to regenerate.
-
-      # The translation index is what the navbar's locale filter reads. It is
-      # derived from what each page DECLARES — `lang`, and `translation_source`
-      # naming what it expresses — never from a directory whose name looks like
-      # a language subtag. Three outcomes, and the third is why this is not a
-      # plain diff: exit 2 means the translation set could NOT BE DETERMINED
-      # (no Jekyll site where one was expected, or a page whose front matter
-      # will not parse and that something translates), which must never be
-      # published as "this folio has no translations".
-      #
-      # It also catches the one thing that is easy to forget and invisible
-      # locally: a translated page with no `nav_exclude: true` goes into the
-      # statically built navbar for EVERY reader, whatever locale they chose.
-      - name: translation index is current
-        run: bun run translation:index:check
-
-      # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
-      #
-      # `translation:drift:check` is the one gate in this job that has been red
-      # BY DECISION (bean `ngxj`, issue #206) rather than by defect. It used to
-      # be the THIRD of 107 `bun run` lines inside "gates that were registered
-      # and never run" — one `run: |` block under `set -e` — so while it was red
-      # the 104 invocations after it never executed, on any PR or any push to
-      # `main`.
-      #
-      # Measured 2026-09-26 (bean `cpss`): of those 104, eighteen have no test
-      # anywhere that references the same script, so for those eighteen the
-      # masked gate was the only thing watching. The other 86 had a test twin,
-      # which is a second line of defence rather than an excuse — and both
-      # figures are BOUNDS, not counts, because the twin was matched on script
-      # basename.
-      #
-      # The cost was measured too, twice. `check:partition` (in the masked
-      # region) reported an unclassified module the hour the batch first ran
-      # through. And "translation index is current", three steps above, is the
-      # gate that would have caught a stale `docs/_data/translations.json` —
-      # which had to be repaired BY HAND on 2026-09-26 after CI reported green
-      # on the branch carrying it. The gate existed the whole time.
-      #
-      # So the invariant is now STRUCTURAL rather than remembered: a gate that
-      # may be deliberately red belongs last, where the set it masks is empty.
-      # Anything added after this step re-creates the defect, and the reason it
-      # is safe here is only that nothing follows.
-      #
-      # Three earlier changes moved ONE gate each to just above the batch
-      # (`ee964c7411` for `translated-links:check`, then `docs:pages:check` and
-      # `check:available-locales`). Each was correct and none of them scaled:
-      # "put your gate above the drift" is a rule every future author has to be
-      # told, while "the deliberate red is last" is a rule the file enforces.
-      - name: translations have not drifted from their source
-        run: bun run translation:drift:check
 
   # ── End-to-end, including the accessibility gate ────────────────────
   #
@@ -2172,10 +2696,59 @@ jobs:
   # Chromium comes from `playwright install --with-deps`, the same call
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
-  e2e:
+  e2e-shard:
     # bpmn-node: Task_E2E
-    name: End-to-end + accessibility (hard)
+    name: End-to-end + accessibility, shard ${{ matrix.shard }}/3
+    #
+    # Bean `dlqu`. `playwright test` was 4m33s of this job's 5m16s with ONE
+    # worker, and once `bun test` ran in parallel this was the workflow's
+    # slowest job. So the suite runs as three shards, each with one worker per
+    # core (`playwright.config.ts`), and the `e2e` job below carries the check
+    # name and goes red unless every shard succeeded.
+    #
+    # The shard reaches Playwright as `E2E_SHARD` in the ENVIRONMENT, never as
+    # `--shard=${{ matrix.shard }}` on the command line: `gatesFrom` runs a
+    # `bun` line locally with no shell, so an interpolation in it would arrive
+    # as literal text (bean `9zok`). Unset, as it is locally, means the whole
+    # suite — which is what `bun run gates --all` should run.
+    # A cap, because a parallel worker that spins (measured once locally:
+    # one `bun test` worker at 97 % CPU for 20 minutes, nothing else left) is
+    # not stopped by a per-test timeout, and the Actions default is six hours.
+    # a shard measured 1m55s-2m37s; 20 is ~8x that, so a red here is a hang, never a slow day.
+    timeout-minutes: 20
     runs-on: ubuntu-latest
+    strategy:
+      # Every shard reports, so one red shard does not hide another's result.
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2187,6 +2760,12 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       - name: Install Chromium
         run: npx --yes playwright install --with-deps chromium
@@ -2194,101 +2773,128 @@ jobs:
       # The suite generates what it needs under _kg/ if absent, so the
       # artefacts under test are the ones the deploy emits rather than a
       # committed fixture that could agree with the test and disagree with
-      # what ships.
+      # what ships. Since bean `dlqu` that happens once per run, in
+      # `cat-harness/test/e2e-global-setup.ts`, before any worker starts.
       # Here rather than in the `typescript` job because bpmn-js renders
       # through Chromium, which only this job installs. Before the e2e run so
       # a stale SVG is reported on its own terms rather than inside a browser
-      # test's output.
+      # test's output. Shard 1 only: it reads the whole tree, so asking it
+      # three times would cost three times and answer once.
       - name: rendered BPMN SVGs are current
+        if: matrix.shard == 1
         run: bun run render:bpmn:check
 
       - name: playwright test
+        env:
+          E2E_SHARD: ${{ matrix.shard }}/3
         run: bunx playwright test
+
+      # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
+      #
+      # A red e2e job here was unreadable to anyone who could not reach
+      # GitHub's log host: the check run's annotations carry only `Process
+      # completed with exit code 1`, and the `list` reporter writes to the log
+      # and nowhere else. An artifact is fetchable from the REST API, so the
+      # failing test, its error and its stack survive where a reader can get
+      # at them.
+      #
+      # `if: failure()` rather than `always()`: a green run's report is noise.
+      #
+      # `if-no-files-found: ignore` is deliberate and was paid for. Shard 1
+      # runs `render:bpmn:check` BEFORE this step, so when THAT fails the job
+      # is red with no report ever written — and that is exactly how the
+      # 2026-10-03 incident presented: shard 1 dying in 37 s while shards 2
+      # and 3 took ~2 min and passed. `error` here would add a second, louder
+      # failure on top of the real one and point at the wrong step.
+      - name: Keep the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
 
       # Every .sh a user runs by hand or wires into a config has a .bat beside
       # it, generated from one template by scripts/gen-bat-wrappers.sh. A
       # script added to WRAPPED without a regenerate, or a wrapper edited by
-      # hand, is the drift this catches; --check writes nothing.
+      # hand, is the drift this catches; --check writes nothing. Shard 1 only,
+      # for the reason the BPMN check gives.
       - name: windows .bat wrappers are current
+        if: matrix.shard == 1
         run: bun run bat:sync:check
 
-  rust-wildcard:
-    # bpmn-node: Task_Rust
-    name: Rust wildcard imports (warn-only)
+  e2e:
+    # bpmn-node: Task_E2E
+    name: End-to-end + accessibility (hard)
+    #
+    # The check NAME that branch protection and the beans cite, kept on a job
+    # that completes the multi-instance task: it is green only when every
+    # shard SUCCEEDED. `if: always()` so that a failed or cancelled shard turns
+    # this red rather than SKIPPING it — a skipped required check reads as
+    # neither red nor green, which is the vacuous pass bean `0qjq` measured.
+    needs: e2e-shard
+    if: always()
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-
-      # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
-      # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
-      # of the legitimate baseline, so they're reported but not failed.
-      - name: Wildcard `use ...::*;` report
-        continue-on-error: true
+      - name: every shard succeeded
+        env:
+          SHARDS: ${{ needs.e2e-shard.result }}
+        # No `gate-shell.sh` here either, and for the same reason: this job
+        # never checks out. See the `typescript` rollup above (bean `yqc4`).
         run: |
-          set -uo pipefail
-          # Same distinction as the Lean gate: there are ZERO .rs files in this
-          # repo, so "OK — no non-test wildcard imports" was reporting a clean
-          # result for a scan of nothing. `tools/` is a folio tree; this job is
-          # here for folios that vendor this workflow.
-          count=$(find tools -name '*.rs' 2>/dev/null | wc -l)
-          if [ "$count" -eq 0 ]; then
-            echo "SKIP — no tools/**/*.rs in this repo (the Rust tree lives in the folio). Nothing scanned."
-            exit 0
+          echo "e2e shards: $SHARDS"
+          if [ "$SHARDS" != "success" ]; then
+            {
+              echo "### ✗ End-to-end + accessibility"
+              echo
+              echo "Shard result: \`$SHARDS\`"
+              echo
+              echo "This job runs nothing itself — it completes the multi-instance"
+              echo "task and is green only when EVERY shard succeeded, so open the"
+              echo "red shard for its own summary and its Playwright report artifact."
+              echo
+              echo "Worth checking first: shard 1/3 alone runs \`render:bpmn:check\`"
+              echo "BEFORE playwright, so a stale BPMN SVG kills it in ~37 s having"
+              echo "run no test, while a passing shard takes ~2 min. \`bun run regen\`"
+              echo "reports that check as OUTSIDE its coverage on every run."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
           fi
-          # Char class covers digits too (e.g. base64::prelude::*, sha2::*) and
-          # underscores (wasm_bindgen::prelude::*, extendr_api::prelude::*).
-          matches=$(grep -rnE '^[[:space:]]*use [A-Za-z0-9_:]+::\*;' \
-            tools --include='*.rs' 2>/dev/null | grep -vE 'use super::\*;' || true)
-          if [ -n "$matches" ]; then
-            echo "::warning::Non-test wildcard imports in tools/ (ratchet — narrow when touched):"
-            echo "$matches" | while IFS= read -r line; do
-              echo "::warning::$line"
-              echo "  $line"
-            done
-          else
-            echo "OK — no non-test wildcard imports in $count Rust file(s)"
-          fi
-
-  dependency-advisories:
-    # bpmn-node: Task_Advisories
-    name: Dependency advisories (warn-only)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          submodules: true
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.14
-
-      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
-      # worth keeping next to the step: a HARD gate on advisories hands a
-      # transitive advisory nobody can patch the power to red every PR until
-      # somebody adds a suppression — and the suppression is what rots.
-      # `.github/dependabot.yml` is the other half: it turns the same
-      # advisories into reviewable PRs rather than into a gate.
-      #
-      # `bun audit` needs the registry, not the modules, so there is no
-      # install step. Adding one would make a dependency resolve a
-      # precondition of asking whether dependencies are safe.
-      #
-      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
-      # state on purpose, and keeps the three states apart in its OUTPUT
-      # instead — which is the only place they can be kept apart once the exit
-      # code carries no information. `|| true` is exactly how "could not
-      # determine" becomes "fine", and this workflow has paid for that once
-      # already: see the ruff note at the top of this file, where a step
-      # "warned about the missing paths and exited 0, so it reported a clean
-      # baseline it had never computed."
-      - name: Known advisories against the resolved tree
-        run: bun run check:dependency-advisories
 
   skill-registration-chain:
     # bpmn-node: Task_SkillChain
     name: Skill-registration chain, unmasked (hard)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2299,6 +2905,12 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
@@ -2320,3 +2932,137 @@ jobs:
       # `node_modules/` counted as graph nodes, pinned in a committed sidecar.
       - name: the registration chain is current, read unmasked
         run: bun run skill:register:check
+
+  qa-publish:
+    # bpmn-node: Task_QaPublish
+    name: Publish QA results to qa-reports (not a gate)
+    #
+    # Bean `16ei`, arc `3fva`, owner rulings D1 and D3: each run's QA results
+    # go to the orphan `qa-reports` branch, keyed `main/<sha>/` on a push to
+    # main and `pr/<n>/<head-sha>/` on a same-repository PR.
+    #
+    # ## A SEPARATE job, after the gates, whatever they concluded
+    #
+    # `needs: gates` orders it after the gates; `always()` runs it even when
+    # they are red, because the evidence of a red commit is evidence too, and
+    # the manifest records the gates' result beside it. Being its own job is
+    # what keeps a red publish from masking a gate: it fails in its own lane
+    # and the gates' verdict is untouched.
+    #
+    # ## It is not a gate, and `gates.ts` knows it
+    #
+    # This is the only job here with `contents: write`, and `gates.ts` skips a
+    # job holding it (`publishes`), so `bun run gates` never pushes from a
+    # contributor's machine.
+    #
+    # ## Fork PRs
+    #
+    # A fork PR's token is read-only (spike `3ds9`). `qa:publish --github`
+    # decides that itself and exits 0 with a `::notice` naming the reason, so
+    # the skip is stated, never silent and never a red run.
+    #
+    # ## What it publishes — `qa:refresh` decides, and says whether it is whole
+    #
+    # Bean `3hk4`. While `test/results/` is still tracked, the commit's own
+    # copy IS the record and nothing is regenerated (`5hox` needs `main/<sha>`
+    # byte-identical to it). Once `5hox` removes it, a fresh checkout holds one
+    # file there, so `qa:refresh` runs the declared QA writers into the empty
+    # tree first. Not an artifact from `gates`: its gates are in judge mode and
+    # write nothing, so its working copy is this checkout's. A refresh that
+    # leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE,
+    # this job fails, and `qa:publish --completeness` refuses to store it — a
+    # partial entry is never published as if it were the commit's record.
+    needs: [gates]
+    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: qa-publish-${{ github.event.pull_request.number || github.sha }}
+      cancel-in-progress: false
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
+      # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
+      # owner ruling 2026-10-01: keep the file, give it a producer). Both
+      # deploys publish bootstrap through bootstrap-tools' `export-graph.ts`,
+      # which writes no QA sidecar, so before this step only a hand run wrote
+      # it and `check:published-instance-exports` reported "no workflow
+      # producer". Run here, before the publish, so what reaches `qa-reports`
+      # is this commit's export. The document goes to the runner's temp dir:
+      # the sidecar is the product. That gate reads this line as the producer.
+      - name: Regenerate the bootstrap kg-export QA sidecar
+        run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
+
+      # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
+      # splice, `commit-tree -p`, push without `-f`, three attempts with the
+      # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
+      # (`qa-reports-unretried`).
+      # Bean `3hk4`. Tracked copy present: accounts for it and runs nothing.
+      # Absent (after `5hox`): runs every writer in `QA_WRITERS`
+      # (`qa-refresh.ts`) into the empty tree, then checks each wrote and every
+      # file is claimed. Exit 1 on an incomplete tree fails the job here, so
+      # the publish below never runs on it. After the kg-export step above,
+      # whose sidecar it accounts for as an `external` family.
+      - name: Produce this run's QA working copy, and say whether it is complete
+        run: bun run qa:refresh --github --report "$RUNNER_TEMP/qa-refresh.json"
+
+      - name: Publish this run's QA results (skips fork PRs with a notice)
+        env:
+          GATES_RESULT: ${{ needs.gates.result }}
+        run: bun run qa:publish --github --completeness "$RUNNER_TEMP/qa-refresh.json" --gates-result "$GATES_RESULT"
+
+      # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did
+      # over the committed tree — every kg-qa sidecar validates, no critical
+      # criterion fails, every home carries its manifest, no conflict marker,
+      # every badge's witness is there — run over the entry this job just
+      # stored, read back through qa-store. It walks every HOSTED home
+      # (`cat-harness/test/results/bootstrap/`, …), which the old test never
+      # did. It keys the entry exactly as the publish does, so a fork PR skips
+      # with the same stated notice; any other miss is UNKNOWN (exit 2), never
+      # a pass. In this job, not in `gates`, because it judges the STORED
+      # record, which exists only after the publish.
+      - name: The stored QA entry validates, hosted homes included
+        run: bun run check:qa-corpus --github

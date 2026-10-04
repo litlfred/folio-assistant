@@ -1,32 +1,6 @@
 classDiagram
   direction TB
   namespace cat_harness__qa {
-    class cat_harness_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
-      <<json: KgQaReportSchema>>
-      kind [1] implements | co-located
-      prose [1] string
-      code [1] string
-      prose_hash [1] string
-      code_hash [1] string
-      by [1] baseline | agent | human
-      reason [0..1] string
-    }
-    class cat_harness_qa_kg_qa_v1_Verdict["Verdict"] {
-      <<json: KgQaReportSchema>>
-      rule [1] string
-      result [1] pass | fail | n/a
-      note [0..1] string
-    }
-    class cat_harness_qa_kg_qa_v1_Voice_review["Voice_review"] {
-      <<json: KgQaReportSchema>>
-      voice [1] string
-      instance [1] string
-      skill_hash [1] string
-      voice_hash [1] string
-      by [1] agent | human
-      at [1] string
-      verdicts [0..*] Verdict[]
-    }
     class cat_harness_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
       $schema [1] 'kg-qa/v1'
@@ -34,8 +8,8 @@ classDiagram
       source_hash [1] string | null
       criteria [1] map~object~
       totals [1] map~number~
-      pair_attestations [0..*] Pair_attestation[]
-      voice_reviews [0..*] Voice_review[]
+      pair_attestations [0..1] any
+      voice_reviews [0..1] any
     }
     class cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
       <<json: KgQaManifestSchema>>
@@ -68,6 +42,8 @@ classDiagram
       cases [0..*] Case[]
       requirements [0..*] string[]
       updated_at [1] string
+      plan [0..1] object
+      sut [0..1] object
     }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
       <<ts: QaWitness>>
@@ -112,7 +88,15 @@ classDiagram
       <<json: QaIndexSchema>>
       $schema [1] 'folio-qa-index/v1'
       page [1] string
+      corpus [0..1] present | absent
       badges [1] map~object~
+      unswept [0..*] string[]
+    }
+    class cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1["folio-qa-translation-pages/v1"] {
+      <<json: QaTranslationPagesSchema>>
+      $schema [1] 'folio-qa-translation-pages/v1'
+      corpus [1] present | absent
+      pages [0..*] string[]
     }
     class cat_harness_qa_folio_detangle_sidecar_v1["folio-detangle-sidecar/v1"] {
       <<ts: DetangleSidecar>>
@@ -172,14 +156,8 @@ classDiagram
       pages [0..*] Page[]
     }
   }
-  cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
-  cat_harness_qa_kg_qa_v1_Voice_review *-- "0..*" cat_harness_qa_kg_qa_v1_Verdict : verdicts
-  cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Voice_review : voice_reviews
   cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
   cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
-  cssClass "cat_harness_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
-  cssClass "cat_harness_qa_kg_qa_v1_Verdict" fa_uml_kind_qa
-  cssClass "cat_harness_qa_kg_qa_v1_Voice_review" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
@@ -189,6 +167,7 @@ classDiagram
   cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_lsi_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" fa_uml_kind_qa

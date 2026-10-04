@@ -9,7 +9,7 @@ import { join } from "node:path";
 import { scriptSidecarPath } from "../../cat-harness/content/pipeline/qa-utils";
 import { detailFileName, detailRelPath } from "../../cat-harness/scripts/agent-memory";
 import { stickyFile } from "../../cat-harness/scripts/ensure-landing-sticky";
-import { kgQaSidecarPath } from "../../cat-harness/schemas/kg-qa";
+import { ForeignSubjectError, kgQaSidecarPath } from "../../cat-harness/schemas/kg-qa";
 import { portableSegment, unportablePath, unportableSegment } from "../../cat-harness/schemas/portable-path";
 
 describe("unportableSegment", () => {
@@ -145,8 +145,10 @@ describe("kgQaSidecarPath", () => {
     expect(p).toBe(join(root, "test", "results", "kg-qa", "skills", "folio-core", "todo-manager.kg-qa.json"));
   });
 
-  test("an outside subject is re-rooted under _external and stays portable", () => {
-    const p = kgQaSidecarPath(root, "/bootstrap/processes", "req:x");
-    expect(p).toBe(join(root, "test", "results", "kg-qa", "_external", "bootstrap", "processes", "req%3Ax.kg-qa.json"));
+  test("an outside subject is REFUSED — its owner audits it (Q-A PR 4)", () => {
+    // It used to be re-rooted under `_external/`, which wrote a second copy of
+    // a verdict its owner already holds. No path is composed at all now, so no
+    // unportable one can be either.
+    expect(() => kgQaSidecarPath(root, "/bootstrap/processes", "req:x")).toThrow(ForeignSubjectError);
   });
 });

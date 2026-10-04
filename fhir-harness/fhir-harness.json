@@ -2,7 +2,10 @@
   "_comment": "THE BARE FHIR IG LAYER, staged as a top-level directory on the path who-iris, smart-trust, smart-immunizations and smart-base are already on. Created 2026-09-22 on the owner's stack ruling: `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`, no smart-guidelines. It is bean `nsbb`'s 'base', now named: run the FHIR IG Publisher with NO pre-processing and NO post-processing and publish the result, which is how SMART Guidelines were built BEFORE the DAK phases were added -- a shape that demonstrably worked rather than one being invented. IT MUST STAY WHO-FREE. The package here may be referenced BY `authoring-who-smart-guidelines` and may never reference it; a violation fails nothing, the layer simply stops being usable by the non-WHO IG it exists for, which is why `ig-build-pipeline` states the refusal as a checkable list rather than as an intention. DECLARES ONLY `skills/`, because that is all that exists: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
   "name": "fhir-harness",
   "repository": "litlfred/fhir-harness",
-  "livesAt": { "repository": "litlfred/folio-assistant", "path": "fhir-harness" },
+  "livesAt": {
+    "repository": "litlfred/folio-assistant",
+    "path": "fhir-harness"
+  },
   "version": "0.1.0",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs (bean `t3n8`). `name` stays the machine identifier that filenames and `needs` edges resolve against.",
   "title": "FHIR IG Harness",
@@ -33,6 +36,14 @@
       ]
     },
     {
+      "id": "fhir-ig-scripts",
+      "path": "scripts/",
+      "description": "The IG site pipeline's code and the Liquid templates it renders with: `stage-ig-sites.ts` stages each instance's IG as its own just-the-docs site, `build-ig-site.ts` turns an IG's `input/` and `sushi-config.yaml` into that site (navigation, colour scheme, the lifted `site.data.fhir` artefact variables, and the Publisher-generated pages `toc` and `artifacts`), `ig-site-data.ts` lifts the IG's `_data`, and `ig-ast.ts` lists, checks, diffs and renders IG ASTs. Templates sit under `templates/`, beside the writer that reads them (`liquid-templates`). Undeclared until 2026-10-01 while the Tool nodes in `tools/` invoked every one of these files: a `.liquid` file in an undeclared directory is one no checker looks at, which is what declaring it fixes.",
+      "graphKinds": [
+        "code"
+      ]
+    },
+    {
       "id": "fhir-harness-processes",
       "path": "processes/",
       "dependents": "skip",
@@ -44,6 +55,10 @@
     {
       "id": "qa",
       "path": "test/results/",
+      "storage": {
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit"
+      },
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 9 files across scenarios (1), skills (6), tools (2). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"

@@ -1,7 +1,8 @@
 name: Lake cache refresh (orphan-branch family)
 
-# Refreshes the `lake-cache/<package>-<toolchain>` family of orphan
-# branches. Tier-2 of the hybrid Lean-cache strategy
+# Refreshes the `cat/folio-assistant-sci/lake-cache/<package>-<toolchain>`
+# family of orphan branches (legacy `cat-lake-cache/…` and `lake-cache/…`
+# until the remotes are renamed — bean folio-assistant-9io2). Tier-2 of the hybrid Lean-cache strategy
 # (.github/actions/lake-cache-restore/).
 #
 # Content-agnostic: the package roster (names + Lake roots) is NOT
@@ -9,7 +10,8 @@ name: Lake cache refresh (orphan-branch family)
 # downstream repo edits to match its own Lean packages.
 #
 # ⚠ THIS WORKFLOW BELONGS IN THE CONTENT REPO, NOT HERE (bean 8agu).
-# It pushes `lake-cache/<pkg>-<slug>` orphan branches, and those branches
+# It pushes `cat/folio-assistant-sci/lake-cache/<pkg>-<slug>` orphan
+# branches (or a legacy name, where that is what exists), and those branches
 # live in the content repo — folio-assistant has ZERO of them. It also
 # needs `content/<paper>/lean/` to build, which the platform does not
 # have. Running it here can only no-op or fail. The copy that matters is
@@ -103,8 +105,15 @@ jobs:
           echo "$slug" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "orphan-branch<<$EOF" >> "$GITHUB_OUTPUT"
-          echo "lake-cache/${{ matrix.package }}-$slug" >> "$GITHUB_OUTPUT"
+          # The family is `cat/folio-assistant-sci/lake-cache/` (bean
+          # folio-assistant-9io2; it was `lake-cache/`, then the interim
+          # `cat-lake-cache/`; names declared in
+          # cat-harness/scripts/special-branches.json). The push step resolves
+          # this key through lake-cache.sh, which writes to a legacy name only
+          # while that is the one that exists — a new-name branch beside a
+          # live legacy one would block the owner's rename.
+          echo "orphan-key<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "${{ matrix.package }}-$slug" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Build the package (populates .lake/)
@@ -119,7 +128,7 @@ jobs:
 
       - name: Push .lake/ to orphan branch
         env:
-          BRANCH: ${{ steps.slug.outputs.orphan-branch }}
+          KEY: ${{ steps.slug.outputs.orphan-key }}
           LAKE_ROOT: ${{ matrix.lake-root }}
           PACKAGE: ${{ matrix.package }}
         run: |
@@ -143,6 +152,9 @@ jobs:
           done
           [ -z "$SVC" ] && { echo "::error::lake-cache.sh not found"; exit 1; }
 
+          BRANCH=$(bash "$SVC" resolve-branch --key "$KEY") \
+            || { echo "::error::could not resolve the cache branch for $KEY"; exit 1; }
+          echo "cache branch: $BRANCH"
           bash "$SVC" seed \
             --lake-root "$LAKE_ROOT" \
             --package "$PACKAGE" \
@@ -160,7 +172,7 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-      - name: List + prune lake-cache/* branches
+      - name: List + prune cat/folio-assistant-sci/lake-cache/*, cat-lake-cache/* and lake-cache/* branches
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGES: ${{ needs.setup.outputs.packages }}
@@ -177,31 +189,45 @@ jobs:
           # degrade gracefully in that scenario rather than failing the
           # whole workflow. Per PR #1097 review (Copilot).
 
-          # Tolerate the fetch's failure on empty pattern.
-          git fetch origin --quiet 'refs/heads/lake-cache/*:refs/remotes/origin/lake-cache/*' 2>/dev/null \
-            || echo "(no lake-cache/* refs to fetch — first run or no remote branches yet)"
+          # Three families during the rename (beans folio-assistant-32f6,
+          # folio-assistant-9io2): the new `cat/folio-assistant-sci/lake-cache/`
+          # and the legacy `cat-lake-cache/` and `lake-cache/`. The keep-2
+          # rule is applied to EACH family separately — exactly the rule this
+          # job always applied to `lake-cache/`, and no wider: a legacy branch
+          # is never pruned because a newer-named one is newer. Every pattern
+          # below starts with the family's full prefix, so `lake-cache/` never
+          # matches inside the other two. The legacy families go with bean
+          # folio-assistant-oycs.
+          FAMILIES="cat/folio-assistant-sci/lake-cache cat-lake-cache lake-cache"
+          for fam in $FAMILIES; do
+            # Tolerate the fetch's failure on empty pattern.
+            git fetch origin --quiet "refs/heads/$fam/*:refs/remotes/origin/$fam/*" 2>/dev/null \
+              || echo "(no $fam/* refs to fetch — first run or no remote branches yet)"
+          done
 
           mapfile -t pkgs < <(echo "$PACKAGES" | jq -r '.[]')
-          for pkg in "${pkgs[@]}"; do
-            branches=$(git branch -r --list "origin/lake-cache/$pkg-*" \
-                       --sort=-committerdate 2>/dev/null | sed 's|.*origin/||' | head -50)
-            if [ -z "$branches" ]; then
-              echo "No lake-cache/$pkg-* branches yet — skipping prune for $pkg"
-              continue
-            fi
-            echo "Branches for $pkg:"
-            echo "$branches" | sed 's/^/  /'
-            to_delete=$(echo "$branches" | tail -n +3)
-            for b in $to_delete; do
-              echo "Pruning old cache: $b"
-              git push origin --delete "$b" 2>/dev/null \
-                || echo "  (already deleted or push failed)"
+          for fam in $FAMILIES; do
+            for pkg in "${pkgs[@]}"; do
+              branches=$(git branch -r --list "origin/$fam/$pkg-*" \
+                         --sort=-committerdate 2>/dev/null | sed 's|.*origin/||' | head -50)
+              if [ -z "$branches" ]; then
+                echo "No $fam/$pkg-* branches — skipping prune for $pkg in $fam"
+                continue
+              fi
+              echo "Branches for $pkg in $fam:"
+              echo "$branches" | sed 's/^/  /'
+              to_delete=$(echo "$branches" | tail -n +3)
+              for b in $to_delete; do
+                echo "Pruning old cache: $b"
+                git push origin --delete "$b" 2>/dev/null \
+                  || echo "  (already deleted or push failed)"
+              done
             done
           done
 
           # Hard cap (paranoia for the case where per-package keep-2 still
           # leaves stale entries from a removed package).
-          total=$(git branch -r --list 'origin/lake-cache/*' 2>/dev/null | wc -l)
+          total=$(git branch -r --list 'origin/cat/folio-assistant-sci/lake-cache/*' 'origin/cat-lake-cache/*' 'origin/lake-cache/*' 2>/dev/null | wc -l)
           if [ "$total" -gt 20 ]; then
-            echo "::warning::lake-cache/* branch count = $total (> 20 cap). Manual cleanup recommended."
+            echo "::warning::cat/folio-assistant-sci/lake-cache/* + cat-lake-cache/* + lake-cache/* branch count = $total (> 20 cap). Manual cleanup recommended."
           fi

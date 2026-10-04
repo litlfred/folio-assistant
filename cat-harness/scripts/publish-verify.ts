@@ -28,7 +28,11 @@
  * in built HTML (bean `uknu`) — a defect the source cannot show. The third is
  * the site search index (bean `fq5u`), a downstream output Jekyll writes and
  * nothing had checked — `--search-index borrowed` on a staging preview, which
- * serves the published index or a declared-empty one.
+ * serves the published index or a declared-empty one. The fourth and fifth are
+ * the mechanical half of the `linked-data` voice (bean `4pla`):
+ * `jsonld-object-links` (a value under an object property expands to a link, or
+ * is a literal the author declared) and `jsonld-own-base` (no document leans on
+ * a remote context's `@base`).
  *
  * ## What is in scope
  *
@@ -44,6 +48,7 @@
  * index, say): counted and reported, never silently passed, and never able to
  * block our release. The same scoping the owner approved for bean `2j09`.
  */
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
@@ -54,6 +59,7 @@ import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
 import { heldProvJsonldContext, PROV_JSONLD_CONTEXT_URL } from "../schemas/prov-jsonld.ts";
 import { duplicateIds } from "./check-duplicate-ids";
+import { ID_LOOKUP_DIR, SCOPES_DIR, type SearchManifest } from "./search-split.ts";
 
 export interface Finding {
   verifier: string;
@@ -69,6 +75,12 @@ export interface VerifierResult {
   findings: Finding[];
   /** Set when the verifier could not run at all — never read as a pass. */
   couldNotTell?: string;
+  /**
+   * Something counted that is neither a pass nor a finding — said in the
+   * report so a sanctioned exception stays visible instead of vanishing into
+   * "pass". `jsonld-object-links`' declared literals are the first.
+   */
+  note?: string;
 }
 
 /** What a verifier knows about the site beyond its files. */
@@ -217,6 +229,235 @@ export const JSONLD_EXPAND: Verifier = {
   },
 };
 
+/** The remote context URLs a document's `@context` names, in order. */
+function remoteContexts(doc: Record<string, unknown>): string[] {
+  const c = doc["@context"];
+  return (Array.isArray(c) ? c : [c]).filter((x): x is string => typeof x === "string");
+}
+
+/** Whether a document's own `@context` carries an inline `@base`. */
+function inlineBase(doc: Record<string, unknown>): boolean {
+  const c = doc["@context"];
+  return (Array.isArray(c) ? c : [c]).some((x) => x !== null && typeof x === "object" && "@base" in (x as object));
+}
+
+/**
+ * The properties a held context makes OBJECT properties — every term it
+ * coerces to `"@type": "@id"` or `"@vocab"`, expanded to its full IRI.
+ *
+ * Read from the contexts themselves, never from a list written here: the
+ * `linked-data` voice's `ld-know-which-properties-are-object-properties` says
+ * the vocabulary decides, and a held context IS that decision in the form a
+ * processor applies. PROV-JSONLD's context coerces exactly PROV-O's object
+ * properties (`agent`, `hadRole`, `hadPlan`, `used`, …); ours coerces the
+ * terms whose value is a node.
+ */
+async function objectProperties(
+  contextDoc: unknown,
+  loader: ReturnType<typeof localLoader>,
+): Promise<Set<string>> {
+  const ctx = (contextDoc as { "@context"?: Record<string, unknown> })?.["@context"];
+  const out = new Set<string>();
+  if (!ctx || typeof ctx !== "object" || Array.isArray(ctx)) return out;
+  for (const [term, def] of Object.entries(ctx)) {
+    if (term.startsWith("@") || def === null || typeof def !== "object") continue;
+    const t = (def as { "@type"?: unknown })["@type"];
+    if (t !== "@id" && t !== "@vocab") continue;
+    const probe = await jsonld.expand({ "@context": ctx, [term]: "urn:probe" } as object, {
+      documentLoader: loader,
+    } as unknown as jsonld.Options.Expand);
+    for (const k of Object.keys((probe[0] ?? {}) as object)) if (!k.startsWith("@")) out.add(k);
+  }
+  return out;
+}
+
+/**
+ * A marker no real value carries, prefixed to every EXPLICIT `{"@value": …}`
+ * before expansion so that a literal the author declared can be told from one
+ * a missing coercion produced. Expansion keeps a string value intact, so the
+ * prefix survives into the expanded form and nowhere else.
+ */
+const DECLARED = "\u0000declared-literal\u0000";
+
+/** A copy of `node` with every explicit `{"@value": string}` marked {@link DECLARED}. */
+function markDeclared(node: unknown): unknown {
+  if (Array.isArray(node)) return node.map(markDeclared);
+  if (node === null || typeof node !== "object") return node;
+  const o = node as Record<string, unknown>;
+  if (typeof o["@value"] === "string" && Object.keys(o).every((k) => k === "@value" || k === "@language" || k === "@type")) {
+    return { ...o, "@value": DECLARED + o["@value"] };
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(o)) out[k] = k === "@context" ? v : markDeclared(v);
+  return out;
+}
+
+/**
+ * The `linked-data` voice, mechanical half: a value under an OBJECT property
+ * must expand to a link (`ld-object-property-is-a-link`), and a compact-IRI key
+ * that misses its term's coercion (`ld-coercion-belongs-to-the-term`) is the
+ * same defect seen from the source — both expand to `{"@value": …}` where a
+ * node was meant, so one walk over the expanded graph catches both, and the
+ * finding names the source key when it was a compact IRI.
+ *
+ * **Three states, as the voice requires.** A link passes. A literal the author
+ * DECLARED — an explicit `{"@value": …}`, which is how `prov-jsonld.ts` writes
+ * a value with no release address while its report carries the reason
+ * (`ld-link-is-the-node-release-address`) — is counted, never a finding. A
+ * literal nobody declared is a finding: that is the PROV-O report defect bean
+ * `9y9j` measured in all 100 activities.
+ *
+ * Which properties are object properties is read from the held contexts each
+ * document names (see {@link objectProperties}); a document naming no held
+ * context has nothing to check against and is counted, not passed silently.
+ */
+export const JSONLD_OBJECT_LINKS: Verifier = {
+  id: "jsonld-object-links",
+  asks:
+    "Does every value under an object property of ours expand to a link — or is it a literal the " +
+    "author declared explicitly, because the node has no release address?",
+  async run(dir, ctx) {
+    const loader = localLoader(dir);
+    const byContext = new Map<string, Set<string>>();
+    const findings: Finding[] = [];
+    let checked = 0;
+    let outOfScope = 0;
+    let declared = 0;
+    for (const f of treeFiles(dir, ".jsonld")) {
+      let doc: Record<string, unknown>;
+      try {
+        doc = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
+      } catch {
+        continue; // `jsonld-expand` reports it; one defect, one finding
+      }
+      if (!isOurs(doc, ctx.bases)) {
+        outOfScope += 1;
+        continue;
+      }
+      if (contextOnly(doc)) continue;
+      const objProps = new Set<string>();
+      for (const url of remoteContexts(doc)) {
+        if (!byContext.has(url)) {
+          let props = new Set<string>();
+          try {
+            props = await objectProperties((await loader(url)).document, loader);
+          } catch {
+            // an unheld context is `jsonld-expand`'s finding, not this one's
+          }
+          byContext.set(url, props);
+        }
+        for (const p of byContext.get(url)!) objProps.add(p);
+      }
+      checked += 1;
+      if (objProps.size === 0) continue;
+      let expanded: unknown;
+      try {
+        expanded = await jsonld.expand(markDeclared(doc) as object, {
+          documentLoader: loader,
+        } as unknown as jsonld.Options.Expand);
+      } catch {
+        continue; // does not expand: `jsonld-expand` says so
+      }
+      const compactKeys = new Set(JSON.stringify(doc).match(/"[A-Za-z][\w-]*:[A-Za-z][\w-]*"(?=\s*:)/g) ?? []);
+      const walk = (node: unknown): void => {
+        if (Array.isArray(node)) return node.forEach(walk);
+        if (node === null || typeof node !== "object") return;
+        for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+          if (k.startsWith("@")) {
+            if (k === "@graph" || k === "@list" || k === "@set" || k === "@reverse") walk(v);
+            continue;
+          }
+          for (const x of Array.isArray(v) ? v : [v]) {
+            const lit = x !== null && typeof x === "object" ? (x as Record<string, unknown>)["@value"] : undefined;
+            if (objProps.has(k) && lit !== undefined) {
+              if (typeof lit === "string" && lit.startsWith(DECLARED)) declared += 1;
+              else {
+                const local = k.replace(/^.*[#/]/, "");
+                const viaCompact = [...compactKeys].some((c) => c.endsWith(`:${local}"`));
+                findings.push({
+                  verifier: "jsonld-object-links",
+                  file: relative(dir, f),
+                  detail:
+                    `${k} is an object property but its value ${JSON.stringify(lit).slice(0, 60)} expands to a ` +
+                    `literal` +
+                    (viaCompact
+                      ? " — the source key is a compact IRI, which does not inherit the term's coercion (ld-coercion-belongs-to-the-term)"
+                      : " (ld-object-property-is-a-link); write the node's address, or an explicit {\"@value\"} with its reason recorded"),
+                });
+              }
+            }
+            walk(x);
+          }
+        }
+      };
+      walk(expanded);
+    }
+    return {
+      checked,
+      outOfScope,
+      findings,
+      ...(declared > 0 ? { note: `${declared} declared literal(s) under object properties — nodes with no release address, reasons carried by their reports` } : {}),
+    };
+  },
+};
+
+/**
+ * `ld-no-base-in-a-remote-context`: JSON-LD 1.1 ignores `@base` in a context
+ * referenced by URL, and jsonld.js applies it anyway — so a document of ours
+ * that names a HELD remote context carrying `@base` and states none of its own
+ * resolves its relative `@id`s only under that one processor. Bean `bh4q` gave
+ * our documents a two-part context (the URL, then an inline `@base`); this is
+ * what keeps a new emitter from dropping the second part.
+ */
+export const JSONLD_OWN_BASE: Verifier = {
+  id: "jsonld-own-base",
+  asks:
+    "Does every document of ours that names a remote context carrying @base state its own @base " +
+    "inline, rather than lean on one a conforming processor ignores?",
+  async run(dir, ctx) {
+    const loader = localLoader(dir);
+    const carriesBase = new Map<string, boolean>();
+    const findings: Finding[] = [];
+    let checked = 0;
+    let outOfScope = 0;
+    for (const f of treeFiles(dir, ".jsonld")) {
+      let doc: Record<string, unknown>;
+      try {
+        doc = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
+      } catch {
+        continue;
+      }
+      if (!isOurs(doc, ctx.bases)) {
+        outOfScope += 1;
+        continue;
+      }
+      if (contextOnly(doc)) continue;
+      checked += 1;
+      if (inlineBase(doc)) continue;
+      for (const url of remoteContexts(doc)) {
+        if (!carriesBase.has(url)) {
+          let has = false;
+          try {
+            const c = ((await loader(url)).document as { "@context"?: unknown })["@context"];
+            has = c !== null && typeof c === "object" && !Array.isArray(c) && "@base" in (c as object);
+          } catch {
+            // unheld: `jsonld-expand`'s finding
+          }
+          carriesBase.set(url, has);
+        }
+        if (carriesBase.get(url)) {
+          findings.push({
+            verifier: "jsonld-own-base",
+            file: relative(dir, f),
+            detail: `names ${url}, whose @base JSON-LD 1.1 ignores in a remote context, and states no @base of its own`,
+          });
+        }
+      }
+    }
+    return { checked, outOfScope, findings };
+  },
+};
+
 /**
  * Bean `uknu`: the theme renders `nav_footer_custom.html` twice, so 1,222
  * published pages carried `id="fa-nav-open"` twice while the source was
@@ -327,8 +568,124 @@ export const SEARCH_INDEX: Verifier = {
   },
 };
 
+/**
+ * The per-scope search indices `search-split.ts` cuts from the site index
+ * (bean `m7mn`, issue #1972). A reader's search loads ONE scope instead of
+ * the whole, so a scope that is missing, stale or overlapping is a search
+ * that silently finds less — or finds pages twice — and nothing else would
+ * notice.
+ *
+ * Asks, in order: when the site index is present, the manifest is too; its
+ * `source.sha256` is the hash of the index actually in this tree (a stale
+ * split of an older index is the failure this exists for — staging borrows
+ * the published index, and must split THAT one); every scope file it names
+ * parses to the stated number of entries; and the scopes PARTITION the index
+ * — their counts sum to the source's and no entry key appears in two.
+ *
+ * A tree with no site index is out of scope here: `search-index` reports it.
+ */
+/**
+ * Bean `lrzn`: a scope's PREBUILT lunr index is loaded instead of built, so it
+ * must index exactly that scope's entries under the theme's fields — an index
+ * of a stale or different split finds pages its results cannot render, and
+ * misses ones it can. Read from the serialized form (`fieldVectors` keys are
+ * `<field>/<ref>`) rather than by loading it, which costs half a second on
+ * the largest scope.
+ */
+export function prebuiltIndexFindings(dir: string, scope: string, path: string, keys: readonly string[]): Finding[] {
+  const id = "search-scopes";
+  let idx: { version?: unknown; fields?: unknown; fieldVectors?: [string, unknown][] };
+  try {
+    idx = JSON.parse(readFileSync(join(dir, path), "utf-8")) as typeof idx;
+  } catch (e) {
+    return [{ verifier: id, file: path, detail: `prebuilt index of ${scope} unreadable: ${(e as Error).message.slice(0, 120)}` }];
+  }
+  const out: Finding[] = [];
+  if (idx.version !== LUNR_VERSION) out.push({ verifier: id, file: path, detail: `prebuilt index of ${scope} is lunr ${String(idx.version)}, the theme loads ${LUNR_VERSION}` });
+  if (JSON.stringify(idx.fields) !== JSON.stringify(PREBUILT_FIELDS)) {
+    out.push({ verifier: id, file: path, detail: `prebuilt index of ${scope} has fields ${JSON.stringify(idx.fields)}, the theme's are ${JSON.stringify(PREBUILT_FIELDS)}` });
+  }
+  const refs = new Set((idx.fieldVectors ?? []).map(([fr]) => fr.slice(fr.indexOf("/") + 1)));
+  const want = new Set(keys);
+  const extra = [...refs].filter((r) => !want.has(r));
+  const missing = [...want].filter((k) => !refs.has(k));
+  if (extra.length || missing.length) {
+    out.push({ verifier: id, file: path, detail: `prebuilt index of ${scope} does not cover its entries: ${missing.length} missing (${missing.slice(0, 3).join(", ")}), ${extra.length} not in the scope (${extra.slice(0, 3).join(", ")})` });
+  }
+  return out;
+}
+
+/** The lunr the theme vendors (just-the-docs 0.12.0) — `lunr.Index.load` warns on any other. */
+const LUNR_VERSION = "2.3.9";
+/** The fields the theme's `buildSearchIndex` declares, in its order. */
+const PREBUILT_FIELDS = ["title", "content", "relUrl"];
+
+export const SEARCH_SCOPES: Verifier = {
+  id: "search-scopes",
+  tool: "site-search-scopes",
+  asks:
+    "Does the per-scope search manifest match the site index in this tree, do its scope indices parse and " +
+    "partition that index exactly, does each prebuilt index cover exactly its scope, and is every identifier " +
+    "lookup it links to in the tree?",
+  async run(dir) {
+    const id = "search-scopes";
+    const source = join(dir, SEARCH_INDEX_PATH);
+    if (!existsSync(source)) return { checked: 0, outOfScope: 1, findings: [] };
+    const manifestAt = `${SCOPES_DIR}/manifest.json`;
+    const mp = join(dir, manifestAt);
+    if (!existsSync(mp)) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: manifestAt, detail: "missing — the site index was never split, so scoped search loads nothing" }] };
+    }
+    let manifest: SearchManifest;
+    try {
+      manifest = JSON.parse(readFileSync(mp, "utf-8")) as SearchManifest;
+    } catch (e) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: manifestAt, detail: `not JSON: ${(e as Error).message}` }] };
+    }
+    const findings: Finding[] = [];
+    const text = readFileSync(source, "utf-8");
+    const hash = createHash("sha256").update(text).digest("hex");
+    if (manifest.source?.sha256 !== hash) {
+      findings.push({ verifier: id, file: manifestAt, detail: `split from a different index (manifest ${String(manifest.source?.sha256).slice(0, 12)}, tree ${hash.slice(0, 12)}) — re-run search-split on this tree` });
+    }
+    const sourceKeys = Object.keys(JSON.parse(text) as Record<string, unknown>);
+    const seen = new Map<string, string>();
+    let total = 0;
+    for (const s of manifest.scopes ?? []) {
+      let keys: string[];
+      try {
+        keys = Object.keys(JSON.parse(readFileSync(join(dir, s.path), "utf-8")) as Record<string, unknown>);
+      } catch (e) {
+        findings.push({ verifier: id, file: s.path, detail: `scope ${s.id} unreadable: ${(e as Error).message.slice(0, 120)}` });
+        continue;
+      }
+      if (keys.length !== s.entries) findings.push({ verifier: id, file: s.path, detail: `scope ${s.id} holds ${keys.length} entries, the manifest says ${s.entries}` });
+      total += keys.length;
+      if (s.index) findings.push(...prebuiltIndexFindings(dir, s.id, s.index.path, keys));
+      for (const k of keys) {
+        const other = seen.get(k);
+        if (other !== undefined) findings.push({ verifier: id, file: s.path, detail: `entry ${k} is in both ${other} and ${s.id}` });
+        else seen.set(k, s.id);
+      }
+    }
+    if (total !== sourceKeys.length) {
+      findings.push({ verifier: id, file: manifestAt, detail: `scopes hold ${total} entries, the site index ${sourceKeys.length} — they do not partition it` });
+    }
+    // Bean `1br0`: every identifier lookup the search box links to is in the
+    // tree — the page and the index it opens. A link to an index the build did
+    // not publish reads to a reader as "could not be read".
+    for (const r of manifest.remote ?? []) {
+      const page = join(dir, ID_LOOKUP_DIR, "index.html");
+      const idx = join(dir, ID_LOOKUP_DIR, r.id, "manifest.json");
+      if (!existsSync(page)) findings.push({ verifier: id, file: manifestAt, detail: `remote ${r.id} links to ${ID_LOOKUP_DIR}/, which holds no lookup page` });
+      if (!existsSync(idx)) findings.push({ verifier: id, file: manifestAt, detail: `remote ${r.id} names an index that is not in the tree (${ID_LOOKUP_DIR}/${r.id}/manifest.json)` });
+    }
+    return { checked: (manifest.scopes ?? []).length + (manifest.remote ?? []).length + 1, outOfScope: 0, findings: findings.slice(0, 40) };
+  },
+};
+
 /** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, HTML_UNIQUE_IDS, SEARCH_INDEX];
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, JSONLD_OBJECT_LINKS, JSONLD_OWN_BASE, HTML_UNIQUE_IDS, SEARCH_INDEX, SEARCH_SCOPES];
 
 export async function verify(
   dir: string,
@@ -358,6 +715,7 @@ export function reportMarkdown(dir: string, results: readonly VerifierResult[], 
   for (const r of results) {
     const state = r.couldNotTell ? `could not tell — ${r.couldNotTell}` : r.findings.length ? `${r.findings.length} finding(s)` : "pass";
     lines.push(`- **${r.id}**: ${state} — ${r.checked} document(s) checked, ${r.outOfScope} out of scope (not ours)`);
+    if (r.note) lines.push(`  - note: ${r.note}`);
     for (const f of r.findings.slice(0, 20)) lines.push(`  - \`${f.file}\`: ${f.detail}`);
     if (r.findings.length > 20) lines.push(`  - …and ${r.findings.length - 20} more`);
   }

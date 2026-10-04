@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "paper-importer",
+    "path": "skills/content/folio-paper-adapter/paper-importer.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.ts",
+      "prose_hash": "842827e73344",
+      "code_hash": "10c160bed984",
+      "by": "baseline"
+    }
+  ]
+}

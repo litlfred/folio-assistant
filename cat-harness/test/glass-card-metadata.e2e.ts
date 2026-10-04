@@ -83,6 +83,12 @@ const pop = ".fa-glass-meta";
 
 async function serveGlass(page: Page) {
   await page.setViewportSize({ width: 1280, height: 800 });
+  // The strip starts HIDDEN on a first open (owner, 2026-10-01, bean `ob3m`
+  // finding 10). These specs click a strip tile, so they arrive as a reader
+  // who has shown it; `glass-strip-default-hidden.e2e.ts` holds the default.
+  await page.addInitScript(() => {
+    try { if (localStorage.getItem("fa-glass-strip-hidden") === null) localStorage.setItem("fa-glass-strip-hidden", "0"); } catch { /* no storage */ }
+  });
   // The library row was pulled out before this page loaded, and stored — as a
   // real row of an untitled entry is — under its bare id.
   await page.addInitScript((key) => {

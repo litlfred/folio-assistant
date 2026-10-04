@@ -77,10 +77,10 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 
 import type { LibraryRef } from "./library-refs.ts";
-import { basename, dirname, extname, join, relative } from "node:path";
+import { dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
-import { directoriesForGraph, readDeclaration, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
+import { directoriesForGraph, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { arxivId } from "./library-readmes.ts";
 
@@ -95,7 +95,8 @@ import { withheldEntryFor } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
-import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-config.js";
+import { ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -222,6 +223,34 @@ export interface LibraryEntry {
    * Absent means nobody counted — never "nothing to summarise".
    */
   summaries?: SummaryTally;
+  /**
+   * The site-root path of the page that RENDERS this entry — attached by the
+   * caller (`gen-library-viz` `entryView`), derived from the declarations and
+   * never read from the asset (#1881). Absent when nobody derived it.
+   */
+  view?: string;
+  /**
+   * Where else a reader can go for this entry — read from a `referenced`
+   * entry's own `links` (`schemas/referenced-source.ts`). Owner, 2026-10-02:
+   * the smart-trust IG is in smart-base's library as an EXTERNAL reference,
+   * so the row has nothing of its own to open and must say where the thing is.
+   *
+   * `href` is an absolute URL, or SITE-ROOT-relative with a leading `/` and no
+   * base — the avatar's convention, composed by the viewer against wherever
+   * the site is served. Absent when the entry records none.
+   */
+  links?: { label: string; href: string }[];
+}
+
+/**
+ * An entry's recorded links, or `undefined` — only a `referenced.json` that
+ * validates contributes any, so a malformed record adds nothing to a page
+ * rather than a half-checked URL. `check:l1-complete` reports the malformation.
+ */
+export function referencedLinksOf(dir: string): { label: string; href: string }[] | undefined {
+  const r = ReferencedSourceSchema.safeParse(readJson<unknown>(join(dir, "referenced.json")));
+  if (!r.success || !r.data.links?.length) return undefined;
+  return r.data.links.map((l) => ("url" in l ? { label: l.label, href: l.url } : { label: l.label, href: `/${l.site_path}` }));
 }
 
 /** Where an entry's picture came from, where it lives, and where it is published. */
@@ -348,7 +377,8 @@ export interface LibraryGraph {
    * looked". Absent means no scan; `unreadable` non-empty means the scan is
    * incomplete and every zero below it is provisional.
    */
-  refScan?: { filesRead: number; unreadable: string[] };
+  /** Bean `65oe`: no `filesRead` — it measured the checkout, not the library. */
+  refScan?: { unreadable: string[] };
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */
@@ -420,13 +450,25 @@ function sha256(path: string): string {
  * `basename(repoRoot)` (bean `t5dm`): the root's basename is wherever the
  * repository was cloned — a worktree named `pr1290` published
  * `"uploadInstance": "pr1290"` — while a sub-instance's first path segment is
- * a path INSIDE the repository and the same in every clone. The basename is
- * the fallback only for a root that declares nothing.
+ * a path INSIDE the repository and the same in every clone.
+ *
+ * A root that declares nothing is NOT named after its folder any more (issue
+ * #1904): it belongs to the landing instance when exactly one harness is
+ * decided (`rootInstanceName`), and otherwise this throws, because a queue
+ * labelled with a guessed instance is the mislabelling above.
  */
 export function instanceOf(absDir: string, repoRoot: string): string {
   const rel = relative(repoRoot, absDir).split("\\").join("/");
   const parts = rel.split("/");
-  return parts.length > 1 ? parts[0]! : (readDeclaration(repoRoot)?.name ?? basename(repoRoot));
+  if (parts.length > 1) return parts[0]!;
+  const name = rootInstanceName(repoRoot);
+  if (name === undefined) {
+    throw new Error(
+      `${absDir} sits at the root of ${repoRoot}, which declares no instance and has no single landing harness ` +
+        `(issue #1904) — cannot say which instance it belongs to. Declare the root, or flag one harness's site.landing.`,
+    );
+  }
+  return name;
 }
 
 /**
@@ -845,6 +887,10 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         ...(existsSync(join(dir, "README.md"))
           ? { readme: sourceLinks(REPO_URL(repoRoot), `${relative(repoRoot, dir).split("\\").join("/")}/README.md`, "main")?.viewHref }
           : {}),
+        ...(() => {
+          const links = has("referenced.json") ? referencedLinksOf(dir) : undefined;
+          return links ? { links } : {};
+        })(),
         ...(() => {
           const w = withheldEntryFor(dir);
           if (w) {

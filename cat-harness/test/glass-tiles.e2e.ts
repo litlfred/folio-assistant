@@ -69,6 +69,12 @@ const TODOS = {
 const ZOOM = { belowPx: 220, byKind: { todo: { belowPx: 300, because: "a todo needs more room" } } };
 
 test.beforeEach(async ({ page }) => {
+  // The strip starts HIDDEN on a first open (owner, 2026-10-01). These specs
+  // are about what is ON the strip, so they arrive as a reader who has shown
+  // it; `glass-strip-default-hidden.e2e.ts` holds the default itself.
+  await page.addInitScript(() => {
+    try { if (localStorage.getItem("fa-glass-strip-hidden") === null) localStorage.setItem("fa-glass-strip-hidden", "0"); } catch { /* no storage */ }
+  });
   await page.route("http://replica.test/**", (route) => {
     const url = new URL(route.request().url());
     if (url.pathname === "/page.html") return route.fulfill({ contentType: "text/html", body: REPLICA });
@@ -153,14 +159,16 @@ test.describe("library → glass: the control is where the eye starts", () => {
 });
 
 test.describe("the tile strip along the glass's bottom edge", () => {
-  test("the strip holds only the glass's own four tiles — owner: \"too many tiles!\"", async ({ page }) => {
+  test("with no strip declared, the strip holds the glass's own Todos and Settings, then More", async ({ page }) => {
+    // This replica serves no `glass-strip.json`, so nothing declared a strip:
+    // the page pins its own chrome and never guesses which graphs matter
+    // (bean `ob3m` finding 10 — the pinned set is DECLARED).
     await open(page);
     const strip = page.locator(".fa-glass-tiles");
     await expect(strip).toBeVisible();
     const ids = await strip.locator("[data-fa-glass-chrome]").evaluateAll((els) =>
       els.map((e) => e.getAttribute("data-fa-glass-chrome")));
-    expect(ids).toEqual(["glass-todos", "glass-filter", "glass-settings", "glass-more"]);
-    // No declared visualisation sits on the strip itself any more.
+    expect(ids).toEqual(["glass-todos", "glass-settings", "glass-more"]);
     await expect(strip.locator("[data-fa-tile]")).toHaveCount(0);
   });
 

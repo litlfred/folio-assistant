@@ -62,11 +62,16 @@ import {
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
 import { VECTOR_LABELS_FILE, VectorLabelsSidecarSchema } from "../schemas/vector-labels.ts";
+import {
+  VECTOR_FIGURES_DIR,
+  VECTOR_FIGURES_FILE,
+  VectorFiguresSidecarSchema,
+} from "../schemas/vector-figure.ts";
 import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
-import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { againstOrUsage, buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResultState } from "./qa-results.ts";
 import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -175,12 +180,14 @@ export type EntryKind = "paged" | "tabular" | "archive" | "referenced" | "undete
  * `blocks` and `images.json` on all 21, `images/` on 13, `ocr/` on 2, and
  * **nothing else anywhere**.
  */
-export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr"];
+// `figures/` is the vector arm's renders — `pdf-vector-figures.py`, bean `ay3x`.
+export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr", VECTOR_FIGURES_DIR];
 
 /** Sidecars an entry may carry beyond {@link KIND_SIDECAR}'s kind markers. */
 export const ENTRY_SIDECARS: readonly string[] = [
   "images.json",
   VECTOR_LABELS_FILE,
+  VECTOR_FIGURES_FILE,
   "manifest.jsonld",
   SUMMARIES_FILE,
   // Authored, not produced by an arm: the licence record gen-library-jsonld
@@ -342,6 +349,67 @@ export function vectorLabelNote(dir: string): string {
     ` The vector arm recovered ${labels} positioned label(s) across ${pages.length} page(s) ` +
     `that declare a figure — see ${VECTOR_LABELS_FILE}; which labels belong to which figure ` +
     `is NOT established (bean a8wy).`
+  );
+}
+
+/**
+ * How far the vector FIGURE arm reaches into the BARE figures — bean `ay3x`.
+ *
+ * Measured against the bare set and nothing wider, on purpose: a figure with
+ * caption text is already covered by the owner's 2026-09-23 caption ruling,
+ * so counting it here would credit the arm with work the caption did. The
+ * bare figures are the only ones neither a raster image nor a caption reaches.
+ *
+ * Three disjoint answers per bare label, and only the first is coverage:
+ *
+ * - `shown` — an INSPECTED render says it shows this figure (`shows`), and
+ *   carries a narrative. Somebody looked; the figure has a description.
+ * - `candidate` — a render exists on a page whose caption candidates name the
+ *   label, and nobody has looked. NOT coverage: a candidate may be a
+ *   cross-reference, so the page may not show the figure at all.
+ * - `neither` — no render names it. The arm did not reach it.
+ *
+ * `undefined` when there is no vector sidecar, or it is undetermined — the
+ * third state, carried rather than flattened to "reached nothing".
+ */
+export function vectorFigureReach(
+  dir: string,
+  bare: readonly string[],
+): { shown: string[]; candidate: string[]; neither: string[]; renders: number; inspected: number } | undefined {
+  const f = join(dir, VECTOR_FIGURES_FILE);
+  if (!existsSync(f)) return undefined;
+  let figures;
+  try {
+    ({ figures } = VectorFiguresSidecarSchema.parse(JSON.parse(readFileSync(f, "utf-8"))));
+  } catch {
+    // A malformed sidecar is `entry-contents`' to report, not this line's.
+    return undefined;
+  }
+  if (figures === null) return undefined;
+  const rendered = figures.filter((x) => x.file !== null);
+  const inspected = rendered.filter((x) => x.basis.method === "inspection");
+  const shownSet = new Set(
+    inspected.filter((x) => x.narrative?.text).flatMap((x) => x.shows ?? []),
+  );
+  const candidateSet = new Set(
+    rendered.filter((x) => x.basis.method === "assembly").flatMap((x) => x.captionLabels),
+  );
+  const shown = bare.filter((l) => shownSet.has(l));
+  const candidate = bare.filter((l) => !shownSet.has(l) && candidateSet.has(l));
+  const neither = bare.filter((l) => !shownSet.has(l) && !candidateSet.has(l));
+  return { shown, candidate, neither, renders: rendered.length, inspected: inspected.length };
+}
+
+/** {@link vectorFigureReach} as a sentence for a gate's detail, or `""`. */
+export function vectorFigureNote(dir: string, bare: readonly string[]): string {
+  const r = vectorFigureReach(dir, bare);
+  if (!r || r.renders === 0) return "";
+  const list = (xs: string[]) => (xs.length ? ` (Fig. ${xs.join(", ")})` : "");
+  return (
+    ` The vector figure arm rendered ${r.renders} caption page(s), ${r.inspected} inspected; of the ` +
+    `${bare.length} bare figure(s), ${r.shown.length} shown by an inspected render${list(r.shown)}, ` +
+    `${r.candidate.length} named on a render nobody has inspected${list(r.candidate)}, ` +
+    `${r.neither.length} on no render${list(r.neither)} — see ${VECTOR_FIGURES_FILE} (bean ay3x).`
   );
 }
 
@@ -888,6 +956,21 @@ function derivableRequirements(dir: string): Requirement[] {
         state: "unmet",
         detail: "no `source` block — re-run the ingest rung",
       });
+    } else if (src.kind === "published") {
+      // A PUBLICATION recorded by reference (a FHIR IG — owner, 2026-10-02):
+      // there are no bytes, so no sha256 to ask for. Its identity is the
+      // publisher's own canonical + version, and `ReferencedSourceSchema`
+      // (the referenced-record requirement above) holds it to that shape.
+      // Met, and the detail says what stands in for the hash rather than
+      // letting a missing one read as an older ingest that never sniffed.
+      const ok = typeof src.canonical === "string" && typeof src.version === "string";
+      out.push({
+        name: "technical-metadata",
+        state: ok ? "met" : "unmet",
+        detail: ok
+          ? `published resource, no bytes held or hashed — ${String(src.canonical)} ${String(src.version)}`
+          : "published `source` missing canonical or version",
+      });
     } else {
       const want = ["file", "sha256", "bytes", "mtime", "mimetype_source"];
       const missing = want.filter((k) => !(k in src));
@@ -967,7 +1050,9 @@ function derivableRequirements(dir: string): Requirement[] {
           const unjudged = parsed.images.filter((i) => i.role === "undetermined");
           // What the TEXT declares, against what the raster arm placed — bean
           // `m4xy`. Never compared as a ratio; see `declaredFigureLabels`.
-          const declared = declaredFigureLabels(join(dir, "sections"));
+          const declaredCaptions = declaredFigureCaptions(join(dir, "sections"));
+          const declared = new Set(declaredCaptions.keys());
+          const bareLabels = [...declaredCaptions].filter(([, c]) => c === null).map(([l]) => l);
           const declaredNote =
             (declared.size > 0
               ? ` The text declares at least ${declared.size} captioned figure(s); ` +
@@ -978,7 +1063,11 @@ function derivableRequirements(dir: string): Requirement[] {
             // `9789240010567-eng` page 92 is the case: the raster arm extracted
             // five component logos and Fig. 5.6.2, the diagram they sit inside,
             // is drawn.
-            vectorLabelNote(dir);
+            vectorLabelNote(dir) +
+            // Reported, never a state change here: which bare figures the
+            // placed raster images already are is NOT established, so the
+            // arm's reach is information beside a `met`, not a verdict on it.
+            vectorFigureNote(dir, bareLabels);
           if (undescribed.length || unjudged.length) {
             out.push({
               name: "image-descriptions",
@@ -1012,9 +1101,27 @@ function derivableRequirements(dir: string): Requirement[] {
             // the other fifteen are cross-references the lower bound counted.
             // A blanket `met` there would pass over fifteen figures nothing
             // describes.
-            const figures = declaredFigureCaptions(join(dir, "sections"));
-            const bare = [...figures].filter(([, c]) => c === null).map(([l]) => l);
-            if (bare.length === 0) {
+            const figures = declaredCaptions;
+            // A bare figure an INSPECTED render shows is covered — bean
+            // `ay3x`. Only `shown` counts: a render nobody looked at is a
+            // candidate, and crediting it would be the pass-on-a-count this
+            // branch exists against. What is left is the "neither the caption
+            // nor the arm reaches" set, and it stays `not-derivable`.
+            const reach = vectorFigureReach(dir, bareLabels);
+            const shown = new Set(reach?.shown ?? []);
+            const bare = bareLabels.filter((l) => !shown.has(l));
+            if (bare.length === 0 && shown.size > 0) {
+              out.push({
+                name: "image-descriptions",
+                state: "met",
+                detail:
+                  `no raster image was placed — the figures are drawn in vector. ` +
+                  `${figures.size - shown.size} declared figure(s) carry caption text and ` +
+                  `${shown.size} more (Fig. ${[...shown].join(", ")}) are shown by a vector render ` +
+                  `somebody inspected and described — see ${VECTOR_FIGURES_FILE} (bean ay3x).` +
+                  vectorLabelNote(dir),
+              });
+            } else if (bare.length === 0) {
               out.push({
                 name: "image-descriptions",
                 state: "met",
@@ -1038,8 +1145,10 @@ function derivableRequirements(dir: string): Requirement[] {
                 detail:
                   `no raster image was placed, and ${bare.length} of ${figures.size} ` +
                   `declared figure(s) carry no caption text either — Fig. ` +
-                  `${bare.join(", ")}. They are drawn in vector and the caption handle does ` +
-                  `not reach them (bean m4xy).` + vectorLabelNote(dir),
+                  `${bare.join(", ")}. They are drawn in vector and neither the caption handle ` +
+                  `nor an inspected vector render reaches them (beans m4xy, ay3x).` +
+                  vectorLabelNote(dir) +
+                  vectorFigureNote(dir, bareLabels),
               });
             }
           } else {
@@ -1284,38 +1393,45 @@ export function sidecarFor(root: string, report: EntryReport): string {
 }
 
 /**
- * Is the committed sidecar what this checker would write now?
+ * Is the committed sidecar what this checker would write now? One state per
+ * entry, in the five {@link QaResultState}s.
  *
  * A committed verdict that nobody re-writes is worse than none: it reads as a
  * current answer while describing an older corpus, which is the defect
- * `kg-audit` grew its `source_hash` for. Compared on everything EXCEPT
- * `updated_at`, which churns on every run and would make each verdict look
- * stale forever.
+ * `kg-audit` grew its `source_hash` for. Compared whole: the document carries
+ * no `updated_at` (`y7b3`), so an old sidecar that still has one reads stale
+ * and is regenerated away.
  *
- * Returns the stems that are missing or stale, so CI names them rather than
- * saying "something drifted".
+ * `against` reads the baseline from the `qa-reports` branch instead of the
+ * working copy (bean `0dav`); the path is the same one either way.
  */
-export function staleSidecars(root: string, reports: EntryReport[]): string[] {
-  const out: string[] = [];
-  for (const r of reports) {
-    const path = join(root, "test", "results", "library-qa", `${r.slug}.qa-results.json`);
-    if (!existsSync(path)) {
-      out.push(`${r.slug}: no sidecar`);
-      continue;
-    }
-    const fresh = JSON.parse(JSON.stringify(sidecarDocument(r)));
-    let committed: Record<string, unknown>;
-    try {
-      committed = JSON.parse(readFileSync(path, "utf-8")) as Record<string, unknown>;
-    } catch {
-      out.push(`${r.slug}: sidecar will not parse`);
-      continue;
-    }
-    // Compared whole: the document carries no `updated_at` (`y7b3`), so an
-    // old sidecar that still has one reads stale and is regenerated away.
-    if (JSON.stringify(fresh) !== JSON.stringify(committed)) out.push(`${r.slug}: stale`);
-  }
-  return out;
+export function sidecarStates(
+  root: string,
+  reports: EntryReport[],
+  against?: string,
+): { slug: string; state: QaResultState }[] {
+  return reports.map((r) => ({
+    slug: r.slug,
+    state: qaResultState(qaResultPath(root, join("library-qa", r.slug)), sidecarDocument(r), { against }),
+  }));
+}
+
+/**
+ * {@link sidecarStates}, as the lines a reader acts on — every entry whose
+ * committed verdict is not `current`. Absent is never folded into current:
+ * "no sidecar" is its own line.
+ */
+export function staleSidecars(root: string, reports: EntryReport[], against?: string): string[] {
+  const words: Record<QaResultState, string> = {
+    current: "current",
+    stale: "stale",
+    absent: "no sidecar",
+    unreadable: "sidecar will not parse",
+    unknown: "could not read the qa-reports baseline",
+  };
+  return sidecarStates(root, reports, against)
+    .filter((x) => x.state !== "current")
+    .map((x) => `${x.slug}: ${words[x.state]}`);
 }
 
 function format(reports: EntryReport[]): string {
@@ -1404,14 +1520,29 @@ if (import.meta.main) {
   }
 
   if (argv.includes("--check")) {
-    const stale = staleSidecars(instanceRootFor(resolve(".")) ?? resolve("."), reports);
-    if (stale.length) {
-      console.error("Committed L1 verdicts are out of date:");
-      for (const x of stale) console.error(`  ✗ ${x}`);
-      console.error("\nRun: bun run check:l1-complete -- --write");
-      process.exit(1);
+    // COMPUTE AND JUDGE (bean `0dav`). The verdict this gate fails on — an
+    // UNMET requirement — is computed fresh on every run and decides the exit
+    // below, with or without `--check`. What `--check` added was "the committed
+    // verdicts are current", and that has no subject once QA results leave
+    // `main` (owner rulings D1/D4): absent is then the normal state, and a
+    // gate that failed on it would be red for nobody's defect. So the
+    // committed copies are REPORTED — against the working copy, or the
+    // `qa-reports` branch with `--against <ref>` — and never decide the exit.
+    const { against, exit: badRef } = againstOrUsage("check:l1-complete", argv);
+    if (badRef !== undefined) process.exit(badRef);
+    const root = instanceRootFor(resolve(".")) ?? resolve(".");
+    const states = sidecarStates(root, reports, against);
+    const off = staleSidecars(root, reports, against);
+    if (off.length) {
+      console.log(
+        `  advisory: ${off.length} of ${states.length} committed L1 verdict(s) are not current ` +
+          `(${against ? `qa-reports:${against}` : "working copy"}). Not gated (bean 0dav). ` +
+          "`bun run check:l1-complete -- --write` rewrites them:",
+      );
+      for (const x of off) console.log(`    · ${x}`);
+    } else {
+      console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
     }
-    console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
   }
   if (argv.includes("--write")) {
     // The SAME root the reports came from. `resolve(".")` wrote the sidecars

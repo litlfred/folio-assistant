@@ -363,6 +363,20 @@ posting is a reading of the licence, not of the bytes. `check:l1-complete`
 knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
 `blocks/` or `images/`. That would be the copy this kind exists not to make.
 
+**A publication, not a file — an external reference (owner, 2026-10-02).** A
+FHIR implementation guide is a website and a package, not one PDF, so there are
+no bytes to hash. Its `referenced.json` takes the `published` variant of
+`source` (`schemas/referenced-source.ts`): `kind: "published"`, `url`,
+`canonical`, `package_id`, `version`, and `read_from` / `read_at` naming the
+local record the identity was read off — no `sha256`, rather than a made-up
+one. `links` names where a reader goes instead (the publisher's page, and a
+`site_path` on this site such as the instance's artefact index), and the
+library viewer shows them on the entry's row. Write it by hand — there is no
+file to run `referenced-source.py` on — then `gen-library-jsonld.ts --entry`
+for the manifest. The licence follows the usual rule: `stated` only with a
+basis, else `unknown` with where you looked. First case:
+`smart-base/library/smart-trust/`, the WHO SMART Trust IG.
+
 ## A source published as text in a repository — read it at a commit (bean `y4uj`)
 
 The Gherkin reference, the MCP specification, the `hmans/beans` README and
@@ -438,6 +452,52 @@ library/<bib-slug>/
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
 per-format arms (images, audio, tables, archives) are tracked separately and a
 check that cannot run must not read as a pass. Bean `pn6j`.
+
+## A manifest's title — the authority order, and never the page-1 parse
+
+The owner's ruling of 2026-10-01 (issue #1794, option 2 of 4). A library
+entry's `manifest.jsonld` `title` is the first of these the entry has:
+
+| rank | `meta.title_source` | read from |
+|---|---|---|
+| 1 | `dc-record` | `dc.title` of the Dublin Core record that the catalogue node naming this entry (`libraryId`) points at through `metadataRef` |
+| 2 | `referenced` | `referenced.json` `identity.title` |
+| 3 | `pdf-info` | `structure.json` `metadata.docinfo.Title`, the PDF Info `/Title`, when it is not junk |
+| 3 | `text-heading` | `structure.json` `metadata.title` of a **text or notebook** structure: front-matter `title:`, `--title`, or the level-1 heading |
+| 4 | `slug` | the entry id. Nothing better exists, and `check:library-qa` reports it as `title-missing` |
+
+**The page-1 front-matter parse is NEVER a title.** On a `pdf-structure/v1`,
+`metadata.title` is `parse_front_matter`'s guess at which lines of page 1 are
+the title. It guessed *Abies* for the WHO editorial style manual, *LeanArchitect
+LeanArchitect*, *Algorithmic Approaches to*, and the whole W3C status block for
+three specifications. A plausible wrong title passes every check that has no
+second source. A slug is honest about being a placeholder and gets flagged.
+The parse may still feed search and the section files' `doc_title`.
+
+`text-heading` shares rank 3 because it is the same kind of fact as `/Title`
+(the source naming itself, in its format's own metadata). The two are exclusive
+by variant, so no entry ever has both. A tabular record's `title` is its source
+file name, which is never a title.
+
+**Junk `/Title`** (`pdfInfoTitleJunk`): shorter than 3 characters or no letters;
+`untitled` and its kin; `Microsoft Word - …`; an arXiv stamp
+(`arXiv:0909.4061v2 [math.NA] …`); anything ending in a file extension; the
+source's file name or stem; the slug. A junk value falls through to the next
+source. It never becomes the title. Records (ranks 1–2) are taken as written,
+because a cataloguer's choice is not a program's default.
+
+**Record the Info dictionary at ingest.** `pdf-structure.py` writes
+`metadata.docinfo`. `pdf-pages.py` did not until #1794, which left 20
+page-granular entries with no `/Title` to read. Backfill an older entry with
+`python3 cat-harness/scripts/pdf-pages.py --docinfo-into <entry> <pdf>`. It
+refuses unless the PDF's sha256 is the one the entry recorded.
+
+One resolver, `cat-harness/content/pipeline/library-title.ts`
+(`resolveLibraryTitle`, `TITLE_AUTHORITY`), is used by both
+`gen-library-jsonld.ts` and `check-library-qa.ts`. The manifest records
+`meta.title_source` and `meta.title_from`, and the QA check re-derives the
+order from the entry's files. So a manifest that claims `pdf-info` while a
+catalogue record exists is reported as `title-implausible`, not believed.
 
 ## `source{}` — the technical facts, written by whichever rung ran
 
@@ -766,6 +826,28 @@ is the gate that refuses, not that script. An *orphaned* verdict — one naming
 an image the sidecar does not have — still fails, in either mode.
 
 Every narrative it writes lands as `draft`. Only a person confirms one.
+
+#### A role threshold is OPTIONAL, and its default is NONE
+
+Owner, 2026-10-03, verbatim: *"an optional one can be set, default none"*.
+That settles the second question bean `m4xy` held open: whether a coverage
+cutoff may sort images into roles (figure vs furniture).
+
+- **By default nothing is thresholded.** With no value supplied, every role
+  call comes from an inspection verdict as above, naming who looked.
+- **A caller may supply one.** An image whose role it decides must record
+  that basis: the value, and that the value was caller-supplied rather than
+  inspected. A thresholded role must never be readable as an inspected one,
+  for the same reason a silently placed image is the `d5f1` defect.
+- **Ship no number.** No config default, and no value in docs, tests or
+  examples presented as recommended. The evidence for that is measured, not
+  suspected (`m4xy`, `j820`, 29 documents in 5 libraries):
+  - per-image coverage does not separate the classes;
+  - the one empty stretch in the WHO corpus is specific to that corpus, so a
+    cutoff placed in it was fitted to these documents and says nothing about
+    others. `m4xy` records the figures.
+
+  A number chosen after seeing a corpus is a number chosen to fit the answer.
 
 #### Reading a figure: the text layer is not the figure
 

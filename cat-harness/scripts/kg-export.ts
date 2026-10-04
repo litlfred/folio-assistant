@@ -38,12 +38,28 @@
  * than no export: a consumer sees a well-formed graph and cannot tell it is
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
+ * ## Judge mode — `bun run kg:export:judge` (bean `bo44`)
+ *
+ * `--judge` builds the export IN MEMORY, judges it and writes nothing: no
+ * `_kg/` document, no QA sidecar. 0 no fatal finding · 1 a root field or a
+ * term outside the `@context`, or a keyword/alias collision · 2 an unread
+ * source (could not determine), an unknown flag, or a run that threw. It
+ * accepts `--base-url` and `--instance`; `--out` and `--qa-root` are a
+ * writer's flags and are refused.
+ *
+ * Distinct from `kg:export:check` below (bean `v556`), which compares the
+ * committed sidecars; both were written the same day under one name and the
+ * owner ruled (2026-10-02) to keep both, the judge under its own name.
+ *
  * As the `kg:export:check` gate (bean `v556`) it judges the committed
  * `kg-export*.qa-results.json` sidecars under the declared `test/results/`.
  *
  * @covers qa
  *
  * @module scripts/kg-export
+ * @covers cat-harness, schemas, skills, processes, tools — the declaration and the graphs its
+ *   collectors read; the judge form audits the EXPORT of them (its `@context` closure and keyword
+ *   use), not each node's own validity, which `kg:audit` and `check:kind-validators` own
  *
  * @conformsTo dcmi-terms
  * @conformsTo omg-bpmn-2.0
@@ -59,7 +75,8 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
-import { DCTERMS_NS } from "../schemas/jsonld.js";
+import { applyVocabMapping, contextBindings, vocabMapping, type VocabMapping } from "../schemas/vocab-mapping.js";
+import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
 import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
@@ -97,10 +114,30 @@ import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
-import { QA_RESULTS_DIR, buildQaResult, qaResultPath, qaResultState, readQaResult, writeQaResult } from "./qa-results.js";
+import {
+  QA_RESULTS_DIR,
+  buildQaResult,
+  concludeJudgement,
+  judgementOf,
+  judgeUsage,
+  qaResultPath,
+  judgeQaResult,
+  readQaResult,
+  writeQaResult,
+  type Judgement,
+  type QaResult,
+} from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { listDecisions } from "../src/workflow/decision-table.js";
-import { checkoutRootFor, corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import {
+  checkoutRootFor,
+  corpusDirectoriesForGraph,
+  declaredSubgraph,
+  subgraphSourceOverrides,
+  type DeclaredSubgraph,
+} from "../schemas/harness-config.js";
+import { contentSourceContext, contentSourceJsonLd, resolveSubgraphSource, type SubgraphSource } from "../schemas/subgraph-source.js";
+import { subgraphIri } from "./subgraph-node.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -206,6 +243,19 @@ const SCHEMA = "https://schema.org/";
 const XSD = "http://www.w3.org/2001/XMLSchema#";
 
 /**
+ * A vocabulary-mapping table of THIS instance (the platform's), read once.
+ * Own rather than the exported instance's: a table belongs to the `vocab-map`
+ * Tool that applies it, which lives here, so `--instance ./bootstrap` names
+ * its roles with the same rows (`vocabMappingDirs`).
+ */
+const namingTables = new Map<string, VocabMapping>();
+function namingTable(id: string): VocabMapping {
+  let m = namingTables.get(id);
+  if (m === undefined) namingTables.set(id, (m = vocabMapping(ROOT, id)));
+  return m;
+}
+
+/**
  * The active context, following `WorldHealthOrganization/smart-base`'s
  * `generate_jsonld_vocabularies.py`.
  *
@@ -232,29 +282,32 @@ const XSD = "http://www.w3.org/2001/XMLSchema#";
  */
 export function buildContext(): Record<string, unknown> {
   const link = { "@type": "@id" } as const;
+  const prefixes = { ...NS_PREFIXES, prov: PROV, rdfs: RDFS, schema: SCHEMA, xsd: XSD };
   return {
     "@version": 1.1,
-    ...NS_PREFIXES,
-    prov: PROV,
-    rdfs: RDFS,
-    schema: SCHEMA,
-    xsd: XSD,
+    ...prefixes,
 
     id: "@id",
     type: "@type",
     graph: "@graph",
 
-    name: "rdfs:label",
-    // Dublin Core, not a second `rdfs:label`/`rdfs:comment` (owner,
-    // 2026-09-30, bean `xsqm`: "emphasize preexisting standards … now
-    // align"). The edges below that restate a standard — `partOf`,
-    // `holdsGraph`, `from`/`to`, `implementedBy`, … — resolve through
-    // `propertyIri`, which reads each retired term's `replacedBy` in the
-    // vocabulary; the JSON keys are unchanged, so a plain-JSON reader sees
-    // no difference and an RDF reader sees the standard property.
-    title: `${DCTERMS_NS}title`,
-    description: `${DCTERMS_NS}description`,
-    summary: "rdfs:comment",
+    // `name`, `title`, `description` and `summary`, then a role's
+    // `prefLabel` and `notation`: DERIVED from the vocabulary-mapping tables
+    // rather than restated here (bean `lodp`). `kg-node-naming` is the row
+    // fsh-guts reads too, so "exactly as the main export" is structural
+    // (finding D2); `role-naming` is the row glossary-export reads too, so
+    // one role node is not named two ways (D3). Dublin Core, not a second
+    // `rdfs:label`/`rdfs:comment` (owner, 2026-09-30, bean `xsqm`:
+    // "emphasize preexisting standards … now align"). The edges below that
+    // restate a standard — `partOf`, `holdsGraph`, `from`/`to`,
+    // `implementedBy`, … — resolve through `propertyIri`, which reads each
+    // retired term's `replacedBy` in the vocabulary; the JSON keys are
+    // unchanged, so a plain-JSON reader sees no difference and an RDF reader
+    // sees the standard property.
+    ...contextBindings([namingTable("kg-node-naming"), namingTable("role-naming")], {
+      inContext: prefixes,
+      prefixes: { ...STANDARD_PREFIXES, ...NS_PREFIXES },
+    }),
     generatedAt: { "@id": `${PROV}generatedAtTime`, "@type": `${XSD}dateTime` },
     // Provenance of the SOURCE, as against provenance of the run above.
     sourceCommit: { "@id": `${PROV}wasDerivedFrom`, "@type": "@id" },
@@ -464,7 +517,17 @@ export function buildContext(): Record<string, unknown> {
     // person reads about that directory, generated by `subgraph-readmes`.
     // Present only when the file exists, so its absence is a fact, not a gap.
     readmePath: termIri("readmePath"),
+    // Where a declared subgraph gets its content — `dcterms:source`, with its
+    // `kind`/`branch` scoped (bean `l4ay`; `schemas/subgraph-source.ts`).
+    contentSource: contentSourceContext(),
     instructionLines: { "@id": termIri("instructionLines"), "@type": `${XSD}integer` },
+    // How many COMMITTED files a declared directory holds, at any depth. Bean
+    // `ba9e`: the directory READMEs printed this, and a count in a committed
+    // file changes on every commit that adds a file, so almost every merge
+    // conflicted on one of 54 READMEs. The export is built at publish time
+    // and committed nowhere, so here the number cannot conflict. Absent when
+    // git could not answer — never a zero standing in for "unknown".
+    fileCount: { "@id": termIri("fileCount"), "@type": `${XSD}integer` },
     hasInstructions: { "@id": termIri("hasInstructions"), "@type": `${XSD}boolean` },
     hasIOContract: { "@id": termIri("hasIOContract"), "@type": `${XSD}boolean` },
     ambiguous: { "@id": termIri("ambiguous"), "@type": `${XSD}boolean` },
@@ -1372,7 +1435,7 @@ function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT):
     // `..` is KEPT, and dropping it is what made this facet useless.
     //
     // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
-    // `bootstrap/`, `detangle/`, `large-datasets/`, `who-style-guide/` —
+    // `bootstrap/`, `detangle/`, `large-datasets/` —
     // resolves to `../<instance>/…` relative to this instance, so
     // `!startsWith("..")` excluded the entire set the facet exists to offer.
     //
@@ -1398,7 +1461,7 @@ function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT):
     }
     if (p === undefined) continue;
     const hit = dirs.find((d) => p === d.rel || p!.startsWith(d.rel + "/"));
-    if (hit) n.inSubgraph = makeIri(doc, "directory", hit.id);
+    if (hit) n.inSubgraph = subgraphIri(doc, hit.id);
   }
 
   // INHERIT through `partOf`, for the nodes that have no path of their own.
@@ -1869,7 +1932,11 @@ function collectSchemas(doc: string, base: string): Node[] {
     "@id": makeIri(doc, "schema", m.name),
     "@type": termIri("Schema"),
     name: m.name,
-    title: m.summary,
+    // Finding D5 (bean `lodp`), owner 2026-10-02: "Make it like the
+    // others". The docblock's first line is a `summary` (rdfs:comment) as on
+    // every other node type; the title is the module's stem.
+    title: m.name,
+    summary: m.summary,
     module: m.module,
     maintainedBy: keeper.get(m.module),
   }));
@@ -2035,11 +2102,17 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
       roles.push(r);
     }
   }
+  // NAMED by the table glossary-export applies to the same IRI (bean `lodp`,
+  // finding D3; owner default applied, option 1, 2026-10-02): the display
+  // name is `skos:prefLabel` and, derived from it, `dcterms:title`; the id is
+  // `skos:notation`. The id was written as `rdfs:label` until then, so a
+  // merged graph gave one role node `rdfs:label "reviewer"` beside
+  // `skos:prefLabel "Reviewer"`.
+  const naming = namingTable("role-naming");
   return roles.map((r) => ({
     "@id": makeIri(doc, "role", r.id),
     "@type": termIri("Role"),
-    name: r.id,
-    title: r.title,
+    ...applyVocabMapping(naming, { title: r.title, id: r.id }),
     description: r.description,
     sourceKind: "role-registry",
     actorKinds: r.actorKinds,
@@ -2155,14 +2228,21 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
     const d = JSON.parse(readFileSync(f, "utf-8")) as {
       title?: string;
       description?: string;
+      repository?: string;
       directories?: Array<{
         id: string;
         path: string;
         graphKinds?: string[];
         title?: string;
         description?: string;
+        source?: SubgraphSource;
+        storage?: unknown;
       }>;
     };
+    // The instance config's override, matched on id — resolved ONCE, by the
+    // resolver every consumer uses, so the node publishes the same answer a
+    // mount or a publisher acts on.
+    const overrides = subgraphSourceOverrides(root);
     // Same exclusion on the other emitter: a declared directory holding an
     // unpublished kind would otherwise put the trashcan's id, path and
     // description into the graph, plus a `holdsGraph` edge pointing at it.
@@ -2171,11 +2251,18 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
       const kinds = x.graphKinds ?? [];
+      let contentSource: Record<string, unknown> | undefined;
+      try {
+        contentSource = contentSourceJsonLd(resolveSubgraphSource(x, overrides), d.repository);
+      } catch (e) {
+        problems.push(`directory "${x.id}": ${e instanceof Error ? e.message : String(e)}`);
+      }
       return {
-        "@id": makeIri(doc, "directory", x.id),
+        "@id": subgraphIri(doc, x.id),
         "@type": termIri("Subgraph"),
         name: x.id,
         path: x.path,
+        ...(contentSource ? { contentSource } : {}),
         holdsGraph: kinds.map(graphKindId),
         // `graphKinds: kinds` was here. REMOVED as denormalised: `holdsGraph`
         // lands on a GraphKind node whose `name` is the kind, and the export's
@@ -2185,12 +2272,27 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
         ...(existsSync(join(root, x.path, "README.md"))
           ? { readmePath: join(x.path, "README.md").replace(/\\/g, "/") }
           : {}),
+        ...((n) => (n === undefined ? {} : { fileCount: n }))(committedFileCount(join(root, x.path))),
       };
     });
   } catch (e) {
     problems.push(`unparseable declaration: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
+}
+
+/**
+ * How many files git has committed or staged under `dir`, at any depth — the
+ * commit's answer, not the worktree's, so an untracked transient never moves
+ * it (bean `ba9e`). `undefined` when git cannot answer (not a work tree, or
+ * the directory is absent): the node then carries no `fileCount`, which a
+ * reader can tell apart from a counted zero.
+ */
+export function committedFileCount(dir: string): number | undefined {
+  if (!existsSync(dir)) return undefined;
+  const r = spawnSync("git", ["ls-files", "-z", "--cached", "--", "."], { cwd: dir, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  if (r.error !== undefined || r.status !== 0) return undefined;
+  return r.stdout.split("\0").filter(Boolean).length;
 }
 
 /** Every term in the context that is declared `{"@type": "@id"}`. */
@@ -2629,6 +2731,31 @@ export function exportIdentity(opts: ExportOptions = {}): {
   };
 }
 
+/**
+ * The declared Subgraph node a PUBLISHER points at — its absolute IRI in the
+ * declaring instance's published document, and its resolved content source in
+ * the JSON-LD form this exporter writes on that node (bean `l4ay`,
+ * `scripts/subgraph-node.ts`).
+ *
+ * Here because the document IRI is {@link exportIdentity}'s answer, and a
+ * publisher that recomposed it would be a second answer to where the node is.
+ * `undefined` when no instance in the checkout declares the id.
+ */
+export function declaredSubgraphNode(
+  start: string,
+  id: string,
+  opts: { baseUrl?: string } = {},
+): { iri: string; contentSource: Record<string, unknown>; declared: DeclaredSubgraph } | undefined {
+  const declared = declaredSubgraph(start, id);
+  if (declared === undefined) return undefined;
+  const { docIri } = exportIdentity({ instanceRoot: declared.instanceRoot, ...(opts.baseUrl ? { baseUrl: opts.baseUrl } : {}) });
+  return {
+    iri: subgraphIri(docIri, id),
+    contentSource: contentSourceJsonLd(declared.source, declared.repository),
+    declared,
+  };
+}
+
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
   const {
@@ -2802,6 +2929,123 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   };
 }
 
+/**
+ * The export's QA sidecar document. Pure — the writer writes it, the judge
+ * (`--judge`) only compares it for the advisory line. One rendering of one
+ * computation.
+ */
+export function kgExportQaDocument(data: Awaited<ReturnType<typeof buildExport>>, docPath: string): QaResult {
+  return buildQaResult({
+    script: "scripts/kg-export.ts",
+    scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
+    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
+    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
+    // document nothing writes — in the file whose whole purpose is saying
+    // what was found about WHICH graph.
+    subject: { kind: "graph", id: docPath },
+    families: {
+      undeclaredTerms: {
+        summary:
+          "Property names used in `@graph` that the `@context` does not declare. " +
+          "Dropped outright by a JSON-LD processor.",
+        entries: data.undeclaredTerms,
+      },
+      undeclaredSchemaModules: {
+        summary:
+          "Modules in the declared schemas/ directory that do not say what they are, " +
+          "so they are absent from the graph.",
+        entries: data.undeclaredSchemaModules,
+      },
+      danglingLinks: {
+        summary: "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+        entries: data.danglingLinks,
+      },
+      problems: {
+        summary: "Sources that could not be read. Never empty-by-omission.",
+        entries: data.problems,
+      },
+    },
+  });
+}
+
+/** What the judge counts, separated so a test can judge a corrupted export without running one. */
+export interface KgExportFindings {
+  /** Root-level fields absent from the `@context` — a processor drops them. Fatal. */
+  rootUndeclared: number;
+  /** Nodes carrying a JSON-LD keyword AND its alias. Fatal. */
+  collisions: number;
+  /** Property names absent from the `@context` (fatal since `ovkk`). */
+  undeclaredTerms: number;
+  /** Sources that could not be read — the graph is partial, so the question was not fully ASKED. */
+  problems: number;
+}
+
+/**
+ * Bean `bo44`'s four states over an export, with the writer's severity line
+ * kept exactly: the three document-validity families fail; dangling links and
+ * undeclared schema modules are reported and never fail. An unread source is
+ * `unknown` (exit 2) here where the writer has always exited 1 on it — both
+ * non-zero, and the judge says WHICH non-zero it is: a partial graph has not
+ * been judged whole, which is a different fact from a defect found in it.
+ */
+export function judgeKgExport(f: KgExportFindings): Judgement {
+  return judgementOf({
+    failing: f.rootUndeclared + f.collisions + f.undeclaredTerms,
+    undetermined: f.problems > 0,
+  });
+}
+
+if (import.meta.main && process.argv.includes("--judge")) {
+  // Judge mode: build the export in memory, judge it, write NOTHING — neither
+  // `_kg/<stub>.jsonld` nor the QA sidecar (bean `bo44`). `--out` and
+  // `--qa-root` are a writer's flags and are refused here.
+  const GATE = "kg:export:judge";
+  const argv = process.argv.slice(2);
+  const usage = judgeUsage(GATE, argv, ["--judge", "--base-url", "--instance"]);
+  if (usage !== undefined) process.exit(usage);
+  const arg = (flag: string): string | undefined => {
+    const i = argv.indexOf(flag);
+    return i !== -1 ? argv[i + 1] : undefined;
+  };
+  try {
+    const baseUrl = arg("--base-url") ?? process.env.KG_BASE_URL;
+    const instanceRoot = arg("--instance");
+    const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
+    const data = await buildExport({ baseUrl, instanceRoot });
+    const published = { ...publishedDocument(data), ...stagingFields() };
+    const rootUndeclared = undeclaredRootTerms(published as unknown as Record<string, unknown>, data["@context"]);
+    const collisions = keywordCollisions(data["@graph"]);
+    for (const t of rootUndeclared) console.error(`  ✗ root field not in the @context: ${t}`);
+    for (const c of collisions.slice(0, 10)) console.error(`  ✗ keyword AND alias: ${c}`);
+    for (const t of data.undeclaredTerms.slice(0, 10)) console.error(`  ✗ undeclared term: ${t.term}`);
+    for (const p of data.problems) console.error(`  ? could not read: ${p}`);
+    const hostStub = artefactStub(readDeclaration(ROOT)!);
+    const findings: KgExportFindings = {
+      rootUndeclared: rootUndeclared.length,
+      collisions: collisions.length,
+      undeclaredTerms: data.undeclaredTerms.length,
+      problems: data.problems.length,
+    };
+    process.exit(
+      concludeJudgement({
+        gate: GATE,
+        judgement: judgeKgExport(findings),
+        detail:
+          `${data["@graph"].length} node(s); ${findings.rootUndeclared} root field(s) and ${findings.undeclaredTerms} ` +
+          `term(s) undeclared, ${findings.collisions} collision(s), ${findings.problems} unread source(s); ` +
+          `${data.danglingLinks.length} dangling link(s) reported, not gated`,
+        committed: {
+          root: ROOT,
+          stem: stub === hostStub ? "kg-export" : `kg-export.${stub}`,
+          fresh: kgExportQaDocument(data, docPath),
+          writer: instanceRoot ? `kg:export -- --instance ${instanceRoot}` : "kg:export",
+        },
+      }),
+    );
+  } catch (e) {
+    process.exit(concludeJudgement({ gate: GATE, judgement: "error", detail: (e as Error).message }));
+  }
+}
 
 // ── `--check` / `--sidecars`: the committed QA sidecars as a verify/write pair
 //    (bean `v556`) ──────────────────────────────────────────────────────────
@@ -2885,15 +3129,18 @@ async function sidecarMode(mode: "check" | "write", baseUrl: string | undefined)
         console.log(`  ✓ ${label} written`);
         continue;
       }
-      const state = qaResultState(qaResultPath(ROOT, s.stem), fresh);
-      if (state === "current") {
-        console.log(`  ✓ ${label} current (${fresh.producer.script_hash})`);
-      } else {
-        bad++;
-        const committed = readQaResult(qaResultPath(ROOT, s.stem));
-        const was = committed ? ` — committed hash ${committed.producer.script_hash}, true ${fresh.producer.script_hash}` : "";
-        console.log(`  ✗ ${label} ${state.toUpperCase()}${was}`);
-      }
+      // COMPUTE AND JUDGE (beans `0dav`, `oqe3`). This compared the fresh
+      // result with the committed sidecar, which reads UNKNOWN once the
+      // results directory declares `storage` (beans `16ei`/`5hox`): the
+      // working copy is no longer the record. Nothing in these sidecars is a
+      // finding the gate fails on, so the fresh result is judged and what
+      // moved against the baseline is reported; a missing one is UNKNOWN.
+      const v = judgeQaResult({
+        gate: `kg:export:check (${label})`,
+        fresh,
+        baseline: { root: ROOT, stem: s.stem, writer: "kg:export:sidecars" },
+      });
+      if (v.exit !== 0) bad++;
     }
   } finally {
     rmSync(tmp, { recursive: true, force: true });
@@ -3036,37 +3283,7 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // own stub.
   const hostStub = artefactStub(readDeclaration(ROOT)!);
   const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
-  const resultPath = writeQaResult(qaRoot, qaStem, buildQaResult({
-    script: "scripts/kg-export.ts",
-    scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
-    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
-    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
-    // document nothing writes — in the file whose whole purpose is saying
-    // what was found about WHICH graph.
-    subject: { kind: "graph", id: docPath },
-    families: {
-      undeclaredTerms: {
-        summary:
-          "Property names used in `@graph` that the `@context` does not declare. " +
-          "Dropped outright by a JSON-LD processor.",
-        entries: data.undeclaredTerms,
-      },
-      undeclaredSchemaModules: {
-        summary:
-          "Modules in the declared schemas/ directory that do not say what they are, " +
-          "so they are absent from the graph.",
-        entries: data.undeclaredSchemaModules,
-      },
-      danglingLinks: {
-        summary: "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
-        entries: data.danglingLinks,
-      },
-      problems: {
-        summary: "Sources that could not be read. Never empty-by-omission.",
-        entries: data.problems,
-      },
-    },
-  }));
+  const resultPath = writeQaResult(qaRoot, qaStem, kgExportQaDocument(data, docPath));
   // Relative to the root it was WRITTEN under, not to `ROOT`. With `--qa-root`
   // pointing elsewhere the latter prints a pile of `../`, and a reader chasing
   // a sidecar has to resolve it by hand to find out it is in a temp directory.

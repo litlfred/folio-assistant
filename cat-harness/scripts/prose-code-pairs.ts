@@ -28,9 +28,16 @@
  *
  * ## One-sided change, keyed by content hash (R2)
  *
- * Each pair's last-accepted state is kept as an ATTESTATION in the subject's
- * own kg-qa sidecar (R6 — an existing family, not a new store), carried across
- * runs the way `block-qa` carries a reviewer entry with its `field_hash`:
+ * Each pair's last-accepted state is kept as an ATTESTATION, carried across
+ * runs the way `block-qa` carries a reviewer entry with its `field_hash`. It
+ * lived in the subject's kg-qa sidecar until bean `2gst` (2026-10-01) moved it
+ * to the attestation store, `test/attestations/kg-qa/` — owner ruling D2 (a):
+ * a judgement stays on main while the derived sidecar moves to the
+ * `qa-reports` branch. A store that cannot be read is `unknown`, never a
+ * fresh baseline ({@link evaluatePairsFrom}). A store with no entry for the
+ * subject (or no store at all) takes the attestations a PRIOR sidecar still
+ * carries inside it, and `kg-audit` moves them into the store as it saves
+ * (owner ruling 2, 2026-10-01) — {@link readAttestations}:
  *
  * - no attestation yet → a `baseline` is recorded; it claims only "unchanged
  *   since first seen", and the pair passes;
@@ -47,7 +54,7 @@
  *   bun run pairs:attest -- --sidecar cat-harness/test/results/kg-qa/processes/ci-health-watch.kg-qa.json \
  *     --by human --reason "re-read the report step against the new exit codes"
  *
- * rewrites that sidecar's attestations to the current hashes with who and why,
+ * rewrites that subject's attestations in the store to the current hashes with who and why,
  * and the next `kg:audit` passes it. `--by` is required and is `agent` or
  * `human`; a reason is required too, because a mark with no reason is a mark
  * nobody can review.
@@ -56,7 +63,14 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import type { KgCriterionEntry, KgFinding, KgQaReport } from "../schemas/kg-qa.js";
+import type { KgCriterionEntry, KgFinding } from "../schemas/kg-qa.js";
+import {
+  kgAttestationFor,
+  priorKgJudgements,
+  readAttestationFile,
+  serialiseAttestations,
+  type KgAttestations,
+} from "../schemas/qa-attestations.js";
 import { workflowsImplementing } from "./workflow-bpmn.js";
 
 /** The declared pair kinds this platform can see. */
@@ -169,26 +183,89 @@ export function evaluatePairs(
   return { entry: { result: findings.length ? "fail" : "pass", findings: [...findings, ...unknown] }, attestations };
 }
 
-/** Attestations recorded in an existing sidecar, or none. */
-export function readAttestations(sidecar: string): PairAttestation[] {
-  if (!existsSync(sidecar)) return [];
-  try {
-    const json = JSON.parse(readFileSync(sidecar, "utf-8")) as { pair_attestations?: PairAttestation[] };
-    return Array.isArray(json.pair_attestations) ? json.pair_attestations : [];
-  } catch {
-    return [];
+/**
+ * The prior attestations, in the states of `readAttestationFile`.
+ *
+ * `hit`, `miss` and `absent` carry a list. On `miss` or `absent` the store
+ * has no entry for this subject, and the list is whatever the PRIOR sidecar
+ * still carries inside it (`moved` counts them): the writer moves those into
+ * the store as it saves (owner ruling 2, 2026-10-01). With nothing in the
+ * prior either, the list is empty — genuinely "first sight".
+ *
+ * `corrupt` and `unknown` carry NO list on purpose: the `de9k` leftover was
+ * a reader that answered `[]` for a file it could not parse, so the next run
+ * re-baselined the subject and the judgement was gone without a word (C1,
+ * C4). A prior sidecar that will not parse while the store has no entry is
+ * `unknown` for the same reason.
+ */
+export type AttestationsRead =
+  | { state: "hit"; attestations: PairAttestation[] }
+  | { state: "miss" | "absent"; attestations: PairAttestation[]; moved: number }
+  | { state: "corrupt" | "unknown"; reason: string };
+
+/**
+ * Attestations recorded for one subject: the store file's, or — when the
+ * store has none — the ones `priorSidecar` still carries (ruling 2). On a
+ * `hit` the prior sidecar is never read.
+ */
+export function readAttestations(storeFile: string, storeRoot: string, priorSidecar?: string): AttestationsRead {
+  const r = readAttestationFile(storeFile, storeRoot);
+  if (r.state === "hit") {
+    const file = r.file as KgAttestations;
+    return { state: "hit", attestations: (file.pair_attestations ?? []) as PairAttestation[] };
   }
+  if (r.state === "miss" || r.state === "absent") {
+    const prior = priorKgJudgements(priorSidecar);
+    if (prior.state === "unknown") return { state: "unknown", reason: prior.reason };
+    const list = prior.state === "found" ? (prior.pair_attestations as PairAttestation[]) : [];
+    return { state: r.state, attestations: list, moved: list.length };
+  }
+  return { state: r.state, reason: r.reason };
 }
 
-/** Rewrite a sidecar's attestations to the current hashes, with who and why. */
+/**
+ * {@link evaluatePairs} over a read that may not have answered.
+ *
+ * With no declared pair the store is irrelevant and the criterion is `n/a`.
+ * With pairs and a `corrupt` or `unknown` read the criterion is `unknown`, and
+ * `attestations` is `undefined` — the caller must write NOTHING back, because
+ * writing fresh baselines over an unread store is exactly the loss this exists
+ * to prevent.
+ */
+export function evaluatePairsFrom(
+  pairs: ProseCodePair[],
+  read: AttestationsRead,
+  repoRoot: string,
+): { entry: KgCriterionEntry; attestations: PairAttestation[] | undefined } {
+  if (pairs.length === 0) return { entry: { result: "n/a", findings: [] }, attestations: [] };
+  if (!("attestations" in read)) {
+    return {
+      entry: { result: "unknown", findings: [{ where: "attestations", detail: `prior attestations are ${read.state}: ${read.reason}. Not re-baselined.` }] },
+      attestations: undefined,
+    };
+  }
+  return evaluatePairs(pairs, read.attestations, repoRoot);
+}
+
+/**
+ * Rewrite a subject's attestations to the current hashes, with who and why.
+ *
+ * Works on the STORE file (`schemas/qa-attestations.ts`), never on a kg-qa
+ * sidecar. Refuses anything but a hit: attesting over a corrupt file would
+ * overwrite a judgement nobody has read, and attesting where none is recorded
+ * has no pair to attest — run `kg:audit` first.
+ */
 export function attest(
-  sidecar: string,
+  storeFile: string,
+  storeRoot: string,
   by: "agent" | "human",
   reason: string,
   repoRoot: string,
 ): number {
-  const json = JSON.parse(readFileSync(sidecar, "utf-8")) as KgQaReport & { pair_attestations?: PairAttestation[] };
-  const list = json.pair_attestations ?? [];
+  const r = readAttestationFile(storeFile, storeRoot);
+  if (r.state !== "hit") throw new Error(`cannot attest ${storeFile}: ${r.state} (${r.reason})`);
+  const json = r.file as KgAttestations;
+  const list = (json.pair_attestations ?? []) as PairAttestation[];
   for (const a of list) {
     const ph = hashOf(resolve(repoRoot, a.prose));
     const ch = hashOf(resolve(repoRoot, a.code));
@@ -197,7 +274,7 @@ export function attest(
     a.by = by;
     a.reason = reason;
   }
-  writeFileSync(sidecar, `${JSON.stringify(json, null, 2)}\n`);
+  writeFileSync(storeFile, serialiseAttestations(json));
   return list.length;
 }
 
@@ -213,16 +290,26 @@ if (import.meta.main) {
   if (!sidecar || (by !== "agent" && by !== "human") || !reason) {
     console.error(
       "usage: bun run pairs:attest -- --sidecar <kg-qa sidecar path> --by agent|human --reason \"…\"\n" +
-        "Both --by and --reason are required: a re-review mark with no reason cannot be reviewed.",
+        "Both --by and --reason are required: a re-review mark with no reason cannot be reviewed.\n" +
+        "The attestation is written to the store (test/attestations/kg-qa/…), not to the sidecar.",
     );
     process.exit(2);
   }
-  const repoRoot = resolve(import.meta.dir, "..", "..");
+  const host = resolve(import.meta.dir, "..");
+  const repoRoot = resolve(host, "..");
   const abs = resolve(process.cwd(), sidecar);
-  if (!existsSync(abs)) {
-    console.error(`no sidecar at ${sidecar}`);
+  // The sidecar path names the SUBJECT; the store file is found from it. It
+  // need not exist itself — once derived results leave main it will not.
+  const where = kgAttestationFor(abs, repoRoot, host);
+  if (where === undefined) {
+    console.error(`${sidecar} is under no instance's kg-qa tree`);
     process.exit(2);
   }
-  const n = attest(abs, by, reason, repoRoot);
-  console.log(`attested ${n} pair(s) in ${relative(repoRoot, abs)} — now run \`bun run kg:audit\``);
+  try {
+    const n = attest(where.file, where.storeRoot, by, reason, repoRoot);
+    console.log(`attested ${n} pair(s) in ${relative(repoRoot, where.file)} — now run \`bun run kg:audit\``);
+  } catch (e) {
+    console.error(e instanceof Error ? e.message : String(e));
+    process.exit(1);
+  }
 }

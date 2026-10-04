@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
     "title": "Scheme Information API",
     "description": "Logical Model for Information on the trusted list and its issuing scheme",
@@ -168,8 +168,25 @@
           "issDateTime",
           "nextUpdate"
         ],
-        "resourceDefinition": "http://smart.who.int/trust/StructureDefinition/SchemeInformation",
-        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/trust/StructureDefinition/SchemeInformation"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
       }
     }
   }

@@ -1,5 +1,5 @@
 <!-- kg:subgraph:begin -->
-# Equipping agents for the real world with Agent Skills
+# Equipping agents for the real world with Agent Skills \ Anthropic
 
 ingested source material — attributed to its document, not folio content
 

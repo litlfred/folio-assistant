@@ -108,6 +108,19 @@ describe("what it must NOT touch — each failure renders fine and is therefore 
     expect(readFileSync(join(root, "cat-harness/library/x/index.html"), "utf-8")).toBe(before);
   });
 
+  test("a page that DECLINES the rail in its own markup keeps that decision (#1881)", () => {
+    // The generator honoured `folio-navbar: none`; this post-build walk did
+    // not, so library entry shells published at 25 KB instead of 2.8 KB.
+    const root = site();
+    const rel = "cat-harness/library/x/entry/index.html";
+    const shell = page(`<p>shell</p>`).replace("<body>", `<meta name="folio-navbar" content="none">\n<body>`);
+    mkdirSync(join(root, "cat-harness/library/x/entry"), { recursive: true });
+    writeFileSync(join(root, rel), shell);
+    const r = run(root);
+    expect(readFileSync(join(root, rel), "utf-8")).toBe(shell);
+    expect(r.declined).toBe(1);
+  });
+
   test("a mount route is the OTHER pass's subject", () => {
     // `injectRails` walks these with a per-instance model. Railing them here
     // too would give a mounted page two rails, and the second would carry the

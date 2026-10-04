@@ -135,7 +135,8 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
               display: flex; flex-flow: column nowrap; align-items: flex-end;
               background: #27262b; color: #fff; }
   .site-header { width: 100%; max-height: 3.75rem; overflow: hidden; display: flex; align-items: center; }
-  .site-title { flex: 1; }
+  /* The theme sizes the avatar link to its 3.75rem header; it is a link now (the open control). */
+  .site-title { flex: 1; display: flex; align-items: center; min-height: 3.75rem; }
   .site-nav { width: 100%; overflow-y: auto; }
   /* THE THEME'S OWN NAV LINK, copied from a real build rather than written
      from memory: padding 4px 32px, line-height 24px, so 32px tall. The theme
@@ -150,11 +151,9 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
 </style></head><body>
   ${script}
   <div class="side-bar">
-    <div class="site-header"><a class="site-title"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
+    <div class="site-header"><a class="site-title" href="#home"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
     <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
-    <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span></label>
-    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
         <details class="fa-harness-tabs">
@@ -235,29 +234,32 @@ async function load(
 }
 
 test.describe("the icon row — line 2 of the fixed top", () => {
-  test("draws one slot per declared icon, in order, minus the CSS-placed [x]", async ({ page }) => {
-    // `close` is a <label> for the pure-CSS open/close checkbox and must keep
-    // working with no script at all, so the stylesheet places it into this
-    // row's last slot while pinned. It stays in the declaration — the instance
-    // still says six — and is SKIPPED here rather than dropped.
+  test("draws one slot per declared icon, in order, minus the declared close", async ({ page }) => {
+    // `close` stays in the declaration -- the instance still says six -- and
+    // is SKIPPED here rather than dropped. Nothing draws it on a theme page
+    // any more: the avatar is the open and close control (ob3m finding 8).
     const { errors } = await load(page, LIVE);
     expect(errors).toEqual([]);
     const drawn = LIVE.icons.filter((i) => i !== "close");
-    // The DECLARED slots. The light/dark switch and the moved [x] follow them
-    // (owner, 2026-09-27: "light dark mode on main icon tab", "close
-    // navigation in line with the rest of icons") and are not declared slots.
-    const slots = ".fa-nav-icons .fa-nav-icon:not(.fa-nav-scheme):not(.fa-nav-close)";
+    // The DECLARED slots. The light/dark switch follows them (owner,
+    // 2026-09-27: "light dark mode on main icon tab") and is not one.
+    const slots = ".fa-nav-icons .fa-nav-icon:not(.fa-nav-scheme)";
     await expect(page.locator(slots)).toHaveCount(drawn.length);
     expect(drawn).not.toContain("close");
     const labels = await page.locator(slots).evaluateAll((ns) =>
       ns.map((n) => n.getAttribute("aria-label")),
     );
-    expect(labels).toEqual(["Todos", "Beans", "Processes", "Knowledge graph", "More actions"]);
-    // ...then the switch, then the [x], last.
+    // fsh-guts joined the row "with the others" (owner, 2026-10-02, #1925). Its
+    // accessible name carries the live count after a dash, so only its stem is
+    // pinned here; the count states are `fshGutsCount`'s to test.
+    expect(labels.map((l) => (l ?? "").split(" — ")[0])).toEqual([
+      "Todos", "Beans", "Processes", "Knowledge graph", "fsh-guts, discarded items", "More actions",
+    ]);
+    // ...then the switch, last. No [x] after it (ob3m finding 8).
     const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
-      ns.slice(-2).map((n) => (n.classList.contains("fa-nav-scheme") ? "scheme" : n.classList.contains("fa-nav-close") ? "close" : n.className)),
+      ns.slice(-1).map((n) => (n.classList.contains("fa-nav-scheme") ? "scheme" : n.className)),
     );
-    expect(tail).toEqual(["scheme", "close"]);
+    expect(tail).toEqual(["scheme"]);
   });
 
   test("FIVE DISTINCT drawings — a row where slots look alike says nothing", async ({ page }) => {
@@ -389,11 +391,15 @@ test.describe("the middle — controlled folders, then the harness navigation, O
     const order = await page
       .locator(".fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className));
-    expect(order[0]).toContain("fa-nav-folders");
-    // The page list's own heading (owner, 2026-09-27: "no title on the
-    // navbar component w/ pages"), then the list.
+    // The viewer rail's order (ob3m finding 7, owner 2026-10-01): the page's
+    // own index, the page list's heading and the list, then the folded Graphs
+    // group that now holds the folders. sidebar-rail.e2e.ts asserts the
+    // layout against the real footer; this asserts the move in this fixture.
+    expect(order[0]).toContain("fa-doc-index");
     expect(order[1]).toContain("fa-nav-pages");
     expect(order[2]).toContain("site-nav");
+    expect(order[3]).toContain("fa-nav-graphs-group");
+    await expect(page.locator(".fa-nav-graphs-group > .fa-nav-folders")).toHaveCount(1);
   });
 
   test("every declared kind is listed; one with no viewer is a non-link", async ({ page }) => {
@@ -476,6 +482,8 @@ test.describe("the middle — controlled folders, then the harness navigation, O
     // tests below — so asserting it visible here would be asserting that the
     // strip still shows words.
     await page.hover(".side-bar");
+    // Inside the Graphs group, which is folded too (ob3m finding 7).
+    await page.locator(".fa-nav-graphs-group__heading").click();
     await expect(page.locator(".fa-nav-folders__count")).toBeVisible();
     await page.locator(".fa-nav-folders__heading").click();
     await expect(page.locator(".fa-nav-folders")).toHaveAttribute("open", "");
@@ -488,14 +496,15 @@ test.describe("the middle — controlled folders, then the harness navigation, O
     await expect(page.locator(".fa-doc-index__count")).toBeVisible();
   });
 
-  test("it DEGRADES — with no row the nav keeps its old place rather than breaking", async ({ page }) => {
+  test("it DEGRADES — with no row there is no folder list, and still one scroller", async ({ page }) => {
     // Neither "could not read" nor "declared none" is a reason to draw an
-    // empty folder list. The middle stays the navigation alone, which is what
-    // it was before this round, and the stylesheet carries both selectors.
+    // empty folder list. The middle is still built, so the page index shares
+    // the one scroll region with the nav rather than keeping its own.
     const { errors } = await load(page, null);
     expect(errors).toEqual([]);
-    await expect(page.locator(".fa-nav-middle")).toHaveCount(0);
-    await expect(page.locator(".side-bar > .site-nav")).toHaveCount(1);
+    await expect(page.locator(".fa-nav-folders")).toHaveCount(0);
+    await expect(page.locator(".side-bar > .fa-nav-middle > .site-nav")).toHaveCount(1);
+    await expect(page.locator(".side-bar > .fa-nav-middle > .fa-doc-index")).toHaveCount(1);
   });
 });
 
@@ -525,7 +534,7 @@ test.describe("the document index — the fixed top, about the page rather than 
     await expect(page.locator(".fa-doc-index")).toHaveCount(0);
   });
 
-  test("sits in the FIXED TOP — after the icon row, before the scrolling middle", async ({ page }) => {
+  test("sits FIRST in the one scrolling middle — the viewer rail's place for it", async ({ page }) => {
     // THE POP-OUT PANELS ARE FILTERED, and they are siblings rather than
     // children of anything: `.fa-panel-in-sidebar` is `position: static`, so a
     // naive child list has `.fa-tiles` sitting between the icon row and this
@@ -535,18 +544,14 @@ test.describe("the document index — the fixed top, about the page rather than 
     // deliberately not restated here: two specs asserting one placement are
     // two answers free to disagree.
     await load(page, CUSTOM);
-    // THE CONTROLS ARE FILTERED TOO, for the same reason the panels are: the
-    // checkbox is off-screen and both labels are `position: absolute`, so
-    // none of them is a region in the column's flow. Where a label is PAINTED
-    // is free of where it sits in the markup — the argument `.fa-nav-toggle`
-    // already makes in the stylesheet.
+    // THE CHECKBOX IS FILTERED TOO: it is clipped off-screen, so it is not a
+    // region in the column's flow.
     const order = await page
-      .locator(".side-bar > *:not(.fa-panel-in-sidebar):not(.fa-nav-open):not(.fa-nav-toggle):not(.fa-nav-close)")
+      .locator(".side-bar > *:not(.fa-panel-in-sidebar):not(.fa-nav-open)")
       .evaluateAll((ns) => ns.map((n) => n.className || n.tagName.toLowerCase()));
     expect(order).toEqual([
       expect.stringContaining("site-header"),
       expect.stringContaining("fa-nav-icons"),
-      expect.stringContaining("fa-doc-index"),
       expect.stringContaining("fa-nav-middle"),
       expect.stringContaining("site-footer"),
     ]);
@@ -623,16 +628,16 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     return out;
   };
 
-  test("the folio handle is not in the sidebar, and the ☰ still takes its clicks", async ({ page }) => {
+  test("the folio handle is not in the sidebar, and the avatar still takes its clicks", async ({ page }) => {
     // Owner, 2026-09-27: the handle is back at the top centre, "not on
-    // navbar". Kept as a guard: the ☰ must still open and close the bar.
+    // navbar". Kept as a guard: the avatar must still open and close the bar.
     await load(page, CUSTOM);
     await expect(page.locator(".side-bar .fa-glass-handle")).toHaveCount(0);
     await expect(page.locator("body > .fa-glass-handle")).toHaveCount(1);
-    await page.hover(".side-bar");
-    await page.locator(".fa-nav-close").click();
-    await page.waitForTimeout(200);
-    await page.locator(".fa-nav-toggle").click({ timeout: 5000 });
+    await page.locator(".side-bar .site-title").click({ timeout: 5000 });
+    await expect(page.locator("#fa-nav-open")).toBeChecked();
+    await page.locator(".side-bar .site-title").click({ timeout: 5000 });
+    await expect(page.locator("#fa-nav-open")).not.toBeChecked();
   });
 
   test("NO text region is visible until the bar is opened", async ({ page }) => {
@@ -654,7 +659,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.hover(".side-bar");
     await page.waitForTimeout(250);
     const shown = (await page.evaluate(visibleText)).join(" | ");
-    for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-folders__heading",
+    for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-graphs-group__heading",
                           "fa-harness-tabs__heading", "fa-harness-tab__label", "fa-nav-home__label"]) {
       expect(shown).toContain(region);
     }
@@ -775,7 +780,7 @@ test.describe("every row in the navbar is a target", () => {
     // has no box to measure, and a sweep that skipped them would report clean
     // over the rows most likely to be wrong.
     await page.hover(".side-bar");
-    for (const heading of [".fa-doc-index__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
+    for (const heading of [".fa-doc-index__heading", ".fa-nav-graphs-group__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
       const h = page.locator(".side-bar " + heading);
       if (await h.count()) await h.click();
     }
@@ -879,89 +884,78 @@ test.describe("every glyph in the navbar paints with the text colour", () => {
  * pressing it remembers a stay-closed preference across pages.
  */
 test.describe("the navbar can be closed, and it stays closed", () => {
-  test("[x] is offered whenever the bar is OPEN, not only while pinned", async ({ page }) => {
+  // ONE CONTROL since ob3m finding 8 (owner, 2026-10-01): the avatar. The [x]
+  // and the hamburger that used to set and lift this preference are gone from
+  // theme pages, as #1762 removed them from the rail. Pinning by the avatar
+  // lifts stay-closed; unpinning by it sets stay-closed.
+  const avatar = (p: import("@playwright/test").Page) => p.locator(".side-bar .site-title");
+
+  test("no [x] and no hamburger are drawn -- the avatar is the control", async ({ page }) => {
     await load(page, CUSTOM);
-    // At rest it is not offered: an [x] alone in a 3.5rem strip reads as a
-    // close button for the page.
-    await expect(page.locator(".fa-nav-close")).toBeHidden();
-    await page.hover(".side-bar");
-    await expect(page.locator(".fa-nav-close")).toBeVisible();
+    await expect(page.locator(".fa-nav-close, .fa-nav-toggle, .side-bar .fa-nav-head")).toHaveCount(0);
+    await expect(avatar(page)).toHaveAttribute("aria-controls", /.+/);
+    await expect(avatar(page)).toHaveAttribute("aria-expanded", "false");
   });
 
-  test("only the [x] SHOWS — its words are for a screen reader (owner, 2026-09-27)", async ({ page }) => {
-    // Owner: the open sidebar showed "× Close navigatio", the words wrapped
-    // over two lines on the grey box and over the icon row. The span that
-    // carries the name was clipped only by the RAIL's stylesheet, and this
-    // fixture had been written without it, so nothing here could see it.
+  test("closing by the avatar is REMEMBERED for the next page", async ({ page }) => {
     await load(page, CUSTOM);
-    await page.hover(".side-bar");
-    const close = page.locator(".fa-nav-close");
-    await expect(close).toBeVisible();
-    const box = (await close.boundingBox())!;
-    expect(box.width).toBeLessThanOrEqual(40);
-    expect(box.height).toBeLessThanOrEqual(40);
-    expect(box.height).toBeGreaterThanOrEqual(24);
-    const sr = (await page.locator(".fa-nav-close .fa-nav-sr").boundingBox())!;
-    expect(sr.width).toBeLessThanOrEqual(1);
-    expect(sr.height).toBeLessThanOrEqual(1);
-    // Hidden from the eye, still the control's name.
-    await expect(close).toContainText("Close navigation");
-  });
-
-  test("pressing it does NOT pin the bar open — the label would have", async ({ page }) => {
-    // The defect this intercepts. `[x]` is a `<label for="fa-nav-open">` and a
-    // label TOGGLES; with the bar open by hover the checkbox is already clear,
-    // so the same click would CHECK it and pin the bar open — the opposite of
-    // what the control says.
-    await load(page, CUSTOM);
-    await page.hover(".side-bar");
-    await page.locator(".fa-nav-close").click();
+    await avatar(page).click();
+    await expect(avatar(page)).toHaveAttribute("aria-expanded", "true");
+    await avatar(page).click();
     expect(await page.locator("#fa-nav-open").isChecked()).toBe(false);
-  });
-
-  test("...and the preference is REMEMBERED for the next page", async ({ page }) => {
-    await load(page, CUSTOM);
-    await page.hover(".side-bar");
-    await page.locator(".fa-nav-close").click();
     expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
     expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBe("closed");
   });
 
-  test("closed means the POINTER stops opening it — and only the pointer", async ({ page }) => {
+  test("closed means the POINTER stops opening it -- and only the pointer", async ({ page }) => {
     await load(page, CUSTOM);
-    await page.hover(".side-bar");
-    await page.locator(".fa-nav-close").click();
+    await avatar(page).click();
+    await avatar(page).click();
+    await page.hover(".side-bar .fa-nav-icons");
     await page.waitForTimeout(250);
     const strip = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
     expect(strip).toBeLessThan(100);
 
-    // A KEYBOARD READER IS NOT TRAPPED. Focus still opens it — suppressing
-    // that would leave them tabbing through links they cannot see, which is a
-    // worse defect than the one being fixed.
+    // A KEYBOARD READER IS NOT TRAPPED. Focus still opens it -- suppressing
+    // that would leave them tabbing through links they cannot see.
+    //
+    // KEYBOARD focus, so it is `:focus-visible`: the pointer is still parked on
+    // the icon column, where `.fa-nav-tip-hold` (#1805) holds the strip shut
+    // for a POINTER and lets go for a keyboard. A bare `.focus()` after two
+    // clicks is pointer-modality focus, which is not what a keyboard reader
+    // makes; a key press first gives it the keyboard's modality.
+    await page.keyboard.press("Shift");
     await page.locator(".side-bar .site-nav a").first().focus();
+    expect(await page.evaluate(() => document.activeElement!.matches(":focus-visible"))).toBe(true);
     await page.waitForTimeout(250);
     const focused = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().width));
     expect(focused).toBeGreaterThan(200);
   });
 
-  test("the hamburger LIFTS it — an action whose inverse is unreachable is not a toggle", async ({ page }) => {
+  test("the avatar LIFTS it -- an action whose inverse is unreachable is not a toggle", async ({ page }) => {
     // `l4zi`. Without this the bar could be closed once and never peek again.
     await load(page, CUSTOM);
-    await page.hover(".side-bar");
-    await page.locator(".fa-nav-close").click();
-    await page.waitForTimeout(200);
-    await page.locator(".fa-nav-toggle").click();
+    await avatar(page).click();
+    await avatar(page).click();
+    expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBe("closed");
+    await avatar(page).click();
     expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBeNull();
     expect(await page.evaluate(() => window.localStorage.getItem("fa-nav"))).toBeNull();
   });
 
+  test("by KEYBOARD too -- Enter on the focused avatar opens and closes", async ({ page }) => {
+    await load(page, CUSTOM);
+    await avatar(page).focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#fa-nav-open")).toBeChecked();
+    await avatar(page).focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#fa-nav-open")).not.toBeChecked();
+  });
+
   test("a browser that refuses localStorage still gets the close", async ({ page }) => {
-    // The preference is a convenience, not state anything else needs, so a
-    // throwing `localStorage` degrades to "closed for this page" rather than
-    // to a broken navbar.
-    // Now that the fixture has a real origin, this has to CREATE the condition
-    // rather than inherit it — which is the point: before, every test here ran
-    // with storage denied and this one passed for the wrong reason.
+    // The preference is a convenience, so a throwing localStorage degrades to
+    // "closed for this page" rather than to a broken navbar.
     await page.addInitScript(() => {
       Object.defineProperty(window, "localStorage", {
         get() { throw new Error("denied"); },
@@ -969,8 +963,8 @@ test.describe("the navbar can be closed, and it stays closed", () => {
     });
     const { errors } = await load(page, CUSTOM);
     expect(errors).toEqual([]);
-    await page.hover(".side-bar");
-    await page.locator(".fa-nav-close").click();
+    await avatar(page).click();
+    await avatar(page).click();
     expect(await page.evaluate(() => document.documentElement.getAttribute("data-fa-nav"))).toBe("closed");
   });
 });
@@ -1012,6 +1006,8 @@ test.describe("a page withheld from this deploy is not linked", () => {
     // `<details>`, so comparing two of them there compares "" with "" and
     // passes whatever the notes say — which is how the first version of this
     // test passed while asserting nothing.
+    // Inside the folded Graphs group since ob3m finding 7.
+    await page.locator(".fa-nav-graphs-group__heading").click();
     await page.locator(".fa-nav-folders__heading").click();
     await page.waitForTimeout(200);
     const note = (kind: string) =>
@@ -1056,6 +1052,8 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
   test("the children sit under their parent, in a disclosure that starts CLOSED", async ({ page }) => {
     await load(page, NESTED);
     await page.hover(".side-bar");
+    // Inside the folded Graphs group since ob3m finding 7.
+    await page.locator(".fa-nav-graphs-group__heading").click();
     await page.locator(".fa-nav-folders__heading").click();
     const docs = page.locator(".fa-nav-folders__list > .fa-nav-folders__item", { hasText: /^docs/ });
     const sub = docs.locator(":scope > .fa-nav-folders__sub");
@@ -1073,6 +1071,8 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
   test("a child whose parent is not listed stands on its own", async ({ page }) => {
     await load(page, NESTED);
     await page.hover(".side-bar");
+    // Inside the folded Graphs group since ob3m finding 7.
+    await page.locator(".fa-nav-graphs-group__heading").click();
     await page.locator(".fa-nav-folders__heading").click();
     await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item",
       { hasText: "orphan" })).toHaveCount(1);

@@ -43,6 +43,69 @@ the point, and the conformance floor is a floor rather than a target.
 - **A change that does not move focus is announced** — a live region, or focus
   management, or both.
 
+## There is no no-JavaScript floor here — and exactly two gates that look like one
+
+This is the question an agent arrives with, so it is answered before the
+checks: **this project's accessibility standard does not require a surface to
+work with JavaScript disabled.** WCAG 2.2 A/AA imposes no such rule, and
+neither does this skill. A rendering MAY fetch and build its content
+client-side.
+
+Two things make it *look* otherwise, and both are narrower than their name
+suggests. Measured 2026-10-02: these are the only two
+`javaScriptEnabled: false` contexts in the repository.
+
+| gate | what it actually requires | what it does NOT reach |
+|---|---|---|
+| `test/linear-floor.e2e.ts` | the **todo listing** (`#fa-todo-listing`) is in the served bytes, in document order, with its count equal to its own cardinality | anything else on the page |
+| `test/first-paint-scheme.e2e.ts` | eight generated dashboards **first-paint dark from CSS alone**, in a light-preferring browser | the page's *content* — this is a colour assertion |
+
+The first is the **board's** linear floor and nothing wider: it is R4 of
+[`folio-board-requirements`](../../architecture/folio-board-requirements.html),
+whose subject is the board. The second is about the first frame, not about
+whether a reader can read the page.
+
+**And the docs site's own navbar already requires JavaScript**, which settles
+the question empirically rather than by reading. `mountNavIconRow`,
+`mountDocumentIndex` and `mountInstanceGraphs` build three of its regions in
+the DOM at load — shipped in #959, documented in `test/navbar-row.e2e.ts` as
+"the three JS-mounted navbar regions", and no gate in this repository objects.
+An argument that the docs site owes a no-JS rendering has to explain that
+first.
+
+**Why this paragraph exists at all.** On 2026-10-02 an agent relaxed R4 — a
+*board* requirement, in a document whose own first section says it is "history,
+not instruction" — and cited a measurement of the **docs nav** as the reason.
+The relaxation was not merely mis-scoped, it was unnecessary: the nav was never
+under the floor it relaxed. Reaching for a requirement to license a change is
+how a rule gets read as wider than it is written, in both directions.
+
+## A rendering built client-side owes two things the static one gave for free
+
+These are **requirements**, stated by the owner on 2026-10-02, and they apply
+to every surface — the board, the docs site, a viewer, a dashboard. They are
+here rather than in a design record because a design record is not instruction
+and nothing goes looking for a rule there.
+
+- **Print and PDF SHALL wait for load and render before printing.** Owner,
+  verbatim: *"print/pdf needs to wait until loaded/rendered before printing
+  (assuming can load assets)"*. A `window.print()` that fires before the fetch
+  resolves produces a blank or partial page, and **a PDF is not re-checkable
+  after the fact the way a web page is** — a reader who got a blank page has no
+  way to tell it from a page that was blank. Playwright's
+  `waitUntil: "load"` is not sufficient on a page that fetches after load.
+- **A load that FAILS SHALL say so** rather than render as empty. "Could not
+  load" and "there is nothing here" are different facts, and a client-side
+  fetch is the easiest place in this repository to lose the distinction —
+  `could-not-determine-is-a-third-state-everywhere` applied to the one surface
+  where the failure is invisible to every gate. **A `console.warn` is not
+  saying so**: it reaches a developer with the console open and no reader ever.
+
+What the relaxation does **not** touch, because the same ruling states them
+independently: movement stays keyboard-operable, and drag stays an accelerator
+rather than the only way in. The declared interaction profile is low-dexterity
+and no byte-count argument reaches it.
+
 ## An automated pass is not the standard, and this is measured
 
 Run axe. Also read the markup. **They find different things, and the overlap is
