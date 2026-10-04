@@ -100,8 +100,7 @@ import { join } from "node:path";
 import { RENDER_LOG_DIR, readRenderLog } from "../schemas/render-log.ts";
 import { readStagingPreview, retireStagingPreview, serializeStagingPreview } from "../schemas/staging-preview.ts";
 import { appendEntry, buildEntry } from "./render-log.ts";
-import { RETIRED_DIR, STAGING_PREFIX } from "./restore-staging.ts";
-import { SLUG_PATTERN } from "./staging-cleanup-preflight.ts";
+import { RETIRED_DIR, SLUG_PATTERN, STAGING_PREFIX } from "./restore-staging.ts";
 import { loadExisting } from "./staging-record.ts";
 
 /**
