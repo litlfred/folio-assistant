@@ -80,7 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
-import { SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
+import { KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -1479,7 +1479,15 @@ export type Tile = z.infer<typeof TileSchema>;
  *   generation wins and a lost write costs a rerun.
  *
  * The field is an enum, not a string, so a FIFTH keying is a schema change
- * somebody has to make rather than a reinterpretation of an existing value.
+ * somebody has to make rather than a reinterpretation of an existing value. The
+ * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
+ * not restated: this field held its own `z.enum([...])` until the two drifted —
+ * `route` was added here with bean `1j3q` and not there, so a route-keyed
+ * declaration parsed and then threw a ZodError inside `resolveSubgraphSource`.
+ * **A schema change somebody has to make is only a guard if there is ONE schema
+ * to change**, and `route-family` was added to `KeyedBySchema` for exactly that
+ * reason — this branch first restated the enum here and reproduced `1j3q` one
+ * keying later.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
@@ -1506,7 +1514,7 @@ export const DirectoryStorageSchema = z
      * {@link DirectoryStorageSchema}'s docblock for why `route` is not a
      * synonym for `tip`.
      */
-    keyedBy: z.enum(["commit", "tip", "route", "route-family"]),
+    keyedBy: KeyedBySchema,
   })
   .strict();
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;

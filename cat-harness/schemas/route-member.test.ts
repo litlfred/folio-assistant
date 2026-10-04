@@ -15,6 +15,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { RouteMemberSchema, DirectoryStorageSchema } from "./cat-harness.ts";
+import { KeyedBySchema } from "./subgraph-source.ts";
 
 const ok = (m: string) => RouteMemberSchema.safeParse(m).success;
 
@@ -111,5 +112,56 @@ describe("the keying enum carries exactly four values", () => {
     for (const branch of ["refs/heads/gh-pages", "-x", "a..b", "a//b", "gh-pages/", "x.lock", "/abs"]) {
       expect(DirectoryStorageSchema.safeParse({ branch, keyedBy: "route-family" }).success).toBe(false);
     }
+  });
+});
+
+/**
+ * THE DRIFT GUARD, and it exists because this branch caused the defect it
+ * guards.
+ *
+ * Bean `1j3q`: `DirectoryStorageSchema.keyedBy` held its own
+ * `z.enum(["commit","tip","route"])` while `KeyedBySchema` in
+ * `subgraph-source.ts` is what every consumer parses through. `route` was added
+ * to the first and not the second, so a route-keyed declaration PARSED and then
+ * threw a ZodError inside `resolveSubgraphSource`. Main fixed it by importing
+ * the one enum, with the rule: *a schema change somebody has to make is only a
+ * guard if there is ONE schema to change.*
+ *
+ * This branch then added `route-family` to the copy in `cat-harness.ts` —
+ * reproducing `1j3q` one keying later, accepted by the declaration and rejected
+ * by every consumer. Nothing caught it; main's fix landed independently and the
+ * merge is what exposed it.
+ *
+ * So the guard is behavioural rather than a comment: the two must AGREE on
+ * every value, in both directions. A future keying added to one and not the
+ * other fails here instead of at a consumer's parse.
+ */
+describe("the keying enum has exactly one definition", () => {
+  const VALUES = ["commit", "tip", "route", "route-family"] as const;
+  const JUNK = ["", "routes", "family", "route_family", "dynamic", "ROUTE", "tip "] as const;
+
+  test("every accepted value is accepted by BOTH", () => {
+    for (const v of VALUES) {
+      expect(KeyedBySchema.safeParse(v).success).toBe(true);
+      expect(DirectoryStorageSchema.safeParse({ branch: "gh-pages", keyedBy: v }).success).toBe(true);
+    }
+  });
+
+  test("every rejected value is rejected by BOTH — the direction `1j3q` missed", () => {
+    // `1j3q`'s failure was a value one side accepted and the other did not.
+    // Asserting only the accept direction would have passed while that bug was
+    // live, so both directions are checked.
+    for (const v of JUNK) {
+      expect(KeyedBySchema.safeParse(v).success).toBe(false);
+      expect(DirectoryStorageSchema.safeParse({ branch: "gh-pages", keyedBy: v }).success).toBe(false);
+    }
+  });
+
+  test("the declaration does not RESTATE the enum — it is the same schema object", () => {
+    // The structural half. Agreement on a value list can be maintained by hand
+    // and drift again; identity cannot. `DirectoryStorageSchema` must carry
+    // `KeyedBySchema` itself, so a new value reaches both by construction.
+    const shape = (DirectoryStorageSchema as unknown as { shape: Record<string, unknown> }).shape;
+    expect(shape.keyedBy).toBe(KeyedBySchema);
   });
 });

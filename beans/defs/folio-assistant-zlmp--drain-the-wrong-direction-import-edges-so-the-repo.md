@@ -4,8 +4,10 @@ title: Drain the wrong-direction import edges so the repo split can cut
 status: in-progress
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-22T18:19:04Z
+updated_at: 2026-10-04T09:56:46Z
 parent: folio-assistant-vke6
 ---
 

@@ -164,8 +164,8 @@
 
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
-<li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">65</span></li>
+<li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">3</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">64</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -179,10 +179,6 @@
 <table id="da-index" data-fa-filtered="true">
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">cat-harness/processes/content/ig-ast-delta-review.bpmn</span></td>
-  <td>THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean <code>a9tx</code>, owner 2026-09-30: &quot;list and view differentials/deltas against AST ...<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Incremental build (system) · QC reviewer · Work plan — beans (shared by humans and agents)</div><div class="f"><span class="k">skills</span> ig-ast-delta, todo-manager</div></td>
-</tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content/review-narrative.bpmn"><code>Narrative review</code></a><br><span class="p">cat-harness/processes/content/review-narrative.bpmn</span></td>
   <td>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translatio…<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, content-review, translation-manager, voice-editorial-review, voice-overlay-review</div></td>
@@ -361,7 +357,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn"><code>Merge the base branch in</code></a><br><span class="p">cat-harness/processes/sdlc/merge-base.bpmn</span></td>
-  <td>CALLED FROM <code>Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code>bun run merge:main</code> (cat-harness/scripts/merge-base.ts).<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> merge:main command · Authoring agent</div><div class="f"><span class="k">skills</span> continual-progress, merge-conflict-patterns, prepare-merge</div></td>
+  <td>CALLED FROM <code>Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code>bun run merge:main</code> (cat-harness/scripts/merge-base.ts).<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> merge:main command · Authoring agent</div><div class="f"><span class="k">skills</span> ci-health, continual-progress, merge-conflict-patterns, prepare-merge</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>A refused merge-train member</code></a><br><span class="p">cat-harness/processes/sdlc/merge-refusal.bpmn</span></td>

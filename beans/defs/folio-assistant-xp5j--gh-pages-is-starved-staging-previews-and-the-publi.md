@@ -270,6 +270,67 @@ Route keying removes CONFLICTS, not BURSTS. Even fully migrated, the published
 site lags until the steward coalesces — `schemas/ref-window.ts` is the type for
 that, and the window, not the keying, is what closes this bean's symptom.
 
+## Handover for a merge steward — 2026-10-04, PR #2063
+
+The owner's merge manager is **in another account's session**, so session
+messaging cannot reach it. This section, `beans/queue/litlfred-folio-assistant-2063.json`
+and the PR itself are the channel.
+
+### What the decision table says, unprompted
+
+`bun run merge:steward` evaluated `merge-priority.dmn#Decision_MergePriority`
+against `origin/main`:
+
+    pr 2063  route "hand back"  class hand-back  rank 90  rule Rule_Refused
+             conflict refused   ownCi missing-required
+             missingGating ["code-quality-gates.yml"]
+
+It reached independently what this branch had established by hand, which is why
+the queue entry records it rather than arguing with it.
+
+### The structural blocker, and it is not this branch's content
+
+`code-quality-gates.yml` has **never run** on #2063, across twelve pushes.
+`check:head-has-run` names the mechanism: a conflicted PR has no
+`refs/pull/N/merge`, GitHub runs no `pull_request` workflow without one, and
+that workflow is `pull_request`-only (`merge_group` cannot fire here, bean
+`1hjm`). So the PR is unmergeable → no gates → cannot be shown green.
+
+`merge-main` is labelled and the bot sweeps on every push to `main`, but it
+**refuses**, correctly, on the authored paths below. Main moves 25–54 commits
+inside one 12–20 min merge+regen cycle, so a hand merge cannot converge either.
+That is bean `0mf0`'s territory, not a defect in this PR.
+
+### Three authored resolutions a steward should NOT redo
+
+1. **`scripts/special-branches.json`** — union. Main's `9c7h` rewrote the
+   `fsh-guts` entry while this branch added `keyedBy`; both kept.
+2. **`schemas/cat-harness.ts`** — **take main's `keyedBy: KeyedBySchema`**, never
+   a restated enum. See below.
+3. **Both submodule gitlinks** — must be main's (`bootstrap-tools`
+   `7ac5150ccbb8`, `bootstrap` `576120449686`). A merge here resolved them to
+   the branch's side and broke `subgraph-readmes.ts` in a file this branch never
+   touched.
+
+### A defect this branch caused and has fixed, worth carrying forward
+
+Main's `c505ba2cc22` (bean `1j3q`) removed a duplicated keying enum:
+`DirectoryStorageSchema.keyedBy` held its own `z.enum([...])` while
+`KeyedBySchema` in `subgraph-source.ts` is what every consumer parses through,
+they drifted, and a route-keyed declaration parsed then threw a ZodError inside
+`resolveSubgraphSource`. Its rule: **a schema change somebody has to make is
+only a guard if there is ONE schema to change.**
+
+This branch added `route-family` to the *copy* — reproducing `1j3q` one keying
+later, accepted by the declaration and rejected by every consumer. Nothing
+caught it; main's fix landing independently is what exposed it at merge.
+
+Now: `route-family` is in `KeyedBySchema` only, `resolveSubgraphSource` accepts
+a `route-family` declaration end to end, and `route-member.test.ts` carries the
+guard — both value directions plus a structural
+`expect(shape.keyedBy).toBe(KeyedBySchema)`, so a restated enum is impossible
+rather than merely detected.
+
 ## Done when
 - [x] owner picks an option
 - [x] `gh-pages` declares `keyedBy: "route"` in `scripts/special-branches.json`
