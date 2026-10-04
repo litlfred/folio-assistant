@@ -4,8 +4,10 @@ title: 'S6 standalone rehearsal: ho66, pyds, mer2 -> tndo -> zmdo, izqr, wggr'
 status: todo
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-01T08:14:35Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-txue
