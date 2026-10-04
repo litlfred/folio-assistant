@@ -559,6 +559,51 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
   .fa-workplan-bar-toggle { grid-template-columns: minmax(5rem, 1fr) 1fr 2.2rem; }
 }
 
+/* ── Milestone bars ─────────────────────────────────────────────────────
+   A PART-TO-WHOLE bar: 100% means every bean beneath the milestone is
+   closed. The epic chart above shares the track and fill elements but its
+   bars are a magnitude comparison scaled to the largest, so the two must not
+   read as one scale — this row is modified rather than restyling the shared
+   classes, because the epic rows wrap theirs in a <button> that owns their
+   layout.
+
+   The counts sit beside the percentage because the share is bean-weighted
+   and the counts are what a reader can reconcile against the bar. */
+
+.fa-workplan-bar-row--progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label value"
+    "track track"
+    "note  note";
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  padding: 0.35rem 0 0.5rem;
+}
+
+.fa-workplan-bar-row--progress .fa-workplan-bar-label { grid-area: label; }
+.fa-workplan-bar-row--progress .fa-workplan-bar-track { grid-area: track; }
+.fa-workplan-bar-row--progress .fa-workplan-bar-value { grid-area: value; }
+.fa-workplan-bar-row--progress .fa-workplan-bar-note { grid-area: note; }
+
+.fa-workplan-bar-note {
+  font-size: 0.75rem;
+  color: var(--fa-wp-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The coverage denominator, under the list rather than in a footnote: three
+   shares with no denominator invite the reading that they describe the whole
+   work plan. */
+.fa-workplan-chart-note {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fa-wp-muted);
+  margin: 0.75rem 0 0;
+  max-width: 62ch;
+}
+
 </style>
 <style data-folio-narrow-viewport>
 /* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
@@ -1752,11 +1797,106 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
    * Build the board for the current SCOPE. Re-entrant: a scope change calls
    * this again over the same data rather than refetching.
    */
+  /**
+   * The declared milestones, as a part-to-whole bar each.
+   *
+   * It RENDERS `plan` and computes nothing. The page holds every bean's
+   * `parent`, `type` and `status`, so it could walk the closure itself — and
+   * that is the reason not to: `milestone:status` prints the same figures from
+   * `milestone-rollup.ts`, and a second walk here would be a second answer
+   * free to disagree with the terminal. `gen-docs-pages.ts` computes it once.
+   *
+   * It sits ABOVE the filter bar deliberately. The rule on this board is that
+   * a filter scopes everything below it; the milestone frame is not scoped by
+   * an epic selection, because it is the thing the epics sit inside.
+   */
+  function milestonePanel(plan) {
+    var sec = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
+    var fig = el("figure", { class: "fa-workplan-chart" });
+    fig.appendChild(el("figcaption", { class: "fa-workplan-chart-title" },
+                       "Declared milestones — share of the beans beneath each that are closed"));
+    if (!plan || !plan.milestones) {
+      // Never zero bars: "this projection carries no plan" and "no milestone
+      // has progress" are different answers.
+      fig.appendChild(el("p", { class: "fa-workplan-empty" },
+                          "This projection carries no milestone rollup, so the share could not be determined."));
+      sec.appendChild(fig);
+      return sec;
+    }
+    if (plan.milestones.length === 0) {
+      fig.appendChild(el("p", { class: "fa-workplan-empty" },
+                          "No bean in this store is typed milestone."));
+      sec.appendChild(fig);
+      return sec;
+    }
+    var list = el("ol", { class: "fa-workplan-bars" });
+    for (var i = 0; i < plan.milestones.length; i++) {
+      var m = plan.milestones[i];
+      // A modifier rather than the bare row class: the epic bars below wrap
+      // label/track/value in a <button> that owns their layout, and these
+      // rows have no control to wrap. Restyling the shared classes to suit
+      // this shape would move the chart underneath it.
+      var li = el("li", { class: "fa-workplan-bar-row fa-workplan-bar-row--progress" });
+      var href = viewHref(m.file);
+      var label = href
+        ? el("a", { class: "fa-workplan-bar-label", href: href, title: m.title }, m.title)
+        : el("span", { class: "fa-workplan-bar-label", title: m.title }, m.title);
+      li.appendChild(label);
+      var track = el("span", { class: "fa-workplan-bar-track" });
+      var fill = el("span", { class: "fa-workplan-bar-fill" });
+      // PART-TO-WHOLE, unlike `epicChart` below, whose bars are a magnitude
+      // comparison scaled to the largest. Here 100% means done, so the width
+      // IS the share and the two charts must not be read as one scale. A
+      // zero-share milestone still gets a sliver, so the row reads as a bar
+      // at 0 rather than as a missing bar.
+      var pct = m.share === null ? 0 : Math.round(m.share * 100);
+      fill.style.width = Math.max(2, pct) + "%";
+      track.appendChild(fill);
+      li.appendChild(track);
+      li.appendChild(el("span", { class: "fa-workplan-bar-value" },
+                        m.share === null ? "n/a" : pct + "%"));
+      // The counts, because the share is bean-weighted and the counts are what
+      // a reader can reconcile against the bar. `in progress` is called out:
+      // it is the part somebody is holding.
+      li.appendChild(el("span", { class: "fa-workplan-bar-note" },
+                        m.closed + " of " + (m.closed + m.open) + " closed · "
+                        + m.inProgress + " in progress · " + m.todo + " todo · "
+                        + m.epics + (m.epics === 1 ? " epic" : " epics")));
+      if (m.unclassified > 0) {
+        li.appendChild(el("span", { class: "fa-workplan-bean-blocked" },
+                          m.unclassified + " in neither status set"));
+      }
+      list.appendChild(li);
+    }
+    fig.appendChild(list);
+    // The denominator, beside the bars rather than in a footnote: percentages
+    // with no coverage figure invite the reading that they describe the
+    // whole work plan.
+    if (typeof plan.coveredOpen === "number" && typeof plan.openTotal === "number") {
+      // `coveredOpen` as GIVEN, never `openTotal - orphanOpen`. Those two
+      // differ whenever a bean id is held by more than one file, and this
+      // board showed both numbers before the rollup reconciled them.
+      fig.appendChild(el("p", { class: "fa-workplan-chart-note" },
+                          "These bars cover " + plan.coveredOpen + " of " + plan.openTotal
+                          + " open beans. The other " + plan.orphanOpen
+                          + " sit under no milestone, so the shares above are not a figure for the whole work plan."));
+    }
+    if (plan.duplicateIds > 0) {
+      fig.appendChild(el("p", { class: "fa-workplan-chart-note" },
+                          plan.duplicateIds + " bean id(s) are held by more than one file, and are counted once each here."));
+    }
+    sec.appendChild(fig);
+    return sec;
+  }
+
   function buildBoard() {
     var beans = BOARD.beans;
     var board = el("div", { class: "fa-workplan-board" });
 
     if (beans) {
+      // The milestone frame FIRST, and outside the scoped region — see
+      // `milestonePanel`'s note on why a filter does not scope it.
+      board.appendChild(milestonePanel(BOARD.plan));
       // Type filter bar — always visible so the user can filter by type
       board.appendChild(typeFilterBar(beans));
       var scoped = inScope(beans);
@@ -1999,6 +2139,11 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
           beans: beanDoc ? beanDoc.items : null,
           todos: todoItems,
           findings: beanDoc && Array.isArray(beanDoc.findings) ? beanDoc.findings : [],
+          // `undefined` when the projection carries no `plan` at all — an
+          // older index, or a store with no milestone bean. That is NOT the
+          // same as a plan with nothing done, so `milestonePanel` says which
+          // it got rather than drawing empty bars.
+          plan: beanDoc ? beanDoc.plan : undefined,
         };
 
         renderBoard(host);
