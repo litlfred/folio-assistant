@@ -19,3 +19,7 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 ## Done when
 - [ ] the owner's explicit go is quoted here with its date
 - [ ] both repositories measured empty, with the command and date recorded
+
+## Measured 2026-10-04 — `litlfred/cat-harness` is empty
+
+`git clone --depth 1 https://github.com/litlfred/cat-harness` → *"warning: You appear to have cloned an empty repository"*; `git rev-parse HEAD` fails (no commits). Same result for `litlfred/cat-harness-test`, which the `zmdo` proof then used. Recorded by session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi. (`litlfred/cat-harness-tools` is not re-measured here.)
