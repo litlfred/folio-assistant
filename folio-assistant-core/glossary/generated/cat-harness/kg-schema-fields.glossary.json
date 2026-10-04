@@ -7049,6 +7049,13 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue.entryobjectschema.status",
+      "prefLabel": "EntryObjectSchema.status",
+      "definition": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.status",
+      "status": "candidate"
+    },
+    {
       "id": "merge-queue.entryobjectschema.trainid",
       "prefLabel": "EntryObjectSchema.trainId",
       "definition": "Assigned once the PR is taken into a train; the train-run instance's id.",
