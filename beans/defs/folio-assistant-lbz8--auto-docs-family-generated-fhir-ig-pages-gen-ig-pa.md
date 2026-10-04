@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T12:55:24Z
-updated_at: 2026-10-04T13:24:01Z
+updated_at: 2026-10-04T13:35:53Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-xsrv
@@ -30,7 +30,7 @@ Owner, 2026-10-04: *"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-doc
 ## Done when
 - [x] the branch exists, seeded and verified (owner, 2026-10-04: "make cat/fhir-harness/ig-docs"), with `main` still authoritative
 - [ ] the gen-ig-pages sub-sub-graph is declared under auto-docs with `storage` on cat/fhir-harness/ig-docs, keyed by route
-- [ ] `<ig>:pages` writes and `<ig>:pages:check` reads through the branch store; `could not determine` when unmounted, never clean
+- [x] `<ig>:pages:check` reads through the branch store (route-authority, #2053); `could not determine` (exit 4) when the branch is unreachable, never clean. The WRITE half (publishing to the branch) is still to do
 - [ ] the pages leave main for each IG still staged here
 - [x] each IG fork uses the same branch name for its own pages (litlfred/smart-trust#5 first: ee00983e)
 
@@ -45,3 +45,12 @@ Owner, 2026-10-04: *"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-doc
 ## 2026-10-04: the fork's branch too
 
 litlfred/smart-trust now has its own `cat/fhir-harness/ig-docs` (ee00983e). It holds 2160 pages under `smart-base/docs/`, generated from the fork's artefact index by the folio-assistant submodule with #2082's fix, and `--check` reported them current. Its blobs equal folio-assistant's ig-docs `smart-trust/docs/` everywhere except `index.md`, whose front matter names each repository's index path. So one branch name and one layout serve both repositories.
+
+## 2026-10-04: the reader (gen-ig-pages --check through route-authority)
+
+`gen-ig-pages --check` now compares through `compareRoute` (#2053), keyed by the docs directory's declared id. Measured:
+- **Live verdicts unchanged:** no `storage` is declared, so all three IGs read from the checkout and are current.
+- **With storage declared temporarily on the real branch** (`authoritative: false`): it reads both copies, current, exit 0. A page edited only on disk is reported as DRIFT and refused.
+- **With storage on a branch that doesn't exist:** "COULD NOT DETERMINE … not a pass", exit 4.
+
+Next: the write half (`<ig>:pages` publishes to the branch through branch-store's `publish --id`), then `storage` on the declarations, then removal from main on the owner's go.
