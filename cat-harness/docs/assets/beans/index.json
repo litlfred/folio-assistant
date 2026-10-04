@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 804,
+      "count": 805,
       "unit": "beans"
     }
   },
@@ -74,7 +74,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:42:43Z",
-      "updatedAt": "2026-10-02T21:42:43Z",
+      "updatedAt": "2026-10-04T13:29:38Z",
       "preview": "Owner, 2026-10-02, verbatim: \"i think we also need cat-kg-jsonld in which all of the json(ld) is staged before being published. right now. it is a bit adhoc. bootstrap-tools writes to bootstrap's gh-pages direcrtly i thinkj..... instead (whoever is doing the rendering of the KG):\n* the writer puts <stub>'s new/incremental updates to the json(ld) KG in the <stub>'a cat-kg-json-ld branch\n* the CI ch",
       "file": "beans/defs/folio-assistant-073f--kg-jsonld-staging-each-stub-stages-its-json-ld-on.md"
     },
@@ -1135,12 +1135,12 @@
       "title": "The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:34:21Z",
-      "updatedAt": "2026-10-03T08:34:21Z",
+      "updatedAt": "2026-10-04T13:29:55Z",
       "preview": "Owner, 2026-10-03: *\"I want you to examine each of the conflicted PR as they\ncome in to figure out how we can reduce the conflicts/ignore them.\"* This is\nthat measurement, taken over the whole open queue at once rather than per PR,\nbecause the answer is a distribution and not a property of any one PR.\n\n## The measurement\n\nEvery conflicted path of every open non-draft PR, against `main` `d089aca961",
       "file": "beans/defs/folio-assistant-34cm--the-committed-site-build-under-cat-harnessdocs-is.md"
     },
@@ -6990,7 +6990,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T10:38:18Z",
-      "updatedAt": "2026-10-04T07:12:12Z",
+      "updatedAt": "2026-10-04T12:13:59Z",
       "preview": "Owner, 2026-10-03: a process may bind only skills (and through them Tools) from its own instance or one it needs — \"general rule, not just fhir-harness\". `check:process-bindings` (cat-harness/scripts/, PR #1968) found 33 unique wrong-direction bindings (35 refs) in 9 diagrams on 2026-10-03, all baselined in cat-harness/scripts/process-bindings.baseline.ts. Each fix is EITHER move the process up to",
       "file": "beans/defs/folio-assistant-mlux--process-bindings-clear-the-34-wrong-direction-skil.md"
     },
@@ -8159,6 +8159,20 @@
       "file": "beans/defs/folio-assistant-qvxh--smart-l1-and-dak-as-document-kinds-with-visualizer.md"
     },
     {
+      "id": "folio-assistant-r0tm",
+      "title": "ADAPTERS CLOSURE (yj6r): ruling request — hoist adapters/document + adapters/paper across three instances; paper-first is FREE and the 15 was 16",
+      "status": "draft",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T11:06:49Z",
+      "updatedAt": "2026-09-30T11:08:23Z",
+      "preview": "The eighth and last escape cluster on bean `yj6r` is the one that cannot be done\nby halves. This is the ruling request for it. **Plan only — no source file in\nthis repository is changed by this work**, and every number below was re-derived\nin this session rather than carried from the previous one.\n\n## Context — what is being decided, in plain words\n\nTwo facts about the layout, stated so nothing be",
+      "file": "beans/defs/folio-assistant-r0tm--adapters-closure-yj6r-ruling-request-hoist-adapter.md"
+    },
+    {
       "id": "folio-assistant-r279",
       "title": "DECIDE: which transcription backend, and what CI pays for it",
       "status": "completed",
@@ -8317,14 +8331,14 @@
     {
       "id": "folio-assistant-rc1e",
       "title": "RENAME: docs-auto -> auto-docs, the kind and every derived artefact (owner ruling)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T12:13:48Z",
-      "updatedAt": "2026-10-04T12:13:59Z",
+      "updatedAt": "2026-10-04T12:52:00Z",
       "preview": "Owner ruling, 2026-10-04, confirmed as its own PR sequenced after #2053. The\ncode already quoted the owner saying `auto-docs` — `graph-kind-registry.ts`'s\ncomment reads *\"auto-docs is one declared subgraph, with declared sub-sub-graphs\nper writer\"* while the key beside it said `docs-auto`.\n\nPR #2070. 194 files: 130 modified, 64 renamed.\n\n## Measured, not recalled\n\nOn `main@67acd90202`: **952 menti",
       "file": "beans/defs/folio-assistant-rc1e--rename-docs-auto-auto-docs-the-kind-and-every-deri.md"
     },
@@ -10586,7 +10600,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-04T05:37:22Z",
+      "updatedAt": "2026-10-04T13:29:55Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -11407,14 +11421,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 8,
-        "total": 144,
+        "total": 145,
         "closed": 43,
-        "open": 101,
+        "open": 102,
         "inProgress": 56,
         "todo": 45,
-        "draft": 0,
+        "draft": 1,
         "unclassified": 0,
-        "share": 0.2986111111111111
+        "share": 0.296551724137931
       },
       {
         "id": "folio-assistant-yg29",
@@ -11432,9 +11446,9 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 311,
+    "orphanOpen": 310,
     "openTotal": 472,
-    "coveredOpen": 157,
+    "coveredOpen": 158,
     "duplicateIds": 1
   }
 }
