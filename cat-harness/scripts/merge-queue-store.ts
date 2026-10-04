@@ -3,7 +3,11 @@
  * READ AND WRITE THE MERGE QUEUE — the steward's decisions, on their branch.
  *
  * @module cat-harness/scripts/merge-queue-store
- * @covers cat-harness
+ * @covers none — a reader and writer over the `merge-queue` graph, run by a
+ *   steward rather than by CI. It validates every entry it reads or writes
+ *   against `MergeQueueEntrySchema`, which is TYPING and not judging
+ *   (`audit:coverage`'s own thesis): claiming coverage here would let the gate
+ *   that judges the kind be removed without the census noticing.
  *
  * ## Why the queue is not on `main`, and why that needed a module
  *
@@ -58,7 +62,7 @@ import { join, relative } from "node:path";
 import { directoryEntriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
 import "../schemas/folio-graph-kind.js";
 import { MergeQueueEntrySchema, type MergeQueueEntry } from "../schemas/merge-queue.ts";
-import { RESERVED, pushMount, readMarker, type PushResult } from "./branch-store.ts";
+import { RESERVED, pushMount, readMarker, type BranchStoreOptions, type PushResult } from "./branch-store.ts";
 import { graphReadPath } from "./graph-read.ts";
 
 /** The graph kind whose directory holds the queue. The declaration says where. */
@@ -208,7 +212,13 @@ export type RecordResult =
  */
 export function recordDecision(
   entry: unknown,
-  opts: { root: string; push?: boolean; message?: string } = { root: process.cwd() },
+  opts: {
+    root: string;
+    push?: boolean;
+    message?: string;
+    /** Passed to `BranchStore.open` — a test points it at a local bare remote. */
+    store?: BranchStoreOptions;
+  } = { root: process.cwd() },
 ): RecordResult {
   const parsed = MergeQueueEntrySchema.safeParse(entry);
   if (!parsed.success) {
@@ -237,5 +247,5 @@ export function recordDecision(
   writeFileSync(join(store.dir, file), JSON.stringify(e, null, 2) + "\n");
   if (opts.push === false) return { state: "written", file, dir: store.dir, push: "skipped" };
   const message = opts.message ?? `queue: ${e.repository}#${e.pr} — ${e.placement.kind === "override" ? "override" : e.placement.class}`;
-  return { state: "written", file, dir: store.dir, push: pushMount(store.id, message, { repoRoot: opts.root }) };
+  return { state: "written", file, dir: store.dir, push: pushMount(store.id, message, { repoRoot: opts.root, store: opts.store }) };
 }

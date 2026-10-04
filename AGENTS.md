@@ -167,6 +167,17 @@ holds markdown. `beans/beans.json` declares it; the schema is
 |---|---|---|---|
 | `defs` | `beans/defs/` | `bean-defs` — WHAT is being worked on | yes |
 | `workflows` | `beans/workflows/` | `workflow-state` — one JSON per running BPMN instance, WHERE IT GOT TO | yes |
+| `queue` | `beans/queue/` | `merge-queue` — what the merge steward DECIDED about an open pull request | **no — `cat/cat-harness/merge-queue`** |
+
+**The queue is the first graph here that is NOT on `main`**, and the reason is
+not a preference about churn: a decision reaches `main` only through a pull
+request, and the merge steward does no development work — so the one actor whose
+decisions that graph records was the one actor that could not write to it, and it
+held no entry at all. `bun run state:mount` puts it on disk;
+`bun run merge:queue:read` reads it and **exits 4 rather than printing an empty
+queue** when it cannot. The discipline is in the skill, not here —
+[`skills/sdlc/sdlc-core/merge-queue.md`](cat-harness/skills/sdlc/sdlc-core/merge-queue.md)
+§"Where the queue IS". Bean `najo`; the pattern is arc `fs43`'s.
 
 **It is the same schema as an instance's `<instance>.json`, not a parallel
 one.** A bean-graph entry IS a `ContentDirectory` — an id, a path, and the graph

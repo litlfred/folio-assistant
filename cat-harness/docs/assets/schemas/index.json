@@ -8104,6 +8104,84 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#NestedDirectory",
+      "name": "NestedDirectory",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "One entry a declaration names FROM WITHIN another — {@link nestedDirectories}'s row.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<parent id>/<own id>` — unique across the instance, and says who declares it."
+        },
+        {
+          "name": "ownId",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The entry's OWN id, as `resolveDirectories` and a mount marker spell it."
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphKinds",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "absent",
+          "type": "{ reason: string }",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "storage",
+          "type": "unknown",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "unknown",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "subgraph",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "`true` when the entry declares itself an instance subgraph (bean `cmsl`)."
+        },
+        {
+          "name": "parentId",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#NetworkReach",
       "name": "NetworkReach",
       "module": "cat-harness/schemas/cat-harness.ts",

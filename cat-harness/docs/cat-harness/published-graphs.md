@@ -196,6 +196,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Folio Assistant — *declared, not published*
 
+### `merge-queue`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
 ### `methodology`
 
 4 of 4 published.

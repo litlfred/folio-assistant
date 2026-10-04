@@ -4,6 +4,13 @@
  *
  * @module scripts/state-mount
  * @graphNode none — a session-start step over a declared `storage` directory
+ * @covers none — a mount makes a graph READABLE and judges none of it. Claiming
+ *   the kinds it mounts would let the gates that do judge them be deleted
+ *   without `audit:coverage`'s census noticing, which is the one thing that
+ *   declaration is for. Needed from the moment a CI job runs this (bean `najo`
+ *   puts it in `gates` and `gates-unrun`): a gate CI runs with no `@covers`
+ *   line is an `audit:coverage:require-all` finding, and it fired on this file
+ *   the first time I ran it. #2052 declares the same line for the same reason.
  *
  * Bean `2h76` part 4, arc `fs43`. The session-start hook calls this; it is also
  * `bun run state:mount` by hand.

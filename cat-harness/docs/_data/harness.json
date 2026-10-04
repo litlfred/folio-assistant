@@ -474,12 +474,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 10
+          "value": 11
         },
         {
           "id": "views",
@@ -523,6 +523,11 @@
           "kind": "memory",
           "note": "no viewer yet",
           "label": "Memory"
+        },
+        {
+          "kind": "merge-queue",
+          "note": "no viewer yet",
+          "label": "Merge queue"
         },
         {
           "kind": "todos",
@@ -613,10 +618,18 @@
           ],
           "where": "local",
           "path": "docs/"
+        },
+        {
+          "id": "queue",
+          "kinds": [
+            "merge-queue"
+          ],
+          "where": "local",
+          "path": "beans/queue/"
         }
       ],
       "findings": [
-        "folio-assistant: declares 4 graph(s) with no published viewer — code, interaction, memory, waiver. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: declares 5 graph(s) with no published viewer — code, interaction, memory, merge-queue, waiver. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [

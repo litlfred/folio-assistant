@@ -268,13 +268,21 @@ export function resolveBeanDefsAt(graphRoot: string): BeanDefsResolution {
 /**
  * Any node of the bean graph, by KIND, with the graph's own relocation applied.
  *
- * Bean `9ofm` row D. The bean graph holds six nodes — `bean-defs` (twice:
- * `defs` and its archive view), `bean-notes`, `workflow-state`,
- * `merge-queue`, `session-survey` — and every one of them moves when `beans`
- * is cut over to its branch, because they are all *inside* it. The `defs`
- * reader had this already; this is the same answer for the rest, so a caller
- * does not compose `join(repoRoot, "beans", <node>)` and quietly keep reading
- * the checkout.
+ * Bean `9ofm` row D. The bean graph's nodes are all *inside* `beans/`, so they
+ * move when it is cut over to its branch. The `defs` reader had this already;
+ * this is the same answer for the rest, so a caller does not compose
+ * `join(repoRoot, "beans", <node>)` and quietly keep reading the checkout.
+ *
+ * **`merge-queue` is the exception, and it is not reachable from here.** Bean
+ * `najo` cut `beans/queue/` over to `cat/cat-harness/merge-queue` ahead of
+ * `beans/`, so its node moves with ITS OWN declaration rather than with the
+ * bean graph — and resolving it through this function would hand back
+ * `<beans graph root>/queue`, which after that cutover is a path nothing
+ * mounts: `declared-but-absent` printed over a graph that is really on a
+ * branch, with the wrong remedy attached. {@link BeanNodeKind} does not admit
+ * it, so this is a type error rather than a comment to remember, and
+ * `merge-queue-store.ts` resolves it by kind through `graphReadPath`. This
+ * docblock named it among the kinds this function serves until 2026-10-04.
  *
  * Returns the same three answers {@link resolveBeanDefs} does: a directory,
  * `null` for "the graph declares no node of this kind", and `unreachable` for
