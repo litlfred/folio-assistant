@@ -7049,6 +7049,13 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue.entryobjectschema.status",
+      "prefLabel": "EntryObjectSchema.status",
+      "definition": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.status",
+      "status": "candidate"
+    },
+    {
       "id": "merge-queue.entryobjectschema.trainid",
       "prefLabel": "EntryObjectSchema.trainId",
       "definition": "Assigned once the PR is taken into a train; the train-run instance's id.",
@@ -7095,6 +7102,13 @@
       "prefLabel": "MemberFactsSchema.ownCi",
       "definition": "The PR's own CI on its head: T2's first evidence.",
       "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.ownCi",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.readiness",
+      "prefLabel": "MemberFactsSchema.readiness",
+      "definition": "Has the OWNING session signalled this PR is finished, against `main`? Bean `uoob` (merge gate (f)), read by `Rule_NotReady`. `ready` is the only admitting value, and the others stay apart because each has a different remedy:",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.readiness",
       "status": "candidate"
     },
     {

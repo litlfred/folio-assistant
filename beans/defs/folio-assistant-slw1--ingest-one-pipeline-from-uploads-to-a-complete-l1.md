@@ -3,8 +3,10 @@
 title: 'INGEST: one pipeline from uploads/ to a complete L1 library'
 status: todo
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:43Z
-updated_at: 2026-09-19T11:43:43Z
+updated_at: 2026-10-04T15:12:16Z
+parent: folio-assistant-npuo
 ---
 
 The `uploads/` → `library/` path, and what "complete" means at L1.

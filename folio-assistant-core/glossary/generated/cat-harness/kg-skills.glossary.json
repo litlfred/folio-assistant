@@ -78,6 +78,14 @@
       "status": "candidate"
     },
     {
+      "id": "auto-docs",
+      "prefLabel": "auto-docs",
+      "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "notation": "auto-docs",
+      "source": "cat-harness/skills/ui/ui-core/auto-docs.md",
+      "status": "candidate"
+    },
+    {
       "id": "bean-blocking",
       "prefLabel": "bean-blocking",
       "definition": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
@@ -545,19 +553,19 @@
       "status": "candidate"
     },
     {
-      "id": "docs-auto",
-      "prefLabel": "docs-auto",
-      "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
-      "notation": "docs-auto",
-      "source": "cat-harness/skills/ui/ui-core/docs-auto.md",
-      "status": "candidate"
-    },
-    {
       "id": "docs-generation",
       "prefLabel": "docs-generation",
       "definition": "Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.",
       "notation": "docs-generation",
       "source": "cat-harness/skills/ui/ui-core/docs-generation.md",
+      "status": "candidate"
+    },
+    {
+      "id": "document-intake",
+      "prefLabel": "document-intake",
+      "definition": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+      "notation": "document-intake",
+      "source": "cat-harness/skills/library/library-core/document-intake.md",
       "status": "candidate"
     },
     {
@@ -973,7 +981,7 @@
     {
       "id": "merge-queue",
       "prefLabel": "merge-queue",
-      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
       "notation": "merge-queue",
       "source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
       "status": "candidate"

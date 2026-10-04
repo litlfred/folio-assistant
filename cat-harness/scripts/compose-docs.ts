@@ -153,7 +153,7 @@ interface DeclEntry {
  * `gen-tools-viz`, `gen-methodologies-viz`, `lib/skill-pages`), each with this
  * exact body. It belongs beside `docsLayers` because it is a *reading* of that
  * resolver, and a reading of a declaration is the thing that must not have six
- * independent copies: bean `06e3`'s move of derived pages to `docs-auto/`
+ * independent copies: bean `06e3`'s move of derived pages to `auto-docs/`
  * changes which layer a generator asks for, and six copies is six places to
  * miss.
  *

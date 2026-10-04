@@ -31,7 +31,7 @@
  * catalogue and of this very projection, so counting them would inflate every
  * slug's referrer list with the thing that displays it — and a slug would
  * then look referenced because it is on a page about being referenced. Same
- * error `docs-auto` made counting 1,522 skills.
+ * error `auto-docs` made counting 1,522 skills.
  *
  * ## Zero and unknown are different answers
  *

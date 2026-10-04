@@ -227,6 +227,7 @@ export const RULES: Rule[] = [
       // it reads declarations, BPMN extension elements and skill file names,
       // consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-process-bindings.ts",
+      "scripts/check-document-kind-sources.ts",
       "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -461,6 +462,13 @@ export const RULES: Rule[] = [
       // folio's subject matter cannot add a row to it or change what a tree
       // comparison concludes.
       "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
+      // `state-drift`'s remedy, performed: refresh a seeded state branch from
+      // the ref its own manifest names, and verify by re-reading the pushed
+      // tip. Harness-level for its neighbour's reason exactly — the row it is
+      // keyed by comes from `scripts/special-branches.json`, the harness's
+      // table, and no folio's subject matter decides which ref a seed is
+      // refreshed from or whether a tree comparison agrees.
+      "scripts/state-seed.ts",                // refresh a seeded state branch, and the cutover's `--authoritative` half
       // What every reader of a moved graph needs, written once (bean `9ofm`
       // row D): given a declared directory id, which directory to actually
       // read — the checkout, the mount, or a refusal. Harness-level for the
@@ -478,10 +486,12 @@ export const RULES: Rule[] = [
       // it classifies conflicted PATHS against declared patterns and proves
       // the result through `regen`. A folio could not make it resolve
       // differently, only give it more generated files (bean `d33q`).
+      "scripts/git-ancestry.ts",             // is A an ancestor of B — with "cannot tell" as its own answer, deepened before it says no
       "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
       "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
+      "scripts/merge-guard.ts",              // the single way a steward lands a PR: seven checks, then the pinned PUT (bean uoob)
       "scripts/merge-steward.ts",            // the command that CALLS merge-queue.ts — the entry point it was written for and never had
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
@@ -934,7 +944,7 @@ export const RULES: Rule[] = [
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
-      "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
+      "scripts/gen-auto-docs.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative
@@ -1292,6 +1302,10 @@ export const RULES: Rule[] = [
       // the harness's own declarations, and needs no folio.
       "src/tools/auth.ts",
       "src/tools/folio-init.ts",
+      // The adapter for an instance that holds no content (bean `zmdo`): the
+      // server's fallback when no content adapter is installed above the
+      // harness. Harness by definition — it exists for the harness alone.
+      "src/no-content-adapter.ts",
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
       "schemas/assistant-workflow.ts",
@@ -1653,6 +1667,7 @@ export const RULES: Rule[] = [
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
+      "scripts/check-state-on-main.ts",  // the same registry's `holds: state`, asked of DECLARED directories
       "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
       "scripts/check-instance-graph.ts",  // every instance's dependency graph resolves (bean `a1lq`)
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)

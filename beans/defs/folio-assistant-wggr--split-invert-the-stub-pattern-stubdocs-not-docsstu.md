@@ -4,8 +4,10 @@ title: 'SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a rep
 status: in-progress
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-19T11:51:29Z
-updated_at: 2026-10-01T18:06:46Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-vke6
 ---
 

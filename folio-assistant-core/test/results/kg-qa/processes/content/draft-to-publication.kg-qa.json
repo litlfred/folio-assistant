@@ -5,7 +5,7 @@
     "id": "Process_Publication",
     "path": "processes/content/draft-to-publication.bpmn"
   },
-  "source_hash": "sha256:72795b4f29afe0feee468a3996f13c3468c4503df19d4a268c8190d730d5b55f",
+  "source_hash": "sha256:d5e2ee542c088c3921fe4a0a6f84d995734ee502dc45edc75e5d8c83a30dbbc1",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -69,10 +69,6 @@
         {
           "where": "Task_PublishRelease",
           "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_PublishRelease",
-          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },

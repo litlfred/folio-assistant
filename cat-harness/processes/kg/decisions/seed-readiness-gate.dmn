@@ -23,9 +23,11 @@
     layerPrs                open PRs touching L
     layerMovingPrs          open PRs that rename or delete a file in L
     standaloneRed           checks red in the sibling-layout rehearsal of L
-    siblingDiscoveryMisses  instances needing L directly, present in a sibling
-                            layout with no aggregate root, that discovery
-                            cannot find there
+    upwardPaths             paths DECLARED in L that resolve only in an
+                            instance above L — each one breaks the day L
+                            stands alone (replaced siblingDiscoveryMisses,
+                            owner 2026-10-04: discovery is checkout-local by
+                            the cmsl ruling, so that count could never pass)
     undetermined            criteria the run could not decide
 
   THE "NOT YET" ROWS COME FIRST, deliberately. An undetermined criterion can
@@ -58,8 +60,8 @@
       <input id="In_Standalone" label="checks red in the sibling-layout rehearsal">
         <inputExpression id="Expr_Standalone" typeRef="number"><text>standaloneRed</text></inputExpression>
       </input>
-      <input id="In_Discovery" label="direct dependents discovery misses in a sibling layout">
-        <inputExpression id="Expr_Discovery" typeRef="number"><text>siblingDiscoveryMisses</text></inputExpression>
+      <input id="In_Upward" label="paths declared in L that resolve only above L">
+        <inputExpression id="Expr_Upward" typeRef="number"><text>upwardPaths</text></inputExpression>
       </input>
       <input id="In_Undetermined" label="criteria that could not be decided">
         <inputExpression id="Expr_Undetermined" typeRef="number"><text>undetermined</text></inputExpression>
@@ -121,16 +123,16 @@
         <inputEntry id="IE_Alone_7"><text>-</text></inputEntry>
         <outputEntry id="OE_Alone"><text>"not yet"</text></outputEntry>
       </rule>
-      <rule id="Rule_Discovery">
-        <description>In a workspace of sibling clones with no aggregate root declaration, discovery cannot find the instances that implement this layer, so every path resolved through them fails.</description>
-        <inputEntry id="IE_Disc_1"><text>-</text></inputEntry>
-        <inputEntry id="IE_Disc_2"><text>-</text></inputEntry>
-        <inputEntry id="IE_Disc_3"><text>-</text></inputEntry>
-        <inputEntry id="IE_Disc_4"><text>-</text></inputEntry>
-        <inputEntry id="IE_Disc_5"><text>-</text></inputEntry>
-        <inputEntry id="IE_Disc_6"><text>&gt; 0</text></inputEntry>
-        <inputEntry id="IE_Disc_7"><text>-</text></inputEntry>
-        <outputEntry id="OE_Disc"><text>"not yet"</text></outputEntry>
+      <rule id="Rule_UpwardPaths">
+        <description>A path declared in this layer resolves only in an instance above it, so it fails the day the layer stands alone.</description>
+        <inputEntry id="IE_Upward_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Upward_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_Upward_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Upward_4"><text>-</text></inputEntry>
+        <inputEntry id="IE_Upward_5"><text>-</text></inputEntry>
+        <inputEntry id="IE_Upward_6"><text>&gt; 0</text></inputEntry>
+        <inputEntry id="IE_Upward_7"><text>-</text></inputEntry>
+        <outputEntry id="OE_Upward"><text>"not yet"</text></outputEntry>
       </rule>
       <rule id="Rule_Undetermined">
         <description>Nothing seen fails, but something could not be seen. Could-not-determine is never settled: stop, and do not seed.</description>

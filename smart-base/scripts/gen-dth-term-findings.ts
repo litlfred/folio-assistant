@@ -59,6 +59,8 @@ export const TermFindingsSchema = z.object({
   figure: z.object({
     title: z.string().min(1),
     svgBean: z.string().min(1),
+    /** The rendered SVG, repo-relative; written by `pdf-vector-svg.py` (bean 70zt). */
+    svg: z.string().min(1).optional(),
     canonical: z.array(QuoteSchema).min(1),
     phases: z.array(z.string().min(1)).length(7),
     reproductions: z.array(QuoteSchema).min(1),
@@ -129,6 +131,12 @@ const SEVERITY_ORDER = ["substantive", "internal", "wording"] as const;
 const norm = (s: string): string => s.replace(/\s+/g, " ").trim();
 
 /** A section's text as a quote is matched against it: front matter dropped, the RA draft's number-only line markers removed. */
+/** The findings page's sentence about the figure's SVG: a link once it exists, the bean until then. */
+function svgSentence(fig: { svg?: string; svgBean: string }): string {
+  if (!fig.svg) return `An SVG rendering from the DIIG's vector layer is bean \`${fig.svgBean}\`.`;
+  return `Its SVG rendering is [\`${fig.svg.split("/").pop()}\`](../${fig.svg.replace(/^smart-base\//, "")}) (bean \`${fig.svgBean}\`). It is drawn from the DIIG PDF's own vector layer, never by hand, and records its source (the PDF's sha256, the page and the crop) in its \`<metadata>\`; \`bun run smart-base:diig-figure:check\` fails if the drawing is edited or the crop drifts.`;
+}
+
 export function sectionText(raw: string): string {
   const body = raw.replace(/^---\n[\s\S]*?\n---\n/, "");
   return norm(body.split("\n").filter((l) => !/^\s*\d+\s*$/.test(l)).join("\n"));
@@ -186,7 +194,7 @@ export function render(f: TermFindings, terms: CandidateTerm[]): string {
   L.push("## Contents", "", "1. [One phase figure: DIIG Fig. 1.1.1](#one-phase-figure-diig-fig-111)", "2. [Approaches recorded as alternatives](#approaches-recorded-as-alternatives)", '3. [What "actor" means, and what each layer could change](#what-actor-means-and-what-each-layer-could-change)', `4. [Terms defined differently (${terms.length})](#terms-defined-differently)`, "");
 
   L.push("## One phase figure: DIIG Fig. 1.1.1", "");
-  L.push(`The seven phases of "${f.figure.title.split(":")[0].toLowerCase()}" have ONE source, the DIIG's own figure. The handbooks that print it are reproductions of it and cite it; they are not separate sources for it. An SVG rendering from the DIIG's vector layer is bean \`${f.figure.svgBean}\`.`, "");
+  L.push(`The seven phases of "${f.figure.title.split(":")[0].toLowerCase()}" have ONE source, the DIIG's own figure. The handbooks that print it are reproductions of it and cite it; they are not separate sources for it. ${svgSentence(f.figure)}`, "");
   for (const q of f.figure.canonical) L.push(quoted(q), "");
   L.push("The phases, in the DIIG's words:", "");
   f.figure.phases.forEach((p, i) => L.push(`${i + 1}. ${p}`));
