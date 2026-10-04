@@ -63,7 +63,7 @@ export type LinkMode = "submodule" | "sibling";
  * Bean `mer2`, owner's ruling 2026-10-01: `folio_init` conflated two
  * operations. The declaration, config, work plan, agent guidance and MCP wiring
  * need NO content type; only `folio/`, its builder shim and the source-material
- * directories need an adapter. A harness layer (`bootstrap`, `agentic-harness`)
+ * directories need an adapter. A harness layer (`bootstrap`, `cat-harness` — the partition once called it `agentic-harness`)
  * declares no `folio` kind and carries no adapter, so the MVP the owner ruled
  * for it — *"`folio_init` creates a working folio against that layer ALONE, in
  * an empty repository"* (`tndo`) — was not expressible while the two were one

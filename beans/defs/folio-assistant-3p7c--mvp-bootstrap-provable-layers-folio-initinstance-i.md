@@ -15,7 +15,7 @@ The MVP the owner ruled in `tndo` (2026-09-30), grouped so its progress can be r
 
 > **MVP = `folio_init` creates a working folio against that layer ALONE, in an empty repository.**
 
-Refined by the owner's 2026-10-01 ruling on `mer2`: for a layer with no adapter (`bootstrap`, `agentic-harness`) the operation is an **instance-init**, not a folio — so "working" means the instance-init succeeds against that layer alone and the checkout can claim a bean, read the conventions and run the next step.
+Refined by the owner's 2026-10-01 ruling on `mer2`: for a layer with no adapter (`bootstrap`, `cat-harness`) the operation is an **instance-init**, not a folio — so "working" means the instance-init succeeds against that layer alone and the checkout can claim a bean, read the conventions and run the next step.
 
 ## How membership is recorded — a tag, not a reparenting
 
@@ -42,4 +42,4 @@ Created at the owner's request, 2026-10-04 (session https://claude.ai/code/sessi
 
 ## Done when
 
-- [ ] `zmdo`'s four per-layer conditions hold for `agentic-harness` and `folio-assist-core`, each run in an empty repository.
+- [ ] `zmdo`'s four per-layer conditions hold for `cat-harness` and `folio-assistant-core` (the layers `zmdo` calls by their pre-rename names `agentic-harness` and `folio-assist-core`, beans `4wzf`, `yx9p`), each run in an empty repository.
