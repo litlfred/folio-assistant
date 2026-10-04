@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-darwin-r6im60/skills/dmn-authoring/input.schema.json",
+  "title": "DMN Authoring Input",
+  "description": "Input schema for DMN (Decision Model and Notation) decision table authoring.",
+  "type": "object",
+  "required": [
+    "decisionName",
+    "inputVariables"
+  ],
+  "properties": {
+    "decisionName": {
+      "type": "string",
+      "description": "Name of the decision to model."
+    },
+    "inputVariables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "boolean",
+              "date",
+              "codeable-concept"
+            ]
+          }
+        }
+      }
+    },
+    "sourceLogic": {
+      "type": "string",
+      "description": "Reference to the clinical decision logic being modeled."
+    }
+  },
+  "staging": {
+    "branch": "claude/vibrant-darwin-r6im60",
+    "sha": "18fbd684e409bf4a5d49670faab8e8a02f0b30d5",
+    "pr": "2120/merge",
+    "run": "37228711912"
+  }
+}
