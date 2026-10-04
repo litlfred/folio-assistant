@@ -81,8 +81,8 @@ whether anything fails when a caller stops distinguishing.
     (`REGEN_VERDICT_TAG`), not matched prose, with a test pinning both ends and
     that the false sentence does not come back
 [x] a test asserts the three verdicts no longer share one signature
-[ ] the five other could-not-determine tools above: does anything fail when a
-    caller flattens them? NOT MEASURED — handed on, not folded in
+[x] the five other could-not-determine tools above: does anything fail when a
+    caller flattens them? MEASURED 2026-10-04 — see the census below
 
 
 ## Second instance, measured 2026-10-04 — `state:mount`
@@ -113,3 +113,56 @@ author's call. Not folded into #2086, which does not touch it.
 TWO instances found in TWO modules, in one sitting, on adjacent lines — so the
 unmeasured hand-off above is not hypothetical, and the next step is to look
 rather than to reason about it.
+
+## The census, measured 2026-10-04 — the defect is LOCALISED, not diffuse
+
+I handed the general question on as unmeasured. It is cheap, so here it is.
+Every subprocess call site in non-test code under `cat-harness/scripts` and
+`cat-harness/src` that runs a multi-state tool:
+
+| tool | states | subprocess callers | flattened? |
+|---|---|---|---|
+| `regen` | 3 exits + crash | 1 — `merge-base.ts` | YES — fixed, PR #2086 |
+| `state:mount` | `partial` != `failed`, ONE exit | 1 — `merge-base.ts` | YES — reported on #2074 |
+| `qa:resolve-conflicts` | 2 (0/1) | 1 — `merge-base.ts` | no: genuinely two-state |
+| `merge:leftover` | 3 verdicts | 0 | n/a |
+| `survey:owed` | 4 states | 0 | n/a |
+| `audit:coverage` | 4 per-kind states | 0 (CI steps only) | n/a |
+| `check:ci-health` | 3 + cancelled | 0 | n/a |
+
+BOTH flatteners are in `merge-base.ts` and nowhere else. The four tools whose
+could-not-determine discipline is most elaborate have NO subprocess caller at
+all: they are run by a person or as a CI step, where the step's own red/green
+is the whole contract and there is no caller to flatten anything.
+
+So the risk is not spread across the could-not-determine tools. It is
+concentrated in the one module that shells out to several of them, and it
+appeared TWICE there within two days.
+
+## Three correct handlers the repo already contains
+
+Worth naming, because the fix is a pattern to copy rather than one to invent:
+
+- `milestone-status.ts:332` branches on `status === 0`, `status === 1` and
+  everything else separately; `:383` checks `status === null` for a signal.
+- `qa-refresh.ts:309` carries `r.status` forward as `exit` rather than
+  booleanising it, so the caller's caller still has the code.
+- `check-published-packages.ts:308` names the exit code and GLOSSES the one
+  that misleads — pytest's exit 5 becomes "COLLECTED NO TESTS" — rather than
+  asserting a single cause. That is exactly the shape of #2086's fix, written
+  before it.
+- `detect-live-corpus.ts` booleanises one writer's exit, which is a real
+  two-state question there, and still carries an explicit `undetermined` field
+  for the case where the answer is not established.
+
+## NOT proposing a gate, deliberately
+
+The obvious next move is a check that refuses `!== 0` on a multi-state tool.
+I am not proposing it, and the census is why: the whole population is seven
+call sites, both defects were in one file, and such a gate would need a
+DECLARATION of which tools are multi-state — a new declared list, kept by
+hand, over a population small enough to read. That is more machinery than the
+finding supports, and an unmaintained declaration is how `dh4f` happens.
+What the finding does support: when `merge-base.ts` gains a shell-out to a
+tool, check that tool's exit codes. Three good patterns to copy are named
+above.
