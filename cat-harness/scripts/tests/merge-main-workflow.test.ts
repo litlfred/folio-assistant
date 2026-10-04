@@ -524,3 +524,88 @@ describe("the signature is read before it is overwritten", () => {
     expect(head.id).toBe("head");
   });
 });
+
+describe("a could-not-determine regen is not reported to the author as an Error (task #62)", () => {
+  // The whole point of the fix: the PR comment is what the author reads, and
+  // for three of regen's four exits it said "**Error**" — asserting a defect
+  // in their branch where regen had either measured nothing or explicitly
+  // said it could not determine. The verdict reaches the comment through the
+  // declared tag, so none of this depends on matching the abort's prose.
+  const abort = (verdict: string): string =>
+    `\nmerge-base: ABORTED, tree restored — the gate set did not prove the resolution — regen-verdict: ${verdict}\n  …`;
+
+  test("parseLog recovers the verdict from the tag and reports no finding when there is none", () => {
+    const p = parseLog(abort("not-settled"));
+    expect(p.regenVerdict).toBe("not-settled");
+    // Critically: not-settled prints no `STILL fails` line, so the comment
+    // must not list one. The old reading had nothing else to go on and fell
+    // through to the generic Error.
+    expect(p.unrepaired).toBe("");
+    expect(p.refused).toBe("");
+  });
+
+  test("a log with no tag records no verdict, rather than guessing one", () => {
+    expect(parseLog("").regenVerdict).toBe("");
+    expect(parseLog("\nmerge-base: ABORTED, tree restored — bun install failed").regenVerdict).toBe("");
+  });
+
+  test("not-settled says COULD NOT DETERMINE, and says regen found no unrepaired check", () => {
+    const p = composeComment({ ...BASE, log: abort("not-settled") });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(p.body).toContain("**Could not determine");
+    expect(p.body).not.toContain("**Error**");
+    // The false assertion the author used to receive.
+    expect(p.body).toContain("no** unrepaired check");
+    expect(p.body).toContain("not a pass either");
+  });
+
+  test("a crashed regen is the bot's tool failing, and says so", () => {
+    const p = composeComment({ ...BASE, status: "137", log: abort("crashed") });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(p.body).toContain("**Could not determine");
+    expect(p.body).toContain("137");
+    expect(p.body).toContain("says nothing about this PR");
+  });
+
+  test("not-staleness with no unrepaired line names the three OTHER kinds", () => {
+    // Exit 1 whose failing checks are `no-writer`, `writer-failed` or
+    // `no-browser`. One is about the tree, one about the tool, one a
+    // could-not-determine — the generic Error text named none of them.
+    const p = composeComment({ ...BASE, log: abort("not-staleness") });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(p.body).toContain("**Not proved");
+    expect(p.body).toContain("none of them is an unrepaired check");
+    expect(p.body).toContain("Chromium");
+  });
+
+  test("a real unrepaired check still gets the unrepaired text, tag or no tag", () => {
+    // The more specific finding wins: when regen DID print `STILL fails`, the
+    // comment must keep naming it rather than falling back to the verdict.
+    const p = composeComment({
+      ...BASE,
+      log: `  ✗ check:x STILL fails after \`bun run x\` — a real defect, not staleness${abort("not-staleness")}`,
+      mainFailing: () => "TypeScript",
+    });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(p.body).toContain("**Not proved — nothing pushed.** Every conflict matched a pattern");
+    expect(p.body).toContain("Unrepaired:");
+    expect(p.body).toContain("check:x");
+  });
+
+  test("a refusal still outranks the verdict", () => {
+    const p = composeComment({ ...BASE, log: `  ✗ a/b.ts  [authored: no pattern]${abort("not-staleness")}` });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(p.body).toContain("**Refused");
+  });
+
+  test("the three verdicts no longer share one signature", () => {
+    // Before the fix every one of them reduced to the SAME salient line —
+    // `merge-base: ABORTED, tree restored — the gate set could not reproduce
+    // the resolution (regen reported unrepaired checks)` — so the second
+    // distinct failure on one head was classified a `repeat` and went quiet.
+    // `no-browser` prints `  ? …`, which SALIENT does not match, so the abort
+    // line was genuinely all there was to tell them apart.
+    const sigs = ["not-settled", "crashed", "not-staleness"].map((v) => signatureOfPlan({ log: abort(v) }));
+    expect(new Set(sigs).size).toBe(3);
+  });
+});
