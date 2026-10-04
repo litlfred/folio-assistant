@@ -26,10 +26,24 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { isTestFile, scanDeclaredPaths, witnessesOf } from "../check-declared-paths.js";
+import { absentResultDirs, isTestFile, scanDeclaredPaths, underAbsentResults, witnessesOf } from "../check-declared-paths.js";
 
 const root = resolve(import.meta.dir, "../..");
 const scan = scanDeclaredPaths(root);
+
+/**
+ * A recorded witness whose literal points into a declared `qa`/`health`
+ * directory that is ABSENT from this checkout cannot be verified here — the
+ * gate's own rule (`isUnverifiable` in `check-declared-paths.ts`), applied
+ * the same way so the test does not assert on the committed QA corpus being
+ * present (bean `cxcn`, reader audit F7). Unverifiable, never "resolves".
+ */
+const absentResults = absentResultDirs(root);
+const recordedWitnesses = new Set(
+  (JSON.parse(readFileSync(join(root, "scripts", "declared-path-baseline.json"), "utf-8")) as { resolves?: string[] }).resolves ?? [],
+);
+const unverifiable = (file: string, literal: string): boolean =>
+  recordedWitnesses.has(`${file}::${literal}`) && underAbsentResults(root, literal, absentResults);
 
 describe("declared-path literals", () => {
   test("the scan saw something — otherwise nothing below proves anything", () => {
@@ -46,7 +60,7 @@ describe("declared-path literals", () => {
     // `witnessesOf`, and the guard below that pins it.
     const current: Record<string, number> = {};
     for (const r of scan.refused) {
-      if (isTestFile(r.file)) continue;
+      if (isTestFile(r.file) || unverifiable(r.file, r.literal)) continue;
       current[r.file] = (current[r.file] ?? 0) + 1;
     }
 
@@ -86,7 +100,11 @@ describe("declared-path literals", () => {
     expect(recorded.length, "no witnesses recorded — the relocation guard is vacuous").toBeGreaterThan(50);
 
     const held = new Set(witnessesOf(scan));
-    const lost = recorded.filter((w) => !held.has(w));
+    const lost = recorded.filter((w) => {
+      if (held.has(w)) return false;
+      const at = w.indexOf("::");
+      return !unverifiable(w.slice(0, at), w.slice(at + 2));
+    });
     expect(lost, "an artefact moved and the code naming it was not updated").toEqual([]);
   });
 
@@ -144,5 +162,25 @@ describe("declared-path literals", () => {
   test("test literals naming real artefacts are checked to dereference", () => {
     const guarded = scan.artefacts.filter((a) => a.file.endsWith(".test.ts"));
     expect(guarded.length, "no test names a real artefact — the relocation guard is vacuous").toBeGreaterThan(20);
+  });
+});
+
+describe("a witness under an ABSENT results tree is unknown, not lost (bean `c8uq`)", () => {
+  test("only a literal INSIDE an absent results directory qualifies", () => {
+    const root = join("/", "r");
+    const absent = [join(root, "test", "results"), join(root, "test", "health", "results") + "/"];
+    expect(underAbsentResults(root, "test/results/kg-qa.manifest.json", absent)).toBe(true);
+    expect(underAbsentResults(root, "test/health/results/repository.health-report.json", absent)).toBe(true);
+    // A sibling whose name merely STARTS with the directory's is not inside it.
+    expect(underAbsentResults(root, "test/results-old/x.json", absent)).toBe(false);
+    expect(underAbsentResults(root, "processes/x.bpmn", absent)).toBe(false);
+  });
+
+  test("absentResultDirs names only declared qa/health directories that are missing", () => {
+    // In this checkout the results trees are committed, so none is absent; the
+    // gate's absent-corpus behaviour is exercised by moving them aside, which
+    // a test must not do (bean `ymsu`).
+    const root = resolve(import.meta.dir, "..", "..");
+    for (const d of absentResultDirs(root)) expect(existsSync(d)).toBe(false);
   });
 });

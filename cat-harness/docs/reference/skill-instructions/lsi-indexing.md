@@ -95,7 +95,7 @@ mis-extracted page, and it is cheapest to mark now.
 ## Where to LOOK at an index
 
 `bun run lsi:viz` writes one page, `/lsi/` ("Latent semantic indexes"): every
-committed index with its dimensions as two poles, its findings, and the
+stored index with its dimensions as two poles, its findings, and the
 need-an-index verdicts. The page names what it draws in its own front matter —
 `renders:` the `qa` directory, `rendered-by: lsi-viewer` — which since #1168
 B7a-2b is how a directory's viewer is found (the directory no longer points at
@@ -105,15 +105,24 @@ declared viewer") with no further wiring. `lsi:viz:check` fails in CI when the p
 `lsi index`, run `lsi:viz` too. The page is excluded from every index's units:
 indexing a page that reports on the indexes would never reach a fixed point.
 
-## Where the index lives, and what is committed
+## Where the index lives, and what is stored
 
 `cat-harness/test/results/lsi/<instance>/<graph>.lsi.json` — the fingerprint,
 parameters, retained variance, per-dimension pole terms, each unit's three
 nearest neighbours, and the findings. **Not the vectors**: a rebuild is about a
 second per few hundred units, and a float dump is not reviewable.
 
-**State graphs are indexed on demand, never committed.** The `beans` graph
-changes on nearly every commit; a committed index would be stale on every PR
+That path is the **working copy**. The record is the commit-keyed entry the CI
+job `qa-publish` stores on the orphan `qa-reports` branch (`main/<sha>/`,
+`pr/<n>/<sha>/`; arc `3fva`); the file is still committed on `main` until
+bean `5hox` removes it. The readers already cope with its absence (bean
+`oq1j`): with no `test/results/lsi/` in the checkout, the verdict rebuilds the
+index in memory and judges that run, writing nothing, and `lsi:viz` reads the
+indexes by ref through `qa-store` (`--ref`, default `main`) — anything but a
+hit exits 2 and writes no page about zero indexes.
+
+**State graphs are indexed on demand, never stored.** The `beans` graph
+changes on nearly every commit; a stored index would be stale on every PR
 and a merge-conflict magnet. `lsi:epics` rebuilds it each run.
 
 ## Reading a sidecar
@@ -172,9 +181,9 @@ run that should keep it current succeeded. `kg:audit` carries this as
 `tool-downstream-fresh` on the `lsi-index` Tool (`minor`), one finding per
 graph, using the same verdict function as `lsi:audit`. It generalises the
 graph-level `lsi-index-fresh` it replaced. Its finding text carries **no
-counts**, so the committed kg-qa sidecar moves only when a verdict flips.
+counts**, so the kg-qa sidecar moves only when a verdict flips.
 
-Two chains keep the committed indexes fresh, so the criterion stays quiet in
+Two chains keep the indexes fresh, so the criterion stays quiet in
 ordinary work:
 
 - **a skill edit** — `skill:register` runs `lsi:skills` before `kg:audit`, and

@@ -122,6 +122,25 @@ ruling is never superseded here.
 goes stale. This matters more for an agent ruling than a script one, because
 nobody can cheaply re-run it.
 
+### Where the verdict is kept: the attestation store, not the derived file
+
+Both entries are **judgements** — `reviewer.kind` is `agent` (or `human`) —
+so their durable home is the `attestations` graph,
+`test/attestations/<family>/<mirrored subject path>.attestations.json`
+(`qa-attestations/v1`), on `main`. The derived `test/results/` file beside
+them is a working copy whose record lives on the `qa-reports` branch, and a
+regeneration cannot reproduce an agent ruling (arc `3fva`, owner ruling D2
+(a)).
+
+`recordUntainted` writes the store **first**, through the same
+`resolvePrior` / `finalizeCriteria` API as every other attesting writer (bean
+`8iqt`), and refreshes the derived report only if one already exists — it
+never invents one. So the verdict lands whether or not the derived file is on
+the branch, and the store file it returns is the one to commit. What puts a
+subject in scope is the subject existing (`<subject>.md` or `.ts`), not its
+derived report, which no longer lives beside it. A corrupt or unreadable store
+reads UNKNOWN and is refused, with nothing written, rather than overwritten.
+
 ## Why the instrument is the thing to watch
 
 A measurement shipped with a `description` explaining its own failures away as

@@ -56,8 +56,9 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
      `git push --force-with-lease` — never a bare `--force` (it clobbers sibling
      pushes).
    **A conflict in a generated QA sidecar has a command** —
-   `bun run qa:resolve-conflicts`. See §"Conflicts in `test/results/`" below
-   before resolving one by hand.
+   `bun run qa:resolve-conflicts`. A conflict in `test/attestations/` is a
+   judgement and has none. See §"Conflicts in `test/results/` and
+   `test/attestations/`" below before resolving either by hand.
 
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
@@ -355,7 +356,29 @@ lives — the workflow, not `package.json`, since 21 of this repository's
 damage: rewriting artefacts that were already correct leaves a diff that says
 nothing about what the merge broke.
 
-## Conflicts in `test/results/` — the command, and the 13 files it refuses
+## Conflicts in `test/results/` and `test/attestations/` — regenerate one, read the other
+
+**First, what each tree is now** (arc `3fva`, owner rulings D1 and D2 (a)):
+
+| tree | holds | durable home | on a conflict |
+|---|---|---|---|
+| `<instance>/test/results/**` | DERIVED verdicts — every `script` entry | the orphan `qa-reports` branch, `main/<sha>/` and `pr/<n>/<sha>/`, written by the CI job `qa-publish` | **regenerate**: `bun run qa:resolve-conflicts`, then `bun run regen` |
+| `<instance>/test/attestations/**` | JUDGEMENTS — every agent, human and baseline-pair attestation, `qa-attestations/v1` | `main`, as authored content | **a person reads both sides**; never regenerated, never "take ours" |
+
+The `test/results/` files are still committed on `main` until bean `5hox`
+removes them, so a base merge can still conflict there. Treat such a file as
+a working copy that has a right answer, not as a record: the record of a
+commit is its `qa-reports` entry, which no merge touches. **Do not
+hand-resolve one and do not regenerate one in order to "commit the result"** —
+regenerate it so the gates see the merged tree, and let `qa-publish` store it.
+
+A conflict in `test/attestations/` is different in kind: it is two
+judgements that disagree, and `qa:attestations:migrate` refuses that case for
+the same reason — reconciling them is a person's call. `qa:resolve-conflicts`
+leaves it untouched and unstaged, because it resolves only under the declared
+`qa` graph. Keep both sides' entries unless they are the same judgement; then
+run `bun run qa:attestations:migrate:check`, which exits 1 if a judgement is
+still only in a derived file.
 
 **Measured, not impressionistic.** Across one working session on PR #773 and
 its successor: **four base merges, four conflicts, every one in a committed
@@ -386,11 +409,18 @@ resolvable.
 > Regenerating blindly is right for 5,883 and would silently destroy 13 — two
 > of them in the family that churns most.
 
-The command refuses those files rather than resolving them, checks the same
-predicate again *after* regenerating, and leaves every conflict outside the
-declared `qa` graph untouched and unstaged. **Resolving one of these by hand is
-still fine — but check for a non-script `reviewer.kind` on both sides first**,
-which is the one thing a regeneration cannot recover.
+**Since bean `8wj1` the guard reads the attestation store.** Every block and
+translation writer now takes its non-script entries from `test/attestations/`
+rather than from the file it is rewriting, so a sidecar whose non-script
+entries are ALL held in the store, byte for byte, regenerates without losing
+one and is resolved. The command still refuses a file carrying a judgement
+the store does NOT hold, a store file that is itself conflicted, or a store
+that cannot be read — a corrupt store reads UNKNOWN, and unknown is never
+resolved as clean. It checks the same predicate again *after* regenerating,
+and leaves every conflict outside the declared `qa` graph untouched and
+unstaged. **If it refuses one, move the judgement into the store first**
+(`bun run qa:attestations:migrate`, or let a writer move it on its next save)
+and re-run — do not hand-edit the derived file.
 
 And the habit this guards: a conflict an agent resolves without reading teaches
 that conflicts in `test/results/` are safe to wave through, which is exactly
@@ -424,6 +454,13 @@ harness git instructions). Do not include the model identifier in the PR.
 
 - **Never push to the default branch** and **never merge a PR** without an
   explicit ask. Prepare-merge leaves the decision to the human.
+- **In folio-assistant an agent never merges to `main` at all** (owner,
+  2026-10-01). When CI is green on every job: mark the PR Ready for review,
+  add the label `ready-to-merge`, and comment `ready: <head sha>`. The Merge
+  Steward session ("Separation") brings `main` in, regenerates and merges. If
+  it reports red: fix, then re-label. The policy and why are in
+  [`continual-progress`](continual-progress.md) §"Green means handed to the
+  Merge Steward".
 - **`--force-with-lease`, never bare `--force`** when a rebase rewrote history.
 - **Honest green.** Pre-existing red is reported as pre-existing, with evidence;
   your-change red blocks the "ready" claim.
