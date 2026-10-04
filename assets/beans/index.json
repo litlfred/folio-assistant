@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 795,
+      "count": 796,
       "unit": "beans"
     }
   },
@@ -1791,6 +1791,20 @@
       "updatedAt": "2026-09-22T21:05:00Z",
       "preview": "Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),\n\"self-sovereign compute + test harness deployments\", at the owner's direction:\n\"bean up to may strwperson and create issue to review these\".\n\n## The claim this epic rests on\n\n#363 lists roughly ten deployment and utilization scenarios — local git only,\nprivate GitHub, sovereign cloud, self-sovereign, devel",
       "file": "beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md"
+    },
+    {
+      "id": "folio-assistant-5akx",
+      "title": "KeyedBySchema and DirectoryStorageSchema were two spellings of one enum — route parsed in one and threw in the other",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:35:58Z",
+      "updatedAt": "2026-10-04T08:48:28Z",
+      "preview": "## What was measured\n\n`main@12b916e9a5`, probe calling both schemas on one `storage` value:\n\n    A. DirectoryStorageSchema accepts keyedBy route? true\n    B. resolveSubgraphSource THREW: ZodError |\n       Invalid option: expected one of \"commit\"|\"tip\"\n\n`DirectoryStorageSchema.keyedBy` (`schemas/cat-harness.ts`) gained `\"route\"` with bean `1j3q`.\n`KeyedBySchema` (`schemas/subgraph-source.ts`), whic",
+      "file": "beans/defs/folio-assistant-5akx--keyedbyschema-and-directorystorageschema-were-two.md"
     },
     {
       "id": "folio-assistant-5blc",
@@ -6785,7 +6799,7 @@
     {
       "id": "folio-assistant-mer2",
       "title": "folio_init takes no layer argument, so the ruled MVP definition is not expressible",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -6794,7 +6808,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-30T21:47:07Z",
-      "updatedAt": "2026-10-01T06:51:19Z",
+      "updatedAt": "2026-10-04T09:52:31Z",
       "preview": "## The finding, and how it was measured\n\nThe owner ruled, 2026-09-30, that **MVP for a layer = `folio_init` creates a\nworking folio against that layer ALONE, in an empty repository** (`tndo`,\nchosen from four candidates). `zmdo` turned that into four checkboxes and named\nthe first thing to measure: *\"whether `folio_init` can target a single layer at\nall today. If it cannot, that is a defect agains",
       "file": "beans/defs/folio-assistant-mer2--folio-init-takes-no-layer-argument-so-the-ruled-mv.md"
     },
@@ -11284,8 +11298,8 @@
         "total": 142,
         "closed": 38,
         "open": 104,
-        "inProgress": 56,
-        "todo": 48,
+        "inProgress": 57,
+        "todo": 47,
         "draft": 0,
         "unclassified": 0,
         "share": 0.2676056338028169
@@ -11306,8 +11320,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 305,
-    "openTotal": 469,
+    "orphanOpen": 306,
+    "openTotal": 470,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
