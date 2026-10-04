@@ -67,6 +67,8 @@ export const GraphKindNodeSchema = z
     concernGroups: z.literal(true).optional(),
     within: z.string().min(1).optional(),
     avatar: KindAvatarSchema.optional(),
+    /** The navbar tile icon (an icon name, as `graph-tiles.ts` spells it). */
+    tileIcon: z.string().min(1).optional(),
     /** WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader. */
     rationale: z.string().min(1).optional(),
   })

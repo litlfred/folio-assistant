@@ -53,7 +53,7 @@ The open question is answered: **every contribution is a node, and validators ar
 - [ ] #2 folio-specific and DAK QA criteria to their owners as criterion nodes
 - [ ] #3 qou's 39-entry chapter profiles to the qou folio as data (math repo: ask before any PR)
 - [ ] #4 avatars on the owning nodes: kind avatars done for moved kinds (dmx1); instance avatars into each `<instance>.json`
-- [ ] #5 the per-kind side tables become fields on folio-graph-kind/v1 (dmx1)
+- [x] #5 the per-kind side tables become fields on folio-graph-kind/v1 (dmx1). MEASURED 2026-10-04: of the six, only `KIND_TILE_ICONS` keyed a kind another harness owns (`uploads`, now folio-assistant-core's); it became `tileIcon` on the node. The other five (UNPUBLISHED, SKILL_BEARING, KG_CONTENT, HARNESS_GRAPH_KINDS, REGISTRY_GROUPS) key only cat-harness's own kinds and classes, so they are local facts and stay
 - [ ] #6 partition ALLOWED derived from declared `needs`; path claims per instance
 - [ ] #7 check-reference-direction PENDING becomes a per-instance baseline (backlog)
 - [ ] #8 PUBLISHED_ELSEWHERE becomes a `publisher` field per declaration

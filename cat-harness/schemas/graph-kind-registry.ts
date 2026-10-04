@@ -501,6 +501,8 @@ export interface GraphKindDef {
    * in `AVATARS`.
    */
   avatar?: { glyph: string; tone: number; reads: string };
+  /** The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts. */
+  tileIcon?: string;
 }
 
 /**
