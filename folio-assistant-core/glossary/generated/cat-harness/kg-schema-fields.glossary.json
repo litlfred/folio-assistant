@@ -2956,7 +2956,7 @@
     {
       "id": "cat-harness.visualisationschema.title",
       "prefLabel": "VisualisationSchema.title",
-      "definition": "What a tile calls it. Absent falls back to the directory's id.",
+      "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
       "status": "candidate"
     },
@@ -5761,6 +5761,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.title",
+      "prefLabel": "GraphKindDef.title",
+      "definition": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.validator",
       "prefLabel": "GraphKindDef.validator",
       "definition": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.",
@@ -5954,6 +5961,13 @@
       "prefLabel": "HarnessConfig.interactivity",
       "definition": "Static, interactive, or undetermined — the FOURTH axis (issue #764, O1).",
       "source": "cat-harness/schemas/harness-config.ts#HarnessConfig.interactivity",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.harnessconfig.site",
+      "prefLabel": "HarnessConfig.site",
+      "definition": "What this instance asks of the published SITE — today only whether it is the landing page (issue #1904). See {@link HarnessSiteSchema}.",
+      "source": "cat-harness/schemas/harness-config.ts#HarnessConfig.site",
       "status": "candidate"
     },
     {

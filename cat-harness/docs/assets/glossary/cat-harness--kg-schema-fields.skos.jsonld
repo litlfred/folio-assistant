@@ -8025,7 +8025,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What a tile calls it. Absent falls back to the directory's id."
+          "@value": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\")."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
@@ -15632,6 +15632,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.validator",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16161,6 +16180,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfig.interactivity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.harnessconfig.site",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessConfig.site"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance asks of the published SITE — today only whether it is the landing page (issue #1904). See {@link HarnessSiteSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfig.site",
       "skos:note": "candidate"
     },
     {

@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRubellaLowIncidenceVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRubellaLowIncidenceVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRubellaLowIncidenceVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRubellaLowIncidenceVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SRubellaLowIncidenceVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRubellaLowIncidenceVS.jsonld` · [view](ValueSet-IMMZD18SRubellaLowIncidenceVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD18SRubellaHighIncidenceVS.html" data-next="ValueSet-IMMZD18STBEEncepurVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
