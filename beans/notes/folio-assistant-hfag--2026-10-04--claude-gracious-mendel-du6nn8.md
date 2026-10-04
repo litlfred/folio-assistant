@@ -30,3 +30,10 @@ The steward lands every member that `merge:steward` admits (owed CI `green`, not
 > "as part of merge manager skill you need to ACK a new PR in queue on its bean"
 
 Landed this session: #2069, #2068, #2059, #2073, #2062, #2070, #2052, #2079.
+
+## 13:20Z: owner approvals, chosen from options
+
+- "Approve all 4": #2083, #2084, #2085, #2086.
+- "zmdo session drafts it": the typed record of the human merge decision (`release` on the queue entry: `releasedSha`, `merge:queue:decide`, `merge:guard` read-back). session_01Ga3HjmX3ag9vTgZWDSmsFi drafts it against #2065's branch.
+
+Landed since: #2076 (`d2432b1`) and #1581 (`df31bb2`).
