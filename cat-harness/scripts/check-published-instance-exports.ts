@@ -58,20 +58,23 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 
 // `declarationPathIn` only, deliberately: it answers "is there a declaration
 // here" from the FILENAME convention and parses nothing, so this gate needs
 // no graph-kind registered to ask. `readDeclaration` would, and a gate that
 // throws on an unregistered kind reports a break it did not find.
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { QA_RESULTS_DIR, qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
+import { againstRef, qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
+import { readQaTree } from "./qa-store.js";
 import { PUBLISHED_ELSEWHERE, declaredInstanceStubs, instanceExportPlan, type PlannedExport } from "./instance-exports.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
-/** Where the committed `kg-export.*.qa-results.json` sidecars live. */
-const QA_DIR = join(REPO_ROOT, "cat-harness", QA_RESULTS_DIR);
+/** The instance whose `kg-export.*.qa-results.json` sidecars this gate compares. */
+const QA_ROOT = join(REPO_ROOT, "cat-harness");
+/** Where those sidecars live — the one composition, `qaResultPath`'s. */
+const QA_DIR = dirname(qaResultPath(QA_ROOT, "x"));
 
 /**
  * A base a workflow supplies through a shell variable cannot be run verbatim,
@@ -183,6 +186,16 @@ export interface PublishedExportReport {
    * no export. Each entry names the workflow and why. Non-empty is a failure.
    */
   incomplete?: string[];
+  /**
+   * Why no committed sidecar could be LISTED, when none could — bean `id4s`.
+   * The QA results directory not being in the checkout (QA leaves `main` for
+   * the `qa-reports` branch) is not "there are no committed sidecars": the
+   * comparison's subjects are unknown, and the report says so instead of
+   * dropping the line.
+   */
+  sidecarSubjectsUnknown?: string;
+  /** The `--against` ref the committed sidecars were read from, when one was given. */
+  against?: string;
 }
 
 /**
@@ -217,11 +230,41 @@ export function committedSidecarSubjects(covered: readonly Invocation[], qaDir: 
   } catch {
     return [];
   }
+  return subjectsFrom(names, covered);
+}
+
+/**
+ * {@link committedSidecarSubjects}, from wherever the committed sidecars are:
+ * the working copy, or with `against` the `qa-reports` branch through
+ * qa-store (bean `id4s`). Four states: a listing that could not be made is
+ * `unknown` with its reason, never an empty list — an empty list would read
+ * as "no sidecar to compare", which is the C2 shape this gate was fixed for.
+ */
+export function sidecarSubjectsFrom(
+  covered: readonly Invocation[],
+  opts: { against?: string; qaDir?: string } = {},
+): { subjects: Invocation[]; unknown?: string } {
+  const qaDir = opts.qaDir ?? QA_DIR;
+  if (opts.against !== undefined) {
+    const t = readQaTree(opts.against, qaDir);
+    if (t.state !== "hit") return { subjects: [], unknown: `qa-reports:${opts.against} — ${t.state}: ${t.reason}` };
+    return { subjects: subjectsFrom([...t.files.keys()].map((p) => basename(p)), covered) };
+  }
+  if (!existsSync(qaDir)) {
+    return {
+      subjects: [],
+      unknown: `${qaDir.slice(REPO_ROOT.length + 1)} is not in this checkout — pass --against <ref> to compare the qa-reports copies`,
+    };
+  }
+  return { subjects: committedSidecarSubjects(covered, qaDir) };
+}
+
+function subjectsFrom(names: readonly string[], covered: readonly Invocation[]): Invocation[] {
   const done = new Set(
     covered.filter((i) => (i.tool ?? "kg-export") === "kg-export").map((i) => instanceStub(i.instance)),
   );
   const out: Invocation[] = [];
-  for (const n of names.sort()) {
+  for (const n of [...names].sort()) {
     const m = /^kg-export\.(.+)\.qa-results\.json$/.exec(n);
     if (m === null || done.has(m[1]!)) continue;
     out.push({ workflow: COMMITTED_SIDECAR, instance: instancePathForStub(m[1]!), standInBase: false, tool: "kg-export" });
@@ -314,7 +357,7 @@ function nodesEmitted(stdout: string): number | undefined {
   return m ? Number(m[1]) : undefined;
 }
 
-function runExport(inv: Invocation, outDir: string): ExportResult {
+function runExport(inv: Invocation, outDir: string, against?: string): ExportResult {
   // ── EXIT 0 IS NOT ENOUGH, and the falsification is what proved it ───────
   //
   // Pointing an invocation at `./no-such-instance` exited 0 and this gate
@@ -382,7 +425,6 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
   // stub. Composed here rather than parsed out of the export's output, because
   // a gate that reads a path off stdout breaks when a log line is reworded.
   const qaStem = `kg-export.${instanceStub(inv.instance)}`;
-  const fresh = readQaResult(qaResultPath(outDir, qaStem));
   // The committed sidecar describes the DEPLOY's export, which passes no base.
   // Its findings name nodes by absolute IRI, so a stand-in base can never
   // agree with it: measured 2026-10-04, `folio-assistant-core` and
@@ -391,10 +433,16 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
   // the base-less invocation of the same instance is the one that does
   // (bean `4ak5`).
   const compares = !inv.standInBase;
-  const qaSidecar =
-    fresh === undefined || !compares
-      ? undefined
-      : qaResultState(qaResultPath(join(REPO_ROOT, "cat-harness"), qaStem), fresh);
+  // ONLY for a kg-export row (bean `0utt`). Every invocation shares `outDir`,
+  // so an `export-graph` row — which writes no sidecar — read the one a
+  // kg-export row had just written there and reported "QA sidecar current"
+  // for a comparison it never made. Latent while the kg-export row came LAST
+  // (it was only ever the committed-sidecar subject); exposed the moment a
+  // workflow line producing that sidecar sorted ahead of the deploys.
+  const fresh = (inv.tool ?? "kg-export") === "kg-export" ? readQaResult(qaResultPath(outDir, qaStem)) : undefined;
+  // Through qa-store's four states (bean `id4s`): the working copy, or the
+  // `qa-reports` branch with `--against`.
+  const qaSidecar = fresh === undefined || !compares ? undefined : qaResultState(qaResultPath(QA_ROOT, qaStem), fresh, { against });
   if (r.status === 0) {
     // A published graph with no nodes is not a graph. Reported as a failure
     // rather than a note: the deploy would write it, and a consumer cannot
@@ -423,9 +471,12 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
     // `e718627f198` — the committed hash was `b539167517cb` against a true
     // `0456470f68c8`, and every verdict in the run was green.
     //
-    // `absent` and `unreadable` are findings too, for the third-state reason:
-    // "there is no sidecar" and "the sidecar agrees" must not share an exit.
-    if (qaSidecar !== undefined && qaSidecar !== "current") {
+    // `absent`, `unreadable` and `unknown` are NOT failures any more (bean
+    // `id4s`): once QA results leave `main` a committed copy is absent by
+    // design, and proposal §2.3 rules a missing baseline `unknown` — reported,
+    // never a pass, not this change's defect. They still never share a line
+    // with agreement: the row carries the state and the report prints it.
+    if (qaSidecar === "stale") {
       return {
         ...inv,
         nodes,
@@ -498,7 +549,7 @@ export function incompleteExports(
   return out;
 }
 
-export function checkPublishedInstanceExports(): PublishedExportReport {
+export function checkPublishedInstanceExports(opts: { against?: string } = {}): PublishedExportReport {
   let files: string[];
   try {
     files = readdirSync(WORKFLOW_DIR)
@@ -544,13 +595,15 @@ export function checkPublishedInstanceExports(): PublishedExportReport {
   };
   if (invocations.length === 0) return base;
 
-  const sidecarSubjects = committedSidecarSubjects(invocations);
+  const { subjects: sidecarSubjects, unknown } = sidecarSubjectsFrom(invocations, { against: opts.against });
   const outDir = mkdtempSync(join(tmpdir(), "published-instance-export-"));
   try {
     return {
       ...base,
       sidecarSubjects,
-      results: [...invocations, ...sidecarSubjects].map((i) => runExport(i, outDir)),
+      ...(unknown !== undefined ? { sidecarSubjectsUnknown: unknown } : {}),
+      ...(opts.against !== undefined ? { against: opts.against } : {}),
+      results: [...invocations, ...sidecarSubjects].map((i) => runExport(i, outDir, opts.against)),
     };
   } finally {
     rmSync(outDir, { recursive: true, force: true });
@@ -600,6 +653,14 @@ export function formatReport(r: PublishedExportReport): string {
             ? "; QA sidecar not compared (it describes the base-less deploy)"
           : "";
     const note = (x.standInBase ? "  (its `--base-url` stood in)" : "") + counted + sidecar;
+    if (x.ok && x.qaSidecar !== undefined && x.qaSidecar !== "current") {
+      out.push(`  ✓ ${x.workflow}: ${x.instance}${note}`);
+      out.push(
+        `      ? UNKNOWN — no ${r.against ? `qa-reports:${r.against}` : "committed"} baseline to compare its sidecar with ` +
+          `(${x.qaSidecar}). NOT "current", and not gated (bean id4s, proposal §2.3)`,
+      );
+      continue;
+    }
     if (x.ok) {
       out.push(`  ✓ ${x.workflow}: ${x.instance}${note}`);
       continue;
@@ -608,6 +669,11 @@ export function formatReport(r: PublishedExportReport): string {
     for (const line of (x.detail ?? "").split("\n")) out.push(`      ${line.trim()}`);
   }
 
+  if (r.sidecarSubjectsUnknown !== undefined) {
+    // Said, never dropped: before bean `id4s` an absent results directory made
+    // the "committed sidecar(s) compared" line vanish while the gate exited 0.
+    out.push(`  ? UNKNOWN — the committed kg-export sidecars could not be listed: ${r.sidecarSubjectsUnknown}. Their comparison was NOT made`);
+  }
   if (orphans.length > 0) {
     // Reported, never deleted: no workflow produces these, so whether they are
     // kept is the owner's call (`deletion-requires-confirmation`).
@@ -634,7 +700,14 @@ export function formatReport(r: PublishedExportReport): string {
 }
 
 if (import.meta.main) {
-  const report = checkPublishedInstanceExports();
+  let against: string | undefined;
+  try {
+    against = againstRef(process.argv.slice(2));
+  } catch (e) {
+    console.error(`check:published-instance-exports: ${(e as Error).message}`);
+    process.exit(2);
+  }
+  const report = checkPublishedInstanceExports({ against });
   const clean =
     report.unreadable === undefined &&
     report.invocations.length > 0 &&
