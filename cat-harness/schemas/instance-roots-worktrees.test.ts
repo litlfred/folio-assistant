@@ -156,9 +156,8 @@ describe("checkoutRootFor — repository-level reads stay inside the checkout (g
   });
 
   test("known-skills never reads `.claude/skills` from outside the checkout", () => {
-    // The ROOT instance's scope is deliberately unchanged — reading the
-    // checkout's `.claude/skills` into it is a scope decision (see the
-    // comment at the read). A sibling's `.claude/skills` must never appear.
+    // The ROOT instance reads its OWN checkout's `.claude/skills` (owner,
+    // 2026-10-04, bean g43f); a sibling's `.claude/skills` must never appear.
     const seed = join(checkout, ".claude", "worktrees", ".claude", "skills", "leak");
     mkdirSync(seed, { recursive: true });
     writeFileSync(join(seed, "leak.md"), "---\nname: leak\n---\n");
@@ -167,6 +166,22 @@ describe("checkoutRootFor — repository-level reads stay inside the checkout (g
       for (const p of skillMdDirs(join(wtA, "core"))) expect(inside(join(wtA, "core", ...p), wtA)).toBe(true);
     } finally {
       rmSync(join(checkout, ".claude", "worktrees", ".claude"), { recursive: true, force: true });
+    }
+  });
+
+  test("the root instance reads its own `.claude/skills`, and a loader-stub group is not a group of skills (g43f)", () => {
+    const own = join(wtA, ".claude", "skills");
+    mkdirSync(join(own, "real"), { recursive: true });
+    writeFileSync(join(own, "real", "a-real-skill.md"), "---\nname: a-real-skill\n---\n");
+    mkdirSync(join(own, "stub-only"), { recursive: true });
+    writeFileSync(join(own, "stub-only", "SKILL.md"), "---\nname: stub-only\n---\n");
+    try {
+      const dirs = skillMdDirs(wtA).map((p) => p.join("/"));
+      expect(dirs).toContain(".claude/skills/real");
+      expect(dirs).not.toContain(".claude/skills/stub-only");
+    } finally {
+      rmSync(join(own, "real"), { recursive: true, force: true });
+      rmSync(join(own, "stub-only"), { recursive: true, force: true });
     }
   });
 

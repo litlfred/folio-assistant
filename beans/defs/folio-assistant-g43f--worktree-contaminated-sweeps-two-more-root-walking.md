@@ -365,4 +365,4 @@ asserting `checkoutRootFor`, `rootForScope`, `findPublishWorkflows`,
 `readSchemaGraph`'s module paths all resolve inside the worktree — plus a live
 assertion on the checkout the test runs in.
 
-- [ ] Whether the root instance should read the checkout's `.claude/skills` (0 → 4, including a bogus `SKILL`).
+- [x] Whether the root instance should read the checkout's `.claude/skills` (0 → 4, including a bogus `SKILL`). Owner, 2026-10-04: "do g43f". It does, and a `.claude/skills/<group>/` holding only Claude Code's `SKILL.md` loader stub is not a group of skills: **0 → 3** (`bean-coordination`, `todo-manager`, both stubs of corpus skills, and `language-trap-agent-audit`). The stub rule is scoped to `.claude/skills` only — elsewhere `SKILL.md` is a skill's own file (who-iris's voices), and excluding it globally dropped three of them from `kg:audit` (measured, then reverted). Regression in `instance-roots-worktrees.test.ts`; `kg:audit:all:check` 14/14 clean.

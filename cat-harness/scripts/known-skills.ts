@@ -86,6 +86,14 @@ import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-mat
 // there is no longer a command that can forget it (bean `z9ax`).
 
 /**
+ * Claude Code's skill-loader stub file name. Under `.claude/skills/` it is a
+ * trigger pointing at a corpus skill, so a group holding only that is not a
+ * group of skills. Elsewhere `SKILL.md` IS a skill's own file (who-iris's
+ * voices use that layout), so this is checked only where the stubs live.
+ */
+export const LOADER_STUB = "SKILL.md";
+
+/**
  * Groups under `.claude/skills/` that hold something other than skills.
  *
  * Each one is a different kind of node in the knowledge graph — participants,
@@ -460,22 +468,24 @@ export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(ro
   // definition, absent from the graph. Latent rather than live (only `local`
   // exists today), and now impossible: the exporter reads this function.
   //
-  // `checkoutRootFor`, and NOT for the checkout's own root instance (bean
-  // `g43f`). `repoRootFor` is `dirname`, so for the root instance this read
-  // `.claude/worktrees/.claude/skills` in a worktree and `/home/user/.claude/
-  // skills` in the main checkout — outside the checkout, found nothing. Simply
-  // pointing it at the checkout WIDENS the root instance's skill set, measured
-  // 2026-10-03: 0 -> 4 names, one of them `SKILL` (the stem of
-  // `interaction-modality/SKILL.md`), and `kg:audit` gained a fail for it. That
-  // is a change of scope, not of where the read lands, so it is left to a
-  // decision rather than made here; what changes is that it can no longer
-  // read another checkout.
+  // `checkoutRootFor` (bean `g43f`): `repoRootFor` is `dirname`, so for the
+  // root instance this read `.claude/worktrees/.claude/skills` in a worktree
+  // and `/home/user/.claude/skills` in the main checkout — outside the
+  // checkout. The root instance now reads the checkout's own `.claude/skills`
+  // (owner, 2026-10-04: "do g43f"), which is the same directory a nested
+  // instance already reached through `repoRootFor`.
+  //
+  // `SKILL.md` does not make a group. It is Claude Code's loader stub
+  // (`.claude/skills/<name>/SKILL.md`), a trigger pointing at the corpus
+  // skill, so a group holding only that is not a group of skills — counted,
+  // it published a skill literally named `SKILL` (measured 2026-10-03: the
+  // root instance went 0 -> 4 names with it, 0 -> 3 without).
   const checkout = checkoutRootFor(root);
   const localRoot = join(checkout, ".claude", "skills");
-  if (resolve(checkout) !== resolve(root) && existsSync(localRoot)) {
+  if (existsSync(localRoot)) {
     for (const g of readdirSync(localRoot, { withFileTypes: true })) {
       if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;
-      if (readdirSync(join(localRoot, g.name)).some((f) => f.endsWith(".md"))) {
+      if (readdirSync(join(localRoot, g.name)).some((f) => f.endsWith(".md") && f !== LOADER_STUB)) {
         dirs.push([".claude", "skills", g.name]);
       }
     }
