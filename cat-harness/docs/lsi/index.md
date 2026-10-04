@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>3105</b><span>units indexed</span></div>
+<div class="lv-stat"><b>3104</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -54,7 +54,6 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `folio-assistant-core/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-sci/library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-sci/sci-methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `folio-assistant-sci/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
 | `folio-assistant/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant/root-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -116,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**233** units · **6153** terms · k = **100** · retains **77.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**232** units · **6139** terms · k = **100** · retains **77.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -124,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.75 | instance, session, kind, directory, harness, page, merge, graph | *(none)* |
-| 2 | 21.87 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, iri, graph, directory |
-| 3 | 18.94 | block, chapter, slot, project, formal, watcher, edges, proof | steward, session, head, conflict, green, merge, bot, conflicted |
-| 4 | 17.38 | page, tile, pdf, avatar, text, glass, card, sticky | subgraph, subdirectory, ledger, train, steward, sibling, plan, sub |
-| 5 | 15.77 | tile, glass, avatar, card, board, sticky, tiles, theme | steward, rung, pdf, member, upload, manifest, owed, train |
-| 6 | 15.43 | steward, head, merge, preview, train, tile, staging, base | cli, archive, beans, task, goal, licence, goals, rung |
-| 7 | 15.04 | lane, actor, requirements, edge, feature, role, forward, preview | queue, withheld, arm, rung, backlog, library, tile, glass |
-| 8 | 14.71 | phase, feedback, url, feature, staging, preview, post, pdf | edges, slot, forward, tile, edge, glass, logical, closing |
+| 1 | 46.68 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
+| 2 | 21.85 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, directory, iri, graph |
+| 3 | 18.86 | block, chapter, slot, project, formal, watcher, proof, edges | steward, session, head, conflict, merge, green, conflicted, bot |
+| 4 | 17.38 | page, tile, pdf, text, avatar, glass, card, images | subgraph, subdirectory, ledger, train, steward, sibling, sub, renderable |
+| 5 | 15.77 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, upload, member, manifest, arxiv, owed |
+| 6 | 15.36 | steward, head, tile, train, merge, preview, board, avatar | task, beans, cli, requirement, process, requirements, methodology, goal |
+| 7 | 15.05 | queue, rung, withheld, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, preview, requirements, feature |
+| 8 | 14.68 | preview, phase, url, feature, staging, feedback, pages, language | slot, tile, glass, edges, forward, avatar, edge, claim |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

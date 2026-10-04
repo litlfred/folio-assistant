@@ -878,3 +878,9 @@ downstream repo, update that repo's ownership note and close the tracking beans.
 - **sidecars** (`*.qa.json`, `*.witness.json`) = *content state tracking*.
   Beans ≠ sidecars. Do **not** convert QA / witness queue items into individual
   beans (see todo-manager.md disambiguation block).
+- **A sibling session** sharing this store (this skill) ≠ **an agent in another
+  environment** you hand ONE task to, which you cannot see and which a person
+  may relay to: [`agent-handoff`](agent-handoff.md). That covers who writes
+  which bean, where the receiver reports, the one line the person pastes, and
+  why the receiver's own measurement is evidence rather than the close (bean
+  `mac1`, 2026-10-02).
