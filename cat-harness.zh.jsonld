@@ -312,10 +312,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T20:57:00.379Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/167a180704c5f1260c10f2507fa0c7991c3b7f6a",
-  "sourceCommitSha": "167a180704c5f1260c10f2507fa0c7991c3b7f6a",
-  "sourceCommitAt": "2026-10-04T22:48:40+02:00",
+  "generatedAt": "2026-10-04T21:18:07.859Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5693b174e460442e5159230cdfc2363e82028a43",
+  "sourceCommitSha": "5693b174e460442e5159230cdfc2363e82028a43",
+  "sourceCommitAt": "2026-10-04T23:12:13+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -328,8 +328,8 @@
     "SequenceFlow": 1103,
     "Lane": 218,
     "ProcessNode": 1046,
-    "Tool": 120,
-    "Schema": 166,
+    "Tool": 121,
+    "Schema": 167,
     "ExternalSchema": 22,
     "GraphKind": 28,
     "Role": 53,
@@ -1658,7 +1658,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1472,
+      "instructionLines": 1473,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40968,6 +40968,66 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/witness-conformance",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "witness-conformance",
+      "title": "Witness conformance report",
+      "description": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run witness:conformance"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Check this directory instead of the declared ones, e.g. before a folio declares the kind.",
+            "required": false,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Machine-readable output, every finding group listed.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Exit 1 when any witness is malformed or not strict JSON. Contract findings never fail the run.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "Counts of witnesses, malformed files, non-strict-JSON files and contract conformance, then the contract findings by field. Exit 2 when no directory declares the kind and no `--dir` was given: a clean report over nothing is not a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/subgraph-readmes",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "subgraph-readmes",
@@ -47385,6 +47445,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/computation-witness",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "computation-witness",
+      "title": "computation-witness",
+      "summary": "`computation-witness/v1` — the runtime schema for a folio's",
+      "module": "schemas/computation-witness.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/concern-groups",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "concern-groups",
@@ -50383,7 +50452,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 245,
+      "fileCount": 246,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
