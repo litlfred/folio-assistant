@@ -5,8 +5,10 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T07:12:36Z
+updated_at: 2026-10-04T07:23:15Z
 parent: folio-assistant-fs43
+blocked_by:
+    - folio-assistant-h8ig
 ---
 
 deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.
@@ -38,3 +40,10 @@ The exact five-step commit, the file counts on both sides, and the measurement t
 2. **The permission to remove the files.** `git rm -r beans` was refused in the dispatched session as irreversible local destruction, and the refusal covers reaching the same outcome another way.
 
 Everything else is ready and verified. `bun run state:seed --id beans --authoritative` is the branch half, and it is idempotent: a second run over an unchanged subgraph reports `current` and pushes nothing (fixed on PR #2052 after that module's own test caught it pushing a commit whose only content was a new manifest timestamp).
+
+## Blocked on
+
+- **waits on:** bean `h8ig` (`beans:claim` must write through the branch store — after the cutover claiming is impossible, not just unsafe), and separately a hand that holds permission to remove 1457 tracked files.
+- **since:** 2026-10-04
+- **expires:** 2026-10-18. If `h8ig` has not landed by then, the block is not the thing to re-check — the ARC's ordering is, because a Phase 6 that waits a fortnight on a Phase 3 row means the row was mis-phased, and the honest move is to say so on `fs43` rather than to extend this date again.
+- **handoff:** everything else is ready and verified. The flip is five steps, written out in this bean's body and in the note `beans/notes/folio-assistant-9ofm--2026-10-04--claude-beans-off-main-9ofm.md`: declare `source: { kind: "branch", branch: "cat/cat-harness/beans", keyedBy: "tip" }`, `git rm -r beans`, add `/beans/` to `.gitignore`, `bun run state:seed --id beans --authoritative`, `bun run state:mount`, then the gates. The branch is current and verified at every refresh, so step 4 is cheap to re-run first. Do NOT reorder: the seed before the `git rm` leaves a window where neither copy is authoritative, and the `git rm` before the declaration leaves a checkout whose declaration says the files are here.
