@@ -119,6 +119,28 @@ already has:
   member is refused".
 - **A hand-back bean** when the PR is ejected or handed back (same section).
   The submitting role picks it up even if the original session is gone.
+  **Every hand-back gets one, not only a train ejection.** That covers
+  `Rule_Refused`, `Rule_HeadNotGreen`, `Rule_NotReady`, and a `merge:guard`
+  refusal on a PR the owner asked to land. A PR comment and a queue entry
+  are not a hand-back on their own: the work plan cannot see them.
+  - **Shape:** titled `Merge refused: #<n> <cause>`, `type: bug`, parented
+    under the PR's bean's parent (or under the PR's bean when it is an epic
+    or feature), marked `--blocking` that bean.
+  - **Body:** the refused checks, roles, the brief (link the takeover plan if
+    there is one), where to report, Done when, and Fails if.
+  - **Dedupe:** check first, because `beans create` dedupes on nothing.
+  - **Process:** run it through `processes/sdlc/merge-refusal.bpmn`
+    (`workflow_start`), not from memory.
+
+  `merge:steward` now prints `✗ handed back with NO open hand-back bean:
+  #…` and carries `handBackBean` per PR in `--json`.
+
+  Measured 2026-10-04: a steward handed back a dozen PRs in one session with
+  comments and queue entries only. The owner asked *"why did you have a
+  process failure here?"*. The procedure lived in another skill
+  (`merge-conflict-patterns`) that the steward never loaded, and nothing
+  checked for it. Owner: "Backfill + enforce". The 13 beans were backfilled
+  (`mfhc` and twelve more).
 - **A direct message as the fast path**, by the recipe below. Use it when the
   PR is next and waiting costs a train.
 - **The queue entry** records the hold or ejection, with its reason and

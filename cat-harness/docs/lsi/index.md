@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.61 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
-| 2 | 21.85 | prs, watcher, queue, sibling, commits, backlog, coordination, merge | harness, instance, declaration, node, directories, directory, iri, graph |
-| 3 | 18.79 | block, chapter, slot, project, formal, watcher, edges, proof | steward, session, head, conflict, merge, green, conflicted, bot |
-| 4 | 17.41 | page, tile, pdf, text, avatar, glass, card, images | subgraph, subdirectory, ledger, train, steward, sibling, sub, relocation |
-| 5 | 15.77 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, member, upload, manifest, arxiv, owed |
-| 6 | 15.37 | steward, head, tile, train, merge, preview, board, avatar | task, process, beans, requirement, cli, requirements, methodology, plan |
-| 7 | 15.06 | queue, rung, withheld, arm, backlog, library, slide, bytes | lane, actor, edge, forward, edges, preview, requirements, feature |
-| 8 | 14.67 | url, phase, preview, feature, staging, feedback, language, pages | slot, tile, edges, forward, glass, edge, avatar, logical |
+| 1 | 46.64 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
+| 2 | 21.86 | prs, watcher, queue, sibling, commits, backlog, merge, coordination | harness, instance, declaration, node, directories, directory, iri, graph |
+| 3 | 18.84 | steward, session, head, conflict, merge, green, conflicted, bot | block, chapter, slot, project, formal, watcher, edges, proof |
+| 4 | 17.42 | page, tile, pdf, text, avatar, glass, card, images | subgraph, subdirectory, ledger, train, steward, sibling, sub, relocation |
+| 5 | 15.78 | tile, glass, avatar, card, board, sticky, tiles, theme | steward, rung, pdf, upload, member, manifest, arxiv, owed |
+| 6 | 15.36 | steward, head, tile, train, merge, preview, board, avatar | task, beans, process, cli, requirement, requirements, methodology, goal |
+| 7 | 15.07 | queue, rung, withheld, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, preview, requirements, feature |
+| 8 | 14.67 | url, preview, phase, staging, feature, feedback, language, pages | slot, tile, edges, forward, glass, edge, avatar, logical |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
