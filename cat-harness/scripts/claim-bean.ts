@@ -69,6 +69,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { findBean, noteBean, updateBean } from "./beans-fallback.js";
+import { graphReadPath } from "./graph-read.ts";
 
 /** The claim line `noteBean` just appended, exactly as it was written. */
 const CLAIM_NOTE = /^_\d{4}-\d{2}-\d{2}T[\d:]+Z_ — Claimed by \S+ —.*$/m;
@@ -229,6 +230,36 @@ function statusOnBranch(
  */
 export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: string; dryRun?: boolean } = {}): ClaimOutcome {
   const repo = opts.repo ?? process.cwd();
+
+  // PRE-FLIGHT: is the default branch still where the bean store is?
+  //
+  // Bean `9ofm` row D. This whole mechanism is "push the claim to the DEFAULT
+  // branch so a sibling session sees it before this branch has a PR" (bean
+  // `35nj`). Once the bean graph is cut over to `cat/cat-harness/beans`, the
+  // default branch no longer holds the store — so that push would land a claim
+  // where no reader looks. Silent, and worse than not claiming at all: the
+  // sibling reads `todo`, starts the same work, and `35nj`'s measured cost
+  // (two sessions, 61 seconds apart, two PRs for one bean) comes back with the
+  // guard that was supposed to stop it reporting success.
+  //
+  // `notCutOver` is the discriminator, and it is why that field exists: a
+  // declaration naming the branch while the checkout still tracks the files
+  // means the default branch IS the store, so today's behaviour is correct and
+  // unchanged. A MOUNT, or an unreachable graph, means it is not.
+  const where = graphReadPath("beans", repo);
+  if (where.state === "refused") {
+    return { state: "unknown", reason: `the bean store is on its branch and not mounted here, so a claim cannot be read or written: ${where.reason}`, attempts: 0 };
+  }
+  if (where.state === "ok" && where.from === "mount") {
+    return {
+      state: "unknown",
+      reason:
+        `the bean store is cut over to its branch and mounted at ${where.at}, so pushing a claim to the default ` +
+        `branch would land it where no reader looks. Claim through the branch store instead (bean 9ofm: this ` +
+        `script's own migration row is still open).`,
+      attempts: 0,
+    };
+  }
 
   const local = findBean(repo, id);
   if (local === undefined) {

@@ -333,3 +333,61 @@ describe("beans-fallback: the CLI-absent reader relocates, and refuses", () => {
     expect(fallbackStoreDir(root, cfg)).toEqual({ at: join(root, "somewhere", "else") });
   });
 });
+
+// ── The three readers migrated in row D step 4 (bean `9ofm`) ───────────────
+describe("todos, issue-marks and the claim writer resolve by declared ID", () => {
+  test("issue-marks: `seenPath` lands in the mount, and REFUSES when the graph is unreachable", async () => {
+    const { seenPath } = await import("../../src/issue-watch/seen-comments.ts");
+
+    const plain = repo([{ id: "issue-marks", path: "issue-marks/", graphKinds: ["issue-marks"] }]);
+    expect(seenPath(plain, "o", "r", 7)).toBe(join(plain, "issue-marks", "o-r-7.json"));
+
+    const mounted = repo([{ id: "issue-marks", path: "issue-marks/", graphKinds: ["issue-marks"], storage: { branch: "cat/cat-harness/issue-marks", keyedBy: "tip" } }]);
+    const into = join(mounted, "im-mount");
+    mount(mounted, "issue-marks", into);
+    expect(seenPath(mounted, "o", "r", 7)).toBe(join(into, "o-r-7.json"));
+
+    // Unreachable: a path under the repo root would make `loadSeen` report
+    // "not seen" for every comment, forever, in silence.
+    const cut = repo([{ id: "issue-marks", path: "issue-marks/", graphKinds: ["issue-marks"], storage: { branch: "cat/cat-harness/issue-marks", keyedBy: "tip" } }]);
+    expect(() => seenPath(cut, "o", "r", 7)).toThrow(/cannot resolve the issue-marks graph/);
+  });
+
+  test("todos: `TODO_ROOT` still resolves to the checkout's real todos directory (inert today)", async () => {
+    const { TODO_ROOT } = await import("../todos.ts");
+    // `TODO_ROOT` is bound to this checkout rather than a fixture, so what is
+    // asserted here is that the relocation left today's answer alone. The
+    // three branch states of the same call are covered by `graphReadPath`'s
+    // own tests and, end to end, by the `issue-marks` case above — which goes
+    // through the identical `graphReadPath(<id>, root)` shape.
+    expect(TODO_ROOT().replace(/\\/g, "/")).toMatch(/\/todos$/);
+  });
+
+  test("claim-bean REFUSES once the store is mounted: a claim pushed to main lands where no reader looks", async () => {
+    const { claimOnDefaultBranch } = await import("../claim-bean.ts");
+
+    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const into = join(cut, "beans-mount");
+    mount(cut, "beans", into);
+    const r = claimOnDefaultBranch("fx-1", "some-branch", { repo: cut });
+    expect(r.state).toBe("unknown");
+    expect(r.reason).toContain("where no reader looks");
+    expect(r.attempts).toBe(0);
+  });
+
+  test("claim-bean is UNCHANGED while the checkout still tracks the files — `notCutOver` is the discriminator", async () => {
+    const { claimOnDefaultBranch } = await import("../claim-bean.ts");
+
+    // Declaration names the branch, files still tracked => the default branch
+    // IS the store, so this must behave exactly as before. It gets past the
+    // pre-flight and fails later, on the store lookup, not on the guard.
+    const notCutOver = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    mkdirSync(join(notCutOver, "beans", "defs"), { recursive: true });
+    writeFileSync(join(notCutOver, "beans", "defs", "a.md"), "---\n# fx-1\ntitle: t\nstatus: todo\ntype: task\n---\nb\n");
+    git(notCutOver, "add", "beans/defs/a.md");
+
+    const r = claimOnDefaultBranch("fx-1", "some-branch", { repo: notCutOver });
+    expect(r.reason ?? "").not.toContain("where no reader looks");
+    expect(r.reason ?? "").not.toContain("not mounted here");
+  });
+});
