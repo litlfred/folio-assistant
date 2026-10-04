@@ -1662,6 +1662,7 @@ export const RULES: Rule[] = [
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
+      "scripts/check-state-on-main.ts",  // the same registry's `holds: state`, asked of DECLARED directories
       "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
       "scripts/check-instance-graph.ts",  // every instance's dependency graph resolves (bean `a1lq`)
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)
