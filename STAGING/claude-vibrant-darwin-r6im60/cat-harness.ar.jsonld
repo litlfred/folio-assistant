@@ -316,10 +316,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T19:44:46.147Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c784e5fd041d4e0747628d283d8943189b2a5c4e",
-  "sourceCommitSha": "c784e5fd041d4e0747628d283d8943189b2a5c4e",
-  "sourceCommitAt": "2026-10-04T19:39:54Z",
+  "generatedAt": "2026-10-04T19:56:32.524Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3f183937f27c3accc96809ad30985b3d60b2f66c",
+  "sourceCommitSha": "3f183937f27c3accc96809ad30985b3d60b2f66c",
+  "sourceCommitAt": "2026-10-04T19:51:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1422,7 +1422,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-darwin-r6im60/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 225,
+      "instructionLines": 283,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3272,7 +3272,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-darwin-r6im60/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 647,
+      "instructionLines": 726,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -54255,7 +54255,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1030,
+      "fileCount": 1022,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-darwin-r6im60/cat-harness.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
@@ -54381,7 +54381,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1955,
+      "fileCount": 1953,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-darwin-r6im60/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -54471,7 +54471,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1146,
+      "fileCount": 1138,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-darwin-r6im60/cat-harness.jsonld#directory/cat-harness-tests",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
