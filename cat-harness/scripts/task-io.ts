@@ -241,7 +241,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "readme:audit": READ_ONLY,
   "readme:audit:root": READ_ONLY,
   "readme:sync:all:check": READ_ONLY,
-  "readme:sync:bootstrap:check": READ_ONLY,
   "readme:sync:check": READ_ONLY,
   "readme:sync:root:check": READ_ONLY,
   "root-scan-census:check": READ_ONLY,
