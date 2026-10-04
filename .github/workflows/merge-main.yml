@@ -258,6 +258,18 @@ jobs:
           git submodule update --init --recursive
           bun install --frozen-lockfile
 
+      # Since bean `i1q7` item 3, `regen` asks the WHOLE gate set, browser-job
+      # pairs included: `render:bpmn:check` needs Chromium, and on a runner
+      # without it regen reports `no-browser` — could-not-determine, never a
+      # pass — so merge-base aborted EVERY merge ("merge-base failed for a
+      # reason that is neither a refusal nor an unrepaired check", #2000 and
+      # #2064 on 2026-10-04, from the moment #1801 brought i1q7 to main).
+      # The same install the e2e and docs-site jobs make; not `--fast`,
+      # because a stale BPMN render after a process change is exactly what
+      # i1q7 found the fast set leaving behind.
+      - name: Install Chromium (regen asks render:bpmn:check — bean i1q7)
+        run: npx --yes playwright install --with-deps chromium
+
       - name: merge main in, with main's merge-base.ts
         id: merge
         run: |
