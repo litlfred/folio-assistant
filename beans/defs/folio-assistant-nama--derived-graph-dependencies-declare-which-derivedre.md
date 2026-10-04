@@ -1,10 +1,11 @@
 ---
 # folio-assistant-nama
 title: 'DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them'
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-04T13:49:44Z
+updated_at: 2026-10-04T13:52:31Z
 parent: folio-assistant-fs43
 ---
 
@@ -25,3 +26,12 @@ Use the ORDER in which subgraphs are declared as the rendering order. That is ch
 - [ ] a gate refuses an edge naming an undeclared id, and a cycle
 - [ ] the rendering order is DERIVED from the edges (topological). Until then, declaration order is used, and a check flags a consumer declared before its source
 - [ ] consumers walk it: regen, the main publish workflow (lbz8) and the staging cone (sibling bean)
+
+## 2026-10-04: design note, for the owner's review
+`cat-harness/docs/proposals/derived-graph-dependencies-2026-10-04.md` proposes:
+- one edge, `derivedFrom`, on the DERIVED directory, resolved across `needs` like `computedFrom`;
+- declaring the missing nodes;
+- a topological order, with declaration order as the interim rule and a check for a consumer declared before its source;
+- a gate, `check:derived-from`.
+
+It asks three decisions: the edge's direction, re-layering the IG pages and artefact index as derived, and strict versus ratchet for the chrome-across-a-missing-needs case. The node schemas are child bean lehh.
