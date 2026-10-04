@@ -4,7 +4,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { MARKER, VIEWER_PATH, embed, isVendoredViewer, openShim, patchViewerHtml } from "../pdf-viewer.ts";
+import { MARKER, VIEWER_PATH, VIEWER_REV, embed, isVendoredViewer, openShim, patchViewerHtml } from "../pdf-viewer.ts";
 import { run as stageBanner } from "../staging-banner.ts";
 
 /**
@@ -84,7 +84,7 @@ describe("openShim", () => {
 
 describe("embed", () => {
   /** Run the embed's inlined client at a pathname; return the frame's src once it scrolls into view. */
-  function frameSrcAt(pathname: string, html: string): { src?: string; srcdoc?: string } {
+  function frameSrcAt(pathname: string, html: string, lastModified?: string): { src?: string; srcdoc?: string } {
     const script = /<script>([\s\S]*?)<\/script>/.exec(html)![1]!;
     const attrs = Object.fromEntries([...html.matchAll(/data-(src|hash)="([^"]*)"/g)].map((m) => [m[1], m[2]!.replace(/&amp;/g, "&")]));
     const frame: { src?: string; srcdoc?: string; getAttribute: (k: string) => string } = {
@@ -99,7 +99,7 @@ describe("embed", () => {
       disconnect() {}
     }
     const win = { IntersectionObserver: IO };
-    const document = { currentScript: { parentNode: { querySelector: () => frame } } };
+    const document = { currentScript: { parentNode: { querySelector: () => frame } }, lastModified };
     new Function("window", "document", "location", "IntersectionObserver", script)(win, document, { pathname }, IO);
     expect(frame.src).toBeUndefined(); // lazy: nothing until it is in view
     cb?.([{ isIntersecting: true }]);
@@ -120,9 +120,26 @@ describe("embed", () => {
     ["/STAGING/my-branch/who-iris/item-x.html", "/STAGING/my-branch/"],
   ] as const) {
     test(`at ${path} the frame opens ${root}${VIEWER_PATH}, on page 3`, () => {
-      expect(frameSrcAt(path, html).src).toBe(`${root}${VIEWER_PATH}?src=${encodeURIComponent(`${CDN}r@main/a b.pdf`)}#page=3`);
+      expect(frameSrcAt(path, html).src).toBe(
+        `${root}${VIEWER_PATH}?src=${encodeURIComponent(`${CDN}r@main/a b.pdf`)}&v=${VIEWER_REV}.0#page=3`,
+      );
     });
   }
+
+  test("the frame's address changes with each deploy of the page around it, so a cache cannot serve last deploy's viewer", () => {
+    // Owner, 2026-10-04: a hard reload still showed the pre-fix frame.
+    const a = frameSrcAt("/who-iris/x.html", html, "10/04/2026 19:44:12").src!;
+    const b = frameSrcAt("/who-iris/x.html", html, "10/04/2026 19:55:56").src!;
+    expect(a).not.toBe(b);
+    expect(a).toContain(`&v=${VIEWER_REV}.`);
+    expect(a.endsWith("#page=3")).toBe(true); // the tag goes in the query, never after the fragment
+  });
+
+  test("the viewer's own shim is fetched under its revision", () => {
+    const out = patchViewerHtml(`<head><script src="../build/pdf.mjs" type="module"></script></head>`);
+    expect(out).toContain(`folio-open.js?v=${VIEWER_REV}`);
+    expect(VIEWER_REV).toMatch(/^[0-9a-f]{10}$/);
+  });
 
   test("a page off the route says so in the frame instead of loading a 404", () => {
     const script = /<script>([\s\S]*?)<\/script>/.exec(html)![1]!;

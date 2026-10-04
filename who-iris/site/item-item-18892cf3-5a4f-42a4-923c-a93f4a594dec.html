@@ -364,7 +364,8 @@ var f=document.currentScript.parentNode.querySelector("iframe[data-src]");
 var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));
 if(!f)return;
 if(!m||m[1]==null){f.srcdoc="<p style=\"font:1rem system-ui\">The viewer could not find this site's root from the page address. Use the links below.</p>";return;}
-var url=m[1]+"assets/vendor/pdfjs/web/viewer.html"+"?src="+encodeURIComponent(f.getAttribute("data-src"))+f.getAttribute("data-hash");
+var lm=Date.parse(document.lastModified);
+var url=m[1]+"assets/vendor/pdfjs/web/viewer.html"+"?src="+encodeURIComponent(f.getAttribute("data-src"))+"&v="+"aa67404ffe"+"."+(lm>0?lm.toString(36):"0")+f.getAttribute("data-hash");
 if(!("IntersectionObserver" in window)){f.src=url;return;}
 var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){io.disconnect();f.src=url;}},{rootMargin:"200px"});
 io.observe(f);

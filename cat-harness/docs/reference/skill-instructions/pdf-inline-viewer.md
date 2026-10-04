@@ -97,14 +97,45 @@ Each of these cost a debugging round. All three are listed under `binds` in the
   the frame whether or not the viewer works. They are not a fallback that
   appears on failure.
 
+## Caching: why the frame's address carries a version tag
+
+GitHub Pages serves every file with `max-age=600` through a CDN, so a hard
+reload can still be answered from a copy up to ten minutes old. On the first
+staging preview that hid a fix. The owner hard-reloaded and still saw the old
+frame, because the old `viewer.html` was what came back. Owner, 2026-10-04:
+*"add the version tag so cache doesn't bite"*.
+
+- **The frame's address ends `&v=<rev>.<deploy>`.** `<rev>` is `VIEWER_REV`, a
+  hash of the pinned release, the shim and the patch. `<deploy>` comes from the
+  host page's `document.lastModified`, which Pages sets at deploy time. So the
+  frame is exactly as fresh as the page around it. A reader who sees the new
+  page gets the new viewer.
+- **The shim is fetched as `folio-open.js?v=<rev>`**, so a change to it cannot be
+  masked by a cached copy.
+- Where a server sends no `Last-Modified` (a local preview), the browser reports
+  the current time, so the frame is simply never cached there. That is correct,
+  just slower.
+
+The outer page itself is outside this. If the green staging banner shows an
+older commit than the deploy, the whole page is a cached copy. Wait out the
+ten minutes, or use a private window.
+
 ## The site's own post-build passes leave the viewer alone
 
 `viewer.html` is Mozilla's markup with one `<script>` added. `minify-site.ts`
 skips it (rewriting it would ship bytes no pdf.js release contains), and
-`publish-verify`'s `html-unique-ids` counts it **out of scope**, not passed. It
+`check:duplicate-ids` and `publish-verify`'s `html-unique-ids` count it **out of scope**, not passed. It
 declares `id="buttons"` twice upstream. That finding is real, and nobody here
-can fix it without forking pdf.js. Both passes ask `isVendoredViewer()`, so
-there is one answer to "is this ours".
+can fix it without forking pdf.js. They ask `isVendoredViewer()`, so there is
+one answer to "is this ours".
+
+**The two passes that INJECT into every page skip it too.** These are the
+staging banner and the standalone navigation rail. On the first staging
+preview, both drew inside the PDF frame, so the frame opened on unstyled site
+navigation and a second banner. Bean `folio-assistant-5ea6` has the
+screenshots. Any new pass that writes into every `*.html` in `_site` owes the
+same exclusion. `standalone-rail.test.ts` and `pdf-viewer.test.ts` each assert
+it for the existing two.
 
 ## Cost
 

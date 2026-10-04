@@ -177,8 +177,26 @@ export function patchViewerHtml(html: string): string {
         `re-measure the integration before bumping PDFJS_VERSION rather than shipping a viewer that ignores ?src=.`,
     );
   }
-  return html.replace(anchor, `<script src="${SHIM_FILE}"></script>\n${anchor}`);
+  return html.replace(anchor, `<script src="${SHIM_FILE}?v=${VIEWER_REV}"></script>\n${anchor}`);
 }
+
+/**
+ * A short tag for the installed viewer's OWN bytes: the pinned release plus
+ * the shim and the patch this file writes. It changes whenever either does,
+ * and goes on the shim's `<script src>` so a reader's cached shim cannot
+ * outlive a change to it.
+ *
+ * Owner, 2026-10-04, after a hard reload still showed a pre-fix frame: *"add
+ * the version tag so cache doesn't bite"*. GitHub Pages serves with
+ * `max-age=600` through a CDN, so a reload can be answered from a copy up to
+ * ten minutes old.
+ */
+export const VIEWER_REV: string = createHash("sha256")
+  .update(PDFJS_SHA256)
+  .update(openShim.toString())
+  .update(patchViewerHtml.toString())
+  .digest("hex")
+  .slice(0, 10);
 
 export function sha256(bytes: Uint8Array): string {
   return createHash("sha256").update(bytes).digest("hex");
@@ -274,6 +292,14 @@ export function embed(o: EmbedOptions): string {
  * attribute's behaviour on a script-assigned `src` differs across engines,
  * and the viewer plus its worker is ~3 MB a reader who never scrolls that far
  * should not pay. Owner, 2026-10-04: *"lazyload"*.
+ *
+ * **The frame's address carries `&v=<rev>.<deploy>`.** `<rev>` is
+ * {@link VIEWER_REV}; `<deploy>` is the HOST page's `document.lastModified`,
+ * which GitHub Pages sets from the deploy. So the frame is exactly as fresh as
+ * the page around it: a reader who sees the new page cannot get last deploy's
+ * viewer from cache — the defect the owner hit on the first staging preview,
+ * where a fixed `viewer.html` was masked by a cached one. The viewer ignores
+ * the parameter; only caches see it.
  */
 function client(patternSource: string): string {
   return `(function(){
@@ -281,7 +307,8 @@ var f=document.currentScript.parentNode.querySelector("iframe[data-src]");
 var m=location.pathname.match(new RegExp(${JSON.stringify(patternSource)}));
 if(!f)return;
 if(!m||m[1]==null){f.srcdoc="<p style=\\"font:1rem system-ui\\">The viewer could not find this site's root from the page address. Use the links below.</p>";return;}
-var url=m[1]+${JSON.stringify(VIEWER_PATH)}+"?src="+encodeURIComponent(f.getAttribute("data-src"))+f.getAttribute("data-hash");
+var lm=Date.parse(document.lastModified);
+var url=m[1]+${JSON.stringify(VIEWER_PATH)}+"?src="+encodeURIComponent(f.getAttribute("data-src"))+"&v="+${JSON.stringify(VIEWER_REV)}+"."+(lm>0?lm.toString(36):"0")+f.getAttribute("data-hash");
 if(!("IntersectionObserver" in window)){f.src=url;return;}
 var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){io.disconnect();f.src=url;}},{rootMargin:"200px"});
 io.observe(f);
