@@ -1,0 +1,106 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-term-mapping.ts",
+    "script_hash": "dd8211501171"
+  },
+  "subject": {
+    "kind": "glossary",
+    "id": "folio-assistant-core/glossary"
+  },
+  "families": {
+    "fhir": {
+      "summary": "3124 candidate(s): 0 mapped, 3124 unmapped, 0 undetermined",
+      "count": 5,
+      "entries": [
+        {
+          "scheme": "kg-bpmn-activities",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 640,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-dmn-decisions",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 10,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-schema-fields",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 2003,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-skills",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 317,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-tools",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 154,
+          "undetermined": 0,
+          "mappedTerms": []
+        }
+      ]
+    },
+    "skos": {
+      "summary": "3124 candidate(s): 0 mapped, 3124 unmapped, 0 undetermined",
+      "count": 5,
+      "entries": [
+        {
+          "scheme": "kg-bpmn-activities",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 640,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-dmn-decisions",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 10,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-schema-fields",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 2003,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-skills",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 317,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-tools",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 154,
+          "undetermined": 0,
+          "mappedTerms": []
+        }
+      ]
+    }
+  },
+  "total": 10
+}

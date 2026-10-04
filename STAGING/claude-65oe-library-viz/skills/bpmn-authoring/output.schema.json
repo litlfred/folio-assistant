@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-65oe-library-viz/skills/bpmn-authoring/output.schema.json",
+  "title": "BPMN Authoring Output",
+  "description": "Output schema for BPMN 2.0 business process authoring.",
+  "type": "object",
+  "required": [
+    "bpmnFile"
+  ],
+  "properties": {
+    "bpmnFile": {
+      "type": "string",
+      "description": "Path to the generated/updated BPMN file."
+    },
+    "diagramFile": {
+      "type": "string",
+      "description": "Path to the rendered diagram (SVG/PNG)."
+    },
+    "taskCount": {
+      "type": "integer"
+    },
+    "gatewayCount": {
+      "type": "integer"
+    },
+    "participantCount": {
+      "type": "integer"
+    }
+  },
+  "staging": {
+    "branch": "claude/65oe-library-viz",
+    "sha": "2f40c0701bb5fd9cc057231ef80a88162b8d5df4",
+    "pr": "2035/merge",
+    "run": "37180715391"
+  }
+}
