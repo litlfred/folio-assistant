@@ -95,6 +95,21 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "generated overview diagrams and their SVGs (201). Recomputed from the declarations; any new node redraws them.",
   },
   {
+    id: "prov-qaqc",
+    // Instance-agnostic, like `derived-results` and unlike `glossary`: a
+    // dependent folio runs `prov:qaqc` over its own workflow instances and
+    // writes the same two shapes under its own root.
+    globs: ["**/docs/prov-qaqc/**", "**/docs/assets/prov/**"],
+    strategy: "take-base",
+    why:
+      "the PROV-O QA/QC report and its per-instance logs. Generated WHOLE from the workflow instances under " +
+      "`beans/workflows/` by `scripts/prov-qaqc.ts`, so any branch that records an instance — which every " +
+      "branch doing process work does — rewrites the index page and adds a `.prov.jsonld`. Added 2026-10-03 " +
+      "after it refused #1892 as the single unclassified path among 32 resolved by pattern: a file nobody " +
+      "authors, blocking a merge nobody can usefully resolve by hand. `take-base` then `regen`, which runs " +
+      "`prov:qaqc` because `check:prov-qaqc` is a workflow gate — so the pattern names no check of its own.",
+  },
+  {
     id: "glossary",
     globs: ["cat-harness/docs/glossary/**", "cat-harness/docs/lsi/**"],
     strategy: "take-base",
@@ -111,6 +126,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: [
       "cat-harness/docs/external-schemas/index.md",
       "cat-harness/docs/methodologies/index.md",
+      "cat-harness/docs/tools/index.md",
       "cat-harness/docs/processes/*.md",
       "cat-harness/docs/qa/index.html",
       "cat-harness/docs/translation-status/index.html",
@@ -124,7 +140,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "cat-harness/docs/fsh-guts/index.md",
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",
@@ -221,6 +237,24 @@ export const PATTERNS: readonly ConflictPattern[] = [
     globs: ["beans/defs/**"],
     strategy: "refuse",
     why: "bean definitions (44). Authored work-plan state, so it is resolved by a person. It may be TWO sessions editing one bean, which is a coordination question — or ONE session whose claim went to the default branch while its completion stayed on the branch, which is `beans:claim`'s normal path and needs no coordination at all (bean `24fa`). Check which before looking for a sibling. Either way, do not union the front matter: a duplicated updated_at is check-bean-front-matter's recorded defect.",
+  },
+  {
+    id: "artefact-verification",
+    globs: ["**/scripts/artefact-verification.json"],
+    strategy: "refuse",
+    why:
+      "the per-check consumer-verification declaration. It READS like a generated sidecar — under `scripts/`, " +
+      "a `.json`, its key set DERIVED from `package.json` — and it is the only path that refused on two open " +
+      "PRs at once (#1958, #1955, swept 2026-10-03), so it is the one a sweep is most likely to glob by " +
+      "mistake. Two facts rule that out. `task-io.ts` classifies `check:artefact-verification` as `READ_ONLY`: " +
+      "NO script writes this file, so there is no writer for `regen` to run and `take-base` would be a silent " +
+      "discard rather than a resolution. And its own `_comment` requires every `none` entry to carry a REASON " +
+      "in prose and says the file may only SHRINK — so a branch that adds a gated check adds an authored " +
+      "sentence, which is exactly what taking base would drop. A conflict here is a genuine editorial merge " +
+      "(both reasons are wanted; which survives is a judgement), and human merge is the cost of the file's " +
+      "shape, not a hole in this catalogue. Bean `mjl3`, which also records the falsifier: if a `--write` is " +
+      "ever added that composes the derived keys and carries existing reasons forward, this becomes " +
+      "`take-base` and the pattern changes with it.",
   },
   {
     id: "uploads",

@@ -1078,7 +1078,8 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "smart-immunizations",
       "smart-trust",
       "who-iris",
-      "who-style-guide",
+      // `who-style-guide` was listed here until 2026-10-01, when the owner
+      // folded it into who-iris as a subgraph (bean qsx4). It fired as designed.
     ]);
     // The two the literal named, pinned individually: the repository root is
     // the entry that was `"."` and then silently stopped resolving, and
