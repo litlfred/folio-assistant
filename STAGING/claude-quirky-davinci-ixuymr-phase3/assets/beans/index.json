@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 790,
+      "count": 791,
       "unit": "beans"
     }
   },
@@ -2037,14 +2037,14 @@
     {
       "id": "folio-assistant-65oe",
       "title": "library:viz is not reproducible across environments: refScan.filesRead embeds a count of the files on disk",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T15:40:27Z",
-      "updatedAt": "2026-10-03T15:40:47Z",
+      "updatedAt": "2026-10-04T06:08:20Z",
       "preview": "## The defect\n\n`cat-harness/docs/assets/library/index.json` ends with\n\n    \"refScan\": { \"filesRead\": 2663, \"unreadable\": [] }\n\n`filesRead` is a COUNT OF THE FILES THE SCAN READ ON DISK. It is therefore a\nproperty of the checkout, not of the library, and it is committed. Any two\nenvironments whose trees differ by even one scanned file disagree, so\n`library:viz:check` reports stale whenever the last",
       "file": "beans/defs/folio-assistant-65oe--libraryviz-is-not-reproducible-across-environments.md"
     },
@@ -10323,6 +10323,20 @@
       "updatedAt": "2026-09-26T19:34:10Z",
       "preview": "`om30` recorded a KNOWN LIMIT rather than implying it: the gates-job split took\nthe masked region from 45 steps to 6, not to 0, and \"local evidence says all six\npass today\" was explicitly a fact about that day's tree rather than a property of\nthe arrangement.\n\nThat fact has expired, and here is the measurement.\n\n## What is masked today, and how it was established\n\nmain's `Repository gates` job sto",
       "file": "beans/defs/folio-assistant-xm31--om30-residual-masking-measured-five-gate-failures.md"
+    },
+    {
+      "id": "folio-assistant-xp5j",
+      "title": "gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:49:11Z",
+      "updatedAt": "2026-10-04T06:49:36Z",
+      "preview": "## How this surfaced\n\n`bun run check:ci-health` on `main`, 2026-10-04. The Pages half of that report\nexists precisely because a Pages build outcome is a fact GitHub holds *about*\nthis repository rather than one the repository holds, so it is asked fresh and\ncached nowhere. It said:\n\n    - ✓ 27 succeeded\n    - ❔ 72 cancelled — neither shipped nor broken\n    - ✗ 0 failed\n    The newest deployment to",
+      "file": "beans/defs/folio-assistant-xp5j--gh-pages-is-starved-staging-previews-and-the-publi.md"
     },
     {
       "id": "folio-assistant-xp72",
