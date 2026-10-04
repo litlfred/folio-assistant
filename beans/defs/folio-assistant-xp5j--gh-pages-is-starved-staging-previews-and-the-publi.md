@@ -331,6 +331,62 @@ guard — both value directions plus a structural
 `expect(shape.keyedBy).toBe(KeyedBySchema)`, so a restated enum is impossible
 rather than merely detected.
 
+## This bean's own defect class, found one level out — measured 2026-10-04T13:20Z
+
+While trying to land #2063, the thing blocking it turned out to be the SAME
+shape as the thing this bean is about. Recorded here because it is evidence
+for the fix, not an aside.
+
+### Measured
+
+    main's velocity            20 commits in 52.4 min = 23/hour (one per ~2.6 min)
+    merge-main runs for #2063  8 in the last 100 workflow runs
+                               success 1 · skipped 2 · in_progress 2 · pending 1 · queued 2
+    one merge+regen cycle      468–1204 s (8–20 min)
+
+`merge-main.yml`'s matrix job:
+
+    group: merge-main-${{ matrix.pr }}-${{ github.event_name }}
+    cancel-in-progress: ${{ github.event_name != 'push' }}
+
+### The mechanism, and it is `xp5j`'s
+
+`cancel-in-progress: false` on a push to `main` is deliberate and correct —
+it protects the RUNNING sweep. But it is the same half-measure this bean
+already measured for `gh-pages`: **it governs the running job, not the pending
+one.** GitHub cancels a PENDING job when a newer one queues for the same
+group. With a trigger every ~2.6 min and a sweep taking 8–20 min, each newer
+push to `main` drops the previous pending sweep, which is why five runs stood
+stacked for one PR.
+
+So the EFFECTIVE sweep rate is far below the trigger rate, and worse: a sweep
+merges the `main` it saw when it STARTED, so by the time its push lands, 3–8
+further commits exist. The merge is stale on arrival even when it succeeds.
+
+Side by side:
+
+| | `gh-pages` (this bean) | `merge-main` bot |
+|---|---|---|
+| many producers | ~15 branches' previews + the site | every push to `main` |
+| one serialised consumer | the built-in Pages deployment | one sweep per PR per event |
+| the half-fix | `cancel-in-progress: false` | the same, already set |
+| what it protects | the running build | the running sweep |
+| what still drops | every pending deployment but the newest | every pending sweep but the newest |
+
+### Why it is evidence rather than a coincidence
+
+The remedy this bean settled on — **coalesce into one write per window, with a
+hard close, because "no more arrivals" has no observation** — is the remedy
+here too, and for the identical reason. A concurrency group cannot coalesce;
+only a coordinator can. `skills/sdlc/sdlc-core/ref-stewardship.md` already
+says this in the abstract; this is the second instance in the same repository
+within one day, which is what makes the generalisation earned rather than
+asserted.
+
+**Not acted on.** Changing how `merge-main.yml` is triggered is merge-pipeline
+configuration and belongs to whoever owns bean `d33q` and `0mf0`, not to this
+bean. Recorded so the next agent does not re-derive it from five stacked runs.
+
 ## Done when
 - [x] owner picks an option
 - [x] `gh-pages` declares `keyedBy: "route"` in `scripts/special-branches.json`
