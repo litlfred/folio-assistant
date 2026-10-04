@@ -62,6 +62,10 @@ classDiagram
       concernGroups [0..1] true
       within [0..1] string
       avatar [0..1] object
+      tileIcon [0..1] string
+      description [0..1] string
+      renderableNote [0..1] string
+      anyLayer [0..1] true
       rationale [0..1] string
     }
   }

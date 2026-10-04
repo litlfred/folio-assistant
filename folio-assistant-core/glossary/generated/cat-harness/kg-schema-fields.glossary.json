@@ -5810,6 +5810,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-node.graphkindnodeschema.description",
+      "prefLabel": "GraphKindNodeSchema.description",
+      "definition": "What a directory of this kind holds: the kind table's `contents`, generated from here.",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.description",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-node.graphkindnodeschema.kind",
       "prefLabel": "GraphKindNodeSchema.kind",
       "definition": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `kinds/` read as a directory of four instances (measured on the first move, 2026-10-04).",
@@ -5821,6 +5828,20 @@
       "prefLabel": "GraphKindNodeSchema.rationale",
       "definition": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader.",
       "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.tileicon",
+      "prefLabel": "GraphKindNodeSchema.tileIcon",
+      "definition": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.tileIcon",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.anylayer",
+      "prefLabel": "GraphKindDef.anyLayer",
+      "definition": "A directory of this kind may be declared by ANY layer, not only the kind's owner (the table's \"and any layer\").",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.anyLayer",
       "status": "candidate"
     },
     {
@@ -5842,6 +5863,13 @@
       "prefLabel": "GraphKindDef.declarationFile",
       "definition": "The NESTED DECLARATION a directory of this kind carries, by filename.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.declarationFile",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.description",
+      "prefLabel": "GraphKindDef.description",
+      "definition": "What a directory of this kind HOLDS, as the kind table states it: the editorial prose that used to be hand-written in that table's `contents` column (owner, 2026-10-04: the prose moves onto the kind, and the table is generated from it). Longer and more careful than `summary`, which stays the one line a tile or a tooltip shows.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.description",
       "status": "candidate"
     },
     {
@@ -5887,10 +5915,24 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.renderablenote",
+      "prefLabel": "GraphKindDef.renderableNote",
+      "definition": "A remark the table's `renderable` column carries beside yes/no (\"the plain just-the-docs pipeline\").",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.renderableNote",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.schema",
       "prefLabel": "GraphKindDef.schema",
       "definition": "Where the shape of a node in this graph is defined — a repo-relative module path, or a `$schema` tag the files themselves carry.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.tileicon",
+      "prefLabel": "GraphKindDef.tileIcon",
+      "definition": "The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.tileIcon",
       "status": "candidate"
     },
     {

@@ -15765,6 +15765,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a directory of this kind holds: the kind table's `contents`, generated from here."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.description",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.kind",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -15800,6 +15819,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.tileicon",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.tileIcon"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.tileIcon",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.anylayer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.anyLayer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A directory of this kind may be declared by ANY layer, not only the kind's owner (the table's \"and any layer\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.anyLayer",
       "skos:note": "candidate"
     },
     {
@@ -15857,6 +15914,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.declarationFile",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a directory of this kind HOLDS, as the kind table states it: the editorial prose that used to be hand-written in that table's `contents` column (owner, 2026-10-04: the prose moves onto the kind, and the table is generated from it). Longer and more careful than `summary`, which stays the one line a tile or a tooltip shows."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.description",
       "skos:note": "candidate"
     },
     {
@@ -15974,6 +16050,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.renderablenote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.renderableNote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A remark the table's `renderable` column carries beside yes/no (\"the plain just-the-docs pipeline\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.renderableNote",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.schema",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -15990,6 +16085,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.tileicon",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.tileIcon"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.tileIcon",
       "skos:note": "candidate"
     },
     {
