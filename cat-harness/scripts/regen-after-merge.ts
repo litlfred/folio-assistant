@@ -58,11 +58,35 @@
  * | `regenerated` | the check failed, its writer ran, the check now passes |
  * | **`unrepaired`** | the check failed, its writer ran, **and it still fails** |
  * | `no-writer` | the check failed and has no writer counterpart |
+ * | `writer-failed` | the check failed, its writer EXITED NON-ZERO, and the check still fails |
+ * | `no-browser` | as `unrepaired`/`writer-failed`, for a browser-job check on a machine with no Chromium |
  *
  * **`unrepaired` is the one this command exists to surface honestly.** A check
  * can fail for reasons that are not staleness — a real defect — and a tool
  * that ran a generator and then reported success would be claiming a repair it
  * did not make. Both it and `no-writer` exit non-zero and name the check.
+ *
+ * **`writer-failed` is a verdict about the TOOL, not the tree** — bean `i1q7`.
+ * `translate-bpmn:bootstrap` printed "Nothing to do" and exited 2, and regen
+ * reported `translate-bpmn:bootstrap:check` as "a real defect, not staleness"
+ * while `--extract` fixed it in a second. A writer that refuses to run is not a
+ * repair that failed; it is a writer that is not a writer, and saying so points
+ * the reader at `package.json` rather than at the artefact.
+ *
+ * ## The whole gate set by default — bean `i1q7`, item 3
+ *
+ * This command asked only the FAST set (the jobs that install no browser),
+ * borrowing `bun run gates`' inner-loop boundary. That boundary is about the
+ * cost of `playwright test`, which regen never runs: it asks only verify/write
+ * PAIRS, and outside the fast set there were exactly two — `render:bpmn:check`
+ * (3.7 s) and `bat:sync:check` (0.1 s, and it needs no browser at all; it sits
+ * in the e2e job by placement). `render:bpmn:check` was stale after every
+ * merge that brought a process change, measured four times on 2026-10-01, and
+ * every time the line saying so was the "NOT covered" footnote. So the default
+ * is the whole set now, and `--fast` keeps the old scope for a machine that
+ * wants it. A browser-job check that cannot be repaired on a machine with no
+ * Chromium is reported `no-browser` — could-not-determine, never green, and
+ * never a claim that the tree is wrong.
  *
  * ## Speed — bean `xpcu`
  *
@@ -88,20 +112,22 @@
  * writer was touching (bean `14ve`'s fixpoint does the work).
  *
  * Usage:
- *   bun run regen                # ask every fast gate; repair what is stale
- *   bun run regen --all          # ...including the browser workflows' gates
+ *   bun run regen                # ask every gate; repair what is stale
+ *   bun run regen --fast         # ...only the fast set (no browser-job pairs)
  *   bun run regen --dry-run      # report what is stale, change nothing
  *   bun run regen --jobs 3       # pool size (default: CPUs - 1)
  *   bun run regen --no-cache     # ask every pair; neither read nor update the hash cache
  *   bun run regen --explain      # say, per pair, why it ran or was skipped
  *   bun run regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
  *
+ * `--all` is accepted and is the default.
+ *
  * Exit (one decision, in {@link exitCodeFor}):
  *   0  every pair is current or was regenerated, and the run SETTLED
  *   1  at least one check is `unrepaired` or `no-writer` — not staleness
  *   2  the run did not reach a fixed point: COULD NOT DETERMINE, never clean
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { loadGates, type Gate } from "./gates.ts";
@@ -122,7 +148,8 @@ import { repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
-const all = process.argv.includes("--all");
+const fast = process.argv.includes("--fast");
+const all = !fast;
 const explain = process.argv.includes("--explain");
 
 /** The npm script a gate command runs, when it runs exactly one. */
@@ -189,10 +216,26 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // Re-materialises a remote package's skills at its PINNED commit, so it is
   // deterministic and is exactly the repair for a stale copy.
   "check:remote-skills": "sync:remote-skills",
+  // Bean `i1q7` / `0utt`. The gate COMPARES the committed
+  // `kg-export.bootstrap.qa-results.json` with a fresh re-export (bean `ymsu`
+  // stopped it rewriting the file on its way past), so a stale sidecar is red
+  // here and nothing in regen knew the writer: it had to be run by hand after
+  // every merge that changed `kg-export.ts` or the bootstrap instance.
+  // `kg-export.ts --instance ./bootstrap` rewrites exactly that sidecar. A red
+  // that is NOT staleness (the export itself failing) comes back `unrepaired`.
+  "check:published-instance-exports": "kg:export:bootstrap",
   // Bean `v556`: the convention's `kg:export` writes the HOST's document and
   // sidecar only, so a stale `kg-export.<stub>` sidecar would come back
   // `unrepaired`. `--sidecars` rewrites exactly the set `--check` compares.
   "kg:export:check": "kg:export:sidecars",
+  // Bean `wczm` item 1: two gates regen could not repair, so a merge train's
+  // single `regen` called the tree current and CI then went red (trains 2 and
+  // 3, #1876, #1883). `check:l1-complete -- --check` was not a bare script,
+  // so regen never saw it; it is now the named `check:l1-complete:check`,
+  // whose writer is `--write`. `smart-kg-l1`'s only writer took one
+  // `--entry` at a time; `--all` rewrites every entry `--check` examines.
+  "check:l1-complete:check": "l1-complete:write",
+  "smart-base:smart-kg-l1:check": "smart-base:smart-kg-l1:all",
 };
 
 /**
@@ -297,7 +340,7 @@ export function maxPassesFromArgv(argv: readonly string[], fallback = DEFAULT_MA
   return fallback;
 }
 
-export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer";
+export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer" | "writer-failed" | "no-browser";
 
 export interface Result {
   check: string;
@@ -404,11 +447,14 @@ export async function regenPass(
     if (writer === undefined) return done({ check, outcome: "no-writer" });
     if (o.dryRun) return done({ check, writer, outcome: "regenerated" });
     return gate.write(index, async () => {
-      await runner(writer);
+      const wrote = await runner(writer);
       writerRan.push(writer);
       // Ask AGAIN. A writer that ran is not a repair that worked, and reporting
       // it as one would be the false-clean this whole command is about.
-      return done({ check, writer, outcome: (await runner(check)) ? "regenerated" : "unrepaired" });
+      // And a writer that EXITED NON-ZERO is named as such (bean `i1q7`): the
+      // defect is in the declared writer, not in what it generates from.
+      const outcome: Outcome = (await runner(check)) ? "regenerated" : wrote ? "unrepaired" : "writer-failed";
+      return done({ check, writer, outcome });
     });
   };
 
@@ -481,6 +527,23 @@ export async function regenToFixpoint(
 /** Why a run exited as it did — one of these, never a bare number. */
 export type ExitReason = "dry-run" | "clean" | "not-settled" | "not-staleness";
 
+/**
+ * The outcomes that are not staleness, so a run carrying one is not clean.
+ *
+ * Derived from {@link Outcome} by exclusion rather than listed independently:
+ * `current` and `regenerated` are the only two a clean run may hold, so a
+ * NEW outcome joins this set by default and has to be deliberately excluded.
+ * The merge that brought in `writer-failed` and `no-browser` (2026-10-04) is
+ * why — a hand-kept list of failures is a list that forgets the next one, and
+ * forgetting here means exiting 0.
+ */
+const CLEAN_OUTCOMES = new Set<Outcome>(["current", "regenerated"]);
+const NOT_STALENESS: ReadonlySet<Outcome> = new Set<Outcome>(
+  (["current", "regenerated", "unrepaired", "no-writer", "writer-failed", "no-browser"] as const).filter(
+    (o) => !CLEAN_OUTCOMES.has(o),
+  ),
+);
+
 /** {@link exitCodeFor}'s verdict: the code, which reason earned it, and the line to print. */
 export interface ExitVerdict {
   code: number;
@@ -523,15 +586,33 @@ export function exitCodeFor(run: {
   passes?: number;
 }): ExitVerdict {
   if (run.dryRun === true) return { code: 0, reason: "dry-run" };
-  const bad = run.results.filter((r) => r.outcome === "unrepaired" || r.outcome === "no-writer");
+  const bad = run.results.filter((r) => NOT_STALENESS.has(r.outcome));
   if (bad.length > 0) {
-    return {
-      code: 1,
-      reason: "not-staleness",
-      message:
-        `${bad.length} check(s) are NOT explained by staleness. Read them: a generator ` +
-        "cannot fix a defect in what it is generating from.",
-    };
+    // `no-browser` is in the set because bean `i1q7` put it there, and it stays
+    // exit 1 for the reason that set exists: it is not staleness, so it must
+    // not read as a clean regeneration. But it is a could-not-determine
+    // rather than a defect in the tree, and the one-size message called every
+    // one of them something "a generator cannot fix" — which misdescribes a
+    // machine that simply has no Chromium. So the count is main's and the
+    // wording is split.
+    const blind = bad.filter((r) => r.outcome === "no-browser");
+    const real = bad.length - blind.length;
+    const parts: string[] = [];
+    if (real > 0) {
+      parts.push(
+        `${real} check(s) are NOT explained by staleness. Read them: a generator ` +
+          "cannot fix a defect in what it is generating from.",
+      );
+    }
+    if (blind.length > 0) {
+      parts.push(
+        `${blind.length} check(s) COULD NOT BE DETERMINED here: they repair through a ` +
+          `browser and this machine has none (${blind.map((r) => r.check).join(", ")}). ` +
+          "That is not a finding about the tree, and it is not a pass either — " +
+          "run them where a browser exists.",
+      );
+    }
+    return { code: 1, reason: "not-staleness", message: parts.join("\n\n") };
   }
   if (!run.settled) {
     return {
@@ -546,6 +627,40 @@ export function exitCodeFor(run: {
     };
   }
   return { code: 0, reason: "clean" };
+}
+
+/**
+ * Re-label a failure that only a browser could repair, on a machine with none.
+ *
+ * `render:bpmn:check` renders through Chromium. Without one, the check and its
+ * writer both fail, and `unrepaired` would assert "a real defect" that nothing
+ * measured. Only checks OUTSIDE the fast set are candidates, because the fast
+ * set is by derivation the jobs that install no browser; inside it, a failure
+ * is the tree's or the tool's and keeps its verdict.
+ */
+export function relabelForMissingBrowser(
+  results: readonly Result[],
+  fastChecks: ReadonlySet<string>,
+  browserPresent: boolean,
+): Result[] {
+  if (browserPresent) return [...results];
+  return results.map((r) =>
+    (r.outcome === "unrepaired" || r.outcome === "writer-failed") && !fastChecks.has(r.check)
+      ? { ...r, outcome: "no-browser" as const }
+      : r,
+  );
+}
+
+/** Is there a Chromium playwright can launch? Probed, never assumed. */
+async function browserPresent(): Promise<boolean> {
+  try {
+    const { chromiumExecutable } = await import("./bpmn-render.ts");
+    if (chromiumExecutable() !== undefined) return true;
+    const { chromium } = await import("playwright");
+    return existsSync(chromium.executablePath());
+  } catch {
+    return false;
+  }
 }
 
 /** The cache key of a pair: both script names, so a re-paired check starts fresh. */
@@ -660,7 +775,10 @@ if (import.meta.main) {
         if (explain) console.log(`  pass ${n}:`);
       },
     });
-    results = fx.results;
+    // Bean `i1q7`: a browser-job check that could not be repaired on a machine
+    // with no Chromium is `no-browser` — could-not-determine, never a defect.
+    const fastChecks = new Set(repairableGates(loadGates(repoRoot, { all: false }), scripts).map((p) => p.check));
+    results = relabelForMissingBrowser(fx.results, fastChecks, await browserPresent());
     settled = fx.settled;
     console.log(
       `  ${fx.passes} pass(es)` +
@@ -684,6 +802,16 @@ if (import.meta.main) {
       console.log(`  ✗ ${r.check} STILL fails after \`bun run ${r.writer}\` — a real defect, not staleness`);
     } else if (r.outcome === "no-writer") {
       console.error(`  ✗ ${r.check} fails and has NO writer counterpart — not staleness`);
+    } else if (r.outcome === "writer-failed") {
+      console.error(
+        `  ✗ ${r.check} still fails, and its writer \`bun run ${r.writer}\` EXITED NON-ZERO — ` +
+          "the declared writer is not a writer; fix the pairing, not the artefact",
+      );
+    } else if (r.outcome === "no-browser") {
+      console.error(
+        `  ? ${r.check} could NOT be asked: it needs Chromium and none is installed ` +
+          "(`npx playwright install chromium`, or `--fast` to leave it out). Not a pass",
+      );
     }
   }
   const unasked = gates.map((g) => scriptOf(g.command)).filter((c): c is string => c !== undefined && NO_WRITER[c] !== undefined);
@@ -697,7 +825,8 @@ if (import.meta.main) {
     `\n${by("current").length} current${skippedCount > 0 ? ` (${skippedCount} skipped: inputs unchanged since their last green run)` : ""}, ` +
       `${by("regenerated").length} ` +
       `${dryRun ? "stale" : "regenerated"}, ${by("unrepaired").length} unrepaired, ` +
-      `${by("no-writer").length} without a writer — ${((performance.now() - t0) / 1000).toFixed(0)}s wall`,
+      `${by("no-writer").length} without a writer, ${by("writer-failed").length} with a failing writer, ` +
+      `${by("no-browser").length} needing a browser — ${((performance.now() - t0) / 1000).toFixed(0)}s wall`,
   );
   // THE DENOMINATOR, on the line people read — bean `5qq3`. "0 regenerated"
   // over the fast set is not "the tree is current", and a qualifier that lives
@@ -708,8 +837,8 @@ if (import.meta.main) {
     const outside = everywhere.filter((p) => !asked.has(p.check));
     if (outside.length > 0) {
       console.log(
-        `NOT covered: ${outside.length} verify/write pair(s) outside this run (browser jobs, other workflows) — ` +
-          `\`bun run regen --all\` asks them too: ${outside.map((p) => p.check).join(", ")}`,
+        `NOT covered: ${outside.length} verify/write pair(s) outside this --fast run (browser jobs, other workflows) — ` +
+          `\`bun run regen\` asks them too: ${outside.map((p) => p.check).join(", ")}`,
       );
     }
   }

@@ -59,12 +59,17 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 
 import type { BlockQaReport, QaCriterionEntry } from "../../schemas/block-qa.ts";
-import { KG_QA_MANIFEST_PATH, kgQaSidecarPath, owningInstanceOf, subjectEscapes } from "../../schemas/kg-qa.ts";
+import { KG_QA_MANIFEST_PATH, KG_QA_RESULTS_DIR, kgQaSidecarPath, owningInstanceOf, subjectEscapes } from "../../schemas/kg-qa.ts";
 import { instanceRootsIn } from "../../schemas/cat-harness.ts";
 import { checkoutRootFor } from "../../schemas/harness-config.ts";
 import type { KgQaManifest, KgQaReport } from "../../schemas/kg-qa.ts";
 import type { ScriptQaReport } from "../../schemas/script-qa.ts";
-import { existingBlockQaPath, translationQaPath } from "./qa-paths.ts";
+import {
+  BLOCK_QA_RESULTS_DIR,
+  TRANSLATION_QA_RESULTS_DIR,
+  existingBlockQaPath,
+  translationQaPath,
+} from "./qa-paths.ts";
 
 /** The QA sidecar families a subject can carry. */
 export const QA_FAMILIES = ["block", "translation", "script", "kg"] as const;
@@ -84,6 +89,41 @@ export const QA_FAMILY_LABEL: Record<QaFamily, { tag: string; label: string }> =
   script: { tag: "SC", label: "Script QA" },
   kg: { tag: "KG", label: "Knowledge-graph QA" },
 };
+
+/** One results tree a family's verdicts are read from, and whether it is here. */
+export interface QaCorpusTree {
+  family: "block" | "translation" | "kg";
+  /** Absolute. */
+  dir: string;
+  present: boolean;
+}
+
+/**
+ * Is the DERIVED QA corpus in this checkout at all?
+ *
+ * Bean `tfqf` (reader audit R51/R56, §4.2). A subject with no sidecar renders
+ * "not swept", which is true when somebody could have swept it and did not. It
+ * is NOT true when the whole results tree is absent — the state of every
+ * checkout once derived QA lives on the `qa-reports` branch and nobody ran
+ * `qa:fetch`. Measured before this: a write-mode docs build with the tree moved
+ * aside turned all 136 live badges into "not swept" and stayed green.
+ *
+ * So a caller asks this ONCE, before it writes anything into the tree (the
+ * docs generator recreates `witnesses/` itself, and asking afterwards would
+ * find its own output). `present` is true when ANY family's results tree is
+ * here: a folio with verdicts in one family has a corpus, and the families it
+ * never swept are honestly "not swept". The legacy sibling layout is not
+ * consulted here; `sidecarPaths` still finds those, so a legacy folio's
+ * swept blocks are never relabelled.
+ */
+export function qaCorpusAvailability(repoRoot: string): { present: boolean; trees: QaCorpusTree[] } {
+  const trees: QaCorpusTree[] = [
+    { family: "block", dir: join(repoRoot, BLOCK_QA_RESULTS_DIR), present: false },
+    { family: "translation", dir: join(repoRoot, TRANSLATION_QA_RESULTS_DIR), present: false },
+    { family: "kg", dir: join(repoRoot, KG_QA_RESULTS_DIR), present: false },
+  ].map((t) => ({ ...t, present: existsSync(t.dir) }) as QaCorpusTree);
+  return { present: trees.some((t) => t.present), trees };
+}
 
 /**
  * The roll-up state of one sidecar, for the icon.

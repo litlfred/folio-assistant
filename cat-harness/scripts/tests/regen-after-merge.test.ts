@@ -17,10 +17,13 @@ import {
   WRITER_OVERRIDES,
   exitCodeFor,
   maxPassesFromArgv,
+  regenPass,
   regenToFixpoint,
+  relabelForMissingBrowser,
   repairableGates,
   scriptOf,
   writerFor,
+  type Outcome,
   type Result,
   type Runner,
 } from "../regen-after-merge.ts";
@@ -458,5 +461,150 @@ describe("the fixpoint bound is above the measured need — bean `g5kt`", () => 
     for (const bad of ["0", "-1", "two", undefined]) {
       expect(() => maxPassesFromArgv(["--max-passes", ...(bad === undefined ? [] : [bad])])).toThrow("--max-passes");
     }
+  });
+});
+
+describe("a writer must WRITE — bean `i1q7`", () => {
+  test("translate-bpmn:bootstrap is the convention writer, and it extracts when run bare", () => {
+    // It printed "Nothing to do. Pass --extract…" and exited 2, so regen ran it,
+    // the check stayed red, and the verdict was "a real defect, not staleness".
+    expect(writerFor(SCRIPTS, "translate-bpmn:bootstrap:check")).toBe("translate-bpmn:bootstrap");
+    expect(SCRIPTS["translate-bpmn:bootstrap"]).toContain("--extract");
+  });
+
+  test("check:published-instance-exports is repaired by re-exporting the bootstrap instance", () => {
+    expect(writerFor(SCRIPTS, "check:published-instance-exports")).toBe("kg:export:bootstrap");
+    expect(SCRIPTS["kg:export:bootstrap"]).toMatch(/kg-export\.ts --instance \.\/bootstrap$/);
+  });
+
+  test("no pair regen uses runs its CHECK as its writer, or a writer that is itself a check", () => {
+    const pairs = [...UNGATED_INPUTS, ...repairableGates(loadGates(REPO, { all: true }), SCRIPTS)];
+    for (const p of pairs) {
+      if (p.writer === undefined) continue;
+      expect(p.writer, p.check).not.toBe(p.check);
+      expect(SCRIPTS[p.writer], `${p.check}'s writer ${p.writer}`).not.toMatch(/--check\b/);
+    }
+  });
+
+  test("a writer that exits non-zero is reported `writer-failed`, not as a defect in the tree", async () => {
+    const runner: Runner = (s) => (s === "x:check" ? false : s !== "x");
+    const { results } = await regenPass([{ check: "x:check", writer: "x" }], runner);
+    expect(results).toEqual([{ check: "x:check", writer: "x", outcome: "writer-failed" }]);
+  });
+
+  test("a writer that exits 0 and changes nothing stays `unrepaired`", async () => {
+    const runner: Runner = (s) => s !== "x:check";
+    expect((await regenPass([{ check: "x:check", writer: "x" }], runner)).results[0]!.outcome).toBe("unrepaired");
+  });
+});
+
+describe("the default asks the WHOLE gate set — bean `i1q7`, item 3", () => {
+  test("render:bpmn:check and bat:sync:check are pairs regen asks by default", () => {
+    // They are outside the fast set only because the e2e job installs a
+    // browser. regen never runs `playwright test`, so that boundary is not
+    // regen's, and render:bpmn was stale after every merge that changed a
+    // process while regen printed it as a footnote.
+    const pairs = repairableGates(loadGates(REPO, { all: true }), SCRIPTS);
+    expect(pairs.find((p) => p.check === "render:bpmn:check")?.writer).toBe("render:bpmn");
+    expect(pairs.find((p) => p.check === "bat:sync:check")?.writer).toBe("bat:sync");
+  });
+
+  test("without a browser, a browser-job failure is `no-browser`, and a fast-set failure keeps its verdict", () => {
+    const results = [
+      { check: "render:bpmn:check", writer: "render:bpmn", outcome: "unrepaired" as const },
+      { check: "voices:viz:check", writer: "voices:viz", outcome: "unrepaired" as const },
+      { check: "bat:sync:check", writer: "bat:sync", outcome: "regenerated" as const },
+    ];
+    const fast = new Set(["voices:viz:check"]);
+    expect(relabelForMissingBrowser(results, fast, false).map((r) => r.outcome)).toEqual([
+      "no-browser",
+      "unrepaired",
+      "regenerated",
+    ]);
+    expect(relabelForMissingBrowser(results, fast, true)).toEqual(results);
+  });
+});
+
+// Bean `wczm` item 1: regen-vs-CI parity for the two gates merge trains 2 and 3
+// found unrepairable (#1876, #1883). Each must reach regen from the REAL
+// workflow, with a writer that exists — or regen calls the tree current and CI
+// goes red on it.
+describe("regen can repair what trains 2 and 3 could not — bean wczm", () => {
+  const pairs = repairableGates(loadGates(REPO, {}), SCRIPTS);
+  for (const [check, writer] of [
+    ["check:l1-complete:check", "l1-complete:write"],
+    ["smart-base:smart-kg-l1:check", "smart-base:smart-kg-l1:all"],
+  ] as const) {
+    test(`${check} is a gate regen asks, and ${writer} is its writer`, () => {
+      expect(pairs.find((p) => p.check === check)).toEqual({ check, writer });
+      expect(SCRIPTS[writer]).toBeDefined();
+    });
+  }
+});
+
+describe("a NEW outcome cannot quietly become clean — bean `g5kt` x `i1q7`", () => {
+  /**
+   * The merge of 2026-10-04 is the reason this exists.
+   *
+   * `exitCodeFor` landed listing its failures — `unrepaired` and `no-writer`.
+   * `i1q7` then added `writer-failed` and `no-browser` on `main`. Two lists of
+   * failures, authored a day apart, and the resolution had to notice that the
+   * newer two belonged in the older list. Nothing would have failed if it had
+   * not: they would simply have exited 0.
+   *
+   * So the question is asked of EVERY outcome, and the map below is
+   * `Record<Outcome, …>` on purpose — add a seventh outcome and this file
+   * stops compiling until somebody says which side it falls on.
+   */
+  const CLEAN: Record<Outcome, boolean> = {
+    current: true,
+    regenerated: true,
+    unrepaired: false,
+    "no-writer": false,
+    "writer-failed": false,
+    "no-browser": false,
+  };
+
+  for (const [outcome, clean] of Object.entries(CLEAN) as [Outcome, boolean][]) {
+    test(`${outcome} ${clean ? "exits 0" : "does NOT exit 0"}`, () => {
+      const v = exitCodeFor({ results: [{ check: "x:check", writer: "x", outcome }], settled: true });
+      if (clean) expect(v.code).toBe(0);
+      else expect(v.code).not.toBe(0);
+    });
+  }
+
+  test("a run holding only clean outcomes is clean", () => {
+    const results: Result[] = [
+      { check: "a:check", writer: "a", outcome: "current" },
+      { check: "b:check", writer: "b", outcome: "regenerated" },
+    ];
+    expect(exitCodeFor({ results, settled: true })).toEqual({ code: 0, reason: "clean" });
+  });
+
+  test("no-browser keeps i1q7's exit code, but is not called a defect in the tree", () => {
+    // The wording matters because the one-size message said every failure was
+    // something "a generator cannot fix" — which misdescribes a machine that
+    // merely has no Chromium. The COUNT stays i1q7's; only the prose splits.
+    const v = exitCodeFor({
+      results: [{ check: "render:bpmn:check", writer: "render:bpmn", outcome: "no-browser" }],
+      settled: true,
+    });
+    expect(v.code).toBe(1);
+    expect(v.message).toContain("COULD NOT BE DETERMINED");
+    expect(v.message).toContain("render:bpmn:check");
+    expect(v.message).not.toContain("cannot fix a defect");
+  });
+
+  test("a real defect and a missing browser in one run are reported as BOTH, not as one", () => {
+    const v = exitCodeFor({
+      results: [
+        { check: "a:check", writer: "a", outcome: "unrepaired" },
+        { check: "render:bpmn:check", writer: "render:bpmn", outcome: "no-browser" },
+      ],
+      settled: true,
+    });
+    expect(v.code).toBe(1);
+    expect(v.message).toContain("cannot fix a defect");
+    expect(v.message).toContain("COULD NOT BE DETERMINED");
   });
 });

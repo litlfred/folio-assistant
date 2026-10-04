@@ -58,9 +58,17 @@ Three sentences is usually enough. Say what you decided, what you decided it
 
 **A rationale with no citation is an assertion**, so `cites` may not be empty.
 Cite the node, not a description of it: a witness under `test/results/`,
-another finding, a `.qa.json` / `.kg-qa.json` / `.script-qa.json` sidecar, a
-block label, a file range, a bib key, a workflow instance under
-`beans/workflows/`.
+another finding, a `.qa.json` / `.kg-qa.json` / `.script-qa.json` sidecar, an
+attestation under `test/attestations/`, a block label, a file range, a bib
+key, a workflow instance under `beans/workflows/`.
+
+**Pin a derived QA citation to its commit.** A file under `test/results/` is
+a working copy: its record is the entry the CI job `qa-publish` stores on the
+orphan `qa-reports` branch, keyed `main/<sha>/` or `pr/<n>/<sha>/` (arc
+`3fva`), and the committed copy goes when bean `5hox` removes it. So cite it
+as `qa-reports:main/<sha>/<path>` — the same locator `bun run qa:fetch --ref`
+reads — or the citation dangles the day the file leaves `main`. A judgement in
+`test/attestations/` stays on `main` and is cited by path.
 
 ## The agent assembles the citations; the human is still the author
 
