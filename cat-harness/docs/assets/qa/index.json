@@ -1,49 +1,49 @@
 {
   "tile": {
     "qa": {
-      "count": 1007,
+      "count": 1065,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 1007,
+  "files": 1065,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 508,
+      "files": 506,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2944,
-        "fail": 438,
-        "n/a": 1639,
-        "unknown": 22
+        "pass": 2910,
+        "fail": 441,
+        "n/a": 1603,
+        "unknown": 19
       }
     },
     {
       "schema": "qa-witness/v1",
-      "files": 144,
+      "files": 186,
       "rollUpField": "counts",
       "buckets": {
-        "fail": 23,
-        "warn": 59,
-        "pass": 2840,
-        "na": 3136,
-        "unknown": 35
+        "fail": 40,
+        "warn": 0,
+        "pass": 3717,
+        "na": 4273,
+        "unknown": 1
       }
     },
     {
       "schema": "block-qa/v1",
-      "files": 122,
+      "files": 172,
       "rollUpField": null
     },
     {
       "schema": "qa-results/v1",
-      "files": 86,
+      "files": 68,
       "rollUpField": null
     },
     {
       "schema": "folio-detangle-sidecar/v1",
-      "files": 68,
+      "files": 67,
       "rollUpField": null
     },
     {
@@ -53,12 +53,12 @@
     },
     {
       "schema": "folio-qa-index/v1",
-      "files": 25,
+      "files": 17,
       "rollUpField": null
     },
     {
       "schema": "kg-qa-manifest/v1",
-      "files": 8,
+      "files": 6,
       "rollUpField": null
     },
     {
@@ -70,28 +70,6 @@
       "schema": "folio-tool-run/v1",
       "files": 4,
       "rollUpField": null
-    },
-    {
-      "schema": "folio-qa-translation-pages/v1",
-      "files": 1,
-      "rollUpField": null
-    },
-    {
-      "schema": "folio-test-run/v1",
-      "files": 1,
-      "rollUpField": null
-    },
-    {
-      "schema": "viewer-nav-qa/v1",
-      "files": 1,
-      "rollUpField": "totals",
-      "buckets": {
-        "pages": 162,
-        "railed": 93,
-        "declined": 69,
-        "missing": 0,
-        "flagged": 0
-      }
     }
   ],
   "unclassified": 0,

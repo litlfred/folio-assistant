@@ -122,17 +122,16 @@ export const QA_WRITERS: readonly QaWriter[] = [
       `${R}/bootstrap/**`,
       `${R}/bootstrap-tools/**`,
       `${R}/cat-harness-tools/**`,
-      // ANY instance hosted here, not a list of them. An instance that
-      // declares no `qa` directory of its own has its KG verdicts written
-      // under this root's `test/results/<instance>/`, and naming the hosted
-      // homes one by one missed the first two instances added after the list
-      // was written (`cat-openapi`, `folio-assistant`; measured 2026-10-04,
-      // bean `72a8`). Scoped to the kg-qa files, so it can claim nothing
-      // another writer owns.
-      `${R}/*/kg-qa/**`,
-      `${R}/*/kg-qa.manifest.json`,
+      // The hosted instances added after this list was first written
+      // (measured 2026-10-04, bean `72a8`): an instance that declares no `qa`
+      // directory of its own has its KG verdicts written under this root's
+      // `test/results/<instance>/`. Named, not globbed: `*/kg-qa/**` would
+      // also claim the folded `agent-skills/` and `large-datasets/` trees,
+      // which no writer produces, and the record must lose those visibly.
+      `${R}/cat-openapi/**`,
+      `${R}/folio-assistant/**`,
     ],
-    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, and any instance without a `qa` directory of its own)",
+    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, cat-openapi, folio-assistant)",
   },
   { id: "kg:detangle", run: ["kg:detangle"], writes: [`${R}/detangle/**`], because: "detangle measurements per instance graph" },
   { id: "translation:block-qa", run: ["translation:block-qa"], writes: [`${R}/translation-qa/**`], because: "translation verdicts; read by the witnesses below" },
