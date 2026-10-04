@@ -385,7 +385,7 @@
     {
       "id": "process_codequalitygates.task_qapublish",
       "prefLabel": "Publish QA results to qa-reports (NOT A GATE)",
-      "definition": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally.",
+      "definition": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-`-f` retry loop are `qa-publish.bpmn`, which also draws the retention run that takes entries off the branch again.",
       "notation": "Task_QaPublish",
       "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaPublish",
       "status": "candidate"
@@ -401,7 +401,7 @@
     {
       "id": "process_codequalitygates.task_skillchain",
       "prefLabel": "Skill-registration chain (UNMASKED)",
-      "definition": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`.",
+      "definition": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, auto:docs:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`.",
       "notation": "Task_SkillChain",
       "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_SkillChain",
       "status": "candidate"
@@ -1375,38 +1375,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_igastdeltareview.task_diff",
-      "prefLabel": "Diff base → head and render the delta pages [ig-ast-delta]",
-      "definition": "`ig-ast.ts diff <base> <head> --plan plan.json --site <site>/ast-delta/`: resources added, removed, changed (with an element-level differential) and version-changed; edges added and removed; the plan's decision. Every page opens with the provisional mark and is wrapped in raw so narrative Liquid is not executed.",
-      "notation": "Task_Diff",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Diff",
-      "status": "candidate"
-    },
-    {
-      "id": "process_igastdeltareview.task_filecoupling",
-      "prefLabel": "Note the missed coupling on the bean [todo-manager]",
-      "definition": "Append to bean `a9tx` (W8): the resource key, the differential path, and why it is unexplained. Check before creating: beans create is not idempotent. A note, not a new bean, unless the owner asks for one.",
-      "notation": "Task_FileCoupling",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_FileCoupling",
-      "status": "candidate"
-    },
-    {
-      "id": "process_igastdeltareview.task_review",
-      "prefLabel": "Read the rendered delta [ig-ast-delta]",
-      "definition": "Start at the delta index; open each changed resource's page. Check `builtAt` before judging: a resource carried from the base was not rebuilt, so a difference there is the change itself or a missed coupling, never noise. The differential is structural: a reordered repeating element shows at every index.",
-      "notation": "Task_Review",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Review",
-      "status": "candidate"
-    },
-    {
-      "id": "process_igastdeltareview.task_validity",
-      "prefLabel": "Check the base AST against the IG's inputs [ig-ast-delta]",
-      "definition": "`ig-ast.ts validity <base> --ig <root>`: folio-assistant-core's compiledValidity on the manifest's inputs, with the input digest recomputed by the same algorithm as the Java writer. Exit 0 valid, 1 stale-inputs (names which input), 2 cannot-tell. Run against the BASE revision's checkout.",
-      "notation": "Task_Validity",
-      "source": "cat-harness/processes/content/ig-ast-delta-review.bpmn#Task_Validity",
-      "status": "candidate"
-    },
-    {
       "id": "process_ingestion.callactivity_buildkg",
       "prefLabel": "Build the L1 knowledge graph [document-intake]",
       "definition": "See ingest-build-l1-kg.bpmn.",
@@ -1933,6 +1901,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_mergebase.task_report",
+      "prefLabel": "Report what the run found, once",
+      "definition": "Every member's verdict, in one table in the run's summary: merged, already up to date, refused, an expected race, a repeat of a failure already reported, something new, or a member that could not say. `cat-harness/scripts/merge-main-comment.ts --aggregate`.",
+      "notation": "Task_Report",
+      "source": "cat-harness/processes/sdlc/merge-base.bpmn#Task_Report",
+      "status": "candidate"
+    },
+    {
       "id": "process_mergebase.task_resolve",
       "prefLabel": "Resolve each by its declared strategy",
       "definition": "qa-sidecar paths first, through `qa:resolve-conflicts`; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction.",
@@ -2442,6 +2418,62 @@
       "status": "candidate"
     },
     {
+      "id": "process_qapublish.task_applyprune",
+      "prefLabel": "Commit a tip without the pruned entries",
+      "definition": "One new commit whose tree lacks the pruned entries, parented on the current tip, through the same fetch → rebuild → push loop as a publish: no `-f`, three attempts. History is not rewritten — truncating it is a deletion of a different order and the owner's call (`deletion-requires-confirmation`), not a scheduled job's.",
+      "notation": "Task_ApplyPrune",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_ApplyPrune",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_backoff",
+      "prefLabel": "Back off [backoff-sleep]",
+      "definition": "Wait the same intervals `backoff-sleep.ts` uses, then go round again: fetch the new tip and splice onto it. Three attempts in all.",
+      "notation": "Task_Backoff",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_Backoff",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_buildentry",
+      "prefLabel": "Build the entry [tree + manifest]",
+      "definition": "First the working copy is produced (`qa:refresh`, bean `3hk4`): while the checkout still tracks `test/results/`, the commit's own copy is the record and nothing runs; once it does not, every declared QA writer runs into the empty tree, because the gates are in judge mode and wrote nothing a publish could carry. A refresh that leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE: the job goes red and `qa:publish --completeness` refuses, so a partial tree is never stored as the commit's record — the \"Not stored\" outcome, reached before any push. Then it hashes the working copy of every declared `qa` directory (`<instance>/test/results/**`, byte-identical to the checkout's layout) into a tree through a private index, and writes `manifest.json` (`qa-reports-manifest/v1`): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store.",
+      "notation": "Task_BuildEntry",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_BuildEntry",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_derivekey",
+      "prefLabel": "Derive the key [main/<sha> or pr/<n>/<sha>]",
+      "definition": "`qa:publish --github` reads the event: a push to main publishes under `main/<sha>/`, a pull request under `pr/<n>/<head-sha>/` — the head that was tested, not the merge ref. It also reads whether the token can write, which the gateway after it routes on.",
+      "notation": "Task_DeriveKey",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_DeriveKey",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_planprune",
+      "prefLabel": "Plan the prune [planPrune]",
+      "definition": "Keep every `main/<sha>` for 90 days and one per day after that; drop `pr/<n>` 7 days after the PR closed. The rule is `planPrune` in `scripts/qa-store.ts`, pinned by its tests, and the plan is printed whether or not it is applied.",
+      "notation": "Task_PlanPrune",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_PlanPrune",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_readprstates",
+      "prefLabel": "Read every PR's state",
+      "definition": "`gh pr list --state all`: number, state and when it closed, so each `pr/<n>/` entry can be judged against its close date. A PR missing from the list is `unknown`, and an unknown is kept.",
+      "notation": "Task_ReadPrStates",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_ReadPrStates",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qapublish.task_spliceandpush",
+      "prefLabel": "Splice onto the tip and push (never -f)",
+      "definition": "Fetch the branch tip, splice this entry into its tree, `commit-tree -p <tip>`, and push without `-f`, with `pack.useSparse=false` so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry.",
+      "notation": "Task_SpliceAndPush",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_SpliceAndPush",
+      "status": "candidate"
+    },
+    {
       "id": "process_qareportsigning.task_apisign",
       "prefLabel": "Sign over the API",
       "definition": "The attestation service signs the run hashes. Reached only from the one table row that has both egress and a configured endpoint.",
@@ -2479,6 +2511,14 @@
       "definition": "Compute the two facts the gateway reads: effectiveReach(deployment, actor) from schemas/actor-reach.ts, and whether the signing-api capability is configured. Undeclared reach resolves to \"unknown\" rather than to the deployment's value — an aggregate does not determine a member.",
       "notation": "Task_ResolveReach",
       "source": "cat-harness/processes/sdlc/qa-report-signing.bpmn#Task_ResolveReach",
+      "status": "candidate"
+    },
+    {
+      "id": "process_qareportsigning.task_storesigned",
+      "prefLabel": "Store the signed report on qa-reports",
+      "definition": "The signed report, its signature and the route that produced it are written TOGETHER into the `qa-reports` entry keyed by the commit the report judged (`main/<sha>/` or `pr/<n>/<sha>/`), through `scripts/qa-store.ts` — never committed to main and never pushed by hand (arc `3fva`, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside `test/attestations/` (ruling D5, default (a)); it is not written here.",
+      "notation": "Task_StoreSigned",
+      "source": "cat-harness/processes/sdlc/qa-report-signing.bpmn#Task_StoreSigned",
       "status": "candidate"
     },
     {
@@ -3037,6 +3077,94 @@
       "definition": "The internal axis. Work the source's functional checklist rather than a blank page: marketing, research and development, management information systems, management team, operations, finance, human resources. A strength gives advantage over others in the field; a weakness places the subject at a disadvantage relative to others. Both are attributes OF the subject. The source's warning belongs to this step specifically: listing strengths on paper \"is very different from testing the organization and experiencing the strengths at work\", so a strength recorded here is a claim, and where evidence for it exists it is cited.",
       "notation": "A_ScanInternal",
       "source": "cat-harness/processes/process/swot-analysis.bpmn#A_ScanInternal",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_binddata",
+      "prefLabel": "Bind the test data [fixed or generated]",
+      "definition": "Per bean `vm6m`: a fixed set is a committed path and counts as evidence only once reviewed; a generated set is template + params + seed and is never materialised. Both feed the run's data hash, and nothing that feeds the process hash may feed it too.",
+      "notation": "A_BindData",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_BindData",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_execute",
+      "prefLabel": "Execute every case, or skip it with a reason",
+      "definition": "Every case in dependency order. A case is executed or explicitly `skipped` with its reason; a case that simply has no verdict is a finding, because it cannot be told from a case nobody ran.",
+      "notation": "A_Execute",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_Execute",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_filecertification",
+      "prefLabel": "File the signed certification [qa-attestations/v1]",
+      "definition": "The signed certification goes under the declared `attestations` graph on main (owner ruling D2 (a), D5 default), pointing at the report it certifies. The bean resolves here, once the process has actually finished.",
+      "notation": "A_FileCertification",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_FileCertification",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_recordcertification",
+      "prefLabel": "Record the certification decision [attestations]",
+      "definition": "The judgement: the certifier records, under their own name, that the system meets plan P at this version on this run. It is written under the declared `attestations` graph beside the other judgements, never on the `qa-reports` branch with derived results. A user task, so no agent or pipeline can fill it.",
+      "notation": "A_RecordCertification",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_RecordCertification",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_recordrefusal",
+      "prefLabel": "Record the refusal, with the failing cases",
+      "definition": "A complete, trusted run in which a case failed. The refusal names the failing cases and is the end of this request; nothing is signed. The bean resolves here because the process has finished — what to do about the failure is a new piece of work.",
+      "notation": "A_RecordRefusal",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_RecordRefusal",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_recordundetermined",
+      "prefLabel": "Record why it could not be decided",
+      "definition": "The third state: which fact kept the table from deciding — a run not finished, an unknown data hash, an unexecuted case, a checker that disagreed or could not run, or nothing passed. A note and not a resolution, because the request is still open: it needs a re-run or an adjudication, not a verdict.",
+      "notation": "A_RecordUndetermined",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_RecordUndetermined",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_reexecutesample",
+      "prefLabel": "Re-execute a sample, blind to the tester's verdicts",
+      "definition": "Given the plan, the bound data and a sample of case ids — not the report. Says `agree`, `disagree` or `unknown`; `unknown` (could not run) is said as plainly as a disagreement, because the table reads both the same way and an unknown read as agreement certifies on one party's word.",
+      "notation": "A_ReExecuteSample",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_ReExecuteSample",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_request",
+      "prefLabel": "Request certification of the system against plan P",
+      "definition": "Name the plan by id AND version, and the system under test by actor id. The actor must carry the `systemUnderTest` facet: an actor that has not said it can be tested is not run against a plan by default. The bean this instance tracks is claimed here.",
+      "notation": "A_Request",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_Request",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_resolveplan",
+      "prefLabel": "Resolve the plan [test-plan/v1]",
+      "definition": "The plan parses, names at least one `req:` requirement, its `exitCriteria` resolves to a decision in a `.dmn` that exists, and its `scope.kind` is the system's facet kind. A plan that does not resolve is not run — `test-plan-resolves` audits the same join afterwards.",
+      "notation": "A_ResolvePlan",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_ResolvePlan",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.a_writerun",
+      "prefLabel": "Write the test run and the test report [folio-test-run/v1 + test-report/v1]",
+      "definition": "The run records `plan {id, version}` and `sut {actor, version, reach}` with its data and process hashes; the report rolls up per plan, never across plans, and goes to the `qa-reports` branch at `tests/plan/sut/run/`. No verdict in it may name the system under test as its reviewer.",
+      "notation": "A_WriteRun",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_WriteRun",
+      "status": "candidate"
+    },
+    {
+      "id": "process_testplanexecution.call_sign",
+      "prefLabel": "Sign the certification",
+      "definition": "`qa-report-signing.bpmn`, unchanged: it builds the signable run record, resolves the signer's reach, and routes the signature to the API or to a human release authority.",
+      "notation": "Call_Sign",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#Call_Sign",
       "status": "candidate"
     },
     {

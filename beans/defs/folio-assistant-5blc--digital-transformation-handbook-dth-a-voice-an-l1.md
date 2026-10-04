@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T18:16:53Z
-updated_at: 2026-10-03T13:54:48Z
+updated_at: 2026-10-04T10:16:01Z
 parent: folio-assistant-qvxh
 ---
 
@@ -14,14 +14,14 @@ Owner, 2026-10-01 (during stage D, #1767), attaching 9789240116191-eng.pdf (DTH 
 Queued, not started: stage D (#1795) was in flight; this belongs to D5 (L1 kind, bean qvxh) and the library half is bean tyo0.
 
 ## Done when
-- [ ] the three new handbooks ingested into smart-base/library via the ingest pipeline (bean tyo0), licence read from each
+- [x] the three new handbooks ingested into smart-base/library via the ingest pipeline (bean tyo0), licence read from each
 - [x] a DTH voice in smart-base (voices graph), derived from the handbooks' own register, as the WHO digital-health voice was from its corpus
 - [x] DTH declared as a subtype of the L1 document kind (qvxh), whose required structure names the Reference Architecture and DIIG concepts it uses — read from the handbooks, not assumed
 - [x] methodologies, processes (BPMN) and glossary terms the handbooks define, each extracted with a citation to its handbook section; owner reviews the list before they are authored
-- [ ] no empirical claim from a handbook enters a formal statement
+- [x] no empirical claim from a handbook enters a formal statement
 - [x] (owner 2026-10-03) contradictions recorded as ALTERNATIVES, none chosen — smart-base/findings/dth-term-alternatives.json + generated dth-terms.md, gated by smart-base:dth-terms:check (#1984, PR #1985)
 - [x] (owner 2026-10-03) one DIIG seven-phase figure as source: DIIG §1.1 Fig. 1.1.1; dth.json cites it first and names PHC Fig. 6 / SC Fig 5 / PC Fig. 4 as reproductions
-- [ ] (owner 2026-10-03) SVG rendering of DIIG Fig. 1.1.1 — bean 70zt
+- [x] (owner 2026-10-03) SVG rendering of DIIG Fig. 1.1.1 — bean 70zt
 - [x] (owner 2026-10-03) RA "Actor" explained against F-A and SG, with one PROPOSED change per layer (not applied)
 - [x] owner decided the three Actor proposals (2026-10-03: all approved; F-A applied, RA comment and SG issue drafted)
 - [ ] owner sends the RA comment and files the SMART Base issue (smart-base/findings/)
@@ -45,3 +45,10 @@ Progress against the done-when list, as measured on main today: the three handbo
 > "1. F-A mapping, 2. Draft RA comment, 3. SMART Base proposal"
 
 All three approved. (1) F-A mapping APPLIED in PR #1985: closeMatch from the glossary's role entry to RA §3.7.2 and to SMART Base GenericPersona, plus one sentence in role-model. (2) RA public comment DRAFTED as smart-base/findings/ra-actor-comment.md and not posted; the owner sends it. (3) SMART Base issue DRAFTED as smart-base/findings/smart-base-persona-issue.md and not filed; the ingested copy is not edited.
+
+## Progress 2026-10-04 (wm63 session)
+
+- **Handbooks ingested:** tyo0 is closed on evidence (#1826; licences stated; check:source-licence green).
+- **No empirical claim in a formal statement:** measured, not assumed. The repository holds 0 `.lean` files, and no theorem, lemma, proposition, definition, axiom or corollary block cites any of the handbooks (9789240093362, 9789240101197, 9789240116191, 9789240010567, the DPI-H RA). The rule stands for anything added later.
+- **DIIG Fig. 1.1.1 SVG:** done in #2062 (bean 70zt).
+- **Remaining:** the owner sends the RA comment and files the SMART Base issue (smart-base/findings/).

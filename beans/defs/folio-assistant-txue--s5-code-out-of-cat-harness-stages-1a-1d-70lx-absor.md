@@ -4,8 +4,10 @@ title: 'S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y
 status: todo
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-10-01T08:14:34Z
-updated_at: 2026-10-01T08:14:35Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-rfuq

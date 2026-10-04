@@ -23,10 +23,6 @@
           "detail": "no role carries \"fhir-client-operations\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
-          "where": "ig-ast-delta",
-          "detail": "no role carries \"ig-ast-delta\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
           "where": "ig-binary-artefacts",
           "detail": "no role carries \"ig-binary-artefacts\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `fhir-ig-skills` at `skills/`, `fhir-harness-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -141,6 +137,22 @@
       "result": "n/a",
       "findings": []
     },
+    "test-plan-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-case-executed-or-skipped": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-data-hash-present": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-sut-not-self-judged": {
+      "result": "n/a",
+      "findings": []
+    },
     "arrow-direction": {
       "result": "pass",
       "findings": []
@@ -170,7 +182,7 @@
   "totals": {
     "pass": 9,
     "fail": 1,
-    "n/a": 12,
+    "n/a": 16,
     "unknown": 0
   }
 }

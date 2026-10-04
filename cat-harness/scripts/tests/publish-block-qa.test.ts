@@ -1,7 +1,10 @@
 /** Publishing a folio's block QA verdicts for the heat map (bean qbfi, option 2). */
 import { describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-import { agentCriteriaFor, summariseBlock } from "../publish-block-qa.js";
+import { agentCriteriaFor, publishBlockQa, summariseBlock } from "../publish-block-qa.js";
 import { QA_CRITERIA_REGISTRY } from "../../content/pipeline/qa-criteria-registry.js";
 
 // `voice-status-leak` and `voice-ai-slop` are registered criteria that depend on `md`.
@@ -72,5 +75,34 @@ describe("agentCriteriaFor (9791)", () => {
     const voiced = { ...QA_CRITERIA_REGISTRY.find((c) => !c.automated)!, id: "voice-x", applies_to: undefined, voices: ["who"] };
     expect(agentCriteriaFor([voiced], "prose", [])).toEqual([]);
     expect(agentCriteriaFor([voiced], "prose", ["who"])).toEqual(["voice-x"]);
+  });
+});
+
+describe("the corpus itself (bean `tfqf`, R60)", () => {
+  /** A folio root with one block and, optionally, its results tree. */
+  function folio(withResults: boolean): { root: string; folioDir: string } {
+    // Nested one level: the voice registry scans the root's SIBLINGS for
+    // instances, and a sibling in the shared tmpdir is somebody else's fixture.
+    const root = join(mkdtempSync(join(tmpdir(), "pbqa-")), "repo");
+    const chapter = join(root, "folio", "demo", "ch");
+    mkdirSync(chapter, { recursive: true });
+    writeFileSync(join(chapter, "alpha.ts"), `export default { kind: "prose", label: "p:alpha", title: "T", chapter: "ch" };\n`);
+    writeFileSync(join(chapter, "alpha.md"), "Body.\n");
+    if (withResults) mkdirSync(join(root, "test", "results", "block-qa"), { recursive: true });
+    return { root, folioDir: join(root, "folio") };
+  }
+
+  test("no results tree and no verdict anywhere is `absent`: the unaudited count is then unknown", () => {
+    const { root, folioDir } = folio(false);
+    const f = publishBlockQa(root, folioDir);
+    expect(f.corpus).toMatchObject({ state: "absent", examined: 0 });
+    rmSync(join(root, ".."), { recursive: true, force: true });
+  });
+
+  test("a results tree holding no verdict for these blocks is `present`: genuinely never swept", () => {
+    const { root, folioDir } = folio(true);
+    const f = publishBlockQa(root, folioDir);
+    expect(f.corpus).toMatchObject({ state: "present", examined: 0 });
+    rmSync(join(root, ".."), { recursive: true, force: true });
   });
 });

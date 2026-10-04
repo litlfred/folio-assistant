@@ -62,7 +62,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Remove base64 `content.data` from published `Library` resources, so an IG embedding compiled CQL does not ship the bytes twice.",
       install: { none: true },
-      invoke: { shell: "python3 input/scripts/strip_library_binaries.py" },
+      invoke: { shell: "python3 fhir-harness/scripts/library-strip/strip_library_binaries.py <igOutput>" },
       io: {
         inputs: [
           { name: "igOutput", schema: t("RepoPath"), required: true, description: "The Publisher's `output/`. It runs AFTER the build — the resources it edits are published ones." },
@@ -88,7 +88,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Replace inline CQL/ELM in `Library` resources with a URL reference to the published copy.",
       install: { none: true },
-      invoke: { shell: "python3 input/scripts/strip_library_content.py" },
+      invoke: { shell: "python3 fhir-harness/scripts/library-strip/strip_library_content.py <igOutput>" },
       io: {
         inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
         outputs: [

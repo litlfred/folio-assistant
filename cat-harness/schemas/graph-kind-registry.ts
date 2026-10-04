@@ -860,7 +860,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +
       "at these statements by `req:<slug>#<key>`.",
   },
-  "docs-auto": {
+  "auto-docs": {
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind — the same
     // reason `proposals` and `requirements` are false above.
@@ -873,13 +873,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // `xsrv`.
     //
     // It is GENERATED, and that is load-bearing rather than incidental:
-    // `gen-docs-auto.ts` already holds the types in `TYPES`, whose `collect()`
+    // `gen-auto-docs.ts` already holds the types in `TYPES`, whose `collect()`
     // functions cannot live in JSON. A hand-kept copy would be a second answer
     // to "what auto-doc types exist", free to disagree the moment either
     // moves.
-    declarationFile: "docs-auto.json",
+    declarationFile: "auto-docs.json",
     // `derived`, by the three questions `content-context-and-state-graphs`
-    // asks. Does a process write it? YES — `gen-docs-auto.ts`, every build.
+    // asks. Does a process write it? YES — `gen-auto-docs.ts`, every build.
     // Does it stand on its own? NO — every page is an index OF another graph,
     // and detached from that graph it lists nothing. Regenerate or re-author?
     // REGENERATE, purely: there is no authored byte in any of these pages, and
@@ -895,12 +895,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     validatorNotApplicable:
       "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry " +
       "validator would be a category error, as on `proposals`. What is checked mechanically is the " +
-      "derivation instead: `docs:auto:check` fails on a stale page, and refuses outright when a type " +
+      "derivation instead: `auto:docs:check` fails on a stale page, and refuses outright when a type " +
       "collects nothing while its graph's directories hold files, which is a moved source rather than an " +
       "empty graph (bean `06e3`).",
     summary:
       "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH " +
-      "that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. " +
+      "that type reaches. A sub-graph of `docs`, written by `scripts/gen-auto-docs.ts` and never by hand. " +
       "Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, " +
       "an index is regenerated.",
   },
@@ -1078,6 +1078,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
       "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema", generated: true },
+      // Which authored pages have a translation projection (bean `4l4d`) —
+      // the list `head_custom.html` once read from `_data/`, now an asset.
+      "folio-qa-translation-pages/v1": { validator: "schemas/site-indexes.ts#QaTranslationPagesSchema", generated: true },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an
@@ -1151,8 +1154,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // with the prose), and detached from the subject it judges it asserts
   // nothing. `recordsWork: false` — a judgement is finished, not in flight.
   //
-  // ONE layout for every family, so bean `8wj1` (block-qa, translation-qa)
-  // adds rows to `ATTESTATION_FAMILIES` rather than a second store:
+  // ONE layout for every family — bean `8wj1` (block-qa, translation-qa) is a
+  // member of the same `QaAttestationsSchema` union, not a second store:
   // `<attestations dir>/<family>/<mirrored subject path>.attestations.json`.
   attestations: {
     renderable: false,
@@ -1423,6 +1426,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Runnable, unlike its neighbour: `SessionSurveySchema` is a Zod schema,
       // so a published survey is PARSED rather than merely typed.
       "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+      // `merge-queue`'s family, missing for the same reason as the survey's:
+      // no queue entry existed until the steward's first ACKs on 2026-10-04,
+      // and the first one made `check:kind-validators:require-all` red. The
+      // SAME validator the child declares, so the two cannot disagree.
+      "folio-merge-queue-entry/v1": { validator: "schemas/merge-queue.ts#MergeQueueEntrySchema" },
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:

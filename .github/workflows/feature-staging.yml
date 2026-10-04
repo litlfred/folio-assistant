@@ -196,6 +196,12 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: Determine staging slug
         id: slug
         # `head.ref` is ATTACKER-CONTROLLED on a fork PR: a branch may be named
@@ -246,6 +252,28 @@ jobs:
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "Staging slug: $SLUG"
+
+      # WHERE THIS PREVIEW'S QA EVIDENCE COMES FROM — the same step as
+      # `docs-site.yml`, keyed by the pull request (bean `tfqf`, F6). The
+      # entry is `pr/<n>/<head sha>`, written by `code-quality-gates.yml`'s
+      # `qa:publish`; the PR's newest entry is the labelled fallback, because
+      # this preview usually races the job that publishes it. A dispatch run
+      # has no PR number and so no store key: it reads the checkout, or says
+      # the evidence is unavailable. The checkout wins while `test/results/`
+      # is committed; see the module note in `qa-site-assets.ts`.
+      - name: Fetch this preview's QA evidence from qa-reports
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ -n "$PR" ] && [ -n "$HEAD_SHA" ]; then
+            set -- --ref "pr/$PR/$HEAD_SHA" --fallback "pr/$PR"
+          else
+            set -- --ref main
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts fetch "$@" \
+            --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       - name: Regenerate generated docs
         run: |
@@ -1020,6 +1048,14 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
           cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
+          # EVERY OTHER declared instance's graph, one document each — bean
+          # `4ak5` item 1. The set is derived from the declarations by the
+          # script, never listed here; the three instances above keep their
+          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+          # `check:published-instance-exports` runs the same plan, and fails if
+          # any declared instance is published by neither.
+          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #
           # Staging published NONE of these while the live site published all
@@ -1156,17 +1192,27 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
+      #
+      # The copy is then JUDGED, as in `docs-site.yml` (bean `tfqf`, C10):
+      # a shortfall against what the source held fails the step, and
+      # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
         run: |
-          mkdir -p ./_site/assets
-          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          mkdir -p ./_site/assets/qa
+          if [ -d cat-harness/test/results/witnesses ]; then
+            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+          if [ -d cat-harness/test/results ]; then
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts verify \
+            --site ./_site --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME
@@ -1560,6 +1606,13 @@ jobs:
         working-directory: source
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        working-directory: source
+        run: bun run state:mount
+
       - name: Check out the publish branch
         uses: actions/checkout@v7
         with:
@@ -1916,6 +1969,13 @@ jobs:
       - name: Install deps
         working-directory: source
         run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        working-directory: source
+        run: bun run state:mount
 
       - name: Refuse to remove a preview that is still in use
         working-directory: source

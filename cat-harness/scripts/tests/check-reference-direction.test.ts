@@ -35,7 +35,7 @@ import {
   SIDECAR_STEM,
   type PendingEntry,
 } from "../check-reference-direction.ts";
-import { QA_RESULTS_DIR, writeQaResult, type QaResult } from "../qa-results.ts";
+import { qaResultPath, writeQaResult, type QaResult } from "../qa-results.ts";
 
 // ── The rule, with no filesystem ────────────────────────────────
 
@@ -609,9 +609,9 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
     writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
-    const first = readFileSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`), "utf-8");
+    const first = readFileSync(qaResultPath(out, SIDECAR_STEM), "utf-8");
     writeQaResult(out, SIDECAR_STEM, resultFor(corpus, [], new Date("2027-05-05T00:00:00.000Z")));
-    expect(readFileSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`), "utf-8")).toBe(first);
+    expect(readFileSync(qaResultPath(out, SIDECAR_STEM), "utf-8")).toBe(first);
   });
 
   test("a fresh sidecar is `current`", () => {
@@ -630,7 +630,7 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
   test("the state check does NOT write — bean `ymsu`, and this is what pins it", () => {
     const out = instanceRoot();
     directionSidecarState(out, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), []));
-    expect(existsSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`))).toBe(false);
+    expect(existsSync(qaResultPath(out, SIDECAR_STEM))).toBe(false);
   });
 
   test("a hand-edited GRADED family is `stale`", () => {
@@ -638,7 +638,7 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
     const out = instanceRoot();
     const fresh = resultFor(corpus, []);
     writeQaResult(out, SIDECAR_STEM, fresh);
-    const p = join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
+    const p = qaResultPath(out, SIDECAR_STEM);
     const doc = JSON.parse(readFileSync(p, "utf-8")) as QaResult;
     doc.families["multi-destination-unlisted"]!.entries = [];
     doc.families["multi-destination-unlisted"]!.count = 0;
@@ -662,7 +662,7 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
     const out = instanceRoot();
     const fresh = resultFor(corpus, []);
     writeQaResult(out, SIDECAR_STEM, fresh);
-    const p = join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
+    const p = qaResultPath(out, SIDECAR_STEM);
     const doc = JSON.parse(readFileSync(p, "utf-8")) as QaResult;
     (doc.families[CENSUS_FAMILY]!.entries[0] as Record<string, number>).wrongDirection = 999_999;
     writeFileSync(p, JSON.stringify(doc, null, 2) + "\n");

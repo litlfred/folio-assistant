@@ -57,7 +57,8 @@ one level down.
 - **A missing value is shown as missing**, never papered over:
   `{{ subgraph.title | default: subgraph.id }}` and
   "_No description is declared for …_" are the pattern. The generator records
-  the gap as a QA finding in `test/results/subgraph-readmes.qa-results.json`;
+  the gap as a QA finding in `test/results/subgraph-readmes.qa-results.json`
+  (a derived result, stored on the `qa-reports` branch by `qa-publish`);
   the template must not make it look filled.
 - **A new variable is a generator change first.** Add it to the object passed
   to `renderFile`, list it in the template's comment, then use it.
@@ -156,5 +157,5 @@ is part of `bun run gates`.
   a theme layout — a copied layout silently stops tracking the pinned version
   ([`upstream-version-adoption`](upstream-version-adoption.md)).
 - A generated reference directory (`reference/skill-instructions/`,
-  `reference/skills/`, `docs-auto/`) is never hand-edited; change its generator.
+  `reference/skills/`, `auto-docs/`) is never hand-edited; change its generator.
 {% endraw %}

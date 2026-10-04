@@ -55,6 +55,7 @@ import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { fshGutsDirectory } from "../schemas/fsh-guts.js";
+import { exitUnlessMounted } from "./branch-store.js";
 import { baseDocsDir } from "./compose-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -313,6 +314,7 @@ export function page(files: GutsFile[], blobBase: string): string {
  */
 
 if (import.meta.main) {
+  exitUnlessMounted("fsh-guts", "gen-fsh-guts-viz", REPO);
   const check = process.argv.includes("--check");
   const dir = gutsDir();
   if (dir === undefined || !existsSync(dir)) {

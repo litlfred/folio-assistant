@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ba9e
 title: 'Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T22:34:28Z
-updated_at: 2026-10-04T05:43:41Z
+updated_at: 2026-10-04T12:13:31Z
 parent: folio-assistant-hfag
 ---
 
@@ -89,13 +89,68 @@ is a two-repo change and was deliberately NOT bundled into #1894, which would
 have meant a submodule bump inside a process PR.
 
 ## Done when
-- [ ] `bootstrap-tools`: subdirectory rows render a marker invariant under
-      adding one file, not an integer; counts written to `_data`
-- [ ] `bootstrap-tools`: `filesIn` counts the committed tree (`--cached`),
+- [x] `bootstrap-tools`: subdirectory rows render a marker invariant under
+      adding one file, not an integer; counts written to the KG JSON-LD as `fileCount` (see below)
+- [x] `bootstrap-tools`: `filesIn` counts the committed tree (`--cached`),
       with the staging nuance above handled rather than ignored
-- [ ] `cat-harness`: the page resolves the live count from `site.data`
-- [ ] `readme:subgraphs:check` green with a transient file present in the tree
+- [x] `cat-harness`: the page resolves the live count (from the published KG JSON-LD, see below)
+- [x] `readme:subgraphs:check` green with a transient file present in the tree
       — the regression test for the Train 6 failure
-- [ ] `y7b3` part 2 checked off, with this bean named as its answer
+- [x] `y7b3` part 2 checked off, with this bean named as its answer
 
 _2026-10-04T05:43:41Z_ — Claimed by claude/zealous-thompson-y8dcf1-ba9e — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Corroboration, 2026-10-04: FIVE stalings in one day across FOUR branches
+
+Not a new finding — this bean's premise, measured again from the inside while doing
+unrelated work. Every one was `cat-harness/scripts/README.md`, and every one cost a
+commit, a push and a CI cycle:
+
+| # | branch | what moved | conflicted? |
+|---|---|---|---|
+| 1 | `claude/uoij-kind-register` | two files ADDED (`kind-register.ts`, `kind-table.ts`) | no |
+| 2 | `claude/xsrv-route-publish` | one file ADDED (`route-publish.test.ts`) | no |
+| 3 | `claude/uoij-kind-register` | `main` DELETED two `.json` files: 480 → 478 | **no** |
+| 4 | `claude/xsrv-route-reader` | `main` added two: regenerated during a merge | yes, `generated-regions` |
+| 5 | `claude/xsrv-route-reader` | `partition/` 4 → 2 files, minutes after #4 | no |
+
+### The two things the day added to what this bean already says
+
+**A count can go stale through a CLEAN merge, which no merge pattern can catch.**
+`readme-generated-regions` resolves this file when it *conflicts*. Cases 1, 2, 3 and 5
+did not conflict — the sides touched different lines, git merged them, and the surviving
+integer simply became false. There is no conflict to apply a pattern to. Only the owning
+`--check` notices, which means it is found by CI after a push rather than before one.
+
+**Case 5 is the sharpest.** It went stale **minutes after** I regenerated it inside the
+very merge of case 4, on the same branch. `main` merged 4 PRs in the hour; a regeneration's
+shelf life is shorter than the time between a push and its CI run. So "regenerate before
+pushing" is not a workaround for this class — it is a race the author loses.
+
+Both support this bean's own conclusion rather than qualifying it: banding lowers the
+frequency and would not have helped any of these five, and dropping the count loses what
+the owner asked for. The counts have to come off `main`.
+
+### One caution for whoever builds it
+
+The dynamic source must be reachable at RENDER time without a network hop, or the page
+degrades to no count where today it degrades to a wrong one — and a wrong count is at
+least visibly wrong to a gate, which is how all five of these were caught.
+
+
+
+## Summary of Changes (closed 2026-10-04)
+
+All landed on `main`:
+- **bootstrap-tools#8** (merge commit 08e42b8): rows invariant under adding a file; `filesIn` reads `--cached`; untracked files are a printed finding.
+- **folio-assistant#2044**: pins it; `kg-export` writes `fileCount` on every Subgraph node.
+
+**Where the count landed, and why not `_data`.** The owner's 2026-10-02 ruling at the top of this bean is *"pull the count dynamically from the KG JSON-LD"*. `_data` was this bean's own proposal for reaching that, and the JSON-LD meets the ruling directly. It is a build output, so it is never committed and cannot conflict.
+
+**Evidence that a page shows it, measured on the live site.**
+- `cat-harness.jsonld` on `gh-pages` was built from main 8274562 at 2026-10-04T10:32Z.
+- It carries `fileCount` on 27 Subgraph nodes (e.g. `directory/tools` 7, `directory/code-lists` 14), and its `@context` declares the term.
+- The KG viewer (`<site>/cat-harness/`) lists every declared property of a selected node, so it renders the count unflagged, read from that document at page load.
+
+**Not done here:** the Subgraph facet's numbers still count graph nodes, not files. That is deliberate: those numbers state what clicking the facet returns.
