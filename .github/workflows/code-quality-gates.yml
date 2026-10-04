@@ -122,6 +122,33 @@ jobs:
     # and say so (SKIP — … Nothing scanned); they are here for folios that
     # vendor this workflow.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -348,6 +375,33 @@ jobs:
     # masked lint and typecheck (bean `om30`). In separate jobs nothing can mask
     # anything, so the rule is no longer something an author has to remember.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -407,6 +461,33 @@ jobs:
     # a shard measured 2m07s-2m21s; 20 is ~9x that, so a red here is a hang, never a slow day.
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -451,9 +532,28 @@ jobs:
         env:
           STATIC: ${{ needs.typescript-static.result }}
           TESTS: ${{ needs.typescript-test.result }}
+        # No `gate-shell.sh` here: this job never checks out, so the wrapper
+        # does not exist for it. It needs none — the diagnosis is already in
+        # the two env vars, so it writes its own summary and the whole of
+        # WHICH part failed reaches `output.summary` (bean `yqc4`).
         run: |
           echo "lint+types: $STATIC   tests: $TESTS"
-          test "$STATIC" = "success" && test "$TESTS" = "success"
+          if [ "$STATIC" != "success" ] || [ "$TESTS" != "success" ]; then
+            {
+              echo "### ✗ TypeScript — tests, lint, types"
+              echo
+              echo "| part | result |"
+              echo "| --- | --- |"
+              echo "| lint and types | \`$STATIC\` |"
+              echo "| test shards | \`$TESTS\` |"
+              echo
+              echo "This job runs nothing itself — it is red because a part above is."
+              echo "\`cancelled\` or \`skipped\` is NOT a pass: a skipped required check"
+              echo "reads as neither red nor green, which is the vacuous pass bean"
+              echo "\`0qjq\` measured. Open the named job for its own summary."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   gates:
     # bpmn-node: Task_RepositoryGates
@@ -489,6 +589,33 @@ jobs:
     # `typescript` is the three checks its name promises; everything else is a
     # repository gate and belongs in this job.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -938,6 +1065,18 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
+      # The same obligation one level out, for a graph KIND (bean `uoij`). Added
+      # 2026-10-04 with the command, because an unenforced chain is exactly the
+      # state it exists to leave: adding `docs-auto` on #2022, six hand-picked
+      # `check:*` commands all passed while `bun run gates` found 5 failures
+      # across 217 and `bun test` found two more.
+      #
+      # It is HERE, in the registered-never-run job, for the reason that job
+      # exists: a gate no workflow runs cannot fail, which is bean `xom7` one
+      # level down.
+      - name: every graph kind's artefacts are current, and its authored two exist
+        run: bun run kind:register:check
+
       # The skills graph's LSI index is written by the registration chain
       # (`lsi:skills`) and read by kg:audit's `tool-downstream-fresh`. Checked on its
       # own so an edited skill with a stale index names THIS step, not a
@@ -1150,6 +1289,26 @@ jobs:
       # `import(expr)` calls it cannot read as could-not-determine, never as 0.
       - name: no module imports from an instance built on top of its own
         run: bun run check:import-direction --all
+
+      # fhir-harness knows nothing about WHO (bean `wm63`). The import check
+      # above cannot see this: a `smart.who.int` canonical, a DAK API sidecar
+      # name or a DAK step invoked from a Tool is a string, not a module. The
+      # gate lives in smart-base, which OWNS those names, so the list itself
+      # is not a breach. Ratchet over a committed baseline (owner, 2026-10-03):
+      # a hit above it fails, and so does a cleared hit the baseline still
+      # allows — clearing it is bean `veiu`.
+      - name: fhir-harness stays WHO-free
+        run: bun run check:fhir-harness-exclusions
+
+      # A process binds only skills it can reach: its own instance's, or one it
+      # needs (owner, 2026-10-03: "general rule, not just fhir-harness"). The
+      # import axis above cannot see it, because a BPMN `<skill ref>` is a name
+      # rather than a module. kg-audit's skill-ref-resolves cannot either: in
+      # this pre-split checkout it resolves against the whole checkout, so
+      # "resolves" meant "exists somewhere". Same allowedFromNeeds direction as
+      # the import and prose axes. Ratchet over a baseline of 33 (bean mlux).
+      - name: a process binds only skills its instance can reach
+        run: bun run check:process-bindings
 
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
@@ -1646,6 +1805,33 @@ jobs:
     # the reason `gates` gives about `typescript` — independent questions,
     # asked independently, so one red cannot stop the other being asked.
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -1907,7 +2093,7 @@ jobs:
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
-          bun run check:l1-complete -- --check
+          bun run check:l1-complete:check
           # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
           # PRODUCED each artefact; this asks whether it is any good -- a
           # title that is the slug, or "Abies" off a scanned cover, passes
@@ -2009,6 +2195,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # One NAME per navigation destination, across the rail, the sidebar
+          # include, harness.json (harness rows, landing viewers, FOLDERS, the
+          # glass and Stickies tiles) and the sticky links. Owner, 2026-10-01,
+          # bean `ob3m` finding 6, "One name everywhere": a surface may only
+          # APPEND the harness as a qualifier. `:check` writes nothing and
+          # also fails a stale `nav-names.qa-results.json` sidecar.
+          bun run check:nav-names:check
           # Every instance declaring a `themes` graph: does it load, and does
           # each theme validate? The gate that TRULY covers the `themes` kind —
           # three others declared `@covers themes` while resolving no themes
@@ -2091,6 +2284,11 @@ jobs:
           # still wrote its sidecar, and nothing called it. The `:check` form
           # judges and writes nothing.
           bun run check:avatar-coverage:check
+          # The site's `/` is a DECIDED harness, never the generator's own
+          # directory or the repository's name (issue #1904): one instantiated
+          # harness lands without a flag, several need `site.landing` on one
+          # (or two or more, for a hub), and several with none fail here.
+          bun run check:landing-instance
           # A reader's folio must be the SAME folio in every library they
           # browse (F8/F9). A page that forgets the mount is a folio that
           # silently disappears when they follow a link — the page renders,
@@ -2251,6 +2449,10 @@ jobs:
           bun run kg:export:judge
           bun run check:xml-comments
           bun run check:orphan-verdicts
+          # Every QA judgement is held in the attestation store (beans `2gst`,
+          # `8wj1`, D2): no kg-qa sidecar still carries one, and every non-script
+          # block/translation verdict in a derived report is held there too.
+          bun run qa:attestations:migrate:check
           bun run check:partition
           # Every XML namespace the corpus declares is reconciled against a
           # specification record naming its EDITION. Added with the registry
@@ -2436,6 +2638,33 @@ jobs:
       fail-fast: false
       matrix:
         shard: [1, 2, 3]
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2523,14 +2752,59 @@ jobs:
       - name: every shard succeeded
         env:
           SHARDS: ${{ needs.e2e-shard.result }}
+        # No `gate-shell.sh` here either, and for the same reason: this job
+        # never checks out. See the `typescript` rollup above (bean `yqc4`).
         run: |
           echo "e2e shards: $SHARDS"
-          test "$SHARDS" = "success"
+          if [ "$SHARDS" != "success" ]; then
+            {
+              echo "### ✗ End-to-end + accessibility"
+              echo
+              echo "Shard result: \`$SHARDS\`"
+              echo
+              echo "This job runs nothing itself — it completes the multi-instance"
+              echo "task and is green only when EVERY shard succeeded, so open the"
+              echo "red shard for its own summary and its Playwright report artifact."
+              echo
+              echo "Worth checking first: shard 1/3 alone runs \`render:bpmn:check\`"
+              echo "BEFORE playwright, so a stale BPMN SVG kills it in ~37 s having"
+              echo "run no test, while a passing shard takes ~2 min. \`bun run regen\`"
+              echo "reports that check as OUTSIDE its coverage on every run."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   skill-registration-chain:
     # bpmn-node: Task_SkillChain
     name: Skill-registration chain, unmasked (hard)
     runs-on: ubuntu-latest
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2591,10 +2865,17 @@ jobs:
     # decides that itself and exits 0 with a `::notice` naming the reason, so
     # the skip is stated, never silent and never a red run.
     #
-    # It publishes what the checkout holds under every declared `qa` directory.
-    # While `test/results/` is still committed, that is the committed content;
-    # once a directory declares `storage`, the gates job must hand its working
-    # copy over (an artifact) before this publishes anything the run produced.
+    # ## What it publishes — `qa:refresh` decides, and says whether it is whole
+    #
+    # Bean `3hk4`. While `test/results/` is still tracked, the commit's own
+    # copy IS the record and nothing is regenerated (`5hox` needs `main/<sha>`
+    # byte-identical to it). Once `5hox` removes it, a fresh checkout holds one
+    # file there, so `qa:refresh` runs the declared QA writers into the empty
+    # tree first. Not an artifact from `gates`: its gates are in judge mode and
+    # write nothing, so its working copy is this checkout's. A refresh that
+    # leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE,
+    # this job fails, and `qa:publish --completeness` refuses to store it — a
+    # partial entry is never published as if it were the commit's record.
     needs: [gates]
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
     runs-on: ubuntu-latest
@@ -2603,6 +2884,33 @@ jobs:
     concurrency:
       group: qa-publish-${{ github.event.pull_request.number || github.sha }}
       cancel-in-progress: false
+    # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
+    # non-zero exit appends the step and the tail of its output to
+    # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
+    # API field readable WITHOUT the Actions log host (bean `yqc4`; measured
+    # Forbidden from a cloud container on 2026-10-03).
+    #
+    # `bash <absolute path>` rather than the path alone, which removes BOTH
+    # ways this can fail on a runner: `bash` is certainly on PATH, the script
+    # is named unambiguously, and the executable bit stops mattering. The
+    # wrapper uses `PIPESTATUS`, which is bash-only, so naming bash is honest
+    # as well as safer.
+    #
+    # ABSOLUTE via `github.workspace`, because a custom `shell:` command is
+    # resolved through PATH, NOT against the workspace. Measured on #2016:
+    # `shell: cat-harness/scripts/gate-shell.sh {0}` made EVERY job fail with
+    # `Could not find a part of the path '/opt/pipx_bin/cat-harness/scripts'`
+    # -- the runner's first PATH entry with the relative path appended. An
+    # absolute path also survives a step that sets its own working-directory.
+    #
+    # The template's `{0}` is the generated step script. The wrapper runs it
+    # under `bash -e` — GitHub's own default — and NOT `-o pipefail`, which
+    # would redden steps that pass today. The two rollup jobs (`typescript`,
+    # `e2e`) are deliberately NOT here: they never check out, so this path
+    # does not exist for them, and they write their own summary inline.
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -2615,11 +2923,44 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
+      # owner ruling 2026-10-01: keep the file, give it a producer). Both
+      # deploys publish bootstrap through bootstrap-tools' `export-graph.ts`,
+      # which writes no QA sidecar, so before this step only a hand run wrote
+      # it and `check:published-instance-exports` reported "no workflow
+      # producer". Run here, before the publish, so what reaches `qa-reports`
+      # is this commit's export. The document goes to the runner's temp dir:
+      # the sidecar is the product. That gate reads this line as the producer.
+      - name: Regenerate the bootstrap kg-export QA sidecar
+        run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
+
       # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
       # splice, `commit-tree -p`, push without `-f`, three attempts with the
       # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
       # (`qa-reports-unretried`).
+      # Bean `3hk4`. Tracked copy present: accounts for it and runs nothing.
+      # Absent (after `5hox`): runs every writer in `QA_WRITERS`
+      # (`qa-refresh.ts`) into the empty tree, then checks each wrote and every
+      # file is claimed. Exit 1 on an incomplete tree fails the job here, so
+      # the publish below never runs on it. After the kg-export step above,
+      # whose sidecar it accounts for as an `external` family.
+      - name: Produce this run's QA working copy, and say whether it is complete
+        run: bun run qa:refresh --github --report "$RUNNER_TEMP/qa-refresh.json"
+
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:
           GATES_RESULT: ${{ needs.gates.result }}
-        run: bun run qa:publish --github --gates-result "$GATES_RESULT"
+        run: bun run qa:publish --github --completeness "$RUNNER_TEMP/qa-refresh.json" --gates-result "$GATES_RESULT"
+
+      # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did
+      # over the committed tree — every kg-qa sidecar validates, no critical
+      # criterion fails, every home carries its manifest, no conflict marker,
+      # every badge's witness is there — run over the entry this job just
+      # stored, read back through qa-store. It walks every HOSTED home
+      # (`cat-harness/test/results/bootstrap/`, …), which the old test never
+      # did. It keys the entry exactly as the publish does, so a fork PR skips
+      # with the same stated notice; any other miss is UNKNOWN (exit 2), never
+      # a pass. In this job, not in `gates`, because it judges the STORED
+      # record, which exists only after the publish.
+      - name: The stored QA entry validates, hosted homes included
+        run: bun run check:qa-corpus --github

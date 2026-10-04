@@ -37,3 +37,6 @@ Make received trust material available through a distrubution point to a Trust N
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
+
+<footer id="ig-footer" data-prev="Requirements-DistributeBusinessRulesFHIR.html" data-next="Requirements-DistributePKIMaterialDID.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

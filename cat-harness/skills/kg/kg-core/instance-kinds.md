@@ -88,7 +88,7 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 |---|---|---|
 | `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
-| `who-` | WHO material | `who-iris`, `who-style-guide` |
+| `who-` | WHO material | `who-iris` (which absorbed `who-style-guide` on 2026-10-01, bean `qsx4`) |
 | `litlfred-` | the owner's own | — none yet |
 
 **Four of the eleven instances here carry no prefix at all** — `agent-skills`,

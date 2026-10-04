@@ -168,6 +168,16 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
+    // cache is rendered from it into the preview at `/<instance>/ast/`. The
+    // lister asks each IG repository over the network (`git ls-remote`).
+    match: "fhir-harness/scripts/stage-ast-sites.ts",
+    kind: "ci-only",
+    reason:
+      "a BUILD step, not a check: it lists the IGs whose repositories carry an AST cache by asking " +
+      "each repository over the network; best effort (continue-on-error), its output only feeds the preview",
+  },
+  {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source
     // repository its menu.json records. A BUILD step: it clones and copies,
     // and has no verdict a contributor could run without the network and a
@@ -231,6 +241,30 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a scheduled WRITE to the qa-reports branch, not a check; its retention rule and its " +
       "tip-only rewrite are covered by qa-store.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. The site builds' QA evidence: `fetch` reads the
+    // `qa-reports` entry for THIS run's ref (`main/<sha>`, `pr/<n>/<sha>`)
+    // over the network and may materialise it into the checkout; `verify`
+    // judges the built `./_site/assets/qa/`, which only the deploy and
+    // staging jobs produce. Run locally with no ref and no site it has no
+    // verdict to give. Its decisions are pinned by qa-site-assets.test.ts in
+    // `bun test`, and `bun run preview:site` runs both halves on a real build.
+    match: "scripts/qa-site-assets.ts",
+    kind: "ci-only",
+    reason:
+      "a build step keyed by the run's own ref (network fetch) and the built ./_site; its source " +
+      "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`
+    // entry for its PR before sweeping. A read keyed by a downstream PR
+    // number; the read path is pinned by qa-store.test.ts in `bun test`.
+    match: "qa-store.ts\" fetch",
+    kind: "ci-only",
+    reason:
+      "a network read of a downstream folio's qa-reports entry keyed by its PR number; the read " +
+      "path is covered by qa-store.test.ts in `bun test`",
   },
   {
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
@@ -338,6 +372,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "scripts/gen-docs-pages.ts",
     kind: "covered-by",
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
+  },
+  {
+    // Bean `5hox` prep, owner ruling 2026-10-01: the /qa/ page is regenerated
+    // from the QA results the site build fetched, so it cannot freeze once QA
+    // leaves `main`.
+    match: "bun run state:visualizer",
+    kind: "covered-by",
+    reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
   },
   // The two projection writers are run by the SITE BUILD and by nothing else.
   //
@@ -1246,6 +1288,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "prints each instance's icon resolution and the two glyph registries' overlap; `check:navbar-consistency:check` is the gating form and is wired",
+  },
+  {
+    script: "check:nav-names",
+    kind: "report",
+    reason:
+      "rewrites `test/results/nav-names.qa-results.json` and prints every destination's names; `check:nav-names:check` is the gating form and is wired",
   },
   {
     script: "check:navbar-consistency:strict",

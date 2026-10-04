@@ -74,8 +74,9 @@
  * word of it being typed here.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, posix, resolve } from "node:path";
 import { IG_API_HUB_SCRIPT, IG_API_HUB_TEMPLATE, IG_API_VIEW_SCRIPT, igApiHubData, igApiHubFragment, igApiServed, igApiViewData, igApiViews } from "./ig-api-views.ts";
+import { igFooterData } from "./ig-footer.ts";
 import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mappingsPage, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
@@ -115,7 +116,7 @@ function arg(name: string): string | undefined {
 
 const INSTANCE_ARG = arg("--instance");
 if (!INSTANCE_ARG) {
-  console.error("usage: gen-ig-pages.ts --instance <dir> --label <name> [--chrome-owner <instance>] [--summary] [--check]");
+  console.error("usage: gen-ig-pages.ts --instance <dir> --label <name> [--chrome-owner <instance>] [--index <index.json>] [--out <dir>] [--summary] [--check]");
   process.exit(2);
 }
 const INSTANCE = resolve(process.cwd(), INSTANCE_ARG);
@@ -130,7 +131,14 @@ const INSTANCE = resolve(process.cwd(), INSTANCE_ARG);
  * changed by the rename alone).
  */
 const INSTANCE_NAME = readDeclaration(INSTANCE)?.name ?? basename(INSTANCE);
-const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
+/**
+ * `--index` renders from an index OTHER than the instance's committed one,
+ * e.g. one derived from a restored IG Publisher AST by
+ * `ast-to-artifact-index.ts`. The instance still supplies the menu and the
+ * chrome; only the artefact list comes from the named file.
+ */
+const INDEX_ARG = arg("--index");
+const INDEX = INDEX_ARG ? resolve(process.cwd(), INDEX_ARG) : join(INSTANCE, "fhir-artifact-index", "index.json");
 /**
  * The IG's OWN navigation, ingested from its `sushi-config.yaml`.
  *
@@ -141,10 +149,32 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  * complete.
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
-const OUT = join(INSTANCE, "docs");
+/**
+ * `--compiled-data <dir>`: where a COMPILED index's files are served, as a
+ * path from the docs root (e.g. `../ast-data` beside `docs/`). When set, each
+ * artefact page whose materialization is a compiled copy gets a resource
+ * section its browser fills from that file: the narrative and the JSON, by
+ * the shared loader `assets/ast-resource.js` (skill `visualizer-loading`).
+ * The page keeps identity, layout and the pointer; the content is fetched,
+ * never baked in. Absent means the files are not served, so no page points
+ * at them.
+ */
+const COMPILED_DATA = arg("--compiled-data")?.replace(/\/+$/, "");
+const AST_LOADER = join(import.meta.dir, "templates", "ig-pages", "ast-resource.js");
+
+/** `--out` writes the pages somewhere other than the instance's committed `docs/`. */
+const OUT_ARG = arg("--out");
+const OUT = OUT_ARG ? resolve(process.cwd(), OUT_ARG) : join(INSTANCE, "docs");
 /** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
 const PAGES_CSS = "assets/ig-pages.css";
 const CHROME_CSS = "assets/ig-chrome.css";
+/**
+ * The Publisher-style footer (#1901): one loader and one data file per IG,
+ * linked from every page that wears the fixture, never copied into each.
+ */
+const IG_FOOTER_SCRIPT = "assets/ig-footer.js";
+const IG_FOOTER_DATA = "assets/ig-footer.json";
+const IG_FOOTER_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-footer.js");
 const igApiServable = () => igApiServed(INSTANCE);
 
 /** The IG API view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
@@ -191,7 +221,17 @@ const SUMMARY = process.argv.includes("--summary");
  * publisher an IG mirrors is the caller's to say: fhir-harness knows no
  * particular one (`fhir-harness/AGENTS.md`), so the default names none.
  */
-const PUBLISH_NOTE = arg("--publish-note") ?? "This page mirrors a published FHIR Implementation Guide.";
+const PUBLISH_NOTE_ARG = arg("--publish-note");
+/**
+ * The publish box's sentence for an index. A page drawn from the IG Publisher
+ * AST cache (`source.kind` `output`) does NOT mirror a published guide, so
+ * the default says what it is instead; a caller's `--publish-note` still wins.
+ */
+const publishNoteFor = (ix: FhirArtifactIndex): string =>
+  PUBLISH_NOTE_ARG ??
+  (ix.source.kind === "output"
+    ? "This page is built from an IG Publisher AST cache, provisional until a full Publisher run."
+    : "This page mirrors a published FHIR Implementation Guide.");
 
 /**
  * What the IG calls its per-artefact JSON sidecars (JSON Schema, displays,
@@ -301,7 +341,7 @@ function igBanner(ix: FhirArtifactIndex): string {
       : `  <div id="ig-status">`,
     `    <p><span class="st-ig-title">${esc(LABEL)}</span><br/><span>${esc(label)}</span></p>`,
     `  </div>`,
-    `  <p id="publish-box">${esc(PUBLISH_NOTE)} ` +
+    `  <p id="publish-box">${esc(publishNoteFor(ix))} ` +
       `The authoritative version is at <a href="${esc(canonical)}">${esc(canonical)}</a>.</p>`,
     `</div>`,
   ].join("\n");
@@ -353,7 +393,7 @@ function pageName(a: FhirArtifact): string {
 }
 
 /**
- * What the uncategorised bucket is called — on its section, its Contents row
+ * What the uncategorised bucket is called — on its section
  * and, if it ever outgrows the index, its page. Never "Other": the IG HAS a
  * literal "Other" category (`byCategory`), and a coined second one put two
  * sections named "Other" on smart-trust's index, the second holding the IG's
@@ -374,33 +414,17 @@ function categoryName(label: string | undefined): string {
 }
 
 /**
- * The index's in-page anchor for a category, which the Contents box links to.
+ * The index's in-page anchor for a category: a stable fragment a link or the
+ * rail's "On this page" can point at. (The in-page Contents box that once
+ * linked here is gone — owner, 2026-10-02, #1901: the TOC lives only in the
+ * left-hand rail.)
  *
  * The uncategorised bucket gets its own id rather than `Other`'s: the IG HAS a
  * literal "Other" category (see `byCategory`), and two sections answering to
- * one fragment would send the Contents link to whichever came first.
+ * one fragment would send a link to whichever came first.
  */
 function categoryAnchor(label: string | undefined): string {
   return label === undefined ? "cat--uncategorised" : `cat-${categoryName(label)}`;
-}
-
-/**
- * The "Contents" box the Publisher puts at the top of `artifacts.html` (#1901):
- * one row per category, in the same order as the sections below it, each
- * linking to its section. A category listed off the index links to the
- * section too, whose summary names the count and points on to its own page —
- * one target per row, so the box and the sections cannot disagree.
- */
-function contentsBox(ordered: [string | undefined, FhirArtifact[]][]): string {
-  return [
-    `<nav class="ig-toc" aria-label="Contents" markdown="1">`,
-    ``,
-    `**Contents**`,
-    ``,
-    ...ordered.map(([label, list]) => `- [${mdText(label ?? UNCATEGORISED)}](#${categoryAnchor(label)}) — ${list.length}`),
-    ``,
-    `</nav>`,
-  ].join("\n");
 }
 
 /**
@@ -454,14 +478,14 @@ const CSS = `
 .st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .st-stat b{display:block;font-size:1.25rem;line-height:1.2}
 .st-stat span{font-size:.75rem;opacity:.75}
-.ig-toc{border:2px solid var(--toc-box-border,rgba(128,128,128,.35));background:var(--toc-box-bg-color,transparent);padding:.5rem 1rem;margin:1rem 0;display:inline-block}
-.ig-toc ul{margin:.25rem 0 0}
+#ig-footer{margin-top:2.5rem;font-size:.85rem}
+#ig-footer p{margin:.4rem 0}
+#ig-footer .ig-footer-band{background:var(--footer-bg-color,transparent);color:var(--footer-text-color,inherit);padding:.5rem 1rem;border-top:1px solid rgba(128,128,128,.35)}
+#ig-footer .ig-footer-band a{color:var(--footer-hyperlink-text-color,inherit)}
 `;
-// `.ig-toc` reads the mirrored chrome's `--toc-box-*` tokens, the Publisher's
-// own Contents-box colours, and WHO's `2px solid` reading of the border token
-// (see `ig-chrome.ts` on its shape conflict). Without an ingested chrome the
-// fallbacks give a neutral box, never a hand-typed palette.
-
+// The footer's band reads the mirrored chrome's `--footer-*` tokens, the
+// Publisher's own footer colours; without an ingested chrome it falls back to
+// the theme's, never to a hand-typed palette.
 /**
  * A page for the JUST-THE-DOCS pipeline: front matter, then the body.
  *
@@ -560,6 +584,9 @@ function navFrontMatter(nav: NavRole): string[] {
  */
 type ChromeChoice = "fixture" | "removed";
 
+/** The footer's opening tag, up to where a page's prev/next attributes go. */
+const FOOTER_TAG = `<footer id="ig-footer"`;
+
 function shell(
   title: string,
   description: string,
@@ -592,7 +619,20 @@ function shell(
   const link = (file: string) => `<link rel="stylesheet" href="{{ '/${INSTANCE_NAME}/${file}' | relative_url }}">`;
   const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
-  return `${fm}${links}\n\n${banner}${body.trim()}\n`;
+  // The footer is drawn by its loader from the IG's own metadata; the page
+  // carries an empty <footer> and, set later for the pages in reading order,
+  // its previous and next pages (`FOOTER_TAG`). The data file and the index
+  // are found from the loader's own URL, so ~3,200 pages do not each repeat
+  // two more URLs. On every fixture page, chrome
+  // or not: it is the IG's facts, not the mirrored styling.
+  const footer =
+    chrome === "fixture"
+      ? // In the chrome's scope when the page wears it, which is where the
+        // mirrored `--footer-*` tokens are defined.
+        `\n\n${FOOTER_TAG}${wearsChrome ? ` class="${CHROME_SCOPE.slice(1)}"` : ""}></footer>\n` +
+        `<script src="{{ '/${INSTANCE_NAME}/${IG_FOOTER_SCRIPT}' | relative_url }}" defer></script>`
+      : "";
+  return `${fm}${links}\n\n${banner}${body.trim()}${footer}\n`;
 }
 
 /**
@@ -680,11 +720,29 @@ function indexPage(ix: FhirArtifactIndex): string {
     `| canonical base | \`${mdCell(ix.canonicalBase ?? "not established")}\` |`,
   ];
 
+  // An index derived from the IG Publisher's AST (`ast-to-artifact-index.ts`,
+  // source kind `output`) is a BUILD's view, not the published IG's: say so
+  // first, because a reader comparing it with the live IG will see artefacts
+  // the published site does not have yet.
+  const fromBuild = ix.source.kind === "output";
+  const intro = fromBuild
+    ? [
+        `> **Built from the IG Publisher AST cache**${ix.source.revision ? ` of \`${mdCell(ix.source.revision.slice(0, 12))}\`` : ""},`,
+        `> not from the published IG. The AST is a cache: its indices, dependencies and`,
+        `> versions are provisional until a full IG Publisher run, and it may list artefacts`,
+        `> the published site does not have yet.`,
+        ``,
+        `The artefact index of the ${LABEL} Implementation Guide, derived from its build output.`,
+        `Every artefact is held here as a compiled copy.`,
+      ]
+    : [
+        `The artefact index of the ${LABEL} Implementation Guide, rebuilt from what the IG`,
+        `publishes. Most of it is catalogued **by reference**: the index records where each artefact`,
+        `lives and holds none of its bytes. An artefact page marked ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)}`,
+        `is not a broken one — it means upstream, not here.`,
+      ];
   const body = [
-    `The artefact index of the ${LABEL} Implementation Guide, rebuilt from what the IG`,
-    `publishes. Most of it is catalogued **by reference**: the index records where each artefact`,
-    `lives and holds none of its bytes. An artefact page marked ${stateTag({ materialization: { state: "referenced" } } as FhirArtifact)}`,
-    `is not a broken one — it means upstream, not here.`,
+    ...intro,
     ``,
     `<div class="st-grid">`,
     stat(ix.count, "artefacts indexed"),
@@ -696,10 +754,18 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
     `## Where this came from`,
     ``,
-    `No FHIR IG publishes an artefact-index document. What looks like one —`,
-    `\`ValueSets.schema.json\` at the published root — is a JSON *Schema* describing the shape of an`,
-    `enumeration response, carrying an \`example\` that happens to hold the list. So this index was`,
-    `**reconstructed**, and every part of it records which published file it came out of.`,
+    ...(fromBuild
+      ? [
+          `This index was **derived** from the IG Publisher's AST, the build's own record of every`,
+          `resource it produced, and each artefact records the AST file it came from. It was not read`,
+          `back from the published IG, so where the two disagree, the published IG is the authority.`,
+        ]
+      : [
+          `No FHIR IG publishes an artefact-index document. What looks like one —`,
+          `\`ValueSets.schema.json\` at the published root — is a JSON *Schema* describing the shape of an`,
+          `enumeration response, carrying an \`example\` that happens to hold the list. So this index was`,
+          `**reconstructed**, and every part of it records which published file it came out of.`,
+        ]),
     ``,
     `| | |`,
     `|---|---|`,
@@ -707,16 +773,26 @@ function indexPage(ix: FhirArtifactIndex): string {
     ``,
     `## ${SIDECAR_LABEL} surface`,
     ``,
-    `The IG publishes its ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
-    `independently — every ValueSet gets all four, the logical models get two — which is why they`,
-    `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
-    ``,
-    `<div class="st-grid">`,
-    stat(sc.schema, "JSON Schema"),
-    stat(sc.displays, "displays"),
-    stat(sc.openapi, "OpenAPI"),
-    stat(sc.jsonld, "JSON-LD"),
-    `</div>`,
+    // NOT DETERMINED is a third state, never a zero: an index that cannot see
+    // the sidecars (an AST-derived one, `sidecarApi: "unknown"`) must not print
+    // "0 of its artefacts", which reads as "the IG publishes none".
+    ...(ix.sidecarApi === "unknown"
+      ? [
+          `Not determined: this index cannot see whether the IG publishes a ${SIDECAR_LABEL}`,
+          `beside its artefacts${fromBuild ? " (the AST records the FHIR build only)" : ""}. Absent here does not mean absent.`,
+        ]
+      : [
+          `The IG publishes its ${SIDECAR_LABEL} for ${sc.schema} of its artefacts. The four sidecars are issued`,
+          `independently — every ValueSet gets all four, the logical models get two — which is why they`,
+          `are counted separately rather than as one "has ${SIDECAR_LABEL}" tally.`,
+          ``,
+          `<div class="st-grid">`,
+          stat(sc.schema, "JSON Schema"),
+          stat(sc.displays, "displays"),
+          stat(sc.openapi, "OpenAPI"),
+          stat(sc.jsonld, "JSON-LD"),
+          `</div>`,
+        ]),
     ``,
     // Linked only when the hub page is written — the same two conditions.
     ...(ix.igApiHub?.localPath && igApiServable().ok ? [`The IG's own [${SIDECAR_LABEL} hub](${hubPage(ix)}.html) lists them as the Publisher's \`${hubPage(ix)}.html\` does.`, ``] : []),
@@ -725,8 +801,6 @@ function indexPage(ix: FhirArtifactIndex): string {
     `Grouped and ordered as the IG's own \`artifacts.html\` groups them, with each artefact's name and`,
     `description. Its canonical URL, published representations and whether it is held here are on`,
     `its own page.`,
-    ``,
-    contentsBox(ordered),
     ``,
     sections,
     ``,
@@ -741,7 +815,7 @@ function indexPage(ix: FhirArtifactIndex): string {
     : "";
   return shell(
     INDEX_TITLE,
-    `All ${ix.count} artefacts of the ${LABEL} IG ${ix.version ?? ""}, reconstructed from its published output.`,
+    `All ${ix.count} artefacts of the ${LABEL} IG ${ix.version ?? ""}, ${fromBuild ? "derived from its IG Publisher AST cache" : "reconstructed from its published output"}.`,
     summary + body,
   );
 }
@@ -840,6 +914,36 @@ function stateTag(a: FhirArtifact): string {
     : `<span class="st-tag st-ref">referenced</span>`;
 }
 
+/**
+ * The resource itself, for an artefact held as a compiled copy and served
+ * under `--compiled-data`: a pointer the shared loader fills in the browser,
+ * a visible loading state, and the raw file for a reader without JavaScript.
+ * The served tree mirrors the AST directory, so the file's path is its
+ * `localPath` with the AST directory's own name dropped.
+ */
+function compiledResourceSection(a: FhirArtifact): string[] {
+  const m = a.materialization;
+  if (!COMPILED_DATA || m.state !== "materialized" || m.purpose !== "compiled" || !m.localPath) return [];
+  // `artifact/Name.html` → the docs root is `../`.
+  const src = `../${COMPILED_DATA}/${m.localPath.replace(/^[^/]+\//, "")}`;
+  // The narrative is the Publisher's XHTML, whose relative links name the
+  // Publisher's own pages. The loader keeps one that names a page THIS site has
+  // (`ast-pages.json`, the same `Type-id` names) and sends the rest to the
+  // published IG, read off this artefact's own published page.
+  const html = a.published.html?.url;
+  const published = html ? html.slice(0, html.lastIndexOf("/") + 1) : undefined;
+  return [
+    `## Resource`,
+    ``,
+    `<div class="ast-resource" data-ast-src="${esc(src)}" data-ast-pages="../assets/ast-pages.json"${published ? ` data-ast-published="${esc(published)}"` : ""}>`,
+    `<p class="ast-state">Loading the resource from the IG Publisher AST cache…</p>`,
+    `<noscript><p>This section loads in the browser. The resource is <a href="${esc(src)}">its JSON in the AST cache</a>.</p></noscript>`,
+    `</div>`,
+    `<script src="../assets/ast-resource.js" defer></script>`,
+    ``,
+  ];
+}
+
 function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
   // THE IG API SECTION — what the IG's post-processing appends to a
@@ -894,10 +998,16 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     `| Published | ${mdCell(repLinks(a))} |`,
     `| Materialization | ${stateTag(a)} — ${
       a.materialization.state === "materialized"
-        ? `${mdCell(a.materialization.purpose ?? "")} copy, regenerable by re-running the ingest`
+        ? a.materialization.purpose === "compiled" && a.materialization.inputs
+          ? // A compiled copy (an IG Publisher AST) is regenerated by the BUILD,
+            // not by an ingest; and it is a cache, so it says what it was built
+            // from and that it stands only until a full Publisher run.
+            `compiled copy of \`${mdCell(a.materialization.inputs.sourceRevision.slice(0, 12))}\` by ${mdCell(a.materialization.inputs.toolchain)} — a cache, provisional until a full IG Publisher run`
+          : `${mdCell(a.materialization.purpose ?? "")} copy, regenerable by re-running the ingest`
         : "upstream, not held here"
     } |`,
     ``,
+    ...compiledResourceSection(a),
     // The sidecar table is worth a screen when there ARE sidecars. On the 655
     // artefacts with none it was four rows of "*not published for this
     // artefact*", which is noise dressed as information — so the absence is
@@ -918,9 +1028,13 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
       : [
           `## ${SIDECAR_LABEL}`,
           ``,
-          `No ${SIDECAR_LABEL} sidecar is published for this artefact. That is a fact about the IG,`,
-          `not a gap in this index — sidecars are published per artefact, and`,
-          `${ix.artifacts.filter((x) => x.sidecars).length} of ${ix.count} carry one.`,
+          ...(ix.sidecarApi === "unknown"
+            ? [`Not determined: this index cannot see whether a ${SIDECAR_LABEL} sidecar is published for this artefact.`]
+            : [
+                `No ${SIDECAR_LABEL} sidecar is published for this artefact. That is a fact about the IG,`,
+                `not a gap in this index — sidecars are published per artefact, and`,
+                `${ix.artifacts.filter((x) => x.sidecars).length} of ${ix.count} carry one.`,
+              ]),
           ``,
         ]),
   ].join("\n");
@@ -1034,6 +1148,15 @@ if (CHROME !== undefined) pages.set(CHROME_CSS, `${chromeStyles(CHROME).trim()}\
 // upstream links.
 for (const a of ix.artifacts) {
   pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
+}
+// The shared loader, published once beside the pages (never inlined in each)
+// and only when a page points at it.
+if ([...pages.values()].some((p) => p.includes("data-ast-src="))) {
+  pages.set(join("assets", "ast-resource.js"), readFileSync(AST_LOADER, "utf8"));
+  pages.set(
+    join("assets", "ast-pages.json"),
+    `${JSON.stringify(ix.artifacts.map((a) => `${pageName(a)}.html`).sort())}\n`,
+  );
 }
 
 // THE IG API VIEW PAGES — the Publisher's `<Name>.schema.json.html` and
@@ -1192,6 +1315,39 @@ if (existsSync(MENU)) {
     sectionOrder += 1;
     pages.set(join("menu", `${menuName(group.label)}.md`), menuGroupPage(menu, group, sectionOrder));
   }
+}
+
+// THE FOOTER'S DATA, once per IG, from the IG's own package when it is held
+// (`ig-footer.ts` says which field comes from where), and the footer's
+// <prev | next> through the index's reading order: the index, then every
+// artefact page in the order the index lists them — the Publisher's own
+// order through `artifacts.html`.
+{
+  // Held means ON DISK: an index can name a package its checkout does not
+  // carry (a scratch copy, a sparse clone), and then the footer says less
+  // rather than the run failing.
+  const pkgPath = ix.package?.localPath ? join(INSTANCE, ix.package.localPath) : undefined;
+  const held = pkgPath && existsSync(pkgPath) ? packageEntries(pkgPath) : undefined;
+  const json = (name: string | undefined) => (name && held?.has(name) ? (JSON.parse(held.get(name)!.toString("utf8")) as Record<string, unknown>) : undefined);
+  const igEntry = held ? [...held.keys()].find((k) => /^package\/ImplementationGuide-[^/]+\.json$/.test(k)) : undefined;
+  pages.set(IG_FOOTER_DATA, `${JSON.stringify(igFooterData(json("package/package.json"), json(igEntry), ix), null, 2)}\n`);
+  pages.set(IG_FOOTER_SCRIPT, readFileSync(IG_FOOTER_LOADER, "utf8"));
+
+  const order = ["index.md", ...[...byCategory(ix.artifacts).values()].flat().map((a) => join("artifact", `${pageName(a)}.md`))];
+  const href = (from: string, to: string): string => {
+    // `index.md` is served as its directory, so a link to it ends in `/`.
+    const rel = posix.relative(posix.dirname(from), to.replace(/\.md$/, ".html"));
+    return to === "index.md" ? rel.replace(/index\.html$/, "") || "./" : rel;
+  };
+  order.forEach((page, i) => {
+    const text = pages.get(page);
+    if (text === undefined) return;
+    const attrs = [
+      i > 0 ? ` data-prev="${esc(href(page, order[i - 1]!))}"` : "",
+      i < order.length - 1 ? ` data-next="${esc(href(page, order[i + 1]!))}"` : "",
+    ].join("");
+    pages.set(page, text.replace(FOOTER_TAG, `${FOOTER_TAG}${attrs}`));
+  });
 }
 
 for (const [label, list] of byCategory(ix.artifacts)) {

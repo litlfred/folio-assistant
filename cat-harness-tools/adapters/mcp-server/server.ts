@@ -3016,9 +3016,11 @@ These become clickable buttons so users don't have to type. Make them specific t
         paperId: id,
       };
       writeFileSync(join(uploadDir, "import-meta.json"), JSON.stringify(meta, null, 2));
-      log("import", `uploaded ${filename} → uploads/${id}/`, `${buf.length} bytes`);
+      log("import", `uploaded ${filename} → ${relative(REPO_ROOT, uploadDir)}/`, `${buf.length} bytes`);
 
-      return Response.json({ ok: true, paperId: id, uploadDir: `uploads/${id}`, meta }, {
+      // Where the files WERE written, repo-relative: `uploads/${id}` named the
+      // root's queue whichever directory the declaration resolved (bean `gz47`).
+      return Response.json({ ok: true, paperId: id, uploadDir: relative(REPO_ROOT, uploadDir), meta }, {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
     } catch (e) {
@@ -3199,9 +3201,11 @@ These become clickable buttons so users don't have to type. Make them specific t
         paperId: id,
       };
       writeFileSync(join(uploadDir, "import-meta.json"), JSON.stringify(meta, null, 2));
-      log("import", `fetched arXiv:${arxivId} → uploads/${id}/`, `${sourceFiles.length} .tex files`);
+      log("import", `fetched arXiv:${arxivId} → ${relative(REPO_ROOT, uploadDir)}/`, `${sourceFiles.length} .tex files`);
 
-      return Response.json({ ok: true, paperId: id, uploadDir: `uploads/${id}`, meta }, {
+      // Where the files WERE written, repo-relative: `uploads/${id}` named the
+      // root's queue whichever directory the declaration resolved (bean `gz47`).
+      return Response.json({ ok: true, paperId: id, uploadDir: relative(REPO_ROOT, uploadDir), meta }, {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
     } catch (e) {

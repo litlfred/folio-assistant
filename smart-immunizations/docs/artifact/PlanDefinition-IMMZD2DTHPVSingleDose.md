@@ -37,3 +37,6 @@ IMMZ.D2.DT.HPV.Single dose Alternative single-dose schedule
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTHPV2Doses.html" data-next="PlanDefinition-IMMZD2DTJEInactivatedVeroCellDerivedVaccine.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -6,7 +6,10 @@ description: >
   sidecars — then prove the result with the gate set. Refuses the whole merge
   when any conflict is authored or undeclared. Use for "merge main", "resolve
   the conflicts", "the PR is conflicted again", "auto-resolve", and when adding
-  a pattern for a new kind of churn.
+  a pattern for a new kind of churn. Also governs what a merge steward does
+  with a merge-train member it had to refuse: one deduplicated bean under the
+  PR's own epic, a hand-back to the owning session with a fail condition, one
+  dispatched agent when nobody owns it, one PR comment, and the close.
 user_invocable: false
 ---
 
@@ -27,7 +30,7 @@ copy, regenerate — and each cost an agent a round and the PR another CI run.
 Owner, 2026-10-01: *"1 + new skills/tools for each common churn/conflict
 pattern"*, and *"put in merge process bpmn"*.
 
-## The two rules that make it safe
+## The three rules that make it safe
 
 1. **All or nothing.** Every conflicted path is classified before anything is
    touched. One refusal ABORTS the merge and restores the tree. Resolving nine
@@ -39,8 +42,45 @@ pattern"*, and *"put in merge process bpmn"*.
    check: the gate set is derived from the workflow and cannot drift, a
    hand-kept list of check names can.
 
+3. **Classify with the BASE's patterns, not your tree's.** `pathClass` reads
+   `PATTERNS` from the checkout it is running in. A branch that forked before a
+   pattern was declared therefore classifies by the OLD declaration, and every
+   path in a newly-declared family reads `authored` — the one verdict that
+   routes work to a person.
+
 A path that **no** pattern names is refused. Adding automation is adding a
 pattern, deliberately, with its reason — never widening a glob on a hunch.
+
+### Why rule 3 is a rule and not a footnote
+
+Measured 2026-10-03, within minutes of #1943 declaring `skos-glossary-export`,
+`glossary-generated` and `skill-instructions`. The merge steward classified
+eight open PRs from a working tree that predated that merge:
+
+| PR | authored, stale patterns | authored, `main`'s patterns |
+|---|---|---|
+| #1888 | 9 | **2** |
+| #1892 | 3 | **1** |
+| #1764 | 3 | **2** |
+| #1935 · #1934 · #1816 · #1808 · #1804 | 0 | 0 |
+
+**Fifteen authored conflicts across the queue, against a true six.** Nine
+paths were reported as needing a person when the base already declared them
+mechanical, and the error is one-directional: a stale tree can only ever
+over-report, never under-report, because a pattern is added and an authored
+path is the fallback. A sibling session was about to start on #1888 believing
+its authored conflict was a bean definition; it is not in conflict at all.
+
+So before classifying anything, `git fetch` and read the patterns from the
+BASE — or do what the measurement did and classify against
+`git show origin/<base>:cat-harness/scripts/merge-conflict-patterns.ts`. The
+number that decides whether a human is needed must come from the declaration
+the merge will actually be resolved under.
+
+This is the same shape as `1xhc` one level out: a stale instrument and a
+correct one are indistinguishable from their output, and the stale one here
+reads as *more* work rather than less, so nothing about the result looks
+wrong.
 
 ## When one side deleted the file
 
@@ -94,6 +134,27 @@ per directory, so a new file anywhere changes one.
 ### `uml` — take the base, regenerate (201)
 
 Generated overview diagrams and their SVGs.
+
+### `prov-qaqc` — take the base, regenerate
+
+The PROV-O QA/QC report (`docs/prov-qaqc/`) and its per-instance logs
+(`docs/assets/prov/`). Generated WHOLE from the workflow instances under
+`beans/workflows/`, so any branch that records an instance — which every branch
+doing process work does — rewrites the index page and adds a `.prov.jsonld`.
+
+**Added 2026-10-03, and the occasion is the reason.** The runner refused #1892
+with `docs/prov-qaqc/index.md` as the SINGLE unclassified path among **32**
+resolved by pattern. One file nobody authors, blocking a merge nobody can
+usefully resolve by hand — which is this catalogue's whole purpose, missing one
+entry.
+
+The globs are instance-agnostic (`**/docs/prov-qaqc/**`), like
+`derived-results` and unlike `glossary`: a dependent folio runs `prov:qaqc`
+over its own instances and writes the same two shapes under its own root.
+
+It names no check of its own, per rule 2: `regen` runs `prov:qaqc` because
+`check:prov-qaqc` is a workflow gate, and a pattern that named its own check
+would be a hand-kept list able to drift from the workflow.
 
 ### `glossary` — take the base, regenerate (207)
 
@@ -337,6 +398,34 @@ is a coordination question (`bean-coordination`), and a duplicated
 `updated_at` from a careless resolution is `check-bean-front-matter`'s
 recorded defect.
 
+### `artefact-verification` — refused, by declaration
+
+`scripts/artefact-verification.json`, the per-check consumer-verification
+declaration. **This is the entry that exists to stop a sweep, not to resolve
+one** — and the one most likely to be globed by mistake, because it reads like a
+generated sidecar (under `scripts/`, a `.json`, its key set derived from
+`package.json`) and because it is the only path that refused on **two** open PRs
+at once (#1958, #1955, swept 2026-10-03).
+
+Two facts, either one sufficient:
+
+- `task-io.ts` classifies `check:artefact-verification` as `READ_ONLY`. **No
+  script writes the file**, so `regen` has no writer to run and `take-base` is a
+  silent *discard* rather than a resolution.
+- Its own `_comment` requires every `none` entry to carry **a reason, in prose**,
+  and says the file *"may only SHRINK"*. A branch that adds a gated check adds
+  an authored sentence — precisely what taking base would drop.
+
+So a conflict here is a genuine editorial merge: both reasons are wanted, and
+which survives is a judgement. Human merge is the cost of the file's shape, not
+a hole in this catalogue.
+
+**The falsifier is recorded** (bean `mjl3`): if a `--write` is ever added that
+composes the derived key set and carries existing reasons forward, the file
+becomes regenerable and this entry becomes `take-base`. Nothing today wants such
+a writer, and adding one to make merges cheaper would be building a mechanism to
+serve the merge tool rather than the gate.
+
 ### `uploads` — refused, by declaration (30)
 
 Uploaded source material: provenance-bearing input, never regenerated.
@@ -361,8 +450,30 @@ that is behind `main`, one live run per PR (a newer run cancels an older one).
 - **It pushes only a proved merge**, as a fast-forward of the branch it checked
   out; if the author pushed meanwhile the push is rejected and nothing is
   overwritten.
-- **A refusal pushes nothing**, labels the PR `needs-merge-human`, and lists
-  the ✗ paths. Adding a pattern stays a person's change, made here.
+- **A refusal pushes nothing** and lists the ✗ paths in its comment. Adding a
+  pattern stays a person's change, made here. It does NOT label the PR: owner
+  ruling 2026-10-03, *"stop using `needs-merge-human`, it's confusing
+  things"*, and the measurement behind it is that **a label asserting "a
+  person is needed" outlives the condition that set it**. Measured the same
+  day: of ten PRs carrying it, **six were stale** — clean against `main` AND
+  pushable by the bot, because the workflow change that had blocked them was
+  already in their merge-base. A stale hold is indistinguishable from a live
+  one without re-deriving why the push failed, which is the
+  `merge-queue` skill's own §"A hold has an EXPIRY and a trigger, or it
+  outlives its reason" at the scale of a whole queue.
+  **The reason lives in the comment, which is dated and names the run; a
+  label is a claim with no timestamp.**
+- **A declared resolution that FAILS is a refusal too**, not an unexplained
+  red job. If taking the base or resolving a region throws, `merge-base`
+  prints `  ✗ <path>  [<pattern>: could not resolve] — <git's first error
+  line>` and aborts, so the bot's comment names the path and the error.
+  Measured 2026-10-03 on #1801: the branch ignores `cat-harness/test/results/`
+  while the files stay tracked, git exits 1 when staging an UNMERGED ignored
+  path (it stages it anyway), and merge-main went red on every push to main.
+  Staging a conflicted path uses `git add -f` in both resolvers, safe because
+  the path is one git listed as unmerged. `regen` reporting an unrepaired
+  check is still a red job: that is a defect for a person to read, not a
+  conflict.
 - **One comment per PR, edited in place** on every run — except a run that
   was **cancelled** (a newer push to `main` superseded it) or whose merge step
   reported no status, which leaves the comment untouched. Before #1854 such a
@@ -378,3 +489,158 @@ shared agent container while `main` moved every few minutes, and GitHub runs no
 `pull_request` CI on a conflicted PR — a 28-conflict resolution went 'dirty'
 again within a minute of its push. Use the label on a PR that is waiting on
 review rather than on its author; leave it off a branch somebody is pushing to.
+
+## When a merge-train member is refused: bean, hand back, or dispatch
+
+A merge steward builds a **train**: `merge-base.ts --no-regen` for each
+member, then one `bun run regen`, then one CI run. A member is **refused**
+when its merge hits an authored or undeclared conflict, or when the train's
+combined result fails a gate that the member alone did not fail. The steward
+drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
+executes what happens to the dropped member. The author's side, the queue
+and the bounce-back are the merge-manager SOP in
+[#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
+12). The hand-back format is the `agent-handoff` skill in
+[#1884](https://github.com/litlfred/folio-assistant/pull/1884).
+
+**Why this exists.** Owner, 2026-10-02: *"if a merge in queue cannot be merged
+for some reason, create a new bean (under appropriate epic/story…), hand it
+back to the sibling (use the agent-to-agent handoff process with a fail
+condition) for resolution, or dispatch an agent as appropriate."* Before this,
+each refusal got an ad-hoc PR comment or chat message, and nothing in the work
+plan said it had happened. The refusals on 2026-10-02 alone show the three
+causes this section has to cover:
+
+| PR | refused on | cause |
+|---|---|---|
+| #1808, #1819 | bean `ob3m` | two sibling navbar PRs edited the same bean (`beans`, refused by declaration) |
+| #1804 | `artefact-verification.json` | authored file, no declared pattern |
+| #1822 | `gen-library-jsonld.ts` | authored conflict with #1881, which overlaps it |
+| #1852 | `proposals/index.md` | authored index, no declared pattern |
+| #1764 | glossary page budget | each PR passed alone; the combination exceeded the budget |
+
+### 1. Open one bean per refused PR, and check before you create
+
+`beans create` dedupes on nothing (see `todo-manager` §"Check before you
+create"). The title carries the PR number, so the check is exact:
+
+```bash
+beans list --json --search 'title:"Merge refused: #1822"' \
+  | jq -r '.[] | select(.title | startswith("Merge refused: #1822 "))
+                | select(.status != "completed" and .status != "scrapped") | .id'
+```
+
+- **An open bean already exists** for this PR: do not create a second one.
+  Add the new refusal to it under `## Attempts` with `--body-append` (never
+  `--body-file`, which replaces the body).
+- **Otherwise create one**: `type: bug`, titled
+  `Merge refused: #<n> <first refused path or gate>`. `--parent` and the
+  create are one action (`todo-manager` §"After you create").
+
+**The parent is the epic or story the PR's own work belongs to,** not the
+steward's epic. Find it in this order: the bean the PR's branch adds or claims
+(`git diff --name-only origin/main...<head> -- beans/defs/`), then a bean id in
+the PR body or commit messages. Parent the refusal under **that bean's parent**
+when the PR's bean is a task, or under the PR's bean itself when it is an epic
+or story. Then mark it `--blocking <the PR's bean>`. Only when the PR names no
+bean at all does it go under the steward's own merge-gate epic (`nok9` here),
+and the bean body says so.
+
+The body records what the owning session needs in order to act without asking:
+
+```markdown
+PR #1822, head <sha> (the sha the train used), dropped from train
+`<train name>` (its other members, and the base sha it merged onto).
+
+## Refused
+- `cat-harness/scripts/gen-library-jsonld.ts`: authored conflict, no declared
+  pattern. Overlaps #1881, which is already in main.
+
+## Done when
+- [ ] the PR's head merges main with `bun run merge:main` and no refusal, and
+      CI is green on that head
+- [ ] the PR re-enters a train with a new `ready: <sha>`, and lands
+```
+
+For a combined-gate refusal (#1764), list the gate, its first failing line, and
+**which other members** the train held, because the fix may belong to either
+side.
+
+### 2. Hand it back to the owning session, with a fail condition
+
+The owning session is the one in the PR's `Claude-Session:` trailer, or in its
+body. Hand the bean back to it in `agent-handoff` form: the steward is the
+**coordinator and verifier**, the owning session is the **executor**, and the
+owner rules on anything authored. The bean carries:
+
+- `## Roles`: steward (coordinator, verifier, closes), owning session
+  (executor), owner (authored conflicts, any exception).
+- `## Report to`: the PR. One line per event:
+  `<id>: started`, `<id>: done <sha>`, `<id>: blocked <why>`.
+- `## Done when`: as above. The verifier is the next train, not the executor's
+  own log.
+- `## Fails if`, the **fail condition**, which is when the steward takes the
+  bean back:
+  - no `started` line on the PR **within 4 hours**;
+  - or no push to the PR branch **within 24 hours**;
+  - or the owning session is **gone**: archived, failed, or unknown to
+    `get_session`;
+  - or the executor reports `blocked` on something it cannot settle.
+
+Send the hand-back to the session itself (`send_message`), as **one line**
+that names the bean and the branch, never the instructions. The instructions
+are in the bean, on the branch. After that, the steward does not edit the
+bean: anything it learns goes to the PR (`agent-handoff` §1).
+
+**The fail condition is a takeover, not a reminder, and that differs from
+`agent-handoff` §7 on purpose.** There, the executor is in another environment
+and the coordinator *cannot* do the step, so an expiry only means asking
+again. Here, the work is in this repository and an agent can do it, so a
+missed deadline moves to §3. The one thing that is never done is putting a
+second writer on a branch whose first writer may still be live: before taking
+over, read the bean's holder note and the PR's last push (`bean-coordination`
+§"A quiet claim").
+
+### 3. When no live owner can be reached, dispatch one agent
+
+If the owning session is gone, or the fail condition has fired, dispatch **one**
+agent on the PR's branch (`dispatch-agent`). One agent is not a swarm; a
+second one is, and needs the owner's per-swarm permission (`swarm-management`).
+Its budget is modest: one fix, one push, one report.
+
+- **It may do** what the patterns would have done had they been declared: bring
+  main in with `merge:main`, regenerate, and fix a gate failure that has one
+  mechanical answer. It pushes merge commits only, and never force-pushes.
+- **It may not decide an authored conflict.** Two sibling PRs editing one bean
+  (`ob3m`), one script changed differently on both sides (#1822 against
+  #1881), or a page over its budget only in combination (#1764): each of these
+  is a choice between authors. The agent writes the question to the owner on
+  the PR, with both sides quoted, the options and a default, and stops
+  (`interaction-modality` §4.1).
+- **The dispatch is recorded on the bean** by the steward, before the agent
+  starts: `## Attempts`, with the date, the reason the fail condition fired,
+  the agent's session or task id, and the budget.
+
+Two failed attempts with the same cause go to the owner instead of a third
+dispatch (`agent-handoff` §7).
+
+### 4. Comment on the PR once, and edit that comment
+
+One comment per refused PR, **edited in place** as the bean moves on, as
+`merge-main.yml` does with its own comment. It names the bean, the head sha,
+the train, the refused paths, and who holds the fix (the owning session, a
+dispatched agent, or the owner). A second refusal of the same PR updates the
+same comment. Remove `ready-to-merge` when #1802's SOP is in force (step 10).
+
+### 5. Close the bean when the PR's fate is settled
+
+The steward is the verifier, so the steward closes:
+
+- **the PR lands**: `completed`, with the merge commit as evidence;
+- **the PR is closed unmerged**: `scrapped`, with the reason and a link. The
+  bean is never deleted (`bean-coordination`).
+
+A fix that is pushed but has not landed does not close the bean. The member
+must survive a train first. A refusal bean left open after its PR has gone is
+the stale state that the `needs-merge-human` label already shows (bean `u7be`
+item 4).

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 210,
+      "count": 212,
       "unit": "modules"
     }
   },
@@ -644,6 +644,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/landing-instance.test.ts",
+      "instance": "cat-harness",
+      "name": "landing-instance.test",
+      "graphNode": "undeclared",
+      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
       "instance": "cat-harness",
       "name": "landing-sticky.test",
@@ -927,6 +935,14 @@
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/qa-attestations-criteria.test.ts",
+      "instance": "cat-harness",
+      "name": "qa-attestations-criteria.test",
+      "graphNode": "undeclared",
+      "summary": "The attestation store's block-qa and translation-qa families (bean `8wj1`,",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/qa-attestations.test.ts",
@@ -2772,6 +2788,13 @@
           "doc": "What this participant can reach off its own machine — `internet`,"
         },
         {
+          "name": "systemUnderTest",
+          "type": "SystemUnderTestFacet",
+          "optional": true,
+          "array": false,
+          "doc": "The system-under-test facet — present when this actor can be executed"
+        },
+        {
           "name": "meta",
           "type": "Record<string, unknown>",
           "optional": true,
@@ -2783,7 +2806,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#NetworkReach",
-        "cat-harness/schemas/skill-package.ts#ActorKind"
+        "cat-harness/schemas/skill-package.ts#ActorKind",
+        "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet"
       ],
       "unresolved": [],
       "external": [],
@@ -3875,6 +3899,176 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#Count",
+      "name": "Count",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-scalar",
+      "doc": "A non-negative whole number of beans.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "name": "MilestonePlanSchema",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-object",
+      "doc": "The milestone rollup as a whole, plus what the per-milestone shares omit.",
+      "fields": [
+        {
+          "name": "milestones",
+          "type": "z.array(MilestoneRollupSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "orphanOpen",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Open beans with no milestone anywhere above them."
+        },
+        {
+          "name": "openTotal",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "coveredOpen",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "SUMMED from the closures, never `openTotal - orphanOpen`."
+        },
+        {
+          "name": "duplicateIds",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Bean ids held by more than one file. A store defect, reported."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bean-graph.ts#Count",
+        "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "name": "MilestoneRollupSchema",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-object",
+      "doc": "One milestone, rolled up over the closure of beans beneath it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repository-relative path of the milestone's bean file."
+        },
+        {
+          "name": "status",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The milestone's OWN status — not derived from its subtree."
+        },
+        {
+          "name": "epics",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Direct children typed `epic`."
+        },
+        {
+          "name": "total",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Transitive descendants, excluding the milestone itself."
+        },
+        {
+          "name": "closed",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "open",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inProgress",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "todo",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "draft",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "unclassified",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "In neither status set — reported alone, folded into neither figure."
+        },
+        {
+          "name": "share",
+          "type": "z.number().min(0).max(1).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "`closed / (closed + open)`; `null` when nothing is classified, which is"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bean-graph.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -8642,7 +8836,7 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "What a tile calls it. Absent falls back to the directory's id."
+          "doc": "What a tile calls it. Absent, the tile takes the display name of the"
         },
         {
           "name": "surfaces",
@@ -17343,6 +17537,13 @@
           "array": false
         },
         {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "What every navigation surface CALLS a destination of this kind: the"
+        },
+        {
           "name": "schema",
           "type": "string",
           "optional": true,
@@ -17795,6 +17996,13 @@
           "doc": "Cross-folio dependencies."
         },
         {
+          "name": "site",
+          "type": "HarnessSite",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance asks of the published SITE — today only whether it is"
+        },
+        {
           "name": "subgraphSources",
           "type": "SubgraphSourceOverrides",
           "optional": true,
@@ -17806,6 +18014,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependencies",
+        "cat-harness/schemas/harness-config.ts#HarnessSite",
         "cat-harness/schemas/harness-config.ts#TranslationConfig",
         "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverrides"
       ],
@@ -17917,6 +18126,12 @@
           "array": false
         },
         {
+          "name": "site",
+          "type": "HarnessSiteSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "subgraphSources",
           "type": "SubgraphSourceOverridesSchema.optional()",
           "optional": true,
@@ -17929,6 +18144,7 @@
       "refs": [
         "cat-harness/schemas/harness-config.ts#HarnessConfigDependenciesSchema",
         "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
+        "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
         "cat-harness/schemas/harness-config.ts#TranslationConfigSchema",
         "cat-harness/schemas/subgraph-source.ts#SubgraphSourceOverridesSchema"
       ],
@@ -17961,6 +18177,42 @@
         {
           "name": "interaction",
           "type": "z.string().default(\"interaction/interaction.json\")",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSite",
+      "name": "HarnessSite",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "name": "HarnessSiteSchema",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "zod-object",
+      "doc": "`site` in `<name>.config.json` — what an instantiated harness asks of the",
+      "fields": [
+        {
+          "name": "landing",
+          "type": "z.boolean().optional()",
           "optional": true,
           "array": false
         }
@@ -18024,6 +18276,20 @@
       "module": "cat-harness/schemas/harness-config.ts",
       "kind": "type-alias",
       "doc": "Something wrong with an instance's dependency graph.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#LandingInstance",
+      "name": "LandingInstance",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Which harness the published site puts at `/`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -23601,6 +23867,43 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/qa-attestations.ts#AttestationKey",
+      "name": "AttestationKey",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "interface",
+      "doc": "Which subject's judgements, in which family.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "CriteriaFamily",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subject",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The subject root relative to the instance root, POSIX, without extension."
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`translation-qa` only."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#CriteriaFamily"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/qa-attestations.ts#AttestationRead",
       "name": "AttestationRead",
       "module": "cat-harness/schemas/qa-attestations.ts",
@@ -23646,6 +23949,121 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#AttestedEntrySchema",
+      "name": "AttestedEntrySchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-record",
+      "doc": "One block or translation judgement, kept opaque: the store never rewrites an entry.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#BlockAttestationsSchema",
+      "name": "BlockAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The `block-qa` family (bean `8wj1`): a block's agent and human verdicts.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(\"block-qa\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "criteria",
+          "type": "CriteriaAttestationsSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#CriteriaAttestationsSchema",
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#CriteriaAttestationRead",
+      "name": "CriteriaAttestationRead",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#CriteriaAttestationsSchema",
+      "name": "CriteriaAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-record",
+      "doc": "Criterion id → its judgements, the derived report's own `criteria` shape.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#CriteriaFamily",
+      "name": "CriteriaFamily",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#CriteriaMap",
+      "name": "CriteriaMap",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#CriteriaOf",
+      "name": "CriteriaOf",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "doc": "The criteria type of a report, so a writer gets its judgements back in its own entry type.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -23819,6 +24237,34 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/qa-attestations.ts#PriorOk",
+      "name": "PriorOk",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "doc": "The resolution a writer may proceed with.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#PriorResolution",
+      "name": "PriorResolution",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "doc": "The answer a writer acts on: proceed with these, or refuse.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/qa-attestations.ts#QaAttestations",
       "name": "QaAttestations",
       "module": "cat-harness/schemas/qa-attestations.ts",
@@ -23884,6 +24330,60 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#QaEntryLike",
+      "name": "QaEntryLike",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "doc": "An entry, kept opaque: the store never rewrites one.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#TranslationAttestationsSchema",
+      "name": "TranslationAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "doc": "The `translation-qa` family (bean `8wj1`): one (subject, locale) pair's agent and human verdicts.",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(\"translation-qa\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "locale",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "criteria",
+          "type": "CriteriaAttestationsSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#CriteriaAttestationsSchema",
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -26437,6 +26937,13 @@
           "doc": "What this participant can reach off its own machine."
         },
         {
+          "name": "systemUnderTest",
+          "type": "SystemUnderTestFacet",
+          "optional": true,
+          "array": false,
+          "doc": "The system-under-test facet (bean `3o5b`) — present when the actor can be"
+        },
+        {
           "name": "path",
           "type": "string",
           "optional": false,
@@ -26457,7 +26964,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#NetworkReach",
-        "cat-harness/schemas/role-graph.ts#ActorDef"
+        "cat-harness/schemas/role-graph.ts#ActorDef",
+        "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet"
       ],
       "unresolved": [],
       "external": [],
@@ -27925,11 +28433,19 @@
           "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: BeanIdSchema…",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "plan",
+          "type": "MilestonePlanSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The milestone rollup the board renders. OPTIONAL, because an index"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
         "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
         "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
@@ -28366,7 +28882,7 @@
         },
         {
           "name": "refScan",
-          "type": "z.object({ filesRead: Count, unreadable: StringList }).strict().optional()",
+          "type": "z.object({ unreadable: StringList }).strict().optional()",
           "optional": true,
           "array": false
         }
@@ -28448,11 +28964,25 @@
           "doc": "The page's slug."
         },
         {
+          "name": "corpus",
+          "type": "z.enum([\"present\", \"absent\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether the build that wrote this had the derived QA corpus (bean"
+        },
+        {
           "name": "badges",
           "type": "z.record(z.string().min(1), QaIndexBadgeSchema)",
           "optional": false,
           "array": false,
           "doc": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty."
+        },
+        {
+          "name": "unswept",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided"
         }
       ],
       "extendsNames": [],
@@ -28460,6 +28990,42 @@
       "refs": [
         "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema",
+      "name": "QaTranslationPagesSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "Which HAND-AUTHORED pages have a translation projection; fetched by `docs-ui.js` (bean `4l4d`).",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-qa-translation-pages/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "corpus",
+          "type": "z.enum([\"present\", \"absent\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -28677,6 +29243,13 @@
           "doc": "Network reach — see `ActorDefinition.reach` in `assistant-types.ts`, and"
         },
         {
+          "name": "systemUnderTest",
+          "type": "SystemUnderTestFacetSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this"
+        },
+        {
           "name": "meta",
           "type": "z.record(z.string(), z.unknown()).optional()",
           "optional": true,
@@ -28686,7 +29259,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/skill-package.ts#ActorKindSchema"
+        "cat-harness/schemas/skill-package.ts#ActorKindSchema",
+        "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema"
       ],
       "unresolved": [
         "NETWORK_REACHES"
@@ -30064,6 +30638,50 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet",
+      "name": "SystemUnderTestFacet",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema",
+      "name": "SystemUnderTestFacetSchema",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "zod-object",
+      "doc": "The system-under-test FACET on an actor — bean `3o5b`, proposal §3.2.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "SutKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/test-plan.ts#SutKindSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -36512,6 +37130,49 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-run.ts#ListedToolRun",
+      "name": "ListedToolRun",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "interface",
+      "doc": "One record as listed: its path (instance-relative), and the record or `undefined` when it does not parse.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "record",
+          "type": "ToolRunRecord | undefined",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-run.ts#ToolRunRecord"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-run.ts#ToolRunListing",
+      "name": "ToolRunListing",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "type-alias",
+      "doc": "Every record under an instance, or `unknown` when there is no record",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-run.ts#ToolRunRecord",
       "name": "ToolRunRecord",
       "module": "cat-harness/schemas/tool-run.ts",
@@ -36759,6 +37420,28 @@
       "fields": [],
       "extendsNames": [],
       "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#IgCacheActionSchema",
+      "name": "IgCacheActionSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "status",
+        "restore",
+        "seed",
+        "contribute",
+        "verify",
+        "list",
+        "doctor",
+        "An ig-cache verb: restore AST, seed it, or diagnose."
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -50950,6 +51633,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/assistant-types.ts#ActorDefinition",
+      "to": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet",
+      "via": "systemUnderTest",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/assistant-types.ts#CapabilityDefinition",
       "to": "cat-harness/schemas/assistant-types.ts#CapabilityDetection",
       "via": "detection",
@@ -51156,6 +51847,110 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "coveredOpen",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "duplicateIds",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "openTotal",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "orphanOpen",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "via": "milestones",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "closed",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "draft",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "epics",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "inProgress",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "open",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "todo",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "total",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "unclassified",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema",
@@ -53431,6 +54226,14 @@
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSite",
+      "via": "site",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfig",
       "to": "cat-harness/schemas/harness-config.ts#TranslationConfig",
       "via": "translation",
       "kind": "field",
@@ -53473,6 +54276,14 @@
       "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
       "to": "cat-harness/schemas/harness-config.ts#HarnessDirsSchema",
       "via": "harness",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#HarnessConfigSchema",
+      "to": "cat-harness/schemas/harness-config.ts#HarnessSiteSchema",
+      "via": "site",
       "kind": "field",
       "optional": true,
       "array": false
@@ -54238,6 +55049,30 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/qa-attestations.ts#AttestationKey",
+      "to": "cat-harness/schemas/qa-attestations.ts#CriteriaFamily",
+      "via": "family",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BlockAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#CriteriaAttestationsSchema",
+      "via": "criteria",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#BlockAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/qa-attestations.ts#KgAttestationsSchema",
       "to": "cat-harness/schemas/qa-attestations.ts#PairAttestationSchema",
       "via": "pair_attestations",
@@ -54266,6 +55101,22 @@
       "to": "cat-harness/schemas/qa-attestations.ts#AttestationSubjectSchema",
       "via": "subject",
       "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#TranslationAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#CriteriaAttestationsSchema",
+      "via": "criteria",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#TranslationAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
       "optional": false,
       "array": false
     },
@@ -54654,6 +55505,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/role-graph.ts#LoadedActor",
+      "to": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacet",
+      "via": "systemUnderTest",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#PermissionVocabulary",
       "to": "cat-harness/schemas/role-graph.ts#PermissionDef",
       "via": "permissions",
@@ -54895,6 +55754,14 @@
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "via": "plan",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "via": "items",
       "kind": "field",
@@ -55056,14 +55923,6 @@
     {
       "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "refScan",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "uploads",
       "kind": "field",
       "optional": false,
@@ -55171,6 +56030,14 @@
       "via": "kind",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema",
+      "to": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema",
+      "via": "systemUnderTest",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -55412,6 +56279,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#SystemUnderTestFacetSchema",
+      "to": "cat-harness/schemas/test-plan.ts#SutKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema",
@@ -56265,6 +57140,14 @@
       "from": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema",
       "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
       "via": "skill",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-run.ts#ListedToolRun",
+      "to": "cat-harness/schemas/tool-run.ts#ToolRunRecord",
+      "via": "record",
       "kind": "field",
       "optional": false,
       "array": false

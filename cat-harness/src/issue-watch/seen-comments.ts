@@ -40,6 +40,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
+// `src/` may import `scripts/` (so does `src/tools/beans-prime.ts`); the
+// reverse is what the layering forbids.
+import { graphReadPath } from "../../scripts/graph-read.ts";
+
 import { z } from "zod";
 
 export const SEEN_DIR = "issue-marks";
@@ -106,9 +110,26 @@ export interface CommentLike {
   created_at?: string;
 }
 
-/** `issue-marks/<owner>-<repo>-<number>.json` */
+/**
+ * `issue-marks/<owner>-<repo>-<number>.json`, under wherever the graph IS.
+ *
+ * Bean `9ofm` row D. `issue-marks` is one of the state graphs that moves, so
+ * the directory is resolved by its declared ID rather than composed from
+ * {@link SEEN_DIR} — which stays as the convention for the `undeclared` case
+ * and as the name the declaration uses.
+ *
+ * **Throws** when the graph is on a branch this checkout cannot reach. Every
+ * caller here either reads a mark or writes one; a path under the repository
+ * root would make `loadSeen` report *"not seen"* for every comment and
+ * `saveSeen` write a mark nothing will ever read — so the watcher would
+ * re-handle every comment on every run, forever, silently. That is worse than
+ * stopping.
+ */
 export function seenPath(root: string, owner: string, repo: string, issue: number): string {
-  return join(root, SEEN_DIR, `${owner}-${repo}-${issue}.json`);
+  const where = graphReadPath(SEEN_DIR, root);
+  if (where.state === "refused") throw new Error(`cannot resolve the issue-marks graph: ${where.reason}`);
+  const dir = where.state === "ok" ? where.at : join(root, SEEN_DIR);
+  return join(dir, `${owner}-${repo}-${issue}.json`);
 }
 
 export function loadSeen(

@@ -325,7 +325,9 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
       expect({ inst, dir: libraryDirOf(resolve(REPO, inst)) })
         .toEqual({ inst, dir: resolve(REPO, inst, "library") });
     }
-    // Declares voices and no corpus — a determined "none", not a failure.
-    expect(libraryDirOf(resolve(REPO, "who-style-guide"))).toBeUndefined();
+    // Declares no corpus — a determined "none", not a failure. This was
+    // `who-style-guide` (voices, no corpus) until it became a subgraph of
+    // who-iris (bean qsx4); `smart-l1` declares no library either.
+    expect(libraryDirOf(resolve(REPO, "smart-l1"))).toBeUndefined();
   });
 });

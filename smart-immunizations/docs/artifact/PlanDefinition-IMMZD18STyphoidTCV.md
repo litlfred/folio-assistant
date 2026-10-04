@@ -37,3 +37,6 @@ IMMZ.D18.S.Typhoid.TCV schedule Typhoid conjugate vaccine (TCV), 1 dose schedule
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18STBETBEMoscow.html" data-next="PlanDefinition-IMMZD18STyphoidTy21a.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

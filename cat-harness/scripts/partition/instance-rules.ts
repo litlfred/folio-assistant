@@ -187,6 +187,10 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS, by the same test as `check-ci-health.ts`: its subject is the
+      // forge's open PRs and this checkout's instance declarations, judged by
+      // a `kg-separation` decision table. It reads no folio material.
+      "scripts/seed-ready.ts",
       // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
       // Its subject is every instance's declarations and source, read; it
       // reads no folio material.
@@ -218,6 +222,12 @@ export const RULES: Rule[] = [
       // `p11x`). Harness for the same reason: it reads declarations and module
       // specifiers, consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-import-direction.ts",
+      // The PROCESS-BINDING half of that arrow (owner, 2026-10-03): which
+      // instance a BPMN's `<skill ref>` reaches. Harness for the same reason —
+      // it reads declarations, BPMN extension elements and skill file names,
+      // consumes the same `layer-direction.ts`, and no folio content.
+      "scripts/check-process-bindings.ts",
+      "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
@@ -246,6 +256,12 @@ export const RULES: Rule[] = [
       // content — the declarations it reads are the harness's, and the glyph
       // registries it compares are the harness's own furniture.
       "scripts/check-navbar-consistency.ts",
+      // HARNESS on the same argument: its subjects are this repository's own
+      // generated navigation (`_data/harness.json`, the navbar include, the
+      // rail written into viewer pages) and its landing templates. It opens
+      // no folio content (bean `ob3m` finding 6).
+      "scripts/check-nav-names.ts",
+      "scripts/lib/nav-label.ts",
       // HARNESS for the same reason: it asks the runtime's own question
       // through `schemas/theme-by-ref.ts` over this repository's declared
       // instances. The THEMES it loads are an instance's subject matter,
@@ -381,6 +397,7 @@ export const RULES: Rule[] = [
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
+      "scripts/test-plan-audit.ts",          // plan <- run <- report, the four test-process criteria (bean `3o5b`)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
       "scripts/content-holds-code.ts",       // a content instance holds no code (kg-separation FR-7, bean `eayu`)
@@ -409,6 +426,10 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
+      "scripts/qa-verify-moved.ts",          // bean 5hox: hash-verify the moved QA files against a qa-reports entry
+      "scripts/qa-refresh.ts",               // bean 3hk4: produce the working copy qa-publish stores, and judge it complete
+      "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
+      "scripts/check-qa-corpus.ts",          // the fetched qa tree validates, hosted homes included (cxcn)
       // Its generalisation (bean `2h76`): the same branch-kept store for ANY
       // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
       // same reason as `qa-store` — it reads the declaration and git, and no
@@ -428,6 +449,21 @@ export const RULES: Rule[] = [
       // through the library rather than a push from the worktree, which is the
       // lost update. Harness-level for the same reason as its neighbours.
       "scripts/state-push.ts",                // the mount's edits, spliced onto the tip
+      // The seeds' own freshness check (bean `9ofm`): it reads each special
+      // branch's `manifest.json`, resolves the ref that manifest names, and
+      // compares the two TREES. Harness-level for the same reason as its
+      // neighbours, and one more: the branches it reads are declared in
+      // `scripts/special-branches.json`, which is the harness's table — a
+      // folio's subject matter cannot add a row to it or change what a tree
+      // comparison concludes.
+      "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
+      // What every reader of a moved graph needs, written once (bean `9ofm`
+      // row D): given a declared directory id, which directory to actually
+      // read — the checkout, the mount, or a refusal. Harness-level for the
+      // same reason as its neighbours: it reads the declaration, git and the
+      // mount marker, and no folio's subject matter could make it resolve
+      // differently — only give it more directories to resolve.
+      "scripts/graph-read.ts",                // where to read a declared graph from: the checkout, or its mount
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
@@ -442,6 +478,7 @@ export const RULES: Rule[] = [
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
       "scripts/merge-queue.ts",              // the merge train's order: live facts in, merge-priority.dmn's placement out (bean hfag)
+      "scripts/merge-steward.ts",            // the command that CALLS merge-queue.ts — the entry point it was written for and never had
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
@@ -1097,6 +1134,14 @@ export const RULES: Rule[] = [
       // half asks the forge which PRs are open, and a PR is a fact about
       // this checkout and the forge, not about any folio's material.
       "scripts/check-bean-rollup.ts",
+      // The milestone closure, HARNESS for the same reason as its neighbours
+      // and not for the one that suggests itself. It is a pure function with
+      // no forge call and no path literal, so "generic" is tempting — but the
+      // block above settles it by SUBJECT: `beans/` is the agent work plan the
+      // harness declares, and a folio's content has no bean store to roll up.
+      // Genericity is about whether swapping the content changes the answer;
+      // this reads a graph a folio does not have.
+      "scripts/milestone-rollup.ts",
       "scripts/check-ready-to-close.ts",
       "scripts/check-waivers.ts",
       "scripts/check-declared-paths.ts",
@@ -1134,7 +1179,7 @@ export const RULES: Rule[] = [
       // exactly that reason. A folio has no bean store of its own to roll
       // over, so swapping the content could not make it answer differently.
       "scripts/bean-rollover.ts",
-      // `mvp-status` is the same test again, and the clearest case of it: it
+      // `milestone-status` is the same test again, and the clearest case of it: it
       // asks how far THIS repository is from its own separation point, and
       // every gate it reports is a fact about this repository — whether the
       // beans that define the plan are on its `main`, how many of its open
@@ -1144,7 +1189,14 @@ export const RULES: Rule[] = [
       // answer differently. It composes the four above rather than
       // re-measuring, which is why it belongs with them and not beside the
       // generic reporters.
-      "scripts/mvp-status.ts",
+      //
+      // Its MILESTONE half is in its own module, `milestone-rollup.ts`,
+      // classified with the other bean-store readers above: the plan is the
+      // harness's, not any folio's. What makes THIS module instance-specific
+      // is the readiness half — `cat-harness-tools`, this repository's open
+      // PRs, its own separation point — and a module is placed by the
+      // question it cannot be asked anywhere else.
+      "scripts/milestone-status.ts",
       // Their two shared modules, classified with them rather than beside
       // the generic path helpers: `merge-pipeline-paths` reads path classes
       // out of this repository's `PATTERNS` declaration, and
@@ -1327,9 +1379,12 @@ export const RULES: Rule[] = [
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
       "scripts/skill-voice-review.ts",     // skills reviewed against the skill voices, kept in the attestation store (beans rkqp, 2gst)
-      // The one-shot move of those judgements out of kg-qa sidecars into the
-      // attestation store (bean `2gst`). Same side as the auditor whose data it moves.
-      "scripts/migrate-kg-attestations.ts",
+      // The move of those judgements — and of block-qa and translation-qa
+      // agent/human verdicts (bean `8wj1`) — out of derived files into the
+      // attestation store (bean `2gst`). Same side as the auditor whose data it
+      // moves; it reads the reports' own `reviewer.kind`, and no folio's
+      // subject matter changes that.
+      "scripts/migrate-qa-attestations.ts",
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
@@ -1501,6 +1556,22 @@ export const RULES: Rule[] = [
       // It was the single `folio-assist-core -> smart-base` edge.
       "schemas/front-matter.ts",    // "this repository's self-declaring files"
       "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
+      // The TEST PROCESS's other two schemas (beans `ygzh`, `3o5b`), by the
+      // same test as `test-run.ts` beside them: a plan and a report describe
+      // how a SYSTEM UNDER TEST is judged, not a folio's content, and their
+      // reader is `kg-audit` (harness) through `scripts/test-plan-audit.ts`.
+      // Left `core` by the `schemas/` rule they made `kg-audit` import core,
+      // and the system-under-test facet on `skill-package.ts` (harness) import
+      // `test-plan.ts` for `SUT_KINDS` — two wrong-direction edges.
+      "schemas/test-plan.ts",
+      "schemas/test-report.ts",
+      // ...which forces `attribution.ts` too: both import `ATTRIBUTION_KINDS`
+      // from it. It is the reviewer-identity vocabulary of every QA verdict
+      // (`script` / `agent` / `human`), it imports only `tool-types.ts`
+      // (harness) and bootstrap's model registry, and its core consumers
+      // (`apply-image-verdicts.ts`, the narrative and image schemas) may import
+      // the harness — so the move adds no wrong-direction edge. Bean `3o5b`.
+      "schemas/attribution.ts",
       "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
       // Declaration vocabulary, by the same test as the four above: it imports
       // only zod, and it carries no part of the content model. The direction is
@@ -1542,6 +1613,7 @@ export const RULES: Rule[] = [
       "scripts/check-actor-reach.ts",       // reads role-graph
       "scripts/check-avatar-coverage.ts",   // avatars belong to roles
       "scripts/check-avatar-instances.ts",  // the same, on the INSTANCE axis
+      "scripts/check-landing-instance.ts",  // which instantiated harness is the site landing
       "scripts/check-declared-assets.ts",   // the instance declaration
       "scripts/check-declared-dirs.ts",     // the same declaration, its DIRECTORIES
       "scripts/check-fallback-roles.ts",    // reads role-graph
@@ -1591,6 +1663,8 @@ export const RULES: Rule[] = [
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
+      "scripts/kind-register.ts",           // the same job for a graph KIND (bean `uoij`): runs the five generators a new kind stales and reports the two artefacts a person authors. Harness by `skill-register.ts`'s argument one line down — it invokes the repo's own tooling and knows nothing about any content type. Its own first gates run is the argument for its existence, one level over: adding it staled five derived artefacts that no hand-picked check named
+      "scripts/kind-table.ts",              // the reader over the graph-kind TABLE in `directory-conventions.md`, which `kind-register` and `graph-kind-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes

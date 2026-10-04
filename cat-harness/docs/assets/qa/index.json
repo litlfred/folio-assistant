@@ -1,22 +1,22 @@
 {
   "tile": {
     "qa": {
-      "count": 979,
+      "count": 995,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 979,
+  "files": 995,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 492,
+      "files": 495,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2843,
-        "fail": 419,
-        "n/a": 1557,
-        "unknown": 21
+        "pass": 2851,
+        "fail": 423,
+        "n/a": 1584,
+        "unknown": 22
       }
     },
     {
@@ -24,11 +24,11 @@
       "files": 144,
       "rollUpField": "counts",
       "buckets": {
-        "fail": 23,
+        "fail": 22,
         "warn": 59,
-        "pass": 2840,
-        "na": 3136,
-        "unknown": 35
+        "pass": 2834,
+        "na": 3141,
+        "unknown": 37
       }
     },
     {
@@ -38,12 +38,12 @@
     },
     {
       "schema": "qa-results/v1",
-      "files": 83,
+      "files": 86,
       "rollUpField": null
     },
     {
       "schema": "folio-detangle-sidecar/v1",
-      "files": 67,
+      "files": 69,
       "rollUpField": null
     },
     {
@@ -53,12 +53,12 @@
     },
     {
       "schema": "folio-qa-index/v1",
-      "files": 19,
+      "files": 25,
       "rollUpField": null
     },
     {
       "schema": "kg-qa-manifest/v1",
-      "files": 7,
+      "files": 8,
       "rollUpField": null
     },
     {
@@ -72,6 +72,11 @@
       "rollUpField": null
     },
     {
+      "schema": "folio-qa-translation-pages/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
       "schema": "folio-test-run/v1",
       "files": 1,
       "rollUpField": null
@@ -81,9 +86,9 @@
       "files": 1,
       "rollUpField": "totals",
       "buckets": {
-        "pages": 129,
-        "railed": 62,
-        "declined": 67,
+        "pages": 162,
+        "railed": 93,
+        "declined": 69,
         "missing": 0,
         "flagged": 0
       }

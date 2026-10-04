@@ -176,17 +176,32 @@ fi
 echo "preview-site: putting each page's own locale on <html>"
 bun run "$here/set-html-lang.ts" --site "$dest" 2>&1 | sed 's/^/  /' || true
 
-# `cp -rT cat-harness/test/results/witnesses ./_site/assets/qa` in CI. The QA
-# witnesses are COMMITTED under `test/results/` (provenance) and SERVED from
-# `/assets/qa/` (what every `data-qa-src` says). Without the copy every badge
-# fetch 404s, and `paintQaBadges` renders that as `unknown` — "could not
-# determine", which is a different answer from "not swept".
+# The QA evidence, as `docs-site.yml` publishes it (bean `tfqf`, F6): FETCH,
+# copy, VERIFY. The witnesses are served from `/assets/qa/` (what every
+# `data-qa-src` says); without them every badge fetch 404s, and `paintQaBadges`
+# renders that as `unknown` — "could not determine", not "not swept".
+#
+# The fetch asks `qa-reports` for the newest `main` entry. While
+# `test/results/` is committed the checkout wins and nothing in it is touched;
+# when the corpus is ABSENT a hit is materialised into the checkout's
+# `test/results/` paths (that is what `qa:fetch` does), and a miss is SAID —
+# this used to skip the copy silently and leave every badge `unknown`.
+# `verify` then counts what landed and writes `assets/qa/availability.json`.
+qa_state="$(mktemp /tmp/preview-qa-state-XXXXXX.json)"
+(cd "$repo" && bun run "$here/qa-site-assets.ts" fetch --ref main \
+  --results cat-harness/test/results --state "$qa_state") 2>&1 | sed 's/^/  /' || true
+mkdir -p "$dest/assets/qa"
 if [ -d "$repo/cat-harness/test/results/witnesses" ]; then
-  mkdir -p "$dest/assets"
   cp -rT "$repo/cat-harness/test/results/witnesses" "$dest/assets/qa"
-  find "$repo/cat-harness/test/results" -maxdepth 1 -name '*.qa-results.json' -exec cp {} "$dest/assets/qa/" \; 2>/dev/null || true
-  echo "preview-site: published $(find "$dest/assets/qa" -name '*.json' | wc -l | tr -d ' ') QA document(s)"
 fi
+if [ -d "$repo/cat-harness/test/results" ]; then
+  find "$repo/cat-harness/test/results" -maxdepth 1 -name '*.qa-results.json' -exec cp {} "$dest/assets/qa/" \;
+fi
+if ! (cd "$repo" && bun run "$here/qa-site-assets.ts" verify --site "$dest" \
+      --results cat-harness/test/results --state "$qa_state") 2>&1 | sed 's/^/  /'; then
+  echo "preview-site: the QA evidence check FAILED — see above; badges may render \`unknown\`." >&2
+fi
+rm -f "$qa_state"
 
 # The knowledge graph and the glossary, at the paths the launcher's tiles point
 # at. The stub is ASKED FOR rather than assumed — `print-stub.ts` is what CI

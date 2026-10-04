@@ -57,7 +57,8 @@ one level down.
 - **A missing value is shown as missing**, never papered over:
   `{{ subgraph.title | default: subgraph.id }}` and
   "_No description is declared for …_" are the pattern. The generator records
-  the gap as a QA finding in `test/results/subgraph-readmes.qa-results.json`;
+  the gap as a QA finding in `test/results/subgraph-readmes.qa-results.json`
+  (a derived result, stored on the `qa-reports` branch by `qa-publish`);
   the template must not make it look filled.
 - **A new variable is a generator change first.** Add it to the object passed
   to `renderFile`, list it in the template's comment, then use it.

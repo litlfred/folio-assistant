@@ -247,6 +247,28 @@ jobs:
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "Staging slug: $SLUG"
 
+      # WHERE THIS PREVIEW'S QA EVIDENCE COMES FROM — the same step as
+      # `docs-site.yml`, keyed by the pull request (bean `tfqf`, F6). The
+      # entry is `pr/<n>/<head sha>`, written by `code-quality-gates.yml`'s
+      # `qa:publish`; the PR's newest entry is the labelled fallback, because
+      # this preview usually races the job that publishes it. A dispatch run
+      # has no PR number and so no store key: it reads the checkout, or says
+      # the evidence is unavailable. The checkout wins while `test/results/`
+      # is committed; see the module note in `qa-site-assets.ts`.
+      - name: Fetch this preview's QA evidence from qa-reports
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ -n "$PR" ] && [ -n "$HEAD_SHA" ]; then
+            set -- --ref "pr/$PR/$HEAD_SHA" --fallback "pr/$PR"
+          else
+            set -- --ref main
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts fetch "$@" \
+            --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
+
       - name: Regenerate generated docs
         run: |
           bun run cat-harness/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
@@ -579,6 +601,38 @@ jobs:
             echo "no readable pull-request file list — composing every instance"
             bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
           fi
+
+      # THE FULL IG PUBLISHER AST PIPELINE, rendered (bean wnhh, owner
+      # 2026-10-02: "build an updated web interface for smart trust testing
+      # full ast pipeline"). For each IG instance whose source repository
+      # carries a seeded `fhir-ast/*` cache, restore it, check it, derive its
+      # artefact index and draw the SAME pages the published-output index
+      # gets, at `/<instance>/ast/`, with the parity and validity reports
+      # beside them. Which IGs is DATA (`stage-ast-sites.ts`), so this names
+      # none. Best effort: the preview never fails on it, and every skip is
+      # printed by the lister.
+      - name: Render each IG from its IG Publisher AST cache
+        continue-on-error: true
+        run: |
+          bun run fhir-harness/scripts/stage-ast-sites.ts > ./_ast-list.txt
+          while IFS=$'\t' read -r INSTANCE URL LABEL CHROME; do
+            [ -n "$INSTANCE" ] || continue
+            SRC="./_ast-src/${INSTANCE}"
+            OUT="./_ast-out/${INSTANCE}"
+            rm -rf "$SRC" "$OUT"
+            GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 "$URL" "$SRC" || { echo "clone failed: $URL"; continue; }
+            CHROME_ARGS=()
+            [ "$CHROME" != "-" ] && CHROME_ARGS=(--chrome-owner "$CHROME")
+            bash fhir-harness/scripts/ig-ast-site.sh --ig-root "$SRC" --instance "$INSTANCE" \
+              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
+            mkdir -p "./_docs/${INSTANCE}/ast"
+            cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
+            # The resources the pages load in the browser, beside the pages.
+            rm -rf "./_docs/${INSTANCE}/ast-data" && cp -R "$OUT/ast-data" "./_docs/${INSTANCE}/ast-data"
+            cp "$OUT/validity.json" "./_docs/${INSTANCE}/ast/validity.json"
+            [ -f "$OUT/parity.json" ] && cp "$OUT/parity.json" "./_docs/${INSTANCE}/ast/parity.json"
+            echo "rendered ${INSTANCE} from its AST -> /${INSTANCE}/ast/"
+          done < ./_ast-list.txt
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
@@ -1124,17 +1178,27 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
+      #
+      # The copy is then JUDGED, as in `docs-site.yml` (bean `tfqf`, C10):
+      # a shortfall against what the source held fails the step, and
+      # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
         run: |
-          mkdir -p ./_site/assets
-          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          mkdir -p ./_site/assets/qa
+          if [ -d cat-harness/test/results/witnesses ]; then
+            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+          if [ -d cat-harness/test/results ]; then
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts verify \
+            --site ./_site --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME

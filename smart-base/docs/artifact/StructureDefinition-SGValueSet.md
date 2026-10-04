@@ -37,3 +37,6 @@ Defines the minimum expectations for ValueSet resources used in SMART Guidelines
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
+
+<footer id="ig-footer" data-prev="StructureDefinition-SGTransaction.html" data-next="StructureDefinition-SGCommunicationRequest.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

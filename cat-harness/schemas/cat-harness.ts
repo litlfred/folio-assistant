@@ -1078,7 +1078,14 @@ export type TileSurface = (typeof TILE_SURFACES)[number];
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
-  /** What a tile calls it. Absent falls back to the directory's id. */
+  /**
+   * What a tile calls it. Absent, the tile takes the display name of the
+   * directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`),
+   * which is what every other surface calls that page. Declare one only when
+   * the page is not simply "the kind's viewer". Never add the harness as a
+   * suffix ("Docs — cat-harness"): the qualifier is appended by the surface
+   * (bean `ob3m` finding 6, "One name everywhere").
+   */
   title: z.string().min(1).optional(),
   /**
    * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
@@ -1448,11 +1455,12 @@ export type Tile = z.infer<typeof TileSchema>;
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
- * ## Not yet set on any declaration
+ * ## Set on every `qa` directory since bean `5hox`
  *
- * Flipping a real `qa` directory to `storage` is a later bean, after every
- * reader has migrated (proposal §4 Phase 3). Setting it earlier would tell the
- * presence checks to stop looking while the readers still read the checkout.
+ * It was flipped only after every reader had migrated (proposal §4 Phase 3):
+ * setting it earlier would have told the presence checks to stop looking while
+ * the readers still read the checkout. Each stored working copy is ignored by
+ * version control, and `directory-storage.test.ts` keeps the two equal.
  */
 export const DirectoryStorageSchema = z
   .object({
@@ -6170,8 +6178,26 @@ export function nestedDirectories(
   root: string,
   decl: CatHarnessDeclaration,
   registry: GraphKindRegistry = defaultGraphKinds,
-): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
-  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+): Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> {
+  const out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}> = [];
   for (const d of decl.directories ?? []) {
     const parent = d.path.replace(/\/+$/, "");
     walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
@@ -6194,7 +6220,16 @@ function walkNested(
   id: string,
   kinds: readonly string[],
   registry: GraphKindRegistry,
-  out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }>,
+  out: Array<{
+  id: string;
+  path: string;
+  graphKinds: string[];
+  description?: string;
+  absent?: { reason: string };
+  storage?: unknown;
+  source?: unknown;
+  parentId: string;
+}>,
   seen: Set<string>,
 ): void {
   if (seen.has(abs)) return;
@@ -6203,7 +6238,17 @@ function walkNested(
   for (const f of [...new Set(files)]) {
     const p = join(abs, f);
     if (!existsSync(p)) continue;
-    let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+    let nested: {
+      directories?: Array<{
+        id?: string;
+        path?: string;
+        graphKinds?: string[];
+        description?: string;
+        absent?: { reason: string };
+        storage?: unknown;
+        source?: unknown;
+      }>;
+    };
     try {
       nested = JSON.parse(readFileSync(p, "utf-8"));
     } catch {
@@ -6217,6 +6262,20 @@ function walkNested(
         path: `${rel}/${sub}/`,
         graphKinds: nd.graphKinds ?? [],
         ...(nd.description ? { description: nd.description } : {}),
+        // Carried through, not dropped. `absent`, `storage` and `source` each
+        // say that the directory is NOT where its path says, or is not meant
+        // to be there at all — so a consumer that loses them asks "is it on
+        // disk?" and gets the wrong answer with no way to tell. Measured
+        // 2026-10-03 (bean `xsrv`): `check:declared-dirs`, extended to reach
+        // these entries, reported a nested entry carrying `absent.reason` as
+        // an unexplained absence, because the reason never arrived. The same
+        // loss would make an eventual `storage: { keyedBy: "route" }` on a
+        // nested entry read as a missing directory — `contentIsOffCheckout`
+        // cannot see a field it was not given. Latent until that test: no
+        // nested entry carries any of the three today.
+        ...(nd.absent ? { absent: nd.absent } : {}),
+        ...(nd.storage ? { storage: nd.storage } : {}),
+        ...(nd.source ? { source: nd.source } : {}),
         parentId: id,
       };
       out.push(entry);

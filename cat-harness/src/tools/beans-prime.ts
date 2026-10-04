@@ -15,6 +15,7 @@
 import { execSync } from "child_process";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
+import { beanDefsDir } from "../../scripts/beans.js";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { listInstances } from "../workflow/store.js";
 import { positionOf } from "../workflow/instance.js";
@@ -34,7 +35,7 @@ function hasBeans(cwd: string): boolean {
 }
 
 /** CLI-independent fallback: read beans/*.md and list titles + status. */
-function primeFromDir(beansDir: string): string {
+export function primeFromDir(beansDir: string): string {
   if (!existsSync(beansDir)) {
     return "_(no beans/ store and no beans CLI — nothing to prime; see AGENTS.md)_";
   }
@@ -117,7 +118,11 @@ export function registerBeansTools(server: McpServer, repoRoot: string): void {
         const list = run("beans list", repoRoot);
         text = [prime, list].filter(Boolean).join("\n\n") || "_(beans returned nothing)_";
       } else {
-        text = primeFromDir(join(repoRoot, "beans"));
+        // The DECLARED bean-defs node (bean `gz47`). This read `beans/*.md`,
+        // where the only Markdown is the directory README, so with no CLI the
+        // fallback primed one "bean": the README.
+        // declared-path-literal: the convention fallback for an instance that declares no bean-defs directory (AGENTS.md: an unmigrated instance falls back to today's conventions)
+        text = primeFromDir(beanDefsDir(repoRoot) ?? join(repoRoot, "beans", "defs"));
       }
       return {
         content: [

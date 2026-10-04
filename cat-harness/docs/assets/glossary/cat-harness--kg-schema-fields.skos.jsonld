@@ -831,6 +831,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/assistant-types.actordefinition.systemundertest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ActorDefinition.systemUnderTest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The system-under-test facet — present when this actor can be executed against a `test-plan/v1` (bean `3o5b`). `agent` and `system` actors only; reach is the actor's own {@link ActorDefinition.reach}, never restated. See `SystemUnderTestFacetSchema` in `skill-package.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.systemUnderTest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/assistant-types.actordefinition.title",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2386,6 +2405,177 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/bean-graph.ts#BeanGraphSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestoneplanschema.coveredopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestonePlanSchema.coveredOpen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "SUMMED from the closures, never `openTotal - orphanOpen`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.coveredOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestoneplanschema.duplicateids",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestonePlanSchema.duplicateIds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bean ids held by more than one file. A store defect, reported."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.duplicateIds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestoneplanschema.orphanopen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestonePlanSchema.orphanOpen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open beans with no milestone anywhere above them."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.orphanOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.epics",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.epics"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Direct children typed `epic`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.epics",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repository-relative path of the milestone's bean file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.share",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.share"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`closed / (closed + open)`; `null` when nothing is classified, which is NOT the same as 0 — see the module note on `milestone-rollup.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.share",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The milestone's OWN status — not derived from its subtree."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.status",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.total",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.total"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transitive descendants, excluding the milestone itself."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.total",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/bean-graph.milestonerollupschema.unclassified",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MilestoneRollupSchema.unclassified"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In neither status set — reported alone, folded into neither figure."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.unclassified",
       "skos:note": "candidate"
     },
     {
@@ -8025,7 +8215,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What a tile calls it. Absent falls back to the directory's id."
+          "@value": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\")."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
@@ -15632,6 +15822,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.validator",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16161,6 +16370,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfig.interactivity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/harness-config.harnessconfig.site",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessConfig.site"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance asks of the published SITE — today only whether it is the landing page (issue #1904). See {@link HarnessSiteSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/harness-config.ts#HarnessConfig.site",
       "skos:note": "candidate"
     },
     {
@@ -20002,6 +20230,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.attestationkey.locale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttestationKey.locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation-qa` only."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.locale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.attestationkey.subject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttestationKey.subject"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The subject root relative to the instance root, POSIX, without extension."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.subject",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.atthome",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21636,6 +21902,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.loadedactor.systemundertest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LoadedActor.systemUnderTest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The system-under-test facet (bean `3o5b`) — present when the actor can be executed against a `test-plan/v1`. Beside `reach` for the same reason: it is a fact about the participant, not something its lane knows."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#LoadedActor.systemUnderTest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.permissiondef.includedin",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22871,6 +23156,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.beanindexschema.plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexSchema.plan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because \"no plan in the projection\" is a state the renderer distinguishes from \"a plan with nothing done\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.extractedtitle",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23004,6 +23308,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.corpus",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.corpus"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the build that wrote this had the derived QA corpus (bean `4l4d`). `absent`: every badge on the page reads \"not available in this build\", and `badges` and `unswept` are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as `present` with no `unswept` list — what it then meant."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.page",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23020,6 +23343,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.unswept",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.unswept"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided here rather than in the committed page since bean `4l4d`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qatranslationpagesschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaTranslationPagesSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages",
       "skos:note": "candidate"
     },
     {
@@ -23115,6 +23476,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.roles",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/skill-package.actordefinitionschema.systemundertest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ActorDefinitionSchema.systemUnderTest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this actor can be executed against a `test-plan/v1`. See {@link SystemUnderTestFacetSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.systemUnderTest",
       "skos:note": "candidate"
     },
     {

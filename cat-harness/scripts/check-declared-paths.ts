@@ -123,8 +123,23 @@
  * `--update` rewrites it, and raising a count is printed loudly and shows up
  * as a diff somebody reviews, the same contract a lockfile has.
  *
+ * ## A witness inside an ABSENT results tree is unknown, not lost
+ *
+ * Bean `c8uq` (reader audit row R32). Six witnessed literals name files under
+ * `test/results/` or `test/health/results/` — derived QA output, which leaves
+ * `main` for the `qa-reports` branch and is present only once `qa:fetch` has
+ * materialised it. With those trees moved aside the gate said *"6 witnessed
+ * literal(s) no longer resolve … point it at where the artefact went"*, and
+ * the artefact went nowhere. So a witness whose literal falls under a declared
+ * `qa` or `health` directory that is ABSENT from the checkout is reported as
+ * `?` *could not determine*, is neither lost nor counted as new debt, and the
+ * run exits 2 when nothing determined failed. `--update` refuses in that state:
+ * dropping six witnesses because the corpus was not fetched is the vacuous
+ * rebaseline this gate exists to stop.
+ *
  * Usage:  bun run check:declared-paths  [--update]
  * Exit:   0 at or under baseline · 1 above it, or a marked literal naming nothing
+ *         · 2 a witness could not be checked because its results tree is absent
  *
  * @covers cat-harness
  */
@@ -197,6 +212,31 @@ function declaredPrefixes(root: string): string[] {
 export function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
   const kinds = d.graphKinds ?? [];
   return kinds.length > 0 && kinds.every((k) => k === "code");
+}
+
+/**
+ * The kinds whose files are DERIVED results a process writes — and which, by
+ * proposal §2 of `qa-reports-branch-and-test-process-2026-10-01.md`, live on
+ * the `qa-reports` branch rather than in every checkout.
+ */
+const RESULT_KINDS = new Set(["qa", "health"]);
+
+/**
+ * Declared `qa` / `health` directories that are ABSENT from this checkout,
+ * absolute. A literal under one of them cannot be checked here, which is a
+ * different fact from naming nothing (bean `c8uq`).
+ */
+export function absentResultDirs(root: string): string[] {
+  return resolveDirectories([{ name: "(local)", root, own: true }])
+    .filter((d) => (d.graphKinds ?? []).some((k) => RESULT_KINDS.has(k)))
+    .map((d) => d.absPath)
+    .filter((abs) => !existsSync(abs));
+}
+
+/** Is `literal` (relative to `root`) inside one of `absent`? */
+export function underAbsentResults(root: string, literal: string, absent: readonly string[]): boolean {
+  const abs = join(root, literal);
+  return absent.some((d) => abs === d.replace(/\/+$/, "") || abs.startsWith(d.replace(/\/+$/, "") + "/"));
 }
 
 /**
@@ -527,12 +567,24 @@ if (import.meta.main) {
   // Test files are governed by the witness list below, not by this count:
   // for a test, a literal naming nothing is a fixture or a test vector, which
   // is the normal case. See `witnessesOf`.
+  // A recorded witness whose literal sits under an ABSENT results tree is not
+  // lost and not new debt: this checkout cannot answer for it (bean `c8uq`).
+  const absentResults = absentResultDirs(root);
+  const priorWitnesses = new Set(prior.resolves ?? []);
+  const isUnverifiable = (r: Site) =>
+    priorWitnesses.has(`${r.file}::${r.literal}`) && underAbsentResults(root, r.literal, absentResults);
+  const unverifiable = refused.filter(isUnverifiable);
+  const unverifiableKeys = new Set(unverifiable.map((r) => `${r.file}::${r.literal}`));
+
   const current: Record<string, number> = {};
-  for (const r of refused) if (!isTestFile(r.file)) current[r.file] = (current[r.file] ?? 0) + 1;
+  for (const r of refused) {
+    if (isTestFile(r.file) || isUnverifiable(r)) continue;
+    current[r.file] = (current[r.file] ?? 0) + 1;
+  }
 
   const witnesses = witnessesOf({ prefixes, artefacts, marked, refused });
   const held = new Set(witnesses);
-  const lost = (prior.resolves ?? []).filter((w) => !held.has(w));
+  const lost = (prior.resolves ?? []).filter((w) => !held.has(w) && !unverifiableKeys.has(w));
 
   const over: Array<{ file: string; was: number; now: number }> = [];
   for (const [file, n] of Object.entries(current)) {
@@ -554,7 +606,8 @@ if (import.meta.main) {
 
   console.log(
     `  ${lost.length ? "✗" : "✓"} ${String(artefacts.length).padStart(3)}  ` +
-      `name a file that exists — ${witnesses.length} witnessed, ${lost.length} lost`,
+      `name a file that exists — ${witnesses.length} witnessed, ${lost.length} lost` +
+      (unverifiable.length ? `, ${unverifiable.length} could not be checked` : ""),
   );
   console.log(`  · ${String(marked.length).padStart(3)}  declared base cases, each with a reason`);
   console.log(
@@ -601,7 +654,28 @@ if (import.meta.main) {
     }
   }
 
+  if (unverifiable.length) {
+    console.log(
+      "\nCOULD NOT DETERMINE — these witnesses name files under a results tree that\n" +
+        "is ABSENT from this checkout. Derived QA lives on the `qa-reports` branch, so\n" +
+        "their absence says nothing about whether the code still points at the right\n" +
+        "place. Neither lost nor counted:",
+    );
+    for (const r of unverifiable) console.log(`  ? ${r.file}:${r.line}  →  "${r.literal}"`);
+    console.log(
+      `\nAbsent: ${absentResults.map((d) => relative(root, d)).join(", ")}. Materialise them with\n` +
+        "`bun run qa:fetch --ref main` (or `--ref pr/<n>`) and re-run. Do NOT --update.",
+    );
+  }
+
   if (update) {
+    if (unverifiable.length) {
+      console.log(
+        `\nRefusing --update: ${unverifiable.length} witness(es) cannot be checked here, and ` +
+          "rewriting the baseline now would DROP them over a corpus nobody looked at.",
+      );
+      process.exit(2);
+    }
     const next: Baseline = {
       // The text the committed baseline already carried. It described only
       // `files` here while the JSON described BOTH records, because the better
@@ -655,6 +729,11 @@ if (import.meta.main) {
         `rather than disappearing.`,
     );
     process.exit(1);
+  }
+
+  if (unverifiable.length) {
+    console.log(`\nNo determined failure, but ${unverifiable.length} witness(es) could not be checked — not a pass.`);
+    process.exit(2);
   }
 
   console.log("\nNo file gained a declared-path literal.");

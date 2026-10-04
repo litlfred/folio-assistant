@@ -38,58 +38,15 @@
  * table is the machine-readable part, which is the argument for scoping there.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 
-import { BASE_GRAPH_KINDS, GRAPH_KIND_ALIASES, defaultGraphKinds } from "../../schemas/cat-harness.js";
-
-const ROOT = join(import.meta.dir, "../..");
-const DOC = "skills/kg/kg-core/directory-conventions.md";
-/** The table's header row, verbatim. Renaming a column is a deliberate edit. */
-const HEADER = "| kind | declared by | contents | renderable |";
-
-/**
- * The kinds the table names, read from its FIRST COLUMN only.
- *
- * Located by the header row rather than by position or by a pattern over the
- * prose: the file holds two pipe-tables and this is the one whose columns say
- * what they are. Absent, or present more than once, THROWS — a table this test
- * cannot find is not an empty table, and a silent pass over nothing is the
- * failure mode the whole bean is about.
- */
-function documentedKinds(): string[] {
-  const lines = readFileSync(join(ROOT, DOC), "utf8").split("\n");
-  const at = lines.reduce<number[]>((acc, l, i) => (l.trim() === HEADER ? [...acc, i] : acc), []);
-  if (at.length !== 1) {
-    throw new Error(
-      `${DOC}: expected exactly one graph-kind table header, found ${at.length}. ` +
-        `Looked for the line: ${HEADER}`,
-    );
-  }
-  const out: string[] = [];
-  // Skip the header and the |---|---| delimiter beneath it.
-  for (let i = at[0]! + 2; i < lines.length; i++) {
-    const line = lines[i]!;
-    if (!line.trimStart().startsWith("|")) break;
-    const first = line.split("|")[1] ?? "";
-    // A cell reads `` `tools` `` or `` **`folio-assist-core`** ``; the kind is the
-    // backticked token, and bold marks WHO DECLARES it in the next column.
-    const kind = first.replace(/[`*]/g, "").trim();
-    if (kind) out.push(kind);
-  }
-  return out;
-}
-
-/** Every name a table row may legitimately carry. */
-function validKinds(): Set<string> {
-  return new Set([
-    ...defaultGraphKinds.names(),
-    ...Object.keys(BASE_GRAPH_KINDS),
-    // A deprecated alias still reads, so documenting one is not an error.
-    ...Object.keys(GRAPH_KIND_ALIASES),
-  ]);
-}
-
+import { defaultGraphKinds } from "../../schemas/cat-harness.js";
+// The table reader, its path and the set of names a row may carry all live in a
+// module rather than here: `kind:register` asks the same question, and two
+// parsers over one hand-written table drift the first time a column moves
+// (bean `uoij`). This file keeps the ASSERTIONS and owns none of the reading —
+// which is why `readFileSync`, `join`, `BASE_GRAPH_KINDS` and
+// `GRAPH_KIND_ALIASES` are gone from it, and so is the document path.
+import { documentedKinds, validKinds } from "../kind-table.ts";
 describe("the graph-kind table and the registry name the same kinds", () => {
   test("the table is found, and is not empty", () => {
     // Without this the two assertions below pass vacuously over `[]` — which is
