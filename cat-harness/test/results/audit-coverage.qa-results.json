@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "489518fcb63f"
+    "script_hash": "210698b89d33"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -435,7 +435,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "empty",
+          "state": "undetermined",
           "directories": [
             "fsh-guts"
           ],
@@ -1206,15 +1206,8 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "fsh-guts",
-          "directories": [
-            "fsh-guts"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1362,5 +1355,5 @@
       "entries": []
     }
   },
-  "total": 79
+  "total": 78
 }
