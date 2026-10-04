@@ -20,6 +20,16 @@ Run `bun run audit:reachability` before saying a decision table works, before
 saying a script has a caller, and before building any reachability report of
 your own.
 
+> **It is not wired into CI yet, and that is not the same as passing.** There is
+> no `audit:reachability:check` alias and no step in `code-quality-gates.yml`, so
+> `gates.ts` does not derive it and `bun run gates` does not run it. Judge it by
+> hand with `bun run cat-harness/scripts/audit-reachability.ts --check`. Both the
+> alias and the step land in one follow-up pull request, together — splitting a
+> gate's NAME from its WIRING is how a check becomes registered-and-never-run
+> (`t373`; `1xhc` measured 21 of 33 such scripts), and the workflow file had to
+> leave the first change because `merge-main`'s resolution push carries no
+> `workflows` scope. Bean `dxqm` holds it.
+
 ---
 
 ## The two failures this exists to prevent
@@ -150,8 +160,8 @@ noise moved; it did not go.
 inside the file, which is what
 [`directory-conventions`](directory-conventions.md) insists a contract must be —
 *extension is a coincidence; a declaration inside the file is the contract* —
-and *"does anything run this?"* then has one right answer. 438 modules declare
-it; six are run by nothing. `scripts/merge-queue.ts` is one of the six, so this
+and *"does anything run this?"* then has one right answer. The corpus is counted on each run and the
+sidecar holds the number; a count in prose is the next thing to go stale. `scripts/merge-queue.ts` is one of the six, so this
 slice would have caught finding 1 on the day it landed.
 
 `audit-coverage` says *prefer a declaration where inference fails in both
@@ -230,15 +240,37 @@ It does **not** hold module totals or the 710 figure: a census moves on any
 commit that adds a file, and a gate stale by default is one people learn to
 regenerate without reading. `audit-coverage` paid for that twice.
 
-### The soft family bites through STALENESS, not through red
+### Judge against a baseline; never compare a committed copy
 
-`--strict` fails on an orphan and is not wired in CI, because six is a backlog
-rather than a defect. The committed sidecar is what stops that from being a gap
-nobody closes: a seventh orphan makes the sidecar disagree with the tree,
-`--check` fails, and the author's regeneration puts the new module **in the
-diff**, where a reviewer sees it. A gate that refused every push until somebody
-wired six old scripts would be switched off; a gate that makes each new one
-visible will not be.
+The records live on the `qa-reports` branch (arc `3fva`, owner rulings D1/D4),
+so `<instance>/test/results/` is a **working copy** and not a record. A writer
+writes it, `qa:publish` pushes the tree once per CI run, and a gate reads the
+baseline through `judgeQaResult` — `--against <ref>` for the branch, and a
+baseline that cannot be asked is **`unknown`: reported, never a pass, never a
+failure.**
+
+Compose the path with `qaResultPath(root, stem)` and nothing else. Bean `id4s`'s
+done-when is that **no caller spells `QA_RESULTS_DIR` itself**, so the day the
+working copy moves it is one line and a grep that proves it.
+
+**`failOnNew` is how a soft finding bites.** This gate's first version failed on
+its own sidecar being STALE, as a proxy for the thing it actually wanted: a new
+orphan showing up in a diff. The proxy stopped meaning anything the moment the
+records left `main` — there is nothing committed left to be stale — and
+`failOnNew` asks the question directly. The standing orphans are inherited and
+do not fail; the next one fails on the commit that introduces it. If you find
+yourself reaching for staleness to make a backlog visible, reach for this
+instead.
+
+### `failOn` is for broken artefacts, and this is the one divergence
+
+`audit:coverage` fails `--check` only on what is **new**, because every finding
+it has is an unmet ambition. Here the hard families are **broken artefacts** — a
+table nothing can evaluate, a diagram the resolver cannot reach, two diagrams
+answering to one name — so they go in `failOn` and fail whether or not a
+baseline calls them new. **A defect is not less of one for having been there
+yesterday.** `--strict` promotes `entry-point-orphan` to the same footing for
+the day the backlog closes.
 
 ### A sweep prints its own denominator, and a checker does not write
 
