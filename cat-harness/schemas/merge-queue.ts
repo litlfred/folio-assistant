@@ -227,6 +227,98 @@ export const EjectionSchema = z
   .strict();
 export type Ejection = z.infer<typeof EjectionSchema>;
 
+/** A full git object name — the commit a decision was given FOR. */
+const ObjectName = z.string().regex(/^[0-9a-f]{40}$/, "a full 40-character object name");
+
+/**
+ * On whose word the release rests — quoted VERBATIM, with where it was said.
+ *
+ * `explicit` — the person said it about THIS pull request ("merge #2077").
+ * `standing-ruling` — a general ruling the decision invokes ("you may merge
+ * green PRs"), with the date it was ruled, because `Task_Release` accepts a
+ * standing ruling only when the steward "quotes [it] verbatim with its date".
+ * A paraphrase is refused by construction: there is no field for one.
+ */
+export const ReleaseAuthoritySchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("explicit"), quote: NonBlank, source: z.url() }).strict(),
+  z
+    .object({
+      kind: z.literal("standing-ruling"),
+      quote: NonBlank,
+      ruledAt: z.iso.date(),
+      source: z.url(),
+    })
+    .strict(),
+]);
+export type ReleaseAuthority = z.infer<typeof ReleaseAuthoritySchema>;
+
+/**
+ * A PERSON's decision to merge this pull request — or not to (bean `ixmq`;
+ * spec from the zmdo session, adopted by the Merge Manager 2026-10-04).
+ *
+ * Before this, `Task_Release` in `merge-train.bpmn` required "explicit
+ * confirmation before merging to `main`, or a standing ruling the steward
+ * quotes verbatim with its date" and nothing could hold it: the approval
+ * lived in a chat, and nothing bound it to the code it approved. Measured the
+ * same day: #2059, #2070 and #2075 each changed head between the steward's
+ * green check and the merge.
+ *
+ * ## `releasedSha` is a decision's SCOPE, not a fact about now
+ *
+ * {@link FORBIDDEN_FACT_KEYS} refuses `headSha` because a stored head goes
+ * stale on the next push. `releasedSha` is the opposite claim: it does not say
+ * what the head IS, it says which commit the person said yes TO — so a later
+ * push does not make it wrong, it makes it **void** ({@link releaseCovers}).
+ * Named differently on purpose, so the fact rule still holds by name.
+ *
+ * `decidedBy` is the HUMAN. The agent that wrote the record down is
+ * `capturedBy`; an agent recording its own decision as a person's is the one
+ * thing this record exists to make impossible to do quietly.
+ *
+ * No `hold` verdict: a hold is already {@link HoldSchema}, with the expiry
+ * and handoff a verdict field would lack.
+ */
+export const ReleaseSchema = z
+  .object({
+    verdict: z.enum(["merge", "do-not-merge"]),
+    decidedBy: NonBlank,
+    decidedAt: Instant,
+    authority: ReleaseAuthoritySchema,
+    releasedSha: ObjectName,
+    capturedBy: NonBlank,
+    reason: NonBlank.optional(),
+  })
+  .strict()
+  .refine((r) => r.decidedBy !== r.capturedBy, {
+    message: "decidedBy is the person who decided; capturedBy is who wrote it down — they cannot be the same actor",
+    path: ["decidedBy"],
+  });
+export type Release = z.infer<typeof ReleaseSchema>;
+
+/**
+ * Whether the recorded release lets THIS head be merged — the question
+ * `merge:guard` asks before it lands anything. Never `ok` on an absent
+ * release: no decision is not a yes.
+ */
+export function releaseCovers(
+  entry: Pick<MergeQueueEntry, "release"> | undefined,
+  headSha: string,
+): { ok: true } | { ok: false; why: "none" | "do-not-merge" | "void"; detail: string } {
+  const r = entry?.release;
+  if (!r) return { ok: false, why: "none", detail: "no human release is recorded for this pull request" };
+  if (r.verdict === "do-not-merge") {
+    return { ok: false, why: "do-not-merge", detail: `${r.decidedBy} decided not to merge (${r.decidedAt})` };
+  }
+  if (r.releasedSha !== headSha) {
+    return {
+      ok: false,
+      why: "void",
+      detail: `released at ${r.releasedSha.slice(0, 12)}, head is now ${headSha.slice(0, 12)} — the decision was for different code`,
+    };
+  }
+  return { ok: true };
+}
+
 const EntryObjectSchema = z
   .object({
     $schema: z.literal(MERGE_QUEUE_ENTRY_TAG),
@@ -243,6 +335,8 @@ const EntryObjectSchema = z
     /** Assigned once the PR is taken into a train; the train-run instance's id. */
     trainId: NonBlank.optional(),
     ejection: EjectionSchema.optional(),
+    /** A person's decision to merge, or not — {@link ReleaseSchema}. */
+    release: ReleaseSchema.optional(),
     /** Beans and epics this PR serves. Epics are beans, so one list. */
     beans: z.array(BeanIdSchema).default([]),
   })
