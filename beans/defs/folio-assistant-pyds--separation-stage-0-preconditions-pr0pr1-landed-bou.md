@@ -1,13 +1,13 @@
 ---
 # folio-assistant-pyds
 title: 'Separation stage 0: preconditions — PR0/PR1 landed, boundary gates watched red, baseline recorded'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-04T09:56:45Z
+updated_at: 2026-10-04T14:43:15Z
 parent: folio-assistant-iirv
 ---
 
@@ -23,3 +23,5 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 - [ ] `check:import-direction` watched RED on a planted `cat-harness → cat-harness-tools` import, and `check:tools-closure` generalised to take an instance name and watched red on a planted violation (falsifier: a planted violation that stays green → stop and fix the gate)
 - [ ] baseline recorded in this bean: `bun test` pass count, `mcp:capture` tool list, every generator's `--check` output hash, the `knownSkills` set
 - [ ] the two plan documents committed under `cat-harness/docs/proposals/` (or `fsh-guts/`) so the scratchpad is not the only copy
+
+_2026-10-04T14:43:11Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
