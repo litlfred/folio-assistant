@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 212,
+      "count": 210,
       "unit": "modules"
     }
   },
@@ -644,14 +644,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/landing-instance.test.ts",
-      "instance": "cat-harness",
-      "name": "landing-instance.test",
-      "graphNode": "undeclared",
-      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
       "instance": "cat-harness",
       "name": "landing-sticky.test",
@@ -935,14 +927,6 @@
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/qa-attestations-criteria.test.ts",
-      "instance": "cat-harness",
-      "name": "qa-attestations-criteria.test",
-      "graphNode": "undeclared",
-      "summary": "The attestation store's block-qa and translation-qa families (bean `8wj1`,",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/qa-attestations.test.ts",
@@ -42327,7 +42311,8 @@
         "single-open",
         "no-redundant-toggle",
         "rail-tips",
-        "harnesses-at-rest"
+        "harnesses-at-rest",
+        "declared-mark"
       ],
       "refs": [],
       "unresolved": [],
