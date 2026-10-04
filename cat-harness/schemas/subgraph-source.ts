@@ -72,8 +72,33 @@ export const BranchNameSchema = z
     "not a valid branch name",
   );
 
-/** How entries are keyed on a branch: one per `commit`, or one live copy at the `tip`. */
-export const KeyedBySchema = z.enum(["commit", "tip"]);
+/**
+ * How entries are keyed on a branch: one per `commit`, one live copy at the
+ * `tip`, or one per published `route`.
+ *
+ * **THE one spelling of this enum.** `DirectoryStorageSchema.keyedBy` in
+ * `cat-harness.ts` imports it rather than restating it, and that is not tidying:
+ * the two were separate literals until this change, `cat-harness.ts` gained
+ * `"route"` with bean `1j3q` and this one did not, so any declaration carrying
+ * `keyedBy: "route"` parsed at the declaration layer and threw a ZodError the
+ * moment {@link resolveSubgraphSource} read it —
+ * `Invalid option: expected one of "commit"|"tip"`, measured on
+ * `main@12b916e9a5`. The declaration said yes and the resolver said no, about
+ * one field, and nothing compared them.
+ *
+ * **Widening an enum is SILENT where widening the union is loud.** The union
+ * below documents that "a new kind is a new member here and a compile error at
+ * every consumer that has not decided what to do with it". A new VALUE gets no
+ * such help: every consumer guarding `keyedBy !== "tip"` kept compiling and
+ * silently took its else-arm. That is why this change is four consumers wide and
+ * not one line.
+ *
+ * What each value means, and why `route` is not a synonym for `tip` (the
+ * difference is whether a write carries `expect`), is in
+ * `DirectoryStorageSchema`'s docblock — one place, because the meaning is one
+ * fact even though the enum is now read in two.
+ */
+export const KeyedBySchema = z.enum(["commit", "tip", "route"]);
 export type KeyedBy = z.infer<typeof KeyedBySchema>;
 
 /** The content is the checkout's own directory at the entry's `path`. */
@@ -238,8 +263,19 @@ export function resolveSubgraphSource(
     case "directory":
       return { kind: "directory", id: entry.id, path: entry.path, declaredIn };
     case "branch": {
-      if (src.keyedBy === "tip" && (entry.graphKinds ?? []).includes("qa")) {
-        throw new Error(`directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and \`keyedBy: "tip"\` is for one-live-copy state (beans, todos)`);
+      // Every NON-commit keying, not just `tip`. `directory-storage.test.ts`
+      // states the principle this guard had already broken: *"A guard that named
+      // one value would admit every value added after it — which is exactly how
+      // `route` would have slipped past the check written for `tip`"*.
+      // `ContentDirectorySchema` refuses both for a DECLARED entry, so this arm
+      // is reached by a caller that builds an entry by hand — `audit-coverage.ts`
+      // does — which is precisely where a schema cannot help.
+      if (src.keyedBy !== "commit" && (entry.graphKinds ?? []).includes("qa")) {
+        throw new Error(
+          `directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and \`keyedBy: "${src.keyedBy}"\` is not. ` +
+            `\`tip\` is for one-live-copy state (beans, todos); \`route\` is for regenerable published output. ` +
+            `A QA verdict is addressed by the COMMIT it judges, so neither names the right unit.`,
+        );
       }
       return {
         kind: "branch",
