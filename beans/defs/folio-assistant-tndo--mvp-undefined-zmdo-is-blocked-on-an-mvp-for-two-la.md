@@ -1,7 +1,7 @@
 ---
 # folio-assistant-tndo
 title: 'MVP UNDEFINED: zmdo is blocked on an MVP for two layers that nothing defines, so GOAL 1''s own falsifier cannot be evaluated'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -82,14 +82,14 @@ same act rather than two.
 
 For each of `agentic-harness` and `folio-assist-core`, independently:
 
-- [ ] `bun run init-folio` against **that layer alone** — no sibling instance on
+- [x] `bun run init-folio` against **that layer alone** — no sibling instance on
       disk, no other layer linked — exits 0 in an empty repository.
-- [ ] The scaffolded folio's declared graphs RESOLVE: every directory named in
+- [x] The scaffolded folio's declared graphs RESOLVE: every directory named in
       its `<instance>.json` exists, and no declared-but-absent entry (the `dh4f`
       defect, where a consumer scans nothing and reports a clean run).
-- [ ] That folio's own gate set passes in the fresh repository, not only in this
+- [x] That folio's own gate set passes in the fresh repository, not only in this
       checkout.
-- [ ] The layer's `needs:` closure is satisfied by what is actually present —
+- [x] The layer's `needs:` closure is satisfied by what is actually present —
       i.e. the bootstrap did not silently depend on a layer above it.
 
 **Each is a command, not an opinion.** That is the whole point of the choice:
@@ -107,8 +107,8 @@ the owner's other three options all required somebody to judge readiness.
 
 1. [x] MVP written down for both layers as checkable conditions, in the owner's
        terms, recorded here.
-2. [ ] `zmdo` carries the condition, so `bean-blocking`'s rule is satisfiable.
-3. [ ] GOAL 1's queue states, with a denominator, how many open items are
+2. [x] `zmdo` carries the condition, so `bean-blocking`'s rule is satisfiable.
+3. [x] GOAL 1's queue states, with a denominator, how many open items are
        blocked on this term.
 
 ## MEASURED 2026-09-30 — done-when 2 and 3, and a finding against `folio_init`
@@ -231,3 +231,14 @@ Nothing from the owner. Done-when 1 is ruled; 2 and 3 are measured. What remains
 is work, and it is `folio_init`'s: a layer argument, and a probe that asserts the
 content type it received. Recorded as its own item rather than done here, because
 the ruling asked for a definition and this bean's scope was the definition.
+
+## Summary of Changes — closed on evidence 2026-10-04
+
+All four per-layer conditions hold for BOTH layers, evaluated in real empty repositories: the zmdo proof runs on 2026-10-04: litlfred/cat-harness-test run 37206112987 (cat-harness alone) and litlfred/folio-test `zmdo-proof` run 37206115053 (folio-assistant-core alone, document folio), both green against folio-assistant@8ea9e47. Method and per-condition table in bean `zmdo` §"PROVEN 2026-10-04".
+
+- **Done-when 2:** `zmdo` carries the condition — it was restated against this definition and evaluated by `zmdo-check.ts`, one assertion per condition.
+- **Done-when 3:** GOAL 1 items blocked on this term: **0 of the 12 `mvp`-tagged beans**. The only one ever blocked on it, `zmdo` (via `mer2`), is proven and closed in the same change.
+
+What the definition does NOT cover, so nobody reads this close as more than it is: the layer's OWN suite standalone (`ho66`) and seeding the layer repositories (`smbc`).
+
+Closed by session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi on the owner's "close out" ruling, 2026-10-04.
