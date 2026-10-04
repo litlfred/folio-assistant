@@ -52,3 +52,15 @@ owner-approved via takeover. Admit to Train B with the train PR's CI standing
 as its CI?
 Owner: **"Admit on train CI (Recommended)"**. Train B = #1918 + #2093 + #2094;
 the substitution is recorded on the train PR.
+
+## 2026-10-04 ~17:40Z — owner ruling: trains must STACK; Train B dissolved
+
+Owner: "We need to require that a merge train has PRs that are stacked one on
+top of another. You're wasting too much time resolving conflicts in the train
+and blocking other stuff from happening. Dissolve the train that you have and
+just merge what you can."
+Asked: #2113 was already green + signed; land it as the last train, or dissolve?
+Owner: **"Land #2113, then no trains (Recommended)"**.
+Train B (#1918, #2093, #2094) dissolved; each lands alone after merging main on
+its own branch. Rule added to merge-queue §"A train admits only members that
+STACK cleanly (STRICT)".
