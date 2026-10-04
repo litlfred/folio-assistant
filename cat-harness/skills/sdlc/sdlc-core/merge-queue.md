@@ -444,6 +444,15 @@ events and posts a `merge-guard` commit status on the head. Making that
 context REQUIRED is a ruleset the owner adds; this skill does not, and no
 agent changes repository settings.
 
+It runs only on events that **can change a verdict** (#2099: ~25 runs in the
+6 min after #2000). A comment counts only when it carries text a check reads
+— `ready:`, a `?`, a `claude.ai/code/session_` footer, or merge-main's
+marker; a CI completion only on a PR head; an `edited` only when the body or
+base changed. So **a check that starts reading a comment for anything else
+must add its text to the workflow's `if:`**, or the status goes stale on
+exactly that comment. Evaluations collapse per PR. The status is a snapshot
+either way, and `--merge` re-evaluates live; never land on a status alone.
+
 `Rule_NotReady` in
 [`merge-priority.dmn`](../../../processes/sdlc/decisions/merge-priority.dmn)
 applies the cheap half of checks 1-3 at placement (`readiness`, from

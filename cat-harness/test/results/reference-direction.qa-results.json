@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 152,
+      "count": 157,
       "entries": [
         {
           "file": "cat-harness/content/docs/content-types/content-types.ts",
@@ -37,6 +37,10 @@
         {
           "file": "cat-harness/content/pipeline/pot-extract.ts",
           "names": 2
+        },
+        {
+          "file": "cat-harness/docs/_data/translation-qa.json",
+          "names": 11
         },
         {
           "file": "cat-harness/docs/ar/agentic-harness.md",
@@ -128,6 +132,10 @@
         },
         {
           "file": "cat-harness/docs/processes/copy-out-materialized.md",
+          "names": 2
+        },
+        {
+          "file": "cat-harness/docs/processes/ig-ast-delta-review.md",
           "names": 2
         },
         {
@@ -367,6 +375,10 @@
           "names": 2
         },
         {
+          "file": "cat-harness/scripts/check-published-instance-exports.ts",
+          "names": 2
+        },
+        {
           "file": "cat-harness/scripts/check-tabular-stubs.ts",
           "names": 2
         },
@@ -380,7 +392,7 @@
         },
         {
           "file": "cat-harness/scripts/gates.ts",
-          "names": 2
+          "names": 3
         },
         {
           "file": "cat-harness/scripts/gen-auto-docs.ts",
@@ -427,6 +439,10 @@
           "names": 2
         },
         {
+          "file": "cat-harness/scripts/instance-exports.ts",
+          "names": 6
+        },
+        {
           "file": "cat-harness/scripts/kg-audit.ts",
           "names": 5
         },
@@ -452,7 +468,7 @@
         },
         {
           "file": "cat-harness/scripts/process-bindings.baseline.ts",
-          "names": 4
+          "names": 2
         },
         {
           "file": "cat-harness/scripts/qa-refresh.ts",
@@ -476,11 +492,15 @@
         },
         {
           "file": "cat-harness/scripts/special-branches.json",
-          "names": 4
+          "names": 5
         },
         {
           "file": "cat-harness/scripts/staging-banner.ts",
           "names": 3
+        },
+        {
+          "file": "cat-harness/scripts/state-on-main-baseline.json",
+          "names": 2
         },
         {
           "file": "cat-harness/scripts/viewer-page.ts",
@@ -870,18 +890,18 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 10626,
+          "occurrences": 10807,
           "allowed": 0,
-          "wrongDirection": 4445,
-          "wrongDirectionFiles": 509,
-          "exempt": 2098,
-          "namesRepository": 2956,
-          "undetermined": 1127,
+          "wrongDirection": 4535,
+          "wrongDirectionFiles": 495,
+          "exempt": 2140,
+          "namesRepository": 2994,
+          "undetermined": 1138,
           "pendingFiles": 48,
-          "pendingOccurrences": 394
+          "pendingOccurrences": 397
         }
       ]
     }
   },
-  "total": 209
+  "total": 214
 }

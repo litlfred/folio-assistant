@@ -26,47 +26,5 @@ export const BASELINE: readonly BaselineEntry[] = [
     "count": 1,
     "reason": "Documentary bpmn:import of smart-base's l2-dak-authoring.bpmn — the upward residual fhir-harness.json already records (proposal §5). Changing it needs the owner's OK.",
     "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/schemas/ig-identity.test.ts",
-    "rule": "who-canonical",
-    "count": 1,
-    "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion.",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/schemas/ig-menu.test.ts",
-    "rule": "dak-naming",
-    "count": 2,
-    "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion. Includes a 'DAK API' menu entry.",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/schemas/ig-menu.test.ts",
-    "rule": "who-canonical",
-    "count": 4,
-    "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion.",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/scripts/gen-ig-pages.test.ts",
-    "rule": "who-canonical",
-    "count": 4,
-    "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion.",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/scripts/ig-site-data.test.ts",
-    "rule": "who-canonical",
-    "count": 2,
-    "reason": "Test fixture uses a WHO IG as sample data; swap for a non-WHO IG without weakening the assertion.",
-    "bean": "folio-assistant-veiu"
-  },
-  {
-    "file": "fhir-harness/tools/index.ts",
-    "rule": "who-layer-path",
-    "count": 1,
-    "reason": "A Tool description string names a smart-base/ path. Reword it neutrally.",
-    "bean": "folio-assistant-veiu"
   }
 ];
