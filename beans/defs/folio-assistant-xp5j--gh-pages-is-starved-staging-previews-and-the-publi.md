@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xp5j
 title: 'gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T06:49:11Z
-updated_at: 2026-10-04T06:49:36Z
+updated_at: 2026-10-04T08:00:34Z
 parent: folio-assistant-1xhc
 ---
 
@@ -95,3 +95,5 @@ threshold is a judgement.
 - [ ] owner picks an option
 - [ ] a successful deployment lands within one burst of a push to `gh-pages`
 - [ ] `check:ci-health`'s newest-settled line reads success rather than cancelled
+
+_2026-10-04T08:00:34Z_ — Claimed by claude/xp5j-ref-steward — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
