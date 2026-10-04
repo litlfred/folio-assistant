@@ -33,8 +33,7 @@
  */
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { workflowFiles } from "../../../cat-harness/scripts/known-skills.js";
-import { orderedDependencies } from "../../../cat-harness/schemas/harness-config.js";
+import { processFiles, processRoots } from "../../../cat-harness/src/workflow/process-files.js";
 import { z } from "zod";
 import { basename, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../../../cat-harness/src/workflow/process-model.js";
@@ -60,51 +59,13 @@ import { githubPrincipalFor } from "../core/github-auth.js";
 const ENGINE_MODE = "strict" as const;
 import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "../../../cat-harness/src/workflow/authorize.js";
 
+// Re-exported: the resolver lives in cat-harness so cat-harness scripts
+// (audit-reachability) can measure the SAME list without importing upward.
+export { processFiles, processRoots };
+
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
 /** Resolve a process by file stem (`editing-hci-validation`) or by process id. */
-/**
- * The instances whose diagrams these tools can run: every dependency in
- * overlay order, then the root — LAST, so the root wins a name collision,
- * the rule `resolveSkillDirs` states for skills.
- *
- * Bean `nf2z`. `workflowFiles(root)` alone is root-only, through
- * `kgDirectories`, and on purpose: the export and the renderers rely on it.
- * But since the split the root instance declares no diagram at all — every
- * one belongs to a dependency — so a server started at the repository root
- * listed "Processes: (none)" and could start nothing, which made the
- * recorded-instance rule (bean `vlhk`) uncompliable. Only THIS module's
- * resolver changes; the root-only function stays as it is.
- *
- * A dependency graph that cannot be resolved falls back to the root alone
- * rather than taking the tools down — the same posture as the role graph
- * below. `check:harness-deps` is where a broken graph is a finding.
- */
-export function processRoots(repoRoot: string): string[] {
-  let deps: string[] = [];
-  try {
-    deps = orderedDependencies(repoRoot).map((d) => resolve(d.rootPath));
-  } catch {
-    deps = [];
-  }
-  return [...new Set([...deps, resolve(repoRoot)])];
-}
-
-/** Every `.bpmn` across {@link processRoots}, root's copy first for a shared stem. */
-export function processFiles(repoRoot: string): string[] {
-  const seen = new Map<string, string>();
-  // Root first, so its file claims the stem; a dependency's same-named
-  // diagram is then shadowed rather than listed twice.
-  for (const r of [...processRoots(repoRoot)].reverse()) {
-    for (const f of workflowFiles(r)) {
-      if (!f.endsWith(".bpmn")) continue;
-      const stem = basename(f, ".bpmn");
-      if (!seen.has(stem)) seen.set(stem, f);
-    }
-  }
-  return [...seen.values()].sort();
-}
-
 async function resolveModel(repoRoot: string, ref: string): Promise<ProcessModel> {
   // EVERY declared knowledge-graph directory, not the literal
   // `processes/`. A topical layout puts diagrams in more than one
