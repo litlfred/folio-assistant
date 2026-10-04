@@ -44,7 +44,7 @@ import { ConcernGroupsSchema } from "../../../cat-harness/schemas/concern-groups
 import { declaredGroupsIn, groupedChildrenIn, groupingKinds, resolveGroups } from "../../../cat-harness/scripts/concern-groups.js";
 import { packageDirsIn } from "../../../cat-harness/scripts/skill-topics.js";
 import { knownSkills, workflowFiles } from "../../../cat-harness/scripts/known-skills.js";
-import { collect as collectInstanceGraph } from "../../../cat-harness/scripts/check-instance-graph.js";
+import { collect as collectInstanceGraph } from "../check-instance-graph.js";
 import { collect as collectConcernGroups } from "../check-concern-groups.js";
 
 const REPO = resolve(import.meta.dir, "../../..");
