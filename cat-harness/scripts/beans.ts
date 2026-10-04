@@ -62,6 +62,7 @@ import {
   DEFAULT_BEAN_GRAPH,
   DEFAULT_BEAN_GRAPH_ROOT,
   nodeOfKind,
+  type BeanNodeKind,
   parseBeanGraph,
 } from "../schemas/bean-graph.ts";
 // Bean `9ofm` row D. No cycle: `graph-read` reads the declaration, git and the
@@ -260,6 +261,38 @@ export function resolveBeanDefsAt(graphRoot: string): BeanDefsResolution {
     ? parseBeanGraph(JSON.parse(readFileSync(file, "utf-8")))
     : DEFAULT_BEAN_GRAPH;
   const node = nodeOfKind(graph, "bean-defs");
+  if (!node) return { dir: null, declared };
+  return { dir: join(declared ? dirname(file) : graphRoot, node.path), declared };
+}
+
+/**
+ * Any node of the bean graph, by KIND, with the graph's own relocation applied.
+ *
+ * Bean `9ofm` row D. The bean graph holds six nodes — `bean-defs` (twice:
+ * `defs` and its archive view), `bean-notes`, `workflow-state`,
+ * `merge-queue`, `session-survey` — and every one of them moves when `beans`
+ * is cut over to its branch, because they are all *inside* it. The `defs`
+ * reader had this already; this is the same answer for the rest, so a caller
+ * does not compose `join(repoRoot, "beans", <node>)` and quietly keep reading
+ * the checkout.
+ *
+ * Returns the same three answers {@link resolveBeanDefs} does: a directory,
+ * `null` for "the graph declares no node of this kind", and `unreachable` for
+ * "the graph is on a branch this checkout cannot reach". Never a path that
+ * merely happens not to exist.
+ *
+ * By kind rather than by id, matching {@link nodeOfKind}; a kind held by two
+ * nodes resolves to the first, which is why the archive has
+ * {@link resolveBeanArchive} of its own.
+ */
+export function resolveBeanGraphNode(root: string, kind: BeanNodeKind): BeanDefsResolution {
+  const where = graphReadPath("beans", root);
+  if (where.state === "refused") return { dir: null, declared: true, unreachable: where.reason };
+  const graphRoot = where.state === "ok" ? where.at : join(root, DEFAULT_BEAN_GRAPH_ROOT);
+  const file = join(graphRoot, BEAN_GRAPH_FILE);
+  const declared = existsSync(file);
+  const graph = declared ? parseBeanGraph(JSON.parse(readFileSync(file, "utf-8"))) : DEFAULT_BEAN_GRAPH;
+  const node = nodeOfKind(graph, kind);
   if (!node) return { dir: null, declared };
   return { dir: join(declared ? dirname(file) : graphRoot, node.path), declared };
 }
