@@ -43,6 +43,7 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`stage-ast-sites.ts`](stage-ast-sites.ts) | a file |  |
 | [`stage-ig-sites.test.ts`](stage-ig-sites.test.ts) | a file |  |
 | [`stage-ig-sites.ts`](stage-ig-sites.ts) | a file |  |
+| [`library-strip/`](library-strip/README.md) | described in its own README | |
 | [`templates/`](templates/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

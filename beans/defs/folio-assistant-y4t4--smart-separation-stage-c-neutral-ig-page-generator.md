@@ -1,10 +1,11 @@
 ---
 # folio-assistant-y4t4
 title: 'SMART-* SEPARATION stage C: neutral IG page generator, neutral sidecar overlay, fhir-artifact-index viewer per instance'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-01T12:15:53Z
-updated_at: 2026-10-01T12:15:53Z
+updated_at: 2026-10-04T07:07:44Z
 parent: folio-assistant-n3ni
 ---
 
@@ -19,3 +20,7 @@ fhir-harness/AGENTS.md: nothing here may know about WHO. gen-ig-pages (stage A) 
 - [x] gates: CI green on #1783 (c617cee1, then c05387e8 after A and B merged)
 
 C2 as built: fhir-artifact-index schema, ingest-ig-artifacts, check-artifact-index (+ ingest invocation test) moved core -> fhir-harness. dak -> sidecars, dakApi -> sidecarApi, dakUnbound -> sidecarsUnbound, provenance.dakEnumerations -> sidecarEnumerations; tag folio-fhir-artifact-index/v1 -> v2 (renamed fields under the same tag would misdescribe the data). Committed index.json x3 migrated by key rename only, verified by reversing the rename and comparing to the original. The materialised sidecar DIRECTORY stays dak/ (981 files; the data leaves for the forks anyway): ingest takes --sidecar-dir (default sidecars), the WHO ingest scripts pass dak. tsconfig now covers fhir-harness/{schemas,scripts}: moving the schema out of core had silently dropped it from type-checking, which is how FhirArtifact["dak"] survived the rename; two older type errors in gen-ig-pages surfaced and are fixed.
+
+## Summary of Changes
+
+Closed 2026-10-04 on evidence, by the wm63 session. Stage C landed as #1783 (merge dae1ab4fe87), and all four items were already ticked. The neutral IG page generator and sidecar it introduced were later generalised into the FHIR IG API (`ig-api-views.ts`, bean d313). #1968's exclusion gate treats that API as generic.
