@@ -114,6 +114,65 @@ export const BranchNameSchema = z
 export const KeyedBySchema = z.enum(["commit", "tip", "route", "route-family"]);
 export type KeyedBy = z.infer<typeof KeyedBySchema>;
 
+/**
+ * ## `route-family`, and why its reasoning is HERE
+ *
+ * One entry per MEMBER of a family under a directory's path, the member
+ * supplied at publish time rather than declared — the `STAGING/<slug>/`
+ * previews on `gh-pages`, one per open branch. Bean `xp5j`.
+ *
+ * A fourth keying rather than a flag on `route`, because `route` must not carry
+ * two write contracts for the same reason it is not a synonym for `tip`. Three
+ * things differ, each a decision rather than a detail:
+ *
+ * 1. **The member key is UNTRUSTED** — it derives from a branch name, and
+ *    `.github/workflows/feature-staging.yml` states a branch name is
+ *    attacker-controlled on a fork PR. {@link RouteMemberSchema} is the
+ *    validation.
+ * 2. **Source and destination differ.** A declared `route` is published FROM
+ *    the declared path; a family member is built into a local directory and
+ *    published to a route named at publish time, so the two cannot be one field.
+ * 3. **A member can be REMOVED.** `route`'s contract has no case for it — "a
+ *    generator that stops emitting a page must stop publishing it" — but a
+ *    member's branch can be deleted, and `feature-staging.yml` already deletes
+ *    `STAGING/<slug>` on PR close.
+ *
+ * Like `route`, a `route-family` write carries NO `expect`: a member is a
+ * rendering authored by nobody, so the newer generation wins.
+ *
+ * This text sits beside the enum rather than on
+ * `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`, and that is `1j3q`'s
+ * rule applied to prose: the keying has ONE definition, so it gets one
+ * description. It also keeps this branch out of a file `main` edits constantly
+ * — the earlier arrangement put 67 lines there and `merge-main-bot` refused
+ * every sweep on it.
+ */
+
+/**
+ * A `route-family` MEMBER key — one path segment, from untrusted input.
+ *
+ * The member becomes a path on the published branch, so a traversal here writes
+ * OUTSIDE the family's prefix — over the site at `/` in the worst case. This
+ * REFUSES rather than sanitises: a key that had to be cleaned up is a key whose
+ * author meant something else, and a sanitiser's output is a value nobody
+ * declared.
+ *
+ * ONE SEGMENT is the load-bearing rule. Refusing `/` outright disposes of
+ * `..`, `//`, absolute paths and deep traversal in a single rule rather than as
+ * four patterns somebody has to keep complete. No dot-prefixed segment (the
+ * `kg-core/directory-conventions` guard, written to stay correct if a member
+ * ever stops being one segment); no leading dash, so a member cannot be read as
+ * a flag.
+ */
+export const RouteMemberSchema = z
+  .string()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, "one path segment: alphanumerics, dot, dash, underscore, not starting with a dot or dash")
+  .refine((m) => !m.split("/").some((seg) => seg.startsWith(".")), "no dot-prefixed segment")
+  .refine((m) => m !== "." && m !== ".." && !m.includes(".."), "not a traversal");
+export type RouteMember = z.infer<typeof RouteMemberSchema>;
+
 /** The content is the checkout's own directory at the entry's `path`. */
 export const DirectorySourceSchema = z.object({ kind: z.literal("directory") }).strict();
 

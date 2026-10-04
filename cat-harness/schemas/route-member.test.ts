@@ -14,8 +14,8 @@
  * sanitiser's output is a value nobody declared.
  */
 import { describe, expect, test } from "bun:test";
-import { RouteMemberSchema, DirectoryStorageSchema } from "./cat-harness.ts";
-import { KeyedBySchema } from "./subgraph-source.ts";
+import { DirectoryStorageSchema } from "./cat-harness.ts";
+import { KeyedBySchema, RouteMemberSchema } from "./subgraph-source.ts";
 
 const ok = (m: string) => RouteMemberSchema.safeParse(m).success;
 
