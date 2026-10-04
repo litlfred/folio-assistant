@@ -37,3 +37,6 @@ A clinician or subject matter expert (SME) of a specific health area who validat
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
+
+<footer id="ig-footer" data-prev="ActorDefinition-SGAuthoring.Persona.BusinessAnalyst.html" data-next="ActorDefinition-SGAuthoring.Persona.ContentReviewer.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

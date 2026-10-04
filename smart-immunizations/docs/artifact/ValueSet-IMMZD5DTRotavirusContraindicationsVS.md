@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTRotavirusContraindicationsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTRotavirusContraindicationsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTRotavirusContraindicationsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTRotavirusContraindicationsVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTRotavirusContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTRotavirusContraindicationsVS.jsonld` · [view](ValueSet-IMMZD5DTRotavirusContraindicationsVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD5DTRabiesContraindicationsVS.html" data-next="ValueSet-IMMZD5DTRubellaContraindicationsVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
