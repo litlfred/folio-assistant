@@ -6334,20 +6334,20 @@
       var lib = isLib ? libraryPlaceOf(key) : null;
       if (lib) {
         var libName = "the " + lib.instance + " library";
-        return { kind: "library", name: libName, href: lib.library, entry: lib.entry,
+        return { kind: "library", name: libName, href: safeHref(lib.library), entry: safeHref(lib.entry),
                  heading: "Back to the library?", tip: "Back in " + libName };
       }
       if (a && a.kind === "sticky") {
         var page = String(a.label || "").replace(/\s+/g, " ").trim();
         var pageName = page ? "its page, " + page : "the page it came from";
-        return { kind: "sticky", name: pageName, href: safeHref(a.href) || withBase("/"),
+        return { kind: "sticky", name: pageName, href: safeHref(a.href) || safeHref(withBase("/")),
                  heading: "Back on its page?", tip: "Back on " + pageName };
       }
       if (isLib) {
-        return { kind: "library", name: "the library view", href: withBase("/cat-harness/library/"),
+        return { kind: "library", name: "the library view", href: safeHref(withBase("/cat-harness/library/")),
                  heading: "Back to the library?", tip: "Back in the library view" };
       }
-      return { kind: "todos", name: "your Todos", href: withBase("/todos/"),
+      return { kind: "todos", name: "your Todos", href: safeHref(withBase("/todos/")),
                heading: "Back to your Todos?", tip: "Back in your Todos" };
     }
     /** "in the X library" / "in your Todos" / "on its page, Y". */
@@ -6359,10 +6359,12 @@
       body.appendChild(el("p", { class: "fa-glass-confirm-say" },
         "Put \u201c" + title + "\u201d back " + backTo(place) + "? It stays in your folio."));
       var again = el("p", { class: "fa-glass-confirm-again" }, "To put it on the glass again, open ");
-      again.appendChild(el("a", { href: place.href }, place.name));
-      if (place.entry) {
+      var backHref = safeHref(place.href);
+      again.appendChild(el("a", { href: backHref }, place.name));
+      var entryHref = safeHref(place.entry);
+      if (entryHref) {
         again.appendChild(document.createTextNode(" \u2014 or go straight to "));
-        again.appendChild(el("a", { href: place.entry }, "its entry"));
+        again.appendChild(el("a", { href: entryHref }, "its entry"));
       }
       again.appendChild(document.createTextNode("."));
       body.appendChild(again);
@@ -6391,7 +6393,9 @@
     function sayShelved(title, place) {
       while (shelvedSay.firstChild) shelvedSay.removeChild(shelvedSay.firstChild);
       shelvedSay.appendChild(document.createTextNode("“" + title + "” is back " +
-        (place.kind === "sticky" ? "on " : "in ")));      shelvedSay.appendChild(el("a", { href: place.href }, place.name));
+        (place.kind === "sticky" ? "on " : "in ")));
+      var backHref = safeHref(place.href);
+      shelvedSay.appendChild(el("a", { href: backHref }, place.name));
       shelvedSay.appendChild(document.createTextNode(" — it stays in your folio."));
     }
 
