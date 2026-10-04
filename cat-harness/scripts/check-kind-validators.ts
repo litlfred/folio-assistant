@@ -20,7 +20,8 @@
  * to be closed.
  *
  * @module folio-assistant/scripts/check-kind-validators
- * @covers validators, computed — every `folio-validator/v1` node is parsed, resolved and
+ * @covers validators, block-kinds, computed — every discovered block kind is checked against
+ *   the kinds BlockSchema types, both directions; every `folio-validator/v1` node is parsed, resolved and
  *   joined onto a kind (one naming no kind is a finding), which is fixed coverage of the
  *   `validators` graph; the KINDS it sweeps are whichever declare `nodeSchemas`, so that half
  *   is computed and a literal list would go stale silently
@@ -33,6 +34,8 @@
 import { BASE_GRAPH_KINDS, declaredKindNodes, defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { FOLIO_GRAPH_KIND } from "../schemas/folio-graph-kind.js";
 import { GLOSSARY_GRAPH_KIND } from "../schemas/glossary-graph-kind.js";
+import { BLOCK_KINDS } from "../schemas/block-kinds.js";
+import { typedBlockKinds } from "../schemas/constraints.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
@@ -323,6 +326,21 @@ async function main(): Promise<number> {
   if (orphans.length > 0) {
     console.log(`\n✗ ${orphans.length} validator node(s) name a graph kind no instance declares:`);
     for (const o of orphans) console.log(`  ✗ ${o.file}: validates kind "${o.node.validates.kind}"`);
+    return 1;
+  }
+
+  // BLOCK KINDS (bean riit, step 2): discovered from `folio-block-kind/v1`
+  // nodes, while the per-kind Zod schemas are code. A discovered kind the code
+  // does not type has no schema to validate its blocks; a typed kind nobody
+  // declares is invisible to every list read off the nodes.
+  const discovered = new Set<string>(BLOCK_KINDS);
+  const typed = new Set(typedBlockKinds());
+  const untyped = [...discovered].filter((k) => !typed.has(k));
+  const undiscovered = [...typed].filter((k) => !discovered.has(k));
+  console.log(`\n${discovered.size} block kind(s) discovered from block-kinds/ nodes`);
+  if (untyped.length || undiscovered.length) {
+    for (const k of untyped) console.log(`  ✗ block kind "${k}" is declared by a node but no BlockSchema member types it`);
+    for (const k of undiscovered) console.log(`  ✗ block kind "${k}" is typed by BlockSchema but no block-kinds/ node declares it`);
     return 1;
   }
 

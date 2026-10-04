@@ -939,3 +939,13 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
   },
 ];
 
+/**
+ * The `kind` literal of each member of {@link BlockSchema}'s union: the block
+ * kinds the CODE types. Block kinds themselves are discovered from nodes (bean
+ * riit, step 2), so `check:kind-validators` and `block-kind-nodes.test.ts`
+ * compare this against the discovered set in both directions.
+ */
+export function typedBlockKinds(): string[] {
+  const options = (BlockSchema as unknown as { options: { shape: { kind: { value: string } } }[] }).options;
+  return options.map((o) => o.shape.kind.value);
+}

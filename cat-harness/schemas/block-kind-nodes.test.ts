@@ -10,19 +10,13 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { BLOCK_KIND_NODES, BLOCK_KINDS, DOCUMENT_BLOCK_KINDS, MATH_BLOCK_KINDS, discoverBlockKinds, kindForBuilder } from "./block-kinds";
-import { BlockSchema, KNOWN_LABEL_PREFIXES, LABEL_PREFIXES } from "./constraints";
+import { KNOWN_LABEL_PREFIXES, LABEL_PREFIXES, typedBlockKinds } from "./constraints";
 import { BLOCK_KIND_TO_FOLIO_TYPE, KIND_PREFIXES, assertPrefixesInSync } from "./jsonld";
 import { KIND_HEADINGS } from "./translation";
 
-/** The `kind` literal of each member of the discriminated union — the TYPED kinds, read from code. */
-function typedKinds(): string[] {
-  const options = (BlockSchema as unknown as { options: { shape: { kind: { value: string } } }[] }).options;
-  return options.map((o) => o.shape.kind.value);
-}
-
 describe("block kinds are discovered, not listed", () => {
   test("every typed kind is discovered, and every discovered kind is typed", () => {
-    expect([...BLOCK_KINDS].sort()).toEqual(typedKinds().sort());
+    expect([...BLOCK_KINDS].map(String).sort()).toEqual(typedBlockKinds().sort());
   });
 
   test("the math kinds are the paper adapter's, declared by folio-assistant-sci; the rest by folio-assistant-core", () => {
