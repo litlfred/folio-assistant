@@ -29,9 +29,9 @@ A comment on PR #2078, plus a message to the Merge Manager role.
 ## Done when
 - [x] main merged into #2078 (merge commit), wm63 conflict resolved keeping both sides, `beans:notes` regenerated, and pushed by hand (the merge-main bot cannot push since #2000)
 - [x] after the merge: `git submodule update --init` before staging; `git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` is empty
-- [ ] owed `Code-quality gates` run green on that head
-- [ ] the PR body names the owning session; the `ready-to-merge` label is present; a signed `ready: <head sha>` is posted
-- [ ] `bun run merge:guard 2078` passes all 7 checks, and it lands
+- [x] owed `Code-quality gates` run green on that head
+- [x] the PR body names the owning session; the `ready-to-merge` label is present; a signed `ready: <head sha>` is posted
+- [ ] `bun run merge:guard 2078` passes all 7 checks, and it lands (all 7 checks pass; awaiting Merge Manager merge)
 
 ## Fails if
 - the resolution drops either side's wm63 text
