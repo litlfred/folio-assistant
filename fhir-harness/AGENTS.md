@@ -21,6 +21,12 @@ IG it exists for. That is why the refusal is written as a checkable list in
 [`skills/fhir-ig-base/ig-build-pipeline.md`](skills/fhir-ig-base/ig-build-pipeline.md)
 rather than left as an intention.
 
+**It is a gate since 2026-10-03: `bun run check:fhir-harness-exclusions`.** It
+is a ratchet over a baseline of the hits that were already here. A new one
+fails CI. The fix is to move the WHO part up into the overlay, never to widen
+the baseline. The skill above says what counts as a mention rather than a
+dependency.
+
 ## Where the layer sits
 
 ```
