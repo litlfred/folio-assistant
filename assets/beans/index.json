@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 825,
+      "count": 827,
       "unit": "beans"
     }
   },
@@ -4857,6 +4857,20 @@
       "updatedAt": "2026-10-02T21:16:16Z",
       "preview": "Issue #1925. Owner ruling 2026-10-02: \"dont treat stickies differently. combine best of each. lower faded avatar/theme looks nicer. upper smaller same size closed looks niceer. icons are a mess on both. make compact underneath. [x] is what? send to fsh-guts? make sure confirmed by user\"\n\n## Done when\n- one renderer for landing and todo stickies; same size closed; faded avatar/theme on all\n- one ic",
       "file": "beans/defs/folio-assistant-dxje--stickies-one-component-1925-one-sticky-for-landing.md"
+    },
+    {
+      "id": "folio-assistant-dxqm",
+      "title": "UNREACHABLE DECLARED ARTEFACTS: a declared executable artefact nothing can reach reads exactly like a decision nobody takes — measured on merge-priority.dmn (kg-qa says pass, no caller can evaluate it) and merge-queue.ts (only importer is its own test)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T05:49:00Z",
+      "updatedAt": "2026-10-04T06:59:00Z",
+      "preview": "`1xhc` one level deeper. The epic's line is *a gate that does not fire is\nindistinguishable from one that passed*. This is: **a declared executable\nartefact that nothing can reach is indistinguishable, from outside, from a\ndecision nobody takes.**\n\nTwo instances found by the merge steward 2026-10-04, both past all 217 CI gates:\n\n1. **`cat-harness/scripts/merge-queue.ts`** — docblock says *\"a libra",
+      "file": "beans/defs/folio-assistant-dxqm--unreachable-declared-artefacts-a-declared-executab.md"
     },
     {
       "id": "folio-assistant-e8m3",
@@ -11292,7 +11306,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T07:47:30Z",
-      "updatedAt": "2026-09-30T10:28:59Z",
+      "updatedAt": "2026-10-04T15:52:25Z",
       "preview": "Found 2026-09-27 while answering the owner's question *\"how resolve/gate/qa escape\nimports?\"* — sibling to `zlmp` under the same SPLIT epic, and **not** a reopening\nof it.\n\n## Two axes, and only one of them has ever been driven to zero\n\n`zlmp` drove the MODULE axis to zero: `check:partition` reports **0**\nwrong-direction edges today, and that is correct on its own terms — it measures\nedges between",
       "file": "beans/defs/folio-assistant-yj6r--escapes-15-instance-boundary-imports-checkpartitio.md"
     },
@@ -11379,6 +11393,20 @@
       "updatedAt": "2026-09-20T22:53:52Z",
       "preview": "Found while building the `elsewhere` state (bean `flh4`, PR #619). A `ContentDirectory`'s `path` resolves against the INSTANCE root; its `coverage.visualiser` / `coverage.docs` resolve against the REPO root. Nothing in `SubgraphCoverageSchema` or `ContentDirectorySchema` says so.\n\nMeasured 2026-09-20 across `harness.json` and `cat-harness/harness.json`: of 27 coverage paths, **25 resolve only from",
       "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
+    },
+    {
+      "id": "folio-assistant-ytqn",
+      "title": "MAIN IS RED: claim-branch-store's conflict test is SYSTEMATICALLY over bun's 5s default in CI — 3 runs at 5820/6252/6908ms, passes alone in 16s",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:10:15Z",
+      "updatedAt": "2026-10-04T08:10:40Z",
+      "preview": "`cat-harness/scripts/tests/claim-branch-store.test.ts` — *\"THE REAL CONFLICT: a\nsibling writes BETWEEN our read and our write — `expect` catches it\"` — **times\nout against bun's 5000 ms default in every CI run measured**, and the assertion\nthat reports is `Expected: \"already-claimed\" / Received: \"unknown\"`, which is\nthe timeout cutting the probe short rather than a wrong verdict.\n\nLanded on `main`",
+      "file": "beans/defs/folio-assistant-ytqn--main-is-red-claim-branch-stores-conflict-test-is-s.md"
     },
     {
       "id": "folio-assistant-yx9p",
@@ -11827,14 +11855,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 379,
+        "total": 381,
         "closed": 140,
-        "open": 239,
-        "inProgress": 92,
-        "todo": 146,
+        "open": 241,
+        "inProgress": 93,
+        "todo": 147,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.36939313984168864
+        "share": 0.3674540682414698
       },
       {
         "id": "folio-assistant-vuip",
@@ -11868,8 +11896,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 486,
-    "coveredOpen": 481,
+    "openTotal": 488,
+    "coveredOpen": 483,
     "duplicateIds": 1
   }
 }

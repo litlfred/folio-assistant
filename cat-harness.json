@@ -312,14 +312,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T17:13:11.721Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9019e4c99a1072b56c8c7b7693d402bd48febca1",
-  "sourceCommitSha": "9019e4c99a1072b56c8c7b7693d402bd48febca1",
-  "sourceCommitAt": "2026-10-04T19:07:50+02:00",
+  "generatedAt": "2026-10-04T17:49:39.293Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c858234ad5f8c23b38a6c87eef427cb0e340ed92",
+  "sourceCommitSha": "c858234ad5f8c23b38a6c87eef427cb0e340ed92",
+  "sourceCommitAt": "2026-10-04T19:42:24+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 306,
+    "Skill": 307,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 34,
@@ -1681,6 +1681,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/artefact-reachability",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "artefact-reachability",
+      "title": "Artefact reachability — load is not evaluability, and a test is not a caller",
+      "description": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/artefact-reachability.md",
+      "instructionLines": 307,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "flushable-containers",
@@ -2619,7 +2635,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 829,
+      "instructionLines": 838,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6455,6 +6471,7 @@
       "path": "skills/kg/kg-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/artefact-reachability",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/associate-harness",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/audit-coverage",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-node-review",
@@ -50331,7 +50348,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 279,
+      "fileCount": 280,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -50419,7 +50436,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1027,
+      "fileCount": 1029,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
     {
@@ -50538,7 +50555,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1947,
+      "fileCount": 1948,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -50572,7 +50589,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1138,
+      "fileCount": 1140,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -50589,7 +50606,7 @@
       ],
       "description": "The harness runtime that is not the server: the content vocabulary (`content-types.ts`), blocks, the workflow engine, CRDM, logging, the git/cache/feedback/safe-path helpers under `core/`, and the built-in adapter table. The MCP and HTTP server itself moved to `cat-harness-tools/src/` (bean `70lx`, B1). `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
       "readmePath": "src/README.md",
-      "fileCount": 46,
+      "fileCount": 47,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
     },
     {
@@ -50623,7 +50640,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1143,
+      "fileCount": 1145,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -50691,8 +50708,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "9019e4c99a1072b56c8c7b7693d402bd48febca1",
+    "sha": "c858234ad5f8c23b38a6c87eef427cb0e340ed92",
     "pr": "main",
-    "run": "37219338946"
+    "run": "37221534463"
   }
 }
