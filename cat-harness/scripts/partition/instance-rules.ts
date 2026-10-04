@@ -294,6 +294,7 @@ export const RULES: Rule[] = [
       // once per declared instance for this repository's deploy, and reads
       // only the declarations (bean `4ak5`).
       "scripts/instance-exports.ts",
+      "scripts/root-index.ts",
       // HARNESS on the same argument: its subject is this repository's own
       // workflows -- which generators each invokes -- and it reads no folio
       // content at all (issue #777, bean `qgpo`).

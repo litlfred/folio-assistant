@@ -669,6 +669,17 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
 
+          # The ROOT INDEX (bean `4ak5` item 3): `<site>/index.jsonld` and its
+          # `.json` alias name every declared instance at depth 1 — its export,
+          # where this site serves it, its directories and graph kinds, its
+          # dependencies, its subgraph root, and a node count and digest of
+          # the document. LAST in this step because it reads what the lines
+          # above wrote, and it exits 1 on any instance whose export is not
+          # there rather than publishing a shorter map. Built here and never
+          # committed (owner, 2026-10-04): a committed copy conflicts whenever
+          # two PRs change the set of harnesses.
+          bun run cat-harness/scripts/root-index.ts --site ./_site
+
       # Every `maintains` claim, checked where the answer exists.
       #
       # A Tool's `maintains` asserts it is authoritative for a PUBLISHED artefact.
