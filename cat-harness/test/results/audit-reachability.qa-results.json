@@ -16,7 +16,7 @@
     },
     "entry-point-latent": {
       "summary": "A LIVE library carrying a command-line entry point nothing runs: the module is reached, its `import.meta.main` branch is not. Kept apart from the orphans because one number for both would hide a module that exists only as a claim inside a list of dead CLI branches — the `typed-only` split in `audit-coverage`, for the same reason.",
-      "count": 18,
+      "count": 19,
       "entries": [
         {
           "file": "cat-harness/content/pipeline/qa-checkers-extended.ts",
@@ -105,6 +105,14 @@
             "mainGuard": false
           },
           "importers": 5
+        },
+        {
+          "file": "cat-harness/scripts/kind-table.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "importers": 1
         },
         {
           "file": "cat-harness/scripts/merge-queue.ts",
@@ -1006,5 +1014,5 @@
       ]
     }
   },
-  "total": 126
+  "total": 127
 }
