@@ -176,7 +176,58 @@ per-checkout `git config`.
    rest re-run without it. The owning session fixes and re-signals ready; it
    is never merged on its behalf.
 
+## When the authors stall: the steward dispatches unblockers
+
+Owner, 2026-10-04, verbatim: *"dispatch agent to handle where CI isnt green.
+make sure you dont use up all github workspace"* and *"if there is something
+small an agent can handle that unblocks, then do so"*. Authors' sessions hit
+usage limits together, so the whole hand-back column can go quiet for an hour
+while every member in it is one small fix away from admission.
+
+**This adds a second actor to step 4 above. It changes nothing else.** An
+unblocker fixes the head. It **never merges, never adds `ready-to-merge`, and
+never posts a `ready:` marker.** The author still vouches for the PR, and the
+steward still lands it only after the author signals ready, or under the
+owner's explicit release.
+
+**Who goes:** the PRs `merge:steward` routes to hand-back. Leave out drafts,
+PRs whose author was active in the last 15 minutes, PRs another session has
+claimed, and PRs under an owner block (a ruling such as "this blocks the PR"
+is a judgement about content, and fixing the code does not lift it). Group
+them into a few agents, each in its own worktree. The general swarm rules are
+in [`swarm-management`](swarm-management.md).
+
+**Every unblocker gets the same rules, written once and handed to all of
+them:**
+
+| rule | why |
+|---|---|
+| **at most ONE push per PR**, after `bun run gates` locally | each push runs full CI **and** deploys a staging preview into `gh-pages`, which has a size budget. Pushing speculatively spends both |
+| no `workflow_dispatch`, re-run, empty commit or close/reopen | the same budget, and a dispatched run is not an owed run (above) |
+| merge commits only: no rebase, amend or force-push | it is somebody else's branch |
+| authored conflict → resolve only dead code, or a pure addition carried over verbatim; otherwise quote both sides and stand down | choosing between two behaviours is the author's call |
+| `git submodule update --init` and `bun run state:mount` before `regen` | without the submodules `merge:steward` cannot load. Without the mount, `fsh-guts:viz` exits non-zero and `audit:coverage:strict` goes red |
+| delete the worktree's `node_modules` at the end | four parallel installs run out of the container's disk |
+| one comment per PR: root cause, the commit it pushed or the reason it stood down | the author comes back to an explanation, not a mystery commit |
+
+**`missing-required` is often a head that CI never started, not a slow
+one.** The causes to check, in order:
+- the PR edits a workflow file and GitHub cannot parse it, so no run is
+  created at all;
+- the head was pushed with `GITHUB_TOKEN`, which starts no `pull_request`
+  run;
+- the run is held at `action_required`.
+
+The first one is not visible in the check list, so look at the YAML.
+
 ## Landing
+
+**Re-run `merge:steward` after every merge, before the next one.** Each merge
+moves `main`. A member admitted against the old `main` can turn `dirty` and
+then cannot land at all. Measured 2026-10-04: #2059 was admitted at
+`f8e1006d`, then reported `dirty` once #2069 landed. Its tested head is still
+green, but GitHub refuses to merge a conflicted PR, so it waits for its
+`merge:main` round and fresh CI on the new head.
 
 Only with the owner's release (`Task_Release`): explicit, or a standing ruling
 quoted verbatim with its date. What lands is exactly the SHA CI tested; if
