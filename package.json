@@ -364,8 +364,6 @@
     "readme:sync:root:check": "bun run cat-harness/content/pipeline/readme-sections.ts --dir . --check",
     "readme:sync:all": "bun run cat-harness/content/pipeline/readme-sections.ts --all",
     "readme:sync:all:check": "bun run cat-harness/content/pipeline/readme-sections.ts --all --check",
-    "readme:sync:bootstrap": "bun run render:bpmn && bun run cat-harness/content/pipeline/readme-sections.ts --dir bootstrap",
-    "readme:sync:bootstrap:check": "bun run cat-harness/content/pipeline/readme-sections.ts --dir bootstrap --check",
     "check:tools-closure": "bun run bootstrap-tools/scripts/check-closure.ts",
     "check:node-iris": "bun run bootstrap-tools/scripts/check-node-iris.ts",
     "iri:sync": "bun run bootstrap-tools/scripts/iri-sync.ts",

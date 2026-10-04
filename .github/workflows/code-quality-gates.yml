@@ -1273,12 +1273,9 @@ jobs:
       - name: Every instance README's generated sections are current
         run: bun run readme:sync:all:check
 
-      # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
-      # `kg:files` (every file it holds), both generated from its declaration
-      # (owner, 2026-09-29). The pictures themselves are checked by
-      # `render:bpmn:check`; this checks the README that shows them.
-      - name: bootstrap's README generated sections are current
-        run: bun run readme:sync:bootstrap:check
+      # bootstrap's README is NOT checked here: owner ruling 2026-10-01, "each
+      # repo owns its README" — bootstrap's own CI checks it (litlfred/bootstrap#1,
+      # check.yml). `readme:sync:all:check` above skips submodule roots (bean kye5).
 
       # One README per LIBRARY ITEM, from its own manifest (bean `qgjh`, owner
       # 2026-09-30: "like bootstrap readmes"). BEFORE the directory READMEs:
