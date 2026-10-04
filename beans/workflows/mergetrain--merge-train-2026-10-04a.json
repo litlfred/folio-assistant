@@ -538,7 +538,7 @@
   ],
   "status": "running",
   "startedAt": "2026-10-04T15:51:24.152Z",
-  "updatedAt": "2026-10-04T16:41:19.425Z",
+  "updatedAt": "2026-10-04T16:44:25.893Z",
   "children": {
     "Call_ChecksPresent": {
       "id": "mergetrain--merge-train-2026-10-04a/Call_ChecksPresent",
@@ -1002,7 +1002,7 @@
       "subject": "merge-train-2026-10-04a",
       "bean": "folio-assistant-hfag",
       "tokens": [
-        "GW_Owner"
+        "Task_Fix"
       ],
       "arrivals": {},
       "history": [
@@ -1080,11 +1080,82 @@
               "https://litlfred.github.io/folio-assistant/policies/http-gateway"
             ]
           }
+        },
+        {
+          "at": "2026-10-04T16:42:26.937Z",
+          "node": "GW_Owner",
+          "outcome": "yes",
+          "actor": "merge-steward (session_019gRX6w8kzAX6wpHbgdyu3s)",
+          "note": "#1898's owning session (session_01VfkKocGaQW7Msro2t5S66U) is live; ejection handed back on b8de with a PR comment.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "session-coordinator",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack#3",
+            "prov:startedAtTime": "2026-10-04T16:42:26.937Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "session-coordinator",
+              "prov:hadPlan": "merge-refusal#GW_Owner"
+            },
+            "prov:used": [
+              "1898"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-10-04T16:44:25.892Z",
+          "node": "Task_HandBack",
+          "actor": "merge-steward (session_019gRX6w8kzAX6wpHbgdyu3s)",
+          "note": "#1898 handed back on hand-back bean b8de with fail condition: take-base on gitignored-tracked skills.lsi.json fails (tool defect u4up); re-admit after u4up or #2066. Train #2113 also needed 1635342194 to restore the two LSI files merge:train dropped.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "session-coordinator",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "mergetrain--merge-train-2026-10-04a/Call_EjectHandBack#4",
+            "prov:startedAtTime": "2026-10-04T16:44:25.892Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "session-coordinator",
+              "prov:hadPlan": "merge-refusal#Task_HandBack"
+            },
+            "prov:used": [
+              "folio-assistant-b8de"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
         }
       ],
       "status": "running",
       "startedAt": "2026-10-04T16:41:04.695Z",
-      "updatedAt": "2026-10-04T16:41:19.425Z"
+      "updatedAt": "2026-10-04T16:44:25.893Z"
     }
   }
 }
