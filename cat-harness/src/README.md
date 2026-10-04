@@ -14,11 +14,13 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`content-types.ts`](content-types.ts) | a file |  |
 | [`google-drive-mcp.py`](google-drive-mcp.py) | a file |  |
 | [`index.ts`](index.ts) | a file |  |
+| [`no-content-adapter.ts`](no-content-adapter.ts) | a file |  |
 | [`qa-agent-write.test.ts`](qa-agent-write.test.ts) | a file |  |
 | [`qa-agent-write.ts`](qa-agent-write.ts) | a file |  |
 | [`route-groups.ts`](route-groups.ts) | a file |  |
 | [`sage-mcp-server.py`](sage-mcp-server.py) | a file |  |
 | [`server.ts`](server.ts) | a file |  |
+| [`tool-groups.test.ts`](tool-groups.test.ts) | a file |  |
 | [`tool-groups.ts`](tool-groups.ts) | a file |  |
 | [`types.ts`](types.ts) | a file |  |
 | [`auth/`](auth/) | _nothing declares what this holds_ | |
