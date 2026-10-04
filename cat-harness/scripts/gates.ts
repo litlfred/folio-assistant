@@ -243,6 +243,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `uoob`. The merge guard's evaluate mode, posting the `merge-guard`
+    // commit status. Its subject is a PULL REQUEST's live state on GitHub —
+    // labels, comments, timeline, the head's runs — not the tree, so a
+    // contributor has no verdict to get from it locally, and it needs
+    // `statuses: write`. Its logic is pinned by merge-guard.test.ts in
+    // `bun test`, against the three real PRs it exists because of.
+    match: "scripts/merge-guard.ts",
+    kind: "ci-only",
+    reason:
+      "judges a PR's live GitHub state rather than the tree and needs `statuses: write`; its logic is " +
+      "covered by merge-guard.test.ts in `bun test`",
+  },
+  {
     // Bean `16ei`. The scheduled retention job for the `qa-reports` branch.
     // It WRITES a branch rather than judging a tree, needs `contents: write`
     // and `pull-requests: read`, and a contributor has no verdict to get from
@@ -1135,6 +1148,12 @@ export interface ScriptExemption {
  * whole difference, since the comment silently covered six of nine.
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+  {
+    script: "split:baseline:check",
+    kind: "report",
+    reason:
+      "A COMPARISON FOR ONE CHANGE, not a property of every commit — bean `pyds`. It compares the served MCP tools and the resolvable skills against the stage-0 baseline of the cat-harness-tools split, and its only consumer is the stage-1a move (`70lx`), whose falsifiers say a change that only MOVES files must leave both identical. Every other pull request legitimately adds a skill or a tool, so as a CI gate it would go red on ordinary work and teach the next agent to rewrite the baseline to get green, which is a ratchet with no direction. The 70lx PRs run it by hand and quote the result; once the split is done it has no subject, and the script and its baseline are removed with the last 70lx batch",
+  },
   {
     script: "check:test-budgets",
     kind: "report",

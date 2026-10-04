@@ -1,11 +1,11 @@
 ---
 # folio-assistant-veiu
 title: 'FHIR-HARNESS: clear the exclusion-gate baseline to zero (wm63 stream 2)'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-03T08:54:49Z
-updated_at: 2026-10-03T08:54:49Z
+updated_at: 2026-10-04T14:02:31Z
 parent: folio-assistant-wm63
 ---
 
@@ -23,3 +23,5 @@ The gate `check:fhir-harness-exclusions` (smart-base/scripts/) was turned on 202
 ## Owner ruling 2026-10-03: the three transforms stay in fhir-harness
 
 *"keep logical-model schemas, ValueSet schemas, JSON-LD vocabularies in fhir-harness. it is only transforming existing (meta)data, not adding any new constraints or profiles (e.g. like smart guidelines does). it is generic."* Recorded in the gate's MOVED_DOWN, in ig-build-pipeline §"Five steps that came DOWN" and in dak-postprocessing. The `tools/index.ts` dak-step baseline entry is dropped (#1968).
+
+_2026-10-04T14:02:31Z_ — Claimed by claude/salvage-1964-fhir-harness-exclusions — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

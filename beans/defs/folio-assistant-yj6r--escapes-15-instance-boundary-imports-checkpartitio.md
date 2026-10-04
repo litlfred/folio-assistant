@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-30T10:28:59Z
+updated_at: 2026-10-04T15:52:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -130,31 +130,83 @@ deletes the need for the part I proposed building.
 
 ## Done when
 
-[ ] each of the 8 clusters adjudicated and landed, cheapest first, one PR each:
+[x] each of the 8 clusters adjudicated and landed, cheapest first, one PR each:
     `external-schema` (3) -> ingest/materialisation (4) -> `dublin-core` +
     `adapters/document/` (2) -> `library-ref` (1) -> `changeset` (1) ->
     `glossary` (2+1) LAST
-    — **7 of 8 landed; ALL 8 adjudicated.** `dublin-core` + `adapters/document/`
-    is the one left, and it is left ON A MEASUREMENT rather than unreached:
-    hoisting that directory removes 2 escapes and creates 15 (see this bean's
-    last Summary of Changes). Its closure is a three-instance move and needs its
-    own ruling. NOT ticked, because "adjudicated" and "landed" are both in this
-    line and only one of them is true of the eighth
+    — **ALL 8 landed and ALL 8 adjudicated**, the eighth as the two-step
+    adapters closure the owner ruled option A on: `adapters/paper/` ->
+    `folio-assistant-sci` (bean `y5si`, `880b707f1da`), then
+    `adapters/document/` + its 6 consuming tests -> `folio-assistant-core`
+    (bean `ybp4`, PR #1687). The "creates 15" figure this line carried was
+    re-derived as **16** in `r0tm` and then routed around rather than paid:
+    hoisting `paper/` FIRST costs 0 on this axis, which is what stopped the
+    eighth cluster being all-or-nothing
 [x] `glossary` ruled on explicitly — the owner ruled 2026-09-30 that it is
     CONTENT: `build-glossary.ts` moves UP into `folio-assistant-core`, the
     schema stays. Landed on `claude/yj6r-glossary-cluster` (PR #1541, issue
     #1540). The four core importers turned out to be the whole of it — all
     core's own glossary tooling — so it is not shared vocabulary
-[ ] the import axis reads 0 `cat-harness ->` sibling escapes, measured by
+[x] the import axis reads 0 `cat-harness ->` sibling escapes, measured by
     resolved import specifier and not by name occurrence
-    — **reads 2** as of PR #1561 (2026-09-30), down from 15. Both remaining are
-    `adapters/document/intake-records.ts` and its test, on `schemas/dublin-core`.
-    NOT earnable until the `adapters/` closure above is ruled on: there is no
-    move that takes this to 0 without taking it through 15 first
-[ ] only THEN: `check:reference-direction` wired into a workflow, with a failing
+    — **reads 0.** Re-measured 2026-10-04 on `origin/main` @ `63ec4fffc4bf`
+    rather than carried from `ybp4`'s report, because a box is earned by a
+    measurement and not by a summary: `bun run check:import-direction --all`
+    prints `0 wrong-direction` for every one of 14 declared instances, GATES 12
+    of them (the two it only reports hold no code files, which that tool
+    refuses to pass on behalf of), and exits 0. Two things it reports rather
+    than grades, and that this tick therefore does NOT cover: **73**
+    `import(expr)` calls in **38** files take a non-literal specifier, printed
+    as could-not-determine and never folded into the 0; and the
+    `undetermined` line does not appear at all, which is this tool's way of
+    saying every declared instance in the checkout now declares `needs`
+[x] ~~only THEN: `check:reference-direction` wired into a workflow, with a
+    failing criterion that bites on a single-target escape~~ — **MOVED to bean
+    `1bvx` on the owner's ruling, 2026-10-04** (answered to session
+    session_01BccmnVFbtRpKxM39kyVw9q: *"Move box, drop clause"*). This box
+    named the PROSE axis, which §"NOT in scope" excludes; `1bvx` already owns
+    that gate and already requires that it go into CI green, not red. The
+    import-axis gate this bean needed is wired: `code-quality-gates.yml` runs
+    `bun run check:import-direction --all`, blocking, and it bites on a
+    single-target escape (measured 2026-10-04). The text below is the
+    reasoning recorded before the ruling:
+    (was) only THEN: `check:reference-direction` wired into a workflow, with a failing
     criterion that bites on a single-target escape
-[ ] the axis writes a committed sidecar, and `audit:coverage` reports the kind
+    — **this box names the wrong gate, and the half that matters to this bean
+    is already done.** On the IMPORT axis — the axis every other box here
+    measures — the gate is wired and it bites:
+    `.github/workflows/code-quality-gates.yml` runs `bun run
+    check:import-direction --all` as a blocking step with no
+    `continue-on-error` (measured 2026-10-04: `grep -rn import-direction
+    .github/workflows/` returns exactly that one line), and `--all` fails on a
+    SINGLE-target escape, which is the property this box asks for.
+    `check:reference-direction` is the PROSE axis that this bean's own §"NOT in
+    scope" excludes, and it still **exits 1** on `origin/main` (measured
+    2026-10-04), so wiring it would be turning a red gate on — what the
+    repository's standing rule, and that checker's own comment, exist to
+    forbid. Left UNTICKED rather than reworded: the box as written cannot be
+    earned without taking on the out-of-scope axis, and editing a "done when"
+    to match what was delivered is how it stops being a test
+[x] `audit:coverage` reports the kind as JUDGED rather than merely typed —
+    **the "writes a committed sidecar" clause is DROPPED on the owner's ruling,
+    2026-10-04** (same answer). Why: `check:import-direction` writes nothing on
+    purpose, so that it cannot inherit `ymsu`, where `bun test` repairs the
+    sidecar that a later gate compares against itself. The remaining clause is
+    earned: `audit:coverage` reads kind `code` as `covered` (16 gates).
+    The text below is the reasoning recorded before the ruling:
+    (was) the axis writes a committed sidecar, and `audit:coverage` reports the kind
     as JUDGED rather than merely typed
+    — **second clause earned, first clause not, so the box stays open.**
+    Measured 2026-10-04, `bun run audit:coverage`: kind `code` reads
+    `1913 files / 0 criteria / 16 gates / 716 sidecars / covered`, so the kind
+    is JUDGED and not merely typed. But `check:import-direction` **writes
+    nothing**, and deliberately — its CI step says so in as many words, so that
+    it cannot inherit `ymsu`, where `bun test` repairs the sidecar a later gate
+    then compares against itself. So the import axis still has no sidecar of
+    its own, and for that axis alone "never audited" and "audited clean" remain
+    indistinguishable in a bare checkout. The sidecar that does exist,
+    `cat-harness/test/results/reference-direction.qa-results.json`, belongs to
+    the prose axis
 
 ## NOT in scope
 
@@ -207,8 +259,20 @@ with its carve acknowledged as judgement at a real coupling cost.
 
 ### Done when
 
-[ ] `groupDepth` derived from the declaration rather than hardcoded per path —
+[x] `groupDepth` derived from the declaration rather than hardcoded per path —
     the named prerequisite for any `schemas/` or `processes/` carve
+    — **derived, so the prerequisite is met — but from the CORPUS, not from the
+    declaration.** `groupDepthFor` now lives in
+    `cat-harness/skills/kg/graph-management/group-depth.ts` and
+    `kg-detangle.ts:39` imports it; the rule is `nested > here -> depth + 1`,
+    read off the scanned paths. A themed sub-directory therefore becomes a
+    subgraph mechanically, which is the only thing the carve boxes below wait
+    on — while the words "from the declaration" stay unsatisfied, because no
+    declaration carries a depth. Ticked on the prerequisite with the divergence
+    stated rather than the box reworded to fit. The module is pure ON PURPOSE:
+    importing the rule from `kg-detangle.ts` RUNS the tool and writes 29
+    sidecars, which is the `ymsu` shape, and that was measured rather than
+    anticipated
 [ ] `cat-harness/schemas` carved: the 70-node component, the 11 small ones, and
     the 129 isolated files ADJUDICATED rather than bucketed (129 files with no
     internal edge is not one decision, it is 129)
@@ -481,3 +545,101 @@ only instance of that shape — `folio-assistant-core/scripts/check-artifact-ind
 a `readdirSync(ROOT)` with no git call — is in the instance the census does not
 scan. The family is empty because its subject moved out, not because the shape
 was eliminated.
+
+
+## Claimed by `claude/escape-import-tranches-yj6r` — the CLOSURE re-measurement (2026-10-04)
+
+_2026-10-04T13:36:20Z_ — Claimed by claude/escape-import-tranches-yj6r — holder note written by hand, because `bun run beans:claim yj6r` REFUSED with `already-claimed`, naming `claude/yj6r-glossary-cluster`.
+
+The refusal was checked rather than overridden, by the two checks
+`bean-coordination` §"A claim is branch-local" asks for, and both say that
+claim is **spent, not live**:
+
+    gh api repos/litlfred/folio-assistant/pulls/1541  -> merged: true, head claude/yj6r-glossary-cluster
+    gh api '.../pulls?state=open&per_page=100'        -> 25 open, none naming yj6r / escape / adapter
+
+That is the third session in a row to have to do this and the third to write
+the result down, which is bean `c3d7`'s finding seen from the inside:
+`beans:claim` has no way to say *"the holder's branch is merged"*, so every
+session pays the same manual check. The note above is `CLAIM_NOTE`-shaped on
+purpose (`claim-bean.ts:77`), so the NEXT session's refusal names this branch
+rather than one merged five days ago.
+
+## Summary of Changes — the closure, RE-MEASURED rather than reported (2026-10-04)
+
+Branch `claude/escape-import-tranches-yj6r`. **No source file changed.** The
+session was handed a premise — *twelve escape-import edges remain; drain them,
+then wire the gate* — and the premise did not survive measurement. Both halves
+were already on `main`. What is recorded here is the measurement that says so,
+and the two boxes it does NOT earn.
+
+### The premise that failed
+
+    claim handed in                      measured on origin/main @ 63ec4fffc4bf
+    -----------------------------------  --------------------------------------
+    12 escape-import edges remain        0   (check:import-direction --all)
+    wire the gate once the count is 0    already wired, blocking, --all
+
+The 12 was not a stale copy of this bean's own numbers either — this bean's
+trail reads 15 -> 12 -> 8 -> 5 -> 2 -> 0, so 12 was true for about one day in
+September. It is exactly what §"Do not quote a count from prose" is for: the
+number was recalled, not re-derived, and the work it implied was finished three
+days before the session that was asked to do it.
+
+### Every number here, with the command that produced it
+
+Run from a clean checkout of `origin/main` @ `63ec4fffc4bf`, which is also this
+branch's base — verified with `git rev-parse HEAD origin/main` returning the
+same sha, because a measurement attributed to `main` from a dirty tree is a
+measurement of something else.
+
+| measurement | command | result |
+|---|---|---|
+| escape imports, every instance | `bun run check:import-direction --all` | **0** wrong-direction, 14 instances, 12 GATED, exit 0 |
+| non-literal `import()` | same command | **73** calls in **38** files, could-not-determine |
+| gate wiring | `grep -rn "import-direction" .github/workflows/` | 1 hit: `code-quality-gates.yml:1338`, `--all`, blocking |
+| cross-instance node/edge direction | `bun run kg:detangle:direction` | **0** wrong-direction among 2756 resolving edges, exit 0 |
+| prose axis | `bun run check:reference-direction` | exits **1**; invoked by **0** workflows |
+| `code` kind coverage | `bun run audit:coverage` | 1913 files / 0 criteria / 16 gates / 716 sidecars / `covered` |
+
+Three direction gates were run, not one, because the whole risk in answering
+"is the axis at zero?" is answering it on the wrong axis. `kg:detangle:direction`
+is scoped by a `SCAN` list and says so itself — it reports 13 of 16 declared
+instances as NOT REACHED, i.e. not measured rather than clean —
+`check:import-direction` has no scan list, and `check:reference-direction` is a
+different subject (a name mentioned, not a module loaded).
+
+### What is STILL open, stated as open
+
+Two boxes above stay unticked, and neither is blocked on anything this bean can
+reach:
+
+1. The gate box names `check:reference-direction`, the PROSE axis this bean
+   excludes in §"NOT in scope", and that gate exits 1 today. The import-axis
+   gate it was presumably reaching for is wired and bites.
+2. The sidecar box is half-earned: the `code` kind is JUDGED, but
+   `check:import-direction` writes no sidecar, on purpose.
+
+Both want a ruling rather than a commit, and neither is worth a source change
+made on an agent's own initiative.
+
+### A coupling found and NOT acted on
+
+`r0tm`, the ruling request for the eighth cluster, is still `status: draft`
+though its ruling was given (option A) and both steps have landed. It was left
+alone: bean `3432` is **in-progress and not this session's**, and it uses
+`r0tm`'s `status: draft` as the single live instance of the marker the check it
+proposes keys on — `3432` measured that marker at 0 of 518 beans otherwise.
+Flipping `r0tm` would make that check vacuous again. Reported on `r0tm` itself
+for whoever holds `3432`, rather than decided here.
+
+## Owner ruling on the two disputed boxes (2026-10-04)
+
+The owner answered the open question on #2089 with *"Move box, drop clause"* (asked by session_01BccmnVFbtRpKxM39kyVw9q, which took over #2089 from the stalled session_01SjvqTkDQsqa6SLLFjBwoD3). So:
+- the `check:reference-direction` box moves to bean `1bvx`, which already owns the prose-axis gate and its go-in-green rule. A note on `1bvx` records the hand-off. This is the existing bean rather than a new one under #1219, because creating one would duplicate `1bvx`;
+- the "committed sidecar" clause is dropped, for the reason given in the box;
+- the escape-import part of this bean is now done on measurement or ruling.
+
+**The bean stays `in-progress`.** Its second Done-when, under §"Themed sub-graphs", has 4 open boxes (carving `cat-harness/schemas`, `cat-harness/processes`, `folio-core` and `folio-paper-adapter`, and the per-directory manifests), and this ruling does not cover them. Nobody holds them now: the recorded holder branches have all merged.
+
+`r0tm` is deliberately left `draft`: bean `3432` uses it as its worked example.

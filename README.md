@@ -355,7 +355,7 @@ bun install
 bun run check-deps
 
 # 4. Run the MCP server (point --repo at your content repo)
-bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 ### Common commands

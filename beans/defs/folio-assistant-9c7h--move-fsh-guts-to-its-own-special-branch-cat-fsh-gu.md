@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9c7h
 title: Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-03T08:34:43Z
+updated_at: 2026-10-04T12:52:02Z
 parent: folio-assistant-7x5n
 ---
 
@@ -103,3 +103,15 @@ The step-3 inventory had marked `board-relocate.bpmn`'s relocate handler as uncl
 - **Relocation, the agents' half:** skill `kg-core/fsh-guts` §"Where it lives" says: mount, then a plain `mv` (NOT `git mv`, which stages the ignored new path onto main; verified), then `git rm --cached` the old path, then `state:push`.
 - **Partition:** `instance-rules.ts` names only CODE about fsh-guts (the visualiser, the schema), which stays. No rule partitions the directory, because it is no longer in the tree.
 - **Siblings:** #1790 edits `fsh-guts/README.md` and #1898 edits the skill. I commented on both, and asked the Merge Manager to order them around this cutover. Before `ready:`, main's `fsh-guts/` is re-spliced, so anything written meanwhile carries over.
+
+
+## Summary of Changes
+
+Landed in #2057 (merge `2366227`, 2026-10-04): `fsh-guts/` lives on `cat/cat-harness/fsh-guts` and is mounted at `fsh-guts/` by `bun run state:mount`; its readers refuse with a clear error when it is not mounted; CI mounts it before every step that reads it; writes go through `bun run state:push`.
+
+**Re-derived from the remote, 2026-10-04** (bean-coordination § "Closing a bean whose work has already landed"):
+- `git ls-tree origin/main fsh-guts` → 0 entries: nothing tracked on main.
+- `folio-assistant.json` on `origin/main`: fsh-guts `source` is `{kind: branch, branch: cat/cat-harness/fsh-guts, keyedBy: tip}`.
+- `git ls-remote origin refs/heads/cat/cat-harness/fsh-guts` → `f54b70e`, holding 147 files under `fsh-guts/`.
+- `.gitignore` carries `/fsh-guts/**` (the file-level rule, so `fsh-guts/logs/` stays ignored inside the mount).
+- On a fresh worktree of `origin/main`: `bun run state:mount` → mounted, 147 files at `f54b70e85cfa`; `bun run fsh-guts:viz:check` → exit 0.

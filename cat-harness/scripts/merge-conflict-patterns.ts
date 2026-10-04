@@ -86,8 +86,8 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "It is also the measured limit of what a declaration buys. These paths carried this entry all along and still conflicted on seven open pull requests each, because the strategy settles HOW a conflict is resolved and never whether one arises — `.gitattributes` says the same thing in its own words: \"Removing these conflicts, rather than tidying them, needs the files off `main` altogether.\"",
   },
   {
-    id: "docs-auto",
-    globs: ["**/docs-auto/**"],
+    id: "auto-docs",
+    globs: ["**/auto-docs/**"],
     strategy: "take-base",
     why: "the generated docs index pages (352). Marked -merge in .gitattributes; one page per directory, so every new file anywhere changes one.",
   },

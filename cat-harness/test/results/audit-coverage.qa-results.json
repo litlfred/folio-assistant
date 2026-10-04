@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "489518fcb63f"
+    "script_hash": "210698b89d33"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 227 gate(s), 77 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 230 gate(s), 77 criteria.",
       "count": 58,
       "entries": [
         {
@@ -28,6 +28,18 @@
           ],
           "typed": true,
           "hasFiles": true
+        },
+        {
+          "kind": "auto-docs",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run auto:docs:check"
+          ],
+          "typed": false,
+          "hasFiles": false
         },
         {
           "kind": "bean-defs",
@@ -188,6 +200,7 @@
             "bun run check:published-refs",
             "bun run check:read-only-graphs",
             "bun run check:rendered-labels:check",
+            "bun run check:state-on-main",
             "bun run check:subgraph-coverage",
             "bun run check:subgraphs",
             "bun run check:undeclared-files:check",
@@ -243,6 +256,7 @@
             "cat-harness-tools/id-lookup",
             "cat-harness-tools/schemas",
             "cat-harness-tools/scripts",
+            "cat-harness-tools/src",
             "cat-harness-tools/test",
             "cat-harness/adapters",
             "cat-harness/deploy",
@@ -254,6 +268,7 @@
             "fhir-harness/scripts",
             "folio-assistant-core/adapters",
             "folio-assistant-core/scripts",
+            "folio-assistant-core/src",
             "folio-assistant-sci/adapters",
             "smart-trust/scripts",
             "tools",
@@ -313,6 +328,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run auto:docs:check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
@@ -330,7 +346,6 @@
             "bun run check:viewer-backticks",
             "bun run check:viewer-nav",
             "bun run check:wireframes:check",
-            "bun run docs:auto:check",
             "bun run docs:harness:check",
             "bun run docs:pages:check",
             "bun run gen:jsonld:check",
@@ -351,18 +366,6 @@
           "hasFiles": true
         },
         {
-          "kind": "docs-auto",
-          "state": "no-directory",
-          "directories": [],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [
-            "bun run docs:auto:check"
-          ],
-          "typed": false,
-          "hasFiles": false
-        },
-        {
           "kind": "document-kinds",
           "state": "covered",
           "directories": [
@@ -371,6 +374,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:document-kind-sources",
             "bun run document-kinds:viz:check",
             "bun run smart-base:document-kinds:check"
           ],
@@ -435,7 +439,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "empty",
+          "state": "undetermined",
           "directories": [
             "fsh-guts"
           ],
@@ -1206,20 +1210,20 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "fsh-guts",
-          "directories": [
-            "fsh-guts"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
       "count": 20,
       "entries": [
+        {
+          "kind": "auto-docs",
+          "criteria": 0,
+          "gates": [
+            "bun run auto:docs:check"
+          ]
+        },
         {
           "kind": "bean-defs",
           "criteria": 0,
@@ -1259,13 +1263,6 @@
           "criteria": 0,
           "gates": [
             "bun run boards:default:check"
-          ]
-        },
-        {
-          "kind": "docs-auto",
-          "criteria": 0,
-          "gates": [
-            "bun run docs:auto:check"
           ]
         },
         {
@@ -1352,7 +1349,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 227 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 230 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -1362,5 +1359,5 @@
       "entries": []
     }
   },
-  "total": 79
+  "total": 78
 }

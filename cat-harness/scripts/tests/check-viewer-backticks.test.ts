@@ -69,7 +69,7 @@ describe("an interpolation is CODE, not page text — bean `57n3`", () => {
 
   test("a nested template inside ${…} does not end the page", () => {
     // The two false findings this bean was opened for, in miniature. Both
-    // `gen-docs-auto.ts` and `dak-pdf.ts` compile and were reported as
+    // `gen-auto-docs.ts` and `dak-pdf.ts` compile and were reported as
     // defects, because the old rule took the first unescaped backtick.
     expect(strayBacktick(page('<title>${scope ? `x ${esc(s)}` : ""}</title>'))).toBeNull();
   });
@@ -110,7 +110,7 @@ describe("the file set is derived, not listed", () => {
     expect(sources).toContain("cat-harness/scripts/gen-schema-viz.ts");
     // And the two the old array could not include, because the old detector
     // reported them falsely.
-    expect(sources).toContain("cat-harness/scripts/gen-docs-auto.ts");
+    expect(sources).toContain("cat-harness-tools/scripts/gen-auto-docs.ts");
     expect(sources).toContain("cat-harness/scripts/dak-pdf.ts");
   });
 

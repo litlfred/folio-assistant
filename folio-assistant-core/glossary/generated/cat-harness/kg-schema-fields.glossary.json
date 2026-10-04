@@ -2268,6 +2268,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.seedswith",
+      "prefLabel": "CatHarnessDeclaration.seedsWith",
+      "definition": "Instances this one is seeded together with — see `seedsWith` on {@link CatHarnessDeclarationSchema}. Absent is \"seeds alone\".",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.seedsWith",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.separation",
       "prefLabel": "CatHarnessDeclaration.separation",
       "definition": "Which half of a kg-separation pair the planned {@link repository} is — see `separation` on {@link CatHarnessDeclarationSchema}. Absent is \"has not said\". Bean `eayu`.",
@@ -2398,6 +2405,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.seedswith",
+      "prefLabel": "CatHarnessDeclarationSchema.seedsWith",
+      "definition": "Instances this one is SEEDED TOGETHER with: the same seeding step creates both repositories, so neither ever stands alone in a checkout (bean `smbc` seeds `cat-harness` and `cat-harness-tools` at once).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.seedsWith",
       "status": "candidate"
     },
     {
@@ -7049,6 +7063,13 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue.entryobjectschema.status",
+      "prefLabel": "EntryObjectSchema.status",
+      "definition": "The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.status",
+      "status": "candidate"
+    },
+    {
       "id": "merge-queue.entryobjectschema.trainid",
       "prefLabel": "EntryObjectSchema.trainId",
       "definition": "Assigned once the PR is taken into a train; the train-run instance's id.",
@@ -7095,6 +7116,13 @@
       "prefLabel": "MemberFactsSchema.ownCi",
       "definition": "The PR's own CI on its head: T2's first evidence.",
       "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.ownCi",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.memberfactsschema.readiness",
+      "prefLabel": "MemberFactsSchema.readiness",
+      "definition": "Has the OWNING session signalled this PR is finished, against `main`? Bean `uoob` (merge gate (f)), read by `Rule_NotReady`. `ready` is the only admitting value, and the others stay apart because each has a different remedy:",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.readiness",
       "status": "candidate"
     },
     {

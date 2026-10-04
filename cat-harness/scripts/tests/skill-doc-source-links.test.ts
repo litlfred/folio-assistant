@@ -5,7 +5,7 @@
  * Bean `folio-assistant-oe98`. 240 of 244 pages linked a path that did not
  * exist — 231 by the pre-split `skills/...` prefix, 9 by a `../bootstrap/...`
  * parent segment no GitHub URL can carry — while `gen-skill-docs --check` and
- * `docs:auto:check` were green throughout. Both compare bytes against what the
+ * `auto:docs:check` were green throughout. Both compare bytes against what the
  * generator would write; a wrong generator agrees with its own output. This
  * test resolves the link instead, which is the only check that can see the
  * class.

@@ -140,7 +140,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 792,
+      "count": 804,
       "unit": "beans"
     },
     {
@@ -148,13 +148,13 @@
       "directory": "docs",
       "title": "Docs",
       "qualifier": "C@T Harness",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
+      "ref": "cat-harness/docs/cat-harness/auto-docs/index/docs/docs/index.html",
       "surfaces": [
         "navbar",
         "board",
         "glass"
       ],
-      "href": "/cat-harness/docs-auto/index/docs/docs/",
+      "href": "/cat-harness/auto-docs/index/docs/docs/",
       "hidden": false,
       "icon": "docs",
       "showQualifier": true
@@ -267,7 +267,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1007,
+      "count": 1006,
       "unit": "documents"
     },
     {
@@ -275,13 +275,13 @@
       "directory": "root-docs",
       "title": "Docs",
       "qualifier": "Folio Assistant",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
+      "ref": "cat-harness/docs/cat-harness/auto-docs/index/docs/root-docs/index.html",
       "surfaces": [
         "navbar",
         "board",
         "glass"
       ],
-      "href": "/cat-harness/docs-auto/index/docs/root-docs/",
+      "href": "/cat-harness/auto-docs/index/docs/root-docs/",
       "hidden": false,
       "showQualifier": true
     },
@@ -307,13 +307,13 @@
       "directory": "skills",
       "title": "Skills",
       "qualifier": "C@T Harness",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html",
+      "ref": "cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html",
       "surfaces": [
         "navbar",
         "board",
         "glass"
       ],
-      "href": "/cat-harness/docs-auto/index/skills/skills/",
+      "href": "/cat-harness/auto-docs/index/skills/skills/",
       "hidden": false,
       "readOnly": false,
       "icon": "skills"
@@ -323,13 +323,13 @@
       "directory": "swimlane-glossary",
       "title": "Swimlane glossary",
       "qualifier": "C@T Harness",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/swimlane-glossary/index.html",
+      "ref": "cat-harness/docs/cat-harness/auto-docs/glossary/swimlane-glossary/index.html",
       "surfaces": [
         "navbar",
         "board",
         "glass"
       ],
-      "href": "/cat-harness/docs-auto/glossary/swimlane-glossary/",
+      "href": "/cat-harness/auto-docs/glossary/swimlane-glossary/",
       "hidden": false
     },
     {
@@ -500,7 +500,7 @@
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/root-docs/",
+          "path": "/cat-harness/auto-docs/index/docs/root-docs/",
           "label": "Docs"
         },
         {
@@ -704,7 +704,7 @@
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/",
+          "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/",
           "label": "Docs"
         },
         {
@@ -820,7 +820,7 @@
       "visualisations": [
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-immunizations-docs/",
+          "path": "/cat-harness/auto-docs/index/docs/smart-immunizations-docs/",
           "label": "Docs"
         },
         {
@@ -977,7 +977,7 @@
       "visualisations": [
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/",
+          "path": "/cat-harness/auto-docs/index/docs/smart-base-docs/",
           "label": "Docs"
         },
         {
@@ -1202,7 +1202,7 @@
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/who-iris-site/",
+          "path": "/cat-harness/auto-docs/index/docs/who-iris-site/",
           "label": "Docs"
         },
         {
@@ -1227,7 +1227,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/who-iris-skills/",
+          "path": "/cat-harness/auto-docs/index/skills/who-iris-skills/",
           "label": "Skills"
         },
         {
@@ -1388,7 +1388,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 10
+          "value": 11
         },
         {
           "id": "kinds",
@@ -1398,7 +1398,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 5
+          "value": 6
         }
       ],
       "visualisations": [
@@ -1439,7 +1439,8 @@
         },
         {
           "kind": "skills",
-          "note": "no viewer yet",
+          "path": "/cat-harness/auto-docs/index/skills/folio-assistant-sci-skills/",
+          "readOnly": false,
           "label": "Skills"
         },
         {
@@ -1464,6 +1465,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-sci/methodologies/"
+        },
+        {
+          "id": "skills",
+          "kinds": [
+            "skills"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/skills/"
         },
         {
           "id": "sci-adapters",
@@ -1531,7 +1540,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 3 graph(s) with no published viewer — attestations, code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1602,7 +1611,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/fhir-ig-skills/",
+          "path": "/cat-harness/auto-docs/index/skills/fhir-ig-skills/",
           "label": "Skills"
         },
         {
@@ -1731,7 +1740,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 12
+          "value": 13
         },
         {
           "id": "kinds",
@@ -1793,7 +1802,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/core-skills/",
+          "path": "/cat-harness/auto-docs/index/skills/core-skills/",
           "label": "Skills"
         },
         {
@@ -1848,6 +1857,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-core/adapters/"
+        },
+        {
+          "id": "core-src",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/src/"
         },
         {
           "id": "core-scripts",
@@ -2019,7 +2036,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
@@ -2079,6 +2096,14 @@
           ],
           "where": "local",
           "path": "cat-harness-tools/test/"
+        },
+        {
+          "id": "cat-harness-tools-src",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "cat-harness-tools/src/"
         }
       ],
       "findings": [
@@ -2179,6 +2204,12 @@
           "label": "Attestations"
         },
         {
+          "kind": "auto-docs",
+          "within": "docs",
+          "note": "no viewer yet",
+          "label": "Auto docs"
+        },
+        {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/cat-harness/",
           "label": "Schemas",
@@ -2196,14 +2227,8 @@
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/docs/",
+          "path": "/cat-harness/auto-docs/index/docs/docs/",
           "label": "Docs"
-        },
-        {
-          "kind": "docs-auto",
-          "within": "docs",
-          "note": "no viewer yet",
-          "label": "Docs auto"
         },
         {
           "kind": "external-schema",
@@ -2269,7 +2294,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/skills/",
+          "path": "/cat-harness/auto-docs/index/skills/skills/",
           "readOnly": false,
           "label": "Skills"
         },
@@ -2549,17 +2574,17 @@
           "path": "cat-harness/docs/requirements/"
         },
         {
-          "id": "docs/docs-auto",
+          "id": "docs/auto-docs",
           "kinds": [
-            "docs-auto"
+            "auto-docs"
           ],
           "where": "local",
-          "path": "cat-harness/docs/cat-harness/docs-auto/"
+          "path": "cat-harness/docs/cat-harness/auto-docs/"
         },
         {
           "id": "docs/uml-overview-pages",
           "kinds": [
-            "docs-auto"
+            "auto-docs"
           ],
           "where": "local",
           "path": "cat-harness/docs/uml/overview/"
@@ -2567,7 +2592,7 @@
         {
           "id": "docs/uml-overview-svgs",
           "kinds": [
-            "docs-auto"
+            "auto-docs"
           ],
           "where": "local",
           "path": "cat-harness/docs/assets/img/uml/overview/"
@@ -2582,7 +2607,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, docs-auto, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — auto-docs, code, code-list, policies, scenarios, substrate-snapshot, uml, vocab-mapping. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2885,6 +2910,12 @@
         "path": "/attestations/"
       },
       {
+        "kind": "auto-docs",
+        "label": "Auto docs",
+        "within": "docs",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "code",
         "label": "Code",
         "note": "no viewer yet"
@@ -2897,13 +2928,7 @@
       {
         "kind": "docs",
         "label": "Docs",
-        "path": "/cat-harness/docs-auto/index/docs/docs/"
-      },
-      {
-        "kind": "docs-auto",
-        "label": "Docs auto",
-        "within": "docs",
-        "note": "no viewer yet"
+        "path": "/cat-harness/auto-docs/index/docs/docs/"
       },
       {
         "kind": "external-schema",
@@ -2970,7 +2995,7 @@
       {
         "kind": "skills",
         "label": "Skills",
-        "path": "/cat-harness/docs-auto/index/skills/skills/"
+        "path": "/cat-harness/auto-docs/index/skills/skills/"
       },
       {
         "kind": "substrate-snapshot",
@@ -3023,7 +3048,7 @@
         {
           "kind": "docs",
           "label": "Docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-immunizations-docs/"
+          "path": "/cat-harness/auto-docs/index/docs/smart-immunizations-docs/"
         },
         {
           "kind": "qa",
@@ -3045,7 +3070,7 @@
         {
           "kind": "docs",
           "label": "Docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
+          "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/"
         },
         {
           "kind": "openapi",
@@ -3067,7 +3092,7 @@
         {
           "kind": "docs",
           "label": "Docs",
-          "path": "/cat-harness/docs-auto/index/docs/smart-base-docs/"
+          "path": "/cat-harness/auto-docs/index/docs/smart-base-docs/"
         },
         {
           "kind": "document-kinds",
@@ -3134,7 +3159,7 @@
         {
           "kind": "docs",
           "label": "Docs",
-          "path": "/cat-harness/docs-auto/index/docs/who-iris-site/"
+          "path": "/cat-harness/auto-docs/index/docs/who-iris-site/"
         },
         {
           "kind": "glossary",
@@ -3159,7 +3184,7 @@
         {
           "kind": "skills",
           "label": "Skills",
-          "path": "/cat-harness/docs-auto/index/skills/who-iris-skills/"
+          "path": "/cat-harness/auto-docs/index/skills/who-iris-skills/"
         },
         {
           "kind": "themes",
@@ -3397,6 +3422,15 @@
       },
       {
         "key": "separation",
+        "skills": [
+          {
+            "name": "kg-separation",
+            "path": "/reference/skill-instructions/kg-separation.html"
+          }
+        ]
+      },
+      {
+        "key": "seedsWith",
         "skills": [
           {
             "name": "kg-separation",
@@ -3922,7 +3956,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
+            "summary": "8: library, sci-methodologies, skills, sci-adapters, sci-sources, sci-processes, qa, attesta…"
           },
           {
             "key": "needs",
@@ -4026,7 +4060,7 @@
           },
           {
             "key": "directories",
-            "summary": "11: core-schemas, folios, glossary, core-tools, core-adapters, core-scripts, core-library, co…"
+            "summary": "12: core-schemas, folios, glossary, core-tools, core-adapters, core-src, core-scripts, core-l…"
           },
           {
             "key": "stickies",
@@ -4129,12 +4163,16 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "seedsWith",
+            "summary": "cat-harness"
+          },
+          {
             "key": "canonicalUrl",
             "summary": "https://litlfred.github.io/folio-assistant/cat-harness-tools"
           },
           {
             "key": "directories",
-            "summary": "5: cat-harness-tools-adapters, cat-harness-tools-schemas, cat-harness-tools-scripts, cat-har…"
+            "summary": "6: cat-harness-tools-adapters, cat-harness-tools-schemas, cat-harness-tools-scripts, cat-har…"
           },
           {
             "key": "needs",
