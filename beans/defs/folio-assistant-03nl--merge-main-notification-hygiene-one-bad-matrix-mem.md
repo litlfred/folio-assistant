@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-04T05:52:09Z
-updated_at: 2026-10-04T07:06:41Z
+updated_at: 2026-10-04T07:41:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -101,3 +101,10 @@ failed. Both are documented GitHub behaviour, pinned by the workflow test, and
 checkable with one safe `workflow_dispatch` (the PR body gives the exact command
 and what to look for); the harness refused the dispatch as a shared resource,
 which is correct.
+
+
+_2026-10-04_ — **PR #2046 is green and labelled** `ready-to-merge` + `merge-main`; not merged (workflow file, merge manager orders it, #1952 first). Gates run 37185893239 success on head `1a0bbdfc9`.
+
+**The regeneration ORDER for a change that adds one BPMN node**, learned from two red CI rounds: `render:bpmn` → `translate-bpmn --extract` → `glossary:page` → `term:mapping` → `skill:register`. The registration chain is necessary and NOT sufficient — it runs neither `term:mapping` nor `translate-bpmn`, and its own verify passes `check:glossary` BEFORE the pots are re-extracted, so running `glossary:page` first leaves five localised pages stale under a green chain.
+
+Also measured: **no `pull_request` run fired for either of the last two pushes** (bean `3pqn`'s shape), so the green verdict is a `workflow_dispatch` on the branch head rather than on main-merged-into-branch. Said on the PR rather than left to read as a current green.
