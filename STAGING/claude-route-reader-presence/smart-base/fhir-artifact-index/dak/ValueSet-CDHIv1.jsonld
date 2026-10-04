@@ -1,0 +1,731 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    }
+  },
+  "@id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-08-26T08:29:23.018668Z",
+  "@graph": [
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.0",
+      "name": "Clients",
+      "fhir:code": "1.0",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.1",
+      "name": "Targeted client communication",
+      "fhir:code": "1.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.1.1",
+      "name": "Transmit health event alerts to specific population group(s)",
+      "fhir:code": "1.1.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.1.2",
+      "name": "Transmit targeted health information to client(s) based on health status or demographics",
+      "fhir:code": "1.1.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.1.3",
+      "name": "Transmit targeted alerts and reminders to client(s)",
+      "fhir:code": "1.1.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.1.4",
+      "name": "Transmit diagnostics result, or availability of result, to client(s)",
+      "fhir:code": "1.1.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.2",
+      "name": "Untargeted client communication",
+      "fhir:code": "1.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.2.1",
+      "name": "Transmit untargeted health information to an undefined population",
+      "fhir:code": "1.2.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.2.2",
+      "name": "Transmit untargeted",
+      "fhir:code": "1.2.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.3",
+      "name": "Client to client communication",
+      "fhir:code": "1.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.3.1",
+      "name": "Peer group for clients",
+      "fhir:code": "1.3.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.4",
+      "name": "Personal health tracking",
+      "fhir:code": "1.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.4.1",
+      "name": "Access by client to own medical records",
+      "fhir:code": "1.4.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.4.2",
+      "name": "Self monitoring of health or diagnostic data by client",
+      "fhir:code": "1.4.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.4.3",
+      "name": "Active data capture/ documentation by client",
+      "fhir:code": "1.4.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.5",
+      "name": "Citizen‐based reporting",
+      "fhir:code": "1.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.5.1",
+      "name": "Reporting of health system feedback by clients",
+      "fhir:code": "1.5.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.5.2",
+      "name": "Reporting of public health events by clients",
+      "fhir:code": "1.5.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.6",
+      "name": "On‐demand information services to clients",
+      "fhir:code": "1.6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.6.1",
+      "name": "Client look‐up of health information",
+      "fhir:code": "1.6.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.7",
+      "name": "Client financial transactions",
+      "fhir:code": "1.7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.7.1",
+      "name": "Transmit or manage out‐of‐pocket payments by client(s)",
+      "fhir:code": "1.7.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.7.2",
+      "name": "Transmit or manage vouchers to client(s) for health services",
+      "fhir:code": "1.7.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#1.7.3",
+      "name": "Transmit or manage incentives to client(s) for health services",
+      "fhir:code": "1.7.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.0",
+      "name": "Health workers",
+      "fhir:code": "2.0",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.1",
+      "name": "Client identification and registration",
+      "fhir:code": "2.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.1.1",
+      "name": "Verify client unique identity",
+      "fhir:code": "2.1.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.1.2",
+      "name": "Enrol client for health services/clinical care plan",
+      "fhir:code": "2.1.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.2",
+      "name": "Client health records",
+      "fhir:code": "2.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.2.1",
+      "name": "Longitudinal tracking of clients’ health status and services",
+      "fhir:code": "2.2.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.2.2",
+      "name": "Manage client’s structured clinical records",
+      "fhir:code": "2.2.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.2.3",
+      "name": "Manage client’s unstructured clinical records",
+      "fhir:code": "2.2.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.2.4",
+      "name": "Routine health indicator data collection and management",
+      "fhir:code": "2.2.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.3",
+      "name": "Health worker decision support",
+      "fhir:code": "2.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.3.1",
+      "name": "Provide prompts and alerts based according to protocol",
+      "fhir:code": "2.3.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.3.2",
+      "name": "Provide checklist according to protocol",
+      "fhir:code": "2.3.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.3.3",
+      "name": "Screen clients by risk or other health status",
+      "fhir:code": "2.3.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.4",
+      "name": "Telemedicine",
+      "fhir:code": "2.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.4.1",
+      "name": "Consultations between remote client and health worker",
+      "fhir:code": "2.4.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.4.2",
+      "name": "Remote monitoring of client health or diagnostic data by provider",
+      "fhir:code": "2.4.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.4.3",
+      "name": "Transmission of medical data to health worker",
+      "fhir:code": "2.4.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.4.4",
+      "name": "Consultations for case management between health worker(s)",
+      "fhir:code": "2.4.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.5",
+      "name": "Health worker communication",
+      "fhir:code": "2.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.5.1",
+      "name": "Communication from health worker(s) to supervisor",
+      "fhir:code": "2.5.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.5.2",
+      "name": "Communication and performance feedback to health worker(s)",
+      "fhir:code": "2.5.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.5.3",
+      "name": "Transmit routine news and workflow notifications to health worker(s)",
+      "fhir:code": "2.5.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.5.4",
+      "name": "Transmit non‐routine health event alerts to health worker(s)",
+      "fhir:code": "2.5.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.5.5",
+      "name": "Peer group for health workers",
+      "fhir:code": "2.5.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.6",
+      "name": "Referral co‐ordination",
+      "fhir:code": "2.6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.6.1",
+      "name": "Coordinate emergency response and transport",
+      "fhir:code": "2.6.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.6.2",
+      "name": "Manage referrals between points of service within health sector",
+      "fhir:code": "2.6.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.6.3",
+      "name": "Manage referrals between health and other sectors",
+      "fhir:code": "2.6.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.7",
+      "name": "Health worker activity planning and scheduling",
+      "fhir:code": "2.7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.7.1",
+      "name": "Identify client(s) in need of services",
+      "fhir:code": "2.7.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.7.2",
+      "name": "Schedule health worker's activities",
+      "fhir:code": "2.7.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.8",
+      "name": "Health worker training",
+      "fhir:code": "2.8",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.8.1",
+      "name": "Provide training content to health worker(s)",
+      "fhir:code": "2.8.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.8.2",
+      "name": "Assess capacity of health worker(s)",
+      "fhir:code": "2.8.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.9",
+      "name": "Prescription and medication management",
+      "fhir:code": "2.9",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.9.1",
+      "name": "Transmit or track prescription orders",
+      "fhir:code": "2.9.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.9.2",
+      "name": "Track client's medication consumption",
+      "fhir:code": "2.9.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.9.3",
+      "name": "Report adverse drug events",
+      "fhir:code": "2.9.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.10",
+      "name": "Laboratory and Diagnostics Imaging Management",
+      "fhir:code": "2.10",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.10.1",
+      "name": "Transmit diagnostic result to health worker",
+      "fhir:code": "2.10.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.10.2",
+      "name": "Transmit and track diagnostic orders",
+      "fhir:code": "2.10.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.10.3",
+      "name": "Capture diagnostic results from digital devices",
+      "fhir:code": "2.10.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#2.10.4",
+      "name": "Track biological specimens",
+      "fhir:code": "2.10.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.0",
+      "name": "Health system managers",
+      "fhir:code": "3.0",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.1",
+      "name": "Human resource management",
+      "fhir:code": "3.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.1.1",
+      "name": "List health workforce cadres and related identification information",
+      "fhir:code": "3.1.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.1.2",
+      "name": "Monitor performance of health worker(s)",
+      "fhir:code": "3.1.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.1.3",
+      "name": "Manage certification/registration of health worker(s)",
+      "fhir:code": "3.1.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.1.4",
+      "name": "Record training credentials of health worker(s)",
+      "fhir:code": "3.1.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2",
+      "name": "Supply chain management",
+      "fhir:code": "3.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2.1",
+      "name": "Manage inventory and distribution of health commodities",
+      "fhir:code": "3.2.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2.2",
+      "name": "Notify stock levels of health commodities",
+      "fhir:code": "3.2.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2.3",
+      "name": "Monitor cold‐chain sensitive commodities",
+      "fhir:code": "3.2.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2.4",
+      "name": "Register licensed drugs and health commodities",
+      "fhir:code": "3.2.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2.5",
+      "name": "Manage procurement of commodities",
+      "fhir:code": "3.2.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.2.6",
+      "name": "Report counterfeit or substandard drugs by clients",
+      "fhir:code": "3.2.6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.3",
+      "name": "Public health event notification",
+      "fhir:code": "3.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.3.1",
+      "name": "Notification of public health events from point of diagnosis",
+      "fhir:code": "3.3.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4",
+      "name": "Civil Registration and Vital Statistics",
+      "fhir:code": "3.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4.1",
+      "name": "Notify birth event",
+      "fhir:code": "3.4.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4.2",
+      "name": "Register birth event",
+      "fhir:code": "3.4.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4.3",
+      "name": "Certify birth event",
+      "fhir:code": "3.4.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4.4",
+      "name": "Notify death event",
+      "fhir:code": "3.4.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4.5",
+      "name": "Register death event",
+      "fhir:code": "3.4.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.4.6",
+      "name": "Certify death event",
+      "fhir:code": "3.4.6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5",
+      "name": "Health financing",
+      "fhir:code": "3.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5.1",
+      "name": "Register and verify client insurance membership",
+      "fhir:code": "3.5.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5.2",
+      "name": "Track insurance billing and claims submission",
+      "fhir:code": "3.5.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5.3",
+      "name": "Track and manage insurance reimbursement",
+      "fhir:code": "3.5.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5.4",
+      "name": "Transmit routine payroll payment to health worker(s)",
+      "fhir:code": "3.5.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5.5",
+      "name": "Transmit or manage incentives to health worker(s)",
+      "fhir:code": "3.5.5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.5.6",
+      "name": "Manage budget and expenditures",
+      "fhir:code": "3.5.6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.6",
+      "name": "Equipment and asset management",
+      "fhir:code": "3.6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.6.1",
+      "name": "Monitor status of health equipment",
+      "fhir:code": "3.6.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.6.2",
+      "name": "Track regulation and licensing of medical equipment",
+      "fhir:code": "3.6.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.7",
+      "name": "Facility management",
+      "fhir:code": "3.7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.7.1",
+      "name": "List health facilities and related information",
+      "fhir:code": "3.7.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#3.7.2",
+      "name": "Assess health facilities",
+      "fhir:code": "3.7.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.0",
+      "name": "Data services",
+      "fhir:code": "4.0",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.1",
+      "name": "Data collection, management, and use",
+      "fhir:code": "4.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.1.1",
+      "name": "Non‐routine data collection and management",
+      "fhir:code": "4.1.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.1.2",
+      "name": "Data storage and aggregation",
+      "fhir:code": "4.1.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.1.3",
+      "name": "Data synthesis and visualisation",
+      "fhir:code": "4.1.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.1.4",
+      "name": "Automated analysis of data to generate new information or predictions on future events",
+      "fhir:code": "4.1.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.2",
+      "name": "Data coding",
+      "fhir:code": "4.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.2.1",
+      "name": "Parse unstructured data into structured data",
+      "fhir:code": "4.2.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.2.2",
+      "name": "Merge, de‐duplicate, and curate coded datasets or terminologies",
+      "fhir:code": "4.2.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.2.3",
+      "name": "Classify disease codes or cause of mortality",
+      "fhir:code": "4.2.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.3",
+      "name": "Location mapping",
+      "fhir:code": "4.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.3.1",
+      "name": "Map location of health facilities/structures",
+      "fhir:code": "4.3.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.3.2",
+      "name": "Map location of health events",
+      "fhir:code": "4.3.2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.3.3",
+      "name": "Map location of clients and households",
+      "fhir:code": "4.3.3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.3.4",
+      "name": "Map location of health worker",
+      "fhir:code": "4.3.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.4",
+      "name": "Data exchange and interoperability",
+      "fhir:code": "4.4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDHIv1.jsonld#4.4.1",
+      "name": "Data exchange across systems",
+      "fhir:code": "4.4.1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDHIv1"
+    }
+  ]
+}
