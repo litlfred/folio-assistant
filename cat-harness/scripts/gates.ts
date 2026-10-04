@@ -203,6 +203,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`slice:sqlite:check` in the fast set, and gen-slice-sqlite.test.ts plus slice-sqlite.e2e.ts pin it",
   },
   {
+    // Bean `4ak5` item 3. The root index is BUILT at publish time over the
+    // exports the deploy has just written into `./_site`, and never committed
+    // (owner, 2026-10-04), so there is no committed artefact for a `--check`
+    // to compare. It refuses to write when any declared instance has no
+    // export, which is its verdict, and root-index.test.ts pins that over a
+    // real site layout.
+    match: "scripts/root-index.ts --site ./_site",
+    kind: "covered-by",
+    reason:
+      "a DEPLOY build into ./_site over the exports only the deploy writes, with no committed copy to check; " +
+      "it exits 1 rather than publish a shorter map, and root-index.test.ts pins both the map and that refusal",
+  },
+  {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source
     // repository its menu.json records. A BUILD step: it clones and copies,
     // and has no verdict a contributor could run without the network and a
