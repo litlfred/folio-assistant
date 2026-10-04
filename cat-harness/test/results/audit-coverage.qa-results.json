@@ -200,6 +200,7 @@
             "bun run kg:locale:check:bootstrap",
             "bun run kg:schema:check",
             "bun run kg:subscribe:check",
+            "bun run kind:register:check",
             "bun run library:readmes:check",
             "bun run ns:check",
             "bun run readme:subgraphs:check",
@@ -258,7 +259,6 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run audit:reachability:check",
             "bun run bootstrap:vocabulary:check",
             "bun run check:agents-claims",
             "bun run check:bootstrap-standalone",
@@ -683,7 +683,6 @@
             "process"
           ],
           "gates": [
-            "bun run audit:reachability:check",
             "bun run check:lane-documentation:check",
             "bun run check:process-bindings",
             "bun run check:process-documentation",

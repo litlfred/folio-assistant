@@ -404,6 +404,8 @@
     "site:links": "bun run cat-harness/scripts/site-links.ts",
     "skill:register": "bun run cat-harness/scripts/skill-register.ts",
     "skill:register:check": "bun run cat-harness/scripts/skill-register.ts --check",
+    "kind:register": "bun run cat-harness/scripts/kind-register.ts",
+    "kind:register:check": "bun run cat-harness/scripts/kind-register.ts --check",
     "skills:docs": "bun run cat-harness/scripts/gen-skill-docs.ts",
     "skills:docs:check": "bun run cat-harness/scripts/gen-skill-docs.ts --check",
     "smart-trust:pages": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-trust --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Trust\" --chrome-owner smart-base",
