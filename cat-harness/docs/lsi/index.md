@@ -128,9 +128,9 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 3 | 18.15 | slot, chapter, block, edges, watcher, project, proof, objection | session, conflict, green, push, epic, page, beans, minutes |
 | 4 | 17.05 | tile, page, avatar, glass, card, sticky, theme, tiles | sibling, queue, ledger, subgraph, subdirectory, sessions, session, member |
 | 5 | 15.32 | tile, glass, board, card, avatar, sticky, tiles, theme | edge, lane, forward, edges, actor, chapter, graph, backward |
-| 6 | 15.11 | preview, merge, steward, red, forward, head, conflicted, base | actor, lane, role, task, requirements, requirement, skills, process |
+| 6 | 15.11 | preview, merge, steward, red, forward, head, conflicted, base | actor, role, lane, task, requirements, requirement, skills, process |
 | 7 | 14.65 | feature, phase, preview, staging, feedback, post, url, requirements | tile, edges, glass, claim, slot, closing, avatar, forward |
-| 8 | 14.39 | edges, forward, backward, sections, cross-chapter, section, feature, preview | actor, lane, criterion, locale, translation, role, witness, translated |
+| 8 | 14.39 | edges, forward, backward, sections, cross-chapter, section, feature, preview | actor, lane, criterion, locale, translation, role, witness, sidecar |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
