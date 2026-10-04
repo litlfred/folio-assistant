@@ -28,7 +28,24 @@
   .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
   .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
   ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
-  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  /* display:flow-root CONTAINS the floated count, and it is not cosmetic.
+     .n is float:right and is emitted AFTER the name and the path, so it is
+     floated onto whichever line box it is reached on. At 390 px the longer
+     ids wrap, the float lands on the second line, and a plain block li does
+     not contain a float — so it overflowed into the NEXT row.
+
+     Measured 2026-10-04 on /cat-harness/docs-auto/index/docs/who-iris-docs/
+     at 390 px: the smart-trust-docs li occupied y 721-756 while its own count
+     2153 rendered at y 750-775, i.e. 19 px inside the who-iris-docs row
+     beneath it, beside THAT row's count. Two readings wrong from one overflow
+     — smart-trust showed no count, and who-iris appeared to show "6 2153".
+     overflowX was 0 and no gate was red; only a browser at phone width showed
+     it, which is the gjli lesson again.
+
+     The phone-width block below already fixed the same class of defect for the
+     #da-index TABLE (bean n5be, finding 4). This list was not covered by it
+     and kept the float. */
+  ul.subs li { display: flow-root; padding: .3rem 0; border-bottom: 1px solid var(--edge); }
   .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
   .fa-table-filter label { font-weight: 600; }
   .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
@@ -151,7 +168,7 @@ rather than what anybody remembered.</p>
 <li><a href="processes/">Processes</a> <span class="n">80</span><div class="f">every BPMN process, with its own documentation, its lanes, and the skills its activities name</div></li>
 <li><a href="roles/">Roles</a> <span class="n">49</span><div class="f">every role a declared `scenarios` graph defines, with the description it declares</div></li>
 <li><a href="schemas/">Schemas</a> <span class="n">181</span><div class="f">every schema module a declared `schemas` directory holds, with the first sentence of its module docblock</div></li>
-<li><a href="skills/">Skills</a> <span class="n">306</span><div class="f">every skill markdown file, with the description it declares in its own front matter</div></li>
+<li><a href="skills/">Skills</a> <span class="n">305</span><div class="f">every skill markdown file, with the description it declares in its own front matter</div></li>
 <li><a href="tasks/">Tasks</a> <span class="n">596</span><div class="f">every named activity in a declared `processes` graph — task, user, service, manual, script and call activities</div></li>
 <li><a href="tools/">Tools</a> <span class="n">9</span><div class="f">every Tool module a declared `tools` directory holds, with the first sentence of its module docblock</div></li>
 </ul>

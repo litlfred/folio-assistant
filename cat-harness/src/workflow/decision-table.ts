@@ -220,14 +220,29 @@ function literal(text: string): string | number | boolean {
   );
 }
 
-/** Split on commas that are not inside quotes. */
+/**
+ * Split on commas that are at the top level — outside quotes AND outside
+ * parentheses.
+ *
+ * The parenthesis half was missing until 2026-10-04, when `not(...)` was
+ * implemented: `not("red","green")` split into `not("red"` and `"green")`, and
+ * the first half then raised `UnsupportedDmn` for an unbalanced paren. FEEL
+ * allows a negation among a list (`"a", not("b"), "c"`), so depth has to be
+ * tracked even though no shipped table does that yet.
+ *
+ * An unbalanced paren is left for {@link unaryTest} to refuse — this function
+ * only decides where the commas are.
+ */
 function splitTop(text: string): string[] {
   const out: string[] = [];
   let cur = "";
   let inQuotes = false;
+  let depth = 0;
   for (const ch of text) {
     if (ch === '"') inQuotes = !inQuotes;
-    if (ch === "," && !inQuotes) {
+    else if (!inQuotes && ch === "(") depth++;
+    else if (!inQuotes && ch === ")") depth--;
+    if (ch === "," && !inQuotes && depth === 0) {
       out.push(cur);
       cur = "";
     } else cur += ch;
@@ -271,11 +286,29 @@ export function unaryTest(test: string, value: unknown): boolean {
     }
   }
 
-  if (/^\[|^\]|\.\./.test(t) || /^not\s*\(/.test(t) || /\(/.test(t)) {
+  // FEEL `not(...)` negates a unary-test LIST, so it is the existing list
+  // handling read the other way round rather than a new kind of expression.
+  //
+  // It is implemented here because `merge-priority.dmn` has used `not("green")`
+  // since it was drawn and this evaluator threw on it, which means the merge
+  // queue's priority table could never be evaluated by ANY caller. Measured
+  // 2026-10-04, from this exception. The throw above is why that was findable
+  // at all: an evaluator that returned false for what it cannot read would
+  // have given the table a plausible wrong answer instead.
+  const neg = /^not\s*\(([\s\S]*)\)$/.exec(t);
+  if (neg) {
+    const inner = neg[1].trim();
+    if (inner === "") {
+      throw new DecisionError("`not()` has no unary test inside it");
+    }
+    return !unaryTest(inner, value);
+  }
+
+  if (/^\[|^\]|\.\./.test(t) || /\(/.test(t)) {
     throw new UnsupportedDmn(
       `unary test \`${t}\` uses FEEL this evaluator does not implement ` +
-        `(ranges, not(), function calls). Supported: -, a literal, a comparison, ` +
-        `or a comma-separated list.`,
+        `(ranges, function calls). Supported: -, a literal, a comparison, ` +
+        `a comma-separated list, or not() of any of those.`,
     );
   }
 

@@ -61,6 +61,7 @@ import { declaredSubgraphNode } from "./kg-export.ts";
 import { TODO_GRAPH_SITE_PATH, serialiseJsonld, todoDocument, todoGraphDocument, todoPageSitePath, todoSitePath } from "./todo-graph.ts";
 import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
+import { milestoneRollup } from "./milestone-rollup.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -1505,6 +1506,19 @@ function processHierarchy(): Record<string, string[]> {
         repoWeb: REPO_WEB,
         items,
         findings: beanFindings(beans),
+        // The milestone rollup, COMPUTED HERE so the board renders a number
+        // it does not derive. The board already loads every bean's `parent`,
+        // `type` and `status`, so it could compute the closure client-side —
+        // and that is exactly what makes it worth not doing: a second
+        // implementation of one definition is free to disagree with the
+        // terminal report, which `milestone:status` prints from the SAME
+        // function. One definition, one writer, and a renderer that renders.
+        //
+        // `orphanOpen` travels with it on purpose: the three shares describe
+        // well under half the open work (241 of 390, 2026-10-03), and a board
+        // showing three percentages without that denominator invites the
+        // reading that they add up to the repository.
+        plan: milestoneRollup(beans),
       },
         null,
         2,

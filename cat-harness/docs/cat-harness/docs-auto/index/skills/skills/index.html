@@ -30,7 +30,24 @@
   .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
   .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
   ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
-  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  /* display:flow-root CONTAINS the floated count, and it is not cosmetic.
+     .n is float:right and is emitted AFTER the name and the path, so it is
+     floated onto whichever line box it is reached on. At 390 px the longer
+     ids wrap, the float lands on the second line, and a plain block li does
+     not contain a float — so it overflowed into the NEXT row.
+
+     Measured 2026-10-04 on /cat-harness/docs-auto/index/docs/who-iris-docs/
+     at 390 px: the smart-trust-docs li occupied y 721-756 while its own count
+     2153 rendered at y 750-775, i.e. 19 px inside the who-iris-docs row
+     beneath it, beside THAT row's count. Two readings wrong from one overflow
+     — smart-trust showed no count, and who-iris appeared to show "6 2153".
+     overflowX was 0 and no gate was red; only a browser at phone width showed
+     it, which is the gjli lesson again.
+
+     The phone-width block below already fixed the same class of defect for the
+     #da-index TABLE (bean n5be, finding 4). This list was not covered by it
+     and kept the float. */
+  ul.subs li { display: flow-root; padding: .3rem 0; border-bottom: 1px solid var(--edge); }
   .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
   .fa-table-filter label { font-weight: 600; }
   .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
@@ -151,7 +168,7 @@
 <li><a href="../fhir-ig-skills/">fhir-ig-skills</a> <span class="p">fhir-harness/skills</span> <span class="n">13</span></li>
 <li><a href="../folio-assistant-sci-skills/">folio-assistant-sci-skills</a> <span class="p">folio-assistant-sci/skills</span> <span class="n">52</span></li>
 <li><a href="../lean-skills/">lean-skills</a> <span class="p">folio-assistant-sci/skills/lean</span> <span class="n">1</span></li>
-<li><strong>skills</strong> <span class="p">cat-harness/skills</span> <span class="n">222</span></li>
+<li><strong>skills</strong> <span class="p">cat-harness/skills</span> <span class="n">221</span></li>
 <li><a href="../smart-base-skills/">smart-base-skills</a> <span class="p">smart-base/skills</span> <span class="n">8</span></li>
 <li><a href="../who-iris-skills/">who-iris-skills</a> <span class="p">who-iris/skills</span> <span class="n">1</span></li>
 </ul>
@@ -419,10 +436,6 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/lsi-indexing.md"><code>lsi-indexing</code></a><br><span class="p">cat-harness/skills/kg/graph-management/lsi-indexing.md</span></td>
   <td>Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier cluste…</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/artefact-reachability.md"><code>artefact-reachability</code></a><br><span class="p">cat-harness/skills/kg/kg-core/artefact-reachability.md</span></td>
-  <td>Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/associate-harness.md"><code>associate-harness</code></a><br><span class="p">cat-harness/skills/kg/kg-core/associate-harness.md</span></td>
