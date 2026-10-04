@@ -5,7 +5,8 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-02T16:29:09Z
-updated_at: 2026-10-02T22:27:34Z
+updated_at: 2026-10-04T15:12:15Z
+parent: folio-assistant-rwmf
 ---
 
 Owner, 2026-10-02 (bean for later): update the Merge Manager skills, process and tools so that a merge is GATED on:

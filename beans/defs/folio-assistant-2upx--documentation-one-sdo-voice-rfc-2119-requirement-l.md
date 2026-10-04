@@ -5,7 +5,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-21T16:21:34Z
-updated_at: 2026-09-21T16:21:34Z
+updated_at: 2026-10-04T15:12:15Z
+parent: folio-assistant-rwmf
 ---
 
 Owner, 2026-09-21. A large body of direction on documentation, captured here as the frame; the children carry the work.
