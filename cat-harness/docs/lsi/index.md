@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**220** units · **5921** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**220** units · **5922** terms · k = **100** · retains **79.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -125,12 +125,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 |---|---|---|---|
 | 1 | 44.93 | instance, kind, directory, harness, page, session, graph, declaration | *(none)* |
 | 2 | 21.69 | watcher, queue, sibling, prs, backlog, block, commits, slot | harness, instance, declaration, node, iri, directories, directory, subgraph |
-| 3 | 18.15 | slot, chapter, block, edges, watcher, project, proof, objection | session, conflict, green, push, epic, page, beans, minutes |
-| 4 | 17.05 | tile, page, avatar, glass, card, sticky, theme, tiles | sibling, queue, ledger, subgraph, subdirectory, sessions, session, member |
-| 5 | 15.32 | tile, glass, board, card, avatar, sticky, tiles, theme | edge, lane, forward, edges, actor, chapter, graph, backward |
+| 3 | 18.15 | slot, chapter, block, edges, watcher, project, proof, objection | session, conflict, green, epic, page, push, beans, minutes |
+| 4 | 17.05 | tile, page, avatar, glass, card, theme, sticky, tiles | sibling, queue, ledger, subgraph, subdirectory, sessions, session, member |
+| 5 | 15.31 | tile, glass, board, card, avatar, sticky, tiles, theme | edge, lane, forward, edges, actor, chapter, graph, backward |
 | 6 | 15.11 | preview, merge, steward, red, forward, head, conflicted, base | actor, role, lane, task, requirements, requirement, skills, process |
-| 7 | 14.65 | feature, phase, preview, staging, feedback, post, url, requirements | tile, edges, glass, claim, slot, closing, avatar, forward |
-| 8 | 14.39 | edges, forward, backward, sections, cross-chapter, section, feature, preview | actor, lane, criterion, locale, translation, role, witness, sidecar |
+| 7 | 14.65 | feature, phase, preview, staging, feedback, post, url, requirements | tile, edges, glass, claim, slot, closing, avatar, card |
+| 8 | 14.38 | edges, forward, backward, sections, cross-chapter, section, feature, preview | actor, lane, criterion, locale, translation, role, witness, sidecar |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
