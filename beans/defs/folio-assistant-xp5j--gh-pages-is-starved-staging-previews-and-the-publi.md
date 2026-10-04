@@ -194,6 +194,82 @@ Gap 2's fix is not "add `publish.yml`" — that is the symptom again. It is a ga
 that checks the declared `writers` against the measured ones, which is what
 would have caught it.
 
+## Design settled 2026-10-04 — `route-family`, a FOURTH keying
+
+The owner chose "teach route keying a dynamic route, then migrate", over the
+steward-only coalescing I recommended. Recording the design before building it,
+because it crosses 14 sites and a handover mid-way would otherwise lose it.
+
+### Why a fourth keying rather than a flag on `route`
+
+`DirectoryStorageSchema`'s docblock answers the question itself:
+
+> The field is an enum, not a string, **so a fourth keying is a schema change
+> somebody has to make rather than a reinterpretation of an existing value.**
+
+And a boolean on `route` would make `keyedBy: "route"` carry two different
+write contracts — exactly what that docblock insists `route` and `tip` must
+never do ("it is not a synonym for `tip`, and the difference is the write").
+`scripts/special-branches.json` already draws the same line one level out, as
+`shape: "branch"` against `shape: "family"`.
+
+### What `route-family` is, against `route`
+
+| | `route` | `route-family` |
+|---|---|---|
+| unit replaced | one declared route | one MEMBER under the directory's prefix |
+| member names | declared, fixed | supplied at publish, **untrusted** |
+| source of the files | the declared path in the checkout | a separate local path — source and destination differ |
+| member removal | not a case: a generator that stops emitting a page stops publishing it | **required** — a member's branch can be deleted |
+| `expect` | refused; newer generation wins | refused, for the same reason |
+
+Three things it needs that `route` does not:
+
+1. **A validated member key.** `feature-staging.yml` states the branch name is
+   ATTACKER-CONTROLLED on a fork PR. So the member is untrusted input: no
+   `..`, no absolute path, no `//`, and **no dot-prefixed segment, tested on
+   every segment** per `kg-core/directory-conventions`. One segment only.
+2. **A source/destination split.** `publishRoute` conflates them today —
+   `loc.path` is both the checkout path and the route on the branch, since "a
+   route is published FROM the working tree by the generator that owns it". A
+   preview builds into a local dir and publishes to a different, dynamic route.
+3. **A removal operation.** `feature-staging.yml` already deletes
+   `STAGING/<slug>` on PR close, and `route`'s contract has no case for a
+   member whose branch is gone.
+
+### The 14 enumeration sites a new value must not land unhandled in
+
+    schemas/cat-harness.ts:1480      the enum itself
+    schemas/cat-harness.ts:1779      the `qa` directory refusal
+    schemas/subgraph-source.ts:241   tip + qa guard
+    scripts/branch-store.ts:172      BRANCH_KEYINGS
+    scripts/branch-store.ts:231      keptAt's route short-circuit
+    scripts/branch-store.ts:267      resolveTipLocation's filter
+    scripts/branch-store.ts:295      resolveTipLocation's refusal
+    scripts/branch-store.ts:716      manifest keying agreement
+    scripts/branch-store.ts:826      the `expect` refusal
+    scripts/check-declared-dirs.ts:427
+    scripts/graph-read.ts:160
+    scripts/audit-coverage.ts:393
+
+Nine of the twelve need a decision rather than a mechanical edit; the three
+`!== "tip"` guards in the last block are about reading a tip store and are
+correct to exclude a family.
+
+### Sequencing, overridden deliberately
+
+`branch-store.ts` says the first route-keyed writer is `docs/uml/`, "a
+follow-on bean to `1j3q`, deliberately separate so the mechanism lands before
+49 gated checks move". This makes `gh-pages` first instead, ahead of that. The
+owner was told and chose it; recorded here so the record shows a decision
+rather than an oversight.
+
+### And the adversary's point still stands
+
+Route keying removes CONFLICTS, not BURSTS. Even fully migrated, the published
+site lags until the steward coalesces — `schemas/ref-window.ts` is the type for
+that, and the window, not the keying, is what closes this bean's symptom.
+
 ## Done when
 - [x] owner picks an option
 - [x] `gh-pages` declares `keyedBy: "route"` in `scripts/special-branches.json`
