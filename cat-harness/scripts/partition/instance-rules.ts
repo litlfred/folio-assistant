@@ -342,6 +342,11 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // The ONE conversion from a harness row's resolved mark to that
+      // navbar's fields (bean `2vpn`). HARNESS beside `navbar.ts`: every
+      // surface that draws a harness's mark calls it, so a folio owning it
+      // would let one instance decide how every other instance's mark is read.
+      "scripts/lib/harness-mark.ts",
       // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the
@@ -1385,6 +1390,15 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // WHICH declared executable artefacts can be reached at all (bean `dxqm`).
+      // Harness machinery for the same reason as the coverage report beside it:
+      // its subjects are the declared `.bpmn`/`.dmn` corpus, the engine's own
+      // resolver and the module graph — never a folio's vocabulary. A folio
+      // could not make it reach a different verdict, only give it more
+      // artefacts to ask about. Assigned in the same change that added the
+      // script, because `unassigned` is exactly what the partition's own report
+      // says must not be read as clean.
+      "scripts/audit-reachability.ts",
       // LSI over the declared prose graphs, and the epic-filing proposal it
       // drives (bean `ansc`). Harness for the same reason as the audit: its
       // subjects are the declarations and the work plan, and the engine it

@@ -324,6 +324,46 @@ cannot resolve. The partition is tested in
 — including that a refused member cannot be the other side of a collision,
 since it never enters a train.
 
+## A train admits only members that STACK cleanly (STRICT)
+
+**Owner ruling, 2026-10-04 ~17:40Z:** *"require that a merge train has PRs
+that are stacked one on top of another. You're wasting too much time resolving
+conflicts in the train and blocking other stuff from happening."*
+
+A train is a **stack**: member *n+1* merges onto `main` + members *1…n* with
+**no conflict at all**, generated paths included, and with no semantic break
+(tsc and the gate set pass on the stack). Check every candidate before
+admitting it:
+
+```sh
+c=origin/main
+for p in <members in order>; do
+  t=$(git merge-tree --write-tree $c pr/$p) || { echo "#$p does not stack"; break; }
+  c=$(git commit-tree $t -p $c -p pr/$p -m stack)
+done
+```
+
+A member that does not stack is **not admitted**. It does not go in on the
+promise that `merge:main` will resolve it. It goes back to its own session,
+which merges `main` on its own branch, gets CI green, and re-signals. Conflict
+resolution belongs on the member's branch, never in the train, and never in the
+steward's time.
+
+**Why, measured on train `merge-train-2026-10-04a` (#2113):** two members with
+`declared` conflicts took **about an hour and five pushes** to reach green:
+1. The train tool dropped the gitignored-but-tracked LSI files (bean `u4up`).
+2. That drop staled the auto-docs pages.
+3. Another session landed #2112, and the train conflicted again.
+4. Re-merging `main` took a 12-minute regen.
+5. A semantic conflict surfaced: #2043 imported a module that #2112 had moved.
+
+While the steward resolved conflicts, nothing else landed. Landing the
+cleanly stacking PRs one at a time, as #2109, #2078 and #2102 did in the same
+window, took one guard run each.
+
+The `overlapKind` table below still says what a collision NEEDS. The steward
+now provides only the `none` row. Every other kind goes back to its owner.
+
 ## Regenerate on a clean tree, and check it
 
 **`git status --porcelain` is empty before a member is merged and the tree
@@ -443,6 +483,15 @@ runs the evaluate mode on label, draft, body, comment and CI-completion
 events and posts a `merge-guard` commit status on the head. Making that
 context REQUIRED is a ruleset the owner adds; this skill does not, and no
 agent changes repository settings.
+
+It runs only on events that **can change a verdict** (#2099: ~25 runs in the
+6 min after #2000). A comment counts only when it carries text a check reads
+— `ready:`, a `?`, a `claude.ai/code/session_` footer, or merge-main's
+marker; a CI completion only on a PR head; an `edited` only when the body or
+base changed. So **a check that starts reading a comment for anything else
+must add its text to the workflow's `if:`**, or the status goes stale on
+exactly that comment. Evaluations collapse per PR. The status is a snapshot
+either way, and `--merge` re-evaluates live; never land on a status alone.
 
 `Rule_NotReady` in
 [`merge-priority.dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-priority.dmn)

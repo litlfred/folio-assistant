@@ -481,7 +481,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["library-ingestion"],
       selection: {
         when:
-          "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run src/index.ts --check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
+          "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
         limits:
           "It adds nothing for archives, spreadsheets or metadata — `ingest-stdlib` already does those, and does them where this cannot run. Its PDF rungs ARE testable in CI as of `68dt`, which installs the lean set; the table rung (`pdf-tables.py`, camelot) is the one part that still is not, and anything gated on THAT remains a path CI cannot exercise — the `5rfy` defect.",
         cost:

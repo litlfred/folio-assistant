@@ -763,7 +763,7 @@
     {
       "id": "cat-harness-src",
       "path": "src/",
-      "description": "The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
+      "description": "The harness runtime that is not the server: the content vocabulary (`content-types.ts`), blocks, the workflow engine, CRDM, logging, the git/cache/feedback/safe-path helpers under `core/`, and the built-in adapter table. The MCP and HTTP server itself moved to `cat-harness-tools/src/` (bean `70lx`, B1). `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
       "graphKinds": [
         "code"
       ]

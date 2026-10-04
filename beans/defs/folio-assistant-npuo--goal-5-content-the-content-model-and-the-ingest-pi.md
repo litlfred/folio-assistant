@@ -3,8 +3,9 @@
 title: 'GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it'
 status: todo
 type: milestone
+priority: normal
 created_at: 2026-10-04T15:12:07Z
-updated_at: 2026-10-04T15:12:07Z
+updated_at: 2026-10-04T18:34:28Z
 ---
 
 **The owner's words, 2026-10-04**, chosen from options put to them in session
@@ -32,5 +33,11 @@ writes against, and the pipeline that fills it**.
 
 ## Done when
 
-- [ ] the owner states this milestone's outcome in their own words, replacing the derived scope above
+- [x] the owner states this milestone's outcome in their own words, replacing the derived scope above — **the owner kept the derived title, 2026-10-04** ("Keep derived title")
 - [x] `slw1` and `0lmb` carry `parent:` this bean
+
+
+
+## Owner ruling on scope, 2026-10-04
+
+In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi the owner was shown this milestone's derived title next to three alternative outcome sentences and chose **"Keep derived title"**. The title above is therefore the owner's record of this milestone's outcome, not only a derivation; the rule that the owner's framing wins still holds if they reword it later.

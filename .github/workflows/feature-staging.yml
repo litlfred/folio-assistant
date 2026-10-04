@@ -1552,10 +1552,11 @@ jobs:
               --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
               --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
             # THE PREVIEW CAP — owner ruling 2026-10-02, issue #1868: "cap the
-            # maximum number of previews (<= 10) and rotate old ones off". The
-            # number lives ONCE, as `MAX_PREVIEWS` in `staging-rotate.ts`. It
-            # stamps this preview's `.staged-at`, keeps it plus the most
-            # recently updated others up to the cap, and for each one removed
+            # maximum number of previews (<= 10) and rotate old ones off",
+            # amended 2026-10-04 to a SIZE budget of 3 GB. The number lives
+            # ONCE, as `MAX_PREVIEW_BYTES` in `staging-rotate.ts`. It stamps
+            # this preview's `.staged-at`, keeps it plus the most recently
+            # updated others while the total fits, and for each one removed
             # retires its record into `STAGING/_retired/`, appends a `removed`
             # render-log entry, and prints slug, age and size — the record
             # `deletion-requires-confirmation` asks of every removal. It never
@@ -1570,7 +1571,7 @@ jobs:
               git -C pages add -A STAGING
               # `-m` and `-F` are mutually exclusive in `git commit`, so the
               # list is read into one paragraph rather than passed as a file.
-              MSG+=(-m "rotated off (preview cap, owner ruling 2026-10-02, #1868):"$'\n'"$(cat "$ROTATED")")
+              MSG+=(-m "rotated off (preview size budget, owner ruling 2026-10-02 amended 2026-10-04, #1868):"$'\n'"$(cat "$ROTATED")")
             fi
             MSG+=(-m "$RUN_URL")
             git -C pages commit "${MSG[@]}" || exit 0

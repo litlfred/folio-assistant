@@ -77,9 +77,10 @@
  *
  * A committed sidecar goes stale, and the question every one of them has to
  * answer is what its `--check` fails on. This one fails on a graded **state**
- * that is NEW against a baseline — an entry that no longer qualifies, a
- * multi-destination file nobody has listed, an instance that declares no
- * `needs`. Bean `0dav`: the baseline is the committed working copy until QA
+ * that is NEW against a baseline — a (file, instance-above-it) pair that
+ * holds a wrong-direction reference (A.10), an entry that no longer
+ * qualifies, an instance that declares no `needs`. (A multi-destination file
+ * nobody has listed is still RECORDED, but A.10 subsumes it as a gate.) Bean `0dav`: the baseline is the committed working copy until QA
  * results leave `main`, and `--against <ref>` on the `qa-reports` branch
  * after; a missing one is UNKNOWN and not gated (proposal §2.3). It used to
  * fail on the committed states merely DISAGREEING, which has no subject once
@@ -88,11 +89,25 @@
  * reviewer has to see, and it is not produced by an unrelated merge.
  *
  * It answers that ONE question and only that: `--check` does not also fail on
- * the backlog. `audit:coverage --check` settled the same trade — staleness is
- * the half that can fail now, the findings are reported, and a gate that
+ * the backlog. `audit:coverage --check` settled the same trade — a gate that
  * refused every push until somebody drained a backlog is a gate switched off
  * within a week. The backlog exit stays on the plain form, and the `✗` lines
  * print on both, so a `--check` that returns 0 cannot be read as a clean axis.
+ *
+ * ### A.10 — the backlog is the BASELINE, so a new pair fails (owner, Q-B 2026-10-01)
+ *
+ * The `wrong-direction` family records every file holding a wrong-direction
+ * reference, ONE entry per file and per instance above it that the file
+ * names — single-destination files as well as multi-destination ones. It is
+ * in `failOnNew`, so `--check` is a one-way ratchet without a second store:
+ * every pair in the baseline sidecar is inherited, a pair the baseline does not
+ * hold (a new file, or a known file naming a further instance) fails, and a
+ * pair that disappears is resolved. The fix is to REWORD in place (Q1).
+ *
+ * The baseline is the `qa-reports` entry `--against` names; CI passes
+ * `--against main`. Without one the comparison is UNKNOWN and not gated, so
+ * the regenerated sidecar is committed in the same change that alters what
+ * this axis records — that copy is what the next `main` entry publishes.
  *
  * It does **not** fail on the verdict counts moving, even though it records
  * them. Grading a number that changes whenever anybody writes a paragraph
@@ -348,6 +363,33 @@ function isGeneratorWritten(abs: string): boolean {
 /** Text this axis can read. A binary or an image carries no reference a reader follows. */
 const EXTENSIONS = new Set([".ts", ".tsx", ".md", ".json", ".jsonld", ".bpmn", ".dmn", ".yml", ".yaml"]);
 
+/**
+ * X3 — the LAYERING SPECIFICATIONS (owner, Q-B 2026-10-01: "adopt the X3
+ * exemption for the 3 layering specifications").
+ *
+ * Each of these files has the instance graph as its SUBJECT: it is the
+ * document or the code that DEFINES which instance sits on which layer, so it
+ * cannot do its job without naming the layers above it. Moved to any one
+ * layer it could no longer describe the others — the 2026-09-24 PENDING
+ * rationale, now ruled rather than held. A named list, never a pattern: a
+ * file earns a place here only by an owner ruling, and a regex would admit
+ * the next file that merely resembles one.
+ *
+ * This file is one of the three. Until the ruling it sat in its own PENDING
+ * list, on the argument that a carve made by the checker for the checker is
+ * the one nobody else can audit; the ruling answers that by being the
+ * owner's carve rather than the checker's, and it is counted in the summary
+ * like every other exemption.
+ */
+// declared-path-literal: the three files the owner's X3 ruling names, repo-root-relative because that is how an occurrence's file is reported
+const LAYERING_SPECIFICATIONS = [
+  "cat-harness/scripts/partition/instance-rules.ts",
+  "smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+  "cat-harness/scripts/check-reference-direction.ts",
+] as const;
+
+const escapeRe = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 // ── This instance's exemptions ──────────────────────────────────
 //
 // Same contract as `iwtn`'s `ALLOW`: each entry states WHY the text is not a
@@ -375,6 +417,10 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
     pattern: /^\s*(\/\/|\*|#)?\s*declared-path-literal:/,
     reason:
       "`check:declared-paths`'s own exemption marker, whose reason text necessarily names the directory it is excusing. Scanning it would make satisfying one gate breach another",
+  },  {
+    file: new RegExp(`^(${LAYERING_SPECIFICATIONS.map(escapeRe).join("|")})$`),
+    reason:
+      "X3, a LAYERING SPECIFICATION (owner, Q-B 2026-10-01): the file's subject IS the instance graph — it defines the layers, so it names them. Moved to any one layer it could no longer describe the others. A named list of three, ruled by the owner, never a pattern",
   },
 ];
 
@@ -403,10 +449,10 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  *    Moving it up does not remove the reference; it removes the
  *    declaration. Same for `avatars.ts`, `ig-chrome.ts`, `graph-kind-
  *    registry.ts`, `namespaces.ts` — registries keyed by instance.
- *  - **Specifications about the layering** — `instance-rules.ts` names the
- *    repos it partitions into; `smart-stack-layering.md` names all eight
- *    layers because it is the document that DEFINES the stack. Move it up
- *    to any one layer and it can no longer describe the other seven.
+ *  - **Specifications about the layering** — `instance-rules.ts`,
+ *    `smart-stack-layering.md` and this file. RULED since (owner, Q-B
+ *    2026-10-01, X3): they left this list for {@link LAYERING_SPECIFICATIONS},
+ *    an exemption, because their subject IS the instance graph.
  *  - **Prose naming two or more** — a genuine choice between destinations
  *    that nobody has made.
  *
@@ -429,25 +475,10 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  * Neither file was edited to earn that — the generator was.
  */
 const PENDING: readonly { file: string; names: number }[] = [
-  // THIS FILE, and it is listed rather than exempted on purpose.
-  //
-  // A findings list names the files it holds findings about, and the name of
-  // a file under `smart-base/` contains `smart-base` — so this module cannot
-  // record a finding without matching itself, and its rationale above cannot
-  // explain the classes without naming them. A narrow exemption was written
-  // first and then deleted: an exemption carved by the checker, for the
-  // checker, is the one carve nobody else can audit, and the list it would
-  // have kept it off is the list that exists to be audited. It qualifies on
-  // exactly the published rule — it names more than one instance above it
-  // and has no single destination — so it goes where everything else that
-  // qualifies goes.
-  { file: "cat-harness/scripts/check-reference-direction.ts", names: 4 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md", names: 8 },
   { file: "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 },
   { file: "cat-harness/docs/cat-harness/published-graphs.md", names: 4 },
   { file: "cat-harness/cat-harness.json", names: 2 },
   { file: "cat-harness/schemas/avatars.ts", names: 6 },
-  { file: "cat-harness/scripts/partition/instance-rules.ts", names: 2 },
   { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
   { file: "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
   { file: "folio-assistant-core/scripts/ingest-ig-artifacts.ts", names: 3 },
@@ -478,7 +509,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/skills/ui/ui-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
   { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
-  { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },
+  { file: "cat-harness-tools/scripts/check-context-emission.ts", names: 3 },
   { file: "cat-harness/scripts/harness-schema-export.ts", names: 2 },
   { file: "cat-harness/docs/wireframes/voices/intent.md", names: 2 },
   { file: "smart-ig/README.md", names: 2 },
@@ -494,6 +525,47 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/docs/processes/index.md", names: 2 },
   { file: "smart-ig/smart-ig.json", names: 2 },
 ];
+
+/**
+ * X1 — a TRANSLATION MIRROR (owner, Q-B 2026-10-01: "exempt translation
+ * mirrors").
+ *
+ * The existing `SKIP_DIRS` rule applied consistently rather than a new carve:
+ * `translations/` is skipped because a name there is the ORIGINAL's reference
+ * counted again, once per locale. The locale copies under `docs/<lang>/` and
+ * `docs/guides/<lang>/` are the same thing in another place, so a reference in
+ * one is fixed in its English source and re-translated, never in the copy.
+ *
+ * Decided by what the FILE declares, never by its path: front matter carrying
+ * a `lang:` other than `en` AND a `translation_source:`. Both, because `lang:`
+ * alone is on every English source page too, and a page that merely mentions
+ * translation must not be able to exempt itself — the same head-only reading
+ * {@link declaresGenerated} uses. Applied per file in {@link analyse} and
+ * consulted LAST, so any other exemption that matches keeps its own reason.
+ */
+const TRANSLATION_MIRROR: ReferenceExemption = {
+  file: /(?:)/,
+  reason:
+    "X1, a TRANSLATION MIRROR (owner, Q-B 2026-10-01): the file's front matter declares a non-English `lang:` and a `translation_source:`, so every name in it is its source page's reference counted again — the reason `translations/` is skipped. Fixed in the source and re-translated, never in the copy",
+};
+
+/** How many exemptions this axis declares, each with a stated reason — {@link EXEMPTIONS} plus {@link TRANSLATION_MIRROR}. */
+export const EXEMPTIONS_DECLARED = EXEMPTIONS.length + 1;
+
+/** Does the file declare itself a translation of another page, in its own front matter? */
+export function declaresTranslationMirror(abs: string): boolean {
+  if (!abs.endsWith(".md")) return false;
+  let text: string;
+  try {
+    text = readFileSync(abs, "utf-8");
+  } catch {
+    return false;
+  }
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text.slice(0, 4000));
+  if (fm === null) return false;
+  const lang = /^lang:\s*["']?([A-Za-z-]+)["']?\s*$/m.exec(fm[1]!)?.[1];
+  return lang !== undefined && lang.toLowerCase() !== "en" && /^translation_source:\s*\S/m.test(fm[1]!);
+}
 
 // ── Discovery ───────────────────────────────────────────────────
 
@@ -714,11 +786,14 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
     } catch {
       continue; // unreadable is not clean, but it is also not a finding about direction
     }
-    const file = relative(root, abs);
+    const file = relative(root, abs).split(sep).join("/");
+    // X1 is a property of the FILE, read once, and appended LAST so any other
+    // exemption that also matches keeps its own reason.
+    const exemptions = declaresTranslationMirror(abs) ? [...EXEMPTIONS, TRANSLATION_MIRROR] : EXEMPTIONS;
     for (const to of targets) {
       for (const hit of occurrencesOf(text, to)) {
         const occurrence: Occurrence = { file, line: hit.line, text: hit.text.trim(), from, to };
-        classified.push({ occurrence, verdict: classifyReference(occurrence, rule, collisionOf, EXEMPTIONS) });
+        classified.push({ occurrence, verdict: classifyReference(occurrence, rule, collisionOf, exemptions) });
       }
     }
   }
@@ -769,6 +844,18 @@ export interface DirectionStates {
   multiDestinationUnlisted: { file: string; names: number }[];
   /** Instances that declare no `needs`, so nothing about their layer is known. */
   undeclaredInstances: string[];
+  /**
+   * A.10 (owner, Q-B 2026-10-01): EVERY file holding a wrong-direction
+   * reference, single- and multi-destination alike — one entry per file and
+   * per instance above it that the file names.
+   *
+   * Per (file, target) rather than per file, so that a file already in the
+   * baseline which starts naming a FURTHER instance above it is a new entry
+   * too; a count per file could not see a file trading one target for
+   * another. Graded under `--check` as NEW-against-the-baseline only: the
+   * backlog is inherited, a new pair fails, a fixed pair is resolved.
+   */
+  wrongDirection: { file: string; target: string }[];
 }
 
 /**
@@ -805,6 +892,9 @@ export function directionStates(
     pendingStale,
     multiDestinationUnlisted,
     undeclaredInstances: [...report.undeclared].sort(),
+    wrongDirection: [...byFile]
+      .flatMap(([file, to]) => [...to].map((target) => ({ file, target })))
+      .sort((a, b) => a.file.localeCompare(b.file) || a.target.localeCompare(b.target)),
   };
 }
 
@@ -890,6 +980,15 @@ export function buildDirectionResult(args: {
           "it is graded while the occurrence count it holds is not.",
         entries: states.pendingHeld,
       },
+      "wrong-direction": {
+        summary:
+          "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE " +
+          "instance above it or several — one entry per file and per instance it names. The backlog, " +
+          "recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming " +
+          "an instance above it, single destination or not, fails; one that stops is resolved. The " +
+          "fix is to REWORD in place (Q1), not to move the file.",
+        entries: states.wrongDirection,
+      },
       "instances-undeclared": {
         summary:
           "An instance that declares no `needs`, so nothing about its layer is known and every " +
@@ -962,6 +1061,20 @@ export function directionSidecarState(
 
 const GATE = "check:reference-direction";
 
+/**
+ * The families `--check` fails on when an entry is NEW against the baseline.
+ * Exported so the tests judge with the gate's own list, not a copy of it.
+ */
+// `multi-destination-unlisted` is RECORDED and no longer in this list:
+// A.10's `wrong-direction` subsumes it. A file newly naming several
+// instances above it newly holds at least one (file, instance) pair, and
+// that pair is what fails, whatever PENDING says — the ruling (Q1:
+// reword in place) retired "list it pending" as the answer to a new one.
+// Grading both would fail one defect twice, and would fail a PR on files
+// a STALE baseline never recorded: measured on this change, `main`'s
+// entry predated seven multi-destination files already on `main`.
+export const CHECK_FAIL_ON_NEW = ["wrong-direction", "pending-stale", "instances-undeclared"] as const;
+
 function main(): number {
   const args = process.argv.slice(2);
   // `--check` reads and compares; it never writes. Bean `ymsu` — a gate that
@@ -990,7 +1103,7 @@ function main(): number {
 
   console.log(`Reference direction — ${report.instances} instances, ${report.classified.length} name occurrences pointing up the dependency arrow\n`);
   console.log(`  wrong-direction   ${String(wrong.length).padStart(5)}   in ${new Set(wrong.map((c) => c.occurrence.file)).size} files`);
-  console.log(`  exempt            ${String(exempt.length).padStart(5)}   ${EXEMPTIONS.length} exemptions, each with a stated reason`);
+  console.log(`  exempt            ${String(exempt.length).padStart(5)}   ${EXEMPTIONS_DECLARED} exemptions, each with a stated reason`);
   // Its OWN line, never folded into `allowed` and never into the two skipped
   // counts below. It is a different statement from all three: the occurrence
   // was read, it was judged, and what it names owes no direction.
@@ -1065,7 +1178,7 @@ function main(): number {
   const fresh = buildDirectionResult({
     report,
     pending: PENDING,
-    exemptionsDeclared: EXEMPTIONS.length,
+    exemptionsDeclared: EXEMPTIONS_DECLARED,
     script: relative(REPO_ROOT, join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts")),
     scriptAbsPath: join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts"),
   });
@@ -1076,13 +1189,13 @@ function main(): number {
   // design cannot be.
   console.log(
     `\n  sidecar: ${where}` +
-      `\n    graded — the PENDING set, the entries that no longer qualify, the unlisted` +
-      ` multi-destination files, the instances with no \`needs\`` +
+      `\n    graded — every (file, target) wrong-direction pair (A.10), the PENDING entries that` +
+      ` no longer qualify, the instances with no \`needs\`; the unlisted multi-destination files are recorded` +
       `\n    recorded, NOT graded — the verdict counts, which move whenever the corpus does`,
   );
   // `--check` answers ONE question, and since bean `0dav` it is: did THIS
-  // change add a graded state? — a file newly naming several instances above
-  // it without being listed, a `PENDING` entry newly no longer qualifying, an
+  // change add a graded state? — a file newly naming an instance above it
+  // (A.10, single or multi destination), a `PENDING` entry newly no longer qualifying, an
   // instance newly declaring no `needs`. Against a baseline: the committed
   // working copy until QA leaves `main`, `--against <ref>` (a `qa-reports`
   // ref) after. It used to be "is the committed ruling what this run
@@ -1093,7 +1206,7 @@ function main(): number {
   // `pending-held` is graded in the record but not here: membership moves only
   // when somebody edits `PENDING`, and that edit is in the diff under review.
   //
-  // It still does not fail on the backlog, for `audit-coverage --check`'s
+  // It still does not fail on the INHERITED backlog, for `audit-coverage --check`'s
   // reason: a gate that refused every push until somebody drained a backlog is
   // a gate switched off within a week. The backlog exit below is the PLAIN
   // form's, and the `✗` lines above print either way, so a `--check` that
@@ -1109,7 +1222,7 @@ function main(): number {
     return judgeQaResult({
       gate: `${GATE}:check`,
       fresh,
-      failOnNew: ["multi-destination-unlisted", "pending-stale", "instances-undeclared"],
+      failOnNew: [...CHECK_FAIL_ON_NEW],
       baseline: { root: INSTANCE_ROOT, stem: SIDECAR_STEM, writer: GATE, against },
     }).exit;
   }

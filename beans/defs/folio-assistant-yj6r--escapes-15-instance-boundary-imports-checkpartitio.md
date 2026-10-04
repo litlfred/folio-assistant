@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-30T10:28:59Z
+updated_at: 2026-10-04T15:52:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -160,7 +160,17 @@ deletes the need for the part I proposed building.
     as could-not-determine and never folded into the 0; and the
     `undetermined` line does not appear at all, which is this tool's way of
     saying every declared instance in the checkout now declares `needs`
-[ ] only THEN: `check:reference-direction` wired into a workflow, with a failing
+[x] ~~only THEN: `check:reference-direction` wired into a workflow, with a
+    failing criterion that bites on a single-target escape~~ — **MOVED to bean
+    `1bvx` on the owner's ruling, 2026-10-04** (answered to session
+    session_01BccmnVFbtRpKxM39kyVw9q: *"Move box, drop clause"*). This box
+    named the PROSE axis, which §"NOT in scope" excludes; `1bvx` already owns
+    that gate and already requires that it go into CI green, not red. The
+    import-axis gate this bean needed is wired: `code-quality-gates.yml` runs
+    `bun run check:import-direction --all`, blocking, and it bites on a
+    single-target escape (measured 2026-10-04). The text below is the
+    reasoning recorded before the ruling:
+    (was) only THEN: `check:reference-direction` wired into a workflow, with a failing
     criterion that bites on a single-target escape
     — **this box names the wrong gate, and the half that matters to this bean
     is already done.** On the IMPORT axis — the axis every other box here
@@ -177,7 +187,14 @@ deletes the need for the part I proposed building.
     forbid. Left UNTICKED rather than reworded: the box as written cannot be
     earned without taking on the out-of-scope axis, and editing a "done when"
     to match what was delivered is how it stops being a test
-[ ] the axis writes a committed sidecar, and `audit:coverage` reports the kind
+[x] `audit:coverage` reports the kind as JUDGED rather than merely typed —
+    **the "writes a committed sidecar" clause is DROPPED on the owner's ruling,
+    2026-10-04** (same answer). Why: `check:import-direction` writes nothing on
+    purpose, so that it cannot inherit `ymsu`, where `bun test` repairs the
+    sidecar that a later gate compares against itself. The remaining clause is
+    earned: `audit:coverage` reads kind `code` as `covered` (16 gates).
+    The text below is the reasoning recorded before the ruling:
+    (was) the axis writes a committed sidecar, and `audit:coverage` reports the kind
     as JUDGED rather than merely typed
     — **second clause earned, first clause not, so the box stays open.**
     Measured 2026-10-04, `bun run audit:coverage`: kind `code` reads
@@ -615,3 +632,14 @@ alone: bean `3432` is **in-progress and not this session's**, and it uses
 proposes keys on — `3432` measured that marker at 0 of 518 beans otherwise.
 Flipping `r0tm` would make that check vacuous again. Reported on `r0tm` itself
 for whoever holds `3432`, rather than decided here.
+
+## Owner ruling on the two disputed boxes (2026-10-04)
+
+The owner answered the open question on #2089 with *"Move box, drop clause"* (asked by session_01BccmnVFbtRpKxM39kyVw9q, which took over #2089 from the stalled session_01SjvqTkDQsqa6SLLFjBwoD3). So:
+- the `check:reference-direction` box moves to bean `1bvx`, which already owns the prose-axis gate and its go-in-green rule. A note on `1bvx` records the hand-off. This is the existing bean rather than a new one under #1219, because creating one would duplicate `1bvx`;
+- the "committed sidecar" clause is dropped, for the reason given in the box;
+- the escape-import part of this bean is now done on measurement or ruling.
+
+**The bean stays `in-progress`.** Its second Done-when, under §"Themed sub-graphs", has 4 open boxes (carving `cat-harness/schemas`, `cat-harness/processes`, `folio-core` and `folio-paper-adapter`, and the per-directory manifests), and this ruling does not cover them. Nobody holds them now: the recorded holder branches have all merged.
+
+`r0tm` is deliberately left `draft`: bean `3432` uses it as its worked example.

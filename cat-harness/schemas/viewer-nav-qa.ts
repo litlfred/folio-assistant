@@ -63,6 +63,7 @@ export type ViewerNavVerdict = z.infer<typeof ViewerNavVerdictSchema>;
  * | `no-redundant-toggle` | a `☰` or an `[x]` duplicates the header — *"excise [hamburger] and [x]"* |
  * | `rail-tips` | a control whose name is in `aria-label` and nowhere visible carries no `data-fa-tip` equal to it, or the page paints no tooltip on hover AND keyboard focus — bean `ob3m` finding 1, owner's ruling 2026-10-01: *"show each icon's name as a tooltip on hover or keyboard focus"* |
  * | `harnesses-at-rest` | the rail has no `▦ Harnesses` disclosure, or its stylesheet hides that summary at rest — same ruling: *"make ▦ Harnesses visible … too"* |
+ * | `declared-mark` | the header draws its LETTER for a harness whose row in `_data/harness.json` carries a resolved `mark` — bean `2vpn`, owner 2026-10-04: *"who-iris is missing top icon on LHS navbar … all needs to be consistent and consolidated"*. The letter is the floor for a harness with no mark, never a substitute for one it has |
  *
  * Only RAILED pages are graded: a page with no rail is already `missing`, and
  * failing it five more times would be one finding counted six ways.
@@ -75,6 +76,7 @@ export const ViewerNavFlagSchema = z.enum([
   "no-redundant-toggle",
   "rail-tips",
   "harnesses-at-rest",
+  "declared-mark",
 ]);
 export type ViewerNavFlag = z.infer<typeof ViewerNavFlagSchema>;
 

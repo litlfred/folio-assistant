@@ -8,7 +8,7 @@ import { CatHarnessDeclarationSchema, ExactVersionSchema } from "../../cat-harne
 import { dependsOnFor } from "../../cat-harness/schemas/depends-on";
 import { applyBump, clearsFloor, comparable, diffSurface, surfaceOf } from "../../cat-harness/schemas/version-bump";
 import { auditVersionBumps, releaseTags } from "../../cat-harness/scripts/check-version-bump";
-import { auditPublishable, formatReport } from "../../cat-harness/scripts/check-publishable";
+import { auditPublishable, formatReport } from "../scripts/check-publishable";
 
 /**
  * A minimal valid declaration, extended per test.

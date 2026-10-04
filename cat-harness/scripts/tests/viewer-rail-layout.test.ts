@@ -201,3 +201,33 @@ describe("sibling rows in a group share one indent (owner, 2026-10-01)", () => {
     expect(css).toContain(".fa-nav-group .fa-nav-sub .fa-nav-dead.fa-nav-kind{");
   });
 });
+
+describe("a declared mark is drawn, never replaced by the letter — bean `2vpn`", () => {
+  // Owner, 2026-10-04: *"who-iris is missing top icon on LHS navbar"*. The
+  // header drew "W" while who-iris's row carried a mark, and the letter
+  // passed `clickable-mark` because a letter is the floor.
+  const headed = (mark?: Record<string, unknown>): string =>
+    injectRail(page(`<h2 id="a">A</h2><h2 id="b">B</h2>`), {
+      instance: "WHO IRIS",
+      toRoot: "..",
+      links: [{ label: "beans", href: "../beans/" }],
+      harnesses: [{ label: "WHO IRIS", href: "../who-iris/" }],
+      visualiserLabel: "todos",
+      ...(mark ? { mark } : {}),
+    })!;
+
+  it("a glyph mark renders as an <svg> in the header", () => {
+    const html = headed({ glyphPath: "M3 18h18", tone: 199 });
+    const head = /<label class="fa-nav-head"[\s\S]*?<\/label>/.exec(html)![0];
+    expect(head).toContain("<svg");
+    expect(layoutFlags(html, new Set(["WHO IRIS"]))).toEqual([]);
+  });
+
+  it("a LETTER for a harness that has a mark is the `declared-mark` finding", () => {
+    expect(layoutFlags(headed(), new Set(["WHO IRIS"]))).toContain("declared-mark");
+  });
+
+  it("a letter for a harness with NO mark is still the floor, not a finding", () => {
+    expect(layoutFlags(headed(), new Set())).not.toContain("declared-mark");
+  });
+});

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-mfhc
 title: 'Merge refused: #2078 merge:guard checks 3 and 5 (no owning session; conflict on wm63 bean)'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-04T14:29:18Z
-updated_at: 2026-10-04T14:29:18Z
+updated_at: 2026-10-04T17:37:49Z
 parent: folio-assistant-wm63
 blocking:
     - folio-assistant-wm63
@@ -27,12 +28,17 @@ PR #2078 (`agy/wm63-non-who-ig-demo`, "feat(fhir-harness): demonstrate bare pipe
 A comment on PR #2078, plus a message to the Merge Manager role.
 
 ## Done when
-- [ ] main merged into #2078 (merge commit), wm63 conflict resolved keeping both sides, `beans:notes` regenerated, and pushed by hand (the merge-main bot cannot push since #2000)
-- [ ] after the merge: `git submodule update --init` before staging; `git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` is empty
-- [ ] owed `Code-quality gates` run green on that head
-- [ ] the PR body names the owning session; the `ready-to-merge` label is present; a signed `ready: <head sha>` is posted
-- [ ] `bun run merge:guard 2078` passes all 7 checks, and it lands
+- [x] main merged into #2078 (merge commit), wm63 conflict resolved keeping both sides, `beans:notes` regenerated, and pushed by hand (the merge-main bot cannot push since #2000)
+- [x] after the merge: `git submodule update --init` before staging; `git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` is empty
+- [x] owed `Code-quality gates` run green on that head
+- [x] the PR body names the owning session; the `ready-to-merge` label is present; a signed `ready: <head sha>` is posted
+- [ ] `bun run merge:guard 2078` passes all 7 checks, and it lands (all 7 checks pass; awaiting Merge Manager merge)
 
 ## Fails if
 - the resolution drops either side's wm63 text
 - the push is made with GITHUB_TOKEN (no `pull_request` run starts)
+
+
+
+## Closed 2026-10-04 on evidence
+#2078 passed all 7 merge:guard checks at e748fc0040 and landed as 05879ab1f8. The refusal this bean recorded no longer holds.

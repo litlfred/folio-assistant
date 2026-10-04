@@ -157,18 +157,20 @@ removes `STAGING/<slug>/` from `gh-pages` so stale previews don't accumulate.
 The full retention rules — merged vs closed-unmerged, the label, the dispatch —
 are in [`staging-review`](staging-review.md) §"Staging retention".
 
-### 6. The cap — at most ten previews, the oldest rotated off
+### 6. The cap — 3 GB of previews in total, the oldest rotated off
 
 **Owner ruling, 2026-10-02 (issue #1868):** *"cap the maximum number of
-previews (<= 10) and rotate old ones off."* Per-PR cleanup bounds nothing in
+previews (<= 10) and rotate old ones off."* **Amended 2026-10-04: by size, not
+count, with a budget of 3 GB** — previews had grown to 200–780 MB each, so ten
+of them rotated off within an hour or two. Per-PR cleanup bounds nothing in
 total, every preview is a full copy of the site, and `gh-pages` passed GitHub's
 10 GB Pages limit — freezing the live site on 2026-10-01.
 
 So every `stage` run, inside its push loop, runs
 `cat-harness/scripts/staging-rotate.ts`: it stamps the preview it is staging
 (`STAGING/<slug>/.staged-at`), keeps that one plus the most recently updated
-others up to `MAX_PREVIEWS` (10, defined there and nowhere else), and removes
-the rest — each with a `removed` render-log entry, its record retired into
+others while the total fits `MAX_PREVIEW_BYTES` (3 GB, 3 x 1024^3 bytes, defined
+there and nowhere else), and removes the rest, oldest first — each with a `removed` render-log entry, its record retired into
 `STAGING/_retired/`, and a line (slug, age, size) in the commit message and
 job log. `_retired/` and non-preview entries are never touched.
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kupb
 title: 'IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-20T08:01:14Z
-updated_at: 2026-10-01T02:05:09Z
+updated_at: 2026-10-04T18:29:58Z
 parent: folio-assistant-yg29
 ---
 
@@ -99,3 +99,13 @@ Closed on evidence, 2026-09-30, with its Done-when re-measured on this branch:
 - **The rendering shows the IRIS hierarchy with 3 materialised items and the rest referenced.** `check:catalogue` exits 0 and `iris:pages:check` reports the pages current. The live published site could not be checked from this container (github.io egress is blocked), so that part rests on the generated pages rather than a fetch.
 
 _2026-10-01_ — REOPENED for child `qsx4`: the owner's 2026-09-30 ruling folds who-style-guide into who-iris as a subgraph ('who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.'), which revises the 'two staged top-level dirs' decision recorded above. Close again when qsx4 closes.
+
+
+## Closed again on evidence, 2026-10-04
+
+The reopen note said *"Close again when qsx4 closes."* `qsx4` closed on evidence today, in this same change. Re-derived on `main` @ `d174883`:
+- **Every child is closed.** No open bean names `parent: folio-assistant-kupb`.
+- **`check:voices` green across the instance boundary**, exit 0.
+- **The rendering shows the IRIS hierarchy with 3 materialised items and the rest referenced.** `check:catalogue` exit 0, `iris:pages:check` exit 0. As on 2026-09-30, the live published site was not fetched from this container.
+
+Session: https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi

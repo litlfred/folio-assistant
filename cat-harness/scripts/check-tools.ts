@@ -39,7 +39,7 @@ import { alternativesWithoutSelection } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
 import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
-import { instanceRootsIn, siblingScopeFor } from "../schemas/cat-harness.js";
+import { instanceRootsIn, repoRootFor, siblingScopeFor } from "../schemas/cat-harness.js";
 import { resolveImplementingPath } from "../schemas/harness-config.js";
 import type { ToolDefinition } from "../schemas/tool.js";
 
