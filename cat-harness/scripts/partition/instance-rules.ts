@@ -187,6 +187,10 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS, by the same test as `check-ci-health.ts`: its subject is the
+      // forge's open PRs and this checkout's instance declarations, judged by
+      // a `kg-separation` decision table. It reads no folio material.
+      "scripts/seed-ready.ts",
       // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
       // Its subject is every instance's declarations and source, read; it
       // reads no folio material.
