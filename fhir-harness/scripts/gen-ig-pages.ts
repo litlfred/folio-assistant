@@ -3,7 +3,7 @@
  * Render ANY FHIR IG instance's reader-facing pages from its artefact index.
  *
  * @module fhir-harness/scripts/gen-ig-pages
- * @covers fhir-artifact-index
+ * @covers fhir-artifact-index, ig-pages — it reads the index and its `--check` grades every page it writes
  *
  * ## Why it lives in fhir-harness
  *

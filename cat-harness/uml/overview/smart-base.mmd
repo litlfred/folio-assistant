@@ -1,10 +1,5 @@
 classDiagram
   direction LR
-  namespace smart_base__smart_base_docs {
-    class n_smart_base_smart_base_docs_docs["docs: no node schema"] {
-      <<could not determine>>
-    }
-  }
   namespace smart_base__library {
     class smart_base_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
@@ -669,6 +664,14 @@ classDiagram
       overrides [0..*] Override[]
     }
   }
+  namespace smart_base__smart_base_docs {
+    class n_smart_base_smart_base_docs_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+    class n_smart_base_smart_base_docs_ig_pages["ig-pages: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace smart_base__smart_base_document_kinds {
     class smart_base_smart_base_document_kinds_folio_document_kind_v1_Source["Source"] {
       <<json: DocumentKindSchema>>
@@ -817,8 +820,6 @@ classDiagram
       superseded [0..1] object
     }
   }
-  cssClass "n_smart_base_smart_base_docs_docs" fa_uml_kind_docs
-  cssClass "n_smart_base_smart_base_docs_docs" fa_uml_undetermined
   smart_base_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" smart_base_library_folio_referenced_source_v1_Outline : outline
   cssClass "smart_base_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "smart_base_library_folio_image_verdicts_v1" fa_uml_kind_library
@@ -904,6 +905,10 @@ classDiagram
   smart_base_smart_base_themes_Theme *-- "0..*" smart_base_smart_base_themes_Override : overrides
   cssClass "smart_base_smart_base_themes_Override" fa_uml_kind_themes
   cssClass "smart_base_smart_base_themes_Theme" fa_uml_kind_themes
+  cssClass "n_smart_base_smart_base_docs_docs" fa_uml_kind_docs
+  cssClass "n_smart_base_smart_base_docs_docs" fa_uml_undetermined
+  cssClass "n_smart_base_smart_base_docs_ig_pages" fa_uml_kind_ig_pages
+  cssClass "n_smart_base_smart_base_docs_ig_pages" fa_uml_undetermined
   smart_base_smart_base_document_kinds_folio_document_kind_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
   smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Section : sections
   smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
