@@ -402,6 +402,39 @@ Only with the owner's release (`Task_Release`): explicit, or a standing ruling
 quoted verbatim with its date. What lands is exactly the SHA CI tested; if
 `main` moved after the train's CI started, re-run rather than land.
 
+**A standing release covers the queue AS IT STOOD, not every PR that arrives
+later.** Owner, 2026-10-04, verbatim: *"my approcal - that counts for the PRs
+that are in queue. new PRs need my approval exp-licity (through you or
+siblign)"*. So on every sweep the steward lists the PRs opened since the
+release, and puts them to the owner in one question, with the table's verdict
+on each. One answer ("approve all 6") may cover the whole batch.
+
+## ACK every PR that enters the queue, on its bean (STRICT)
+
+Owner, 2026-10-04: *"as part of merge manager skill you need to ACK a new PR
+in queue on its bean"*. A submitter who hears nothing cannot tell "queued"
+from "lost", and the bean is where the next session looks.
+
+When a PR enters the queue (first seen on a sweep, or approved by the
+owner), the steward writes three things in the same change:
+
+1. **The queue entry**, `beans/queue/<owner>--<repo>--<pr>.json`. It holds the
+   table's placement, a `reason` that begins `ACK:` and says what the PR waits
+   on, and **`beans`**, copied from the PR body. Validate it against
+   `MergeQueueEntrySchema`.
+2. **A note on each bean the PR serves**, one file per bean per branch:
+   `beans/notes/<bean>--<date>--<branch>.md`. A note, never an append to the
+   bean def; [`bean-coordination`](bean-coordination.md) says why. Then run
+   `bun run beans:notes`, or CI's `beans:notes:check` goes red.
+3. **One comment on the PR** naming the entry and the beans. Before the beans
+   cutover, items 1 and 2 reach `main` only through the steward's own PR, a
+   cycle late, so the comment is the ACK the author sees now. After the
+   cutover, write 1 and 2 with `state:push`; the comment then just points at
+   them.
+
+A PR whose body names no bean gets the entry with `beans: []` and a comment
+asking the author to name one. The steward does not invent the association.
+
 ## Your merge cadence is an input to the bot's throughput
 
 **Pacing and concurrency are one question, not two.** `merge-main.yml` sweeps

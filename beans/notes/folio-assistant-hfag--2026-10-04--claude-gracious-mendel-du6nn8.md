@@ -20,3 +20,13 @@ The previous Merge Manager stalled. This session took over the role.
 > "as things come in and geen, then merge"
 
 The steward lands every member that `merge:steward` admits (owed CI `green`, not `refused`), re-running the table after each merge. This replaces the earlier per-PR question on #2073 ("wait for ready:"). A content block the owner recorded on a PR, such as `vqlp` on #1898, still holds, because it is a ruling on that PR's content, not on its timing.
+
+## Owner rulings, 2026-10-04 ~12:20–13:00Z, verbatim
+
+> "my approcal - that counts for the PRs that are in queue.   new PRs need my approval exp-licity (through you or siblign)"
+
+> "approve all 6" (#2075, #2076, #2078, #2079, #2080, #2082, all opened after 12:15Z)
+
+> "as part of merge manager skill you need to ACK a new PR in queue on its bean"
+
+Landed this session: #2069, #2068, #2059, #2073, #2062, #2070, #2052, #2079.
