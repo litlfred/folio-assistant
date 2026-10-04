@@ -28,7 +28,7 @@ import { TOOL_GROUPS, registerMcpToolGroups } from "../adapters/mcp-server/tool-
 import {
   registerDeclaredToolGroups,
   type ToolGroupDeclaration,
-} from "../../cat-harness/src/tool-groups.ts";
+} from "../src/tool-groups.ts";
 
 /** The MCP server's own root, for the ad-hoc declarations below: this
  * instance, which `adapters/mcp-server/tool-groups.ts` also roots itself in. */
@@ -39,8 +39,8 @@ import {
   discoverBuiltinAdapters,
   resolveBuiltinAdapter,
 } from "../../cat-harness/src/builtin-adapters.ts";
-import { SERVER_ROUTES } from "../../cat-harness/src/server.ts";
-import { dispatchGet, dispatchPost, mountDeclaredRoutes } from "../../cat-harness/src/route-groups.ts";
+import { SERVER_ROUTES } from "../src/server.ts";
+import { dispatchGet, dispatchPost, mountDeclaredRoutes } from "../src/route-groups.ts";
 
 /** The HTTP server's own root, which its route declarations resolve against.
  * Still `cat-harness/` until the HTTP server moves here (bean `w2gr`, step 3b). */

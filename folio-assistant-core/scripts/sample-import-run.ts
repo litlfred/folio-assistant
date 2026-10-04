@@ -36,7 +36,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { registerWorkflowTools } from "../../cat-harness/src/tools/workflow.ts";
+import { registerWorkflowTools } from "../../cat-harness-tools/src/tools/workflow.ts";
 import { fshGutsDirectory } from "../../cat-harness/schemas/fsh-guts.ts";
 import { contentAt } from "../../cat-harness/scripts/branch-store.ts";
 import { positionOf } from "../../cat-harness/src/workflow/instance.ts";
