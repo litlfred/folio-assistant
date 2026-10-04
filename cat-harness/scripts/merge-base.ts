@@ -103,6 +103,19 @@ export function unmergedStages(root: string, path: string): Set<number> {
   return out;
 }
 
+/**
+ * Stage a path that was CONFLICTED. `-f` because git checks an unmerged path
+ * against `.gitignore` as if it were new: measured 2026-10-03 on #1801, which
+ * ignores `cat-harness/test/results/` while the files there stay tracked on
+ * both sides, and `git add` refused every conflicted sidecar under it ("The
+ * following paths are ignored"), crashing merge-main on each push to main.
+ * Only ever called with a path git itself listed as unmerged, so it was
+ * tracked on at least one side and `-f` cannot sweep in an untracked file.
+ */
+export function stageConflicted(root: string, path: string): void {
+  git(root, "add", "-f", "--", path);
+}
+
 /** Take the base's side of `path`, deletion included; stages the result. */
 export function takeBase(root: string, path: string): void {
   const action = takeBaseAction(unmergedStages(root, path));
@@ -111,7 +124,7 @@ export function takeBase(root: string, path: string): void {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
-    git(root, "add", "--", path);
+    stageConflicted(root, path);
   }
 }
 
@@ -138,6 +151,18 @@ function refuseLostFiles(root: string, abort: (why: string) => never): void {
     for (const f of lost) console.error(`  ✗ ${f}  [present on both sides, absent from the merge]`);
     abort(`${lost.length} file(s) both sides hold would be deleted by this merge (bean vsv7)`);
   }
+}
+
+/**
+ * The refusal line for a path whose declared resolution FAILED. It has the
+ * shape of a planned refusal (`  ✗ <path>  [<pattern>: …]`), which is what
+ * merge-main.yml and merge-main-comment.ts read: the job stays green and the
+ * bot's comment names the path and why, instead of a red job with
+ * "exited 1 without a refusal". The error's first line is kept verbatim.
+ */
+export function resolutionFailure(path: string, patternId: string, err: unknown): string {
+  const first = String((err as { stderr?: unknown })?.stderr || (err as Error)?.message || err).split("\n").find((l) => l.trim()) ?? "unknown error";
+  return `  ✗ ${path}  [${patternId}: could not resolve] — ${first.trim()}`;
 }
 
 function describe(c: Classified): string {
@@ -229,22 +254,37 @@ if (import.meta.main) {
     const qa = spawnSync("bun", ["run", "qa:resolve-conflicts"], { cwd: root, stdio: "inherit" });
     const still = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
     const qaLeft = p.resolvable.filter((c) => c.strategy === "qa-sidecar" && still.includes(c.path));
-    if (qa.status !== 0 || qaLeft.length) abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
+    if (qa.status !== 0 || qaLeft.length) {
+      // Report as refusals (see resolutionFailure), so the bot's comment names them.
+      for (const c of qaLeft) console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      if (!qaLeft.length) console.log(`  ✗ qa:resolve-conflicts  [qa-sidecar: could not resolve] — exited ${qa.status} (see its output above)`);
+      abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
+    }
   }
   for (const c of p.resolvable) {
     // A README one side deleted has no hunks to resolve: it is a take-base
     // case whichever pattern named it.
     const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
-    if (c.strategy === "take-base" || oneSided) {
-      takeBase(root, c.path);
-      continue;
-    } else if (c.strategy === "generated-regions") {
-      const text = readFileSync(join(root, c.path), "utf-8");
-      const resolved = resolveGeneratedRegions(text);
-      if (resolved === undefined) abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
-      writeFileSync(join(root, c.path), resolved);
-    } else continue;
-    git(root, "add", "--", c.path);
+    let resolved: string | undefined;
+    try {
+      if (c.strategy === "take-base" || oneSided) {
+        takeBase(root, c.path);
+        continue;
+      } else if (c.strategy === "generated-regions") {
+        resolved = resolveGeneratedRegions(readFileSync(join(root, c.path), "utf-8"));
+        if (resolved !== undefined) {
+          writeFileSync(join(root, c.path), resolved);
+          stageConflicted(root, c.path);
+        }
+      }
+    } catch (err) {
+      console.log(resolutionFailure(c.path, c.pattern?.id ?? c.strategy, err));
+      abort(`${c.path}: its declared resolution failed (✗ above)`);
+    }
+    if (c.strategy === "generated-regions" && !oneSided && resolved === undefined) {
+      console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? c.strategy}: could not resolve] — a hunk lies outside a generated region`);
+      abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
+    }
   }
 
   if (noRegen) {
