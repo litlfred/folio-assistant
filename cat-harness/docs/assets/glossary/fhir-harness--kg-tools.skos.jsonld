@@ -306,7 +306,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published."
+          "@value": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here because nothing in it belonged to one IG (#1767); with `--summary` it writes an instance's landing page. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published."
         }
       ],
       "skos:notation": "ig-pages",

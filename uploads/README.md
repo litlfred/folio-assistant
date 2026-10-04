@@ -52,7 +52,6 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`ChatGPT-Image-Sep-20-2026-11_58_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_58_08-AM.png) | a file |  |
 | [`Home-_-folio-assistant.pdf`](Home-_-folio-assistant.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
-| [`formal-24-11-01.pdf`](formal-24-11-01.pdf) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`9789240101197-eng/`](9789240101197-eng/) | 2 files | |
 | [`9789240116191-eng/`](9789240116191-eng/) | 2 files | |
