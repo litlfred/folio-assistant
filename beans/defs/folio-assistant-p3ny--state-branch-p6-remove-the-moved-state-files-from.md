@@ -3,8 +3,9 @@
 title: 'STATE BRANCH P6: remove the moved state files from main — ONLY on the owner''s explicit go'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T06:10:27Z
+updated_at: 2026-10-04T06:32:50Z
 parent: folio-assistant-fs43
 ---
 
@@ -17,3 +18,16 @@ deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is 
 Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
 
 _2026-10-04T06:10:27Z_ — Claimed by claude/beans-off-main-9ofm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner's go recorded 2026-10-04, and the two things that still gate it
+
+Owner dispatch, 2026-10-04: *"Phase 6 (removing `beans/` from `main`) is pre-authorised"*, with the standing condition from the proposal — not before every reader and writer is green against the branch.
+
+It did not land in PR #2052, for two reasons:
+
+1. **The session's permission layer refused the removal** as irreversible local destruction, and the refusal covers reaching the same outcome another way. A pre-authorisation in a dispatch is not the permission system's consent, so the flip needs a human or a session that holds it.
+2. **`claim-bean` still pushes to `main`** (measured on main@abbc21c90f34). After the cutover that writes `beans/defs/<id>.md` into a main that no longer tracks `beans/`, re-creating the directory — which `check:declared-dirs` then reports as `not-cut-over`: a red main caused by claiming a bean. PR #2042 fixes it and must merge first.
+
+Everything else is ready: the branch is current and verified (`cat/cat-harness/beans` @ 67265200d0ff, subtree 05fbb6a90bc1, 1442 files = main's 1442), `state:seed --id beans --authoritative` performs the branch half, CI mounts the graph before any gate reads it, and the engine resolves its directory instead of composing it.
+
+The exact five-step commit, the file counts on both sides, and the measurement that `.beans.yml` needs no change are in the bean note `beans/notes/folio-assistant-9ofm--2026-10-04--claude-beans-off-main-9ofm.md`.
