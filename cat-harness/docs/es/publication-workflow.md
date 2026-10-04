@@ -49,7 +49,7 @@ treinta y nueve frente a cincuenta y cinco.
 
 Un recuento en prosa es una afirmación; un índice derivado es evidencia. Por lo tanto, el número reside
 en [el índice derivado de procesos](../cat-harness/auto-docs/index/processes/),
-que se genera a partir de la declaración mediante `bun run docs:auto`, está controlado en CI
+que se genera a partir de la declaración mediante `bun run auto:docs`, está controlado en CI
 y no puede desviarse de los diagramas que contabiliza. **El trabajo de esta página es la mitad
 que no se puede generar**: para qué *sirve* cada proceso, cuándo te encontrarías
 en él y cuál proceso vecino es el que realmente deseas.

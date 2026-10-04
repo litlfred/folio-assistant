@@ -174,7 +174,7 @@ export function pipeline(scratch: string): RenderStep[] {
     // it would index a directory mid-write. It is NOT fatal — a missing index
     // costs one rendering, and the authored pages that reference it are what
     // carry the meaning (bean `06e3`).
-    { id: "auto-docs", needs: ["skill-docs", "bpmn"], fatal: false, inputGraphs: ["cat-harness"], label: "derived sub-graph indexes", run: ["bun", "run", "docs:auto"] },
+    { id: "auto-docs", needs: ["skill-docs", "bpmn"], fatal: false, inputGraphs: ["cat-harness"], label: "derived sub-graph indexes", run: ["bun", "run", "auto:docs"] },
     // `needs: ["docs-pages"]`, and it is a REAL dependency rather than a
     // tidy-looking one: the state visualiser decides each graph's state by
     // asking whether `assets/<id>/index.json` is on disk, and `docs-pages` is

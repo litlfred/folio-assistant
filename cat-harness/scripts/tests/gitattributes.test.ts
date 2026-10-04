@@ -88,10 +88,10 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
 describe("every -merge path is gated in CI", () => {
   test("a wrong resolution reddens rather than ships", () => {
     // This is what makes the whole entry safe rather than clever. The three
-    // files are covered by `check:glossary`, `docs:auto:check` and
+    // files are covered by `check:glossary`, `auto:docs:check` and
     // `audit:coverage:require-all`, so taking the wrong side cannot ship.
     const wf = readFileSync(join(REPO, ".github", "workflows", "code-quality-gates.yml"), "utf-8");
-    for (const gate of ["check:glossary", "docs:auto:check", "audit:coverage:require-all", "lsi:skills:check"]) {
+    for (const gate of ["check:glossary", "auto:docs:check", "audit:coverage:require-all", "lsi:skills:check"]) {
       expect(wf, `${gate} is not in CI, so a -merge path it covers is unguarded`).toContain(gate);
     }
   });

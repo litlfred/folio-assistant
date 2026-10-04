@@ -895,7 +895,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     validatorNotApplicable:
       "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry " +
       "validator would be a category error, as on `proposals`. What is checked mechanically is the " +
-      "derivation instead: `docs:auto:check` fails on a stale page, and refuses outright when a type " +
+      "derivation instead: `auto:docs:check` fails on a stale page, and refuses outright when a type " +
       "collects nothing while its graph's directories hold files, which is a moved source rather than an " +
       "empty graph (bean `06e3`).",
     summary:

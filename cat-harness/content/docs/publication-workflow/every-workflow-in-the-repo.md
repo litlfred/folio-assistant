@@ -10,7 +10,7 @@ thirty-nine against fifty-five.
 
 A count in prose is a claim; a derived index is evidence. So the number lives
 in [the derived process index](cat-harness/auto-docs/index/processes/),
-which is generated from the declaration by `bun run docs:auto`, gated in CI,
+which is generated from the declaration by `bun run auto:docs`, gated in CI,
 and cannot drift from the diagrams it counts. **This page's job is the half
 that cannot be generated** — what each process is *for*, when you would be in
 it, and which neighbouring one you actually want.

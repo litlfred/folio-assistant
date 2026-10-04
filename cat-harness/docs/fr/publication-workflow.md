@@ -49,7 +49,7 @@ trente-neuf alors qu'il y en avait cinquante-cinq.
 
 Un décompte en prose est une affirmation ; un index dérivé est une preuve. Le nombre réside
 donc dans [l'index dérivé des processus](../cat-harness/auto-docs/index/processes/),
-qui est généré à partir de la déclaration par `bun run docs:auto`, contrôlé en CI,
+qui est généré à partir de la déclaration par `bun run auto:docs`, contrôlé en CI,
 et ne peut pas diverger des diagrammes qu'il dénombre. **Le rôle de cette page est la moitié
 qui ne peut pas être générée** — à quoi *sert* chaque processus, dans quel cas vous vous y
 trouveriez, et quel processus voisin vous recherchez réellement.

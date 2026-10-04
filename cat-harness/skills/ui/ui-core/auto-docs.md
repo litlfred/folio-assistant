@@ -29,7 +29,7 @@ Three statements, and only the first is a generator.
 
 ## The obligation: reference the index, then say what it cannot
 
-`bun run docs:auto` emits, per artefact, what that artefact **declares about
+`bun run auto:docs` emits, per artefact, what that artefact **declares about
 itself** — a skill's front-matter description, a process's own
 `<bpmn:documentation>`, its lanes, the skills its activities name. That is a
 complete answer to *what exists* and no answer at all to:

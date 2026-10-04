@@ -132,7 +132,7 @@ const VIEWERS: Viewer[] = [
     id: "auto-docs-viewer",
     title: "Generated index pages",
     description: "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
-    script: "docs:auto",
+    script: "auto:docs",
     renders: ["skills", "docs", "swimlane-glossary"],
   },
 ];
