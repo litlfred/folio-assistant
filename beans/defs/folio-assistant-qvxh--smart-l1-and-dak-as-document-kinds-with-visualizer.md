@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qvxh
 title: SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses
-status: completed
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T08:37:53Z
-updated_at: 2026-10-04T12:41:46Z
+updated_at: 2026-10-04T13:06:48Z
 parent: folio-assistant-uhkv
 ---
 
@@ -39,3 +39,7 @@ Every box is now ticked. qvxh stays in-progress until this lands on main.
 ## Closed 2026-10-04
 
 #2062 merged 2026-10-04 with every gating check green on 572f7c2 (17 success, 2 skipped). check:document-kind-sources runs in CI, and all 39 computedFrom claims resolve. The external-evidence half continues as bean 0lde.
+
+## Reopened 2026-10-04 (wm63 session)
+
+I marked this completed too early. Its own boxes are all done, but it contains four open children: 0lde (L1 evidence), 5blc (DTH), 8pzh (smart-kg L1 extraction) and pebe (the pinned ontology). check:bean-rollup refused, correctly: a completed container with open children reads as finished on the roadmap. It closes when they do.
