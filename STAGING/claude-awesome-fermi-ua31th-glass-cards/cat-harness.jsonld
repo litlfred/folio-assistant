@@ -316,14 +316,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T18:38:51.266Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cb8dc9873c20e3beb0c1d6cd1f4d4982bc36f589",
-  "sourceCommitSha": "cb8dc9873c20e3beb0c1d6cd1f4d4982bc36f589",
-  "sourceCommitAt": "2026-10-04T18:32:30Z",
+  "generatedAt": "2026-10-04T19:54:45.206Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a56ee6b5e0a189bfc719073f15b1f5c04cf85ad5",
+  "sourceCommitSha": "a56ee6b5e0a189bfc719073f15b1f5c04cf85ad5",
+  "sourceCommitAt": "2026-10-04T19:44:50Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 308,
+    "Skill": 310,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 34,
@@ -1422,7 +1422,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 225,
+      "instructionLines": 283,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2951,7 +2951,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/session-intent.md",
-      "instructionLines": 269,
+      "instructionLines": 273,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3136,7 +3136,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 827,
+      "instructionLines": 887,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3272,7 +3272,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 647,
+      "instructionLines": 726,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3289,7 +3289,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
-      "instructionLines": 593,
+      "instructionLines": 661,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3328,6 +3328,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deployment-auth"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/work-plan-restructure",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "work-plan-restructure",
+      "title": "Restructuring a work plan — a reviewed plan, not a bulk edit",
+      "description": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/work-plan-restructure.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/work-plan-restructure"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/delivery-summary",
@@ -3599,6 +3616,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-plan-execution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/branch-archaeology",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "branch-archaeology",
+      "title": "Branch archaeology: what each branch holds that main does not",
+      "description": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/branch-archaeology.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/gate-tree-mutation",
@@ -7089,6 +7123,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/branch-archaeology",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/coordinate",
@@ -7138,7 +7173,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/watch",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/where-a-proposal-goes"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/where-a-proposal-goes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#skill/work-plan-restructure"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -53586,7 +53622,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 269,
+      "fileCount": 271,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/uml",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
@@ -53604,7 +53640,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 281,
+      "fileCount": 283,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -53697,7 +53733,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1030,
+      "fileCount": 1022,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
@@ -53823,7 +53859,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1949,
+      "fileCount": 1952,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -53859,7 +53895,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1088,
+      "fileCount": 1030,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
@@ -53913,7 +53949,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1147,
+      "fileCount": 1139,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-glass-cards/cat-harness.jsonld#directory/cat-harness-tests",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
@@ -53987,8 +54023,8 @@
   ],
   "staging": {
     "branch": "claude/awesome-fermi-ua31th-glass-cards",
-    "sha": "a2438c38e85d6ef9f5fd2e833dcd521cff48447d",
+    "sha": "22ed07f3adac7eff3f4edfea51411d03f8004c8c",
     "pr": "1918/merge",
-    "run": "37224907034"
+    "run": "37229771603"
   }
 }
