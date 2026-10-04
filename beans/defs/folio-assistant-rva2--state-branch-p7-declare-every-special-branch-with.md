@@ -114,3 +114,5 @@ TypeScript: subgraph-source (`special` field, specialBranchFor), state-drift (it
 4. Delete the table and its legacy fallback in one commit.
 
 Coordinated on #2055 (bean zxvh), which adds size budgets INTO the table; the suggestion there is `storage.budget`.
+
+_2026-10-04T17:01:12Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

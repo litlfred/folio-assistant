@@ -235,6 +235,32 @@ export const EjectionSchema = z
   .strict();
 export type Ejection = z.infer<typeof EjectionSchema>;
 
+/**
+ * Where the steward believes the PR stands, as a DECISION it records rather
+ * than a GitHub fact. Owner, 2026-10-04: *"review all open PRs.... anything
+ * not in merge queue? put in as status unknown any found. then try to figure
+ * out where they are, what's stale"*.
+ *
+ * - `unknown`: the steward found the PR open and not in the queue; triage pending.
+ * - `active`: its author pushed or commented within the stale window.
+ * - `waiting-on-author`: handed back with a named ask, author not yet back.
+ * - `blocked`: waits on another PR, bean or ruling, named in `reason`.
+ * - `stale`: no push and no human comment for longer than the stale window.
+ * - `approval-void`: the owner approved it, then its scope changed.
+ * - `landed`: merged; the entry is kept as history, not deleted.
+ */
+export const QUEUE_STATUSES = [
+  "unknown",
+  "active",
+  "waiting-on-author",
+  "blocked",
+  "stale",
+  "approval-void",
+  "landed",
+] as const;
+export const QueueStatusSchema = z.enum(QUEUE_STATUSES);
+export type QueueStatus = z.infer<typeof QueueStatusSchema>;
+
 const EntryObjectSchema = z
   .object({
     $schema: z.literal(MERGE_QUEUE_ENTRY_TAG),
@@ -251,6 +277,8 @@ const EntryObjectSchema = z
     /** Assigned once the PR is taken into a train; the train-run instance's id. */
     trainId: NonBlank.optional(),
     ejection: EjectionSchema.optional(),
+    /** The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed. */
+    status: QueueStatusSchema.optional(),
     /** Beans and epics this PR serves. Epics are beans, so one list. */
     beans: z.array(BeanIdSchema).default([]),
   })

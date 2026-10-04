@@ -6,8 +6,11 @@
  * declares for its module — so a tool can neither be declared and not served,
  * nor served and not declared.
  */
-import { describe, expect, test } from "bun:test";
-import { resolve } from "node:path";
+import { afterEach, describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { clearCheckoutCache } from "../schemas/harness-config.js";
 import { tools } from "../tools/index.js";
 import { registerDeclaredToolGroups, toolGroupsFromNodes } from "./tool-groups.js";
 
@@ -49,3 +52,76 @@ describe("tool groups derived from Tool nodes (zmdo)", () => {
     expect(o.state === "failed" && o.detail).toContain("exports no register");
   });
 });
+
+/**
+ * A Tool node's `invoke.inProcess.module` is written relative to the instance
+ * that DECLARES it, and stays that way when the code moves (owner, split plan
+ * "Trap 1"): the loader finds the module in the one instance that implements
+ * the declarer through its own `needs`. Same fixture shape as
+ * `cat-harness-tools/scripts/tests/implementing-path.test.ts`.
+ */
+describe("a declared module resolves through the implementing instance (70lx)", () => {
+  const made: string[] = [];
+  afterEach(() => {
+    for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true });
+    clearCheckoutCache();
+  });
+
+  function put(root: string, rel: string, body: unknown = ""): void {
+    const p = join(root, rel);
+    mkdirSync(join(p, ".."), { recursive: true });
+    writeFileSync(p, typeof body === "string" ? body : JSON.stringify(body, null, 2));
+  }
+
+  /** `base` declares; `impl` and `twin` each need it directly. */
+  function checkout(): string {
+    const root = mkdtempSync(join(tmpdir(), "tool-groups-"));
+    made.push(root);
+    put(root, "top.json", { name: "top", needs: ["base", "impl", "twin"], directories: [] });
+    put(root, "base/base.json", { name: "base", needs: [], directories: [] });
+    put(root, "impl/impl.json", { name: "impl", needs: ["base"], directories: [] });
+    put(root, "twin/twin.json", { name: "twin", needs: ["base"], directories: [] });
+    return root;
+  }
+
+  const registrar = (name: string) =>
+    `export function registerX(server: { tool: (n: string) => void }) { server.tool(${JSON.stringify(name)}); }\n`;
+  const group = { id: "x", module: "src/tools/x.ts", layer: "harness" as const };
+
+  test("a module the declarer no longer holds is loaded from the implementer", async () => {
+    const root = checkout();
+    put(root, "impl/src/tools/x.ts", registrar("from_impl"));
+    const { names, server } = recordingServer();
+    const [o] = await registerDeclaredToolGroups(server, [group], join(root, "base"));
+    expect(o).toEqual({ id: "x", state: "registered" });
+    expect(names).toEqual(["from_impl"]);
+  });
+
+  test("the declarer's own copy wins, so a batch that has not moved yet is unchanged", async () => {
+    const root = checkout();
+    put(root, "base/src/tools/x.ts", registrar("from_base"));
+    put(root, "impl/src/tools/x.ts", registrar("from_impl"));
+    const { names, server } = recordingServer();
+    await registerDeclaredToolGroups(server, [group], join(root, "base"));
+    expect(names).toEqual(["from_base"]);
+  });
+
+  test("two implementers holding it is a FAILURE naming both, never the first by order", async () => {
+    const root = checkout();
+    put(root, "impl/src/tools/x.ts", registrar("from_impl"));
+    put(root, "twin/src/tools/x.ts", registrar("from_twin"));
+    const { names, server } = recordingServer();
+    const [o] = await registerDeclaredToolGroups(server, [group], join(root, "base"));
+    expect(o.state).toBe("failed");
+    expect(o.state === "failed" && o.detail).toContain("impl");
+    expect(o.state === "failed" && o.detail).toContain("twin");
+    expect(names).toEqual([]);
+  });
+
+  test("held by nobody is still ABSENT, reported, not failed", async () => {
+    const root = checkout();
+    const [o] = await registerDeclaredToolGroups({}, [group], join(root, "base"));
+    expect(o.state).toBe("absent");
+  });
+});
+

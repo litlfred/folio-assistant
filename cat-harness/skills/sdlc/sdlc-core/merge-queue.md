@@ -119,6 +119,28 @@ already has:
   member is refused".
 - **A hand-back bean** when the PR is ejected or handed back (same section).
   The submitting role picks it up even if the original session is gone.
+  **Every hand-back gets one, not only a train ejection.** That covers
+  `Rule_Refused`, `Rule_HeadNotGreen`, `Rule_NotReady`, and a `merge:guard`
+  refusal on a PR the owner asked to land. A PR comment and a queue entry
+  are not a hand-back on their own: the work plan cannot see them.
+  - **Shape:** titled `Merge refused: #<n> <cause>`, `type: bug`, parented
+    under the PR's bean's parent (or under the PR's bean when it is an epic
+    or feature), marked `--blocking` that bean.
+  - **Body:** the refused checks, roles, the brief (link the takeover plan if
+    there is one), where to report, Done when, and Fails if.
+  - **Dedupe:** check first, because `beans create` dedupes on nothing.
+  - **Process:** run it through `processes/sdlc/merge-refusal.bpmn`
+    (`workflow_start`), not from memory.
+
+  `merge:steward` now prints `✗ handed back with NO open hand-back bean:
+  #…` and carries `handBackBean` per PR in `--json`.
+
+  Measured 2026-10-04: a steward handed back a dozen PRs in one session with
+  comments and queue entries only. The owner asked *"why did you have a
+  process failure here?"*. The procedure lived in another skill
+  (`merge-conflict-patterns`) that the steward never loaded, and nothing
+  checked for it. Owner: "Backfill + enforce". The 13 beans were backfilled
+  (`mfhc` and twelve more).
 - **A direct message as the fast path**, by the recipe below. Use it when the
   PR is next and waiting costs a train.
 - **The queue entry** records the hold or ejection, with its reason and
@@ -472,6 +494,46 @@ one.** The causes to check, in order:
 
 The first one is not visible in the check list, so look at the YAML.
 
+**After any merge of `main`, check for silently dropped files.** Files that
+are gitignored but still tracked under `*/test/results/` (LSI indexes, QA
+sidecars) are dropped by a merge and by `git add -A`. Local checks still pass,
+because regen rewrites them on disk, but CI's fresh checkout fails. Run
+`git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` and
+`git ls-files -m`, and re-add anything dropped with `git add -f` (bean `8j9e`).
+
+### Stalled for days, with no handover report: write it, then hand it to a takeover agent
+
+Owner, 2026-10-04, verbatim: *"several agents (~8) just stalled for week.
+they didnt generate handover reports. disaptach agent to review PRs and
+generate plan ... to takeover work by anotther agent"*.
+
+An unblocker suits a short pause. When the authors are gone for days, the
+steward does something else:
+
+1. **Writes the handover report each author did not.** It goes as one
+   comment per PR, headed `## Takeover plan`, in the
+   [`handover-report`](handover-report.md) format and measured, not
+   recalled: intent with the owner's rulings quoted; head SHA, conflicts
+   split into authored and generated, owed CI; done and remaining; approval
+   and any scope drift; ordered next steps with their falsifiers; owner
+   questions; couplings with other open PRs. This step is read-only apart
+   from the comment.
+2. **Gives the owner one paste-able brief** for the takeover agent: the
+   cold start, the work order across PRs (the couplings decide it), the
+   merge rules, and the open owner questions. The owner starts that agent,
+   possibly on another account, so the brief must stand alone.
+3. **The takeover session becomes each PR's owning session.** `merge:guard`
+   accepts a `ready:` marker only from the session the PR body names, and
+   check 2 keeps the merging session from vouching for its own landing.
+   So the takeover agent edits the body's session line to its own session,
+   records "taken over from <old> (stalled)", claims the beans, and then
+   signs. Owner, 2026-10-04, chose this over the steward signing or a
+   one-time bypass: *"Wait for takeover agent"*.
+
+A PR that is green but refused by checks 3 and 4 (no marker, no label) is
+`waiting-on-author` in the queue, not `active`, until the takeover session
+signs it.
+
 ## Landing
 
 **Re-run `merge:steward` after every merge, before the next one.** Each merge
@@ -520,6 +582,49 @@ owner), the steward writes three things in the same change:
 
 A PR whose body names no bean gets the entry with `beans: []` and a comment
 asking the author to name one. The steward does not invent the association.
+
+## Every open PR has an entry: review the whole list, then triage it
+
+Owner, 2026-10-04, verbatim: *"review all open PRs.... anything not in merge
+queue? put in as status unknown any found. then try to figure out where they
+are, what's stale, etc."* and *"add to merge manager skills."*
+
+`merge:steward` skips drafts, and a PR that nobody ACKed has no entry, so the
+queue silently shrinks to the PRs someone happened to look at. Measured on
+the first review: **18 of 26** open PRs had no entry, 9 of them drafts.
+
+On a review, and at least once per working session:
+
+1. **List every open PR**, drafts included, from the API; not from the
+   steward's table and not from memory.
+2. **Every PR without an entry gets one with `status: "unknown"`.** A
+   draft gets the placement `rule: "draft"`, `class: "hand-back"`,
+   `rank: 99`, and its `decision` names the steward, not the DMN, because
+   the table never placed it. Claiming the table did would be a fact the
+   steward invented.
+3. **Triage each one into a status** (`QUEUE_STATUSES` in
+   `schemas/merge-queue.ts`), with the evidence in `reason`:
+
+   | status | when |
+   |---|---|
+   | `active` | its author pushed or commented within 24 hours |
+   | `waiting-on-author` | handed back with a named ask, and the author is not back yet |
+   | `blocked` | waits on another PR, bean or ruling, named in `reason` |
+   | `stale` | no push **and** no human comment for more than 24 hours. Bot pushes from `merge-main` do not count as activity |
+   | `approval-void` | the owner approved it, and then its scope changed |
+   | `landed` | merged. The entry stays as history; it is never deleted |
+
+4. **Report the stale ones to the owner as a decision**, never close them:
+   closing a PR is the author's or the owner's call
+   ([`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md)).
+
+**An approval is for the content that was approved.** Measured on the first
+review: #2082 was approved as a three-bean close, and an hour later its
+branch carried an 11-file code change under a new title. Compare the title
+and the changed-file count against what was approved before landing. On a
+mismatch, set `approval-void` and ask again. The typed fix is a `release`
+bound to `releasedSha` (the zmdo session's draft on #2065); until it lands,
+this check is the steward's.
 
 ## Your merge cadence is an input to the bot's throughput
 

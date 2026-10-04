@@ -34,6 +34,7 @@
 
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { resolveImplementingPath } from "../schemas/harness-config.js";
 import type { ToolDefinition } from "../schemas/tool.js";
 
 /** Which repository layer a group will live in after the split. */
@@ -77,7 +78,15 @@ export type ToolGroupOutcome =
 export async function registerDeclaredToolGroups(
   server: unknown,
   groups: readonly ToolGroupDeclaration[],
-  /** Absolute path the declared modules are relative to. */
+  /**
+   * The DECLARING instance's root: the declared modules are relative to it.
+   *
+   * A module is looked up there first and then in the one instance that
+   * implements it (`resolveImplementingPath`), so a Tool node declared here
+   * keeps resolving after its module moves up to the instance that implements
+   * this one, with no path of that instance written into the definition
+   * (owner, split plan "Trap 1", 2026-10-01).
+   */
   root: string,
   /**
    * Extra arguments passed to every registrar after the server.
@@ -92,7 +101,18 @@ export async function registerDeclaredToolGroups(
   const out: ToolGroupOutcome[] = [];
 
   for (const g of groups) {
-    const abs = join(root, g.module);
+    const where = resolveImplementingPath(root, g.module);
+    if (where.state === "ambiguous") {
+      // Never resolved by checkout order: picking one would serve another
+      // instance's tools and report them as these.
+      out.push({
+        id: g.id,
+        state: "failed",
+        detail: `${g.module} is held by more than one implementing instance (${where.candidates.map((c) => c.name).join(", ")}); a declared module must name one file`,
+      });
+      continue;
+    }
+    const abs = join(where.state === "found" ? where.root : root, g.module);
     if (!existsSync(abs)) {
       out.push({
         id: g.id,

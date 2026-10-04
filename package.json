@@ -504,6 +504,8 @@
     "document-kinds:viz:check": "bun run cat-harness/scripts/gen-document-kinds-viz.ts --check",
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
     "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
+    "split:baseline": "bun run cat-harness-tools/scripts/split-baseline.ts",
+    "split:baseline:check": "bun run cat-harness-tools/scripts/split-baseline.ts --check",
     "wireframe:check": "bun run cat-harness/scripts/wireframe-check.mjs"
   },
   "dependencies": {
