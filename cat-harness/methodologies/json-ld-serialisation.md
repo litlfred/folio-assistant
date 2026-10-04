@@ -113,7 +113,7 @@ JSON parser reads records; a consumer with a JSON-LD processor reads a graph.
    whose `@graph` holds every node.
 9. **Every bound prefix is emitted, or declared forward with a reason.** A
    platform rule, not the spec's: `check:context-emission`
-   (`cat-harness/scripts/check-context-emission.ts`) counts emissions over the
+   (`cat-harness-tools/scripts/check-context-emission.ts`) counts emissions over the
    published documents and fails on a bound prefix nothing speaks unless it
    is listed in `FORWARD_DECLARED` with a reason.
 
@@ -174,7 +174,7 @@ expanding to the `@base` address.
 | block / library / site siblings | `cat-harness/content/pipeline/gen-block-jsonld.ts`, `gen-library-jsonld.ts`, `gen-site-jsonld.ts` (`gen:jsonld:check`) |
 | whole-graph export, aliasing, no `@vocab` | `cat-harness/scripts/kg-export.ts` |
 | expansion under a real processor, offline loader | `cat-harness/scripts/publish-verify.ts` (`jsonld-expand` verifier) |
-| prefixes bound vs emitted | `cat-harness/scripts/check-context-emission.ts` |
+| prefixes bound vs emitted | `cat-harness-tools/scripts/check-context-emission.ts` |
 | identifier = file path | `bootstrap-tools/scripts/check-node-iris.ts` |
 
 ## What the source does NOT establish

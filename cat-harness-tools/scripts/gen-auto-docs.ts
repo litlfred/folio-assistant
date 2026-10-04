@@ -84,7 +84,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "../../cat-harness/scripts/gen-schema-viz.ts";
-import { classify } from "../../cat-harness/scripts/check-docs-populated.ts";
+import { classify } from "./check-docs-populated.ts";
 import { isSkillMd, kgRoots, skillMdDirs, corpusScopeFor } from "../../cat-harness/scripts/known-skills.ts";
 import { readRoleGraph } from "../../cat-harness/schemas/role-graph.ts";
 import {
