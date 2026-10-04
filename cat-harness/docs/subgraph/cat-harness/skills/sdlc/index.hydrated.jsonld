@@ -197,6 +197,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-report-signing",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-reports",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
@@ -1015,6 +1016,25 @@
             "sha256": "30cbb4c25384dbd05faee394938fa9d8c92d0d4723a1faf93606e85cba346464"
           },
           "title": "QA witnesses — the published projection of every verdict"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for \"gh-pages is cancelling its own deployments\", \"two sessions pushed the same store branch\", \"who owns writes to this branch\", \"coalesce these pushes\", and before giving any ref a concurrency policy.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 194,
+          "instructionsPath": "skills/sdlc/sdlc-core/ref-stewardship.md",
+          "name": "ref-stewardship",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/962d54ff026f09974060ab38302bb11d30c7b89b18ba3eb20c64c15bff79d898",
+            "bytes": 10330,
+            "sha256": "962d54ff026f09974060ab38302bb11d30c7b89b18ba3eb20c64c15bff79d898"
+          },
+          "title": "Ref stewardship — one ref, many writers, one steward"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",

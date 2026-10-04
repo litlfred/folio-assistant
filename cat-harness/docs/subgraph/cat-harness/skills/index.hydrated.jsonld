@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 287,
+      "fileCount": 288,
       "holdsGraph": [
         "bootstrap:graphKind/skills"
       ],
@@ -3346,6 +3346,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-report-signing",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-reports",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
@@ -4164,6 +4165,25 @@
                 "sha256": "30cbb4c25384dbd05faee394938fa9d8c92d0d4723a1faf93606e85cba346464"
               },
               "title": "QA witnesses — the published projection of every verdict"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for \"gh-pages is cancelling its own deployments\", \"two sessions pushed the same store branch\", \"who owns writes to this branch\", \"coalesce these pushes\", and before giving any ref a concurrency policy.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 194,
+              "instructionsPath": "skills/sdlc/sdlc-core/ref-stewardship.md",
+              "name": "ref-stewardship",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/962d54ff026f09974060ab38302bb11d30c7b89b18ba3eb20c64c15bff79d898",
+                "bytes": 10330,
+                "sha256": "962d54ff026f09974060ab38302bb11d30c7b89b18ba3eb20c64c15bff79d898"
+              },
+              "title": "Ref stewardship — one ref, many writers, one steward"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
