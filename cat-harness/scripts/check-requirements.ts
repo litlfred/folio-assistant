@@ -78,8 +78,22 @@ export function collisions(proposals: string[], requirements: string[]): string[
   return proposals.filter((p) => req.has(p)).sort();
 }
 
+/**
+ * The requirement (or proposal) slugs in a directory.
+ *
+ * `index.md` and `README.md` are the directory's OWN page, not a node in it.
+ * `index.md` was excluded from the start; `README.md` was not, and the gate went
+ * red on `main` the day one appeared under `docs/requirements/` — twice over, as
+ * "has no front matter, so it carries no requirement" AND as "is in BOTH
+ * proposals and requirements", the second because both directories carry a
+ * README and the collision check compares basenames.
+ *
+ * A README is written for a reader of the directory. Holding it to the
+ * Requirement schema asks a different document to be this one.
+ */
 function slugsIn(dir: string): string[] {
-  return readdirSync(dir).filter((n) => n.endsWith(".md") && n !== "index.md").map((n) => basename(n, ".md"));
+  const own = new Set(["index.md", "README.md"]);
+  return readdirSync(dir).filter((n) => n.endsWith(".md") && !own.has(n)).map((n) => basename(n, ".md"));
 }
 
 /**

@@ -203,13 +203,15 @@ describe("the report over this repository", () => {
     }
   });
 
-  test("a nested kind reads as no-directory, not as a gap", () => {
+  test("a nested kind resolves its own directory and is judged, not a gap", () => {
     // `bean-defs` is declared in `beans/beans.json`, one level inside the
-    // `beans` graph, so no INSTANCE declares a directory of it. That must not
-    // read as an unaudited kind — and it is the case that proves the first
-    // state earns its name.
+    // `beans` graph. Until #2094 a nested declaration resolved only through the
+    // skills-only `subgraph: true`, so this kind read `no-directory`. It now
+    // resolves `beans/defs` itself, and must read as JUDGED by the gates that
+    // audit the bean store, never as `unaudited` or `typed-only`.
     const beanDefs = rows.find((r) => r.kind === "bean-defs");
-    expect(beanDefs?.state).toBe("no-directory");
+    expect(beanDefs?.state).toBe("covered");
+    expect(beanDefs?.directories.some((d) => d.endsWith("beans/defs"))).toBe(true);
     expect(beanDefs?.gates.length).toBeGreaterThan(0);
   });
 
