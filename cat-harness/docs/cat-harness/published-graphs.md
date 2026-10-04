@@ -335,12 +335,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `tools`
 
-1 of 4 published.
+1 of 5 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/tools/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `translation-sources`
