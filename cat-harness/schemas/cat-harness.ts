@@ -1310,7 +1310,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — three keyings, and a fourth is a schema change
+ * ## `keyedBy` — four keyings, and a fifth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1341,14 +1341,23 @@ export type Tile = z.infer<typeof TileSchema>;
  *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
  *   and it is exactly what separates these two keyings.
  *
- * The field is an enum, not a string, so a fourth keying is a schema change
+ * - `route-family` — one entry per MEMBER of a family under the directory's
+ *   path, the member supplied at publish time rather than declared. Bean
+ *   `xp5j`. **Its reasoning lives with the enum**, in
+ *   `schemas/subgraph-source.ts`: a keying is documented where its one
+ *   definition is, which is the same rule that put the enum there (`1j3q`).
+ *   {@link RouteMemberSchema} there validates the untrusted member key.
+ *
+ * The field is an enum, not a string, so a FIFTH keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value. The
  * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
- * not restated: this field held its own `z.enum(["commit","tip","route"])` until
- * the two drifted — `route` was added here with bean `1j3q` and not there, so a
- * route-keyed declaration parsed and then threw a ZodError inside
- * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
- * if there is ONE schema to change.
+ * not restated: this field held its own `z.enum([...])` until the two drifted —
+ * `route` was added here with bean `1j3q` and not there, so a route-keyed
+ * declaration parsed and then threw a ZodError inside `resolveSubgraphSource`.
+ * **A schema change somebody has to make is only a guard if there is ONE schema
+ * to change**, and `route-family` was added to `KeyedBySchema` for exactly that
+ * reason — this branch first restated the enum here and reproduced `1j3q` one
+ * keying later.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
@@ -1368,7 +1377,8 @@ export const DirectoryStorageSchema = z
       .refine(
         (b) => !b.includes("..") && !b.includes("//") && !b.endsWith("/") && !b.endsWith(".lock") && !b.startsWith("/"),
         "not a valid branch name",
-      ),
+      )
+      .optional(),
     /**
      * How entries are keyed on the branch: one entry per `commit`, one live
      * copy at the `tip`, or one entry per published `route`. See
@@ -1376,32 +1386,36 @@ export const DirectoryStorageSchema = z
      * synonym for `tip`.
      */
     keyedBy: KeyedBySchema,
+    /**
+     * `keyedBy: "family"` only (bean `lehh`, owner 2026-10-04): a FAMILY of
+     * branches, one per key — the branch-only graphs fhir-ast (one branch per
+     * IG package) and lake-cache (one per Lean package and toolchain). `path`
+     * is where a mount of ONE member lands, as fsh-guts' is. Resolved to
+     * `kind: "family"`, never to a single branch.
+     */
+    branchPrefix: BranchPrefixSchema.optional(),
+    /** `family` only: what the key is, in words — "the IG's package id". */
+    keyFrom: z.string().min(1).optional(),
+    /**
+     * `family` only: where the family is. Absent = this repository, a copy
+     * materialised here; `owner/repo` = read from that remote (owner,
+     * 2026-10-04: a remote AST may be read or materialised locally, "similar
+     * for lean cache").
+     */
+    repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
   })
   .strict()
-  .or(
-    /**
-     * A FAMILY of branches, one per key (bean `lehh`, owner 2026-10-04): the
-     * branch-only graphs fhir-ast (one branch per IG package) and lake-cache
-     * (one per Lean package and toolchain). `path` is where a mount of ONE
-     * member lands, as fsh-guts' is. Resolved to `kind: "family"`, never to a
-     * single branch: see `FamilySourceSchema` for why it is not a fourth
-     * `keyedBy` on the shape above.
-     */
-    z
-      .object({
-        branchPrefix: BranchPrefixSchema,
-        keyedBy: z.literal("family"),
-        /** What the key is, in words: "the IG's package id". */
-        keyFrom: z.string().min(1),
-        /**
-         * Where the family is: absent = this repository, a copy materialised
-         * here; `owner/repo` = read from that remote (owner, 2026-10-04: a
-         * remote AST may be read or materialised locally, "similar for lean cache").
-         */
-        repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
-      })
-      .strict(),
-  );
+  // ONE object carrying the ONE enum (`route-member.test.ts` checks identity),
+  // with the family form told apart by its keying rather than by a second arm.
+  .superRefine((s, ctx) => {
+    const family = s.keyedBy === "family";
+    if (family && (s.branch !== undefined || s.branchPrefix === undefined || s.keyFrom === undefined)) {
+      ctx.addIssue({ code: "custom", path: ["keyedBy"], message: '`keyedBy: "family"` takes `branchPrefix` and `keyFrom`, and no `branch`' });
+    }
+    if (!family && (s.branch === undefined || s.branchPrefix !== undefined || s.keyFrom !== undefined || s.repository !== undefined)) {
+      ctx.addIssue({ code: "custom", path: ["keyedBy"], message: "a single-branch keying takes `branch`, and no `branchPrefix`, `keyFrom` or `repository`" });
+    }
+  });
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
 
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
@@ -1730,12 +1744,12 @@ export const ContentDirectorySchema = z.preprocess(
   ContentDirectoryShape.refine(
     (d) =>
       !(
-        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
         (d.graphKinds as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
-        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
   ),

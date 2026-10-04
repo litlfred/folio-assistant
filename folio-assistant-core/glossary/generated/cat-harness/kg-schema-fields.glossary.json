@@ -7952,6 +7952,55 @@
       "status": "candidate"
     },
     {
+      "id": "ref-window.refwindowobjectschema.closedat",
+      "prefLabel": "RefWindowObjectSchema.closedAt",
+      "definition": "When the steward actually performed the single write, if it has.",
+      "source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.closedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ref-window.refwindowobjectschema.expires",
+      "prefLabel": "RefWindowObjectSchema.expires",
+      "definition": "The hard close. Set once, at open: there is no extend, because a window that extends on every arrival never closes.",
+      "source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.expires",
+      "status": "candidate"
+    },
+    {
+      "id": "ref-window.refwindowobjectschema.handoff",
+      "prefLabel": "RefWindowObjectSchema.handoff",
+      "definition": "Who takes this window if the holder stops — the field that makes a handover safe. Without it the next steward cannot tell \"mine to close\" from \"someone else's, in flight\", and both wrong answers push twice.",
+      "source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.handoff",
+      "status": "candidate"
+    },
+    {
+      "id": "ref-window.refwindowobjectschema.heldby",
+      "prefLabel": "RefWindowObjectSchema.heldBy",
+      "definition": "Who holds the window — a session URL, `owner`, or an actor id.",
+      "source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.heldBy",
+      "status": "candidate"
+    },
+    {
+      "id": "ref-window.writerequestschema.authored",
+      "prefLabel": "WriteRequestSchema.authored",
+      "definition": "Whether an AUTHOR wrote this route's content, as opposed to a generator regenerating it.",
+      "source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.authored",
+      "status": "candidate"
+    },
+    {
+      "id": "ref-window.writerequestschema.requestedby",
+      "prefLabel": "WriteRequestSchema.requestedBy",
+      "definition": "Who asked — a workflow file, a session URL, or an actor id.",
+      "source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.requestedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "ref-window.writerequestschema.route",
+      "prefLabel": "WriteRequestSchema.route",
+      "definition": "The route this write owns — `/` for the published site, `STAGING/<slug>/` for a preview. Composition is per route: two different routes compose by union, two of the same route take the newer.",
+      "source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.route",
+      "status": "candidate"
+    },
+    {
       "id": "refactor-strategy.leanversionrange.max",
       "prefLabel": "LeanVersionRange.max",
       "definition": "e.g. `\"4.30.0\"`. Omit for \"no known upper bound\".",

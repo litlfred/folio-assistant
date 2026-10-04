@@ -97,7 +97,26 @@ export const BranchNameSchema = z
  * `DirectoryStorageSchema`'s docblock — one place, because the meaning is one
  * fact even though the enum is now read in two.
  */
-export const KeyedBySchema = z.enum(["commit", "tip", "route"]);
+/**
+ * The ONE keying enum. `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`
+ * imports this rather than restating it, and bean `1j3q` is why: that field
+ * held its own copy, `route` was added there and not here, and a route-keyed
+ * declaration then parsed and threw a ZodError inside
+ * {@link resolveSubgraphSource}. A schema change somebody has to make is only
+ * a guard if there is one schema to change.
+ *
+ * `route-family` (bean `xp5j`) is added HERE for that reason. The branch that
+ * introduced it first added a fourth value to the copy in `cat-harness.ts` and
+ * reproduced `1j3q` one keying later — accepted by the declaration, rejected by
+ * every consumer that parses through this.
+ *
+ * `family` (bean `lehh`) is here for the same reason: a family of BRANCHES,
+ * one per key, under a `branchPrefix` (fhir-ast, lake-cache). It first lived
+ * as a separate `z.literal("family")` arm of the storage schema — a second
+ * definition of a keying, the drift this enum exists to prevent — and merging
+ * main's identity test (`route-member.test.ts`) said so.
+ */
+export const KeyedBySchema = z.enum(["commit", "tip", "route", "route-family", "family"]);
 export type KeyedBy = z.infer<typeof KeyedBySchema>;
 
 /** A branch-name PREFIX for a family of branches: a plain branch name ending in `/`. */
@@ -105,6 +124,65 @@ export const BranchPrefixSchema = z
   .string()
   .regex(/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+\/$/, "a plain branch prefix ending in /, e.g. cat/fhir-harness/fhir-ast/")
   .refine((b) => !b.includes("..") && !b.includes("//") && !b.startsWith("/"), "not a valid branch prefix");
+
+/**
+ * ## `route-family`, and why its reasoning is HERE
+ *
+ * One entry per MEMBER of a family under a directory's path, the member
+ * supplied at publish time rather than declared — the `STAGING/<slug>/`
+ * previews on `gh-pages`, one per open branch. Bean `xp5j`.
+ *
+ * A fourth keying rather than a flag on `route`, because `route` must not carry
+ * two write contracts for the same reason it is not a synonym for `tip`. Three
+ * things differ, each a decision rather than a detail:
+ *
+ * 1. **The member key is UNTRUSTED** — it derives from a branch name, and
+ *    `.github/workflows/feature-staging.yml` states a branch name is
+ *    attacker-controlled on a fork PR. {@link RouteMemberSchema} is the
+ *    validation.
+ * 2. **Source and destination differ.** A declared `route` is published FROM
+ *    the declared path; a family member is built into a local directory and
+ *    published to a route named at publish time, so the two cannot be one field.
+ * 3. **A member can be REMOVED.** `route`'s contract has no case for it — "a
+ *    generator that stops emitting a page must stop publishing it" — but a
+ *    member's branch can be deleted, and `feature-staging.yml` already deletes
+ *    `STAGING/<slug>` on PR close.
+ *
+ * Like `route`, a `route-family` write carries NO `expect`: a member is a
+ * rendering authored by nobody, so the newer generation wins.
+ *
+ * This text sits beside the enum rather than on
+ * `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`, and that is `1j3q`'s
+ * rule applied to prose: the keying has ONE definition, so it gets one
+ * description. It also keeps this branch out of a file `main` edits constantly
+ * — the earlier arrangement put 67 lines there and `merge-main-bot` refused
+ * every sweep on it.
+ */
+
+/**
+ * A `route-family` MEMBER key — one path segment, from untrusted input.
+ *
+ * The member becomes a path on the published branch, so a traversal here writes
+ * OUTSIDE the family's prefix — over the site at `/` in the worst case. This
+ * REFUSES rather than sanitises: a key that had to be cleaned up is a key whose
+ * author meant something else, and a sanitiser's output is a value nobody
+ * declared.
+ *
+ * ONE SEGMENT is the load-bearing rule. Refusing `/` outright disposes of
+ * `..`, `//`, absolute paths and deep traversal in a single rule rather than as
+ * four patterns somebody has to keep complete. No dot-prefixed segment (the
+ * `kg-core/directory-conventions` guard, written to stay correct if a member
+ * ever stops being one segment); no leading dash, so a member cannot be read as
+ * a flag.
+ */
+export const RouteMemberSchema = z
+  .string()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, "one path segment: alphanumerics, dot, dash, underscore, not starting with a dot or dash")
+  .refine((m) => !m.split("/").some((seg) => seg.startsWith(".")), "no dot-prefixed segment")
+  .refine((m) => m !== "." && m !== ".." && !m.includes(".."), "not a traversal");
+export type RouteMember = z.infer<typeof RouteMemberSchema>;
 
 /** The content is the checkout's own directory at the entry's `path`. */
 export const DirectorySourceSchema = z.object({ kind: z.literal("directory") }).strict();
@@ -160,11 +238,11 @@ export type SubgraphSourceOverrides = z.infer<typeof SubgraphSourceOverridesSche
 
 /** The #1764 shape, read only to map it. */
 const LegacyStorageSchema = z.union([
-  z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema }),
+  z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema.exclude(["family"]) }),
   // `storage`'s family form (bean `lehh`): the owner's spelling, mapped to `kind: "family"`.
   z.object({
     branchPrefix: BranchPrefixSchema,
-    keyedBy: z.literal("family"),
+    keyedBy: KeyedBySchema.extract(["family"]),
     keyFrom: z.string().min(1),
     repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
   }),
