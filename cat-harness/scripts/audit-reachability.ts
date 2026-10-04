@@ -94,35 +94,66 @@
  * the author's assertion. Under-claiming is recoverable — the count says so out
  * loud. Over-claiming looks like reachability, which is the defect.
  *
- * ## Why a committed sidecar, and what it buys the soft family
+ * ## The record, and how the soft family bites without a red gate
  *
  * A printed verdict cannot tell *"nothing ever reached this"* from *"this lost
  * its caller in the commit under review"*. The sidecar holds the RELATION —
  * which decisions are evaluable, which diagrams the resolver reaches, which
- * modules only their tests reach — and not the census, because a census moves
- * on any commit that adds a file and a gate stale by default is one people
- * learn to regenerate without reading (`audit-coverage`, bean `xutg`).
+ * entry points are run — and not the census, because a census moves on any
+ * commit that adds a file (`audit-coverage`, bean `xutg`).
  *
- * That is also how `module-test-only` bites without a red gate: a tenth
- * test-only module makes the sidecar STALE, `--check` fails, and the author's
- * regeneration puts the new module in the diff. The failure is not wired yet
- * because nine is a backlog rather than a defect; `--strict` is the flag for
- * the day it closes, and bean `dxqm` holds that.
+ * It is a WORKING COPY, not a committed record: `cat-harness/test/results/` is
+ * gitignored and the records live on the `qa-reports` branch (arc `3fva`, owner
+ * rulings D1/D4), which `qa:publish` pushes once per CI run. So this script
+ * writes the working copy and {@link judgeQaResult} reads the baseline — the
+ * branch with `--against <ref>`, and a baseline that cannot be asked is
+ * `unknown`: reported, never a pass, never a failure.
  *
- * ## What `--check` fails on, and why it includes the hard families
+ * **`failOnNew` is how an orphan bites.** The first version of this gate failed
+ * on its own sidecar being STALE, as a proxy: a twelfth orphan would make the
+ * committed file disagree with the tree, and the author's regeneration would put
+ * the new module in the diff. That proxy stopped meaning anything once the
+ * records left `main`, and what replaces it asks the question directly — the
+ * eleven standing orphans are inherited and do not fail, a twelfth fails on the
+ * commit that introduces it.
  *
- * `audit:coverage` fails `--check` on staleness ALONE, because everything else
- * it reports is an unmet ambition. This one diverges on purpose: an unevaluable
- * decision table and an unreachable diagram are **broken artefacts**, not
- * ambitions, so they fail in the gate that runs on every push. The bare writer
- * stays exit-0 so that regenerating a sidecar can never be confused with the
- * defect, and `--check` does not write — a checker that repairs the staleness
- * it reports cannot be falsified (`generalise-the-fix` Move 3).
+ * ## What fails, and the one divergence from `audit:coverage`
+ *
+ * `failOn` carries the BROKEN ARTEFACTS: a decision table nothing can evaluate,
+ * a diagram the resolver cannot reach, two diagrams answering to one name, an
+ * `@entrypoint` naming no script. They fail whether or not a baseline calls
+ * them new. In `audit:coverage` every finding is an unmet ambition and only a
+ * NEW one fails; here these are defects, and a defect is not less of one for
+ * having been there yesterday.
+ *
+ * `--strict` promotes `entry-point-orphan` to the same footing, for the day
+ * eleven becomes zero. Bean `dxqm` holds that.
+ *
+ * **And `--check` does not write.** A checker that repairs what it reports
+ * cannot be falsified — red once, green on the rerun (`generalise-the-fix`
+ * Move 3).
+ *
+ * ## It is NOT WIRED INTO CI YET, and that is not the same as passing
+ *
+ * There is no `audit:reachability:check` alias and no step in
+ * `code-quality-gates.yml`, so `gates.ts` does not derive this and **`bun run
+ * gates` does not run it.** A gate that does not fire is indistinguishable from
+ * one that passed — bean `1xhc`, the epic this work sits under — so the absence
+ * is stated here rather than left to be discovered.
+ *
+ * Both land in one follow-up pull request, together: the workflow file had to
+ * leave this change because `merge-main`'s resolution push carries no
+ * `workflows` scope, so any PR touching it cannot be resolved by the bot (9 of
+ * 20 open PRs, owner ruling 2026-10-04). Splitting a gate's NAME from its
+ * WIRING is how a check becomes registered-and-never-run (`t373`; `1xhc`
+ * measured 21 of 33), so the alias waits for its step rather than arriving
+ * ahead of it.
  *
  * Usage:
- *   bun run audit:reachability            # print the report, write the sidecar
- *   bun run audit:reachability --check    # ...fail on a stale sidecar OR a broken artefact; writes nothing
- *   bun run audit:reachability --strict   # ...and on a module only its own test reaches
+ *   bun run audit:reachability                                  # report, write the working copy
+ *   bun run cat-harness/scripts/audit-reachability.ts --check    # judge, write nothing
+ *   bun run cat-harness/scripts/audit-reachability.ts --check --against main
+ *   bun run cat-harness/scripts/audit-reachability.ts --check --strict
  *
  * @module scripts/audit-reachability
  * @covers processes, code
@@ -141,7 +172,14 @@ import {
   unreadableExpressions,
   type UnreadableExpression,
 } from "../src/workflow/decision-table.js";
-import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
+import {
+  againstOrUsage,
+  buildQaResult,
+  judgeQaResult,
+  judgeUsage,
+  qaResultPath,
+  writeQaResult,
+} from "./qa-results.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const ROOT = join(import.meta.dir, "..");
@@ -200,8 +238,8 @@ export function invocationBefore(line: string, index: number): boolean {
   return INVOKES.test(line.slice(Math.max(0, index - INVOKE_WINDOW), index));
 }
 
-/** This script's own sidecar, derived from the constants that write it. */
-const SELF_SIDECAR_STEM = "audit-reachability";
+/** This script's own sidecar stem. The PATH is composed by `qaResultPath`, never here (bean `id4s`). */
+const STEM = "audit-reachability";
 
 // ── the declared corpus ─────────────────────────────────────────
 
@@ -564,7 +602,7 @@ export function moduleReach(repo: string): {
   // so reading it would credit every module named in a finding with being
   // reached — and the report would clear itself, for ever, one run later.
   // `audit-coverage`'s rule: a measurement must not be a term in itself.
-  const selfSidecar = join(ROOT, QA_RESULTS_DIR, `${SELF_SIDECAR_STEM}.qa-results.json`);
+  const selfSidecar = qaResultPath(ROOT, STEM);
   for (const abs of corpus.files) {
     if (abs === selfSidecar) continue;
     const rel = relative(repo, abs);
@@ -649,30 +687,19 @@ function msg(e: unknown): string {
   return e instanceof Error ? e.message : String(e);
 }
 
-/** The staleness key: the whole result. It carries no timestamp. */
-function comparable(r: QaResult): string {
-  return JSON.stringify(r);
-}
-
-/**
- * Is the committed sidecar what this run computed?
- *
- * `absent` is its own answer: under `--check`, no record at all reads
- * identically to a clean one if both are reported as "not stale".
- */
-export function sidecarState(instanceRoot: string, fresh: QaResult): "absent" | "stale" | "current" {
-  const p = join(instanceRoot, QA_RESULTS_DIR, `${SELF_SIDECAR_STEM}.qa-results.json`);
-  if (!existsSync(p)) return "absent";
-  try {
-    return comparable(JSON.parse(readFileSync(p, "utf-8")) as QaResult) === comparable(fresh) ? "current" : "stale";
-  } catch {
-    return "stale";
-  }
-}
+/** The gate's name, for the shared judgement reporter. */
+const GATE = "audit:reachability";
 
 async function main(): Promise<number> {
-  const check = process.argv.includes("--check");
-  const strict = process.argv.includes("--strict");
+  const argv = process.argv.slice(2);
+  const check = argv.includes("--check");
+  const strict = argv.includes("--strict");
+  if (check) {
+    const usage = judgeUsage(GATE, argv, ["--strict", "--against"]);
+    if (usage !== undefined) return usage;
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, argv);
+  if (badRef !== undefined) return badRef;
 
   const { bpmn, dmn, instances } = declaredDiagrams(REPO);
   const { rows: processes, ambiguous, decisionRefs } = await processReach(REPO, bpmn);
@@ -874,21 +901,69 @@ async function main(): Promise<number> {
     },
   });
 
-  const state = sidecarState(ROOT, result);
-  if (!check) writeQaResult(ROOT, SELF_SIDECAR_STEM, result);
-  if (state !== "current") {
-    const where = relative(REPO, join(ROOT, QA_RESULTS_DIR, `${SELF_SIDECAR_STEM}.qa-results.json`));
-    const what = state === "absent" ? `no committed sidecar at ${where}` : `the committed sidecar at ${where} disagrees with this run`;
-    console.log(check ? `\n✗ ${what} — run \`bun run audit:reachability\` and commit it.` : `\n· ${what} — written.`);
-  }
-
-  // The hard families fail wherever the GATE runs; the bare writer stays
-  // exit-0 so regenerating a sidecar is never confused with the defect.
+  // The BROKEN artefacts, counted once so the writer and the gate cannot
+  // disagree about what they are.
   const broken =
-    unevaluable.length + unloadable.length + shadowed.length + brokenProcesses.length + ambiguous.length + brokenClaims.length;
-  if (check && (state !== "current" || broken > 0)) return 1;
-  if (strict && orphans.length > 0) return 1;
-  return 0;
+    unevaluable.length +
+    unloadable.length +
+    shadowed.length +
+    brokenProcesses.length +
+    ambiguous.length +
+    brokenClaims.length;
+
+  // ── The gate: COMPUTE AND JUDGE, write nothing (bean `0dav`) ──────────
+  //
+  // The first version of this failed `--check` on its own committed sidecar
+  // being STALE or ABSENT. That stopped being a question the day QA results
+  // left `main` for the `qa-reports` branch (owner rulings D1/D4): nothing
+  // committed is left to be stale, and a gate that failed on its own record
+  // being absent would be red for nobody's defect. `qaResultState`'s fifth
+  // state — `unknown`, when the baseline could not be asked — is why it
+  // cannot simply be treated as absent either.
+  //
+  // What replaces it is BETTER than what it was reaching for. The staleness
+  // check was a proxy: it made a NEW orphan visible by forcing a
+  // regeneration into the diff. `failOnNew` asks that question directly —
+  // the eleven standing orphans are inherited and do not fail, a twelfth
+  // fails `--check` on the commit that introduces it. Same intent, one less
+  // indirection, and no file has to move for it to work.
+  //
+  // The split between the two lists is the one this report has argued
+  // throughout:
+  //
+  // - `failOn` — a decision table nothing can evaluate, a diagram the
+  //   resolver cannot reach, two diagrams answering to one name, an
+  //   `@entrypoint` naming no script. **Broken artefacts**, not unmet
+  //   ambitions, so they fail whether or not a baseline says they are new.
+  //   That is a deliberate divergence from `audit:coverage`, whose every
+  //   finding IS an unmet ambition.
+  // - `failOnNew` — an `entry-point-orphan`. A backlog of eleven, and a gate
+  //   refusing every push until somebody wires eleven old scripts is a gate
+  //   switched off in a week. `--strict` promotes it for the day that closes.
+  if (!check) {
+    const out = writeQaResult(ROOT, STEM, result);
+    console.log(`\n· ${relative(REPO, out)} — written.`);
+    // The writer stays exit-0 on the standing findings so that regenerating a
+    // sidecar is never confused with the defect — but a BROKEN artefact is a
+    // defect wherever it is noticed.
+    if (broken > 0) return 1;
+    if (strict && orphans.length > 0) return 1;
+    return 0;
+  }
+  console.log("");
+  return judgeQaResult({
+    gate: `${GATE}${strict ? ":strict" : ":check"}`,
+    fresh: result,
+    failOn: [
+      "decision-unevaluable",
+      "process-unreachable",
+      "process-ambiguous",
+      "entrypoint-claim-broken",
+      ...(strict ? ["entry-point-orphan"] : []),
+    ],
+    failOnNew: ["entry-point-orphan"],
+    baseline: { root: ROOT, stem: STEM, writer: GATE, against },
+  }).exit;
 }
 
 if (import.meta.main) process.exit(await main());

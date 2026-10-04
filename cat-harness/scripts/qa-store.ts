@@ -60,7 +60,8 @@
  * Usage:
  *   bun run qa:fetch [--ref main|<sha>|main/<sha>|pr/<n>|pr/<n>/<sha>] [--into DIR] [--prefix P]
  *   bun run qa:publish --ref main/<sha>|pr/<n>/<sha> [--root DIR ...] [--gates-result R]
- *   bun run qa:publish --github [--gates-result R]     # CI: derive the key, skip forks
+ *   bun run qa:publish --github --completeness FILE [--gates-result R]   # CI: derive the key, skip forks,
+ *                                                       # refuse an incomplete qa:refresh report (bean 3hk4)
  *   bun run qa:prune [--apply] [--pr-states FILE]       # dry run unless --apply
  *   bun run cat-harness/scripts/qa-store.ts read --ref R <path>
  *   bun run cat-harness/scripts/qa-store.ts where
@@ -83,8 +84,16 @@ import { TreeStore } from "./branch-store.js";
 
 // ── Constants ────────────────────────────────────────────────────────────
 
+/**
+ * The branch's name, and the names it had before, newest first. Owner
+ * 2026-10-02: special branches are `cat/<harness>/<name>` (note on `fs43`,
+ * bean `tlk2`), superseding the interim `cat-` prefix of bean `32f6`. The
+ * legacy list empties when bean `oycs` says every remote is renamed.
+ */
+export const QA_BRANCH = "cat/cat-harness/qa-reports";
+export const LEGACY_QA_BRANCHES: readonly string[] = ["cat-qa-reports", "qa-reports"];
 /** The branch when no declaration names one (proposal §2.4). */
-export const DEFAULT_QA_BRANCH = "qa-reports";
+export const DEFAULT_QA_BRANCH = QA_BRANCH;
 export const MANIFEST_FILE = "manifest.json";
 export const MANIFEST_SCHEMA = "qa-reports-manifest/v1";
 export const INDEX_FILE = "index.json";
@@ -143,6 +152,13 @@ export interface QaManifest {
   bytes: number;
   written_at: string;
   producer?: { run?: string; gates?: string };
+  /**
+   * What `qa:refresh` said of the working copy this entry was built from (bean
+   * `3hk4`): `tracked` (the commit's own committed copy) or `computed` (the
+   * declared writers ran into an empty tree), and the files per writer. Absent
+   * on an entry published without a report, which `--github` refuses.
+   */
+  completeness?: { mode: string; files: number; families: Record<string, number> };
 }
 
 export interface QaIndex {
@@ -262,6 +278,27 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
   return { branch: branches[0] ?? DEFAULT_QA_BRANCH, keyedBy: "commit", declared: branches.length === 1, directories };
 }
 
+// ── Which name the branch has ────────────────────────────────────────────
+
+/**
+ * The names to look for, in order. A declaration naming EITHER spelling of the
+ * QA branch gets both, new first, so a folio whose declaration predates the
+ * rename still finds a renamed remote; any other name is taken as given.
+ */
+export function qaBranchCandidates(declared: string): string[] {
+  return declared === QA_BRANCH || LEGACY_QA_BRANCHES.includes(declared) ? [QA_BRANCH, ...LEGACY_QA_BRANCHES] : [declared];
+}
+
+/**
+ * The rule, for readers AND writers: the first candidate that exists on the
+ * remote, else the first candidate. Writers follow it too, so nothing creates
+ * the new name beside a live legacy one and blocks the rename — GitHub's
+ * branch rename refuses a target that exists, and keeps no redirect for git.
+ */
+export function pickQaBranch(candidates: readonly string[], present: ReadonlySet<string>): string {
+  return candidates.find((c) => present.has(c)) ?? candidates[0]!;
+}
+
 // ── Git plumbing ─────────────────────────────────────────────────────────
 //
 // The plumbing itself is `branch-store.ts`'s `TreeStore` (bean `2h76`); what
@@ -286,22 +323,24 @@ function gitTopLevel(cwd = process.cwd()): string {
  * `branch-store.ts` had a second copy of — `mktree` and `setPath` were
  * byte-identical but for a `private`, `must` identical outright. The copy that
  * survives is {@link TreeStore}, and the three axes the two actually differed
- * on are its constructor arguments. The signature here is UNCHANGED, so every
- * caller and `qa-store.test.ts` are untouched.
+ * on are its constructor arguments.
  *
- * `fetchTip` now also reports WHICH branch answered, because a tip-keyed
- * caller migrating between names needs that. A commit-keyed caller has one
- * candidate and can ignore it.
+ * It takes the CANDIDATE names ({@link qaBranchCandidates}: the new
+ * `cat/cat-harness/qa-reports` first, then the legacy spellings), which
+ * TreeStore already carries; `fetchTip` reports which one answered.
  */
 class Store extends TreeStore {
   constructor(
     dir: string,
     remote: string,
-    branch: string,
+    candidates: readonly string[],
     authEnv: Record<string, string>,
     log?: (line: string) => void,
   ) {
-    super(dir, remote, [branch], authEnv, { identity: QA_BOT, refNamespace: "qa-store", log });
+    // TreeStore (bean `2h76` part 1) carries the candidate list and settles
+    // `branch` on every fetchTip by the same rule as pickQaBranch: the first
+    // name the remote has, else the first (#1801 merged onto #1982).
+    super(dir, remote, candidates, authEnv, { identity: QA_BOT, refNamespace: "qa-store", log });
   }
 }
 
@@ -346,10 +385,11 @@ function openStore(opts: QaStoreOptions = {}): { store: Store; repoRoot: string 
     if (c.status !== 0) throw new QaUsageError(`cannot find the git directory of ${repoRoot}`);
     storeDir = join(c.stdout.trim(), "qa-store.git");
   }
-  const id = `${resolve(storeDir)}|${remote}|${branch}`;
+  const candidates = qaBranchCandidates(branch);
+  const id = `${resolve(storeDir)}|${remote}|${candidates.join(",")}`;
   let store = stores.get(id);
   if (!store) {
-    store = new Store(resolve(storeDir), remote, branch, authEnvFrom(repoRoot), opts.log);
+    store = new Store(resolve(storeDir), remote, candidates, authEnvFrom(repoRoot), opts.log);
     stores.set(id, store);
   }
   return { store, repoRoot };
@@ -446,7 +486,7 @@ function verifyEntry(store: Store, entry: string, key: string): { state: "ok"; m
 function snapshot(ref: string, opts: QaStoreOptions): SnapshotResult {
   const spec = parseQaRef(ref);
   const { store } = openStore(opts);
-  const memo = `${store.dir}|${store.remote}|${store.branch}|${ref}`;
+  const memo = `${store.dir}|${store.remote}|${store.candidates.join(",")}|${ref}`;
   const hit = snapshots.get(memo);
   if (hit) return hit;
   let result: SnapshotResult;
@@ -567,6 +607,29 @@ export function readQaManifest(ref: string, opts: QaStoreOptions = {}): (QaReadH
   return { state: "hit", key: s.snap.key, tip: s.snap.tip, manifest: s.snap.manifest };
 }
 
+/**
+ * Every payload path of an entry with its BLOB ID, read from trees alone — no
+ * blob is fetched, so comparing a whole checkout against an entry costs one
+ * trees-only fetch. Bean `5hox`: removal is gated on the entry holding a
+ * hash-identical copy, and a hash is exactly what a tree already records.
+ * Paths are repository-relative, as in the checkout; the manifest is excluded.
+ */
+export function readQaBlobIds(ref: string, opts: QaStoreOptions = {}): (QaReadHit & { blobs: Map<string, string> }) | QaNotHit {
+  const s = snapshot(ref, opts);
+  if (s.state !== "hit") return s;
+  const { store } = openStore(opts);
+  const r = store.git(["ls-tree", "-r", "-z", s.snap.entry], { env: { GIT_NO_LAZY_FETCH: "1" } });
+  if (r.status !== 0) return { state: "unknown", reason: `ls-tree of ${s.snap.key} failed: ${r.stderr.trim()}` };
+  const blobs = new Map<string, string>();
+  for (const l of r.stdout.toString().split("\0").filter(Boolean)) {
+    const tab = l.indexOf("\t");
+    const [, type, sha] = l.slice(0, tab).split(" ");
+    const path = l.slice(tab + 1);
+    if (type === "blob" && path !== MANIFEST_FILE) blobs.set(path, sha!);
+  }
+  return { state: "hit", key: s.snap.key, tip: s.snap.tip, blobs };
+}
+
 export interface QaFetchResult {
   state: QaState;
   reason?: string;
@@ -613,7 +676,7 @@ export function fetchQa(args: { ref: string; into?: string; prefix?: string }, o
 
 // ── Writing ──────────────────────────────────────────────────────────────
 
-export type QaPublishState = "published" | "present" | "empty" | "failed";
+export type QaPublishState = "published" | "present" | "empty" | "incomplete" | "failed";
 
 export interface QaPublishResult {
   state: QaPublishState;
@@ -752,7 +815,20 @@ function writeLoop(
  * - Every other entry on the branch is carried across untouched.
  */
 export function publishQa(
-  args: { ref: string; roots: string[]; checkout?: string; producer?: QaManifest["producer"]; writtenAt?: string },
+  args: {
+    ref: string;
+    roots: string[];
+    checkout?: string;
+    producer?: QaManifest["producer"];
+    writtenAt?: string;
+    /**
+     * The refresh report's account of the tree (bean `3hk4`). When given, the
+     * entry must hold exactly `completeness.files` files, or nothing is
+     * written (`incomplete`): a tree that changed between the account and the
+     * publish is not the tree that was judged complete.
+     */
+    completeness?: QaManifest["completeness"];
+  },
   opts: QaStoreOptions = {},
 ): QaPublishResult {
   const key = parseQaKey(args.ref);
@@ -773,9 +849,20 @@ export function publishQa(
         written_at: writtenAt,
         ...(args.checkout && args.checkout !== key.sha ? { checkout: args.checkout } : {}),
         ...(args.producer ? { producer: args.producer } : {}),
+        ...(args.completeness ? { completeness: args.completeness } : {}),
       })
     : undefined;
   if (!built) return { state: "empty", key: kp, reason: "no files under any root; nothing to publish", attempts: 0 };
+  if (args.completeness && built.manifest.files !== args.completeness.files) {
+    return {
+      state: "incomplete",
+      key: kp,
+      reason:
+        `the tree holds ${built.manifest.files} file(s) and the refresh report accounted for ${args.completeness.files}; ` +
+        "something wrote or removed files between the two, so this is not the tree that was judged complete — nothing published",
+      attempts: 0,
+    };
+  }
 
   const r = writeLoop(store, opts, `qa-reports: ${kp} (${built.manifest.files} files, ${built.manifest.bytes} bytes)`, (_tip, base) => {
     const existing = base ? store.lookup(base, kp) : undefined;
@@ -803,6 +890,31 @@ export function publishQa(
 
 function clearSnapshotsFor(store: Store): void {
   for (const k of snapshots.keys()) if (k.startsWith(`${store.dir}|`)) snapshots.delete(k);
+}
+
+// ── Completeness: what `qa:refresh` said of the tree (bean `3hk4`) ───────
+
+/** The `$schema` of `qa-refresh.ts`'s report. Here, because the publish reads it. */
+export const REFRESH_SCHEMA = "qa-refresh/v1";
+
+/**
+ * Is a `qa:refresh` report well-formed and COMPLETE? The publish's one
+ * question of it. Anything else — absent, foreign, incomplete — is a refusal
+ * with its reason, never a publish of a partial tree as if it were whole.
+ */
+export function refreshReportComplete(
+  r: unknown,
+): { ok: true; completeness: NonNullable<QaManifest["completeness"]> } | { ok: false; reason: string } {
+  const x = r as { $schema?: unknown; files?: unknown; reasons?: unknown; complete?: unknown; mode?: unknown; families?: unknown } | undefined;
+  if (!x || x.$schema !== REFRESH_SCHEMA) return { ok: false, reason: `not a ${REFRESH_SCHEMA} report` };
+  if (typeof x.files !== "number" || !Array.isArray(x.reasons)) return { ok: false, reason: "the report carries no file count or reasons" };
+  if (x.complete !== true) {
+    return { ok: false, reason: `the refresh was INCOMPLETE: ${(x.reasons as string[]).join("; ") || "no reason given"}` };
+  }
+  return {
+    ok: true,
+    completeness: { mode: String(x.mode), files: x.files, families: (x.families ?? {}) as Record<string, number> },
+  };
 }
 
 // ── CI: what to publish, and when not to ────────────────────────────────
@@ -989,7 +1101,7 @@ function flags(argv: string[]): { pos: string[]; one: (n: string) => string | un
   const pos: string[] = [];
   const vals = new Map<string, string[]>();
   const bools = new Set<string>();
-  const VALUED = new Set(["ref", "into", "prefix", "root", "remote", "branch", "store", "gates-result", "pr-states", "now"]);
+  const VALUED = new Set(["ref", "into", "prefix", "root", "remote", "branch", "store", "gates-result", "pr-states", "now", "completeness"]);
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
     if (!a.startsWith("--")) {
@@ -1077,10 +1189,37 @@ export function main(argv: string[]): number {
         checkout = d.checkout;
       }
       if (!ref) throw new QaUsageError("publish needs --ref main/<sha> | pr/<n>/<sha>, or --github in CI");
+      // Bean `3hk4`: a CI publish states what produced its tree. Without a
+      // complete `qa:refresh` report, a fresh checkout after `5hox` would be
+      // stored as a one-file entry that reads as the record of the commit.
+      let completeness: QaManifest["completeness"];
+      const reportFile = f.one("completeness");
+      if (reportFile !== undefined || f.has("github")) {
+        if (reportFile === undefined) {
+          console.error("qa:publish INCOMPLETE: --github needs --completeness <qa:refresh report>; nothing published");
+          return QA_EXIT.unknown;
+        }
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(readFileSync(reportFile, "utf-8"));
+        } catch (e) {
+          console.error(`qa:publish INCOMPLETE: the refresh report ${reportFile} could not be read (${(e as Error).message}); nothing published`);
+          return QA_EXIT.unknown;
+        }
+        const c = refreshReportComplete(parsed);
+        if (!c.ok) {
+          console.error(`qa:publish INCOMPLETE: ${c.reason}; nothing published`);
+          return QA_EXIT.unknown;
+        }
+        completeness = c.completeness;
+      }
       const roots = f.many("root").length ? f.many("root") : resolveQaLocation(repoRoot).directories.filter((d) => d.present).map((d) => d.path);
       const run = process.env.GITHUB_RUN_ID ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}` : undefined;
       const gates = f.one("gates-result");
-      const r = publishQa({ ref, roots, checkout, ...(run || gates ? { producer: { ...(run ? { run } : {}), ...(gates ? { gates } : {}) } } : {}) }, { ...opts, repoRoot });
+      const r = publishQa(
+        { ref, roots, checkout, ...(run || gates ? { producer: { ...(run ? { run } : {}), ...(gates ? { gates } : {}) } } : {}), ...(completeness ? { completeness } : {}) },
+        { ...opts, repoRoot },
+      );
       say(r, `qa:publish ${r.state.toUpperCase()} ${r.key}: ${r.reason}${r.commit ? ` (${r.commit})` : ""}`);
       return r.state === "published" || r.state === "present" ? 0 : r.state === "empty" ? QA_EXIT.miss : QA_EXIT.unknown;
     }
