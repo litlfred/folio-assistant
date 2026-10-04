@@ -3,11 +3,13 @@
 title: 'latex-known-macros.json lacks \phantom and \lessgtr: preflight false positives on a real paper'
 status: todo
 type: bug
+priority: normal
 tags:
     - latex
     - preflight
 created_at: 2026-10-04T18:57:25Z
-updated_at: 2026-10-04T18:57:25Z
+updated_at: 2026-10-04T19:02:51Z
+parent: folio-assistant-d308
 ---
 
 Found 2026-10-04 running paper-feature-build on litlfred/qou (PR #2118). The LaTeX preflight that build.ts runs reports two undefined-macro findings, and both are standard commands:
