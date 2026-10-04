@@ -75,7 +75,7 @@ const REPO = resolve(import.meta.dir, "..", "..");
 
 /** The subgraph context: same base as the content context, its own path. */
 const SUBGRAPH_CONTEXT_URL = CONTENT_CONTEXT_URL.replace(/ns\/content\/v1\.jsonld$/, SUBGRAPH_CONTEXT_PATH);
-const SUBGRAPH_CONTEXT_FILE = join(import.meta.dir, "..", SUBGRAPH_CONTEXT_PATH);
+const SUBGRAPH_CONTEXT_FILE = join(REPO, "cat-harness", SUBGRAPH_CONTEXT_PATH);
 
 /**
  * Prefixes bound ahead of anything that emits them, each with the reason.
