@@ -28,16 +28,27 @@ placement, a hold, an ejection — with who decided it, when, and the evidence
 URL it acted on. `FORBIDDEN_FACT_KEYS` in the schema refuses an entry that
 carries a fact.
 
-## Handing a PR to the queue — the author's side (STRICT)
+## Handing a PR to the queue — the sibling session's side (STRICT)
 
-**The PR is the message.** The steward reads open PRs labelled
-`ready-to-merge`, and nothing else. A comment posted anywhere else reaches
-nobody: not on a PR you believe is the steward's, not on an issue such as
-#1800, not in a bean on your branch. Measured 2026-10-03/04 (bean `j5iq`): a
-merge-order change was posted to #1959 three hours after it merged, and the
-pokes on #1800 changed none of the three facts that kept #1968 out of the queue.
+`merge-train.bpmn` has two lanes that matter here:
+- **`sibling-session`** ("Sibling session"): whoever submits a PR to the
+  queue and fixes it when it is handed back.
+- **`merge-steward`** ("Merge steward"): whoever orders and lands the queue.
 
-To hand over, do all of these on YOUR PR:
+Both are ROLES, not sessions. Owner, 2026-10-04: *"Merge Manager may
+change"*. So nothing in this section depends on which session holds either
+lane.
+
+### The PR is the message
+
+The steward reads open PRs labelled `ready-to-merge`, and nothing else. A
+comment posted anywhere else reaches nobody: not on a PR you believe is the
+steward's, and not on an issue such as #1800. Measured 2026-10-03/04 (bean
+`j5iq`): a merge-order change was posted to #1959 three hours after it
+merged, and the pokes on #1800 changed none of the three facts that kept
+#1968 out of the queue.
+
+To submit, do all of these on YOUR PR:
 
 1. **Owed CI is green on the head.** See §"Admission asks which runs are OWED".
 2. **The PR is ready for review**, not a draft.
@@ -52,11 +63,6 @@ To hand over, do all of these on YOUR PR:
 6. **The body has no unticked box**, and there is no open question to the
    owner or the steward.
 
-**A push makes the marker stale.** A head newer than your `ready:` sha is not
-intake, unless every commit since is a `merge-main` bot merge. Post `ready:`
-again for the new head once CI is green on it. Do not post "ready soon": it is
-not intake, and it costs the steward a read.
-
 **Merge order goes on the PR, and setting an order is the owner's call.**
 - Write it in the `ready:` comment, on every PR it concerns ("merge before #N").
 - Quote the owner's ruling with its date.
@@ -64,24 +70,86 @@ not intake, and it costs the steward a read.
   one until the earlier one lands. A label is the only hold the steward is
   certain to see.
 
-**Address the ROLE, never a session.** The Merge Steward is a lane in
-`merge-train.bpmn`, not a particular session, and whoever holds it today may
-not hold it tomorrow. So the handover must not depend on who that is:
+### After submitting: do not spend CI you do not need yet
+
+Owner, 2026-10-04: once CI has confirmed the PR, a submitter far back in the
+queue should not burn CI cycles keeping up with a churning `main`. Every
+merge of `main` into your PR re-runs the whole suite. While other PRs are
+landing, each of those runs is obsolete before the steward reaches you.
+
+- **The first green is what admits you.** Your `ready:` marker stays valid
+  across `merge-main` bot merges (see "A push makes the marker stale" below),
+  so the steward can still see a PR that is a few merges behind.
+- **Far back, stand still.** If your PR is not in the next train or two (the
+  steward's status comment on your PR gives your position), do not merge
+  `main` by hand to stay current. Take `merge-main` off as well: that label
+  makes the bot merge `main` into your PR on every push to `main`
+  (§"Your merge cadence is an input to the bot's throughput").
+- **Near the front, catch up once.** When you are in the next train, or the
+  steward asks you to:
+  1. put `merge-main` back on, or merge `main` by hand
+     ([`prepare-merge`](prepare-merge.md) §"Submodules: check the pointers
+     BEFORE you stage the merge");
+  2. let CI go green;
+  3. post a fresh signed `ready:`.
+- **A conflict is the exception.** If `main` now conflicts with your PR, fix it
+  when you see it, wherever you are in the queue. A conflict is work, not churn.
+
+**A push makes the marker stale.** A head newer than your `ready:` sha is not
+intake, unless every commit since is a `merge-main` bot merge. Post `ready:`
+again for the new head once CI is green on it. Do not post "ready soon": it is
+not intake, and it costs the steward a read.
+
+### The steward's side: reach a submitter who has fallen behind
+
+While watching the queue, and after every reshuffle or disentangling of
+trains, the steward checks the PRs near the front. A PR there can be:
+- behind `main` and conflicted;
+- red, or with an owed run missing on its head;
+- carrying a stale `ready:`;
+- carrying `needs-merge-human`.
+
+When the steward finds one, it tells the submitter. It never fixes the PR on
+the submitter's behalf, and never waits in silence. It uses the skills it
+already has:
+
+- **The status comment on the PR, edited in place.** It states the position,
+  what is missing, and by when. Its shape is the one in
+  [`merge-conflict-patterns`](merge-conflict-patterns.md) §"When a merge-train
+  member is refused".
+- **A hand-back bean** when the PR is ejected or handed back (same section).
+  The submitting role picks it up even if the original session is gone.
+- **A direct message as the fast path**, by the recipe below. Use it when the
+  PR is next and waiting costs a train.
+- **The queue entry** records the hold or ejection, with its reason and
+  expiry (§"The steward answers in the queue").
+
+A submitter told "you are next" catches up at once. That is the trade this
+section makes: CI is spent on the PRs about to land, not on the whole queue.
+
+### Address the ROLE, never a session
+
+The Merge Steward is a lane in `merge-train.bpmn`, not a particular session,
+and whoever holds it today may not hold it tomorrow. So the handover must not
+depend on who that is:
 - no session id written anywhere, since it dies with its container;
 - no "they are active on PR #N", since that PR may merge or the role may move;
 - no message as the channel.
 
-Whoever takes the lane next reads the same open PRs and the same
-`beans/queue/` entries.
+Whoever takes the lane next reads the same open PRs and the same queue
+entries.
 
 **A direct message is a fast path on top of that, never a replacement.** Owner,
 2026-10-04: use one when it is the more efficient tool, and say how you used
-it. It saves the steward a polling cycle, but it never counts as handing
-over: the PR's own state still has to say `ready`. Steps:
+it. It saves the receiver a polling cycle, but it never counts as handing
+over: the PR's own state still has to say `ready`. The same recipe works in
+both directions:
 
-1. **Find whoever holds the role now.** Do not use a remembered session id.
+1. **Find whoever holds the other role now.** Do not use a remembered session
+   id.
    - Cloud: run `list_sessions` (claude-code-remote). Match the session whose
-     title or `external_metadata.current_branches` shows the steward lane.
+     title or `external_metadata.current_branches` shows the lane, or the
+     PR's head branch when you are looking for a submitter.
    - Same machine: run `ListAgents`.
 2. **Check it can receive.** For a cloud session, run `get_session(id)` and
    confirm `cross_session_inbound == "available"`.
@@ -94,25 +162,40 @@ over: the PR's own state still has to say `ready`. Steps:
 [`coordinate`](coordinate.md) §"What actually reaches a sibling" has the
 measurements of which tool reaches which kind of session.
 
-**The steward answers in the queue, and you read it there.** Once the steward
-has decided something about your PR (a placement, a hold, an ejection), that
-decision is an entry under `beans/queue/` with its reason, who decided and
-when (see §"The rule everything else follows from"). A refusal also opens a
-bean for you, per
-[`merge-conflict-patterns`](merge-conflict-patterns.md) §"When a merge-train
-member is refused". Look there before asking where your PR stands.
+### The steward answers in the queue, and the queue lives on the beans branch
 
-**Not a bean, and not GitHub's merge queue.** Both were considered as the
-channel (owner, 2026-10-04):
-- A bean on your branch is invisible to the steward until your PR lands
-  ([`bean-coordination`](bean-coordination.md): a claim is branch-local).
-- A ready sha is a GitHub fact, which this queue never stores (§"The rule
-  everything else follows from").
-- GitHub's native merge queue is not offered on a personal-account repository
-  (bean `1hjm`).
+Once the steward has decided something about your PR (a placement, a hold,
+an ejection), that decision is an entry under `beans/queue/<pr>.json`. The
+entry carries `pr` and **`beans`**, the beans and epics the PR serves; name
+them in your PR body so the steward can copy them. That list is the
+association between a PR and its beans.
 
-The `merge-guard` commit status (bean `uoob`) checks these same six points
-mechanically. Once it lands, run it against your own PR before you announce.
+**Where to read it depends on the state-branch cutover** (arc `fs43`, bean
+`9ofm`):
+- **Before the cutover**, `main` is authoritative. Entries reach it only through
+  the steward's own PRs, a PR cycle late, so the edited-in-place status comment
+  on your PR is the live answer.
+- **After the cutover**, `beans/` (with `queue/` inside it) is authoritative on
+  the orphan branch **`cat/cat-harness/beans`**. Read it with
+  `bun run state:mount`. The steward writes an entry the moment it decides,
+  then `bun run state:push`, which splices only the changed paths onto the tip
+  and stops on a conflicting write instead of overwriting it. The entry is then
+  live for everyone, and the status comment is a courtesy that points at it.
+
+The branch's `manifest.json` says which state it is in (`"authoritative"`).
+Read that rather than this paragraph.
+
+**The cutover also changes what a bean can do here.** Today a bean created on
+your branch is invisible until your PR lands, so it cannot carry a merge
+request. After the cutover, a bean written through `state:push` is visible at
+once. A submitter can then note on the PR's bean that it is submitted, and the
+steward can answer on the same bean. The PR state above stays the intake
+signal either way: the bean is where the conversation is kept.
+
+**Not GitHub's merge queue.** It is not offered on a personal-account
+repository (bean `1hjm`). The `merge-guard` commit status (bean `uoob`) checks
+the six submission points mechanically; once it lands, run it against your own
+PR before you announce.
 
 ## Placement is computed, not chosen
 

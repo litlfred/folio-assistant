@@ -390,7 +390,7 @@ nobody ran is a driver that is not there, failing open and silently.
 When the branch is green and pushed, it reaches the Merge Steward only by its
 own state: label `ready-to-merge`, a signed `ready: <head sha>` comment, and no
 `needs-merge-human`. [`merge-queue`](merge-queue.md) §"Handing a PR to the
-queue" has the six points. Never post the handover anywhere but the PR.
+queue" has the six points, and when NOT to spend CI keeping up while far back. Never post the handover anywhere but the PR.
 
 ## Opening the PR (only when asked)
 
