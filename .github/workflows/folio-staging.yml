@@ -357,12 +357,23 @@ jobs:
           bun run "$PLATFORM_DIR/cat-harness/scripts/publish-block-qa.ts" \
             --folio "$FOLIO_DIR" --out "$SITE_DIR/block-qa.json"
 
-      - name: Check out the publish branch
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ inputs.publish_branch }}
-          path: pages
-          persist-credentials: true
+      - name: Check out the publish branch, or start it
+        # The same step as publish-main's. A new folio's FIRST pull request
+        # can run before anything was ever published, and actions/checkout
+        # fails outright on a missing ref — measured on litlfred/smart-ra#1,
+        # whose site built and then could not be staged. Started as an orphan
+        # here, it is the branch publish-main later writes main's site into.
+        env:
+          PUBLISH_BRANCH: ${{ inputs.publish_branch }}
+        run: |
+          set -eu
+          if git ls-remote --exit-code --heads origin "$PUBLISH_BRANCH" >/dev/null; then
+            git fetch --depth 1 origin "$PUBLISH_BRANCH"
+            git worktree add -B "$PUBLISH_BRANCH" pages "origin/$PUBLISH_BRANCH"
+          else
+            echo "no $PUBLISH_BRANCH branch yet; starting one"
+            git worktree add --orphan -b "$PUBLISH_BRANCH" pages
+          fi
 
       - name: Choose the before side
         # The published site a reviewer compares with (bean `5uuf`): main's
