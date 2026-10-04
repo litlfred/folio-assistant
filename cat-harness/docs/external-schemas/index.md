@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>224</b><span>declared uses</span></div>
+<div class="xs-stat"><b>222</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -132,8 +132,6 @@ a registry nobody prunes is one that stops describing the repository.
 | [`cat-harness/scripts/todo-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/todo-graph.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
-| `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
-| `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
 | [`who-iris/skills/iris-dspace.md`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md) | `conformsTo:` front matter |
 
 **Operative terms (22).** The terms this repository acts on —

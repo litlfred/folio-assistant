@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 213,
+      "count": 216,
       "unit": "modules"
     }
   },
@@ -509,6 +509,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/graph-kind-node.test.ts",
+      "instance": "cat-harness",
+      "name": "graph-kind-node.test",
+      "graphNode": "undeclared",
+      "summary": "Graph kinds declared as nodes (bean dmx1): loaded from each instance's",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "instance": "cat-harness",
+      "name": "graph-kind-node",
+      "graphNode": "undeclared",
+      "summary": "A GRAPH KIND as a node of the knowledge graph, declared by the harness that",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/graph-kind-registry.ts",
       "instance": "cat-harness",
       "name": "graph-kind-registry",
@@ -577,6 +593,14 @@
       "name": "instance-repositories",
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-roots.ts",
+      "instance": "cat-harness",
+      "name": "instance-roots",
+      "graphNode": "undeclared",
+      "summary": "Instance DISCOVERY: which directories are instances, and which file in a",
       "isTest": false
     },
     {
@@ -17513,6 +17537,210 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/graph-kind-node.ts#_EveryDefFieldIsDeclarable",
+      "name": "_EveryDefFieldIsDeclarable",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-node.ts#GraphKindNode",
+      "name": "GraphKindNode",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
+      "name": "GraphKindNodeSchema",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(GRAPH_KIND_NODE_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/, \"a lower-case kind word, e.g. ig-ast\")",
+          "optional": false,
+          "array": false,
+          "doc": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT"
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "layer",
+          "type": "z.literal(\"core\").optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "perInstance",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "renderable",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "recordsWork",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "holds",
+          "type": "z.enum([\"content\", \"context\", \"state\", \"derived\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "schema",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "validator",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "validatorNotApplicable",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "nodeSchemas",
+          "type": "z.record(z.string().min(1), NodeSchemaRefSchema).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "declarationFile",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "concernGroups",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "within",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "avatar",
+          "type": "KindAvatarSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+        "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "GRAPH_KIND_NODE_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "name": "KindAvatarSchema",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "zod-object",
+      "doc": "A kind's mark: SVG path data in a 24×24 box, a hue angle, and why. As `schemas/avatars.ts` `Avatar`.",
+      "fields": [
+        {
+          "name": "glyph",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tone",
+          "type": "z.number().int().min(0).max(359)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reads",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema",
+      "name": "NodeSchemaRefSchema",
+      "module": "cat-harness/schemas/graph-kind-node.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "name": "GraphKind",
       "module": "cat-harness/schemas/graph-kind-registry.ts",
@@ -17629,6 +17857,13 @@
           "optional": true,
           "array": false,
           "doc": "The kind this one is a SUB-GRAPH of, when it is one."
+        },
+        {
+          "name": "avatar",
+          "type": "{ glyph: string; tone: number; reads: string }",
+          "optional": true,
+          "array": false,
+          "doc": "The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather"
         }
       ],
       "extendsNames": [],
@@ -32534,6 +32769,13 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$/, \"owner/repo\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote."
         }
       ],
       "extendsNames": [],
@@ -32587,7 +32829,8 @@
       "fields": [],
       "extendsNames": [],
       "values": [
-        "family"
+        "family",
+        "owner/repo"
       ],
       "refs": [],
       "unresolved": [],
@@ -54289,6 +54532,22 @@
       "via": "concepts",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
+      "to": "cat-harness/schemas/graph-kind-node.ts#KindAvatarSchema",
+      "via": "avatar",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema",
+      "to": "cat-harness/schemas/graph-kind-node.ts#NodeSchemaRefSchema",
+      "via": "nodeSchemas",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

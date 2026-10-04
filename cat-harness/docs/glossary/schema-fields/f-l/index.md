@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1776 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1780 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 386 terms and is 217 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 390 terms and is 220 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2028</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2028</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2032</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2032</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,12 +32,19 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">386</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">390</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a></nav>
 
 <h2 id="letter-F">F</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-schema-fields--subgraph-source.familysourceschema.repository" data-fa-state="extracted" data-fa-gloss="">
+FamilySourceSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the family is: absent = this repository (materialised locally); <code>owner/repo</code> = read from that remote.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/subgraph-source.ts"><code>cat-harness/schemas/subgraph-source.ts#FamilySourceSchema.repository</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--types.feedbackitem.author" data-fa-state="extracted" data-fa-gloss="">
 FeedbackItem.author <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -742,6 +749,13 @@ GraphExportSchema.omitted <span class="fa-gloss-status">candidate, extracted</sp
 <p>Subgraphs declared but whose contents were not read — never an unexplained empty.</p>
 <p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.omitted</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.avatar" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.avatar <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather than listed here: it travels with the kind, so <code>schemas/avatars.ts</code> does not have to be a second central table. A kind listed here keeps its entry in <code>AVATARS</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.avatar</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.concerngroups" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.concernGroups <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -832,6 +846,20 @@ GraphKindDef.within <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The kind this one is a SUB-GRAPH of, when it is one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-node.graphkindnodeschema.kind" data-fa-state="extracted" data-fa-gloss="">
+GraphKindNodeSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind's word, as a directory's <code>graphKinds</code> names it. <code>kind</code>, NOT <code>name</code>: a JSON file whose <code>name</code> equals its filename stem is how <code>findDeclarationFile</code> recognises an INSTANCE declaration, so a node spelled with <code>name</code> made <code>kinds/</code> read as a directory of four instances (measured on the first move, 2026-10-04).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-node.ts"><code>cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kind</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-node.graphkindnodeschema.rationale" data-fa-state="extracted" data-fa-gloss="">
+GraphKindNodeSchema.rationale <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-node.ts"><code>cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphkinds" data-fa-state="extracted" data-fa-gloss="">
 GraphNodeDirectory.graphKinds <span class="fa-gloss-status">candidate, extracted</span>

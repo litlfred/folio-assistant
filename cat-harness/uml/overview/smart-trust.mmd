@@ -1,5 +1,10 @@
 classDiagram
   direction LR
+  namespace smart_trust__smart_trust_ast {
+    class n_smart_trust_smart_trust_ast_ig_ast["ig-ast: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace smart_trust__smart_trust_artifact_index {
     class smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context["Context"] {
       <<json: FhirArtifactIndexSchema>>
@@ -341,6 +346,8 @@ classDiagram
       total [1] number
     }
   }
+  cssClass "n_smart_trust_smart_trust_ast_ig_ast" fa_uml_kind_ig_ast
+  cssClass "n_smart_trust_smart_trust_ast_ig_ast" fa_uml_undetermined
   smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
   smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
   smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts

@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**230** units · **6119** terms · k = **100** · retains **78.2 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**230** units · **6120** terms · k = **100** · retains **78.2 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.80 | kind, instance, directory, session, harness, page, merge, graph | *(none)* |
-| 2 | 21.91 | prs, watcher, queue, sibling, commits, backlog, merge, coordination | harness, instance, declaration, node, directories, directory, iri, subgraph |
-| 3 | 18.84 | steward, session, head, conflict, merge, green, conflicted, bot | block, chapter, slot, project, formal, watcher, edges, proof |
-| 4 | 17.46 | page, tile, pdf, text, avatar, images, glass, card | subgraph, subdirectory, ledger, train, steward, sibling, sub, renderable |
-| 5 | 15.78 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, upload, member, manifest, arxiv, sniff |
-| 6 | 15.41 | steward, head, preview, merge, train, tile, staging, board | task, cli, beans, process, requirement, methodology, goal, requirements |
-| 7 | 15.08 | queue, withheld, rung, arm, backlog, library, tile, glass | lane, actor, preview, edge, forward, requirements, feature, edges |
-| 8 | 14.68 | preview, phase, url, staging, feature, feedback, pages, pdf | slot, tile, edges, forward, glass, edge, avatar, card |
+| 1 | 46.86 | instance, kind, directory, session, page, harness, graph, merge | *(none)* |
+| 2 | 21.95 | prs, watcher, queue, sibling, commits, merge, backlog, coordination | harness, instance, declaration, node, directories, subgraph, iri, directory |
+| 3 | 18.85 | steward, session, head, conflict, green, merge, conflicted, bot | block, chapter, slot, project, formal, watcher, edges, proof |
+| 4 | 17.49 | page, tile, pdf, text, avatar, glass, card, images | subgraph, subdirectory, ledger, train, steward, sibling, prs, sub |
+| 5 | 15.78 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, upload, member, manifest, arxiv, owed |
+| 6 | 15.41 | steward, head, preview, merge, tile, train, staging, board | task, cli, process, beans, requirement, methodology, requirements, goal |
+| 7 | 15.09 | queue, withheld, rung, arm, backlog, library, tile, slide | lane, actor, edge, preview, forward, requirements, edges, feature |
+| 8 | 14.68 | preview, phase, url, staging, feature, feedback, pages, pdf | slot, tile, glass, forward, edges, avatar, edge, card |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

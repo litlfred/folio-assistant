@@ -15727,6 +15727,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.kind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `kinds/` read as a directory of four instances (measured on the first move, 2026-10-04)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-node.graphkindnodeschema.rationale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindNodeSchema.rationale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.avatar",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.avatar"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather than listed here: it travels with the kind, so `schemas/avatars.ts` does not have to be a second central table. A kind listed here keeps its entry in `AVATARS`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.avatar",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.concerngroups",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24977,6 +25034,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/subgraph-source.familysourceschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FamilySourceSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema.repository",
       "skos:note": "candidate"
     },
     {

@@ -5796,6 +5796,27 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-node.graphkindnodeschema.kind",
+      "prefLabel": "GraphKindNodeSchema.kind",
+      "definition": "The kind's word, as a directory's `graphKinds` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `kinds/` read as a directory of four instances (measured on the first move, 2026-10-04).",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-node.graphkindnodeschema.rationale",
+      "prefLabel": "GraphKindNodeSchema.rationale",
+      "definition": "WHY the kind sits in its layer and renders as it does: what a code comment said on a listed kind. Not read by any reader.",
+      "source": "cat-harness/schemas/graph-kind-node.ts#GraphKindNodeSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.avatar",
+      "prefLabel": "GraphKindDef.avatar",
+      "definition": "The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather than listed here: it travels with the kind, so `schemas/avatars.ts` does not have to be a second central table. A kind listed here keeps its entry in `AVATARS`.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.avatar",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.concerngroups",
       "prefLabel": "GraphKindDef.concernGroups",
       "definition": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?",
@@ -9202,6 +9223,13 @@
       "prefLabel": "StickyTextSchema.scale",
       "definition": "Multiply the words' size. `1` is normal; `0.8` fits more in.",
       "source": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale",
+      "status": "candidate"
+    },
+    {
+      "id": "subgraph-source.familysourceschema.repository",
+      "prefLabel": "FamilySourceSchema.repository",
+      "definition": "Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote.",
+      "source": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema.repository",
       "status": "candidate"
     },
     {

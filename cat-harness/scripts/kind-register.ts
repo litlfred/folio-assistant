@@ -4,7 +4,7 @@
  * `skill:register` of kinds.
  *
  * @module scripts/kind-register
- * @covers cat-harness
+ * @covers cat-harness, kinds — it loads every declared kind node (which parses each against folio-graph-kind/v1) and checks each owes nothing
  *
  * ## The measurement that made this a command rather than a list
  *
