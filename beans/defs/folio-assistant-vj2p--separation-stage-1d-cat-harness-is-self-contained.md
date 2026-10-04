@@ -3,8 +3,11 @@
 title: 'Separation stage 1d: cat-harness is self-contained — each instance hosts its own outputs; prose cites code by repository'
 status: todo
 type: task
+priority: normal
+tags:
+    - mvp
 created_at: 2026-10-01T06:58:02Z
-updated_at: 2026-10-01T06:58:02Z
+updated_at: 2026-10-04T09:56:45Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-y9r6

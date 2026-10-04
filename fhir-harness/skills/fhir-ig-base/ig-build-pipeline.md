@@ -126,7 +126,10 @@ Postprocessing"* and nothing in either is DAK-shaped: any IG depending on
 phase's *"Delete files >100MB before deployment"* is the same concern one layer
 down.
 
-They belong here. Recorded because this is the layering rule
+They belong here, and since 2026-10-04 they are here: byte-identical copies in
+[`scripts/library-strip/`](../../scripts/library-strip/README.md), with their
+upstream commit, licence and hashes recorded, and a test that runs them on a
+non-WHO IG's output. Recorded because this is the layering rule
 ([`smart-stack-layering`](../../../smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md))
 producing a result its own step names contradicted — which is the only kind of
 evidence that a split is doing work.
