@@ -71,6 +71,33 @@ function send(res, status, body, headers) {
   res.end(body);
 }
 
+/**
+ * THE ONE DEPLOY-TIME MOUNT A COMMITTED PAGE REACHES INTO (bean `2vpn`).
+ *
+ * This serves the repository as it is committed, and `mount-instance-docs`
+ * runs only in the site build: it publishes an instance's `docs/` site
+ * directory at the `docs` kind's route, `<site>/docs/<instance>/`. A committed
+ * page that links an asset there — who-iris's WHO emblem in every navbar
+ * header and harness row, since its mark is resolved through that route —
+ * therefore 404s here while the deployed page serves it. So a request under
+ * the platform site's `docs/<instance>/` that names no committed file falls
+ * back to `<instance>/docs/`, which is what the build mounts there. A
+ * committed file always wins, the fallback is checked to stay under ROOT, and
+ * only that one route is emulated: anything else still 404s, as it should.
+ */
+const SITE_ROOT = "/cat-harness/docs";
+function mountedPath(pathname) {
+  const m = new RegExp(`^${SITE_ROOT}/docs/([a-z0-9][a-z0-9-]*)/(.*)$`).exec(pathname);
+  if (!m) return undefined;
+  const candidate = path.resolve(ROOT, m[1], "docs", m[2]);
+  if (!candidate.startsWith(path.join(ROOT, m[1], "docs") + path.sep)) return undefined;
+  try {
+    return fs.statSync(candidate).isFile() ? candidate : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 const server = http.createServer((req, res) => {
   let pathname;
   try {
@@ -91,7 +118,12 @@ const server = http.createServer((req, res) => {
   try {
     stat = fs.statSync(filePath);
   } catch {
-    return send(res, 404, `Not found: ${pathname}`, { "Content-Type": "text/plain" });
+    const mounted = mountedPath(pathname);
+    if (mounted === undefined) {
+      return send(res, 404, `Not found: ${pathname}`, { "Content-Type": "text/plain" });
+    }
+    filePath = mounted;
+    stat = fs.statSync(filePath);
   }
 
   if (stat.isDirectory()) {
