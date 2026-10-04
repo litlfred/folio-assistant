@@ -121,6 +121,7 @@ export function registerBeansTools(server: McpServer, repoRoot: string): void {
         // The DECLARED bean-defs node (bean `gz47`). This read `beans/*.md`,
         // where the only Markdown is the directory README, so with no CLI the
         // fallback primed one "bean": the README.
+        // declared-path-literal: the convention fallback for an instance that declares no bean-defs directory (AGENTS.md: an unmigrated instance falls back to today's conventions)
         text = primeFromDir(beanDefsDir(repoRoot) ?? join(repoRoot, "beans", "defs"));
       }
       return {

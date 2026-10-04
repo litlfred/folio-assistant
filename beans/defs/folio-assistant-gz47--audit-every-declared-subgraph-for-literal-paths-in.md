@@ -1,7 +1,7 @@
 ---
 # folio-assistant-gz47
 title: 'Audit every declared subgraph for literal paths in tests and consumers: check:declared-paths sees only cat-harness''s own declarations and code'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-03T08:51:59Z
 updated_at: 2026-10-03T08:51:59Z
@@ -18,10 +18,17 @@ Owner, 2026-10-03: "audit other declared sub-graphs. may have same issue with te
 Every baseline key is cat-harness-relative (`scripts/…`, `schemas/…`), which is consistent with (1) and (2).
 
 ## Done when
-- [ ] measured: for every declared directory in every instance (not only cat-harness's), the literal-path references to it in every instance's code and tests, split into fixture / test-vector / layout assertion / real corpus reference (the four populations the gate's header already names)
-- [ ] the gate widened to the checkout (every instance's declarations, every instance's source trees), with a ratchet baseline for what exists, so no new literal can land
+- [x] measured: for every declared directory in every instance (not only cat-harness's), the literal-path references to it in every instance's code and tests, split into fixture / test-vector / layout assertion / real corpus reference (the four populations the gate's header already names)
+- [x] the gate widened to the checkout (every instance's declarations, every instance's source trees), with a ratchet baseline for what exists, so no new literal can land
 - [ ] the existing-file exemption revisited against the content-source ruling: a file under a subgraph whose source could move is not stable just because it exists today
-- [ ] real corpus references fixed the way #1948 fixed fsh-guts (through the declaration's resolver), in batches, each with a mutation check
-- [ ] the skill that governs the gate updated (the gate's header names the rule; find its skill with skill_list)
+- [x] real corpus references fixed the way #1948 fixed fsh-guts (through the declaration's resolver), in batches, each with a mutation check
+- [x] the skill that governs the gate updated (the gate's header names the rule; find its skill with skill_list)
 
 Related: 9c7h (the trigger), the 2026-10-03 content-source ruling (subgraph source = directory | branch | graph-db), ho66 (standalone rehearsal: many of its 469 failures are the same "assumes this repository's layout" shape).
+
+## Status 2026-10-03 (Parcel B session)
+- **measured**: five batches (fsh-guts, todos, beans, uploads, docs), recorded in the notes under `beans/notes/folio-assistant-gz47--*`.
+- **gate widened**: `check:foreign-paths` (#2017, merged) scans every instance's non-test source for literals into ANOTHER instance's declared directories, with a one-way ratchet. On main after #2003 the baseline is **empty**: 0 counted, 19 marked with reasons. The last site, the convention fallback in `beans-prime.ts`, is marked in this PR.
+- **real references fixed**: #2003 (merged), batches 1–4, each falsified by simulating the move.
+- **skill**: `kg-core/directory-conventions.md` §"A consumer never spells a declared directory's path".
+- **still open**: the existing-file exemption in `check:declared-paths`, revisited against the content-source ruling. A file under a subgraph whose source could move is not stable just because it exists today. That is a policy call on the older gate, left for whoever owns it.
