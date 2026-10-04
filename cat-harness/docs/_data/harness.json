@@ -3421,6 +3421,15 @@
         ]
       },
       {
+        "key": "seedsWith",
+        "skills": [
+          {
+            "name": "kg-separation",
+            "path": "/reference/skill-instructions/kg-separation.html"
+          }
+        ]
+      },
+      {
         "key": "stub",
         "skills": [
           {
@@ -4145,6 +4154,10 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "seedsWith",
+            "summary": "cat-harness"
+          },
+          {
             "key": "canonicalUrl",
             "summary": "https://litlfred.github.io/folio-assistant/cat-harness-tools"
           },
@@ -4378,7 +4391,6 @@
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "cat-harness-tools: declares `seedsWith`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "bootstrap-tools: declares `supports`, which the declaration schema does not have and silently drops."
     ]
