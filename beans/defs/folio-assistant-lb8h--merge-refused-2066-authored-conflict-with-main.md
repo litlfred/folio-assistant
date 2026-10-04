@@ -1,10 +1,11 @@
 ---
 # folio-assistant-lb8h
 title: 'Merge refused: #2066 authored conflict with main'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-04T14:30:42Z
+updated_at: 2026-10-04T19:44:20Z
 parent: folio-assistant-3fva
 blocking:
     - folio-assistant-5hox
@@ -32,3 +33,8 @@ A comment on PR #2066, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 2066` passes all 7 checks, and it lands (or the owner closes it)
+
+
+
+## Closed 2026-10-04 on evidence
+#2066 landed as d01eaf16b2 (merge:guard 7/7 at bb29a1f2b8, run by session 01VfkKoc). The refusal no longer holds.

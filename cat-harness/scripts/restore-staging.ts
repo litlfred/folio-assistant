@@ -106,6 +106,18 @@ export const STAGING_PREFIX = "STAGING";
 export const RETIRED_DIR = "_retired";
 
 /**
+ * What a slug may contain.
+ *
+ * Exactly the characters `feature-staging.yml`'s own `Determine staging slug`
+ * step can produce — `sed 's|[^a-zA-Z0-9._-]|-|g'`. A dispatch input is
+ * arbitrary text from a person, and this value reaches `rm -rf` in the
+ * workflow, so the shape is checked rather than assumed. `.` and `..` are
+ * refused by name: both are spelled entirely out of permitted characters and
+ * neither names a preview.
+ */
+export const SLUG_PATTERN = /^[A-Za-z0-9._-]+$/;
+
+/**
  * What else on the publish branch must survive a full replace.
  *
  * The previews above are carried because a reviewer's link would otherwise
