@@ -73,6 +73,7 @@ import { isSkillMd, skillMdDirs } from "../../cat-harness/scripts/known-skills.t
 import { ancestorsOf, flattenDependencies } from "../../cat-harness/schemas/dependency-order.js";
 import { allowedFromNeeds } from "../../cat-harness/schemas/layer-direction.js";
 import { BASELINE, type BindingBaselineEntry } from "../../cat-harness/scripts/process-bindings.baseline.ts";
+import { HARNESS_ROOT } from "./lib/roots.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -220,7 +221,7 @@ if (import.meta.main) {
     console.log(`  COULD NOT DETERMINE ${count("undetermined")}: ${from.join(", ")} declare(s) no needs`);
   }
   if (process.argv.includes("--shrink")) {
-    const path = join(import.meta.dir, "process-bindings.baseline.ts");
+    const path = join(HARNESS_ROOT, "scripts", "process-bindings.baseline.ts"); // stayed in cat-harness (70lx B2)
     const src = readFileSync(path, "utf-8");
     const kept = BASELINE.filter((b) => !stale.includes(b));
     writeFileSync(path, `${src.slice(0, src.indexOf("export const BASELINE"))}export const BASELINE: readonly BindingBaselineEntry[] = ${JSON.stringify(kept, null, 2)};\n`);

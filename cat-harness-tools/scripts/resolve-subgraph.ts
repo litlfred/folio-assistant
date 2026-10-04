@@ -19,10 +19,10 @@
  *
  * @module scripts/resolve-subgraph
  */
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 import { checkoutDirectories, declaredSubgraph, type DeclaredSubgraph } from "../../cat-harness/schemas/harness-config.ts";
+import { HARNESS_ROOT } from "./lib/roots.ts";
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(name);
@@ -39,7 +39,7 @@ function line(d: DeclaredSubgraph): string {
 }
 
 if (import.meta.main) {
-  const from = resolve(arg("--from") ?? resolve(dirname(fileURLToPath(import.meta.url)), ".."));
+  const from = resolve(arg("--from") ?? HARNESS_ROOT);
   const json = process.argv.includes("--json");
   const ids = process.argv.includes("--all")
     ? [...new Set(checkoutDirectories(from).filter((d) => d.own && d.within === undefined).map((d) => d.id))]

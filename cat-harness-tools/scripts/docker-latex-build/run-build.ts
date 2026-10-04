@@ -5,9 +5,10 @@
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { HARNESS_ROOT } from "../lib/roots.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const contentDir = resolve(__dirname, "../../content");
+const contentDir = resolve(HARNESS_ROOT, "content"); // the harness's content/ (70lx B2)
 const pipelineDir = join(contentDir, "pipeline");
 
 // Dynamic import of the build modules (use file:// URLs for Node ESM compat)

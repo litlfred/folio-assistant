@@ -57,6 +57,7 @@ import { join } from "node:path";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
 import { plan } from "../../cat-harness/scripts/merge-base.ts";
 import { git, parseMemberSpec, resolveMember, type GitResult } from "../../cat-harness/scripts/merge-pipeline-git.ts";
+import { HARNESS_ROOT } from "./lib/roots.ts";
 
 export type MemberStatus = "merged" | "already-contained" | "refused" | "would-merge" | "would-refuse";
 
@@ -285,7 +286,7 @@ if (import.meta.main) {
   const root = opt("--root") ?? repoRootFor(join(import.meta.dir, ".."));
   const outFile = opt("--out");
   const baseArg = opt("--base");
-  const mergeBase = join(import.meta.dir, "merge-base.ts");
+  const mergeBase = join(HARNESS_ROOT, "scripts", "merge-base.ts"); // stayed in cat-harness (70lx B2)
 
   const report: TrainReport = {
     $schema: "merge-train-report/v1", dry_run: dryRun, root, base: baseArg ?? "", branch: null, members: [], checks: [],

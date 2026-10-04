@@ -75,7 +75,7 @@
  *   bun run check:library-qa:check    # fail if stale or undeterminable; writes nothing
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, dirname, extname, join, resolve } from "node:path";
+import { basename, dirname, extname, join } from "node:path";
 
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { readStructure, STRUCTURE_FILENAME } from "../../cat-harness/schemas/document-structure.ts";
@@ -93,8 +93,10 @@ import {
 } from "../../cat-harness/content/pipeline/library-title.ts";
 import { tally } from "../../cat-harness/scripts/summaries.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, writeQaResult, type QaResult } from "../../cat-harness/scripts/qa-results.js";
+import { HARNESS_ROOT } from "./lib/roots.ts";
 
-const ROOT = resolve(import.meta.dir, "..");
+// The HARNESS (70lx B2): this script moved up, and what it reads stayed in cat-harness.
+const ROOT = HARNESS_ROOT;
 const SCRIPT = "scripts/check-library-qa.ts";
 /** The sidecar stem. Not `library-qa/`: that directory is `check:l1-complete`'s, per entry. */
 export const STEM = "library-entry-qa";

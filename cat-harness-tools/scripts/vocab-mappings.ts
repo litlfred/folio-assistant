@@ -34,8 +34,10 @@ import { relative, resolve } from "node:path";
 import { NS_PREFIXES } from "../../cat-harness/schemas/namespaces.js";
 import { STANDARD_PREFIXES, expandCurie, toConceptMap } from "../../cat-harness/schemas/vocab-mapping-fhir.js";
 import { loadVocabMappings, vocabMappingDirs, type VocabMapping } from "../../cat-harness/schemas/vocab-mapping.js";
+import { HARNESS_ROOT } from "./lib/roots.ts";
 
-const ROOT = resolve(import.meta.dir, "..");
+// The HARNESS (70lx B2): this script moved up, and what it reads stayed in cat-harness.
+const ROOT = HARNESS_ROOT;
 
 /** The findings for one table: empty when it is sound. */
 export function tableFindings(m: VocabMapping, prefixes: Readonly<Record<string, string>>): string[] {
