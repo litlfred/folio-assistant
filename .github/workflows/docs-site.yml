@@ -186,6 +186,24 @@ jobs:
       - name: Regenerate the QA state page from this build's results
         run: bun run state:visualizer
 
+      # The LSI viewer page (docs/lsi/index.md), on the same reasoning one step
+      # up and for the same reason bean `tqjj` stops committing it. It is an
+      # aggregate over every index, so a one-sentence edit to one of 229 skills
+      # restaged it: 319 of the last 400 commits on `main` touched it.
+      #
+      # Off `main` it cannot be kept current by a gate either. With no sidecar
+      # in the checkout `lsi:viz` reads `qa-reports` at `main`, which resolves
+      # to the LATEST published entry — a value that depends on when the run
+      # happened rather than on the tree, which is bean `in5a`'s loop. HERE it
+      # is drawn from the entry the fetch step above pinned to THIS build's
+      # sha, so the published page is about the commit it ships with.
+      #
+      # It is this workflow's own step and nothing else's: `lsi:viz` run from a
+      # gate job, which does not fetch, would read whichever entry was latest
+      # at that moment.
+      - name: Regenerate the LSI viewer page from this build's indexes
+        run: bun run lsi:viz
+
       # The schema graph's projection and its viewer. Same reasoning as the
       # regenerations above: the committed copy is browsable on GitHub and the
       # PUBLISHED one must never be the stale half of that pair. `schemas/` is
