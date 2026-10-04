@@ -117,6 +117,11 @@ checkout-scoped, so "resolves" means "exists somewhere". On 2026-10-03 that
 hid 33 wrong-direction bindings in 9 diagrams behind a green audit. They are
 in a ratchet baseline, cleared under bean `mlux`.
 
+**The two say so about each other** (owner, 2026-10-04, option 1 of 3):
+`skill-ref-resolves` is existence only, and its own summary names this gate
+as the answer on direction. That leaves one implementation of "may this process
+bind this skill", not two free to disagree.
+
 When it fires there are two fixes, and choosing between them is a placement
 decision, not a mechanical one:
 
