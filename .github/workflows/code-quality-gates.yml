@@ -2132,7 +2132,7 @@ jobs:
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
-          bun run check:l1-complete -- --check
+          bun run check:l1-complete:check
           # Issue #1794, bean `8iqc`: l1-complete asks whether ingestion
           # PRODUCED each artefact; this asks whether it is any good -- a
           # title that is the slug, or "Abies" off a scanned cover, passes

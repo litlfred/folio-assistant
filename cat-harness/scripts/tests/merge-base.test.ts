@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { lostOnBothSides, plan, resolutionFailure, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { lostOnBothSides, plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
 import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
@@ -483,6 +483,75 @@ describe("a merge never drops a file both sides hold — bean vsv7, done-when 2"
   test("nothing lost is an empty list, and the order is stable", () => {
     expect(lostOnBothSides(["z", "a"], ["a", "z"], ["a", "z"])).toEqual([]);
     expect(lostOnBothSides(["z", "a", "m"], ["m", "a", "z"], [])).toEqual(["a", "m", "z"]);
+  });
+});
+
+// Bean `wczm` item 2. Train 1 (#1869): a branch's submodule pin that
+// fast-forwarded main's was silently reverted by taking main's side. A gitlink
+// is resolved by ANCESTRY: the descendant wins, diverged pins and pins the
+// submodule does not have are refused.
+describe("a conflicted submodule gitlink is resolved by ancestry — bean wczm", () => {
+  const env = { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@invalid", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@invalid", GIT_ALLOW_PROTOCOL: "file" };
+  const g = (cwd: string, ...a: string[]) => execFileSync("git", ["-c", "protocol.file.allow=always", ...a], { cwd, env, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+
+  /** A super-repo whose `sub` pin is set to `oursPin` on a branch and `theirsPin` on main, then merged: a gitlink conflict. */
+  function conflict(build: (commit: (msg: string) => string, reset: (to: string) => void) => { base: string; ours: string; theirs: string }) {
+    const top = mkdtempSync(join(tmpdir(), "gitlink-"));
+    const subSrc = join(top, "sub-src");
+    mkdirSync(subSrc);
+    g(subSrc, "init", "-q", "-b", "main");
+    const commit = (msg: string) => { g(subSrc, "commit", "-q", "--allow-empty", "-m", msg); return g(subSrc, "rev-parse", "HEAD"); };
+    const reset = (to: string) => { g(subSrc, "checkout", "-q", "-B", `b-${to.slice(0, 7)}`, to); };
+    const pins = build(commit, reset);
+    const sup = join(top, "super");
+    mkdirSync(sup);
+    g(sup, "init", "-q", "-b", "main");
+    // SHALLOW, as this repository's submodules and CI's are: with the full
+    // history git resolves a fast-forward pin itself and nothing conflicts.
+    g(sup, "submodule", "add", "-q", "--depth", "1", `file://${subSrc}`, "sub");
+    const pin = (oid: string) => { g(join(sup, "sub"), "fetch", "-q", "--depth", "1", "origin", oid); g(join(sup, "sub"), "checkout", "-q", oid); g(sup, "add", "sub"); g(sup, "commit", "-q", "-m", `pin ${oid.slice(0, 7)}`); };
+    pin(pins.base);
+    g(sup, "checkout", "-q", "-b", "branch");
+    pin(pins.ours);
+    g(sup, "checkout", "-q", "main");
+    pin(pins.theirs);
+    g(sup, "checkout", "-q", "branch");
+    try { g(sup, "merge", "--no-ff", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+    if (g(sup, "diff", "--name-only", "--diff-filter=U") !== "sub") throw new Error("fixture: expected a gitlink conflict on sub");
+    return { top, sup, ...pins };
+  }
+
+  test("the branch's pin fast-forwards main's: keep the branch's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, theirs: b, ours: d }; });
+    try {
+      const r = resolveGitlink(c.sup, "sub");
+      expect(r).toEqual({ take: "ours", pin: c.ours, why: "the branch's pin fast-forwards the base's" });
+      stageGitlink(c.sup, "sub", c.ours);
+      expect(g(c.sup, "diff", "--name-only", "--diff-filter=U")).toBe("");
+      expect(g(c.sup, "ls-files", "-s", "sub").split(/\s+/)[1]).toBe(c.ours);
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("main's pin fast-forwards the branch's: take main's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, ours: b, theirs: d }; });
+    try {
+      expect(resolveGitlink(c.sup, "sub")).toEqual({ take: "theirs", pin: c.theirs, why: "the base's pin fast-forwards the branch's" });
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("diverged pins are refused — either side drops the other's commits", () => {
+    const c = conflict((commit, reset) => { const a = commit("a"); const b = commit("b"); reset(a); const d = commit("c"); return { base: a, ours: b, theirs: d }; });
+    try {
+      const r = resolveGitlink(c.sup, "sub");
+      expect(r && "refuse" in r && r.refuse).toContain("diverged");
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("a path that is not a gitlink is not this resolver's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, theirs: b, ours: d }; });
+    try {
+      expect(resolveGitlink(c.sup, ".gitmodules")).toBeUndefined();
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
   });
 });
 
