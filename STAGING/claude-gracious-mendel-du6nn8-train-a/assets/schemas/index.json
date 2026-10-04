@@ -6837,6 +6837,13 @@
           "doc": "Which half of a kg-separation pair the planned {@link repository} is —"
         },
         {
+          "name": "seedsWith",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Instances this one is seeded together with — see `seedsWith` on"
+        },
+        {
           "name": "stub",
           "type": "string",
           "optional": true,
@@ -7060,6 +7067,13 @@
           "optional": true,
           "array": false,
           "doc": "Which half of a kg-separation pair this instance's planned `repository`"
+        },
+        {
+          "name": "seedsWith",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Instances this one is SEEDED TOGETHER with: the same seeding step creates"
         },
         {
           "name": "stub",

@@ -316,10 +316,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T17:08:11.993Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bfa33bb768a490b959b6772d080da9d618275a97",
-  "sourceCommitSha": "bfa33bb768a490b959b6772d080da9d618275a97",
-  "sourceCommitAt": "2026-10-04T17:03:04Z",
+  "generatedAt": "2026-10-04T17:29:31.978Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d6e5153b17a00bc823c075f93770cd2ae8a1d076",
+  "sourceCommitSha": "d6e5153b17a00bc823c075f93770cd2ae8a1d076",
+  "sourceCommitAt": "2026-10-04T17:24:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1405,7 +1405,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/kg-separation.md",
-      "instructionLines": 278,
+      "instructionLines": 287,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -48489,7 +48489,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/src/index.ts --check-deps",
+        "shell": "bun run check-deps",
         "mcp": {
           "tool": "check_dependencies"
         },
@@ -53568,7 +53568,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 265,
+      "fileCount": 269,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/cat-harness.jsonld#directory/uml",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
@@ -53805,7 +53805,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1942,
+      "fileCount": 1948,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -53841,7 +53841,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1150,
+      "fileCount": 1140,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
@@ -53857,9 +53857,9 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
-      "description": "The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
+      "description": "The harness runtime that is not the server: the content vocabulary (`content-types.ts`), blocks, the workflow engine, CRDM, logging, the git/cache/feedback/safe-path helpers under `core/`, and the built-in adapter table. The MCP and HTTP server itself moved to `cat-harness-tools/src/` (bean `70lx`, B1). `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
       "readmePath": "src/README.md",
-      "fileCount": 83,
+      "fileCount": 46,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/cat-harness.jsonld#directory/cat-harness-src",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
     },
@@ -53969,8 +53969,8 @@
   ],
   "staging": {
     "branch": "claude/gracious-mendel-du6nn8-train-a",
-    "sha": "8b4f966ee6d614d95a0d9319c010ee1b57819757",
+    "sha": "5707988441ede586cdb7aa7638ac288ace2e5ecd",
     "pr": "2113/merge",
-    "run": "37219050433"
+    "run": "37220417798"
   }
 }

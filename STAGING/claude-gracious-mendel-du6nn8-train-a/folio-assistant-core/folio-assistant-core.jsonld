@@ -322,10 +322,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T17:08:27.371Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bfa33bb768a490b959b6772d080da9d618275a97",
-  "sourceCommitSha": "bfa33bb768a490b959b6772d080da9d618275a97",
-  "sourceCommitAt": "2026-10-04T17:03:04Z",
+  "generatedAt": "2026-10-04T17:29:45.159Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d6e5153b17a00bc823c075f93770cd2ae8a1d076",
+  "sourceCommitSha": "d6e5153b17a00bc823c075f93770cd2ae8a1d076",
+  "sourceCommitAt": "2026-10-04T17:24:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -336,7 +336,7 @@
     "Lane": 45,
     "ProcessNode": 181,
     "GraphKind": 12,
-    "Subgraph": 11,
+    "Subgraph": 12,
     "Asset": 2
   },
   "@graph": [
@@ -7150,6 +7150,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-adapters"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "core-src",
+      "path": "src/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+      ],
+      "description": "Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). Moved up from `cat-harness/src/routes/` when the server moved to `cat-harness-tools` (bean `70lx`, B1; owner, 2026-10-04: a content package's server half lives with its content). The server declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.",
+      "readmePath": "src/README.md",
+      "fileCount": 4,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gracious-mendel-du6nn8-train-a/folio-assistant-core/folio-assistant-core.jsonld#directory/core-scripts",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "core-scripts",
@@ -7283,8 +7301,8 @@
   ],
   "staging": {
     "branch": "claude/gracious-mendel-du6nn8-train-a",
-    "sha": "8b4f966ee6d614d95a0d9319c010ee1b57819757",
+    "sha": "5707988441ede586cdb7aa7638ac288ace2e5ecd",
     "pr": "2113/merge",
-    "run": "37219050433"
+    "run": "37220417798"
   }
 }
