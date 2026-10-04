@@ -90,13 +90,16 @@ exclude:
   - folio-assistant-migration.md
   - qou-migration-checklist.md
   - sage-mcp.md
-  # The README `readme:subgraphs` writes into the SVG-only asset directory once
-  # it resolves as a declared directory (#2094). It is a page for someone
-  # browsing the repository, not a site page: under the github-pages gem set,
-  # `jekyll-readme-index` publishes it as `index.html` through a path with no
-  # GFM tables, and `check:escaped-markup` fails on the pipes. The SVGs
-  # themselves are still served.
+  # Directory READMEs that `readme:subgraphs` writes into a declared directory
+  # with NO index page of its own (#2094). They are for someone browsing the
+  # repository, not site pages: under the github-pages gem set,
+  # `jekyll-readme-index` publishes such a README as the directory's
+  # `index.html` through a path with no GFM tables, and `check:escaped-markup`
+  # fails on the pipes. A directory that has an `index.md` is unaffected. Find
+  # new cases with: every tracked README.md under docs/ whose directory holds
+  # no index.md or index.html.
   - assets/img/uml/overview/README.md
+  - cat-harness/auto-docs/lsi/README.md
 
 plugins:
   - jekyll-remote-theme

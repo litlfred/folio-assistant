@@ -37,6 +37,7 @@ describe("umlOrphans (ghgn)", () => {
     // Both overview roots are declared directories, so `readme:subgraphs`
     // writes a README into each. Treating it as an orphan made the two writers
     // alternate forever: this one deleted it, that one wrote it back.
+    // declared-path-literal: fixture paths passed to the pure `umlOrphans`; nothing is read from disk.
     const existing = [...written.keys(), ...svgs, "docs/uml/overview/README.md", "img/uml/overview/README.md"];
     expect(umlOrphans(existing, written, svgs)).toEqual([]);
   });
