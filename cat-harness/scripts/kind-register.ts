@@ -83,13 +83,20 @@ export interface Step {
 }
 
 /**
- * The five GENERATED obligations, in order.
+ * The six GENERATED obligations, in order.
  *
  * Hand-declared, because no file states which artefacts a kind feeds — but each
  * was measured stale-then-current on #2022 by adding one kind, and {@link main}
  * re-proves every one at runtime rather than asserting it here.
  */
 export const STEPS: readonly Step[] = [
+  {
+    write: ["kind:table"],
+    verify: ["kind:table:check"],
+    because:
+      "the graph-kind TABLE in skills/kg/kg-core/directory-conventions.md, generated from each kind's " +
+      "`description` since the owner moved the prose onto the kinds (bean dmx1). Edit the kind, not the row",
+  },
   {
     write: ["avatars:css"],
     verify: ["avatars:css:check"],
@@ -144,7 +151,7 @@ export function authoredGaps(root?: string): AuthoredGap[] {
         kind,
         owes: "avatar",
         detail:
-          `no entry in \`schemas/avatars.ts\`. It needs a glyph (24x24 path data), a \`tone\` ` +
+          `no avatar: an \`avatar\` on its \`kinds/\` node for a declared kind, else an entry in \`schemas/avatars.ts\`. It needs a glyph (24x24 path data), a \`tone\` ` +
           `(hue, 0-359) and a \`reads\` sentence saying why that mark. Check the clearance report ` +
           `below before choosing the tone.`,
       });
@@ -153,7 +160,7 @@ export function authoredGaps(root?: string): AuthoredGap[] {
       out.push({
         kind,
         owes: "kind-table-row",
-        detail: `no row in \`${KIND_TABLE_DOC}\`. Columns: kind, declared by, contents, renderable.`,
+        detail: `no row in \`${KIND_TABLE_DOC}\`: the table is GENERATED from each kind's \`description\` (bean dmx1), so run \`bun run kind:table\`, and give the kind a \`description\` if it has none.`,
       });
     }
   }

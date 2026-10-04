@@ -13,5 +13,6 @@
     "tone": 200,
     "reads": "a page with a tick — somebody read this version and judged it"
   },
-  "rationale": "Written by a running review: the coordinator's step commits each verdict as it is ingested. A record OF a review, like `todo-feedback`, and not a todo: it asks for nothing."
+  "rationale": "Written by a running review: the coordinator's step commits each verdict as it is ingested. A record OF a review, like `todo-feedback`, and not a todo: it asks for nothing.",
+  "description": "reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's hash, committed on the feature branch. Not a todo: it asks for nothing. Read by the coverage gate (`folio-review-coverage`, bean `px0t`)."
 }

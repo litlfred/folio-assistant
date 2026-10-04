@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:04:22Z
-updated_at: 2026-10-04T17:21:55Z
+updated_at: 2026-10-04T17:49:34Z
 parent: folio-assistant-fs43
 ---
 
@@ -23,7 +23,7 @@ A harness or instance declares the graph kinds it owns. The registry a reader se
 - [x] the owner picks where a kind is declared (asked 2026-10-04)
 - [x] the registry is computed from declarations across `needs`, and a kind claimed twice is refused
 - [x] fhir-harness owns its kinds (fhir-artifact-index, ig-metadata-index, ig-pages, ig-ast), and cat-openapi owns `openapi`
-- [ ] the generated artefacts (kind table, avatars, UML, glossary) follow the declarations
+- [x] the generated artefacts (kind table, avatars, UML, glossary) follow the declarations
 - [ ] `graph-kind-registry.ts` holds only cat-harness's own kinds
 
 ## Not this bean
@@ -55,3 +55,15 @@ Their code comments are kept verbatim as `rationale`.
 - `folio`: core registers it in code at load; next to convert.
 - 48 kinds that are cat-harness's own: they stay.
 - The kind TABLE in directory-conventions.md is still one hand-kept list that kind:register checks. Generating it from the nodes is the remaining Done-when.
+
+## 2026-10-04: the kind table is generated (owner: prose onto the nodes)
+
+**Owner, option 1 of 3:** each row's prose moves onto its kind, and the table is generated from it. Rejected: generating from `summary` alone (it would lose the prose), and a hand-kept table per harness.
+
+**What changed.**
+- New kind fields `description` (what a directory holds), `renderableNote` and `anyLayer` carry what the row said. A declared kind holds them on its node; a listed kind on its entry; `folio` and `glossary` in their own modules.
+- `kind:table` writes the table between markers, grouped by owner: bootstrap, harness, core, then each declaring harness. `kind:table:check` is the sixth step of `kind:register`, so the existing gate covers it.
+
+**Measured against the hand-kept table.** All 62 rows' contents and renderable cells are identical. 12 'declared by' cells changed, and each is the REGISTRY's answer replacing a stale hand-written one: skills, processes, scenarios and schemas are bootstrap's; todos, todo-items, library, voices, voice-vendors and todo-feedback are `layer: core`.
+
+Also: of the six per-kind side tables, only KIND_TILE_ICONS keyed a moved kind (`uploads`); it is `tileIcon` on the node now (sod4 #5).
