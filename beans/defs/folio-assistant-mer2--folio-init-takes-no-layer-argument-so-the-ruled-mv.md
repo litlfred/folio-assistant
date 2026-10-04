@@ -4,8 +4,10 @@ title: folio_init takes no layer argument, so the ruled MVP definition is not ex
 status: in-progress
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-30T21:47:07Z
-updated_at: 2026-10-04T09:52:31Z
+updated_at: 2026-10-04T09:56:44Z
 parent: folio-assistant-vke6
 blocking:
     - folio-assistant-zmdo
@@ -151,13 +153,24 @@ primitive serves both, which was the reason to look for one.
 
 ## Done when — restated on the ruling
 
-1. [ ] An instance-init that writes the instance-level artefacts and takes no
+1. [x] An instance-init that writes the instance-level artefacts and takes no
        content type.
-2. [ ] `folio_init` becomes instance-init + the adapter's folio scaffold, with
+2. [x] `folio_init` becomes instance-init + the adapter's folio scaffold, with
        its current behaviour unchanged for a folio.
-3. [ ] The probe asserts what it produced — a declaration that loads and graphs
+3. [x] The probe asserts what it produced — a declaration that loads and graphs
        that resolve — rather than inferring success from exit 0.
 4. [ ] `x3bd`'s bootstrap-only test and `zmdo`'s per-layer MVP both run through
        it.
 
 _2026-10-04T09:52:31Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Progress 2026-10-04 — done-when 1–3 on `claude/dazzling-sagan-xifirf`
+
+- **1.** `initInstance` in `cat-harness/scripts/init-folio.ts`, and `init-folio --instance` on the CLI: declaration with `directories: []`, config with no `contentType`/`adapter`/`adapterModule`, work plan, todos graph, agent guidance, MCP wiring. Nothing an adapter owns — no `folio/`, `uploads/`, `library/` or workflows. `--instance --type` is **refused**, not ignored.
+- **2.** `initFolio` = the shared `writeInstanceFiles` + the folio half + the shared `finishScaffold`. The 30 pre-existing tests pass unchanged; a new test asserts the content-type-free files are byte-identical between the two.
+- **3.** The probe reads the declaration back through `readDeclaration` and checks every declared directory exists — for an instance, a document folio and a paper folio — and asserts a folio's config carries the content type it asked for, so the resolver's silent fallback cannot read as a pass.
+- **4. open.** `x3bd`'s bootstrap-only test and `zmdo`'s per-layer MVP do not run through it yet. Not wired as an MCP tool yet either: registering a Tool node is its own change.
+
+Measured: `bun test cat-harness/scripts/tests/init-folio.test.ts` — **40 pass, 0 fail**.
+
+**Found, not fixed:** an instance cannot be upgraded to a folio in place. `init-folio` skips existing files, so the declaration and config would keep saying "no content". The instance's AGENTS.md says so rather than promising it.

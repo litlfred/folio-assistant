@@ -134,6 +134,17 @@ export function rules(root: string): Rule[] {
  * `stripComments`, which blanks strings too because it is after specifiers.
  * `hashLines` adds `#` line comments for Python/shell/YAML.
  */
+/**
+ * Whether a `/` at this point opens a regex literal rather than dividing: the
+ * standard heuristic, from the last significant character already emitted.
+ */
+function regexCanStart(before: string): boolean {
+  const t = before.trimEnd();
+  if (t === "") return true;
+  if (/[(,=:[!&|?{};+\-*%<>~^]$/.test(t)) return true;
+  return /\b(return|typeof|case|in|of|delete|void|throw|new|yield|await)$/.test(t);
+}
+
 export function codeOf(src: string, hashLines = false): string {
   let out = "";
   let i = 0;
@@ -152,6 +163,20 @@ export function codeOf(src: string, hashLines = false): string {
       const stop = end < 0 ? src.length : end;
       out += blank(src.slice(i, stop));
       i = stop;
+    } else if (!hashLines && c === "/" && regexCanStart(out)) {
+      // A regex literal is code, but its quotes are not string delimiters:
+      // `/href="([^"]+)"/g` has three, and reading the first as an opening
+      // quote flipped code and prose for the rest of the file (bean izx8).
+      let j = i + 1;
+      let inClass = false;
+      while (j < src.length && src[j] !== "\n" && (inClass || src[j] !== "/")) {
+        if (src[j] === "\\") j++;
+        else if (src[j] === "[") inClass = true;
+        else if (src[j] === "]") inClass = false;
+        j++;
+      }
+      out += src.slice(i, Math.min(j + 1, src.length));
+      i = j + 1;
     } else if (c === '"' || c === "'" || c === "`") {
       let j = i + 1;
       while (j < src.length && src[j] !== c) j += src[j] === "\\" ? 2 : 1;

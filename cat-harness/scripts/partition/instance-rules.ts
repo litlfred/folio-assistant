@@ -227,6 +227,7 @@ export const RULES: Rule[] = [
       // it reads declarations, BPMN extension elements and skill file names,
       // consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-process-bindings.ts",
+      "scripts/check-document-kind-sources.ts",
       "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is

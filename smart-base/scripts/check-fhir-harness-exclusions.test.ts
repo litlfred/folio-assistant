@@ -21,6 +21,11 @@ describe("a mention is not a dependency", () => {
     expect(r.graded).toEqual([]);
     expect(r.mentions).toBe(1);
   });
+  it("quotes inside a regex literal do not open a string, so a later comment stays prose (izx8)", () => {
+    const src = 'const m = s.matchAll(/href="([^"]+)"/g);\nconst half = a / b; // c / d\n// smart-base/ is named in a comment\nexport const x = 1;\n';
+    expect(one("fhir-harness/r.ts", src).graded).toEqual([]);
+    expect(codeOf(src)).toContain('/href="([^"]+)"/g');
+  });
   it("a markdown page is all prose", () => {
     expect(one("fhir-harness/skills/a.md", "No `dak.config.json` here.").graded).toEqual([]);
   });
