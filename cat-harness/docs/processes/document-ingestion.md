@@ -31,7 +31,7 @@ THE ID `Process_Ingestion` IS KEPT ON PURPOSE: `methodology-from-source.bpmn`'s 
 
 - **Called by:** [Adopt a methodology from a source document](methodology-from-source.html), [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** none
-- **Presented on:** no docs page section shows this diagram
+- **Presented on:** [Document ingestion — `uploads/` and `library/` are two stages of one pipeline](../document-ingestion.html#uploads-and-library-are-two-stages-of-one-pipeline)
 
 ## Lanes — who acts
 

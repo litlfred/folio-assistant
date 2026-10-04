@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 795,
+      "count": 796,
       "unit": "beans"
     }
   },
@@ -175,6 +175,20 @@
       "updatedAt": "2026-09-22T21:02:55Z",
       "preview": "Owner: *\"review ... skills for document review for large things like a DAK or\nL1 digital transofrmation hadbook\"* and *\"put into folio-assistant-core\"*.\n\n**What.** A `review` skill package at `folio-assistant-core/skills/review/`,\ndeclared in folio-assistant-core.json:\n- `large-document-review`: the method. Slice the document by the folio/\n  graph, not by page. Assign slices to reviewer roles by s",
       "file": "beans/defs/folio-assistant-0jtl--skills-a-review-package-in-folio-assistant-core-la.md"
+    },
+    {
+      "id": "folio-assistant-0kbt",
+      "title": "gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:39:59Z",
+      "updatedAt": "2026-10-04T09:39:59Z",
+      "preview": "The `qa` tile and `assets/qa/index.json` are projected BEFORE the orphan sweep removes witness files whose section no longer exists, so one run after a section is renamed or removed publishes a count that includes a file that run itself deleted.\n\nMEASURED on the #1898 branch, 2026-10-04, while bean `vqlp` was being fixed. A section `the-basic-flow` was added, generated (writing `witnesses/document",
+      "file": "beans/defs/folio-assistant-0kbt--gen-docs-pages-publishes-a-qa-count-that-includes-.md"
     },
     {
       "id": "folio-assistant-0lj4",
@@ -11306,8 +11320,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 305,
-    "openTotal": 469,
+    "orphanOpen": 306,
+    "openTotal": 470,
     "coveredOpen": 160,
     "duplicateIds": 1
   }

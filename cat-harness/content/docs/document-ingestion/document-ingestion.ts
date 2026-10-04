@@ -13,6 +13,35 @@ export default webpage({
     {
       id: "uploads-and-library-are-two-stages-of-one-pipeline",
       title: "`uploads/` and `library/` are two stages of one pipeline",
+      // THE BASIC FLOW IS SHOWN HERE RATHER THAN IN A SECTION OF ITS OWN, and
+      // the reason is measured. `Process_Ingestion` — the one process this
+      // placement keeps in the harness — was presented by no section at all
+      // once `the-pipeline` below was repointed at core's refinement (bean
+      // `vqlp`): `docs/processes/document-ingestion.md` read "no docs page
+      // section shows this diagram", no witness bundle carried that subject,
+      // and the `qa-witness` roll-up lost a real failure with it (`fail` 23 to
+      // 22) because the finding had nowhere to be recorded.
+      //
+      // A section of its own would have been the better documentation and was
+      // written first. It adds a HEADING, and `translation-drift.ts`'s
+      // `shapeOf` compares heading shape: all five localised pages went to
+      // "13 heading(s) in the source, 12 here". `KNOWN_DRIFT` is empty and
+      // that module calls empty "the goal state, not a lapse", so the choices
+      // were to translate into five locales or to regress it. Owner,
+      // 2026-10-04, chose this third way instead: the diagram hangs on the
+      // section whose prose it already illustrates — uploads and library as
+      // two stages of ONE pipeline is exactly what the four steps do — and no
+      // heading is added, so nothing drifts and no translation is guessed.
+      asset: {
+        kind: "bpmn",
+        source: "processes/library/document-ingestion.bpmn",
+        rendered: "assets/img/workflows/document-ingestion.svg",
+        alt: "BPMN swimlane diagram with two lanes: a contributor who has a file for the folio places it in uploads/ by a declared route; the Ingestion Engine then extracts its metadata into the knowledge graph and an exclusive gateway asks whether the asset is materialized - if it is, the asset is placed in library/<slug>/, and if it is only referenced it is recorded in library/ as referenced - and either path ends with the asset catalogued. The diagram makes no content-type decision and calls no subprocess.",
+        sourceLinks: [
+          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn" },
+        ],
+        linkStyle: "button",
+      },
       block: "uploads-and-library-are-two-stages-of-one-pipeline",
     },
     {
