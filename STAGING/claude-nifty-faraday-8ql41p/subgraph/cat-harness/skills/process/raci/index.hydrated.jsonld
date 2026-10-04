@@ -1,0 +1,42 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/raci/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/raci",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci",
+      "description": "RACI — involvement over the processes and roles this repository already declares. Three declared edge kinds (accountable, consulted, informed) over BPMN activities and `roles.json` entries, NOT a new party registry. R is deliberately absent because a lane already declares it. RELOCATED 2026-09-22 from `methodologies/raci/` on the owner's \"dont bury sub-graph assets\", which brought it into skill QA for the first time (bean `lps0`).",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "name": "raci",
+      "path": "skills/process/raci",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "RACI over this repository's processes — who is Responsible, Accountable, Consulted and Informed for each activity. Three declared edge kinds over the roles and BPMN activities that already exist, not a new party registry. Use it to work out involvement when a project is initiated, and to sketch its breakdown.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/raci",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 124,
+      "instructionsPath": "skills/process/raci/raci.md",
+      "name": "raci",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/551868adac563fffc3573ea82dd91a447b0f01ea1eb9e6f7d8b0e6aceca56127",
+        "bytes": 5817,
+        "sha256": "551868adac563fffc3573ea82dd91a447b0f01ea1eb9e6f7d8b0e6aceca56127"
+      },
+      "title": "RACI — involvement, over the graph that already exists"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/process/raci",
+  "path": "skills/process/raci/"
+}
