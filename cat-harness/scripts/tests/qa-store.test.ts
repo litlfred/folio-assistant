@@ -24,10 +24,12 @@ import {
   keyPath,
   parseQaKey,
   parseQaRef,
+  pickQaBranch,
   planPrune,
   publishQa,
   pruneQa,
   QA_EXIT,
+  qaBranchCandidates,
   QaUsageError,
   readQa,
   readQaManifest,
@@ -92,7 +94,7 @@ function fixture(): Fixture {
     container: (name, extra = {}) => ({
       repoRoot: work,
       remote: url,
-      branch: "qa-reports",
+      branch: "cat/cat-harness/qa-reports",
       storeDir: join(base, `${name}.store.git`),
       sleep: () => {},
       log: () => {},
@@ -105,11 +107,11 @@ function fixture(): Fixture {
 function tamper(f: Fixture, edit: (dir: string) => void): void {
   clearQaCache();
   const dir = join(f.base, `tamper-${Math.random().toString(36).slice(2)}`);
-  git(f.base, "clone", "-q", "-b", "qa-reports", f.url, dir);
+  git(f.base, "clone", "-q", "-b", "cat/cat-harness/qa-reports", f.url, dir);
   edit(dir);
   git(dir, "add", "-A");
   git(dir, "commit", "-qm", "tamper");
-  git(dir, "push", "-q", "origin", "HEAD:refs/heads/qa-reports");
+  git(dir, "push", "-q", "origin", "HEAD:refs/heads/cat/cat-harness/qa-reports");
 }
 
 function cli(args: string[], env: Record<string, string> = {}): { code: number; out: string; err: string } {
@@ -236,7 +238,7 @@ describe("the four read states", () => {
 
   test("CLI exit codes follow lake-cache: 0 hit, 1 miss, 2 usage, 3 corrupt, 4 unknown", () => {
     const f = fixture();
-    const common = ["--remote", f.url, "--branch", "qa-reports"];
+    const common = ["--remote", f.url, "--branch", "cat/cat-harness/qa-reports"];
     const into = join(f.base, "into");
     expect(cli(["fetch", ...common, "--store", join(f.base, "s1.git"), "--into", into]).code).toBe(QA_EXIT.miss);
     publishQa({ ref: `main/${SHA_A}`, roots: [RESULTS] }, f.container("ci"));
@@ -244,7 +246,7 @@ describe("the four read states", () => {
     expect(cli(["fetch", ...common, "--store", join(f.base, "s3.git"), "--ref", "refs/x"]).code).toBe(QA_EXIT.usage);
     tamper(f, (d) => writeFileSync(join(d, "main", SHA_A, "manifest.json"), "{"));
     expect(cli(["fetch", ...common, "--store", join(f.base, "s4.git"), "--into", into]).code).toBe(QA_EXIT.corrupt);
-    const gone = ["--remote", `file://${join(f.base, "absent.git")}`, "--branch", "qa-reports"];
+    const gone = ["--remote", `file://${join(f.base, "absent.git")}`, "--branch", "cat/cat-harness/qa-reports"];
     expect(cli(["fetch", ...gone, "--store", join(f.base, "s5.git"), "--into", into]).code).toBe(QA_EXIT.unknown);
   }, T);
 });
@@ -273,7 +275,7 @@ describe("writing", () => {
     expect(differs.reason).toContain("first write stands");
     const r = readQa(`main/${SHA_A}`, `${RESULTS}/audit-coverage.qa-results.json`, f.container("agent"));
     expect(r.state === "hit" && r.text).toBe('{"rows":3}\n');
-    expect(first.commit).toBe(git(f.bare, "rev-parse", "refs/heads/qa-reports").trim());
+    expect(first.commit).toBe(git(f.bare, "rev-parse", "refs/heads/cat/cat-harness/qa-reports").trim());
   }, T);
 
   test("no root present is `empty`, not a published nothing", () => {
@@ -286,7 +288,7 @@ describe("writing", () => {
   test("CONCURRENT WRITERS: the loser is rejected by the ref lock, rebuilds on the new tip, and both entries survive", () => {
     const f = fixture();
     publishQa({ ref: `main/${SHA_C}`, roots: [RESULTS] }, f.container("seed"));
-    const seedTip = git(f.bare, "rev-parse", "refs/heads/qa-reports").trim();
+    const seedTip = git(f.bare, "rev-parse", "refs/heads/cat/cat-harness/qa-reports").trim();
     let raced = false;
     const a = publishQa(
       { ref: `main/${SHA_A}`, roots: [RESULTS] },
@@ -304,7 +306,7 @@ describe("writing", () => {
     expect(a.state).toBe("published");
     expect(a.attempts).toBe(2);
 
-    const tip = git(f.bare, "rev-parse", "refs/heads/qa-reports").trim();
+    const tip = git(f.bare, "rev-parse", "refs/heads/cat/cat-harness/qa-reports").trim();
     const listing = git(f.bare, "ls-tree", "-r", "--name-only", tip);
     expect(listing).toContain(`main/${SHA_C}/manifest.json`);
     expect(listing).toContain(`main/${SHA_A}/manifest.json`);
@@ -325,7 +327,7 @@ describe("writing", () => {
     const f = fixture();
     const env = { ...process.env, QA_STORE_REMOTE: f.url };
     const run = (sha: string, store: string) =>
-      Bun.spawn(["bun", SCRIPT, "publish", "--ref", `main/${sha}`, "--root", RESULTS, "--branch", "qa-reports", "--store", join(f.base, store)], {
+      Bun.spawn(["bun", SCRIPT, "publish", "--ref", `main/${sha}`, "--root", RESULTS, "--branch", "cat/cat-harness/qa-reports", "--store", join(f.base, store)], {
         cwd: f.work,
         env,
         stdout: "pipe",
@@ -334,7 +336,7 @@ describe("writing", () => {
     const [p1, p2] = [run(SHA_A, "p1.git"), run(SHA_B, "p2.git")];
     const [c1, c2] = await Promise.all([p1.exited, p2.exited]);
     expect([c1, c2]).toEqual([0, 0]);
-    const listing = git(f.bare, "ls-tree", "--name-only", "qa-reports:main");
+    const listing = git(f.bare, "ls-tree", "--name-only", "cat/cat-harness/qa-reports:main");
     expect(listing.trim().split("\n").sort()).toEqual([SHA_A, SHA_B]);
   }, 120_000);
 });
@@ -371,7 +373,7 @@ describe("CI decision", () => {
     git(f.work, "commit", "-qm", "seed");
     const event = join(f.base, "event.json");
     writeFileSync(event, JSON.stringify({ pull_request: { number: 43, head: { sha: SHA_B, repo: { full_name: "someone/fork" } } } }));
-    const r = spawnSync("bun", [SCRIPT, "publish", "--github", "--branch", "qa-reports", "--store", join(f.base, "s.git")], {
+    const r = spawnSync("bun", [SCRIPT, "publish", "--github", "--branch", "cat/cat-harness/qa-reports", "--store", join(f.base, "s.git")], {
       cwd: f.work,
       encoding: "utf-8",
       env: { ...process.env, QA_STORE_REMOTE: f.url, GITHUB_EVENT_NAME: "pull_request", GITHUB_EVENT_PATH: event, GITHUB_REPOSITORY: "litlfred/folio-assistant", GITHUB_SHA: SHA_C },
@@ -416,17 +418,17 @@ describe("prune", () => {
     publishQa({ ref: `main/${SHA_B}`, roots: [RESULTS], writtenAt: daysAgo(120, 1) }, f.container("ci"));
     publishQa({ ref: `main/${SHA_C}`, roots: [RESULTS], writtenAt: daysAgo(1) }, f.container("ci"));
     publishQa({ ref: `pr/7/${SHA_A}`, roots: [RESULTS], writtenAt: daysAgo(30) }, f.container("ci"));
-    const before = git(f.bare, "rev-parse", "refs/heads/qa-reports").trim();
+    const before = git(f.bare, "rev-parse", "refs/heads/cat/cat-harness/qa-reports").trim();
     const prState = (pr: number) => (pr === 7 ? ({ state: "closed", closedAt: daysAgo(10) } as const) : ({ state: "unknown" } as const));
 
     const dry = pruneQa({ now, prState }, f.container("pruner"));
     expect(dry.state).toBe("dry-run");
     expect(dry.plan?.remove).toEqual([`main/${SHA_A}`, "pr/7"]);
-    expect(git(f.bare, "rev-parse", "refs/heads/qa-reports").trim()).toBe(before);
+    expect(git(f.bare, "rev-parse", "refs/heads/cat/cat-harness/qa-reports").trim()).toBe(before);
 
     const done = pruneQa({ now, prState, apply: true }, f.container("pruner"));
     expect(done.state).toBe("pruned");
-    const tip = git(f.bare, "rev-parse", "refs/heads/qa-reports").trim();
+    const tip = git(f.bare, "rev-parse", "refs/heads/cat/cat-harness/qa-reports").trim();
     expect(git(f.bare, "rev-parse", `${tip}^`).trim()).toBe(before);
     const listing = git(f.bare, "ls-tree", "-r", "--name-only", tip);
     expect(listing).not.toContain(`main/${SHA_A}/`);
@@ -436,5 +438,59 @@ describe("prune", () => {
     expect(JSON.parse(git(f.bare, "show", `${tip}:index.json`)).pr?.["7"]).toBeUndefined();
 
     expect(pruneQa({ now, prState, apply: true }, f.container("pruner2")).state).toBe("nothing");
+  }, T);
+});
+
+describe("every branch name (bean zlq9; renames 32f6, tlk2)", () => {
+  const heads = (f: Fixture) =>
+    git(f.bare, "for-each-ref", "--format=%(refname:short)", "refs/heads/").trim().split("\n").filter(Boolean).sort();
+
+  test("candidates: any spelling of the QA branch yields all three, newest first; any other name stands alone", () => {
+    const ALL = ["cat/cat-harness/qa-reports", "cat-qa-reports", "qa-reports"];
+    for (const n of ALL) expect(qaBranchCandidates(n)).toEqual(ALL);
+    expect(qaBranchCandidates("my-qa")).toEqual(["my-qa"]);
+    expect(pickQaBranch(ALL, new Set())).toBe("cat/cat-harness/qa-reports");
+    expect(pickQaBranch(ALL, new Set(["qa-reports"]))).toBe("qa-reports");
+    expect(pickQaBranch(ALL, new Set(["qa-reports", "cat-qa-reports"]))).toBe("cat-qa-reports");
+    expect(pickQaBranch(ALL, new Set(["qa-reports", "cat-qa-reports", "cat/cat-harness/qa-reports"]))).toBe("cat/cat-harness/qa-reports");
+  });
+
+  test("NEITHER exists: the writer creates cat/cat-harness/qa-reports", () => {
+    const f = fixture();
+    expect(publishQa({ ref: `main/${SHA_A}`, roots: [RESULTS] }, f.container("ci")).state).toBe("published");
+    expect(heads(f)).toEqual(["cat/cat-harness/qa-reports"]);
+  }, T);
+
+  test("ONLY the legacy name: a reader finds it and a writer extends it, never creating cat/cat-harness/qa-reports beside it", () => {
+    const f = fixture();
+    publishQa({ ref: `main/${SHA_A}`, roots: [RESULTS] }, f.container("old", { branch: "my-legacy-only" }));
+    git(f.bare, "branch", "-m", "my-legacy-only", "qa-reports");
+    clearQaCache();
+    // A declaration naming the OLD spelling and one naming the new both find it.
+    for (const branch of ["qa-reports", "cat/cat-harness/qa-reports"]) {
+      const r = readQa(`main/${SHA_A}`, `${RESULTS}/kg-qa/skills/a.kg-qa.json`, f.container(`r-${branch}`, { branch }));
+      expect(r.state).toBe("hit");
+    }
+    expect(publishQa({ ref: `main/${SHA_B}`, roots: [RESULTS] }, f.container("ci")).state).toBe("published");
+    expect(heads(f)).toEqual(["qa-reports"]);
+    expect(git(f.bare, "ls-tree", "--name-only", "qa-reports:main").trim().split("\n").sort()).toEqual([SHA_A, SHA_B]);
+  }, T);
+
+  test("BOTH exist: the new name wins for readers and writers; the legacy branch is left as it was", () => {
+    const f = fixture();
+    publishQa({ ref: `main/${SHA_A}`, roots: [RESULTS] }, f.container("old", { branch: "my-old" }));
+    git(f.bare, "branch", "-m", "my-old", "qa-reports");
+    clearQaCache();
+    publishQa({ ref: `main/${SHA_B}`, roots: [RESULTS] }, f.container("new", { branch: "my-new" }));
+    git(f.bare, "branch", "-m", "my-new", "cat/cat-harness/qa-reports");
+    clearQaCache();
+    const legacyTip = git(f.bare, "rev-parse", "refs/heads/qa-reports").trim();
+    expect(heads(f)).toEqual(["cat/cat-harness/qa-reports", "qa-reports"]);
+    // SHA_A lives only on the legacy branch: a reader that falls back would hit it.
+    expect(readQa(`main/${SHA_A}`, `${RESULTS}/kg-qa/skills/a.kg-qa.json`, f.container("r1")).state).toBe("miss");
+    expect(readQa(`main/${SHA_B}`, `${RESULTS}/kg-qa/skills/a.kg-qa.json`, f.container("r2")).state).toBe("hit");
+    expect(publishQa({ ref: `main/${SHA_C}`, roots: [RESULTS] }, f.container("ci")).state).toBe("published");
+    expect(git(f.bare, "rev-parse", "refs/heads/qa-reports").trim()).toBe(legacyTip);
+    expect(git(f.bare, "ls-tree", "--name-only", "cat/cat-harness/qa-reports:main").trim().split("\n").sort()).toEqual([SHA_B, SHA_C]);
   }, T);
 });

@@ -37,12 +37,24 @@
  * A non-script entry is self-identifying, so the guard is a predicate and not a
  * judgement call. It is applied TWICE on purpose:
  *
- * 1. **Before** — refuse any file where either side carries one, leaving it
- *    conflicted for a person.
+ * 1. **Before** — refuse any file where either side carries one that the
+ *    ATTESTATION STORE does not hold, leaving it conflicted for a person.
  * 2. **After** — verify that every non-script entry present in either side is
  *    still present in the regenerated file. A fast path that is the only
  *    protection is a fast path that becomes the protection the day its
  *    assumption breaks.
+ *
+ * ## The guard reads the store (bean `8wj1`)
+ *
+ * Until the attestation store existed, "either side carries a non-script
+ * entry" meant "regeneration would destroy it", because the writers kept those
+ * entries only by reading the file being regenerated. Since `8wj1` every block
+ * and translation writer reads them from `test/attestations/` instead
+ * (`schemas/qa-attestations.ts`), so a file whose non-script entries
+ * are ALL held there, byte for byte, regenerates without losing one, and is
+ * resolved. One the store does not hold, a store file that is itself
+ * conflicted, or a store that cannot be read, is still refused: those are the
+ * cases where a person has to look.
  *
  * ## Two constraints found by resolving a real conflict rather than imagining one
  *
@@ -80,6 +92,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.ts";
+import { attestationKeyForDerived, attestationPath, entryIdentity, readCriteriaAttestations } from "../schemas/qa-attestations.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
@@ -147,6 +160,8 @@ export interface SideScan {
   kinds: string[];
   /** Identities of the non-script entries, for the after-check. */
   nonScript: string[];
+  /** The non-script entries themselves — criterion and exact serialisation — for the store check. */
+  nonScriptEntries?: { criterion: string | undefined; json: string }[];
   /** Distinct `reviewer.id` values — which generator wrote this. */
   reviewerIds: string[];
   /** A side that would not parse. Never treated as "nothing found". */
@@ -174,9 +189,15 @@ export function scanDocument(doc: unknown, into: SideScan, path: string[] = []):
     const id = typeof r["id"] === "string" ? (r["id"] as string) : undefined;
     if (kind !== undefined) {
       into.kinds.push(kind);
-      if (kind !== "script") into.nonScript.push(`${path.join(".")}|${kind}|${id ?? "?"}`);
+      if (kind !== "script") {
+        into.nonScript.push(`${path.join(".")}|${kind}|${id ?? "?"}`);
+        const criterion = path.length >= 3 && path[path.length - 3] === "criteria" ? path[path.length - 2] : undefined;
+        (into.nonScriptEntries ??= []).push({ criterion, json: entryIdentity(doc) });
+      }
     }
-    if (id !== undefined && !into.reviewerIds.includes(id)) into.reviewerIds.push(id);
+    // Only a SCRIPT reviewer names a generator; an agent's id never will, and
+    // looking one up would report a "missing writer" for every adjudication.
+    if (id !== undefined && kind === "script" && !into.reviewerIds.includes(id)) into.reviewerIds.push(id);
   }
   for (const [k, v] of Object.entries(rec)) scanDocument(v, into, [...path, k]);
 }
@@ -231,6 +252,68 @@ export interface Outcome {
 }
 
 /**
+ * Does the attestation store hold every non-script entry of both sides?
+ * `undefined` when it does; otherwise why not. Never "yes" by default: a family
+ * the store does not serve, a store file in conflict, or an unreadable store
+ * are each a reason.
+ */
+export function storeHolds(
+  repoRoot: string,
+  instanceRoot: string,
+  path: string,
+  scan: SideScan,
+  unmerged: readonly string[],
+): string | undefined {
+  const key = attestationKeyForDerived(instanceRoot, join(repoRoot, path));
+  if (!key) return "its family is not one the attestation store serves";
+  const storePath = relative(repoRoot, attestationPath(instanceRoot, key));
+  if (unmerged.includes(storePath)) return `its attestation file ${storePath} is itself conflicted`;
+  const read = readCriteriaAttestations(instanceRoot, key);
+  if (read.state === "corrupt" || read.state === "unknown") return `the attestation store is ${read.state} at ${storePath}: ${read.reason}`;
+  const held = read.state === "hit" ? read.criteria : {};
+  const missing = (scan.nonScriptEntries ?? []).filter(
+    (e) => e.criterion === undefined || !(held[e.criterion] ?? []).some((h) => entryIdentity(h) === e.json),
+  );
+  if (missing.length > 0) {
+    return `${missing.length} of them ${read.state === "absent" ? "with no attestation store at all" : `not held in ${storePath}`} — run \`bun run qa:attestations:migrate\` first`;
+  }
+  return undefined;
+}
+
+/**
+ * Which instance's attestation store answers for `path`: the instance owning
+ * the LONGEST declared qa directory that contains it. `undefined` when no
+ * owner is known for that directory.
+ */
+export type InstanceFor = string | ((path: string) => string | undefined);
+
+/**
+ * Pair every declared `qa` directory (repo-relative, trailing `/`) with the
+ * instance that owns it — of the instances declaring it, the deepest one whose
+ * root contains it, else the first to declare it. An instance inherits its
+ * dependencies' declarations, so "declares it" alone does not say whose store
+ * a sidecar's non-script verdicts are held in.
+ */
+export function qaDirOwners(repoRoot: string, instances: readonly string[]): Map<string, string> {
+  const owners = new Map<string, string>();
+  const depth = (p: string) => p.split("/").length;
+  for (const inst of instances) {
+    for (const abs of directoriesForGraph(inst, "qa")) {
+      const rel = relative(repoRoot, abs).replace(/\/*$/, "") + "/";
+      const contains = !relative(inst, abs).startsWith("..");
+      const prev = owners.get(rel);
+      if (prev === undefined) {
+        owners.set(rel, inst);
+        continue;
+      }
+      const prevContains = !relative(prev, abs).startsWith("..");
+      if (contains && (!prevContains || depth(inst) > depth(prev))) owners.set(rel, inst);
+    }
+  }
+  return owners;
+}
+
+/**
  * Decide, per conflicted path, without touching anything.
  *
  * `qaDirs` is EVERY declared `qa` directory in the checkout, repo-relative,
@@ -239,9 +322,21 @@ export interface Outcome {
  * `merge-conflict-patterns.ts`, handed here, and "left alone — outside the
  * declared qa graph", because this walked `cat-harness/test/results/` only.
  * merge-base then aborted on a conflict the pattern had promised to resolve.
+ *
+ * `instanceRoot` names whose attestation store must hold a sidecar's
+ * non-script entries before it may be dropped (bean `2gst`). A string means
+ * one instance for every path; a function answers per path, so a who-iris
+ * sidecar is checked against who-iris's store and not the root's.
  */
-export function plan(repoRoot: string, qaDirs: string | readonly string[], paths: readonly string[]): Outcome[] {
+export function plan(
+  repoRoot: string,
+  qaDirs: string | readonly string[],
+  paths: readonly string[],
+  instanceRoot?: InstanceFor,
+): Outcome[] {
   const dirs = typeof qaDirs === "string" ? [qaDirs] : qaDirs;
+  const ownerOf = (path: string): string | undefined =>
+    typeof instanceRoot === "function" ? instanceRoot(path) : instanceRoot;
   return paths.map((path) => {
     if (!dirs.some((d) => path.startsWith(d))) {
       return { path, action: "skip" as const, reason: `outside every declared \`qa\` graph (${dirs.join(", ")})` };
@@ -265,10 +360,23 @@ export function plan(repoRoot: string, qaDirs: string | readonly string[], paths
       };
     }
     if (scan.nonScript.length > 0) {
+      const kinds = [...new Set(scan.nonScript.map((s) => s.split("|")[1]))].join(", ");
+      const owner = ownerOf(path);
+      const why =
+        owner === undefined
+          ? "no instance root was given to find the attestation store"
+          : storeHolds(repoRoot, owner, path, scan, paths);
+      if (why !== undefined) {
+        return {
+          path,
+          action: "refuse" as const,
+          reason: `carries ${scan.nonScript.length} non-script verdict(s) (${kinds}) — regenerating could destroy them: ${why}`,
+        };
+      }
       return {
         path,
-        action: "refuse" as const,
-        reason: `carries ${scan.nonScript.length} non-script verdict(s) (${[...new Set(scan.nonScript.map((s) => s.split("|")[1]))].join(", ")}) — regenerating would destroy them`,
+        action: "resolve" as const,
+        reason: `${scan.nonScript.length} non-script verdict(s) (${kinds}), every one held in the attestation store, which the regenerating writer reads`,
       };
     }
     return {
@@ -319,7 +427,16 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  const outcomes = plan(repoRoot, qaDirs, paths);
+  // The instance that owns the `qa` directory a path lies in: ITS
+  // `test/attestations/` is the store that must hold the path's non-script
+  // verdicts — a who-iris sidecar is judged against who-iris's store, never
+  // the root's. The longest matching directory wins, since homes nest.
+  const owners = qaDirOwners(repoRoot, instanceRootsIn(repoRoot));
+  const instanceFor = (path: string): string | undefined => {
+    const dir = [...owners.keys()].filter((d) => path.startsWith(d)).sort((a, b) => b.length - a.length)[0];
+    return dir === undefined ? undefined : owners.get(dir);
+  };
+  const outcomes = plan(repoRoot, qaDirs, paths, instanceFor);
   const resolve = outcomes.filter((o) => o.action === "resolve");
   const refuse = outcomes.filter((o) => o.action === "refuse");
   const skip = outcomes.filter((o) => o.action === "skip");
@@ -342,11 +459,11 @@ if (import.meta.main) {
   }
 
   // What must survive: every non-script entry from either side of every file
-  // this command touches. It is empty by construction today (a file carrying
-  // one is refused above) and is computed anyway, because the check that only
-  // ever passes is the one nobody notices has stopped running.
+  // this command touches — by criterion and exact serialisation, not by array
+  // index, since a writer composes attestations FIRST and an index may move.
   const mustSurvive = new Map<string, string[]>();
-  for (const o of resolve) mustSurvive.set(o.path, scanConflict(repoRoot, o.path).nonScript);
+  const survivalId = (e: { criterion: string | undefined; json: string }) => `${e.criterion ?? "?"}|${e.json}`;
+  for (const o of resolve) mustSurvive.set(o.path, (scanConflict(repoRoot, o.path).nonScriptEntries ?? []).map(survivalId));
 
   // Take either side. Which one does not matter: the regeneration below
   // overwrites it from the MERGED tree, and both sides are stale with respect
@@ -393,9 +510,10 @@ if (import.meta.main) {
     if (before.length === 0) continue;
     const after: SideScan = { kinds: [], nonScript: [], reviewerIds: [], unreadable: [] };
     scanDocument(JSON.parse(readFileSync(join(repoRoot, path), "utf-8")), after);
+    const afterIds = new Set((after.nonScriptEntries ?? []).map(survivalId));
     for (const entry of before) {
-      if (!after.nonScript.includes(entry)) {
-        console.error(`  ✗ ${path}: regeneration dropped ${entry}`);
+      if (!afterIds.has(entry)) {
+        console.error(`  ✗ ${path}: regeneration dropped ${entry.slice(0, 160)}`);
         lost++;
       }
     }
