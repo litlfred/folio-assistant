@@ -235,6 +235,7 @@ describe("payloads", () => {
 
   test("the hydrated file does not inline a body — it carries the link instead", () => {
     const text = files.get(fileFor("skills/kg/kg-core/", SUBGRAPH_HYDRATED_FILE))!;
+    // declared-path-literal: this test's subject is one named skill file, whose distinctive heading it asserts below.
     const body = readFileSync(join(ROOT, "skills/kg/kg-core/kg-export.md"), "utf-8");
     const distinctive = "## Named subgraphs — one IRI, two files, framed from one graph";
     expect(body).toContain(distinctive);
