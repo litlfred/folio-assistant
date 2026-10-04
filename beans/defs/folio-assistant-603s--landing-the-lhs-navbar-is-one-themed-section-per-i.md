@@ -1,11 +1,11 @@
 ---
 # folio-assistant-603s
 title: 'LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T12:32:20Z
-updated_at: 2026-09-26T03:51:27Z
+updated_at: 2026-10-04T19:55:08Z
 parent: folio-assistant-yj32
 ---
 
@@ -599,3 +599,14 @@ On the page a harness tab OPENS (\`_includes/harness_details.html\`), per the ow
 Data: \`subgraphsOf\` in \`harness-tiles.ts\`, read from the declaration, never scanned; the local rows are the same \`dirs\` the "declared directories" stat counts. 3 unit tests in \`harness-tiles.test.ts\`, the remote cases from fixtures.
 
 **Measured on a local build:** who-iris shows 9 local, 0 remote; cat-harness 47 local, 0 remote. **No instance on main declares a remote graph or a subscription today**, so the remote branch of the TEMPLATE has rendered on no real page — only the data path is tested. Recorded rather than discovered later.
+
+
+## Closed on evidence, 2026-10-04
+
+Every item under §"What is still THIS bean, after the slice" re-derived on `main` @ `84a36a8` (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi), each by running it, not by reading the notes above:
+- **Dependency ordering** — `harness-tiles.test.ts` + `navbar.test.ts`: 153 pass, 0 fail; the generated navbar renders its six sections in dependency order.
+- **Collapsed = info, opened = docs navigation** — `check:viewer-nav` exit 0 (93 railed pages, 0 flagged).
+- **Display panel, inert and labelled** — `check:instance-render` exit 0.
+- **Local/remote subgraph tab** — landed in #1775 (`e41ef50`). The "Still open" sentence under that ticked box is stale. Caveat kept honest: no instance declares a remote graph yet, so the remote half is fixture-tested only.
+
+The owner's open questions above (where `.fa-landing-board` sits; #851's common nav element) are not checklist items and stay with the owner.
