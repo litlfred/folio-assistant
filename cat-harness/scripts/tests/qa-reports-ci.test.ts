@@ -30,6 +30,9 @@ describe("qa-reports-unretried", () => {
     ["          git push -f origin \"$c:qa-reports\""],
     ["git -c pack.useSparse=false push origin $commit:refs/heads/qa-reports"],
     ["for attempt in 1 2 3; do git push origin x:qa-reports && break; done"],
+    ["git push origin HEAD:refs/heads/cat-qa-reports"],
+    ["git push origin x:cat-qa-reports"],
+    ["git push origin x:refs/heads/cat/cat-harness/qa-reports"],
   ])("flags a raw push: %s", (line) => {
     expect(qaReportsUnretried(`jobs:\n  j:\n    steps:\n      - run: |\n          ${line}\n`, "x.yml").map((f) => f.kind)).toEqual(["qa-reports-unretried"]);
   });
@@ -39,6 +42,7 @@ describe("qa-reports-unretried", () => {
     ["bun run qa:prune --apply"],
     ["# git push origin x:qa-reports — a comment"],
     ["git push origin x:qa-reports-spike"],
+    ["git push origin x:cat-qa-reports-spike"],
     ["git fetch origin qa-reports"],
   ])("does not flag: %s", (line) => {
     expect(qaReportsUnretried(`jobs:\n  j:\n    steps:\n      - run: |\n          ${line}\n`, "x.yml")).toEqual([]);

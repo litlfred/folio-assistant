@@ -320,7 +320,8 @@ the #956 consolidation nearly lost a baseline:
 |---|---|
 | `scripts/stale-paths-baseline.json` | **two lines long.** Every milestone repair removes its own entry. Two repairs in flight = a conflict whose wrong resolution silently empties a file whose stated property is that it *shrinks rather than fossilises* — and an empty baseline fails every finding, "which is the safe direction" only if somebody notices. |
 | a shared bean like `k59d` | every stream appends its own outcome. **"An append cannot collide" is false when two sessions append**, because both land at EOF. That precedent is recorded in `k59d` itself and is wrong as stated. |
-| generated dirs (`docs-auto/`, `skill-instructions/`, kg-qa sidecars) | nobody edits them, everybody regenerates them. Take `main`'s copy and re-run the generator — never hand-merge. |
+| generated dirs (`auto-docs/`, `skill-instructions/`, kg-qa sidecars) | nobody edits them, everybody regenerates them. Take `main`'s copy and re-run the generator — never hand-merge. For `test/results/**`, `bun run qa:resolve-conflicts`: those are derived QA results whose record is on the `qa-reports` branch. |
+| `test/attestations/**` | judgements, not generated — no generator can reproduce one. Read both sides and keep both unless they are the same judgement; see [`prepare-merge`](prepare-merge.md) §"Conflicts in `test/results/` and `test/attestations/`". |
 
 **Name the files you will touch, not just the beans**, when you post intent.
 A sibling can dodge a file; it cannot dodge a subject it cannot see.

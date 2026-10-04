@@ -7,7 +7,7 @@
  *
  * @module scripts/tests/claim-branch-store
  */
-import { afterAll, describe, expect, test } from "bun:test";
+import { afterAll, describe, expect, setDefaultTimeout, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -16,6 +16,13 @@ import { join } from "node:path";
 import { BranchStore } from "../branch-store.ts";
 import { appendNoteToText, setFieldInText } from "../beans-fallback.ts";
 import { claimOnBranchStore } from "../claim-bean.ts";
+
+// Every test here builds a bare remote, clones it, and pushes through a real
+// `git` — about twenty subprocesses, the race test two stores' worth. That is
+// the point (the conflict must be git's, not a mock's), and it does not fit
+// bun's 5 s default on a shared runner: the race test took 6.1 s on main's
+// own run for #2061 and 6.8 s on #1801's, red both times for nobody's defect.
+setDefaultTimeout(30_000);
 
 const made: string[] = [];
 afterAll(() => {
@@ -74,6 +81,9 @@ function tipText(w: ReturnType<typeof world>): string {
 /** Timestamps differ by construction; everything else must match exactly. */
 const normalise = (t: string): string => t.replace(/\d{4}-\d{2}-\d{2}T[\d:.]+Z?/g, "<T>").replace(/_\d[^_]*_/g, "_<T>_");
 
+/** Budget for a test that drives two clones of one remote (see below). */
+const GIT_HEAVY_MS = 30_000;
+
 describe("claiming on the branch store", () => {
   test("a clean claim lands on the tip, in-progress, with the claim note", () => {
     const w = world();
@@ -97,6 +107,11 @@ describe("claiming on the branch store", () => {
     expect(normalise(tipText(w))).toBe(normalise(expected));
   });
 
+  // These two open a SECOND clone of the remote and push from both sides:
+  // real git, several processes each. Locally they finish well inside bun's
+  // 5 s default; on a loaded CI runner the second took 6.1-6.5 s and timed
+  // out (main, 2026-10-04, runs 37186849743 and 37187288682). The limit is a
+  // budget for real I/O, not a retry: the assertions are unchanged.
   test("A SIBLING THAT WROTE FIRST IS A CONFLICT, caught on the first attempt — bean 35nj", () => {
     const w = world();
 
@@ -116,7 +131,7 @@ describe("claiming on the branch store", () => {
     // And the sibling's claim is intact: no lost write.
     expect(tipText(w)).toContain("Claimed by their-branch");
     expect(tipText(w)).not.toContain("Claimed by my-branch");
-  });
+  }, GIT_HEAVY_MS);
 
   test("THE REAL CONFLICT: a sibling writes BETWEEN our read and our write — `expect` catches it", () => {
     const w = world();
@@ -150,7 +165,7 @@ describe("claiming on the branch store", () => {
     const after = tipText(w);
     expect(after).toContain("Claimed by their-branch");
     expect(after).not.toContain("Claimed by my-branch");
-  });
+  }, GIT_HEAVY_MS);
 
   test("already in-progress with no readable holder is `held-unknown`, never a silent pass", () => {
     const w = world("in-progress");

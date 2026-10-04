@@ -89,8 +89,13 @@
  * - **unmounted** — cut over, and nothing mounted here, so every reader of
  *   the path sees an EMPTY graph rather than an unreachable one.
  *
- * A **commit**-keyed directory is still skipped, because for that keying the
- * checkout copy really is an artefact of whether `qa:fetch` ran. The
+ * A **route**-keyed directory gets the FIRST of those two and not the second:
+ * two copies is still two copies, but there is no route-keyed mount for
+ * `unmounted` to be about. {@link routePresence} carries why, and which gate asks
+ * the question this one declines.
+ *
+ * A **commit**-keyed directory is still skipped entirely, because for that keying
+ * the checkout copy really is an artefact of whether `qa:fetch` ran. The
  * distinction, and the measurements behind it, are in {@link tipPresence}.
  *
  * Exit codes: 0 clean · 1 any finding.
@@ -219,6 +224,62 @@ export function tipPresence(
 }
 
 /**
+ * What this checkout can say about a directory kept per published ROUTE.
+ *
+ * **Two answers, not three**, and the missing one is the whole point of having a
+ * separate function rather than a `keyedBy` branch inside {@link tipPresence}:
+ *
+ * - **`not-cut-over`** — identical to the tip case, and for an identical reason.
+ *   The declaration names a branch, the checkout still tracks files at the path,
+ *   so the graph has two copies and nothing says which is authoritative. Bean
+ *   `9ofm`'s guard is about TWO COPIES, and route-keying does not change how many
+ *   there are.
+ * - **`off-checkout`** — the files are not tracked here. **Not a finding**, and
+ *   not a pass dressed as one either: it is this gate declining a question it
+ *   cannot ask. There is nothing further to measure locally, because…
+ *
+ * ## …there is no `unmounted` for a route store, and that is not a gap
+ *
+ * `tipPresence`'s third state reads the mount MARKER. A route store has no
+ * mount: `tipLocations` defaults to `keyedBy: "tip"` and `state-mount.ts` takes
+ * that default, so a route entry is never a mount candidate, and `mountTip`
+ * itself reads no `keyedBy` at all — pointed at a route branch it opens a
+ * tip-keyed store and `verifiedTip` answers **`corrupt`** (measured against the
+ * seeded `cat/cat-harness/uml-overview`, whose manifest is route-keyed). So "cut
+ * over and nothing mounted here" is not a state a route store can be in;
+ * reporting it would be a finding against a mechanism that does not exist, and
+ * one nobody could ever clear.
+ *
+ * **What replaces it is a different gate, not a missing branch here.** Whether
+ * the branch actually carries the routes is answered by the route's own
+ * generator `--check` — `route-authority.ts`'s `compareRoute`, which reports
+ * `unknown` and refuses to pass when it cannot fetch. That question needs the
+ * network. This gate is deliberately offline (`tipPresence`: *"it cannot go red
+ * for a network reason and cannot be made green by a fetch"*), so answering it
+ * here would mean giving this gate a second posture. Two gates, one each.
+ */
+export function routePresence(
+  loc: { id: string; branch: string; keyedBy: string },
+  abs: string,
+  repoRoot: string,
+): { state: "off-checkout" } | { state: "not-cut-over"; detail: string } {
+  const rel = relative(repoRoot, abs).split(sep).join("/") || ".";
+  const tracked = spawnSync("git", ["ls-files", "--", rel], { cwd: repoRoot, encoding: "utf-8" });
+  if (!(tracked.status === 0 && tracked.stdout.trim())) return { state: "off-checkout" };
+  const n = tracked.stdout.trim().split("\n").length;
+  return {
+    state: "not-cut-over",
+    detail:
+      `declares \`storage.branch: "${loc.branch}"\` (keyed by route) and the checkout still tracks ` +
+      `${n} file(s) here, so the graph has two copies and nothing says which is authoritative. ` +
+      `For a ROUTE store that is worse than ambiguous: the site build serves whichever copy its path ` +
+      `resolves to, and the generator's \`--check\` compares against the BRANCH, so the two disagree ` +
+      `silently. Flipping the declaration and removing the files are ONE change (bean \`9ofm\`): land ` +
+      `both, or neither.`,
+  };
+}
+
+/**
  * @param otherInstances every instance root in the checkout; a
  *   repository-scoped entry inside one of them other than the declaring
  *   instance is a `mirror`. An instance that CONTAINS the declaring one (the
@@ -335,10 +396,10 @@ export function auditInstance(
  * it** — this module's own docblock opens by saying a declaration into thin air
  * makes every consumer "report a clean run over nothing", and five entries in
  * `cat-harness/docs/docs.json` were exactly that: `proposals`, `requirements`,
- * `docs-auto` and the two uml routes (bean `xsrv`).
+ * `auto-docs` and the two uml routes (bean `xsrv`).
  *
  * It also explains a thing reported on #2022 as a quirk: `audit:coverage` calls
- * `docs-auto` `no-directory` because nothing resolved a nested path for
+ * `auto-docs` `no-directory` because nothing resolved a nested path for
  * presence.
  *
  * `nestedDirectories` walks to any depth and guards a declaration naming its
@@ -401,12 +462,19 @@ function declaringFile(
  * this path sees nothing, and "no content" and "could not reach the content"
  * would be indistinguishable from here. See {@link tipPresence}.
  *
- * **`route` is skipped too, and that is a decision rather than an omission.**
- * There is no route-keyed mount: `branch-store.ts`'s mount/marker pair is
- * tip-keyed, so this checkout has no local presence to compare and `unmounted`
- * would be a verdict about a mechanism that does not exist. It becomes a real
- * question when `xsrv` cuts a reader over — and at that point this is the one
- * place to add it, rather than two.
+ * **`route` is HALF of the tip question, and only half.** This paragraph said
+ * "skipped too, and that is a decision rather than an omission", with the right
+ * reason for the wrong scope: there is no route-keyed mount — `tipLocations`
+ * defaults to `tip` and `state-mount.ts:168` takes that default, so a route entry
+ * is never a mount candidate — and `unmounted` really would be a verdict about a
+ * mechanism that does not exist. But `not-cut-over` is not about a mount. It is
+ * about TWO COPIES, and a route-keyed declaration whose files are still tracked
+ * here has exactly two, the same as a tip-keyed one. Skipping the keying skipped
+ * both halves and only one of them was meant to go.
+ *
+ * That paragraph also said the question arrives "when `xsrv` cuts a reader over —
+ * and at that point this is the one place to add it". This is that point, and
+ * this is that place. See {@link routePresence}.
  */
 function offCheckoutFindings(
   e: { id: string; path: string; absent?: { reason: string } },
@@ -424,7 +492,12 @@ function offCheckoutFindings(
     // `unmounted` is the honest state: nothing read this path.
     return [{ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message }];
   }
-  if (src.kind !== "branch" || src.keyedBy !== "tip") return [];
+  if (src.kind !== "branch") return [];
+  if (src.keyedBy === "route") {
+    const r = routePresence(src, abs, repoRoot);
+    return r.state === "off-checkout" ? [] : [{ instance: instanceRoot, id: e.id, path: e.path, kind: r.state, detail: r.detail }];
+  }
+  if (src.keyedBy !== "tip") return [];
   const t = tipPresence(src, abs, repoRoot);
   return t.state === "mounted" ? [] : [{ instance: instanceRoot, id: e.id, path: e.path, kind: t.state, detail: t.detail }];
 }

@@ -80,7 +80,7 @@ import {
 } from "./kg-node";
 import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
-import { SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
+import { KeyedBySchema, SubgraphSourceSchema, contentIsOffCheckout, type SubgraphSource } from "./subgraph-source";
 
 /**
  * The suffix every instance declaration carries — `<name>.config.json`.
@@ -1451,15 +1451,22 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and it is exactly what separates these two keyings.
  *
  * The field is an enum, not a string, so a fourth keying is a schema change
- * somebody has to make rather than a reinterpretation of an existing value.
+ * somebody has to make rather than a reinterpretation of an existing value. The
+ * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
+ * not restated: this field held its own `z.enum(["commit","tip","route"])` until
+ * the two drifted — `route` was added here with bean `1j3q` and not there, so a
+ * route-keyed declaration parsed and then threw a ZodError inside
+ * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
+ * if there is ONE schema to change.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
- * ## Not yet set on any declaration
+ * ## Set on every `qa` directory since bean `5hox`
  *
- * Flipping a real `qa` directory to `storage` is a later bean, after every
- * reader has migrated (proposal §4 Phase 3). Setting it earlier would tell the
- * presence checks to stop looking while the readers still read the checkout.
+ * It was flipped only after every reader had migrated (proposal §4 Phase 3):
+ * setting it earlier would have told the presence checks to stop looking while
+ * the readers still read the checkout. Each stored working copy is ignored by
+ * version control, and `directory-storage.test.ts` keeps the two equal.
  */
 export const DirectoryStorageSchema = z
   .object({
@@ -1477,7 +1484,7 @@ export const DirectoryStorageSchema = z
      * {@link DirectoryStorageSchema}'s docblock for why `route` is not a
      * synonym for `tip`.
      */
-    keyedBy: z.enum(["commit", "tip", "route"]),
+    keyedBy: KeyedBySchema,
   })
   .strict();
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;

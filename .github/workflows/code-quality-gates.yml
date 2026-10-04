@@ -414,6 +414,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
       - name: bun run lint
@@ -499,6 +505,17 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # The same mount as the gates job, for the same reason one level down:
+      # the test files that read the LIVE store (`bean-store-hygiene`,
+      # `bean-front-matter`, `survey`, `merge-train`, …) assert over whatever
+      # `resolveBeanDefs` hands them, and after the cutover that is the mount.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
@@ -639,6 +656,36 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # EVERY declared tip-keyed graph on disk before any gate reads one —
+      # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
+      # covering the store when it moves".
+      #
+      # Nine bean gates run in this job (`check:bean-parents`, `bean-blocks`,
+      # `bean-rollup`, `bean-bodies`, `bean-front-matter`, `bean-issue-links`,
+      # `bean-archive`, `bean-parent-prose`, `bean-restates-skill`), and so do
+      # `check:harness-dirs`, `check:harness-state`, `kg:audit` and
+      # `audit:coverage`. Once `beans/` is kept at the tip of its own branch
+      # the checkout no longer carries it, and a gate that joined the path
+      # would judge an absent directory — `1xhc`, a step that did not fire
+      # looking exactly like one that passed, over the store eight of those
+      # gates exist to judge.
+      #
+      # It is INERT today and that is deliberate: while no declaration keeps a
+      # graph at a branch tip, `state:mount` reports `not-enabled` and exits 0
+      # (measured). It is added BEFORE the cutover rather than with it so that
+      # the one irreversible commit is the declaration and the `git rm`, and
+      # not also the CI change that has to be right for them.
+      #
+      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
+      # not determine" apart from "determined absent" and exits non-zero for
+      # either, so the gates below never run over a store this runner could
+      # not reach.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -1432,12 +1479,9 @@ jobs:
       - name: Every instance README's generated sections are current
         run: bun run readme:sync:all:check
 
-      # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
-      # `kg:files` (every file it holds), both generated from its declaration
-      # (owner, 2026-09-29). The pictures themselves are checked by
-      # `render:bpmn:check`; this checks the README that shows them.
-      - name: bootstrap's README generated sections are current
-        run: bun run readme:sync:bootstrap:check
+      # bootstrap's README is NOT checked here: owner ruling 2026-10-01, "each
+      # repo owns its README" — bootstrap's own CI checks it (litlfred/bootstrap#1,
+      # check.yml). `readme:sync:all:check` above skips submodule roots (bean kye5).
 
       # One README per LIBRARY ITEM, from its own manifest (bean `qgjh`, owner
       # 2026-09-30: "like bootstrap readmes"). BEFORE the directory READMEs:
@@ -1847,6 +1891,20 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # THE job that runs the nine bean gates — they moved here with the rest
+      # of the block when `dlqu` split this job out of `gates`, so this is
+      # where the mount has to be. I put it in `gates` and the test shards
+      # first and `check:workflows`' new `bean-gate-unmounted` rule caught the
+      # miss on the first run, which is the whole argument for the rule being
+      # a rule rather than a careful reading: the mount is PER JOB, and a job
+      # named for what it runs rather than for what it reads does not say so.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: gates that were registered and never run
         run: |
           set -e
@@ -2154,6 +2212,10 @@ jobs:
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
           bun run smart-base:document-kinds:check
+          # A section's computedFrom names a graph its instance declares or
+          # inherits (bean qvxh): "computable from these assets" is a claim,
+          # and a claim nothing checks is prose.
+          bun run check:document-kind-sources
           # smart-kg L1 documents kept beside library entries (bean 8pzh):
           # stale the moment a section text or structure.json they read changes.
           bun run smart-base:smart-kg-l1:check
@@ -2161,6 +2223,11 @@ jobs:
           # candidate list or the authored alternatives change, and red when a
           # quote no longer matches the section it cites.
           bun run smart-base:dth-terms:check
+          # DIIG Fig. 1.1.1 as SVG (bean 70zt), the one rendering the DTHs point at.
+          # CI has no source PDF, so this checks what it can without one: the
+          # crop still matches vector-figures.json and the drawing is unedited.
+          # Byte-identical regeneration runs wherever the PDF is present.
+          bun run smart-base:diig-figure:check
           bun run document-kinds:viz:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated
@@ -2449,6 +2516,10 @@ jobs:
           bun run kg:export:judge
           bun run check:xml-comments
           bun run check:orphan-verdicts
+          # Every QA judgement is held in the attestation store (beans `2gst`,
+          # `8wj1`, D2): no kg-qa sidecar still carries one, and every non-script
+          # block/translation verdict in a derived report is held there too.
+          bun run qa:attestations:migrate:check
           bun run check:partition
           # Every XML namespace the corpus declares is reconciled against a
           # specification record naming its EDITION. Added with the registry
@@ -2479,7 +2550,7 @@ jobs:
           # because it reads as current. It also reports an ORPHAN -- a
           # sub-graph page whose sub-graph now contributes nothing -- which is
           # `ankg`'s helper doing its job in a third generator.
-          bun run docs:auto:check
+          bun run auto:docs:check
           bun run gen:jsonld:check
           bun run readme:sync:check
           bun run avatars:css:check
@@ -2673,6 +2744,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: Install Chromium
         run: npx --yes playwright install --with-deps chromium
 
@@ -2812,6 +2889,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
       # job behind `bun test`, which runs the kg-audit and detangle WRITERS and
@@ -2861,10 +2944,17 @@ jobs:
     # decides that itself and exits 0 with a `::notice` naming the reason, so
     # the skip is stated, never silent and never a red run.
     #
-    # It publishes what the checkout holds under every declared `qa` directory.
-    # While `test/results/` is still committed, that is the committed content;
-    # once a directory declares `storage`, the gates job must hand its working
-    # copy over (an artifact) before this publishes anything the run produced.
+    # ## What it publishes — `qa:refresh` decides, and says whether it is whole
+    #
+    # Bean `3hk4`. While `test/results/` is still tracked, the commit's own
+    # copy IS the record and nothing is regenerated (`5hox` needs `main/<sha>`
+    # byte-identical to it). Once `5hox` removes it, a fresh checkout holds one
+    # file there, so `qa:refresh` runs the declared QA writers into the empty
+    # tree first. Not an artifact from `gates`: its gates are in judge mode and
+    # write nothing, so its working copy is this checkout's. A refresh that
+    # leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE,
+    # this job fails, and `qa:publish --completeness` refuses to store it — a
+    # partial entry is never published as if it were the commit's record.
     needs: [gates]
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
     runs-on: ubuntu-latest
@@ -2912,11 +3002,50 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
+      # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
+      # owner ruling 2026-10-01: keep the file, give it a producer). Both
+      # deploys publish bootstrap through bootstrap-tools' `export-graph.ts`,
+      # which writes no QA sidecar, so before this step only a hand run wrote
+      # it and `check:published-instance-exports` reported "no workflow
+      # producer". Run here, before the publish, so what reaches `qa-reports`
+      # is this commit's export. The document goes to the runner's temp dir:
+      # the sidecar is the product. That gate reads this line as the producer.
+      - name: Regenerate the bootstrap kg-export QA sidecar
+        run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
+
       # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
       # splice, `commit-tree -p`, push without `-f`, three attempts with the
       # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
       # (`qa-reports-unretried`).
+      # Bean `3hk4`. Tracked copy present: accounts for it and runs nothing.
+      # Absent (after `5hox`): runs every writer in `QA_WRITERS`
+      # (`qa-refresh.ts`) into the empty tree, then checks each wrote and every
+      # file is claimed. Exit 1 on an incomplete tree fails the job here, so
+      # the publish below never runs on it. After the kg-export step above,
+      # whose sidecar it accounts for as an `external` family.
+      - name: Produce this run's QA working copy, and say whether it is complete
+        run: bun run qa:refresh --github --report "$RUNNER_TEMP/qa-refresh.json"
+
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:
           GATES_RESULT: ${{ needs.gates.result }}
-        run: bun run qa:publish --github --gates-result "$GATES_RESULT"
+        run: bun run qa:publish --github --completeness "$RUNNER_TEMP/qa-refresh.json" --gates-result "$GATES_RESULT"
+
+      # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did
+      # over the committed tree — every kg-qa sidecar validates, no critical
+      # criterion fails, every home carries its manifest, no conflict marker,
+      # every badge's witness is there — run over the entry this job just
+      # stored, read back through qa-store. It walks every HOSTED home
+      # (`cat-harness/test/results/bootstrap/`, …), which the old test never
+      # did. It keys the entry exactly as the publish does, so a fork PR skips
+      # with the same stated notice; any other miss is UNKNOWN (exit 2), never
+      # a pass. In this job, not in `gates`, because it judges the STORED
+      # record, which exists only after the publish.
+      - name: The stored QA entry validates, hosted homes included
+        run: bun run check:qa-corpus --github

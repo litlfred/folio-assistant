@@ -173,6 +173,13 @@ export interface ActorDefinition {
    * `schemas/actor-reach.ts`.
    */
   reach?: NetworkReach;
+  /**
+   * The system-under-test facet — present when this actor can be executed
+   * against a `test-plan/v1` (bean `3o5b`). `agent` and `system` actors only;
+   * reach is the actor's own {@link ActorDefinition.reach}, never restated.
+   * See `SystemUnderTestFacetSchema` in `skill-package.ts`.
+   */
+  systemUnderTest?: SystemUnderTestFacet;
   /** Arbitrary metadata (e.g., MCP endpoint, config path). */
   meta?: Record<string, unknown>;
 }
@@ -348,7 +355,7 @@ export interface SkillDependency {
  * **Reinstating it means writing the consumer first.** A field whose only
  * justification is a generator that does not run is how this one lasted.
  */
-import type { ActorKind, LifecycleStage, SkillPackageManifest } from "./skill-package.js";
+import type { ActorKind, LifecycleStage, SkillPackageManifest, SystemUnderTestFacet } from "./skill-package.js";
 import type { NetworkReach } from "./cat-harness.js";
 
 export interface SkillSchemaRef {
