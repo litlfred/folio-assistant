@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4j86
 title: 'STAGING CONE (file level): a preview rebuilds only what a PR''s changed files can reach — general rule, in the skills'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-04T15:04:45Z
+updated_at: 2026-10-04T16:20:43Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-nama
