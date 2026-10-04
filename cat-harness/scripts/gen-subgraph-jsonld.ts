@@ -33,7 +33,8 @@
  * Above every root is the REPOSITORY's index, `<BASE_URL>/subgraph/`, whose
  * `hasSubgraph` are the roots framed here. `bootstrap` and `bootstrap-tools`
  * are not among them: they sit below this instance and publish through their
- * own graph (`pve3`).
+ * own graph (`pve3`). Their own repository indexes are linked from it with
+ * `rdfs:seeAlso` (bean `t8c4`) — a link a reader may follow, never membership.
  *
  * Transitive membership is not a second property. It is `hasMember` followed
  * through `hasSubgraph`, which is exactly what the hydrated file nests.
@@ -94,8 +95,10 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, wri
 import { basename, dirname, extname, join, relative, resolve, sep } from "node:path";
 import jsonld from "jsonld";
 import { buildContext, buildExport, graphKindId } from "./kg-export.js";
-import { corpusScopeFor, kgDirectories } from "./known-skills.js";
-import { checkoutRootFor, findInstanceRoot, readDeclaration } from "../schemas/cat-harness.js";
+import { corpusScopeFor, kgDirectories, workflowFiles } from "./known-skills.js";
+import { checkoutRootFor, findInstanceRoot, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
+import { readKnowledgeGraphDeclaration } from "../../bootstrap-tools/schemas/declaration.ts";
+import { publicationBase } from "../../bootstrap-tools/scripts/subgraph-jsonld.ts";
 import { gitCorpus } from "../schemas/git-corpus.js";
 import { propertyIri, termIri } from "../schemas/namespaces.js";
 import {
@@ -279,6 +282,7 @@ export function subgraphContext(): Record<string, unknown> {
   }
   ctx.hasMember = { "@id": propertyIri("hasMember"), "@type": "@id", "@container": "@set" };
   ctx.hasSubgraph = { "@id": propertyIri("hasSubgraph"), "@type": "@id", "@container": "@set" };
+  ctx.seeAlso = { "@id": "http://www.w3.org/2000/01/rdf-schema#seeAlso", "@type": "@id", "@container": "@set" };
   // Not `@type: @id`: the value is a node object — the payload's IRI plus its
   // digest and size — so a consumer can verify a fetch without a second one.
   ctx.payload = { "@id": propertyIri("payload") };
@@ -336,6 +340,12 @@ export interface SubgraphPlan {
   repoName: string;
   /** Every harness root this build frames: this instance's first, then each overlaid one by name. */
   harnessRoots: string[];
+  /**
+   * The repository indexes of instances in this checkout that declare
+   * diagrams this build does not frame — bootstrap's, published by
+   * bootstrap-tools at its own site (bean `t8c4`). Written as `seeAlso`.
+   */
+  seeAlso: string[];
   contextUrl: string;
   subgraphs: Map<string, SubgraphEntry>;
   nodes: Map<string, Node>;
@@ -550,11 +560,31 @@ export function planSubgraphs(
     repoIri: `${base}/subgraph/`,
     repoName,
     harnessRoots: roots,
+    seeAlso: unframedRepoIndexes(repoRoot, new Set(harnessRoots.keys())),
     contextUrl: `${base}/${SUBGRAPH_CONTEXT_PATH}`,
     subgraphs,
     nodes,
     problems,
   };
+}
+
+/**
+ * Where an instance this build does not frame publishes its own subgraphs:
+ * `<its publication base>subgraph/`, by the same rule bootstrap-tools
+ * publishes with (`publicationBase`), so the address is derived from its
+ * declaration and never written here. Only an instance that declares a
+ * diagram is linked — the reader follows the link for processes, and a link
+ * to a site with none would be a fetch for nothing.
+ */
+export function unframedRepoIndexes(repoRoot: string, framed: ReadonlySet<string>): string[] {
+  const out = new Set<string>();
+  for (const inst of instanceRootsIn(repoRoot)) {
+    if (framed.has(resolve(inst))) continue;
+    if (!workflowFiles(inst, "instance").some((f) => f.endsWith(".bpmn"))) continue;
+    const base = publicationBase(readKnowledgeGraphDeclaration(inst));
+    if (base) out.add(`${base}subgraph/`);
+  }
+  return [...out].sort();
 }
 
 function subgraphNode(e: SubgraphEntry): Node {
@@ -685,6 +715,7 @@ export async function renderSubgraphFiles(
       name: plan.repoName,
       path: "./",
       hasSubgraph: plan.harnessRoots,
+      ...(plan.seeAlso.length > 0 ? { seeAlso: plan.seeAlso } : {}),
     };
     const framed = (await jsonld.frame(
       { "@context": ctx, "@graph": [repoNode] } as never,

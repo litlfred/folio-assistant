@@ -15,7 +15,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
-import { declaredDiagrams, framedInstances, publishedProcesses } from "../check-process-index.ts";
+import { declaredDiagrams, framedInstances, publishedProcesses, unframedProcesses } from "../check-process-index.ts";
 import { firstSentence } from "../kg-export.ts";
 import { subgraphOutDir } from "../gen-subgraph-jsonld.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
@@ -125,6 +125,19 @@ describe("rows from a hydrated processes subgraph", () => {
   });
 });
 
+describe("a dependency's subgraph carries `source`, not `sourcePath` (t8c4)", () => {
+  test("the row's path and BPMN link come from the absolute `source` IRI", () => {
+    const api = viewerApi();
+    const src = "https://dep.test/processes/log-message.bpmn";
+    const rows = api.rowsFromHydrated({
+      "@id": "https://dep.test/subgraph/dep/processes/",
+      path: "processes/",
+      hasMember: [{ "@id": "https://dep.test/dep.jsonld#process/Log", "@type": "bootstrap:Process", name: "Log", summary: "Logs.", source: src }],
+    }, "dep");
+    expect(rows.map((r) => [r.path, r.source])).toEqual([[src, src]]);
+  });
+});
+
 describe("first sentence", () => {
   test("a summary is the documentation's first sentence", () => {
     expect(firstSentence("Own. More.")).toBe("Own.");
@@ -151,6 +164,19 @@ describe("the committed subgraph JSON-LD", () => {
     for (const [p, inst] of boot) {
       expect({ p, framed: framed.has(inst) }).toEqual({ p, framed: false });
     }
+  });
+  test("bootstrap's diagrams are covered through its OWN subgraphs, linked by `seeAlso` (t8c4)", () => {
+    const { seeAlso } = publishedProcesses(OUT);
+    const boot = [...declared].filter(([, inst]) => !framed.has(inst)).map(([p]) => p).sort();
+    const { byPath, problems: why } = unframedProcesses(seeAlso, framed, REPO);
+    expect(why).toEqual([]);
+    expect(boot.length).toBeGreaterThan(0);
+    expect([...byPath.keys()].sort()).toEqual(boot);
+    // A link, never membership: nothing of theirs is re-carried as ours.
+    for (const iri of seeAlso) expect(iri).toMatch(/^https:\/\/[^/]+\/[^/]+\/subgraph\/$/);
+  });
+  test("with no `seeAlso`, an unframed instance's diagrams are NOT counted", () => {
+    expect(unframedProcesses([], framed, REPO).byPath.size).toBe(0);
   });
   test("the shipped viewer reads the same rows from the same files", () => {
     const api = viewerApi();

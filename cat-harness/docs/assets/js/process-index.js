@@ -100,9 +100,11 @@
             summary: typeof m.summary === "string" && m.summary ? m.summary : "",
             group: group,
             instance: String(instance || ""),
-            path: String(m.sourcePath || ""),
+            // bootstrap's subgraphs carry `source` (an absolute IRI) and no
+            // `sourcePath` (bean `t8c4`); either identifies the diagram.
+            path: String(m.sourcePath || m.source || ""),
             svg: typeof m.depiction === "string" ? m.depiction : "",
-            source: typeof m.sourceUrl === "string" ? m.sourceUrl : "",
+            source: typeof m.sourceUrl === "string" ? m.sourceUrl : typeof m.source === "string" ? m.source : "",
             calls: [],
           });
         } else if (m.calledElement != null && m.partOf != null) {
@@ -315,13 +317,37 @@
       return;
     }
     var repoIri = String(repo["@id"] || "");
-    var roots = list(repo.hasSubgraph).map(function (iri) { return localUrl(iri, repoIri, srcDir, INDEX); }).filter(Boolean);
+    // Bean `t8c4`: an instance this graph does not frame (bootstrap, `pve3`)
+    // publishes its own subgraphs at its own site, and the repository index
+    // links each such site with `seeAlso`. Those are read where they are
+    // published — an absolute IRI, so a preview reads the live dependency —
+    // and their rows join this site's. A site that cannot be read is a
+    // failure note beside the table, never a silently shorter one.
+    var others = list(repo.seeAlso).map(String).filter(function (u) { return /^https:\/\/[^/]/i.test(u); });
+    var left = 1 + others.length;
+    var settle = function () { if (--left === 0) finish(repoIri); };
+    walkRepo(repo, repoIri, srcDir, settle);
+    others.forEach(function (iri) {
+      FA.fetchJson(iri + INDEX, function (doc, why2) {
+        if (!doc) { failures.push({ url: iri + INDEX, why: why2 }); return settle(); }
+        walkRepo(doc, String(doc["@id"] || iri), String(doc["@id"] || iri), settle);
+      });
+    });
+  });
+
+  /**
+   * One repository index down to its `processes` hydrated files, adding their
+   * rows. `dir` is where that repository's files are read from: this site's
+   * own directory for ours, the IRI itself for a `seeAlso` one.
+   */
+  function walkRepo(repo, repoIri, dir, done) {
+    var roots = list(repo.hasSubgraph).map(function (iri) { return localUrl(iri, repoIri, dir, INDEX); }).filter(Boolean);
     all(roots, function (rootDocs) {
       var tops = [];
       rootDocs.forEach(function (r) {
         if (!r) return;
         list(r.hasSubgraph).forEach(function (iri) {
-          var u = localUrl(iri, repoIri, srcDir, "");
+          var u = localUrl(iri, repoIri, dir, "");
           if (u) tops.push({ dir: u, instance: String(r.name || "") });
         });
       });
@@ -337,9 +363,9 @@
             instances[wanted[i].instance] = true;
             rows = rows.concat(rowsFromHydrated(h, wanted[i].instance));
           });
-          finish(repoIri);
+          done();
         });
       });
     });
-  });
+  }
 })();

@@ -207,8 +207,16 @@ export const SubgraphHydratedNodeSchema: z.ZodType<SubgraphHydratedNode> = z.laz
 /** The `@context` is a URL, never an inline object. */
 const ContextUrl = z.string().url();
 
-/** `index.jsonld`. */
-export const SubgraphIndexSchema = SubgraphIndexNodeSchema.extend({ "@context": ContextUrl }).strict();
+/**
+ * `index.jsonld`. `seeAlso` is the REPOSITORY level's only (bean `t8c4`): the
+ * repository indexes of instances in this checkout whose diagrams this build
+ * does not frame (`pve3` — bootstrap publishes through its own graph). A link,
+ * not membership: nothing here claims to hold their nodes.
+ */
+export const SubgraphIndexSchema = SubgraphIndexNodeSchema.extend({
+  "@context": ContextUrl,
+  seeAlso: z.array(z.string().url()).optional(),
+}).strict();
 export type SubgraphIndex = z.infer<typeof SubgraphIndexSchema>;
 
 /** `index.hydrated.jsonld`. */

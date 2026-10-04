@@ -21,17 +21,19 @@
  *   5. the page still carries the container the view mounts on, with a
  *      `<noscript>` fallback.
  *
- * ## What it does NOT cover, said rather than skipped
+ * ## Diagrams of instances this graph does not frame
  *
- * A diagram declared by an instance OUTSIDE this graph's corpus —
- * `bootstrap` and `bootstrap-tools`, which sit below this instance and whose
- * processes the `pve3` ruling keeps out of its graph (#432) — has no node
- * here and cannot have one without re-carrying bootstrap's process into the
- * root's graph. Those are LISTED on every run as not covered, with the
- * reason; the count is never folded into a clean total. Which instances are
- * outside is computed (`kgDirectories` over the corpus `kg-export` reads),
- * not named here, so a new instance in the corpus that is missing from the
- * files fails rather than being excused.
+ * `bootstrap` and `bootstrap-tools` sit below this instance, and the `pve3`
+ * ruling keeps their processes out of its graph (#432). They publish their
+ * OWN subgraphs at their own sites (bootstrap-tools#7), and the repository
+ * index links each with `seeAlso` (bean `t8c4`). Such a diagram is covered
+ * when that link is there AND the build that publishes those subgraphs —
+ * bootstrap-tools' `buildSubgraphs`, run here in process, nothing fetched —
+ * holds a documented Process node for it, keyed by its `source` IRI (those
+ * files carry no `sourcePath`). An unframed instance with no such link is
+ * LISTED as not covered, with the reason, and never folded into a clean
+ * total. Which instances are unframed is computed (`kgDirectories` over the
+ * corpus `kg-export` reads), not named here.
  *
  * Staleness (the files differ from what the generator writes now) is
  * `subgraph:jsonld:check`'s, not this gate's.
@@ -50,6 +52,8 @@ import { corpusScopeFor, kgDirectories, workflowFiles } from "./known-skills.ts"
 import { SubgraphHydratedSchema, SubgraphIndexSchema, SUBGRAPH_HYDRATED_FILE, SUBGRAPH_INDEX_FILE } from "../schemas/subgraph-manifest.ts";
 import { findInstanceRoot, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { subgraphOutDir } from "./gen-subgraph-jsonld.ts";
+import { readKnowledgeGraphDeclaration } from "../../bootstrap-tools/schemas/declaration.ts";
+import { buildSubgraphs, publicationBase } from "../../bootstrap-tools/scripts/subgraph-jsonld.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
@@ -89,7 +93,7 @@ export interface PublishedProcess { id: string; sourcePath: string; summary?: st
  * Every Process in every `processes` subgraph the repository index reaches,
  * read from the files on disk, plus what could not be read.
  */
-export function publishedProcesses(outDir: string = OUT): { processes: PublishedProcess[]; problems: string[]; repoIri?: string } {
+export function publishedProcesses(outDir: string = OUT): { processes: PublishedProcess[]; problems: string[]; repoIri?: string; seeAlso: string[] } {
   const problems: string[] = [];
   const processes: PublishedProcess[] = [];
   const read = (abs: string, schema: typeof SubgraphIndexSchema | typeof SubgraphHydratedSchema): Doc | undefined => {
@@ -100,7 +104,7 @@ export function publishedProcesses(outDir: string = OUT): { processes: Published
     return doc;
   };
   const repo = read(join(outDir, SUBGRAPH_INDEX_FILE), SubgraphIndexSchema);
-  if (!repo) return { processes, problems };
+  if (!repo) return { processes, problems, seeAlso: [] };
   const repoIri = String(repo["@id"]);
   const fileOf = (iri: string, file: string): string | undefined => {
     if (!iri.startsWith(repoIri)) { problems.push(`${iri} is not under the repository's subgraph IRI ${repoIri}`); return undefined; }
@@ -133,13 +137,65 @@ export function publishedProcesses(outDir: string = OUT): { processes: Published
       walk(hyd);
     }
   }
-  return { processes, problems, repoIri };
+  return { processes, problems, repoIri, seeAlso: list(repo.seeAlso).map(String) };
+}
+
+/**
+ * The diagrams an instance this graph does NOT frame publishes as documented
+ * Process nodes in its OWN subgraphs (bean `t8c4`) — bootstrap's, which
+ * bootstrap-tools publishes at bootstrap's site. Counted only when the
+ * repository index links that site (`seeAlso`), since that link is how the
+ * page finds it. Computed with the build that publishes them, run here in
+ * process: nothing is fetched, so a gate does not depend on a site being up,
+ * and the files cannot vouch for themselves any more than ours can. Those
+ * files carry no `sourcePath`; a node is keyed by its `source` IRI under the
+ * instance's publication base.
+ */
+export function unframedProcesses(seeAlso: readonly string[], framed: ReadonlySet<string>, repoRoot: string = REPO): { byPath: Map<string, PublishedProcess>; problems: string[] } {
+  const byPath = new Map<string, PublishedProcess>();
+  const problems: string[] = [];
+  for (const inst of instanceRootsIn(repoRoot)) {
+    if (framed.has(resolve(inst))) continue;
+    const decl = readKnowledgeGraphDeclaration(inst);
+    const base = publicationBase(decl);
+    if (!decl || !base || !seeAlso.includes(`${base}subgraph/`)) continue;
+    let build: ReturnType<typeof buildSubgraphs>;
+    try {
+      build = buildSubgraphs(inst);
+    } catch (e) {
+      problems.push(`${decl.name}: its subgraphs could not be built — ${String(e)}`);
+      continue;
+    }
+    for (const p of build.problems) problems.push(`${decl.name}: ${p}`);
+    for (const [file, text] of build.files) {
+      if (!file.endsWith(`/${SUBGRAPH_HYDRATED_FILE}`)) continue;
+      const walk = (node: Doc): void => {
+        for (const m of list(node.hasMember) as Doc[]) {
+          if (!list(m["@type"]).some((t) => String(t).replace(/^.*[#:/]/, "") === "Process")) continue;
+          const source = typeof m.source === "string" ? m.source : "";
+          if (!source.startsWith(base)) { problems.push(`${String(m["@id"])}: its source ${JSON.stringify(source)} is not under ${base}`); continue; }
+          const path = repoRel(join(inst, source.slice(base.length)));
+          byPath.set(path, {
+            id: String(m["@id"]),
+            sourcePath: path,
+            summary: typeof m.summary === "string" ? m.summary : undefined,
+            harness: decl.name,
+          });
+        }
+        for (const c of list(node.hasSubgraph) as Doc[]) walk(c);
+      };
+      walk(JSON.parse(text) as Doc);
+    }
+  }
+  return { byPath, problems };
 }
 
 if (import.meta.main) {
-  const { processes, problems, repoIri } = publishedProcesses();
+  const { processes, problems, repoIri, seeAlso } = publishedProcesses();
   const declared = declaredDiagrams();
   const framed = framedInstances();
+  const unframed = unframedProcesses(seeAlso, framed);
+  problems.push(...unframed.problems);
   // A node's `sourcePath` is relative to the instance that EXPORTED it — this one.
   const byPath = new Map<string, PublishedProcess>();
   for (const p of processes) {
@@ -154,9 +210,13 @@ if (import.meta.main) {
       if (!local || !existsSync(local)) problems.push(`a Process node depicts an SVG that is not there: ${p.depiction}`);
     }
   }
+  for (const [path, p] of unframed.byPath) {
+    if (!declared.has(path)) problems.push(`a Process node for an undeclared diagram: ${path} (${p.id})`);
+    if (!p.summary) problems.push(`a Process node carries no documentation: ${path} — give the diagram a <bpmn:documentation> of its own`);
+  }
   const outside: string[] = [];
   for (const [path, inst] of declared) {
-    if (byPath.has(path)) continue;
+    if (byPath.has(path) || unframed.byPath.has(path)) continue;
     if (framed.has(inst)) problems.push(`declared but not a Process node in any published processes subgraph: ${path}`);
     else outside.push(`${path}  (${readDeclaration(inst)?.name ?? relative(REPO, inst)})`);
   }
@@ -167,7 +227,7 @@ if (import.meta.main) {
   if (!/<noscript>/.test(page)) problems.push(`${PAGE} has no <noscript> fallback for the process table`);
 
   if (outside.length) {
-    console.log(`Not covered — declared by an instance outside this graph (pve3: its processes publish through its own graph, which frames no subgraphs):`);
+    console.log(`Not covered — declared by an instance outside this graph whose own subgraphs the repository index does not link (pve3, t8c4):`);
     for (const o of outside.sort()) console.log(`  · ${o}`);
   }
   if (problems.length) {
@@ -176,7 +236,8 @@ if (import.meta.main) {
     process.exit(1);
   }
   console.log(
-    `Process index: ${processes.length} of ${declared.size} declared diagram(s) are documented Process nodes in the published subgraphs; ` +
-    `${outside.length} not covered (listed above); page mount present.`,
+    `Process index: ${processes.length + unframed.byPath.size} of ${declared.size} declared diagram(s) are documented Process nodes in the published subgraphs ` +
+    `(${unframed.byPath.size} in the subgraphs of instances this graph does not frame, linked by seeAlso); ` +
+    `${outside.length} not covered${outside.length ? " (listed above)" : ""}; page mount present.`,
   );
 }
