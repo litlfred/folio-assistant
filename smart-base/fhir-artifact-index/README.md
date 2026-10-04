@@ -14,5 +14,5 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `smart-base-artifact-index
 | [`menu.json`](menu.json) | data |  |
 | [`releases.json`](releases.json) | data |  |
 | [`upstream-report-CDHIv1toCDHIv2.md`](upstream-report-CDHIv1toCDHIv2.md) | "A draft issue for WorldHealthOrganization/smart-base. |  |
-| [`dak/`](dak/) | 138 files | |
+| [`dak/`](dak/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

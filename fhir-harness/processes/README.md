@@ -10,5 +10,5 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-harness-process
 
 | file | what it is | used by |
 |---|---|---|
-| [`content/`](content/) | 2 files | |
+| [`content/`](content/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

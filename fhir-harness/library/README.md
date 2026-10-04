@@ -10,7 +10,7 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `library`, holding `l
 
 | file | what it is | used by |
 |---|---|---|
-| [`cucumber-2024-gherkin-reference/`](cucumber-2024-gherkin-reference/README.md) | 68 files | |
-| [`hl7-2023-fhir-r5-testplan/`](hl7-2023-fhir-r5-testplan/README.md) | 50 files | |
-| [`isaitb-2026-interoperability-test-bed-readme/`](isaitb-2026-interoperability-test-bed-readme/README.md) | 83 files | |
+| [`cucumber-2024-gherkin-reference/`](cucumber-2024-gherkin-reference/README.md) | described in its own README | |
+| [`hl7-2023-fhir-r5-testplan/`](hl7-2023-fhir-r5-testplan/README.md) | described in its own README | |
+| [`isaitb-2026-interoperability-test-bed-readme/`](isaitb-2026-interoperability-test-bed-readme/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

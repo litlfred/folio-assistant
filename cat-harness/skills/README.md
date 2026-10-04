@@ -13,16 +13,16 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`skills.json`](skills.json) | data |  |
 | [`authoring/`](authoring/) | How content is written, reviewed and validated: the content-type adapters, the content lifecycle, editorial and voice review, and domain authoring (math, WHO SMART guidelines). | |
 | [`conduct/`](conduct/) | How an agent behaves in the harness: interaction, confirmation, memory, security, and what it may and may not do on its own. | |
-| [`conventions/`](conventions/) | 2 files | |
-| [`folio-core/`](folio-core/) | 6 files | |
-| [`framework/`](framework/) | 1 file | |
+| [`conventions/`](conventions/) | _nothing declares what this holds_ | |
+| [`folio-core/`](folio-core/) | _nothing declares what this holds_ | |
+| [`framework/`](framework/) | _nothing declares what this holds_ | |
 | [`kg/`](kg/) | How the graph is declared, placed, read, restructured, exported and audited. | |
 | [`library/`](library/) | How sources are acquired, ingested, archived, catalogued and described. | |
-| [`permissions/`](permissions/) | 1 file | |
+| [`permissions/`](permissions/) | _nothing declares what this holds_ | |
 | [`process/`](process/) | How work is modelled and run: BPMN and DMN, roles and authorization, RACI, methodologies, and the workflow engine's state. | |
-| [`requirements/`](requirements/) | 7 files | |
+| [`requirements/`](requirements/) | _nothing declares what this holds_ | |
 | [`sdlc/`](sdlc/) | How work is planned, claimed, reviewed, merged, released and coordinated: the work plan, issues and PRs, CI and gates, requirements (CRDM, spec-kit), and multi-session coordination. | |
-| [`skill-definitions/`](skill-definitions/) | 2 files | |
+| [`skill-definitions/`](skill-definitions/) | _nothing declares what this holds_ | |
 | [`ui/`](ui/) | How the corpus is rendered, published and presented: the docs site, viewers, boards, themes, and their QC. | |
-| [`voices/`](voices/README.md) | 7 files | |
+| [`voices/`](voices/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

@@ -80,8 +80,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`todo-page.e2e.ts`](todo-page.e2e.ts) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
-| [`attestations/`](attestations/README.md) | 32 files | |
-| [`health/`](health/) | 8 files | |
-| [`results/`](results/README.md) | 1030 files | |
-| [`support/`](support/) | 6 files | |
+| [`attestations/`](attestations/README.md) | described in its own README | |
+| [`health/`](health/) | _nothing declares what this holds_ | |
+| [`results/`](results/README.md) | described in its own README | |
+| [`support/`](support/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

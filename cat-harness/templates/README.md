@@ -10,6 +10,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `folio-templates`, holdin
 
 | file | what it is | used by |
 |---|---|---|
-| [`document/`](document/) | 3 files | |
-| [`paper/`](paper/) | 13 files | |
+| [`document/`](document/) | _nothing declares what this holds_ | |
+| [`paper/`](paper/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

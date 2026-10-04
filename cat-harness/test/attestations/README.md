@@ -10,7 +10,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `attestations`, holdin
 
 | file | what it is | used by |
 |---|---|---|
-| [`block-qa/`](block-qa/) | 11 files | |
-| [`kg-qa/`](kg-qa/) | 19 files | |
-| [`translation-qa/`](translation-qa/) | 1 file | |
+| [`block-qa/`](block-qa/) | _nothing declares what this holds_ | |
+| [`kg-qa/`](kg-qa/) | _nothing declares what this holds_ | |
+| [`translation-qa/`](translation-qa/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

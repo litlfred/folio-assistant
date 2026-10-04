@@ -12,5 +12,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `uml`, holding `uml`.
 |---|---|---|
 | [`harness-object-model.puml`](harness-object-model.puml) | a file |  |
 | [`harness-schemas.puml`](harness-schemas.puml) | a file |  |
-| [`overview/`](overview/) | 262 files | |
+| [`overview/`](overview/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

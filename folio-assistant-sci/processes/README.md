@@ -10,5 +10,5 @@ Part of [folio-assistant-sci](../README.md) 0.1.0, declared as `sci-processes`, 
 
 | file | what it is | used by |
 |---|---|---|
-| [`content/`](content/) | 3 files | |
+| [`content/`](content/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

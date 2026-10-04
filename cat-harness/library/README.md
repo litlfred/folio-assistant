@@ -12,46 +12,46 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 |---|---|---|
 | [`figure-descriptions.json`](figure-descriptions.json) | data |  |
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
-| [`agent-skill-best-practices---gemini-cli/`](agent-skill-best-practices---gemini-cli/README.md) | 13 files | |
-| [`agent-skills---google-antigravity-docs/`](agent-skills---google-antigravity-docs/README.md) | 16 files | |
-| [`arxiv-0909.4061v2/`](arxiv-0909.4061v2/README.md) | 227 files | |
-| [`arxiv-2202.02427v1/`](arxiv-2202.02427v1/README.md) | 73 files | |
-| [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | 130 files | |
-| [`arxiv-2504.07199v3/`](arxiv-2504.07199v3/README.md) | 77 files | |
-| [`arxiv-2504.19675v2/`](arxiv-2504.19675v2/README.md) | 83 files | |
-| [`arxiv-2504.21474v1/`](arxiv-2504.21474v1/README.md) | 32 files | |
-| [`arxiv-2508.05192v2/`](arxiv-2508.05192v2/README.md) | 44 files | |
-| [`arxiv-2508.21620v2/`](arxiv-2508.21620v2/README.md) | 65 files | |
-| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | 258 files | |
-| [`arxiv-2605.03537v1/`](arxiv-2605.03537v1/README.md) | 62 files | |
-| [`arxiv-2606.04382v1/`](arxiv-2606.04382v1/README.md) | 77 files | |
-| [`arxiv-2607.14456v1/`](arxiv-2607.14456v1/README.md) | 104 files | |
-| [`arxiv-2607.20636v1/`](arxiv-2607.20636v1/README.md) | 462 files | |
-| [`arxiv-2607.25032v1/`](arxiv-2607.25032v1/README.md) | 43 files | |
-| [`arxiv-2608.08453v1/`](arxiv-2608.08453v1/README.md) | 67 files | |
-| [`best-practices---google-antigravity-docs/`](best-practices---google-antigravity-docs/README.md) | 16 files | |
-| [`deerwester-1990-indexing-by-lsa/`](deerwester-1990-indexing-by-lsa/README.md) | 107 files | |
-| [`dusengumuremyi-2026-ai-mediated-raci/`](dusengumuremyi-2026-ai-mediated-raci/README.md) | 29 files | |
-| [`equipping-agents-for-the-real-world-with-agent-skills-anthro/`](equipping-agents-for-the-real-world-with-agent-skills-anthro/README.md) | 52 files | |
-| [`gurel-tat-2017-swot-analysis/`](gurel-tat-2017-swot-analysis/README.md) | 61 files | |
-| [`hmans-2026-beans-readme/`](hmans-2026-beans-readme/README.md) | 47 files | |
-| [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | 72 files | |
-| [`landauer-foltz-laham-1998-intro-lsa/`](landauer-foltz-laham-1998-intro-lsa/README.md) | 128 files | |
-| [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | 1631 files | |
-| [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | 4 files | |
-| [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | 4 files | |
-| [`omg-2024-spdx-3-0/`](omg-2024-spdx-3-0/README.md) | 1234 files | |
-| [`qi-hessen-vanderheijden-2023-ca-vs-lsa/`](qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) | 78 files | |
-| [`rfc2119-key-words-requirement-levels/`](rfc2119-key-words-requirement-levels/README.md) | 22 files | |
-| [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | 28 files | |
-| [`sammut-bonnici-galea-2015-swot-analysis/`](sammut-bonnici-galea-2015-swot-analysis/README.md) | 34 files | |
-| [`skill-authoring-best-practices---claude-platform-docs/`](skill-authoring-best-practices---claude-platform-docs/README.md) | 106 files | |
-| [`skills-in-openai-api/`](skills-in-openai-api/README.md) | 7 files | |
-| [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/README.md) | 41 files | |
-| [`strauch-carbno-2025-spdx-3-1-supply-chain/`](strauch-carbno-2025-spdx-3-1-supply-chain/README.md) | 70 files | |
-| [`w3c-2013-prov-o/`](w3c-2013-prov-o/README.md) | 105 files | |
-| [`w3c-2018-odrl-model-2-2/`](w3c-2018-odrl-model-2-2/README.md) | 206 files | |
-| [`w3c-2020-json-ld-1-1/`](w3c-2020-json-ld-1-1/README.md) | 501 files | |
-| [`w3c-2024-prov-jsonld/`](w3c-2024-prov-jsonld/README.md) | 220 files | |
-| [`wang-rangaiah-2026-mcdm-aggregation/`](wang-rangaiah-2026-mcdm-aggregation/README.md) | 138 files | |
+| [`agent-skill-best-practices---gemini-cli/`](agent-skill-best-practices---gemini-cli/README.md) | described in its own README | |
+| [`agent-skills---google-antigravity-docs/`](agent-skills---google-antigravity-docs/README.md) | described in its own README | |
+| [`arxiv-0909.4061v2/`](arxiv-0909.4061v2/README.md) | described in its own README | |
+| [`arxiv-2202.02427v1/`](arxiv-2202.02427v1/README.md) | described in its own README | |
+| [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | described in its own README | |
+| [`arxiv-2504.07199v3/`](arxiv-2504.07199v3/README.md) | described in its own README | |
+| [`arxiv-2504.19675v2/`](arxiv-2504.19675v2/README.md) | described in its own README | |
+| [`arxiv-2504.21474v1/`](arxiv-2504.21474v1/README.md) | described in its own README | |
+| [`arxiv-2508.05192v2/`](arxiv-2508.05192v2/README.md) | described in its own README | |
+| [`arxiv-2508.21620v2/`](arxiv-2508.21620v2/README.md) | described in its own README | |
+| [`arxiv-2602.12670v4/`](arxiv-2602.12670v4/README.md) | described in its own README | |
+| [`arxiv-2605.03537v1/`](arxiv-2605.03537v1/README.md) | described in its own README | |
+| [`arxiv-2606.04382v1/`](arxiv-2606.04382v1/README.md) | described in its own README | |
+| [`arxiv-2607.14456v1/`](arxiv-2607.14456v1/README.md) | described in its own README | |
+| [`arxiv-2607.20636v1/`](arxiv-2607.20636v1/README.md) | described in its own README | |
+| [`arxiv-2607.25032v1/`](arxiv-2607.25032v1/README.md) | described in its own README | |
+| [`arxiv-2608.08453v1/`](arxiv-2608.08453v1/README.md) | described in its own README | |
+| [`best-practices---google-antigravity-docs/`](best-practices---google-antigravity-docs/README.md) | described in its own README | |
+| [`deerwester-1990-indexing-by-lsa/`](deerwester-1990-indexing-by-lsa/README.md) | described in its own README | |
+| [`dusengumuremyi-2026-ai-mediated-raci/`](dusengumuremyi-2026-ai-mediated-raci/README.md) | described in its own README | |
+| [`equipping-agents-for-the-real-world-with-agent-skills-anthro/`](equipping-agents-for-the-real-world-with-agent-skills-anthro/README.md) | described in its own README | |
+| [`gurel-tat-2017-swot-analysis/`](gurel-tat-2017-swot-analysis/README.md) | described in its own README | |
+| [`hmans-2026-beans-readme/`](hmans-2026-beans-readme/README.md) | described in its own README | |
+| [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | described in its own README | |
+| [`landauer-foltz-laham-1998-intro-lsa/`](landauer-foltz-laham-1998-intro-lsa/README.md) | described in its own README | |
+| [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | described in its own README | |
+| [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | described in its own README | |
+| [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | described in its own README | |
+| [`omg-2024-spdx-3-0/`](omg-2024-spdx-3-0/README.md) | described in its own README | |
+| [`qi-hessen-vanderheijden-2023-ca-vs-lsa/`](qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) | described in its own README | |
+| [`rfc2119-key-words-requirement-levels/`](rfc2119-key-words-requirement-levels/README.md) | described in its own README | |
+| [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | described in its own README | |
+| [`sammut-bonnici-galea-2015-swot-analysis/`](sammut-bonnici-galea-2015-swot-analysis/README.md) | described in its own README | |
+| [`skill-authoring-best-practices---claude-platform-docs/`](skill-authoring-best-practices---claude-platform-docs/README.md) | described in its own README | |
+| [`skills-in-openai-api/`](skills-in-openai-api/README.md) | described in its own README | |
+| [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/README.md) | described in its own README | |
+| [`strauch-carbno-2025-spdx-3-1-supply-chain/`](strauch-carbno-2025-spdx-3-1-supply-chain/README.md) | described in its own README | |
+| [`w3c-2013-prov-o/`](w3c-2013-prov-o/README.md) | described in its own README | |
+| [`w3c-2018-odrl-model-2-2/`](w3c-2018-odrl-model-2-2/README.md) | described in its own README | |
+| [`w3c-2020-json-ld-1-1/`](w3c-2020-json-ld-1-1/README.md) | described in its own README | |
+| [`w3c-2024-prov-jsonld/`](w3c-2024-prov-jsonld/README.md) | described in its own README | |
+| [`wang-rangaiah-2026-mcdm-aggregation/`](wang-rangaiah-2026-mcdm-aggregation/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

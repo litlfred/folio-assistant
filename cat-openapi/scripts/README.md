@@ -13,5 +13,5 @@ Part of [C@T OpenAPI](../README.md) 0.1.0, declared as `cat-openapi-scripts`, ho
 | [`gen-openapi-pages.ts`](gen-openapi-pages.ts) | a file |  |
 | [`ingest-openapi.ts`](ingest-openapi.ts) | a file |  |
 | [`openapi.test.ts`](openapi.test.ts) | a file |  |
-| [`templates/`](templates/) | 2 files | |
+| [`templates/`](templates/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

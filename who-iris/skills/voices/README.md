@@ -10,7 +10,7 @@ Part of [WHO IRIS](../../README.md) 0.1.0, declared as `voices`, holding `voices
 
 | file | what it is | used by |
 |---|---|---|
-| [`who-editorial/`](who-editorial/) | 2 files | |
-| [`who-guideline-development/`](who-guideline-development/) | 2 files | |
-| [`who-publication-design/`](who-publication-design/) | 2 files | |
+| [`who-editorial/`](who-editorial/) | _nothing declares what this holds_ | |
+| [`who-guideline-development/`](who-guideline-development/) | _nothing declares what this holds_ | |
+| [`who-publication-design/`](who-publication-design/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

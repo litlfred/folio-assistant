@@ -11,5 +11,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-library`, 
 | file | what it is | used by |
 |---|---|---|
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
-| [`arxiv-2510.21603v1/`](arxiv-2510.21603v1/README.md) | 166 files | |
+| [`arxiv-2510.21603v1/`](arxiv-2510.21603v1/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

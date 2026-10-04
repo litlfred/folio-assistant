@@ -10,8 +10,8 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-uploads`, holding 
 
 | file | what it is | used by |
 |---|---|---|
-| [`9789241548960-eng/`](9789241548960-eng/) | 3 files | |
-| [`iris-home/`](iris-home/) | 2 files | |
-| [`who-pub-tps-931/`](who-pub-tps-931/) | 3 files | |
-| [`wpr-rdo-2020-003-eng/`](wpr-rdo-2020-003-eng/) | 10 files | |
+| [`9789241548960-eng/`](9789241548960-eng/) | _nothing declares what this holds_ | |
+| [`iris-home/`](iris-home/) | _nothing declares what this holds_ | |
+| [`who-pub-tps-931/`](who-pub-tps-931/) | _nothing declares what this holds_ | |
+| [`wpr-rdo-2020-003-eng/`](wpr-rdo-2020-003-eng/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

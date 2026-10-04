@@ -12,8 +12,8 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-docs`, holdi
 |---|---|---|
 | [`dak-api.md`](dak-api.md) | "The WHO SMART Trust IG's DAK API hub: its logical models, ValueSet schemas, JSON-LD vocabularies and enumeration endpoints." |  |
 | [`index.md`](index.md) | "All 678 artefacts of the WHO SMART Trust IG 1.8.0, reconstructed from its published output." |  |
-| [`artifact/`](artifact/) | 2144 files | |
-| [`assets/`](assets/) | 8 files | |
-| [`category/`](category/) | 1 file | |
-| [`menu/`](menu/) | 5 files | |
+| [`artifact/`](artifact/) | _nothing declares what this holds_ | |
+| [`assets/`](assets/) | _nothing declares what this holds_ | |
+| [`category/`](category/) | _nothing declares what this holds_ | |
+| [`menu/`](menu/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

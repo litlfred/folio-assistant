@@ -17,5 +17,5 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-site`, holding `do
 | [`item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html`](item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html) | a file |  |
 | [`item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html`](item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html) | a file |  |
 | [`item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html`](item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html) | a file |  |
-| [`dublin-core/`](dublin-core/) | 6 files | |
+| [`dublin-core/`](dublin-core/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

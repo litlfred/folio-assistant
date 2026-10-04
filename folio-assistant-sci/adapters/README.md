@@ -10,5 +10,5 @@ Part of [folio-assistant-sci](../README.md) 0.1.0, declared as `sci-adapters`, h
 
 | file | what it is | used by |
 |---|---|---|
-| [`paper/`](paper/) | 3 files | |
+| [`paper/`](paper/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

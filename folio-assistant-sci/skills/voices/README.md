@@ -10,7 +10,7 @@ Part of [folio-assistant-sci](../../README.md) 0.1.0, declared as `voices`, hold
 
 | file | what it is | used by |
 |---|---|---|
-| [`milnor/`](milnor/) | 2 files | |
+| [`milnor/`](milnor/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
 
 ## `milnor` — the Milnor Exposition Standard

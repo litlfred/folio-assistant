@@ -49,6 +49,6 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
-| [`lib/`](lib/) | 2 files | |
-| [`tests/`](tests/) | 7 files | |
+| [`lib/`](lib/) | _nothing declares what this holds_ | |
+| [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

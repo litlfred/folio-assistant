@@ -10,5 +10,5 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-scripts`, ho
 
 | file | what it is | used by |
 |---|---|---|
-| [`tests/`](tests/) | 1 file | |
+| [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

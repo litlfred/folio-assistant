@@ -489,6 +489,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   instructionsPath: { gloss: "Where a skill's instruction body lives, relative to the instance root." },
   readmePath: { gloss: "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory." },
   instructionLines: { gloss: "How long a skill's instruction body is." },
+  fileCount: { gloss: "How many committed files a declared directory holds, at any depth: published here rather than in its README, where a count conflicted on every merge (bean ba9e)." },
   hasIOContract: { gloss: "Whether a skill declares input and output schemas." },
   inputSchema: { gloss: "The published schema a skill's input must satisfy." },
   outputSchema: { gloss: "The published schema a skill's output satisfies." },

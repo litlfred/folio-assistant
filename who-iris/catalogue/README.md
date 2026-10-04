@@ -11,6 +11,6 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-catalogue`, holdin
 | file | what it is | used by |
 |---|---|---|
 | [`catalogue.json`](catalogue.json) | WHO IRIS — Institutional Repository for Information Sharing |  |
-| [`nodes/`](nodes/) | 13 files | |
-| [`records/`](records/) | 3 files | |
+| [`nodes/`](nodes/) | _nothing declares what this holds_ | |
+| [`records/`](records/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

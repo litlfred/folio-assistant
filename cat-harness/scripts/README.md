@@ -8,19 +8,19 @@ The platform's executable surface -- generators, checkers and the gate runner. T
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-scripts`, holding `code`.
 
-_493 files directly here, too many to list: 362 .ts, 46 .sh, 34 .bat, 32 .py, 16 .json, 1 .txt, 1 .ps1, 1 .mjs._
+_More than 150 files directly here, too many to list, of these kinds: .bat, .json, .mjs, .ps1, .py, .sh, .ts, .txt._
 
 | file | what it is | used by |
 |---|---|---|
-| [`ci/`](ci/) | 1 file | |
-| [`docker-latex-build/`](docker-latex-build/) | 3 files | |
-| [`eval/`](eval/) | 2 files | |
-| [`git-hooks/`](git-hooks/) | 5 files | |
-| [`knot-plots/`](knot-plots/) | 10 files | |
-| [`lib/`](lib/) | 16 files | |
-| [`partition/`](partition/) | 2 files | |
-| [`render-tex/`](render-tex/) | 2 files | |
-| [`templates/`](templates/) | 1 file | |
-| [`tests/`](tests/) | 590 files | |
-| [`translation/`](translation/README.md) | 14 files | |
+| [`ci/`](ci/) | _nothing declares what this holds_ | |
+| [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
+| [`eval/`](eval/) | _nothing declares what this holds_ | |
+| [`git-hooks/`](git-hooks/) | _nothing declares what this holds_ | |
+| [`knot-plots/`](knot-plots/) | _nothing declares what this holds_ | |
+| [`lib/`](lib/) | _nothing declares what this holds_ | |
+| [`partition/`](partition/) | _nothing declares what this holds_ | |
+| [`render-tex/`](render-tex/) | _nothing declares what this holds_ | |
+| [`templates/`](templates/) | _nothing declares what this holds_ | |
+| [`tests/`](tests/) | _nothing declares what this holds_ | |
+| [`translation/`](translation/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

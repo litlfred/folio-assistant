@@ -11,5 +11,5 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `methodologies`, holding `
 | file | what it is | used by |
 |---|---|---|
 | [`diig.md`](diig.md) | DIIG — the investment path from a health system bottleneck to a costed plan |  |
-| [`processes/`](processes/README.md) | 2 files | |
+| [`processes/`](processes/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

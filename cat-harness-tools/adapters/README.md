@@ -10,5 +10,5 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 
 | file | what it is | used by |
 |---|---|---|
-| [`mcp-server/`](mcp-server/) | 16 files | |
+| [`mcp-server/`](mcp-server/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

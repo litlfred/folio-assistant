@@ -10,9 +10,9 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-skills`, hol
 
 | file | what it is | used by |
 |---|---|---|
-| [`content/`](content/) | 5 files | |
-| [`fhir-client/`](fhir-client/) | 3 files | |
-| [`fhir-ig-base/`](fhir-ig-base/) | 8 files | |
-| [`remote-packages/`](remote-packages/) | 1 file | |
-| [`skill-definitions/`](skill-definitions/) | 4 files | |
+| [`content/`](content/) | _nothing declares what this holds_ | |
+| [`fhir-client/`](fhir-client/) | _nothing declares what this holds_ | |
+| [`fhir-ig-base/`](fhir-ig-base/) | _nothing declares what this holds_ | |
+| [`remote-packages/`](remote-packages/) | _nothing declares what this holds_ | |
+| [`skill-definitions/`](skill-definitions/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

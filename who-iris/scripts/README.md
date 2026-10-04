@@ -11,5 +11,5 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-scripts`, holding 
 | file | what it is | used by |
 |---|---|---|
 | [`gen-iris-pages.ts`](gen-iris-pages.ts) | a file |  |
-| [`tests/`](tests/) | 2 files | |
+| [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

@@ -15,5 +15,5 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-artifact-ind
 | [`menu.json`](menu.json) | data |  |
 | [`package.tgz`](package.tgz) | a file |  |
 | [`releases.json`](releases.json) | data |  |
-| [`dak/`](dak/) | 70 files | |
+| [`dak/`](dak/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

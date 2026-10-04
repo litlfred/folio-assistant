@@ -12,10 +12,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 |---|---|---|
 | [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |
 | [`processes.json`](processes.json) | data |  |
-| [`content/`](content/) | 4 files | |
-| [`kg/`](kg/) | 10 files | |
-| [`library/`](library/) | 14 files | |
-| [`process/`](process/) | 12 files | |
-| [`sdlc/`](sdlc/) | 29 files | |
-| [`ui/`](ui/) | 4 files | |
+| [`content/`](content/) | _nothing declares what this holds_ | |
+| [`kg/`](kg/) | _nothing declares what this holds_ | |
+| [`library/`](library/) | _nothing declares what this holds_ | |
+| [`process/`](process/) | _nothing declares what this holds_ | |
+| [`sdlc/`](sdlc/) | _nothing declares what this holds_ | |
+| [`ui/`](ui/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

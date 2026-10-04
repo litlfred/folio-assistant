@@ -21,18 +21,18 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`server.ts`](server.ts) | a file |  |
 | [`tool-groups.ts`](tool-groups.ts) | a file |  |
 | [`types.ts`](types.ts) | a file |  |
-| [`auth/`](auth/) | 1 file | |
-| [`blocks/`](blocks/) | 3 files | |
-| [`core/`](core/) | 14 files | |
-| [`crdm/`](crdm/) | 1 file | |
-| [`docs/`](docs/) | 1 file | |
-| [`impact/`](impact/) | 1 file | |
-| [`issue-watch/`](issue-watch/) | 2 files | |
-| [`logging/`](logging/) | 2 files | |
-| [`mcp/`](mcp/) | 1 file | |
-| [`routes/`](routes/) | 5 files | |
-| [`sessions/`](sessions/) | 1 file | |
-| [`tools/`](tools/) | 21 files | |
-| [`upstream/`](upstream/) | 2 files | |
-| [`workflow/`](workflow/) | 14 files | |
+| [`auth/`](auth/) | _nothing declares what this holds_ | |
+| [`blocks/`](blocks/) | _nothing declares what this holds_ | |
+| [`core/`](core/) | _nothing declares what this holds_ | |
+| [`crdm/`](crdm/) | _nothing declares what this holds_ | |
+| [`docs/`](docs/) | _nothing declares what this holds_ | |
+| [`impact/`](impact/) | _nothing declares what this holds_ | |
+| [`issue-watch/`](issue-watch/) | _nothing declares what this holds_ | |
+| [`logging/`](logging/) | _nothing declares what this holds_ | |
+| [`mcp/`](mcp/) | _nothing declares what this holds_ | |
+| [`routes/`](routes/) | _nothing declares what this holds_ | |
+| [`sessions/`](sessions/) | _nothing declares what this holds_ | |
+| [`tools/`](tools/) | _nothing declares what this holds_ | |
+| [`upstream/`](upstream/) | _nothing declares what this holds_ | |
+| [`workflow/`](workflow/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

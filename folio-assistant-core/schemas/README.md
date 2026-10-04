@@ -32,5 +32,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, 
 | [`review-comment.ts`](review-comment.ts) | a file |  |
 | [`review-verdict.test.ts`](review-verdict.test.ts) | a file |  |
 | [`review-verdict.ts`](review-verdict.ts) | a file |  |
-| [`skills/`](skills/) | 10 files | |
+| [`skills/`](skills/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

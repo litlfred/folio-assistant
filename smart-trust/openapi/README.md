@@ -14,6 +14,6 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-openapi`, ho
 | [`gateway.jsonld`](gateway.jsonld) | data |  |
 | [`gateway.openapi.json`](gateway.openapi.json) | data |  |
 | [`gateway.source.json`](gateway.source.json) | Digital Documentation Covid Certificate Gateway |  |
-| [`assets/`](assets/) | 2 files | |
-| [`gateway/`](gateway/) | 67 files | |
+| [`assets/`](assets/) | _nothing declares what this holds_ | |
+| [`gateway/`](gateway/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

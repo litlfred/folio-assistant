@@ -10,42 +10,42 @@ Part of [folio-assistant-core](../../README.md) 0.1.0, declared as `voices`, hol
 
 | file | what it is | used by |
 |---|---|---|
-| [`address-adjudicator/`](address-adjudicator/) | 1 file | |
-| [`address-administrator/`](address-administrator/) | 1 file | |
-| [`address-author/`](address-author/) | 1 file | |
-| [`address-authoring-agent/`](address-authoring-agent/) | 1 file | |
-| [`address-business-analyst/`](address-business-analyst/) | 1 file | |
-| [`address-clinical-sme/`](address-clinical-sme/) | 1 file | |
-| [`address-code-reviewer/`](address-code-reviewer/) | 1 file | |
-| [`address-compute-authoring-agent/`](address-compute-authoring-agent/) | 1 file | |
-| [`address-deep-researcher/`](address-deep-researcher/) | 1 file | |
-| [`address-docs-authoring-agent/`](address-docs-authoring-agent/) | 1 file | |
-| [`address-editor/`](address-editor/) | 1 file | |
-| [`address-editorial-authoring-agent/`](address-editorial-authoring-agent/) | 1 file | |
-| [`address-evidence-agent/`](address-evidence-agent/) | 1 file | |
-| [`address-feedback-provider/`](address-feedback-provider/) | 1 file | |
-| [`address-fhir-modeller/`](address-fhir-modeller/) | 1 file | |
-| [`address-ingestion-agent/`](address-ingestion-agent/) | 1 file | |
-| [`address-integration-watcher/`](address-integration-watcher/) | 1 file | |
-| [`address-lean-authoring-agent/`](address-lean-authoring-agent/) | 1 file | |
-| [`address-librarian/`](address-librarian/) | 1 file | |
-| [`address-narrative-reviewer/`](address-narrative-reviewer/) | 1 file | |
-| [`address-onboarding-agent/`](address-onboarding-agent/) | 1 file | |
-| [`address-platform-authoring-agent/`](address-platform-authoring-agent/) | 1 file | |
-| [`address-programme-manager/`](address-programme-manager/) | 1 file | |
-| [`address-proof-review-agent/`](address-proof-review-agent/) | 1 file | |
-| [`address-publication-manager/`](address-publication-manager/) | 1 file | |
-| [`address-qc-reviewer/`](address-qc-reviewer/) | 1 file | |
-| [`address-review-coordinator/`](address-review-coordinator/) | 1 file | |
-| [`address-reviewer/`](address-reviewer/) | 1 file | |
-| [`address-session-coordinator/`](address-session-coordinator/) | 1 file | |
-| [`address-sibling-session/`](address-sibling-session/) | 1 file | |
-| [`address-stakeholder/`](address-stakeholder/) | 1 file | |
-| [`address-terminologist/`](address-terminologist/) | 1 file | |
-| [`address-translation-adjudicator/`](address-translation-adjudicator/) | 1 file | |
-| [`address-translation-coordinator/`](address-translation-coordinator/) | 1 file | |
-| [`address-translator/`](address-translator/) | 1 file | |
-| [`address-user/`](address-user/) | 1 file | |
-| [`linked-data/`](linked-data/) | 1 file | |
-| [`technical-writer/`](technical-writer/) | 1 file | |
+| [`address-adjudicator/`](address-adjudicator/) | _nothing declares what this holds_ | |
+| [`address-administrator/`](address-administrator/) | _nothing declares what this holds_ | |
+| [`address-author/`](address-author/) | _nothing declares what this holds_ | |
+| [`address-authoring-agent/`](address-authoring-agent/) | _nothing declares what this holds_ | |
+| [`address-business-analyst/`](address-business-analyst/) | _nothing declares what this holds_ | |
+| [`address-clinical-sme/`](address-clinical-sme/) | _nothing declares what this holds_ | |
+| [`address-code-reviewer/`](address-code-reviewer/) | _nothing declares what this holds_ | |
+| [`address-compute-authoring-agent/`](address-compute-authoring-agent/) | _nothing declares what this holds_ | |
+| [`address-deep-researcher/`](address-deep-researcher/) | _nothing declares what this holds_ | |
+| [`address-docs-authoring-agent/`](address-docs-authoring-agent/) | _nothing declares what this holds_ | |
+| [`address-editor/`](address-editor/) | _nothing declares what this holds_ | |
+| [`address-editorial-authoring-agent/`](address-editorial-authoring-agent/) | _nothing declares what this holds_ | |
+| [`address-evidence-agent/`](address-evidence-agent/) | _nothing declares what this holds_ | |
+| [`address-feedback-provider/`](address-feedback-provider/) | _nothing declares what this holds_ | |
+| [`address-fhir-modeller/`](address-fhir-modeller/) | _nothing declares what this holds_ | |
+| [`address-ingestion-agent/`](address-ingestion-agent/) | _nothing declares what this holds_ | |
+| [`address-integration-watcher/`](address-integration-watcher/) | _nothing declares what this holds_ | |
+| [`address-lean-authoring-agent/`](address-lean-authoring-agent/) | _nothing declares what this holds_ | |
+| [`address-librarian/`](address-librarian/) | _nothing declares what this holds_ | |
+| [`address-narrative-reviewer/`](address-narrative-reviewer/) | _nothing declares what this holds_ | |
+| [`address-onboarding-agent/`](address-onboarding-agent/) | _nothing declares what this holds_ | |
+| [`address-platform-authoring-agent/`](address-platform-authoring-agent/) | _nothing declares what this holds_ | |
+| [`address-programme-manager/`](address-programme-manager/) | _nothing declares what this holds_ | |
+| [`address-proof-review-agent/`](address-proof-review-agent/) | _nothing declares what this holds_ | |
+| [`address-publication-manager/`](address-publication-manager/) | _nothing declares what this holds_ | |
+| [`address-qc-reviewer/`](address-qc-reviewer/) | _nothing declares what this holds_ | |
+| [`address-review-coordinator/`](address-review-coordinator/) | _nothing declares what this holds_ | |
+| [`address-reviewer/`](address-reviewer/) | _nothing declares what this holds_ | |
+| [`address-session-coordinator/`](address-session-coordinator/) | _nothing declares what this holds_ | |
+| [`address-sibling-session/`](address-sibling-session/) | _nothing declares what this holds_ | |
+| [`address-stakeholder/`](address-stakeholder/) | _nothing declares what this holds_ | |
+| [`address-terminologist/`](address-terminologist/) | _nothing declares what this holds_ | |
+| [`address-translation-adjudicator/`](address-translation-adjudicator/) | _nothing declares what this holds_ | |
+| [`address-translation-coordinator/`](address-translation-coordinator/) | _nothing declares what this holds_ | |
+| [`address-translator/`](address-translator/) | _nothing declares what this holds_ | |
+| [`address-user/`](address-user/) | _nothing declares what this holds_ | |
+| [`linked-data/`](linked-data/) | _nothing declares what this holds_ | |
+| [`technical-writer/`](technical-writer/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

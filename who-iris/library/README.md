@@ -16,7 +16,7 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `library`, holding `library`
 | [`who-pub-tps-931-cover.png`](who-pub-tps-931-cover.png) | a file |  |
 | [`withheld.json`](withheld.json) | data |  |
 | [`wpr-rdo-2020-003-eng-cover.png`](wpr-rdo-2020-003-eng-cover.png) | a file |  |
-| [`9789241548960-eng/`](9789241548960-eng/README.md) | 758 files | |
-| [`who-pub-tps-931/`](who-pub-tps-931/README.md) | 488 files | |
-| [`wpr-rdo-2020-003-eng/`](wpr-rdo-2020-003-eng/README.md) | 122 files | |
+| [`9789241548960-eng/`](9789241548960-eng/README.md) | described in its own README | |
+| [`who-pub-tps-931/`](who-pub-tps-931/README.md) | described in its own README | |
+| [`wpr-rdo-2020-003-eng/`](wpr-rdo-2020-003-eng/README.md) | described in its own README | |
 <!-- kg:subgraph:end -->

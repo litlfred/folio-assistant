@@ -10,5 +10,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-adapters`,
 
 | file | what it is | used by |
 |---|---|---|
-| [`document/`](document/) | 14 files | |
+| [`document/`](document/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
