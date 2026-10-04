@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T12:25:29.997Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/68f9b048b3ae21d561e208e583e48347d61a60df",
-  "sourceCommitSha": "68f9b048b3ae21d561e208e583e48347d61a60df",
-  "sourceCommitAt": "2026-10-04T12:18:48Z",
+  "generatedAt": "2026-10-04T12:35:20.946Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7534ffcfd3447931ee58e9bad81dbb2f897b5947",
+  "sourceCommitSha": "7534ffcfd3447931ee58e9bad81dbb2f897b5947",
+  "sourceCommitAt": "2026-10-04T12:30:23Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1533,7 +1533,7 @@
       ],
       "description": "L1 source content: one `<bib-slug>/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \"nobody has done this\" while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice.",
       "readmePath": "library/README.md",
-      "fileCount": 3349,
+      "fileCount": 3350,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/library"
     },
     {
@@ -1730,8 +1730,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-thompson-y8dcf1-ba9e-site",
-    "sha": "a12399ba9c5b1663b39262d4bb938252685bdfc5",
+    "sha": "4203e4aaf9686d4a67fa92afaac2da0158cab13c",
     "pr": "2075/merge",
-    "run": "37201780155"
+    "run": "37202344270"
   }
 }

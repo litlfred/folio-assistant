@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T12:25:22.111Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/68f9b048b3ae21d561e208e583e48347d61a60df",
-  "sourceCommitSha": "68f9b048b3ae21d561e208e583e48347d61a60df",
-  "sourceCommitAt": "2026-10-04T12:18:48Z",
+  "generatedAt": "2026-10-04T12:35:13.096Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7534ffcfd3447931ee58e9bad81dbb2f897b5947",
+  "sourceCommitSha": "7534ffcfd3447931ee58e9bad81dbb2f897b5947",
+  "sourceCommitAt": "2026-10-04T12:30:23Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -468,7 +468,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Read before adding anything to fhir-harness.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 165,
+      "instructionLines": 168,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2275,7 +2275,7 @@
       ],
       "description": "The IG site pipeline's code and the Liquid templates it renders with: `stage-ig-sites.ts` stages each instance's IG as its own just-the-docs site, `build-ig-site.ts` turns an IG's `input/` and `sushi-config.yaml` into that site (navigation, colour scheme, the lifted `site.data.fhir` artefact variables, and the Publisher-generated pages `toc` and `artifacts`), `ig-site-data.ts` lifts the IG's `_data`, and `ig-ast.ts` lists, checks, diffs and renders IG ASTs. Templates sit under `templates/`, beside the writer that reads them (`liquid-templates`). Undeclared until 2026-10-01 while the Tool nodes in `tools/` invoked every one of these files: a `.liquid` file in an undeclared directory is one no checker looks at, which is what declaring it fixes.",
       "readmePath": "scripts/README.md",
-      "fileCount": 49,
+      "fileCount": 53,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts"
     },
     {
@@ -2336,8 +2336,8 @@
   ],
   "staging": {
     "branch": "claude/zealous-thompson-y8dcf1-ba9e-site",
-    "sha": "a12399ba9c5b1663b39262d4bb938252685bdfc5",
+    "sha": "4203e4aaf9686d4a67fa92afaac2da0158cab13c",
     "pr": "2075/merge",
-    "run": "37201780155"
+    "run": "37202344270"
   }
 }
