@@ -1,54 +1,97 @@
 /**
- * The LSI viewer page works for its reader, over the REAL committed indexes —
- * not only that it is current (`lsi:viz:check` asks that), but that what it
- * says resolves: every unit it names is a file in this checkout, every
- * committed index has its section, every declared prose graph has a verdict
- * row, and every table row has the columns its header promises.
+ * The LSI viewer page works for its reader: every unit it names is a file in
+ * this checkout, every index it reads has its section, every declared prose
+ * graph has a verdict row, and every table row has the columns its header
+ * promises.
+ *
+ * Drawn over a FIXTURE index, never over the committed `test/results/lsi/`
+ * (bean `cxcn`, reader audit F7 R69): that corpus is leaving `main` for the
+ * `qa-reports` branch, and a test that reads it fails for a reason that is not
+ * a defect once it has gone. Whether the committed PAGE matches the committed
+ * indexes is `lsi:viz:check`'s question — a gate, which reads the checkout or
+ * the branch and says UNKNOWN on a miss — and it is not re-asked here.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { render } from "../gen-lsi-viz.ts";
-import { proseGraphs } from "../lsi.ts";
+import { renderFrom, type IndexesRead } from "../gen-lsi-viz.ts";
+import { INDEX_DIR, proseGraphs, sourceFromFiles, type LsiSidecar } from "../lsi.ts";
 
 const REPO = resolve(import.meta.dir, "../../..");
-const page = render();
 
-function sidecarFiles(dir: string, out: string[] = []): string[] {
-  if (!existsSync(dir)) return out;
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    const p = join(dir, e.name);
-    if (e.isDirectory()) sidecarFiles(p, out);
-    else if (e.name.endsWith(".lsi.json")) out.push(p);
-  }
-  return out;
-}
+/** Two real skill files, so "every unit it names is a file" has something true to check. */
+const UNIT_A = "cat-harness/skills/sdlc/sdlc-core/qa-reports.md";
+const UNIT_B = "cat-harness/skills/sdlc/sdlc-core/qa-witness.md";
+
+const FIXTURE: LsiSidecar = {
+  $schema: "folio-lsi-index/v1",
+  method: "cat-harness/methodologies/lsi.md",
+  instance: "fixture-instance",
+  graph: "fixture-graph",
+  path: "cat-harness/skills",
+  docs: null,
+  fingerprint: "0".repeat(64),
+  options: { k: 2, weighting: "log-entropy", minDf: 2, maxDfShare: 0.5, powerIterations: 4, seed: 1990 },
+  units: 2,
+  terms: 3,
+  k: 2,
+  retained: 0.5,
+  dimensions: [
+    { dim: 1, sigma: 2.5, positive: ["qa", "branch"], negative: [] },
+    { dim: 2, sigma: 1.25, positive: ["witness"], negative: ["store|pipe"] },
+  ],
+  findings: {
+    nearDuplicates: [{ a: UNIT_A, b: UNIT_B, cosine: 0.97 }],
+    narrowDimensions: [{ dim: 2, units: [UNIT_B] }],
+  },
+  neighbours: {},
+};
+
+const FIXTURE_PATH = `${INDEX_DIR}/fixture-instance/fixture-graph.lsi.json`;
+const read: IndexesRead = {
+  state: "hit",
+  from: "a fixture",
+  files: [join(REPO, FIXTURE_PATH)],
+  src: sourceFromFiles(new Map([[FIXTURE_PATH, JSON.stringify(FIXTURE)]])),
+};
+const drawn = renderFrom(read);
+const page = drawn.state === "hit" ? drawn.page : "";
 
 describe("the LSI viewer page", () => {
-  test("is exactly what is committed", () => {
-    expect(readFileSync(join(REPO, "cat-harness/docs/lsi/index.md"), "utf8")).toBe(page);
+  test("a miss is returned with its reason, never drawn as an empty page", () => {
+    const miss = renderFrom({ state: "miss", reason: "no lsi/ in this entry" });
+    expect(miss).toEqual({ state: "miss", reason: "no lsi/ in this entry" });
   });
 
-  test("has a section for every committed index", () => {
-    const files = sidecarFiles(join(REPO, "cat-harness/test/results/lsi"));
-    expect(files.length).toBeGreaterThan(0);
-    for (const f of files) {
-      const s = JSON.parse(readFileSync(f, "utf8"));
-      expect(page).toContain("## " + s.instance + " / " + s.graph);
-    }
+  test("a hit is drawn", () => {
+    expect(drawn.state).toBe("hit");
+    expect(page.length).toBeGreaterThan(0);
+  });
+
+  test("has a section for every index it read", () => {
+    expect(page).toContain("## " + FIXTURE.instance + " / " + FIXTURE.graph);
+    // The stat tile counts what was READ, not what is committed.
+    expect(page).toContain("<b>1</b><span>committed indexes</span>");
   });
 
   test("has a verdict row for every declared prose graph", () => {
-    for (const t of proseGraphs()) expect(page).toContain("| `" + t.instance + "/" + t.id + "` |");
+    const graphs = proseGraphs();
+    expect(graphs.length).toBeGreaterThan(0);
+    for (const t of graphs) expect(page).toContain("| `" + t.instance + "/" + t.id + "` |");
   });
 
   test("every unit it names is a file in this checkout", () => {
     const named = [...page.matchAll(/`([^`\s]+\/sections\/[^`\s]+\.md|[^`\s]+\.md)`/g)].map((m) => m[1]).filter((p) => p.includes("/"));
-    expect(named.length).toBeGreaterThan(0);
-    for (const p of named) if (!p.startsWith("scripts/")) expect(existsSync(join(REPO, p))).toBe(true);
+    expect(named).toContain(UNIT_A);
+    for (const p of named) if (!p.startsWith("scripts/")) expect(existsSync(join(REPO, p!))).toBe(true);
   });
 
-  test("every table row has as many cells as its header", () => {
+  test("a dimension with no negative pole is flagged as a margin, not a theme", () => {
+    expect(page).toContain("Dimension 1 has **no negative pole**");
+  });
+
+  test("every table row has as many cells as its header — a `|` in a term is escaped", () => {
+    expect(page).toContain("store\\|pipe");
     let cols = 0;
     for (const line of page.split("\n")) {
       if (!line.startsWith("|")) { cols = 0; continue; }

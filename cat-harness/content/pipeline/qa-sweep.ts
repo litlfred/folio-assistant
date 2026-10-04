@@ -84,6 +84,7 @@ import { loadContributions } from "../../schemas/harness-config";
 import { ContributionRegistry, composedKindOwner, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 import { contributionsRoot } from "./repo-root";
 
 
@@ -388,6 +389,8 @@ async function run(): Promise<void> {
   let totalMajor = 0;
   let totalMinor = 0;
   let totalNeedsAgent = 0;
+  // Blocks NOT written because their attestations could not be read. Never a pass.
+  let attestationRefusals = 0;
 
   // `includeUnlabelled`: the sweep's question is "what prose ships?", not "what
   // is in the dependency graph". Unlabelled `prose()` blocks — chapter intros
@@ -420,7 +423,22 @@ async function run(): Promise<void> {
     // still beside their blocks keeps its history instead of this sweep
     // bootstrapping an empty report over it on first run.
     const qaPath = blockQaPath(contentRepoRoot, block.root);
-    const existingReport = loadQaReport(existingBlockQaPath(contentRepoRoot, block.root) ?? qaPath);
+    // The ATTESTATION half never comes from the prior report: it comes from the
+    // store (`qa-attestations.ts`, bean `8wj1`). With the prior absent, this
+    // used to write a report holding only script entries and drop every agent
+    // and human verdict without a word (C11). A store that cannot be read
+    // means this block is not written at all, and the run says UNKNOWN.
+    const attested = resolvePrior(
+      contentRepoRoot,
+      blockAttestationKey(contentRepoRoot, block.root),
+      loadQaReport(existingBlockQaPath(contentRepoRoot, block.root) ?? qaPath),
+    );
+    if (!attested.ok) {
+      console.error(refusalLine("qa-sweep", relative(contentRepoRoot, block.root), attested));
+      attestationRefusals++;
+      continue;
+    }
+    const existingReport = attested.prior;
     const newPaths = {
       ts: relative(contentRepoRoot, block.ts),
       md: block.md ? relative(contentRepoRoot, block.md) : undefined,
@@ -432,7 +450,7 @@ async function run(): Promise<void> {
       kind: block.kind,
       paths: newPaths,
       source_hashes: currentHashes,
-      criteria: {},
+      criteria: composeCriteria({}, attested.attestations),
       updated_at: nowIso,
     };
 
@@ -758,6 +776,19 @@ async function run(): Promise<void> {
     // Only advance the file's own timestamp when its content actually moved,
     // for the same reason.
     if (wroteSomething) report.updated_at = nowIso;
+    if (wroteSomething) {
+      try {
+        report.criteria = finalizeCriteria(attested, report.criteria, "script", { dryRun: args.dryRun });
+      } catch (err) {
+        console.error(refusalLine("qa-sweep", relative(contentRepoRoot, block.root), {
+          state: "unknown",
+          path: attested.path,
+          reason: err instanceof Error ? err.message : String(err),
+        }));
+        attestationRefusals++;
+        continue;
+      }
+    }
     if (!args.dryRun && wroteSomething) {
       saveQaReport(qaPath, report);
     }
@@ -887,6 +918,12 @@ async function run(): Promise<void> {
     }
   }
 
+  if (attestationRefusals > 0) {
+    console.error(
+      `qa-sweep: UNKNOWN — ${attestationRefusals} block(s) not written because their attestations could not be read; see above`,
+    );
+    process.exit(4);
+  }
   if (args.ci && totalCritical > 0) {
     process.exit(1);
   }

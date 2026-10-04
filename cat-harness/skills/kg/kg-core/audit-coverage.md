@@ -4,7 +4,7 @@ description: >
   Which audits reach which KIND of node, measured rather than inferred. Read
   before concluding that a corpus is unaudited, before writing a criterion for
   one, and before building any coverage report — the gate half must be declared,
-  an undeclared declarer is counted, and the committed record holds the relation
+  an undeclared declarer is counted, and the stored record holds the relation
   rather than the census.
 user_invocable: true
 ---
@@ -183,7 +183,11 @@ Exclude your own output, **derive the path from the constants that write it** so
 a relocation cannot leave the exclusion pointing elsewhere, and test that one run
 converges.
 
-### Commit the RELATION, print the census
+### Store the RELATION, print the census
+
+(The record was committed when this rule was written; it is now stored on the
+`qa-reports` branch keyed by commit. The rule is about what goes in it, and is
+unchanged.)
 
 The first version recorded `files` and `sidecars`. Two costs, and the second is
 the one that kills a gate:
@@ -201,7 +205,7 @@ coverage moves, which is when a reviewer needs the diff. One bit of the census �
 holds anything at all rather than on how much.
 
 **And that is this skill's own thesis applied to its own design.** A sidecar count
-is not a coverage measurement; committing one would have made the report depend on
+is not a coverage measurement; recording one would have made the report depend on
 the signal it exists to replace.
 
 ### A docblock that documents a tag necessarily contains the tag
@@ -216,11 +220,29 @@ side of the star.
 
 ## What `--check` fails on, and what it does not
 
-`--check` fails on a **stale sidecar** and **does not write**. The falsification
-pass caught the first version repairing the staleness it reported: red once, green
-on the rerun, the file still stale in the repository. **A checker that mutates its
-own subject cannot be falsified**, which is the one property
-[`generalise-the-fix`](../../sdlc/sdlc-core/generalise-the-fix.md) Move 3 asks a guard to have.
+`--check` **computes and judges, and writes nothing**. It fails on a finding
+that is **NEW** against a baseline — a kind that lost its audit, a gate that
+stopped declaring, in the commit under review — and not on its own sidecar
+being stale. Staleness stopped being a question when derived QA results moved
+to the `qa-reports` branch (arc `3fva`, bean `0dav`): nothing committed is
+left to be stale. The baseline is the committed working copy until bean
+`5hox` removes it, and `--against <ref>` (a `qa-reports` ref such as `main`)
+after. **A baseline that is not there is UNKNOWN** — printed, never a pass,
+never a failure, because an unwritten baseline is not this change's defect.
+
+It used to fail on a stale sidecar, and the falsification pass caught that
+first version repairing the staleness it reported: red once, green on the
+rerun, the file still stale in the repository. The lesson survives the move:
+**a checker that mutates its own subject cannot be falsified**, which is the one
+property [`generalise-the-fix`](../../sdlc/sdlc-core/generalise-the-fix.md)
+Move 3 asks a guard to have.
+
+**A kind whose directory is declared but absent from the checkout reads
+`unknown`, not `empty`** (the readers-audit's C8). With `test/results/` moved
+aside, `qa` and `health` read `empty, 0` before this state existed — an absent
+answer printed as a determined zero. A directory that declares `storage` reads
+`stored` instead: its files are on the branch, fetch them with `bun run
+qa:fetch`.
 
 The findings are reported and do not fail. `--strict` fails on an unaudited kind
 and `--require-all` on an undeclared gate, for the day each gap is meant to close.

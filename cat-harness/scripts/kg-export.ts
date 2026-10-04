@@ -121,7 +121,7 @@ import {
   judgementOf,
   judgeUsage,
   qaResultPath,
-  qaResultState,
+  judgeQaResult,
   readQaResult,
   writeQaResult,
   type Judgement,
@@ -3129,15 +3129,18 @@ async function sidecarMode(mode: "check" | "write", baseUrl: string | undefined)
         console.log(`  ✓ ${label} written`);
         continue;
       }
-      const state = qaResultState(qaResultPath(ROOT, s.stem), fresh);
-      if (state === "current") {
-        console.log(`  ✓ ${label} current (${fresh.producer.script_hash})`);
-      } else {
-        bad++;
-        const committed = readQaResult(qaResultPath(ROOT, s.stem));
-        const was = committed ? ` — committed hash ${committed.producer.script_hash}, true ${fresh.producer.script_hash}` : "";
-        console.log(`  ✗ ${label} ${state.toUpperCase()}${was}`);
-      }
+      // COMPUTE AND JUDGE (beans `0dav`, `oqe3`). This compared the fresh
+      // result with the committed sidecar, which reads UNKNOWN once the
+      // results directory declares `storage` (beans `16ei`/`5hox`): the
+      // working copy is no longer the record. Nothing in these sidecars is a
+      // finding the gate fails on, so the fresh result is judged and what
+      // moved against the baseline is reported; a missing one is UNKNOWN.
+      const v = judgeQaResult({
+        gate: `kg:export:check (${label})`,
+        fresh,
+        baseline: { root: ROOT, stem: s.stem, writer: "kg:export:sidecars" },
+      });
+      if (v.exit !== 0) bad++;
     }
   } finally {
     rmSync(tmp, { recursive: true, force: true });

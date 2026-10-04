@@ -38,6 +38,17 @@
  * `n/a`, not `pass`: a small graph was not judged to be fine, it was not
  * judged.
  *
+ * ## With no index directory in the checkout
+ *
+ * The sidecars and their run records are derived QA bound for the
+ * `qa-reports` branch (arc `3fva`, owner rulings D1/D4, bean `oq1j`). When
+ * `test/results/lsi/` is absent, {@link graphVerdict} REBUILDS the index in
+ * memory and judges that run, writing nothing (proposal §2.3: compute and
+ * judge): fresh by construction, or failed. It never reads the absence as
+ * "has none", and never as a pass it did not compute. A reader that wants the
+ * STORED indexes (the viewer page) fetches them by ref and passes them in as
+ * an {@link IndexSource}.
+ *
  * It REPORTS by default (exit 0 with findings), like `check:methodology-
  * evidence`; `--strict` fails on a needed-but-missing or stale index.
  */
@@ -46,7 +57,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 import { declaredGraphs, instanceRootsIn } from "../schemas/cat-harness";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
-import { downstreamState, readToolRun, writeToolRun, UNKNOWN_FINGERPRINT, type DownstreamState } from "../schemas/tool-run.ts";
+import { downstreamState, parseToolRun, toolRunPath, writeToolRun, TOOL_RUNS_DIR, UNKNOWN_FINGERPRINT, type DownstreamState } from "../schemas/tool-run.ts";
 import { specimenSections } from "../schemas/section-verdicts.ts";
 import {
   buildLsi,
@@ -223,7 +234,20 @@ function findings(index: LsiIndex) {
 
 // ─── Commands ────────────────────────────────────────────────────────────────
 
-export function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptions = DEFAULT_OPTS): LsiSidecar {
+/**
+ * Build the index sidecar for a graph IN MEMORY: no file, no run record.
+ *
+ * {@link index} is this plus the two writes. The readers that run with no
+ * index in the checkout recompute through here (bean `oq1j`): derived QA is
+ * leaving `main` for the `qa-reports` branch, and a rebuild costs about a
+ * second per graph (measured 2026-10-01: 0.6–5.5 s over the seven graphs that
+ * need one). It is memoised per process for the default options, so a reader
+ * that asks for the verdict and then the dimensions builds once.
+ */
+export function computeIndex(t: GraphTarget, docs?: string[], opts: LsiOptions = DEFAULT_OPTS): { sidecar: LsiSidecar; ms: number } {
+  const key = !docs?.length && opts === DEFAULT_OPTS ? targetOf(t) : undefined;
+  const hit = key ? computed.get(key) : undefined;
+  if (hit) return hit;
   const units = unitsOf(t.absPath, t.graphKinds, docs);
   const t0 = performance.now();
   const ix = buildLsi(units, opts);
@@ -249,15 +273,28 @@ export function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptio
     },
     neighbours: f.neighbours,
   };
+  const built = { sidecar, ms };
+  if (key) computed.set(key, built);
+  return built;
+}
+const computed = new Map<string, { sidecar: LsiSidecar; ms: number }>();
+
+export function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptions = DEFAULT_OPTS): LsiSidecar {
+  // A WRITE always rebuilds: the memo is for readers, and an index written
+  // after its graph changed in this process (`ingest --promote`) must not be
+  // the build from before the change.
+  computed.delete(targetOf(t));
+  const { sidecar, ms } = computeIndex(t, docs, opts);
   const out = sidecarPath(t, docs);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(sidecar, null, 2) + "\n");
   // The run record — only for a WHOLE-graph index, which is what the
   // freshness verdict is about; a `--doc` subset is a different output.
-  if (!docs?.length) writeToolRun(HARNESS, { tool: LSI_TOOL_ID, target: targetOf(t), outcome: "succeeded", inputFingerprint: ix.fingerprint });
+  if (!docs?.length) writeToolRun(HARNESS, { tool: LSI_TOOL_ID, target: targetOf(t), outcome: "succeeded", inputFingerprint: sidecar.fingerprint });
+  const f = sidecar.findings;
   console.log(
-    `${t.instance}/${t.id}${docs ? ` [${docs.join(", ")}]` : ""}: ${units.length} units, ${ix.terms.length} terms, k=${ix.k}, retained ${(ix.retained * 100).toFixed(1)}%, ${ms} ms` +
-      ` — ${f.dupes.length} near-duplicate pair(s), ${f.narrow.length} narrow dimension(s) → ${relative(REPO, out)}`,
+    `${t.instance}/${t.id}${docs ? ` [${docs.join(", ")}]` : ""}: ${sidecar.units} units, ${sidecar.terms} terms, k=${sidecar.k}, retained ${(sidecar.retained * 100).toFixed(1)}%, ${ms} ms` +
+      ` — ${f.nearDuplicates.length} near-duplicate pair(s), ${f.narrowDimensions.length} narrow dimension(s) → ${relative(REPO, out)}`,
   );
   return sidecar;
 }
@@ -325,27 +362,123 @@ export interface GraphVerdict {
   state?: DownstreamState;
 }
 
-/** Does this graph need an LSI index, and is the one it has fresh? One answer
- *  for `lsi:audit` and for kg:audit's `tool-downstream-fresh` (the
- *  `lsi-index` member, via `scripts/downstream-runs.ts`). */
-export function graphVerdict(t: GraphTarget): GraphVerdict {
+/**
+ * Does this graph NEED an index? A fact about the tree alone: no index file is
+ * read. `needed: false` carries the `n/a` verdict to report.
+ */
+export function needOf(t: GraphTarget): { needed: false; verdict: GraphVerdict } | { needed: true; units: LsiUnit[]; words: number } {
   const us = unitsOf(t.absPath, t.graphKinds);
   const units = us.length;
   const words = us.reduce((s, u) => s + tokenize(u.text).length, 0);
-  const sc = sidecarPath(t);
   if (t.graphKinds.some((k) => ON_DEMAND_KINDS.has(k)))
-    return { result: "n/a", detail: `state graph — indexed on demand, never committed (${units} units)`, stableDetail: "state graph — indexed on demand, never committed", units, words };
+    return { needed: false, verdict: { result: "n/a", detail: `state graph — indexed on demand, never committed (${units} units)`, stableDetail: "state graph — indexed on demand, never committed", units, words } };
   if (!(units >= NEED_UNITS && words >= NEED_WORDS))
-    return { result: "n/a", detail: `below threshold (${units} units, ${words} words)`, stableDetail: "below the need-an-index threshold — not judged", units, words };
+    return { needed: false, verdict: { result: "n/a", detail: `below threshold (${units} units, ${words} words)`, stableDetail: "below the need-an-index threshold — not judged", units, words } };
+  return { needed: true, units: us, words };
+}
+
+/**
+ * Is there an index directory in the checkout at all?
+ *
+ * Bean `oq1j` (arc `3fva`). The indexes and their run records are derived QA,
+ * bound for the `qa-reports` branch (owner rulings D1/D4). The DIRECTORY is
+ * the switch, not each file. With the directory present, a graph that needs
+ * an index and has none is still the finding it always was. With it absent,
+ * nothing in the checkout can be stale, so the verdict is computed instead
+ * (proposal §2.3: compute and judge).
+ */
+export function indexesInCheckout(): boolean {
+  return existsSync(RESULTS);
+}
+
+/** The index directory, repository-relative: its path in the checkout and on the `qa-reports` branch alike. */
+export const INDEX_DIR = relative(REPO, RESULTS).split("\\").join("/");
+/** The LSI run records' directory, repository-relative. */
+export const RUN_RECORD_DIR = relative(REPO, join(HARNESS, TOOL_RUNS_DIR, LSI_TOOL_ID)).split("\\").join("/");
+
+/**
+ * Where a verdict reads an index and its run record from.
+ *
+ * {@link CHECKOUT_SOURCE} is the working copy. A reader that fetched a tree
+ * from the `qa-reports` branch (`scripts/qa-store.ts` `readQaTree`) passes
+ * {@link sourceFromFiles} over it, and the verdict is then the one the
+ * checkout would give with that tree materialised: the same code over the
+ * fetched files, not a second reading of them.
+ */
+export interface IndexSource {
+  /** Is there an index directory in this source at all? `false` makes {@link graphVerdict} compute instead. */
+  present: boolean;
+  /** The text at a repository-relative path, or `undefined` when the source holds no such file. */
+  read(repoPath: string): string | undefined;
+}
+
+export const CHECKOUT_SOURCE: IndexSource = {
+  get present() {
+    return indexesInCheckout();
+  },
+  read(repoPath) {
+    const abs = join(REPO, repoPath);
+    return existsSync(abs) ? readFileSync(abs, "utf8") : undefined;
+  },
+};
+
+/** A tree read from the store, keyed by repository-relative path. Present by construction: it was fetched. */
+export function sourceFromFiles(files: ReadonlyMap<string, string>): IndexSource {
+  return { present: true, read: (p) => files.get(p) };
+}
+
+/** Does this graph need an LSI index, and is the one it has fresh? One answer
+ *  for `lsi:audit` and for kg:audit's `tool-downstream-fresh` (the
+ *  `lsi-index` member, via `scripts/downstream-runs.ts`). */
+export function graphVerdict(t: GraphTarget, src: IndexSource = CHECKOUT_SOURCE): GraphVerdict {
+  const need = needOf(t);
+  if (!need.needed) return need.verdict;
+  const us = need.units;
+  const units = us.length;
+  const words = need.words;
+  const sc = sidecarPath(t);
   const run = `bun run lsi index --instance ${t.instance} --graph ${t.id}`;
-  if (!existsSync(sc))
+  if (!src.present) {
+    // COMPUTE AND JUDGE. The run is this one: it either builds over the
+    // current inputs, which is fresh by construction, or it fails, which is
+    // never green. Nothing is written, so a `:check` stays a reader.
+    try {
+      computeIndex(t);
+      return {
+        result: "pass",
+        state: "fresh",
+        detail: `fresh — recomputed in this run (${units} units); no index in the checkout (${relative(REPO, RESULTS)}/ is absent) to be stale`,
+        stableDetail: "fresh — recomputed in this run; there is no index in the checkout to be stale",
+        units,
+        words,
+      };
+    } catch (e) {
+      return {
+        result: "fail",
+        state: "failed",
+        detail: `the index could not be built here — ${(e as Error).message}`,
+        stableDetail: `the index could not be built — run \`${run}\` to see why`,
+        units,
+        words,
+      };
+    }
+  }
+  const text = src.read(relative(REPO, sc).split("\\").join("/"));
+  if (text === undefined)
     return { result: "fail", state: "not-run", detail: `needs an index (${units} units, ${words} words) and has none`, stableDetail: `needs an LSI index and has none — run \`${run}\``, units, words };
   // FRESH needs a successful RUN RECORD over the current inputs, not just a
   // sidecar whose fingerprint matches: the sidecar says what an index was
   // built over, the record says the run that built it succeeded and is the
   // latest. No record is `not-run`, never green (bean `fq5u`).
-  const s = JSON.parse(readFileSync(sc, "utf8")) as LsiSidecar;
-  const state = downstreamState(readToolRun(HARNESS, LSI_TOOL_ID, targetOf(t)), fingerprintUnits(us, s.options));
+  let s: LsiSidecar;
+  try {
+    s = JSON.parse(text) as LsiSidecar;
+  } catch (e) {
+    // Unreadable is not "has none" and not fresh: a fail that says which.
+    return { result: "fail", state: "not-run", detail: `${relative(REPO, sc)} does not parse — ${(e as Error).message}`, stableDetail: `the index does not parse — re-run \`${run}\``, units, words };
+  }
+  const record = parseToolRun(src.read(relative(REPO, toolRunPath(HARNESS, LSI_TOOL_ID, targetOf(t))).split("\\").join("/")));
+  const state = downstreamState(record, fingerprintUnits(us, s.options));
   const said: Record<DownstreamState, [string, string]> = {
     fresh: [`fresh (${units} units)`, "fresh"],
     stale: [`stale — the graph changed since ${relative(REPO, sc)} was built`, `stale — re-run \`${run}\``],

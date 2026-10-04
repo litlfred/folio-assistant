@@ -249,7 +249,14 @@ that owns a whole README (bootstrap's schema page) keeps that region intact.
 no `title`, no `description` or a description over 60 words, every declared
 directory absent from disk, and every unmarked README. Findings are reported,
 not failed: filling a declaration is its owner's work. `--check` fails on a
-stale README or a stale record, and runs in CI and in the pre-commit hook
+stale README — the READMEs are docs, committed — and **judges** the record
+rather than comparing it: it fails on a declared directory newly absent or a
+process newly unresolved against a baseline, and a missing baseline is
+UNKNOWN and not gated (bean `0dav`). The record itself is a derived QA result
+whose home is the `qa-reports` branch (arc `3fva`), so it is not something to
+regenerate and commit. A `qa` or `health` directory absent from the checkout
+is not an absent-directory finding: those kinds are leaving `main`
+(`mayLeaveMain`). It runs in CI and in the pre-commit hook
 (`scripts/git-hooks/pre-commit`).
 
 ### Where the README render sits in the pipeline
