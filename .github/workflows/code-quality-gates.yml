@@ -419,6 +419,14 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # The same mount as the gates job, for the same reason one level down:
+      # the test files that read the LIVE store (`bean-store-hygiene`,
+      # `bean-front-matter`, `survey`, `merge-train`, …) assert over whatever
+      # `resolveBeanDefs` hands them, and after the cutover that is the mount.
+      # Inert while nothing is tip-keyed. Bean `9ofm`.
+      - name: state graphs on disk, or the run stops
+        run: bun run state:mount
+
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
       # ~97 % CPU until the job cap: on 2026-10-03 shard 1/2 of a 4-worker run
@@ -512,6 +520,33 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # EVERY declared tip-keyed graph on disk before any gate reads one —
+      # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
+      # covering the store when it moves".
+      #
+      # Nine bean gates run in this job (`check:bean-parents`, `bean-blocks`,
+      # `bean-rollup`, `bean-bodies`, `bean-front-matter`, `bean-issue-links`,
+      # `bean-archive`, `bean-parent-prose`, `bean-restates-skill`), and so do
+      # `check:harness-dirs`, `check:harness-state`, `kg:audit` and
+      # `audit:coverage`. Once `beans/` is kept at the tip of its own branch
+      # the checkout no longer carries it, and a gate that joined the path
+      # would judge an absent directory — `1xhc`, a step that did not fire
+      # looking exactly like one that passed, over the store eight of those
+      # gates exist to judge.
+      #
+      # It is INERT today and that is deliberate: while no declaration keeps a
+      # graph at a branch tip, `state:mount` reports `not-enabled` and exits 0
+      # (measured). It is added BEFORE the cutover rather than with it so that
+      # the one irreversible commit is the declaration and the `git rm`, and
+      # not also the CI change that has to be right for them.
+      #
+      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
+      # not determine" apart from "determined absent" and exits non-zero for
+      # either, so the gates below never run over a store this runner could
+      # not reach.
+      - name: state graphs on disk, or the run stops
+        run: bun run state:mount
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
