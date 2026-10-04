@@ -632,3 +632,6 @@ index because a table this size makes the front page unreadable.
 | [GDHCNParticipantDID-XYK-UAT-All](../artifact/Endpoint-GDHCNParticipantDID-XYK-UAT-All.html)<br>`Endpoint/GDHCNParticipantDID-XYK-UAT-All` | India Trustlist (DID v2) - UAT - All keys did:web:tng-cdn.who.int:v2:trustlist:-:XYK resolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/XYK/did.json |
 | [GDHCNParticipantDID-XYK-UAT-DSC](../artifact/Endpoint-GDHCNParticipantDID-XYK-UAT-DSC.html)<br>`Endpoint/GDHCNParticipantDID-XYK-UAT-DSC` |  |
 | [GDHCNParticipantDID-XYK-UAT-SCA](../artifact/Endpoint-GDHCNParticipantDID-XYK-UAT-SCA.html)<br>`Endpoint/GDHCNParticipantDID-XYK-UAT-SCA` |  |
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

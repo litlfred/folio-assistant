@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D2_Determine_required_vaccination_s_.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D2_Determine_required_vaccination_s_.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
+
+<footer id="ig-footer" data-prev="StructureDefinition-IMMZD18.html" data-next="StructureDefinition-IMMZD20.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

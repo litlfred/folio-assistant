@@ -37,3 +37,6 @@ This library defines decision support logic for the IMMZ.D18.S.Single-dose sched
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Library-IMMZD18SHPV2DosesLogic.html" data-next="Library-IMMZD18SJEInactivatedVeroCellDerivedVaccineLogic.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -303,3 +303,6 @@ index because a table this size makes the front page unreadable.
 | [WHOConcepts](../artifact/Library-WHOConcepts.html)<br>`Library/WHOConcepts` | This library defines common concepts used throughout WHO SMART Guidelines content |
 | [WHOElements](../artifact/Library-WHOElements.html)<br>`Library/WHOElements` | This library defines context-independent elements used throughout WHO SMART Guidelines content |
 | [WHOEncounterElements](../artifact/Library-WHOEncounterElements.html)<br>`Library/WHOEncounterElements` | This library defines encounter-based elements used throughout WHO SMART Guidelines content |
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

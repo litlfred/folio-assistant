@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTPolioContraindicationsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTPolioContraindicationsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTPolioContraindicationsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTPolioContraindicationsVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTPolioContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTPolioContraindicationsVS.jsonld` · [view](ValueSet-IMMZD5DTPolioContraindicationsVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD5DTPneumococcalContraindicationsVS.html" data-next="ValueSet-IMMZD5DTRabiesContraindicationsVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
