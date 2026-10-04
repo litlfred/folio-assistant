@@ -351,6 +351,26 @@
 </tbody>
 </table>
 
+<h2>Read it here</h2>
+<figure class="pdf-viewer" data-fa-pdf-viewer style="margin:1rem 0">
+<iframe title="Publication and information products style guide (PDF viewer)" data-src="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf" data-hash=""
+  style="width:100%;height:80vh;border:1px solid #ccc" loading="lazy"
+  allow="fullscreen" src="about:blank"></iframe>
+<figcaption style="font-size:.9em">Search, page jump, print and download are in the viewer's toolbar.
+  <a href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf" target="_blank" rel="noopener">Open the PDF on its own</a>
+  &middot; <a href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf" download>Download</a></figcaption>
+<script>(function(){
+var f=document.currentScript.parentNode.querySelector("iframe[data-src]");
+var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));
+if(!f)return;
+if(!m||m[1]==null){f.srcdoc="<p style=\"font:1rem system-ui\">The viewer could not find this site's root from the page address. Use the links below.</p>";return;}
+var url=m[1]+"assets/vendor/pdfjs/web/viewer.html"+"?src="+encodeURIComponent(f.getAttribute("data-src"))+f.getAttribute("data-hash");
+if(!("IntersectionObserver" in window)){f.src=url;return;}
+var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){io.disconnect();f.src=url;}},{rootMargin:"200px"});
+io.observe(f);
+})();</script>
+</figure>
+
 <h3>Both links, as asked for</h3>
 <table class="items">
 <thead><tr><th>Where</th><th>Link</th></tr></thead>
