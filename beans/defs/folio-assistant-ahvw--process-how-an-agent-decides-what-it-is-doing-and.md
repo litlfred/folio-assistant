@@ -3,8 +3,10 @@
 title: 'PROCESS: how an agent decides what it is doing, and what governs each step'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-10-04T15:12:14Z
+parent: folio-assistant-rwmf
 ---
 
 How an agent works out what it is doing, and what governs the step it is on.
