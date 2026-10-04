@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "30ce8b4d2652"
+    "script_hash": "085baa7c29a8"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 79,
+      "count": 76,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -52,21 +52,6 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "processes",
-          "path": "bootstrap/processes"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "models",
-          "path": "bootstrap/models"
-        },
-        {
-          "instance": "bootstrap-tools",
-          "directory": "bootstrap-tools-scripts",
-          "path": "bootstrap-tools/scripts"
         },
         {
           "instance": "cat-harness",
@@ -417,13 +402,8 @@
     },
     "no-description": {
       "summary": "Declared directories with no `description`: their README says so instead of saying what they hold.",
-      "count": 2,
+      "count": 1,
       "entries": [
-        {
-          "instance": "bootstrap",
-          "directory": "skills",
-          "path": "bootstrap/skills"
-        },
         {
           "instance": "who-iris",
           "directory": "who-iris-themes",
@@ -433,7 +413,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 101,
+      "count": 97,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -474,31 +454,6 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "skills",
-          "path": "bootstrap/skills"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "schemas",
-          "path": "bootstrap/schemas"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "scenarios",
-          "path": "bootstrap/scenarios"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "processes",
-          "path": "bootstrap/processes"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "models",
-          "path": "bootstrap/models"
         },
         {
           "instance": "cat-harness",
@@ -664,6 +619,11 @@
           "instance": "cat-openapi",
           "directory": "cat-openapi-scripts",
           "path": "cat-openapi/scripts"
+        },
+        {
+          "instance": "fhir-harness",
+          "directory": "fhir-harness-kinds",
+          "path": "fhir-harness/kinds"
         },
         {
           "instance": "fhir-harness",
@@ -964,5 +924,5 @@
       "entries": []
     }
   },
-  "total": 184
+  "total": 176
 }

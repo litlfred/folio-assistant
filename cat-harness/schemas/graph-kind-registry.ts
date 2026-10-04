@@ -44,6 +44,12 @@
  * @module schemas/graph-kind-registry
  * @graphNode schema
  */
+import { readdirSync, readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { GraphKindNodeSchema, kindDefOf } from "./graph-kind-node";
+import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
 import { namespaceForLayer } from "./namespaces";
 import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
@@ -488,6 +494,13 @@ export interface GraphKindDef {
    * `beans/workflow/` history above is exactly that confusion).
    */
   within?: string;
+  /**
+   * The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather
+   * than listed here: it travels with the kind, so `schemas/avatars.ts` does
+   * not have to be a second central table. A kind listed here keeps its entry
+   * in `AVATARS`.
+   */
+  avatar?: { glyph: string; tone: number; reads: string };
 }
 
 /**
@@ -540,6 +553,22 @@ export interface GraphKindDef {
  * the consumer that must not be handed instance state asks for a node by name.
  */
 export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
+  // The META-KIND (bean dmx1): a directory of graph kind `kinds` holds the
+  // harness's own graph kinds, one `folio-graph-kind/v1` node per file. Owner,
+  // 2026-10-04: no central registry for subgraph types; a `kinds/` graph
+  // (option 1 of 3). The base layer declares this one kind in code because a
+  // reader needs it to find all the others.
+  kinds: {
+    title: "Graph kinds",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-graph-kind/v1": { validator: "schemas/graph-kind-node.ts#GraphKindNodeSchema" },
+    },
+    summary:
+      "The graph kinds a harness declares it owns, one node per kind, so no central registry " +
+      "names another harness's subgraph types. Loaded across the instances on first use.",
+  },
   tools: {
     title: "Tools",
     renderable: false,
@@ -815,33 +844,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
       "how ingestion works is `docs`.",
   },
-  // The GENERATED pages of a FHIR IG mirror — a SECOND kind on a directory
-  // that is also `docs`, not a replacement for it (bean `nama`, owner,
-  // 2026-10-04). The owner ruled the IG pages `derived`; a layer belongs to a
-  // KIND, and `docs` is shared with authored documentation, so moving `docs`
-  // would have re-layered every hand-written page with them. The site keeps
-  // mounting the directory through `docs`, so nothing in the render pipeline
-  // changes; this kind adds only the layer and the edge back to the generator.
-  "ig-pages": {
-    title: "IG pages",
-    perInstance: true,
-    // Rendered through the directory's `docs` kind, never on its own: this
-    // kind wires nothing to the site build, which is what `renderable` asks.
-    renderable: false,
-    // `derived`, by the one question: `gen-ig-pages` writes every page from
-    // the artefact index and the chrome, and none is edited in place, so a QA
-    // finding against one is a finding against the generator — `library`'s
-    // argument (bean `hqku`).
-    holds: "derived",
-    validatorNotApplicable:
-      "its nodes are `.md` pages written wholly by `fhir-harness/scripts/gen-ig-pages.ts`, and " +
-      "`derived` besides, so a finding against one is a finding against the generator; " +
-      "`<ig>:pages:check` grades their currency.",
-    summary:
-      "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and " +
-      "the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is " +
-      "how the site mounts them, and this kind is what says they are derived.",
-  },
+
   // ── SUB-GRAPHS OF `docs` — issue #1164 ──────────────────────────────────
   //
   // A harness feature's documents move through two places, and the move is the
@@ -2009,6 +2012,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "repository, path and commit it was ingested from (the cat-openapi harness). Every operation " +
       "in a document is a node of its own: a page and an IRI under the instance's docs.",
   },
+
   "ig-metadata-index": {
     title: "IG metadata index",
     renderable: false,
@@ -2505,10 +2509,11 @@ export type GraphKind = string;
 
 /** Thrown when a kind is registered twice with different meanings. */
 export class GraphKindConflictError extends Error {
-  constructor(name: string) {
+  constructor(name: string, detail?: string) {
     super(
-      `graph kind "${name}" is already registered with a different definition. ` +
-        `Kinds are a shared vocabulary — rename, or register once.`,
+      `graph kind "${name}" is already registered with a different definition` +
+        (detail ? ` (${detail})` : "") +
+        `. Kinds are a shared vocabulary — rename, or register once.`,
     );
     this.name = "GraphKindConflictError";
   }
@@ -2645,9 +2650,49 @@ export function graphKindIri(name: string, def?: Pick<GraphKindDef, "layer">): s
 
 export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
+  /** Which file declared each kind loaded from a `kinds/` graph (bean dmx1). */
+  private declaredIn = new Map<string, string>();
+  private loaded = false;
 
-  constructor(seed: Readonly<Record<string, GraphKindDef>> = BASE_GRAPH_KINDS) {
+  /**
+   * @param seed the kinds this layer lists in code
+   * @param declaredUnder a checkout whose instances' `kinds/` graphs are
+   *   loaded on first use; omitted, the registry holds only `seed` and what is
+   *   `register`ed (a test's private registry)
+   */
+  constructor(
+    seed: Readonly<Record<string, GraphKindDef>> = BASE_GRAPH_KINDS,
+    private readonly declaredUnder?: string,
+  ) {
     for (const [k, v] of Object.entries(seed)) this.kinds.set(k, v);
+  }
+
+  /**
+   * Load every declared kind node under {@link declaredUnder}, once. Lazy, so
+   * importing the registry touches no filesystem; on FIRST USE rather than at a
+   * call site, so a reader that imports only this module still sees every
+   * harness's kinds. A node that does not parse, or a name two files declare,
+   * THROWS with the path: a kind silently missing reads as "not a known kind",
+   * which is the dh4f shape.
+   */
+  private ensureDeclared(): void {
+    if (this.loaded || this.declaredUnder === undefined) return;
+    this.loaded = true;
+    for (const { file, node } of declaredKindNodes(this.declaredUnder)) {
+      const prior = this.declaredIn.get(node.name);
+      if (prior === file) continue;
+      if (prior !== undefined || this.kinds.has(node.name)) {
+        throw new GraphKindConflictError(node.name, `declared by ${prior ?? "the base layer's code"} and by ${file}`);
+      }
+      this.kinds.set(node.name, kindDefOf(node));
+      this.declaredIn.set(node.name, file);
+    }
+  }
+
+  /** The file that declared `name`, when it came from a `kinds/` graph. */
+  declaredBy(name: string): string | undefined {
+    this.ensureDeclared();
+    return this.declaredIn.get(resolveGraphKind(name).kind);
   }
 
   register(name: string, def: GraphKindDef): void {
@@ -2664,26 +2709,75 @@ export class GraphKindRegistry {
   // and nowhere else: a second place that knows the old name is a second place
   // that can forget it.
   has(name: string): boolean {
+    this.ensureDeclared();
     return this.kinds.has(resolveGraphKind(name).kind);
   }
 
   get(name: string): GraphKindDef | undefined {
+    this.ensureDeclared();
     return this.kinds.get(resolveGraphKind(name).kind);
   }
 
   names(): string[] {
+    this.ensureDeclared();
     return [...this.kinds.keys()];
   }
 
   /** The kind a `GraphKind` individual names, or `undefined`. */
   forIri(iri: string): string | undefined {
+    this.ensureDeclared();
     for (const [k, v] of this.kinds) if (graphKindIri(k, v) === iri) return k;
     return undefined;
   }
 }
 
-/** The shared registry. Core registers `folio` into this at load. */
-export const defaultGraphKinds = new GraphKindRegistry();
+/**
+ * Every `folio-graph-kind/v1` node in every `kinds/` graph the instances under
+ * `repoRoot` declare, files sorted for a stable order. Read RAW from each
+ * declaration (only `directories[].graphKinds`, `path` and `scope`), because
+ * the declaration's Zod schema lives in `cat-harness.ts`, which imports this
+ * module.
+ */
+export function declaredKindNodes(repoRoot: string): { file: string; node: ReturnType<typeof GraphKindNodeSchema.parse> }[] {
+  const out: { file: string; node: ReturnType<typeof GraphKindNodeSchema.parse> }[] = [];
+  for (const root of instanceRootsIn(repoRoot)) {
+    const declFile = findDeclarationFile(root);
+    if (declFile === undefined) continue;
+    let decl: { directories?: { path?: string; scope?: string; graphKinds?: string[] }[] };
+    try {
+      decl = JSON.parse(readFileSync(join(root, declFile), "utf-8")) as typeof decl;
+    } catch {
+      continue; // an unreadable declaration is `readDeclaration`'s finding, with its own message
+    }
+    for (const d of decl.directories ?? []) {
+      if (!d.path || !(d.graphKinds ?? []).includes("kinds")) continue;
+      const dir = join(d.scope === "repository" ? resolve(repoRoot) : root, d.path);
+      let files: string[];
+      try {
+        files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+      } catch {
+        continue; // a declared-but-absent kinds/ is `check:declared-dirs`'s finding
+      }
+      for (const f of files) {
+        const file = join(dir, f);
+        const parsed = GraphKindNodeSchema.safeParse(JSON.parse(readFileSync(file, "utf-8")));
+        if (!parsed.success) throw new Error(`${file} is not a folio-graph-kind/v1 node: ${parsed.error.message}`);
+        out.push({ file, node: parsed.data });
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * The shared registry: the base layer's kinds above, plus every kind the
+ * instances of THIS checkout declare in their `kinds/` graphs (bean dmx1),
+ * loaded on first use. Core registers `folio` into it at load.
+ */
+export const defaultGraphKinds = new GraphKindRegistry(
+  BASE_GRAPH_KINDS,
+  resolve(dirname(fileURLToPath(import.meta.url)), "..", ".."),
+);
 
 /**
  * The display name of a graph kind: its declared {@link GraphKindDef.title},

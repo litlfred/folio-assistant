@@ -10,6 +10,20 @@
   "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
   "directories": [
     {
+      "id": "smart-trust-ast",
+      "path": "fhir-ast/",
+      "description": "WHO SMART Trust's IG Publisher AST, INGESTED here although the IG's source is not (owner, 2026-10-04: an IG's semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG's own repository (litlfred/smart-trust; it could instead be materialised onto a local branch here, by dropping `repository`), one branch per IG package id; this IG's member is cat/fhir-harness/fhir-ast/smart.who.int.trust. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean lehh.",
+      "graphKinds": [
+        "ig-ast"
+      ],
+      "storage": {
+        "branchPrefix": "cat/fhir-harness/fhir-ast/",
+        "keyedBy": "family",
+        "keyFrom": "the IG's package id",
+        "repository": "litlfred/smart-trust"
+      }
+    },
+    {
       "id": "smart-trust-artifact-index",
       "path": "fhir-artifact-index/",
       "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have — the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",

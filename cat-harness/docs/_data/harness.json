@@ -683,12 +683,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
@@ -715,6 +715,11 @@
           "sameAs": "smart-trust"
         },
         {
+          "kind": "ig-ast",
+          "note": "no viewer yet",
+          "label": "IG AST"
+        },
+        {
           "kind": "ig-pages",
           "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/",
           "label": "Docs",
@@ -733,6 +738,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "smart-trust-ast",
+          "kinds": [
+            "ig-ast"
+          ],
+          "where": "local",
+          "path": "smart-trust/fhir-ast/"
+        },
         {
           "id": "smart-trust-artifact-index",
           "kinds": [
@@ -776,7 +789,7 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 3 graph(s) with no published viewer — code, openapi, qa. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 4 graph(s) with no published viewer — code, ig-ast, openapi, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 2 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index, openapi. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -1587,12 +1600,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
@@ -1605,6 +1618,11 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
+        },
+        {
+          "kind": "kinds",
+          "note": "no viewer yet",
+          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1633,6 +1651,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "fhir-harness-kinds",
+          "kinds": [
+            "kinds"
+          ],
+          "where": "local",
+          "path": "fhir-harness/kinds/"
+        },
         {
           "id": "library",
           "kinds": [
@@ -1683,7 +1709,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 3 graph(s) with no published viewer — code, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 4 graph(s) with no published viewer — code, kinds, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
@@ -3069,6 +3095,11 @@
           "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/"
         },
         {
+          "kind": "ig-ast",
+          "label": "IG AST",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "openapi",
           "label": "Openapi",
           "note": "no viewer yet"
@@ -3201,18 +3232,6 @@
     }
   ],
   "releases": {
-    "bootstrap": {
-      "version": "0.1.0",
-      "major": 0,
-      "agent": "https://litlfred.github.io/bootstrap/0.1.0/",
-      "human": "https://litlfred.github.io/bootstrap/v0/"
-    },
-    "bootstrap-tools": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
     "cat-harness": {
       "version": "0.1.0",
       "major": 0,
@@ -3701,7 +3720,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart-trust-scripts, qa"
+            "summary": "6: smart-trust-ast, smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart…"
           },
           {
             "key": "stickies",
@@ -3997,7 +4016,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, fhir-harness-processes, qa"
+            "summary": "7: fhir-harness-kinds, library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, fhir-harness…"
           },
           {
             "key": "needs",

@@ -124,7 +124,11 @@ export const BranchSourceSchema = z
  * where `keyFrom` says in words what the key is (an IG's package id; a Lean
  * package and toolchain). Bean `lehh`, owner 2026-10-04 (option 1 of 3): a
  * branch-only graph is declared on its directory, with a mount path, as
- * fsh-guts is. Its own KIND rather than a fourth `keyedBy` on `branch`,
+ * fsh-guts is. `repository` says WHERE the family is (owner, 2026-10-04: an
+ * IG's AST *"could also materialize a remote AST into local branch"*, and
+ * *"similar for lean cache"*): absent, it is on this repository, a local copy
+ * materialised here; present, it is read from that remote `owner/repo`.
+ * Its own KIND rather than a fourth `keyedBy` on `branch`,
  * because a family has no single branch to read: a consumer that took the
  * `branch` arm would read a branch that does not exist as an empty graph. A new
  * union member is a compile error at every such consumer instead.
@@ -134,6 +138,8 @@ export const FamilySourceSchema = z
     kind: z.literal("family"),
     branchPrefix: BranchPrefixSchema,
     keyFrom: z.string().min(1),
+    /** Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote. */
+    repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
   })
   .strict();
 
@@ -157,7 +163,12 @@ export type SubgraphSourceOverrides = z.infer<typeof SubgraphSourceOverridesSche
 const LegacyStorageSchema = z.union([
   z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema }),
   // `storage`'s family form (bean `lehh`): the owner's spelling, mapped to `kind: "family"`.
-  z.object({ branchPrefix: BranchPrefixSchema, keyedBy: z.literal("family"), keyFrom: z.string().min(1) }),
+  z.object({
+    branchPrefix: BranchPrefixSchema,
+    keyedBy: z.literal("family"),
+    keyFrom: z.string().min(1),
+    repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
+  }),
 ]);
 
 /** Which layer the answer came from — reported, so an override is never silent. */
@@ -202,6 +213,8 @@ export type ResolvedSubgraphSource =
       path: string;
       branchPrefix: string;
       keyFrom: string;
+      /** The remote `owner/repo` the family is read from; absent when it is materialised on this repository. */
+      repository?: string;
       /** The `family` row of `special-branches.json` with this prefix, while that table exists (bean rva2). */
       special: SpecialBranchRow | undefined;
       declaredIn: SourceDeclaredIn;
@@ -296,7 +309,7 @@ export function resolveSubgraphSource(
   } else if (entry.storage !== undefined) {
     const s = LegacyStorageSchema.parse(entry.storage);
     src = "branchPrefix" in s
-      ? { kind: "family", branchPrefix: s.branchPrefix, keyFrom: s.keyFrom }
+      ? { kind: "family", branchPrefix: s.branchPrefix, keyFrom: s.keyFrom, ...(s.repository ? { repository: s.repository } : {}) }
       : { kind: "branch", branch: s.branch, keyedBy: s.keyedBy };
     declaredIn = "storage";
   }
@@ -341,6 +354,7 @@ export function resolveSubgraphSource(
         path: entry.path,
         branchPrefix: prefix,
         keyFrom: src.keyFrom,
+        ...(src.repository ? { repository: src.repository } : {}),
         special: (rows ?? specialBranches()).find((r) => r.shape === "family" && (r.name === prefix || r.legacy.includes(prefix))),
         declaredIn,
       };
@@ -374,7 +388,13 @@ export function contentSourceJsonLd(src: ResolvedSubgraphSource, repository?: st
     }
     case "family":
       // The prefix is the family's identifier; no single branch has a tree URL.
-      return { kind: "family", branch: src.branchPrefix, keyFrom: src.keyFrom, declaredIn: src.declaredIn };
+      return {
+        kind: "family",
+        branch: src.branchPrefix,
+        keyFrom: src.keyFrom,
+        ...(src.repository ? { familyRepository: src.repository } : {}),
+        declaredIn: src.declaredIn,
+      };
   }
 }
 
@@ -406,6 +426,7 @@ export function contentSourceContext(): Record<string, unknown> {
       branch: propertyIri("contentSourceBranch"),
       keyedBy: termIri("keyedBy"),
       keyFrom: termIri("keyFrom"),
+      familyRepository: termIri("familyRepository"),
       declaredIn: termIri("sourceDeclaredIn"),
     },
   };

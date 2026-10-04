@@ -170,3 +170,21 @@ describe("a branch FAMILY (bean lehh)", () => {
     expect(contentSourceJsonLd(r)).toEqual({ kind: "family", branch: "cat/x/", keyFrom: "k", declaredIn: "declaration" });
   });
 });
+
+describe("a branch FAMILY's repository (owner: read remote, or materialise locally)", () => {
+  const E = { id: "ig-ast", path: "fhir-ast/", graphKinds: ["ig-ast"] };
+  test("absent means this repository; present names the remote, through both spellings and the JSON-LD", () => {
+    const local = resolveSubgraphSource({ ...E, storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k" } }, undefined, []);
+    expect(local.kind === "family" && local.repository).toBe(undefined);
+    const remote = resolveSubgraphSource(
+      { ...E, storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k", repository: "litlfred/smart-trust" } },
+      undefined,
+      [],
+    );
+    expect(remote).toMatchObject({ kind: "family", repository: "litlfred/smart-trust" });
+    expect(contentSourceJsonLd(remote)).toMatchObject({ familyRepository: "litlfred/smart-trust" });
+  });
+  test("a repository is owner/repo, not a URL", () => {
+    expect(SubgraphSourceSchema.safeParse({ kind: "family", branchPrefix: "cat/x/", keyFrom: "k", repository: "https://github.com/a/b" }).success).toBe(false);
+  });
+});

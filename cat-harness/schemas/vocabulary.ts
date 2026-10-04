@@ -364,6 +364,11 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member " +
       "branch is the family's prefix followed by one key.",
   },
+  familyRepository: {
+    gloss:
+      "The remote repository (`owner/repo`) a branch FAMILY is read from. Absent when the family is materialised " +
+      "on the declaring repository itself.",
+  },
   sourceDeclaredIn: {
     gloss:
       "Which layer said where a subgraph's content comes from — the declaration, a legacy `storage` field, the " +

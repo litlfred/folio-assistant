@@ -43,6 +43,8 @@
  * @graphNode schema
  */
 
+import { defaultGraphKinds } from "./graph-kind-registry";
+
 /**
  * One avatar.
  *
@@ -309,6 +311,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 200,
     reads: "a page with a tick — somebody read this version and judged it",
   },
+  kinds: {
+    // A stack of three cards, the top one tagged: a graph whose nodes are the
+    // KINDS of the other graphs. Bean dmx1.
+    glyph: "M5 8h12v11H5zM7 5h12v11M9 2h12v11M8 12h6M8 15h4",
+    tone: 300,
+    reads: "a stack of type cards — the graph kinds a harness declares it owns",
+  },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
     tone: 250,
@@ -449,15 +458,8 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 168,
     reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
   },
-  "ig-pages": {
-    // The `docs` folded page with `fhir-artifact-index`'s schema brace beside
-    // it. Both quotes are the point: these pages ARE docs pages (the directory
-    // carries both kinds), and they are written from the index, which the
-    // brace stands for. Bean `nama`.
-    glyph: "M5 3h7l4 4v14H5zM12 3v4h4M8 12h5M8 16h3M21 9c-1 0-1 2-2 2 1 0 1 2 2 2",
-    tone: 178,
-    reads: "a docs page beside a schema brace — pages written from an IG's artefact index, never by hand",
-  },
+
+
   "ig-metadata-index": {
     // The `fhir-artifact-index` drawer with an arrow LEAVING it. It quotes
     // that glyph on purpose, as that one quotes `catalogue`'s: the three are
@@ -662,19 +664,28 @@ export const GENERIC: Avatar = {
   reads: "a question mark — no avatar is declared for this kind",
 };
 
+/**
+ * A kind DECLARED as a node (bean dmx1) carries its own avatar, so this table
+ * is not a second central registry for kinds it does not list.
+ */
+function declaredAvatar(kind: string): Avatar | undefined {
+  return defaultGraphKinds.get(kind)?.avatar;
+}
+
 /** Has this kind got an avatar of its own? */
 export function hasAvatar(kind: string): boolean {
-  return Object.prototype.hasOwnProperty.call(AVATARS, kind);
+  return Object.prototype.hasOwnProperty.call(AVATARS, kind) || declaredAvatar(kind) !== undefined;
 }
 
 /** The avatar for a kind, falling back to {@link GENERIC}. */
 export function avatarFor(kind: string): Avatar {
-  return AVATARS[kind] ?? GENERIC;
+  return AVATARS[kind] ?? declaredAvatar(kind) ?? GENERIC;
 }
 
-/** Every kind that has one, in declaration order. */
+/** Every kind that has one: this table's, in declaration order, then the declared kinds'. */
 export function avatarKinds(): string[] {
-  return Object.keys(AVATARS);
+  const listed = Object.keys(AVATARS);
+  return [...listed, ...defaultGraphKinds.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined)];
 }
 
 /**
