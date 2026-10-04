@@ -82,6 +82,72 @@ correct one are indistinguishable from their output, and the stale one here
 reads as *more* work rather than less, so nothing about the result looks
 wrong.
 
+## A pattern is not always the answer — ask what the file's record is
+
+**Read this before declaring a pattern for a path that already has one.** The
+registry answers *how* a conflict is resolved. It never answers *whether* one
+arises, and reaching for it a second time on the same path is the move to
+stop and check.
+
+Two nearby things are already written down and neither is this one:
+
+- **bean `in5a`** — a declared pattern settles a file whose content is a
+  function of the TREE, and settles nothing about one whose content is a
+  function of the machine that built it. There, take-base is a loop: take
+  either side, regenerate, and the value is whatever this container sees.
+- **this section** — the content *is* tree-determined, the pattern *does*
+  resolve it, and the path still conflicts on every merge.
+
+The worked example is bean `tqjj`, and the measurement is what makes it a rule
+rather than a preference. `**/test/results/lsi/**` and
+`**/test/results/tool-runs/**` have been declared under `derived-results` all
+along, and `cat-harness/docs/lsi/**` under `glossary`. On 2026-10-04 those three
+paths were still blocking **seven open pull requests each**, 317-319 of the last
+400 commits on `main` touching them. Regenerating `skills.lsi.json` on an
+unchanged tree gave a **byte-identical** file, so `in5a` did not apply; but
+appending one sentence to one of 229 skill files rewrote the `fingerprint`,
+**9 of 12** `dimensions` entries and **166 of 229** `neighbours` entries. An
+SVD rotation is globally sensitive, so the convergent resolution is a rewrite
+of 94 % of the file — and nothing on `main` judged those bytes: corrupting the
+sidecar's `fingerprint` left `lsi:skills:check` at exit 0 (`.gitattributes`,
+bean `eqxp`).
+
+So the question to ask is not *which strategy*, it is:
+
+> **What is this file's record, and is `main` it?**
+
+- **`main` is the record** — an authored file, or a generated one a reader
+  navigates to by name. Declare the pattern; that is what the registry is for.
+- **`main` is not the record** — the file's record is the `qa-reports` entry
+  for its commit, or a build output, and the copy on `main` is a duplicate kept
+  in step by a gate. Then **take it off `main`**, and keep the declaration for
+  the branches still carrying it, where the base has deleted the file and
+  take-base resolves that too (see the next section).
+- **Part of it is, and part is not** — the common case, and the one to look for
+  before concluding either of the above. Cut by **what each value is a function
+  of**: a value the TREE determines stays committed and is reviewable; a value
+  determined by some other artefact's CONTENT is produced where that artefact
+  lives. `docs/lsi/index.md` is the worked example — front matter, prose and
+  the verdict table stay, each index's size, poles and findings go — and the
+  front matter is *why* it could not be taken off whole: it declares the
+  harness tile, so an uncommitted page is a page with no way in.
+
+**The trap on the way out.** Taking a page off its store and leaving it
+committed can make it *worse*: once `lsi:viz` had no sidecar in the checkout it
+read `qa-reports` at `main`, which resolves to the **latest published entry**,
+so the committed page would have gone stale whenever anyone else pushed — a
+value depending on when the gate ran rather than on the tree. **`in5a`'s loop,
+arriving over the network.** Whatever stays committed must be computed from the
+tree, deliberately and not by luck.
+
+`.gitattributes` reached the same conclusion from the `-merge` side and states
+it plainly: *"Removing these conflicts, rather than tidying them, needs the
+files off `main` altogether."* Two things make that safe rather than merely
+tidy, and both are checks, not care: every reader must already cope with the
+file's absence (bean `oq1j` for the LSI readers), and something must still
+PRODUCE it where its record lives — `qa:refresh` decides that **per writer**,
+so a family can be removed on its own instead of all 1,186 at once.
+
 ## When one side deleted the file
 
 A modify/delete conflict has no stage for the side that deleted it, so
@@ -126,6 +192,11 @@ LSI indexes, detangle sidecars and tool-run records under `test/results/`.
 Recomputed from the whole corpus, so any concurrent skill or schema change
 touches them.
 
+The **LSI** half is untracked on `main` since bean `tqjj`, and the globs are
+kept for the branches still carrying it. See §"A pattern is not always the
+answer": this family is the measured case where the declaration was correct,
+did what it claimed, and removed no conflicts.
+
 ### `auto-docs` — take the base, regenerate (352)
 
 The generated docs index pages, already `-merge` in `.gitattributes`. One page
@@ -160,6 +231,14 @@ would be a hand-kept list able to drift from the workflow.
 
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
 term additions always collide.
+
+The **LSI page** still conflicts, but much less often since bean `tqjj`: its
+per-index detail — the half a one-sentence skill edit moved — is added by the
+docs-site build rather than committed, and what is left is a function of the
+tree. The glossary page has no equivalent split: every number on it is a term
+count over the whole corpus, so there is no half that only the tree moves. That
+is the second branch of §"A pattern is not always the answer" — `main` is still
+the glossary page's record, and declaring the strategy is all there is to do.
 
 ### `translated-glossary` — take the base, regenerate
 
@@ -500,8 +579,8 @@ drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
 executes what happens to the dropped member. The author's side, the queue
 and the bounce-back are the merge-manager SOP in
 [#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
-12). The hand-back format is the `agent-handoff` skill in
-[#1884](https://github.com/litlfred/folio-assistant/pull/1884).
+12). The hand-back format is the
+[`agent-handoff`](agent-handoff.md) skill.
 
 **Why this exists.** Owner, 2026-10-02: *"if a merge in queue cannot be merged
 for some reason, create a new bean (under appropriate epic/story…), hand it

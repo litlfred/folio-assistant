@@ -949,3 +949,20 @@ describe("subgraphsOf — every declared graph, marked local or remote (603s)", 
     expect(subgraphsOf({ remoteGraphs: [], subscriptions: [] }, dirs).filter((r) => r.where === "remote")).toEqual([]);
   });
 });
+
+describe("every harness's navbar MARK is resolved once — bean `2vpn`", () => {
+  // Owner, 2026-10-04: *"who-iris is missing top icon on LHS navbar … all
+  // needs to be consistent and consolidated"*. who-iris's mark was a registry
+  // glyph, and the resolver only knew theme cards and declared icons.
+  test("an instance with its own registry glyph and no image carries the GLYPH as its mark", () => {
+    const f = fixture({ "smart-base": { name: "smart-base", directories: [] }, host: host() });
+    const sb = tilesOf(f).find((t) => t.name === "smart-base")!;
+    expect(sb.mark?.glyph).toMatch(/^M/);
+    expect(sb.mark?.src).toBeUndefined();
+  });
+
+  test("the generic fallback is NOT a mark: an unknown instance has none, and the navbar draws its letter", () => {
+    const f = fixture({ host: host(), who: { name: "who", directories: [] } });
+    expect(tilesOf(f).find((t) => t.name === "who")!.mark).toBeUndefined();
+  });
+});

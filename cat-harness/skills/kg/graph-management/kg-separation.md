@@ -167,6 +167,15 @@ could never reach zero, and it counted *instances* where the risk is *paths*.
 On cat-harness it read 3 while 0 of 134 declared paths resolved above the layer.
 Count what breaks, not what is out of sight.
 
+**A seeding pair is not upward (owner, 2026-10-04).** When the code moved to
+the tools layer, the harness's Tool nodes kept their `src/tools/*` paths and
+resolve into their implementer through `needs` ("Trap 1"), so the count read
+23 for the harness. The two are seeded in the same step, so none of those can
+break on seeding day. The HIGHER instance says so, `seedsWith: [<lower>]` in
+its declaration, because a lower instance naming one above it is the wrong
+direction. `seed:ready` states such paths in its note and does not count
+them; a path into any other instance above still counts.
+
 Four things to keep straight:
 
 - **The layer map is read off the declarations**: `livesAt.path` is the

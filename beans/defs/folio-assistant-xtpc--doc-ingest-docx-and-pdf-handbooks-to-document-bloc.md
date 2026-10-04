@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xtpc
 title: 'DOC INGEST: .docx and PDF handbooks to document blocks with content-derived ids — and document-intake out of the paper adapter'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:09:45Z
+updated_at: 2026-10-04T19:17:28Z
 parent: folio-assistant-q4jm
 ---
 
@@ -51,3 +51,5 @@ The owner's #197 asks for exactly this, plus provenance **to page and line of th
 ## Moved here from 5xzc (2026-09-22)
 
 - [ ] register `id-reingest-stable`: re-ingesting an unchanged upload yields the same labels. Implement it beside `id-unique` / `id-stable` in `qa-checkers-ids.ts`, once this bean's ingest emits blocks. It was not registered earlier because a criterion with nothing to check sweeps `n/a` everywhere, and that reads as coverage.
+
+_2026-10-04T19:17:28Z_ — Claimed by claude/confident-bardeen-inaarx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

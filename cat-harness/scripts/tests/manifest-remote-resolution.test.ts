@@ -46,6 +46,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
+import { implementingRootFor } from "../../schemas/harness-config.js";
 import { knownSkills, manifestResolvableSkills, remotePackageSkills } from "../known-skills.js";
 import { codeWithoutComments } from "../repo-files.js";
 
@@ -201,7 +202,9 @@ describe("the reason the allowance was closed is still true", () => {
     // strings alone does not fix it either, because a markdown code span in a
     // comment is backticked and backticks quote strings in TypeScript.
     for (const f of ["src/tools/skill-fetch.ts", "scripts/generate-registry.ts"]) {
-      const code = codeWithoutComments(readFileSync(join(ROOT, f), "utf8"));
+      // Resolved through the implementing instance: `skill-fetch.ts` moved up
+      // with the server (bean `70lx`), and this layer names no path above it.
+      const code = codeWithoutComments(readFileSync(join(implementingRootFor(ROOT, f), f), "utf8"));
       expect(code).not.toContain("remote-packages");
     }
   });

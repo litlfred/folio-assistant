@@ -195,11 +195,12 @@ test.describe("the zoom controls stay where the pointer is", () => {
     expect(moves, `start ${JSON.stringify(start)}`).toEqual([]);
   });
 
-  test("a card's own − and + stay under the pointer as it is resized", async ({ page }) => {
+  test("a card's − and + (the move bar's, since issue #1900) stay under the pointer as it is resized", async ({ page }) => {
     await serveGlass(page, 800);
     const card = page.locator(plain);
+    await card.locator('[data-fa-control="move"]').click();
     for (const [label, n] of [["larger", 3], ["smaller", 5], ["larger", 2]] as const) {
-      const btn = card.locator(`button[aria-label^="Make Second"][aria-label$=" ${label}"]`);
+      const btn = page.locator(`.fa-glass-move-bar button[aria-label^="Make Second"][aria-label$=" ${label}"]`);
       for (let i = 0; i < n; i++) {
         const before = (await btn.boundingBox())!;
         await btn.click();
@@ -208,6 +209,20 @@ test.describe("the zoom controls stay where the pointer is", () => {
         expect(Math.abs(after.y - before.y), `${label} #${i + 1} y`).toBeLessThanOrEqual(0.5);
       }
     }
+  });
+
+  test("the resize corner stays under the pointer through a drag", async ({ page }) => {
+    await serveGlass(page, 800);
+    const grip = page.locator(`${plain} .fa-glass-asset-resize`);
+    const g = (await grip.boundingBox())!;
+    const x0 = g.x + g.width / 2, y0 = g.y + g.height / 2;
+    await page.mouse.move(x0, y0);
+    await page.mouse.down();
+    await page.mouse.move(x0 + 50, y0 + 30, { steps: 5 });
+    const mid = (await grip.boundingBox())!;
+    expect(Math.abs(mid.x + mid.width / 2 - (x0 + 50))).toBeLessThanOrEqual(1);
+    expect(Math.abs(mid.y + mid.height / 2 - (y0 + 30))).toBeLessThanOrEqual(1);
+    await page.mouse.up();
   });
 });
 
