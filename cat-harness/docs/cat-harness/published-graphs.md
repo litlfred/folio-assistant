@@ -378,9 +378,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `validators`
 
-0 of 2 published.
+0 of 4 published.
 {: .fa-hx-dim }
 
+- C@T Harness — *declared, not published*
+- C@T OpenAPI — *declared, not published*
 - FHIR IG Harness — *declared, not published*
 - folio-assistant-core — *declared, not published*
 

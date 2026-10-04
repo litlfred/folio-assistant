@@ -4,9 +4,7 @@
   "renderable": false,
   "holds": "derived",
   "nodeSchemas": {
-    "folio-openapi-source/v1": {
-      "validator": "cat-openapi:schemas/openapi.ts#OpenApiProvenanceSchema"
-    }
+    "folio-openapi-source/v1": {}
   },
   "summary": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi harness). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
   "avatar": {

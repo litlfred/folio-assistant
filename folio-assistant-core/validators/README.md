@@ -8,5 +8,7 @@ The validators folio-assistant-core's code provides, one folio-validator/v1 node
 
 Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-validators`, holding `validators`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`glossary.json`](glossary.json) | data |  |
 <!-- kg:subgraph:end -->

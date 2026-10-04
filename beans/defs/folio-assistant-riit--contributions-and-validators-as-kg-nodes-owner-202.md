@@ -20,7 +20,7 @@ Every contribution is a node in the contributing harness's KG, declared like `ki
 
 ## Done when
 - [x] the owner agrees the node shapes for a validator and for each contribution type (one proposal, with the open choices put to them)
-- [ ] validators are nodes, and kinds name them
+- [x] validators are nodes, and the validator names its family (ruling 2): 71 in cat-harness, 9 fhir-harness, 8 folio-assistant-core, 1 cat-openapi. The one exception is `models`: its code is in bootstrap-tools, another repository, so its string stays until bootstrap-tools declares the node
 - [ ] block kinds and adapters are nodes (sod4 #1 lands here: the paper block kinds first)
 - [ ] checkers, renderers, pipeline plugins and MCP tools are nodes referencing their code
 - [ ] `contributions.ts` modules are gone, or reduced to the code the nodes reference

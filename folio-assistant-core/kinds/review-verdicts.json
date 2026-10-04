@@ -5,7 +5,6 @@
   "layer": "core",
   "renderable": false,
   "holds": "state",
-  "validator": "folio-assistant-core:schemas/review-verdict.ts#ReviewVerdictSchema",
   "recordsWork": false,
   "summary": "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's content hash and committed on the edit-set's feature branch. Read by the review coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
   "avatar": {

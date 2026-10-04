@@ -5,15 +5,9 @@
   "renderable": false,
   "holds": "content",
   "nodeSchemas": {
-    "folio-dublin-core/v1": {
-      "validator": "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema"
-    },
-    "folio-catalogue-node/v1": {
-      "validator": "folio-assistant-core:schemas/catalogue.ts#CatalogueNodeSchema"
-    },
-    "folio-catalogue/v1": {
-      "validator": "folio-assistant-core:schemas/catalogue.ts#CatalogueSchema"
-    }
+    "folio-dublin-core/v1": {},
+    "folio-catalogue-node/v1": {},
+    "folio-catalogue/v1": {}
   },
   "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
   "avatar": {
