@@ -390,7 +390,11 @@ test.describe("themed todos on the glass follow their shape, and stay faded on a
   test("the shelved-items note is a CARD on the glass, and its × dismisses it", async ({ page }) => {
     await popOutSticky(page);
     await page.locator(`${sticky} .fa-glass-asset-close`).click();
-    await page.getByRole("button", { name: "Put it back" }).click(); // the confirm, #1900
+    // The confirm, #1900. A todo goes back to the Todos board (a landing
+    // sticky goes back to its page instead: glass-card-open.e2e.ts).
+    const dlg = page.getByRole("dialog", { name: "Back to your Todos?" });
+    await expect(dlg.getByRole("link", { name: "your Todos" })).toHaveAttribute("href", /\/todos\/$/);
+    await dlg.getByRole("button", { name: "Put it back" }).click();
     const note = page.locator(".fa-glass-note-card");
     await expect(note).toBeVisible();
     await expect(note.locator(".fa-glass-shelved-note")).toContainText("Put your folio away");

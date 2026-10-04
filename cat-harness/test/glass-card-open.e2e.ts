@@ -53,10 +53,14 @@ const ZOOM = { belowPx: 220 };
 
 const style = `.fa-glass-asset[data-fa-asset="${STYLE_KEY}"]`;
 const trust = `.fa-glass-asset[data-fa-asset="${TRUST_KEY}"]`;
+// A LANDING STICKY pinned to the glass (#1926's `kind: "sticky"`): it goes
+// back to the page it was pinned from, never to "your Todos".
+const NOTE_KEY = "landing/welcome";
+const note = `.fa-glass-asset[data-fa-asset="${NOTE_KEY}"]`;
 
 async function serveGlass(page: Page, stripHidden = "0"): Promise<string[]> {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.addInitScript(([a, b, hidden]) => {
+  await page.addInitScript(([a, b, c, hidden]) => {
     try {
       // #1819 hides the tile strip by default; these specs must hold with it
       // shown (and the confirm must not depend on it either way).
@@ -67,10 +71,12 @@ async function serveGlass(page: Page, stripHidden = "0"): Promise<string[]> {
                  geom: { left: 20, top: 20, width: 288, height: 384 } },
           [b]: { shown: true, title: "smart-trust", href: "", avatar: "", kind: "library",
                  geom: { left: 340, top: 20, width: 288, height: 384 } },
+          [c]: { shown: true, title: "Welcome to the folio", href: "/home.html", label: "Home page",
+                 kind: "sticky", text: "Start here.", geom: { left: 660, top: 20, width: 240, height: 240 } },
         }));
       }
     } catch { /* storage blocked: the spec fails visibly below */ }
-  }, [STYLE_KEY, TRUST_KEY, stripHidden]);
+  }, [STYLE_KEY, TRUST_KEY, NOTE_KEY, stripHidden]);
   const opened: string[] = [];
   await page.route("http://replica.test/**", (route) => {
     const url = new URL(route.request().url());
@@ -242,6 +248,24 @@ test.describe("close — × confirms, names the library, and links it", () => {
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
       .analyze();
     expect(violations.map((v) => `${v.id}: ` + v.nodes.map((n) => n.failureSummary ?? n.html).join(" | "))).toEqual([]);
+  });
+
+  test("a landing sticky's × names ITS PAGE, not the library and not your Todos", async ({ page }) => {
+    await serveGlass(page);
+    const close = page.locator(`${note} .fa-glass-asset-close`);
+    await expect(close).toHaveAttribute("aria-label",
+      "Put Welcome to the folio back on its page, Home page — it stays in your folio");
+    await close.click();
+    const dlg = page.getByRole("dialog", { name: "Back on its page?" });
+    await expect(dlg).toBeVisible();
+    await expect(dlg).toContainText("Put “Welcome to the folio” back on its page, Home page? It stays in your folio.");
+    await expect(dlg).not.toContainText("Todos");
+    await expect(dlg.getByRole("link", { name: "its page, Home page" })).toHaveAttribute("href", "/home.html");
+    await expect(dlg.getByRole("button", { name: "Keep it on the glass" })).toBeFocused();
+    await dlg.getByRole("button", { name: "Put it back" }).click();
+    await expect(page.locator(note)).toHaveCount(0);
+    const say = page.getByRole("status").filter({ hasText: "is back on" });
+    await expect(say).toHaveText("“Welcome to the folio” is back on its page, Home page — it stays in your folio.");
   });
 
   test("the confirm works with the tile strip hidden too", async ({ page }) => {

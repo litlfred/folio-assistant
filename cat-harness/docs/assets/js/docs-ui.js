@@ -4524,26 +4524,62 @@
    * WHERE it is restored from — a reversible action whose way back the reader
    * has to discover is one-way in practice (`l4zi`).
    */
-  var confirmSeq = 0;
   function confirmSendToFshGuts(title, onConfirm, opener) {
-    var n = ++confirmSeq;
-    var dialog = el("dialog", {
-      class: "fa-fsh-confirm",
-      "aria-labelledby": "fa-fsh-confirm-title-" + n,
-      "aria-describedby": "fa-fsh-confirm-body-" + n,
-    });
-    dialog.appendChild(el("h2", { class: "fa-fsh-confirm-title", id: "fa-fsh-confirm-title-" + n },
-      "Send “" + title + "” to fsh-guts?"));
-    var body = el("div", { id: "fa-fsh-confirm-body-" + n });
+    var body = el("div");
     body.appendChild(el("p", null,
       "fsh-guts is the trashcan that is kept. This takes the sticky off your panel in " +
       "this browser only; nobody else's view changes."));
     body.appendChild(el("p", null,
       "It is restorable: open " + fshGutsRestoreWhere() + ", and choose Restore."));
+    return confirmDialog({
+      cls: "fa-fsh-confirm",
+      title: "Send \u201c" + title + "\u201d to fsh-guts?",
+      body: body,
+      cancel: "Cancel",
+      ok: "Send to fsh-guts",
+      onConfirm: onConfirm,
+      opener: opener,
+    });
+  }
+
+  /**
+   * THE ONE CONFIRM: every "are you sure" on the page is this dialog, so the
+   * rules below are stated once and cannot drift between two copies (#1900
+   * and #1926 each grew one; they were merged here).
+   *
+   * - A NATIVE `<dialog>` opened modal: the browser traps focus, makes the
+   *   page behind it inert, and puts it in the top layer above every board
+   *   window.
+   * - Focus starts on Cancel, the recoverable choice.
+   * - Escape (the browser's `cancel`, or by hand where no modal fires it) is
+   *   the cancel, never the confirm, and is stopped here so it does not also
+   *   reach a surface behind (the glass's own Escape puts the glass away).
+   * - Dismissal returns focus to `opener`; confirming runs `onConfirm`, which
+   *   owns where focus goes next.
+   *
+   * `cls` is the class prefix (`<cls>`, `<cls>-title`, `<cls>-actions`,
+   * `<cls>-cancel`, `<cls>-ok`): each surface keeps its own look. `mount`
+   * defaults to `document.body`; the glass mounts inside its layer so its
+   * theme tokens reach the dialog.
+   */
+  var confirmSeq = 0;
+  function confirmDialog(o) {
+    var n = ++confirmSeq;
+    var cls = o.cls;
+    var attrs = {
+      class: cls,
+      "aria-labelledby": cls + "-title-" + n,
+      "aria-describedby": cls + "-body-" + n,
+    };
+    if (o.live) attrs["aria-live"] = o.live;
+    var dialog = el("dialog", attrs);
+    dialog.appendChild(el("h2", { class: cls + "-title", id: cls + "-title-" + n }, o.title));
+    var body = o.body;
+    body.id = cls + "-body-" + n;
     dialog.appendChild(body);
-    var row = el("div", { class: "fa-fsh-confirm-actions" });
-    var cancel = el("button", { type: "button", class: "fa-fsh-confirm-cancel" }, "Cancel");
-    var ok = el("button", { type: "button", class: "fa-fsh-confirm-ok" }, "Send to fsh-guts");
+    var row = el("div", { class: cls + "-actions" });
+    var cancel = el("button", { type: "button", class: cls + "-cancel" }, o.cancel);
+    var ok = el("button", { type: "button", class: cls + "-ok" }, o.ok);
     row.appendChild(cancel);
     row.appendChild(ok);
     dialog.appendChild(row);
@@ -4555,8 +4591,8 @@
       done = true;
       if (dialog.open && typeof dialog.close === "function") dialog.close();
       if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
-      if (confirmed) onConfirm();
-      else if (opener && opener.isConnected) opener.focus();
+      if (confirmed) o.onConfirm();
+      else if (o.opener && o.opener.isConnected) o.opener.focus();
     }
     cancel.addEventListener("click", finish);
     ok.addEventListener("click", function () { confirmed = true; finish(); });
@@ -4566,7 +4602,7 @@
     dialog.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); finish(); }
     });
-    document.body.appendChild(dialog);
+    (o.mount || document.body).appendChild(dialog);
     if (typeof dialog.showModal === "function") dialog.showModal();
     else dialog.setAttribute("open", "");
     cancel.focus();
@@ -6282,73 +6318,69 @@
      * left for the reader to remember. It also says what does NOT happen: the
      * asset stays in the folio, which is the three-state rule in words.
      *
-     * A NATIVE MODAL `<dialog>`: focus is trapped and the page behind it is
-     * inert by the browser, not by a script that could miss a case. Escape is
-     * the cancel, never the confirm; focus lands on the safe choice; and the
-     * Escape is stopped here so it does not also put the glass away. Inside
-     * the layer for the glass's theme tokens, with its own `aria-live="off"`
-     * so opening it is not also read out as a live change. */
-    var confirmSeq = 0;
-    function confirmShelve(key, title, kind, opener) {
+     * THREE PLACES, because there are three kinds of card (#1926 added the
+     * third): a LIBRARY card goes back to its instance's library, a TODO to
+     * the Todos board, and a pinned LANDING STICKY to the page it was pinned
+     * from. Calling a sticky "your Todos" sent the reader to a list it was
+     * never on. `returnPlaceOf` is the one answer, read by the confirm, the
+     * after-the-fact status and the x button's own label.
+     *
+     * The dialog is `confirmDialog`, the page's one confirm (focus on the
+     * safe choice, Escape cancels and is stopped before the glass's own
+     * Escape), mounted inside the layer for the glass's theme tokens and with
+     * `aria-live="off"` so opening it is not also read out as a live change. */
+    function returnPlaceOf(key, a) {
+      var isLib = zoomKindOf(a) === "library";
+      var lib = isLib ? libraryPlaceOf(key) : null;
+      if (lib) {
+        var libName = "the " + lib.instance + " library";
+        return { kind: "library", name: libName, href: lib.library, entry: lib.entry,
+                 heading: "Back to the library?", tip: "Back in " + libName };
+      }
+      if (a && a.kind === "sticky") {
+        var page = String(a.label || "").replace(/\s+/g, " ").trim();
+        var pageName = page ? "its page, " + page : "the page it came from";
+        return { kind: "sticky", name: pageName, href: safeHref(a.href) || withBase("/"),
+                 heading: "Back on its page?", tip: "Back on " + pageName };
+      }
+      if (isLib) {
+        return { kind: "library", name: "the library view", href: withBase("/cat-harness/library/"),
+                 heading: "Back to the library?", tip: "Back in the library view" };
+      }
+      return { kind: "todos", name: "your Todos", href: withBase("/todos/"),
+               heading: "Back to your Todos?", tip: "Back in your Todos" };
+    }
+    /** "in the X library" / "in your Todos" / "on its page, Y". */
+    function backTo(place) { return (place.kind === "sticky" ? "on " : "in ") + place.name; }
+    function confirmShelve(key, a, title, opener) {
       hideMeta();
-      var place = kind === "library" ? libraryPlaceOf(key) : null;
-      var where = place ? "the " + place.instance + " library" : "your Todos";
-      var whereHref = place ? place.library : withBase("/todos/");
-      var n = ++confirmSeq;
-      var dlg = el("dialog", {
-        class: "fa-glass-confirm",
-        "aria-labelledby": "fa-glass-confirm-title-" + n,
-        "aria-describedby": "fa-glass-confirm-say-" + n,
-        "aria-live": "off",
-      });
-      dlg.appendChild(el("h2", { class: "fa-glass-confirm-title", id: "fa-glass-confirm-title-" + n },
-        place ? "Back to the library?" : "Back to your Todos?"));
-      dlg.appendChild(el("p", { class: "fa-glass-confirm-say", id: "fa-glass-confirm-say-" + n },
-        "Put “" + title + "” back in " + where + "? It stays in your folio."));
+      var place = returnPlaceOf(key, a);
+      var body = el("div");
+      body.appendChild(el("p", { class: "fa-glass-confirm-say" },
+        "Put \u201c" + title + "\u201d back " + backTo(place) + "? It stays in your folio."));
       var again = el("p", { class: "fa-glass-confirm-again" }, "To put it on the glass again, open ");
-      again.appendChild(el("a", { href: whereHref }, where));
-      if (place) {
-        again.appendChild(document.createTextNode(" — or go straight to "));
+      again.appendChild(el("a", { href: place.href }, place.name));
+      if (place.entry) {
+        again.appendChild(document.createTextNode(" \u2014 or go straight to "));
         again.appendChild(el("a", { href: place.entry }, "its entry"));
       }
       again.appendChild(document.createTextNode("."));
-      dlg.appendChild(again);
-      var row = el("div", { class: "fa-glass-confirm-actions" });
-      var cancel = el("button", { type: "button", class: "fa-glass-confirm-cancel" }, "Keep it on the glass");
-      var ok = el("button", { type: "button", class: "fa-glass-confirm-ok" }, "Put it back");
-      row.appendChild(cancel);
-      row.appendChild(ok);
-      dlg.appendChild(row);
-      var done = false;
-      function finish(confirmed) {
-        if (done) return;
-        done = true;
-        if (dlg.open) dlg.close();
-        if (dlg.parentNode) dlg.parentNode.removeChild(dlg);
-        if (!confirmed) {
-          if (opener && opener.isConnected) opener.focus();
-          return;
-        }
-        shelveFromGlass(key);
-        sayShelved(title, where, whereHref);
-        handle.focus();
-      }
-      cancel.addEventListener("click", function () { finish(false); });
-      ok.addEventListener("click", function () { finish(true); });
-      // The browser's own Escape fires `cancel`; ours is stopped from reaching
-      // the glass, whose Escape would put the whole glass away.
-      dlg.addEventListener("cancel", function (e) { e.preventDefault(); finish(false); });
-      dlg.addEventListener("keydown", function (e) {
-        if (e.key !== "Escape") return;
-        e.preventDefault();
-        e.stopPropagation();
-        finish(false);
+      body.appendChild(again);
+      return confirmDialog({
+        cls: "fa-glass-confirm",
+        title: place.heading,
+        body: body,
+        cancel: "Keep it on the glass",
+        ok: "Put it back",
+        live: "off",
+        mount: layer,
+        opener: opener,
+        onConfirm: function () {
+          shelveFromGlass(key);
+          sayShelved(title, place);
+          handle.focus();
+        },
       });
-      layer.appendChild(dlg);
-      if (typeof dlg.showModal === "function") dlg.showModal();
-      else dlg.setAttribute("open", "");
-      cancel.focus();
-      return dlg;
     }
 
     /* SAID AFTER, WITH THE SAME LINK — a status the reader can also SEE, not
@@ -6356,10 +6388,10 @@
      * just gone, and "where did it go" is answered where they are looking. */
     var shelvedSay = el("p", { class: "fa-glass-shelved-say", role: "status" });
     sheet.insertBefore(shelvedSay, empty);
-    function sayShelved(title, where, whereHref) {
+    function sayShelved(title, place) {
       while (shelvedSay.firstChild) shelvedSay.removeChild(shelvedSay.firstChild);
-      shelvedSay.appendChild(document.createTextNode("“" + title + "” is back in "));
-      shelvedSay.appendChild(el("a", { href: whereHref }, where));
+      shelvedSay.appendChild(document.createTextNode("“" + title + "” is back " +
+        (place.kind === "sticky" ? "on " : "in ")));      shelvedSay.appendChild(el("a", { href: place.href }, place.name));
       shelvedSay.appendChild(document.createTextNode(" — it stays in your folio."));
     }
 
@@ -6543,19 +6575,18 @@
       // happen -- `board-windows`: closing returns it to the middle state
       // and never to the first. The label says where it goes, and the
       // confirm (issue #1900) names which library and links it.
+      var returnTo = returnPlaceOf(key, a);
       function closeLabel(t) {
-        return "Put " + t + " back in " + (place ? "the " + place.instance + " library" : "the library view") +
-          " — it stays in your folio";
+        return "Put " + t + " back " + backTo(returnTo) + " — it stays in your folio";
       }
       var close = el("button", {
         type: "button",
         class: "fa-glass-asset-tool fa-glass-asset-close",
         "aria-label": closeLabel(label),
-        title: place ? "Back in the " + place.instance + " library (stays in your folio)"
-          : "Back in library view (stays in your folio)",
+        title: returnTo.tip + " (stays in your folio)",
       }, "×");
       close.addEventListener("click", function () {
-        confirmShelve(key, label, isLibrary ? "library" : "todos", close);
+        confirmShelve(key, a, label, close);
       });
       tools.appendChild(moveBtn);
       tools.appendChild(close);

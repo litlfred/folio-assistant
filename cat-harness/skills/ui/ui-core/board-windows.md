@@ -300,6 +300,15 @@ glass says, with the same link, where the asset went. Naming the library is
 not politeness: a reader holding assets from several libraries otherwise has
 to remember which one each came from to get it back.
 
+**The place is the card's own, so there are three.** A library card goes back
+to its instance's library, a todo to the Todos board, and a landing sticky
+pinned to the glass to the page it was pinned from. Calling a sticky "your
+Todos" sends the reader to a list it was never on. One function answers
+"where does this card go back to", and the confirm, the status after it and
+the `[x]` button's own label all read it, so the three cannot disagree. The
+confirm is the page's one confirm dialog, shared with sending a sticky to
+fsh-guts, so focus-on-Cancel and Escape-cancels are stated once.
+
 A card's other controls follow the floor below. Opening a library card goes to
 the asset's visualizer when its index entry declares one, else to its entry
 page; resizing is a corner drag, with `+`/`−` in move mode and the move bar's
