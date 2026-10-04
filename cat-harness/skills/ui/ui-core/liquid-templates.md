@@ -157,4 +157,4 @@ is part of `bun run gates`.
   a theme layout — a copied layout silently stops tracking the pinned version
   ([`upstream-version-adoption`](../../sdlc/sdlc-core/upstream-version-adoption.md)).
 - A generated reference directory (`reference/skill-instructions/`,
-  `reference/skills/`, `docs-auto/`) is never hand-edited; change its generator.
+  `reference/skills/`, `auto-docs/`) is never hand-edited; change its generator.
