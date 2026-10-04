@@ -312,27 +312,27 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T07:42:52.271Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bd1d1454057a3f77521aefe98d3a71b2520b740a",
-  "sourceCommitSha": "bd1d1454057a3f77521aefe98d3a71b2520b740a",
-  "sourceCommitAt": "2026-10-04T07:38:21Z",
+  "generatedAt": "2026-10-04T08:24:51.579Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/80c4fcbddaa570ea2a89849f1eebea745ecb5f44",
+  "sourceCommitSha": "80c4fcbddaa570ea2a89849f1eebea745ecb5f44",
+  "sourceCommitAt": "2026-10-04T08:20:40Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 304,
+    "Skill": 306,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 35,
-    "Decision": 11,
-    "Process": 80,
-    "SequenceFlow": 1067,
-    "Lane": 212,
-    "ProcessNode": 1007,
+    "Decision": 12,
+    "Process": 82,
+    "SequenceFlow": 1099,
+    "Lane": 218,
+    "ProcessNode": 1041,
     "Tool": 120,
     "Schema": 166,
     "ExternalSchema": 22,
     "GraphKind": 28,
-    "Role": 49,
+    "Role": 53,
     "Subgraph": 27,
     "Asset": 3
   },
@@ -817,7 +817,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
-      "instructionLines": 84,
+      "instructionLines": 110,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/skills/content-test/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/skills/content-test/output.schema.json",
       "hasInstructions": true,
@@ -1163,7 +1163,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
-      "instructionLines": 302,
+      "instructionLines": 303,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1418,7 +1418,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 216,
+      "instructionLines": 225,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1452,7 +1452,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 354,
+      "instructionLines": 368,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1537,7 +1537,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/skill-registration.md",
-      "instructionLines": 129,
+      "instructionLines": 138,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1588,7 +1588,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
-      "instructionLines": 93,
+      "instructionLines": 102,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1702,12 +1702,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "audit-coverage",
       "title": "Audit coverage — measured, with denominators",
-      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
+      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/audit-coverage.md",
-      "instructionLines": 255,
+      "instructionLines": 277,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1740,7 +1740,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1429,
+      "instructionLines": 1464,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2316,7 +2316,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/role-model.md",
-      "instructionLines": 708,
+      "instructionLines": 712,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2828,7 +2828,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/test-engineer.md",
-      "instructionLines": 149,
+      "instructionLines": 172,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2896,7 +2896,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/platform-gates.md",
-      "instructionLines": 356,
+      "instructionLines": 375,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2930,7 +2930,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/coordinate.md",
-      "instructionLines": 524,
+      "instructionLines": 525,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2979,7 +2979,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/qa-report-signing.md",
-      "instructionLines": 111,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2996,7 +2996,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/untainted-verification.md",
-      "instructionLines": 158,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3019,6 +3019,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "qa-reports",
+      "title": "QA reports — derived results on a branch, judgements on `main`",
+      "description": "Where a QA result lives now. Derived verdicts go to the orphan `qa-reports` branch, keyed by commit, written by the CI job `qa-publish`. Judgements stay on main in the `attestations` graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under `test/results/` or `test/attestations/`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/qa-reports.md",
+      "instructionLines": 153,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-reports"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/related-work-coordination",
@@ -3161,12 +3178,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "qa-witness",
       "title": "QA witnesses — the published projection of every verdict",
-      "description": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "description": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/qa-witness.md",
-      "instructionLines": 127,
+      "instructionLines": 135,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3284,7 +3301,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/ci-health.md",
-      "instructionLines": 162,
+      "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3301,7 +3318,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/adjudication.md",
-      "instructionLines": 266,
+      "instructionLines": 267,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3335,7 +3352,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 499,
+      "instructionLines": 552,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3512,6 +3529,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upstream-version-adoption"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "test-plan-execution",
+      "title": "Running a test plan — from a request to a signed certification",
+      "description": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/test-plan-execution.md",
+      "instructionLines": 156,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-plan-execution"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/gate-tree-mutation",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "gate-tree-mutation",
@@ -3538,7 +3572,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/decision-audit.md",
-      "instructionLines": 85,
+      "instructionLines": 93,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3606,7 +3640,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
-      "instructionLines": 267,
+      "instructionLines": 292,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3994,7 +4028,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
-      "instructionLines": 160,
+      "instructionLines": 161,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4045,7 +4079,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/readme-sections.md",
-      "instructionLines": 292,
+      "instructionLines": 299,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5677,8 +5711,10 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#capability/git-push"
       ],
       "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/programme-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/test-requester",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/translation-coordinator"
       ],
       "permissionName": [
@@ -5726,6 +5762,7 @@
       ],
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/validation-pipeline"
       ],
       "permissionName": [
@@ -5758,8 +5795,9 @@
       "description": "The dispatched party that renders an artefact independently — a back-translation, an independent finding — given only what `UntaintedDispatch.checker_sees` allows and nothing that would let it shortcut. It RULES ON NOTHING: its witness carries `result: \"n/a\"` and the intermediate text a reader needs to ask 'on what basis?'. It deliberately does NOT hold `qa-reporting`, and that absence is the point — a checker that emits a verdict is comparing a thing with its own paraphrase of itself, and `check:qa-reviewer-permission` refuses it structurally rather than by convention.",
       "hasCapability": [],
       "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/feedback-provider",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/qc-reviewer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/feedback-provider"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/untainted-checker"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/untainted-checker"
     },
@@ -7050,6 +7088,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/publish-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/related-work-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/rendered-verification",
@@ -7058,6 +7097,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/stalled-agent-triage",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/untainted-verification",
@@ -7214,6 +7254,18 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/signing-route/Decision_SigningRoute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#decision/test-certification/Decision_TestCertification",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Decision",
+      "name": "Are the plan's exit criteria met?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/sdlc/decisions/test-certification.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/test-certification/Decision_TestCertification"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_CRDM",
@@ -22987,8 +23039,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
       ],
-      "nodeCount": 9,
-      "flowCount": 9,
+      "nodeCount": 10,
+      "flowCount": 10,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -23075,9 +23127,18 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/flow/S09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/lane/Lane_Qa",
@@ -23289,9 +23350,32 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Store the signed report on qa-reports",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/lane/Lane_Qa",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/flow/S09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Report attested",
+      "name": "Report attested and stored",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning",
@@ -23301,7 +23385,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/flow/S09"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
@@ -26258,6 +26342,547 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_ByHand"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Publish and keep QA results on qa-reports",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/qa-publish.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily"
+      ],
+      "nodeCount": 17,
+      "flowCount": 16,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no: fork PR",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "accepted",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "rejected,\nattempts left",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "third rejection,\nor git failed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no: dry run",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "CI/CD Pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gates finished (any conclusion)",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Derive the key [main/<sha> or pr/<n>/<sha>]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Can this token write?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P03",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P04"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Skipped: fork PR (::notice says why)",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P04"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Build the entry [tree + manifest]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Splice onto the tip and push (never -f)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P05",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Push accepted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P07",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P08",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Back off",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Results stored under their key",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P07"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Not stored (job red, gates untouched)",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/P10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Daily schedule, or dispatched",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Read every PR's state",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Plan the prune",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Apply?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Plan printed, nothing removed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R04"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Commit a tip without the pruned entries",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Retention applied",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_QaPublish/flow/R06"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_UpstreamAdoption",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "name": "Adopting an upstream version bump",
@@ -27277,6 +27902,574 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/node/End_Failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Test-plan execution",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/test-plan-execution.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/Start_Request"
+      ],
+      "nodeCount": 16,
+      "flowCount": 15,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/Start_Request",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Request",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Request",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ResolvePlan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ResolvePlan",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_BindData",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_BindData",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Execute",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Execute",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_WriteRun",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_WriteRun",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ReExecuteSample",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ReExecuteSample",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Certified",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "certified",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordCertification",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Certified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "refused",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordRefusal",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Undetermined",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "undetermined",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordUndetermined",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Undetermined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordCertification",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/Call_Sign",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordRefusal",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordUndetermined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Undetermined",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F11",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/Call_Sign",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_FileCertification",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F12",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_FileCertification",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Certified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Requester",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Requester / system under test",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/test-requester",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Requester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Tester",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Checker",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Untainted checker",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/untainted-checker",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Checker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Certifier",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "Attestation service",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/attestation-service",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Attestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/Start_Request",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Certification wanted against plan P",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/test-requester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Requester",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/Start_Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Request",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Request certification of the system against plan P",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/test-requester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Requester",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "claim",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ResolvePlan",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Resolve the plan [test-plan/v1]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ResolvePlan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_BindData",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Bind the test data [fixed or generated]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F04"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_BindData"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Execute",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Execute every case, or skip it with a reason",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-engineer"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Execute"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_WriteRun",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Write the test run and the test report [folio-test-run/v1 + test-report/v1]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_WriteRun"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ReExecuteSample",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Re-execute a sample, blind to the tester's verdicts",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/untainted-checker",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Checker",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ReExecuteSample"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Exit criteria met?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/test-certification.dmn#Decision_TestCertification",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#decision/test-certification/Decision_TestCertification",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Certified",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Refused",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Undetermined"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordCertification",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record the certification decision",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Certified"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordCertification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordRefusal",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record the refusal, with the failing cases",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Refused"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordRefusal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordUndetermined",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Record why it could not be decided",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Undetermined"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordUndetermined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/Call_Sign",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Sign the certification",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/attestation-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/Call_Sign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_FileCertification",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "File the signed certification [qa-attestations/v1]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/attestation-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "resolve",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_FileCertification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Certified",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Certified and signed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/attestation-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Certified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Refused",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F09"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Undetermined",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Undetermined — nothing signed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Undetermined"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_Adjudication",
@@ -29120,12 +30313,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Publish QA results to qa-reports (NOT A GATE)",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_CodeQualityGates",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/platform-gates"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -51656,6 +52849,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/platform-gates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/prepare-merge",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/document-publishing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/fhir-validation",
@@ -51702,7 +52896,8 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/content-test",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-reports"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/validation-pipeline"
     },
@@ -51769,7 +52964,8 @@
         "system"
       ],
       "hasSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-report-signing"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/attestation-service"
     },
@@ -52065,6 +53261,79 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/compute-authoring-agent"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/test-requester",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Test requester",
+      "title": "Test requester",
+      "notation": "test-requester",
+      "description": "Asks for a system under test to be certified against a named `test-plan/v1` (plan id and version). It may BE the system under test, or speak for it, and that is exactly why it carries no lane after the request: the requester never tests, checks or certifies, so the system never writes a verdict about itself (`untainted-verification`; the `test-sut-not-self-judged` criterion). Lane `Lane_Requester` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/test-requester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/tester",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Tester",
+      "title": "Tester",
+      "notation": "tester",
+      "description": "Runs a `test-plan/v1` against a system under test: resolves the plan, binds its test data (fixed and reviewed, or generated from template + params + seed, per `vm6m`), executes every case or skips it with a reason, and writes the `folio-test-run/v1` and the `test-report/v1`. UNTAINTED from the system under test — never the same actor — and it does not certify: the rollup it writes is what the certifier decides ON. Bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-engineer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/content-test"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/untainted-checker",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Untainted checker",
+      "title": "Untainted checker",
+      "notation": "untainted-checker",
+      "description": "Re-executes a SAMPLE of a plan's cases from the plan and the data alone — never the tester's verdicts — and reports whether it agrees. It rules on nothing: agreement is a fact the certification table reads, not a verdict the checker writes (`untainted-verification` rule 3: one party doing both halves is not this check). Lane `Lane_Checker` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/untainted-checker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#role/certifier",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "prefLabel": "Certifier",
+      "title": "Certifier",
+      "notation": "certifier",
+      "description": "Takes the certification decision on ONE test report: applies the DMN the plan's `exitCriteria` names (computed from facts, never asserted) and records the decision as a judgement under the declared `attestations` graph, from which it is signed through `qa-report-signing.bpmn`. A specialisation of `stakeholder` — accountable sign-off — but NOT `judgementOnly`: the exit criteria are a table it applies, and only the decision on top of them is the judgement (owner ruling, 2026-10-01). Never the tester and never the system under test. Bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/test-plan-execution",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#skill/decision-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/certifier"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/tools",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "tools",
@@ -52276,8 +53545,11 @@
       "name": "qa",
       "path": "test/results/",
       "contentSource": {
-        "kind": "directory",
-        "declaredIn": "default"
+        "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
       },
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/qa"
@@ -52299,7 +53571,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/attestations"
       ],
-      "description": "The JUDGEMENT half of every QA verdict this instance carries across runs, split out of `test/results/` by owner ruling D2 (a), 2026-10-01 (bean `2gst`, arc `3fva`): derived script verdicts move to the `qa-reports` branch; anything a reviewer judged stays HERE, on main, where a `git rm` of derived results cannot reach it. One `qa-attestations/v1` file per subject at `<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa` today; `block-qa` and `translation-qa` from bean `8wj1`) and the mirror is exactly that family's own, so a subject's attestation is found by swapping the tree root and the suffix. Today: the `pair_attestations` that were carried inside `kg-qa/v1` sidecars, ALL of them, the `by: baseline` entries with the `by: agent` ones; the owner ruled on 2026-10-01 that a baseline is a judgement, because a regenerated one forgets the drift it recorded (defect C4). `voice_reviews` live here too when one is recorded. Schema and the four read states (hit / miss / corrupt / unknown; an absent family tree is `unknown`, never \"never attested\"): `schemas/qa-attestations.ts`. Hosted instances (bootstrap) would sit under `<stub>/`, as their `qa` verdicts do. Declared WITH its files, per bean dh4f.",
+      "description": "The JUDGEMENT half of every QA verdict this instance carries across runs, split out of `test/results/` by owner ruling D2 (a), 2026-10-01 (bean `2gst`, arc `3fva`): derived script verdicts move to the `qa-reports` branch; anything a reviewer judged stays HERE, on main, where a `git rm` of derived results cannot reach it. One `qa-attestations/v1` file per subject at `<family>/<mirrored subject path>.attestations.json`, where `<family>` is the derived family it sits beside (`kg-qa`, bean `2gst`; `block-qa` and `translation-qa`, bean `8wj1`) and the mirror is exactly that family's own, so a subject's attestation is found by swapping the tree root and the suffix. Today: the `pair_attestations` that were carried inside `kg-qa/v1` sidecars, ALL of them, the `by: baseline` entries with the `by: agent` ones; the owner ruled on 2026-10-01 that a baseline is a judgement, because a regenerated one forgets the drift it recorded (defect C4). `voice_reviews` live here too when one is recorded. Under `block-qa/` and `translation-qa/`: every block or translation verdict whose `reviewer.kind` is not `script` (13 at the split, 11 + 2), held in a `criteria` map of the derived report's own shape; the derived report keeps a projection composed from here. Schema and the five read states (hit / miss / absent / corrupt / unknown): `schemas/qa-attestations.ts`. Owner ruling 2 (2026-10-01): a writer that finds judgements in a prior derived file and no store entry MOVES them here as it saves, rather than refusing; a corrupt store is still unknown and refused. Hosted instances (bootstrap) would sit under `<stub>/`, as their `qa` verdicts do. Declared WITH its files, per bean dh4f.",
       "readmePath": "test/attestations/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-xsrv-route-reader/cat-harness.jsonld#directory/attestations",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/attestations"
