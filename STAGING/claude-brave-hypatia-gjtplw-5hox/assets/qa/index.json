@@ -1,5 +1,99 @@
 {
+  "tile": {
+    "qa": {
+      "count": 1099,
+      "unit": "documents"
+    }
+  },
   "$schema": "folio-qa-graph/v1",
-  "availability": "unknown",
-  "reason": "the derived QA corpus was not in this build (it lives on the `qa-reports` branch and was not fetched), so the qa graph was not counted"
+  "files": 1099,
+  "families": [
+    {
+      "schema": "kg-qa/v1",
+      "files": 506,
+      "rollUpField": "totals",
+      "buckets": {
+        "pass": 2913,
+        "fail": 442,
+        "n/a": 1600,
+        "unknown": 18
+      }
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 194,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 43,
+        "warn": 59,
+        "pass": 3594,
+        "na": 4436,
+        "unknown": 35
+      }
+    },
+    {
+      "schema": "block-qa/v1",
+      "files": 172,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 83,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-detangle-sidecar/v1",
+      "files": 67,
+      "rollUpField": null
+    },
+    {
+      "schema": "translation-qa/v1",
+      "files": 35,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-index/v1",
+      "files": 25,
+      "rollUpField": null
+    },
+    {
+      "schema": "kg-qa-manifest/v1",
+      "files": 6,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-lsi-index/v1",
+      "files": 4,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-tool-run/v1",
+      "files": 4,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-translation-pages/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-test-run/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "viewer-nav-qa/v1",
+      "files": 1,
+      "rollUpField": "totals",
+      "buckets": {
+        "pages": 162,
+        "railed": 93,
+        "declined": 69,
+        "missing": 0,
+        "flagged": 0
+      }
+    }
+  ],
+  "unclassified": 0,
+  "unreadable": 0
 }

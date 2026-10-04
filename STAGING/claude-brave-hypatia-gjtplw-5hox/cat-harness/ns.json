@@ -312,6 +312,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphKind/auto-docs",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "auto-docs",
+      "comment": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-auto-docs.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "prefLabel": "auto-docs",
+      "definition": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-auto-docs.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "notation": "cat-harness:graphKind/auto-docs",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphKind/bean-defs",
       "@type": [
         "bootstrap:GraphKind",
@@ -472,21 +487,6 @@
       "prefLabel": "docs",
       "definition": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
       "notation": "cat-harness:graphKind/docs",
-      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
-      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:graphKind/docs-auto",
-      "@type": [
-        "bootstrap:GraphKind",
-        "skos:Concept"
-      ],
-      "label": "docs-auto",
-      "comment": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
-      "prefLabel": "docs-auto",
-      "definition": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
-      "notation": "cat-harness:graphKind/docs-auto",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
