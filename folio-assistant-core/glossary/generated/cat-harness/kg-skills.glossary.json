@@ -189,6 +189,14 @@
       "status": "candidate"
     },
     {
+      "id": "branch-archaeology",
+      "prefLabel": "branch-archaeology",
+      "definition": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+      "notation": "branch-archaeology",
+      "source": "cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md",
+      "status": "candidate"
+    },
+    {
       "id": "branch-freshness",
       "prefLabel": "branch-freshness",
       "definition": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
@@ -1775,6 +1783,14 @@
       "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
       "notation": "wireframe-design-review",
       "source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "work-plan-restructure",
+      "prefLabel": "work-plan-restructure",
+      "definition": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "notation": "work-plan-restructure",
+      "source": "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md",
       "status": "candidate"
     },
     {

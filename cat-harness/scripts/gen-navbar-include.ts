@@ -70,6 +70,7 @@ import { dirname, join } from "node:path";
 import { siteDirFor } from "../schemas/cat-harness.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
+import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
 import {
   navbarOpenInputHtml,
   navbarRegionsHtml,
@@ -111,7 +112,7 @@ export interface Harness {
   label?: string;
   href?: string;
   tone?: number;
-  mark?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } };
+  mark?: HarnessMark | null;
   instantiated?: boolean;
   visualisations?: Visualisation[];
 }
@@ -155,16 +156,9 @@ function harnessRow(h: Harness, staging: boolean): NavItem {
   return {
     ...(h.href ? { href: h.href } : {}),
     label,
-    ...(h.tone !== undefined ? { tone: h.tone } : {}),
-    ...(h.mark?.src
-      ? {
-          avatar: {
-            src: h.mark.src,
-            ...(h.mark.title ? { title: h.mark.title } : {}),
-            ...(h.mark.region ? { region: h.mark.region } : {}),
-          },
-        }
-      : {}),
+    // The row's resolved mark — image or glyph — read the one way every
+    // navbar surface reads it (bean `2vpn`, `lib/harness-mark.ts`).
+    ...navMarkFields(h.mark, h.tone),
     // The ⚙ opens the glass's Harnesses panel with this harness chosen (#1146).
     // `docs-ui.js` handles it by delegation; with no script it does nothing and
     // the row still works.
