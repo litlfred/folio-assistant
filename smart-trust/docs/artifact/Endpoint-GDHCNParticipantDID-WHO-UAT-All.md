@@ -37,3 +37,6 @@ UAT Participant WHO Trustlist (DID v2) - UAT - All keys did:web:tng-cdn.who.int:
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
+
+<footer id="ig-footer" data-prev="Endpoint-GDHCNParticipantDID-WHO-UAT.html" data-next="Endpoint-GDHCNParticipantDID-WHO-UAT-DSC.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

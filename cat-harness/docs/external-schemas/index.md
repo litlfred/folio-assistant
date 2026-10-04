@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>218</b><span>declared uses</span></div>
+<div class="xs-stat"><b>219</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -325,7 +325,7 @@ graph. That is a determined zero, not an unfilled field.
 
 | user | declared by |
 |---|---|
-| `cat-harness/processes/kg/decisions/*.dmn (3)` | `xmlns` binding |
+| `cat-harness/processes/kg/decisions/*.dmn (4)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |

@@ -70,24 +70,6 @@ Grouped and ordered as the IG's own `artifacts.html` groups them, with each arte
 description. Its canonical URL, published representations and whether it is held here are on
 its own page.
 
-<nav class="ig-toc" aria-label="Contents" markdown="1">
-
-**Contents**
-
-- [Requirements: Actor Definitions](#cat-Requirements__Actor_Definitions) — 22
-- [Terminology: Code Systems](#cat-Terminology__Code_Systems) — 12
-- [Terminology: Concept Maps](#cat-Terminology__Concept_Maps) — 4
-- [Structures: Questionnaires](#cat-Structures__Questionnaires) — 1
-- [Requirements: Formal Requirements](#cat-Requirements__Formal_Requirements) — 41
-- [Structures: Logical Models](#cat-Structures__Logical_Models) — 25
-- [Structures: Extension Definitions](#cat-Structures__Extension_Definitions) — 11
-- [Conformance](#cat-Conformance) — 17
-- [Structures: Resource Profiles](#cat-Structures__Resource_Profiles) — 3
-- [Terminology: Value Sets](#cat-Terminology__Value_Sets) — 24
-- [Uncategorised](#cat--uncategorised) — 65
-
-</nav>
-
 <details markdown="1" id="cat-Requirements__Actor_Definitions">
 <summary><strong>Requirements: Actor Definitions</strong> — 22</summary>
 
@@ -400,3 +382,6 @@ its own page.
 | [Base](./artifact/ImplementationGuide-smart.who.int.base.html)<br>`ImplementationGuide/smart.who.int.base` |  |
 
 </details>
+
+<footer id="ig-footer" data-next="artifact/ActorDefinition-DAK.Persona.CommunityHealthWorker.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -37,3 +37,6 @@ IMMZ.D18.S.TBE.FSME-Immun schedule FSME-Immun, 3-dose schedule
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18STBEEnceVir.html" data-next="PlanDefinition-IMMZD18STBETBEMoscow.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

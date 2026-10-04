@@ -440,6 +440,41 @@ describe("a tile with no icon of its own takes its graph KIND's (ob3m finding 11
   });
 });
 
+describe("a tile says the destination's ONE name (bean `ob3m` finding 6)", () => {
+  // Owner, 2026-10-01, "One name everywhere". The glass called the folio's
+  // root docs page `root-docs` (the directory id) while the rail called it
+  // `docs`, and called cat-harness's "Docs — cat-harness".
+  const docs = (id: string, title?: string): TiledDirectory => ({
+    id,
+    graphKinds: ["docs"],
+    coverage: SubgraphCoverageSchema.parse({ visualiser: [{ ref: `site/${id}/index.html`, ...(title ? { title } : {}) }] }),
+  });
+
+  test("an undeclared title is the kind's display name, never the directory id", () => {
+    expect(graphTiles([docs("root-docs")]).map((t) => t.title)).toEqual(["Docs"]);
+  });
+
+  test("the harness is a qualifier beside the label, never folded into it", () => {
+    const tiles = graphTiles(
+      [docs("docs", "Docs — cat-harness"), { ...docs("root-docs"), scope: "repository" }],
+      undefined,
+      (d) => (d.scope === "repository" ? "Folio Assistant" : "C@T Harness"),
+      ["cat-harness"],
+    );
+    expect(tiles.map((t) => [t.title, t.qualifier])).toEqual([
+      ["Docs", "C@T Harness"],
+      ["Docs", "Folio Assistant"],
+    ]);
+    // Two tiles share the name, so the qualifier is SHOWN on both.
+    expect(tiles.map((t) => t.showQualifier)).toEqual([true, true]);
+  });
+
+  test("a tile whose name is unique keeps the qualifier out of sight", () => {
+    const tiles = graphTiles([docs("docs")], undefined, () => "C@T Harness");
+    expect(tiles[0]!.qualifier).toBe("C@T Harness");
+    expect(tiles[0]!.showQualifier).toBeUndefined();
+  });
+});
 
 // ── The glass strip's pins — owner, 2026-10-01, bean `ob3m` finding 10 ─────
 describe("resolveGlassStrip — pinned tiles first, plus '+N more'", () => {

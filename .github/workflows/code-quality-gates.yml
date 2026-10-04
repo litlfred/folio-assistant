@@ -2006,6 +2006,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # One NAME per navigation destination, across the rail, the sidebar
+          # include, harness.json (harness rows, landing viewers, FOLDERS, the
+          # glass and Stickies tiles) and the sticky links. Owner, 2026-10-01,
+          # bean `ob3m` finding 6, "One name everywhere": a surface may only
+          # APPEND the harness as a qualifier. `:check` writes nothing and
+          # also fails a stale `nav-names.qa-results.json` sidecar.
+          bun run check:nav-names:check
           # Every instance declaring a `themes` graph: does it load, and does
           # each theme validate? The gate that TRULY covers the `themes` kind —
           # three others declared `@covers themes` while resolving no themes
