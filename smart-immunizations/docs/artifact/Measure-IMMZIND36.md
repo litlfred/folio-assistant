@@ -37,3 +37,6 @@ IMMZ.IND.36 Drop-out rate of BCG to measles and rubella-containing vaccine 1st d
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Measure-IMMZIND35.html" data-next="Measure-IMMZIND37.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-BusinessProcessWorkflow.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-BusinessProcessWorkflow.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
+
+<footer id="ig-footer" data-prev="Requirements-SGAuthoring.Skills.ValidateL3Functionality.html" data-next="StructureDefinition-BusinessProcessWorkflowSource.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

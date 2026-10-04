@@ -35,3 +35,6 @@ at the post-processing marker, mid-page, where a stripping tag would glue the ho
 <script src="{{ page.hub.script }}" defer></script>
 
 Read from [the IG's published hub page]({{ page.hub.published }}).
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
