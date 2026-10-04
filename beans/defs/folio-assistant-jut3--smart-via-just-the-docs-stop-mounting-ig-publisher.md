@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:16:24Z
+updated_at: 2026-10-01T12:37:45Z
 parent: folio-assistant-uhkv
 ---
 
@@ -393,4 +393,323 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 
 _2026-09-29_ — **Re-parented `yj32` → `uhkv`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Rendering the smart-* IGs through Jekyll is SMART-stack work; yj32 stays the interface epic.
 
+## M2 re-measured 2026-10-01: upstream `input/pages` is now DETERMINED
+
+Provenance: `WorldHealthOrganization/smart-trust` at `30d55b3630ac8a8937e1d98f7c060a4ae5a78ef0` (2026-09-29), shallow anonymous clone. Session https://claude.ai/code/session_01DnFZtVpff4o7puqWazGvKN. The 2026-09-22 entry said *could not determine*; this replaces that with a number, and does not mean it was zero.
+
+| | |
+|---|---|
+| narrative pages (`input/pagecontent/*.md`) | **42**, 4 506 lines |
+| page tree | `sushi-config.yaml` `pages:`, nested 3 deep (Home / Business Requirements / Data Models and Exchange / …) |
+| pages with **no** Liquid at all | **22** of 42 |
+| Liquid tags used | `include` 54, `assign` 6, `unless` 6, `for` 1; **no** `sql`, **no** `[[[ ]]]` links |
+| `include` targets | other pagecontent pages (~20, transclusion), `img.html` ×10, two PlantUML-generated SVGs (`input/images-source/*.plantuml`), and `list-structuremaps.xhtml` (×1, **Publisher-generated**, not in source) |
+| `site.data` reads | `site.data.fhir.packageId` ×2, `site.data.info.exclude{xml,json,ttl}` (`downloads.md` only) |
+| images | 45 png, 5 svg, plus docx/pdf/pptx downloads under `input/images/` |
+| licence | `CC-BY-SA-3.0-IGO` (`sushi-config.yaml`) |
+
+**What this says about feasibility.** The Liquid surface is small and almost entirely `include`. Of the Publisher-only inputs, only three need supplying from Publisher metadata:
+- `site.data.fhir.*`, which the artefact index can provide;
+- `site.data.info.*`;
+- one generated fragment, `list-structuremaps.xhtml`.
+
+Rendering 42 pages through just-the-docs is therefore a bounded job. The falsifier would have been heavy use of `sql` or `[[[ ]]]`, and it does not fire.
+
+**The decision this exposes, which is the owner's:** where the 42 pages come from. The options are a committed snapshot (licence CC-BY-SA, attribution required), a submodule, or a fetch at build time. The repository boundary rule (*platform, not content*) applies to `smart-trust/` as a mock-up instance. Nothing is vendored until that is decided.
+
+## 2026-10-01: narrative pages, a duplicate built and reverted
+
+**What happened.** A round 2 built a second renderer for the 42 narrative pages (`ingest-ig-pages.ts`, `narrative-pages.ts`, a new graph kind `ig-page-sources`, and `smart-trust/docs/pages/`). It went in as `464df76` and was reverted in the next commit. **Bean `bamf` (#1670) and `u3cd` (#1701) already render the IG's narrative pages through just-the-docs**, as their own site at `/smart-trust/ig/` (`fhir-harness/scripts/build-ig-site.ts`, `stage-ig-sites.ts`). They also copy images, render the PlantUML diagrams and populate `site.data.fhir`. Nothing in this bean pointed at `bamf`, and nothing was searched before building. The duplicate was found when its pages failed staging's `check:duplicate-ids`: WHO's own source repeats `{#execute_rule}`, `{#get_valuesets_api}` and `routine_sync`, and `bamf`'s post-build `--dedupe-ids` already renames those.
+
+**What was kept.** The owner's ruling is honoured through `bamf`. `fhir-artifact-index/menu.json` was re-ingested from `litlfred/smart-trust` at `30d55b36`, so `stage-ig-sites.ts`, which clones `menu.json`'s `source.of` at `source.ref`, now builds `/smart-trust/ig/` from the fork.
+
+**Still true from round 2.** Two upstream defects worth fixing on the fork:
+1. `{{PARTICIPANT_CODE}}` sits in prose in five pages, so the Publisher most likely renders it empty.
+2. `feedback.md` derives `github.com/WorldHealthOrganization/trust`, but the repository is `smart-trust`.
+
+**Done-when item 2** (`input/pages/` through just-the-docs with Publisher metadata) is met by `bamf`, not by this bean's work. The **parity checklist / MVP** call is the owner's, still open.
+
+## Owner ruling 2026-10-01: branding means logos only
+
+Asked how far *"just dont want branding"* reaches, with three options: logos only; no WHO identity at all; or colours only. The owner chose **1, logos only**.
+
+- **No WHO logo** on any page. This is the generator's existing rule: *"until published under WHO, colour carries the identity and the wordmark is set in type"*.
+- **WHO's colour theme stays.** That is `7h3u`'s `themes/upstream/who.css` (#1682).
+- **The plain-text "WHO SMART Trust" name in titles stays.**
+
+Nothing changes in the rendered output. Recorded so the next agent doesn't re-ask.
+
+## 2026-10-01: both upstream defects fixed on the fork
+
+The two defects are fixed in https://github.com/litlfred/smart-trust/pull/2 (draft, `69f0662`), on the owner's instruction:
+- `{{PARTICIPANT_CODE}}` is replaced by `**$participant**`;
+- the feedback link now prepends `smart-`.
+
+SUSHI could not run in that session, because `packages.fhir.org` was unreachable. On the owner's choice, the fork's `fhirbuild` CI runs SUSHI and the IG Publisher on the PR, and nothing merges until it is green. Once it merges, re-ingest `menu.json` at the new fork commit so `/smart-trust/ig/` picks up the fix.
+
+## 2026-10-01: fork fix merged; staging re-pinned
+
+https://github.com/litlfred/smart-trust/pull/2 merged as `25771f6` after both IG builds went green. `menu.json` was re-ingested at `25771f6`, so `/smart-trust/ig/` now builds with both defects fixed.
+
+## Parity checklist, measured (2026-10-01)
+
+The P0 rule from the skill (`ig-publisher-reduction`, owner approval 2026-09-30) is a **strict** page-set match: every page the Publisher renders counts, and one we cannot render is a gap, not an exception.
+
+**Provenance**
+- **Publisher side:** `litlfred/smart-trust` `gh-pages` root, a full IG Publisher build of `main` at `25771f6`: 3,548 root `.html` pages, file tree read without blobs.
+- **Our side:** `folio-assistant` `gh-pages` `STAGING/claude-wonderful-curie-gbfeuy/smart-trust/`: 728 pages. That is 674 artefact pages, 1 index, 1 category page, 5 menu sections, and 47 under `ig/` (`bamf`: 42 narrative pages plus 5 menu sections).
+
+| page kind (Publisher) | Publisher | ours | gap | what it needs |
+|---|---:|---:|---:|---|
+| narrative page (`pages:` tree) | 35 | 35 | **0** | done (`bamf`) |
+| artefact main page | 673 | 673 | **0** | done (`gen-smart-trust-pages`) |
+| artefact not in our index | 4 | 0 | 4 | **index is stale** (read 2026-09-21; the `IRL` participant was added since). Re-ingest, no new rendering. |
+| representation view `.json/.xml/.ttl.html` | 2,004 | 0 | 2,004 | the resource bytes. 655 of 674 are `referenced`, not held, so this needs materialisation, and P2 (which representations survive) decides it first |
+| `.change.history` tab | 668 | 0 | 668 | per-artefact history. Not in any export the index reads, so **data-limited** until the fork or AST exports it |
+| `-testing` tab | 69 | 0 | 69 | test-plan data per artefact; source not yet identified |
+| profile tabs: `-definitions`, `-mappings`, `-examples`, `.profile.json/xml/ttl`, `.profile.history` | 35 | 0 | 35 | StructureDefinition snapshots for the 5 profiles, from the package (materialisation) |
+| DAK `.schema.json` / `.jsonld` views (smart-base post-processing) | 33 | 0 | 33 | the DAK post-processing outputs, already produced by the fork's CI |
+| IG-level generated: `artifacts`, `toc`, `qa`, `qa-dep`, `qa-ipreview`, `qa-tx`, `qa-txservers`, `qa.min`, `searchform`, `history`, `smart.liquid` | 11 | 0 (our index is an `artifacts` equivalent at another URL) | 11 | `artifacts` and `toc` are derivable from the index and the page tree; `qa*` need the Publisher's QA output; `searchform` needs a search index; `history` needs the package history |
+| **total** | **3,548** | **708 matched** | **2,840** | |
+
+**Reading it**
+- The two page kinds a reader reads, narrative pages and artefact main pages, are at **full parity**.
+- 2,004 of the 2,840 gaps (71 %) are representation views. They wait on P2's decision about which representations survive, and are not rendering work.
+- The next biggest gap, 668 change-history tabs, is **data-limited**: no export carries that history. By the skill's own rule it belongs on the fork's ask list rather than here.
+- **Cheap and in reach now:** 4 stale artefacts (re-ingest), `artifacts`/`toc` (derivable), and 33 DAK views (outputs already exist).
+
+**The MVP call against this table is the owner's**, and so is whether representation views wait for P2.
+
+## 2026-10-01: parity step 1 — index re-ingested from the fork
+
+`ingest:ig` was re-run over `litlfred/smart-trust` `gh-pages` (`9bd9643`, the deploy of `main` `25771f6`), with `--base https://litlfred.github.io/smart-trust`, following the owner's ruling that the fork is the source.
+
+- **Result:** 678 artefacts. The 4 `IRL` artefacts were added and none removed. The DAK sidecars still cover 19 materialised artefacts; their only change is the expansion timestamp.
+- **Changed fields:** `materialization.provenance.upstream` now points at the fork; one upstream description changed ("test city" became "TEST CITY").
+- **Checks:** `ingest:ig:check` passes against that checkout, and `check:materialized-fixity` verifies 272 artefacts with 0 edited.
+- **Parity gap closed:** "artefact not in our index" goes from 4 to 0.
+- **Lesson:** the first attempt skipped `gh-pages`' subfolders (`schemas/`, `openapi/`) and silently dropped every DAK schema sidecar. The ingest reported it as a thinner index (`schema=0`), and it was caught by comparing with the previous counts.
+
+## 2026-10-01: parity step 2 — `toc` and `artifacts` generated
+
+`build-ig-site.ts` now writes the two Publisher-generated IG-level pages from data the build already holds, and reports them under `generated`, separately from source pages.
+
+- **`toc`:** the `pages:` tree, nested. A page that neither exists nor is generated is listed as text, not as a link.
+- **`artifacts`:** every artefact from the instance's index, grouped by category, linking to `../artifact/<stem>.html`. It is written only when the instance holds both an index and `docs/artifact/` (`stage-ig-sites.ts` `artifactsFor`). It takes the menu's "Artifact Index" slot.
+- **Shared naming rule:** the page-name rule moved to `artifactPageName` in `fhir-artifact-index.ts`, so the writer (`gen-smart-trust-pages`) and this linker cannot disagree.
+- **Verified** on a local stage of the fork at `25771f6`: 678 of 678 artefact links and 36 of 36 toc links resolve, and both pages parse as strict Liquid.
+- **Parity:** the IG-level generated pages go from 11 missing to 9 (`qa*`, `searchform` and `history` remain).
+
+## 2026-10-01: phased-transition review — P0 restatement (APPROVED, see below)
+
+**The conflict.** Approved P0 says *"strictly: a page the Publisher renders from data it does not export is a gap, not an exception"*. But:
+- P2 (also approved) drops XML and Turtle, so 1,331 representation-view pages can never be P0 matches; under P2 they are refusals.
+- The skill's own "not settled" section says a data-limited page kind *"belongs on the fork's ask rather than on the parity list"*, which covers the 668 change-history tabs.
+
+As written, P0 cannot pass before P2 and the fork are done, and that inverts the phase order.
+
+**Proposed wording for P0's page-set criterion.** Every page the Publisher renders for the IG is accounted for as **exactly one** of:
+- **matched:** this site renders it;
+- **refused under P2:** an XML or Turtle representation view, recorded in P2's refusal list;
+- **on the fork's ask:** rendered from data the Publisher does not export, listed with the data it needs.
+
+A page in none of the three is a **gap**, and P0 passes only with zero gaps. Strictness is kept, since nothing is silently excepted; it just stops counting the other phases' work as P0's.
+
+The skill (`ig-publisher-reduction.md`) is **not edited** until the owner approves this wording.
+
+**Opened in the same review:** `ha24` (P1), `ntyj` (P2) and `h3tx` (P4). P1 and P2 are blocked by `qrnz` (second IG, needed for the combined view); P4 is blocked by `a9tx`.
+
+## Owner ruling 2026-10-01: every phase renders equivalent to the standard IG render
+
+In the owner's words: *"each phase needs to render equivalent to existing IG standard render"*.
+
+This is an invariant across **all** phases, not just P0's exit criterion. Whatever a phase changes in the pipeline, its output must stay equivalent to the IG Publisher's standard render of the same IG. The measured reference is `jut3`'s parity table: the Publisher's page set, by page kind.
+
+**Open tension, put to the owner:** P2 as approved drops XML/Turtle ("recorded as a refusal"). Under this invariant, a refused representation is a difference from the standard render.
+
+## Owner ruling 2026-10-01: P2 kept as approved
+
+In the owner's words: *"Keep P2 as approved: drop XML and Turtle, and treat the refusal record as an accepted"*, the option offered as *"…accepted, documented difference from the standard render"*.
+
+- XML and Turtle representation views (1,331 pages on smart-trust) are **not rendered**.
+- Each one is recorded as a refusal. That record is the **accepted, documented exception** to the cross-phase rule that every phase renders equivalent to the standard IG render.
+- JSON views remain in scope (673 pages).
+
 _2026-10-01T12:16:24Z_ — Claimed by claude/wonderful-curie-gbfeuy — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner ruling 2026-10-01: P0 restatement approved
+
+The owner answered *"1y"* to the restatement above: every Publisher page is
+**matched**, **refused under P2**, or **on the fork's ask**, and P0 passes with
+zero pages in none of them. `ig-publisher-reduction`'s P0 row now carries it,
+with the reason under "Approved by the owner".
+
+Against the parity table: narrative (35) and artefact main pages (673) are
+matched, and `toc` and `artifacts` are matched as of PR #1766. XML/TTL views
+(1,331) are P2 refusals once `ntyj` records them. Change history (668) goes on
+the fork's ask. Still to place: JSON views (673), DAK views (33), profile tabs
+(35), `-testing` (69), and the other IG-level pages (9).
+
+## 2026-10-01: DAK view pages — 33 rendered, 8 equivalent, two upstream divergences found
+
+`gen-smart-trust-pages` now writes the Publisher's `<Name>.schema.json.html`
+(19) and `<Name>.jsonld.html` (14). Each is the raw file, published beside
+the page, plus a page that is `smart-trust/scripts/templates/dak-view.liquid`
+over `page.dak`, computed by `smart-trust/scripts/dak-views.ts`. The work is in
+smart-trust, not fhir-harness, because a DAK is WHO's. The displayed text is
+`JSON.stringify(parsed, null, 2)`, as the Publisher's page fetches and shows
+it. That is not always the file's own bytes: JavaScript puts integer-like keys
+first, which affects 3 of the 33 files.
+
+**Checked against the Publisher** (Jekyll build vs the fork's `gh-pages` at
+`9bd9643`): **8 of 33 equivalent.** The other 25 differ for reasons outside
+this renderer:
+
+1. **Two different schemas per ValueSet or model upstream.** The view page
+   fetches the ROOT `<Name>.schema.json`, written by `smart-base`'s current
+   `generate_valueset_schemas.py` (`e151a4d`): values are Coding objects with
+   `system` and `code`. `schemas/<Name>.schema.json`, which `dak-api.html`
+   links and this index holds, is the older format, where values are IRI
+   strings. Both come from the same deploy and carry the same `$id`. All 19
+   schema pages show different text for this reason.
+2. **The Publisher's tab bars are inconsistent**, which comes from the DAK
+   post-processing that injects the tabs:
+   - 12 pages list JSON Schema / JSON-LD twice;
+   - 8 schema pages have no JSON-LD tab, though their JSON-LD page links back
+     to them;
+   - the 5 StructureDefinition pages carry SD tabs (`Content`,
+     `Detailed Descriptions`, `Mappings`) instead of `Narrative Content`.
+
+Ours renders one consistent tab bar. Which schema copy to show, and whether
+to reproduce the tab defects, are the owner's calls.
+
+## Owner ruling 2026-10-01: show the root schema; DAK views now equivalent
+
+The owner answered *"do 1"*: the view pages show the root copy. The ingest
+now reads every schema, displays and OpenAPI sidecar from the root first and
+falls back to `schemas/`. It reports each pair that differs; on the fork that
+is all 52 pairs. The fork's own `dak-api.html` links the root copies too, so
+`schemas/` is the stale one.
+
+After re-ingest, with the file now fetched client-side (bean `680p`), **all 33
+DAK view pages display exactly what the Publisher's pages display**
+(Chromium, via Playwright). The tab-bar differences remain and are the second
+decision.
+
+## 2026-10-01: `dak-api.html` replicated as its own page
+
+The owner asked to *"replicate dak-api.html seperately"*. The page lives at
+`/smart-trust/dak-api.html`.
+
+- **Ingest.** The hub is the region of the published `dak-api.html` between
+  its `DAK_API_HUB_START`/`END` markers, which smart-base's
+  `generate_dak_api_hub.py` writes after the Publisher has run. The IG's source
+  page holds only a placeholder. The ingest keeps the fragment verbatim as
+  `fhir-artifact-index/dak/dak-api-hub.html` and records it as `dakApiHub`.
+- **Page.** `templates/ig-pages/dak-api.liquid` plus `dak-hub.js`. The loader
+  fetches the fragment from the served graph and re-points each link through a
+  map `dakHubLinks` computes: artefact pages go under `artifact/`, held DAK
+  files to the served graph, and the rest to the Publisher's copy.
+- **Checked in Chromium:** the text is identical to the Publisher's hub
+  (8,735 characters). All 53 on-site links resolve; 9 go to the Publisher.
+  Those 9 are `openapi/index.html`, the enumeration schemas, and three pages
+  the Publisher never wrote (`ValueSets-enumeration.html`,
+  `LogicalModels-enumeration.html`, `LogicalModels.html`). Those three are
+  upstream dead links, kept visibly as the Publisher's.
+
+**Parity correction.** The parity table counted the IG site's narrative
+`dak-api` page as matched. It is not: our `/smart-trust/ig/dak-api.html`
+renders the source page, which holds only the `<!-- DAK_API_CONTENT -->`
+placeholder, and lacks the hub. That page is now a gap for P0, to be closed
+by pointing it at the replica or by injecting the hub as a DAK overlay. The
+overlay belongs in smart-base, not fhir-harness.
+
+## 2026-10-01: the DAK API section on artefact pages — 14 of 14 equivalent
+
+smart-base's post-processing (`_generate_html_content`) appends "API
+Information" and "Endpoints" to each ValueSet's Publisher page. It builds them
+from the ValueSet's OpenAPI sidecar, and it skips logical models.
+
+- **Our version.** The artefact page carries a host element, and
+  `dak-openapi.js` builds the same elements, classes, text, fallbacks and
+  style in the browser, from the OpenAPI file in the served graph (bean
+  `680p`).
+- **Checked in Chromium:** all 14 Publisher pages carrying the section show
+  identical displayed text and element structure. A test pins the page set to
+  exactly the ValueSets with a held OpenAPI file.
+- **The owner's v1.7.2 PDF** (`StructureDefinition-COSEHeader`) shows the
+  section, plus a "Schema Definition" block, on a StructureDefinition page.
+  The current generator omits "Schema Definition" on purpose ("intentionally
+  omitted … to avoid duplicate content") and skips logical models. So the
+  fork's 1.8.0 render, with no section on the 5 StructureDefinition pages, is
+  current upstream behaviour, and ours matches it.
+- **A whitespace trap, met and fixed.** The template is appended to an
+  artefact page. A whitespace-stripping opening tag glued its `<div>` onto the
+  page's last table row, and kramdown printed it as text. This template
+  therefore opens with an unstripped comment tag; the
+  README reader accepts both forms.
+
+## 2026-10-01: the IG site's `dak-api` page, and 672 JSON views — both equivalent
+
+The owner chose `1 2 3`: close the IG site's `dak-api` gap, then build the JSON
+views, then write the P2 refusal record.
+
+**1. The IG site's `dak-api` page.** Its source holds only `<!-- DAK_API_CONTENT -->`.
+- `build-ig-site` gained a **generic** `fills` option: content a post-processing step writes at a marker. A fill puts its body there and adds its data to the page's front matter. It knows a marker and a template, never whose post-processing wrote them, and it reports fills it could not place.
+- `stage-ig-sites` passes the DAK hub fill, built by `dakHubFill` in `dak-views.ts`.
+- The page is now its own source plus the hub, which is what the Publisher published.
+- **Checked in Chromium** on a staged IG site: the source intro is present, the hub text is identical to the Publisher's, and all 53 links resolve.
+- just-the-docs sets `h4` in uppercase and the hub's card titles are `h4`, so a style rule scoped to the hub restores the Publisher's case.
+
+**2. JSON views: 672 of 672 equivalent.**
+- The Publisher writes `<Name>.json.html` for every artefact except the ImplementationGuide and StructureDefinitions, which get `.profile.json.html`.
+- Its page fetches `<Name>.json` and shows `JSON.stringify(parsed, null, 2)`. Ours fetches the IG's **`package.tgz`, held in the served graph** (228 KB; `--materialize-package`, new index field `package`). The browser gunzips it, walks the tar and reads the resource (`resource-views.ts`, `json-view.liquid`, `resource-json.js`), rather than copying 672 resource files. 677 of the 678 package resources are JSON-equal to the published `.json`.
+- **Checked in Chromium:** all 672 show identical JSON, status line and heading.
+- The Publisher's status line uses `colsd` for drafts and `colsi` otherwise, with the same text.
+- **Not reproduced:** all 672 Publisher headings start with `": "`, an empty type label in its template. Ours drop it, by the same rule as the tab bars. Recorded with the other upstream defects in bean `g4oc`.
+- The DAK view pages' JSON tab now points to this site's JSON view, but only where that page is written; smart-base holds no package, so its pages are unchanged.
+
+## 2026-10-01: change history, testing and profile tabs — 756 of 756 equivalent (10 left)
+
+The owner chose `1 2 3` again: change history, profile tabs, testing tabs.
+
+**Change history is not data-limited, so the parity table was wrong.** All
+672 Publisher `.change.history.html` pages on smart-trust state no history,
+just a heading and one sentence. Measured on all 672: the heading is
+`name ?? title ?? id`, then " - Change History"; the sentence is
+`History of changes for <id> .`. They are rendered now, and they come off the
+fork's ask.
+
+**The tab pages, generic in `resource-views.ts`.** The resource facts the
+Publisher states (`name`, `experimental`, `kind`, `status`, `date`) are read at
+generation time from the held `package.tgz`, the same copy the JSON views
+fetch. One template, `tab-page.liquid`, renders them. Each page states only
+what the Publisher's does:
+- **`-testing`** is written only while the IG holds no TestPlan and no
+  TestScript, because otherwise the Publisher's page would list them.
+- **`-examples`** is written only while no resource claims the model in
+  `meta.profile`.
+
+**Checked against the fork's `gh-pages`** (Jekyll build, main-content text):
+
+| page kind | pages | equivalent |
+|---|---:|---:|
+| `.change.history` | 672 | 672 |
+| `-testing` | 69 | 69 |
+| logical model `.profile.history` | 5 | 5 |
+| logical model `-examples` | 5 | 5 |
+| logical model `.profile.json` (Chromium, JSON + status + heading) | 5 | 5 |
+
+**Left:** `-definitions` and `-mappings` for the 5 logical models (10 pages).
+They are the Publisher's element tables (Key / Differential / Snapshot)
+rendered from each StructureDefinition's snapshot, which is real rendering
+work rather than a sentence. That is the next slice.
+
+## Owner ruling 2026-10-02: the Publisher's QA output is left as is
+
+Owner, on converting `qa.xml` to JSON for a client-side QA page: *"fhir qa.xml? other things rely on it downstream... outside of this project. leave as is."*
+
+- **`qa.xml` is a FHIR Bundle of OperationOutcomes, and consumers outside this project read it.** It is not one of the per-artefact XML representations P2 refuses. The P2 record (`p2-refusals.qa-results.json`) does not list it and must not.
+- **The QA files are the Publisher's own, so this pipeline does not re-render, convert or drop them.** That covers `qa.html`, `qa.min.html`, `qa.xml`, `qa.json`, `qa.txt`, `qa.compare.txt`, `qa-tx`, `qa-txservers`, `qa-dep` and `qa-ipreview`. Where a Publisher run exists, they are published from its output byte for byte.
+- **Parity table:** the `qa*` pages move from "missing" to **passed through from the Publisher, by owner ruling**. They are not a render this pipeline owes.
+- **Still open:** `searchform` and `history` among the IG-level pages.

@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T08:55:15Z
-updated_at: 2026-10-03T09:17:35Z
+updated_at: 2026-10-03T09:17:38Z
 parent: folio-assistant-d33q
 ---
 

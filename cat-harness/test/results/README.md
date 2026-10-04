@@ -15,6 +15,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`crdm-detect-eval.test-run.json`](crdm-detect-eval.test-run.json) | data |  |
 | [`harness-state.qa-results.json`](harness-state.qa-results.json) | data |  |
 | [`kg-export.bootstrap.qa-results.json`](kg-export.bootstrap.qa-results.json) | data |  |
+| [`kg-export.folio-assistant.qa-results.json`](kg-export.folio-assistant.qa-results.json) | data |  |
 | [`kg-export.qa-results.json`](kg-export.qa-results.json) | data |  |
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
 | [`lane-documentation.qa-results.json`](lane-documentation.qa-results.json) | data |  |
@@ -35,12 +36,14 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
-| [`detangle/`](detangle/) | 67 files | |
+| [`cat-openapi/`](cat-openapi/) | 2 files | |
+| [`detangle/`](detangle/) | 68 files | |
 | [`folio-assistant/`](folio-assistant/) | 2 files | |
-| [`kg-qa/`](kg-qa/) | 459 files | |
+| [`kg-qa/`](kg-qa/) | 466 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
-| [`library-qa/`](library-qa/) | 64 files | |
+| [`library-qa/`](library-qa/) | 66 files | |
 | [`lsi/`](lsi/) | 4 files | |
+| [`screenshots/`](screenshots/) | 20 files | |
 | [`tool-runs/`](tool-runs/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |

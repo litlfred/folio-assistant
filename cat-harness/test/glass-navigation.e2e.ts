@@ -51,15 +51,28 @@ const TILES = [
     surfaces: ["navbar", "board", "glass"], hidden: false },
 ];
 const TODOS = { items: [{ id: "t-one", summary: "First thing to do" }] };
+const PINS = ["glass-todos", "glass-filter", "glass-settings"];
 const ZOOM = { belowPx: 220, byKind: { todo: { belowPx: 300, because: "a todo needs more room" } } };
 
 test.beforeEach(async ({ page }) => {
+  // The strip starts HIDDEN on a first open (owner, 2026-10-01). These specs
+  // are about what is ON the strip, so they arrive as a reader who has shown
+  // it; `glass-strip-default-hidden.e2e.ts` holds the default itself.
+  await page.addInitScript(() => {
+    try { if (localStorage.getItem("fa-glass-strip-hidden") === null) localStorage.setItem("fa-glass-strip-hidden", "0"); } catch { /* no storage */ }
+  });
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.route("http://replica.test/**", (route) => {
     const url = new URL(route.request().url());
     if (url.pathname === "/page.html") return route.fulfill({ contentType: "text/html", body: REPLICA });
     if (url.pathname === "/assets/harness/tiles.json") {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(TILES) });
+    }
+    // The DECLARED pins (bean `ob3m` finding 10). These specs are about
+    // arranging the strip, so they declare the glass's three own tiles and
+    // leave the fitting to `glass-strip-fit.e2e.ts`.
+    if (url.pathname === "/assets/harness/glass-strip.json") {
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(PINS) });
     }
     if (url.pathname === "/assets/todos/index.json") {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(TODOS) });
@@ -72,6 +85,8 @@ test.beforeEach(async ({ page }) => {
   });
   await page.goto("http://replica.test/page.html");
   await page.waitForSelector(".fa-glass-handle", { state: "attached" });
+  // The pins arrive by fetch on a replica page; wait for them, not for luck.
+  await page.waitForSelector('.fa-glass-tiles [data-fa-strip-item="glass-filter"]', { state: "attached" });
 });
 
 const layer = ".fa-sticky-layer";
@@ -337,7 +352,7 @@ test.describe("the strip slides away — \"Only by a button\"", () => {
     await page.click(tab);
     await expect(page.locator(dock)).toHaveAttribute("data-fa-strip", "hidden");
     await expect(page.locator(tab)).toHaveAttribute("aria-expanded", "false");
-    await expect(page.locator(tab)).toHaveText("▴ Show tiles");
+    await expect(page.locator(tab)).toContainText("▴ Show tiles");
     // Hidden means unreachable by keyboard too — not merely off-screen.
     await expect(page.locator(".fa-glass-tiles")).toHaveAttribute("inert", "");
     // The way back is on screen.
@@ -388,6 +403,10 @@ test.describe("accessibility of the new controls", () => {
       await page.goto("http://replica.test/page.html");
       await page.waitForSelector(".fa-glass-handle", { state: "attached" });
       await page.click(".fa-glass-handle");
+      // The strip starts hidden on a first open (owner, 2026-10-01): the
+      // Show tiles tab is the first control a reader meets, so it is pressed
+      // here rather than skipped by a stored choice.
+      await page.click(".fa-glass-strip-toggle");
       await page.click('[data-fa-glass-chrome="glass-more"]');
       await expect(page.locator('[data-fa-strip-row="glass-todos"]')).toBeVisible();
       const { violations } = await new AxeBuilder({ page })

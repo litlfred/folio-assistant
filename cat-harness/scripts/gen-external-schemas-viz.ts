@@ -43,7 +43,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "no
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { docsLayers } from "./compose-docs.js";
+import { baseDocsDir } from "./compose-docs.js";
 import { loadSpecs, namespacesInUse } from "./external-schemas.js";
 import { specUsers, type SpecUse, type SpecUseForm, type SpecUsers } from "./spec-users.js";
 import { BASE_GRAPH_KINDS } from "../schemas/graph-kind-registry.js";
@@ -81,11 +81,6 @@ export function pageRelPath(repo = REPO): string | undefined {
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
-function baseDocs(repo: string): string {
-  const base = docsLayers(repo).layers.find((l) => !l.repositoryScoped);
-  if (base === undefined) throw new Error("no instance-scoped docs layer is declared");
-  return base.dir;
-}
 
 const CSS = `
 .xs-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
@@ -353,7 +348,7 @@ if (import.meta.main) {
     handledDirectories(REPO, INSTANCE_ROOT, KIND),
     VIEWER_TOOL,
   );
-  const out = join(baseDocs(REPO), PAGE);
+  const out = join(baseDocsDir(REPO), PAGE);
 
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";

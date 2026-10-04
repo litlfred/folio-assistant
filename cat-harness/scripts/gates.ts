@@ -168,6 +168,16 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
+    // cache is rendered from it into the preview at `/<instance>/ast/`. The
+    // lister asks each IG repository over the network (`git ls-remote`).
+    match: "fhir-harness/scripts/stage-ast-sites.ts",
+    kind: "ci-only",
+    reason:
+      "a BUILD step, not a check: it lists the IGs whose repositories carry an AST cache by asking " +
+      "each repository over the network; best effort (continue-on-error), its output only feeds the preview",
+  },
+  {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source
     // repository its menu.json records. A BUILD step: it clones and copies,
     // and has no verdict a contributor could run without the network and a
@@ -500,6 +510,23 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "takes `--dir ./_site`: it verifies the BUILT site before a deploy (bean `vigi`); its " +
       "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
+  },
+  {
+    match: "search-split.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it cuts the BUILT (or, on a preview, borrowed) search index into per-scope " +
+      "indices (bean `m7mn`); there is no `_site` in a checkout. Its scope rule, partition and determinism " +
+      "are covered by search-split.test.ts, and its output on every deployed tree by publish-verify's " +
+      "`search-scopes` verifier",
+  },
+  {
+    match: "publish-id-lookup.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it copies the identifier-lookup client and each declared index into the BUILT " +
+      "site (bean `1br0`); there is no `_site` in a checkout. Covered by publish-id-lookup.test.ts, and on " +
+      "every deployed tree by publish-verify's `search-scopes`, which fails a linked lookup the tree lacks",
   },
   {
     match: "strip-preview-seo.ts",

@@ -1254,6 +1254,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pin-spdx-license-list",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Snapshot the SPDX License List at its pinned version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against."
+        }
+      ],
+      "skos:notation": "pin-spdx-license-list",
+      "dcterms:source": "cat-harness/tools/index.ts#pin-spdx-license-list",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/processes-viewer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1554,6 +1574,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/site-search-scopes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Site search scopes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed."
+        }
+      ],
+      "skos:notation": "site-search-scopes",
+      "dcterms:source": "cat-harness/tools/index.ts#site-search-scopes",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/skill-docs",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1671,6 +1711,26 @@
       ],
       "skos:notation": "subgraph-readmes",
       "dcterms:source": "cat-harness/tools/index.ts#subgraph-readmes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/subgraph-resolve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve a declared subgraph's content source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on."
+        }
+      ],
+      "skos:notation": "subgraph-resolve",
+      "dcterms:source": "cat-harness/tools/index.ts#subgraph-resolve",
       "skos:note": "candidate"
     },
     {

@@ -187,6 +187,10 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS: the cross-instance half of check:declared-paths (bean `gz47`).
+      // Its subject is every instance's declarations and source, read; it
+      // reads no folio material.
+      "scripts/check-foreign-paths.ts",
       // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
       // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
       // symlinked root makes a tool answer a question about the repository from
@@ -410,6 +414,35 @@ export const RULES: Rule[] = [
       // same reason as `qa-store` — it reads the declaration and git, and no
       // folio's subject matter could make it answer differently.
       "scripts/branch-store.ts",             // a `keyedBy: "tip"` directory's own branch: one live copy
+      // The declaration-driven face of the same store (bean `2h76` part 3): it
+      // resolves a DIRECTORY ID to the branch its declaration names, so no
+      // caller hardcodes a branch through a rename. Harness-level for the same
+      // reason again: it reads the declaration and git, and no folio subject
+      // matter could make it resolve differently.
+      "scripts/state-store.ts",              // a declared tip-keyed directory, by id: read and splice-write
+      // Its session-start step (bean `2h76` part 4): fetches the declared state
+      // branch and checks it out as a read surface. Harness-level for the same
+      // reason as the three above.
+      "scripts/state-mount.ts",               // the state branch on disk, or a loud finding saying it is not
+      // The write half of that mount: it turns the worktree diff into a splice
+      // through the library rather than a push from the worktree, which is the
+      // lost update. Harness-level for the same reason as its neighbours.
+      "scripts/state-push.ts",                // the mount's edits, spliced onto the tip
+      // The seeds' own freshness check (bean `9ofm`): it reads each special
+      // branch's `manifest.json`, resolves the ref that manifest names, and
+      // compares the two TREES. Harness-level for the same reason as its
+      // neighbours, and one more: the branches it reads are declared in
+      // `scripts/special-branches.json`, which is the harness's table — a
+      // folio's subject matter cannot add a row to it or change what a tree
+      // comparison concludes.
+      "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
+      // What every reader of a moved graph needs, written once (bean `9ofm`
+      // row D): given a declared directory id, which directory to actually
+      // read — the checkout, the mount, or a refusal. Harness-level for the
+      // same reason as its neighbours: it reads the declaration, git and the
+      // mount marker, and no folio's subject matter could make it resolve
+      // differently — only give it more directories to resolve.
+      "scripts/graph-read.ts",                // where to read a declared graph from: the checkout, or its mount
       // Its clean-merge counterpart, and harness-level for the same reason: it
       // loads the GATE SET from the workflow and re-runs whichever writers
       // their checks report stale. It knows nothing about any folio's subject
@@ -471,6 +504,9 @@ export const RULES: Rule[] = [
       "schemas/skill-definitions-dir.ts",    // where the JSON skill definitions and conventions live (bean `rqao`)
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
+      "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
+      "scripts/resolve-subgraph.ts",         // the subgraph-source resolver from a shell (Tool `subgraph-resolve`)
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
@@ -643,6 +679,10 @@ export const RULES: Rule[] = [
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.
       "scripts/check-source-licence.ts",
+      // Snapshots the SPDX License List ids that check validates against (bean
+      // `sd5v`): the same subject — every declared library's licences — and
+      // no folio's content.
+      "scripts/pin-spdx-license-list.ts",
       "scripts/check-wireframes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
@@ -844,6 +884,9 @@ export const RULES: Rule[] = [
       // tools and processes visualisers link a skill only where one is, so the
       // module sits beside the two viewers that read it.
       "scripts/lib/skill-pages.ts",
+      // The raw-block wrapper both of those visualisers emit authored text through
+      // (bean `kjbb`): a closing tag inside the text must not end the block early.
+      "scripts/lib/liquid-raw.ts",
       // Its library twin (bean `qgjh`): where a library reference links — the
       // viewer, the item README, the upstream record — read, never composed.
       "scripts/lib/library-links.ts",
@@ -1390,6 +1433,10 @@ export const RULES: Rule[] = [
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",
+      // The per-scope search split (bean `m7mn`): the publish process runs it
+      // after the build, and publish-verify imports its shapes, so it sits
+      // beside the verifier rather than below it.
+      "scripts/search-split.ts",
       // The downstream-tool criterion family (bean `fq5u`): kg:audit's reader
       // of Tool run records, harness for the same reason as the audit itself.
       "scripts/downstream-runs.ts",

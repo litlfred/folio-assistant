@@ -96,6 +96,27 @@ per directory, so a new file anywhere changes one.
 
 Generated overview diagrams and their SVGs.
 
+### `prov-qaqc` — take the base, regenerate
+
+The PROV-O QA/QC report (`docs/prov-qaqc/`) and its per-instance logs
+(`docs/assets/prov/`). Generated WHOLE from the workflow instances under
+`beans/workflows/`, so any branch that records an instance — which every branch
+doing process work does — rewrites the index page and adds a `.prov.jsonld`.
+
+**Added 2026-10-03, and the occasion is the reason.** The runner refused #1892
+with `docs/prov-qaqc/index.md` as the SINGLE unclassified path among **32**
+resolved by pattern. One file nobody authors, blocking a merge nobody can
+usefully resolve by hand — which is this catalogue's whole purpose, missing one
+entry.
+
+The globs are instance-agnostic (`**/docs/prov-qaqc/**`), like
+`derived-results` and unlike `glossary`: a dependent folio runs `prov:qaqc`
+over its own instances and writes the same two shapes under its own root.
+
+It names no check of its own, per rule 2: `regen` runs `prov:qaqc` because
+`check:prov-qaqc` is a workflow gate, and a pattern that named its own check
+would be a hand-kept list able to drift from the workflow.
+
 ### `glossary` — take the base, regenerate (207)
 
 The generated glossary and LSI pages: whole-corpus aggregates where concurrent
@@ -126,6 +147,13 @@ scripts/state-visualizer.ts". **`docs/uploads/index.html` is the viewer OF
 `uploads/`, not an upload** — before 2026-10-01 the `uploads` refusal's
 `**/uploads/**` caught it, and #1764 refused on it. First match wins, so the
 viewer entries sit above the refusal.
+
+And `docs/fsh-guts/index.md`, written whole by `fsh-guts:viz`
+(`gen-fsh-guts-viz.ts`, checked by `fsh-guts:viz:check`) from everything under
+`fsh-guts/`. Any PR that archives an upload rewrites it, so two such PRs always
+collide; #1766 refused on it alone on 2026-10-03. Only that one page is
+declared: the archive it renders (`fsh-guts/**`) is kept content and stays
+refused.
 
 ### `viewer-namespace` — take the base, regenerate
 
@@ -198,6 +226,70 @@ these pages are generated from and stays `refuse`; a test pins that pair,
 because resolving the generated copy while taking a side on the source is the
 mistake this entry would otherwise invite.
 
+### `docs-pages` — take the base, regenerate (17)
+
+The 17 `cat-harness/docs/**.md` pages `gen-docs-pages.ts` writes whole from the
+authored blocks under `cat-harness/content/docs/<slug>/` (`docs:pages`, gated
+by `docs:pages:check`). Each one says so in its own front matter:
+
+```
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+```
+
+Bean `8c6v`: **none** of the 17 was named by a pattern, so `classify()`
+returned `refuse / — none —` and the merge handed back for hand-editing the
+files that forbid it. `docs/publication-workflow.md` was one of the **2**
+refusals on #1888 after **53** of its 55 conflicts had resolved by pattern —
+one undeclared family holding up a 53-file resolution is the all-or-nothing
+rule working as designed, and the gap it exposed.
+
+**Safe because nothing is carried forward.** `emit()` is compare-or-write: the
+only read of a prior page is inside its `--check` branch, for the comparison,
+and every other read in the script is of an INPUT (`readBlock` over
+`content/docs/`, BPMN XML, manifests). Its one walk of the output directory
+skips files carrying the generated marker. This is bean `8rff`'s discipline —
+**confirm the writer by reading the script, not by how whole-file it looks** —
+applied again, and here it comes out the other way than it did for the
+glossary ledger.
+
+**Gated on EXACT content, which is why `take-base` is verifiable rather than
+merely convenient.** The generator's own docblock says a difference in a `page`
+is "somebody who added a node, renamed a block, ran a first sweep, or moved a
+sidecar, and did not regenerate". So after `take-base`, `docs:pages:check`
+proves the regenerated page is right — the resolution is not trusted, it is
+checked.
+
+**The 17 slugs are ENUMERATED, not globbed, and that is deliberate.**
+`cat-harness/docs/*.md` is a **mix**: measured 2026-10-03, the directory holds
+31 `.md` pages of which 13 are generated, so 18 authored ones sit beside them
+(`architecture.md`, `index.md`, `getting-started.md`, `platform.md`, …), and
+`guides/` holds 9 of which 4 are generated, leaving `agent-onboarding.md`,
+`voices.md` and 3 more. A directory glob would take a side on
+authored prose — the one thing a resolver must never do. The cost is that a
+page added to `content/docs/` is **refused until its slug is declared here**,
+which is the safe direction to be wrong in, and a test reads the pages' own
+front matter from the TREE so the enumeration cannot go quietly stale.
+
+**That test must read the front matter, not the file**, and it earned the
+distinction immediately. Its first cut tested the whole file for the marker
+and the very next merge of `main` turned up an 18th subject: the generated
+body of **this skill**, `docs/reference/skill-instructions/merge-conflict-patterns.md`,
+which quotes the marker in the code fence three paragraphs above. A detector
+that reads a quotation as a declaration finds its own documentation — *"a
+docblock that documents a tag necessarily contains the tag"*, from
+[`audit-coverage`](audit-coverage.md). That page's own front
+matter names `gen-skill-docs.ts`, and `skill-instructions` is declared before
+`docs-pages`, so the first match already gives it the right owner. A test pins
+all three facts.
+
+**The authored neighbour is the source, and it stays refused.**
+`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
+is the hand-written INPUT for `docs/publication-workflow.md`; on #1888 both
+sides had only *added* rows to it, but a union of additions is a property of
+that instance and not of the path, so the next conflict there could be a
+contested edit. A test pins the pair, and pins that nothing under `content/`
+is claimed at any depth.
+
 ### `health-report` — take the base's measurement
 
 `test/health/results/*.health-report.json`. Not a derivation of the tree but a
@@ -267,6 +359,34 @@ is a coordination question (`bean-coordination`), and a duplicated
 `updated_at` from a careless resolution is `check-bean-front-matter`'s
 recorded defect.
 
+### `artefact-verification` — refused, by declaration
+
+`scripts/artefact-verification.json`, the per-check consumer-verification
+declaration. **This is the entry that exists to stop a sweep, not to resolve
+one** — and the one most likely to be globed by mistake, because it reads like a
+generated sidecar (under `scripts/`, a `.json`, its key set derived from
+`package.json`) and because it is the only path that refused on **two** open PRs
+at once (#1958, #1955, swept 2026-10-03).
+
+Two facts, either one sufficient:
+
+- `task-io.ts` classifies `check:artefact-verification` as `READ_ONLY`. **No
+  script writes the file**, so `regen` has no writer to run and `take-base` is a
+  silent *discard* rather than a resolution.
+- Its own `_comment` requires every `none` entry to carry **a reason, in prose**,
+  and says the file *"may only SHRINK"*. A branch that adds a gated check adds
+  an authored sentence — precisely what taking base would drop.
+
+So a conflict here is a genuine editorial merge: both reasons are wanted, and
+which survives is a judgement. Human merge is the cost of the file's shape, not
+a hole in this catalogue.
+
+**The falsifier is recorded** (bean `mjl3`): if a `--write` is ever added that
+composes the derived key set and carries existing reasons forward, the file
+becomes regenerable and this entry becomes `take-base`. Nothing today wants such
+a writer, and adding one to make merges cheaper would be building a mechanism to
+serve the merge tool rather than the gate.
+
 ### `uploads` — refused, by declaration (30)
 
 Uploaded source material: provenance-bearing input, never regenerated.
@@ -308,6 +428,161 @@ shared agent container while `main` moved every few minutes, and GitHub runs no
 `pull_request` CI on a conflicted PR — a 28-conflict resolution went 'dirty'
 again within a minute of its push. Use the label on a PR that is waiting on
 review rather than on its author; leave it off a branch somebody is pushing to.
+
+## When a merge-train member is refused: bean, hand back, or dispatch
+
+A merge steward builds a **train**: `merge-base.ts --no-regen` for each
+member, then one `bun run regen`, then one CI run. A member is **refused**
+when its merge hits an authored or undeclared conflict, or when the train's
+combined result fails a gate that the member alone did not fail. The steward
+drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
+executes what happens to the dropped member. The author's side, the queue
+and the bounce-back are the merge-manager SOP in
+[#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
+12). The hand-back format is the `agent-handoff` skill in
+[#1884](https://github.com/litlfred/folio-assistant/pull/1884).
+
+**Why this exists.** Owner, 2026-10-02: *"if a merge in queue cannot be merged
+for some reason, create a new bean (under appropriate epic/story…), hand it
+back to the sibling (use the agent-to-agent handoff process with a fail
+condition) for resolution, or dispatch an agent as appropriate."* Before this,
+each refusal got an ad-hoc PR comment or chat message, and nothing in the work
+plan said it had happened. The refusals on 2026-10-02 alone show the three
+causes this section has to cover:
+
+| PR | refused on | cause |
+|---|---|---|
+| #1808, #1819 | bean `ob3m` | two sibling navbar PRs edited the same bean (`beans`, refused by declaration) |
+| #1804 | `artefact-verification.json` | authored file, no declared pattern |
+| #1822 | `gen-library-jsonld.ts` | authored conflict with #1881, which overlaps it |
+| #1852 | `proposals/index.md` | authored index, no declared pattern |
+| #1764 | glossary page budget | each PR passed alone; the combination exceeded the budget |
+
+### 1. Open one bean per refused PR, and check before you create
+
+`beans create` dedupes on nothing (see `todo-manager` §"Check before you
+create"). The title carries the PR number, so the check is exact:
+
+```bash
+beans list --json --search 'title:"Merge refused: #1822"' \
+  | jq -r '.[] | select(.title | startswith("Merge refused: #1822 "))
+                | select(.status != "completed" and .status != "scrapped") | .id'
+```
+
+- **An open bean already exists** for this PR: do not create a second one.
+  Add the new refusal to it under `## Attempts` with `--body-append` (never
+  `--body-file`, which replaces the body).
+- **Otherwise create one**: `type: bug`, titled
+  `Merge refused: #<n> <first refused path or gate>`. `--parent` and the
+  create are one action (`todo-manager` §"After you create").
+
+**The parent is the epic or story the PR's own work belongs to,** not the
+steward's epic. Find it in this order: the bean the PR's branch adds or claims
+(`git diff --name-only origin/main...<head> -- beans/defs/`), then a bean id in
+the PR body or commit messages. Parent the refusal under **that bean's parent**
+when the PR's bean is a task, or under the PR's bean itself when it is an epic
+or story. Then mark it `--blocking <the PR's bean>`. Only when the PR names no
+bean at all does it go under the steward's own merge-gate epic (`nok9` here),
+and the bean body says so.
+
+The body records what the owning session needs in order to act without asking:
+
+```markdown
+PR #1822, head <sha> (the sha the train used), dropped from train
+`<train name>` (its other members, and the base sha it merged onto).
+
+## Refused
+- `cat-harness/scripts/gen-library-jsonld.ts`: authored conflict, no declared
+  pattern. Overlaps #1881, which is already in main.
+
+## Done when
+- [ ] the PR's head merges main with `bun run merge:main` and no refusal, and
+      CI is green on that head
+- [ ] the PR re-enters a train with a new `ready: <sha>`, and lands
+```
+
+For a combined-gate refusal (#1764), list the gate, its first failing line, and
+**which other members** the train held, because the fix may belong to either
+side.
+
+### 2. Hand it back to the owning session, with a fail condition
+
+The owning session is the one in the PR's `Claude-Session:` trailer, or in its
+body. Hand the bean back to it in `agent-handoff` form: the steward is the
+**coordinator and verifier**, the owning session is the **executor**, and the
+owner rules on anything authored. The bean carries:
+
+- `## Roles`: steward (coordinator, verifier, closes), owning session
+  (executor), owner (authored conflicts, any exception).
+- `## Report to`: the PR. One line per event:
+  `<id>: started`, `<id>: done <sha>`, `<id>: blocked <why>`.
+- `## Done when`: as above. The verifier is the next train, not the executor's
+  own log.
+- `## Fails if`, the **fail condition**, which is when the steward takes the
+  bean back:
+  - no `started` line on the PR **within 4 hours**;
+  - or no push to the PR branch **within 24 hours**;
+  - or the owning session is **gone**: archived, failed, or unknown to
+    `get_session`;
+  - or the executor reports `blocked` on something it cannot settle.
+
+Send the hand-back to the session itself (`send_message`), as **one line**
+that names the bean and the branch, never the instructions. The instructions
+are in the bean, on the branch. After that, the steward does not edit the
+bean: anything it learns goes to the PR (`agent-handoff` §1).
+
+**The fail condition is a takeover, not a reminder, and that differs from
+`agent-handoff` §7 on purpose.** There, the executor is in another environment
+and the coordinator *cannot* do the step, so an expiry only means asking
+again. Here, the work is in this repository and an agent can do it, so a
+missed deadline moves to §3. The one thing that is never done is putting a
+second writer on a branch whose first writer may still be live: before taking
+over, read the bean's holder note and the PR's last push (`bean-coordination`
+§"A quiet claim").
+
+### 3. When no live owner can be reached, dispatch one agent
+
+If the owning session is gone, or the fail condition has fired, dispatch **one**
+agent on the PR's branch (`dispatch-agent`). One agent is not a swarm; a
+second one is, and needs the owner's per-swarm permission (`swarm-management`).
+Its budget is modest: one fix, one push, one report.
+
+- **It may do** what the patterns would have done had they been declared: bring
+  main in with `merge:main`, regenerate, and fix a gate failure that has one
+  mechanical answer. It pushes merge commits only, and never force-pushes.
+- **It may not decide an authored conflict.** Two sibling PRs editing one bean
+  (`ob3m`), one script changed differently on both sides (#1822 against
+  #1881), or a page over its budget only in combination (#1764): each of these
+  is a choice between authors. The agent writes the question to the owner on
+  the PR, with both sides quoted, the options and a default, and stops
+  (`interaction-modality` §4.1).
+- **The dispatch is recorded on the bean** by the steward, before the agent
+  starts: `## Attempts`, with the date, the reason the fail condition fired,
+  the agent's session or task id, and the budget.
+
+Two failed attempts with the same cause go to the owner instead of a third
+dispatch (`agent-handoff` §7).
+
+### 4. Comment on the PR once, and edit that comment
+
+One comment per refused PR, **edited in place** as the bean moves on, as
+`merge-main.yml` does with its own comment. It names the bean, the head sha,
+the train, the refused paths, and who holds the fix (the owning session, a
+dispatched agent, or the owner). A second refusal of the same PR updates the
+same comment. Remove `ready-to-merge` when #1802's SOP is in force (step 10).
+
+### 5. Close the bean when the PR's fate is settled
+
+The steward is the verifier, so the steward closes:
+
+- **the PR lands**: `completed`, with the merge commit as evidence;
+- **the PR is closed unmerged**: `scrapped`, with the reason and a link. The
+  bean is never deleted (`bean-coordination`).
+
+A fix that is pushed but has not landed does not close the bean. The member
+must survive a train first. A refusal bean left open after its PR has gone is
+the stale state that the `needs-merge-human` label already shows (bean `u7be`
+item 4).
 {% endraw %}
 
 ## Processes that run this skill
@@ -315,5 +590,6 @@ review rather than on its author; leave it off a branch somebody is pushing to.
 | process | step(s) that name it |
 |---|---|
 | [Merge the base branch in](../../processes/merge-base.html) | Classify every conflicted path against the declared patterns; Resolve each by its declared strategy; Abort, restore the tree, list what was refused |
+| [A refused merge-train member](../../processes/merge-refusal.html) | Record the refusal on the bean; Comment on the PR once, linking the bean; Hand back, with a fail condition; Merge main in, regenerate, fix mechanical gates; Re-enter a train on the new head |
 | [A merge train](../../processes/merge-train.html) | Hand it back (calls a sub-process); Hand the culprit back (calls a sub-process) |
 

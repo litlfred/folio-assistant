@@ -249,7 +249,12 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     const labels = await page.locator(slots).evaluateAll((ns) =>
       ns.map((n) => n.getAttribute("aria-label")),
     );
-    expect(labels).toEqual(["Todos", "Beans", "Processes", "Knowledge graph", "More actions"]);
+    // fsh-guts joined the row "with the others" (owner, 2026-10-02, #1925). Its
+    // accessible name carries the live count after a dash, so only its stem is
+    // pinned here; the count states are `fshGutsCount`'s to test.
+    expect(labels.map((l) => (l ?? "").split(" — ")[0])).toEqual([
+      "Todos", "Beans", "Processes", "Knowledge graph", "fsh-guts, discarded items", "More actions",
+    ]);
     // ...then the switch, last. No [x] after it (ob3m finding 8).
     const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
       ns.slice(-1).map((n) => (n.classList.contains("fa-nav-scheme") ? "scheme" : n.className)),

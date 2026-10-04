@@ -29,6 +29,12 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
+      # The identifier lookup this workflow publishes (bean `1br0`): the
+      # script, its client, and each instance's generated index — a changed
+      # index must redeploy, or the search box links to a stale one.
+      - 'cat-harness-tools/scripts/**'
+      - 'cat-harness-tools/id-lookup/**'
+      - '*/id-lookup/**'
       # EVERY script under here, not the handful somebody remembered.
       #
       # This list was eight named scripts, each added with a comment arguing
@@ -428,6 +434,17 @@ jobs:
           #
           # `.json` alias for the same reason as every document above: Pages
           # serves `.jsonld` as octet-stream. The `.jsonld` stays canonical.
+          # The CHECKOUT ROOT instance's own graph (bean `l4ay`). It declares
+          # the checkout-level subgraphs — `todos`, `beans`, `fsh-guts`, … —
+          # and `todos.jsonld` is published AS its declared `todos` Subgraph
+          # node (`<base>/folio-assistant/folio-assistant.jsonld#directory/todos`,
+          # `subgraph-node.ts`). Publishing the document is what makes that
+          # `@id` dereference rather than name a node nothing serves.
+          ROOT_STUB=$(bun run cat-harness/scripts/print-stub.ts .)
+          mkdir -p "./_site/${ROOT_STUB}"
+          bun run cat-harness/scripts/kg-export.ts --instance . --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
+          cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
+
           bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
@@ -636,6 +653,22 @@ jobs:
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
+
+      # The identifier lookup (bean `1br0`, issue #1972 step 3): its client page
+      # and each instance's generated index, copied into the built tree — never
+      # into the Jekyll source, which the client says it must not sit under.
+      # BEFORE the split, which names every lookup it finds as a `remote` entry
+      # the search box links to.
+      - name: Publish the identifier lookup
+        run: bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site
+
+      # One search index per scope — each instance, each target locale, the
+      # platform — cut from the index Jekyll just wrote, plus the manifest a
+      # page reads to load only its own (issue #1972, bean `m7mn`). Before the
+      # verify step, whose `search-scopes` verifier checks the split matches
+      # THIS index and partitions it exactly.
+      - name: Split the search index per scope
+        run: bun run cat-harness/scripts/search-split.ts --dir ./_site
 
       # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
       # "a set of post processing tools for verification that a failure

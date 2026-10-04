@@ -50,9 +50,30 @@ export const IPA = {
 
 type Ig = typeof IPS | typeof IPA;
 
-/** A `folio-fhir-artifact-index/v2` with one referenced profile. */
+/** One referenced profile of `ig`, keyed `StructureDefinition/<id>`. */
+function profile(ig: Ig, id: string, name: string, title: string): Record<string, unknown> {
+  const page = `${ig.published}/StructureDefinition-${id}`;
+  return {
+    key: `StructureDefinition/${id}`,
+    resourceType: "StructureDefinition",
+    id,
+    published: { json: { url: `${page}.json` }, html: { url: `${page}.html` } },
+    materialization: { state: "referenced", provenance: { upstream: `${page}.html` } },
+    canonical: `${ig.canonical}/StructureDefinition/${id}`,
+    version: ig.version,
+    name,
+    category: "Structures: Resource Profiles",
+    title,
+    description: "A fixture profile.",
+  };
+}
+
+/** A `folio-fhir-artifact-index/v2` with two referenced profiles. */
 export function artifactIndex(ig: Ig, id: string): Record<string, unknown> {
-  const page = `${ig.published}/StructureDefinition-Composition-uv-ips`;
+  const artifacts = [
+    profile(ig, "Composition-uv-ips", "CompositionUvIps", "Composition (IPS)"),
+    profile(ig, "Patient-uv-ips", "PatientUvIps", "Patient (IPS)"),
+  ];
   return {
     $schema: "folio-fhir-artifact-index/v2",
     id,
@@ -70,22 +91,8 @@ export function artifactIndex(ig: Ig, id: string): Record<string, unknown> {
       artifactsHtml: "artifacts.html",
     },
     sidecarApi: "absent",
-    count: 1,
-    artifacts: [
-      {
-        key: "StructureDefinition/Composition-uv-ips",
-        resourceType: "StructureDefinition",
-        id: "Composition-uv-ips",
-        published: { json: { url: `${page}.json` }, html: { url: `${page}.html` } },
-        materialization: { state: "referenced", provenance: { upstream: `${page}.html` } },
-        canonical: `${ig.canonical}/StructureDefinition/Composition-uv-ips`,
-        version: ig.version,
-        name: "CompositionUvIps",
-        category: "Structures: Resource Profiles",
-        title: "Composition (IPS)",
-        description: "A fixture profile.",
-      },
-    ],
+    count: artifacts.length,
+    artifacts,
   };
 }
 

@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>117</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>69</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>95</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>120</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>70</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>98</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 95 |
+| <span class="tg-tag tg-shell">shell</span> | 98 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 108 |
+| `none` | 111 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **69** skills named across **117** tools resolve to a
+Yes — all **70** skills named across **120** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -130,6 +130,7 @@ tool advertising a capability the graph cannot locate.
 | `paper-preferences`<br>Rendering preferences | Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`build-docs`](../reference/skill-instructions/build-docs.html)<br>[`build-pdf`](../reference/skill-instructions/build-pdf.html) | 10 in / 1 out |
 | `paper-preview`<br>Open a render | Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`rendering-auditor`](../reference/skill-instructions/rendering-auditor.html)<br>[`staging-review`](../reference/skill-instructions/staging-review.html) | 3 in / 1 out |
 | `pdf-cover`<br>PDF page raster | Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer. | <span class="tg-tag tg-shell">shell</span> | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | 5 in / 1 out |
+| `pin-spdx-license-list`<br>Snapshot the SPDX License List at its pinned version | Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against. | <span class="tg-tag tg-shell">shell</span> | [`vocabulary-authority`](../reference/skill-instructions/vocabulary-authority.html) | 1 in / 1 out |
 | `processes-viewer`<br>Processes viewer | Render the declared BPMN processes as an index page and one page per diagram. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `proof-dependency-graph`<br>Proof dependency graph | Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 4 in / 1 out |
 | `proof-objects-extract`<br>Proof-object extraction | Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read. | <span class="tg-tag tg-shell">shell</span> | [`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 1 in / 1 out |
@@ -145,12 +146,14 @@ tool advertising a capability the graph cannot locate.
 | `serve-rendering`<br>Local rendering server | Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all. | <span class="tg-tag tg-shell">shell</span> | [`serving-renderings`](../reference/skill-instructions/serving-renderings.html) | 2 in / 1 out |
 | `sibling-sessions`<br>Sibling sessions in a window | List the Claude Code sessions that have committed to this repository in a time window, from the `Claude-Session:` trailer on commits across ALL branches — with each one's commit count, first and last commit, latest subject, and the branches containing its tip. The session API cannot see a sibling session, so the trailer is the only durable session identity here and a session's state is INFERRED from its branch; whether a session is still running is not knowable from a checkout and is deliberately not reported. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | 2 in / 1 out |
 | `site-search-index`<br>Site search index | The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 0 in / 1 out |
+| `site-search-scopes`<br>Site search scopes | The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |
 | `skill-docs`<br>Skill instruction reference | Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |
 | `skill-fetch`<br>Fetch a skill | Load one skill's instruction body for the agent to follow, from the local packages or an external bundle. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | 2 in / 1 out |
 | `skill-list`<br>List skills | Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | 0 in / 1 out |
 | `stakeholder-map`<br>Stakeholder map | Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`role-model`](../reference/skill-instructions/role-model.html) | 1 in / 1 out |
 | `state-viewer`<br>State graph viewer | Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `subgraph-readmes`<br>Directory READMEs from the Knowledge Graph | Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`upload-routes`](../reference/skill-instructions/upload-routes.html) | 1 in / 1 out |
+| `subgraph-resolve`<br>Resolve a declared subgraph's content source | Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on. | <span class="tg-tag tg-shell">shell</span> | [`directory-conventions`](../reference/skill-instructions/directory-conventions.html) | 3 in / 1 out |
 | `tabular-csv`<br>CSV tabular metadata (STUB) | STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`). | <span class="tg-tag tg-manual">manual</span> | [`tabular-metadata`](../reference/skill-instructions/tabular-metadata.html) | 1 in / 1 out |
 | `tabular-xlsx`<br>Spreadsheet tabular metadata (STUB) | STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet. | <span class="tg-tag tg-manual">manual</span> | [`tabular-metadata`](../reference/skill-instructions/tabular-metadata.html) | 1 in / 1 out |
 | `tex-snippet-validate`<br>TeX snippet validation (AST) | Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one. | <span class="tg-tag tg-shell">shell</span> | [`latex-validation`](../reference/skill-instructions/latex-validation.html) | 5 in / 1 out |

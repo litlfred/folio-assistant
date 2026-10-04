@@ -171,6 +171,29 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       requires: { runtime: ["bun"], network: true },
     }),
+    // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
+    // its content". The ONE resolver, from a shell — `branch-store
+    // mount`/`push` call the same function and dispatch on its `kind`.
+    defineTool({
+      id: "subgraph-resolve",
+      title: "Resolve a declared subgraph's content source",
+      description:
+        "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      install: { none: true },
+      invoke: { shell: "bun run subgraph:resolve" },
+      io: {
+        inputs: [
+          { name: "id", schema: t("Slug"), required: false, description: "A declared directory id. Repeatable; absent with `--all`." },
+          { name: "all", schema: t("Flag"), required: false, arg: { flag: "--all" }, description: "Every subgraph the checkout declares." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Machine-readable output." },
+        ],
+        outputs: [
+          { name: "source", schema: t("Text"), description: "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no instance declares the id, 2 when the declaration contradicts itself or names an undeclared branch." },
+        ],
+      },
+      satisfies: ["directory-conventions"],
+      requires: { runtime: ["bun"], network: false },
+    }),
     defineTool({
       id: "subgraph-readmes",
       title: "Directory READMEs from the Knowledge Graph",
@@ -1956,6 +1979,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
     }),
 
+    defineTool({
+      id: "site-search-scopes",
+      title: "Site search scopes",
+      description:
+        "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
+      io: {
+        inputs: [
+          { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
+        ],
+        outputs: [
+          { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+      downstream: {
+        output: "assets/js/search/manifest.json",
+        inputs: ["the site search index (`assets/js/search-data.json`)", "the declared instances and target locales"],
+        judgedAt: "published",
+        verifier: "search-scopes",
+      },
+    }),
+
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
@@ -2439,6 +2487,45 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // edge against one. The clean run does not mean the edge was tested.
       satisfies: ["library-ingestion"],
       requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── The SPDX License List, pinned as a value vocabulary (bean `sd5v`) ──
+    //
+    // The owner, 2026-10-03: "go ahead with licence-id validation, that's it
+    // for now". The List is the authority a `licence.json` id is checked
+    // against, snapshotted at the pinned edition as `pin-ig-terminology` does
+    // for an IG — so it satisfies the same skill. No SPDX document is made.
+    defineTool({
+      id: "pin-spdx-license-list",
+      title: "Snapshot the SPDX License List at its pinned version",
+      description:
+        "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pin-spdx-license-list.ts --from <license-list-data checkout>" },
+      // `network: false` is exact: it reads a local copy and never fetches.
+      // The copy is fetched by hand at the pinned tag, for the reason
+      // `pin-ig-terminology` gives: a gate that needs the network fails for
+      // the wrong reason.
+      requires: { runtime: ["bun"], network: false },
+      io: {
+        inputs: [
+          // No `arg` binding, as on `pin-ig-terminology`: the copy lives in a
+          // scratch directory, and `FilesystemPath` is refused as a
+          // command-line word.
+          { name: "licenseListCheckout", schema: t("FilesystemPath"), required: true, description: "A copy of github.com/spdx/license-list-data at tag `v<version>`, passed as `--from`. Named for what it is rather than `from`: with the same name it would share `pin-ig-terminology`'s signature and be DERIVED as its substitute, which it is not — an IG clone and a licence list are different inputs (`deriveAlternatives`). Refused unless both files declare the pin's `licenseListVersion`." },
+        ],
+        outputs: [
+          { name: "snapshot", schema: t("RepoPath"), description: "`folio-pinned-terminology/v1`: the version, the source, and every `spdx-license#<id>` / `spdx-exception#<id>` with its name, sorted; `deprecated: true` where the List marks it." },
+        ],
+      },
+      satisfies: ["vocabulary-authority"],
+      selection: {
+        when:
+          "A licence id must be checked against a fixed, named edition of the SPDX License List rather than against whatever spdx.org serves today.",
+        limits:
+          "Ids, names and the deprecated flag only — not licence texts, URLs or OSI/FSF flags. The version comes from the pin record, never from this script; refreshing means moving the pin first.",
+        cost: "Two JSON files (~380 KB) fetched once by hand; the ~105 KB snapshot is committed, so nothing runs at check time.",
+      },
     }),
 
     // ── Tabular extraction: DECLARED, and deliberately not built ─────────
