@@ -31,20 +31,37 @@
         },
         {
           "kind": "auto-docs",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "cat-harness/docs/assets/img/uml/overview",
+            "cat-harness/docs/cat-harness/auto-docs",
+            "cat-harness/docs/cat-harness/auto-docs/glossary",
+            "cat-harness/docs/cat-harness/auto-docs/index/dmn",
+            "cat-harness/docs/cat-harness/auto-docs/index/docs",
+            "cat-harness/docs/cat-harness/auto-docs/index/processes",
+            "cat-harness/docs/cat-harness/auto-docs/index/roles",
+            "cat-harness/docs/cat-harness/auto-docs/index/schemas",
+            "cat-harness/docs/cat-harness/auto-docs/index/skills",
+            "cat-harness/docs/cat-harness/auto-docs/index/tasks",
+            "cat-harness/docs/cat-harness/auto-docs/index/tools",
+            "cat-harness/docs/cat-harness/auto-docs/lsi",
+            "cat-harness/docs/uml/overview"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run auto:docs:check"
           ],
           "typed": false,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "bean-defs",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "beans/defs",
+            "beans/defs/archive"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -61,19 +78,21 @@
             "bun run check:stale-paths"
           ],
           "typed": false,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "bean-notes",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "beans/notes"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run beans:notes:check"
           ],
           "typed": false,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "beans",
@@ -112,25 +131,29 @@
         },
         {
           "kind": "board-positions",
-          "state": "no-directory",
-          "directories": [],
+          "state": "typed-only",
+          "directories": [
+            "todos/boards"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "boards",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "todos/boards"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run boards:default:check"
           ],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "cat-harness",
@@ -437,7 +460,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "undetermined",
+          "state": "empty",
           "directories": [
             "fsh-guts"
           ],
@@ -568,13 +591,15 @@
         },
         {
           "kind": "merge-queue",
-          "state": "no-directory",
-          "directories": [],
+          "state": "typed-only",
+          "directories": [
+            "beans/queue"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "methodology",
@@ -711,15 +736,17 @@
         },
         {
           "kind": "proposals",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "cat-harness/docs/proposals"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:requirements"
           ],
           "typed": false,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "qa",
@@ -763,15 +790,17 @@
         },
         {
           "kind": "requirements",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "cat-harness/docs/requirements"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:requirements"
           ],
           "typed": false,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "review-verdicts",
@@ -869,13 +898,15 @@
         },
         {
           "kind": "session-survey",
-          "state": "no-directory",
-          "directories": [],
+          "state": "typed-only",
+          "directories": [
+            "beans/surveys"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "skills",
@@ -1004,23 +1035,27 @@
         },
         {
           "kind": "todo-feedback",
-          "state": "no-directory",
-          "directories": [],
+          "state": "typed-only",
+          "directories": [
+            "todos/feedback"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "todo-items",
-          "state": "no-directory",
-          "directories": [],
+          "state": "typed-only",
+          "directories": [
+            "todos/items"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "todos",
@@ -1145,13 +1180,18 @@
         },
         {
           "kind": "voice-vendors",
-          "state": "no-directory",
-          "directories": [],
+          "state": "typed-only",
+          "directories": [
+            "cat-harness/skills/voices/vendors",
+            "cat-harness/skills/voices/vendors/agent-skill-authoring-claude",
+            "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli",
+            "cat-harness/skills/voices/vendors/agent-skill-authoring-openai"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "voices",
@@ -1189,15 +1229,17 @@
         },
         {
           "kind": "workflow-state",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "beans/workflows"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:prov-qaqc"
           ],
           "typed": true,
-          "hasFiles": false
+          "hasFiles": true
         }
       ]
     },
@@ -1208,60 +1250,24 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "fsh-guts",
+          "directories": [
+            "fsh-guts"
+          ]
+        }
+      ]
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 20,
+      "count": 7,
       "entries": [
-        {
-          "kind": "auto-docs",
-          "criteria": 0,
-          "gates": [
-            "bun run auto:docs:check"
-          ]
-        },
-        {
-          "kind": "bean-defs",
-          "criteria": 0,
-          "gates": [
-            "bun run check:bean-archive",
-            "bun run check:bean-blocks",
-            "bun run check:bean-bodies",
-            "bun run check:bean-front-matter",
-            "bun run check:bean-issue-links",
-            "bun run check:bean-parent-prose:check",
-            "bun run check:bean-parents",
-            "bun run check:bean-restates-skill",
-            "bun run check:bean-rollup",
-            "bun run check:ready-to-close",
-            "bun run check:stale-paths"
-          ]
-        },
-        {
-          "kind": "bean-notes",
-          "criteria": 0,
-          "gates": [
-            "bun run beans:notes:check"
-          ]
-        },
         {
           "kind": "binary-release",
           "criteria": 0,
           "gates": []
-        },
-        {
-          "kind": "board-positions",
-          "criteria": 0,
-          "gates": []
-        },
-        {
-          "kind": "boards",
-          "criteria": 0,
-          "gates": [
-            "bun run boards:default:check"
-          ]
         },
         {
           "kind": "ig-metadata-index",
@@ -1269,28 +1275,9 @@
           "gates": []
         },
         {
-          "kind": "merge-queue",
-          "criteria": 0,
-          "gates": []
-        },
-        {
-          "kind": "proposals",
-          "criteria": 0,
-          "gates": [
-            "bun run check:requirements"
-          ]
-        },
-        {
           "kind": "qa-report",
           "criteria": 0,
           "gates": []
-        },
-        {
-          "kind": "requirements",
-          "criteria": 0,
-          "gates": [
-            "bun run check:requirements"
-          ]
         },
         {
           "kind": "review-verdicts",
@@ -1303,11 +1290,6 @@
           "gates": []
         },
         {
-          "kind": "session-survey",
-          "criteria": 0,
-          "gates": []
-        },
-        {
           "kind": "test-plan",
           "criteria": 0,
           "gates": []
@@ -1316,35 +1298,53 @@
           "kind": "test-report",
           "criteria": 0,
           "gates": []
-        },
-        {
-          "kind": "todo-feedback",
-          "criteria": 0,
-          "gates": []
-        },
-        {
-          "kind": "todo-items",
-          "criteria": 0,
-          "gates": []
-        },
-        {
-          "kind": "voice-vendors",
-          "criteria": 0,
-          "gates": []
-        },
-        {
-          "kind": "workflow-state",
-          "criteria": 0,
-          "gates": [
-            "bun run check:prov-qaqc"
-          ]
         }
       ]
     },
     "kinds-typed-only": {
       "summary": "A declared kind whose nodes a declared validator TYPES and no criterion or gate JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, and still a finding — `--strict` fails on it. Typing is not judging: a kind can parse perfectly against its schema while nothing has an opinion about what it says.",
-      "count": 0,
-      "entries": []
+      "count": 6,
+      "entries": [
+        {
+          "kind": "board-positions",
+          "directories": [
+            "todos/boards"
+          ]
+        },
+        {
+          "kind": "merge-queue",
+          "directories": [
+            "beans/queue"
+          ]
+        },
+        {
+          "kind": "session-survey",
+          "directories": [
+            "beans/surveys"
+          ]
+        },
+        {
+          "kind": "todo-feedback",
+          "directories": [
+            "todos/feedback"
+          ]
+        },
+        {
+          "kind": "todo-items",
+          "directories": [
+            "todos/items"
+          ]
+        },
+        {
+          "kind": "voice-vendors",
+          "directories": [
+            "cat-harness/skills/voices/vendors",
+            "cat-harness/skills/voices/vendors/agent-skill-authoring-claude",
+            "cat-harness/skills/voices/vendors/agent-skill-authoring-gemini-cli",
+            "cat-harness/skills/voices/vendors/agent-skill-authoring-openai"
+          ]
+        }
+      ]
     },
     "kinds-unaudited": {
       "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 230 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
@@ -1357,5 +1357,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 72
 }

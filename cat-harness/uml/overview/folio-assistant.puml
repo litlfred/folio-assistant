@@ -184,7 +184,19 @@ package "folio-assistant/workflows" as pkg_folio_assistant_workflows <<workflow-
   }
 }
 package "folio-assistant/queue" as pkg_folio_assistant_queue <<merge-queue>> {
-  note "merge-queue: no node schema declared\n(no node here carries a $schema family merge-queue names (1 named): could not determine)" as n_folio_assistant_queue_merge_queue
+  class "folio-merge-queue-entry/v1" as folio_assistant_queue_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1 <<json: MergeQueueEntrySchema>> #f4f4f1 {
+    $schema [1] : 'folio-merge-queue-entry/v1'
+    repository [1] : string
+    pr [1] : integer
+    placement [1] : object
+    reason [1] : string
+    decidedBy [1] : string
+    decidedAt [1] : string<date-time>
+    hold [0..1] : object
+    trainId [0..1] : string
+    ejection [0..1] : object
+    beans [0..*] : string[]
+  }
 }
 package "folio-assistant/surveys" as pkg_folio_assistant_surveys <<session-survey>> {
   class "Axe" as folio_assistant_surveys_folio_session_survey_v1_Axe <<json: SessionSurveySchema>> #f4f4f1 {
