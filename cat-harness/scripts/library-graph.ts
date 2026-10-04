@@ -377,7 +377,8 @@ export interface LibraryGraph {
    * looked". Absent means no scan; `unreadable` non-empty means the scan is
    * incomplete and every zero below it is provisional.
    */
-  refScan?: { filesRead: number; unreadable: string[] };
+  /** Bean `65oe`: no `filesRead` — it measured the checkout, not the library. */
+  refScan?: { unreadable: string[] };
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */
