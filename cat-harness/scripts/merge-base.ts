@@ -41,6 +41,8 @@ import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { classify, resolveGeneratedRegions, type Classified } from "./merge-conflict-patterns.js";
+import { relate } from "./git-ancestry.js";
+import { REGEN_VERDICT_TAG, regenExitMeaning } from "./regen-after-merge.js";
 
 export interface Plan {
   resolvable: Classified[];
@@ -69,7 +71,7 @@ function syncSubmodules(root: string): void {
  * What a take-base resolution does with one conflicted path, from the stages
  * git holds for it (`ls-files -u`: 1 base, 2 ours, 3 theirs).
  *
- * Measured 2026-10-02 on #1805: main DELETED generated files (docs-auto pages
+ * Measured 2026-10-02 on #1805: main DELETED generated files (auto-docs pages
  * under a folded instance) that the branch had modified. There is no stage 3,
  * so `checkout --theirs` threw "does not have their version" and the run ended
  * in "Error". Taking the base's side of a deletion IS the deletion: generated
@@ -144,31 +146,32 @@ export function resolveGitlink(root: string, path: string): GitlinkResolution | 
   const theirs = pins.get(3);
   if (!ours || !theirs) return pins.size ? { refuse: "one side removed the submodule" } : undefined;
   const sub = join(root, path);
-  const has = (oid: string) => spawnSync("git", ["-C", sub, "cat-file", "-e", `${oid}^{commit}`]).status === 0;
-  for (const oid of [ours, theirs]) {
-    if (!has(oid)) spawnSync("git", ["-C", sub, "fetch", "-q", "origin", oid], { stdio: "ignore" });
-    if (!has(oid)) return { refuse: `could not determine: the submodule does not have ${oid.slice(0, 9)}` };
+  // The ancestry question — including the deepen-before-answering and the
+  // could-not-determine that this resolver has always needed — now lives in
+  // `git-ancestry`, so there is ONE implementation of it. It was a set of
+  // closures here, which meant four other call sites asked the bare question
+  // and read a missing object as "not an ancestor" (measured 2026-10-04: a
+  // `--depth 1` clone exits **128**, and `.ok` / `try`/`catch` callers all
+  // turn that into a negative). `relate` is this logic, lifted and named.
+  const rel = relate(sub, ours, theirs);
+  switch (rel.rel) {
+    // `ours` descends from `theirs`: the branch moved the pin forward.
+    case "a-descends":
+      return { take: "ours", pin: ours, why: "the branch's pin fast-forwards the base's" };
+    case "b-descends":
+      return { take: "theirs", pin: theirs, why: "the base's pin fast-forwards the branch's" };
+    // Identical pins do not conflict, so this is unreachable through the index;
+    // handled rather than defaulted, because an unhandled case here would fall
+    // through to "diverged" and send a non-conflict to a person.
+    case "same":
+      return { take: "ours", pin: ours, why: "both sides pin the same commit" };
+    case "unknown":
+      return { refuse: `could not determine: ${rel.reason}` };
+    case "diverged":
+      return {
+        refuse: `the pins diverged (${ours.slice(0, 9)} vs ${theirs.slice(0, 9)}); either side drops the other's commits`,
+      };
   }
-  const ancestor = (a: string, b: string) => spawnSync("git", ["-C", sub, "merge-base", "--is-ancestor", a, b]).status === 0;
-  const shallow = () => spawnSync("git", ["-C", sub, "rev-parse", "--is-shallow-repository"], { encoding: "utf-8" }).stdout.trim() === "true";
-  const decide = (): GitlinkResolution | undefined => {
-    if (ancestor(theirs, ours)) return { take: "ours", pin: ours, why: "the branch's pin fast-forwards the base's" };
-    if (ancestor(ours, theirs)) return { take: "theirs", pin: theirs, why: "the base's pin fast-forwards the branch's" };
-    return undefined;
-  };
-  // This is the case that conflicts in the first place: git resolves a
-  // fast-forward pin itself when it can see the history, so a conflict here
-  // usually means a SHALLOW submodule (`--depth 1`, as CI and these checkouts
-  // are), where neither pin can be shown to descend from the other. Deepen
-  // before deciding; a history still cut short is could-not-determine, never
-  // "diverged", which would send every fast-forward to a person.
-  const first = decide();
-  if (first) return first;
-  if (shallow()) spawnSync("git", ["-C", sub, "fetch", "-q", "--unshallow", "origin"], { stdio: "ignore" });
-  const second = decide();
-  if (second) return second;
-  if (shallow()) return { refuse: `could not determine: the submodule's history is shallow and could not be deepened` };
-  return { refuse: `the pins diverged (${ours.slice(0, 9)} vs ${theirs.slice(0, 9)}); either side drops the other's commits` };
 }
 
 /** Stage a resolved gitlink pin. */
@@ -350,7 +353,24 @@ if (import.meta.main) {
   }
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
-  if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
+  // NOT one message for every non-zero exit. `regen`'s `exitCodeFor` returns
+  // three distinct verdicts and this line used to assert "regen reported
+  // unrepaired checks" for all of them — false for exit 2 (which reports no
+  // unrepaired check at all, only that it could not settle), false for a
+  // `no-browser`-only exit 1 (which regen itself calls could-not-determine),
+  // and false for a crash (where nothing was measured). The ABORT is right in
+  // every case: none of them may push. Only the recorded reason was wrong, and
+  // the abort line is the one place the reason is written down — it is what
+  // the PR comment's signature is built from and what a person reads in the
+  // log. `regenExitMeaning` is the inverse of `exitCodeFor` and carries the
+  // evidence.
+  if (regen.status !== 0) {
+    const m = regenExitMeaning(regen.status);
+    abort(
+      `the gate set did not prove the resolution — ${REGEN_VERDICT_TAG} ${m.verdict}\n` +
+        `  ${m.why}`,
+    );
+  }
   git(root, "add", "-A");
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);

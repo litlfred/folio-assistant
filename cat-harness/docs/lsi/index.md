@@ -128,7 +128,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 3 | 18.38 | chapter, block, slot, project, formal, edges, proof, watcher | session, conflict, steward, green, merge, push, beans, merges |
 | 4 | 17.37 | page, text, tile, pdf, avatar, images, card, glass | subgraph, subdirectory, ledger, sibling, train, plan, steward, prs |
 | 5 | 15.70 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, pdf, archive, upload, arxiv, sniff, zip, licence |
-| 6 | 15.17 | actor, lane, requirements, task, process, role, methodology, skills | steward, sha, head, train, queue, tile, merge, board |
+| 6 | 15.17 | actor, lane, requirements, task, process, role, methodology, skills | steward, sha, head, train, tile, queue, merge, board |
 | 7 | 14.99 | preview, forward, merge, steward, staging, edges, translation, base | rung, arm, withheld, licence, queue, backlog, library, glass |
 | 8 | 14.66 | edges, forward, edge, slot, logical, tile, cross-chapter, backward | phase, feedback, feature, url, language, pdf, staging, post |
 

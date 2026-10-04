@@ -11,7 +11,7 @@
  *
  * ## Why it exists, and the order the two defects arrived in
  *
- * `gen-docs-auto.ts`'s process index took the first `<documentation>` after
+ * `gen-auto-docs.ts`'s process index took the first `<documentation>` after
  * the `<process>` open tag as the process's summary. Correct for a process
  * carrying its own; for one that does not, it took **the first lane's** and
  * presented it as what the process is for.
@@ -180,7 +180,7 @@ if (import.meta.main) {
   }
   console.log(
     `\n  A process's own documentation answers "what is this whole thing FOR, and when\n` +
-      `  would I be in it" — the question a reader of the docs-auto index actually has.\n` +
+      `  would I be in it" — the question a reader of the auto-docs index actually has.\n` +
       `  A lane's answers something else, and the index quoted one until 2026-09-22.\n` +
       `\n  Reported, not gated: a gate landing red on known blanks is one somebody\n` +
       `  switches off. \`--strict\` is what CI runs once this reaches zero (bean 7rna).`,

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 215,
+      "count": 216,
       "unit": "modules"
     }
   },
@@ -1514,6 +1514,14 @@
       "graphNode": "schema",
       "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/to-json-schema.test.ts",
+      "instance": "cat-harness",
+      "name": "to-json-schema.test",
+      "graphNode": "undeclared",
+      "summary": "The converter's two obligations, and they pull in opposite directions.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/to-json-schema.ts",
@@ -36563,6 +36571,38 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/to-json-schema.test.ts#Json",
+      "name": "Json",
+      "module": "cat-harness/schemas/to-json-schema.test.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "type",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "Record<string, unknown>",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "required",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/todo-graph.ts#TodoGraph",

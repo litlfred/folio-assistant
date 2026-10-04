@@ -14,6 +14,7 @@ import { basename, resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { FolioServer } from "./server.js";
 import { resolveBuiltinAdapter } from "./builtin-adapters.js";
+import { NoContentAdapter } from "./no-content-adapter.js";
 import { GitHelper } from "./core/git.js";
 import { log } from "./core/logging.js";
 import { expectedInstanceConfigPath } from "../schemas/harness-config";
@@ -120,6 +121,8 @@ if (args.includes("--check-deps")) {
 
 let adapterType = "paper";
 let adapterModule: string | undefined;
+/** Whether the config NAMED a content type, rather than `adapterType` defaulting. */
+let contentDeclared = false;
 let feedbackDir = resolve(repoRoot, ".folio-feedback");
 let viewerPort: number | undefined;
 
@@ -131,6 +134,7 @@ if (harnessConfigPath !== undefined && existsSync(harnessConfigPath)) {
   try {
     const config = JSON.parse(readFileSync(harnessConfigPath, "utf-8"));
     adapterType = config.contentType || config.adapter || "paper";
+    contentDeclared = Boolean(config.contentType || config.adapter);
     adapterModule = config.adapterModule;
     if (config.feedbackDir) feedbackDir = resolve(repoRoot, config.feedbackDir);
     if (config.viewer?.port) viewerPort = config.viewer.port;
@@ -192,12 +196,23 @@ if (adapterModule) {
   // way would silently drop `lean_build` from an existing folio whose config
   // happens to omit `contentType` — which is why a fallback that DOES go that
   // way (because the science layer is not installed) says so out loud.
-  const r = await resolveBuiltinAdapter(adapterType);
-  if (r.fallbackReason) log("init", r.fallbackReason);
-  adapter = new (r.ctor as new (...a: never[]) => unknown)(
-    repoRoot as never, gitHelper as never, feedbackDir as never,
-  );
-  log("init", `Using ${r.used.contentType} adapter (repo: ${repoRoot})`);
+  //
+  // When NO adapter is installed at all — `cat-harness` with nothing above it —
+  // the server starts with the generic tools only, and says so (owner,
+  // 2026-10-04, bean `zmdo`). It refused to start until then, which left a
+  // fresh instance on the harness alone unable to reach `folio_init`.
+  try {
+    const r = await resolveBuiltinAdapter(adapterType);
+    if (r.fallbackReason) log("init", r.fallbackReason);
+    adapter = new (r.ctor as new (...a: never[]) => unknown)(
+      repoRoot as never, gitHelper as never, feedbackDir as never,
+    );
+    log("init", `Using ${r.used.contentType} adapter (repo: ${repoRoot})`);
+  } catch (e) {
+    adapter = new NoContentAdapter(repoRoot);
+    const asked = contentDeclared ? `contentType "${adapterType}" was asked for and` : "this instance declares no content type, and";
+    log("init", `NO CONTENT ADAPTER — serving the generic tools only: ${asked} ${e instanceof Error ? e.message.split("\n")[0] : String(e)}`);
+  }
 }
 
 // ── Start server ─────────────────────────────────────────────────
