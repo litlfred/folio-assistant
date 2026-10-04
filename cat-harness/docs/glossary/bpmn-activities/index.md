@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 443 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 27 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 116 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 415 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 27 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 148 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 660 terms and is 534 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 664 terms and is 539 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>660</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>660</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>664</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>664</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">660</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">664</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -694,7 +694,14 @@ Back off [backoff-sleep] <span class="fa-gloss-status">candidate, extracted</spa
 <p>Wait the same intervals <code>backoff-sleep.ts</code> uses, then go round again: fetch the new tip and splice onto it. Three attempts in all.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/qa-publish.bpmn"><code>cat-harness/processes/sdlc/qa-publish.bpmn#Task_Backoff</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_buildl1kg.task_bind" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-core--kg-bpmn-activities--process_l1documentingestion.callactivity_basic" data-fa-state="extracted" data-fa-gloss="">
+Basic ingestion (harness) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The harness's <code>document-ingestion.bpmn</code>: accept the upload by a declared route, extract its metadata into the KG, and catalogue the asset in library/ — placed if materialized, recorded as referenced if not. Everything below refines that result for a document. Called, not copied: this was Lane_0 and Task_Place of this diagram until placement PR6 moved them down as the basic flow.</p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn"><code>folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Basic</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-bpmn-activities--process_buildl1kg.task_bind" data-fa-state="extracted" data-fa-gloss="">
 Bind the folder name to the bibliography slug <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
@@ -4388,7 +4395,7 @@ Splice onto the tip and push (never -f) <span class="fa-gloss-status">candidate,
 <p>Fetch the branch tip, splice this entry into its tree, <code>commit-tree -p &lt;tip&gt;</code>, and push without <code>-f</code>, with <code>pack.useSparse=false</code> so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/qa-publish.bpmn"><code>cat-harness/processes/sdlc/qa-publish.bpmn#Task_SpliceAndPush</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_extractstructure.task_sections" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-core--kg-bpmn-activities--process_extractstructure.task_sections" data-fa-state="extracted" data-fa-gloss="">
 Split into sections/*.md with doc_brief front-matter <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
