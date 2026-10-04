@@ -3,8 +3,9 @@
 title: 'Merge refused: #1898 owed CI not green on its head'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-04T14:30:43Z
+updated_at: 2026-10-04T16:41:00Z
 parent: folio-assistant-iirv
 blocking:
     - folio-assistant-apcg
@@ -32,3 +33,7 @@ A comment on PR #1898, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 1898` passes all 7 checks, and it lands (or the owner closes it)
+
+
+## Attempts
+- 2026-10-04 16:40Z, train merge-train-2026-10-04a (PR #2113): EJECTED. #1898 at 0f70ad8 was signed by session_01VfkKoc and its CI guard passed all 7 checks, but merge-base's take-base resolution of the gitignored-but-tracked `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` failed (\"is in the index, but not at stage 2\"). The fault is the tool (class 8j9e), not the PR. It rides the next train once the resolution is fixed or worked around, or after #2066 takes the LSI trio off main.
