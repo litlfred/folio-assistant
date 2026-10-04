@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "489518fcb63f"
+    "script_hash": "210698b89d33"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -206,7 +206,6 @@
             "bun run check:version-bump",
             "bun run check:wireframes:check",
             "bun run harness:dirs:check",
-            "bun run iri:sync:check",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",

@@ -7596,7 +7596,7 @@
         },
         {
           "name": "keyedBy",
-          "type": "z.enum([\"commit\", \"tip\", \"route\"])",
+          "type": "KeyedBySchema",
           "optional": false,
           "array": false,
           "doc": "How entries are keyed on the branch: one entry per `commit`, one live"
@@ -7604,7 +7604,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -32421,12 +32423,13 @@
       "name": "KeyedBySchema",
       "module": "cat-harness/schemas/subgraph-source.ts",
       "kind": "zod-enum",
-      "doc": "How entries are keyed on a branch: one per `commit`, or one live copy at the `tip`.",
+      "doc": "How entries are keyed on a branch: one per `commit`, one live copy at the",
       "fields": [],
       "extendsNames": [],
       "values": [
         "commit",
-        "tip"
+        "tip",
+        "route"
       ],
       "refs": [],
       "unresolved": [],
@@ -52709,6 +52712,14 @@
       "to": "cat-harness/schemas/kg-node.ts#KgNodeLabels",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "via": "keyedBy",
+      "kind": "field",
       "optional": false,
       "array": false
     },
