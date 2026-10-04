@@ -20,8 +20,10 @@
  * to be closed.
  *
  * @module folio-assistant/scripts/check-kind-validators
- * @covers computed — it sweeps whichever kinds declare `nodeSchemas`, so a literal list would go
- *   stale silently
+ * @covers validators, computed — every `folio-validator/v1` node is parsed, resolved and
+ *   joined onto a kind (one naming no kind is a finding), which is fixed coverage of the
+ *   `validators` graph; the KINDS it sweeps are whichever declare `nodeSchemas`, so that half
+ *   is computed and a literal list would go stale silently
  */
 
 // The REGISTRY, not BASE_GRAPH_KINDS: since bean dmx1 a harness DECLARES its
