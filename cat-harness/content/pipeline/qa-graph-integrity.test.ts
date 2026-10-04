@@ -121,16 +121,22 @@ describe("checkQaDirs", () => {
 describe("the qa directories declared in this checkout", () => {
   const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
   const dirs = declaredQaDirs(REPO);
-  const report = checkQaDirs(dirs);
+  // Only the judgement half is swept HERE: it is authored content on `main`.
+  // The derived `qa` half is the committed corpus that is leaving `main`, and
+  // a test must not assert on it (bean `cxcn`, reader audit F7) —
+  // `bun run check:qa-corpus` judges it over the fetched tree instead.
+  const attestations = declaredQaDirs(REPO, ["attestations"]);
+  const report = checkQaDirs(attestations);
 
   it("includes cat-harness's, whose walk covers the hosted bootstrap homes", () => {
     expect(dirs).toContain(resolve(REPO, "cat-harness", "test", "results"));
     // The judgement half, split out by bean `2gst`, is swept as well.
     expect(dirs).toContain(resolve(REPO, "cat-harness", "test", "attestations"));
+    expect(attestations).toEqual(dirs.filter((d) => d.endsWith("attestations")));
     expect(report.examined).toBeGreaterThan(0);
   });
 
-  it("holds no conflict marker and no unparseable JSON", () => {
+  it("the attestation store holds no conflict marker and no unparseable JSON", () => {
     const lines = report.findings.map((f) => `${relative(REPO, f.path)} — ${f.problem}: ${f.detail}`);
     expect(lines).toEqual([]);
   });

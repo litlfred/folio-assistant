@@ -831,6 +831,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/assistant-types.actordefinition.systemundertest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ActorDefinition.systemUnderTest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The system-under-test facet — present when this actor can be executed against a `test-plan/v1` (bean `3o5b`). `agent` and `system` actors only; reach is the actor's own {@link ActorDefinition.reach}, never restated. See `SystemUnderTestFacetSchema` in `skill-package.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.systemUnderTest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/assistant-types.actordefinition.title",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -20211,6 +20230,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.attestationkey.locale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttestationKey.locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation-qa` only."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.locale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.attestationkey.subject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttestationKey.subject"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The subject root relative to the instance root, POSIX, without extension."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.subject",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/qa-attestations.kgattestationtree.atthome",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21978,6 +22035,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.loadedactor.systemundertest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LoadedActor.systemUnderTest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The system-under-test facet (bean `3o5b`) — present when the actor can be executed against a `test-plan/v1`. Beside `reach` for the same reason: it is a fact about the participant, not something its lane knows."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#LoadedActor.systemUnderTest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.permissiondef.includedin",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23365,6 +23441,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.corpus",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.corpus"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the build that wrote this had the derived QA corpus (bean `4l4d`). `absent`: every badge on the page reads \"not available in this build\", and `badges` and `unswept` are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as `present` with no `unswept` list — what it then meant."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.page",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23381,6 +23476,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.unswept",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.unswept"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided here rather than in the committed page since bean `4l4d`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.qatranslationpagesschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaTranslationPagesSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages",
       "skos:note": "candidate"
     },
     {
@@ -23476,6 +23609,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.roles",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/skill-package.actordefinitionschema.systemundertest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ActorDefinitionSchema.systemUnderTest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this actor can be executed against a `test-plan/v1`. See {@link SystemUnderTestFacetSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.systemUnderTest",
       "skos:note": "candidate"
     },
     {

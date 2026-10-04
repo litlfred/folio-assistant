@@ -285,3 +285,5 @@ that, and the window, not the keying, is what closes this bean's symptom.
 - [ ] a test covers the same-route double write that must still be reported
 - [ ] a successful deployment lands within one burst of a push to `gh-pages`
 - [ ] `check:ci-health`'s newest-settled line reads success rather than cancelled
+
+_2026-10-04T08:00:34Z_ — Claimed by claude/xp5j-ref-steward — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

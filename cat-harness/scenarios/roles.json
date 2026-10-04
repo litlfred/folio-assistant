@@ -511,7 +511,8 @@
         "ig-ast-delta",
         "ci-health",
         "platform-gates",
-        "prepare-merge"
+        "prepare-merge",
+        "qa-reports"
       ]
     },
     {
@@ -537,7 +538,8 @@
       ],
       "skills": [
         "content-test",
-        "content-validate"
+        "content-validate",
+        "qa-reports"
       ]
     },
     {
@@ -578,7 +580,8 @@
         "system"
       ],
       "skills": [
-        "qa-report-signing"
+        "qa-report-signing",
+        "test-plan-execution"
       ]
     },
     {
@@ -799,6 +802,66 @@
       ],
       "skills": [],
       "persona": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
+    },
+    {
+      "id": "test-requester",
+      "title": "Test requester",
+      "description": "Asks for a system under test to be certified against a named `test-plan/v1` (plan id and version). It may BE the system under test, or speak for it, and that is exactly why it carries no lane after the request: the requester never tests, checks or certifies, so the system never writes a verdict about itself (`untainted-verification`; the `test-sut-not-self-judged` criterion). Lane `Lane_Requester` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "skills": [
+        "test-plan-execution"
+      ],
+      "persona": "Wants a yes. Knows the system and not the plan, and will read any shortcut in the process as permission. Needs to know what to name in the request and that everything after it is somebody else's."
+    },
+    {
+      "id": "tester",
+      "title": "Tester",
+      "description": "Runs a `test-plan/v1` against a system under test: resolves the plan, binds its test data (fixed and reviewed, or generated from template + params + seed, per `vm6m`), executes every case or skips it with a reason, and writes the `folio-test-run/v1` and the `test-report/v1`. UNTAINTED from the system under test — never the same actor — and it does not certify: the rollup it writes is what the certifier decides ON. Bean `3o5b`.",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "skills": [
+        "test-plan-execution",
+        "test-engineer",
+        "content-test"
+      ],
+      "persona": "Running somebody else's plan against somebody else's system. Needs every case to end in a verdict or a stated skip, and both hashes known, because a hole in either is what the certifier will be unable to decide on."
+    },
+    {
+      "id": "untainted-checker",
+      "title": "Untainted checker",
+      "description": "Re-executes a SAMPLE of a plan's cases from the plan and the data alone — never the tester's verdicts — and reports whether it agrees. It rules on nothing: agreement is a fact the certification table reads, not a verdict the checker writes (`untainted-verification` rule 3: one party doing both halves is not this check). Lane `Lane_Checker` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "untainted-verification",
+        "test-plan-execution"
+      ],
+      "persona": "Given the plan, the data and a sample, and deliberately not the tester's report. Needs to say 'could not run' as plainly as 'disagree', because an unknown read as agreement certifies on one party's word."
+    },
+    {
+      "id": "certifier",
+      "title": "Certifier",
+      "description": "Takes the certification decision on ONE test report: applies the DMN the plan's `exitCriteria` names (computed from facts, never asserted) and records the decision as a judgement under the declared `attestations` graph, from which it is signed through `qa-report-signing.bpmn`. A specialisation of `stakeholder` — accountable sign-off — but NOT `judgementOnly`: the exit criteria are a table it applies, and only the decision on top of them is the judgement (owner ruling, 2026-10-01). Never the tester and never the system under test. Bean `3o5b`.",
+      "actorKinds": [
+        "person"
+      ],
+      "inherits": [
+        "stakeholder"
+      ],
+      "skills": [
+        "test-plan-execution",
+        "decision-audit"
+      ],
+      "persona": "Accountable for a yes that other people will rely on without re-running anything. Needs the rollup, the checker's agreement and the table's answer side by side, and needs `undetermined` to look nothing like `certified`."
     }
   ]
 }

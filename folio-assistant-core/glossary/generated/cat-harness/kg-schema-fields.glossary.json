@@ -308,6 +308,13 @@
       "status": "candidate"
     },
     {
+      "id": "assistant-types.actordefinition.systemundertest",
+      "prefLabel": "ActorDefinition.systemUnderTest",
+      "definition": "The system-under-test facet — present when this actor can be executed against a `test-plan/v1` (bean `3o5b`). `agent` and `system` actors only; reach is the actor's own {@link ActorDefinition.reach}, never restated. See `SystemUnderTestFacetSchema` in `skill-package.ts`.",
+      "source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.systemUnderTest",
+      "status": "candidate"
+    },
+    {
       "id": "assistant-types.actordefinition.title",
       "prefLabel": "ActorDefinition.title",
       "definition": "Display text. `title`/`description`, like every KG node — see `schemas/kg-node.ts`.",
@@ -7448,6 +7455,20 @@
       "status": "candidate"
     },
     {
+      "id": "qa-attestations.attestationkey.locale",
+      "prefLabel": "AttestationKey.locale",
+      "definition": "`translation-qa` only.",
+      "source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.locale",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.attestationkey.subject",
+      "prefLabel": "AttestationKey.subject",
+      "definition": "The subject root relative to the instance root, POSIX, without extension.",
+      "source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.subject",
+      "status": "candidate"
+    },
+    {
       "id": "qa-attestations.kgattestationtree.atthome",
       "prefLabel": "KgAttestationTree.attHome",
       "definition": "Absolute attestations home (the `<family>` directory goes under it).",
@@ -8099,6 +8120,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.loadedactor.systemundertest",
+      "prefLabel": "LoadedActor.systemUnderTest",
+      "definition": "The system-under-test facet (bean `3o5b`) — present when the actor can be executed against a `test-plan/v1`. Beside `reach` for the same reason: it is a fact about the participant, not something its lane knows.",
+      "source": "cat-harness/schemas/role-graph.ts#LoadedActor.systemUnderTest",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.permissiondef.includedin",
       "prefLabel": "PermissionDef.includedIn",
       "definition": "The broader actions this one is part of: another action here, or one of ODRL's common vocabulary (`schemas/odrl.ts#ODRL_ACTIONS`). This is what makes the vocabulary an ODRL profile (issue #1180): a permission to a broader action permits every action included in it. Required and non-empty, so every action has a way up to `odrl:use`.",
@@ -8610,10 +8638,31 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.qaindexschema.corpus",
+      "prefLabel": "QaIndexSchema.corpus",
+      "definition": "Whether the build that wrote this had the derived QA corpus (bean `4l4d`). `absent`: every badge on the page reads \"not available in this build\", and `badges` and `unswept` are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as `present` with no `unswept` list — what it then meant.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.qaindexschema.page",
       "prefLabel": "QaIndexSchema.page",
       "definition": "The page's slug.",
       "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.unswept",
+      "prefLabel": "QaIndexSchema.unswept",
+      "definition": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided here rather than in the committed page since bean `4l4d`.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qatranslationpagesschema.pages",
+      "prefLabel": "QaTranslationPagesSchema.pages",
+      "definition": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages",
       "status": "candidate"
     },
     {
@@ -8649,6 +8698,13 @@
       "prefLabel": "ActorDefinitionSchema.roles",
       "definition": "Roles (BPMN swimlanes) this actor may take on.",
       "source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.roles",
+      "status": "candidate"
+    },
+    {
+      "id": "skill-package.actordefinitionschema.systemundertest",
+      "prefLabel": "ActorDefinitionSchema.systemUnderTest",
+      "definition": "The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this actor can be executed against a `test-plan/v1`. See {@link SystemUnderTestFacetSchema}.",
+      "source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.systemUnderTest",
       "status": "candidate"
     },
     {

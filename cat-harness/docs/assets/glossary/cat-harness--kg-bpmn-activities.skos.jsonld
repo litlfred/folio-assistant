@@ -966,7 +966,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally."
+          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-`-f` retry loop are `qa-publish.bpmn`, which also draws the retention run that takes entries off the branch again."
         }
       ],
       "skos:notation": "Task_QaPublish",
@@ -6089,6 +6089,146 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_applyprune",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Commit a tip without the pruned entries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One new commit whose tree lacks the pruned entries, parented on the current tip, through the same fetch → rebuild → push loop as a publish: no `-f`, three attempts. History is not rewritten — truncating it is a deletion of a different order and the owner's call (`deletion-requires-confirmation`), not a scheduled job's."
+        }
+      ],
+      "skos:notation": "Task_ApplyPrune",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_ApplyPrune",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_backoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Back off [backoff-sleep]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Wait the same intervals `backoff-sleep.ts` uses, then go round again: fetch the new tip and splice onto it. Three attempts in all."
+        }
+      ],
+      "skos:notation": "Task_Backoff",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_Backoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_buildentry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the entry [tree + manifest]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "First the working copy is produced (`qa:refresh`, bean `3hk4`): while the checkout still tracks `test/results/`, the commit's own copy is the record and nothing runs; once it does not, every declared QA writer runs into the empty tree, because the gates are in judge mode and wrote nothing a publish could carry. A refresh that leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE: the job goes red and `qa:publish --completeness` refuses, so a partial tree is never stored as the commit's record — the \"Not stored\" outcome, reached before any push. Then it hashes the working copy of every declared `qa` directory (`<instance>/test/results/**`, byte-identical to the checkout's layout) into a tree through a private index, and writes `manifest.json` (`qa-reports-manifest/v1`): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store."
+        }
+      ],
+      "skos:notation": "Task_BuildEntry",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_BuildEntry",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_derivekey",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Derive the key [main/<sha> or pr/<n>/<sha>]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`qa:publish --github` reads the event: a push to main publishes under `main/<sha>/`, a pull request under `pr/<n>/<head-sha>/` — the head that was tested, not the merge ref. It also reads whether the token can write, which the gateway after it routes on."
+        }
+      ],
+      "skos:notation": "Task_DeriveKey",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_DeriveKey",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_planprune",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Plan the prune [planPrune]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keep every `main/<sha>` for 90 days and one per day after that; drop `pr/<n>` 7 days after the PR closed. The rule is `planPrune` in `scripts/qa-store.ts`, pinned by its tests, and the plan is printed whether or not it is applied."
+        }
+      ],
+      "skos:notation": "Task_PlanPrune",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_PlanPrune",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_readprstates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read every PR's state"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`gh pr list --state all`: number, state and when it closed, so each `pr/<n>/` entry can be judged against its close date. A PR missing from the list is `unknown`, and an unknown is kept."
+        }
+      ],
+      "skos:notation": "Task_ReadPrStates",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_ReadPrStates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_spliceandpush",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Splice onto the tip and push (never -f)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fetch the branch tip, splice this entry into its tree, `commit-tree -p <tip>`, and push without `-f`, with `pack.useSparse=false` so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry."
+        }
+      ],
+      "skos:notation": "Task_SpliceAndPush",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-publish.bpmn#Task_SpliceAndPush",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qareportsigning.task_apisign",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6186,6 +6326,26 @@
       ],
       "skos:notation": "Task_ResolveReach",
       "dcterms:source": "cat-harness/processes/sdlc/qa-report-signing.bpmn#Task_ResolveReach",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qareportsigning.task_storesigned",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Store the signed report on qa-reports"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The signed report, its signature and the route that produced it are written TOGETHER into the `qa-reports` entry keyed by the commit the report judged (`main/<sha>/` or `pr/<n>/<sha>/`), through `scripts/qa-store.ts` — never committed to main and never pushed by hand (arc `3fva`, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside `test/attestations/` (ruling D5, default (a)); it is not written here."
+        }
+      ],
+      "skos:notation": "Task_StoreSigned",
+      "dcterms:source": "cat-harness/processes/sdlc/qa-report-signing.bpmn#Task_StoreSigned",
       "skos:note": "candidate"
     },
     {
@@ -7576,6 +7736,226 @@
       ],
       "skos:notation": "A_ScanInternal",
       "dcterms:source": "cat-harness/processes/process/swot-analysis.bpmn#A_ScanInternal",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_binddata",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bind the test data [fixed or generated]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per bean `vm6m`: a fixed set is a committed path and counts as evidence only once reviewed; a generated set is template + params + seed and is never materialised. Both feed the run's data hash, and nothing that feeds the process hash may feed it too."
+        }
+      ],
+      "skos:notation": "A_BindData",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_BindData",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_execute",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Execute every case, or skip it with a reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every case in dependency order. A case is executed or explicitly `skipped` with its reason; a case that simply has no verdict is a finding, because it cannot be told from a case nobody ran."
+        }
+      ],
+      "skos:notation": "A_Execute",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_Execute",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_filecertification",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "File the signed certification [qa-attestations/v1]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The signed certification goes under the declared `attestations` graph on main (owner ruling D2 (a), D5 default), pointing at the report it certifies. The bean resolves here, once the process has actually finished."
+        }
+      ],
+      "skos:notation": "A_FileCertification",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_FileCertification",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_recordcertification",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the certification decision [attestations]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The judgement: the certifier records, under their own name, that the system meets plan P at this version on this run. It is written under the declared `attestations` graph beside the other judgements, never on the `qa-reports` branch with derived results. A user task, so no agent or pipeline can fill it."
+        }
+      ],
+      "skos:notation": "A_RecordCertification",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_RecordCertification",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_recordrefusal",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the refusal, with the failing cases"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A complete, trusted run in which a case failed. The refusal names the failing cases and is the end of this request; nothing is signed. The bean resolves here because the process has finished — what to do about the failure is a new piece of work."
+        }
+      ],
+      "skos:notation": "A_RecordRefusal",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_RecordRefusal",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_recordundetermined",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record why it could not be decided"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The third state: which fact kept the table from deciding — a run not finished, an unknown data hash, an unexecuted case, a checker that disagreed or could not run, or nothing passed. A note and not a resolution, because the request is still open: it needs a re-run or an adjudication, not a verdict."
+        }
+      ],
+      "skos:notation": "A_RecordUndetermined",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_RecordUndetermined",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_reexecutesample",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-execute a sample, blind to the tester's verdicts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Given the plan, the bound data and a sample of case ids — not the report. Says `agree`, `disagree` or `unknown`; `unknown` (could not run) is said as plainly as a disagreement, because the table reads both the same way and an unknown read as agreement certifies on one party's word."
+        }
+      ],
+      "skos:notation": "A_ReExecuteSample",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_ReExecuteSample",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_request",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Request certification of the system against plan P"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Name the plan by id AND version, and the system under test by actor id. The actor must carry the `systemUnderTest` facet: an actor that has not said it can be tested is not run against a plan by default. The bean this instance tracks is claimed here."
+        }
+      ],
+      "skos:notation": "A_Request",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_Request",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_resolveplan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Resolve the plan [test-plan/v1]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The plan parses, names at least one `req:` requirement, its `exitCriteria` resolves to a decision in a `.dmn` that exists, and its `scope.kind` is the system's facet kind. A plan that does not resolve is not run — `test-plan-resolves` audits the same join afterwards."
+        }
+      ],
+      "skos:notation": "A_ResolvePlan",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_ResolvePlan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.a_writerun",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the test run and the test report [folio-test-run/v1 + test-report/v1]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The run records `plan {id, version}` and `sut {actor, version, reach}` with its data and process hashes; the report rolls up per plan, never across plans, and goes to the `qa-reports` branch at `tests/plan/sut/run/`. No verdict in it may name the system under test as its reviewer."
+        }
+      ],
+      "skos:notation": "A_WriteRun",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#A_WriteRun",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_testplanexecution.call_sign",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Sign the certification"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`qa-report-signing.bpmn`, unchanged: it builds the signable run record, resolves the signer's reach, and routes the signature to the API or to a human release authority."
+        }
+      ],
+      "skos:notation": "Call_Sign",
+      "dcterms:source": "cat-harness/processes/sdlc/test-plan-execution.bpmn#Call_Sign",
       "skos:note": "candidate"
     },
     {
