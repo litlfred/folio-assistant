@@ -616,7 +616,15 @@ classDiagram
       <<json: QaIndexSchema>>
       $schema [1] 'folio-qa-index/v1'
       page [1] string
+      corpus [0..1] present | absent
       badges [1] map~object~
+      unswept [0..*] string[]
+    }
+    class cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1["folio-qa-translation-pages/v1"] {
+      <<json: QaTranslationPagesSchema>>
+      $schema [1] 'folio-qa-translation-pages/v1'
+      corpus [1] present | absent
+      pages [0..*] string[]
     }
     class cat_harness_qa_folio_detangle_sidecar_v1["folio-detangle-sidecar/v1"] {
       <<ts: DetangleSidecar>>
@@ -1376,6 +1384,7 @@ classDiagram
   cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_lsi_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" fa_uml_kind_qa

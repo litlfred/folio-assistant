@@ -43,6 +43,8 @@ const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 const PAGE_URL = "http://tr.test/page.html";
 const QA_INDEX_URL = "/assets/qa/harness/qa-index.json";
 const QA_SRC_URL = "/assets/qa/harness/page.translation.json";
+/** The published list of authored pages that HAVE a projection (bean `4l4d`). */
+const QA_LIST_URL = "/assets/qa/translation-qa-pages.json";
 
 interface Meta {
   lang: string;
@@ -50,7 +52,7 @@ interface Meta {
   /** The page this one translates. `docs-ui.js` shows it in the unverified
    *  notice's drawer, so the notice specs need to be able to set it. */
   translationSource?: string;
-  translationQa?: { key: string; src: string; index: string } | null;
+  translationQa?: { key: string; src: string; index: string; slug?: string; list?: string } | null;
   availableLocales?: string[];
   supportedLocales?: string[];
   sweep?: Record<string, unknown>;
@@ -95,6 +97,8 @@ async function serve(
     body?: string;
     index?: unknown;
     projection?: unknown;
+    /** The `translation-qa-pages.json` body; omitted, the list 404s. */
+    list?: unknown;
     scheme?: "light" | "dark";
   } = {},
 ): Promise<void> {
@@ -105,6 +109,9 @@ async function serve(
         contentType: "text/html",
         body: harness(meta, opts.body, opts.scheme),
       });
+    }
+    if (url.endsWith(QA_LIST_URL) && opts.list !== undefined) {
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(opts.list) });
     }
     if (url.endsWith(QA_INDEX_URL) && opts.index !== undefined) {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(opts.index) });
@@ -315,14 +322,20 @@ test.describe("a hand-authored page builds its own TR badge", () => {
   // The bean-`pp93` case. A generated page has its badge written into the
   // markup; `docs/fr/index.md` has no generator, so `docs-ui.js` builds one
   // from the paths `head_custom.html` publishes — but ONLY where a projection
-  // exists, which `_data/translation-qa-pages.json` says and the page does not
-  // guess. A badge emitted unconditionally would 404 and paint `unknown`,
-  // "could not determine", which is a different answer from "not swept".
+  // exists, which the published `translation-qa-pages.json` says and the page
+  // does not guess. A badge emitted unconditionally would 404 and paint
+  // `unknown`, "could not determine", which is a different answer from "not
+  // swept". Since bean `4l4d` that list is FETCHED rather than baked into the
+  // page by Jekyll, so the committed site no longer depends on the QA corpus.
   const tq = {
     key: "page.translation",
+    slug: "harness",
     src: QA_SRC_URL,
     index: QA_INDEX_URL,
+    list: QA_LIST_URL,
   };
+  const listed = { $schema: "folio-qa-translation-pages/v1", corpus: "present", pages: ["harness"] };
+  const unlisted = { $schema: "folio-qa-translation-pages/v1", corpus: "present", pages: ["index"] };
   const index = {
     badges: {
       "page.translation": {
@@ -336,7 +349,7 @@ test.describe("a hand-authored page builds its own TR badge", () => {
     await serve(
       page,
       { lang: "fr", availableLocales: ["ar", "zh", "en", "fr", "ru", "es"], translationQa: tq },
-      { index },
+      { index, list: listed },
     );
     const b = page.locator('.fa-qa-badge[data-qa-key="page.translation"]');
     await expect(b).toHaveCount(1);
@@ -350,6 +363,35 @@ test.describe("a hand-authored page builds its own TR badge", () => {
     await expect(page.locator(".fa-qa-badge")).toHaveCount(0);
   });
 
+  test("a list that does not name the page means no projection, and no badge", async ({ page }) => {
+    // Wait for the list to have been answered, not for a timeout: an absence
+    // asserted before the fetch lands would pass vacuously.
+    const answered = page.waitForResponse((r) => r.url().endsWith(QA_LIST_URL));
+    await serve(page, { lang: "en", availableLocales: ["en", "fr"], translationQa: tq }, { index, list: unlisted });
+    await answered;
+    await page.evaluate(() => new Promise((r) => setTimeout(r, 50)));
+    await expect(page.locator(".fa-qa-badge")).toHaveCount(0);
+  });
+
+  for (const [why, list] of [
+    ["the list says the corpus was absent", { $schema: "folio-qa-translation-pages/v1", corpus: "absent", pages: [] }],
+    ["the list will not load", undefined],
+  ] as const) {
+    test(`${why}: the badge reads "not available in this build", never a verdict`, async ({ page }) => {
+      await serve(page, { lang: "fr", availableLocales: ["en", "fr"], translationQa: tq }, { index, list });
+      const b = page.locator('.fa-qa-badge[data-qa-key="page.translation"]');
+      await expect(b).toHaveClass(/fa-qa-unavailable/);
+      for (const wrong of ["fa-qa-pass", "fa-qa-warn", "fa-qa-fail", "fa-qa-pending"]) {
+        await expect(b).not.toHaveClass(new RegExp(wrong));
+      }
+      // Inert: nothing to open.
+      expect(await b.evaluate((n) => n.tagName)).toBe("SPAN");
+      await expect(b).toHaveAccessibleName(
+        "Translation QA: not available in this build — the QA results were not fetched, so whether this was swept is unknown",
+      );
+    });
+  }
+
   test("it does not double up when the generator already emitted one", async ({ page }) => {
     // A generated page carries `fa-page-qa-badges` in its markup AND would get
     // `translationQa` from the same front-matter lookup. Two badges for one
@@ -357,7 +399,7 @@ test.describe("a hand-authored page builds its own TR badge", () => {
     await serve(
       page,
       { lang: "en", availableLocales: ["en", "fr"], translationQa: tq },
-      { body: PAGE_BADGE, index },
+      { body: PAGE_BADGE, index, list: listed },
     );
     await expect(page.locator('.fa-qa-badge[data-qa-key="page.translation"]')).toHaveCount(1);
   });
@@ -390,7 +432,7 @@ test.describe("a hand-authored page builds its own TR badge", () => {
     await serve(
       page,
       { lang: "fr", availableLocales: ["ar", "zh", "en", "fr", "ru", "es"], translationQa: tq },
-      { index, projection },
+      { index, projection, list: listed },
     );
     await page.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
     await expect(page.locator(".fa-qa-chip.fa-qa-locale")).toHaveCount(2);
@@ -594,6 +636,33 @@ test.describe("the unverified-translation notice", () => {
     await serve(page, { lang: "fr", translationStatus: "unverified", translationQa: null });
     await expect(page.locator(".fa-translation-warning")).toHaveCount(1);
     await expect(page.locator(".fa-translation-warning__report")).toHaveCount(0);
+  });
+
+  test("with the published list, the report is offered only for a listed page", async ({ page }) => {
+    // Since bean `4l4d` every page carries the paths, so `src` alone no longer
+    // means a report exists; the fetched list decides.
+    const tq = { key: "page.translation", slug: "harness", src: QA_SRC_URL, index: QA_INDEX_URL, list: QA_LIST_URL };
+    const index = { badges: { "page.translation": { state: "warn", counts: { fail: 0, warn: 1, pass: 0, na: 0, unknown: 0 } } } };
+    const answered = page.waitForResponse((r) => r.url().endsWith(QA_LIST_URL));
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationQa: tq }, {
+      index,
+      list: { $schema: "folio-qa-translation-pages/v1", corpus: "present", pages: ["index"] },
+    });
+    await answered;
+    await page.evaluate(() => new Promise((r) => setTimeout(r, 50)));
+    await expect(page.locator(".fa-translation-warning__report")).toHaveCount(1);
+    await expect(page.locator(".fa-translation-warning__report")).toBeHidden();
+  });
+
+  test("and it is shown once the listed page's badge is built", async ({ page }) => {
+    const tq = { key: "page.translation", slug: "harness", src: QA_SRC_URL, index: QA_INDEX_URL, list: QA_LIST_URL };
+    const index = { badges: { "page.translation": { state: "warn", counts: { fail: 0, warn: 1, pass: 0, na: 0, unknown: 0 } } } };
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationQa: tq }, {
+      index,
+      list: { $schema: "folio-qa-translation-pages/v1", corpus: "present", pages: ["harness"] },
+    });
+    await page.locator(".fa-translation-warning summary").first().press("Enter");
+    await expect(page.locator(".fa-translation-warning__report")).toBeVisible();
   });
 
   test("and a verified page gets no notice at all", async ({ page }) => {

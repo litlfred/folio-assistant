@@ -52,6 +52,7 @@
  * | `stale`      | 1    | regenerate (`bun run check:source-licence`) and commit |
  * | `absent`     | 1    | nothing committed is nothing to compare — a vacuous pass otherwise (`dh4f`) |
  * | `unreadable` | 2    | the question could not be ASKED; 2 is this script's existing could-not-determine code |
+ * | `unknown`    | 2    | the store could not say (bean `c8uq`: a fetch miss is never a pass); could-not-determine, as `unreadable` |
  *
  * `malformed` keeps exit 1 in BOTH modes: it gates on CONTENT, `--check` gates
  * on FRESHNESS, and folding one into the other would hide either.
@@ -212,7 +213,7 @@ export function sourceLicenceDocument(r: LicenceReport): QaResult {
 export const sourceLicenceDoc = sourceLicenceDocument;
 
 /** Exit code for each freshness state, as tabled in the module docblock. */
-export const CHECK_EXIT: Readonly<Record<QaResultState, number>> = { current: 0, stale: 1, absent: 1, unreadable: 2 };
+export const CHECK_EXIT: Readonly<Record<QaResultState, number>> = { current: 0, stale: 1, absent: 1, unreadable: 2, unknown: 2 };
 
 /**
  * The `--check` decision: compare `doc` with the sidecar committed under

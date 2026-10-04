@@ -402,6 +402,7 @@ export const RULES: Rule[] = [
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
+      "scripts/test-plan-audit.ts",          // plan <- run <- report, the four test-process criteria (bean `3o5b`)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
       "scripts/content-holds-code.ts",       // a content instance holds no code (kg-separation FR-7, bean `eayu`)
@@ -430,6 +431,10 @@ export const RULES: Rule[] = [
       // same reason as its two neighbours — it reads the declaration and git,
       // and no folio's subject matter could make it answer differently.
       "scripts/qa-store.ts",                 // the qa-reports branch: readQa / publishQa / pruneQa
+      "scripts/qa-verify-moved.ts",          // bean 5hox: hash-verify the moved QA files against a qa-reports entry
+      "scripts/qa-refresh.ts",               // bean 3hk4: produce the working copy qa-publish stores, and judge it complete
+      "scripts/qa-site-assets.ts",           // a site build's QA evidence: fetch from qa-reports, verify the copy (tfqf)
+      "scripts/check-qa-corpus.ts",          // the fetched qa tree validates, hosted homes included (cxcn)
       // Its generalisation (bean `2h76`): the same branch-kept store for ANY
       // directory declaring `storage.keyedBy: "tip"`. Harness-level for the
       // same reason as `qa-store` — it reads the declaration and git, and no
@@ -1383,9 +1388,12 @@ export const RULES: Rule[] = [
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
       "scripts/skill-voice-review.ts",     // skills reviewed against the skill voices, kept in the attestation store (beans rkqp, 2gst)
-      // The one-shot move of those judgements out of kg-qa sidecars into the
-      // attestation store (bean `2gst`). Same side as the auditor whose data it moves.
-      "scripts/migrate-kg-attestations.ts",
+      // The move of those judgements — and of block-qa and translation-qa
+      // agent/human verdicts (bean `8wj1`) — out of derived files into the
+      // attestation store (bean `2gst`). Same side as the auditor whose data it
+      // moves; it reads the reports' own `reviewer.kind`, and no folio's
+      // subject matter changes that.
+      "scripts/migrate-qa-attestations.ts",
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
@@ -1557,6 +1565,22 @@ export const RULES: Rule[] = [
       // It was the single `folio-assist-core -> smart-base` edge.
       "schemas/front-matter.ts",    // "this repository's self-declaring files"
       "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
+      // The TEST PROCESS's other two schemas (beans `ygzh`, `3o5b`), by the
+      // same test as `test-run.ts` beside them: a plan and a report describe
+      // how a SYSTEM UNDER TEST is judged, not a folio's content, and their
+      // reader is `kg-audit` (harness) through `scripts/test-plan-audit.ts`.
+      // Left `core` by the `schemas/` rule they made `kg-audit` import core,
+      // and the system-under-test facet on `skill-package.ts` (harness) import
+      // `test-plan.ts` for `SUT_KINDS` — two wrong-direction edges.
+      "schemas/test-plan.ts",
+      "schemas/test-report.ts",
+      // ...which forces `attribution.ts` too: both import `ATTRIBUTION_KINDS`
+      // from it. It is the reviewer-identity vocabulary of every QA verdict
+      // (`script` / `agent` / `human`), it imports only `tool-types.ts`
+      // (harness) and bootstrap's model registry, and its core consumers
+      // (`apply-image-verdicts.ts`, the narrative and image schemas) may import
+      // the harness — so the move adds no wrong-direction edge. Bean `3o5b`.
+      "schemas/attribution.ts",
       "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
       // Declaration vocabulary, by the same test as the four above: it imports
       // only zod, and it carries no part of the content model. The direction is

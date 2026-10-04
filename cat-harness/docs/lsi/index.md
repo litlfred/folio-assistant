@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>3099</b><span>units indexed</span></div>
+<div class="lv-stat"><b>3101</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**227** units · **6084** terms · k = **100** · retains **78.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**229** units · **6102** terms · k = **100** · retains **78.3 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,16 +123,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.70 | instance, harness, directory, page, graph, kind, session, branch | *(none)* |
-| 2 | 21.98 | watcher, sibling, queue, prs, commits, backlog, coordination, slot | harness, subgraph, iri, instance, declaration, node, directories, graph |
-| 3 | 18.29 | chapter, block, slot, edges, project, formal, watcher, proof | session, push, conflict, minutes, branch, epic, window, green |
-| 4 | 17.23 | page, manifest, text, tile, block, blocks, pdf, avatar | subdirectory, sibling, ledger, plan, sessions, subgraph, train, relocation |
-| 5 | 15.90 | tile, glass, board, avatar, card, sticky, theme, tiles | slice, payloads, payload, heavy, manifest, export, deploy, processor |
-| 6 | 15.43 | preview, deploy, staging, tile, build, iri, client, payload | rung, archive, ingest, licence, archived, sniff, zip, arm |
-| 7 | 15.14 | lane, actor, requirements, task, role, process, analysis, skills | queue, sha, backlog, slide, rung, member, arm, zip |
-| 8 | 14.70 | locale, translation, forward, language, staging, preview, translated, french | slice, payloads, heavy, tile, glass, iri, subgraph, strip |
+| 1 | 46.80 | instance, directory, harness, kind, page, graph, session, declaration | *(none)* |
+| 2 | 21.94 | watcher, sibling, queue, prs, commits, backlog, coordination, slot | harness, subgraph, iri, instance, declaration, node, directories, directory |
+| 3 | 18.28 | chapter, block, slot, edges, project, formal, watcher, proof | session, conflict, push, green, minutes, epic, window, beans |
+| 4 | 17.28 | page, manifest, text, tile, block, pdf, blocks, avatar | subdirectory, sibling, ledger, plan, sessions, train, relocation, session |
+| 5 | 15.90 | tile, glass, board, avatar, card, sticky, theme, tiles | slice, payloads, payload, heavy, manifest, export, processor, deploy |
+| 6 | 15.41 | preview, deploy, staging, tile, build, iri, payload, client | rung, archive, ingest, licence, archived, sniff, zip, arm |
+| 7 | 15.14 | lane, actor, requirements, task, role, process, skills, analysis | queue, sha, slide, backlog, rung, member, steward, zip |
+| 8 | 14.73 | forward, translation, locale, merge, chapter, preview, backward, edges | slice, payloads, iri, heavy, subgraph, bytes, backlog, withheld |
 
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
+
+*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
+
+- 0.951 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
 
 ## smart-base / library
 

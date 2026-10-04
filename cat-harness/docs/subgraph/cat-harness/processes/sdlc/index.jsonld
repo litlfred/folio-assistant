@@ -2438,6 +2438,172 @@
       "name": "Documents exported, not yet deployed"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish",
+      "@type": "bootstrap:Process",
+      "name": "Publish and keep QA results on qa-reports"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P03",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P04",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no: fork PR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P07",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "accepted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P08",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "rejected,\nattempts left"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "third rejection,\nor git failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R04",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no: dry run"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R05",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "@type": "cat-harness:Lane",
+      "name": "CI/CD Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Plan printed, nothing removed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Retention applied"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not stored (job red, gates untouched)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_Published",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Results stored under their key"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Skipped: fork PR (::notice says why)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Push accepted?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Apply?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Can this token write?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Daily schedule, or dispatched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gates finished (any conclusion)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Commit a tip without the pruned entries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Back off"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build the entry [tree + manifest]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Derive the key [main/<sha> or pr/<n>/<sha>]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Plan the prune"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Read every PR's state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Splice onto the tip and push (never -f)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning",
       "@type": "bootstrap:Process",
       "name": "QA report signing"
@@ -2481,6 +2647,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/lane/Lane_Api",
       "@type": "cat-harness:Lane",
       "name": "Attestation service (API)"
@@ -2498,7 +2668,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
       "@type": "bootstrap:ProcessNode",
-      "name": "Report attested"
+      "name": "Report attested and stored"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Gateway_Signed",
@@ -2539,6 +2709,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_ResolveReach",
       "@type": "bootstrap:ProcessNode",
       "name": "Resolve the performer's reach [effectiveReach + signing-api probe]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Store the signed report on qa-reports"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork",
@@ -2801,6 +2976,179 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_StalledAgentTriage/node/U_Decide",
       "@type": "bootstrap:ProcessNode",
       "name": "Decide each theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "@type": "bootstrap:Process",
+      "name": "Test-plan execution"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F07",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Certified",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "certified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Refused",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/flow/F_Undetermined",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "undetermined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "@type": "cat-harness:Lane",
+      "name": "Attestation service"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "@type": "cat-harness:Lane",
+      "name": "Certifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Checker",
+      "@type": "cat-harness:Lane",
+      "name": "Untainted checker"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Requester",
+      "@type": "cat-harness:Lane",
+      "name": "Requester / system under test"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/lane/Lane_Tester",
+      "@type": "cat-harness:Lane",
+      "name": "Tester"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_BindData",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bind the test data [fixed or generated]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Execute",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Execute every case, or skip it with a reason"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_FileCertification",
+      "@type": "bootstrap:ProcessNode",
+      "name": "File the signed certification [qa-attestations/v1]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ReExecuteSample",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Re-execute a sample, blind to the tester's verdicts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordCertification",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record the certification decision"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordRefusal",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record the refusal, with the failing cases"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_RecordUndetermined",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record why it could not be decided"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_Request",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Request certification of the system against plan P"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_ResolvePlan",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Resolve the plan [test-plan/v1]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/A_WriteRun",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write the test run and the test report [folio-test-run/v1 + test-report/v1]"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/Call_Sign",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Sign the certification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Certified",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Certified and signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Refused",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/End_Undetermined",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Undetermined — nothing signed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/GW_ExitCriteria",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Exit criteria met?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution/node/Start_Request",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Certification wanted against plan P"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_UpstreamAdoption",

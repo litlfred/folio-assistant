@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:12Z
-updated_at: 2026-10-01T15:00:00Z
+updated_at: 2026-10-01T17:30:00Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -64,3 +64,16 @@ Asked with three options, recommended first. The owner chose "count as judgement
 - [ ] the test-run criteria read `unknown`, not `n/a` (C5, `test-run-conformance.ts`): NOT done here, still open
 - [ ] `kg:audit:check` / `kg:audit:all:check` pass with `test/results/` absent: needs compute-and-judge against `qa-reports`, still open. With the results absent, `--check` reports 488 stale, as expected.
 - [ ] a seeded new finding fails a PR and an inherited one does not: still open, same reason
+
+## Owner ruling 2 (2026-10-01, binding) — auto-move on first save, every family
+A folio with no store yet does NOT refuse and wait for a manual migration: a writer that finds judgements in a prior derived file and no store entry moves them into the store as it saves. Applies to kg-qa too. Nothing is ever silently dropped; a corrupt store is still UNKNOWN and refused. (Ruling 1 the same day: 2gst's declared design is the one design, and `8wj1` adapts to it. Ruling 3: the store stays at `<instance>/test/attestations/`.)
+
+## Summary of Changes — ruling 2 and the 8wj1 merge (2026-10-01, `claude/quirky-davinci-ixuymr`, NOT pushed)
+What changed in this bean's path:
+- `readAttestationFile` answers `absent` when the store directory is not there (it answered `unknown`, which made `kg-audit` refuse and wait for `--init-attestations`). A store path that is not a directory is still `unknown`.
+- `readAttestations` (pairs) and `readVoiceReviews` take the PRIOR sidecar. On `miss`/`absent` they return the judgements it still carries (read raw by `priorKgJudgements`, since `KgQaReportSchema` refuses them), so `evaluatePairsFrom` neither re-baselines nor drops them: C4's drift is still a finding. A prior sidecar that does not parse is `unknown`. On a `hit` the sidecar is never read.
+- `kg-audit` now writes the store BEFORE the sidecars; a moved entry the evaluation did not carry (a pair no longer declared) is kept verbatim; a subject whose prior sidecar cannot be parsed while the store has no entry is UNKNOWN, and neither file is written (writer exit 4, `--check` exit 1). `--init-attestations` is kept but no longer needed. `recordReview` seeds a new store file from the prior sidecar.
+- `migrate-kg-attestations.ts` is now `migrate-qa-attestations.ts`, covering block-qa and translation-qa as well; `qa:attestations:migrate:check` gates it in CI.
+- **Measured end to end on the real corpus:** with `cat-harness/test/attestations/` moved aside and the 18 cat-harness judgements put back into their sidecars, one `kg:audit` run printed "moved 18 judgement(s)", recreated the 18 store files byte-identical (`diff -r` clean), and left every sidecar byte-identical to the committed (clean) one. Restored afterwards.
+- **Counts:** 32 files, 32 entries (26 baseline + 6 agent), unchanged; `migrate-qa-attestations.test.ts` also checks that the readers return all 32 verbatim from prior sidecars with no store.
+- Commits: `b18799fb` (code and tests), `9f858484` (declaration and conventions text), `604ef031` (regen).

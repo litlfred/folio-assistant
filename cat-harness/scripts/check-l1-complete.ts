@@ -71,7 +71,7 @@ import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
-import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { againstOrUsage, buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResultState } from "./qa-results.ts";
 import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -1393,38 +1393,45 @@ export function sidecarFor(root: string, report: EntryReport): string {
 }
 
 /**
- * Is the committed sidecar what this checker would write now?
+ * Is the committed sidecar what this checker would write now? One state per
+ * entry, in the five {@link QaResultState}s.
  *
  * A committed verdict that nobody re-writes is worse than none: it reads as a
  * current answer while describing an older corpus, which is the defect
- * `kg-audit` grew its `source_hash` for. Compared on everything EXCEPT
- * `updated_at`, which churns on every run and would make each verdict look
- * stale forever.
+ * `kg-audit` grew its `source_hash` for. Compared whole: the document carries
+ * no `updated_at` (`y7b3`), so an old sidecar that still has one reads stale
+ * and is regenerated away.
  *
- * Returns the stems that are missing or stale, so CI names them rather than
- * saying "something drifted".
+ * `against` reads the baseline from the `qa-reports` branch instead of the
+ * working copy (bean `0dav`); the path is the same one either way.
  */
-export function staleSidecars(root: string, reports: EntryReport[]): string[] {
-  const out: string[] = [];
-  for (const r of reports) {
-    const path = join(root, "test", "results", "library-qa", `${r.slug}.qa-results.json`);
-    if (!existsSync(path)) {
-      out.push(`${r.slug}: no sidecar`);
-      continue;
-    }
-    const fresh = JSON.parse(JSON.stringify(sidecarDocument(r)));
-    let committed: Record<string, unknown>;
-    try {
-      committed = JSON.parse(readFileSync(path, "utf-8")) as Record<string, unknown>;
-    } catch {
-      out.push(`${r.slug}: sidecar will not parse`);
-      continue;
-    }
-    // Compared whole: the document carries no `updated_at` (`y7b3`), so an
-    // old sidecar that still has one reads stale and is regenerated away.
-    if (JSON.stringify(fresh) !== JSON.stringify(committed)) out.push(`${r.slug}: stale`);
-  }
-  return out;
+export function sidecarStates(
+  root: string,
+  reports: EntryReport[],
+  against?: string,
+): { slug: string; state: QaResultState }[] {
+  return reports.map((r) => ({
+    slug: r.slug,
+    state: qaResultState(qaResultPath(root, join("library-qa", r.slug)), sidecarDocument(r), { against }),
+  }));
+}
+
+/**
+ * {@link sidecarStates}, as the lines a reader acts on — every entry whose
+ * committed verdict is not `current`. Absent is never folded into current:
+ * "no sidecar" is its own line.
+ */
+export function staleSidecars(root: string, reports: EntryReport[], against?: string): string[] {
+  const words: Record<QaResultState, string> = {
+    current: "current",
+    stale: "stale",
+    absent: "no sidecar",
+    unreadable: "sidecar will not parse",
+    unknown: "could not read the qa-reports baseline",
+  };
+  return sidecarStates(root, reports, against)
+    .filter((x) => x.state !== "current")
+    .map((x) => `${x.slug}: ${words[x.state]}`);
 }
 
 function format(reports: EntryReport[]): string {
@@ -1513,14 +1520,29 @@ if (import.meta.main) {
   }
 
   if (argv.includes("--check")) {
-    const stale = staleSidecars(instanceRootFor(resolve(".")) ?? resolve("."), reports);
-    if (stale.length) {
-      console.error("Committed L1 verdicts are out of date:");
-      for (const x of stale) console.error(`  ✗ ${x}`);
-      console.error("\nRun: bun run l1-complete:write");
-      process.exit(1);
+    // COMPUTE AND JUDGE (bean `0dav`). The verdict this gate fails on — an
+    // UNMET requirement — is computed fresh on every run and decides the exit
+    // below, with or without `--check`. What `--check` added was "the committed
+    // verdicts are current", and that has no subject once QA results leave
+    // `main` (owner rulings D1/D4): absent is then the normal state, and a
+    // gate that failed on it would be red for nobody's defect. So the
+    // committed copies are REPORTED — against the working copy, or the
+    // `qa-reports` branch with `--against <ref>` — and never decide the exit.
+    const { against, exit: badRef } = againstOrUsage("check:l1-complete", argv);
+    if (badRef !== undefined) process.exit(badRef);
+    const root = instanceRootFor(resolve(".")) ?? resolve(".");
+    const states = sidecarStates(root, reports, against);
+    const off = staleSidecars(root, reports, against);
+    if (off.length) {
+      console.log(
+        `  advisory: ${off.length} of ${states.length} committed L1 verdict(s) are not current ` +
+          `(${against ? `qa-reports:${against}` : "working copy"}). Not gated (bean 0dav). ` +
+          "`bun run check:l1-complete -- --write` rewrites them:",
+      );
+      for (const x of off) console.log(`    · ${x}`);
+    } else {
+      console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
     }
-    console.log(`✓ ${reports.length} committed L1 verdict(s) current`);
   }
   if (argv.includes("--write")) {
     // The SAME root the reports came from. `resolve(".")` wrote the sidecars

@@ -19,6 +19,7 @@ import {
   report,
   reviewerOutcome,
   scan,
+  scanCounted,
 } from "../check-qa-reviewer-permission.ts";
 import { couldNotDispatchEntry } from "../../content/pipeline/untainted-verification.ts";
 import type { QaCriterionEntry } from "../../schemas/block-qa.ts";
@@ -227,5 +228,25 @@ describe("the checker/adjudicator split enforces itself", () => {
       }),
     );
     expect(scan(results, readActors(dir)).map((f) => f.outcome)).toEqual(["forbidden"]);
+  });
+});
+
+describe("the population travels with the verdict (bean `c8uq`)", () => {
+  test("an ABSENT results tree examines nothing, and says it was absent", () => {
+    const r = scanCounted(join(tmpdir(), `qa-perm-absent-${Date.now()}`), new Map());
+    expect(r).toEqual({ findings: [], examined: 0, present: false });
+  });
+
+  test("permitted entries are counted as examined, though they are not findings", () => {
+    const { results, actors } = fixture();
+    const a = readActors(actors);
+    sidecar(results, "x.qa.json", [
+      { field_hash: HASH, result: "pass", reviewer: { kind: "agent", id: "x", actor: "qc-reviewer" }, reviewed_at: T },
+      { field_hash: HASH, result: "pass", reviewer: { kind: "script", id: "s.ts" }, reviewed_at: T },
+    ]);
+    const r = scanCounted(results, a);
+    expect(r.present).toBe(true);
+    expect(r.examined).toBe(2);
+    expect(r.findings.map((f) => f.outcome)).toEqual(["unresolved"]);
   });
 });

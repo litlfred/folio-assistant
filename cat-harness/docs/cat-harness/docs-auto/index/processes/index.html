@@ -165,7 +165,7 @@
 <ul class="subs">
 <li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">64</span></li>
+<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">66</span></li>
 <li><a href="sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -345,7 +345,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>The gates a change must pass before it can merge</code></a><br><span class="p">cat-harness/processes/sdlc/code-quality-gates.bpmn</span></td>
-  <td>The gates a change must pass before it can merge: the jobs of the code-quality workflow, each marked hard, warn-only or not a gate, joined by one question — did every hard one pass.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> platform-gates</div></td>
+  <td>The gates a change must pass before it can merge: the jobs of the code-quality workflow, each marked hard, warn-only or not a gate, joined by one question — did every hard one pass.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> platform-gates, qa-reports</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/criterion-adjudication.bpmn"><code>Criterion adjudication</code></a><br><span class="p">cat-harness/processes/sdlc/criterion-adjudication.bpmn</span></td>
@@ -396,8 +396,12 @@
   <td>Run the verifier set over the built tree between the export and the deploy, blocking it: pass, fail or could-not-tell, and the caller deploys only on a pass.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> publish-verification</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/qa-publish.bpmn"><code>Publish and keep QA results on qa-reports</code></a><br><span class="p">cat-harness/processes/sdlc/qa-publish.bpmn</span></td>
+  <td>How a run's derived QA results become a durable, commit-keyed record without being committed to main, and how that record is retired.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> qa-reports</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/qa-report-signing.bpmn"><code>QA report signing</code></a><br><span class="p">cat-harness/processes/sdlc/qa-report-signing.bpmn</span></td>
-  <td>Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Validation and QA (mechanical + agents) · Attestation service (API) · Human signer</div><div class="f"><span class="k">skills</span> content-test, qa-report-signing</div></td>
+  <td>Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Validation and QA (mechanical + agents) · Attestation service (API) · Human signer</div><div class="f"><span class="k">skills</span> content-test, qa-report-signing, qa-reports</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/related-work.bpmn"><code>Related work: find, sort, summarize, ask to coordinate</code></a><br><span class="p">cat-harness/processes/sdlc/related-work.bpmn</span></td>
@@ -410,6 +414,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/stalled-agent-triage.bpmn"><code>Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route</code></a><br><span class="p">cat-harness/processes/sdlc/stalled-agent-triage.bpmn</span></td>
   <td>When agents stall (context exhausted, container lost, session timed out) their work is spread over PRs, branches, beans and process runs.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Triage agent · Merge steward · User</div><div class="f"><span class="k">skills</span> bean-coordination, coordinate, handover-report, stalled-agent-triage</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/test-plan-execution.bpmn"><code>Test-plan execution</code></a><br><span class="p">cat-harness/processes/sdlc/test-plan-execution.bpmn</span></td>
+  <td>Executing a <code>test-plan/v1</code> against a system under test and taking the result to a certification decision: requested by (or for) the system, run by a tester, re-executed in sample by an untainted checker, decided by a ce…<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Requester / system under test · Tester · Untainted checker · Certifier · Attestation service</div><div class="f"><span class="k">skills</span> qa-report-signing, test-engineer, test-plan-execution, untainted-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/upstream-pin-watch.bpmn"><code>Watching a pinned upstream dependency</code></a><br><span class="p">cat-harness/processes/sdlc/upstream-pin-watch.bpmn</span></td>

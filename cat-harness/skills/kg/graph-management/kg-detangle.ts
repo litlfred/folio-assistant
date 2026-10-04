@@ -552,6 +552,22 @@ const results = groups.map((g) => {
 const HARNESS = join(ROOT, "cat-harness");
 const RESULTS_DIR = detangleResultsDir(HARNESS);
 
+/**
+ * Is there a pinned record in the checkout to compare against? Read ONCE,
+ * before the writer can create the directory.
+ *
+ * Bean `oq1j` (arc `3fva`, reader `R12`). The sidecars are derived QA, bound
+ * for the `qa-reports` branch (owner rulings D1/D4). With the DIRECTORY
+ * absent, `--check` used to call every group STALE, which named a defect
+ * nobody made. It now computes, which it always did, and compares nothing,
+ * because there is nothing pinned to be stale (proposal §2.3, "committed ≠
+ * fresh: gone"). It says so, and never prints the "current" line it did not
+ * earn. With the directory PRESENT, from the checkout or from `bun run
+ * qa:fetch`, the comparison and the orphan sweep run exactly as before, so a
+ * group with no sidecar beside ones that have them is still STALE.
+ */
+const pinnedInCheckout = existsSync(RESULTS_DIR);
+
 function writeSidecars(): { written: string[]; stale: { path: string; fields: string[] }[] } {
   const written: string[] = [];
   const stale: { path: string; fields: string[] }[] = [];
@@ -565,7 +581,7 @@ function writeSidecars(): { written: string[]; stale: { path: string; fields: st
     } catch {
       // Absent or unreadable — every field differs, which `staleFields` says.
     }
-    const fields = staleFields(committed, fresh);
+    const fields = pinnedInCheckout ? staleFields(committed, fresh) : [];
     if (fields.length > 0) stale.push({ path: rel, fields });
     // `--gate-direction` reads the tree and grades it; it must not also
     // rewrite the pinned record it is not grading. A gate that mutates its
@@ -916,7 +932,14 @@ function gateDirection(): void {
 // ── Report the pinned record, after the table so it reads as a footnote to it.
 if (!process.argv.includes("--json") && !gatingDirection) {
   const where = relative(process.cwd(), RESULTS_DIR);
-  if (checking) {
+  if (checking && !pinnedInCheckout) {
+    // Not "current": nothing was compared. Said in full, so the line cannot
+    // be mistaken for the pass it is not.
+    console.log(`  ? ${sidecarsWritten.length} group measurement(s) computed; no pinned record in the checkout (${where}/ is absent).`);
+    console.log("    Nothing was compared and the orphan sweep did not run: with no record there is nothing to be stale");
+    console.log("    (proposal §2.3). The record is derived QA on the qa-reports branch; `bun run qa:fetch` brings it back to");
+    console.log("    compare against, and `bun run kg:detangle` writes a fresh one.");
+  } else if (checking) {
     if (staleSidecars.length === 0 && orphanSidecars.length === 0) {
       console.log(`  \u2713 ${sidecarsWritten.length} pinned measurement(s) current in ${where}/`);
     }
