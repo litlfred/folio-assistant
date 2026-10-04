@@ -37,3 +37,6 @@ Capability to review the SMART Guidelines publication checklist across L1-L4 lay
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
+
+<footer id="ig-footer" data-prev="Requirements-SGAuthoring.Skills.ReviewAndApproveContent.html" data-next="Requirements-SGAuthoring.Skills.ReviewL1Guidelines.html" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>

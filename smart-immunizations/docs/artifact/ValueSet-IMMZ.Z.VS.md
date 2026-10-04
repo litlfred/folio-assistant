@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | *not published for this artefact* | |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.VS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.VS.jsonld` · [view](ValueSet-IMMZ.Z.VS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.LiveAttenuated.html" data-next="ValueSet-IMMZD18SBCGVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

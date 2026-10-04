@@ -27,3 +27,6 @@ nav_order: 3
 
 Published by the IG at `http://smart.who.int/trust`. This repository holds the IG's
 artefacts, not its narrative pages, so every link above leaves for the canonical copy.
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

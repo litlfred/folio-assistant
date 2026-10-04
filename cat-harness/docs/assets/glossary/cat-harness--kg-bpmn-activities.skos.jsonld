@@ -4014,6 +4014,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_kgseparation.task_drain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Drain: land, close or re-target the open PRs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks."
+        }
+      ],
+      "skos:notation": "Task_Drain",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Drain",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_kgseparation.task_hosted",
       "@type": "skos:Concept",
       "skos:inScheme": {

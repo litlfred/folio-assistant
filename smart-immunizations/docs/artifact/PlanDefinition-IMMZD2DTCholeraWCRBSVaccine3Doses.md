@@ -37,3 +37,6 @@ IMMZ.D2.DT.Cholera.WC-rBS vaccine 3 doses Whole cell-recombinant B subunit (WC-r
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTCholeraWCRBSVaccine2Doses.html" data-next="PlanDefinition-IMMZD2DTCholeraWCVaccines.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

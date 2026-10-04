@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
+
+<footer id="ig-footer" data-prev="StructureDefinition-IMMZD21.html" data-next="StructureDefinition-IMMZD7.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

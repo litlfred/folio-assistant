@@ -5,7 +5,7 @@
     "id": "Process_KgSeparation",
     "path": "processes/kg/kg-separation.bpmn"
   },
-  "source_hash": "sha256:9ae43a87a55264e3fe30f5901af43f1064ee9e971d4ab70093d94f9aa4561af1",
+  "source_hash": "sha256:ecf80ee31108f737817ef27c7e4938a063e075118ea852890fe6f4b33bcf1e6f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -83,6 +83,10 @@
           "detail": "names skill \"kg-separation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
+          "where": "Task_Drain",
+          "detail": "names skill \"kg-separation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
           "where": "Task_Seed",
           "detail": "names skill \"kg-separation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
@@ -101,7 +105,7 @@
       ]
     },
     "decision-ref-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "role-ref-resolves": {
@@ -179,9 +183,9 @@
     }
   },
   "totals": {
-    "pass": 15,
+    "pass": 16,
     "fail": 2,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }

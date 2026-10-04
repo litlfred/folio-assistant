@@ -353,9 +353,28 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F27",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "not yet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F28",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F29",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "unknown"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F3",
       "@type": "bootstrap:SequenceFlow",
       "name": "declined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F30",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "settled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/flow/F4",
@@ -414,6 +433,11 @@
       "name": "Stays in place, ready to leave"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_SeedUnknown",
+      "@type": "bootstrap:ProcessNode",
+      "name": "UNKNOWN — do not seed. Not clean"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/End_Separated",
       "@type": "bootstrap:ProcessNode",
       "name": "Separated"
@@ -442,6 +466,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_Ids",
       "@type": "bootstrap:ProcessNode",
       "name": "Every identifier its file's path?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/GW_SeedReady",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Ready to seed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Start_Trigger",
@@ -482,6 +511,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Detangle",
       "@type": "bootstrap:ProcessNode",
       "name": "1–3 · Declare, detangle, isolate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Drain",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Drain: land, close or re-target the open PRs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation/node/Task_Hosted",

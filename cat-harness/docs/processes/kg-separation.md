@@ -9,11 +9,11 @@ nav_exclude: true
 {% raw %}
 # A knowledge graph leaves for its own repositories
 
-`Process_KgSeparation` · strict · 17 step(s)
+`Process_KgSeparation` · strict · 18 step(s)
 
 Move part of a knowledge graph into repositories of its own: the content and the tools that write and check it separate as a pair, into two repositories, not one. The content (files to read, no code) and its tools (the code that writes and checks it) separate as a pair. `kg-separation.md` is the practice; this is its order and its gates. Stages 1-3 are `graph-detanglement`, reused rather than restated.
 
-EVERY GATEWAY IS A COMMAND. `Tools closed?` is `check:tools-closure` with the content's no-code test and a byte-identity check on the generated files; `Every identifier its file's path?` is `check:node-iris`; `Green alone?` is the standalone rehearsal. A check that could not run stops the process rather than reading as clean.
+EVERY GATEWAY IS A COMMAND. `Tools closed?` is `check:tools-closure` with the content's no-code test and a byte-identity check on the generated files; `Every identifier its file's path?` is `check:node-iris`; `Green alone?` is the standalone rehearsal; `Ready to seed?` is `seed:ready --layer <name> --rehearse`, decided by decisions/seed-readiness-gate.dmn. A check that could not run stops the process rather than reading as clean.
 
 A PERSON DECIDES FOUR TIMES, AND THE ADMINISTRATOR LANE SAYS WHERE: whether to separate at all, whether to authorise the extraction, creating the repositories, and the cutover. Nothing is committed to the new repositories before they are created, and the parent keeps its own copy until it consumes the first release.
 
@@ -40,7 +40,7 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
 
 ## Steps
 
-Every one of the 17 step(s) is documented.
+Every one of the 18 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -56,6 +56,7 @@ Every one of the 17 step(s) is documented.
 | **Report what moves — sizes, what breaks**<br>`Task_Propose` | Authoring agent | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | The agent reports and waits: what moves, how large, what in the parent breaks, and the rollback. It never relocates a durable artefact on its own initiative. |
 | **9 · Authorise the extraction**<br>`Task_Authorise` | Administrator | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place. |
 | **Create the repositories**<br>`Task_Create` | Administrator | [`kg-separation`](../reference/skill-instructions/kg-separation.html) | The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this. |
+| **Drain: land, close or re-target the open PRs**<br>`Task_Drain` | Authoring agent | [`kg-separation`](../reference/skill-instructions/kg-separation.html) | Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks. |
 | **10 · Seed both repositories**<br>`Task_Seed` | Authoring agent | [`kg-separation`](../reference/skill-instructions/kg-separation.html) | Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable. |
 | **11 · Parent consumes, additively**<br>`Task_Consume` | Platform authoring agent | calls [Adopting an upstream version bump](upstream-version-adoption.html)<br>[`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html) | The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared. |
 | **12 · First release**<br>`Task_Release` | Publication manager | [`package-release`](../reference/skill-instructions/package-release.html) | Tag each repository, publish /<version>/ and /v<major>/. From here the two are versioned independently; a tools release lists the content majors it supports. |
@@ -64,12 +65,13 @@ Every one of the 17 step(s) is documented.
 
 ## Decisions
 
-Every one of the 3 decision(s) is documented.
+Every one of the 4 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **Tools closed, content code-free?**<br>`GW_Closed` | Decided by commands, not judgement: `check:tools-closure` (no import leaves the tools directory or names an undeclared package), the content's no-code test (FR-7), and generated files byte-identical before and after the move. Any failure goes back to the split. | **leaks or stale** → 6 · Split content from tools<br>**closed** → 7 · Plan publication |
 | **Every identifier its file's path?**<br>`GW_Ids` | Decided by `check:node-iris`: a published node's own identifier ($id or @id) under the release address must be its file's path. A mismatch goes back to the plan: move the file, or change the identifier before it is ever served. | **mismatch** → 7 · Plan publication<br>**every one matches** → 8 · Rehearse standalone |
 | **Green alone?**<br>`GW_Alone` | Green with nothing else present goes on. Red means an edge the earlier gates did not see, so back to detangling. If the rehearsal could not run, that is not a pass: stop. | **red: an unseen edge** → 1–3 · Declare, detangle, isolate<br>**could not run** → UNKNOWN — stop. Not clean<br>**green** → Report what moves — sizes, what breaks |
+| **Ready to seed?**<br>`GW_SeedReady` | Asked AT SEED TIME, because the tree has moved since `8 · Rehearse`. A seed is a snapshot with no history, so every open PR over the layer when it is taken is orphaned into the monorepo. Computed by decisions/seed-readiness-gate.dmn (hit policy FIRST) from `seed:ready --layer <name>`: an open `heavy-mover` PR over the layer or the next one, any open PR on the next layer, more than five over the layer, any that moves a file in it, a red sibling-layout rehearsal, or a direct dependent that discovery cannot find among sibling clones answers `not yet`. A criterion that could not be decided answers `unknown` and stops; it never hides a finding already certain, which is why the `not yet` rows come first. The rehearsal runs only on request (`--rehearse`, owner ruling 2026-10-02), so without it the answer is never `settled`. | **not yet** → Drain: land, close or re-target the open PRs<br>**unknown** → UNKNOWN — do not seed. Not clean<br>**settled** → 10 · Seed both repositories |
 
 {% endraw %}
