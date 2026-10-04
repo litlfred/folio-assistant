@@ -2,10 +2,11 @@
   "$schema": "folio-qa-availability/v1",
   "source": "checkout",
   "requested": [
-    "pr/2078/c4e47e09155498e2ee9f5fd2cab1b6c7e2d5843d",
+    "pr/2078/e748fc00408de9244728b2f8351055b3512993d7",
     "pr/2078"
   ],
-  "reason": "the checkout holds the QA corpus (still committed), so it is published as checked out; qa-reports had no entry for this build's ref",
+  "key": "pr/2078/c4e47e09155498e2ee9f5fd2cab1b6c7e2d5843d",
+  "reason": "the checkout holds the QA corpus (still committed), so it is published as checked out; qa-reports also has pr/2078/c4e47e09155498e2ee9f5fd2cab1b6c7e2d5843d",
   "expected": {
     "witnesses": 170,
     "results": 20
