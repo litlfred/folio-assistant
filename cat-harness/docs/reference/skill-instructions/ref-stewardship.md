@@ -125,12 +125,24 @@ already derived them for the hold case, from the same reasoning
 cannot be told from an abandoned one."* Read that sentence with "window" in it
 and nothing needs re-deriving.
 
+`schemas/ref-window.ts` is the type. Three fields are `HoldSchema`'s verbatim
+and the fourth is narrowed:
+
 | field | for a window | without it |
 |---|---|---|
-| `waitsOn` | the ref, and the writers being batched | a reader cannot tell which ref this window is for |
+| `ref` | the watched ref — `HoldSchema`'s `waitsOn`, narrowed from prose to a declared ref | a reader cannot tell which ref this window is for |
 | `since` | when it opened | the deadline cannot be checked, only trusted |
 | `expires` | the hard close — **after `since`**, enforced by refine | abandoned and open are indistinguishable |
 | `handoff` | who takes it if this steward stops | the next steward cannot tell "mine to close" from "someone else's in flight" |
+
+Two more the type carries for the same reason. `heldBy` says whose window it
+is, and `closedAt` says whether the single write happened — **absent means open
+OR abandoned, and `expires` is the only thing that tells those apart**, so a
+reader must never take an absent `closedAt` for "still collecting".
+
+There is **no `extend`**, and the object is strict, so the field a well-meaning
+writer reaches for is refused rather than ignored. That makes "set once, at
+open" a property of the type instead of a promise in this paragraph.
 
 **`expires` does the work here that it does for a hold, for the same reason and
 with the opposite polarity.** A hold's expiry stops it outliving its
@@ -166,9 +178,16 @@ the number readable at all.
 - **No steward runs over the `cat/cat-harness/*` refs.** They are seeded and
   declared and, per `special-branches.json`, *"not authoritative"* until arc
   `fs43`'s flip. A steward over a ref nobody reads from would be ceremony.
-- **The window object is not yet a schema.** The four fields are `HoldSchema`'s
-  and the reasoning transfers, but a hold is keyed by `repository` + `pr` and a
-  window is keyed by ref, so it is a sibling type rather than a reuse.
-  Stated here so the next agent extends the schema instead of attaching a
-  window to a queue entry, where it would mean something else.
+- **Nothing writes a window yet.** `schemas/ref-window.ts` types one and
+  `ref-window.test.ts` holds it to the handover rules, but no steward opens one,
+  because there is nothing to coalesce until the producers stop pushing
+  directly. The type lands first on purpose: a steward written before the state
+  it hands over is a steward whose handover is untested.
+- **The parity between the window and the hold is behavioural, not structural.**
+  `SHARED_LEASE_FIELDS` is the declared list and the test removes each field
+  from both schemas and requires both to refuse. An earlier version compared key
+  lists through `HoldSchema.def.innerType.shape`; it threw, because a
+  `.refine()` does not expose its inner object there — and a parity check that
+  silently compared two empty lists would have passed forever (the `dh4f`
+  shape).
 {% endraw %}

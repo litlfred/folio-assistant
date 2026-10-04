@@ -20895,6 +20895,139 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.closedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.closedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the steward actually performed the single write, if it has."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.closedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.expires",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.expires"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The hard close. Set once, at open: there is no extend, because a window that extends on every arrival never closes."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.expires",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.handoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.handoff"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who takes this window if the holder stops — the field that makes a handover safe. Without it the next steward cannot tell \"mine to close\" from \"someone else's, in flight\", and both wrong answers push twice."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.handoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.refwindowobjectschema.heldby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RefWindowObjectSchema.heldBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who holds the window — a session URL, `owner`, or an actor id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#RefWindowObjectSchema.heldBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.writerequestschema.authored",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteRequestSchema.authored"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether an AUTHOR wrote this route's content, as opposed to a generator regenerating it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.authored",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.writerequestschema.requestedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteRequestSchema.requestedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who asked — a workflow file, a session URL, or an actor id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.requestedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/ref-window.writerequestschema.route",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WriteRequestSchema.route"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The route this write owns — `/` for the published site, `STAGING/<slug>/` for a preview. Composition is per route: two different routes compose by union, two of the same route take the newer."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ref-window.ts#WriteRequestSchema.route",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/refactor-strategy.leanversionrange.max",
       "@type": "skos:Concept",
       "skos:inScheme": {
