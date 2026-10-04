@@ -1,0 +1,17 @@
+{
+  "$schema": "state-manifest/v1",
+  "keyedBy": "route",
+  "status": "seed",
+  "authoritative": false,
+  "seededFrom": "63ec4fffc4bf0c38ed6f49b09a590c09eb5255a0",
+  "seededAt": "2026-10-04T13:21:27Z",
+  "bean": "folio-assistant-lbz8",
+  "directories": [
+    { "id": "smart-trust-docs", "path": "smart-trust/docs" },
+    { "id": "smart-base-docs", "path": "smart-base/docs" },
+    { "id": "smart-immunizations-docs", "path": "smart-immunizations/docs" }
+  ],
+  "excluded": ["*/docs/README.md"],
+  "writer": "fhir-harness/scripts/gen-ig-pages.ts",
+  "gate": "bun run smart-trust:pages:check && bun run smart-base:pages:check && bun run smart-immunizations:pages:check"
+}
