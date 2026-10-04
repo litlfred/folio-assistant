@@ -42,6 +42,7 @@ import {
 } from "../../bootstrap-tools/schemas/requirement.ts";
 import { NETWORK_REACHES } from "./cat-harness";
 import { SkillNameSchema } from "./tool-types.js";
+import { SutKindSchema } from "./test-plan";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
 
@@ -121,6 +122,48 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
   z.object({ method: z.literal("always") }),
 ]);
 
+/**
+ * The system-under-test FACET on an actor — bean `3o5b`, proposal §3.2.
+ *
+ * A facet rather than a role, because being tested is not a lane anybody
+ * takes on: the system under test is the SUBJECT of `test-plan-execution.bpmn`,
+ * and the tester and the certifier are the ones acting. Any actor kind that
+ * can be executed may carry it — an `agent` or a `system` (machine); a
+ * `person` is not a system under test, and `external` is not ours to run.
+ *
+ * - `kind` is the closed list `SUT_KINDS` in `test-plan.ts` (owner ruling:
+ *   skill, agent, tool, machine, ig, process), so a plan's `scope.kind` and an
+ *   actor's facet are compared in ONE vocabulary.
+ * - `version` is the version a run would record when nothing more specific is
+ *   known. A run still records its own `sut.version`; this is the actor's
+ *   declaration, not the run's measurement.
+ * - **reach is NOT restated here.** It is the actor's own `reach`, and
+ *   {@link sutRefFor} reads it from there — absent becomes `unknown`, never
+ *   `internet`. A second `reach` on the facet would be a second answer free to
+ *   disagree with the first.
+ */
+export const SystemUnderTestFacetSchema = z.strictObject({
+  kind: SutKindSchema,
+  version: z.string().min(1),
+});
+export type SystemUnderTestFacet = z.infer<typeof SystemUnderTestFacetSchema>;
+
+/** Actor kinds that may carry the facet: what can be EXECUTED. */
+export const SUT_ACTOR_KINDS = ["agent", "system"] as const;
+
+/**
+ * The `sut` a `folio-test-run/v1` records for this actor: id, version, reach.
+ * `undefined` when the actor declares no facet — it has not said it can be
+ * tested, and a run against it is a finding rather than a default.
+ */
+export function sutRefFor(
+  actor: { id: string; reach?: (typeof NETWORK_REACHES)[number]; systemUnderTest?: SystemUnderTestFacet },
+  version?: string,
+): { actor: string; version: string; reach: (typeof NETWORK_REACHES)[number] | "unknown" } | undefined {
+  if (actor.systemUnderTest === undefined) return undefined;
+  return { actor: actor.id, version: version ?? actor.systemUnderTest.version, reach: actor.reach ?? "unknown" };
+}
+
 // ─── ActorDefinition ─────────────────────────────────────────────────────────
 
 /**
@@ -147,7 +190,24 @@ export const ActorDefinitionSchema = z.object({
    * `schemas/actor-reach.ts` for how it composes with the deployment's.
    */
   reach: z.enum(NETWORK_REACHES).optional(),
+  /**
+   * The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this
+   * actor can be executed against a `test-plan/v1`. See
+   * {@link SystemUnderTestFacetSchema}.
+   */
+  systemUnderTest: SystemUnderTestFacetSchema.optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
+}).superRefine((a, ctx) => {
+  // A person is not executed against a plan, and an external participant is
+  // not ours to run: the facet on either is a modelling error, refused here
+  // rather than discovered when a run names it.
+  if (a.systemUnderTest !== undefined && !(SUT_ACTOR_KINDS as readonly string[]).includes(a.kind)) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["systemUnderTest"],
+      message: `actor \`${a.id}\` is kind \`${a.kind}\`; only ${SUT_ACTOR_KINDS.join(" or ")} actors can be a system under test`,
+    });
+  }
 });
 
 // ─── CapabilityDefinition ────────────────────────────────────────────────────

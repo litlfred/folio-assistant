@@ -92,7 +92,7 @@ import {
   type LibraryTitleSource,
 } from "../content/pipeline/library-title.ts";
 import { tally } from "./summaries.ts";
-import { buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResult } from "./qa-results.js";
+import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, writeQaResult, type QaResult } from "./qa-results.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SCRIPT = "scripts/check-library-qa.ts";
@@ -505,8 +505,17 @@ export function resultOf(j: Judgement, root: string = ROOT): QaResult {
   });
 }
 
+const GATE = "check:library-qa";
+
 if (import.meta.main) {
-  const check = process.argv.includes("--check");
+  const argv = process.argv.slice(2);
+  const check = argv.includes("--check");
+  if (check) {
+    const usage = judgeUsage(GATE, argv, ["--against"]);
+    if (usage !== undefined) process.exit(usage);
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, argv);
+  if (badRef !== undefined) process.exit(badRef);
   const repoRoot = repoRootFor(ROOT);
   const g = readLibraryGraph([ROOT, repoRoot], repoRoot);
   if (g === null) {
@@ -523,11 +532,15 @@ if (import.meta.main) {
 
   const undetermined = result.families["could-not-determine"]?.count ?? 0;
   if (check) {
-    const state = qaResultState(qaResultPath(ROOT, STEM), result);
-    if (state !== "current") {
-      console.error(`\n  ✗ ${STEM}.qa-results.json is ${state} — run \`bun run check:library-qa\``);
-      process.exit(1);
-    }
+    // COMPUTE AND JUDGE (beans `0dav`, `oqe3`). This used to fail on the
+    // committed record differing from this run, which reads UNKNOWN once the
+    // results directory declares `storage` (bean `16ei`/`5hox`): the working
+    // copy is no longer the record. The families are advisory, so none fails;
+    // what moved against a baseline (the working copy, or `--against <ref>`)
+    // is reported, and a missing baseline is UNKNOWN. A judgement that could
+    // not be made still fails below.
+    const v = judgeQaResult({ gate: GATE, fresh: result, baseline: { root: ROOT, stem: STEM, writer: GATE, against } });
+    if (v.exit !== 0) process.exit(v.exit);
   } else {
     writeQaResult(ROOT, STEM, result);
   }

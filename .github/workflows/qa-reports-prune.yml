@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/sdlc/qa-publish.bpmn
 # qa-reports prune — retention for the orphan `qa-reports` branch.
 #
 # Bean `16ei`, arc `3fva`, proposal §2.2 "Retention": keep every `main/<sha>`
@@ -53,6 +54,7 @@ concurrency:
 
 jobs:
   prune:
+    # bpmn-node: Start_Daily
     name: Prune qa-reports (retention)
     runs-on: ubuntu-latest
     steps:

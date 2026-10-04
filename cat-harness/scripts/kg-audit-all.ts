@@ -41,11 +41,26 @@ import { availableParallelism } from "node:os";
 import { relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../schemas/cat-harness.js";
+import { againstOrUsage, judgeUsage } from "./qa-results.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const args = process.argv.slice(2);
 const check = args.includes("--check");
 const strict = args.includes("--strict");
+/**
+ * Judge mode (bean `oqe3`): each instance's `kg-audit.ts --check` computes
+ * and judges against `--against <ref>`, passed through unchanged, and exits
+ * on the four-state table (0 ok · 1 finding · 2 unknown or error). An unknown
+ * flag is refused here before fifteen processes are spawned to ignore it.
+ */
+let against: string | undefined;
+if (check) {
+  const usage = judgeUsage("kg:audit:all:check", args, ["--strict", "--against"]);
+  if (usage !== undefined) process.exit(usage);
+  const a = againstOrUsage("kg:audit:all:check", args);
+  if (a.exit !== undefined) process.exit(a.exit);
+  against = a.against;
+}
 
 /** One instance's outcome. `crashed` is NOT a kind of failure — it is worse. */
 interface Outcome {
@@ -82,6 +97,7 @@ async function auditOne(root: string): Promise<Outcome> {
   const argv = ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", id === "." ? "." : `./${id}`];
   if (check) argv.push("--check");
   if (strict) argv.push("--strict");
+  if (against !== undefined) argv.push("--against", against);
 
   const p = Bun.spawn(argv, { cwd: REPO, stdout: "pipe", stderr: "pipe" });
   const [out, err] = await Promise.all([new Response(p.stdout).text(), new Response(p.stderr).text()]);
@@ -91,9 +107,13 @@ async function auditOne(root: string): Promise<Outcome> {
   // would be free to disagree with the sidecars it is reporting on.
   const summary = /^ {2}pass .*$/m.exec(out)?.[0]?.trim();
   const header = /Knowledge-graph audit\s+\([^)]*\)/.exec(out)?.[0];
+  // The instance's own judge verdict, quoted (bean `oqe3`): "OK on what was
+  // determined — N part(s) UNKNOWN" must reach the sweep's reader, or a run
+  // with no baseline reads as a plain pass one level up.
+  const judged = check ? /\(judge mode, wrote nothing\): (.*)$/m.exec(`${out}\n${err}`)?.[1]?.trim() : undefined;
   return header === undefined
     ? { id, code, crashed: (err.trim() || out.trim()).split("\n").slice(-3).join(" ").slice(0, 300) }
-    : { id, code, summary: `${header.replace(/\s+/g, " ")} — ${summary ?? "no counts"}` };
+    : { id, code, summary: `${header.replace(/\s+/g, " ")} — ${summary ?? "no counts"}${judged ? `\n${" ".repeat(29)}${judged.slice(0, 200)}` : ""}` };
 }
 
 const outcomes: Outcome[] = new Array(roots.length);
@@ -127,4 +147,13 @@ if (crashed.length > 0) {
   );
 }
 
+// Judge mode keeps the four states: an instance that could not be judged (a
+// crash, or its own exit 2) is UNKNOWN for the sweep, and outranks a finding —
+// a sweep blind on one instance has not cleared the others. The writer form
+// keeps its historical 1.
+if (check) {
+  const blind = crashed.length > 0 || failed.some((o) => o.code === 2);
+  const found = failed.some((o) => o.code === 1);
+  process.exit(blind ? 2 : found ? 1 : 0);
+}
 process.exit(crashed.length > 0 || failed.length > 0 ? 1 : 0);

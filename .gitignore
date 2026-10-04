@@ -252,6 +252,27 @@ cat-harness/ingest-staging/
 # BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
 _docs/
 
+# The WORKING COPY of every declared `qa` directory (bean `5hox`, arc `3fva`,
+# owner ruling D4). Each of these declares `storage: { branch: qa-reports }`:
+# the record is the orphan `qa-reports` branch, keyed by commit and written by
+# the CI job `qa-publish` through `qa-store.ts`. Writers still write here and
+# `qa:fetch` materialises an entry here; neither is committed. Judgements are
+# NOT here: `test/attestations/` stays on main (ruling D2 (a)), and so does
+# `test/health/results/`, which no publish carries yet. One line per declared
+# directory, kept equal to the declarations by `directory-storage.test.ts`.
+cat-harness/test/results/
+fhir-harness/test/results/
+folio-assistant-core/test/results/
+folio-assistant-sci/test/results/
+smart-base/test/results/
+smart-dak/test/results/
+smart-ig/test/results/
+smart-immunizations/test/results/
+smart-l1/test/results/
+smart-trust/test/results/
+who-iris/test/results/
+who-style-guide/test/results/
+
 # The state-branch mount (bean `2h76` part 4). A git worktree of the `state`
 # branch, put here by `bun run state:mount` so the third-party `beans` CLI can
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this

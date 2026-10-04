@@ -117,6 +117,28 @@ cannot tell an API signature from a human one cannot tell which trust
 assumption they are relying on — and the two are not interchangeable: one
 attests that a service with a key saw these hashes, the other that a person
 holding release authority did.
+
+## Where the signed report goes: the `qa-reports` branch, next to its run
+
+A QA report is a **derived** record — it can be rebuilt from the tree and the
+data it hashed — so since arc `3fva` it is kept where every derived QA result
+is kept: the orphan **`qa-reports`** branch, in the entry keyed by the commit
+it judged (`main/<sha>/` or `pr/<n>/<sha>/`), written through
+`scripts/qa-store.ts` and never by a hand `git push`. The signature and the
+route that produced it travel **with** the report, in the same entry, because
+a signature separated from the bytes it covers attests nothing a reader can
+check. `Task_RecordAttestation` in `qa-report-signing.bpmn` ends there.
+
+**What does not go there.** A **certification** — an accountable role's
+Decision taken on a test report's rollup — is a separate node, and it stays
+on `main` beside the attestations (owner decision D5, default (a)): it is a
+judgement, the same class as `test/attestations/`, and no regeneration can
+reproduce it. That decision belongs to the test-plan process, which calls
+this one to sign; this skill only signs.
+
+A read of a signed report follows the store's rules: a **miss is never read
+as "unsigned and fine"**, and a store that cannot answer is UNKNOWN, which
+routes like unknown reach — to a person, never to a pass.
 {% endraw %}
 
 ## Processes that run this skill
@@ -128,4 +150,5 @@ This skill has its own process: **[QA report signing](../../processes/qa-report-
 | process | step(s) that name it |
 |---|---|
 | [QA report signing](../../processes/qa-report-signing.html) | Build the test run [folio-test-run/v1]; Resolve the performer's reach [effectiveReach + signing-api probe]; Sign over the API; Sign as release authority; Record which route signed it |
+| [Test-plan execution](../../processes/test-plan-execution.html) | Sign the certification (calls a sub-process) |
 
