@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-04T05:37:22Z
+updated_at: 2026-10-04T13:29:55Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -399,3 +399,13 @@ One more thing the writer question will reach: `offCheckoutFindings` in
 `not-cut-over` state `9ofm` added for `tip` — two copies and nothing saying which is
 authoritative. Extending it to `route` belongs with the flip, and the extraction done
 on #2032 means there is one place to do it.
+
+
+
+## 2026-10-04: the auto-docs family is held by another session (coordination note)
+
+The owner said on 2026-10-04: *"take the auto-docs part and coordinate on the beans"*. So **session_01Jf39Vh4B8EQT6TBYzTtMCA** (branch `claude/zealous-thompson-y8dcf1-*`) holds the **`cat-harness/auto-docs` family only**, the `auto-docs` entry in `docs/docs.json`. The uml routes stay this bean's first family and with whoever drives `fs43`.
+
+- **Why auto-docs, measured on main `f8f329a`:** 58 files, 6.3 MB, one writer (`gen-auto-docs.ts`). It accounts for 118 of the 279 conflicts across today's 18 open PRs, the largest single source (bean `34cm`).
+- **Blocked on the same decision as Done-when 3:** the writer shape (a/b/c above). It was put to the owner on 2026-10-04 with (b), a `publish` verb run by CI on main, recommended. Nothing is built until it is answered.
+- **Before any build:** the one-writer premise will be checked for `auto-docs/` (every writer of the path), per `1j3q`'s falsifier.
