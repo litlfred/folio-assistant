@@ -22,3 +22,6 @@ nav_order: 4
 
 Published by the IG at `http://smart.who.int/base`. This repository holds the IG's
 artefacts, not its narrative pages, so every link above leaves for the canonical copy.
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-base/assets/ig-footer.js' | relative_url }}" defer></script>
