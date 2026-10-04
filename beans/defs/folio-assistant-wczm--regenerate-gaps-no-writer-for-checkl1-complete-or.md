@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-10-02T17:19:31Z
-updated_at: 2026-10-04T06:27:43Z
+updated_at: 2026-10-04T07:12:57Z
 parent: folio-assistant-hfag
 ---
 
@@ -36,3 +36,7 @@ Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-
 
 ## Summary of Changes
 All three gaps closed on PR #2051 and reconciled with `u7be` (which keeps only its own item 3). (1) regen now has a declared writer for both gates trains 2 and 3 could not repair; (2) a conflicted submodule pin is resolved by ancestry, deepening a shallow submodule first; (3) merge-main clears `needs-merge-human` after a clean run.
+
+
+
+**Item 3 superseded (2026-10-04).** The owner ruled on 2026-10-03 to stop using `needs-merge-human` (commit 1732878, "Excise needs-merge-human"), so a clean run has no label left to clear. The `clearNeedsHuman` signal is dropped from this bean's PR when main is merged in. Items 1 and 2 stand.

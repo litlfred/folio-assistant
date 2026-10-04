@@ -23,14 +23,18 @@
  * - `leave`: the job was cancelled, or the merge step reported no status.
  *   The existing comment stays as it is; the run that superseded this one
  *   writes its own.
- * - `write`: the comment body, and whether to label `needs-merge-human`.
+ * - `write`: the comment body. The refusal REASON is in that body; it is not
+ *   also encoded as a label. Owner, 2026-10-03: stop using
+ *   `needs-merge-human` — a label that says "a person is needed" outlives
+ *   the condition that set it, and a stale one is indistinguishable from a
+ *   live one without re-measuring why the bot could not push.
  *
  * Every `write` text is the text the workflow wrote before, unchanged.
  *
  * Usage (from the workflow; inputs in the environment, as the step sets them):
  *   bun run cat-harness/scripts/merge-main-comment.ts --log <merge.log>
  * prints one JSON object: {"action":"leave","reason":…} or
- * {"action":"write","body":…,"labelNeedsHuman":…}.
+ * {"action":"write","body":…}.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -56,18 +60,7 @@ export interface CommentInput {
 
 export type CommentPlan =
   | { action: "leave"; reason: string }
-  | {
-      action: "write";
-      body: string;
-      labelNeedsHuman: boolean;
-      /**
-       * The merge succeeded or there was nothing to merge, so an earlier
-       * refusal's `needs-merge-human` no longer describes the PR. Without this
-       * the label outlived the problem it named (bean `wczm` item 3): a later
-       * clean run fixed the branch and the PR still asked for a person.
-       */
-      clearNeedsHuman: boolean;
-    };
+  | { action: "write"; body: string };
 
 /** The three lists the comment reports, read from merge-base's own output. */
 export function parseLog(log: string): { resolved: string; refused: string; unrepaired: string } {
@@ -94,12 +87,10 @@ export function composeComment(i: CommentInput): CommentPlan {
   }
   const { resolved, refused, unrepaired } = parseLog(i.log);
   let head: string;
-  let labelNeedsHuman = false;
   if (i.merged === "true" && i.pushed === "success") {
     head = `**Merged \`main\` and pushed \`${i.sha.slice(0, 9)}\`.** Every conflict was resolved by a declared pattern and the gate set reproduced the result; CI now judges it.`;
   } else if (i.merged === "true" && i.blocked === "workflows") {
     head = "**Merged and proved, but GitHub refused the push: the merge commit changes a workflow file**, and the workflow's token has no `workflows` permission, so no retry can succeed. Needs a person to push the merge (run the `merge:main` script locally). The fix is the owner's credentials design (#1829): a token with `workflows` scope.";
-    labelNeedsHuman = true;
   } else if (i.merged === "true" && i.rejected === "true") {
     head = "**Merged and proved, but the push was rejected** — the branch moved during the run. Nothing was overwritten; the next push to `main` retries.";
   } else if (i.merged === "true") {
@@ -108,7 +99,6 @@ export function composeComment(i: CommentInput): CommentPlan {
     head = "**Already up to date with `main`.** Nothing to push.";
   } else if (refused !== "") {
     head = "**Refused — nothing pushed.** These conflicts are authored or named by no declared pattern, so they need a person. Adding a pattern is a deliberate change with its reason (skill `merge-conflict-patterns`), never a widened glob.";
-    labelNeedsHuman = true;
   } else if (unrepaired !== "") {
     const failing = i.mainFailing();
     head = `**Not proved — nothing pushed.** Every conflict matched a pattern, but regen could not reproduce these checks. If \`main\` is red on the same checks, it is main's red, not this PR's. Failing on main right now: ${failing || "none"}.`;
@@ -125,8 +115,6 @@ export function composeComment(i: CommentInput): CommentPlan {
   return {
     action: "write",
     body: `${body.join("\n")}\n\n[Run](${i.runUrl}) · \`.github/workflows/merge-main.yml\` (bean \`d33q\`). Remove the \`merge-main\` label to stop.`,
-    labelNeedsHuman,
-    clearNeedsHuman: !labelNeedsHuman && ((i.merged === "true" && i.pushed === "success") || (i.merged !== "true" && i.status === "0")),
   };
 }
 

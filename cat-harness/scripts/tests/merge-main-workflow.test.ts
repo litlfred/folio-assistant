@@ -139,10 +139,9 @@ describe("a push refusal is read from stderr, not guessed", () => {
     expect(run).toContain('echo "blocked=workflows"');
   });
 
-  test("(b) the workflows refusal labels needs-merge-human and names the credentials design", () => {
+  test("(b) the workflows refusal names the credentials design, and labels nothing", () => {
     const p = composeComment({ ...BASE, merged: "true", blocked: "workflows" });
     if (p.action !== "write") throw new Error("expected a comment");
-    expect(p.labelNeedsHuman).toBe(true);
     expect(p.body).toContain("#1829");
     expect(p.body).not.toContain("branch moved");
   });
@@ -187,7 +186,6 @@ describe("a cancelled or unfinished run is not an error (#1854)", () => {
     if (p.action === "write") {
       expect(p.body).toContain("**Error** (exit 2) — merge-base failed for a reason that is neither a refusal nor an unrepaired check");
       expect(p.body.startsWith("<!-- merge-main-bot -->\n")).toBe(true);
-      expect(p.labelNeedsHuman).toBe(false);
     }
   });
 
@@ -200,7 +198,7 @@ describe("a cancelled or unfinished run is not an error (#1854)", () => {
     ].join("\n");
     expect(parseLog(log).resolved).toBe("- `glossary`: 2\n- `qa-results`: 1");
     const refused = composeComment({ ...BASE, log });
-    expect(refused.action === "write" && refused.labelNeedsHuman).toBe(true);
+    expect(refused.action).toBe("write");
     expect(refused.action === "write" && refused.body).toContain("**Refused — nothing pushed.**");
     expect(refused.action === "write" && refused.body).toContain("Refused:\n- beans/defs/x.md  [beans: refuse] — authored");
     const upToDate = composeComment({ ...BASE, status: "0" });
@@ -233,29 +231,5 @@ describe("a cancelled or unfinished run is not an error (#1854)", () => {
   test("a cancelled merge step never trips the failure step", () => {
     const fail = steps.find((s) => /refused != 'true'/.test((s as { if?: string }).if ?? ""))! as Step & { if?: string };
     expect(fail.if).toContain("steps.merge.outcome == 'success'");
-  });
-});
-
-describe("a clean run clears an earlier refusal's label — bean wczm item 3", () => {
-  const LOG = "  ✗ cat-harness/x.ts  [no declared pattern]";
-  const write = (p: ReturnType<typeof composeComment>) => {
-    if (p.action !== "write") throw new Error("expected a write");
-    return p;
-  };
-  test("merged and pushed, or already up to date: clear it", () => {
-    expect(write(composeComment({ ...BASE, status: "0", merged: "true", pushed: "success", sha: "0123456789abcdef" })).clearNeedsHuman).toBe(true);
-    expect(write(composeComment({ ...BASE, status: "0" })).clearNeedsHuman).toBe(true);
-  });
-  test("a refusal, an unproved merge, a blocked or failed push, or an error: leave it", () => {
-    expect(write(composeComment({ ...BASE, log: LOG })).clearNeedsHuman).toBe(false);
-    expect(write(composeComment({ ...BASE, log: "    ✗ check:x STILL fails" })).clearNeedsHuman).toBe(false);
-    expect(write(composeComment({ ...BASE, merged: "true", blocked: "workflows" })).clearNeedsHuman).toBe(false);
-    expect(write(composeComment({ ...BASE, merged: "true", rejected: "true" })).clearNeedsHuman).toBe(false);
-    expect(write(composeComment({ ...BASE, status: "2" })).clearNeedsHuman).toBe(false);
-  });
-  test("the workflow acts on it, and only when the label is there", () => {
-    const wf = readFileSync(WORKFLOW, "utf-8");
-    expect(wf).toContain("jq -r .clearNeedsHuman");
-    expect(wf).toMatch(/grep -qx needs-merge-human; then[\s\S]{0,120}--remove-label needs-merge-human/);
   });
 });
