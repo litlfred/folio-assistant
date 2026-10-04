@@ -165,7 +165,7 @@
 <ul class="subs">
 <li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><strong>fhir-harness-processes</strong> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">63</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">64</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -177,11 +177,11 @@
 <tbody>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">fhir-harness/processes/content/ig-incremental-build.bpmn</span></td>
-  <td>One change — a PR push or a push to main — through the incremental IG build proposed in issue #199: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm va…<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
+  <td>A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy.<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>L3 FHIR IG pipeline</code></a><br><span class="p">fhir-harness/processes/content/l3-fhir-pipeline.bpmn</span></td>
-  <td>folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> FHIR modeller · Work plan — beans (shared by humans and agents) · Build pipeline — SUSHI · validator · IG Publisher · QC reviewer · Publication manager</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l2-dak-authoring, l3-fhir-authoring, quality-control, todo-manager</div></td>
+  <td>How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> FHIR modeller · Work plan — beans (shared by humans and agents) · Build pipeline — SUSHI · validator · IG Publisher · QC reviewer · Publication manager</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l2-dak-authoring, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 </tbody>
 </table>
