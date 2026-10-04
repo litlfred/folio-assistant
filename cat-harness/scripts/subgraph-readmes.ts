@@ -49,6 +49,7 @@ import {
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
 
@@ -65,11 +66,12 @@ const REPO = repoRootFor(ROOT);
  * directory's graph (`beans.json`'s `defs`), and they are what the README's
  * table names; a `subgraph: true` entry is promoted to an instance directory
  * of its own (`skills.json`'s `voices`) and describes itself under its own
- * heading. The two partition, so a promoted directory's row keeps the count.
+ * heading. The two partition, so a promoted directory's row borrows nothing.
  *
  * Only a single-segment `path` names a row — `defs/archive` is a directory
  * inside a row, not one. A missing, unparseable or description-less
- * declaration supplies nothing and the row falls back to the file count:
+ * declaration supplies nothing and the row says nothing declares it (no
+ * count since bean `ba9e`):
  * absent stays absent rather than being invented. An unparseable file is
  * `check:harness-dirs`'s finding, not this one's.
  */
@@ -150,7 +152,12 @@ export function harnessInstances(repo: string): InstanceInput[] {
       // `.gitignore` lists every working copy and the writer lists only what
       // git would commit; `directory-storage.test.ts` keeps that list equal to
       // the declarations.
-      dirs: instanceDirectories(inst, decl).filter((d) => !isStored(d)).map((d) => {
+      //
+      // The same holds for a `source`-declared branch (bean `9c7h`: fsh-guts),
+      // which `isStored` does not see because it reads only `storage`:
+      // counting the files git tracks here would rewrite its README as "holds
+      // no files" — true of main, false of the subgraph.
+      dirs: instanceDirectories(inst, decl).filter((d) => !isStored(d) && !contentIsOffCheckout(d)).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
         const abs = resolve(base, d.path);
         // Absent declaration means the writer gets nothing and prints no
@@ -239,6 +246,12 @@ if (import.meta.main) {
   const stale = staleFiles.length;
   const result = qaResult(p);
   if (!check) writeQaResult(ROOT, "subgraph-readmes", result);
+  // PRINTED, never recorded (bean `ba9e`). A finding that depends on the
+  // worktree would make the recorded result depend on it too — the defect
+  // counting the committed tree exists to remove.
+  for (const u of p.findings["untracked-not-counted"]) {
+    console.warn(`  ! untracked, so not counted or listed in ${u.directory}'s README until staged: ${u.path}`);
+  }
   const f = p.findings;
   console.log(
     `${p.writes.size} directory README(s); ${check ? `${stale} stale` : `${wrote} written`}. ` +
