@@ -316,10 +316,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T18:47:03.704Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/81f856f4eef1c7c2d243c972d9eeb8589cd2f4a2",
-  "sourceCommitSha": "81f856f4eef1c7c2d243c972d9eeb8589cd2f4a2",
-  "sourceCommitAt": "2026-10-04T18:42:00Z",
+  "generatedAt": "2026-10-04T19:11:05.465Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7b052a9744dc0423a5c52a07b3c523dac1b53780",
+  "sourceCommitSha": "7b052a9744dc0423a5c52a07b3c523dac1b53780",
+  "sourceCommitAt": "2026-10-04T19:06:16Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -5252,12 +5252,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "latex-build-cache",
       "title": "LaTeX build performance — findings + what's safe",
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool `tex-install`), quick changed-chapter feature builds with latexdiff (Tool `paper-feature-build`), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-eloquent-wright-l6fdw0/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "../folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md",
-      "instructionLines": 135,
+      "instructionLines": 173,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -53622,7 +53622,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 271,
+      "fileCount": 273,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eloquent-wright-l6fdw0/cat-harness.jsonld#directory/uml",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
@@ -53859,7 +53859,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1954,
+      "fileCount": 1959,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eloquent-wright-l6fdw0/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -53895,7 +53895,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1028,
+      "fileCount": 1026,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eloquent-wright-l6fdw0/cat-harness.jsonld#directory/cat-harness-scripts",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
@@ -54023,8 +54023,8 @@
   ],
   "staging": {
     "branch": "claude/eloquent-wright-l6fdw0",
-    "sha": "99a8878d32d70aeca6c3fecc9f17714b8901fe9b",
+    "sha": "25617c80d28f52f5188a47bad0705502a53307d9",
     "pr": "2118/merge",
-    "run": "37225471338"
+    "run": "37226989699"
   }
 }

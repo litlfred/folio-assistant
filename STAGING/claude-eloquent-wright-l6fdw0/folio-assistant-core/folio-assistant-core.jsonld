@@ -322,10 +322,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T18:47:17.870Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/81f856f4eef1c7c2d243c972d9eeb8589cd2f4a2",
-  "sourceCommitSha": "81f856f4eef1c7c2d243c972d9eeb8589cd2f4a2",
-  "sourceCommitAt": "2026-10-04T18:42:00Z",
+  "generatedAt": "2026-10-04T19:11:19.897Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7b052a9744dc0423a5c52a07b3c523dac1b53780",
+  "sourceCommitSha": "7b052a9744dc0423a5c52a07b3c523dac1b53780",
+  "sourceCommitAt": "2026-10-04T19:06:16Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -7109,7 +7109,7 @@
       ],
       "description": "Core's glossary (owner, 2026-09-23: \"put glossary into folio-assistant-core\", \"part of general pracice w/ glossary/ page\"): folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphKinds [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/, which is what makes a glossary general practice rather than a harness feature. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
       "readmePath": "glossary/README.md",
-      "fileCount": 31,
+      "fileCount": 32,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-eloquent-wright-l6fdw0/folio-assistant-core/folio-assistant-core.jsonld#directory/glossary",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/glossary"
     },
@@ -7301,8 +7301,8 @@
   ],
   "staging": {
     "branch": "claude/eloquent-wright-l6fdw0",
-    "sha": "99a8878d32d70aeca6c3fecc9f17714b8901fe9b",
+    "sha": "25617c80d28f52f5188a47bad0705502a53307d9",
     "pr": "2118/merge",
-    "run": "37225471338"
+    "run": "37226989699"
   }
 }
