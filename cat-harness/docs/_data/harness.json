@@ -1422,12 +1422,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 10
+          "value": 11
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 9
+          "value": 10
         },
         {
           "id": "views",
@@ -1445,6 +1445,11 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
+        },
+        {
+          "kind": "kinds",
+          "note": "no viewer yet",
+          "label": "Graph kinds"
         },
         {
           "kind": "library",
@@ -1483,6 +1488,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "folio-assistant-sci-kinds",
+          "kinds": [
+            "kinds"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/kinds/"
+        },
         {
           "id": "library",
           "kinds": [
@@ -1565,7 +1578,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 4 graph(s) with no published viewer — attestations, code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 5 graph(s) with no published viewer — attestations, code, kinds, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -3258,18 +3271,6 @@
     }
   ],
   "releases": {
-    "bootstrap": {
-      "version": "0.1.0",
-      "major": 0,
-      "agent": "https://litlfred.github.io/bootstrap/0.1.0/",
-      "human": "https://litlfred.github.io/bootstrap/v0/"
-    },
-    "bootstrap-tools": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
     "cat-harness": {
       "version": "0.1.0",
       "major": 0,
@@ -4000,7 +4001,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: library, sci-methodologies, sci-adapters, sci-sources, sci-processes, qa, attestations"
+            "summary": "8: folio-assistant-sci-kinds, library, sci-methodologies, sci-adapters, sci-sources, sci-pro…"
           },
           {
             "key": "needs",
