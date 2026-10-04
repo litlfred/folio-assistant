@@ -59,7 +59,8 @@
  *   `unassigned` and a finding
  */
 
-import { basename } from "path";
+import { existsSync } from "fs";
+import { basename, join } from "path";
 import { SPEC, REPOS, ROOT, SCAN_ROOTS } from "./partition/instance-rules.js";
 import {
   analyse as analyseWith,
@@ -259,6 +260,24 @@ function main(): void {
     console.error(`\n\u2717 ${unassigned.length} module(s) fell through every rule:`);
     for (const m of unassigned.sort()) console.error(`    ${m}`);
     console.error("    Classify each in REPO_RULES. An unassigned module is not a clean result.");
+  }
+  // ── A RULE NAMING A FILE THAT IS NOT THERE is a dead rule (bean `70lx`).
+  //
+  // An `exact` entry classifies one path; when that file moves out of this
+  // instance it matches nothing, forever, and nothing said so — 117 had piled
+  // up by 2026-10-04, one per file each 70lx batch moved to
+  // `cat-harness-tools`. A dead entry is not harmless: it reads as a ruling
+  // about a file this tool no longer scans, and the next reader trusts it.
+  // Prefix and keyword rules are not judged: they name a shape, not a file.
+  const deadRules = SPEC.rules
+    .flatMap((r) => r.exact ?? [])
+    .filter((p) => !existsSync(join(ROOT, p)))
+    .sort();
+  if (deadRules.length > 0) {
+    failed = true;
+    console.error(`\n\u2717 ${deadRules.length} exact rule(s) name a file that is not in \`${basename(ROOT)}/\`:`);
+    for (const p of deadRules) console.error(`    ${p}`);
+    console.error("    Remove each from partition/instance-rules.ts — a moved file is classified where it now lives.");
   }
   if (crossEdges.length > 0) {
     failed = true;
