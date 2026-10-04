@@ -18,7 +18,7 @@ import {
   type TrainReport,
 } from "../merge-train.ts";
 import { git as runGit } from "../merge-pipeline-git.ts";
-import { conflicts } from "../mvp-status.ts";
+import { conflicts } from "../milestone-status.ts";
 import { makeRepo, type Repo } from "./merge-pipeline-fixture.ts";
 
 const GEN = "cat-harness/docs/glossary/index.md";
@@ -159,7 +159,7 @@ describe("merge-tree exit status — the negative control (bean 0s6w)", () => {
     // Measured with git 2.43: an unfetched or mistyped ref exits 1, the same
     // code as a real conflict, printing "not something we can merge" to stderr
     // and no tree on stdout. So the code is not the whole contract; the tree
-    // line is. `parseMergeTree` requires it, and `mvp-status` now does too.
+    // line is. `parseMergeTree` requires it, and `milestone-status` now does too.
     const { ours } = conflictedPair();
     const r = runGit(repo!.dir, ["merge-tree", "--write-tree", "--name-only", "--no-messages", ours, "0".repeat(40)]);
     expect(r.code).not.toBe(0);
@@ -167,7 +167,7 @@ describe("merge-tree exit status — the negative control (bean 0s6w)", () => {
     expect(conflicts(ours, "0".repeat(40), repo!.dir)).toBeUndefined();
   });
 
-  test("mvp-status still reads a real conflict, and a clean pair, from the same repo", () => {
+  test("milestone-status still reads a real conflict, and a clean pair, from the same repo", () => {
     const { ours, theirs } = conflictedPair();
     expect(conflicts(ours, theirs, repo!.dir)).toEqual({ authored: ["a.ts"], generated: 0 });
     expect(conflicts(ours, ours, repo!.dir)).toEqual({ authored: [], generated: 0 });

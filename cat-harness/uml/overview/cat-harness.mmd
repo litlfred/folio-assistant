@@ -907,6 +907,7 @@ classDiagram
       repoWeb [1] string
       items [0..*] Item[]
       findings [0..*] Finding[]
+      plan [0..1] object
     }
     class cat_harness_docs_folio_translation_status_v1_Locale["Locale"] {
       <<json: TranslationStatusSchema>>
