@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 213,
+      "count": 214,
       "unit": "modules"
     }
   },
@@ -233,6 +233,14 @@
       "graphNode": "none",
       "reason": "the node shape; the nodes are `code-lists/*.json`",
       "summary": "A code list: a closed set of codes, each with a label, a plain-language",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "instance": "cat-harness",
+      "name": "computation-witness",
+      "graphNode": "schema",
+      "summary": "`computation-witness/v1` — the runtime schema for a folio's",
       "isTest": false
     },
     {
@@ -9114,6 +9122,321 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/computation-witness.ts#ComputationWitnessConformanceSchema",
+      "name": "ComputationWitnessConformanceSchema",
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "kind": "zod-object",
+      "doc": "The contract: what a producer is meant to write. Ported unchanged in",
+      "fields": [
+        {
+          "name": "engine",
+          "type": "z.enum(CONTRACT_ENGINES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "engineVersion",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "computedAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "assertions",
+          "type": "z.array( z .object({ name: z.string(), computed: Scalar, expected: Scalar, passed: z.boolean().optional(), tolerance: S…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "commitSha",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "scriptCommitSha",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "scriptHash",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "scriptFile",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "auditOnly",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "allPassed",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/computation-witness.ts#Scalar"
+      ],
+      "unresolved": [],
+      "external": [
+        "CONTRACT_ENGINES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/computation-witness.ts#ComputationWitnessFile",
+      "name": "ComputationWitnessFile",
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "name": "ComputationWitnessSchema",
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "kind": "zod-object",
+      "doc": "The envelope: every witness on disk. See the module doc.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "engine",
+          "type": "z.union([z.string(), z.record(z.string(), z.unknown())]).nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "engineVersion",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "computedAt",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commitSha",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "scriptFile",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "scriptHash",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "scriptCommitSha",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contentBlock",
+          "type": "OptString",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "auditOnly",
+          "type": "z.union([z.string(), z.boolean()]).nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "durationMs",
+          "type": "z.number().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "allPassed",
+          "type": "z.boolean().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assertions",
+          "type": "z .union([z.array(z.union([WitnessAssertionSchema, z.string()])), z.record(z.string(), z.unknown())]) .optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "caveats",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "parameters",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "data",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "precisionMetadata",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/computation-witness.ts#OptString",
+        "cat-harness/schemas/computation-witness.ts#WitnessAssertionSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/computation-witness.ts#OptString",
+      "name": "OptString",
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/computation-witness.ts#Scalar",
+      "name": "Scalar",
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "kind": "zod-union",
+      "doc": "Number or string: a value serialised from arbitrary precision is a string.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/computation-witness.ts#WitnessAssertionSchema",
+      "name": "WitnessAssertionSchema",
+      "module": "cat-harness/schemas/computation-witness.ts",
+      "kind": "zod-object",
+      "doc": "An assertion as the corpus writes it. `computed` and `expected` are",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "computed",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "expected",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "passed",
+          "type": "z.boolean().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tolerance",
+          "type": "z.union([Scalar, z.null()]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "unit",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/computation-witness.ts#Scalar"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -40199,6 +40522,25 @@
           "optional": true,
           "array": false,
           "doc": "Optional: marks the witness as **audit-only** — produced by an"
+        },
+        {
+          "name": "scriptFile",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The producer, its content hash, and the commit that last changed it —"
+        },
+        {
+          "name": "scriptHash",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "scriptCommitSha",
+          "type": "string",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -53247,6 +53589,102 @@
       "from": "cat-harness/schemas/code-list.ts#CodeSchema",
       "to": "cat-harness/schemas/code-list.ts#CodeSourceSchema",
       "via": "source",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessConformanceSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#Scalar",
+      "via": "assertions",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "commitSha",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "computedAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "contentBlock",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "description",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "engineVersion",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "name",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "scriptCommitSha",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "scriptFile",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#OptString",
+      "via": "scriptHash",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#ComputationWitnessSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#WitnessAssertionSchema",
+      "via": "assertions",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/computation-witness.ts#WitnessAssertionSchema",
+      "to": "cat-harness/schemas/computation-witness.ts#Scalar",
+      "via": "tolerance",
       "kind": "field",
       "optional": true,
       "array": false
