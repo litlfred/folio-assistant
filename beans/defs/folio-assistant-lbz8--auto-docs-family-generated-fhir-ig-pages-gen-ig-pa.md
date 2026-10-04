@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T12:55:24Z
-updated_at: 2026-10-04T13:22:44Z
+updated_at: 2026-10-04T13:24:01Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-xsrv
@@ -32,7 +32,7 @@ Owner, 2026-10-04: *"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-doc
 - [ ] the gen-ig-pages sub-sub-graph is declared under auto-docs with `storage` on cat/fhir-harness/ig-docs, keyed by route
 - [ ] `<ig>:pages` writes and `<ig>:pages:check` reads through the branch store; `could not determine` when unmounted, never clean
 - [ ] the pages leave main for each IG still staged here
-- [ ] each IG fork uses the same branch name for its own pages (litlfred/smart-trust#5 first)
+- [x] each IG fork uses the same branch name for its own pages (litlfred/smart-trust#5 first: ee00983e)
 
 ## 2026-10-04: branch seeded (owner: "make cat/fhir-harness/ig-docs")
 
@@ -41,3 +41,7 @@ Owner, 2026-10-04: *"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-doc
 - **Manifest:** `state-manifest/v1`, `keyedBy: route`, `status: seed`, `authoritative: false`. Writer and gate are named.
 - **Verified:** every page's blob equals main@63ec4fff's, checked before the push and again from a cold `git init` fetch.
 - **Nothing reads it yet**, and main keeps its copy. The remaining steps, in order: the reader (`--check` reads the branch, unknown when unfetchable), then `storage` on the declarations, then removal from main on the owner's go. The owner's explicit ask moved the seed ahead of xsrv; the cutover stays behind it.
+
+## 2026-10-04: the fork's branch too
+
+litlfred/smart-trust now has its own `cat/fhir-harness/ig-docs` (ee00983e). It holds 2160 pages under `smart-base/docs/`, generated from the fork's artefact index by the folio-assistant submodule with #2082's fix, and `--check` reported them current. Its blobs equal folio-assistant's ig-docs `smart-trust/docs/` everywhere except `index.md`, whose front matter names each repository's index path. So one branch name and one layout serve both repositories.
