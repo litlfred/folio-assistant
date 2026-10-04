@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 847,
+      "count": 849,
       "unit": "beans"
     }
   },
@@ -1068,6 +1068,20 @@
       "updatedAt": "2026-09-27T05:19:46Z",
       "preview": "Owner 2026-09-27: 'i want purple folio button, not on navbar but at top middle of display screen. not so tall'. Reverses 269z's navbar placement.\n\n## Summary of Changes\n\n- `docs-ui.js` `placeHandle`: the handle is appended to `body` again (fixed top centre) on every page, rail or theme sidebar alike.\n- `docs-ui.css`: pill 1.75rem tall (was 3.25rem), rounded bottom corners, 0.85rem label; `--in-nav",
       "file": "beans/defs/folio-assistant-2vne--folio-handle-back-to-top-centre-as-a-short-pill.md"
+    },
+    {
+      "id": "folio-assistant-2vpn",
+      "title": "who-iris's top LHS navbar mark is the letter 'W', not an icon — and every harness's top mark must come from one mechanism",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-yg29",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T18:34:12Z",
+      "updatedAt": "2026-10-04T19:10:22Z",
+      "preview": "Owner, 2026-10-04, in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi, on being asked to sign GOAL 3 off: *\"actually no, who-iris is missing top icon on LHS navbar. investigate why and if also try of other harnesses. all needs to be sconsisisten and consolidated\"* — with a screenshot of https://litlfred.github.io/folio-assistant/who-iris/ whose `.fa-nav-head` shows a slate tile wit",
+      "file": "beans/defs/folio-assistant-2vpn--who-iriss-top-lhs-navbar-mark-is-the-letter-w-not.md"
     },
     {
       "id": "folio-assistant-2yyh",
@@ -6845,14 +6859,14 @@
     {
       "id": "folio-assistant-kupb",
       "title": "IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-yg29",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:14Z",
-      "updatedAt": "2026-10-01T02:05:09Z",
+      "updatedAt": "2026-10-04T18:29:58Z",
       "preview": "Owner ask, 2026-09-20, three messages in one session.\n\nSOURCES, both uploaded to the repo root by the owner and both measured this session:\n- `549fb04` — a saved DSpace ITEM PAGE. The HTML declares `saved from url=https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec`; the sidecar zip carries `client-theme.css`, `styles.e55b0c9926626404.css`, `who_logo.svg`, `who_logo_white.svg`, `iris_l",
       "file": "beans/defs/folio-assistant-kupb--iris-catalogue-a-referenced-import-of-who-iris-int.md"
     },
@@ -7695,12 +7709,12 @@
       "title": "GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it",
       "status": "todo",
       "type": "milestone",
-      "priority": "",
+      "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:12:07Z",
-      "updatedAt": "2026-10-04T15:12:07Z",
+      "updatedAt": "2026-10-04T18:34:28Z",
       "preview": "**The owner's words, 2026-10-04**, chosen from options put to them in session\nhttps://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi when ruling on\n`rwmf`'s residual: *\"New GOAL 5: CONTENT\"*. That option was described as *\"a\nfifth milestone for the content model and the pipeline that feeds it — one\ncoherent subject none of the four goals pays for.\"* The title above is derived\nfrom those words and",
       "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md"
     },
@@ -8677,14 +8691,14 @@
     {
       "id": "folio-assistant-qsx4",
       "title": "who-style-guide folds INTO who-iris as a declared subgraph, docs included",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T00:02:14Z",
-      "updatedAt": "2026-10-02T22:18:46Z",
+      "updatedAt": "2026-10-04T18:29:58Z",
       "preview": "Owner ruling 2026-09-30, verbatim: \"who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.\" Issue #476.\n\nSupersedes the separate-instance arrangement of `w095` (and the \"own repo/dir\" half of the 2026-09-20 decision recorded in `kupb`/`r1lz`). The `z7ev` cross-instance citation was the price of the split; with the voices and the library they are",
       "file": "beans/defs/folio-assistant-qsx4--who-style-guide-folds-into-who-iris-as-a-declared.md"
     },
@@ -9150,7 +9164,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:26:45Z",
-      "updatedAt": "2026-10-04T15:11:54Z",
+      "updatedAt": "2026-10-04T18:34:28Z",
       "preview": "## There is no owner's quote on this bean, and that is deliberate\n\n`vuip`, `p5wm` and `yg29` each open with the owner's words kept verbatim.\n**This one has none.** The owner chose *\"a fourth milestone: PLATFORM\"* from a\nset of options put to them on 2026-10-03, and the title and scope below were\n**derived from the measurement in the next section** by\n`session_01SjvqTkDQsqa6SLLFjBwoD3` rather than ",
       "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md"
     },
@@ -9789,6 +9803,20 @@
       "file": "beans/defs/folio-assistant-tntp--no-orphan-lean-checks-only-that-a-ts-sibling-exist.md"
     },
     {
+      "id": "folio-assistant-tqjj",
+      "title": "LSI trio off main: the index sidecar, its run record and the viewer page conflict on ~80% of merges",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:21:22Z",
+      "updatedAt": "2026-10-04T09:01:31Z",
+      "preview": "Sibling of ba9e (its worked example is PR #2044); the class is y7b3, \"a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict\". The landing place is arc 3fva, owner rulings D1/D4.\n\n## Measured (2026-10-04, this checkout, 400 commits on main)\n\n| file | commits touching it, of 400 |\n|---|---|\n| cat-harness/test/results/lsi/cat-harness/skills.lsi.json",
+      "file": "beans/defs/folio-assistant-tqjj--lsi-trio-off-main-the-index-sidecar-its-run-record.md"
+    },
+    {
       "id": "folio-assistant-tqv4",
       "title": "CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it",
       "status": "completed",
@@ -10129,14 +10157,14 @@
     {
       "id": "folio-assistant-v26p",
       "title": "PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:09:45Z",
-      "updatedAt": "2026-09-22T21:09:52Z",
+      "updatedAt": "2026-10-04T19:15:46Z",
       "preview": "Owner, issue #197 (2026-09-17), *\"prepare also for draft publication review processes: a fixed version (rendered PDF version w/ line numbers) goes out, then people return with excel/csv/tablular data of comments and feedback that needs to be reviewed and dispensed with\"*, and it asks for *\"show all comments that are on a page, at a line number, re-assign a comment to a more appropriate place, tria",
       "file": "beans/defs/folio-assistant-v26p--public-comment-tabular-comments-returned-on-a-line.md"
     },
@@ -11201,14 +11229,14 @@
     {
       "id": "folio-assistant-xtpc",
       "title": "DOC INGEST: .docx and PDF handbooks to document blocks with content-derived ids — and document-intake out of the paper adapter",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:54Z",
-      "updatedAt": "2026-09-22T21:09:45Z",
+      "updatedAt": "2026-10-04T19:17:28Z",
       "preview": "Owner: *\"doc ingest\"*. A DAK narrative or an L1 handbook arrives as a .docx or\nPDF. Until it is blocks in the folio/ graph, there is nothing to diff, anchor\ncomments to, or heat-map.\n\n**Measured 2026-09-22.**\n- `document-intake` lives in **folio-paper-adapter/**, not\n  folio-document-adapter/. An L1 handbook is a `document` folio, so the skill\n  is in the wrong adapter for its main customer.\n- The",
       "file": "beans/defs/folio-assistant-xtpc--doc-ingest-docx-and-pdf-handbooks-to-document-bloc.md"
     },
@@ -11460,7 +11488,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:48:29Z",
-      "updatedAt": "2026-10-04T15:52:48Z",
+      "updatedAt": "2026-10-04T18:34:12Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> showing who-iris w/ existing materialized assets with themed harness.\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `kupb` | IRIS CATALOGUE — a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample i",
       "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md"
     },
@@ -12123,8 +12151,8 @@
         "total": 121,
         "closed": 41,
         "open": 80,
-        "inProgress": 20,
-        "todo": 60,
+        "inProgress": 22,
+        "todo": 58,
         "draft": 0,
         "unclassified": 0,
         "share": 0.33884297520661155
@@ -12135,14 +12163,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 12,
-        "total": 388,
+        "total": 389,
         "closed": 144,
-        "open": 244,
-        "inProgress": 94,
+        "open": 245,
+        "inProgress": 95,
         "todo": 149,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3711340206185567
+        "share": 0.37017994858611825
       },
       {
         "id": "folio-assistant-vuip",
@@ -12165,14 +12193,14 @@
         "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md",
         "status": "in-progress",
         "epics": 1,
-        "total": 10,
-        "closed": 8,
-        "open": 2,
-        "inProgress": 2,
+        "total": 11,
+        "closed": 10,
+        "open": 1,
+        "inProgress": 1,
         "todo": 0,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8
+        "share": 0.9090909090909091
       }
     ],
     "orphanOpen": 0,
