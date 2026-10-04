@@ -1,13 +1,13 @@
 ---
 # folio-assistant-zmdo
 title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prove an empty-repo bootstrap'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-18T17:24:16Z
-updated_at: 2026-10-04T09:56:45Z
+updated_at: 2026-10-04T12:12:34Z
 parent: folio-assistant-vke6
 blocked_by:
     - folio-assistant-mer2
@@ -207,3 +207,5 @@ Both points hold, checked against the store and GitHub that day:
 **What remains is the falsifier.** Choice made from three options: run it in the existing throwaway repos **`litlfred/cat-harness-test`** and **`litlfred/folio-test`** — instance-init (bean `mer2`) against `cat-harness` alone, and against `folio-assistant-core` alone, then evaluate the four per-layer conditions in `tndo`. The real layer repositories are not touched by the proof. Rejected: temp directories only (never exercises a real clone); reading the layer repos first (deferred, not needed to run the proof).
 
 Still blocked on `mer2` (PR #2073) merging.
+
+_2026-10-04T12:12:34Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
