@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rva2
 title: 'STATE BRANCH P7: declare every special branch with the same field — gh-pages (within folio, keyed by commit, back-link = build.json) and lake-cache/*'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-03T00:12:57Z
+updated_at: 2026-10-04T17:01:12Z
 parent: folio-assistant-fs43
 ---
 
@@ -76,3 +76,5 @@ also fix the table's `name` fields to the slashed form in the same change. Leavi
 flat means a writer resolves `cat-state`, finds nothing, falls through to the legacy
 `state` which no longer exists, and creates a THIRD name for a branch that already has
 two.
+
+_2026-10-04T17:01:12Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
