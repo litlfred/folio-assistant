@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T18:51:01Z
+updated_at: 2026-10-04T19:21:42Z
 parent: folio-assistant-fs43
 ---
 
@@ -61,3 +61,14 @@ Left, and why:
 - The per-kind Zod schemas and `BlockSchema`'s union are CODE in cat-harness/schemas/constraints.ts (option 3, not taken).
 - About 6 pipeline audits spell `"thm:"`-style prefixes inline: conditional-class-banner-audit, audit-wiring, conjectural-propagation-audit and others.
 - `CONTENT_ADAPTERS` and `ADAPTER_COMPANION_ROLES` belong to the adapter-node step.
+
+
+## 2026-10-04: step 2b — block-kind headings are in the translation graph
+
+- Each owning instance now declares `translations/` (graph kind `translation-sources`). In it, `<lang>/block-kinds.pot` and `.po` hold one entry per kind: `msgctxt "block-kind:<kind>"`, with the node's English `heading` as msgid.
+  - folio-assistant-core holds the document kinds; folio-assistant-sci holds the math kinds.
+  - Every string was moved verbatim from `KIND_HEADINGS`.
+- `kindHeading(kind, locale)` takes English from the node. Other locales come from every declared `translation-sources` directory's `<lang>/block-kinds.po`, read lazily. The fallback for a kind with no node here is the title-cased name.
+- `KIND_HEADINGS` is gone; it was the last per-kind table in cat-harness. `po-strings.ts` is a new leaf gettext reader. `declared-nodes.ts` gains `declaredDirectories`.
+- **One behaviour change:** `figure` had no row in any locale, so it fell back to English everywhere. It now takes `diagram`'s rendering, since both read "Figure": es "Figura", ru "Рисунок", zh "图", ar "شكل". The fr rendering is "Figure" either way.
+- **A precedent noted, not followed:** core's glossary catalogues sit in `cat-harness/translations/<lang>/glossary/`. These sit with their owners instead, per "Owners now" and "not centrally managed". Whether the glossary ones should move is the owner's call.

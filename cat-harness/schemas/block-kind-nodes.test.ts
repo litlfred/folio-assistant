@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { BLOCK_KIND_NODES, BLOCK_KINDS, DOCUMENT_BLOCK_KINDS, MATH_BLOCK_KINDS, discoverBlockKinds, kindForBuilder } from "./block-kinds";
 import { KNOWN_LABEL_PREFIXES, LABEL_PREFIXES, typedBlockKinds } from "./constraints";
 import { BLOCK_KIND_TO_FOLIO_TYPE, KIND_PREFIXES, assertPrefixesInSync } from "./jsonld";
-import { KIND_HEADINGS } from "./translation";
+import { kindHeading } from "./translation";
 
 describe("block kinds are discovered, not listed", () => {
   test("every typed kind is discovered, and every discovered kind is typed", () => {
@@ -30,12 +30,21 @@ describe("block kinds are discovered, not listed", () => {
     for (const n of BLOCK_KIND_NODES) {
       expect(BLOCK_KIND_TO_FOLIO_TYPE[n.kind as keyof typeof BLOCK_KIND_TO_FOLIO_TYPE]).toBe(n.folioType);
       expect(KNOWN_LABEL_PREFIXES).toContain(`${n.labelPrefix}:`);
-      expect(KIND_HEADINGS.en[n.kind]).toBe(n.heading);
+      expect(kindHeading(n.kind, "en")).toBe(n.heading);
       expect(kindForBuilder(n.builder ?? n.kind)).toBe(n.kind);
       if (n.prefixEnforced) expect(LABEL_PREFIXES[n.kind]).toBe(`${n.labelPrefix}:`);
     }
     expect(() => assertPrefixesInSync(KNOWN_LABEL_PREFIXES)).not.toThrow();
     expect(KIND_PREFIXES.length).toBe(KNOWN_LABEL_PREFIXES.length);
+  });
+
+  test("non-English headings come from the owners' translation catalogues", () => {
+    expect(kindHeading("theorem", "fr")).toBe("Théorème"); // folio-assistant-sci/translations/fr
+    expect(kindHeading("table", "zh-Hans")).toBe("表"); // folio-assistant-core/translations/zh
+    expect(kindHeading("figure", "es")).toBe("Figura"); // had no row before; diagram's rendering
+    expect(kindHeading("prose", "ru")).toBe(""); // shown with no heading, in every locale
+    expect(kindHeading("lemma", "xx")).toBe("Lemma"); // no catalogue: the node's English
+    expect(kindHeading("decision-table", "fr")).toBe("Decision-table"); // no node here: title-cased
   });
 
   test("a kind declared by two files is refused, naming both", () => {

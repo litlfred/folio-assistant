@@ -14,9 +14,9 @@ import { join, resolve } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
 
-/** `{ file, raw }` for every `*.json` in every directory declared with `graphKind`, files sorted. */
-export function declaredNodeFiles(repoRoot: string, graphKind: string): { file: string; raw: unknown }[] {
-  const out: { file: string; raw: unknown }[] = [];
+/** Every directory declared with `graphKind`, across the instances of a checkout (absolute paths, declaration order). */
+export function declaredDirectories(repoRoot: string, graphKind: string): string[] {
+  const out: string[] = [];
   for (const root of instanceRootsIn(repoRoot)) {
     const declFile = findDeclarationFile(root);
     if (declFile === undefined) continue;
@@ -28,17 +28,25 @@ export function declaredNodeFiles(repoRoot: string, graphKind: string): { file: 
     }
     for (const d of decl.directories ?? []) {
       if (!d.path || !(d.graphKinds ?? []).includes(graphKind)) continue;
-      const dir = join(d.scope === "repository" ? resolve(repoRoot) : root, d.path);
-      let files: string[];
-      try {
-        files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
-      } catch {
-        continue; // a declared-but-absent directory is `check:declared-dirs`'s finding
-      }
-      for (const f of files) {
-        const file = join(dir, f);
-        out.push({ file, raw: JSON.parse(readFileSync(file, "utf-8")) });
-      }
+      out.push(join(d.scope === "repository" ? resolve(repoRoot) : root, d.path));
+    }
+  }
+  return out;
+}
+
+/** `{ file, raw }` for every `*.json` in every directory declared with `graphKind`, files sorted. */
+export function declaredNodeFiles(repoRoot: string, graphKind: string): { file: string; raw: unknown }[] {
+  const out: { file: string; raw: unknown }[] = [];
+  for (const dir of declaredDirectories(repoRoot, graphKind)) {
+    let files: string[];
+    try {
+      files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+    } catch {
+      continue; // a declared-but-absent directory is `check:declared-dirs`'s finding
+    }
+    for (const f of files) {
+      const file = join(dir, f);
+      out.push({ file, raw: JSON.parse(readFileSync(file, "utf-8")) });
     }
   }
   return out;
