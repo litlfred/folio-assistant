@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T05:35:04Z
-updated_at: 2026-10-04T05:40:09Z
+updated_at: 2026-10-04T05:47:04Z
+parent: folio-assistant-uhkv
 ---
 
 Follow-up to #1970 on #1901. Owner 2026-10-02: TOC only in the LHS rail (done in #2020), so remove the Contents box #1970 added. Owner 2026-10-02 scope addition: Publisher footer — prev/top/next row; band 'IG © <publisher> ↗. Package <id>#<version> based on FHIR <v> ↗. Generated <date>'; Links: Table of Contents | QA Report | Version History | License. Values from the IG's own metadata (package.tgz package.json / ImplementationGuide), never hard-coded; links to absent targets left out.
