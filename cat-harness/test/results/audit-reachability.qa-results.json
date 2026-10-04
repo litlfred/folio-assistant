@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-reachability.ts",
-    "script_hash": "0027f55b1cb5"
+    "script_hash": "59f0f42b2bfe"
   },
   "subject": {
     "kind": "audit-reachability",
@@ -35,8 +35,16 @@
     },
     "entry-point-latent": {
       "summary": "A LIVE library carrying a command-line entry point nothing runs: the module is reached, its `import.meta.main` branch is not. Kept apart from the orphans because one number for both would hide a module that exists only as a claim inside a list of dead CLI branches — the `typed-only` split in `audit-coverage`, for the same reason.",
-      "count": 13,
+      "count": 17,
       "entries": [
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-extended.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "importers": 3
+        },
         {
           "file": "cat-harness/content/pipeline/qa-checkers-q-usage.ts",
           "shape": {
@@ -126,6 +134,22 @@
           "importers": 2
         },
         {
+          "file": "cat-harness/scripts/partition/instance-rules.ts",
+          "shape": {
+            "shebang": false,
+            "mainGuard": true
+          },
+          "importers": 1
+        },
+        {
+          "file": "cat-harness/scripts/qa-results.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "importers": 23
+        },
+        {
           "file": "cat-harness/scripts/staging-stamp.ts",
           "shape": {
             "shebang": true,
@@ -140,13 +164,29 @@
             "mainGuard": true
           },
           "importers": 1
+        },
+        {
+          "file": "folio-assistant-sci/content/pipeline/qa-checkers-cost.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "importers": 1
         }
       ]
     },
     "entry-point-orphan": {
       "summary": "A module that DECLARES itself runnable — a `#!` shebang or an `import.meta.main` guard — that nothing runs and nothing but a test imports. Finding 1's shape exactly: `scripts/merge-queue.ts` said in its own docblock that the merge steward called it, and the only thing reaching it was the test proving it worked. Reported rather than failed — `--strict` fails on it and bean `folio-assistant-dxqm` holds the day that wires. It bites anyway: one more entry makes this sidecar stale, `--check` fails, and the regeneration puts the new module in the diff.",
-      "count": 6,
+      "count": 12,
       "entries": [
+        {
+          "file": "cat-harness/content/pipeline/conjectural-propagation-audit.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "testImporters": []
+        },
         {
           "file": "cat-harness/content/pipeline/derive-po.ts",
           "shape": {
@@ -159,6 +199,16 @@
           ]
         },
         {
+          "file": "cat-harness/content/pipeline/lean-formal-ref.ts",
+          "shape": {
+            "shebang": false,
+            "mainGuard": true
+          },
+          "testImporters": [
+            "cat-harness/scripts/tests/lean-ref-coverage.test.ts"
+          ]
+        },
+        {
           "file": "cat-harness/content/pipeline/qa-checkers-ids.ts",
           "shape": {
             "shebang": true,
@@ -166,6 +216,45 @@
           },
           "testImporters": [
             "cat-harness/scripts/tests/qa-checkers-ids.test.ts"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-render.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "testImporters": []
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-triviality.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "testImporters": [
+            "cat-harness/scripts/tests/qa-checkers-triviality.test.ts"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-uses.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "testImporters": [
+            "cat-harness/scripts/tests/lean-ref-owns-decl.test.ts",
+            "cat-harness/scripts/tests/uses-hygiene-remedy.test.ts"
+          ]
+        },
+        {
+          "file": "cat-harness/content/pipeline/qa-checkers-vacuity.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "testImporters": [
+            "cat-harness/scripts/tests/qa-checkers-vacuity.test.ts"
           ]
         },
         {
@@ -938,5 +1027,5 @@
       ]
     }
   },
-  "total": 117
+  "total": 127
 }

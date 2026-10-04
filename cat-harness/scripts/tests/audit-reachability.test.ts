@@ -5,6 +5,7 @@ import { join, resolve } from "node:path";
 
 import {
   declaredDiagrams,
+  invocationBefore,
   decisionReach,
   entrypointsIn,
   executableShape,
@@ -222,6 +223,35 @@ describe("the subject is a declaration, not a guess", () => {
     // It reported ITSELF as an orphan until it was wired into `package.json`,
     // which is the cheapest possible falsification of the check.
     expect(self!.state).toBe("invoked");
+  });
+
+  test("an invocation must stand CLOSE BEFORE the path, not merely on the same line", () => {
+    const at = (line: string, path: string): boolean => invocationBefore(line, line.indexOf(path));
+    // A real invocation puts them next to each other.
+    expect(at("          run: bun run cat-harness/scripts/minify-site.ts", "cat-harness/")).toBe(true);
+    expect(at('execFileSync("bun", ["run", "scripts/x.ts"])', "scripts/x.ts")).toBe(true);
+    expect(at('invoke: inProcess("src/tools/workflow.ts", "workflow_list")', "src/tools/")).toBe(true);
+
+    // PROSE ABOUT A FINDING MUST NOT CLEAR IT. This is the measured defect:
+    // the artefact-verification declaration that this gate obliged its author
+    // to write says that a diagram names `scripts/merge-queue.ts` in prose,
+    // and on one long JSON line that sentence counted as a caller.
+    const prose =
+      "it spawns a probe; and a module named only in a diagram's documentation is not " +
+      "credited as reached -- `merge-train.bpmn` and `merge-priority.dmn` both name " +
+      "`scripts/merge-queue.ts` in prose, which is not running it.";
+    expect(prose).toContain("spawns"); // the token really is on the line
+    expect(at(prose, "scripts/merge-queue.ts")).toBe(false);
+  });
+
+  test("the tokens are anchored at BOTH ends — `executable` and `denominators` are not invocations", () => {
+    // Both fired in the measured false positive, and any docblock on this
+    // subject is certain to contain them.
+    expect(invocationBefore("a self-declared executable at scripts/x.ts", "a self-declared executable at ".length)).toBe(false);
+    expect(invocationBefore("both denominators, then scripts/x.ts", "both denominators, then ".length)).toBe(false);
+    // ...while the real binaries still count.
+    expect(invocationBefore("node scripts/x.ts", "node ".length)).toBe(true);
+    expect(invocationBefore("deno run scripts/x.ts", "deno run ".length)).toBe(true);
   });
 
   test("a module named only in a diagram's documentation is NOT counted as reached", () => {

@@ -147,6 +147,59 @@ import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./q
 const ROOT = join(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
 
+/**
+ * How far before a path an invocation may stand and still count as running it.
+ *
+ * 120 characters. A real invocation puts the two next to each other — `run: bun
+ * run <path>` is eight, `execFileSync("bun", ["run", <path>])` about twenty,
+ * and the longest in this repository's workflows is a `working-directory` step
+ * at under sixty. The measured false positive was **1050**, in a sentence
+ * explaining the finding it cleared.
+ *
+ * It is a threshold, so it is a judgement, and the honest direction for it is
+ * TIGHT: too tight produces a visible finding somebody answers in one line with
+ * `@entrypoint`, while too loose hides one. That asymmetry is the only reason a
+ * number is defensible here at all.
+ */
+const INVOKE_WINDOW = 120;
+
+/**
+ * An invocation — a runtime, a spawn, or this repo's in-process tool dispatch.
+ *
+ * `\b…\b` on both sides of every token. Unanchored at the tail, `\bexec`
+ * matches **exec**utable and `\bdeno` matches **deno**minators, which are the
+ * two words any docblock about this subject is certain to contain; both fired
+ * in the measured false positive. `import(` keeps its own alternative because
+ * a parenthesis is not a word character.
+ */
+const INVOKES = /\b(bunx?|node|tsx|deno|spawn|spawnSync|exec|execSync|execFile|execFileSync|inProcess)\b|\bimport\(/;
+
+/**
+ * Does an invocation stand close enough before `index` on this line to mean
+ * that the path there is being RUN rather than written about?
+ *
+ * ## Measured on this file's own prose, twice
+ *
+ * The first version asked only whether the LINE carried a token anywhere, and
+ * `scripts/artefact-verification.json` then cleared `merge-queue.ts`: the
+ * declaration that this very gate obliged its author to write **says** that
+ * `merge-train.bpmn` names `scripts/merge-queue.ts` in prose — and that
+ * sentence, 1050 characters after the nearest token on a single JSON line,
+ * counted as a caller.
+ *
+ * **Prose about a finding must not be able to clear it.** That is
+ * `audit-coverage`'s *a measurement must not be a term in itself*, with the
+ * term one file further out than this script's own sidecar exclusion reaches —
+ * so an exclusion list could not have caught it and a position rule can.
+ *
+ * {@link INVOKE_WINDOW} is a threshold and therefore a judgement, and the
+ * honest direction for it is TIGHT: too tight produces a visible finding
+ * somebody answers in one line with `@entrypoint`, while too loose hides one.
+ */
+export function invocationBefore(line: string, index: number): boolean {
+  return INVOKES.test(line.slice(Math.max(0, index - INVOKE_WINDOW), index));
+}
+
 /** This script's own sidecar, derived from the constants that write it. */
 const SELF_SIDECAR_STEM = "audit-reachability";
 
@@ -477,11 +530,9 @@ export function moduleReach(repo: string): {
   // and the generated glossary JSON carries that prose onward. A grep over
   // mentions clears the very defect this file exists to catch.
   //
-  // So a mention counts only on a line that also carries an INVOCATION — a
-  // runtime, a spawn, or this repo's own in-process tool dispatch. That is the
-  // move `audit-coverage` makes for `@covers`: a parser over text has to tell
-  // a USE from a MENTION, and here the use has a verb beside it.
-  const INVOKES = /\b(bunx?|node|tsx|deno|spawn|spawnSync|exec|execSync|execFile|execFileSync|inProcess|import\()/;
+  // So a mention counts only where an INVOCATION stands immediately before the
+  // path. {@link invocationBefore} carries the rule and the two ways
+  // "somewhere on the line" was measured to be wrong.
   const named = new Map<string, string>();
   // Suffix matching with at least one separator, because a workflow step with
   // a `working-directory` names `scripts/x.ts` for `cat-harness/scripts/x.ts`.
@@ -498,6 +549,8 @@ export function moduleReach(repo: string): {
     for (const line of src.split("\n")) {
       if (!INVOKES.test(line)) continue;
       for (const m of line.matchAll(/[\w./@-]+\.tsx?\b/g)) {
+        // The window immediately before this path, not the whole line.
+        if (!invocationBefore(line, m.index)) continue;
         const tok = m[0].replace(/^\.\//, "");
         for (const hit of moduleSet.has(tok) ? [tok] : (bySuffix.get(tok) ?? [])) {
           if (!named.has(hit)) named.set(hit, where);
