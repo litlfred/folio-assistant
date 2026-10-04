@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 805,
+      "count": 806,
       "unit": "beans"
     }
   },
@@ -3805,14 +3805,14 @@
     {
       "id": "folio-assistant-ba9e",
       "title": "Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T22:34:28Z",
-      "updatedAt": "2026-10-04T07:38:21Z",
+      "updatedAt": "2026-10-04T12:13:31Z",
       "preview": "Child of `y7b3` part 2, which the owner left as \"decide later\" on 2026-09-30\nwith three options on the table (band the count, drop it, keep it exact).\n**Owner chose a fourth on 2026-10-02: pull the count dynamically from the KG\nJSON-LD rather than freeze it into committed markdown.**\n\n## Why that is the right answer and the other three are not\n\nThe repository had already reached this conclusion fr",
       "file": "beans/defs/folio-assistant-ba9e--generated-readme-subdirectory-counts-207-volatile.md"
     },
@@ -6075,6 +6075,20 @@
       "updatedAt": "2026-10-01T16:32:32Z",
       "preview": "Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each quoted against the HELD spec in cat-harness/library/. None is fixed: each needs a decision, not a mechanical edit.\n\n1. **PROV_CONTEXT** (cat-harness/schemas/prov.ts:29) = \"http://www.w3.org/ns/prov-o\". That IRI is the PROV-O OWL ontology document; the namespace is http://www.w3.org/ns/prov# and W3C's JSON-LD context is",
       "file": "beans/defs/folio-assistant-jcet--standards-mismatches-the-w3c-methodology-nodes-rec.md"
+    },
+    {
+      "id": "folio-assistant-jd1e",
+      "title": "A CALLER UNDID g5kt: merge-base reported regen's three verdicts as one, so could-not-determine reached the author as a defect in their branch",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:11:35Z",
+      "updatedAt": "2026-10-04T13:13:49Z",
+      "preview": "Found while re-measuring my own four claims about the `merge:main` defect class\n(PR #2086). THREE OF THE FOUR did not survive measurement; this is the one that\ndid, and it was not where I said it was.\n\n## The defect\n\n`merge-base.ts` had ONE message for every non-zero `regen` exit:\n\n    if (regen.status !== 0) abort(\"the gate set could not reproduce the\n      resolution (regen reported unrepaired c",
+      "file": "beans/defs/folio-assistant-jd1e--a-caller-undid-g5kt-merge-base-reported-regens-thr.md"
     },
     {
       "id": "folio-assistant-jg8s",
