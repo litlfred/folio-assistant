@@ -307,6 +307,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
 
+  validators: {
+    // A check mark inside a shield: code that judges a node, declared as a node.
+    // Bean riit.
+    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM8.5 12.5l2.5 2.5 4.5-5M12 3v2",
+    tone: 132,
+    reads: "a shield with a tick — a validator, declared by the harness whose code it is",
+  },
   kinds: {
     // A stack of three cards, the top one tagged: a graph whose nodes are the
     // KINDS of the other graphs. Bean dmx1.

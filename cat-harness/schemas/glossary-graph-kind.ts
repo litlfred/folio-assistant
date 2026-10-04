@@ -35,6 +35,8 @@
 import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./graph-kind-registry.js";
 
 export const GLOSSARY_GRAPH_KIND: GraphKindDef = {
+  // Its one family, LISTED with no code: core's validator node names it (bean riit).
+  nodeSchemas: { "folio-glossary/v1": {} },
   anyLayer: true,
     description:
       "Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphKinds: [\"glossary\"]`. The `glossary` kind is `perInstance`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](../../library/library-core/glossary-terms.md) skill; gated by `check:glossary`.",

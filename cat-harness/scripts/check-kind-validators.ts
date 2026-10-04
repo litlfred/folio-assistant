@@ -24,13 +24,19 @@
  *   stale silently
  */
 
-import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
+// The REGISTRY, not BASE_GRAPH_KINDS: since bean dmx1 a harness DECLARES its
+// kinds in a kinds/ graph, and a sweep over the code list alone stopped checking
+// every kind that moved (fhir-harness's, cat-openapi's, core's). Measured
+// 2026-10-04 while building riit; core's code-registered kinds are imported too.
+import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import "../schemas/folio-graph-kind.js";
+import "../schemas/glossary-graph-kind.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
 import { join, relative } from "node:path";
 
-import { directoriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
+import { directoriesForGraph, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../schemas/kind-validator.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
@@ -62,8 +68,8 @@ export interface ValidatorSweep {
 
 export async function sweep(root: string): Promise<ValidatorSweep> {
   const out: ValidatorSweep = { resolved: [], notApplicable: [], undeclared: [], unresolvable: [], contradictory: [] };
-  for (const kind of Object.keys(BASE_GRAPH_KINDS)) {
-    const def = BASE_GRAPH_KINDS[kind];
+  for (const kind of defaultGraphKinds.names()) {
+    const def = defaultGraphKinds.get(kind);
     const na = def?.validatorNotApplicable;
     // The contradiction first, because everything below would otherwise pick a
     // winner between two claims that cannot both hold.
@@ -96,6 +102,8 @@ export interface FamilySweep {
   invalid: { file: string; issue: string }[];
   /** No instance declares a directory of this kind — nested, or not yet present. */
   noDirectory?: boolean;
+  /** Directories of this kind stored on a branch FAMILY: by declaration not in the checkout (bean lehh). */
+  onFamily?: number;
 }
 
 /**
@@ -149,14 +157,30 @@ function jsonFiles(dir: string): string[] {
  */
 export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
   const out: FamilySweep[] = [];
-  for (const [kind, def] of Object.entries(BASE_GRAPH_KINDS)) {
+  for (const kind of defaultGraphKinds.names()) {
+    const def = defaultGraphKinds.get(kind)!;
     if (!def.nodeSchemas) continue;
     const fams = await resolveNodeSchemas(kind, root);
     const byTag = new Map(fams.map((f) => [f.tag, f]));
     const s: FamilySweep = { kind, counts: {}, unmapped: [], unresolvable: [], invalid: [] };
     for (const f of fams) if (f.state === "unresolvable") s.unresolvable.push({ tag: f.tag, reason: f.reason });
     const dirs = new Set<string>();
-    for (const inst of instanceRootsIn(join(root, ".."))) for (const d of directoriesForGraph(inst, kind)) dirs.add(d);
+    // A directory stored on a BRANCH FAMILY (bean lehh) holds its nodes on the
+    // family's branches by declaration, never in the checkout: named, not swept.
+    const onFamily = new Set<string>();
+    for (const inst of instanceRootsIn(join(root, ".."))) {
+      for (const e of readDeclaration(inst)?.directories ?? []) {
+        const st = e.storage as { keyedBy?: string } | undefined;
+        const src = e.source as { kind?: string } | undefined;
+        if (e.graphKinds.includes(kind as never) && (st?.keyedBy === "family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
+      }
+      for (const d of directoriesForGraph(inst, kind)) if (!onFamily.has(d.replace(/\/$/, ""))) dirs.add(d);
+    }
+    s.onFamily = onFamily.size;
+    if (dirs.size === 0 && onFamily.size > 0) {
+      out.push(s);
+      continue;
+    }
     if (dirs.size === 0) {
       s.noDirectory = true;
       out.push(s);
@@ -208,7 +232,9 @@ async function main(): Promise<number> {
               : `  · ${tag}: ${c.nodes} node(s), a TypeScript shape, not runnable — could not determine`,
       );
     }
-    if (f.noDirectory) {
+    if (f.onFamily && Object.keys(f.counts).length === 0) {
+      console.log(`  · ${f.onFamily} director(ies) on a branch FAMILY by declaration — the nodes are on the family's branches, not in this checkout, so not examined here`);
+    } else if (f.noDirectory) {
       console.log(`  · no instance declares a ${f.kind} directory — nothing to route (a nested kind is reached through its parent)`);
     } else if (nodes === 0) {
       console.log(`  ✗ EXAMINED NOTHING — ${f.kind} declares nodeSchemas and no node was found`);
@@ -246,6 +272,16 @@ async function main(): Promise<number> {
       `\n✗ ${r.contradictory.length} kind(s) claim BOTH a runnable schema and that none can exist — ` +
         `there is no reading under which both hold: ${r.contradictory.join(", ")}`,
     );
+    return 1;
+  }
+
+  // A VALIDATOR NODE naming a kind no instance declares (bean riit): the
+  // registry cannot join it to anything, so its code checks nothing. A node
+  // naming an unlisted family already throws at load, with its path.
+  const orphans = defaultGraphKinds.validatorNodeList().filter((v) => !defaultGraphKinds.has(v.node.validates.kind));
+  if (orphans.length > 0) {
+    console.log(`\n✗ ${orphans.length} validator node(s) name a graph kind no instance declares:`);
+    for (const o of orphans) console.log(`  ✗ ${o.file}: validates kind "${o.node.validates.kind}"`);
     return 1;
   }
 

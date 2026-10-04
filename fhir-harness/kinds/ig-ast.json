@@ -6,15 +6,9 @@
   "renderable": false,
   "holds": "derived",
   "nodeSchemas": {
-    "ig-ast/v1": {
-      "validator": "fhir-harness:schemas/ig-ast.ts#AstManifestSchema"
-    },
-    "ig-ast-dependencies/v1": {
-      "validator": "fhir-harness:schemas/ig-ast.ts#AstDependenciesSchema"
-    },
-    "ig-ast-plan/v1": {
-      "validator": "fhir-harness:schemas/ig-ast.ts#AstPlanSchema"
-    }
+    "ig-ast/v1": {},
+    "ig-ast-dependencies/v1": {},
+    "ig-ast-plan/v1": {}
   },
   "summary": "The IG Publisher's abstract syntax tree of a FHIR Implementation Guide (its resources, their dependency edges and the build plan), ingested into the folio that uses the IG. One branch per IG package id; the IG's own source need not be materialised.",
   "avatar": {

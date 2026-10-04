@@ -44,12 +44,12 @@
  * @module schemas/graph-kind-registry
  * @graphNode schema
  */
-import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { declaredNodeFiles } from "./declared-nodes";
 import { GraphKindNodeSchema, kindDefOf } from "./graph-kind-node";
-import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
+import { ValidatorNodeSchema, type ValidatorNode } from "./validator-node";
 import { namespaceForLayer } from "./namespaces";
 import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
@@ -141,6 +141,10 @@ export type NodeSchemaRef = (
   | { validator: string; shape?: never; external?: never }
   | { shape: string; validator?: never; external?: never }
   | { external: string; validator?: never; shape?: never }
+  // A family LISTED with no code of its own: its validator is a
+  // `folio-validator/v1` node that names it (bean riit, owner 2026-10-04: the
+  // validator names the family). The registry fills `validator` in from it.
+  | { validator?: never; shape?: never; external?: never }
 ) & {
   /**
    * Files of this family are GENERATOR OUTPUT — a script writes every one, so
@@ -584,6 +588,24 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "The graph kinds a harness declares it owns, one node per kind, so no central registry " +
       "names another harness's subgraph types. Loaded across the instances on first use.",
+  },
+  // The second META-KIND (bean riit): a directory of graph kind `validators`
+  // holds the validators a harness's code provides, one `folio-validator/v1`
+  // node each, naming the kind and family it validates. The registry joins them
+  // onto the kinds. Owner, 2026-10-04: validators are KG nodes, and the
+  // validator names the family.
+  validators: {
+    description:
+      "the validators a harness's code provides, one `folio-validator/v1` node each (`schemas/validator-node.ts`), naming the graph kind and `$schema` family it checks and the Zod export that checks it; the registry joins each onto its kind on first use, and refuses a second answer for one family. Owner, 2026-10-04: validators are KG nodes, and the validator names the family (option 1 of 2). Bean `riit`.",
+    title: "Validators",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-validator/v1": { validator: "schemas/validator-node.ts#ValidatorNodeSchema" },
+    },
+    summary:
+      "The validators a harness's code provides, one node each naming the graph kind and $schema " +
+      "family it checks and the Zod export that checks it, joined onto the kinds on first use.",
   },
   tools: {
     description:
@@ -2516,6 +2538,8 @@ export class GraphKindRegistry {
   private kinds = new Map<string, GraphKindDef>();
   /** Which file declared each kind loaded from a `kinds/` graph (bean dmx1). */
   private declaredIn = new Map<string, string>();
+  /** Validator nodes, keyed `kind\u0000family`, kept so a kind registered LATER (core's `folio`) is joined too. */
+  private validatorNodes = new Map<string, { file: string; node: ValidatorNode }>();
   private loaded = false;
 
   /**
@@ -2551,6 +2575,56 @@ export class GraphKindRegistry {
       this.kinds.set(node.kind, kindDefOf(node));
       this.declaredIn.set(node.kind, file);
     }
+    for (const v of declaredValidatorNodes(this.declaredUnder)) {
+      const key = `${v.node.validates.kind}\u0000${v.node.validates.family ?? ""}`;
+      const prior = this.validatorNodes.get(key);
+      if (prior && prior.file !== v.file) {
+        throw new Error(`two validators for ${describeValidator(v.node)}: ${prior.file} and ${v.file}. One family, one validator.`);
+      }
+      this.validatorNodes.set(key, v);
+    }
+    // A validator naming a kind not registered YET is joined by `register`
+    // (core registers `folio` in code after load); one naming no kind at all
+    // is `check:kind-validators`' finding.
+    for (const name of [...this.kinds.keys()]) this.joinValidators(name);
+  }
+
+  /** Fill each listed family's (or the kind's own) validator in from the node that names it. */
+  private joinValidators(name: string): void {
+    const def = this.kinds.get(name);
+    if (!def) return;
+    let next: GraphKindDef | undefined;
+    for (const { file, node } of this.validatorNodes.values()) {
+      if (node.validates.kind !== name) continue;
+      next ??= { ...def, ...(def.nodeSchemas ? { nodeSchemas: { ...def.nodeSchemas } } : {}) };
+      const family = node.validates.family;
+      if (family === undefined) {
+        if (next.validator !== undefined && next.validator !== node.schema) {
+          throw new Error(`${file}: kind "${name}" already names a validator in code (${next.validator}); two answers for one kind`);
+        }
+        next.validator = node.schema;
+        continue;
+      }
+      const entry = next.nodeSchemas?.[family];
+      if (entry === undefined) throw new Error(`${file}: validates family "${family}", which kind "${name}" does not list`);
+      if ((entry.validator !== undefined && entry.validator !== node.schema) || entry.shape !== undefined || entry.external !== undefined) {
+        throw new Error(`${file}: family "${family}" of kind "${name}" already has an answer in code; two answers for one family`);
+      }
+      (next.nodeSchemas as Record<string, NodeSchemaRef>)[family] = { ...entry, validator: node.schema } as NodeSchemaRef;
+    }
+    if (next) this.kinds.set(name, next);
+  }
+
+  /** The validator node joined onto `kind` (and `family`), when one is. */
+  validatorNodeFor(kind: string, family?: string): { file: string; node: ValidatorNode } | undefined {
+    this.ensureDeclared();
+    return this.validatorNodes.get(`${resolveGraphKind(kind).kind}\u0000${family ?? ""}`);
+  }
+
+  /** Every validator node loaded, for a check that a node names a kind that exists. */
+  validatorNodeList(): { file: string; node: ValidatorNode }[] {
+    this.ensureDeclared();
+    return [...this.validatorNodes.values()];
   }
 
   /** The file that declared `name`, when it came from a `kinds/` graph. */
@@ -2566,6 +2640,7 @@ export class GraphKindRegistry {
       throw new GraphKindConflictError(name);
     }
     this.kinds.set(name, def);
+    this.joinValidators(name);
   }
 
   // `has` and `get` resolve a deprecated spelling, so a declaration written
@@ -2603,34 +2678,24 @@ export class GraphKindRegistry {
  * module.
  */
 export function declaredKindNodes(repoRoot: string): { file: string; node: ReturnType<typeof GraphKindNodeSchema.parse> }[] {
-  const out: { file: string; node: ReturnType<typeof GraphKindNodeSchema.parse> }[] = [];
-  for (const root of instanceRootsIn(repoRoot)) {
-    const declFile = findDeclarationFile(root);
-    if (declFile === undefined) continue;
-    let decl: { directories?: { path?: string; scope?: string; graphKinds?: string[] }[] };
-    try {
-      decl = JSON.parse(readFileSync(join(root, declFile), "utf-8")) as typeof decl;
-    } catch {
-      continue; // an unreadable declaration is `readDeclaration`'s finding, with its own message
-    }
-    for (const d of decl.directories ?? []) {
-      if (!d.path || !(d.graphKinds ?? []).includes("kinds")) continue;
-      const dir = join(d.scope === "repository" ? resolve(repoRoot) : root, d.path);
-      let files: string[];
-      try {
-        files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
-      } catch {
-        continue; // a declared-but-absent kinds/ is `check:declared-dirs`'s finding
-      }
-      for (const f of files) {
-        const file = join(dir, f);
-        const parsed = GraphKindNodeSchema.safeParse(JSON.parse(readFileSync(file, "utf-8")));
-        if (!parsed.success) throw new Error(`${file} is not a folio-graph-kind/v1 node: ${parsed.error.message}`);
-        out.push({ file, node: parsed.data });
-      }
-    }
-  }
-  return out;
+  return declaredNodeFiles(repoRoot, "kinds").map(({ file, raw }) => {
+    const parsed = GraphKindNodeSchema.safeParse(raw);
+    if (!parsed.success) throw new Error(`${file} is not a folio-graph-kind/v1 node: ${parsed.error.message}`);
+    return { file, node: parsed.data };
+  });
+}
+
+/** Every `folio-validator/v1` node in every declared `validators/` graph (bean riit). */
+export function declaredValidatorNodes(repoRoot: string): { file: string; node: ValidatorNode }[] {
+  return declaredNodeFiles(repoRoot, "validators").map(({ file, raw }) => {
+    const parsed = ValidatorNodeSchema.safeParse(raw);
+    if (!parsed.success) throw new Error(`${file} is not a folio-validator/v1 node: ${parsed.error.message}`);
+    return { file, node: parsed.data };
+  });
+}
+
+function describeValidator(n: ValidatorNode): string {
+  return n.validates.family ? `kind "${n.validates.kind}", family "${n.validates.family}"` : `kind "${n.validates.kind}"`;
 }
 
 /**

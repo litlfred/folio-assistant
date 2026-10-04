@@ -30,6 +30,8 @@ const NodeSchemaRefSchema = z.union([
   z.object({ validator: z.string().min(1), generated: z.literal(true).optional() }).strict(),
   z.object({ shape: z.string().min(1), generated: z.literal(true).optional() }).strict(),
   z.object({ external: z.string().min(1), generated: z.literal(true).optional() }).strict(),
+  // Listed with no code: a `folio-validator/v1` node names this family (bean riit).
+  z.object({ generated: z.literal(true).optional() }).strict(),
 ]);
 
 /** A kind's mark: SVG path data in a 24×24 box, a hue angle, and why. As `schemas/avatars.ts` `Avatar`. */

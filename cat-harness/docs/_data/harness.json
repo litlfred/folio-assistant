@@ -1613,12 +1613,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 8
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 8
         },
         {
           "id": "views",
@@ -1661,9 +1661,22 @@
           "kind": "tools",
           "note": "no viewer yet",
           "label": "Tools"
+        },
+        {
+          "kind": "validators",
+          "note": "no viewer yet",
+          "label": "Validators"
         }
       ],
       "subgraphs": [
+        {
+          "id": "fhir-harness-validators",
+          "kinds": [
+            "validators"
+          ],
+          "where": "local",
+          "path": "fhir-harness/validators/"
+        },
         {
           "id": "fhir-harness-kinds",
           "kinds": [
@@ -1722,7 +1735,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 4 graph(s) with no published viewer — code, kinds, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 5 graph(s) with no published viewer — code, kinds, qa, tools, validators. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: a viewer is published at /cat-harness/schemas/fhir-harness/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
@@ -1791,12 +1804,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 14
+          "value": 15
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 13
+          "value": 14
         },
         {
           "id": "views",
@@ -1867,12 +1880,25 @@
           "label": "Tools"
         },
         {
+          "kind": "validators",
+          "note": "no viewer yet",
+          "label": "Validators"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-core/",
           "label": "Voices"
         }
       ],
       "subgraphs": [
+        {
+          "id": "folio-assistant-core-validators",
+          "kinds": [
+            "validators"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/validators/"
+        },
         {
           "id": "folio-assistant-core-kinds",
           "kinds": [
@@ -1988,7 +2014,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 5 graph(s) with no published viewer — code, folio, kinds, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, kinds, qa, tools, validators. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -3287,18 +3313,6 @@
     }
   ],
   "releases": {
-    "bootstrap": {
-      "version": "0.1.0",
-      "major": 0,
-      "agent": "https://litlfred.github.io/bootstrap/0.1.0/",
-      "human": "https://litlfred.github.io/bootstrap/v0/"
-    },
-    "bootstrap-tools": {
-      "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
-    },
     "cat-harness": {
       "version": "0.1.0",
       "major": 0,
@@ -4092,7 +4106,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: fhir-harness-kinds, library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, fhir-harness…"
+            "summary": "8: fhir-harness-validators, fhir-harness-kinds, library, fhir-ig-skills, fhir-ig-tools, fhir…"
           },
           {
             "key": "needs",
@@ -4142,7 +4156,7 @@
           },
           {
             "key": "directories",
-            "summary": "13: folio-assistant-core-kinds, core-schemas, folios, glossary, core-tools, core-adapters, co…"
+            "summary": "14: folio-assistant-core-validators, folio-assistant-core-kinds, core-schemas, folios, glossa…"
           },
           {
             "key": "stickies",

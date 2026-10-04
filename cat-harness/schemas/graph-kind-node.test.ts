@@ -83,3 +83,61 @@ describe("this checkout", () => {
     }
   });
 });
+
+describe("validators as nodes (bean riit): the validator names the family", () => {
+  /** A checkout with one instance declaring kinds/ and validators/. */
+  function withValidators(kinds: Record<string, unknown>[], validators: Record<string, unknown>[]): string {
+    const root = mkdtempSync(join(tmpdir(), "validators-"));
+    made.push(root);
+    const dir = join(root, "alpha");
+    mkdirSync(join(dir, "kinds"), { recursive: true });
+    mkdirSync(join(dir, "validators"), { recursive: true });
+    writeFileSync(
+      join(dir, "alpha.json"),
+      JSON.stringify({
+        name: "alpha",
+        directories: [
+          { id: "k", path: "kinds/", graphKinds: ["kinds"] },
+          { id: "v", path: "validators/", graphKinds: ["validators"] },
+        ],
+      }),
+    );
+    for (const k of kinds) writeFileSync(join(dir, "kinds", `${(k as { kind: string }).kind}.json`), JSON.stringify(k));
+    validators.forEach((v, i) => writeFileSync(join(dir, "validators", `${(v as { id?: string }).id ?? i}.json`), JSON.stringify(v)));
+    return root;
+  }
+  const famKind = { ...node("widget"), nodeSchemas: { "widget/v1": {} } };
+  const v = (id: string, family?: string, schema = "alpha:schemas/w.ts#WidgetSchema") => ({
+    $schema: "folio-validator/v1",
+    id,
+    validates: { kind: "widget", ...(family ? { family } : {}) },
+    schema,
+  });
+  test("a listed family takes the validator a node names for it", () => {
+    const r = new GraphKindRegistry({}, withValidators([famKind], [v("widget", "widget/v1")]));
+    expect(r.get("widget")?.nodeSchemas?.["widget/v1"]?.validator).toBe("alpha:schemas/w.ts#WidgetSchema");
+    expect(r.validatorNodeFor("widget", "widget/v1")?.node.id).toBe("widget");
+  });
+  test("a kind-level validator fills a kind with no families", () => {
+    const r = new GraphKindRegistry({}, withValidators([node("widget")], [v("widget")]));
+    expect(r.get("widget")?.validator).toBe("alpha:schemas/w.ts#WidgetSchema");
+  });
+  test("a validator for a family the kind does not list is refused", () => {
+    expect(() => new GraphKindRegistry({}, withValidators([famKind], [v("widget", "other/v1")])).get("widget")).toThrow(/does not list/);
+  });
+  test("two validators for one family are refused, naming both", () => {
+    expect(() =>
+      new GraphKindRegistry({}, withValidators([famKind], [v("a", "widget/v1"), v("b", "widget/v1", "alpha:x.ts#Other")])).get("widget"),
+    ).toThrow(/two validators/);
+  });
+  test("a family that already names DIFFERENT code is two answers, and refused", () => {
+    const coded = { ...node("widget"), nodeSchemas: { "widget/v1": { validator: "alpha:old.ts#OldSchema" } } };
+    expect(() => new GraphKindRegistry({}, withValidators([coded], [v("widget", "widget/v1")])).get("widget")).toThrow(/two answers/);
+  });
+  test("a kind registered in code after load is joined too (core's folio)", () => {
+    const r = new GraphKindRegistry({}, withValidators([], [v("widget")]));
+    r.names();
+    r.register("widget", { renderable: false, holds: "content", summary: "late" });
+    expect(r.get("widget")?.validator).toBe("alpha:schemas/w.ts#WidgetSchema");
+  });
+});
