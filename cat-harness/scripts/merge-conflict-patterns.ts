@@ -83,8 +83,8 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them.",
   },
   {
-    id: "docs-auto",
-    globs: ["**/docs-auto/**"],
+    id: "auto-docs",
+    globs: ["**/auto-docs/**"],
     strategy: "take-base",
     why: "the generated docs index pages (352). Marked -merge in .gitattributes; one page per directory, so every new file anywhere changes one.",
   },

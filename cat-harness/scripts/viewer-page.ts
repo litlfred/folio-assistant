@@ -4,7 +4,7 @@
  * Owner, 2026-09-23, naming three pages and then the rule:
  *
  * > navbar should be on sub pages like `/cat-harness/catalogue/who-iris/` or
- * > `/cat-harness/docs-auto/index/docs/who-iris-docs/` or library
+ * > `/cat-harness/auto-docs/index/docs/who-iris-docs/` or library
  * > etc... **common fixture unless explicty removed in harness visualtion.**
  *
  * The last clause inverts the default. The rail is PRESENT unless a
@@ -106,7 +106,7 @@ export interface ViewerNav {
    *
    * A generator that knows better PASSES it — `gen-library-viz` writes
    * `library/<instance>/` and has the instance in hand. What no caller does is
-   * INFER it from the path: `docs-auto/index/skills/who-iris-skills/` would
+   * INFER it from the path: `auto-docs/index/skills/who-iris-skills/` would
    * have to be un-suffixed to yield `who-iris`, and a rule that strips
    * `-skills` here is a second answer to a question the generator already
    * answered, free to disagree with it and silently wrong on the first

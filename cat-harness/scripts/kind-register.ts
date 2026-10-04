@@ -8,7 +8,7 @@
  *
  * ## The measurement that made this a command rather than a list
  *
- * Adding the `docs-auto` kind (#2022, bean `06e3`) I ran **six hand-picked
+ * Adding the `auto-docs` kind (#2022, bean `06e3`) I ran **six hand-picked
  * `check:*` commands** and every one passed. `bun run gates` then found **5
  * failures across 217**, and `bun test` found two more. Seven obligations, of
  * which a careful hand-picked subset found none:
@@ -44,7 +44,7 @@
  * ## The hue check this command DOES NOT have, and why
  *
  * It was going to fail on an exact hue collision — the one unambiguous case —
- * because the `docs-auto` glyph was first given tone **164**, 16° from
+ * because the `auto-docs` glyph was first given tone **164**, 16° from
  * `requirements` at 148, and two green page-glyphs told apart only by bullets
  * versus ticks. No gate caught it; rendering them side by side did.
  *
@@ -57,7 +57,7 @@
  *
  * So hue is **reported and never graded**, all of it. A gate failing on 11
  * deliberate decisions is not a strict gate, it is a wrong one. And the
- * `docs-auto` defect was never "same hue" anyway: it was two similar GLYPHS at
+ * `auto-docs` defect was never "same hue" anyway: it was two similar GLYPHS at
  * similar hues, which no number over one field expresses. The clearance table
  * earns its place as input to the person choosing a tone — which is exactly
  * where {@link authoredGaps} sends them.

@@ -126,7 +126,7 @@ export interface StrayBacktick {
  * for a file that obeys its own NO BACKTICKS warning absolutely. Two
  * generators do not, legitimately:
  *
- *     <title>${esc(type.title)}${scope ? ` — ${esc(scope)}` : ""} · docs-auto</title>
+ *     <title>${esc(type.title)}${scope ? ` — ${esc(scope)}` : ""} · auto-docs</title>
  *
  * The backticks there are inside an interpolation, which is CODE rather than
  * page text, so they open and close a nested template and do not end this

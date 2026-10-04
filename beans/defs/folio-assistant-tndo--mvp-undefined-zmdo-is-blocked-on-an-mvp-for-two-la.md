@@ -4,8 +4,10 @@ title: 'MVP UNDEFINED: zmdo is blocked on an MVP for two layers that nothing def
 status: todo
 type: task
 priority: normal
+tags:
+    - mvp
 created_at: 2026-09-30T11:33:55Z
-updated_at: 2026-09-30T19:49:33Z
+updated_at: 2026-10-04T09:56:44Z
 parent: folio-assistant-vke6
 ---
 

@@ -798,10 +798,10 @@ describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () 
   });
 
   it("does not mistake a mid-path `index` for the leaf", () => {
-    // `.../index/skills/...` is a real shape here — the docs-auto tree — and a
+    // `.../index/skills/...` is a real shape here — the auto-docs tree — and a
     // rule anchored anywhere but the end would eat a directory called `index`.
-    expect(publishedUrlOf("cat-harness/docs-auto/index/skills/")).toBe(
-      "/cat-harness/docs-auto/index/skills/",
+    expect(publishedUrlOf("cat-harness/auto-docs/index/skills/")).toBe(
+      "/cat-harness/auto-docs/index/skills/",
     );
   });
 

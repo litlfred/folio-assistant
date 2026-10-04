@@ -12,7 +12,17 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { composeComment, parseLog, type CommentInput } from "../merge-main-comment.ts";
+import {
+  aggregateVerdicts,
+  classifyVerdict,
+  composeComment,
+  parseLog,
+  salientLines,
+  signatureIn,
+  type CommentInput,
+  type Verdict,
+  type VerdictInput,
+} from "../merge-main-comment.ts";
 
 const WORKFLOW = join(resolve(import.meta.dir, "../../.."), ".github", "workflows", "merge-main.yml");
 
@@ -28,8 +38,23 @@ const on = (doc.on ?? doc.true)!;
 /** A finished, non-cancelled run with nothing to report; each test sets what it is about. */
 const BASE: CommentInput = {
   jobStatus: "success", status: "1", merged: "false", pushed: "no", blocked: "", rejected: "",
-  sha: "", log: "", marker: "<!-- merge-main-bot -->", runUrl: "https://example.invalid/run",
+  sha: "", log: "", headSha: "1111111111111111111111111111111111111111",
+  marker: "<!-- merge-main-bot -->", runUrl: "https://example.invalid/run",
   mainFailing: () => "",
+};
+
+/** A member that failed with a brand-new signature; each test sets what it is about. */
+const MEMBER: VerdictInput = {
+  pr: "1801", jobStatus: "failure", headCheck: "success", mergeOutcome: "success",
+  pushOutcome: "skipped", status: "1", refused: "", merged: "false", pushed: "no",
+  blocked: "", rejected: "", signature: "abc123abc123abc1", previous: "",
+};
+
+const verdictOf = (i: Partial<VerdictInput>): Verdict => classifyVerdict({ ...MEMBER, ...i });
+const signatureOfPlan = (i: Partial<CommentInput>): string => {
+  const p = composeComment({ ...BASE, ...i });
+  if (p.action !== "write") throw new Error("expected a comment");
+  return p.signature;
 };
 
 describe("merge-main.yml triggers", () => {
@@ -231,5 +256,271 @@ describe("a cancelled or unfinished run is not an error (#1854)", () => {
   test("a cancelled merge step never trips the failure step", () => {
     const fail = steps.find((s) => /refused != 'true'/.test((s as { if?: string }).if ?? ""))! as Step & { if?: string };
     expect(fail.if).toContain("steps.merge.outcome == 'success'");
+  });
+});
+
+
+describe("one bad member no longer reds the whole run (bean `03nl`)", () => {
+  // Measured on run 37179860536: exactly ONE of the matrix members failed
+  // (#1801, on a condition already fixed on another branch, bean `z7n1`), the
+  // run was `failure`, and GitHub emailed the owner on every push to main —
+  // which is many an hour.
+  test("the matrix member allows its own failure to be ignored by the RUN", () => {
+    expect((doc.jobs.merge as { "continue-on-error"?: boolean })["continue-on-error"]).toBe(true);
+  });
+
+  test("...and still fails, so it is red and findable rather than swallowed", () => {
+    const fail = doc.jobs.merge!.steps.find((s) => /refused != 'true'/.test((s as { if?: string }).if ?? ""))!;
+    expect(fail.run).toContain("exit 1");
+  });
+
+  test("the selection job stays loud: no continue-on-error anywhere on it", () => {
+    expect((doc.jobs.select as { "continue-on-error"?: boolean })["continue-on-error"]).toBeUndefined();
+  });
+
+  test("one job, and only one, decides the run's colour", () => {
+    const notify = doc.jobs.notify as { needs?: string[]; if?: string; "continue-on-error"?: boolean } | undefined;
+    expect(notify).toBeDefined();
+    expect(notify!.needs).toEqual(["select", "merge"]);
+    // It must run when `merge` failed (the case it exists for) and when `merge`
+    // was skipped (nothing behind main) — but not on a cancelled, superseded run.
+    expect(notify!.if).toContain("!cancelled()");
+    expect(notify!.if).not.toContain("always()");
+    expect(notify!["continue-on-error"]).toBeUndefined();
+  });
+
+  test("every member reports, whatever happened to it, and hands the verdict over", () => {
+    const steps = doc.jobs.merge!.steps;
+    const record = steps.findIndex((s) => s.name?.startsWith("Record what this member found"));
+    const upload = steps.findIndex((s) => (s.uses ?? "").startsWith("actions/upload-artifact"));
+    const fail = steps.findIndex((s) => /refused != 'true'/.test((s as { if?: string }).if ?? ""));
+    // After the failure step, so the step that exits 1 cannot skip it; under
+    // always(), so the steps that exit 1 on purpose are covered too.
+    expect(record).toBeGreaterThan(fail);
+    expect((steps[record] as { if?: string }).if).toBe("always()");
+    expect((steps[upload] as { if?: string }).if).toBe("always()");
+    expect(upload).toBeGreaterThan(record);
+    // A job that died before main's tool was checked out still writes one —
+    // and so does one whose tool predates the --verdict mode, since the copy
+    // that runs is main's. Both are "could not determine", which is loud.
+    expect(steps[record]!.run).toContain('"verdict":"undetermined","notify":true');
+    expect(steps[record]!.run).toContain('grep -q -- "--verdict" "$tool"');
+  });
+
+  test("the aggregator runs main's copy, with the submodules its checkout needs", () => {
+    const steps = doc.jobs.notify!.steps;
+    const checkout = steps.find((s) => (s.uses ?? "").startsWith("actions/checkout")) as { with?: Record<string, unknown> };
+    expect(checkout.with?.submodules).toBe("recursive");
+    const bun = steps.find((s) => (s.uses ?? "").startsWith("oven-sh/setup-bun")) as { with?: Record<string, unknown> };
+    expect(bun.with?.["bun-version"]).toBe("1.3.14");
+    const decide = steps.find((s) => s.name?.startsWith("Decide whether this run"))!;
+    expect(decide.run).toContain("cat-harness/scripts/merge-main-comment.ts --aggregate verdicts");
+    // A download that finds nothing must not stop it: "no verdict for #N" is
+    // the thing it has to report.
+    const dl = steps.find((s) => (s.uses ?? "").startsWith("actions/download-artifact")) as { "continue-on-error"?: boolean };
+    expect(dl["continue-on-error"]).toBe(true);
+  });
+});
+
+describe("the comment carries the signature of what it reports", () => {
+  test("every written comment ends with its signature, and it round-trips", () => {
+    const p = composeComment({ ...BASE, status: "2" });
+    if (p.action !== "write") throw new Error("expected a comment");
+    expect(signatureIn(p.body)).toBe(p.signature);
+    expect(p.body).toMatch(/<!-- merge-main-signature: [0-9a-f]{16} -->$/);
+    // The bot's own marker still leads, which is how the comment is found.
+    expect(p.body.startsWith("<!-- merge-main-bot -->\n")).toBe(true);
+  });
+
+  test("a comment with no signature records none, rather than throwing", () => {
+    expect(signatureIn("<!-- merge-main-bot -->\n**Error** (exit 1)")).toBe("");
+  });
+
+  test("the same failure twice gives the same signature — the run link does not count", () => {
+    expect(signatureOfPlan({ status: "2" })).toBe(signatureOfPlan({ status: "2", runUrl: "https://example.invalid/other-run" }));
+  });
+
+  test("a push by the AUTHOR makes it new again", () => {
+    expect(signatureOfPlan({ status: "2" })).not.toBe(signatureOfPlan({ status: "2", headSha: "2222222222222222222222222222222222222222" }));
+  });
+
+  test("a CHANGED CAUSE is new even when the comment's head sentence is identical", () => {
+    // The generic Error branch says the same thing for every cause, which is
+    // why the signature reads merge-base's own ABORTED line.
+    const one = composeComment({ ...BASE, log: "\nmerge-base: ABORTED, tree restored — 3 conflict(s) need a person (✗ above)" });
+    const two = composeComment({ ...BASE, log: "\nmerge-base: ABORTED, tree restored — bun install against the merged lockfile failed" });
+    if (one.action !== "write" || two.action !== "write") throw new Error("expected comments");
+    expect(one.body.split("\n")[1]).toBe(two.body.split("\n")[1]);
+    expect(one.signature).not.toBe(two.signature);
+  });
+
+  test("main's own red does not change the signature — it flaps, and it is main's", () => {
+    const log = "    ✗ check:x STILL fails";
+    const one = composeComment({ ...BASE, log, mainFailing: () => "TypeScript" });
+    const two = composeComment({ ...BASE, log, mainFailing: () => "TypeScript, Repository gates, e2e 2/3" });
+    if (one.action !== "write" || two.action !== "write") throw new Error("expected comments");
+    // The comment still SAYS what is failing on main; the signature does not
+    // count it, or an unchanged PR condition would notify on every flap.
+    expect(one.body).toContain("Failing on main right now: TypeScript.");
+    expect(two.body).toContain("Repository gates");
+    expect(one.signature).toBe(two.signature);
+  });
+
+  test("the salient lines are normalised, sorted and bounded", () => {
+    const log = [
+      "  ✓ x.md  [glossary: take-base]",
+      "merge-base: ABORTED, tree restored — qa:resolve-conflicts left 1 sidecar(s) conflicted",
+      "    ✗ check:x STILL fails",
+      "resolved 0123456789abcdef in 12.5s",
+    ].join("\n");
+    expect(salientLines(log)).toEqual([
+      "merge-base: ABORTED, tree restored — qa:resolve-conflicts left 1 sidecar(s) conflicted",
+      "✗ check:x STILL fails",
+    ]);
+    // A sha or a duration in the line would make every run differ from every
+    // other, which is the spam this exists to stop.
+    expect(salientLines("fatal: could not read 0123456789abcdef after 3.5s")).toEqual(["fatal: could not read <sha> after <dur>"]);
+  });
+});
+
+describe("a repeat is quiet; new, changed, systemic and undetermined are loud", () => {
+  test("a failure the comment already reports on this head is quiet", () => {
+    const v = verdictOf({ signature: "deadbeefdeadbeef", previous: "deadbeefdeadbeef" });
+    expect(v.verdict).toBe("repeat");
+    expect(v.notify).toBe(false);
+  });
+
+  test("a first failure, and a failure whose cause changed, both notify", () => {
+    expect(verdictOf({ previous: "" })).toMatchObject({ verdict: "new", notify: true });
+    const changed = verdictOf({ signature: "aaaaaaaaaaaaaaaa", previous: "bbbbbbbbbbbbbbbb" });
+    expect(changed).toMatchObject({ verdict: "new", notify: true });
+    expect(changed.reason).toContain("changed");
+  });
+
+  test("a failure with no signature is undetermined, never a repeat", () => {
+    // It cannot be told from one already reported, and "could not determine" is
+    // never rendered as clean.
+    expect(verdictOf({ signature: "", previous: "" })).toMatchObject({ verdict: "undetermined", notify: true });
+  });
+
+  test("the expected races are quiet, each named", () => {
+    expect(verdictOf({ jobStatus: "cancelled" })).toMatchObject({ verdict: "race", notify: false });
+    expect(verdictOf({ headCheck: "failure" })).toMatchObject({ verdict: "race", notify: false });
+    expect(verdictOf({ merged: "true", rejected: "true" })).toMatchObject({ verdict: "race", notify: false });
+  });
+
+  test("the outcomes that are not failures at all stay quiet", () => {
+    expect(verdictOf({ status: "0" })).toMatchObject({ verdict: "up-to-date", notify: false });
+    expect(verdictOf({ refused: "true" })).toMatchObject({ verdict: "refused", notify: false });
+    expect(verdictOf({ status: "0", merged: "true", pushed: "success" })).toMatchObject({ verdict: "merged", notify: false });
+    expect(verdictOf({ merged: "true", blocked: "workflows" })).toMatchObject({ verdict: "blocked", notify: false });
+  });
+
+  test("a merge step that never completed is the bot's own failure: loud", () => {
+    expect(verdictOf({ mergeOutcome: "skipped" })).toMatchObject({ verdict: "undetermined", notify: true });
+    expect(verdictOf({ status: "" })).toMatchObject({ verdict: "undetermined", notify: true });
+  });
+
+  test("a REFUSAL outranks the signature: it is not a bot failure in the first place", () => {
+    // The owner's ruling retired `needs-merge-human`; the reason lives in the
+    // comment, and a PR that needs a person must not red the bot's run either.
+    expect(verdictOf({ refused: "true", previous: "" }).notify).toBe(false);
+  });
+});
+
+describe("the run notifies once, or not at all", () => {
+  const v = (pr: string, verdict: Verdict["verdict"], notify: boolean): Verdict =>
+    ({ pr, verdict, notify, reason: "because", signature: "s", previous: "p" });
+
+  test("fourteen successes and one repeated failure: nobody is emailed", () => {
+    const verdicts = [v("1", "merged", false), v("2", "up-to-date", false), v("3", "repeat", false)];
+    const out = aggregateVerdicts({ selected: ["1", "2", "3"], verdicts, selectResult: "success" });
+    expect(out.loud).toBe(false);
+    // Quiet is not silent: the failure is still named in the run's summary.
+    expect(out.summary).toContain("#3");
+    expect(out.summary).toContain("repeat");
+    expect(out.summary).toContain("1 member(s) failed");
+  });
+
+  test("one new failure makes the run red", () => {
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "merged", false), v("2", "new", true)], selectResult: "success" });
+    expect(out.loud).toBe(true);
+    expect(out.lines.join("\n")).toContain("#2");
+  });
+
+  test("a member that reported nothing is loud, and says which", () => {
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "merged", false)], selectResult: "success" });
+    expect(out.loud).toBe(true);
+    expect(out.summary).toContain("#2 reported no verdict at all");
+  });
+
+  test("every selected PR failing is systemic, and it is reported", () => {
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "new", true)], selectResult: "success" });
+    expect(out.loud).toBe(true);
+    expect(out.summary).toContain("Every selected PR failed");
+  });
+
+  test("...but a systemic state of pure REPEATS is not emailed again", () => {
+    // Under a 10-minute merge cadence a persistent all-fail state would be
+    // ~100 emails a day about conditions each PR's comment already reports —
+    // this change's own defect in a different hat. The run in which it became
+    // true was loud, because each member's first failure was new then.
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "repeat", false)], selectResult: "success" });
+    expect(out.loud).toBe(false);
+    expect(out.summary).toContain("every one of those failures is a repeat");
+    expect(out.summary).toContain("does not email it again");
+  });
+
+  test("a systemic state is still loud when a member could not classify itself", () => {
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "undetermined", true)], selectResult: "success" });
+    expect(out.loud).toBe(true);
+  });
+
+  test("ONE PR failing a repeat is not systemic", () => {
+    const out = aggregateVerdicts({ selected: ["1"], verdicts: [v("1", "repeat", false)], selectResult: "success" });
+    expect(out.loud).toBe(false);
+  });
+
+  test("select's own failure is loud by itself, and is not emailed twice", () => {
+    const out = aggregateVerdicts({ selected: [], verdicts: [], selectResult: "failure" });
+    expect(out.loud).toBe(false);
+    expect(out.lines.join("\n")).toContain("loud by itself");
+  });
+
+  test("nothing selected is a clean, quiet run", () => {
+    const out = aggregateVerdicts({ selected: [], verdicts: [], selectResult: "success" });
+    expect(out.loud).toBe(false);
+    expect(out.summary).toContain("no opted-in PR was behind main");
+  });
+});
+
+describe("the signature is read before it is overwritten", () => {
+  const steps = doc.jobs.merge!.steps;
+
+  test("the previous signature is read in a step ahead of the comment step", () => {
+    const prev = steps.findIndex((s) => s.name === "Read the failure this PR's comment already reports");
+    const comment = steps.findIndex((s) => s.name?.startsWith("Comment once"));
+    expect(prev).toBeGreaterThanOrEqual(0);
+    expect(comment).toBeGreaterThan(prev);
+    expect(steps[prev]!.run).toContain("merge-main-signature");
+    expect(steps[prev]!.run).toContain('echo "signature=$sig" >> "$GITHUB_OUTPUT"');
+  });
+
+  test("the comment step keeps its plan, and knows the PR's head", () => {
+    const comment = steps.find((s) => s.name?.startsWith("Comment once"))! as Step & { env?: Record<string, string> };
+    expect(comment.run).toContain('--plan-out "$RUNNER_TEMP/plan.json"');
+    expect(comment.env?.HEAD_SHA).toBe("${{ steps.pr.outputs.sha }}");
+  });
+
+  test("the verdict step reads that plan and that previous signature", () => {
+    const record = steps.find((s) => s.name?.startsWith("Record what this member found"))! as Step & { env?: Record<string, string> };
+    expect(record.run).toContain('--verdict "$out" --plan "$RUNNER_TEMP/plan.json"');
+    expect(record.env?.PREVIOUS_SIGNATURE).toBe("${{ steps.prev.outputs.signature }}");
+    expect(record.env?.HEAD_CHECK).toBe("${{ steps.head.outcome }}");
+  });
+
+  test("the head-moved race has an id, so the verdict can recognise it", () => {
+    const head = steps.find((s) => s.name === "Check the branch did not move since selection")! as Step & { id?: string };
+    expect(head.id).toBe("head");
   });
 });

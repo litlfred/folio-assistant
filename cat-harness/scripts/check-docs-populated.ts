@@ -176,7 +176,7 @@ export function proseWords(text: string, isMarkdown: boolean): number {
 
 /**
  * The BPMN element kinds that are a task in a lane — the same list
- * `gen-docs-auto.ts`'s `index/tasks` type uses, and namespace-tolerant for the
+ * `gen-auto-docs.ts`'s `index/tasks` type uses, and namespace-tolerant for the
  * same reason: a process authored with the `bpmn:` prefix is the same process.
  */
 const TASK_RE =
