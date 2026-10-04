@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { lostOnBothSides, plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
@@ -467,5 +467,20 @@ describe("qa sidecars of a NESTED instance are in scope", () => {
     const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
     expect(o!.action).toBe("skip");
     expect(o!.reason).toContain("who-iris/test/results/");
+  });
+});
+
+describe("a merge never drops a file both sides hold — bean vsv7, done-when 2", () => {
+  test("a path on both parents and absent from the result is reported", () => {
+    expect(lostOnBothSides(["a", "b", "c"], ["a", "b"], ["a"])).toEqual(["b"]);
+  });
+
+  test("a path only one side holds may go: that is a deletion the merge took", () => {
+    expect(lostOnBothSides(["a", "only-ours"], ["a", "only-theirs"], ["a"])).toEqual([]);
+  });
+
+  test("nothing lost is an empty list, and the order is stable", () => {
+    expect(lostOnBothSides(["z", "a"], ["a", "z"], ["a", "z"])).toEqual([]);
+    expect(lostOnBothSides(["z", "a", "m"], ["m", "a", "z"], [])).toEqual(["a", "m", "z"]);
   });
 });

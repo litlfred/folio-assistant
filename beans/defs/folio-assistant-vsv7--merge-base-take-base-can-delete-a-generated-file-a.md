@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vsv7
 title: merge-base take-base can DELETE a generated file and still report proved
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-03T20:05:45Z
-updated_at: 2026-10-04T06:27:58Z
+updated_at: 2026-10-04T07:06:23Z
 parent: folio-assistant-hfag
 ---
 
@@ -28,3 +28,8 @@ Suspected cause: the resolver checks out stage 3 (or 2) for a path the earlier p
 
 ## Still open
 - Done-when item 2: the proof step does not yet fail when a path present on BOTH parents is absent from the result. Not done here.
+
+## Done-when 2 — done (2026-10-04)
+`lostOnBothSides` + `refuseLostFiles` in `merge-base.ts`: just before the merge commit (both the regen and the `--no-regen` paths) the index is compared with both parents, and any path both hold that the result lacks aborts the merge with the list (tree restored). Tests in `merge-base.test.ts` (34/34).
+
+All three done-when items hold: an already-resolved path is left alone (not deleted); a lost both-sides path now fails the run; the stage-0 case has a test. Owner, 2026-10-04: "do g43f, vsv7".

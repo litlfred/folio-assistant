@@ -109,6 +109,31 @@ export function takeBase(root: string, path: string): void {
   }
 }
 
+/**
+ * Paths both parents hold that the merged result does not (bean `vsv7`, done-when 2).
+ *
+ * A merge may drop a file one side deleted; it never drops one BOTH sides
+ * still have. On #1955 (2026-10-03) a resolver mis-step `git rm`ed two such
+ * generated sidecars and the run still said "proved", because no gate asks
+ * whether a file vanished. This is that question, asked of the index just
+ * before the merge commit. Pure over three path lists.
+ */
+export function lostOnBothSides(ours: readonly string[], theirs: readonly string[], result: readonly string[]): string[] {
+  const kept = new Set(result);
+  const theirsSet = new Set(theirs);
+  return ours.filter((f) => theirsSet.has(f) && !kept.has(f)).sort();
+}
+
+/** Abort (tree restored) when the staged merge lost a path both parents hold. */
+function refuseLostFiles(root: string, abort: (why: string) => never): void {
+  const list = (ref: string) => git(root, "ls-tree", "-r", "--name-only", ref).split("\n").filter(Boolean);
+  const lost = lostOnBothSides(list("HEAD"), list("MERGE_HEAD"), git(root, "ls-files").split("\n").filter(Boolean));
+  if (lost.length) {
+    for (const f of lost) console.error(`  ✗ ${f}  [present on both sides, absent from the merge]`);
+    abort(`${lost.length} file(s) both sides hold would be deleted by this merge (bean vsv7)`);
+  }
+}
+
 function describe(c: Classified): string {
   return c.pattern ? `${c.path}  [${c.pattern.id}: ${c.strategy}]` : `${c.path}  [no declared pattern]`;
 }
@@ -218,6 +243,7 @@ if (import.meta.main) {
 
   if (noRegen) {
     git(root, "add", "-A");
+    refuseLostFiles(root, abort);
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);
     process.exit(0);
@@ -244,6 +270,7 @@ if (import.meta.main) {
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
   if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
   git(root, "add", "-A");
+  refuseLostFiles(root, abort);
   git(root, "commit", "-q", "--no-edit");
   console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern, regenerated and proved.`);
 }
