@@ -544,6 +544,104 @@ const NOT_STALENESS: ReadonlySet<Outcome> = new Set<Outcome>(
   ),
 );
 
+/**
+ * The TAG that carries regen's verdict into a caller's own output.
+ *
+ * Declared once because two modules read the same token: `merge-base.ts`
+ * prints it when it aborts, and `merge-main-comment.ts` recovers the verdict
+ * from the captured log to decide whether the PR comment says "Error" or
+ * "Could not determine". Matching the abort's PROSE instead would make the
+ * bot's reporting depend on a sentence nobody thinks of as an interface.
+ */
+export const REGEN_VERDICT_TAG = "regen-verdict:";
+
+/** What a caller holding only regen's EXIT CODE may truthfully say about it. */
+export interface RegenExit {
+  verdict: ExitReason | "crashed";
+  /**
+   * Did regen establish a fact about the TREE?
+   *
+   * False for `not-settled` (every verdict was read from a tree a writer was
+   * still changing) and for `crashed` (nothing was measured at all). True for
+   * `not-staleness`, where regen did measure checks — though its OWN output is
+   * the only place the kinds are separated, which is why {@link RegenExit.why}
+   * sends the reader there rather than naming one.
+   */
+  determined: boolean;
+  why: string;
+}
+
+/**
+ * Read a non-zero `regen` exit HONESTLY — the inverse of {@link exitCodeFor}.
+ *
+ * ## The false reason this replaces
+ *
+ * `merge-base.ts` had one line for every non-zero exit:
+ *
+ * ```ts
+ * if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
+ * ```
+ *
+ * {@link exitCodeFor} returns three distinct verdicts and that message asserts
+ * one cause for all of them. It is FALSE in three of the four cases a caller
+ * can see:
+ *
+ * - **exit 2** — regen reported *no* unrepaired check. It reported that it
+ *   could not reach a fixed point, so it cannot stand behind the count it
+ *   printed. Its own words: *"this is NOT a clean regeneration"*.
+ * - **exit 1, every bad check `no-browser`** — regen labels that
+ *   could-not-determine in as many words: *"not a finding about the tree, and
+ *   it is not a pass either"*. Reporting it as an unrepaired check asserts a
+ *   defect in a tree nothing measured.
+ * - **exit 1, `no-writer`** — a check with no writer counterpart is a
+ *   different finding from one whose writer ran and did not fix it. Bean
+ *   `i1q7` split `writer-failed` out for exactly this reason: a verdict about
+ *   the TOOL is not a verdict about the tree.
+ * - **any other code, or a signal** — regen itself failed, and the message
+ *   described that as a measurement.
+ *
+ * **The abort was right in every case; only the recorded reason was wrong.**
+ * That is the same shape as commit `732c17f65`, whose resolution was correct
+ * and whose stated reason ("the pins diverged") was measured in a shallow
+ * submodule and false — and it is why this is a named function with tests
+ * rather than a longer string at the call site.
+ */
+export function regenExitMeaning(code: number | null): RegenExit {
+  if (code === 0) {
+    return { verdict: "clean", determined: true, why: "every pair is current or was regenerated, and the run settled" };
+  }
+  if (code === 1) {
+    return {
+      verdict: "not-staleness",
+      determined: true,
+      why:
+        "regen found at least one check that staleness does not explain, and its own output above " +
+        "says which — AND WHICH KIND. `unrepaired` is a defect (the writer ran and the check still " +
+        "fails); `no-writer` is a check with no writer counterpart; `writer-failed` is a verdict " +
+        "about the tool; `no-browser` is COULD NOT DETERMINE on a machine with no Chromium. Do not " +
+        "report them as one finding.",
+    };
+  }
+  if (code === 2) {
+    return {
+      verdict: "not-settled",
+      determined: false,
+      why:
+        "COULD NOT DETERMINE: regen did not reach a fixed point, so every verdict it printed was " +
+        "read from a tree a writer was still changing. It reported NO unrepaired check — it " +
+        "reported that it cannot stand behind the count.",
+    };
+  }
+  return {
+    verdict: "crashed",
+    determined: false,
+    why:
+      `regen exited ${code === null ? "on a signal" : code}, which is none of its three verdicts ` +
+      "(0 clean, 1 not-staleness, 2 not-settled). The tool itself failed and nothing was measured " +
+      "about the merged tree.",
+  };
+}
+
 /** {@link exitCodeFor}'s verdict: the code, which reason earned it, and the line to print. */
 export interface ExitVerdict {
   code: number;
