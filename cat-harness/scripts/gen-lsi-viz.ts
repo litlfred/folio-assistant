@@ -352,7 +352,7 @@ if (import.meta.main) {
       process.exit(JUDGEMENT_EXIT.unknown);
     }
     page = drawn.page;
-    console.log(`lsi viewer: per-index detail read from ${read.from}`);
+    if (read.state === "hit") console.log(`lsi viewer: per-index detail read from ${read.from}`);
   } else {
     // No index is read, so there is nothing to be unavailable: the committed
     // page is a function of the tree alone (module docblock).
@@ -368,7 +368,7 @@ if (import.meta.main) {
             ? " differs from the DETAIL page — that is expected: the detail is added by the docs-site build and is not committed."
             : " is stale — run `bun run lsi:viz` and commit it."),
       );
-      process.exit(detail ? JUDGEMENT_EXIT.pass : 1);
+      process.exit(detail ? JUDGEMENT_EXIT.ok : 1);
     }
     console.log("lsi viewer: " + relative(REPO, OUT) + " is current");
   } else {
