@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T12:55:24Z
-updated_at: 2026-10-04T13:44:35Z
+updated_at: 2026-10-04T13:49:53Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-xsrv
@@ -69,3 +69,9 @@ So:
 - **The just-the-docs build** pulls IG pages from `cat/fhir-harness/ig-docs` and QA results from `cat/cat-harness/qa-reports`, rather than needing them committed on main.
 
 Mapping the existing pipeline (docs-site, feature-staging, compose-docs's existing "cut", qa:fetch, branch-store) before building.
+
+## 2026-10-04: two sibling beans
+- **nama**, DERIVED-GRAPH DEPENDENCIES: derived subgraphs declare what they are computed FROM (fhir-ast -> ig-docs -> gh-pages; lean-cache). Until it lands, declaration order is the rendering order (owner).
+- **4j86**, STAGING CONE at file level (owner chose option 1): this bean's staging item is that one.
+
+QA results already come from qa-reports in both site builds (qa-site-assets.ts fetch and verify, in docs-site.yml and feature-staging.yml), so that half of the owner's site-build ask exists already.
