@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T13:49:44Z
-updated_at: 2026-10-04T13:52:31Z
+updated_at: 2026-10-04T13:54:32Z
 parent: folio-assistant-fs43
 ---
 
@@ -35,3 +35,10 @@ Use the ORDER in which subgraphs are declared as the rendering order. That is ch
 - a gate, `check:derived-from`.
 
 It asks three decisions: the edge's direction, re-layering the IG pages and artefact index as derived, and strict versus ratchet for the chrome-across-a-missing-needs case. The node schemas are child bean lehh.
+
+## Owner rulings, 2026-10-04 (all three, option 1 each)
+1. The edge is `derivedFrom`, on the derived graph.
+2. The IG pages and the artefact index are re-layered as `derived`.
+3. An edge across a missing `needs` path (the chrome case) is a ratchet: a baselined layering gap, where new gaps fail and cleared ones shrink the baseline.
+
+Next: the schema change (`derivedFrom` on ContentDirectorySchema, using computedFrom's resolver), then check:derived-from with its baseline, then the declarations and re-layering. The node schemas are bean lehh.
