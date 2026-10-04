@@ -11,31 +11,12 @@
   "families": {
     "decision-unevaluable": {
       "summary": "A declared decision table this repository's OWN FEEL evaluator cannot read, cell by cell — the state `merge-priority.dmn` was in for two months while `kg-audit` recorded \"result\": \"pass\" over it. Load is not evaluability: the loader never looks inside a rule, and `possibleOutcomes` reads the first output column only. Fails `--check`, because an unevaluable table is a broken artefact rather than an unmet ambition.",
-      "count": 1,
-      "entries": [
-        {
-          "file": "cat-harness/processes/sdlc/decisions/merge-priority.dmn",
-          "decision": "Decision_MergePriority",
-          "state": "unevaluable",
-          "unreadable": [
-            {
-              "rule": "Rule_HeadNotGreen",
-              "side": "input",
-              "column": 8,
-              "of": "ownCi",
-              "expression": "not(\"green\")",
-              "message": "unary test `not(\"green\")` uses FEEL this evaluator does not implement (ranges, not(), function calls). Supported: -, a literal, a comparison, or a comma-separated list."
-            }
-          ],
-          "referencedBy": [
-            "merge-train.bpmn#GW_Placement"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "entry-point-latent": {
       "summary": "A LIVE library carrying a command-line entry point nothing runs: the module is reached, its `import.meta.main` branch is not. Kept apart from the orphans because one number for both would hide a module that exists only as a claim inside a list of dead CLI branches — the `typed-only` split in `audit-coverage`, for the same reason.",
-      "count": 17,
+      "count": 18,
       "entries": [
         {
           "file": "cat-harness/content/pipeline/qa-checkers-extended.ts",
@@ -115,7 +96,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 10
+          "importers": 11
         },
         {
           "file": "cat-harness/scripts/graph-read.ts",
@@ -124,6 +105,14 @@
             "mainGuard": false
           },
           "importers": 5
+        },
+        {
+          "file": "cat-harness/scripts/merge-queue.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": false
+          },
+          "importers": 1
         },
         {
           "file": "cat-harness/scripts/partition/engine.ts",
@@ -177,7 +166,7 @@
     },
     "entry-point-orphan": {
       "summary": "A module that DECLARES itself runnable — a `#!` shebang or an `import.meta.main` guard — that nothing runs and nothing but a test imports. Finding 1's shape exactly: `scripts/merge-queue.ts` said in its own docblock that the merge steward called it, and the only thing reaching it was the test proving it worked. Reported rather than failed — `--strict` fails on it and bean `folio-assistant-dxqm` holds the day that wires. It bites anyway: one more entry makes this sidecar stale, `--check` fails, and the regeneration puts the new module in the diff.",
-      "count": 12,
+      "count": 11,
       "entries": [
         {
           "file": "cat-harness/content/pipeline/conjectural-propagation-audit.ts",
@@ -278,16 +267,6 @@
           ]
         },
         {
-          "file": "cat-harness/scripts/merge-queue.ts",
-          "shape": {
-            "shebang": true,
-            "mainGuard": false
-          },
-          "testImporters": [
-            "cat-harness/scripts/tests/merge-queue.test.ts"
-          ]
-        },
-        {
           "file": "fhir-harness/scripts/ast-to-artifact-index.ts",
           "shape": {
             "shebang": true,
@@ -363,7 +342,7 @@
           "kind": "decision",
           "file": "cat-harness/processes/sdlc/decisions/merge-priority.dmn",
           "id": "Decision_MergePriority",
-          "state": "unevaluable",
+          "state": "evaluable",
           "referencedBy": [
             "merge-train.bpmn#GW_Placement"
           ]
@@ -1027,5 +1006,5 @@
       ]
     }
   },
-  "total": 127
+  "total": 126
 }
