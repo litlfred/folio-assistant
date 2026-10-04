@@ -26,7 +26,8 @@
  *
  * Usage:
  *   bun run cat-harness/scripts/check-term-mapping.ts
- *   bun run cat-harness/scripts/check-term-mapping.ts --check   # fail if stale
+ *   bun run cat-harness/scripts/check-term-mapping.ts --check   # compute and judge; write nothing
+ *   … --check --against <ref>   # ...and say what moved against a qa-reports baseline
  *
  * @module scripts/check-term-mapping
  * @covers glossary
@@ -50,7 +51,7 @@ import {
   adjudicationStatus,
   type AdjudicationStatus,
 } from "../schemas/term-adjudication.ts";
-import { QA_RESULTS_DIR, buildQaResult, writeQaResult } from "./qa-results.ts";
+import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const STEM = "term-mapping";
@@ -523,8 +524,17 @@ function summarise(ms: TermMapping[], target: string): string {
   return `${of.length} candidate(s): ${n("mapped")} mapped, ${n("unmapped")} unmapped, ${n("undetermined")} undetermined`;
 }
 
+const GATE = "check:term-mapping";
+
 function main(): number {
-  const check = process.argv.includes("--check");
+  const argv = process.argv.slice(2);
+  const check = argv.includes("--check");
+  if (check) {
+    const usage = judgeUsage(GATE, argv, ["--against"]);
+    if (usage !== undefined) return usage;
+  }
+  const { against, exit: badRef } = againstOrUsage(GATE, argv);
+  if (badRef !== undefined) return badRef;
   const { mappings, scope } = run(ROOT);
 
   const file = {
@@ -587,27 +597,25 @@ function main(): number {
       ]),
     ),
   });
-  const rel = join("cat-harness", QA_RESULTS_DIR, `${STEM}.qa-results.json`);
   if (check) {
-    // `--check` VERIFIES. Writing in check mode would make the gate green by
-    // repairing what it was asked to inspect, which is the one thing a check
-    // must not do.
+    // `--check` VERIFIES: it never writes, because writing in check mode would
+    // make the gate green by repairing what it was asked to inspect.
     //
-    // Compared on the FAMILIES, not the whole file: `producer.script_hash`
-    // moves whenever this script is edited and the timestamp moves every run,
-    // and neither is a finding. What must not drift is what was found.
-    const abs = join(ROOT, rel);
-    if (!existsSync(abs)) {
-      console.error(`  ✗ ${rel} does not exist — run \`bun run term:mapping\``);
-      return 1;
-    }
-    const prior = JSON.parse(readFileSync(abs, "utf-8")) as { families?: unknown };
-    if (JSON.stringify(prior.families) !== JSON.stringify(result.families)) {
-      console.error(`  ✗ ${rel} is stale — run \`bun run term:mapping\` and commit it`);
-      return 1;
-    }
-    console.log(`  ✓ ${rel} is current`);
-    return 0;
+    // COMPUTE AND JUDGE (bean `0dav`). It used to fail on the committed
+    // record's families differing from this run, and on the record being
+    // absent — which is the state QA results are in once they leave `main`
+    // (owner rulings D1/D4). Nothing here was ever a FINDING: this check
+    // "never fails on WHAT IT FOUND" (below), so it fails on no family. What
+    // it still fails on is a result that does not satisfy its own schema
+    // (exit 2, above). What moved against a baseline is REPORTED: the
+    // committed working copy today, `--against <ref>` after the move, and a
+    // missing one is UNKNOWN. `check:glossary` renders this computation
+    // directly, so the page and the record cannot disagree through this file.
+    return judgeQaResult({
+      gate: GATE,
+      fresh: result,
+      baseline: { root: join(ROOT, "cat-harness"), stem: STEM, writer: "term:mapping", against },
+    }).exit;
   }
   const out = writeQaResult(join(ROOT, "cat-harness"), STEM, result);
   console.log(`  wrote ${out.slice(ROOT.length + 1)}`);

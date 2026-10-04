@@ -17,6 +17,7 @@
  * files.
  */
 import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -215,7 +216,7 @@ test("a link destination is percent-encoded per segment, parentheses included", 
  * `declarationFile` — and only from entries that are NOT `subgraph: true`.
  * Anything undeclared keeps the file count: absent stays absent.
  */
-describe("subdirectory rows — described from the declaration, or counted", async () => {
+describe("subdirectory rows — described from the declaration, or saying nothing does (no count, bean ba9e)", async () => {
   const r = mkdtempSync(join(tmpdir(), "subgraph-subdirs-"));
   const inst = join(r, "demo");
   const work = join(inst, "work");
@@ -251,20 +252,94 @@ describe("subdirectory rows — described from the declaration, or counted", asy
     expect(readme).toContain("| [`parts/`](parts/) | The parts of the plan. | |");
   });
 
-  test("a promoted (`subgraph: true`) directory describes itself elsewhere; its row keeps the count", () => {
-    expect(readme).toMatch(/\| \[`promoted\/`\]\([^)]*\) \| 1 file \|/);
+  test("a promoted (`subgraph: true`) directory describes itself elsewhere; its row borrows nothing", () => {
+    expect(readme).toContain("| [`promoted/`](promoted/) | _nothing declares what this holds_ | |");
     expect(readme).not.toContain("Its own subgraph.");
   });
 
-  test("no description, or no declaration at all, stays a count — nothing is invented", () => {
-    expect(readme).toContain("| [`nodesc/`](nodesc/) | 1 file | |");
-    expect(readme).toContain("| [`undeclared/`](undeclared/) | 1 file | |");
+  test("no description, or no declaration at all, says so — nothing is invented, and nothing is counted", () => {
+    expect(readme).toContain("| [`nodesc/`](nodesc/) | _nothing declares what this holds_ | |");
+    expect(readme).toContain("| [`undeclared/`](undeclared/) | _nothing declares what this holds_ | |");
+    expect(readme).not.toContain("1 file");
     expect(readme).not.toContain("Not a row of work/.");
   });
 
   test("a directory whose kind names no declaration file supplies nothing", () => {
     expect(subdirDescriptions(work, ["no-such-kind"])).toEqual({});
     expect(subdirDescriptions(join(work, "undeclared"), ["beans"])).toEqual({});
+    rmSync(r, { recursive: true, force: true });
+  });
+});
+
+describe("a subgraph kept OFF the checkout is not described from it (bean 9c7h)", () => {
+  test("fsh-guts, kept on its branch, is not among the directories whose README this tree writes", () => {
+    // Counting the files git tracks here would rewrite its README as "holds
+    // no files" — true of main, false of the subgraph, whose README lives on
+    // `cat/cat-harness/fsh-guts` with its content.
+    const ids = harnessInstances(REPO).flatMap((i) => i.dirs.map((d) => d.id));
+    expect(ids.length).toBeGreaterThan(20);
+    expect(ids).not.toContain("fsh-guts");
+  });
+});
+
+/**
+ * A STORED directory is skipped — bean `f3bh`.
+ *
+ * Its record lives on a branch (`storage`, bean `16ei`) and the checkout holds
+ * at most a working copy. A README planned from it, or a finding about it,
+ * would differ between a contributor who ran `qa:fetch` and one who did not —
+ * and from CI. The fixture is a real git work tree with the working copy
+ * ignored, which is how every `qa` directory is configured here, because the
+ * parent's file listing is git's answer.
+ */
+describe("a stored directory: the plan is the same with and without its working copy", async () => {
+  const r = mkdtempSync(join(tmpdir(), "subgraph-stored-"));
+  const inst = join(r, "demo");
+  mkdirSync(join(inst, "tests"), { recursive: true });
+  writeFileSync(
+    join(inst, "demo.json"),
+    JSON.stringify({
+      name: "demo",
+      title: "Demo",
+      directories: [
+        { id: "tests", path: "tests/", graphKinds: ["skills"], title: "Tests", description: "The tests." },
+        {
+          id: "qa",
+          path: "tests/results/",
+          graphKinds: ["qa"],
+          title: "Results",
+          description: "Derived QA.",
+          storage: { branch: "qa-reports", keyedBy: "commit" },
+        },
+      ],
+    }),
+  );
+  writeFileSync(join(inst, "README.md"), "# demo\n");
+  writeFileSync(join(inst, "tests", "a.test.ts"), "// a\n");
+  writeFileSync(join(r, ".gitignore"), "demo/tests/results/\n");
+  spawnSync("git", ["init", "-q"], { cwd: r });
+
+  const without = await plan(r, harnessInstances(r), TEMPLATES);
+  mkdirSync(join(inst, "tests", "results", "kg-qa"), { recursive: true });
+  writeFileSync(join(inst, "tests", "results", "kg-qa", "x.kg-qa.json"), "{}\n");
+  writeFileSync(join(inst, "tests", "results", "summary.qa-results.json"), "{}\n");
+  const withCopy = await plan(r, harnessInstances(r), TEMPLATES);
+
+  test("the stored directory is not among the harness's directories", () => {
+    const dirs = harnessInstances(r).flatMap((i) => i.dirs.map((d) => d.id));
+    expect(dirs).toContain("tests");
+    expect(dirs).not.toContain("qa");
+  });
+
+  test("every planned README is byte-identical, and none is written into the stored directory", () => {
+    expect([...withCopy.writes.keys()].sort()).toEqual([...without.writes.keys()].sort());
+    for (const [path, text] of without.writes) expect(withCopy.writes.get(path), path).toBe(text);
+    expect([...withCopy.writes.keys()].some((p) => p.includes(join("tests", "results")))).toBe(false);
+  });
+
+  test("the findings are identical too, and the absent working copy is not `absent-directory`", () => {
+    expect(withCopy.findings).toEqual(without.findings);
+    expect(without.findings["absent-directory"]).toEqual([]);
     rmSync(r, { recursive: true, force: true });
   });
 });

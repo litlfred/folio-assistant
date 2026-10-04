@@ -27,10 +27,12 @@ import {
   expiredExceptions,
   sidecarDocument,
   sourceBlockOf,
+  sidecarStates,
   staleSidecars,
   ENTRY_DIRECTORIES,
   ENTRY_SIDECARS,
 } from "../check-l1-complete.ts";
+import { resolveQaLocation } from "../qa-store.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
 import {
   OCR_THRESHOLD_CHARS,
@@ -398,10 +400,28 @@ describe("the verdict as a committed sidecar", () => {
     expect(staleSidecars(root, [checkEntry(entry())])[0]).toContain("no sidecar");
   });
 
-  test("the committed verdicts for the real corpus are current", () => {
+  test("the committed verdicts for the real corpus are current — or, when not committed, ABSENT and never current", () => {
+    // Bean 0dav: QA results leave `main` for the `qa-reports` branch, so the
+    // verdicts may legitimately not be in this checkout. Then every entry must
+    // read `absent` — never `current`, which would be a clean answer about
+    // a file that is not there.
     const root = join(import.meta.dir, "../..");
     const all = checkAll(root);
     expect(all, "no `library` declared — staleness over nothing proves nothing").toBeDefined();
+    const states = sidecarStates(root, all ?? []);
+    expect(states.length).toBeGreaterThan(0);
+    // Bean 5hox: the directory declares `storage`, so its working copy is not
+    // a record and, with no `--against`, every verdict reads UNKNOWN — present
+    // or absent, and never `current` about a copy nobody stored.
+    const results = join(root, "test", "results");
+    if (resolveQaLocation(join(root, "..")).directories.some((d) => d.absPath === results && d.storage)) {
+      expect(new Set(states.map((x) => x.state))).toEqual(new Set(["unknown"]));
+      return;
+    }
+    if (!existsSync(join(root, "test", "results", "library-qa"))) {
+      expect(new Set(states.map((x) => x.state))).toEqual(new Set(["absent"]));
+      return;
+    }
     expect(staleSidecars(root, all ?? [])).toEqual([]);
   });
 });

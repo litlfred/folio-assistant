@@ -11,8 +11,11 @@
  * | `harness:dirs` | absent → created | absent → NOT created (an empty working copy reads as clean) |
  * | `audit:coverage` | censused | skipped, and the kind reads `stored` |
  *
- * `keyedBy` is `commit`, `tip` or `route`; `tip` is refused on a `qa`
- * directory. No real declaration sets the field yet; flipping one is a later bean.
+ * `keyedBy` is `commit`, `tip` or `route` (beans `2h76`, `9ofm`); `tip` is refused on a `qa`
+ * directory. Every real `qa` directory declares it since bean `5hox`, and the
+ * last describe block pins the one consequence a fixture cannot: each stored
+ * directory's working copy is ignored by version control, so a writer's output
+ * is never committed by accident and the removal stays removed.
  *
  * ## The two keyings are NOT the same question (bean `9ofm`)
  *
@@ -162,7 +165,16 @@ describe("presence checks honour it", () => {
       { absPath: a, storage: STORED },
       { absPath: b, storage: STORED },
     ]);
-    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, undetermined: 0 });
+    expect(r).toEqual({ files: 0, sidecars: 0, stored: 2, undetermined: 0, uncounted: 0 });
+  });
+
+  test("a directory neither stored nor present is UNCOUNTED, never a census of zero (bean 0dav, C8)", () => {
+    const root = instance([]);
+    const here = join(root, "here");
+    mkdirSync(here);
+    writeFileSync(join(here, "x.json"), "{}");
+    const r = censusDirectories([{ absPath: here }, { absPath: join(root, "gone") }]);
+    expect(r).toEqual({ files: 1, sidecars: 0, stored: 0, undetermined: 0, uncounted: 1 });
   });
 });
 
@@ -223,6 +235,7 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
       sidecars: 0,
       stored: 0,
       undetermined: 0,
+      uncounted: 0,
     });
 
     // Unmounted: `undetermined`, and NOT `stored` — "could not read the files"
@@ -232,6 +245,7 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
       sidecars: 0,
       stored: 0,
       undetermined: 1,
+      uncounted: 0,
     });
   });
 
@@ -258,6 +272,7 @@ describe("a tip-keyed directory is three-valued, and only one value is a pass", 
       sidecars: 0,
       stored: 1,
       undetermined: 0,
+      uncounted: 0,
     });
   });
 
@@ -289,7 +304,7 @@ describe("resolveQaLocation", () => {
     ]);
 
     const plain = instance([{ id: "qa", path: "test/results/", graphKinds: ["qa"] }]);
-    expect(resolveQaLocation(plain)).toMatchObject({ branch: "qa-reports", declared: false });
+    expect(resolveQaLocation(plain)).toMatchObject({ branch: "cat/cat-harness/qa-reports", declared: false });
   });
 
   test("two qa directories naming different branches are refused, not resolved by order", () => {
@@ -298,5 +313,25 @@ describe("resolveQaLocation", () => {
       { id: "qa2", path: "more/results/", graphKinds: ["qa"], storage: { branch: "two", keyedBy: "commit" } },
     ]);
     expect(() => resolveQaLocation(root)).toThrow(QaUsageError);
+  });
+});
+
+describe("the real declarations (bean 5hox)", () => {
+  const repoRoot = join(import.meta.dir, "..", "..", "..");
+
+  test("every declared qa directory is stored, and every stored working copy is ignored", () => {
+    const loc = resolveQaLocation(repoRoot);
+    expect(loc.directories.length).toBeGreaterThan(0);
+    expect(loc.declared).toBe(true);
+    expect(loc.directories.filter((d) => !d.storage).map((d) => d.path)).toEqual([]);
+    const probes = loc.directories.map((d) => `${d.path}/probe.json`);
+    const r = spawnSync("git", ["check-ignore", "--no-index", "--stdin"], { cwd: repoRoot, input: probes.join("\n") + "\n", encoding: "utf-8" });
+    const ignored = new Set(r.stdout.split("\n").filter(Boolean));
+    expect(probes.filter((p) => !ignored.has(p))).toEqual([]);
+  });
+
+  test("attestations are never ignored: they stay on main (ruling D2 (a))", () => {
+    const r = spawnSync("git", ["check-ignore", "--no-index", "-q", "cat-harness/test/attestations/kg-qa/probe.attestations.json"], { cwd: repoRoot });
+    expect(r.status).toBe(1);
   });
 });
