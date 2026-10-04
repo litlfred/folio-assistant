@@ -314,3 +314,20 @@ describe("the default asks the WHOLE gate set — bean `i1q7`, item 3", () => {
     expect(relabelForMissingBrowser(results, fast, true)).toEqual(results);
   });
 });
+
+// Bean `wczm` item 1: regen-vs-CI parity for the two gates merge trains 2 and 3
+// found unrepairable (#1876, #1883). Each must reach regen from the REAL
+// workflow, with a writer that exists — or regen calls the tree current and CI
+// goes red on it.
+describe("regen can repair what trains 2 and 3 could not — bean wczm", () => {
+  const pairs = repairableGates(loadGates(REPO, {}), SCRIPTS);
+  for (const [check, writer] of [
+    ["check:l1-complete:check", "l1-complete:write"],
+    ["smart-base:smart-kg-l1:check", "smart-base:smart-kg-l1:all"],
+  ] as const) {
+    test(`${check} is a gate regen asks, and ${writer} is its writer`, () => {
+      expect(pairs.find((p) => p.check === check)).toEqual({ check, writer });
+      expect(SCRIPTS[writer]).toBeDefined();
+    });
+  }
+});
