@@ -498,8 +498,8 @@ drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
 executes what happens to the dropped member. The author's side, the queue
 and the bounce-back are the merge-manager SOP in
 [#1802](https://github.com/litlfred/folio-assistant/pull/1802) (steps 10 and
-12). The hand-back format is the `agent-handoff` skill in
-[#1884](https://github.com/litlfred/folio-assistant/pull/1884).
+12). The hand-back format is the
+[`agent-handoff`](agent-handoff.md) skill.
 
 **Why this exists.** Owner, 2026-10-02: *"if a merge in queue cannot be merged
 for some reason, create a new bean (under appropriate epic/story…), hand it

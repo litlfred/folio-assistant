@@ -18,7 +18,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -48,7 +48,7 @@ function bean(id: string, status = "todo"): string {
 
 /** A work checkout on `claude/feature`, whose `origin` is a bare repo with `main`. */
 function repoWith(beans: Record<string, string>): { work: string; bare: string } {
-  const base = mkdtempSync(join(tmpdir(), "claim-bean-t-"));
+  const base = realpathSync(mkdtempSync(join(tmpdir(), "claim-bean-t-")));
   const bare = join(base, "remote.git");
   git(base, "init", "-q", "--bare", "-b", "main", bare);
   const work = join(base, "work");

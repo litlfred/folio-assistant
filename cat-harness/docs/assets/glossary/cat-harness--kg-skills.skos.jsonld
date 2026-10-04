@@ -69,6 +69,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-handoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "agent-handoff"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent."
+        }
+      ],
+      "skos:notation": "agent-handoff",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/agent-memory",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -86,6 +106,26 @@
       ],
       "skos:notation": "agent-memory",
       "dcterms:source": "cat-harness/skills/conduct/conduct-core/agent-memory.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/artefact-reachability",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "artefact-reachability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals."
+        }
+      ],
+      "skos:notation": "artefact-reachability",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/artefact-reachability.md",
       "skos:note": "candidate"
     },
     {
