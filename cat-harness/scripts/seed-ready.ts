@@ -137,6 +137,8 @@ export interface LayerDecl {
   stagedIn?: string;
   /** Absolute path of the directory the declaration was read from. */
   root?: string;
+  /** Instances this one is seeded together with (`seedsWith`); absent is "alone". */
+  seedsWith?: string[];
 }
 
 /**
@@ -159,6 +161,7 @@ export function readLayers(repoRoot: string): LayerDecl[] {
       needs: d.needs ?? [],
       stagedIn: d.livesAt?.repository,
       root: resolve(at),
+      ...(d.seedsWith ? { seedsWith: d.seedsWith } : {}),
     });
   }
   return out;
@@ -637,7 +640,10 @@ export function declaredPathsOf(layerRoot: string): DeclaredPath[] {
  * all 8 distinct QA criterion source files, resolve inside cat-harness).
  *
  * So this counts the paths themselves. A path resolving `via: "needs"` is one
- * that breaks when L stands alone; `ambiguous` counts too, since two
+ * that breaks when L stands alone — UNLESS the instance holding it declares
+ * `seedsWith: [L]`, in which case the same seeding step creates both and the
+ * path is stated in the note rather than counted (owner, 2026-10-04: the
+ * harness's Tool nodes resolving into cat-harness-tools are a seeding pair); `ambiguous` counts too, since two
  * implementers above L is the same dependence twice. A `missing` path is not
  * counted here — it is broken in the monorepo already, and `check:tools`
  * owns that.
@@ -653,11 +659,18 @@ export function probeUpwardPaths(repoRoot: string, layerName: string, decls: Lay
     return { state: "error", note: `the declared paths could not be read: ${message(e)}` };
   }
   const upward: string[] = [];
+  // Declared by the instance ABOVE (`seedsWith`): one seeding step creates
+  // both, so a path into it cannot break on the day L is seeded (owner,
+  // 2026-10-04). Counted and stated, never silently dropped.
+  const partners = new Set(decls.filter((d) => d.seedsWith?.includes(layerName)).map((d) => d.name));
+  const intoPartner = new Map<string, number>();
   try {
     clearCheckoutCache();
     for (const p of paths) {
       const r = resolveImplementingPath(root, p.path);
-      if (r.state === "found" && r.via === "needs") {
+      if (r.state === "found" && r.via === "needs" && partners.has(r.instance)) {
+        intoPartner.set(r.instance, (intoPartner.get(r.instance) ?? 0) + 1);
+      } else if (r.state === "found" && r.via === "needs") {
         upward.push(`${p.kind} ${p.owner}: ${p.path} resolves only in ${r.instance}, above ${layerName}`);
       } else if (r.state === "ambiguous") {
         upward.push(`${p.kind} ${p.owner}: ${p.path} is held by ${r.candidates.map((c) => c.name).join(" and ")}, above ${layerName}`);
@@ -674,7 +687,9 @@ export function probeUpwardPaths(repoRoot: string, layerName: string, decls: Lay
     findings: upward,
     // The Tool count is stated so that "0 paths" over a layer whose Tools are
     // all shell-invoked reads as determined, not as a probe that read nothing.
-    note: `${paths.length} declared path(s) checked — tool modules (from ${toolsOf(root).length} Tool node(s)), QA criterion sources, render targets`,
+    note:
+      `${paths.length} declared path(s) checked — tool modules (from ${toolsOf(root).length} Tool node(s)), QA criterion sources, render targets` +
+      [...intoPartner].map(([name, n]) => `; ${n} resolve into \`${name}\`, which is seeded with ${layerName} (seedsWith)`).join(""),
   };
 }
 
