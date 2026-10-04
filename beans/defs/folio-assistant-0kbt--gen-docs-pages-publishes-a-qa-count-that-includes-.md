@@ -3,6 +3,7 @@
 title: 'gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run'
 status: todo
 type: bug
+parent: folio-assistant-1swy
 priority: normal
 created_at: 2026-10-04T09:39:59Z
 updated_at: 2026-10-04T09:39:59Z

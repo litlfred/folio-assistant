@@ -3,6 +3,7 @@
 title: 'regen reports audit:coverage:strict current while the artefact on disk differs from what its writer produces'
 status: todo
 type: bug
+parent: folio-assistant-1xhc
 priority: normal
 created_at: 2026-10-04T12:18:57Z
 updated_at: 2026-10-04T12:18:57Z

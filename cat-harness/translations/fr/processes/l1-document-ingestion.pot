@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: l1-document-ingestion\n"
-"POT-Creation-Date: 2026-10-02T17:47:02.286Z\n"
+"POT-Creation-Date: 2026-10-04T14:31:41.090Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Build the L1 knowledge graph [document-intake]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/library/l1-document-ingestion.bpmn:247
+#: ../folio-assistant-core/processes/library/l1-document-ingestion.bpmn:245
 #. Diagram label
 msgid "complete"
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 msgid "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/. CARRIES THE BODY `document-ingestion.bpmn` HAD until placement PR6 (bean `apcg`; owner ruling 3, 2026-09-30: \"only basic doc ingestion high level workflow in cat-harness … more detailed doc ingestion/cataloguing methodologies in folio-asst-core\"). Every activity id is unchanged, so a reference to `Task_Detect` or `CallActivity_Extract` means what it meant. IT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill."
 msgstr ""
 
-#: ../folio-assistant-core/processes/library/l1-document-ingestion.bpmn:245
+#: ../folio-assistant-core/processes/library/l1-document-ingestion.bpmn:243
 #. Diagram label
 msgid "gap"
 msgstr ""
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Ingest the theme [theme-art-intake]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/library/l1-document-ingestion.bpmn:234
+#: ../folio-assistant-core/processes/library/l1-document-ingestion.bpmn:232
 #. Diagram label
 msgid "Ingested"
 msgstr ""

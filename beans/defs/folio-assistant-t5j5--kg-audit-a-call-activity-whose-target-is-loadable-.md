@@ -3,6 +3,7 @@
 title: 'kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown'
 status: todo
 type: task
+parent: folio-assistant-zzmr
 priority: normal
 created_at: 2026-10-04T09:08:59Z
 updated_at: 2026-10-04T09:08:59Z

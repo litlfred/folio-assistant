@@ -1,7 +1,7 @@
 ---
 # folio-assistant-vqlp
 title: 'Placement PR6 leaves Process_Ingestion with no docs page section, so the harness''s own basic flow has no KG witness'
-status: done
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T09:08:33Z
@@ -10,7 +10,7 @@ updated_at: 2026-10-04T09:46:54Z
 #1898 repoints `content/docs/document-ingestion/nodes/the-pipeline.jsonld`'s `sourceDocument` from `cat-harness/processes/library/document-ingestion.bpmn` to `folio-assistant-core/processes/library/l1-document-ingestion.bpmn`. That is deliberate and the prose was rewritten to match. The side effect is not: the harness's own basic flow, which the PR says STAYS in the harness, is then presented by no page section.
 
 Measured on the branch head:
-- `docs/processes/document-ingestion.md` says "**Presented on:** no docs page section shows this diagram"; on main it says "[Document ingestion - The pipeline](../document-ingestion.html#the-pipeline)".
+- `docs/processes/document-ingestion.md` says "**Presented on:** no docs page section shows this diagram"; on main it says "`[Document ingestion - The pipeline](../document-ingestion.html#the-pipeline)`".
 - Process node pages carrying that line: 71 on main, 72 on the branch. The one added is Process_Ingestion.
 - No witness bundle in the tree has subject `Process_Ingestion` (21 bundles checked), so the flow has no KG evidence and `kg:audit` still exits 0 - it lands silently.
 

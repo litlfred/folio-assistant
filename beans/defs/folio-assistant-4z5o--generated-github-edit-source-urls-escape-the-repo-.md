@@ -3,6 +3,7 @@
 title: 'Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure'
 status: todo
 type: bug
+parent: folio-assistant-o3xy
 priority: normal
 created_at: 2026-10-04T09:08:59Z
 updated_at: 2026-10-04T09:08:59Z
