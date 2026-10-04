@@ -255,10 +255,19 @@ export function createBean(root: string, opts: CreateOptions): { bean: Bean; dup
   return { bean: parseBean(path)! };
 }
 
-/** Rewrite one front-matter scalar in place, leaving the body untouched. */
-function setField(bean: Bean, key: string, value: string): void {
-  const raw = readFileSync(bean.path, "utf-8");
-  const m = FM.exec(raw)!;
+/**
+ * {@link setField} as a pure TEXT transform.
+ *
+ * Extracted so the branch-store claim path (bean `9ofm`) writes **byte-identical**
+ * bytes to what the filesystem writer produces. That is this module's stated
+ * contract — "it is the same store, not a shadow copy", asserted by
+ * `scripts/tests/beans-fallback.test.ts` — and the only way to keep it through
+ * a second writer is for both to share the transform rather than reimplement
+ * it. A claim spliced onto the branch has to read back cleanly under the CLI.
+ */
+export function setFieldInText(raw: string, key: string, value: string, now = nowStamp()): string {
+  const m = FM.exec(raw);
+  if (!m) throw new Error("not a bean file: no front matter");
   let front = m[1]!;
   const line = `${key}: ${value}`;
   front = new RegExp(`^${key}:.*$`, "m").test(front)
@@ -266,10 +275,23 @@ function setField(bean: Bean, key: string, value: string): void {
     : `${front}\n${line}`;
   if (key !== "updated_at") {
     front = /^updated_at:.*$/m.test(front)
-      ? front.replace(/^updated_at:.*$/m, `updated_at: ${nowStamp()}`)
-      : `${front}\nupdated_at: ${nowStamp()}`;
+      ? front.replace(/^updated_at:.*$/m, `updated_at: ${now}`)
+      : `${front}\nupdated_at: ${now}`;
   }
-  writeFileSync(bean.path, `---\n${front}\n---\n${m[2]}`, "utf-8");
+  return `---\n${front}\n---\n${m[2]}`;
+}
+
+/** {@link noteBean} as a pure TEXT transform. Same reason as {@link setFieldInText}. */
+export function appendNoteToText(raw: string, text: string, now = nowStamp()): string {
+  const m = FM.exec(raw);
+  if (!m) throw new Error("not a bean file: no front matter");
+  const body = `${m[2]!.replace(/\s*$/, "")}\n\n_${now}_ — ${text}\n`;
+  return setFieldInText(`---\n${m[1]}\n---\n${body}`, "updated_at", now, now);
+}
+
+/** Rewrite one front-matter scalar in place, leaving the body untouched. */
+function setField(bean: Bean, key: string, value: string): void {
+  writeFileSync(bean.path, setFieldInText(readFileSync(bean.path, "utf-8"), key, value), "utf-8");
 }
 
 export function updateBean(root: string, id: string, fields: Record<string, string>): Bean {
@@ -282,11 +304,7 @@ export function updateBean(root: string, id: string, fields: Record<string, stri
 export function noteBean(root: string, id: string, text: string): Bean {
   const bean = findBean(root, id);
   if (!bean) throw new Error(`No bean matching "${id}" in this store.`);
-  const raw = readFileSync(bean.path, "utf-8");
-  const m = FM.exec(raw)!;
-  const body = `${m[2]!.replace(/\s*$/, "")}\n\n_${nowStamp()}_ — ${text}\n`;
-  writeFileSync(bean.path, `---\n${m[1]}\n---\n${body}`, "utf-8");
-  setField(bean, "updated_at", nowStamp());
+  writeFileSync(bean.path, appendNoteToText(readFileSync(bean.path, "utf-8"), text), "utf-8");
   return parseBean(bean.path)!;
 }
 
