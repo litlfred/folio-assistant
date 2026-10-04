@@ -235,14 +235,14 @@
     {
       "id": "folio-assistant-0s6w",
       "title": "MERGE VERIFICATION: reading merge-tree's rc through a command substitution reports the WRONG exit status, and it reads as clean",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:07:04Z",
-      "updatedAt": "2026-10-03T02:07:04Z",
+      "updatedAt": "2026-10-04T06:03:36Z",
       "preview": "A merge steward verifies mergeability with `git merge-tree --write-tree` and reads the exit\ncode: **rc=0 clean, rc=1 CONFLICT, rc>=2 an ERROR that is not clean**. On 2026-10-03 that\nread was wrong for a whole session, in one specific shell form, and it reported **clean**.\n\n## The defect\n\n```sh\ngit merge-tree --write-tree origin/main \"$sha\" >/dev/null 2>&1\necho \"merge-tree rc=$?\"                   ",
       "file": "beans/defs/folio-assistant-0s6w--merge-verification-reading-merge-trees-rc-through.md"
     },
@@ -11138,8 +11138,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 304,
-    "openTotal": 468,
+    "orphanOpen": 303,
+    "openTotal": 467,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
