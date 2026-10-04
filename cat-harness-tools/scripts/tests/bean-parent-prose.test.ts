@@ -39,8 +39,8 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
-const SCRIPT = join("cat-harness", "scripts", "check-bean-parent-prose.ts");
-const SOURCE = join(REPO, "cat-harness", "scripts", "check-bean-parent-prose.ts");
+const SCRIPT = join("cat-harness-tools", "scripts", "check-bean-parent-prose.ts");
+const SOURCE = join(REPO, "cat-harness-tools", "scripts", "check-bean-parent-prose.ts");
 
 function run(...args: string[]): { status: number; out: string } {
   const r = spawnSync("bun", ["run", SCRIPT, ...args], { cwd: REPO, encoding: "utf-8" });
@@ -109,7 +109,7 @@ describe("quotations are not claims", () => {
 describe("one reader of the store", () => {
   test("it uses `readBeans` rather than walking the directory", () => {
     const src = readFileSync(SOURCE, "utf-8");
-    expect(src).toMatch(/import \{ readBeans \} from "\.\/beans\.ts"/);
+    expect(src).toMatch(/import \{ readBeans \} from "\.\.\/\.\.\/cat-harness\/scripts\/beans\.ts"/);
     // A directory walk here would sweep in `beans/defs/archive/`, which has its
     // own declaration and its own reader.
     expect(src).not.toContain("readdirSync");
