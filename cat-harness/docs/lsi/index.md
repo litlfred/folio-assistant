@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**232** units · **6139** terms · k = **100** · retains **77.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**232** units · **6139** terms · k = **100** · retains **77.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.68 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
-| 2 | 21.85 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, directory, iri, graph |
+| 1 | 46.71 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
+| 2 | 21.86 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, directory, iri, graph |
 | 3 | 18.86 | block, chapter, slot, project, formal, watcher, proof, edges | steward, session, head, conflict, merge, green, conflicted, bot |
-| 4 | 17.38 | page, tile, pdf, text, avatar, glass, card, images | subgraph, subdirectory, ledger, train, steward, sibling, sub, renderable |
-| 5 | 15.77 | tile, glass, avatar, card, board, sticky, tiles, theme | rung, steward, pdf, upload, member, manifest, arxiv, owed |
-| 6 | 15.36 | steward, head, tile, train, merge, preview, board, avatar | task, beans, cli, requirement, process, requirements, methodology, goal |
-| 7 | 15.05 | queue, rung, withheld, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, preview, requirements, feature |
-| 8 | 14.68 | preview, phase, url, feature, staging, feedback, pages, language | slot, tile, glass, edges, forward, avatar, edge, claim |
+| 4 | 17.43 | page, tile, avatar, card, glass, pdf, sticky, text | subgraph, subdirectory, ledger, train, steward, sibling, sub, renderable |
+| 5 | 15.83 | tile, glass, card, avatar, board, sticky, tiles, theme | rung, pdf, steward, upload, manifest, arxiv, sniff, zip |
+| 6 | 15.38 | steward, head, train, merge, tile, preview, slot, sha | task, requirements, beans, requirement, process, methodology, cli, options |
+| 7 | 15.07 | queue, rung, withheld, arm, library, backlog, slide, bytes | lane, actor, preview, edge, forward, edges, feature, requirements |
+| 8 | 14.69 | preview, url, staging, phase, feature, feedback, pages, page | slot, tile, edges, forward, glass, edge, claim, logical |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
