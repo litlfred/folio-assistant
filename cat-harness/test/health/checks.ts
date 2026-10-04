@@ -48,6 +48,7 @@ import type {
   HealthMeasurement,
   HealthThreshold,
 } from "../../schemas/health-report.ts";
+import { MAX_PREVIEW_BYTES } from "../../scripts/staging-rotate.ts";
 
 // ── Evidence ────────────────────────────────────────────────────
 
@@ -216,6 +217,41 @@ export interface HealthContext {
   repoSize: Probe<RepoSizeEvidence>;
   beans: Probe<BeanEvidence[]>;
   todos: Probe<TodoEvidence[]>;
+  /** Every special branch the declaration names, with its budget and tip size. */
+  specialBranches: Probe<SpecialBranchEvidence>;
+}
+
+/** A special branch's size budget, as `special-branches.json` declares it. */
+export interface SpecialBranchBudget {
+  bytes: number;
+  /** `branch`: each branch on its own. `family`: every branch of a family together. */
+  scope: "branch" | "family";
+  /** The owner's own words for the number. */
+  stated: string;
+  basis: string;
+}
+
+/** One declared special branch (or family), as measured on the remote. */
+export interface SpecialBranchMeasure {
+  id: string;
+  name: string;
+  shape: "branch" | "family";
+  budget?: SpecialBranchBudget;
+  /**
+   * `measured`: budgeted, present, every member's tip tree summed.
+   * `absent`: no branch on the remote carries the name (a determined answer).
+   * `unbudgeted`: present, but the declaration states no budget — never read
+   * as within one.
+   */
+  state: "measured" | "absent" | "unbudgeted";
+  /** The name (new or legacy) the remote actually carries. */
+  resolved?: string;
+  branches: { ref: string; bytes: number; files: number }[];
+}
+
+export interface SpecialBranchEvidence {
+  rows: SpecialBranchMeasure[];
+  command: string;
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
@@ -453,8 +489,16 @@ export function formatAge(minutes: number): string {
  * as work merges instead of being carried forever.
  *
  * Owner, 2026-09-20: *"set stagfing to 500mb. drain if branches merged"*.
+ *
+ * **Superseded 2026-10-04.** The owner replaced the #1868 count cap with a size
+ * budget — *"Cap by size, not count"*, *"3gb"* — which `staging-rotate.ts`
+ * ENFORCES on every deploy. This check now reports against that same number,
+ * imported rather than restated: two budgets for one quantity would put a
+ * permanent finding (500 MB) beside a rotation that allows 3 GB, which is the
+ * monotonic-verdict failure the 2026-09-20 note above describes. Over it now
+ * means the rotation did not hold, which is news.
  */
-export const STAGING_WARN_BYTES = 500 * MB;
+export const STAGING_WARN_BYTES = MAX_PREVIEW_BYTES;
 
 
 /**
@@ -506,7 +550,13 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
     unit: "bytes",
     severity: "major",
     basis:
-      "The owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches " +
+      "The owner's size budget for previews, 2026-10-04 (\"Cap by size, not count\", \"3gb\"), " +
+      "which replaced the #1868 count cap of ten and which `staging-rotate.ts` enforces on every " +
+      "deploy; this threshold IS that constant (`MAX_PREVIEW_BYTES`), imported, so the check and " +
+      "the rotation cannot disagree. Previews had grown from ~88 MiB (2026-09-22) to 200-780 MB, " +
+      "so ten of them was 3-5 GB and any one lasted an hour or two. Being over it means the " +
+      "rotation did not hold. HISTORY, kept because the reasoning still applies: " +
+      "the owner's explicit instruction, 2026-09-20 (\"set stagfing to 500mb. drain if branches " +
       "merged\"), RAISED from the 100 MB they set on 2026-09-19 — and the raise went with a policy " +
       "change that made the old number mean something different. Until `folio-assistant-1feu`, " +
       "previews were retained on close AND on merge, so the total was monotonic: any threshold was " +
@@ -575,9 +625,9 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
   // which owns the serving question. A threshold belongs with its argument.
   //
   // What remains is the owner's own number, and it is a BUDGET rather than a
-  // cliff: 500 MB, set 2026-09-20 ("set stagfing to 500mb. drain if branches
-  // merged"). Being over it is worth telling a person about whatever GitHub
-  // does.
+  // cliff: 3 GB since 2026-10-04 (500 MB from 2026-09-20), the same constant
+  // the rotation enforces. Being over it is worth telling a person about
+  // whatever GitHub does.
   if (total > STAGING_WARN_BYTES) {
     findings.push({
       metric: "staging-total-bytes",
@@ -589,14 +639,83 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
       // is the copy a reader sees first.
       summary:
         `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, ` +
-        `over the ${formatBytes(STAGING_WARN_BYTES)} warning point.`,
+        `over the ${formatBytes(STAGING_WARN_BYTES)} budget the deploy rotation enforces.`,
       action:
-        "Report the list below to the owner and ask which are finished with. Removal is by adding " +
+        "The rotation in `feature-staging.yml`'s stage job should have held this, so first read its " +
+        "last run's `staging-rotate` output: a single preview larger than the budget is kept on its " +
+        "own (and says so in a warning), anything else is the rotation failing. Then report the list " +
+        "below to the owner and ask which are finished with. Removal is by adding " +
         "`staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once " +
         "it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative.",
     });
   }
   return settle(id, summary, STAGING_SIZE_THRESHOLDS, measurements, findings);
+}
+
+/**
+ * Each declared special branch against its declared size budget.
+ *
+ * Owner, 2026-10-04: *"also update healthchecks for limits on the other specal
+ * branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)"*,
+ * and qa-reports at 500 MB. The budgets live on the rows of
+ * `special-branches.json`, beside the names — one declaration, so a renamed
+ * branch cannot leave its budget behind — and every threshold below is built
+ * from them, basis and all. The preview budget on `gh-pages` is not here: it
+ * is `staging-preview-size`'s, and the deploy rotation enforces it.
+ *
+ * A family is measured as the owner scoped it: `lake-cache` in TOTAL, because
+ * a full clone fetches every cache branch; `auto-docs` PER BRANCH.
+ */
+export function specialBranchSizeCheck(ctx: HealthContext): HealthCheckResult {
+  const id = "special-branch-size";
+  const summary =
+    "Each special data branch (beans, todos, qa-reports, the Lean cache family, auto-docs) against the " +
+    "size budget its row in `special-branches.json` declares. Measures tip trees; removes nothing.";
+  if (ctx.specialBranches.state === "unknown") {
+    return unknownResult(id, summary, [], ctx.specialBranches.reason);
+  }
+  const ev = ctx.specialBranches.value;
+  const metric = (r: SpecialBranchMeasure) => `special-branch-bytes:${r.id}`;
+  const thresholds: HealthThreshold[] = ev.rows
+    .filter((r) => r.budget !== undefined)
+    .map((r) => ({
+      metric: metric(r),
+      value: r.budget!.bytes,
+      unit: "bytes",
+      severity: "major",
+      basis: `${r.budget!.scope === "family" ? `Every branch under \`${r.name}\` together` : `\`${r.name}\`${r.shape === "family" ? ", each branch" : ""}`}: ${r.budget!.stated}. ${r.budget!.basis}`,
+    }));
+  const measurements: HealthMeasurement[] = [];
+  const findings: HealthFinding[] = [];
+  for (const r of ev.rows) {
+    if (r.state !== "measured" || r.budget === undefined) continue;
+    const total = r.branches.reduce((n, b) => n + b.bytes, 0);
+    measurements.push({ metric: metric(r), value: total, unit: "bytes", command: ev.command });
+    const over =
+      r.budget.scope === "family"
+        ? total > r.budget.bytes
+          ? [{ what: `${r.branches.length} branch(es) under \`${r.resolved ?? r.name}\``, bytes: total }]
+          : []
+        : r.branches.filter((b) => b.bytes > r.budget!.bytes).map((b) => ({ what: `\`${b.ref}\``, bytes: b.bytes }));
+    for (const o of over) {
+      findings.push({
+        metric: metric(r),
+        severity: "major",
+        summary: `${o.what} ${o.bytes === total && r.budget.scope === "family" ? "total" : "is"} ${formatBytes(o.bytes)}, over the ${formatBytes(r.budget.bytes)} budget (${r.budget.stated}) for \`${r.id}\`.`,
+        action:
+          "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or " +
+          "whether the budget should change. Nothing here removes anything; the budget is the owner's.",
+      });
+    }
+  }
+  const counted = (state: SpecialBranchMeasure["state"]) => ev.rows.filter((r) => r.state === state);
+  measurements.push(
+    { metric: "special-branches-measured", value: counted("measured").length, unit: "count", command: ev.command },
+    // Said, not dropped: a branch the declaration gives no budget is NOT within one.
+    { metric: "special-branches-unbudgeted", value: counted("unbudgeted").length, unit: "count", command: `present without a budget: ${counted("unbudgeted").map((r) => r.id).join(", ") || "none"}` },
+    { metric: "special-branches-absent", value: counted("absent").length, unit: "count", command: `not on the remote: ${counted("absent").map((r) => r.id).join(", ") || "none"}` },
+  );
+  return settle(id, summary, thresholds, measurements, findings);
 }
 
 /**
@@ -1794,6 +1913,13 @@ export const HEALTH_CHECKS: readonly {
       "Total size of the `STAGING/` review previews on the publish branch, against the owner's " +
       "budget. Measurement only — the serving question is `pages-publish-health`.",
     run: stagingSizeCheck,
+  },
+  {
+    id: "special-branch-size",
+    summary:
+      "Each special data branch against the size budget its `special-branches.json` row declares " +
+      "(owner, 2026-10-04). Measures tip trees; removes nothing.",
+    run: specialBranchSizeCheck,
   },
   {
     id: "pages-publish-health",

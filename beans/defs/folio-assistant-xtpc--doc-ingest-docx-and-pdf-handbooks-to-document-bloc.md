@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-10-04T19:17:28Z
+updated_at: 2026-10-04T20:03:46Z
 parent: folio-assistant-q4jm
 ---
 
@@ -53,3 +53,15 @@ The owner's #197 asks for exactly this, plus provenance **to page and line of th
 - [ ] register `id-reingest-stable`: re-ingesting an unchanged upload yields the same labels. Implement it beside `id-unique` / `id-stable` in `qa-checkers-ids.ts`, once this bean's ingest emits blocks. It was not registered earlier because a criterion with nothing to check sweeps `n/a` everywhere, and that reads as coverage.
 
 _2026-10-04T19:17:28Z_ — Claimed by claude/confident-bardeen-inaarx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Round 1: 2026-10-04 (branch claude/confident-bardeen-inaarx)
+
+- `folio-assistant-core/scripts/docx-structure.py`, standard library only: headings, lists (ordered/bulleted from numbering.xml), tables (gridSpan), images, captions, text-box call-outs (mc:Fallback copies skipped), footnotes, and bold/italic/hyperlinks kept as Markdown. On the DPI-H draft: 1108 items, 101 footnotes.
+- `folio-assistant-core/scripts/docx-to-folio.ts`: an editable document folio with nested sections and one block per paragraph, list, table, figure or call-out. Labels are `<prefix><section>-<text hash>`. A re-run looks old labels up by hash: 946 of 946 kept on the DPI-H draft, and the test inserts a paragraph and sees exactly one new label. Every block carries `meta.source` page / printedPage / lineStart / lineEnd / method, and `review-anchors.json` is the same index in one file.
+- Platform fixes it needed: `render-markdown.ts` now renders subsection headings at any depth (they were dropped, and only one level of blocks was walked); `Section.lead` for a chapter's text before its first heading; `build-document-site.ts` copies `folio/<slug>/media/`.
+
+- [x] every ingested node carries source page and line provenance
+- [ ] a .docx upload becomes document blocks through the apui entry point (the CLI works; apui not wired)
+- [ ] document-intake reachable from the document adapter
+- [x] re-ingesting an unchanged document keeps every label (test; `id-reingest-stable` not yet registered)

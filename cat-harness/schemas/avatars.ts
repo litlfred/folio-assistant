@@ -532,6 +532,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 136,
     reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
   },
+  "computation-witness": {
+    // A clipboard with a tick: the record a computation keeps of what it
+    // checked and that the checks held. Deliberately NOT `qa`'s verdict — a
+    // witness is a computation's own record, produced by running it, and
+    // judges nothing else. Bean `qou-qb6t`. `tone: 328` was unused and sits
+    // away from `code`'s so a producer and its record are told apart.
+    glyph: "M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5",
+    tone: 328,
+    reads: "a clipboard with a tick — a computation's record of what it checked, and that it held",
+  },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
     // that is something arriving, and a release is something that WENT, under

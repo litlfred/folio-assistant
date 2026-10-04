@@ -665,6 +665,153 @@
       "status": "candidate"
     },
     {
+      "id": "public-comment.anchorschema.candidates",
+      "prefLabel": "AnchorSchema.candidates",
+      "definition": "Other plausible targets, for triage to choose between.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.candidates",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.anchorschema.note",
+      "prefLabel": "AnchorSchema.note",
+      "definition": "Why, in a sentence a triager can check.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.anchorschema.targetlabel",
+      "prefLabel": "AnchorSchema.targetLabel",
+      "definition": "A block or section label in the folio; null when unplaced.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.targetLabel",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetrefschema.before",
+      "prefLabel": "ChangeSetRefSchema.before",
+      "definition": "Before/after deep links to the comment's anchor.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.before",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.changesetrefschema.stagingurl",
+      "prefLabel": "ChangeSetRefSchema.stagingUrl",
+      "definition": "The staging preview of the change set.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.stagingUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.citationschema.caption",
+      "prefLabel": "CitationSchema.caption",
+      "definition": "\"Table 3.1\" / \"Figure 2.2\" as parsed from the line or comment.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#CitationSchema.caption",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.citationschema.raw",
+      "prefLabel": "CitationSchema.raw",
+      "definition": "The cell or phrase exactly as given.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#CitationSchema.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.decisionschema.changeset",
+      "prefLabel": "DecisionSchema.changeSet",
+      "definition": "Where the change is made, for a decision that changes the document.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema.changeSet",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.publicfieldsschema.discussion",
+      "prefLabel": "PublicFieldsSchema.discussion",
+      "definition": "GitHub issue holding this comment's discussion, once one is opened.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.discussion",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.publicfieldsschema.ref",
+      "prefLabel": "PublicFieldsSchema.ref",
+      "definition": "\"PC-0042\": the number a committee and a commenter refer to.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.publicfieldsschema.text",
+      "prefLabel": "PublicFieldsSchema.text",
+      "definition": "The comment as written.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.text",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.recommendationschema.by",
+      "prefLabel": "RecommendationSchema.by",
+      "definition": "GitHub login of the committee member.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.by",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.recommendationschema.url",
+      "prefLabel": "RecommendationSchema.url",
+      "definition": "The issue or PR comment it was given in.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.url",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.reviewerschema.id",
+      "prefLabel": "ReviewerSchema.id",
+      "definition": "Stable pseudonym: a hash of the normalised email or name.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.reviewerschema.name",
+      "prefLabel": "ReviewerSchema.name",
+      "definition": "Only when `acknowledge` is true.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.sourceschema.batch",
+      "prefLabel": "SourceSchema.batch",
+      "definition": "The intake batch: a file name, a form export, a letter.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.batch",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.sourceschema.segment",
+      "prefLabel": "SourceSchema.segment",
+      "definition": "For a narrative: which passage of the letter this comment is.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.sourceschema.sha256",
+      "prefLabel": "SourceSchema.sha256",
+      "definition": "sha256 of the intake file, so a re-import is recognised.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.sha256",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.sourceschema.url",
+      "prefLabel": "SourceSchema.url",
+      "definition": "For a GitHub comment: its URL.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.url",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.transitioninput.decision",
+      "prefLabel": "TransitionInput.decision",
+      "definition": "`at` and `by` default to the transition's.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.decision",
+      "status": "candidate"
+    },
+    {
+      "id": "public-comment.transitioninput.recommendation",
+      "prefLabel": "TransitionInput.recommendation",
+      "definition": "`at` defaults to the transition's.",
+      "source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation",
+      "status": "candidate"
+    },
+    {
       "id": "review-comment.blockanchor.section",
       "prefLabel": "BlockAnchor.section",
       "definition": "The section listing the block (the ChangeSet's form). The heat map's row for its comments (bean `qbfi`).",

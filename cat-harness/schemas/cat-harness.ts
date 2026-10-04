@@ -1424,7 +1424,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — three keyings, and a fourth is a schema change
+ * ## `keyedBy` — four keyings, and a fifth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1455,14 +1455,23 @@ export type Tile = z.infer<typeof TileSchema>;
  *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
  *   and it is exactly what separates these two keyings.
  *
- * The field is an enum, not a string, so a fourth keying is a schema change
+ * - `route-family` — one entry per MEMBER of a family under the directory's
+ *   path, the member supplied at publish time rather than declared. Bean
+ *   `xp5j`. **Its reasoning lives with the enum**, in
+ *   `schemas/subgraph-source.ts`: a keying is documented where its one
+ *   definition is, which is the same rule that put the enum there (`1j3q`).
+ *   {@link RouteMemberSchema} there validates the untrusted member key.
+ *
+ * The field is an enum, not a string, so a FIFTH keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value. The
  * enum itself is `KeyedBySchema` in `schemas/subgraph-source.ts`, IMPORTED and
- * not restated: this field held its own `z.enum(["commit","tip","route"])` until
- * the two drifted — `route` was added here with bean `1j3q` and not there, so a
- * route-keyed declaration parsed and then threw a ZodError inside
- * `resolveSubgraphSource`. A schema change somebody has to make is only a guard
- * if there is ONE schema to change.
+ * not restated: this field held its own `z.enum([...])` until the two drifted —
+ * `route` was added here with bean `1j3q` and not there, so a route-keyed
+ * declaration parsed and then threw a ZodError inside `resolveSubgraphSource`.
+ * **A schema change somebody has to make is only a guard if there is ONE schema
+ * to change**, and `route-family` was added to `KeyedBySchema` for exactly that
+ * reason — this branch first restated the enum here and reproduced `1j3q` one
+ * keying later.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
@@ -1788,12 +1797,12 @@ export const ContentDirectorySchema = z.preprocess(
   ContentDirectoryShape.refine(
     (d) =>
       !(
-        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
         (d.graphKinds as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
-        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
   ),
@@ -4491,7 +4500,27 @@ function declaredFromWithin(
       continue;
     }
     for (const nd of nested.directories ?? []) {
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      // `nd.subgraph !== true` was a third condition here until 2026-10-04.
+      // It withheld 29 directories from EVERY store-side consumer —
+      // `branch-store`, `graph-read`, `audit-coverage`, `state-mount` — while
+      // `nestedDirectories` (the other walk over the same declaration files,
+      // read by `check:declared-dirs` and `check:requirements`) ignored it. One
+      // fact, two readers, opposite answers: the shape of #2069's enum drift.
+      //
+      // It was never in the schema. No `subgraph: z.boolean()`, no `subgraph?:`
+      // field — it was read off an untyped object here and nowhere else, so
+      // nothing validated it and nothing required it. It appeared in 5 files,
+      // all `skills/skills.json`, and was absent from `beans/beans.json`,
+      // `docs/docs.json` and `auto-docs.json`. Removing it resolved 144 -> 173
+      // directories, including `auto-docs.json`'s ten sub-sub-graphs: the
+      // owner's 2026-10-03 ruling was implemented and unreachable.
+      //
+      // Measured consequences, all repaired in the same change because an
+      // exposed finding is still a finding: `check:layout-norms` saw
+      // `beans/defs contains beans/defs/archive` (siblings in one declaration
+      // file, now sanctioned there) and `check:subgraphs` saw one genuinely
+      // broken link in `docs/proposals/` that it could not previously reach.
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
       out.push({ sub, entry: nd as unknown as ContentDirectory });
     }
@@ -4563,7 +4592,7 @@ function promoteFromWithin(
       // (beans.json's `defs`, docs.json's `proposals`). It answered the retired
       // `dependents` question until 2026-09-30 (option A); the fact it carried
       // here was never about dependents, so it is now stated as what it is.
-      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.subgraph !== true) continue;
+      if (typeof nd.id !== "string" || typeof nd.path !== "string") continue;
       // An instance-level DECLARATION with this id wins; a built-in DEFAULT
       // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
       // a from-within declaration is stronger than a convention.

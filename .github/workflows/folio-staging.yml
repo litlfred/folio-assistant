@@ -147,7 +147,11 @@ concurrency:
 
 jobs:
   stage:
-    if: github.event_name != 'issue_comment' && github.event_name != 'push' && github.event.action != 'closed'
+    # A dispatch on the default branch is a request to republish MAIN (see
+    # publish-main), not to stage the default branch as if it were a PR.
+    if: >-
+      github.event_name != 'issue_comment' && github.event_name != 'push' && github.event.action != 'closed'
+      && !(github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -353,12 +357,23 @@ jobs:
           bun run "$PLATFORM_DIR/cat-harness/scripts/publish-block-qa.ts" \
             --folio "$FOLIO_DIR" --out "$SITE_DIR/block-qa.json"
 
-      - name: Check out the publish branch
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ inputs.publish_branch }}
-          path: pages
-          persist-credentials: true
+      - name: Check out the publish branch, or start it
+        # The same step as publish-main's. A new folio's FIRST pull request
+        # can run before anything was ever published, and actions/checkout
+        # fails outright on a missing ref — measured on litlfred/smart-ra#1,
+        # whose site built and then could not be staged. Started as an orphan
+        # here, it is the branch publish-main later writes main's site into.
+        env:
+          PUBLISH_BRANCH: ${{ inputs.publish_branch }}
+        run: |
+          set -eu
+          if git ls-remote --exit-code --heads origin "$PUBLISH_BRANCH" >/dev/null; then
+            git fetch --depth 1 origin "$PUBLISH_BRANCH"
+            git worktree add -B "$PUBLISH_BRANCH" pages "origin/$PUBLISH_BRANCH"
+          else
+            echo "no $PUBLISH_BRANCH branch yet; starting one"
+            git worktree add --orphan -b "$PUBLISH_BRANCH" pages
+          fi
 
       - name: Choose the before side
         # The published site a reviewer compares with (bean `5uuf`): main's
@@ -578,7 +593,12 @@ jobs:
     # picture was missing. `publish-main-site.ts` deletes only files its own
     # manifest names: `STAGING/`, `_render-log/` and anything a person put at
     # the root are never touched.
-    if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
+    # A DISPATCH on the default branch publishes main too (bean v26p): a
+    # workflow that commits to main with GITHUB_TOKEN (the public-comment
+    # intake, recording a committee member's tag) cannot trigger a `push` run,
+    # because GitHub does not start workflows from GITHUB_TOKEN pushes, but it
+    # may dispatch one. Without this the record changed and the site did not.
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     concurrency:
       # One main publish at a time, and never cancelled half-way: the newest

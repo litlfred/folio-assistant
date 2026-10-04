@@ -855,6 +855,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_publication.callactivity_publiccomment",
+      "prefLabel": "Public comment on the review version",
+      "definition": "When the draft is released for public comment: comments returned on the frozen, line-numbered review version are placed, triaged, recommended on by the review committee and decided by the editor (public-comment.bpmn). Bean v26p, issue #197.",
+      "notation": "CallActivity_PublicComment",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#CallActivity_PublicComment",
+      "status": "candidate"
+    },
+    {
       "id": "process_publication.task_authorizerelease",
       "prefLabel": "Authorise the release [content-publish]",
       "definition": "Publication requires authorisation by the programme manager or designated authority.",
@@ -932,6 +940,78 @@
       "definition": "Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper.",
       "notation": "Task_SmeSignoff",
       "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_SmeSignoff",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.callactivity_changeset",
+      "prefLabel": "Review the change set on its staging preview",
+      "definition": "The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process.",
+      "notation": "CallActivity_ChangeSet",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#CallActivity_ChangeSet",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_assign",
+      "prefLabel": "Assign to committee members",
+      "definition": "public-comment assign: by GitHub login. A committee member who recommends on an unassigned comment is assigned it as they do.",
+      "notation": "Task_Assign",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Assign",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_authoredits",
+      "prefLabel": "Edit the document as decided, on a feature branch",
+      "definition": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch that may answer several comments. Status: editing.",
+      "notation": "Task_AuthorEdits",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_AuthorEdits",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_committeerecommends",
+      "prefLabel": "Recommend a decision, with a rationale",
+      "definition": "A GitHub comment tagged pc: PC-0042 / recommend: code, from a login in config.json committee, or public-comment recommend.",
+      "notation": "Task_CommitteeRecommends",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_CommitteeRecommends",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_editordecides",
+      "prefLabel": "Decide, weighing the recommendations",
+      "definition": "public-comment decide, or decide: code on GitHub from a login in config.json editors. accepted, accepted-modified, not-accepted, noted, deferred; a reason for all but accepted. Also reopens a decided comment.",
+      "notation": "Task_EditorDecides",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_EditorDecides",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_incorporate",
+      "prefLabel": "Mark incorporated when the change set merges",
+      "definition": "public-comment incorporate, naming the branch, PR and staging URL.",
+      "notation": "Task_Incorporate",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Incorporate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_ingest",
+      "prefLabel": "Ingest and place each comment",
+      "definition": "public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received.",
+      "notation": "Task_Ingest",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Ingest",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_triage",
+      "prefLabel": "Triage: confirm the anchor, type and priority",
+      "definition": "public-comment triage / reassign / duplicate. An unplaced or low-confidence anchor is placed here, by a person.",
+      "notation": "Task_Triage",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Triage",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_withdraw",
+      "prefLabel": "Record the withdrawal",
+      "definition": "public-comment withdraw, from any open status.",
+      "notation": "Task_Withdraw",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Withdraw",
       "status": "candidate"
     }
   ]

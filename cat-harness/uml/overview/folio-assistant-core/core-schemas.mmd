@@ -72,6 +72,25 @@ classDiagram
       anchor [0..1] string
       citedBy [0..*] string[]
     }
+    class folio_assistant_core_core_schemas_skills_public_comment_input_schema_json_Public_Comment_Input["Public Comment Input"] {
+      <<schema: skills/public-comment/input.schema.json>>
+      operation [1] enum(13)
+      file [0..1] string
+      ref [0..1] string
+      to [0..1] string
+      code [0..1] accepted | accepted-modified | not-accepted | noted | deferred
+      reason [0..1] string
+      branch [0..1] string
+      pr [0..1] integer
+      filter [0..1] object
+    }
+    class folio_assistant_core_core_schemas_skills_public_comment_output_schema_json_Public_Comment_Output["Public Comment Output"] {
+      <<schema: skills/public-comment/output.schema.json>>
+      changed [0..*] string[]
+      unplaced [0..*] string[]
+      refused [0..*] string[]
+      comments [0..*] any[]
+    }
     class folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input["Quality Control Input"] {
       <<schema: skills/quality-control/input.schema.json>>
       checkType [1] qa-report | publication-checklist | conformance-validation | functionality-test | cross-component-consistency
@@ -104,6 +123,8 @@ classDiagram
   cssClass "folio_assistant_core_core_schemas_skills_document_structure_output_schema_json_Document_Structure_Output" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_normative_statements_input_schema_json_Normative_Statement_Input" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_normative_statements_output_schema_json_Normative_Statement_Output" fa_uml_kind_schemas
+  cssClass "folio_assistant_core_core_schemas_skills_public_comment_input_schema_json_Public_Comment_Input" fa_uml_kind_schemas
+  cssClass "folio_assistant_core_core_schemas_skills_public_comment_output_schema_json_Public_Comment_Output" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output" fa_uml_kind_schemas

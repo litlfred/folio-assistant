@@ -52,12 +52,40 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - C@T Harness — *declared, not published*
 
+### `bean-defs`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
+### `bean-notes`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
 ### `beans`
 
 1 of 1 published.
 {: .fa-hx-dim }
 
 - [Folio Assistant]({{ '/beans/' | relative_url }})
+
+### `board-positions`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
+### `boards`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
 
 ### `cat-harness`
 
@@ -196,6 +224,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Folio Assistant — *declared, not published*
 
+### `merge-queue`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
 ### `methodology`
 
 4 of 4 published.
@@ -291,6 +326,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [folio-assistant-sci]({{ '/cat-harness/schemas/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/schemas/' | relative_url }})
 
+### `session-survey`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
 ### `skills`
 
 5 of 7 published.
@@ -326,6 +368,20 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - SMART Base — *declared, not published*
 - WHO IRIS — *declared, not published*
 
+### `todo-feedback`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
+### `todo-items`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
 ### `todos`
 
 1 of 1 published.
@@ -335,12 +391,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `tools`
 
-1 of 4 published.
+1 of 5 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/tools/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `translation-sources`
@@ -373,6 +430,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - C@T Harness — *declared, not published*
 
+### `voice-vendors`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `voices`
 
 5 of 5 published.
@@ -385,6 +449,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [WHO IRIS]({{ '/cat-harness/voices/who-iris/' | relative_url }})
 
 ### `waiver`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- Folio Assistant — *declared, not published*
+
+### `workflow-state`
 
 0 of 1 published.
 {: .fa-hx-dim }

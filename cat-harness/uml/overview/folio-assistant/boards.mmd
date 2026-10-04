@@ -1,0 +1,12 @@
+classDiagram
+  direction TB
+  namespace folio_assistant__boards {
+    class folio_assistant_boards_Board["Board"] {
+      <<json: BoardSchema>>
+      $schema [1] 'folio-board/v1'
+      id [1] string
+      title [1] string
+      filter [0..1] object
+    }
+  }
+  cssClass "folio_assistant_boards_Board" fa_uml_kind_boards
