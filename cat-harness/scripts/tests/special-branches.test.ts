@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "fs";
-import { join, resolve } from "path";
+import { resolve } from "path";
 
 /**
  * `special-branches.json` is the one declaration of the harness's special

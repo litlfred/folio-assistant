@@ -34,12 +34,12 @@ describe("a window is a lease, so it must expire", () => {
   });
 
   test("`expires` is REQUIRED — without it, abandoned and open are the same", () => {
-    const { expires, ...noExpiry } = OPEN;
+    const { expires: _expires, ...noExpiry } = OPEN;
     expect(RefWindowSchema.safeParse(noExpiry).success).toBe(false);
   });
 
   test("`handoff` is REQUIRED — it is the whole handover answer", () => {
-    const { handoff, ...noHandoff } = OPEN;
+    const { handoff: _handoff, ...noHandoff } = OPEN;
     expect(RefWindowSchema.safeParse(noHandoff).success).toBe(false);
   });
 
@@ -177,7 +177,7 @@ describe("the lease fields stay spelled the same as the hold's", () => {
   test("`waitsOn` is deliberately NOT shared — it is narrowed to `ref`", () => {
     expect(SHARED_LEASE_FIELDS as readonly string[]).not.toContain("waitsOn");
     // The hold requires it...
-    const { waitsOn, ...noWaitsOn } = HOLD_SAMPLE;
+    const { waitsOn: _waitsOn, ...noWaitsOn } = HOLD_SAMPLE;
     expect(HoldSchema.safeParse(noWaitsOn).success).toBe(false);
     // ...and the window refuses it, because `ref` is the typed answer.
     expect(RefWindowSchema.safeParse({ ...OPEN, waitsOn: "gh-pages" }).success).toBe(false);

@@ -76,6 +76,9 @@
  * in the declared `workflow-state` graph under `beans/workflows/`, committed,
  * where a sibling session reads the same position — the same reason a workflow
  * instance lives there rather than in a variable.
+ *
+ * @module schemas/ref-window
+ * @graphNode schema
  */
 import { z } from "zod";
 
