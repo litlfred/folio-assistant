@@ -363,16 +363,26 @@ describe("todos, issue-marks and the claim writer resolve by declared ID", () =>
     expect(TODO_ROOT().replace(/\\/g, "/")).toMatch(/\/todos$/);
   });
 
-  test("claim-bean REFUSES once the store is mounted: a claim pushed to main lands where no reader looks", async () => {
+  // SUPERSEDED, deliberately. This asserted the #2042 REFUSAL — "a claim
+  // pushed to main lands where no reader looks". The owner ruled 2026-10-04
+  // that claims move to the branch store "when the readers and writers are
+  // all ready for cutover", so the refusal is now a WRITER and
+  // `claimOnDefaultBranch` DISPATCHES to it. What is still true, and is what
+  // this now pins, is that it no longer pushes to the default branch.
+  test("claim-bean DISPATCHES to the branch store once the store is mounted — it no longer pushes to main", async () => {
     const { claimOnDefaultBranch } = await import("../claim-bean.ts");
 
     const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
     const into = join(cut, "beans-mount");
     mount(cut, "beans", into);
     const r = claimOnDefaultBranch("fx-1", "some-branch", { repo: cut });
+
+    // No remote here, so the branch-store path cannot reach a tip — the point
+    // is WHICH path ran. The old refusal's wording is gone, and the reason now
+    // names the branch store rather than the default branch.
     expect(r.state).toBe("unknown");
-    expect(r.reason).toContain("where no reader looks");
-    expect(r.attempts).toBe(0);
+    expect(r.reason ?? "").not.toContain("where no reader looks");
+    expect(r.reason ?? "").toMatch(/cat\/cat-harness\/beans|branch store|tip-keyed/i);
   });
 
   test("claim-bean is UNCHANGED while the checkout still tracks the files — `notCutOver` is the discriminator", async () => {

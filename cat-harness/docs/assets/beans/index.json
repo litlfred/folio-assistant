@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 784,
+      "count": 785,
       "unit": "beans"
     }
   },
@@ -235,14 +235,14 @@
     {
       "id": "folio-assistant-0s6w",
       "title": "MERGE VERIFICATION: reading merge-tree's rc through a command substitution reports the WRONG exit status, and it reads as clean",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:07:04Z",
-      "updatedAt": "2026-10-03T02:07:04Z",
+      "updatedAt": "2026-10-04T06:03:36Z",
       "preview": "A merge steward verifies mergeability with `git merge-tree --write-tree` and reads the exit\ncode: **rc=0 clean, rc=1 CONFLICT, rc>=2 an ERROR that is not clean**. On 2026-10-03 that\nread was wrong for a whole session, in one specific shell form, and it reported **clean**.\n\n## The defect\n\n```sh\ngit merge-tree --write-tree origin/main \"$sha\" >/dev/null 2>&1\necho \"merge-tree rc=$?\"                   ",
       "file": "beans/defs/folio-assistant-0s6w--merge-verification-reading-merge-trees-rc-through.md"
     },
@@ -9111,12 +9111,12 @@
       "title": "MERGE GATE (e): four merge-steward gaps - regen pairs for l1-complete/smart-kg-l1, gitlink fast-forward, no-CI heads in trains, stale needs-merge-human",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-nok9",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:29:16Z",
-      "updatedAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-04T06:10:07Z",
       "preview": "Child (e) of the merge-gate epic. These are merge-steward gaps measured 2026-10-02 while running merge trains. Each one lets a merge look proved when it is not.\n\n1. `regen-after-merge.ts` has no writer pair for `check:l1-complete`, nor for `smart-base:smart-kg-l1` (the `--entry` form). Both run in `code-quality-gates.yml`, so a train's single `regen` can report \"current\" while CI then goes red.\n2.",
       "file": "beans/defs/folio-assistant-u7be--merge-gate-e-four-merge-steward-gaps-regen-pairs-f.md"
     },
@@ -9189,6 +9189,20 @@
       "updatedAt": "2026-09-23T21:59:49Z",
       "preview": "## What\n\nEvery generated docs page carries **two elements with `id=\"fa-nav-open\"`**. A\nduplicate `id` is invalid HTML, and `document.getElementById` plus every\n`<label for=…>` resolve to the **first** one only.\n\n## How it was found\n\nMeasured 2026-09-22 on the **rendered** page, not on the source — the staging\npreview for PR #957, read out of the `gh-pages` publish ref rather than over\nHTTP (the ag",
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
+    },
+    {
+      "id": "folio-assistant-uoij",
+      "title": "kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T05:32:27Z",
+      "updatedAt": "2026-10-04T05:32:48Z",
+      "preview": "Owner chose this on 2026-10-04, as item 2 of three (\"1 2 3\") after #2032 went green.\n\n## The measurement that makes it a bean rather than an idea\n\nAdding the `docs-auto` kind on #2022, I ran **six hand-picked `check:*` commands** and\nthey all passed. `bun run gates` then found **5 failures across 217**, and `bun test`\nfound two more:\n\n| obligation | found by | generated? |\n|---|---|---|\n| `readme:",
+      "file": "beans/defs/folio-assistant-uoij--kindregister-one-command-performs-the-seven-artefa.md"
     },
     {
       "id": "folio-assistant-uoob",
@@ -9769,14 +9783,14 @@
     {
       "id": "folio-assistant-wczm",
       "title": "Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main's side on a fast-forwardable gitlink; merge-main bot doesn't clear needs-merge-human",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:19:31Z",
-      "updatedAt": "2026-10-02T17:19:31Z",
+      "updatedAt": "2026-10-04T07:12:57Z",
       "preview": "Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-pipeline epic `hfag` for these regenerate and merge-bot gaps.\n\n## Overlap with `u7be` (read this first)\n\n`u7be` (\"MERGE GATE (e): four merge-steward gaps\"), filed on PR #1887's branch and NOT on `main` when this bean was created, lists items (1), (2) and (4) below as its own (1), (2) and (4). Checked with `beans list` ",
       "file": "beans/defs/folio-assistant-wczm--regenerate-gaps-no-writer-for-checkl1-complete-or.md"
     },
@@ -10324,7 +10338,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-03T17:52:50Z",
+      "updatedAt": "2026-10-04T05:37:22Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -11124,8 +11138,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 304,
-    "openTotal": 468,
+    "orphanOpen": 303,
+    "openTotal": 467,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
