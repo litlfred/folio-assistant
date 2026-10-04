@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9c7h
 title: Move fsh-guts/ to its own special branch cat/cat-harness/fsh-guts (separation prerequisite); retarget its tools
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T21:20:17Z
-updated_at: 2026-10-03T08:34:43Z
+updated_at: 2026-10-04T12:52:02Z
 parent: folio-assistant-7x5n
 ---
 
@@ -34,10 +34,10 @@ Branch name updated 2026-10-02 per the owner's naming ruling, `cat/<harness>/<na
 ## Done when
 - [x] `fsh-guts` declared in `special-branches.json`, with the test green (2026-10-03, branch claude/lucid-shannon-o8zop1-fsh-guts)
 - [x] `cat/cat-harness/fsh-guts` exists with the contents of `fsh-guts/` (owner confirmed the push 2026-10-03; seeded 9c8828be, verified cold)
-- [ ] every tool listed above reads and writes through the declaration; `bun run gates` green
-- [ ] relocation ("delete means relocate") writes to the branch, and an end-to-end test proves it
-- [ ] `fsh-guts/` removed from `main` after the owner confirms
-- [ ] the separation partition (`instance-rules.ts`) no longer has an fsh-guts case
+- [x] every tool listed above reads and writes through the declaration; `bun run gates` green
+- [x] relocation ("delete means relocate") writes to the branch, and an end-to-end test proves it
+- [x] `fsh-guts/` removed from `main` after the owner confirms
+- [x] the separation partition (`instance-rules.ts`) no longer has an fsh-guts case
 
 Related: `32f6` (cat- prefix; PR #1913), `rva2` (one storage field per special branch), `wggr` (non-instance stores), `oi3h` (fsh-guts visualiser).
 
@@ -91,3 +91,27 @@ The step-3 inventory had marked `board-relocate.bpmn`'s relocate handler as uncl
 - The UI only READS. The dead-fish viewer fetches the published `fsh-guts.json` export. #1926's "discard to fsh-guts" is browser-local ("stickies you discarded in this browser") and never writes to the repository.
 
 **So the complete writer list for the cutover is:** `sample-import-run.ts` (already resolved through `fshGutsDirectory`, #1945); the log writer (local scratch, stays in the working tree by design); and AGENTS following the `fsh-guts`, `deletion-requires-confirmation` and `board-diagram-interchange` skills, plus the relocate steps of `activity-log.bpmn`, `code-change-review.bpmn` and `sample-import.bpmn`. For those, step 3 is an INSTRUCTION change ("mount, move into the mount, `branch-store push`" instead of `git mv` into fsh-guts/), made once the content-source resolver from the 2026-10-03 subgraph-source ruling lands.
+
+## 2026-10-04: the cutover (owner: "1", one cutover PR, "coordinate with Merge Manager and siblings")
+
+- **The branch caught up first.** Main's `fsh-guts/` had grown to 147 files since the seed (140). Those 8 paths (README plus 7 new files) were spliced onto the branch with `bun run state:push` through a mount: `expect`-guarded, no force, logs excluded. The branch's `fsh-guts` tree at **9c13b434** equals main's last tree, **3750b31a**, so nothing on main is lost.
+- **The declaration:** `folio-assistant.json`'s `fsh-guts` entry carries `source: { kind: "branch", branch: "cat/cat-harness/fsh-guts", keyedBy: "tip" }`. With doy3 (#1997), `tipLocations`, `state:mount` and `state:push` all find it.
+- **Main stops tracking it:** 147 files removed from the index. `.gitignore` gains `/fsh-guts/**`. The `/**` matters: a directory rule `fsh-guts/` is reported for every path under it, so the `fsh-guts/logs/` rule is never seen and branch-store would push the logs. This is pinned by a test that fails under the directory rule.
+- **No vacuous read:** `branch-store.contentAt(id)` returns present (via checkout or mount), not-mounted, or undeclared. The export, the visualiser, `check:uploads-retired` and `check:retired-front-matter` exit 2 ("could not determine") when the trashcan is not mounted. The sample-import trial writer refuses too. With the directory absent, 15 tests fail loudly instead of passing on nothing; with it mounted, all pass.
+- **Logs do not block the first mount:** `mountTip` no longer counts checkout-ignored files as a competing copy (fixed in branch-store, with a test).
+- **CI:** 13 `bun run state:mount` steps across code-quality-gates (7 jobs), docs-site, feature-staging (3) and merge-main (2). Each is a STEP_EXEMPTIONS `ci-only` setup step, and `state-mount.ts` declares `@covers none`.
+- **Relocation, the agents' half:** skill `kg-core/fsh-guts` §"Where it lives" says: mount, then a plain `mv` (NOT `git mv`, which stages the ignored new path onto main; verified), then `git rm --cached` the old path, then `state:push`.
+- **Partition:** `instance-rules.ts` names only CODE about fsh-guts (the visualiser, the schema), which stays. No rule partitions the directory, because it is no longer in the tree.
+- **Siblings:** #1790 edits `fsh-guts/README.md` and #1898 edits the skill. I commented on both, and asked the Merge Manager to order them around this cutover. Before `ready:`, main's `fsh-guts/` is re-spliced, so anything written meanwhile carries over.
+
+
+## Summary of Changes
+
+Landed in #2057 (merge `2366227`, 2026-10-04): `fsh-guts/` lives on `cat/cat-harness/fsh-guts` and is mounted at `fsh-guts/` by `bun run state:mount`; its readers refuse with a clear error when it is not mounted; CI mounts it before every step that reads it; writes go through `bun run state:push`.
+
+**Re-derived from the remote, 2026-10-04** (bean-coordination § "Closing a bean whose work has already landed"):
+- `git ls-tree origin/main fsh-guts` → 0 entries: nothing tracked on main.
+- `folio-assistant.json` on `origin/main`: fsh-guts `source` is `{kind: branch, branch: cat/cat-harness/fsh-guts, keyedBy: tip}`.
+- `git ls-remote origin refs/heads/cat/cat-harness/fsh-guts` → `f54b70e`, holding 147 files under `fsh-guts/`.
+- `.gitignore` carries `/fsh-guts/**` (the file-level rule, so `fsh-guts/logs/` stays ignored inside the mount).
+- On a fresh worktree of `origin/main`: `bun run state:mount` → mounted, 147 files at `f54b70e85cfa`; `bun run fsh-guts:viz:check` → exit 0.

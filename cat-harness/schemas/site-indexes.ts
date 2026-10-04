@@ -63,6 +63,15 @@ export const BeanIndexItemSchema = z
   })
   .strict();
 
+// Declared in `bean-graph.ts`, the HARNESS layer, and imported here. The
+// rollup is a bean-store concept, and `cat-harness` may not import
+// `folio-assistant-core` — core depends on harness, so the declaration has to
+// sit on the side that `scripts/milestone-rollup.ts` can reach. Measured by
+// `check:partition`, which refused the other direction outright.
+import { MilestonePlanSchema, MilestoneRollupSchema } from "./bean-graph.ts";
+
+export { MilestonePlanSchema, MilestoneRollupSchema };
+
 export const BeanIndexSchema = z
   .object({
     ...envelope("folio-bean-index/v1"),
@@ -78,6 +87,13 @@ export const BeanIndexSchema = z
         })
         .strict(),
     ),
+    /**
+     * The milestone rollup the board renders. OPTIONAL, because an index
+     * written before this field existed is still a valid index — and because
+     * "no plan in the projection" is a state the renderer distinguishes from
+     * "a plan with nothing done".
+     */
+    plan: MilestonePlanSchema.optional(),
   })
   .strict();
 
@@ -462,7 +478,41 @@ export const QaIndexSchema = z
     $schema: z.literal("folio-qa-index/v1"),
     /** The page's slug. */
     page: z.string().min(1),
+    /**
+     * Whether the build that wrote this had the derived QA corpus (bean
+     * `4l4d`). `absent`: every badge on the page reads "not available in this
+     * build", and `badges` and `unswept` are empty because nothing was known.
+     * Optional only for an index written before that bean, which the painter
+     * reads as `present` with no `unswept` list — what it then meant.
+     */
+    corpus: z.enum(["present", "absent"]).optional(),
     /** Keyed `<nodeId>.<family>` or `page.<family>`; may be empty. */
     badges: z.record(z.string().min(1), QaIndexBadgeSchema),
+    /**
+     * Keys whose subject has NO sidecar — "not swept", painted inert. Decided
+     * here rather than in the committed page since bean `4l4d`.
+     */
+    unswept: z.array(z.string().min(1)).optional(),
+  })
+  .strict()
+  .superRefine((doc, ctx) => {
+    const unswept = doc.unswept ?? [];
+    if (doc.corpus === "absent" && (Object.keys(doc.badges).length > 0 || unswept.length > 0)) {
+      ctx.addIssue({ code: "custom", message: "corpus absent: an index that knew nothing carries no rows" });
+    }
+    for (const k of unswept) {
+      if (k in doc.badges) ctx.addIssue({ code: "custom", message: `${k} is both a row and unswept` });
+    }
+  });
+
+// ── folio-qa-translation-pages/v1 — scripts/gen-docs-pages.ts → test/results/witnesses/translation-qa-pages.json ──
+
+/** Which HAND-AUTHORED pages have a translation projection; fetched by `docs-ui.js` (bean `4l4d`). */
+export const QaTranslationPagesSchema = z
+  .object({
+    $schema: z.literal("folio-qa-translation-pages/v1"),
+    corpus: z.enum(["present", "absent"]),
+    /** Page slugs (path, `/` → `-`). Empty with `corpus: "absent"`. */
+    pages: z.array(z.string().min(1)),
   })
   .strict();

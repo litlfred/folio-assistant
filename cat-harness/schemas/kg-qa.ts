@@ -668,7 +668,10 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["process"],
     scope: "instance",
     severity: "critical",
-    summary: "An activity names a skill that does not exist, so an agent handed the step cannot open it.",
+    summary:
+      "An activity names a skill that does not exist, so an agent handed the step cannot open it. EXISTENCE ONLY: " +
+      "whether this process may bind that skill (its instance reaching the skill's, through `needs`) is " +
+      "`check:process-bindings`, and a pass here says nothing about direction (owner, 2026-10-04, bean mlux).",
   },
   {
     id: "decision-ref-resolves",
@@ -1502,6 +1505,48 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A recorded test run that cannot be checked against its skill's contract: the skill declares none, " +
       "the contract is external, or the run records only aggregates. Could-not-check, never a pass.",
   },
+  // The test process (bean `3o5b`, proposal §3.2). Implemented once, in
+  // `scripts/test-plan-audit.ts`, by following plan ← run ← report through the
+  // schemas that already state each rule. `n/a` while no plan, plan-run or
+  // report exists — never a pass over nothing.
+  {
+    id: "test-plan-resolves",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "critical",
+    summary:
+      "A test plan does not parse or names an exit-criteria DMN that does not resolve, or a plan-run or " +
+      "test report names a plan, a plan version or a system under test that cannot be followed (an " +
+      "undeclared actor, one with no system-under-test facet, or one of a different kind from the plan's scope).",
+  },
+  {
+    id: "test-case-executed-or-skipped",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "major",
+    summary:
+      "A terminal test report leaves a case of its plan with no verdict, or gives a verdict for a case the " +
+      "plan does not contain. Every case is executed or explicitly skipped with a reason; a report whose plan " +
+      "cannot be followed is `unknown`, never a pass.",
+  },
+  {
+    id: "test-data-hash-present",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "major",
+    summary:
+      "A plan-run's data hash is `unknown`, or a test report's run carries no known data hash — what was " +
+      "tested cannot be established, so the result cannot be certified (zz0a).",
+  },
+  {
+    id: "test-sut-not-self-judged",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "critical",
+    summary:
+      "A verdict in a test report names the system under test as its reviewer — a system judging itself " +
+      "(untainted-verification). The schema refuses it; this records it under its own name.",
+  },
   {
     id: "arrow-direction",
     applies: ["graph"],
@@ -1677,6 +1722,26 @@ export function tally(criteria: Record<string, KgCriterionEntry>): Record<KgResu
  * against its `critical` criteria too, so it still fails — which is the case
  * the promotion was reaching for.
  */
+/**
+ * The findings `kg:audit:check` grades in one report (bean `oqe3`): every
+ * failing or unknown criterion at one of `gate`'s severities, one entry per
+ * finding — or one for the criterion when it lists none. {@link worstSeverity}'s
+ * rule (fail and unknown both count), kept exactly; per ENTRY rather than per
+ * report, so a new finding in a subject that already had an old one is still
+ * NEW against a baseline.
+ */
+export function gradedKgFindings(report: Pick<KgQaReport, "criteria">, gate: readonly KgSeverity[]): unknown[] {
+  const out: unknown[] = [];
+  for (const [id, e] of Object.entries(report.criteria ?? {})) {
+    if (e.result !== "fail" && e.result !== "unknown") continue;
+    const sev = KG_CRITERIA_BY_ID[id]?.severity;
+    if (sev === undefined || !gate.includes(sev)) continue;
+    if ((e.findings ?? []).length === 0) out.push({ criterion: id, result: e.result });
+    for (const f of e.findings ?? []) out.push({ criterion: id, result: e.result, finding: f });
+  }
+  return out;
+}
+
 export function worstSeverity(report: KgQaReport): KgSeverity | undefined {
   let worst: KgSeverity | undefined;
   const rank: Record<KgSeverity, number> = { minor: 1, major: 2, critical: 3 };

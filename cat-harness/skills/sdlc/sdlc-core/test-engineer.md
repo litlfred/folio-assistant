@@ -76,6 +76,29 @@ describe("Feature under test", () => {
 - **Types from `schemas/formalization-types.ts`**: Use `TestResult`, `TestReport`,
   `CoverageEntry` etc. when generating structured output.
 
+### A test never reads `test/results/` as a fixture
+
+Derived QA results are leaving `main` for the orphan `qa-reports` branch
+(arc `3fva`): the checkout's `<instance>/test/results/**` is a working copy,
+still committed until bean `5hox` removes it, and the record is the
+commit-keyed entry `qa-publish` stores. A test that reads that tree is
+reading a file that will not be there — and the readers audit
+(`docs/proposals/qa-readers-audit-2026-10-01.md` §5.5) measured what that
+costs: 15 tests in 6 files fail only when the corpus is absent, and one,
+*"no critical criterion is failing"*, **passes** when it is absent because it
+iterates over zero files.
+
+- **Build the fixture**, or run the producer in-process over one, and assert
+  on what it computed. A verdict is not a fixture: the corpus is supposed to
+  change (see [`qa-witness`](qa-witness.md)).
+- **If a test must read a stored result, read it through `qa-store`**
+  (`readQa`) and treat `miss`, `corrupt` and `unknown` as states to assert,
+  never as an empty pass.
+- **A loop over a corpus needs a "there are some" guard** beside it, or it is
+  green over nothing.
+- **Never write into `test/attestations/` from a test.** It is the judgement
+  store on `main`; a test that needs one builds it in a temporary root.
+
 ### Adding a new formal-layer project
 
 When a new formal-layer library is added to the build manifest:

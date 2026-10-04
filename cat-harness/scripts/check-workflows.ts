@@ -69,7 +69,8 @@ export interface WorkflowFinding {
     | "interpolated-untrusted"
     | "gh-pages-ungrouped"
     | "gh-pages-wipes-staging"
-    | "qa-reports-unretried";
+    | "qa-reports-unretried"
+    | "bean-gate-unmounted";
   detail: string;
 }
 
@@ -361,8 +362,9 @@ export function ghPagesWipesStaging(text: string, file: string): WorkflowFinding
   return out;
 }
 
-/** The branch the QA results are published to (owner ruling D1). */
-export const QA_REPORTS_BRANCH = "qa-reports";
+/** The branch the QA results are published to (owner ruling D1), and its earlier names (beans `32f6`, `tlk2`). */
+export const QA_REPORTS_BRANCH = "cat/cat-harness/qa-reports";
+export const QA_REPORTS_BRANCH_NAMES: readonly string[] = [QA_REPORTS_BRANCH, "cat-qa-reports", "qa-reports"];
 
 /**
  * Every write to `qa-reports` must go through `qa-store.ts` — bean `16ei`.
@@ -389,7 +391,7 @@ export const QA_REPORTS_BRANCH = "qa-reports";
 export function qaReportsUnretried(text: string, file: string): WorkflowFinding[] {
   const out: WorkflowFinding[] = [];
   const lines = text.split("\n");
-  const branch = new RegExp(`(^|[\\s:/'"])${QA_REPORTS_BRANCH}(?![\\w-])`);
+  const branch = new RegExp(`(^|[\\s:/'"])(${QA_REPORTS_BRANCH_NAMES.join("|")})(?![\\w-])`);
   for (let i = 0; i < lines.length; i++) {
     const l = lines[i]!;
     if (l.trimStart().startsWith("#")) continue;
@@ -408,6 +410,120 @@ export function qaReportsUnretried(text: string, file: string): WorkflowFinding[
   return out;
 }
 
+/** How a job puts a tip-keyed graph on disk. One command, so one spelling to look for. */
+export const STATE_MOUNT = "state:mount";
+
+/**
+ * Commands that READ the bean store, declared rather than inferred.
+ *
+ * A DECLARED list, for `audit:coverage`'s reason: a grep for the store's path
+ * fails in both directions — these scripts reach it through
+ * `resolveBeanDefs`, which names no path, while a dozen unrelated files
+ * mention `beans/` in prose. So the list is stated, and the cost of its being
+ * stated is that a new bean gate must be added here too. That is the cheaper
+ * failure: a missing entry means this check does not cover a gate, which the
+ * gate's own red run still reveals, whereas an inferred list that quietly
+ * stopped matching would report every job clean.
+ *
+ * `kg:audit`, `audit:coverage` and `check:harness-state` are in it because
+ * they judge the bean graph among others — `audit:coverage`'s whole subject is
+ * whether a kind is audited at all, and it was `bjzs`/`xutg`'s point that a
+ * zero there must not read as "clean".
+ */
+export const BEAN_STORE_READERS: readonly string[] = [
+  "check:bean-parents",
+  "check:bean-parent-prose",
+  "check:bean-blocks",
+  "check:bean-archive",
+  "check:bean-rollup",
+  "check:bean-bodies",
+  "check:bean-front-matter",
+  "check:bean-issue-links",
+  "check:bean-restates-skill",
+  "beans:notes:check",
+  "beans:landed",
+  "check:quiet-claim-liveness",
+  "check:harness-state",
+  "audit:coverage",
+  "kg:audit",
+];
+
+/**
+ * A job that judges the bean store must put it on disk FIRST — bean `9ofm`,
+ * arc `fs43` §4's `gates` row.
+ *
+ * Nine bean gates run in one job here, and `check:harness-state`, `kg:audit`
+ * and `audit:coverage` judge that graph among others. Once `beans/` is kept at
+ * the tip of its own branch the checkout no longer carries it, and a gate that
+ * joined the path would judge an absent directory: `1xhc`, a step that did not
+ * fire looking exactly like one that passed, over the store eight of those
+ * gates exist to judge. The readers themselves now refuse rather than read
+ * empty (`graphReadPath`, row D), so the symptom would be a red run with a
+ * remedy — but only for the readers that funnel through it, and only after
+ * somebody has spent a CI cycle on it.
+ *
+ * Per JOB, not per file, and that is the point: `code-quality-gates.yml` has
+ * the mount in two jobs and a third job could add a bean gate without one.
+ * The mount must also come EARLIER in the job, because a mount after the gate
+ * is a gate that ran over nothing.
+ *
+ * The rule is live while the graph is still on `main` and that is deliberate.
+ * `state:mount` reports `not-enabled` and exits 0 until a declaration keeps a
+ * graph at a branch tip, so the requirement costs one process per job now and
+ * is correct on the day the declaration flips — rather than becoming a rule
+ * somebody has to remember to turn on, inside the one commit that is already
+ * irreversible.
+ */
+export function beanGateUnmounted(text: string, file: string): WorkflowFinding[] {
+  const lines = text.split("\n");
+  type Job = { name: string; mount: number | undefined; readers: Array<{ cmd: string; line: number }> };
+  const jobs: Job[] = [];
+  let cur: Job | undefined;
+  let inJobs = false;
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i]!;
+    if (/^jobs:\s*$/.test(l)) {
+      inJobs = true;
+      continue;
+    }
+    if (!inJobs) continue;
+    const job = /^ {2}([A-Za-z0-9_-]+):\s*$/.exec(l);
+    if (job !== null) {
+      cur = { name: job[1]!, mount: undefined, readers: [] };
+      jobs.push(cur);
+      continue;
+    }
+    if (cur === undefined || l.trimStart().startsWith("#")) continue;
+    if (cur.mount === undefined && l.includes(STATE_MOUNT)) cur.mount = i + 1;
+    for (const cmd of BEAN_STORE_READERS) {
+      // `bun run <cmd>`, so a comment naming a gate and a `--check` variant of
+      // one are not two different rules.
+      if (new RegExp(`\\bbun run ${cmd.replace(/[:]/g, "[:]")}(?![\\w-])`).test(l)) cur.readers.push({ cmd, line: i + 1 });
+    }
+  }
+  const out: WorkflowFinding[] = [];
+  for (const j of jobs) {
+    const late = j.readers.filter((r) => j.mount === undefined || r.line < j.mount);
+    if (late.length === 0) continue;
+    const first = late[0]!;
+    out.push({
+      file,
+      line: first.line,
+      kind: "bean-gate-unmounted" as const,
+      detail:
+        `job \`${j.name}\` runs \`bun run ${first.cmd}\`${late.length > 1 ? ` (and ${late.length - 1} more)` : ""} ` +
+        (j.mount === undefined
+          ? `with no \`bun run ${STATE_MOUNT}\` step`
+          : `BEFORE its \`${STATE_MOUNT}\` step on line ${j.mount}`) +
+        `. The bean store is declared tip-keyed (arc \`fs43\`), so after the cutover the checkout does not ` +
+        `carry \`beans/\` and this gate would judge an absent directory — a step that did not fire, reported ` +
+        `as one that passed. Add \`- run: bun run ${STATE_MOUNT}\` earlier in the job; it exits 0 and mounts ` +
+        `nothing while \`main\` is still authoritative.`,
+    });
+  }
+  return out;
+}
+
 export function checkWorkflows(): WorkflowFinding[] {
   const out: WorkflowFinding[] = [];
   for (const f of readdirSync(DIR)) {
@@ -420,6 +536,7 @@ export function checkWorkflows(): WorkflowFinding[] {
       ...ghPagesUngrouped(text, f),
       ...ghPagesWipesStaging(text, f),
       ...qaReportsUnretried(text, f),
+      ...beanGateUnmounted(text, f),
     );
   }
   return out;
@@ -434,7 +551,8 @@ if (import.meta.main) {
       "✓ all parse; no duplicate keys; no attacker-controlled expression in a run body; " +
         `every gh-pages push is protected by the \`${GH_PAGES_GROUP}\` queue or a retry; ` +
         `no full-replace publish drops the open PRs' \`${STAGING_PREFIX}/\` previews; ` +
-        `every write to \`${QA_REPORTS_BRANCH}\` goes through qa-store`,
+        `every write to \`${QA_REPORTS_BRANCH}\` goes through qa-store; ` +
+        `every job that judges the bean store mounts it first`,
     );
   } else {
     for (const f of findings) console.error(`  ✗ ${f.file}:${f.line}  [${f.kind}] ${f.detail}`);

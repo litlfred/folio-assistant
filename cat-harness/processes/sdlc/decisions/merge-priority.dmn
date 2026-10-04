@@ -35,6 +35,12 @@
                    pp. 7-8; R6, R7 of the requirements note on
                    claude/merge-pipeline-library). Generated paths excluded.
 
+    readiness      bean `uoob`: has the OWNING session signalled this PR is
+                   finished, against main? `ready`, or one of `draft`,
+                   `not-main`, `no-marker`, `foreign-marker`, `stale-marker`.
+                   Read by Rule_NotReady. The full test, at the moment of
+                   merging, is `bun run merge:guard`, the only way a PR lands.
+
   Outputs:
 
     route   "admit" or "hand back" — the gateway's branch, so FIRST output.
@@ -89,6 +95,9 @@
       <input id="In_HeadRun" label="(T2) the owed CI runs on the head">
         <inputExpression id="Expr_HeadRun" typeRef="string"><text>ownCi</text></inputExpression>
       </input>
+      <input id="In_Ready" label="the owning session signalled ready, against main">
+        <inputExpression id="Expr_Ready" typeRef="string"><text>readiness</text></inputExpression>
+      </input>
       <output id="Out_Route" name="route" typeRef="string" />
       <output id="Out_Class" name="class" typeRef="string" />
       <output id="Out_Rank" name="rank" typeRef="number" />
@@ -104,6 +113,7 @@
         <inputEntry id="IE_Ov_6"><text>-</text></inputEntry>
         <inputEntry id="IE_Ov_7"><text>-</text></inputEntry>
         <inputEntry id="IE_Ov_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_Ov_9"><text>-</text></inputEntry>
         <outputEntry id="OE_Ov_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_Ov_2"><text>"override"</text></outputEntry>
         <outputEntry id="OE_Ov_3"><text>0</text></outputEntry>
@@ -119,6 +129,7 @@
         <inputEntry id="IE_Rf_6"><text>-</text></inputEntry>
         <inputEntry id="IE_Rf_7"><text>-</text></inputEntry>
         <inputEntry id="IE_Rf_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_Rf_9"><text>-</text></inputEntry>
         <outputEntry id="OE_Rf_1"><text>"hand back"</text></outputEntry>
         <outputEntry id="OE_Rf_2"><text>"hand-back"</text></outputEntry>
         <outputEntry id="OE_Rf_3"><text>90</text></outputEntry>
@@ -134,10 +145,27 @@
         <inputEntry id="IE_Hng_6"><text>-</text></inputEntry>
         <inputEntry id="IE_Hng_7"><text>-</text></inputEntry>
         <inputEntry id="IE_Hng_8"><text>not("green")</text></inputEntry>
+        <inputEntry id="IE_Hng_9"><text>-</text></inputEntry>
         <outputEntry id="OE_Hng_1"><text>"hand back"</text></outputEntry>
         <outputEntry id="OE_Hng_2"><text>"ci-not-green"</text></outputEntry>
         <outputEntry id="OE_Hng_3"><text>91</text></outputEntry>
         <outputEntry id="OE_Hng_4"><text>"alone"</text></outputEntry>
+      </rule>
+      <rule id="Rule_NotReady">
+        <description>Bean `uoob` (merge gate (f), epic `nok9`), owner ruling 2026-10-03. The owning session has not signalled that this PR is finished, against `main`, so nobody may land it -- not the train, and not a steward acting alone. `ready` is the ONLY admitting value; the others are kept apart because each has a different remedy: `draft` (still a draft), `not-main` (based on another branch: #1937 merged into the head of #1764 after #1764 had landed), `no-marker` (no `ready: &lt;sha&gt;` comment: #1960, #1957), `foreign-marker` (the marker is signed by no session, or by a session other than the PR's own: #1937's was unsigned) and `stale-marker` (the head moved past the marker). Derived by `deriveFacts` from LivePr's draft, baseRef, readySha and readyBy. `merge:guard` asks the full question at the moment of merging, including whether the commits after a stale marker are all merge-main bot merges; this table cannot, so it is the more conservative of the two, and a PR it hands back for `stale-marker` may still pass the guard after the bot merges main in.</description>
+        <inputEntry id="IE_Nr_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_2"><text>false</text></inputEntry>
+        <inputEntry id="IE_Nr_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_4"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_5"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_6"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_7"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_Nr_9"><text>"draft","not-main","no-marker","foreign-marker","stale-marker"</text></inputEntry>
+        <outputEntry id="OE_Nr_1"><text>"hand back"</text></outputEntry>
+        <outputEntry id="OE_Nr_2"><text>"hand-back"</text></outputEntry>
+        <outputEntry id="OE_Nr_3"><text>92</text></outputEntry>
+        <outputEntry id="OE_Nr_4"><text>"alone"</text></outputEntry>
       </rule>
 
       <rule id="Rule_SeedSmallClean">
@@ -150,6 +178,7 @@
         <inputEntry id="IE_S0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_S0_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_S0_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_S0_9"><text>-</text></inputEntry>
         <outputEntry id="OE_S0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_S0_2"><text>"harness-seed"</text></outputEntry>
         <outputEntry id="OE_S0_3"><text>10</text></outputEntry>
@@ -165,6 +194,7 @@
         <inputEntry id="IE_S1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_S1_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_S1_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_S1_9"><text>-</text></inputEntry>
         <outputEntry id="OE_S1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_S1_2"><text>"harness-seed"</text></outputEntry>
         <outputEntry id="OE_S1_3"><text>11</text></outputEntry>
@@ -180,6 +210,7 @@
         <inputEntry id="IE_S2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_S2_7"><text>-</text></inputEntry>
         <inputEntry id="IE_S2_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_S2_9"><text>-</text></inputEntry>
         <outputEntry id="OE_S2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_S2_2"><text>"harness-seed"</text></outputEntry>
         <outputEntry id="OE_S2_3"><text>12</text></outputEntry>
@@ -196,6 +227,7 @@
         <inputEntry id="IE_U0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_U0_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_U0_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_U0_9"><text>-</text></inputEntry>
         <outputEntry id="OE_U0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_U0_2"><text>"unblocker"</text></outputEntry>
         <outputEntry id="OE_U0_3"><text>20</text></outputEntry>
@@ -211,6 +243,7 @@
         <inputEntry id="IE_U1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_U1_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_U1_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_U1_9"><text>-</text></inputEntry>
         <outputEntry id="OE_U1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_U1_2"><text>"unblocker"</text></outputEntry>
         <outputEntry id="OE_U1_3"><text>21</text></outputEntry>
@@ -226,6 +259,7 @@
         <inputEntry id="IE_U2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_U2_7"><text>-</text></inputEntry>
         <inputEntry id="IE_U2_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_U2_9"><text>-</text></inputEntry>
         <outputEntry id="OE_U2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_U2_2"><text>"unblocker"</text></outputEntry>
         <outputEntry id="OE_U2_3"><text>22</text></outputEntry>
@@ -242,6 +276,7 @@
         <inputEntry id="IE_M0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_M0_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_M0_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_M0_9"><text>-</text></inputEntry>
         <outputEntry id="OE_M0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_M0_2"><text>"mvp"</text></outputEntry>
         <outputEntry id="OE_M0_3"><text>30</text></outputEntry>
@@ -257,6 +292,7 @@
         <inputEntry id="IE_M1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_M1_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_M1_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_M1_9"><text>-</text></inputEntry>
         <outputEntry id="OE_M1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_M1_2"><text>"mvp"</text></outputEntry>
         <outputEntry id="OE_M1_3"><text>31</text></outputEntry>
@@ -272,6 +308,7 @@
         <inputEntry id="IE_M2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_M2_7"><text>-</text></inputEntry>
         <inputEntry id="IE_M2_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_M2_9"><text>-</text></inputEntry>
         <outputEntry id="OE_M2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_M2_2"><text>"mvp"</text></outputEntry>
         <outputEntry id="OE_M2_3"><text>32</text></outputEntry>
@@ -288,6 +325,7 @@
         <inputEntry id="IE_D0_6"><text>"small"</text></inputEntry>
         <inputEntry id="IE_D0_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_D0_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_D0_9"><text>-</text></inputEntry>
         <outputEntry id="OE_D0_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_D0_2"><text>"standard"</text></outputEntry>
         <outputEntry id="OE_D0_3"><text>40</text></outputEntry>
@@ -303,6 +341,7 @@
         <inputEntry id="IE_D1_6"><text>-</text></inputEntry>
         <inputEntry id="IE_D1_7"><text>"low"</text></inputEntry>
         <inputEntry id="IE_D1_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_D1_9"><text>-</text></inputEntry>
         <outputEntry id="OE_D1_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_D1_2"><text>"standard"</text></outputEntry>
         <outputEntry id="OE_D1_3"><text>41</text></outputEntry>
@@ -318,6 +357,7 @@
         <inputEntry id="IE_D2_6"><text>-</text></inputEntry>
         <inputEntry id="IE_D2_7"><text>-</text></inputEntry>
         <inputEntry id="IE_D2_8"><text>-</text></inputEntry>
+        <inputEntry id="IE_D2_9"><text>-</text></inputEntry>
         <outputEntry id="OE_D2_1"><text>"admit"</text></outputEntry>
         <outputEntry id="OE_D2_2"><text>"standard"</text></outputEntry>
         <outputEntry id="OE_D2_3"><text>42</text></outputEntry>

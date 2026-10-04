@@ -22,7 +22,7 @@
  * being discovered as an uninformative red X afterwards.
  */
 import { describe, test, expect } from "bun:test";
-import { checkWorkflows, ghPagesWipesStaging, GH_PAGES_GROUP } from "../check-workflows.js";
+import { BEAN_STORE_READERS, beanGateUnmounted, checkWorkflows, ghPagesWipesStaging, GH_PAGES_GROUP, STATE_MOUNT } from "../check-workflows.js";
 import { readdirSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { repoRootFor } from "../../schemas/cat-harness.js";
@@ -320,6 +320,52 @@ describe("every path that publishes or removes a preview also LOGS it", () => {
       expect(paths).toContain("source");
       expect(paths).toContain("pages");
     }
+  });
+
+  // ── A job that judges the bean store mounts it first (bean `9ofm`) ───────
+  //
+  // Written against fixture text rather than only the real workflows, because
+  // the interesting cases are the ones this repository must NOT have: a gate
+  // with no mount, and a gate before its mount. On the real files the rule
+  // found a genuine miss on its first run — the nine bean gates live in
+  // `gates-unrun`, not in `gates`, and the mount had gone into the latter.
+  describe("bean-gate-unmounted", () => {
+    const yml = (steps: string): string => `name: t\njobs:\n  j:\n    steps:\n${steps}`;
+
+    test("a bean gate with no mount in its job is a finding", () => {
+      const f = beanGateUnmounted(yml("      - run: bun run check:bean-parents\n"), "t.yml");
+      expect(f).toHaveLength(1);
+      expect(f[0]!.kind).toBe("bean-gate-unmounted");
+      expect(f[0]!.detail).toContain("no `bun run state:mount` step");
+    });
+
+    test("a mount AFTER the gate is a finding too: the gate still ran over nothing", () => {
+      const f = beanGateUnmounted(yml(`      - run: bun run kg:audit:check\n      - run: bun run ${STATE_MOUNT}\n`), "t.yml");
+      expect(f).toHaveLength(1);
+      expect(f[0]!.detail).toContain("BEFORE its `state:mount` step");
+    });
+
+    test("mounted first: clean", () => {
+      expect(beanGateUnmounted(yml(`      - run: bun run ${STATE_MOUNT}\n      - run: bun run check:bean-rollup\n`), "t.yml")).toEqual([]);
+    });
+
+    test("PER JOB — a sibling job's mount does not cover this one", () => {
+      const text = `name: t\njobs:\n  a:\n    steps:\n      - run: bun run ${STATE_MOUNT}\n  b:\n    steps:\n      - run: bun run check:bean-blocks\n`;
+      const f = beanGateUnmounted(text, "t.yml");
+      expect(f).toHaveLength(1);
+      expect(f[0]!.detail).toContain("job `b`");
+    });
+
+    test("a COMMENT naming a gate is not a gate", () => {
+      expect(beanGateUnmounted(yml("      # bun run check:bean-parents is wired elsewhere\n"), "t.yml")).toEqual([]);
+    });
+
+    test("the real workflows are clean, and the rule reaches every declared reader", () => {
+      for (const f of files) expect(beanGateUnmounted(readFileSync(join(WORKFLOW_DIR, f), "utf-8"), f)).toEqual([]);
+      // The list is DECLARED, so its own emptiness has to be asserted: a rule
+      // over zero commands is green over everything.
+      expect(BEAN_STORE_READERS.length).toBeGreaterThan(8);
+    });
   });
 
   test("the log lives OUTSIDE STAGING/, so `rm -rf STAGING/$SLUG` cannot reach it", () => {

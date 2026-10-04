@@ -17,7 +17,7 @@
  * |---|---|
  * | priority class, rank or override position | CI status of the head |
  * | the reason, who decided, when | mergeability (`clean`, `dirty`, `unstable`) |
- * | a hold, with its expiry | labels (`ready-to-merge`, `needs-merge-human`) |
+ * | a hold, with its expiry | labels (`ready-to-merge`, `merge-main`) |
  * | the train it was assigned to | the head SHA |
  * | an ejection from a train, with its evidence link | the PR's own CI verdict, and whether CI saw the head |
  * | links to beans and epics | the changed-file list, and what it touches |
@@ -87,8 +87,17 @@ export const MERGE_QUEUE_ENTRY_TAG = "folio-merge-queue-entry/v1";
  * train at all but a route out of it (to `merge-refusal.bpmn`, PR #1888).
  *
  * The table (`merge-priority.dmn`) is the authority for which class a PR gets;
- * this list is the vocabulary it may answer in, and a test asserts the two
- * agree.
+ * this list is the vocabulary it may answer in, and
+ * `tests/merge-priority-table.test.ts` asserts the two agree.
+ *
+ * **That last sentence was false until 2026-10-04**, and it cost the table its
+ * only caller. `PRIORITY_CLASSES` was referenced from nowhere but this file: no
+ * test compared it with the diagram, and `ci-not-green` — which rule 3 returns
+ * for any PR whose CI is not green, so most of them — was missing here. The
+ * first `placeAll` ever run against the live queue died in `PriorityClassSchema
+ * .parse`. A docblock that claims a test is not a test, and the claim is worse
+ * than silence because a reader checking whether the two agreed would have
+ * found the promise and stopped looking.
  */
 export const PRIORITY_CLASSES = [
   "override",
@@ -97,8 +106,14 @@ export const PRIORITY_CLASSES = [
   "mvp",
   "standard",
   "hand-back",
+  /** Rule 3: handed back because its own CI is not green — a different reason from a refusal. */
+  "ci-not-green",
 ] as const;
 export const PriorityClassSchema = z.enum(PRIORITY_CLASSES);
+
+/** The values of {@link MemberFactsSchema}`.readiness`, in the order a PR moves through them. */
+export const READINESS = ["ready", "draft", "not-main", "no-marker", "foreign-marker", "stale-marker"] as const;
+export type Readiness = (typeof READINESS)[number];
 export type PriorityClass = z.infer<typeof PriorityClassSchema>;
 
 /**
@@ -124,6 +139,10 @@ export const FORBIDDEN_FACT_KEYS = [
   "mergeable_state", // read live only: bean `fx5r` measured it serving a pre-merge view
   "labels",
   "draft",
+  "baseRef",
+  "readySha",
+  "readyBy",
+  "readiness", // bean `uoob`: a comment can be edited and a PR re-drafted at any time
   "authoredPaths",
   "authored_paths",
   "touchesShared",
@@ -375,6 +394,27 @@ export const MemberFactsSchema = z
     ownCi: z.enum(["green", "red", "missing-required", "none", "unknown"]),
     /** Did CI run on the head that would be merged (T2; bean `u7be` item 3). */
     headShaMatchesCi: z.boolean(),
+    /**
+     * Has the OWNING session signalled this PR is finished, against `main`?
+     * Bean `uoob` (merge gate (f)), read by `Rule_NotReady`. `ready` is the
+     * only admitting value, and the others stay apart because each has a
+     * different remedy:
+     *
+     * | value | means | real case, 2026-10-03 |
+     * |---|---|---|
+     * | `ready` | not a draft, on `main`, and a `ready: <sha>` signed by the PR's own session names the head | — |
+     * | `draft` | still a draft | — |
+     * | `not-main` | based on another branch | #1937, on #1764's head after #1764 merged |
+     * | `no-marker` | no `ready:` comment | #1960, #1957 |
+     * | `foreign-marker` | the marker is unsigned, or signed by another session | #1937's was unsigned |
+     * | `stale-marker` | the head moved past the marker | #1937 |
+     *
+     * Coarser than `merge:guard` on purpose: it cannot see that the commits
+     * after a stale marker are merge-main bot merges, so it hands those back
+     * where the guard would pass them. The guard is the gate; this keeps an
+     * unfinished PR out of a train.
+     */
+    readiness: z.enum(READINESS),
   })
   .strict();
 export type MemberFacts = z.infer<typeof MemberFactsSchema>;

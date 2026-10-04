@@ -168,6 +168,18 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
+    // job that reads the repository mounts it after `bun install`. A SETUP
+    // step: it fetches over the network and has no verdict of its own; the
+    // readers it serves refuse an unmounted copy (exit 2), and the mount
+    // logic is asserted by state-mount.test.ts and branch-mount.test.ts.
+    match: "bun run state:mount",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it mounts the subgraphs kept on branches (fsh-guts) so the gates that follow " +
+      "read real content; a contributor's session-start hook runs the same command",
+  },
+  {
     // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
     // cache is rendered from it into the preview at `/<instance>/ast/`. The
     // lister asks each IG repository over the network (`git ls-remote`).
@@ -231,6 +243,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `uoob`. The merge guard's evaluate mode, posting the `merge-guard`
+    // commit status. Its subject is a PULL REQUEST's live state on GitHub —
+    // labels, comments, timeline, the head's runs — not the tree, so a
+    // contributor has no verdict to get from it locally, and it needs
+    // `statuses: write`. Its logic is pinned by merge-guard.test.ts in
+    // `bun test`, against the three real PRs it exists because of.
+    match: "scripts/merge-guard.ts",
+    kind: "ci-only",
+    reason:
+      "judges a PR's live GitHub state rather than the tree and needs `statuses: write`; its logic is " +
+      "covered by merge-guard.test.ts in `bun test`",
+  },
+  {
     // Bean `16ei`. The scheduled retention job for the `qa-reports` branch.
     // It WRITES a branch rather than judging a tree, needs `contents: write`
     // and `pull-requests: read`, and a contributor has no verdict to get from
@@ -241,6 +266,30 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a scheduled WRITE to the qa-reports branch, not a check; its retention rule and its " +
       "tip-only rewrite are covered by qa-store.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. The site builds' QA evidence: `fetch` reads the
+    // `qa-reports` entry for THIS run's ref (`main/<sha>`, `pr/<n>/<sha>`)
+    // over the network and may materialise it into the checkout; `verify`
+    // judges the built `./_site/assets/qa/`, which only the deploy and
+    // staging jobs produce. Run locally with no ref and no site it has no
+    // verdict to give. Its decisions are pinned by qa-site-assets.test.ts in
+    // `bun test`, and `bun run preview:site` runs both halves on a real build.
+    match: "scripts/qa-site-assets.ts",
+    kind: "ci-only",
+    reason:
+      "a build step keyed by the run's own ref (network fetch) and the built ./_site; its source " +
+      "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`
+    // entry for its PR before sweeping. A read keyed by a downstream PR
+    // number; the read path is pinned by qa-store.test.ts in `bun test`.
+    match: "qa-store.ts\" fetch",
+    kind: "ci-only",
+    reason:
+      "a network read of a downstream folio's qa-reports entry keyed by its PR number; the read " +
+      "path is covered by qa-store.test.ts in `bun test`",
   },
   {
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
@@ -348,6 +397,32 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "scripts/gen-docs-pages.ts",
     kind: "covered-by",
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
+  },
+  {
+    // Bean `5hox` prep, owner ruling 2026-10-01: the /qa/ page is regenerated
+    // from the QA results the site build fetched, so it cannot freeze once QA
+    // leaves `main`.
+    match: "bun run state:visualizer",
+    kind: "covered-by",
+    reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
+  },
+  {
+    // Bean `tqjj`: the LSI viewer page, the same shape as the step above and
+    // for a sharper version of the same reason. It is an aggregate over every
+    // index, so one sentence added to one of 229 skills restaged it — 319 of
+    // the last 400 commits on `main`.
+    //
+    // It must be the SITE BUILD's step and not a gate's. With no index
+    // sidecar in the checkout, `lsi:viz` reads `qa-reports` at `main`, which
+    // resolves to the latest published entry — a value that depends on when
+    // the run happened rather than on the tree (bean `in5a`). The site build
+    // is the only job that fetches, so it is the only one that can pin the
+    // entry to the commit being built.
+    match: "bun run lsi:viz",
+    kind: "covered-by",
+    reason:
+      "`lsi:viz:check` is in the gate set; the site build runs the writer over the indexes it fetched for its own sha, " +
+      "which is the only place the entry read is pinned to the commit rather than to whatever was published last",
   },
   // The two projection writers are run by the SITE BUILD and by nothing else.
   //
@@ -723,6 +798,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "jsonld-label-resolution.test.ts",
     kind: "covered-by",
     reason: "`bun test` is in the gate set and runs every test file, this one included",
+  },
+  {
+    // Bean `03nl`. The merge-main bot's one notification per run: it reads
+    // THIS RUN's per-PR verdicts out of its own artifacts and decides whether
+    // anything in them is new. There is no tree to judge and no verdict a
+    // contributor could get from it — outside a run there are no artifacts to
+    // read, and inside one the answer is about that run. Its branches are
+    // pinned by `merge-main-workflow.test.ts` in `bun test`: every verdict
+    // class, the three conditions that notify, and the quiet ones.
+    match: "merge-main-comment.ts --aggregate",
+    kind: "ci-only",
+    reason:
+      "reads this run's own per-PR verdict artifacts and decides whether any of them is new; nothing " +
+      "to run outside a run, and its branches are pinned by merge-main-workflow.test.ts in `bun test`",
   },
 ];
 
@@ -1256,6 +1345,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "prints each instance's icon resolution and the two glyph registries' overlap; `check:navbar-consistency:check` is the gating form and is wired",
+  },
+  {
+    script: "check:nav-names",
+    kind: "report",
+    reason:
+      "rewrites `test/results/nav-names.qa-results.json` and prints every destination's names; `check:nav-names:check` is the gating form and is wired",
   },
   {
     script: "check:navbar-consistency:strict",

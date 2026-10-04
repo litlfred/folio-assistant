@@ -12,7 +12,8 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { plan, resolutionFailure, resolveGitlink, stageGitlink, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
@@ -73,7 +74,7 @@ describe("classify", () => {
   test("measured generated families resolve by their declared strategy", () => {
     expect(classify("cat-harness/test/results/skill-register.qa-results.json").pattern?.id).toBe("qa-results");
     expect(classify("cat-harness/test/results/lsi/cat-harness/skills.lsi.json").strategy).toBe("take-base");
-    expect(classify("cat-harness/docs/cat-harness/docs-auto/index/index.html").pattern?.id).toBe("docs-auto");
+    expect(classify("cat-harness/docs/cat-harness/auto-docs/index/index.html").pattern?.id).toBe("auto-docs");
     expect(classify("cat-harness/docs/glossary/index.md").pattern?.id).toBe("glossary");
     expect(classify("beans/README.md").strategy).toBe("generated-regions");
   });
@@ -345,7 +346,7 @@ describe("resolveGeneratedRegions", () => {
 /**
  * A modify/delete conflict: `ours` changes the file, `theirs` (the base being
  * merged in) deletes it — or the reverse. Measured 2026-10-02 on #1805, where
- * main deleted docs-auto pages the branch had touched and `checkout --theirs`
+ * main deleted auto-docs pages the branch had touched and `checkout --theirs`
  * threw "does not have their version".
  */
 function modifyDelete(deletedBy: "theirs" | "ours"): string {
@@ -401,7 +402,7 @@ describe("take-base when one side deleted the file", () => {
 describe("modify/delete on DECLARED paths: generated resolves, authored refuses (#1854)", () => {
   // Real pattern paths rather than a bare `gen.html`, so classification and
   // the stage handling are exercised together on what git actually reports.
-  const GEN = "cat-harness/docs/cat-harness/docs-auto/index/index.html";
+  const GEN = "cat-harness/docs/cat-harness/auto-docs/index/index.html";
   const BEAN = "beans/defs/folio-assistant-x--y.md";
   const mk = (): string => {
     const dir = mkdtempSync(join(tmpdir(), "merge-base-md2-"));
@@ -433,7 +434,7 @@ describe("modify/delete on DECLARED paths: generated resolves, authored refuses 
       expect(conflicted).toEqual([BEAN, GEN].sort());
       const p = plan(conflicted);
       expect(p.resolvable.map((c) => c.path)).toEqual([GEN]);
-      expect(p.resolvable[0]!.pattern?.id).toBe("docs-auto");
+      expect(p.resolvable[0]!.pattern?.id).toBe("auto-docs");
       expect(p.refused.map((c) => c.path)).toEqual([BEAN]);
       expect(p.refused[0]!.pattern?.id).toBe("beans");
       for (const c of p.resolvable) takeBase(d, c.path);
@@ -455,5 +456,138 @@ describe("qa sidecars of a NESTED instance are in scope", () => {
     const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
     expect(o!.action).toBe("skip");
     expect(o!.reason).toContain("who-iris/test/results/");
+  });
+});
+
+// Bean `wczm` item 2. Train 1 (#1869): a branch's submodule pin that
+// fast-forwarded main's was silently reverted by taking main's side. A gitlink
+// is resolved by ANCESTRY: the descendant wins, diverged pins and pins the
+// submodule does not have are refused.
+describe("a conflicted submodule gitlink is resolved by ancestry — bean wczm", () => {
+  const env = { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@invalid", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@invalid", GIT_ALLOW_PROTOCOL: "file" };
+  const g = (cwd: string, ...a: string[]) => execFileSync("git", ["-c", "protocol.file.allow=always", ...a], { cwd, env, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+
+  /** A super-repo whose `sub` pin is set to `oursPin` on a branch and `theirsPin` on main, then merged: a gitlink conflict. */
+  function conflict(build: (commit: (msg: string) => string, reset: (to: string) => void) => { base: string; ours: string; theirs: string }) {
+    const top = mkdtempSync(join(tmpdir(), "gitlink-"));
+    const subSrc = join(top, "sub-src");
+    mkdirSync(subSrc);
+    g(subSrc, "init", "-q", "-b", "main");
+    const commit = (msg: string) => { g(subSrc, "commit", "-q", "--allow-empty", "-m", msg); return g(subSrc, "rev-parse", "HEAD"); };
+    const reset = (to: string) => { g(subSrc, "checkout", "-q", "-B", `b-${to.slice(0, 7)}`, to); };
+    const pins = build(commit, reset);
+    const sup = join(top, "super");
+    mkdirSync(sup);
+    g(sup, "init", "-q", "-b", "main");
+    // SHALLOW, as this repository's submodules and CI's are: with the full
+    // history git resolves a fast-forward pin itself and nothing conflicts.
+    g(sup, "submodule", "add", "-q", "--depth", "1", `file://${subSrc}`, "sub");
+    const pin = (oid: string) => { g(join(sup, "sub"), "fetch", "-q", "--depth", "1", "origin", oid); g(join(sup, "sub"), "checkout", "-q", oid); g(sup, "add", "sub"); g(sup, "commit", "-q", "-m", `pin ${oid.slice(0, 7)}`); };
+    pin(pins.base);
+    g(sup, "checkout", "-q", "-b", "branch");
+    pin(pins.ours);
+    g(sup, "checkout", "-q", "main");
+    pin(pins.theirs);
+    g(sup, "checkout", "-q", "branch");
+    try { g(sup, "merge", "--no-ff", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+    if (g(sup, "diff", "--name-only", "--diff-filter=U") !== "sub") throw new Error("fixture: expected a gitlink conflict on sub");
+    return { top, sup, ...pins };
+  }
+
+  test("the branch's pin fast-forwards main's: keep the branch's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, theirs: b, ours: d }; });
+    try {
+      const r = resolveGitlink(c.sup, "sub");
+      expect(r).toEqual({ take: "ours", pin: c.ours, why: "the branch's pin fast-forwards the base's" });
+      stageGitlink(c.sup, "sub", c.ours);
+      expect(g(c.sup, "diff", "--name-only", "--diff-filter=U")).toBe("");
+      expect(g(c.sup, "ls-files", "-s", "sub").split(/\s+/)[1]).toBe(c.ours);
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("main's pin fast-forwards the branch's: take main's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, ours: b, theirs: d }; });
+    try {
+      expect(resolveGitlink(c.sup, "sub")).toEqual({ take: "theirs", pin: c.theirs, why: "the base's pin fast-forwards the branch's" });
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("diverged pins are refused — either side drops the other's commits", () => {
+    const c = conflict((commit, reset) => { const a = commit("a"); const b = commit("b"); reset(a); const d = commit("c"); return { base: a, ours: b, theirs: d }; });
+    try {
+      const r = resolveGitlink(c.sup, "sub");
+      expect(r && "refuse" in r && r.refuse).toContain("diverged");
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+
+  test("a path that is not a gitlink is not this resolver's", () => {
+    const c = conflict((commit) => { const a = commit("a"); const b = commit("b"); const d = commit("c"); return { base: a, theirs: b, ours: d }; });
+    try {
+      expect(resolveGitlink(c.sup, ".gitmodules")).toBeUndefined();
+    } finally { rmSync(c.top, { recursive: true, force: true }); }
+  });
+});
+
+/**
+ * #1801, 2026-10-03: the branch adds `results/` to `.gitignore` while the
+ * files there stay tracked on both sides. git checks an UNMERGED path against
+ * `.gitignore` as if it were new, so a plain `git add` refused, and merge-main
+ * went red on every push to main ("exited 1 without a refusal").
+ */
+function ignoredTrackedConflict(): string {
+  const dir = mkdtempSync(join(tmpdir(), "merge-base-ign-"));
+  const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
+  g("init", "-q", "-b", "branch");
+  g("config", "user.email", "t@example.invalid");
+  g("config", "user.name", "t");
+  mkdirSync(join(dir, "results"));
+  writeFileSync(join(dir, "results/x.json"), "{}\n");
+  g("add", ".");
+  g("commit", "-qm", "base");
+  g("checkout", "-q", "-b", "main");
+  writeFileSync(join(dir, "results/x.json"), "{\"main\":1}\n");
+  g("commit", "-qam", "main side");
+  g("checkout", "-q", "branch");
+  writeFileSync(join(dir, ".gitignore"), "results/\n");
+  writeFileSync(join(dir, "results/x.json"), "{\"branch\":1}\n");
+  g("add", ".gitignore");
+  g("commit", "-qam", "branch side: ignore results/, still tracked");
+  try { g("merge", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+  return dir;
+}
+
+describe("a conflicted path the branch's .gitignore matches (#1801)", () => {
+  const dirs = [ignoredTrackedConflict(), ignoredTrackedConflict()];
+
+  test("the crash, reproduced: a plain `git add` exits 1 on the unmerged ignored path", () => {
+    // (git stages it all the same; only the exit status is the failure, and
+    // the resolver's git() helper throws on it.)
+    const dir = dirs[0]!;
+    expect([...unmergedStages(dir, "results/x.json")].sort()).toEqual([1, 2, 3]);
+    expect(() => execFileSync("git", ["add", "--", "results/x.json"], { cwd: dir, stdio: "pipe" })).toThrow();
+  });
+
+  test("takeBase stages the base's copy anyway, and nothing else", () => {
+    const dir = dirs[1]!;
+    expect([...unmergedStages(dir, "results/x.json")].sort()).toEqual([1, 2, 3]);
+    writeFileSync(join(dir, "results/untracked.json"), "{}\n");
+    takeBase(dir, "results/x.json");
+    expect(readFileSync(join(dir, "results/x.json"), "utf-8")).toBe("{\"main\":1}\n");
+    expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: dir, encoding: "utf-8" })).toBe("");
+    // -f is scoped to the conflicted path: an ignored untracked neighbour stays out.
+    expect(execFileSync("git", ["ls-files", "--", "results/untracked.json"], { cwd: dir, encoding: "utf-8" })).toBe("");
+  });
+
+  test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
+});
+
+describe("a resolution that fails is reported as a refusal, not an unexplained exit", () => {
+  test("the line has the refusal shape merge-main.yml and merge-main-comment read", () => {
+    const err = Object.assign(new Error("Command failed"), { stderr: "\nThe following paths are ignored by one of your .gitignore files:\nresults\n" });
+    const line = resolutionFailure("results/x.json", "derived-results", err);
+    expect(line).toBe("  ✗ results/x.json  [derived-results: could not resolve] — The following paths are ignored by one of your .gitignore files:");
+    // merge-main.yml: grep -qE '^  ✗ .*  \['
+    expect(/^ {2}✗ .* {2}\[/.test(line)).toBe(true);
+    expect(parseLog(`merge-base: 1 conflicted path(s)\n${line}\n`).refused).toContain("results/x.json");
   });
 });

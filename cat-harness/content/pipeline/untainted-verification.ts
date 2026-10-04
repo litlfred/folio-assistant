@@ -53,9 +53,17 @@
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { relative } from "node:path";
+import { join, relative } from "node:path";
 
 import type { QaCriterionEntry, QaFieldHash } from "../../schemas/block-qa.ts";
+import {
+  attestationKeyForDerived,
+  composeCriteria,
+  finalizeCriteria,
+  isAsciiEscaped,
+  refusalLine,
+  resolvePrior,
+} from "../../schemas/qa-attestations.ts";
 
 /** Who ran, and under what. `model` is meaningless without `model_source`. */
 export interface UntaintedParty {
@@ -315,11 +323,33 @@ export function mergeUntainted(
 }
 
 /**
- * Write a verification into the subject's sidecar.
+ * Record a verification in the attestation store — a judgement's durable
+ * home — and refresh the derived report's projection only if one exists.
  *
- * Refuses when the sidecar does not exist. The script sweep is what
- * establishes that a block is in scope at all; a recorder that invents a
- * sidecar could file a verdict against something nothing has ever swept.
+ * Both entries are judgements (`reviewer.kind` agent or human), so since
+ * `8wj1`/`2gst` they belong in the declared `attestations` graph
+ * (`qa-attestations/v1`), not in the derived block-qa report, which is a
+ * working copy whose record lives on the `qa-reports` branch (bean `8iqt`).
+ * This writer goes through the same API as the nine writers `8wj1` fixed:
+ * `resolvePrior`, then `finalizeCriteria` in `"attesting"` mode, which writes
+ * the store FIRST, reads it back, and only then composes the projection.
+ *
+ * `sidecarPath` names the subject by its derived report's path (under
+ * `test/results/block-qa/` or the legacy sibling) whether or not that file
+ * exists: once derived files leave `main` (bean `5hox`) it usually will not,
+ * and the verdict must still land.
+ *
+ * Refuses — throws, having written nothing — when:
+ * - the path names no block-qa / translation-qa subject;
+ * - the SUBJECT does not exist (neither `<subject>.md` nor `<subject>.ts`).
+ *   This used to be "the sidecar does not exist — run the sweep first", but
+ *   the derived report is no longer kept beside the subject, so its absence
+ *   says nothing about scope; the subject's absence still does;
+ * - the derived report exists and does not parse;
+ * - the store is `corrupt` or `unknown`, or `conflict`s with the report:
+ *   UNKNOWN, nothing written.
+ *
+ * Returns the store path written, relative to `root`.
  */
 export function recordUntainted(
   sidecarPath: string,
@@ -327,18 +357,58 @@ export function recordUntainted(
   fresh: readonly QaCriterionEntry[],
   root: string,
 ): string {
-  if (!existsSync(sidecarPath)) {
+  const key = attestationKeyForDerived(root, sidecarPath);
+  if (key === undefined) {
+    throw new Error(`${relative(root, sidecarPath)} names no block-qa or translation-qa subject under ${root}`);
+  }
+  const subjectAbs = join(root, key.subject);
+  if (!existsSync(`${subjectAbs}.md`) && !existsSync(`${subjectAbs}.ts`)) {
     throw new Error(
-      `no ${relative(root, sidecarPath)} — run the sweep first; an untainted verification ` +
-        `cannot be the thing that decides this block is in scope`,
+      `no ${key.subject}.md or ${key.subject}.ts — an untainted verification cannot be filed ` +
+        `against a subject that does not exist`,
     );
   }
-  const doc = JSON.parse(readFileSync(sidecarPath, "utf-8")) as {
-    criteria: Record<string, QaCriterionEntry[]>;
-    updated_at?: string;
+  type Report = { criteria?: Record<string, QaCriterionEntry[]>; updated_at?: string; [k: string]: unknown };
+  let prior: Report | undefined;
+  let priorText: string | undefined;
+  if (existsSync(sidecarPath)) {
+    priorText = readFileSync(sidecarPath, "utf-8");
+    try {
+      prior = JSON.parse(priorText) as Report;
+    } catch (e) {
+      throw new Error(
+        `${relative(root, sidecarPath)} does not parse (${e instanceof Error ? e.message : String(e)}) — ` +
+          `fix it by hand first; nothing was written`,
+      );
+    }
+  }
+  const res = resolvePrior(root, key, prior);
+  if (!res.ok) throw new Error(refusalLine("recordUntainted", key.subject, res));
+
+  const criteria: Record<string, QaCriterionEntry[]> = {
+    ...((res.prior?.criteria ?? composeCriteria({}, res.attestations)) as Record<string, QaCriterionEntry[]>),
   };
-  doc.criteria[criterion] = mergeUntainted(doc.criteria[criterion], fresh);
-  doc.updated_at = new Date().toISOString();
-  writeFileSync(sidecarPath, JSON.stringify(doc, null, 2) + "\n");
-  return relative(root, sidecarPath);
+  criteria[criterion] = mergeUntainted(criteria[criterion], fresh);
+  let finalised: Record<string, QaCriterionEntry[]>;
+  try {
+    finalised = finalizeCriteria(res, criteria, "attesting", {
+      asciiEscape: priorText !== undefined && isAsciiEscaped(priorText),
+    });
+  } catch (err) {
+    throw new Error(
+      refusalLine("recordUntainted", key.subject, {
+        state: "unknown",
+        path: res.path,
+        reason: err instanceof Error ? err.message : String(err),
+      }),
+    );
+  }
+  // The projection is refreshed only where it already exists: the derived
+  // report is the sweep's to create, and its record lives on `qa-reports`.
+  if (prior !== undefined) {
+    prior.criteria = finalised;
+    prior.updated_at = new Date().toISOString();
+    writeFileSync(sidecarPath, JSON.stringify(prior, null, 2) + "\n");
+  }
+  return relative(root, res.path);
 }

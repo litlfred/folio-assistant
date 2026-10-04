@@ -225,9 +225,17 @@ cat-harness/docs/vendor/
 # it wants kept (`git add -f`), so opting in is a deliberate act at the point
 # of capture rather than a global switch somebody forgets is flipped.
 #
-# NOT `fsh-guts/` wholesale: the rest of the trashcan is committed on purpose
-# — that is what makes the never-delete rule a relocation rather than a
-# disappearance.
+# The rest of the trashcan is kept on purpose — that is what makes the
+# never-delete rule a relocation rather than a disappearance — but since bean
+# `9c7h` it is kept on its own branch, `cat/cat-harness/fsh-guts`, not on
+# main. `bun run state:mount` puts it at `fsh-guts/`, and `bun run state:push`
+# splices edits back. So the WHOLE directory is ignored here: a mounted copy
+# committed to main would be a second, diverging copy. branch-store reads
+# this root rule as "the mount itself" and still pushes the files under it,
+# while `fsh-guts/logs/` below stays local scratch that is never pushed.
+# `/**` and NOT `/fsh-guts/`: a directory rule stops git at the directory, so
+# it would be reported for the logs too and the logs rule would never be seen.
+/fsh-guts/**
 fsh-guts/logs/
 
 # Transient ingest staging — the arms write here, `check:l1-complete` gates it
@@ -243,6 +251,27 @@ cat-harness/ingest-staging/
 # The composed documentation tree (`compose-docs.ts`). A build output: the
 # BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
 _docs/
+
+# The WORKING COPY of every declared `qa` directory (bean `5hox`, arc `3fva`,
+# owner ruling D4). Each of these declares `storage: { branch: qa-reports }`:
+# the record is the orphan `qa-reports` branch, keyed by commit and written by
+# the CI job `qa-publish` through `qa-store.ts`. Writers still write here and
+# `qa:fetch` materialises an entry here; neither is committed. Judgements are
+# NOT here: `test/attestations/` stays on main (ruling D2 (a)), and so does
+# `test/health/results/`, which no publish carries yet. One line per declared
+# directory, kept equal to the declarations by `directory-storage.test.ts`.
+cat-harness/test/results/
+fhir-harness/test/results/
+folio-assistant-core/test/results/
+folio-assistant-sci/test/results/
+smart-base/test/results/
+smart-dak/test/results/
+smart-ig/test/results/
+smart-immunizations/test/results/
+smart-l1/test/results/
+smart-trust/test/results/
+who-iris/test/results/
+who-style-guide/test/results/
 
 # The state-branch mount (bean `2h76` part 4). A git worktree of the `state`
 # branch, put here by `bun run state:mount` so the third-party `beans` CLI can

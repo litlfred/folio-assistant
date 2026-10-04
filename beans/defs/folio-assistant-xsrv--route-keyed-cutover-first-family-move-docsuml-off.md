@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xsrv
 title: 'ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-03T17:52:50Z
+updated_at: 2026-10-04T13:47:14Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -282,3 +282,122 @@ holds **2 files**, the docs-auto index pages *about* the uml graph, which are no
 134 pages this bean is about. So Done-when 1 is **half done**: the kind exists and
 is judged, the two route directories are still undeclared and carry no `storage`.
 Not ticked.
+
+
+## DONE-WHEN 2 DONE 2026-10-04 — `cat/cat-harness/uml-overview` seeded, hash-verified
+
+Owner chose this on 2026-10-04 ("1 2 3", xsrv first) once #2032 went green. Seeded
+with `2h76`'s plumbing — private index, `read-tree --prefix`, `commit-tree` with no
+parent, a plain push, never `-f`.
+
+| | |
+|---|---|
+| branch | `cat/cat-harness/uml-overview` (orphan) |
+| commit | `ae5fb4d608437dbf022d7fbe7379daa5183771f0` |
+| tree | `8fbfc3c682efeaf7d119b4a85baff9c81d709b18` |
+| seeded from | `main@066efdbfa2` |
+| author | `folio-state-bot`, the identity `branch-store.ts` exports as `STATE_BOT` |
+
+**One branch for both directories, deliberately.** One generator owns them and the
+pages reference the SVGs, so a single branch makes an update atomic across both.
+Paths mirror the checkout, so a reader finds a file where `main` holds it.
+
+### Hash-verified, twice, as `2h76` requires
+
+Tree ids per path, computed locally **before** the push and again from a cold
+`git init` reader with none of my objects (`fetch --depth=1 --filter=blob:none`):
+
+    cat-harness/docs/uml/overview               5bb59f46274733a0c14533d9d048b05238a03b13
+    cat-harness/docs/assets/img/uml/overview    620de680926d6282fdb12013915b9f3b9470f624
+
+Identical in all three places, and the root tree `8fbfc3c6…` matched too. **0
+mismatches.** A tree id rather than a byte-compare because a byte-compare passes on a
+tree reassembled wrongly.
+
+### And verified FUNCTIONALLY, which the hash check cannot do
+
+`branch-store.ts` opened against the real branch, three states and all three distinct:
+
+| opened as | result |
+|---|---|
+| `keyedBy: "route"` | **`hit`** — 8002 bytes, blob `abbef49926c4` |
+| `keyedBy: "tip"`, same branch | **`corrupt`** — *"is keyed by route, not tip"* |
+| a branch that does not exist | **`miss`** — *"does not exist on the remote"* |
+
+The middle row is the one worth having. `BranchStoreOptions.keyedBy`'s docblock says
+the keying is passed rather than sniffed because *"a reader that adopted whatever
+keying the branch claimed would read a route-keyed branch as state the moment somebody
+pushed the wrong manifest"* — so a mismatch must be `corrupt`, not `hit` and not
+`miss`. Measured, not assumed.
+
+### Counts moved, and that is the point of recording the base
+
+132 pages and 262 SVGs at `main@066efdbfa2` — not the 134/266 measured hours earlier,
+and not this bean's original 126. The generator reruns on every declaration change, so
+a count is only meaningful beside the commit it was taken at.
+
+### `main` is still authoritative
+
+`manifest.json` carries `"status": "seed"`, `"authoritative": false`. Nothing reads the
+branch, `main` keeps its copy, and the README on the branch says so and says not to
+merge it. Next: Done-when 3, `uml:overview:check` reads the branch and an unfetchable
+branch reports **unknown**; then `storage`; then — owner only — the removal.
+
+
+## DONE-WHEN 3 IS NOT A STANDALONE STEP — a route-keyed branch has no WRITER, measured
+
+Stopped before building it, because the step as written cannot stand on its own and
+the missing piece is a design decision rather than an omission.
+
+**Measured, not read.** `mountTip` and `pushMount` — the only write path with a CLI —
+both call `BranchStore.open(loc.branch, { repoRoot, ...opts.store })` with **no
+`keyedBy`**, so it defaults to `"tip"`. Against the branch just seeded:
+
+    mountTip on a route-keyed branch -> corrupt
+      cat/cat-harness/uml-overview is keyed by route, not tip
+
+That is `verifiedTip` doing its job: the keying is passed rather than sniffed
+precisely so a reader cannot adopt whatever a branch claims. The mount/push pair is
+tip-shaped all the way down — a marker, `expect` from the mounted tip, and a refusal
+for *"a directory the checkout still tracks"* — and a route-keyed `write()` **refuses
+`expect`** by construction (bean `1j3q`).
+
+### Why that blocks the reader rather than merely inconveniencing it
+
+`uml:overview:check` compares the generator's fresh output against the authoritative
+copy. Point it at the branch and the first declaration change anywhere makes the
+generator's output differ from the seed, so the gate goes **red with no remedy**: no
+command regenerates onto a route-keyed branch. A gate whose fix does not exist is
+worse than the gate not existing — it is the `1xhc` shape, a red that trains people to
+ignore reds.
+
+So the real order is: **writer, then reader, then `storage`.** This bean's Done-when 3
+assumed the writer.
+
+### Three shapes the writer could take — the owner's call, not an agent's
+
+| | what it is | against it |
+|---|---|---|
+| **(a)** pass `loc.keyedBy` through `mount`/`push` | smallest diff, one mechanism | mount semantics are tip's: a marker, `expect`, and a refusal while the checkout still tracks the path. A route store refuses `expect`, so "push the mount" has no meaning |
+| **(b)** a separate `branch-store publish --id <id>` | matches the keying's own words — *"one entry per published SITE ROUTE, each replaced wholesale by the single generator that owns it"* — no mount, no marker, no `expect` | a second CLI verb, and the question of who runs it (CI on `main`? the generator?) |
+| **(c)** the generator calls `BranchStore.write()` directly | no CLI at all | every future route-keyed generator rebuilds the same loop, and nothing can run it by id |
+
+**(b)** is what the keying's definition reads like, and I have not built it: inventing
+a publish mechanism unasked is the opposite of what this arc has been doing one
+declared step at a time.
+
+### What is NOT blocked
+
+Nothing already done is affected. The branch is seeded and hash-verified, `main` stays
+authoritative, `manifest.json` says `"authoritative": false`, and no declaration sets
+`storage`. The repository is in a state somebody can leave it in indefinitely — which
+is the whole reason the seed came before the flip.
+
+One more thing the writer question will reach: `offCheckoutFindings` in
+`check-declared-dirs.ts` skips `route`, with its reason in the docblock. The moment
+`storage` is set while the files are still on `main`, that silence becomes the
+`not-cut-over` state `9ofm` added for `tip` — two copies and nothing saying which is
+authoritative. Extending it to `route` belongs with the flip, and the extraction done
+on #2032 means there is one place to do it.
+
+_2026-10-04T13:47:14Z_ — Claimed by claude/lucid-shannon-o8zop1-gz47-ruling — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

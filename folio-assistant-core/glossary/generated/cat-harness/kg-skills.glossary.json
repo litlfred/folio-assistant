@@ -72,9 +72,17 @@
     {
       "id": "audit-coverage",
       "prefLabel": "audit-coverage",
-      "definition": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
+      "definition": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.",
       "notation": "audit-coverage",
       "source": "cat-harness/skills/kg/kg-core/audit-coverage.md",
+      "status": "candidate"
+    },
+    {
+      "id": "auto-docs",
+      "prefLabel": "auto-docs",
+      "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "notation": "auto-docs",
+      "source": "cat-harness/skills/ui/ui-core/auto-docs.md",
       "status": "candidate"
     },
     {
@@ -545,19 +553,19 @@
       "status": "candidate"
     },
     {
-      "id": "docs-auto",
-      "prefLabel": "docs-auto",
-      "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
-      "notation": "docs-auto",
-      "source": "cat-harness/skills/ui/ui-core/docs-auto.md",
-      "status": "candidate"
-    },
-    {
       "id": "docs-generation",
       "prefLabel": "docs-generation",
       "definition": "Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.",
       "notation": "docs-generation",
       "source": "cat-harness/skills/ui/ui-core/docs-generation.md",
+      "status": "candidate"
+    },
+    {
+      "id": "document-intake",
+      "prefLabel": "document-intake",
+      "definition": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+      "notation": "document-intake",
+      "source": "cat-harness/skills/library/library-core/document-intake.md",
       "status": "candidate"
     },
     {
@@ -973,7 +981,7 @@
     {
       "id": "merge-queue",
       "prefLabel": "merge-queue",
-      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
       "notation": "merge-queue",
       "source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
       "status": "candidate"
@@ -1153,9 +1161,17 @@
       "status": "candidate"
     },
     {
+      "id": "qa-reports",
+      "prefLabel": "qa-reports",
+      "definition": "Where a QA result lives now. Derived verdicts go to the orphan `qa-reports` branch, keyed by commit, written by the CI job `qa-publish`. Judgements stay on main in the `attestations` graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under `test/results/` or `test/attestations/`.",
+      "notation": "qa-reports",
+      "source": "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
+      "status": "candidate"
+    },
+    {
       "id": "qa-witness",
       "prefLabel": "qa-witness",
-      "definition": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "definition": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
       "notation": "qa-witness",
       "source": "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
       "status": "candidate"
@@ -1480,6 +1496,14 @@
       "prefLabel": "test-engineer",
       "notation": "test-engineer",
       "source": "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
+      "status": "candidate"
+    },
+    {
+      "id": "test-plan-execution",
+      "prefLabel": "test-plan-execution",
+      "definition": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.",
+      "notation": "test-plan-execution",
+      "source": "cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md",
       "status": "candidate"
     },
     {

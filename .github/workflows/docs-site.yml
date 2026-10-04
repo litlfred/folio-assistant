@@ -140,6 +140,50 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      # The site READS the work plan at build time — `gen-docs-pages.ts` writes
+      # `assets/beans/index.json` from `beanDefsDir()`, and `state-visualizer`
+      # renders the store — so the graph has to be on disk before those steps
+      # run. After arc `fs43`'s cutover it is on `cat/cat-harness/beans` and
+      # this is what puts it there; inert while nothing is tip-keyed (bean
+      # `9ofm`, §4 `site` row).
+      #
+      # Deliberately NOT paired with a trigger on pushes to the bean branch.
+      # That needs more than a path: this job checks out `github.ref`, which
+      # for such a push is a branch carrying no code, and the concurrency group
+      # is keyed by the same ref. Bean `fwtz` carries it. Note what is and is
+      # not a regression: `beans/**` is not in this workflow's path filter
+      # today either, so a bean edit does not rebuild the site NOW.
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
+      # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
+      # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
+      #
+      # The derived QA corpus is published to the `qa-reports` branch by
+      # `code-quality-gates.yml` (`qa:publish`), keyed `main/<sha>`. This reads
+      # that entry — or the newest `main` entry as a labelled fallback — into a
+      # scratch directory. While `test/results/` is still committed the
+      # checkout wins; once it is not (bean `5hox`) the fetched entry is
+      # materialised into the checkout so the generator below reads it. With
+      # neither, the build says "QA not available for this ref" in the log, in
+      # the badges, in the `qa` tile and in `assets/qa/availability.json` —
+      # and never publishes a smaller set as if it were the whole.
+      #
+      # It must run BEFORE the generator: `gen-docs-pages.ts` recreates
+      # `witnesses/` itself, and a corpus check made after that finds its own
+      # output (the 965 → 2 count, C9).
+      - name: Fetch this build's QA evidence from qa-reports
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          bun run cat-harness/scripts/qa-site-assets.ts fetch \
+            --ref "main/$SHA" --fallback main \
+            --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
+
       - name: Regenerate skill schema reference
         run: bun run cat-harness/scripts/gen-schema-docs.ts
 
@@ -153,6 +197,31 @@ jobs:
       # the deploy-time refresh.
       - name: Regenerate content-backed docs pages
         run: bun run cat-harness/scripts/gen-docs-pages.ts
+
+      # The /qa/ page (docs/qa/index.html) is written by the state visualiser
+      # from the QA results this build fetched. It was committed and never
+      # regenerated here, so once QA leaves `main` (bean 5hox) it would show a
+      # frozen count. Owner ruling 2026-10-01: regenerate it in the build.
+      - name: Regenerate the QA state page from this build's results
+        run: bun run state:visualizer
+
+      # The LSI viewer page's PER-INDEX DETAIL (docs/lsi/index.md), on the same
+      # reasoning one step up. Bean `tqjj` splits that page by what each value
+      # is a function of: its front matter, prose and verdict table are a
+      # function of the tree and stay committed, while each index's size,
+      # retained share, dimension poles and findings are a function of the
+      # index's CONTENT — which a one-sentence edit to any of 229 skills moves,
+      # and which cost 319 of the last 400 commits on `main`. `--detail` adds
+      # that half here and nowhere else.
+      #
+      # It has to be THIS workflow's step. A gate job does not fetch, so
+      # `lsi:viz -- --detail` there would read `qa-reports` at `main`, which
+      # resolves to the LATEST published entry — a value that depends on when
+      # the run happened rather than on the tree, which is bean `in5a`'s loop.
+      # The fetch step above pins the entry to THIS build's sha, so the
+      # published page is about the commit it ships with.
+      - name: Add the LSI viewer page's per-index detail from this build's indexes
+        run: bun run lsi:viz -- --detail
 
       # The schema graph's projection and its viewer. Same reasoning as the
       # regenerations above: the committed copy is browsable on GitHub and the
@@ -445,6 +514,14 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance . --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
           cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
+          # EVERY OTHER declared instance's graph, one document each — bean
+          # `4ak5` item 1. The set is derived from the declarations by the
+          # script, never listed here; the three instances above keep their
+          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+          # `check:published-instance-exports` runs the same plan, and fails if
+          # any declared instance is published by neither.
+          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site
+
           bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
@@ -623,17 +700,32 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
+      #
+      # The copy is then JUDGED (bean `tfqf`, C10): `qa-site-assets.ts verify`
+      # counts what landed against what the source held when the build
+      # started, fails the step on a shortfall, and publishes
+      # `assets/qa/availability.json` naming the source. A silent shrink was
+      # the defect — this step used to print a smaller count and stay green.
       - name: Publish the QA witnesses and results
         run: |
-          mkdir -p ./_site/assets
-          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          mkdir -p ./_site/assets/qa
+          # Guarded: with no corpus and nothing generated there is no
+          # directory, and `verify` below — not a `cp` error — says what that
+          # means.
+          if [ -d cat-harness/test/results/witnesses ]; then
+            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+          if [ -d cat-harness/test/results ]; then
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts verify \
+            --site ./_site --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.

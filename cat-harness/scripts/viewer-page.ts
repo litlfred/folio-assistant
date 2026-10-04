@@ -4,7 +4,7 @@
  * Owner, 2026-09-23, naming three pages and then the rule:
  *
  * > navbar should be on sub pages like `/cat-harness/catalogue/who-iris/` or
- * > `/cat-harness/docs-auto/index/docs/who-iris-docs/` or library
+ * > `/cat-harness/auto-docs/index/docs/who-iris-docs/` or library
  * > etc... **common fixture unless explicty removed in harness visualtion.**
  *
  * The last clause inverts the default. The rail is PRESENT unless a
@@ -63,7 +63,8 @@ import { dirname, relative, sep } from "node:path";
 
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
-import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs } from "./mount-instance-docs.js";
+import { kindTitle } from "./lib/nav-label.js";
+import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs, railNames } from "./mount-instance-docs.js";
 
 /**
  * The opt-out a visualisation writes into its own page.
@@ -105,7 +106,7 @@ export interface ViewerNav {
    *
    * A generator that knows better PASSES it — `gen-library-viz` writes
    * `library/<instance>/` and has the instance in hand. What no caller does is
-   * INFER it from the path: `docs-auto/index/skills/who-iris-skills/` would
+   * INFER it from the path: `auto-docs/index/skills/who-iris-skills/` would
    * have to be un-suffixed to yield `who-iris`, and a rule that strips
    * `-skills` here is a second answer to a question the generator already
    * answered, free to disagree with it and silently wrong on the first
@@ -140,15 +141,44 @@ export function subjectSection(
   subjects: readonly string[],
   current: string | undefined,
   regions: readonly { label: string; id: string }[],
+  /**
+   * What each subject page is CALLED. A subject page is a destination other
+   * surfaces name too (`/cat-harness/schemas/cat-harness/` is "Schemas" in
+   * the Graphs group), so its row takes that one name with the harness as the
+   * qualifier: "Schemas · C@T Harness". Bean `ob3m` finding 6. Omitted, a row
+   * is the bare segment, as before.
+   *
+   * Called with `undefined`, it names the WHOLE-VIEW page. That page is a
+   * destination too: an instance with a graph of this kind but no subject page
+   * of its own (who-iris's and folio-assistant-sci's `schemas`, since bean
+   * `j7ql`) links it, and the sidebar and landing call it "Schemas". Naming it
+   * "all" here was a second name for that one page. Omitted, it is "all".
+   */
+  name?: (subject: string | undefined) => { label: string; qualifier?: string },
 ): VisualiserNavEntry[] {
   const anchors = regions.map((r) => ({ label: r.label, href: `#${r.id}` }));
   const up = current === undefined ? "" : "../";
+  const named = (s: string): { label: string; qualifier?: string } => name?.(s) ?? { label: s };
+  const whole = name?.(undefined) ?? { label: "all" };
   return [
-    current === undefined ? { label: "all", items: anchors } : { label: "all", href: up },
+    current === undefined ? { ...whole, items: anchors } : { ...whole, href: up },
     ...subjects.map((s) =>
-      s === current ? { label: s, items: anchors } : { label: s, href: `${up}${s}/` },
+      s === current ? { ...named(s), items: anchors } : { ...named(s), href: `${up}${s}/` },
     ),
   ];
+}
+
+/**
+ * {@link subjectSection}'s `name` for a handler's viewer of `kind`: the kind's
+ * display name, qualified by each subject harness's own name from
+ * `_data/harness.json` (its directory name when the data cannot say).
+ */
+export function subjectNames(
+  built: string,
+  kind: string,
+): (subject: string | undefined) => { label: string; qualifier?: string } {
+  const label = kindTitle(kind);
+  return (subject) => (subject === undefined ? { label } : { label, qualifier: railNames(built, subject).harness ?? subject });
 }
 
 /**
@@ -196,7 +226,8 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
   // The visualiser this page IS — the row the loop below marks current. Its
   // label names the page's own section in the rail (#1757).
   let visualiserLabel: string | undefined;
-  const links: NavItem[] = declaredGraphs(instance, new Map(), site).map((item) => {
+  const named = railNames(o.built, instance);
+  const links: NavItem[] = declaredGraphs(instance, new Map(), site, named.harness).map((item) => {
     // WHERE AM I — and the row loses its HREF, not just gains a mark.
     //
     // `state-visualizer.test.ts` states the rule this repository already
@@ -231,7 +262,8 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     }
   }
   const railed = injectRail(withHeadingIds(own), {
-    instance,
+    instance: named.harness ?? instance,
+    ...(named.site ? { homeLabel: named.site } : {}),
     toRoot,
     ...(mark ? { mark } : {}),
     ...(visualiserLabel ? { visualiserLabel } : {}),
