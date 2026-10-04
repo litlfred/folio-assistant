@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 768,
+      "count": 770,
       "unit": "beans"
     }
   },
@@ -2381,14 +2381,14 @@
     {
       "id": "folio-assistant-7fu5",
       "title": "CI: fold the four one-second jobs into one — fewer runner requests per run",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T16:14:26Z",
-      "updatedAt": "2026-10-03T16:34:12Z",
+      "updatedAt": "2026-10-04T05:33:46Z",
       "preview": "Measured on main run 37133247484 (2026-10-03, #2010 merge): 21.7 min wall for a run whose longest job executes 174 s. Runner WAIT dominates: first job queued 4.5 min; the two 1-s aggregator jobs waited 9.6 and 3.8 min. Each run asks for 18 runners. Four jobs do ~1 s of work after a ~13 s checkout: lean-bare-import, python-imports, rust-wildcard, dependency-advisories.\n\nOwner chose option 1 (2026-1",
       "file": "beans/defs/folio-assistant-7fu5--ci-fold-the-four-one-second-jobs-into-one-fewer-ru.md"
     },
@@ -5351,6 +5351,20 @@
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
+      "id": "folio-assistant-hcpz",
+      "title": "seed:ready — per-layer seeding readiness gateway for kg-separation (Source settled?)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T17:22:19Z",
+      "updatedAt": "2026-10-02T22:27:27Z",
+      "preview": "Owner approved 2026-10-02: 'seed:ready: check skills/process to harness / KG separation and align.' The steward applied stability criteria by hand before a seeding review (heavy-mover PRs landed; no open PR touches the next layer; at most 5 touch the layer; none moves files in it). This bean makes that a DMN-backed gateway in kg-separation.bpmn, evaluated by bun run seed:ready --layer <name>, read",
+      "file": "beans/defs/folio-assistant-hcpz--seedready-per-layer-seeding-readiness-gateway-for.md"
+    },
+    {
       "id": "folio-assistant-hfag",
       "title": "Merge pipeline: train process, queue state, reprioritisation, gates",
       "status": "in-progress",
@@ -6389,6 +6403,20 @@
       "updatedAt": "2026-09-29T20:50:33Z",
       "preview": "_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. .github/workflows/feature-staging.yml exists with 32 STAGING references and is demonstrably working — it deployed previews for PRs #298 and #308 in this session, each commenting the STAGING URL. Note this bean has an EMPTY body: title and issue #215 only, no statement of what 'done' means, so this verification is against ob",
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
+    },
+    {
+      "id": "folio-assistant-m025",
+      "title": "IG pages: remove in-page Contents box; add Publisher footer from package metadata (#1901)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T05:35:04Z",
+      "updatedAt": "2026-10-04T06:05:02Z",
+      "preview": "Follow-up to #1970 on #1901. Owner 2026-10-02: TOC only in the LHS rail (done in #2020), so remove the Contents box #1970 added. Owner 2026-10-02 scope addition: Publisher footer — prev/top/next row; band 'IG © <publisher> ↗. Package <id>#<version> based on FHIR <v> ↗. Generated <date>'; Links: Table of Contents | QA Report | Version History | License. Values from the IG's own metadata (package.tg",
+      "file": "beans/defs/folio-assistant-m025--ig-pages-remove-in-page-contents-box-add-publisher.md"
     },
     {
       "id": "folio-assistant-m1k4",
