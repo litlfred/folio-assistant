@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 792,
+      "count": 795,
       "unit": "beans"
     }
   },
@@ -1679,6 +1679,20 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"soverign cloud: hosted git server, staging and publcation URLs follows different\ndeployment pattern (jusidiction defined). in L4-L5 context may have data stores\nlike hapi. for (public health) portals, (health) digital wallets),etc. or health\nworker decision spport. bean up to may strwperson and create issue to r",
       "file": "beans/defs/folio-assistant-4y2i--topology-sovereign-cloud-hosted-forge-jurisdiction.md"
+    },
+    {
+      "id": "folio-assistant-4z5o",
+      "title": "Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:08:59Z",
+      "updatedAt": "2026-10-04T09:08:59Z",
+      "preview": "Generated pages compose GitHub URLs by joining an instance-relative path that leaves the instance root, producing links with `/main/../` in them:\n\n    https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-core/processes/library/l1-document-ingestion.bpmn\n    https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/...   (the blob form is correct)\n\nThe `edit/` f",
+      "file": "beans/defs/folio-assistant-4z5o--generated-github-edit-source-urls-escape-the-repo-.md"
     },
     {
       "id": "folio-assistant-502c",
@@ -8805,6 +8819,20 @@
       "file": "beans/defs/folio-assistant-t5dm--instance-name-from-the-checkout-folder-library-gra.md"
     },
     {
+      "id": "folio-assistant-t5j5",
+      "title": "kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:08:59Z",
+      "updatedAt": "2026-10-04T09:08:59Z",
+      "preview": "Owner, 2026-10-04: the audit should resolve across instances.\n\nToday a `bpmn:callActivity` whose target process lives in a DIFFERENT declared instance reads `unknown`, with evidence that says in as many words that the audit cannot tell two different things apart:\n\n    CallActivity_Basic: calls \"Process_Ingestion\", which is the id of no\n    process this instance can load. That is either a typo or a",
+      "file": "beans/defs/folio-assistant-t5j5--kg-audit-a-call-activity-whose-target-is-loadable-.md"
+    },
+    {
       "id": "folio-assistant-t6ht",
       "title": "STICKIES BOARD: remove the Visualisations tile strip (owner 2026-10-02, reverses v0jv) — issue #1905",
       "status": "in-progress",
@@ -9635,6 +9663,20 @@
       "updatedAt": "2026-09-24T05:25:53Z",
       "preview": "User asked (2026-09-23) whether other open-source projects take a similar approach, then chose 'Write a prior-art doc'. Add a reader-facing comparison page under cat-harness/docs, verified against each project's repo.\n\n## Done when\n- [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overl",
       "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
+    },
+    {
+      "id": "folio-assistant-vqlp",
+      "title": "Placement PR6 leaves Process_Ingestion with no docs page section, so the harness's own basic flow has no KG witness",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:08:33Z",
+      "updatedAt": "2026-10-04T09:08:33Z",
+      "preview": "#1898 repoints `content/docs/document-ingestion/nodes/the-pipeline.jsonld`'s `sourceDocument` from `cat-harness/processes/library/document-ingestion.bpmn` to `folio-assistant-core/processes/library/l1-document-ingestion.bpmn`. That is deliberate and the prose was rewritten to match. The side effect is not: the harness's own basic flow, which the PR says STAYS in the harness, is then presented by n",
+      "file": "beans/defs/folio-assistant-vqlp--placement-pr6-leaves-process-ingestion-with-no-doc.md"
     },
     {
       "id": "folio-assistant-vrfx",
@@ -11264,8 +11306,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 302,
-    "openTotal": 466,
+    "orphanOpen": 305,
+    "openTotal": 469,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
