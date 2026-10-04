@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 790,
+      "count": 792,
       "unit": "beans"
     }
   },
@@ -1099,6 +1099,20 @@
       "updatedAt": "2026-09-24T05:45:45Z",
       "preview": "Owner, 2026-09-23 (bean iwtn, ruling 4): *\"cat-harness/tools like renderer. zod is in cat-harness\"*. `model-registry.ts` already moved (PR #1200). The owner then chose to move the other two as well, in a follow-up PR after #1200 merges.\n\n## The rule (owner, 2026-09-23)\n\n> Zod - these are authoring tools for the KG, different tools can/will be used, but the core KG should be unchanged.\n\nThe Zod fil",
       "file": "beans/defs/folio-assistant-319n--zod-is-in-cat-harness-move-bootstrap-tools-graphts.md"
+    },
+    {
+      "id": "folio-assistant-324x",
+      "title": "regen reports docs:pages current while assets/beans/index.json is stale",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T07:18:41Z",
+      "updatedAt": "2026-10-04T07:18:41Z",
+      "preview": "Measured twice on #1955 (2026-10-04, after main merges that took main's copy of cat-harness/docs/assets/beans/index.json by the site-data pattern): the file lacked `edges` (bean vhqq), check:kind-validators:require-all failed in CI, yet `bun run regen` reported docs:pages:check current. Running `bun run docs:pages` rewrote it with 86 edges each time. So docs:pages:check does not compare this asset",
+      "file": "beans/defs/folio-assistant-324x--regen-reports-docspages-current-while-assetsbeansi.md"
     },
     {
       "id": "folio-assistant-32f6",
@@ -9004,6 +9018,20 @@
       "file": "beans/defs/folio-assistant-t7fl--uploadsreadme-shows-the-high-level-document-ingest.md"
     },
     {
+      "id": "folio-assistant-t8c4",
+      "title": "bootstrap subgraph nodes carry no sourcePath: decide whether the reader needs it",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-whlc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T07:18:59Z",
+      "updatedAt": "2026-10-04T07:18:59Z",
+      "preview": "Owner, 2026-10-04, on litlfred/bootstrap-tools#7 item 4: 'track in bean'.\n\nbootstrap-tools#7 publishes bootstrap's and bootstrap-tools' named subgraphs with each node's file as an absolute `source` IRI (`dcterms:source`, owner ruled 'ok' on absolute IRIs) and NO repository-relative `sourcePath` literal, which folio-assistant's own subgraph files carry. folio-assistant's process-index reader (`cat-",
+      "file": "beans/defs/folio-assistant-t8c4--bootstrap-subgraph-nodes-carry-no-sourcepath-decid.md"
+    },
+    {
       "id": "folio-assistant-t8g3",
       "title": "Translation support foundation (issue #206)",
       "status": "todo",
@@ -12497,8 +12525,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 305,
-    "openTotal": 468,
+    "orphanOpen": 307,
+    "openTotal": 470,
     "coveredOpen": 159,
     "duplicateIds": 0
   }
