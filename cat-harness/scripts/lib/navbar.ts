@@ -67,6 +67,14 @@ export interface NavItem {
   href?: string;
   /** What it is called. */
   label: string;
+  /**
+   * The harness this destination belongs to, APPENDED to {@link label} where
+   * the harness matters — "Schemas · C@T Harness" — and never folded into it.
+   * Bean `ob3m` finding 6, "One name everywhere": the label is the
+   * destination's one name on every surface, and this is the only part that
+   * may vary.
+   */
+  qualifier?: string;
   /** A single character or short glyph, shown while the navbar rests. */
   icon?: string;
   /**
@@ -604,8 +612,10 @@ function itemHtml(i: NavItem, c: Ctx): string {
   // The description is INSIDE the label span's row but hidden visually, so it
   // joins the accessible name without widening the strip.
   const sr = i.description ? `<span class="fa-nav-sr"> — ${esc(i.description)}</span>` : "";
-  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}${sr}</span>`;
-  const title = i.description ? ` title="${esc(`${i.label} — ${i.description}`)}"` : "";
+  const q = i.qualifier ? `<span class="fa-nav-qualifier"> · ${esc(i.qualifier)}</span>` : "";
+  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}${q}${sr}</span>`;
+  const named = i.qualifier ? `${i.label} · ${i.qualifier}` : i.label;
+  const title = i.description ? ` title="${esc(`${named} — ${i.description}`)}"` : "";
   // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
   // the document index a different shape from every other group here, and the
   // rows are links either way.
@@ -844,6 +854,8 @@ export const VISUALISER_NAV_ATTR = "data-fa-visualiser-nav";
 /** One row of a declared visualiser section; `items` are its children. */
 export interface VisualiserNavEntry {
   label: string;
+  /** Appended to the label, as {@link NavItem.qualifier}. */
+  qualifier?: string;
   href?: string;
   items?: readonly { label: string; href?: string }[];
 }
@@ -895,11 +907,12 @@ export function visualiserNavOf(html: string, label: string): NavGroup | undefin
     return undefined;
   }
   if (!Array.isArray(raw)) return undefined;
-  type Entry = { href?: unknown; label?: unknown; items?: unknown };
+  type Entry = { href?: unknown; label?: unknown; qualifier?: unknown; items?: unknown };
   const row = (e: Entry, depth: number): NavItem | undefined =>
     typeof e?.label === "string" && e.label
       ? {
           label: e.label,
+          ...(typeof e.qualifier === "string" && e.qualifier ? { qualifier: e.qualifier } : {}),
           // A BULLET, not the row's initial. A letter per row read as a
           // column of unrelated marks (B, T, P, D — #1757 screenshot); the
           // initial is the mark for a harness, which these rows are not.

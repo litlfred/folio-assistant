@@ -163,7 +163,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
       ["host/library/who"],
     );
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library", path: "/host/library/who/" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", label: "Library", path: "/host/library/who/" }]);
   });
 
   test("a declared graph with NO page is not linked, and is reported", () => {
@@ -175,7 +175,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
       who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library", note: "no viewer yet" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", label: "Library", note: "no viewer yet" }]);
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
 
@@ -191,7 +191,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
 
   test("the site-owning instance elides its own name, as state-visualizer does", () => {
     const f = fixture({ host: host() }, ["beans"]);
-    expect(tilesOf(f)[0]!.visualisations).toEqual([{ kind: "beans", path: "/beans/" }]);
+    expect(tilesOf(f)[0]!.visualisations).toEqual([{ kind: "beans", label: "Beans", path: "/beans/" }]);
   });
 
   test("a sibling gets NO page at the elided path — that namespace is the owner's", () => {
@@ -200,7 +200,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
     const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] } }, [
       "beans",
     ]);
-    expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans", note: "no viewer yet" }]);
+    expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans", label: "Beans", note: "no viewer yet" }]);
   });
 });
 
@@ -577,7 +577,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = publishAt(f.repo, "translation-status");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library", path: "/translation-status/" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", label: "Library", path: "/translation-status/" }]);
     expect(who.findings.join(" ")).not.toContain("no published viewer");
   });
 
@@ -590,7 +590,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = join("host", hostSite(f.repo), "nowhere", "index.html");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library", note: "no viewer yet" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", label: "Library", note: "no viewer yet" }]);
     expect(who.findings.join(" ")).toContain("does not resolve on disk");
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
@@ -616,7 +616,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     // THE ROW SAYS THE SAME THING THE FINDING DOES. `viewer not published`,
     // never `no viewer yet` — a reader told the second about a viewer that
     // was built would go and build a second one.
-    expect(who.visualisations).toEqual([{ kind: "library", note: "viewer not published" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", label: "Library", note: "viewer not published" }]);
     expect(who.findings.join(" ")).toContain("exists but is not at a conventional path");
     // And NOT the unbuilt message, which is the assertion that would have
     // been false. Without this line the test passes on a report that says
@@ -632,7 +632,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = publishAt(f.repo, "somewhere-else");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library", path: "/host/library/who/" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", label: "Library", path: "/host/library/who/" }]);
   });
 
   test("one directory's viewer does not vouch for a kind it does not hold", () => {
@@ -657,8 +657,8 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     );
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.visualisations).toEqual([
-      { kind: "library", path: "/lib-view/" },
-      { kind: "uploads", note: "no viewer yet" },
+      { kind: "library", label: "Library", path: "/lib-view/" },
+      { kind: "uploads", label: "Uploads", note: "no viewer yet" },
     ]);
     expect(who.findings.join(" ")).toContain("no published viewer — uploads");
   });
@@ -876,6 +876,40 @@ describe("an instance's OWN theme tones its tile (bean v8n5)", () => {
     for (const name of ["cat-harness", "bootstrap"]) {
       expect(tiles.find((t) => t.name === name)!.toneFrom).toBe("avatar");
     }
+  });
+});
+
+describe("one name per destination (bean `ob3m` finding 6)", () => {
+  test("each row carries its kind's display name; two kinds on two pages are not merged", () => {
+    const f = fixture(
+      {
+        host: host(),
+        who: { name: "who", directories: [{ id: "s", path: "schemas/", graphKinds: ["schemas", "cat-harness"] }] },
+      },
+      ["host/schemas/who", "host/cat-harness/who"],
+    );
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    // Both kinds resolve their own conventional page here, so neither is
+    // marked: two pages, two rows, each named for its kind. The shared-page
+    // case is `labelVisualisations`'s, pinned in `nav-label.test.ts`.
+    expect(who.visualisations.map((v) => [v.kind, v.label, v.sameAs])).toEqual([
+      ["cat-harness", "Harness graph", undefined],
+      ["schemas", "Schemas", undefined],
+    ]);
+  });
+
+  test("an INSTANTIATED harness with no folio opens its landing section, not a graph's viewer", () => {
+    // Bootstrap's row linked `/processes/` and named that page "Bootstrap".
+    const f = fixture(
+      { host: host(), who: { name: "who", directories: [{ id: "p", path: "processes/", graphKinds: ["processes"] }] } },
+      ["host/processes/who"],
+    );
+    writeFileSync(join(f.repo, "who.config.json"), "{}");
+    const who = tilesOf(f).find((t) => t.name === "who")!;
+    expect(who.instantiated).toBe(true);
+    expect({ href: who.href, kind: who.hrefKind }).toEqual({ href: "/#harness-who", kind: "section" });
+    // The graph keeps its own page under its own name.
+    expect(who.visualisations).toEqual([{ kind: "processes", label: "Processes", path: "/host/processes/who/" }]);
   });
 });
 
