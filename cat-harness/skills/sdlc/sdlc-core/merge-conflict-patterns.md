@@ -415,6 +415,16 @@ that is behind `main`, one live run per PR (a newer run cancels an older one).
   overwritten.
 - **A refusal pushes nothing**, labels the PR `needs-merge-human`, and lists
   the ✗ paths. Adding a pattern stays a person's change, made here.
+- **A declared resolution that FAILS is a refusal too**, not an unexplained
+  red job. If taking the base or resolving a region throws, `merge-base`
+  prints `  ✗ <path>  [<pattern>: could not resolve] — <git's first error
+  line>` and aborts, so the PR is labelled and told which path. Measured
+  2026-10-03 on #1801: the branch ignores `cat-harness/test/results/` while
+  the files stay tracked, git exits 1 when staging an UNMERGED ignored path
+  (it stages it anyway), and merge-main went red on every push to main.
+  Staging a conflicted path now uses `git add -f`, safe because the path is
+  one git listed as unmerged. `regen` reporting an unrepaired check is still
+  a red job: that is a defect for a person to read, not a conflict.
 - **One comment per PR, edited in place** on every run — except a run that
   was **cancelled** (a newer push to `main` superseded it) or whose merge step
   reported no status, which leaves the comment untouched. Before #1854 such a
