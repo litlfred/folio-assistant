@@ -58,6 +58,11 @@ const drawn = renderFrom(read);
 const page = drawn.state === "hit" ? drawn.page : "";
 
 describe("the LSI viewer page", () => {
+  // `renderCommitted` walks every declared prose graph (~2-4 s on a CI
+  // runner), so it is rendered ONCE here and reused; only the determinism
+  // test below renders it a second time, and carries a timeout for that.
+  let committedOnce: string | undefined;
+  const committedPage = (): string => (committedOnce ??= renderCommitted());
   test("a miss is returned with its reason, never drawn as an empty page", () => {
     const miss = renderFrom({ state: "miss", reason: "no lsi/ in this entry" });
     expect(miss).toEqual({ state: "miss", reason: "no lsi/ in this entry" });
@@ -79,7 +84,7 @@ describe("the LSI viewer page", () => {
   // is a function of the TREE, so it reads the same with and without an index
   // to hand, and only `--detail` adds anything that an index's content moves.
   test("the committed page carries no value an index's content moves", () => {
-    const committed = renderCommitted();
+    const committed = committedPage();
     for (const n of [FIXTURE.units, FIXTURE.terms].map(String)) {
       expect(committed).not.toContain("<b>" + n + "</b>");
     }
@@ -87,20 +92,22 @@ describe("the LSI viewer page", () => {
     expect(committed).not.toContain("units indexed");
     expect(committed).not.toContain("## " + FIXTURE.instance + " / " + FIXTURE.graph);
     expect(committed).not.toContain(FIXTURE.fingerprint);
-  });
+  }, 30_000);
 
   test("the committed page is the same whether or not an index is to hand", () => {
     // `renderCommitted` takes no source, which is the point: there is no
     // argument by which a container holding a working copy could get a
     // different page from a fresh CI checkout (module docblock, bean `in5a`).
-    expect(renderCommitted()).toBe(renderCommitted());
-    expect(renderCommitted().length).toBeLessThan(page.length);
-  });
+    // Two independent renders, compared: one cached, one fresh.
+    const fresh = renderCommitted();
+    expect(fresh).toBe(committedPage());
+    expect(fresh.length).toBeLessThan(page.length);
+  }, 30_000);
 
   test("the freshness column exists only with --detail", () => {
     expect(page).toContain("| graph | needs one | verdict | detail |");
-    expect(renderCommitted()).toContain("| graph | needs one |");
-    expect(renderCommitted()).not.toContain("| verdict |");
+    expect(committedPage()).toContain("| graph | needs one |");
+    expect(committedPage()).not.toContain("| verdict |");
   });
 
   test("has a verdict row for every declared prose graph", () => {
