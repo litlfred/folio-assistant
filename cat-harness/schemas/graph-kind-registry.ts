@@ -1426,6 +1426,19 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Runnable, unlike its neighbour: `SessionSurveySchema` is a Zod schema,
       // so a published survey is PARSED rather than merely typed.
       "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+      // `merge-queue`'s family, and the THIRD time this comment's rule has been
+      // learned from a node rather than from the rule. It was declared solely
+      // on the child kind, and `beans/queue/` held only a README — so, exactly
+      // as the `folio-session-survey/v1` sentence above predicts, a map with no
+      // nodes could not be caught failing to route one. The first real entry
+      // (bean `xp5j`, PR #2063) made `check:kind-validators:require-all` red
+      // with `unmapped family folio-merge-queue-entry/v1`.
+      //
+      // Runnable, like its session-survey neighbour and unlike
+      // `folio-workflow-instance/v1`: `MergeQueueEntrySchema` is Zod, so an
+      // entry is PARSED rather than merely typed. It is the same export the
+      // steward's tooling imports, so the kind and the writer cannot drift.
+      "folio-merge-queue-entry/v1": { validator: "schemas/merge-queue.ts#MergeQueueEntrySchema" },
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
