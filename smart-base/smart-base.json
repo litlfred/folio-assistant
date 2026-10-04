@@ -12,6 +12,14 @@
   "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
   "directories": [
     {
+      "id": "smart-base-qa-checkers",
+      "path": "qa-checkers/",
+      "description": "The dak adapter's automated QA checkers, one folio-qa-checker/v1 node per criterion, naming DAK_AUTOMATED_CHECKERS in content/pipeline/qa-checkers-dak.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
+      "graphKinds": [
+        "qa-checkers"
+      ]
+    },
+    {
       "id": "smart-base-block-kinds",
       "path": "block-kinds/",
       "description": "The `dak` adapter's 21 block kinds, one folio-block-kind/v1 node per file (bean riit, step 3): kind, builder, label prefix and RDF types. Read off these nodes by smart-base/schemas/dak-kinds.ts and dak-jsonld.ts, and registered for a folio by loadContributions only when the folio's dependency tree includes smart-base (owner, 2026-10-04: a folio sees the nodes of the instances it depends on, option 1 of 3). They replace the blockKinds array contributions.ts returned.",

@@ -607,6 +607,36 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The validators a harness's code provides, one node each naming the graph kind and $schema " +
       "family it checks and the Zod export that checks it, joined onto the kinds on first use.",
   },
+  // The fourth and fifth META-KINDS (bean riit, step 3b): a harness's QA
+  // checkers and pipeline-plugin implementations, one node each, registered
+  // for a folio through its dependency tree. Owner, 2026-10-04: every
+  // contribution is a node, one graph per contribution type.
+  "qa-checkers": {
+    description:
+      "the QA checkers a harness's code provides, one `folio-qa-checker/v1` node each (`schemas/contribution-nodes.ts`): the criterion it answers, and the dispatch table (`path#Export`, keyed by the criterion) that holds the code. `loadContributions` registers them for every folio whose dependency tree includes the harness. Owner, 2026-10-04: every contribution is a node, one graph per type (option 1 of 2), scoped by the dependency tree (option 1 of 3). Bean `riit`, step 3b.",
+    title: "QA checkers",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-qa-checker/v1": {},
+    },
+    summary:
+      "The QA checkers a harness provides, one node per criterion naming the table that holds the code; " +
+      "registered for a folio through its dependency tree.",
+  },
+  "pipeline-plugins": {
+    description:
+      "the generic pipeline's slots a harness fills, one `folio-pipeline-plugin/v1` node each (`schemas/contribution-nodes.ts`): the slot (`content/pipeline/pipeline-plugins.ts`), and the table of implementations (`path#Export`, keyed by slot, typed against the slots' contract). `loadContributions` registers them for every folio whose dependency tree includes the harness. Bean `riit`, step 3b; the slots themselves are bean `squu`'s.",
+    title: "Pipeline plugins",
+    renderable: false,
+    holds: "content",
+    nodeSchemas: {
+      "folio-pipeline-plugin/v1": {},
+    },
+    summary:
+      "The generic pipeline slots a harness fills, one node per slot naming the table of implementations; " +
+      "registered for a folio through its dependency tree.",
+  },
   // The third META-KIND (bean riit, step 2): a directory of graph kind
   // `block-kinds` holds the block kinds a harness's adapter owns, one
   // `folio-block-kind/v1` node each. `block-kinds.ts` DISCOVERS them across

@@ -20,7 +20,9 @@
  * to be closed.
  *
  * @module folio-assistant/scripts/check-kind-validators
- * @covers validators, block-kinds, computed — every discovered block kind is checked against
+ * @covers validators, block-kinds, qa-checkers, pipeline-plugins, computed — every
+ *   `qa-checkers` and `pipeline-plugins` node is loaded through the platform root's dependency
+ *   tree and must resolve to the code its table ref names; every discovered block kind is checked against
  *   the kinds BlockSchema types, both directions; every `folio-validator/v1` node is parsed, resolved and
  *   joined onto a kind (one naming no kind is a finding), which is fixed coverage of the
  *   `validators` graph; the KINDS it sweeps are whichever declare `nodeSchemas`, so that half
@@ -43,7 +45,9 @@ import { join, relative } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../../cat-harness/schemas/kind-validator.js";
-import { HARNESS_ROOT } from "./lib/roots.ts";
+import { HARNESS_ROOT, REPO_ROOT } from "./lib/roots.ts";
+import { ContributionRegistry } from "../../cat-harness/schemas/contributions.js";
+import { loadContributionsSync } from "../../cat-harness/schemas/harness-config.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const instanceRoot = HARNESS_ROOT;
@@ -343,6 +347,28 @@ async function main(): Promise<number> {
     for (const k of untyped) console.log(`  ✗ block kind "${k}" is declared by a node but no BlockSchema member types it`);
     for (const k of undiscovered) console.log(`  ✗ block kind "${k}" is typed by BlockSchema but no block-kinds/ node declares it`);
     return 1;
+  }
+
+  // CONTRIBUTION NODES (bean riit, step 3b): every QA checker and pipeline
+  // plugin a harness declares as a node must resolve to the table entry its
+  // ref names. The platform root's dependency tree holds every instance, so
+  // loading its contributions loads every node; a node naming code that is
+  // not there throws, with the node's path.
+  if (REPO_ROOT === undefined) {
+    // Standalone: no checkout holds the contributing instances, so nothing is
+    // examined — said, never read as a pass.
+    console.log("\n· contribution nodes not examined: standalone, no checkout holds the instances that declare them");
+  } else {
+    try {
+      const registry = loadContributionsSync(REPO_ROOT, new ContributionRegistry());
+      console.log(
+        `\n${registry.contributedPipelinePlugins().length} pipeline plugin(s) and ` +
+          `${registry.contributedQaCheckers().length} contributed QA checker(s) resolve to code`,
+      );
+    } catch (e) {
+      console.log(`\n✗ a contribution node does not resolve: ${(e as Error).message}`);
+      return 1;
+    }
   }
 
   if (r.unresolvable.length > 0) {

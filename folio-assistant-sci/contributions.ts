@@ -42,31 +42,11 @@
  * @module folio-assistant-sci/contributions
  */
 
-import type {
-  CheckerPaths,
-  CheckerResult,
-} from "../cat-harness/schemas/block-qa.js";
-import { COST_AUTOMATED_CHECKERS } from "./content/pipeline/qa-checkers-cost.js";
 import { FORMAL_EDGES_TOOL, registerFormalEdgesTools } from "./content/pipeline/formal-edges-mcp.js";
-import type { PipelinePluginContribution } from "../cat-harness/schemas/contributions.js";
-import type { PipelinePlugins } from "../cat-harness/content/pipeline/pipeline-plugins.js";
-import { declarationStarts, stripLeanComments } from "../cat-harness/content/pipeline/lean-lexer.js";
-import { registerDefaultChapterProfiles } from "../cat-harness/content/pipeline/_folio-chapter-profiles.qou.js";
-import { runPreflight } from "../cat-harness/content/pipeline/latex-preflight.js";
-import { computeStats, leanFileStatus, resolveLeanFile } from "../cat-harness/scripts/lean-coverage.js";
-
-/** Where each contributed checker is defined, relative to this instance. */
-const COST_CHECKERS = "content/pipeline/qa-checkers-cost.ts";
 
 export default function contribute(): {
   name: string;
-  qaCheckers: Array<{
-    criterion: string;
-    check: (paths: CheckerPaths) => CheckerResult;
-    sourceFile: string;
-  }>;
   tools: Array<{ name: string; register: (server: unknown) => void }>;
-  pipelinePlugins: PipelinePluginContribution[];
 } {
   return {
     // Overwritten by `loadContributions` from the dependency entry — the root
@@ -74,34 +54,14 @@ export default function contribute(): {
     // impersonate another's namespace. Stated anyway so this file reads
     // honestly on its own.
     name: "folio-assistant-sci",
-    // Derived from the module's own dispatch table rather than re-listed here.
-    // Two places naming the same set is two places for them to disagree, and
-    // the table is what the checkers are actually registered under.
-    qaCheckers: Object.entries(COST_AUTOMATED_CHECKERS).map(([criterion, check]) => ({
-      criterion,
-      check,
-      sourceFile: COST_CHECKERS,
-    })),
+    // No `qaCheckers` or `pipelinePlugins` (bean riit, step 3b): each is a
+    // node in this instance's `qa-checkers/` and `pipeline-plugins/` graphs,
+    // which `loadContributions` registers through the dependency tree. The
+    // checker table stays in qa-checkers-cost.ts and the slot table moved to
+    // content/pipeline/plugin-slots.ts; the nodes name both.
     // The formal-edge extractor (folio-assistant#1492). Lean tooling, so it
     // lives here and reaches the server as a contribution: the server walks
     // declared dependencies and never names this instance.
     tools: [{ name: FORMAL_EDGES_TOOL, register: registerFormalEdgesTools }],
-    pipelinePlugins: PIPELINE_PLUGINS,
   };
 }
-
-/**
- * The slots this layer fills. Typed against the generic side's own map, so a
- * shape that drifts from what the callers expect fails `tsc` here rather than
- * at the call.
- */
-const PIPELINE_IMPLEMENTATIONS: PipelinePlugins = {
-  "lean-lexer": { stripLeanComments, declarationStarts },
-  "chapter-profile-defaults": { registerDefaults: registerDefaultChapterProfiles },
-  "latex-preflight": { runPreflight },
-  "lean-coverage": { resolveLeanFile, leanFileStatus, computeStats },
-};
-
-const PIPELINE_PLUGINS: PipelinePluginContribution[] = Object.entries(PIPELINE_IMPLEMENTATIONS).map(
-  ([kind, implementation]) => ({ kind, implementation }),
-);

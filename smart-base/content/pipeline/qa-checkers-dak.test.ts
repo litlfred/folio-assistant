@@ -35,11 +35,14 @@ import {
   COMPANION_ROLES,
 } from "../../../cat-harness/schemas/block-qa";
 import { ContributionRegistry } from "../../../cat-harness/schemas/contributions";
-import contribute, { DAK_COMPANION_ROLES } from "../../contributions";
+import { DAK_COMPANION_ROLES } from "../../contributions";
+import { loadContributionsSync } from "../../../cat-harness/schemas/harness-config";
 
 /** smart-base's contribution, registered as `loadContributions` would. */
-const registry = new ContributionRegistry();
-registry.register({ ...contribute(), root: resolve(import.meta.dir, "../..") });
+// The registry a folio depending on smart-base gets (smart-ig's): since bean
+// riit, step 3b, the checkers reach it as `smart-base/qa-checkers/` nodes
+// through the dependency walk, not from an array contributions.ts returns.
+const registry = loadContributionsSync(resolve(import.meta.dir, "../../../smart-ig"), new ContributionRegistry());
 
 const DIR = mkdtempSync(join(tmpdir(), "dak-checkers-"));
 const p = (n: string) => join(DIR, n);

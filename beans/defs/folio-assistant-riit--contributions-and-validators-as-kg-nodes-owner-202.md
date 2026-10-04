@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T19:52:09Z
+updated_at: 2026-10-04T20:05:48Z
 parent: folio-assistant-fs43
 ---
 
@@ -110,3 +110,16 @@ Owner, the same turn: *"uploads and library live in cat-harness as part of doc i
 
 - dmx1 had moved `uploads` to core's `kinds/`. That broke DEFAULT_DIRECTORIES' invariant, which `cat-harness.test.ts` asserts: the harness defaults `uploads/` but no longer knew the kind.
 - The definition now sits in BASE again, with its avatar and tile icon. Its rationale is kept as a comment.
+
+
+## 2026-10-04: step 3b — QA checkers and pipeline plugins are nodes
+
+- Two new graphs, each a BASE meta-kind with an avatar and a validator node: `qa-checkers` (`folio-qa-checker/v1`: `criterion`, `check`) and `pipeline-plugins` (`folio-pipeline-plugin/v1`: `slot`, `implementation`). One graph per type, as the owner ruled.
+- **A ref is the contributing instance's OWN code:** `path.ts#Export`. `OwnCodeRefSchema` refuses an `instance:` prefix or a `..` path.
+  - The export is a TABLE keyed by the node's criterion or slot: the dispatch table each harness already keeps, so `tsc` checks every entry against its contract.
+  - The node names the entry once, in data. `sourceFile`, which freshness is hashed over, is the ref's path.
+- `loadContributions` and `loadContributionsSync` register them through the dependency walk (`registerDeclaredContributions`). A table entry is resolved with `require` and throws, naming the node, when the module, export or entry is missing.
+- **folio-assistant-sci:** two checker nodes naming `COST_AUTOMATED_CHECKERS`, and four slot nodes naming the new `content/pipeline/plugin-slots.ts#PIPELINE_IMPLEMENTATIONS` (moved out of contributions.ts). Tested: the platform root gets all of them; folio-assistant-core gets none.
+- **smart-base:** five checker nodes naming `DAK_AUTOMATED_CHECKERS`.
+- Both contributions.ts modules no longer return `qaCheckers` or `pipelinePlugins`. sci's still returns `tools`, which is step 3c.
+- `check:kind-validators` now `@covers qa-checkers, pipeline-plugins`: it loads the platform root's contributions, and every node must resolve (4 plugins, 7 checkers). audit:coverage reports both graphs as covered.

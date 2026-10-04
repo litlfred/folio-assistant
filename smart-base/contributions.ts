@@ -37,12 +37,8 @@
  * @module smart-base/contributions
  */
 
-import type { CheckerPaths, CheckerResult, CompanionRole } from "../cat-harness/schemas/block-qa.js";
+import type { CompanionRole } from "../cat-harness/schemas/block-qa.js";
 import { DAK_ADAPTER } from "./schemas/dak-kinds.js";
-import { DAK_AUTOMATED_CHECKERS } from "./content/pipeline/qa-checkers-dak.js";
-
-/** Where each contributed checker is defined, relative to this instance. */
-const DAK_CHECKERS = "content/pipeline/qa-checkers-dak.ts";
 
 /**
  * The companion roles a DAK block can carry — the row `ADAPTER_COMPANION_ROLES`
@@ -53,11 +49,6 @@ export const DAK_COMPANION_ROLES: CompanionRole[] = ["md", "ts", "bpmn", "dmn", 
 export default function contribute(): {
   name: string;
   adapter: { name: string; module: string; companionRoles: CompanionRole[] };
-  qaCheckers: Array<{
-    criterion: string;
-    check: (paths: CheckerPaths) => CheckerResult;
-    sourceFile: string;
-  }>;
 } {
   return {
     // Overwritten by `loadContributions` from the dependency entry; stated so
@@ -75,11 +66,7 @@ export default function contribute(): {
     // `folio-block-kind/v1` nodes in `smart-base/block-kinds/`, which
     // `loadContributions` registers for every folio whose dependency tree
     // includes smart-base — the same reach this array had.
-    // Derived from the module's own dispatch table, as sci's are.
-    qaCheckers: Object.entries(DAK_AUTOMATED_CHECKERS).map(([criterion, check]) => ({
-      criterion,
-      check,
-      sourceFile: DAK_CHECKERS,
-    })),
+    // No `qaCheckers` (bean riit, step 3b): each is a node in
+    // `smart-base/qa-checkers/`, naming DAK_AUTOMATED_CHECKERS by criterion.
   };
 }

@@ -382,6 +382,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
 import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
+import { PipelinePluginNodeSchema, QaCheckerNodeSchema, splitOwnCodeRef } from "./contribution-nodes";
 import {
   describeRepository,
   type ContentTypeDisagreement,
@@ -1680,7 +1681,7 @@ export async function loadContributions<C extends { name: string }, S extends Co
   folioRoot: string,
   registry: S,
 ): Promise<S> {
-  registerDeclaredKinds<C>(folioRoot, registry);
+  registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     const fn = contributeFunction(dep, modulePath, await import(modulePath));
     registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
@@ -1714,7 +1715,7 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
   folioRoot: string,
   registry: S,
 ): S {
-  registerDeclaredKinds<C>(folioRoot, registry);
+  registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const fn = contributeFunction(dep, modulePath, require(modulePath));
@@ -1744,33 +1745,88 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
  * the platform's code types them and `block-kinds.ts` reads them for every
  * folio, and registering them again would be refused as a redefinition.
  */
-function registerDeclaredKinds<C extends { name: string }>(folioRoot: string, registry: ContributionSink<C>): void {
+function registerDeclaredContributions<C extends { name: string }>(folioRoot: string, registry: ContributionSink<C>): void {
   for (const dep of orderedDependencies(folioRoot)) {
     const blockKinds: Record<string, unknown>[] = [];
-    for (const dir of directoriesForGraph(dep.rootPath, "block-kinds")) {
-      let files: string[];
-      try {
-        files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
-      } catch {
-        continue; // a declared-but-absent directory is `check:declared-dirs`' finding
-      }
-      for (const f of files) {
-        const parsed = BlockKindNodeSchema.safeParse(JSON.parse(readFileSync(join(dir, f), "utf-8")));
-        if (!parsed.success) throw new Error(`${join(dir, f)} is not a folio-block-kind/v1 node: ${parsed.error.message}`);
-        const n = parsed.data;
-        if (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.adapter)) continue;
-        blockKinds.push({
-          kind: n.kind,
-          adapter: n.adapter,
-          builder: builderOf(n),
-          labelPrefix: n.labelPrefix,
-          folioType: n.folioType,
-          ...(n.docoType ? { docoType: n.docoType } : {}),
-        });
-      }
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "block-kinds")) {
+      const parsed = BlockKindNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-block-kind/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      if (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.adapter)) continue;
+      blockKinds.push({
+        kind: n.kind,
+        adapter: n.adapter,
+        builder: builderOf(n),
+        labelPrefix: n.labelPrefix,
+        folioType: n.folioType,
+        ...(n.docoType ? { docoType: n.docoType } : {}),
+      });
     }
-    if (blockKinds.length > 0) registerPinned(registry, dep, { name: dep.dependency.name, blockKinds } as unknown as C);
+
+    // QA checkers and pipeline plugins (bean riit, step 3b): the node names
+    // the criterion or slot; its ref names the TABLE that holds the code,
+    // relative to THIS dependency's root, keyed by that criterion or slot.
+    const qaCheckers: Record<string, unknown>[] = [];
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "qa-checkers")) {
+      const parsed = QaCheckerNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-qa-checker/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      const { path } = splitOwnCodeRef(n.check);
+      qaCheckers.push({ criterion: n.criterion, check: tableEntry(dep, file, n.check, n.criterion, "function"), sourceFile: path });
+    }
+    const pipelinePlugins: Record<string, unknown>[] = [];
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "pipeline-plugins")) {
+      const parsed = PipelinePluginNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-pipeline-plugin/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      pipelinePlugins.push({ kind: n.slot, implementation: tableEntry(dep, file, n.implementation, n.slot, "object") });
+    }
+
+    if (blockKinds.length + qaCheckers.length + pipelinePlugins.length === 0) continue;
+    registerPinned(registry, dep, {
+      name: dep.dependency.name,
+      ...(blockKinds.length ? { blockKinds } : {}),
+      ...(qaCheckers.length ? { qaCheckers } : {}),
+      ...(pipelinePlugins.length ? { pipelinePlugins } : {}),
+    } as unknown as C);
   }
+}
+
+/** Every `*.json` in every directory ONE instance declares with `graphKind`, files sorted. */
+function declaredNodesOf(root: string, graphKind: string): { file: string; raw: unknown }[] {
+  const out: { file: string; raw: unknown }[] = [];
+  for (const dir of directoriesForGraph(root, graphKind)) {
+    let files: string[];
+    try {
+      files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+    } catch {
+      continue; // a declared-but-absent directory is `check:declared-dirs`' finding
+    }
+    for (const f of files) out.push({ file: join(dir, f), raw: JSON.parse(readFileSync(join(dir, f), "utf-8")) });
+  }
+  return out;
+}
+
+/**
+ * `table[key]` from the module `ref` names, under `dep`'s root — loaded with
+ * `require`, which Bun runs synchronously for `.ts` (the property
+ * {@link loadContributionsSync} relies on), so one resolver serves both
+ * loaders. A missing module, export or entry throws naming the node: a node
+ * that names code which is not there is a contribution that appears wired
+ * and is not.
+ */
+function tableEntry(dep: ResolvedDependency, nodeFile: string, ref: string, key: string, want: "function" | "object"): unknown {
+  const { path, exportName } = splitOwnCodeRef(ref);
+  const abs = resolve(dep.rootPath, path);
+  if (!existsSync(abs)) throw new Error(`${nodeFile}: ${ref} — ${abs} does not exist`);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const table = (require(abs) as Record<string, unknown>)[exportName];
+  if (typeof table !== "object" || table === null) throw new Error(`${nodeFile}: ${ref} exports no table named ${exportName}`);
+  const entry = (table as Record<string, unknown>)[key];
+  if (want === "function" ? typeof entry !== "function" : typeof entry !== "object" || entry === null) {
+    throw new Error(`${nodeFile}: ${exportName} in ${path} has no ${want} entry for "${key}"`);
+  }
+  return entry;
 }
 
 /** Every dependency declaring a `contributes` module, with its resolved path. */

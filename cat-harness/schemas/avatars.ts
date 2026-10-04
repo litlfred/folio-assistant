@@ -359,6 +359,20 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
 
+  "qa-checkers": {
+    // A magnifier over a tick: code that judges content against a criterion.
+    // Bean riit, step 3b.
+    glyph: "M10 4a6 6 0 1 1 0 12a6 6 0 0 1 0-12zM14.5 14.5L20 20M7.5 10l2 2 3.5-3.5",
+    tone: 96,
+    reads: "a magnifier over a tick — a QA checker, declared by the harness whose code it is",
+  },
+  "pipeline-plugins": {
+    // A plug entering a socket: an implementation filling a generic slot.
+    // Bean riit, step 3b.
+    glyph: "M4 12h6M10 8h4v8h-4zM14 10h3M14 14h3M17 7v10h3",
+    tone: 300,
+    reads: "a plug in a socket — a pipeline slot filled by the harness that owns the code",
+  },
   "block-kinds": {
     // Three stacked blocks with a tag on the top one: each kind a node,
     // labelled by its prefix. Bean riit, step 2.
