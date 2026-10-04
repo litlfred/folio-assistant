@@ -24,6 +24,7 @@
  *
  *   <out>/index.html          every document in the folio, linked
  *   <out>/<slug>/index.html   one page per document, block anchors intact
+ *   <out>/<slug>/media/       the document's images, copied from folio/<slug>/media/
  *   <out>/review/index.html   what changed from main, read from the preview's
  *                             changeset.json when opened (bean txut)
  *   <out>/outline.json        every document's chapters, sections and blocks
@@ -50,7 +51,7 @@
  * the folio's own workflow, which is the same trust the build command already
  * has.
  */
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
@@ -178,6 +179,11 @@ export async function buildDocumentSite(repoRoot: string, outDir: string): Promi
     const dir = join(outDir, d.slug);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), page(d.slug, html));
+    // A document's images live in `folio/<slug>/media/` and its blocks link
+    // them as `media/<file>`, relative to the document's page. Copied, so a
+    // figure in the preview is the figure in the folio.
+    const media = join(dirname(d.path), "media");
+    if (existsSync(media)) cpSync(media, join(dir, "media"), { recursive: true });
     result.documents.push({ slug: d.slug, blocks: built.blockCount, page: `${d.slug}/index.html` });
   }
   const list = result.documents
