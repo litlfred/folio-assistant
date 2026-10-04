@@ -32402,6 +32402,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/subgraph-source.ts#BranchPrefixSchema",
+      "name": "BranchPrefixSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-scalar",
+      "doc": "A branch-name PREFIX for a family of branches: a plain branch name ending in `/`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/subgraph-source.ts#BranchSourceSchema",
       "name": "BranchSourceSchema",
       "module": "cat-harness/schemas/subgraph-source.ts",
@@ -32463,6 +32477,43 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema",
+      "name": "FamilySourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "The content is a FAMILY of branches, one per key: `<branchPrefix><key>`,",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"family\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "branchPrefix",
+          "type": "BranchPrefixSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyFrom",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#BranchPrefixSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/subgraph-source.ts#KeyedBy",
       "name": "KeyedBy",
       "module": "cat-harness/schemas/subgraph-source.ts",
@@ -32497,28 +32548,14 @@
       "id": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
       "name": "LegacyStorageSchema",
       "module": "cat-harness/schemas/subgraph-source.ts",
-      "kind": "zod-object",
+      "kind": "zod-union",
       "doc": "The #1764 shape, read only to map it.",
-      "fields": [
-        {
-          "name": "branch",
-          "type": "BranchNameSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "keyedBy",
-          "type": "KeyedBySchema",
-          "optional": false,
-          "array": false
-        }
-      ],
+      "fields": [],
       "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
-        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      "values": [
+        "family"
       ],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": false
@@ -56517,17 +56554,9 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
-      "to": "cat-harness/schemas/subgraph-source.ts#BranchNameSchema",
-      "via": "branch",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/subgraph-source.ts#LegacyStorageSchema",
-      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
-      "via": "keyedBy",
+      "from": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#BranchPrefixSchema",
+      "via": "branchPrefix",
       "kind": "field",
       "optional": false,
       "array": false
