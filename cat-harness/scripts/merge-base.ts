@@ -325,6 +325,13 @@ if (import.meta.main) {
   }
 
   if (noRegen) {
+    // Sync the submodule checkouts to the merged gitlinks BEFORE staging.
+    // `add -A` stages a gitlink from the submodule's checked-out HEAD, so
+    // without this the merge commit silently reverts the base's
+    // `bootstrap`/`bootstrap-tools` pins — the trap `merge-queue` names, and
+    // what broke `readme:subgraphs` on an unblocker's merge of #2062
+    // (2026-10-04).
+    syncSubmodules(root);
     git(root, "add", "-A");
     git(root, "commit", "-q", "--no-edit");
     console.log(`\nmerge-base: merged ${base}; ${p.resolvable.length} conflict(s) resolved by declared pattern. NOT regenerated (--no-regen): run \`bun run regen\` once over the train.`);

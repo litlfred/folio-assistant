@@ -14,3 +14,9 @@ The previous Merge Manager stalled. This session took over the role.
 - **#1898:** held by the owner's `vqlp` block (09:10Z comment). The owner later delegated "when it lands" to the steward, but a content block is not a timing decision.
 - **Owner instruction:** dispatch unblockers for the not-green PRs while the authors are paused, without spending GitHub resources. That is recorded as a new section in `merge-queue.md`: "When the authors stall: the steward dispatches unblockers".
 - `merge:steward` crashed on a fresh clone until `git submodule update --init` was run.
+
+## Standing release — owner, 2026-10-04 ~10:45Z, verbatim
+
+> "as things come in and geen, then merge"
+
+The steward lands every member that `merge:steward` admits (owed CI `green`, not `refused`), re-running the table after each merge. This replaces the earlier per-PR question on #2073 ("wait for ready:"). A content block the owner recorded on a PR, such as `vqlp` on #1898, still holds, because it is a ruling on that PR's content, not on its timing.
