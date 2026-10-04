@@ -3,8 +3,9 @@
 title: 'AUDIT: TypeScript tables that are really KG facts owned by one harness — ranked, with where each belongs (owner asked 2026-10-04)'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-04T17:33:33Z
-updated_at: 2026-10-04T17:33:33Z
+updated_at: 2026-10-04T17:36:04Z
 parent: folio-assistant-dmx1
 ---
 
@@ -36,3 +37,7 @@ Owner, 2026-10-04: *"dispatch agent: other stuff in typescript that should be in
 
 ## Done when
 - [ ] the owner picks which findings to take, and in what order
+
+## 2026-10-04: the owner's order
+
+**Owner: block kinds first** (option 1 of 4). After rva2 and dmx1 finish, the paper adapter's 16 block kinds become one node per kind in folio-assistant-core, replacing the ~7 parallel tables, as dak was already moved out. Rejected as next: the kind side tables (they stay part of dmx1's remaining work), the qou chapter profiles (a math repo: ask before any PR there), and leaving the audit as backlog.
