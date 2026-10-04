@@ -47,6 +47,7 @@
     "audit:coverage:check": "bun run cat-harness/scripts/audit-coverage.ts --check",
     "audit:coverage:require-all": "bun run cat-harness/scripts/audit-coverage.ts --check --require-all --against main",
     "audit:coverage:strict": "bun run cat-harness/scripts/audit-coverage.ts --check --strict --against main",
+    "audit:reachability": "bun run cat-harness/scripts/audit-reachability.ts",
     "avatar:crops": "bun run cat-harness/scripts/render-avatar-crops.ts",
     "avatars:css": "bun run cat-harness/scripts/gen-avatars-css.ts",
     "avatars:css:check": "bun run cat-harness/scripts/gen-avatars-css.ts --check",
