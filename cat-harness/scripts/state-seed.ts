@@ -279,7 +279,9 @@ export function refreshSeed(row: SpecialBranch, opts: SeedOptions = {}): SeedRes
 }
 
 export function report(r: SeedResult): string {
-  if (r.state === "refused" || r.state === "unknown" || r.state === "failed") {
+  // Narrowed by naming the arm it KEEPS: `typescript7` declines to narrow this
+  // union by excluding three of the other arm's literals.
+  if (r.state !== "refreshed" && r.state !== "current") {
     return `${r.state === "refused" ? "·" : "✗"} ${r.branch}: ${r.state} — ${r.reason}`;
   }
   // A dry run has pushed nothing, so it is neither verified nor failed — the

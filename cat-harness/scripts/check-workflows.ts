@@ -69,7 +69,8 @@ export interface WorkflowFinding {
     | "interpolated-untrusted"
     | "gh-pages-ungrouped"
     | "gh-pages-wipes-staging"
-    | "qa-reports-unretried";
+    | "qa-reports-unretried"
+    | "bean-gate-unmounted";
   detail: string;
 }
 

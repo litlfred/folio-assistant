@@ -78,13 +78,13 @@ export function workflowDir(repoRoot: string): string {
   // `undeclared` keeps the convention every other reader follows: a folio with
   // no `beans` entry at all has no store, and the compiled-in default is the
   // right answer for it.
-  const dir = g.state === "ok" ? join(g.at, WITHIN_GRAPH) : g.state === "undeclared" ? join(repoRoot, WORKFLOW_DIR) : null;
-  if (dir === null) {
+  if (g.state === "refused") {
     throw new Error(
       `cannot reach the workflow-state graph: ${g.reason} — until it is mounted, "no instance recorded" would be ` +
         `reported for every running process, which is not the same answer as there being none`,
     );
   }
+  const dir = g.state === "ok" ? join(g.at, WITHIN_GRAPH) : join(repoRoot, WORKFLOW_DIR);
   resolved.set(repoRoot, dir);
   return dir;
 }

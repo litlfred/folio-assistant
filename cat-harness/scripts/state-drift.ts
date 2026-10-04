@@ -56,7 +56,7 @@ import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA } from "./branch-store.ts";
 
 export const SPECIAL_BRANCHES = join(import.meta.dir, "special-branches.json");
 
-interface SpecialBranch {
+export interface SpecialBranch {
   id: string;
   shape: string;
   name: string;
