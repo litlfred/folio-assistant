@@ -1,8 +1,8 @@
 {
   "$schema": "qa-results/v1",
   "producer": {
-    "script": "cat-harness/scripts/check-harness-state.ts",
-    "script_hash": "abd61529c43f"
+    "script": "cat-harness-tools/scripts/check-harness-state.ts",
+    "script_hash": "2fdfa69b55f3"
   },
   "subject": {
     "kind": "harness-state",
@@ -15,7 +15,7 @@
       "entries": [
         {
           "where": "cat-harness/test/health/results/repository.health-report.json",
-          "detail": "written by `test/health/run.ts` at 1ec9dfbb8b11; the checker is now ff086b0f8c8a. Re-run `bun run health` and commit, or the remedies in it are the old producer's."
+          "detail": "written by `test/health/run.ts` at b991c83479c4; the checker is now efcabbbd5371. Re-run `bun run health` and commit, or the remedies in it are the old producer's."
         }
       ]
     },
