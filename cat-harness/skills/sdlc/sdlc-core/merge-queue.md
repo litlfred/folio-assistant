@@ -472,6 +472,46 @@ one.** The causes to check, in order:
 
 The first one is not visible in the check list, so look at the YAML.
 
+**After any merge of `main`, check for silently dropped files.** Files that
+are gitignored but still tracked under `*/test/results/` (LSI indexes, QA
+sidecars) are dropped by a merge and by `git add -A`. Local checks still pass,
+because regen rewrites them on disk, but CI's fresh checkout fails. Run
+`git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` and
+`git ls-files -m`, and re-add anything dropped with `git add -f` (bean `8j9e`).
+
+### Stalled for days, with no handover report: write it, then hand it to a takeover agent
+
+Owner, 2026-10-04, verbatim: *"several agents (~8) just stalled for week.
+they didnt generate handover reports. disaptach agent to review PRs and
+generate plan ... to takeover work by anotther agent"*.
+
+An unblocker suits a short pause. When the authors are gone for days, the
+steward does something else:
+
+1. **Writes the handover report each author did not.** It goes as one
+   comment per PR, headed `## Takeover plan`, in the
+   [`handover-report`](handover-report.md) format and measured, not
+   recalled: intent with the owner's rulings quoted; head SHA, conflicts
+   split into authored and generated, owed CI; done and remaining; approval
+   and any scope drift; ordered next steps with their falsifiers; owner
+   questions; couplings with other open PRs. This step is read-only apart
+   from the comment.
+2. **Gives the owner one paste-able brief** for the takeover agent: the
+   cold start, the work order across PRs (the couplings decide it), the
+   merge rules, and the open owner questions. The owner starts that agent,
+   possibly on another account, so the brief must stand alone.
+3. **The takeover session becomes each PR's owning session.** `merge:guard`
+   accepts a `ready:` marker only from the session the PR body names, and
+   check 2 keeps the merging session from vouching for its own landing.
+   So the takeover agent edits the body's session line to its own session,
+   records "taken over from <old> (stalled)", claims the beans, and then
+   signs. Owner, 2026-10-04, chose this over the steward signing or a
+   one-time bypass: *"Wait for takeover agent"*.
+
+A PR that is green but refused by checks 3 and 4 (no marker, no label) is
+`waiting-on-author` in the queue, not `active`, until the takeover session
+signs it.
+
 ## Landing
 
 **Re-run `merge:steward` after every merge, before the next one.** Each merge
