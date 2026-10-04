@@ -9,7 +9,7 @@ import {
   HEAVY_MOVER_LABEL,
   parseBunTest,
   planLayer,
-  probeSiblingDiscovery,
+  probeUpwardPaths,
   readLayers,
   SEED_READINESS_DECISION,
   seedReadinessDmn,
@@ -58,7 +58,7 @@ const forge = (prs: PrPathSet[] | undefined): ForgeSnapshot => ({
 
 const CLEAN_PROBES: Probes = {
   standalone: { state: "measured", count: 0, findings: [] },
-  discovery: { state: "measured", count: 0, findings: [] },
+  upward: { state: "measured", count: 0, findings: [] },
 };
 
 const verdictOf = (r: ReturnType<typeof assess>, id: string) => r.criteria.find((c) => c.id === id)!.verdict;
@@ -98,7 +98,7 @@ describe("the gateway", () => {
     expect(SETTLED_REQUIRES_REHEARSAL).toBe(true);
     const r = assess(plan, forge([]), table, {
       standalone: { state: "not-run", note: "not requested" },
-      discovery: { state: "measured", count: 0, findings: [] },
+      upward: { state: "measured", count: 0, findings: [] },
     });
     expect(verdictOf(r, "standalone")).toBe("could-not-determine");
     expect(r.outcome).toBe("unknown");
@@ -163,7 +163,7 @@ describe("the gateway", () => {
     expect(r.outcome).toBe("unknown");
   });
 
-  test("a red rehearsal or a discovery miss is not yet; a probe that errored is unknown", () => {
+  test("a red rehearsal or an upward path is not yet; a probe that errored is unknown", () => {
     const red = assess(plan, forge([]), table, {
       ...CLEAN_PROBES,
       standalone: { state: "measured", count: 3, findings: ["a", "b", "c"] },
@@ -171,11 +171,11 @@ describe("the gateway", () => {
     expect(red.rule).toBe("Rule_Standalone");
     const missed = assess(plan, forge([]), table, {
       ...CLEAN_PROBES,
-      discovery: { state: "measured", count: 1, findings: ["core"] },
+      upward: { state: "measured", count: 1, findings: ["tool-module x: src/x.ts resolves only in core"] },
     });
-    expect(missed.rule).toBe("Rule_Discovery");
-    const broke = assess(plan, forge([]), table, { ...CLEAN_PROBES, discovery: { state: "error", note: "x" } });
-    expect(verdictOf(broke, "sibling-discovery")).toBe("could-not-determine");
+    expect(missed.rule).toBe("Rule_UpwardPaths");
+    const broke = assess(plan, forge([]), table, { ...CLEAN_PROBES, upward: { state: "error", note: "x" } });
+    expect(verdictOf(broke, "upward-paths")).toBe("could-not-determine");
     expect(broke.outcome).toBe("unknown");
   });
 });
@@ -187,14 +187,29 @@ describe("the probes", () => {
     expect(parseBunTest("Killed")).toBeUndefined();
   });
 
-  test("sibling discovery runs over this checkout and names what it expected", () => {
+  test("upward paths: cat-harness declares paths, and none resolves only above it (measured 2026-10-04)", () => {
     const repoRoot = resolve(import.meta.dir, "../../..");
     const decls = readLayers(repoRoot);
-    const p = probeSiblingDiscovery(repoRoot, "cat-harness", decls);
+    const p = probeUpwardPaths(repoRoot, "cat-harness", decls);
     expect(p.state).toBe("measured");
     if (p.state === "measured") {
-      expect(p.note).toContain("cat-harness-tools");
+      // Not vacuous: the three registries are read, and there are many paths.
+      expect(p.note).toMatch(/^\d+ declared path/);
+      expect(Number(p.note!.split(" ")[0])).toBeGreaterThan(20);
       expect(p.count).toBe(p.findings.length);
+      expect(p.findings).toEqual([]);
     }
   });
+
+  test("a path found only in an instance above the layer is counted, and one in the layer is not", () => {
+    const repoRoot = resolve(import.meta.dir, "../../..");
+    const decls = readLayers(repoRoot);
+    // folio-assistant-core declares Tool modules of its own; each resolves in
+    // core itself (own) — so core's count is also the paths it cannot keep.
+    const p = probeUpwardPaths(repoRoot, "folio-assistant-core", decls);
+    expect(p.state).toBe("measured");
+    const none = probeUpwardPaths(repoRoot, "no-such-layer", decls);
+    expect(none.state).toBe("error");
+  });
+
 });
