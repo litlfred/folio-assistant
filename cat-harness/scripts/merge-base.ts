@@ -56,8 +56,14 @@ export function plan(paths: string[]): Plan {
   };
 }
 
+// `maxBuffer` well above Node's 1 MB default: `ls-tree -r` / `ls-files` of this
+// repository are over 2 MB, and the lost-file guard (bean `vsv7`) reads both
+// parents' full lists. At the default it threw ENOBUFS on its first live run,
+// 2026-10-04, after regen had finished — the merge was left uncommitted.
+const GIT_MAX_BUFFER = 256 * 1024 * 1024;
+
 function git(root: string, ...args: string[]): string {
-  return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"], maxBuffer: GIT_MAX_BUFFER }).trim();
 }
 
 /** Check each submodule out at the commit the index pins. */
