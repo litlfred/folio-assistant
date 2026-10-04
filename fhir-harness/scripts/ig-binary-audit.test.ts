@@ -5,7 +5,7 @@ const tree = [
   "100644 blob aaaaaaaa    1000\tindex.html",
   "100644 blob bbbbbbbb   35000\tfull-ig.zip",
   "100644 blob cccccccc     900\tpackage.tgz",
-  "100644 blob dddddddd    1100\tvalidator-smart.who.int.base.pack",
+  "100644 blob dddddddd    1100\tvalidator-hl7.fhir.uv.ips.pack",
   "100644 blob eeeeeeee   35000\tbranches/feat-a/full-ig.zip",
   "100644 blob ffffffff   35000\tbranches/feat-b/full-ig.zip",
   "100644 blob 11111111     900\tbranches/feat-b/package.tgz",

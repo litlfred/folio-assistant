@@ -22,14 +22,14 @@ const a = {
   },
 } as unknown as FhirArtifact;
 
-describe("dak views", () => {
+describe("IG API views", () => {
   it("has a page for each HELD schema and JSON-LD sidecar, in the Publisher's tab order, and none for displays", () => {
     expect(igApiViews(a).map((v) => v.file)).toEqual(["ValueSet-Actors.schema.json", "ValueSet-Actors.jsonld"]);
     const byRef = { ...a, sidecars: { schema: { url: "https://p/x.schema.json" } } } as unknown as FhirArtifact;
     expect(igApiViews(byRef)).toEqual([]);
   });
 
-  it("tabs: narrative, the Publisher's representations, then the DAK views with this one active", () => {
+  it("tabs: narrative, the Publisher's representations, then the IG API views with this one active", () => {
     const d = igApiViewData(a, igApiViews(a)[1]!);
     expect(d.tabs.map((t) => `${t.label}${t.active ? "*" : ""}`)).toEqual(["Narrative Content", "XML", "JSON", "JSON Schema", "JSON-LD*"]);
     expect(d.tabs[0]!.href).toBe("ValueSet-Actors.html");
@@ -71,10 +71,10 @@ describe("dak views", () => {
 });
 
 describe("igApiServed finds the declaration by its own name, not the directory's (bean rbz3)", () => {
-  it("a separated IG keeps its data under smart-base/ and its declaration is still <name>.json", () => {
-    const d = mkdtempSync(join(tmpdir(), "dak-served-"));
+  it("a separated IG keeps its data under its repository's directory and its declaration is still <name>.json", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-api-served-"));
     try {
-      const root = join(d, "smart-base");
+      const root = join(d, "ig-repo");
       mkdirSync(root);
       const decl = (name: string) => ({
         name,
@@ -83,12 +83,12 @@ describe("igApiServed finds the declaration by its own name, not the directory's
           { path: "docs/", instanceRoot: true, composed: true },
         ],
       });
-      writeFileSync(join(root, "smart-trust.json"), JSON.stringify(decl("smart-trust")));
+      writeFileSync(join(root, "example-ig.json"), JSON.stringify(decl("example-ig")));
       expect(igApiServed(root)).toEqual({ ok: true });
       // A file named after the directory but declaring another name is not a declaration.
-      rmSync(join(root, "smart-trust.json"));
-      writeFileSync(join(root, "smart-base.json"), JSON.stringify(decl("smart-trust")));
-      expect(igApiServed(root)).toEqual({ ok: false, why: "smart-base/ holds no instance declaration" });
+      rmSync(join(root, "example-ig.json"));
+      writeFileSync(join(root, "ig-repo.json"), JSON.stringify(decl("example-ig")));
+      expect(igApiServed(root)).toEqual({ ok: false, why: "ig-repo/ holds no instance declaration" });
     } finally {
       rmSync(d, { recursive: true, force: true });
     }

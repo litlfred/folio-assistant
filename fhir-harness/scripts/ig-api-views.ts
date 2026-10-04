@@ -127,15 +127,15 @@ export function igApiHubLinks(artifacts: readonly FhirArtifact[], publishedAt: s
 }
 
 /**
- * Whether an instance's DAK files are on the site for a page to fetch: its
+ * Whether an instance's IG API files are on the site for a page to fetch: its
  * artefact-index directory is declared `served`, and its docs directory is
  * the composed instance root — so a page one level down reaches the served
  * data as `../<path>` (bean `680p`).
  */
 export function igApiServed(instanceRoot: string): { ok: true } | { ok: false; why: string } {
   // Found as the file whose stem equals its own `name`, never as
-  // `<directory>.json`: in a separated IG repository the directory is
-  // `smart-base/` and the declaration is still `smart-trust.json` (bean `rbz3`).
+  // `<directory>.json`: in a separated IG repository the directory is named
+  // for the repository, not the IG, and the declaration keeps the IG's name (bean `rbz3`).
   const at = declarationPathIn(instanceRoot);
   if (at === undefined) return { ok: false, why: `${basename(instanceRoot)}/ holds no instance declaration` };
   let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
@@ -161,8 +161,8 @@ export function igApiHubFragment(instanceRoot: string, localPath: string): strin
 /**
  * The placeholder a hub page's source holds when its index records none —
  * the ingest's own default. An IG whose post-processing uses another marker
- * (WHO's DAK overlay: `<!-- DAK_API_CONTENT -->`, from `generate_dak_api_hub.py`'s
- * `comment_marker`) has it recorded on `igApiHub.placeholder` at ingest.
+ * (a publisher's own post-processing step names its own) has it recorded on
+ * `igApiHub.placeholder` at ingest.
  */
 export const IG_API_PLACEHOLDER = "<!-- IG_API_CONTENT -->";
 /** The hub's loader, published under the instance's docs root by `gen-ig-pages`. */
