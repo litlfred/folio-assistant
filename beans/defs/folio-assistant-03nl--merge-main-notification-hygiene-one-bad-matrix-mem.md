@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-04T05:52:09Z
-updated_at: 2026-10-04T05:52:31Z
+updated_at: 2026-10-04T07:06:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -55,3 +55,49 @@ layer rather than to the gate layer.
 - [ ] every quiet failure is still recorded in the PR comment AND the job summary, and its member job is still red
 - [ ] `cat-harness/scripts/tests/merge-main-workflow.test.ts` covers the new behaviour
 - [ ] bun run gates green, PR CI green, PR marked ready-to-merge
+
+## Landed on `claude/merge-main-notification-hygiene` → PR #2046
+
+**What changed.** `continue-on-error: true` on the `merge` matrix member, so one
+member's failure no longer reds the RUN (which is what GitHub emails); the bot's
+in-place PR comment now carries a SIGNATURE of the failure it reports
+(`<!-- merge-main-signature: … -->` = PR head sha + merge-base's own
+`ABORTED`/`STILL fails`/`fatal:` lines + the comment text, normalised); and one
+new job, `notify`, is the only thing that reds the run.
+
+**Loud:** a new or changed failure; a member that reported no verdict or could
+not classify itself; a systemic failure (every selected PR failed) that is not
+made up entirely of repeats; `select`'s own failure (no `continue-on-error`, and
+`notify` deliberately does not double-count it).
+
+**Quiet, and still recorded four ways** — PR comment, job summary, warning
+annotation, and the member's own red job: a repeat of an identical failure on an
+unchanged head, a refusal, the head-moved race, a cancelled run, a rejected
+fast-forward, the `workflows`-scope push block.
+
+**A correction I made to my own first design, recorded because it is the same
+defect in a new hat:** systemic was loud unconditionally. Under this merge
+cadence a persistent all-fail state would then be ~100 emails a day about
+conditions each PR's comment already reports. It is now loud unless every one of
+those failures is a repeat — the run in which a systemic state BECOMES true is
+still loud, because each member's first failure is new then.
+
+**What a new job owes here, found by three gates rather than by memory:** a BPMN
+node (`Task_Report` + `Start_Report`/`GW_News`/`End_Notified`/`End_Recorded`, a
+deliberately separate flow — drawing it inside one PR's merge would say the run
+notifies per PR); a `STEP_EXEMPTIONS` entry in `gates.ts` declaring the
+`--aggregate` step `ci-only` with its reason; and `skill:register` +
+`render:bpmn` + `processes:viz`, whose 20-odd generated artefacts are committed
+with it.
+
+**Spun out rather than widened in:** `obhe` — `ci-health.md` already carries this
+doctrine ("an edit does not notify, so a long outage stays one unread item
+rather than a stream") and names only the tracking-issue instance.
+
+**Not verifiable from this container, and said in the PR body rather than
+assumed:** that `continue-on-error` on a JOB keeps the run's conclusion green,
+and that `if: ${{ !cancelled() }}` makes `notify` run when `merge` was skipped or
+failed. Both are documented GitHub behaviour, pinned by the workflow test, and
+checkable with one safe `workflow_dispatch` (the PR body gives the exact command
+and what to look for); the harness refused the dispatch as a shared resource,
+which is correct.
