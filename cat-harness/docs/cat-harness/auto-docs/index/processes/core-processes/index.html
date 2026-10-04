@@ -163,7 +163,7 @@
 </div>
 
 <ul class="subs">
-<li><strong>core-processes</strong> <span class="p">folio-assistant-core/processes</span> <span class="n">16</span></li>
+<li><strong>core-processes</strong> <span class="p">folio-assistant-core/processes</span> <span class="n">17</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">3</span></li>
 <li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">60</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
@@ -193,7 +193,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/draft-to-publication.bpmn"><code>Draft, review and publish</code></a><br><span class="p">folio-assistant-core/processes/content/draft-to-publication.bpmn</span></td>
-  <td>folio-assistant — corpus to draft publication to officially published.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Editors + authoring agents · Work plan — beans (shared by humans and agents) · Corpus + build pipeline (system) · Publication manager · Review team (content · QC · technical officer) · Clinical / scientific SMEs · Programme manager (release authority)</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-publish, content-review, content-test, content-validate, quality-control, render-kg-to-cdn, todo-manager</div></td>
+  <td>folio-assistant — corpus to draft publication to officially published.<div class="f"><span class="k">activities</span> 12</div><div class="f"><span class="k">lanes</span> Editors + authoring agents · Work plan — beans (shared by humans and agents) · Corpus + build pipeline (system) · Publication manager · Review team (content · QC · technical officer) · Public review (commenters, review committee, editor) · Clinical / scientific SMEs · Programme manager (release authority)</div><div class="f"><span class="k">skills</span> content-author, content-feedback, content-publish, content-review, content-test, content-validate, public-comment, quality-control, render-kg-to-cdn, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn"><code>Editing and HCI validation</code></a><br><span class="p">folio-assistant-core/processes/content/editing-hci-validation.bpmn</span></td>
@@ -202,6 +202,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/evidence-retrieval.bpmn"><code>Evidence for a recommendation</code></a><br><span class="p">folio-assistant-core/processes/content/evidence-retrieval.bpmn</span></td>
   <td>The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each cand…<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Author / guideline developer (person) · Evidence agent (system) · Trusted registries and observatories (external) · Work plan — beans (shared)</div><div class="f"><span class="k">skills</span> content-author, content-review, document-intake, evidence-appraisal, todo-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>Public comment on a review draft</code></a><br><span class="p">folio-assistant-core/processes/content/public-comment.bpmn</span></td>
+  <td>A frozen, line-numbered draft went out for public review.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Public commenter · Intake agent · Review coordinator · Review committee · Editor · Author (human or agentic) · Change set — feature branch and staging</div><div class="f"><span class="k">skills</span> public-comment, staging-review</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/deep-document-research.bpmn"><code>Deep document research</code></a><br><span class="p">folio-assistant-core/processes/library/deep-document-research.bpmn</span></td>

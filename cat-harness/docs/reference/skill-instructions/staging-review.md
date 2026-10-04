@@ -664,4 +664,5 @@ Full rule and the measured failure:
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Comment the preview URL on the PR; Post the retention notice on the PR |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Review the MVP against what we bind to |
 | [Content Change and Review](../../processes/content-change-review.html) | Review staged rendering; Request further revisions; Submit to review committee; Compare main vs staging; Slice the change and assign reviewers |
+| [Public comment on a review draft](../../processes/public-comment.html) | Review the change set on its staging preview (calls a sub-process) |
 

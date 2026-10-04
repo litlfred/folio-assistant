@@ -265,6 +265,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [QA report signing](qa-report-signing.html) | `qa-report-signing` | — | A QA report becomes **evidence** when a third party can establish what was |
 | [QA reports](qa-reports.html) | `qa-reports` | — | **A QA result is either reproducible or it is not, and that decides where it |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
+| [Ref stewardship](ref-stewardship.html) | `ref-stewardship` | — | A **watched ref** is a long-lived branch that several processes write and that |
 | [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
@@ -344,6 +345,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+| [public-comment](public-comment.html) | `public-comment` | — | > Skill id: `public-comment` · Package: `folio-document-adapter` · Process: |
 
 ## Catalogue records — Dublin Core renderings (catalogue)
 

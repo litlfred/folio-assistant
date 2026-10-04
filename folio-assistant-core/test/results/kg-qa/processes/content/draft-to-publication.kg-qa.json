@@ -5,7 +5,7 @@
     "id": "Process_Publication",
     "path": "processes/content/draft-to-publication.bpmn"
   },
-  "source_hash": "sha256:d5e2ee542c088c3921fe4a0a6f84d995734ee502dc45edc75e5d8c83a30dbbc1",
+  "source_hash": "sha256:e0c3787ba5f288ac1686f0069f74518c901458a349c6e8a8693b423f2694f95b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -49,6 +49,10 @@
         {
           "where": "Task_CirculateDraft",
           "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "CallActivity_PublicComment",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
           "where": "Task_ReviewDraft",

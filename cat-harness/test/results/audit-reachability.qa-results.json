@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-reachability.ts",
-    "script_hash": "1b709cec0710"
+    "script_hash": "9393a66e9594"
   },
   "subject": {
     "kind": "audit-reachability",
@@ -16,7 +16,7 @@
     },
     "entry-point-latent": {
       "summary": "A LIVE library carrying a command-line entry point nothing runs: the module is reached, its `import.meta.main` branch is not. Kept apart from the orphans because one number for both would hide a module that exists only as a claim inside a list of dead CLI branches — the `typed-only` split in `audit-coverage`, for the same reason.",
-      "count": 20,
+      "count": 21,
       "entries": [
         {
           "file": "cat-harness/content/pipeline/qa-checkers-extended.ts",
@@ -171,6 +171,14 @@
           "importers": 1
         },
         {
+          "file": "folio-assistant-core/scripts/public-comment.ts",
+          "shape": {
+            "shebang": true,
+            "mainGuard": true
+          },
+          "importers": 1
+        },
+        {
           "file": "folio-assistant-sci/content/pipeline/qa-checkers-cost.ts",
           "shape": {
             "shebang": true,
@@ -315,8 +323,8 @@
       "entries": []
     },
     "reachability-measured": {
-      "summary": "Every declared decision and diagram with its state, and the gateways pointing at each decision. Not findings: the relation itself, so a diff shows reachability moving. The reference counts are recorded and never graded — `kg-audit`'s `decision-outcomes-used` owns \"no gateway references this decision\", and a second reader of one relation is a second answer free to disagree with the first. Activity skill refs are owned by `check:workflow-refs` for the same reason and are not re-read here. 12 decision(s), 88 diagram(s), 14 declaring instance(s).",
-      "count": 100,
+      "summary": "Every declared decision and diagram with its state, and the gateways pointing at each decision. Not findings: the relation itself, so a diff shows reachability moving. The reference counts are recorded and never graded — `kg-audit`'s `decision-outcomes-used` owns \"no gateway references this decision\", and a second reader of one relation is a second answer free to disagree with the first. Activity skill refs are owned by `check:workflow-refs` for the same reason and are not re-read here. 12 decision(s), 89 diagram(s), 14 declaring instance(s).",
+      "count": 101,
       "entries": [
         {
           "kind": "decision",
@@ -988,6 +996,13 @@
         },
         {
           "kind": "process",
+          "file": "folio-assistant-core/processes/content/public-comment.bpmn",
+          "id": "Process_PublicComment",
+          "state": "reachable",
+          "referencedBy": []
+        },
+        {
+          "kind": "process",
           "file": "folio-assistant-core/processes/library/deep-document-research.bpmn",
           "id": "Process_DeepDocumentResearch",
           "state": "reachable",
@@ -1045,5 +1060,5 @@
       ]
     }
   },
-  "total": 131
+  "total": 133
 }
