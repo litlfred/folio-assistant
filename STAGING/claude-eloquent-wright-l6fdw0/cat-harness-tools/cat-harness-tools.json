@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T18:18:09.402Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/58a18693dc89d9f77f37b39ea1d1eb33710f1a4c",
-  "sourceCommitSha": "58a18693dc89d9f77f37b39ea1d1eb33710f1a4c",
-  "sourceCommitAt": "2026-10-04T18:11:53Z",
+  "generatedAt": "2026-10-04T18:32:38.531Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/538801292da54113e9e0c90203b5b3063b29f566",
+  "sourceCommitSha": "538801292da54113e9e0c90203b5b3063b29f566",
+  "sourceCommitAt": "2026-10-04T18:27:33Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -368,7 +368,7 @@
       ],
       "description": "Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `content/pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition.",
       "readmePath": "schemas/README.md",
-      "fileCount": 16,
+      "fileCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-schemas"
     },
     {
@@ -385,7 +385,7 @@
       ],
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
       "readmePath": "scripts/README.md",
-      "fileCount": 21,
+      "fileCount": 73,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-scripts"
     },
     {
@@ -460,8 +460,8 @@
   ],
   "staging": {
     "branch": "claude/eloquent-wright-l6fdw0",
-    "sha": "c55fdfb1e3353fe8613577a9d867ab9428490c71",
+    "sha": "ee956c2bb587bd209cda79f4af4dcc688def9eea",
     "pr": "2107/merge",
-    "run": "37223498306"
+    "run": "37224527061"
   }
 }
