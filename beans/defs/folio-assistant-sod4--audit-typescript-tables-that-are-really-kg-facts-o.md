@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sod4
 title: 'AUDIT: TypeScript tables that are really KG facts owned by one harness — ranked, with where each belongs (owner asked 2026-10-04)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T17:33:33Z
-updated_at: 2026-10-04T17:36:04Z
+updated_at: 2026-10-04T17:41:44Z
 parent: folio-assistant-dmx1
 ---
 
@@ -36,8 +36,29 @@ Owner, 2026-10-04: *"dispatch agent: other stuff in typescript that should be in
 **Open for the owner:** contributions are still made in TypeScript (`*/contributions.ts`) rather than as JSON nodes. Is that consistent with the ruling?
 
 ## Done when
-- [ ] the owner picks which findings to take, and in what order
+- [x] the owner picks which findings to take, and in what order
 
 ## 2026-10-04: the owner's order
 
 **Owner: block kinds first** (option 1 of 4). After rva2 and dmx1 finish, the paper adapter's 16 block kinds become one node per kind in folio-assistant-core, replacing the ~7 parallel tables, as dak was already moved out. Rejected as next: the kind side tables (they stay part of dmx1's remaining work), the qou chapter profiles (a math repo: ask before any PR there), and leaving the audit as backlog.
+
+## 2026-10-04: the owner's resolution: sod4 stays the UMBRELLA
+
+The owner chose to keep sod4 open as the parent, with one row per finding, ticked as each moves (option 2 of 3; rejected: split it and close it, or close it with no beans). The order: block kinds first.
+
+The open question is answered: **every contribution is a node, and validators are KG nodes too**. That work is bean , and #1 (block kinds) lands inside it.
+
+## Findings
+- [ ] #1 paper block kinds as nodes in folio-assistant-core, replacing ~7 parallel tables (FIRST; via )
+- [ ] #2 folio-specific and DAK QA criteria to their owners as criterion nodes
+- [ ] #3 qou's 39-entry chapter profiles to the qou folio as data (math repo: ask before any PR)
+- [ ] #4 avatars on the owning nodes: kind avatars done for moved kinds (dmx1); instance avatars into each `<instance>.json`
+- [ ] #5 the per-kind side tables become fields on folio-graph-kind/v1 (dmx1)
+- [ ] #6 partition ALLOWED derived from declared `needs`; path claims per instance
+- [ ] #7 check-reference-direction PENDING becomes a per-instance baseline (backlog)
+- [ ] #8 PUBLISHED_ELSEWHERE becomes a `publisher` field per declaration
+- [ ] #9 check-avatar-instances EXEMPT becomes a flag in smart-trust's declaration
+- [ ] #10 gates.ts: the three fhir-harness exemption rows move to fhir-harness
+- [ ] #11 core's AUDITS tool table: check for duplicates of tools/ nodes, and convert
+- [ ] #12 special-branches.json retired (rva2; the TypeScript readers are done)
+- [ ] merge-train.ts's hard-coded smart-base L1 check becomes a hook smart-base declares
