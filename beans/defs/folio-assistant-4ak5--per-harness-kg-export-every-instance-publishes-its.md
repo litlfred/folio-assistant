@@ -1,10 +1,11 @@
 ---
 # folio-assistant-4ak5
 title: 'PER-HARNESS KG EXPORT: every instance publishes its own JSON-LD + schema (split cat-harness.jsonld); root index.jsonld meta-skeleton at depth 1'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-02T21:36:29Z
-updated_at: 2026-10-02T21:36:29Z
+updated_at: 2026-10-04T08:13:36Z
 parent: folio-assistant-whlc
 ---
 
@@ -67,3 +68,12 @@ Measured 2026-10-02 against `origin/gh-pages` (the site built from `909678c`) an
 - [ ] `<site>/index.jsonld` and `index.json` name every instance at depth 1, with no payloads, plus a committed root copy
 - [ ] one skill holds the publication rules; the old locations point to it
 - [ ] a CI gate enforces export-per-instance and the completeness of the root index
+
+
+
+## Claimed 2026-10-04 — items 1 and 5 only (session_01Jf39Vh4B8EQT6TBYzTtMCA, branch claude/zealous-thompson-y8dcf1-4ak5)
+
+Scope agreed with the owner: items 1 and 5. Items 2–4 (the split, the root index, the rules skill) are offered to session_01AxhsSvodhTgaioG1nUBWkh, which holds c1m4/f233/q8ar/ax6r; no reply yet. The root index is proposed as built at publish time rather than committed; that change to this bean waits on that session and the owner.
+
+- **Item 1:** `scripts/instance-exports.ts` exports every declared instance the site did not, derived from the declarations. Eleven new documents: bootstrap-tools, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, folio-assistant-sci, the four smart-*, who-iris. cat-harness, the checkout root and bootstrap keep their own publishers, named with why in PUBLISHED_ELSEWHERE.
+- **Item 5:** `check:published-instance-exports` now fails when the deploy does not run the derived publisher, when a workflow running it drops an exempt instance's own publisher, or when an exemption names no declared instance.

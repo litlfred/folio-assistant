@@ -66,6 +66,7 @@ import { basename, join, resolve } from "node:path";
 // throws on an unregistered kind reports a break it did not find.
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { QA_RESULTS_DIR, qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
+import { PUBLISHED_ELSEWHERE, declaredInstanceStubs, instanceExportPlan, type PlannedExport } from "./instance-exports.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
@@ -102,6 +103,17 @@ const INVOCATION = /kg-export\.ts\s+--instance\s+(\S+)([^\n]*)/g;
  * is not cat-harness's.
  */
 const TOOLS_INVOCATION = /bootstrap-tools\/scripts\/export-graph\.ts\s+--root\s+(\S+)([^\n]*)/g;
+
+/**
+ * `instance-exports.ts --out-dir` — the DERIVED publisher (bean `4ak5`): one
+ * line that runs `kg-export --instance` for every declared instance not
+ * published elsewhere. Expanded into one invocation per planned instance, so
+ * each is run and its committed sidecar compared exactly as a literal line's.
+ */
+const PLAN_INVOCATION = /instance-exports\.ts\s+--out-dir\s+\S+([^\n]*)/g;
+
+/** The deploy: completeness is required of the site it builds (bean `4ak5` item 5). */
+export const DEPLOY_WORKFLOW = "docs-site.yml";
 
 export interface Invocation {
   /** The workflow file that runs it, basename only. */
@@ -166,6 +178,11 @@ export interface PublishedExportReport {
    * as "examined nothing". See {@link committedSidecarSubjects}.
    */
   sidecarSubjects?: Invocation[];
+  /**
+   * Bean `4ak5` item 5: declared instances a publishing workflow leaves with
+   * no export. Each entry names the workflow and why. Non-empty is a failure.
+   */
+  incomplete?: string[];
 }
 
 /**
@@ -247,8 +264,22 @@ function instancePathForStub(stub: string): string {
  * a workflow supplying one is testing a different command from a workflow
  * that does not, and the report must not present them as the same evidence.
  */
-export function publishedInstances(workflowText: string, workflow = ""): Invocation[] {
+export function publishedInstances(
+  workflowText: string,
+  workflow = "",
+  plan: () => readonly PlannedExport[] = () => instanceExportPlan(REPO_ROOT),
+): Invocation[] {
+  const planned = [...workflowText.matchAll(PLAN_INVOCATION)].flatMap((m) =>
+    plan().map((p) => ({
+      workflow,
+      instance: p.path,
+      // The publisher passes no base to an instance with its own canonical URL.
+      standInBase: /--base-url/.test(m[1] ?? "") && !p.ownCanonical,
+      tool: "kg-export" as const,
+    })),
+  );
   return [
+    ...planned,
     ...[...workflowText.matchAll(INVOCATION)].map((m) => ({
       workflow,
       instance: m[1]!,
@@ -352,8 +383,16 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
   // a gate that reads a path off stdout breaks when a log line is reworded.
   const qaStem = `kg-export.${instanceStub(inv.instance)}`;
   const fresh = readQaResult(qaResultPath(outDir, qaStem));
+  // The committed sidecar describes the DEPLOY's export, which passes no base.
+  // Its findings name nodes by absolute IRI, so a stand-in base can never
+  // agree with it: measured 2026-10-04, `folio-assistant-core` and
+  // `smart-base` came out STALE under the stand-in and CURRENT without one.
+  // So a stand-in run builds and counts the document and does not compare;
+  // the base-less invocation of the same instance is the one that does
+  // (bean `4ak5`).
+  const compares = !inv.standInBase;
   const qaSidecar =
-    fresh === undefined
+    fresh === undefined || !compares
       ? undefined
       : qaResultState(qaResultPath(join(REPO_ROOT, "cat-harness"), qaStem), fresh);
   if (r.status === 0) {
@@ -367,7 +406,7 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
     // none, nothing was compared. That is could-not-determine, and it must
     // not share an exit with agreement (bean `r7v6`, C2). `export-graph.ts`
     // writes no sidecar by design, so that row has nothing to compare.
-    if ((inv.tool ?? "kg-export") === "kg-export" && fresh === undefined) {
+    if ((inv.tool ?? "kg-export") === "kg-export" && compares && fresh === undefined) {
       return {
         ...inv,
         nodes,
@@ -413,6 +452,52 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
   return { ...inv, nodes, ok: false, qaSidecar, detail: said || `exited ${String(r.status)} with no diagnosis` };
 }
 
+/** A workflow's text with its comment lines removed, so prose naming a command is not the command. */
+function commands(text: string): string {
+  return text
+    .split("\n")
+    .filter((l) => !/^\s*#/.test(l))
+    .join("\n");
+}
+
+/**
+ * Bean `4ak5` item 5 — does every declared instance get a graph?
+ *
+ * The planned set is complete by construction, so what can go wrong is at its
+ * edges, and each edge is asked here:
+ *
+ * - the DEPLOY must run the derived publisher at all, or the site carries
+ *   only the instances somebody wrote a line for — the state this bean found;
+ * - every workflow that runs it must also run each exempt instance's own
+ *   publisher ({@link PUBLISHED_ELSEWHERE}), or the exemption outlives its
+ *   reason and the instance is published by nobody;
+ * - an exemption must name a DECLARED instance, or it exempts nothing and
+ *   hides a rename.
+ */
+export function incompleteExports(
+  workflows: ReadonlyMap<string, string>,
+  declaredStubs: ReadonlySet<string>,
+): string[] {
+  const out: string[] = [];
+  const running = [...workflows].filter(([, t]) => new RegExp(PLAN_INVOCATION.source).test(commands(t)));
+  if (!running.some(([f]) => f === DEPLOY_WORKFLOW)) {
+    out.push(
+      `${DEPLOY_WORKFLOW} does not run \`instance-exports.ts --out-dir\`: the site publishes only the instances a workflow line names`,
+    );
+  }
+  for (const [f, text] of running) {
+    for (const [stub, e] of Object.entries(PUBLISHED_ELSEWHERE)) {
+      if (!e.publisher.test(commands(text))) {
+        out.push(`${f}: \`${stub}\` is exempt from instance-exports.ts (${e.why}) but this workflow runs no publisher for it`);
+      }
+    }
+  }
+  for (const stub of Object.keys(PUBLISHED_ELSEWHERE)) {
+    if (!declaredStubs.has(stub)) out.push(`PUBLISHED_ELSEWHERE names \`${stub}\`, which no instance in this checkout declares`);
+  }
+  return out;
+}
+
 export function checkPublishedInstanceExports(): PublishedExportReport {
   let files: string[];
   try {
@@ -430,6 +515,7 @@ export function checkPublishedInstanceExports(): PublishedExportReport {
 
   const invocations: Invocation[] = [];
   const unreadable: string[] = [];
+  const texts = new Map<string, string>();
   for (const f of files) {
     const abs = join(WORKFLOW_DIR, f);
     if (!existsSync(abs)) continue;
@@ -443,14 +529,18 @@ export function checkPublishedInstanceExports(): PublishedExportReport {
       unreadable.push(`${f}: ${e instanceof Error ? e.message : String(e)}`);
       continue;
     }
+    texts.set(f, text);
     invocations.push(...publishedInstances(text, f));
   }
+  const declaredStubs = declaredInstanceStubs(REPO_ROOT);
+  const incomplete = incompleteExports(texts, declaredStubs);
 
   const base: PublishedExportReport = {
     invocations,
     results: [],
     workflowsRead: files.length - unreadable.length,
     ...(unreadable.length > 0 ? { unreadable: unreadable.join("; ") } : {}),
+    ...(incomplete.length > 0 ? { incomplete } : {}),
   };
   if (invocations.length === 0) return base;
 
@@ -496,6 +586,8 @@ export function formatReport(r: PublishedExportReport): string {
     out.push(`  ? COULD NOT READ ${r.unreadable}. The results below are partial.`);
   }
 
+  for (const line of r.incomplete ?? []) out.push(`  ✗ NOT EXPORTED — ${line}`);
+
   const failed = r.results.filter((x) => !x.ok);
   for (const x of r.results) {
     const counted = x.nodes === undefined ? "" : ` — ${String(x.nodes)} node(s)`;
@@ -504,6 +596,8 @@ export function formatReport(r: PublishedExportReport): string {
         ? `; QA sidecar ${x.qaSidecar}`
         : x.tool === "export-graph"
           ? "; writes no QA sidecar"
+          : x.standInBase
+            ? "; QA sidecar not compared (it describes the base-less deploy)"
           : "";
     const note = (x.standInBase ? "  (its `--base-url` stood in)" : "") + counted + sidecar;
     if (x.ok) {
@@ -522,8 +616,8 @@ export function formatReport(r: PublishedExportReport): string {
         "its committed sidecar is compared here, but only a manual run produces it. Keeping it is a person's decision",
     );
   }
-  if (failed.length === 0 && r.unreadable === undefined) {
-    out.push("    every graph a workflow publishes builds, with dereferenceable `@id`s");
+  if (failed.length === 0 && r.unreadable === undefined && (r.incomplete ?? []).length === 0) {
+    out.push("    every declared instance is published, and every graph a workflow publishes builds, with dereferenceable `@id`s");
     return out.join("\n");
   }
   if (failed.length === 0) return out.join("\n");
@@ -544,6 +638,7 @@ if (import.meta.main) {
   const clean =
     report.unreadable === undefined &&
     report.invocations.length > 0 &&
+    (report.incomplete ?? []).length === 0 &&
     report.results.every((x) => x.ok);
   (clean ? console.log : console.error)(formatReport(report));
   process.exit(clean ? 0 : 1);

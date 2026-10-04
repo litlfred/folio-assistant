@@ -1,0 +1,195 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/kg-export.ts",
+    "script_hash": "b95ac23e95da"
+  },
+  "subject": {
+    "kind": "graph",
+    "id": "folio-assistant-sci/folio-assistant-sci.jsonld"
+  },
+  "families": {
+    "danglingLinks": {
+      "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+      "count": 32,
+      "entries": [
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/lane/Lane_Ci",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/node/Start_Change",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/node/Task_Check",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/node/GW_Drift",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/node/End_Clean",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_AtomicMassDrift/node/End_Drift",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Author",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/author"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_WorkPlan",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/work-plan"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Agent",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/authoring-agent"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Lean",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Build",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/lane/Lane_Reviewer",
+          "edge": "bindsRole",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/reviewer"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/StartEvent_NewPaper",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/author"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Plan",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-plan"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Plan",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/author"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_SeedPlan",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/todo-manager"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_SeedPlan",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/work-plan"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Scaffold",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-plan"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Scaffold",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/authoring-agent"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_AuthorBlocks",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-author"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_AuthorBlocks",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/authoring-agent"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Formalize",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Gateway_LeanGreen",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/lean-toolchain"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Validate",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-validate"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Validate",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Render",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Review",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-review"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Review",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/reviewer"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Gateway_ReviewOutcome",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/reviewer"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Publish",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/content-publish"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/Task_Publish",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#process/Process_PaperAuthoring/node/EndEvent_Published",
+          "edge": "performedBy",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#role/build-pipeline"
+        }
+      ]
+    },
+    "problems": {
+      "summary": "Sources that could not be read. Never empty-by-omission.",
+      "count": 0,
+      "entries": []
+    },
+    "undeclaredSchemaModules": {
+      "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
+      "count": 0,
+      "entries": []
+    },
+    "undeclaredTerms": {
+      "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 32
+}

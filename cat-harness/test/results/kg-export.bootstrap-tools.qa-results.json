@@ -1,0 +1,47 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/kg-export.ts",
+    "script_hash": "b95ac23e95da"
+  },
+  "subject": {
+    "kind": "graph",
+    "id": "bootstrap-tools/bootstrap-tools.jsonld"
+  },
+  "families": {
+    "danglingLinks": {
+      "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
+      "count": 0,
+      "entries": []
+    },
+    "problems": {
+      "summary": "Sources that could not be read. Never empty-by-omission.",
+      "count": 0,
+      "entries": []
+    },
+    "undeclaredSchemaModules": {
+      "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
+      "count": 3,
+      "entries": [
+        {
+          "module": "schemas/declaration.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "schemas/declared-order.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "schemas/graph-export.ts",
+          "why": "no-tag"
+        }
+      ]
+    },
+    "undeclaredTerms": {
+      "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 3
+}
