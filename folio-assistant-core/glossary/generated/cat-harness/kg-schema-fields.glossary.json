@@ -7105,6 +7105,13 @@
       "status": "candidate"
     },
     {
+      "id": "merge-queue.memberfactsschema.readiness",
+      "prefLabel": "MemberFactsSchema.readiness",
+      "definition": "Has the OWNING session signalled this PR is finished, against `main`? Bean `uoob` (merge gate (f)), read by `Rule_NotReady`. `ready` is the only admitting value, and the others stay apart because each has a different remedy:",
+      "source": "cat-harness/schemas/merge-queue.ts#MemberFactsSchema.readiness",
+      "status": "candidate"
+    },
+    {
       "id": "merge-queue.memberfactsschema.refused",
       "prefLabel": "MemberFactsSchema.refused",
       "definition": "A declared merge pattern refuses a conflicted path, or GitHub reports it dirty.",

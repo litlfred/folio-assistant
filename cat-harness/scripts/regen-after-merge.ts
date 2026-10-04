@@ -283,11 +283,20 @@ export const NO_WRITER: Readonly<Record<string, string>> = {
   "check:raci": "raci-chart.ts only prints; it writes nothing",
   "check:subgraphs": "check-subgraphs.ts only reports",
   "check:harness-dirs": "compares two config files; harness:dirs makes directories, not what it compares",
-  // `viewer:nav:audit` does write, but what it writes is the BASELINE the gate
-  // compares against, and the gate fails only on a REGRESSION. Running it on a
-  // failure would re-baseline, so the regression would vanish and be reported
-  // as a repair. It is the one case where a writer exists and must not be run.
+  // THE BASELINE CASES: a writer exists and must NOT be run. What it writes is
+  // the baseline the gate compares against, and the gate fails only on a
+  // REGRESSION, so running it on a failure re-baselines — the regression
+  // vanishes and is reported as a repair. There are two, and the second is why
+  // this comment no longer says "the one case":
+  //
+  // - `viewer:nav:audit` writes the viewer-nav baseline.
+  // - `check:state-on-main --update` writes the state-on-main baseline, which
+  //   may only SHRINK. regen repairing it would be regen RAISING a ratchet,
+  //   which is the whole thing the ratchet exists to prevent. Its `--update`
+  //   refuses growth without `--allow-growth` as a second line of defence, but
+  //   the first is not asking it at all.
   "check:viewer-nav": "its writer re-baselines, which would hide the regression the gate exists to report",
+  "check:state-on-main": "its --update writes the ratchet the gate reads; repairing it would RAISE a baseline that may only shrink",
 };
 
 /**
