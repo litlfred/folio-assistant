@@ -3438,13 +3438,16 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/merge-base.svg",
       "description": "Bring the base branch into a pull-request branch: merge, classify every conflicted path before resolving any, refuse the whole merge if one is authored or undeclared, otherwise resolve, regenerate and prove the result with the gate set. CALLED FROM `Task_PrepareMerge` in code-change-review.bpmn, and executed by `bun run merge:main` (cat-harness/scripts/merge-base.ts). Bean `y7b3`, issue #1707. Owner, 2026-10-01: \"put in merge process bpmn\".\n\nMEASURED 2026-09-30 over 300 main-into-branch merges: 235 conflicted, 147 (63%) ONLY on generated files, each resolved the same mechanical way. The declared patterns, and why each is or is not automatic, are in the `merge-conflict-patterns` skill.\n\nALL OR NOTHING: every conflicted path is classified before any is touched, and one refusal aborts the merge and restores the tree. PROVED, NOT ASSUMED: `regen` derives every check/writer pair from the CI workflow, and an unrepaired check aborts too. Only what both gateways pass is committed.",
       "enforcement": "strict",
-      "flowCount": 14,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "name": "Merge the base branch in",
-      "nodeCount": 13,
+      "nodeCount": 18,
       "sourcePath": "processes/sdlc/merge-base.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn",
-      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Report"
+      ],
       "summary": "Bring the base branch into a pull-request branch: merge, classify every conflicted path before resolving any, refuse the whole merge if one is authored or undeclared, otherwise resolve, regenerate and prove the result with the gate set."
     },
     {
@@ -3496,6 +3499,40 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_ByHand"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m15",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m16",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_News"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m17",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_News",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "new, changed or systemic",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Notified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m18",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_News",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "already reported",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Recorded"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m2",
@@ -3610,6 +3647,34 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Notified",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m17",
+      "name": "Run red: one email",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Recorded",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m18",
+      "name": "Run green: recorded, not sent again",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
@@ -3646,6 +3711,24 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_News",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m16",
+      "name": "Anything new?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m17",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m18"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
@@ -3672,6 +3755,20 @@
       "name": "Base moved, or PR conflicted",
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m1",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Report",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "name": "Every member reported",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m15",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,
@@ -3774,6 +3871,22 @@
       "name": "Regenerate, asking every CI gate",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m9",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Report",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/lane/Lane_Command",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m15",
+      "name": "Report what the run found, once",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m16",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "relaxable": true,

@@ -39,6 +39,7 @@ import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
 import { checkoutRootFor, repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
+import { exitUnlessMounted } from "./branch-store.ts";
 import { kgRoots } from "./known-skills.ts";
 import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 
@@ -244,6 +245,7 @@ export function scan(
 }
 
 function main(): void {
+  exitUnlessMounted("fsh-guts", "check-retired-front-matter", REPO);
   const { findings, scanned, missingRecords, roots } = scan();
 
   // A vacuity guard. `scanned === 0` means the declaration resolved to

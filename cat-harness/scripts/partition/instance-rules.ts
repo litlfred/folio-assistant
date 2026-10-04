@@ -289,6 +289,10 @@ export const RULES: Rule[] = [
       // It builds an instance's KG the way `kg-export` (already harness,
       // below) does, one instance at a time (issue #720).
       "scripts/check-published-instance-exports.ts",
+      // HARNESS with the gate above, which imports it: it runs `kg-export`
+      // once per declared instance for this repository's deploy, and reads
+      // only the declarations (bean `4ak5`).
+      "scripts/instance-exports.ts",
       // HARNESS on the same argument: its subject is this repository's own
       // workflows -- which generators each invokes -- and it reads no folio
       // content at all (issue #777, bean `qgpo`).

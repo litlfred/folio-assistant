@@ -9,7 +9,7 @@ nav_exclude: true
 {% raw %}
 # Merge the base branch in
 
-`Process_MergeBase` · strict · 7 step(s)
+`Process_MergeBase` · strict · 8 step(s)
 
 Bring the base branch into a pull-request branch: merge, classify every conflicted path before resolving any, refuse the whole merge if one is authored or undeclared, otherwise resolve, regenerate and prove the result with the gate set. CALLED FROM `Task_PrepareMerge` in code-change-review.bpmn, and executed by `bun run merge:main` (cat-harness/scripts/merge-base.ts). Bean `y7b3`, issue #1707. Owner, 2026-10-01: "put in merge process bpmn".
 
@@ -34,7 +34,7 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
 
 ## Steps
 
-**2** of 7 step(s) carry no documentation — `activity-documented` lists them.
+**2** of 8 step(s) carry no documentation — `activity-documented` lists them.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -45,15 +45,17 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
 | **Commit the merge**<br>`Task_Commit` | merge:main command | [`continual-progress`](../reference/skill-instructions/continual-progress.html) | — |
 | **Abort, restore the tree, list what was refused**<br>`Task_Abort` | merge:main command | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | `git merge --abort`. Each refused path is listed with its pattern's reason, or "no declared pattern". |
 | **Resolve by hand, then regenerate**<br>`Task_ByHand` | Authoring agent | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | — |
+| **Report what the run found, once**<br>`Task_Report` | merge:main command | [`ci-health`](../reference/skill-instructions/ci-health.html) | Every member's verdict, in one table in the run's summary: merged, already up to date, refused, an expected race, a repeat of a failure already reported, something new, or a member that could not say. `cat-harness/scripts/merge-main-comment.ts --aggregate`. |
 
 ## Decisions
 
-Every one of the 3 decision(s) is documented.
+Every one of the 4 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **Any conflict?**<br>`GW_Conflicts` | `none` still regenerates: a CLEAN merge can produce an artefact neither side would emit (bean `lxpq`), so only the gates can say it is right. | **none** → Regenerate, asking every CI gate<br>**yes** → Classify every conflicted path against the declared patterns |
 | **Every path resolvable?**<br>`GW_AllDeclared` | `no` if even one path is refused: the merge is aborted whole, never half-resolved. | **yes** → Resolve each by its declared strategy<br>**no** → Abort, restore the tree, list what was refused |
 | **Every gate reproduced?**<br>`GW_Proved` | `no` when regen reports an unrepaired check, or one with no writer: a resolution the gates cannot reproduce is not a resolution. | **yes** → Commit the merge<br>**no** → Abort, restore the tree, list what was refused |
+| **Anything new?**<br>`GW_News` | `new` on three conditions and no others: a failure whose signature the PR's own comment did not already report; a member that reported no verdict, or one it could not classify; and a systemic failure (every selected PR failed) unless every one of those failures is itself a repeat, in which case each PR's comment already reports its own condition and the run that made it true was the loud one. A repeat of an identical failure on an unchanged head is `already reported`. | **new, changed or systemic** → Run red: one email<br>**already reported** → Run green: recorded, not sent again |
 
 {% endraw %}

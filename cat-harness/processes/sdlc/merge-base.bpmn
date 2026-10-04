@@ -38,6 +38,11 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
         <bpmn:flowNodeRef>Task_Commit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Merged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Abort</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Start_Report</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Report</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_News</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Notified</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Recorded</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Authoring agent">
         <bpmn:documentation>Reached only when the command refused: an authored conflict, an undeclared path, or a resolution the gates could not reproduce. The refused paths are listed for it; what to do with an authored conflict is judgement.</bpmn:documentation>
@@ -115,6 +120,29 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
     <bpmn:endEvent id="End_ByHand" name="Merged by&#10;a person">
       <bpmn:incoming>m14</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:startEvent id="Start_Report" name="Every member&#10;reported">
+      <bpmn:documentation>A SECOND trigger, not a step of the merge above: `merge-main.yml` runs one merge per opted-in PR and this fires once per RUN, when all of them have reported. Drawn separately because a diagram that showed it inside one PR's flow would say the run notifies per PR, which is the defect it exists to fix (bean `03nl`).</bpmn:documentation>
+      <bpmn:outgoing>m15</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Report" name="Report what the run&#10;found, once">
+      <bpmn:documentation>Every member's verdict, in one table in the run's summary: merged, already up to date, refused, an expected race, a repeat of a failure already reported, something new, or a member that could not say. `cat-harness/scripts/merge-main-comment.ts --aggregate`.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="ci-health"/></bpmn:extensionElements>
+      <bpmn:incoming>m15</bpmn:incoming>
+      <bpmn:outgoing>m16</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_News" name="Anything&#10;new?">
+      <bpmn:documentation>`new` on three conditions and no others: a failure whose signature the PR's own comment did not already report; a member that reported no verdict, or one it could not classify; and a systemic failure (every selected PR failed) unless every one of those failures is itself a repeat, in which case each PR's comment already reports its own condition and the run that made it true was the loud one. A repeat of an identical failure on an unchanged head is `already reported`.</bpmn:documentation>
+      <bpmn:incoming>m16</bpmn:incoming>
+      <bpmn:outgoing>m17</bpmn:outgoing>
+      <bpmn:outgoing>m18</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Notified" name="Run red:&#10;one email">
+      <bpmn:incoming>m17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Recorded" name="Run green: recorded,&#10;not sent again">
+      <bpmn:documentation>Quiet is not silent. The finding stays in the PR's comment, in the member's job summary, in a warning annotation and in that member's own red job; only the email is withheld. `1xhc`: a report nobody receives must still be a report somebody can find.</bpmn:documentation>
+      <bpmn:incoming>m18</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:sequenceFlow id="m1" sourceRef="Start_Merge" targetRef="Task_Merge"/>
     <bpmn:sequenceFlow id="m2" sourceRef="Task_Merge" targetRef="GW_Conflicts"/>
     <bpmn:sequenceFlow id="m3" name="none" sourceRef="GW_Conflicts" targetRef="Task_Regen"/>
@@ -129,6 +157,10 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
     <bpmn:sequenceFlow id="m12" sourceRef="Task_Commit" targetRef="End_Merged"/>
     <bpmn:sequenceFlow id="m13" sourceRef="Task_Abort" targetRef="Task_ByHand"/>
     <bpmn:sequenceFlow id="m14" sourceRef="Task_ByHand" targetRef="End_ByHand"/>
+    <bpmn:sequenceFlow id="m15" sourceRef="Start_Report" targetRef="Task_Report"/>
+    <bpmn:sequenceFlow id="m16" sourceRef="Task_Report" targetRef="GW_News"/>
+    <bpmn:sequenceFlow id="m17" name="new, changed or systemic" sourceRef="GW_News" targetRef="End_Notified"/>
+    <bpmn:sequenceFlow id="m18" name="already reported" sourceRef="GW_News" targetRef="End_Recorded"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_MergeBase">
     <bpmndi:BPMNPlane id="Plane_Process_MergeBase" bpmnElement="Collaboration_Process_MergeBase">
@@ -154,6 +186,18 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
       <bpmndi:BPMNShape id="Shape_Task_Abort" bpmnElement="Task_Abort"><dc:Bounds x="900" y="210" width="150" height="70"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_ByHand" bpmnElement="Task_ByHand"><dc:Bounds x="900" y="340" width="150" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_ByHand" bpmnElement="End_ByHand"><dc:Bounds x="1100" y="362" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Report" bpmnElement="Start_Report"><dc:Bounds x="100" y="232" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Report" bpmnElement="Task_Report"><dc:Bounds x="170" y="220" width="150" height="60"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_News" bpmnElement="GW_News" isMarkerVisible="true"><dc:Bounds x="370" y="225" width="50" height="50"/></bpmndi:BPMNShape>
+      <!-- x=480, not 620: `m7` runs VERTICALLY down x=635 from GW_AllDeclared
+           to the abort row at y=245, and an end event at 620-656 would have
+           had that edge drawn through it. -->
+      <bpmndi:BPMNShape id="Shape_End_Notified" bpmnElement="End_Notified"><dc:Bounds x="480" y="200" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Recorded" bpmnElement="End_Recorded"><dc:Bounds x="480" y="255" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_m15" bpmnElement="m15"><di:waypoint x="136" y="250"/><di:waypoint x="170" y="250"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_m16" bpmnElement="m16"><di:waypoint x="320" y="250"/><di:waypoint x="370" y="250"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_m17" bpmnElement="m17"><di:waypoint x="395" y="225"/><di:waypoint x="395" y="218"/><di:waypoint x="480" y="218"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_m18" bpmnElement="m18"><di:waypoint x="395" y="275"/><di:waypoint x="395" y="273"/><di:waypoint x="480" y="273"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_m1" bpmnElement="m1"><di:waypoint x="136" y="150"/><di:waypoint x="160" y="150"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_m2" bpmnElement="m2"><di:waypoint x="290" y="150"/><di:waypoint x="330" y="150"/></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_m3" bpmnElement="m3"><di:waypoint x="355" y="125"/><di:waypoint x="355" y="60"/><di:waypoint x="975" y="60"/><di:waypoint x="975" y="110"/></bpmndi:BPMNEdge>

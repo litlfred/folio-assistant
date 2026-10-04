@@ -12,7 +12,7 @@ import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { resolveTipLocation, tipLocations } from "../branch-store.js";
+import { contentAt, resolveTipLocation, tipLocations } from "../branch-store.js";
 import { mountState, report } from "../state-mount.js";
 import { cleanup, git, MANIFEST, stateFixture, TIP_SOURCE, BRANCH } from "./state-fixture.js";
 
@@ -112,6 +112,23 @@ describe("stale is ASKED, never inferred from a refusal plus a marker", () => {
     const r = mountState({ repoRoot: root, store });
     expect(r.graphs[0]?.state).toBe("refused");
     expect(r.state).toBe("failed");
+  });
+});
+
+describe("contentAt: a reader is told when the content is not on disk (bean 9c7h)", () => {
+  test("kept on a branch and not mounted is `not-mounted`, never an empty directory", () => {
+    const { root, store } = stateFixture("state-mount-t-").checkout("a");
+    const before = contentAt("todos", root);
+    expect(before.state).toBe("not-mounted");
+    if (before.state === "not-mounted") expect(before.reason).toContain("state:mount");
+    expect(mountState({ repoRoot: root, store }).state).toBe("mounted");
+    expect(contentAt("todos", root)).toMatchObject({ state: "present", via: "mount" });
+  });
+
+  test("kept in the checkout is `present` with no mount needed; an undeclared id says so", () => {
+    const { root } = stateFixture("state-mount-t-").checkout("a", { kind: "directory" });
+    expect(contentAt("todos", root)).toMatchObject({ state: "present", via: "checkout" });
+    expect(contentAt("nope", root).state).toBe("undeclared");
   });
 });
 

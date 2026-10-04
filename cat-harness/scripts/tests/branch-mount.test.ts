@@ -226,6 +226,34 @@ describe("push", () => {
     expect(f.remoteFile("fsh-guts/retired/a.md")!.toString()).toBe("edited under a root-ignore\n");
   });
 
+  test("the cutover's ignore rules: logs written BEFORE the first mount neither block it nor get pushed (bean 9c7h)", () => {
+    const f = fixture();
+    const { root, opts } = f.checkout("a");
+    // Exactly what main's .gitignore says after the cutover. `/**`, not a
+    // directory rule: `fsh-guts/` would be reported for the logs too, and
+    // they would be pushed.
+    writeFileSync(join(root, ".gitignore"), "/fsh-guts/**\nfsh-guts/logs/\n");
+    // The log writer runs whether or not the trashcan is mounted.
+    mkdirSync(join(root, "fsh-guts/logs"), { recursive: true });
+    writeFileSync(join(root, "fsh-guts/logs/session.jsonl"), "{}\n");
+    expect(mountTip(LOC, opts).state).toBe("mounted");
+    expect(readFileSync(join(root, "fsh-guts/logs/session.jsonl"), "utf-8")).toBe("{}\n");
+    writeFileSync(join(root, "fsh-guts/retired/a.md"), "edited after the cutover\n");
+    expect(pushMount("fsh-guts", "edit", opts).state).toBe("pushed");
+    expect(f.remoteFile("fsh-guts/retired/a.md")!.toString()).toBe("edited after the cutover\n");
+    expect(f.remoteFile("fsh-guts/logs/session.jsonl")).toBeUndefined();
+  });
+
+  test("a file the checkout does NOT ignore still blocks a first mount — it is a competing copy", () => {
+    const f = fixture();
+    const { root, opts } = f.checkout("a");
+    mkdirSync(join(root, "fsh-guts/retired"), { recursive: true });
+    writeFileSync(join(root, "fsh-guts/retired/stray.md"), "not a mount\n");
+    const r = mountTip(LOC, opts);
+    expect(r.state).toBe("refused");
+    expect(readFileSync(join(root, "fsh-guts/retired/stray.md"), "utf-8")).toBe("not a mount\n");
+  });
+
   test("an unmounted id is refused, not treated as empty", () => {
     const f = fixture();
     const { opts } = f.checkout("a");

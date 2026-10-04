@@ -1353,6 +1353,24 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m17",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "new, changed or systemic"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m18",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "already reported"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/flow/m2",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -1409,6 +1427,16 @@
       "name": "Merged, proved"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Notified",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run red: one email"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/End_Recorded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run green: recorded, not sent again"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_AllDeclared",
       "@type": "bootstrap:ProcessNode",
       "name": "Every path resolvable?"
@@ -1419,6 +1447,11 @@
       "name": "Any conflict?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_News",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Anything new?"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/GW_Proved",
       "@type": "bootstrap:ProcessNode",
       "name": "Every gate reproduced?"
@@ -1427,6 +1460,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Merge",
       "@type": "bootstrap:ProcessNode",
       "name": "Base moved, or PR conflicted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Start_Report",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every member reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Abort",
@@ -1457,6 +1495,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Regen",
       "@type": "bootstrap:ProcessNode",
       "name": "Regenerate, asking every CI gate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Report",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Report what the run found, once"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MergeBase/node/Task_Resolve",

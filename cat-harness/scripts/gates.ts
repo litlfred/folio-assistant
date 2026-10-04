@@ -168,6 +168,18 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
+    // job that reads the repository mounts it after `bun install`. A SETUP
+    // step: it fetches over the network and has no verdict of its own; the
+    // readers it serves refuse an unmounted copy (exit 2), and the mount
+    // logic is asserted by state-mount.test.ts and branch-mount.test.ts.
+    match: "bun run state:mount",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it mounts the subgraphs kept on branches (fsh-guts) so the gates that follow " +
+      "read real content; a contributor's session-start hook runs the same command",
+  },
+  {
     // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
     // cache is rendered from it into the preview at `/<instance>/ast/`. The
     // lister asks each IG repository over the network (`git ls-remote`).
@@ -778,6 +790,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "jsonld-label-resolution.test.ts",
     kind: "covered-by",
     reason: "`bun test` is in the gate set and runs every test file, this one included",
+  },
+  {
+    // Bean `03nl`. The merge-main bot's one notification per run: it reads
+    // THIS RUN's per-PR verdicts out of its own artifacts and decides whether
+    // anything in them is new. There is no tree to judge and no verdict a
+    // contributor could get from it — outside a run there are no artifacts to
+    // read, and inside one the answer is about that run. Its branches are
+    // pinned by `merge-main-workflow.test.ts` in `bun test`: every verdict
+    // class, the three conditions that notify, and the quiet ones.
+    match: "merge-main-comment.ts --aggregate",
+    kind: "ci-only",
+    reason:
+      "reads this run's own per-PR verdict artifacts and decides whether any of them is new; nothing " +
+      "to run outside a run, and its branches are pinned by merge-main-workflow.test.ts in `bun test`",
   },
 ];
 
