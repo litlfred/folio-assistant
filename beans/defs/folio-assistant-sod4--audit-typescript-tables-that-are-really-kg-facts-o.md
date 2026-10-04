@@ -46,10 +46,10 @@ Owner, 2026-10-04: *"dispatch agent: other stuff in typescript that should be in
 
 The owner chose to keep sod4 open as the parent, with one row per finding, ticked as each moves (option 2 of 3; rejected: split it and close it, or close it with no beans). The order: block kinds first.
 
-The open question is answered: **every contribution is a node, and validators are KG nodes too**. That work is bean , and #1 (block kinds) lands inside it.
+The open question is answered: **every contribution is a node, and validators are KG nodes too**. That work is bean folio-assistant-riit, and #1 (block kinds) lands inside it.
 
 ## Findings
-- [ ] #1 paper block kinds as nodes in folio-assistant-core, replacing ~7 parallel tables (FIRST; via )
+- [ ] #1 paper block kinds as nodes in folio-assistant-core, replacing ~7 parallel tables (FIRST; via folio-assistant-riit)
 - [ ] #2 folio-specific and DAK QA criteria to their owners as criterion nodes
 - [ ] #3 qou's 39-entry chapter profiles to the qou folio as data (math repo: ask before any PR)
 - [ ] #4 avatars on the owning nodes: kind avatars done for moved kinds (dmx1); instance avatars into each `<instance>.json`
