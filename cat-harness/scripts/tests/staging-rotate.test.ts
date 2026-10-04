@@ -1,10 +1,11 @@
 /**
- * `staging-rotate` — the preview cap. Owner ruling 2026-10-02, issue #1868.
+ * `staging-rotate` — the preview cap. Owner ruling 2026-10-02, issue #1868,
+ * amended 2026-10-04 from a count of ten to a size budget of 3 GB.
  *
  * @module scripts/tests/staging-rotate.test
  *
  * Five properties the ruling and `deletion-requires-confirmation` between them
- * require: under the cap nothing goes; over it the OLDEST go; the preview
+ * require: under the budget nothing goes; over it the OLDEST go; the preview
  * being staged never goes; `_retired/` and anything that is not a preview are
  * never touched; and a preview with no stamp still gets an age from the
  * fallbacks rather than being treated as new.
@@ -17,7 +18,7 @@ import { join, resolve } from "node:path";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { createStagingPreview, readStagingPreview, serializeStagingPreview } from "../../schemas/staging-preview.ts";
 import {
-  MAX_PREVIEWS,
+  MAX_PREVIEW_BYTES,
   STAGED_AT_FILE,
   isPreviewName,
   planRotation,
@@ -32,12 +33,12 @@ const NOW_MS = Date.parse(NOW);
 const HOUR = 3_600_000;
 const noGit: GitTime = () => undefined;
 
-function p(slug: string, hoursAgo: number | undefined): Preview {
+function p(slug: string, hoursAgo: number | undefined, bytes = 100): Preview {
   return {
     slug,
     updatedMs: hoursAgo === undefined ? undefined : NOW_MS - hoursAgo * HOUR,
     source: hoursAgo === undefined ? "unknown" : "stamp",
-    bytes: 0,
+    bytes,
   };
 }
 
@@ -47,7 +48,9 @@ function pages(previews: [string, number | undefined][]): string {
   for (const [slug, h] of previews) {
     const d = join(dir, "STAGING", slug);
     mkdirSync(d, { recursive: true });
-    writeFileSync(join(d, "index.html"), `<p>${slug}</p>`);
+    // 100 bytes each, so a budget of N x 100 holds N previews. The stamp
+    // written below adds its own bytes, which is why budgets here leave room.
+    writeFileSync(join(d, "index.html"), "x".repeat(100));
     if (h !== undefined) writeFileSync(join(d, STAGED_AT_FILE), new Date(NOW_MS - h * HOUR).toISOString());
   }
   return dir;
@@ -56,52 +59,73 @@ function pages(previews: [string, number | undefined][]): string {
 const remaining = (dir: string) => readdirSync(join(dir, "STAGING")).sort();
 
 describe("the cap is the owner's number", () => {
-  test("ten, defined once", () => {
-    expect(MAX_PREVIEWS).toBe(10);
+  test("3 GB of previews in total, defined once", () => {
+    expect(MAX_PREVIEW_BYTES).toBe(3 * 1024 ** 3);
   });
 });
 
+// Every preview below is 100 bytes unless it says otherwise, so a budget of
+// N x 100 holds exactly N of them.
 describe("planRotation — pure", () => {
-  test("under the cap, nothing is removed", () => {
-    const plan = planRotation([p("a", 1), p("b", 50), p("c", 500)], "a", 10);
+  test("under the budget, nothing is removed", () => {
+    const plan = planRotation([p("a", 1), p("b", 50), p("c", 500)], "a", 1000);
     expect(plan.remove).toEqual([]);
     expect(plan.keep.map((x) => x.slug).sort()).toEqual(["a", "b", "c"]);
   });
 
-  test("exactly at the cap, nothing is removed — the cap counts the current preview", () => {
+  test("exactly at the budget, nothing is removed — the current preview counts", () => {
     const all = Array.from({ length: 10 }, (_, i) => p(`s${i}`, i));
-    expect(planRotation(all, "s0", 10).remove).toEqual([]);
+    expect(planRotation(all, "s0", 1000).remove).toEqual([]);
   });
 
-  test("over the cap, the OLDEST are removed", () => {
+  test("over the budget, the OLDEST are removed", () => {
     const all = Array.from({ length: 13 }, (_, i) => p(`s${String(i).padStart(2, "0")}`, i));
-    const plan = planRotation(all, "s00", 10);
+    const plan = planRotation(all, "s00", 1000);
     expect(plan.remove.map((x) => x.slug)).toEqual(["s10", "s11", "s12"]);
     expect(plan.keep).toHaveLength(10);
   });
 
+  test("size decides how many fit: one large preview displaces several small ones", () => {
+    const plan = planRotation([p("cur", 0, 300), p("big", 1, 500), p("a", 2), p("b", 3), p("c", 4)], "cur", 1000);
+    expect(plan.keep.map((x) => x.slug)).toEqual(["cur", "big", "a", "b"]);
+    expect(plan.remove.map((x) => x.slug)).toEqual(["c"]);
+  });
+
+  test("strictly by recency: an older small preview never outlives a newer one that did not fit", () => {
+    const plan = planRotation([p("cur", 0, 600), p("newer", 1, 500), p("older", 2, 100)], "cur", 1000);
+    expect(plan.keep.map((x) => x.slug)).toEqual(["cur"]);
+    expect(plan.remove.map((x) => x.slug)).toEqual(["newer", "older"]);
+  });
+
   test("the current preview is never removed, even when it is the oldest", () => {
     const all = [p("cur", 9999), ...Array.from({ length: 12 }, (_, i) => p(`o${i}`, i))];
-    const plan = planRotation(all, "cur", 10);
+    const plan = planRotation(all, "cur", 1000);
     expect(plan.keep.map((x) => x.slug)).toContain("cur");
     expect(plan.remove.map((x) => x.slug)).not.toContain("cur");
     expect(plan.keep).toHaveLength(10);
   });
 
-  test("the current preview keeps its slot even if not yet on the tree", () => {
+  test("a current preview over the whole budget is kept, and everything else goes", () => {
+    const plan = planRotation([p("cur", 0, 5000), p("a", 1), p("b", 2)], "cur", 1000);
+    expect(plan.keep.map((x) => x.slug)).toEqual(["cur"]);
+    expect(plan.remove.map((x) => x.slug)).toEqual(["a", "b"]);
+  });
+
+  test("the current preview not yet on the tree takes no bytes", () => {
     const all = Array.from({ length: 10 }, (_, i) => p(`o${i}`, i));
-    const plan = planRotation(all, "new", 10);
-    expect(plan.remove.map((x) => x.slug)).toEqual(["o9"]);
+    expect(planRotation(all, "new", 1000).remove).toEqual([]);
+    expect(planRotation(all, "new", 900).remove.map((x) => x.slug)).toEqual(["o9"]);
   });
 
   test("unknown ages sort oldest; ties break by slug", () => {
-    const plan = planRotation([p("cur", 0), p("b", 5), p("z", 5), p("u", undefined)], "cur", 2);
+    const plan = planRotation([p("cur", 0), p("b", 5), p("z", 5), p("u", undefined)], "cur", 200);
     expect(plan.keep.map((x) => x.slug)).toEqual(["cur", "b"]);
     expect(plan.remove.map((x) => x.slug)).toEqual(["z", "u"]);
   });
 
-  test("a cap below one is refused", () => {
+  test("a budget that is not a positive number of bytes is refused", () => {
     expect(() => planRotation([], "x", 0)).toThrow();
+    expect(() => planRotation([], "x", Number.NaN)).toThrow();
   });
 });
 
@@ -116,7 +140,7 @@ describe("what counts as a preview", () => {
 });
 
 describe("rotate — on a checkout", () => {
-  test("under the cap, nothing is removed and the current preview is stamped", () => {
+  test("under the budget, nothing is removed and the current preview is stamped", () => {
     const dir = pages([["cur", undefined], ["a", 3], ["b", 30]]);
     const { plan } = rotate({ dir, current: "cur", now: NOW, git: noGit });
     expect(plan.remove).toEqual([]);
@@ -124,7 +148,7 @@ describe("rotate — on a checkout", () => {
     expect(readFileSync(join(dir, "STAGING", "cur", STAGED_AT_FILE), "utf8").trim()).toBe(NOW);
   });
 
-  test("over the cap, the oldest go, each with a render-log entry and a retired record", () => {
+  test("over the budget, the oldest go, each with a render-log entry and a retired record", () => {
     const list: [string, number][] = Array.from({ length: 11 }, (_, i) => [`p${String(i).padStart(2, "0")}`, i + 1]);
     const dir = pages([["cur", undefined], ...list]);
     // Give the oldest a record, so its retirement can be checked.
@@ -136,7 +160,7 @@ describe("rotate — on a checkout", () => {
     });
     writeFileSync(join(dir, "STAGING", "p10", "staging-preview.json"), serializeStagingPreview(rec));
 
-    const { plan, lines } = rotate({ dir, current: "cur", now: NOW, git: noGit, max: 10 });
+    const { plan, lines } = rotate({ dir, current: "cur", now: NOW, git: noGit, budget: 1300 });
     expect(plan.remove.map((x) => x.slug)).toEqual(["p09", "p10"]);
     expect(existsSync(join(dir, "STAGING", "p09"))).toBe(false);
     expect(existsSync(join(dir, "STAGING", "p10"))).toBe(false);
@@ -152,13 +176,13 @@ describe("rotate — on a checkout", () => {
     expect(log.every((l) => JSON.parse(l).event === "removed")).toBe(true);
   });
 
-  test("_retired and non-preview entries are untouched, and do not count toward the cap", () => {
+  test("_retired and non-preview entries are untouched, and do not count toward the budget", () => {
     const dir = pages([["cur", undefined], ["a", 1], ["b", 2]]);
     mkdirSync(join(dir, "STAGING", "_retired"), { recursive: true });
     writeFileSync(join(dir, "STAGING", "_retired", "old.json"), "{}");
     writeFileSync(join(dir, "STAGING", "README.txt"), "not a preview");
     mkdirSync(join(dir, "STAGING", ".hidden"));
-    const { plan } = rotate({ dir, current: "cur", now: NOW, git: noGit, max: 2 });
+    const { plan } = rotate({ dir, current: "cur", now: NOW, git: noGit, budget: 300 });
     expect(plan.remove.map((x) => x.slug)).toEqual(["b"]);
     expect(remaining(dir)).toEqual([".hidden", "README.txt", "_retired", "a", "cur"]);
     expect(readFileSync(join(dir, "STAGING", "_retired", "old.json"), "utf8")).toBe("{}");
@@ -194,8 +218,8 @@ describe("rotate — on a checkout", () => {
     expect(byslug.gitonly.source).toBe("git");
     expect(byslug.cur.source).toBe("unknown");
 
-    // Cap 2: `cur` plus the newest of the rest, which is the render-logged one.
-    const { plan } = rotate({ dir, current: "cur", now: NOW, git, max: 2 });
+    // Room for `cur` plus one more: the newest of the rest, the render-logged one.
+    const { plan } = rotate({ dir, current: "cur", now: NOW, git, budget: 250 });
     expect(plan.keep.map((x) => x.slug)).toEqual(["cur", "logged"]);
     expect(plan.remove.map((x) => x.slug)).toEqual(["recorded", "gitonly"]);
   });
@@ -227,8 +251,8 @@ describe("the stage job runs the rotation where a lost race re-applies it", () =
     expect(push).toBeGreaterThan(rot);
   });
 
-  test("passes no cap of its own — the number lives once, in the script", () => {
-    expect(body).not.toMatch(/staging-rotate\.ts[^\n]*--max/);
-    expect(YML).not.toMatch(/MAX_PREVIEWS:/);
+  test("passes no budget of its own — the number lives once, in the script", () => {
+    expect(body).not.toMatch(/staging-rotate\.ts[^\n]*--(max|budget)/);
+    expect(YML).not.toMatch(/MAX_PREVIEW(S|_BYTES):/);
   });
 });
