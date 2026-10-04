@@ -19,6 +19,7 @@ Part of [Folio Assistant](../../README.md) 0.1.0, declared as `workflows`, holdi
 | [`crdm--folio-assistant-b94c.json`](crdm--folio-assistant-b94c.json) | data |  |
 | [`crdm--issue-607-kg-to-cdn-portal.json`](crdm--issue-607-kg-to-cdn-portal.json) | data |  |
 | [`merge-train--train-6.json`](merge-train--train-6.json) | data |  |
+| [`mergetrain--merge-train-2026-10-04a.json`](mergetrain--merge-train-2026-10-04a.json) | data |  |
 | [`sampleimport--xlg2-wpro-trial-original.json`](sampleimport--xlg2-wpro-trial-original.json) | data |  |
 | [`sampleimport--xlg2-wpro-trial.json`](sampleimport--xlg2-wpro-trial.json) | data |  |
 <!-- kg:subgraph:end -->
