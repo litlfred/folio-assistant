@@ -124,12 +124,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
 | 1 | 46.08 | instance, kind, directory, harness, page, session, graph, declaration | *(none)* |
-| 2 | 21.71 | watcher, sibling, prs, queue, commits, slot, block, backlog | harness, instance, declaration, node, directories, directory, iri, subgraph |
+| 2 | 21.70 | watcher, sibling, queue, prs, commits, slot, block, backlog | harness, instance, declaration, node, directories, directory, iri, subgraph |
 | 3 | 18.18 | chapter, slot, block, edges, project, formal, watcher, proof | session, conflict, green, epic, push, beans, minutes, merge |
 | 4 | 17.23 | page, tile, text, avatar, block, glass, card, pdf | sibling, subgraph, ledger, subdirectory, plan, sessions, session, prs |
-| 5 | 15.61 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, sniff, zip, pdf, ingest, archived, arxiv |
-| 6 | 15.17 | lane, actor, requirements, role, task, process, analysis, skills | sha, queue, tile, backlog, board, member, slide, steward |
-| 7 | 14.96 | preview, merge, staging, translation, forward, base, steward, locale | rung, arm, withheld, glass, licence, backlog, tile, fit |
+| 5 | 15.61 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, sniff, zip, ingest, pdf, archived, arxiv |
+| 6 | 15.17 | lane, actor, requirements, role, task, process, analysis, skills | sha, queue, tile, backlog, board, member, steward, slot |
+| 7 | 14.96 | preview, merge, staging, translation, forward, base, steward, locale | rung, arm, glass, withheld, licence, backlog, tile, fit |
 | 8 | 14.61 | edges, forward, edge, logical, tile, backward, slot, cross-chapter | feedback, post, phase, language, pdf, url, feature, staging |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
