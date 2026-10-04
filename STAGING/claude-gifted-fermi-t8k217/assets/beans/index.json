@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 807,
+      "count": 810,
       "unit": "beans"
     }
   },
@@ -1579,6 +1579,20 @@
       "updatedAt": "2026-10-02T05:51:37Z",
       "preview": "Follow-up from 3o5b (owner, 2026-10-02: bean, build later). test-plan/v1 lets a plan name its exitCriteria DMN, but GW_ExitCriteria in test-plan-execution.bpmn always evaluates the platform default (processes/decisions/test-certification.dmn).\n\n## Do first (interim guard, small)\n- [ ] kg:audit criterion: a plan whose exitCriteria names a table other than the default is flagged (major), so no plan ",
       "file": "beans/defs/folio-assistant-4iey--per-plan-exit-criteria-dmn-test-plan-execution-loo.md"
+    },
+    {
+      "id": "folio-assistant-4j86",
+      "title": "STAGING CONE (file level): a preview rebuilds only what a PR's changed files can reach — general rule, in the skills",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:49:44Z",
+      "updatedAt": "2026-10-04T13:49:53Z",
+      "preview": "Owner, 2026-10-04: *\"staging rebuild only what is dependency cone of changes (general rule. update skills)\"*. Asked how fine-grained, the owner chose FILE LEVEL (option 1 of 3).\n\n## Today (measured 2026-10-04, read-only map)\nfeature-staging.yml's cut is a PREFIX MATCH, not a cone:\n- compose-docs.ts `carriedInstances()` (bean ga8a) carries a composed instance only if a changed path starts with its ",
+      "file": "beans/defs/folio-assistant-4j86--staging-cone-file-level-a-preview-rebuilds-only-wh.md"
     },
     {
       "id": "folio-assistant-4kj4",
@@ -6550,9 +6564,23 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T12:55:24Z",
-      "updatedAt": "2026-10-04T13:35:53Z",
+      "updatedAt": "2026-10-04T13:49:53Z",
       "preview": "Owner, 2026-10-04: *\"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-docs so not pollute main. or maybe cat/fhir-harness/ig-docs\"*. Asked with options, the owner chose **cat/fhir-harness/ig-docs** (option 1 of 3).\n\n## Why this name\n- The pages have ONE writer: fhir-harness's `gen-ig-pages`. So the branch is named for the harness that produces them (`cat/<harness>/<subgraph>`), and route-ke",
       "file": "beans/defs/folio-assistant-lbz8--auto-docs-family-generated-fhir-ig-pages-gen-ig-pa.md"
+    },
+    {
+      "id": "folio-assistant-lehh",
+      "title": "DERIVED NODE SCHEMAS: declare ig-ast (pick up fhir-harness/schemas/ig-ast.ts), lake-cache and gh-pages as graphs with schemas",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-nama",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:52:13Z",
+      "updatedAt": "2026-10-04T13:52:13Z",
+      "preview": "Owner, 2026-10-04: *\"bean - was an AST schema somewhere. pickup. add schemas for lean-cache (cat/folio-assistant-sci/lean-cache branch?) and gh-pages too\"*\n\n## Found (2026-10-04)\n- **ig-ast**: the schema exists. `fhir-harness/schemas/ig-ast.ts` (Zod) has generated JSON Schemas `ig-ast.schema.json`, `ig-ast-plan.schema.json` and `ig-ast-dependencies.schema.json` (bean l0lq), gated by `ig-ast:schema",
+      "file": "beans/defs/folio-assistant-lehh--derived-node-schemas-declare-ig-ast-pick-up-fhir-h.md"
     },
     {
       "id": "folio-assistant-lfxa",
@@ -7133,6 +7161,20 @@
       "updatedAt": "2026-09-30T00:33:58Z",
       "preview": "Found 2026-09-23 while ingesting the `doc-researcher` methodology (bean `ctp3`).\nA **reporting** inconsistency, not a wrong answer: both generators are internally\nright and they disagree about what \"this corpus\" means.\n\n## Measured\n\n`folio-assistant-core/processes/deep-document-research.bpmn` declares a lane\n`Deep researcher`, bound to the `deep-researcher` role.\n\n| generator | reaches that diagra",
       "file": "beans/defs/folio-assistant-nafz--glossary-export-walks-one-instances-diagrams-while.md"
+    },
+    {
+      "id": "folio-assistant-nama",
+      "title": "DERIVED-GRAPH DEPENDENCIES: declare which derived/rendered subgraph is computed from which (fhir-ast -> ig-docs -> gh-pages; lean-cache), and walk them",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:49:44Z",
+      "updatedAt": "2026-10-04T13:54:32Z",
+      "preview": "Owner, 2026-10-04: *\"bean up missing dependency logic on derived graphs (e.g. ig-docs, gh-pages, lean-cache, fhir-ast). may need to walk dependencies between derived content (e.g. fhir-ast is dependency of ig-docs). not sure graph schema has that yet... these are rendered sub-graphs. so we can use order that subgraphs declared as rendering order for now maybe\"*\n\n## What exists (measured 2026-10-04",
+      "file": "beans/defs/folio-assistant-nama--derived-graph-dependencies-declare-which-derivedre.md"
     },
     {
       "id": "folio-assistant-nba0",
@@ -10621,14 +10663,14 @@
     {
       "id": "folio-assistant-xsrv",
       "title": "ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-04T05:37:22Z",
+      "updatedAt": "2026-10-04T13:47:14Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -11474,8 +11516,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 311,
-    "openTotal": 471,
+    "orphanOpen": 314,
+    "openTotal": 474,
     "coveredOpen": 156,
     "duplicateIds": 1
   }
