@@ -29,13 +29,16 @@ import {
   analyse,
   buildDirectionResult,
   CENSUS_FAMILY,
+  CHECK_FAIL_ON_NEW,
+  declaresTranslationMirror,
+  EXEMPTIONS_DECLARED,
   directionCensus,
   directionSidecarState,
   directionStates,
   SIDECAR_STEM,
   type PendingEntry,
 } from "../check-reference-direction.ts";
-import { qaResultPath, writeQaResult, type QaResult } from "../qa-results.ts";
+import { judgeQaResult, qaResultPath, writeQaResult, type QaResult } from "../qa-results.ts";
 
 // ── The rule, with no filesystem ────────────────────────────────
 
@@ -686,4 +689,193 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
     writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
     expect(directionSidecarState(out, resultFor(corpus, [], new Date("2030-12-31T23:59:59.000Z")))).toBe("current");
   });
+});
+
+// ── X1: a translation mirror is exempt by what the FILE declares ─
+
+describe("X1 — a translation mirror is exempt by its own front matter, never by its path", () => {
+  const mirror = (fm: string) => `---\n${fm}\n---\n\nabout high\n`;
+
+  test("`lang:` other than en AND `translation_source:` is exempt, carrying the X1 reason", () => {
+    const r = analyse(tree({ "low/fr/p.md": mirror("lang: fr\ntranslation_source: p.md") }));
+    expect(r.classified.map((c) => c.verdict.verdict)).toEqual(["exempt"]);
+    expect(JSON.stringify(r.classified[0]!.verdict)).toContain("X1, a TRANSLATION MIRROR");
+  });
+
+  test("`lang: en` with a `translation_source:` is still read — the English source is counted once", () => {
+    expect(verdicts(tree({ "low/p.md": mirror("lang: en\ntranslation_source: p.md") }))).toEqual(["low/p.md wrong-direction"]);
+  });
+
+  test("a non-English `lang:` WITHOUT `translation_source:` is read — both halves are required", () => {
+    expect(verdicts(tree({ "low/p.md": mirror("lang: fr") }))).toEqual(["low/p.md wrong-direction"]);
+  });
+
+  test("a page that merely MENTIONS the keys in its body cannot exempt itself", () => {
+    const body = "# Translating\n\nlang: fr\ntranslation_source: x.md\n\nabout high\n";
+    expect(verdicts(tree({ "low/p.md": body }))).toEqual(["low/p.md wrong-direction"]);
+  });
+
+  test("it is decided by the file, not the path: a locale directory alone exempts nothing", () => {
+    expect(verdicts(tree({ "low/docs/fr/p.md": "about high\n" }))).toEqual(["low/docs/fr/p.md wrong-direction"]);
+  });
+
+  test("only Markdown is read for it — a JSON file with the same keys is not a mirror", () => {
+    const root = tree({ "low/p.json": JSON.stringify({ lang: "fr", translation_source: "x", v: "high" }) });
+    expect(declaresTranslationMirror(join(root, "low/p.json"))).toBe(false);
+    expect(verdicts(root)).toEqual(["low/p.json wrong-direction"]);
+  });
+
+  test("it is consulted LAST: a line another exemption already covers keeps that exemption's reason", () => {
+    const r = analyse(tree({ "low/fr/p.md": "---\nlang: fr\ntranslation_source: p.md\n---\n\nsee https://example.org/high\n" }));
+    expect(r.classified).toHaveLength(1);
+    expect(JSON.stringify(r.classified[0]!.verdict)).not.toContain("X1,");
+  });
+
+  test("the declared-exemption count includes it", () => {
+    expect(EXEMPTIONS_DECLARED).toBeGreaterThan(0);
+    const result = buildDirectionResult({
+      report: analyse(tree({})),
+      pending: [],
+      exemptionsDeclared: EXEMPTIONS_DECLARED,
+      script: "scripts/producer.ts",
+      scriptAbsPath: "/does/not/exist.ts",
+    });
+    expect(result.families[CENSUS_FAMILY]!.summary).toContain(`${EXEMPTIONS_DECLARED} exemption(s) declared`);
+  });
+});
+
+// ── A.10: every (file, target) pair is graded NEW against a baseline ─
+
+/** Judge quietly, with the gate's own `failOnNew` list, against a baseline in `root`. */
+function judgeNew(fresh: QaResult, baselineRoot: string) {
+  const log = console.log;
+  const err = console.error;
+  console.log = () => {};
+  console.error = () => {};
+  try {
+    return judgeQaResult({
+      gate: "check:reference-direction:check",
+      fresh,
+      failOnNew: [...CHECK_FAIL_ON_NEW],
+      baseline: { root: baselineRoot, stem: SIDECAR_STEM, writer: "check:reference-direction" },
+    });
+  } finally {
+    console.log = log;
+    console.error = err;
+  }
+}
+
+describe("A.10 — a wrong-direction pair NEW against the baseline fails `--check`, single or multi destination", () => {
+  const baselineOf = (corpus: string): string => {
+    const d = mkdtempSync(join(tmpdir(), "refdir-base-"));
+    made.push(d);
+    writeQaResult(d, SIDECAR_STEM, resultFor(corpus, []));
+    expect(existsSync(qaResultPath(d, SIDECAR_STEM))).toBe(true);
+    return d;
+  };
+
+  test("the family holds ONE entry per file and per instance above it", () => {
+    const r = resultFor(threeTier({ "low/a.md": "about mid and high\n", "low/b.md": "about high\n" }), []);
+    expect(r.families["wrong-direction"]!.entries).toEqual([
+      { file: "low/a.md", target: "high" },
+      { file: "low/a.md", target: "mid" },
+      { file: "low/b.md", target: "high" },
+    ]);
+  });
+
+  test("an unchanged tree is inherited, not new — exit 0", () => {
+    const corpus = threeTier({ "low/a.md": "about high\n" });
+    expect(judgeNew(resultFor(corpus, []), baselineOf(corpus)).exit).toBe(0);
+  });
+
+  test("a NEW file naming ONE instance above it fails — the single-destination half of A.10", () => {
+    const base = baselineOf(threeTier({ "low/a.md": "about high\n" }));
+    const v = judgeNew(resultFor(threeTier({ "low/a.md": "about high\n", "low/b.md": "about mid\n" }), []), base);
+    expect(v.exit).toBe(1);
+    expect(v.diff?.added["wrong-direction"]).toEqual([{ file: "low/b.md", target: "mid" }]);
+  });
+
+  test("a NEW file naming SEVERAL instances above it fails, one new entry per target", () => {
+    const base = baselineOf(threeTier({ "low/a.md": "about high\n" }));
+    const v = judgeNew(resultFor(threeTier({ "low/a.md": "about high\n", "low/c.md": "about mid and high\n" }), []), base);
+    expect(v.exit).toBe(1);
+    expect(v.diff?.added["wrong-direction"]).toEqual([
+      { file: "low/c.md", target: "high" },
+      { file: "low/c.md", target: "mid" },
+    ]);
+  });
+
+  test("a KNOWN file naming a FURTHER instance fails on the added target only", () => {
+    const base = baselineOf(threeTier({ "low/a.md": "about high\n" }));
+    const v = judgeNew(resultFor(threeTier({ "low/a.md": "about high and mid\n" }), []), base);
+    expect(v.exit).toBe(1);
+    expect(v.diff?.added["wrong-direction"]).toEqual([{ file: "low/a.md", target: "mid" }]);
+  });
+
+  test("a FIXED pair is resolved, never a failure — the ratchet only tightens", () => {
+    const base = baselineOf(threeTier({ "low/a.md": "about mid and high\n" }));
+    const v = judgeNew(resultFor(threeTier({ "low/a.md": "about mid\n" }), []), base);
+    expect(v.exit).toBe(0);
+    expect(v.diff?.resolved).toBe(1);
+  });
+
+  test("a baseline that predates the family is UNKNOWN for it, never 'every pair is new'", () => {
+    const corpus = threeTier({ "low/a.md": "about high\n" });
+    const d = mkdtempSync(join(tmpdir(), "refdir-old-"));
+    made.push(d);
+    const old = resultFor(corpus, []);
+    const { "wrong-direction": _dropped, ...families } = old.families;
+    writeQaResult(d, SIDECAR_STEM, { ...old, families });
+    const v = judgeNew(resultFor(threeTier({ "low/a.md": "about high\n", "low/b.md": "about mid\n" }), []), d);
+    expect(v.exit).toBe(0);
+    expect(v.unknowns.join(" ")).toContain("carries no `wrong-direction` family");
+  });
+
+  test("no baseline at all is UNKNOWN and not gated — not 'no new findings'", () => {
+    const empty = mkdtempSync(join(tmpdir(), "refdir-none-"));
+    made.push(empty);
+    const v = judgeNew(resultFor(threeTier({ "low/b.md": "about mid\n" }), []), empty);
+    expect(v.exit).toBe(0);
+    expect(v.baseline.state).not.toBe("hit");
+  });
+});
+
+// ── The falsifier, over the REAL tree ───────────────────────────
+//
+// The one test here that walks the real corpus, and it walks it ONCE: a scan
+// takes 15-35 s in a contended container, so the generous timeout is the
+// measured cost rather than slack. Every other test in this file stays
+// synthetic for the reason the header gives.
+
+describe("the real tree: a new doc naming two instances above it makes `--check` exit 1", () => {
+  const REPO = join(import.meta.dir, "..", "..", "..");
+  test(
+    "planted under cat-harness/docs/, it is NEW in `wrong-direction` against a baseline of the same tree without it",
+    () => {
+      const rel = `cat-harness/docs/zz-refdir-falsifier-${process.pid}.md`;
+      const abs = join(REPO, rel);
+      writeFileSync(abs, "# Falsifier\n\nThis page relies on smart-base and on who-iris.\n");
+      let report: ReturnType<typeof analyse>;
+      try {
+        report = analyse(REPO);
+      } finally {
+        rmSync(abs, { force: true });
+      }
+      const without = { ...report, classified: report.classified.filter((c) => c.occurrence.file !== rel) };
+      const mk = (r: typeof report) =>
+        buildDirectionResult({ report: r, pending: [], exemptionsDeclared: EXEMPTIONS_DECLARED, script: "s.ts", scriptAbsPath: "/no/such.ts" });
+      const base = mkdtempSync(join(tmpdir(), "refdir-real-"));
+      made.push(base);
+      writeQaResult(base, SIDECAR_STEM, mk(without));
+      // Vacuity guard: the same tree WITHOUT the planted file passes.
+      expect(judgeNew(mk(without), base).exit).toBe(0);
+      const v = judgeNew(mk(report), base);
+      expect(v.exit).toBe(1);
+      expect(v.diff?.added["wrong-direction"]).toEqual([
+        { file: rel, target: "smart-base" },
+        { file: rel, target: "who-iris" },
+      ]);
+    },
+    180_000,
+  );
 });
