@@ -97,7 +97,7 @@ export function takeBase(root: string, path: string): void {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
-    git(root, "add", "--", path);
+    git(root, "add", "-f", "--", path); // -f: a tracked path under an ignored dir (*/test/results) is refused otherwise
   }
 }
 
@@ -205,7 +205,7 @@ if (import.meta.main) {
       if (resolved === undefined) abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
       writeFileSync(join(root, c.path), resolved);
     } else continue;
-    git(root, "add", "--", c.path);
+    git(root, "add", "-f", "--", c.path); // -f: as above
   }
 
   if (noRegen) {

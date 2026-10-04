@@ -144,7 +144,9 @@ export function takeProvisionalSide(repoRoot: string, path: string): void {
     return;
   }
   git(repoRoot, ["checkout", `--${side}`, "--", path]);
-  git(repoRoot, ["add", "--", path]);
+  // `-f`: a tracked path under an IGNORED directory (`*/test/results`, stored on
+  // the QA branch since bean 16ei/5hox) is refused by a plain `git add`.
+  git(repoRoot, ["add", "-f", "--", path]);
 }
 
 /** How a file's two sides look to the guard. */
@@ -519,7 +521,7 @@ if (import.meta.main) {
   // A sidecar taken as a deletion and not recreated is already staged by
   // `git rm`; naming it to `git add` would fail on a path that is gone.
   const present = resolve.map((o) => o.path).filter((p) => existsSync(join(repoRoot, p)));
-  if (present.length > 0) git(repoRoot, ["add", "--", ...present]);
+  if (present.length > 0) git(repoRoot, ["add", "-f", "--", ...present]); // -f: see takeProvisionalSide
   console.log(`\n  ✓ ${resolve.length} sidecar(s) regenerated and staged.`);
   for (const o of refuse) console.log(`  ✗ ${o.path} left conflicted — ${o.reason}`);
   for (const o of skip) console.log(`  · ${o.path} left alone — ${o.reason}`);
