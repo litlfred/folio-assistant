@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
+
+<footer id="ig-footer" data-prev="StructureDefinition-CWTPayload.html" data-next="StructureDefinition-HCert.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

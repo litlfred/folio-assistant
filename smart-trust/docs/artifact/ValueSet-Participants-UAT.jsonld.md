@@ -34,3 +34,6 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
