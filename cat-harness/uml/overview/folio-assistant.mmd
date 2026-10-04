@@ -80,6 +80,20 @@ classDiagram
       commits [1] integer
       axes [1..*] Axe[]
     }
+    class folio_assistant_beans_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1["folio-merge-queue-entry/v1"] {
+      <<json: MergeQueueEntrySchema>>
+      $schema [1] 'folio-merge-queue-entry/v1'
+      repository [1] string
+      pr [1] integer
+      placement [1] object
+      reason [1] string
+      decidedBy [1] string
+      decidedAt [1] string~date-time~
+      hold [0..1] object
+      trainId [0..1] string
+      ejection [0..1] object
+      beans [0..*] string[]
+    }
   }
   namespace folio_assistant__todos {
     class folio_assistant_todos_folio_board_v1_folio_board_v1["folio-board/v1"] {
@@ -162,6 +176,7 @@ classDiagram
   cssClass "folio_assistant_beans_folio_workflow_instance_v1" fa_uml_kind_beans
   cssClass "folio_assistant_beans_folio_session_survey_v1_Axe" fa_uml_kind_beans
   cssClass "folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1" fa_uml_kind_beans
+  cssClass "folio_assistant_beans_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1" fa_uml_kind_beans
   cssClass "folio_assistant_todos_folio_board_v1_folio_board_v1" fa_uml_kind_todos
   folio_assistant_memory_MemoryNode *-- "0..*" folio_assistant_memory_AlsoAbout : alsoAbout
   cssClass "folio_assistant_memory_AlsoAbout" fa_uml_kind_memory
