@@ -120,7 +120,7 @@ const WHY_DECLINED = "declares <meta name=\"folio-navbar\" content=\"none\">";
  * Regex over one `<nav class="fa-nav">` rather than a DOM, for the reason
  * `documentIndexOf` gives: this walks the whole docs tree.
  */
-export function layoutFlags(html: string): ViewerNavFlag[] {
+export function layoutFlags(html: string, marked: ReadonlySet<string> = new Set()): ViewerNavFlag[] {
   const at = html.indexOf('<nav class="fa-nav"');
   if (at < 0) return [];
   const end = html.indexOf("</nav>", at);
@@ -134,8 +134,14 @@ export function layoutFlags(html: string): ViewerNavFlag[] {
     // A mark is an avatar <img>, a drawn <svg>, or a LETTER — one
     // alphanumeric character. `☰` is not a letter: it names the action.
     const glyph = /<span class="fa-nav-glyph[^"]*"[^>]*>([\s\S]*?)<\/span>/.exec(head[2]!)?.[1] ?? "";
-    const marked = /<img\b|<svg\b/.test(glyph) || /^[\p{L}\p{N}]$/u.test(glyph.trim());
-    if (!control || !marked) flags.push("clickable-mark");
+    const letter = /^[\p{L}\p{N}]$/u.test(glyph.trim());
+    const drawn = /<img\b|<svg\b/.test(glyph);
+    if (!control || !(drawn || letter)) flags.push("clickable-mark");
+    // The letter is the FLOOR, for a harness with no mark (bean `2vpn`). A
+    // header that names a harness whose resolved mark exists and still draws
+    // its letter has dropped that mark between `harness-tiles.ts` and here.
+    const name = /<span class="fa-nav-name[^"]*">([^<]*)<\/span>/.exec(head[2]!)?.[1]?.trim();
+    if (letter && name !== undefined && marked.has(name)) flags.push("declared-mark");
   }
 
   const summaries = [...nav.matchAll(/<details class="fa-nav-group"( open)?><summary>[\s\S]*?<span class="fa-nav-label">([^<]*)</g)];
@@ -300,8 +306,32 @@ export function stripFlags(js: string, css: string): ViewerNavFlag[] {
   return flags;
 }
 
+/**
+ * The display names of every harness whose `_data/harness.json` row carries a
+ * resolved `mark` — the set a header may not answer with a bare letter. Empty
+ * when the file is absent or unreadable: an unknowable mark is not a finding.
+ */
+export function markedHarnessNames(docs: string): Set<string> {
+  const data = join(docs, "_data", "harness.json");
+  if (!existsSync(data)) return new Set();
+  try {
+    const d = JSON.parse(readFileSync(data, "utf-8")) as {
+      harnesses?: { name?: string; label?: string; title?: string; mark?: { src?: string; glyph?: string } | null }[];
+    };
+    return new Set(
+      (d.harnesses ?? [])
+        .filter((h) => h.mark?.src || h.mark?.glyph)
+        .map((h) => h.label ?? h.title ?? h.name)
+        .filter((n): n is string => typeof n === "string"),
+    );
+  } catch {
+    return new Set();
+  }
+}
+
 export function audit(docs: string, repo: string): ViewerNavQa {
   const pages: ViewerNavPage[] = [];
+  const marked = markedHarnessNames(docs);
   for (const abs of pagesUnder(docs)) {
     const html = readFileSync(abs, "utf-8");
     // A source page with YAML front matter gets the theme's sidebar from the
@@ -311,7 +341,7 @@ export function audit(docs: string, repo: string): ViewerNavQa {
     const source = relative(repo, abs).split(sep).join("/");
     const path = sitePathForPage(docs, abs);
     if (html.includes('class="fa-nav"')) {
-      const flags = layoutFlags(html);
+      const flags = layoutFlags(html, marked);
       pages.push({ path, source, verdict: "railed", ...(flags.length ? { flags } : {}) });
     } else if (declinesNavbar(html)) {
       pages.push({ path, source, verdict: "declined", reason: WHY_DECLINED });

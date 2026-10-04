@@ -44,9 +44,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`kg-qa/`](kg-qa/) | _nothing declares what this holds_ | |
 | [`large-datasets/`](large-datasets/) | _nothing declares what this holds_ | |
 | [`library-qa/`](library-qa/) | _nothing declares what this holds_ | |
-| [`lsi/`](lsi/) | _nothing declares what this holds_ | |
 | [`screenshots/`](screenshots/) | _nothing declares what this holds_ | |
-| [`tool-runs/`](tool-runs/) | _nothing declares what this holds_ | |
 | [`translation-qa/`](translation-qa/) | _nothing declares what this holds_ | |
 | [`viewer-nav/`](viewer-nav/) | _nothing declares what this holds_ | |
 | [`witnesses/`](witnesses/) | _nothing declares what this holds_ | |

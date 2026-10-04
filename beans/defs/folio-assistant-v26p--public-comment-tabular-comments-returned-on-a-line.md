@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v26p
 title: 'PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-22T21:09:45Z
-updated_at: 2026-09-22T21:09:52Z
+updated_at: 2026-10-04T19:15:46Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
@@ -29,3 +29,5 @@ The page/line provenance for INGEST is xtpc (the other half of #197).
 - [ ] a CSV and an XLSX of comments import as Findings, with unplaced rows kept
 - [ ] the five operations are Tool nodes, each with a test
 - [ ] the Public Comment sub-process is in the lifecycle BPMN, and #197 is updated each round
+
+_2026-10-04T19:15:46Z_ — Claimed by claude/confident-bardeen-inaarx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
