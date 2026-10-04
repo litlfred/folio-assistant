@@ -7176,16 +7176,16 @@
     {
       "id": "folio-assistant-mfhc",
       "title": "Merge refused: #2078 merge:guard checks 3 and 5 (no owning session; conflict on wm63 bean)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-wm63",
       "blocking": [
         "folio-assistant-wm63"
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:29:18Z",
-      "updatedAt": "2026-10-04T14:29:18Z",
+      "updatedAt": "2026-10-04T17:37:49Z",
       "preview": "PR #2078 (`agy/wm63-non-who-ig-demo`, \"feat(fhir-harness): demonstrate bare pipeline on non-WHO IG (wm63, nsbb)\"), head `1d2cf9188ce9`. Owner-approved for landing 2026-10-04; owner, 14:40Z: \"2078 land if ready\". Handed back by the Merge Manager at 14:40Z, against main `32b1fb6fdb`.\n\n## Refused\n`merge:guard 2078` (evaluate only):\n- check 3 `ready-marker`: the PR body links no session, so no `ready:",
       "file": "beans/defs/folio-assistant-mfhc--merge-refused-2078-mergeguard-checks-3-and-5-no-ow.md"
     },
@@ -11759,12 +11759,6 @@
     },
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-mfhc",
-      "blocks": "folio-assistant-wm63",
-      "detail": "blocks `folio-assistant-wm63` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-ns96",
       "blocks": "folio-assistant-uoob",
       "detail": "blocks `folio-assistant-uoob` and states no expiry, so the block cannot be told from abandoned work"
@@ -11804,6 +11798,12 @@
       "bean": "folio-assistant-mac1",
       "blocks": "folio-assistant-wnhh",
       "detail": "is completed but still blocks `folio-assistant-wnhh`, which is in-progress"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-mfhc",
+      "blocks": "folio-assistant-wm63",
+      "detail": "is completed but still blocks `folio-assistant-wm63`, which is in-progress"
     },
     {
       "kind": "blocker-closed",
@@ -11851,13 +11851,13 @@
         "status": "in-progress",
         "epics": 8,
         "total": 151,
-        "closed": 46,
-        "open": 105,
+        "closed": 47,
+        "open": 104,
         "inProgress": 57,
-        "todo": 47,
+        "todo": 46,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.304635761589404
+        "share": 0.31125827814569534
       },
       {
         "id": "folio-assistant-yg29",
@@ -11876,8 +11876,8 @@
       }
     ],
     "orphanOpen": 323,
-    "openTotal": 488,
-    "coveredOpen": 161,
+    "openTotal": 487,
+    "coveredOpen": 160,
     "duplicateIds": 1
   }
 }
