@@ -587,6 +587,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * not said". Bean `eayu`.
    */
   separation?: "content" | "tools";
+  /**
+   * Instances this one is seeded together with — see `seedsWith` on
+   * {@link CatHarnessDeclarationSchema}. Absent is "seeds alone".
+   */
+  seedsWith?: string[];
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -2795,6 +2800,22 @@ export const CatHarnessDeclarationSchema = z.object({
    * instance `supports` is content too, and is read as such without this.
    */
   separation: z.enum(["content", "tools"]).optional(),
+  /**
+   * Instances this one is SEEDED TOGETHER with: the same seeding step creates
+   * both repositories, so neither ever stands alone in a checkout (bean
+   * `smbc` seeds `cat-harness` and `cat-harness-tools` at once).
+   *
+   * Declared by the HIGHER instance, naming the lower one, because a lower
+   * instance naming one above it is the wrong direction
+   * (`check:reference-direction`). `seed:ready` reads it: a path declared in
+   * a lower instance that resolves only into an instance seeding with it is
+   * not "upward" — it cannot break on a seeding day that creates both.
+   * Owner, 2026-10-04: cat-harness's Tool nodes resolving into
+   * cat-harness-tools are a seeding pair, not a seeding risk.
+   *
+   * Absent means "seeds alone", which is the strict reading.
+   */
+  seedsWith: z.array(z.string().min(1)).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
