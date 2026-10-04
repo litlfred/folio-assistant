@@ -5080,7 +5080,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T07:15:24Z",
-      "updatedAt": "2026-10-04T07:15:33Z",
+      "updatedAt": "2026-10-04T07:22:48Z",
       "preview": "Follow-on to 14ve, which fixed 'one pass only'. Two defects remain in the same loop.\n\n1. SILENT NON-CONVERGENCE (the 1xhc shape). regen-after-merge.ts computes `settled` and prints '— CAP REACHED: the last pass still ran a writer, so the tree may not be settled', then exits on `unrepaired + no-writer` ONLY. `settled` is never consulted. So a run that genuinely could not reach a fixed point exits 0",
       "file": "beans/defs/folio-assistant-g5kt--regen-fixpoint-cap-is-silent-a-run-that-does-not-c.md"
     },
@@ -5262,7 +5262,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-01T08:52:00Z",
+      "updatedAt": "2026-10-04T07:33:35Z",
       "preview": "Arc `3fva`, proposal `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §4 item 0.1. Measured 2026-10-01 at about 07:50Z, main `61b1e747`.\n\nThe last green Code-quality run was `27067b3fcb0` (#1725, 07:11Z). Since then main has failed 12 times in a row. The handover's \"red from #1743\" is out of date: #1725 turned it green, and it went red again from `a43d3b4e297` on.\n\nFai",
       "file": "beans/defs/folio-assistant-gurh--main-red-2026-10-01-code-quality-gates-12-consecut.md"
     },
