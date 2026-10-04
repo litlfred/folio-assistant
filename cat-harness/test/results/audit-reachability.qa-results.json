@@ -107,7 +107,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 9
+          "importers": 10
         },
         {
           "file": "cat-harness/scripts/graph-read.ts",
@@ -115,7 +115,7 @@
             "shebang": true,
             "mainGuard": false
           },
-          "importers": 2
+          "importers": 5
         },
         {
           "file": "cat-harness/scripts/partition/engine.ts",
@@ -231,8 +231,8 @@
       "entries": []
     },
     "reachability-measured": {
-      "summary": "Every declared decision and diagram with its state, and the gateways pointing at each decision. Not findings: the relation itself, so a diff shows reachability moving. The reference counts are recorded and never graded — `kg-audit`'s `decision-outcomes-used` owns \"no gateway references this decision\", and a second reader of one relation is a second answer free to disagree with the first. Activity skill refs are owned by `check:workflow-refs` for the same reason and are not re-read here. 10 decision(s), 86 diagram(s), 14 declaring instance(s).",
-      "count": 96,
+      "summary": "Every declared decision and diagram with its state, and the gateways pointing at each decision. Not findings: the relation itself, so a diff shows reachability moving. The reference counts are recorded and never graded — `kg-audit`'s `decision-outcomes-used` owns \"no gateway references this decision\", and a second reader of one relation is a second answer free to disagree with the first. Activity skill refs are owned by `check:workflow-refs` for the same reason and are not re-read here. 11 decision(s), 86 diagram(s), 14 declaring instance(s).",
+      "count": 97,
       "entries": [
         {
           "kind": "decision",
@@ -250,6 +250,15 @@
           "state": "evaluable",
           "referencedBy": [
             "graph-detanglement.bpmn#GW_Isolated"
+          ]
+        },
+        {
+          "kind": "decision",
+          "file": "cat-harness/processes/kg/decisions/seed-readiness-gate.dmn",
+          "id": "Decision_SeedReadiness",
+          "state": "evaluable",
+          "referencedBy": [
+            "kg-separation.bpmn#GW_SeedReady"
           ]
         },
         {
@@ -929,5 +938,5 @@
       ]
     }
   },
-  "total": 116
+  "total": 117
 }
