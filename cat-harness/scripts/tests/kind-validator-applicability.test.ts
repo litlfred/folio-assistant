@@ -87,3 +87,11 @@ describe("a kind cannot claim both", () => {
     }
   });
 });
+
+describe("the clean break (bean riit): validators are nodes, not strings on a kind", () => {
+  test("no authored kind carries validator code, except code in another repository", async () => {
+    const { authoredValidatorStrings, FOREIGN_REPOSITORY_PREFIXES } = await import("../check-kind-validators.js");
+    const inline = authoredValidatorStrings().filter((a) => !FOREIGN_REPOSITORY_PREFIXES.some((p) => a.ref.startsWith(p)));
+    expect(inline).toEqual([]);
+  });
+});

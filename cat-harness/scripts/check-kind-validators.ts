@@ -28,9 +28,9 @@
 // kinds in a kinds/ graph, and a sweep over the code list alone stopped checking
 // every kind that moved (fhir-harness's, cat-openapi's, core's). Measured
 // 2026-10-04 while building riit; core's code-registered kinds are imported too.
-import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
-import "../schemas/folio-graph-kind.js";
-import "../schemas/glossary-graph-kind.js";
+import { BASE_GRAPH_KINDS, declaredKindNodes, defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { FOLIO_GRAPH_KIND } from "../schemas/folio-graph-kind.js";
+import { GLOSSARY_GRAPH_KIND } from "../schemas/glossary-graph-kind.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 
 import { gitCorpus } from "../schemas/git-corpus.ts";
@@ -64,6 +64,31 @@ export interface ValidatorSweep {
    * true.
    */
   contradictory: string[];
+}
+
+/** Code in another repository: it cannot declare a validator node in this one. */
+export const FOREIGN_REPOSITORY_PREFIXES: readonly string[] = ["bootstrap-tools:", "bootstrap:"];
+
+/**
+ * Every validator string a kind's AUTHORED definition still carries: the code
+ * list, the kinds/ nodes and core's two code-registered kinds, read BEFORE the
+ * registry joins validator nodes on, which is what tells a string an author
+ * wrote from one the registry filled in.
+ */
+export function authoredValidatorStrings(): { kind: string; family?: string; ref: string }[] {
+  const out: { kind: string; family?: string; ref: string }[] = [];
+  const add = (kind: string, d: { validator?: string; nodeSchemas?: Readonly<Record<string, unknown>> }) => {
+    if (d.validator) out.push({ kind, ref: d.validator });
+    for (const [family, e] of Object.entries(d.nodeSchemas ?? {})) {
+      const v = (e as { validator?: string }).validator;
+      if (v) out.push({ kind, family, ref: v });
+    }
+  };
+  for (const [k, d] of Object.entries(BASE_GRAPH_KINDS)) add(k, d);
+  add("folio", FOLIO_GRAPH_KIND);
+  add("glossary", GLOSSARY_GRAPH_KIND);
+  for (const { node } of declaredKindNodes(join(import.meta.dir, "..", ".."))) add(node.kind, node);
+  return out;
 }
 
 export async function sweep(root: string): Promise<ValidatorSweep> {
@@ -272,6 +297,20 @@ async function main(): Promise<number> {
       `\n✗ ${r.contradictory.length} kind(s) claim BOTH a runnable schema and that none can exist — ` +
         `there is no reading under which both hold: ${r.contradictory.join(", ")}`,
     );
+    return 1;
+  }
+
+  // THE CLEAN BREAK (bean riit, step 1c): a kind's AUTHORED definition names
+  // no validator code; a `folio-validator/v1` node names the kind instead. The
+  // one exception is code in ANOTHER repository (a submodule such as
+  // bootstrap-tools), which cannot declare a node here; it is named, not failed.
+  const authored = authoredValidatorStrings();
+  const foreign = authored.filter((a) => FOREIGN_REPOSITORY_PREFIXES.some((p) => a.ref.startsWith(p)));
+  const inline = authored.filter((a) => !foreign.includes(a));
+  for (const f of foreign) console.log(`  · ${f.kind}${f.family ? ` ${f.family}` : ""}: validator in another repository (${f.ref}), kept as a string until it declares a node`);
+  if (inline.length > 0) {
+    console.log(`\n✗ ${inline.length} validator(s) written into a kind's definition rather than declared as a validators/ node:`);
+    for (const i of inline) console.log(`  ✗ ${i.kind}${i.family ? ` ${i.family}` : ""}: ${i.ref}`);
     return 1;
   }
 
