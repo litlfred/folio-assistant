@@ -152,6 +152,55 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 199,
     reads: "an open book — a repository of published documents, in WHO blue",
   },
+  // ── The instances that had NO mark, 2026-10-04 (bean `2vpn`) ───────────
+  //
+  // Owner: *"all needs to be consistent and consolidated"*, then, offered a
+  // glyph per instance, chose *"Glyphs I propose"*. Until these, each drew its
+  // LETTER in the navbar — the floor for a harness with no mark. A `-tools`
+  // instance takes its parent's tone on purpose: `kind-register` reads a
+  // shared tone as a family colour, and that is what a tools layer is.
+  "smart-ig": {
+    // A page with a folded corner and lines — an implementation guide.
+    glyph: "M6 3h9l3 3v15H6zM15 3v3h3M9 11h6M9 15h6",
+    tone: 229,
+    reads: "a published guide page — the IG built on the SMART base",
+  },
+  "smart-immunizations": {
+    // A syringe: plunger, barrel, needle.
+    glyph: "M18 3l3 3M16 5l3 3M17.5 6.5L9 15l-3 1 1-3 8.5-8.5M10 10l4 4M6 18l-3 3",
+    tone: 352,
+    reads: "a syringe — the immunization guide",
+  },
+  "folio-assistant-sci": {
+    // A conical flask with a fill line — the scientific-paper profile.
+    glyph: "M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3M7 15h10",
+    tone: 56,
+    reads: "a laboratory flask — folios that are scientific papers",
+  },
+  "fhir-harness": {
+    // A flame, for FHIR's own pun on its name.
+    glyph: "M12 3c1 4 5 6 5 11a5 5 0 01-10 0c0-3 2-4 2-7 1 1 2 2 3 4 0-3 0-5 0-8z",
+    tone: 10,
+    reads: "a flame — the FHIR implementation-guide harness",
+  },
+  "cat-openapi": {
+    // A pair of braces — an interface described as data.
+    glyph: "M9 4c-2 0-3 1-3 3v2c0 1-1 2-2 3 1 1 2 2 2 3v2c0 2 1 3 3 3M15 4c2 0 3 1 3 3v2c0 1 1 2 2 3-1 1-2 2-2 3v2c0 2-1 3-3 3",
+    tone: 76,
+    reads: "braces — an API described as data",
+  },
+  "cat-harness-tools": {
+    // A wrench — what implements the harness's tool definitions.
+    glyph: "M14.5 5.5a4 4 0 005 5L11 19a2.1 2.1 0 01-3-3l8.5-8.5a4 4 0 01-2-2zM8.5 16.5h.01",
+    tone: 268,
+    reads: "a wrench, in cat-harness's colour — the code that implements its tools",
+  },
+  "bootstrap-tools": {
+    // A trowel — the tool that plants bootstrap's seed.
+    glyph: "M12 3v9M8 12h8l-1 5a3 3 0 01-6 0z",
+    tone: 96,
+    reads: "a trowel, in bootstrap's colour — the code that implements bootstrap's tools",
+  },
   // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
   //
   // TONES NEAR THE PARENT'S 268 ON PURPOSE. These are the parts of one graph,
