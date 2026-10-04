@@ -3886,6 +3886,176 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/bean-graph.ts#Count",
+      "name": "Count",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-scalar",
+      "doc": "A non-negative whole number of beans.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "name": "MilestonePlanSchema",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-object",
+      "doc": "The milestone rollup as a whole, plus what the per-milestone shares omit.",
+      "fields": [
+        {
+          "name": "milestones",
+          "type": "z.array(MilestoneRollupSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "orphanOpen",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Open beans with no milestone anywhere above them."
+        },
+        {
+          "name": "openTotal",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "coveredOpen",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "SUMMED from the closures, never `openTotal - orphanOpen`."
+        },
+        {
+          "name": "duplicateIds",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Bean ids held by more than one file. A store defect, reported."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bean-graph.ts#Count",
+        "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "name": "MilestoneRollupSchema",
+      "module": "cat-harness/schemas/bean-graph.ts",
+      "kind": "zod-object",
+      "doc": "One milestone, rolled up over the closure of beans beneath it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repository-relative path of the milestone's bean file."
+        },
+        {
+          "name": "status",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The milestone's OWN status — not derived from its subtree."
+        },
+        {
+          "name": "epics",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Direct children typed `epic`."
+        },
+        {
+          "name": "total",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "Transitive descendants, excluding the milestone itself."
+        },
+        {
+          "name": "closed",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "open",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inProgress",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "todo",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "draft",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "unclassified",
+          "type": "Count",
+          "optional": false,
+          "array": false,
+          "doc": "In neither status set — reported alone, folded into neither figure."
+        },
+        {
+          "name": "share",
+          "type": "z.number().min(0).max(1).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "`closed / (closed + open)`; `null` when nothing is classified, which is"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bean-graph.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/bean-note.ts#BeanId",
       "name": "BeanId",
       "module": "cat-harness/schemas/bean-note.ts",
@@ -28026,11 +28196,19 @@
           "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: BeanIdSchema…",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "plan",
+          "type": "MilestonePlanSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The milestone rollup the board renders. OPTIONAL, because an index"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
         "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
         "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
@@ -51281,6 +51459,110 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "coveredOpen",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "duplicateIds",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "openTotal",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "orphanOpen",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "via": "milestones",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "closed",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "draft",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "epics",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "inProgress",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "open",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "todo",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "total",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#Count",
+      "via": "unclassified",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/bean-note.ts#BeanNoteFrontMatterSchema",
       "to": "cat-harness/schemas/bean-note.ts#BeanId",
       "via": "bean",
@@ -55030,6 +55312,14 @@
       "via": "parent",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
+      "to": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema",
+      "via": "plan",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
