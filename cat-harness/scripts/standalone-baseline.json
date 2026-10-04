@@ -2,7 +2,7 @@
   "_comment": "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness/scripts/check-standalone.ts.",
   "layers": {
     "cat-harness": {
-      "failed": 470,
+      "failed": 472,
       "failing": [
         "content/pipeline/contributions-root.test.ts > contributionsRoot > loading from contributionsRoot() registers both contributed cost checkers",
         "content/pipeline/pipeline-plugins.test.ts > this repository > folio-assistant-sci fills every slot, loaded lazily from the running folio",
@@ -77,6 +77,7 @@
         "scripts/tests/check-undeclared-files.test.ts > this repository, as it stands > beans/ and todos/ are accounted for by declaration, not by a list",
         "scripts/tests/check-viewer-backticks.test.ts > the file set is derived, not listed > it finds the generators, including the one outside cat-harness",
         "scripts/tests/check-workflow-paths.test.ts > the baseline is a RATCHET > RATCHET: every live Missing work-dir is baselined",
+        "scripts/tests/claim-branch-store.test.ts > claiming on the branch store > THE REAL CONFLICT: a sibling writes BETWEEN our read and our write — `expect` catches it",
         "scripts/tests/compose-docs.test.ts > an EMPTY overlay composes byte-identically — the safety property > on the real tree, every file and every byte matches the base",
         "scripts/tests/compose-docs.test.ts > compose-docs reads its layers from the declaration > the REAL repository declares exactly the two layers this is built on",
         "scripts/tests/compose-docs.test.ts > the cut, on the REAL tree > a branch touching no instance composes MATERIALLY fewer files",
@@ -325,6 +326,7 @@
         "scripts/tests/root-scan-census.test.ts > the census covers the repository, and says which instances it scanned (tqv4) > over this repository, folio-assistant-core's scripts are in scope",
         "scripts/tests/search-split.test.ts > this checkout's declared instances include the ones the site mounts",
         "scripts/tests/seed-ready.test.ts > the probes > sibling discovery runs over this checkout and names what it expected",
+        "scripts/tests/shell-exit-status.test.ts > no tracked shell script or workflow reads a stale $?",
         "scripts/tests/site-dir-single-answer.test.ts > the site root is one answer, not a literal > `.gitignore` follows the site root, in both directions",
         "scripts/tests/site-links.test.ts > both publishing workflows check their own tiles > `docs-site.yml` and `feature-staging.yml` each verify the links",
         "scripts/tests/skill-contracts.test.ts > a skill names its own contracts (#1168, B3b) > a local contract resolves against the instance HOLDING the skill (placement PR1)",

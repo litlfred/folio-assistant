@@ -235,14 +235,14 @@
     {
       "id": "folio-assistant-0s6w",
       "title": "MERGE VERIFICATION: reading merge-tree's rc through a command substitution reports the WRONG exit status, and it reads as clean",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:07:04Z",
-      "updatedAt": "2026-10-03T02:07:04Z",
+      "updatedAt": "2026-10-04T06:03:36Z",
       "preview": "A merge steward verifies mergeability with `git merge-tree --write-tree` and reads the exit\ncode: **rc=0 clean, rc=1 CONFLICT, rc>=2 an ERROR that is not clean**. On 2026-10-03 that\nread was wrong for a whole session, in one specific shell form, and it reported **clean**.\n\n## The defect\n\n```sh\ngit merge-tree --write-tree origin/main \"$sha\" >/dev/null 2>&1\necho \"merge-tree rc=$?\"                   ",
       "file": "beans/defs/folio-assistant-0s6w--merge-verification-reading-merge-trees-rc-through.md"
     },
@@ -9111,12 +9111,12 @@
       "title": "MERGE GATE (e): four merge-steward gaps - regen pairs for l1-complete/smart-kg-l1, gitlink fast-forward, no-CI heads in trains, stale needs-merge-human",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-nok9",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T16:29:16Z",
-      "updatedAt": "2026-10-02T16:29:16Z",
+      "updatedAt": "2026-10-04T06:10:07Z",
       "preview": "Child (e) of the merge-gate epic. These are merge-steward gaps measured 2026-10-02 while running merge trains. Each one lets a merge look proved when it is not.\n\n1. `regen-after-merge.ts` has no writer pair for `check:l1-complete`, nor for `smart-base:smart-kg-l1` (the `--entry` form). Both run in `code-quality-gates.yml`, so a train's single `regen` can report \"current\" while CI then goes red.\n2.",
       "file": "beans/defs/folio-assistant-u7be--merge-gate-e-four-merge-steward-gaps-regen-pairs-f.md"
     },
@@ -9783,14 +9783,14 @@
     {
       "id": "folio-assistant-wczm",
       "title": "Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main's side on a fast-forwardable gitlink; merge-main bot doesn't clear needs-merge-human",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:19:31Z",
-      "updatedAt": "2026-10-02T17:19:31Z",
+      "updatedAt": "2026-10-04T07:12:57Z",
       "preview": "Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-pipeline epic `hfag` for these regenerate and merge-bot gaps.\n\n## Overlap with `u7be` (read this first)\n\n`u7be` (\"MERGE GATE (e): four merge-steward gaps\"), filed on PR #1887's branch and NOT on `main` when this bean was created, lists items (1), (2) and (4) below as its own (1), (2) and (4). Checked with `beans list` ",
       "file": "beans/defs/folio-assistant-wczm--regenerate-gaps-no-writer-for-checkl1-complete-or.md"
     },
@@ -10261,14 +10261,14 @@
     {
       "id": "folio-assistant-xp5j",
       "title": "gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:49:11Z",
-      "updatedAt": "2026-10-04T06:49:36Z",
+      "updatedAt": "2026-10-04T08:00:34Z",
       "preview": "## How this surfaced\n\n`bun run check:ci-health` on `main`, 2026-10-04. The Pages half of that report\nexists precisely because a Pages build outcome is a fact GitHub holds *about*\nthis repository rather than one the repository holds, so it is asked fresh and\ncached nowhere. It said:\n\n    - ✓ 27 succeeded\n    - ❔ 72 cancelled — neither shipped nor broken\n    - ✗ 0 failed\n    The newest deployment to",
       "file": "beans/defs/folio-assistant-xp5j--gh-pages-is-starved-staging-previews-and-the-publi.md"
     },
@@ -11138,8 +11138,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 305,
-    "openTotal": 469,
+    "orphanOpen": 303,
+    "openTotal": 467,
     "coveredOpen": 160,
     "duplicateIds": 1
   }

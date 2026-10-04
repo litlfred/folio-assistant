@@ -187,6 +187,14 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // sidecar only, so a stale `kg-export.<stub>` sidecar would come back
   // `unrepaired`. `--sidecars` rewrites exactly the set `--check` compares.
   "kg:export:check": "kg:export:sidecars",
+  // Bean `wczm` item 1: two gates regen could not repair, so a merge train's
+  // single `regen` called the tree current and CI then went red (trains 2 and
+  // 3, #1876, #1883). `check:l1-complete -- --check` was not a bare script,
+  // so regen never saw it; it is now the named `check:l1-complete:check`,
+  // whose writer is `--write`. `smart-kg-l1`'s only writer took one
+  // `--entry` at a time; `--all` rewrites every entry `--check` examines.
+  "check:l1-complete:check": "l1-complete:write",
+  "smart-base:smart-kg-l1:check": "smart-base:smart-kg-l1:all",
 };
 
 /**
