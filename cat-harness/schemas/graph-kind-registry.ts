@@ -815,6 +815,33 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
       "how ingestion works is `docs`.",
   },
+  // The GENERATED pages of a FHIR IG mirror — a SECOND kind on a directory
+  // that is also `docs`, not a replacement for it (bean `nama`, owner,
+  // 2026-10-04). The owner ruled the IG pages `derived`; a layer belongs to a
+  // KIND, and `docs` is shared with authored documentation, so moving `docs`
+  // would have re-layered every hand-written page with them. The site keeps
+  // mounting the directory through `docs`, so nothing in the render pipeline
+  // changes; this kind adds only the layer and the edge back to the generator.
+  "ig-pages": {
+    title: "IG pages",
+    perInstance: true,
+    // Rendered through the directory's `docs` kind, never on its own: this
+    // kind wires nothing to the site build, which is what `renderable` asks.
+    renderable: false,
+    // `derived`, by the one question: `gen-ig-pages` writes every page from
+    // the artefact index and the chrome, and none is edited in place, so a QA
+    // finding against one is a finding against the generator — `library`'s
+    // argument (bean `hqku`).
+    holds: "derived",
+    validatorNotApplicable:
+      "its nodes are Markdown pages written wholly by `fhir-harness/scripts/gen-ig-pages.ts`, and " +
+      "`derived` besides, so a finding against one is a finding against the generator; " +
+      "`<ig>:pages:check` grades their currency.",
+    summary:
+      "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and " +
+      "the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is " +
+      "how the site mounts them, and this kind is what says they are derived.",
+  },
   // ── SUB-GRAPHS OF `docs` — issue #1164 ──────────────────────────────────
   //
   // A harness feature's documents move through two places, and the move is the
@@ -1838,21 +1865,24 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // What the two DO share is `MaterializationSchema`, imported rather than
   // restated — the same move `bean-graph.ts` makes with `ContentDirectorySchema`.
   //
-  // NOT `derived`, and the distinction is the one `library`'s own comment
-  // draws. `library` is derived because ingestion PRODUCES BYTES HERE and a
-  // finding against a section is a finding against the ingestion that made it.
-  // This graph models a corpus that stays where it is: 655 of smart-trust's
-  // 674 artefacts are `referenced` and always will be. That is the `catalogue`
-  // shape exactly — including its mixed case, where a handful of nodes are
-  // materialised and the rest are not — so it takes `catalogue`'s answer.
+  // `derived` since the owner's ruling of 2026-10-04 (bean `nama`). This
+  // entry used to argue `content`, on `catalogue`'s reasoning: the corpus
+  // stays where it is (655 of smart-trust's 674 artefacts are `referenced`).
+  // That is true of the ARTEFACTS, and still why this is not a `library`. But
+  // the graph is the index FILES, and those are produced here by `ingest:ig`
+  // and regenerated rather than re-authored, which is `library`'s test, not
+  // `catalogue`'s. A `catalogue` is curated by hand; this index never is.
   "fhir-artifact-index": {
     title: "FHIR artefact index",
     renderable: false,
-    // `content`, on `catalogue`'s reasoning: detach an artefact node and it
-    // still says something standing on its own — this ValueSet exists, at this
-    // canonical URL, in this IG, with this JSON Schema. Being assembled by an
-    // import process is not what the axis asks about.
-    holds: "content",
+    // `derived` — the owner's ruling of 2026-10-04 (bean `nama`, ruling 2 of
+    // 3), which overturns the `catalogue` reasoning this entry gave before. A
+    // node still reads on its own, but every file here is re-derived by
+    // `ingest:ig` from the IG's published output and never edited in place, so
+    // a finding against one is a finding against the ingestion — `library`'s
+    // argument (bean `hqku`), and the `ingest:ig:check` gate already grades it
+    // that way. It also feeds `ig-pages`, which `derivedFrom` now says.
+    holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
       "folio-fhir-artifact-index/v2": { validator: "fhir-harness:schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema" },

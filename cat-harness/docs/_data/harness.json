@@ -688,12 +688,12 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
@@ -713,6 +713,12 @@
           "readOnly": true,
           "label": "smart-trust",
           "sameAs": "smart-trust"
+        },
+        {
+          "kind": "ig-pages",
+          "path": "/cat-harness/auto-docs/index/docs/smart-trust-docs/",
+          "label": "Docs",
+          "sameAs": "docs"
         },
         {
           "kind": "openapi",
@@ -746,7 +752,8 @@
         {
           "id": "smart-trust-docs",
           "kinds": [
-            "docs"
+            "docs",
+            "ig-pages"
           ],
           "where": "local",
           "path": "smart-trust/docs/"
@@ -809,12 +816,12 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
@@ -831,6 +838,12 @@
           "sameAs": "smart-immunizations"
         },
         {
+          "kind": "ig-pages",
+          "path": "/cat-harness/auto-docs/index/docs/smart-immunizations-docs/",
+          "label": "Docs",
+          "sameAs": "docs"
+        },
+        {
           "kind": "qa",
           "note": "no viewer yet",
           "label": "QA"
@@ -838,20 +851,21 @@
       ],
       "subgraphs": [
         {
-          "id": "smart-immunizations-docs",
-          "kinds": [
-            "docs"
-          ],
-          "where": "local",
-          "path": "smart-immunizations/docs/"
-        },
-        {
           "id": "smart-immunizations-artifact-index",
           "kinds": [
             "fhir-artifact-index"
           ],
           "where": "local",
           "path": "smart-immunizations/fhir-artifact-index/"
+        },
+        {
+          "id": "smart-immunizations-docs",
+          "kinds": [
+            "docs",
+            "ig-pages"
+          ],
+          "where": "local",
+          "path": "smart-immunizations/docs/"
         },
         {
           "id": "qa",
@@ -966,12 +980,12 @@
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 11
+          "value": 12
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 7
+          "value": 8
         }
       ],
       "visualisations": [
@@ -996,6 +1010,12 @@
           "readOnly": true,
           "label": "SMART Base",
           "sameAs": "smart-base"
+        },
+        {
+          "kind": "ig-pages",
+          "path": "/cat-harness/auto-docs/index/docs/smart-base-docs/",
+          "label": "Docs",
+          "sameAs": "docs"
         },
         {
           "kind": "library",
@@ -1034,14 +1054,6 @@
         }
       ],
       "subgraphs": [
-        {
-          "id": "smart-base-docs",
-          "kinds": [
-            "docs"
-          ],
-          "where": "local",
-          "path": "smart-base/docs/"
-        },
         {
           "id": "library",
           "kinds": [
@@ -1105,6 +1117,15 @@
           ],
           "where": "local",
           "path": "smart-base/themes/"
+        },
+        {
+          "id": "smart-base-docs",
+          "kinds": [
+            "docs",
+            "ig-pages"
+          ],
+          "where": "local",
+          "path": "smart-base/docs/"
         },
         {
           "id": "smart-base-document-kinds",
@@ -3726,7 +3747,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: smart-immunizations-docs, smart-immunizations-artifact-index, qa"
+            "summary": "3: smart-immunizations-artifact-index, smart-immunizations-docs, qa"
           },
           {
             "key": "needs",
@@ -3822,7 +3843,7 @@
           },
           {
             "key": "directories",
-            "summary": "12: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
+            "summary": "12: library, methodologies, processes, smart-base-house-processes, smart-base-artifact-index,…"
           },
           {
             "key": "needs",

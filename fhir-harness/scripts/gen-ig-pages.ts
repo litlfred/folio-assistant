@@ -199,11 +199,11 @@ const IG_API_OPENAPI_SCRIPT = "assets/ig-api-openapi.js";
  * The instance that OWNS the template chrome, or none.
  *
  * Named rather than walked to, and `schemas/ig-chrome.ts` §`chromeFileFor`
- * carries why: `smart-trust` needs `smart-ig` while `smart-base` needs
- * `fhir-harness`, so there is no `needs` path between them to walk. Widening
- * the walk until one matched would settle a layering question — `nsbb`'s —
- * inside a stylesheet loader. A FLAG rather than a constant now that the
- * generator is generic: fhir-harness has no business naming a WHO instance.
+ * carries why: the generator is generic, so the caller names the owner rather
+ * than a walk picking one (the `needs` gap that first motivated this has closed;
+ * the IG page sets now declare `derivedFrom: smart-base-themes`, bean `nama`).
+ * A FLAG rather than a constant: fhir-harness has no business naming a WHO
+ * instance.
  */
 const CHROME_OWNER = arg("--chrome-owner");
 

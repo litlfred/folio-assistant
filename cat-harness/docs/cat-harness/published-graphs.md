@@ -163,6 +163,15 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/health/' | relative_url }})
 
+### `ig-pages`
+
+3 of 3 published.
+{: .fa-hx-dim }
+
+- [SMART Base]({{ '/cat-harness/auto-docs/index/docs/smart-base-docs/' | relative_url }})
+- [smart-immunizations]({{ '/cat-harness/auto-docs/index/docs/smart-immunizations-docs/' | relative_url }})
+- [smart-trust]({{ '/cat-harness/auto-docs/index/docs/smart-trust-docs/' | relative_url }})
+
 ### `interaction`
 
 0 of 1 published.

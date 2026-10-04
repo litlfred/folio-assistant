@@ -449,6 +449,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 168,
     reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
   },
+  "ig-pages": {
+    // The `docs` folded page with `fhir-artifact-index`'s schema brace beside
+    // it. Both quotes are the point: these pages ARE docs pages (the directory
+    // carries both kinds), and they are written from the index, which the
+    // brace stands for. Bean `nama`.
+    glyph: "M5 3h7l4 4v14H5zM12 3v4h4M8 12h5M8 16h3M21 9c-1 0-1 2-2 2 1 0 1 2 2 2",
+    tone: 178,
+    reads: "a docs page beside a schema brace — pages written from an IG's artefact index, never by hand",
+  },
   "ig-metadata-index": {
     // The `fhir-artifact-index` drawer with an arrow LEAVING it. It quotes
     // that glyph on purpose, as that one quotes `catalogue`'s: the three are

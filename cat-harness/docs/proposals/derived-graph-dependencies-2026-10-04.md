@@ -139,6 +139,9 @@ convention or by hand:
   `ig-chrome.ts`: *"there is no `needs` path from smart-trust to smart-base."*
   Such an edge would show a real layering gap. The gate should **report** it as
   that, rather than this proposal inventing a `needs` edge to make it resolve.
+  *Measured at step 3 (2026-10-04): the chrome case no longer falsifies. Since
+  `ig-chrome.ts` was written, `smart-ig` gained `needs: ["smart-base"]`, so all
+  three IG page sets resolve `smart-base-themes` and the baseline stays empty.*
 
 ## Owner rulings, 2026-10-04 — all three decided
 
