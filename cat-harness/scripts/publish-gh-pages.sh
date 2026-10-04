@@ -78,8 +78,13 @@ for attempt in 1 2 3; do
   # Re-restore against what is on the branch NOW. Exit 2 from the restore means
   # the branch could not be READ, which must never be published as "there are
   # no previews to keep" — so it is fatal here too rather than retried.
-  if ! bun run cat-harness/scripts/restore-staging.ts --site "$SITE" --state "$STATE"; then
-    rc=$?
+  # The exit status is captured on the line AFTER the command, before anything
+  # else runs. `if ! cmd; then rc=$?` read the status of `! cmd` — always 0 in
+  # that branch — so this refused to publish and then exited 0, a green step
+  # that published nothing (bean `0s6w`).
+  rc=0
+  bun run cat-harness/scripts/restore-staging.ts --site "$SITE" --state "$STATE" || rc=$?
+  if [ "$rc" -ne 0 ]; then
     echo "::error::publish-gh-pages: restore-staging exited $rc — refusing to publish a site whose preview set is unknown" >&2
     exit "$rc"
   fi
