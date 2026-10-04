@@ -2268,6 +2268,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.seedswith",
+      "prefLabel": "CatHarnessDeclaration.seedsWith",
+      "definition": "Instances this one is seeded together with — see `seedsWith` on {@link CatHarnessDeclarationSchema}. Absent is \"seeds alone\".",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.seedsWith",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.separation",
       "prefLabel": "CatHarnessDeclaration.separation",
       "definition": "Which half of a kg-separation pair the planned {@link repository} is — see `separation` on {@link CatHarnessDeclarationSchema}. Absent is \"has not said\". Bean `eayu`.",
@@ -2398,6 +2405,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.seedswith",
+      "prefLabel": "CatHarnessDeclarationSchema.seedsWith",
+      "definition": "Instances this one is SEEDED TOGETHER with: the same seeding step creates both repositories, so neither ever stands alone in a checkout (bean `smbc` seeds `cat-harness` and `cat-harness-tools` at once).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.seedsWith",
       "status": "candidate"
     },
     {
