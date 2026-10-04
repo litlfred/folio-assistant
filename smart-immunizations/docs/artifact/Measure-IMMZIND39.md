@@ -37,3 +37,6 @@ IMMZ.IND.39 Drop-out rate from the 3rd dose of malaria vaccines to the 4th dose
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Measure-IMMZIND38.html" data-next="Measure-IMMZIND44.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

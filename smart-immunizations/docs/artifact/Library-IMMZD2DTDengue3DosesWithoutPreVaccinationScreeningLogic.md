@@ -37,3 +37,6 @@ This library defines decision support logic for the IMMZ.D2.DT.Dengue.3 doses wi
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Library-IMMZD2DTCholeraWCVaccinesLogic.html" data-next="Library-IMMZD2DTDengue3DosesWithPreVaccinationScreeningLogic.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

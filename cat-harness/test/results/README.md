@@ -23,6 +23,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`library-entry-qa.qa-results.json`](library-entry-qa.qa-results.json) | data |  |
 | [`lsi-need-an-index.qa-results.json`](lsi-need-an-index.qa-results.json) | data |  |
 | [`methodology-evidence.qa-results.json`](methodology-evidence.qa-results.json) | data |  |
+| [`nav-names.qa-results.json`](nav-names.qa-results.json) | data |  |
 | [`reference-direction.qa-results.json`](reference-direction.qa-results.json) | data |  |
 | [`rendered-labels.qa-results.json`](rendered-labels.qa-results.json) | data |  |
 | [`root-scan-census.qa-results.json`](root-scan-census.qa-results.json) | data |  |
@@ -39,7 +40,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`cat-openapi/`](cat-openapi/) | 2 files | |
 | [`detangle/`](detangle/) | 68 files | |
 | [`folio-assistant/`](folio-assistant/) | 2 files | |
-| [`kg-qa/`](kg-qa/) | 466 files | |
+| [`kg-qa/`](kg-qa/) | 467 files | |
 | [`large-datasets/`](large-datasets/) | 2 files | |
 | [`library-qa/`](library-qa/) | 66 files | |
 | [`lsi/`](lsi/) | 4 files | |
