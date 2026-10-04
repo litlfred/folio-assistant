@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T18:13:53.972Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1a7789d0511d0b2eda835d74e34b29f65201c627",
-  "sourceCommitSha": "1a7789d0511d0b2eda835d74e34b29f65201c627",
-  "sourceCommitAt": "2026-10-04T18:07:04Z",
+  "generatedAt": "2026-10-04T18:26:33.038Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cd8f9da8cef110be6449cf259de2cc9902287422",
+  "sourceCommitSha": "cd8f9da8cef110be6449cf259de2cc9902287422",
+  "sourceCommitAt": "2026-10-04T18:22:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -385,7 +385,7 @@
       ],
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
       "readmePath": "scripts/README.md",
-      "fileCount": 131,
+      "fileCount": 133,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-scripts"
     },
     {
@@ -460,8 +460,8 @@
   ],
   "staging": {
     "branch": "claude/70lx-b2b",
-    "sha": "dad6b8480a0d0aac8cedcc8bfbf22af9e5d6d05b",
+    "sha": "a1fc7be6fa7c5f863890dfdce964b328fae7428d",
     "pr": "2115/merge",
-    "run": "37223224943"
+    "run": "37224216013"
   }
 }
