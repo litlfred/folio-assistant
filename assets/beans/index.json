@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 807,
+      "count": 809,
       "unit": "beans"
     }
   },
@@ -1303,7 +1303,7 @@
     {
       "id": "folio-assistant-3p7c",
       "title": "MVP: bootstrap-provable layers — folio_init/instance-init against one layer alone, in an empty repo",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-vuip",
@@ -2975,6 +2975,20 @@
       "updatedAt": "2026-10-02T07:57:02Z",
       "preview": "Found by the d6bw agent, 2026-10-01.\n\n`recordUntainted` (the untainted-verification writer) still writes an agent verdict into the derived block-qa report. Since 8wj1/2gst, judgements live in the declared `attestations` graph (`test/attestations/`, `qa-attestations/v1`). The verdict reaches the store only when a later writer runs and auto-moves it (owner ruling 2). So nothing is lost today. But on",
       "file": "beans/defs/folio-assistant-8iqt--recorduntainted-writes-agent-verdicts-into-the-der.md"
+    },
+    {
+      "id": "folio-assistant-8j9e",
+      "title": "A merge silently drops a gitignored-but-tracked file: green locally, red in CI (#2000)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T13:33:34Z",
+      "updatedAt": "2026-10-04T13:33:34Z",
+      "preview": "Related: `blgm` (the merge pipeline tools: `merge-base.ts` is where the check belongs). Filed under epic `nok9` because a bean can only have an epic, milestone or feature as its parent.\n\nA merge can silently delete a file that `main` tracks but `.gitignore` covers, and nothing catches it until CI fails on a fresh checkout. Every local check stays green, because regen rewrites the file on disk and ",
+      "file": "beans/defs/folio-assistant-8j9e--a-merge-silently-drops-a-gitignored-but-tracked-fi.md"
     },
     {
       "id": "folio-assistant-8jt6",
@@ -6275,6 +6289,20 @@
       "file": "beans/defs/folio-assistant-k8rc--the-typescript-prose-backlog-344-and-two-of-them.md"
     },
     {
+      "id": "folio-assistant-k9mv",
+      "title": "SEED:READY upward paths — count declared paths that resolve only above the layer, not dependents discovery cannot see",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T14:14:25Z",
+      "updatedAt": "2026-10-04T14:14:25Z",
+      "preview": "`seed:ready`'s `sibling-discovery` criterion is re-aimed at what it said it protects against: **paths declared in a layer that resolve only in an instance above it**.\n\nOwner's choice, 2026-10-04, from three options (re-aim / make discovery see sibling clones / record only), after this measurement:\n\n- `seed:ready` failed `cat-harness` and `folio-assistant-core` on \"discovery misses 3 dependents in ",
+      "file": "beans/defs/folio-assistant-k9mv--seedready-upward-paths-count-declared-paths-that-r.md"
+    },
+    {
       "id": "folio-assistant-k9yq",
       "title": "STICKY ART DEFAULT: square crop, faded, unless the todo names a layout; themes page shows square samples",
       "status": "completed",
@@ -6929,9 +6957,7 @@
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
-      "blocking": [
-        "folio-assistant-zmdo"
-      ],
+      "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T21:47:07Z",
       "updatedAt": "2026-10-04T09:56:44Z",
@@ -9217,7 +9243,7 @@
     {
       "id": "folio-assistant-tndo",
       "title": "MVP UNDEFINED: zmdo is blocked on an MVP for two layers that nothing defines, so GOAL 1's own falsifier cannot be evaluated",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -9693,14 +9719,14 @@
     {
       "id": "folio-assistant-veiu",
       "title": "FHIR-HARNESS: clear the exclusion-gate baseline to zero (wm63 stream 2)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-wm63",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:54:49Z",
-      "updatedAt": "2026-10-03T08:54:49Z",
+      "updatedAt": "2026-10-04T14:02:31Z",
       "preview": "The gate `check:fhir-harness-exclusions` (smart-base/scripts/) was turned on 2026-10-03 in ratchet mode over 9 file×rule pairs (20 graded hits) listed in smart-base/scripts/fhir-harness-exclusions.baseline.ts. Owner ruling 2026-10-03: gate now, clear the hits in a second stream (session https://claude.ai/code/session_01PpaL9j6AhiTfvqnkF7BiaG).\n\n## Done when\n\n- [ ] the WHO test fixtures (4 test fil",
       "file": "beans/defs/folio-assistant-veiu--fhir-harness-clear-the-exclusion-gate-baseline-to.md"
     },
@@ -10628,7 +10654,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:28:54Z",
-      "updatedAt": "2026-10-04T13:47:14Z",
+      "updatedAt": "2026-10-04T13:50:14Z",
       "preview": "The follow-on to `1j3q` (PR #1996), which built `storage.keyedBy: \"route\"` and\ndeliberately flipped nothing. This is the first family that uses it.\n\n## Why `docs/uml/` and not the other 48\n\n**A-narrow, chosen over A-full.** Measured on #1966: **49 of 94** gated checks\nwrite page files. Flipping them together cannot be bisected — a red tells you\n\"some page moved wrong\" and nothing more. `docs/uml/`",
       "file": "beans/defs/folio-assistant-xsrv--route-keyed-cutover-first-family-move-docsuml-off.md"
     },
@@ -11293,14 +11319,12 @@
     {
       "id": "folio-assistant-zmdo",
       "title": "SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prove an empty-repo bootstrap",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
-      "blockedBy": [
-        "folio-assistant-mer2"
-      ],
+      "blockedBy": [],
       "createdAt": "2026-09-18T17:24:16Z",
       "updatedAt": "2026-10-04T12:12:34Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18, verbatim intent:\n\n> when we get to an MVP for agent-harness and folio-assist-core, create\n> the two repo as forks of folio-asst. then delete/modify the new repos\n> until we get to a state we can test under a new/empty repo \"bootstrap a\n> litlfred/folio-assistant here\"\n\nSo: **fork twice, subtract, then prove the result bootstraps from nothing.**\n\n## Why fork-a",
@@ -11376,12 +11400,6 @@
     },
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-mer2",
-      "blocks": "folio-assistant-zmdo",
-      "detail": "blocks `folio-assistant-zmdo` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-tfo1",
       "blocks": "folio-assistant-d3yq",
       "detail": "blocks `folio-assistant-d3yq` and states no expiry, so the block cannot be told from abandoned work"
@@ -11449,14 +11467,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 8,
-        "total": 145,
-        "closed": 43,
-        "open": 102,
+        "total": 146,
+        "closed": 46,
+        "open": 100,
         "inProgress": 56,
-        "todo": 45,
+        "todo": 43,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.296551724137931
+        "share": 0.3150684931506849
       },
       {
         "id": "folio-assistant-yg29",
@@ -11474,9 +11492,9 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 310,
-    "openTotal": 472,
-    "coveredOpen": 158,
+    "orphanOpen": 311,
+    "openTotal": 471,
+    "coveredOpen": 156,
     "duplicateIds": 1
   }
 }
