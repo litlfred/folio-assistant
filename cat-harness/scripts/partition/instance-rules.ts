@@ -1611,6 +1611,7 @@ export const RULES: Rule[] = [
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
+      "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
