@@ -7234,6 +7234,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.graphnodedirectoryshape.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphNodeDirectoryShape.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this entry's content comes from, when it is not the checkout."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.graphnodedirectoryshape.subgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphNodeDirectoryShape.subgraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "This entry is an instance SUBGRAPH, not a part of its parent's graph."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.instancelocation.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19163,6 +19201,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/merge-queue.entryobjectschema.release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "EntryObjectSchema.release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A person's decision to merge, or not — {@link ReleaseSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.release",
       "skos:note": "candidate"
     },
     {

@@ -2667,6 +2667,20 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.graphnodedirectoryshape.source",
+      "prefLabel": "GraphNodeDirectoryShape.source",
+      "definition": "Where this entry's content comes from, when it is not the checkout.",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.source",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.graphnodedirectoryshape.subgraph",
+      "prefLabel": "GraphNodeDirectoryShape.subgraph",
+      "definition": "This entry is an instance SUBGRAPH, not a part of its parent's graph.",
+      "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.subgraph",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.instancelocation.path",
       "prefLabel": "InstanceLocation.path",
       "definition": "The instance's directory within it, repository-relative, no leading `./`.",
@@ -7060,6 +7074,13 @@
       "prefLabel": "EntryObjectSchema.reason",
       "definition": "Why this placement, in a sentence. For `computed`, the rule's description will do.",
       "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.release",
+      "prefLabel": "EntryObjectSchema.release",
+      "definition": "A person's decision to merge, or not — {@link ReleaseSchema}.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.release",
       "status": "candidate"
     },
     {

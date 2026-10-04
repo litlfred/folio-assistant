@@ -7784,11 +7784,34 @@
           "optional": true,
           "array": false,
           "doc": "This directory is DECLARED and deliberately not on disk, with the reason."
+        },
+        {
+          "name": "subgraph",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This entry is an instance SUBGRAPH, not a part of its parent's graph."
+        },
+        {
+          "name": "source",
+          "type": "SubgraphSourceSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where this entry's content comes from, when it is not the checkout."
+        },
+        {
+          "name": "storage",
+          "type": "z.lazy(() => DirectoryStorageSchema).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+        "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -21571,6 +21594,13 @@
           "array": false
         },
         {
+          "name": "release",
+          "type": "ReleaseSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A person's decision to merge, or not — {@link ReleaseSchema}."
+        },
+        {
           "name": "beans",
           "type": "z.array(BeanIdSchema).default([])",
           "optional": true,
@@ -21586,7 +21616,8 @@
         "cat-harness/schemas/merge-queue.ts#HoldSchema",
         "cat-harness/schemas/merge-queue.ts#Instant",
         "cat-harness/schemas/merge-queue.ts#NonBlank",
-        "cat-harness/schemas/merge-queue.ts#PlacementSchema"
+        "cat-harness/schemas/merge-queue.ts#PlacementSchema",
+        "cat-harness/schemas/merge-queue.ts#ReleaseSchema"
       ],
       "unresolved": [],
       "external": [
@@ -21826,6 +21857,20 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/merge-queue.ts#ObjectName",
+      "name": "ObjectName",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-scalar",
+      "doc": "A full git object name — the commit a decision was given FOR.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/merge-queue.ts#Placement",
       "name": "Placement",
       "module": "cat-harness/schemas/merge-queue.ts",
@@ -21880,6 +21925,114 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#Release",
+      "name": "Release",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#ReleaseAuthority",
+      "name": "ReleaseAuthority",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#ReleaseAuthoritySchema",
+      "name": "ReleaseAuthoritySchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-union",
+      "doc": "On whose word the release rests — quoted VERBATIM, with where it was said.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "explicit",
+        "standing-ruling"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "name": "ReleaseSchema",
+      "module": "cat-harness/schemas/merge-queue.ts",
+      "kind": "zod-object",
+      "doc": "A PERSON's decision to merge this pull request — or not to (bean `ixmq`;",
+      "fields": [
+        {
+          "name": "verdict",
+          "type": "z.enum([\"merge\", \"do-not-merge\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "decidedBy",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "decidedAt",
+          "type": "Instant",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "authority",
+          "type": "ReleaseAuthoritySchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "releasedSha",
+          "type": "ObjectName",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "capturedBy",
+          "type": "NonBlank",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "NonBlank.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/merge-queue.ts#Instant",
+        "cat-harness/schemas/merge-queue.ts#NonBlank",
+        "cat-harness/schemas/merge-queue.ts#ObjectName",
+        "cat-harness/schemas/merge-queue.ts#ReleaseAuthoritySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -52815,6 +52968,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "to": "cat-harness/schemas/cat-harness.ts#DirectoryStorageSchema",
+      "via": "storage",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
+      "to": "cat-harness/schemas/subgraph-source.ts#SubgraphSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
       "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
       "via": "repository",
@@ -54927,6 +55096,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "via": "release",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
       "to": "cat-harness/schemas/merge-queue.ts#Instant",
       "via": "expires",
@@ -54954,6 +55131,54 @@
       "from": "cat-harness/schemas/merge-queue.ts#HoldSchema",
       "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
       "via": "waitsOn",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#Instant",
+      "via": "decidedAt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "capturedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "decidedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#NonBlank",
+      "via": "reason",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#ObjectName",
+      "via": "releasedSha",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/merge-queue.ts#ReleaseSchema",
+      "to": "cat-harness/schemas/merge-queue.ts#ReleaseAuthoritySchema",
+      "via": "authority",
       "kind": "field",
       "optional": false,
       "array": false

@@ -568,7 +568,7 @@
         },
         {
           "kind": "merge-queue",
-          "state": "empty",
+          "state": "undetermined",
           "directories": [
             "beans/queue"
           ],
@@ -1210,15 +1210,8 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "merge-queue",
-          "directories": [
-            "beans/queue"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1361,5 +1354,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 77
 }
