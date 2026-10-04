@@ -1,0 +1,18 @@
+{
+  "$schema": "state-manifest/v1",
+  "status": "store",
+  "authoritative": true,
+  "subgraph": "queue",
+  "note": "The merge queue — a merge steward's DECISIONS about open pull requests, one JSON file each, validating against MergeQueueEntrySchema in cat-harness/schemas/merge-queue.ts. Authoritative HERE rather than on main, and the reason is structural rather than a preference: an entry on main arrives only through a pull request, and the owner has ruled that the merge steward does no development work — it must not open PRs of its own, because that has it setting its own priority in the queue it manages, spending the CI the queue is starved of, and judging its own head. So the one actor whose decisions this graph records was the one actor that could not write to it, and beans/queue/ held no entry for two days. A write here is a splice onto this tip carrying the blob each file was read at, so a sibling steward's write to the same entry is a conflict rather than an overwrite. Declared by the queue entry in beans/beans.json; the branch name is declared in cat-harness/scripts/special-branches.json. Bean folio-assistant-najo, under the merge-pipeline epic hfag; the pattern is arc fs43's.",
+  "source": {
+    "ref": "main",
+    "sha": "12b916e9a5b0864290937705ffa2254b624c4d71"
+  },
+  "seededAt": "2026-10-04T08:25:51Z",
+  "keyedBy": "tip",
+  "graphs": [
+    {
+      "path": "beans/queue"
+    }
+  ]
+}
