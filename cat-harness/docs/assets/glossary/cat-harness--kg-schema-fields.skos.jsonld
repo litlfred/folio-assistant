@@ -3434,6 +3434,234 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.adapter",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.adapter"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content adapter whose vocabulary the kind is from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.adapter",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.builder",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.builder"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The builder function a block manifest calls. Defaults to `kind`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.builder",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.docotype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.docoType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A DoCO co-type, only where one is unambiguously right."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.docoType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.foliotype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.folioType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind's own RDF class."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.folioType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.heading",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.heading"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The English heading, singular — the translation graph's source string. Empty for a kind shown without one (`prose`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.heading",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.headingplural",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.headingPlural"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The English heading, plural, for an index that groups by kind."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.headingPlural",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.indexrank",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.indexRank"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the definition index lists this kind's section, lowest first; absent for a kind the index omits. A reading order (definitions before the theorems that use them), so it is authored, not sorted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.indexRank",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.kind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind string a block's `kind` field carries."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.kind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.labelprefix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.labelPrefix"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The label prefix, without its colon (`def`, not `def:`). Two kinds may share one (`fig`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.labelPrefix",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.prefixenforced",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.prefixEnforced"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether a block's label MUST start with the prefix. `false` only where the label rule never applied (`prose`), so moving the table onto nodes did not tighten validation of a corpus nobody re-checked."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.prefixEnforced",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.profile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.profile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The NARROWEST content profile that admits the kind. Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-kind-node.blockkindnodeschema.provable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockKindNodeSchema.provable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether a label of this kind names an upstream provable, which an `algorithm` must cite."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.provable",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/block-qa.blockqareport.criteria",
       "@type": "skos:Concept",
       "skos:inScheme": {

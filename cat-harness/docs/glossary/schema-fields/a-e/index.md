@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1792 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1804 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 562 terms and is 319 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 574 terms and is 326 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2044</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2044</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2056</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2056</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">562</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">574</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1042,6 +1042,90 @@ BlockKindContribution.labelPrefix <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>The label prefix, without its colon — <code>&quot;dt&quot;</code> for <code>dt:anc-danger-signs</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#BlockKindContribution.labelPrefix</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.adapter" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.adapter <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The content adapter whose vocabulary the kind is from.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.adapter</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.builder" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.builder <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The builder function a block manifest calls. Defaults to <code>kind</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.builder</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.docotype" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.docoType <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A DoCO co-type, only where one is unambiguously right.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.docoType</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.foliotype" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.folioType <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind's own RDF class.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.folioType</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.heading" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.heading <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The English heading, singular — the translation graph's source string. Empty for a kind shown without one (<code>prose</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.heading</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.headingplural" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.headingPlural <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The English heading, plural, for an index that groups by kind.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.headingPlural</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.indexrank" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.indexRank <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the definition index lists this kind's section, lowest first; absent for a kind the index omits. A reading order (definitions before the theorems that use them), so it is authored, not sorted.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.indexRank</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.kind" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind string a block's <code>kind</code> field carries.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.kind</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.labelprefix" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.labelPrefix <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The label prefix, without its colon (<code>def</code>, not <code>def:</code>). Two kinds may share one (<code>fig</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.labelPrefix</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.prefixenforced" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.prefixEnforced <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether a block's label MUST start with the prefix. <code>false</code> only where the label rule never applied (<code>prose</code>), so moving the table onto nodes did not tighten validation of a corpus nobody re-checked.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.prefixEnforced</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.profile" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.profile <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The NARROWEST content profile that admits the kind. Profiles nest (<code>document</code> ⊂ <code>paper</code>), so <code>document</code> means both and <code>paper</code> means the paper profile only — a formal mathematical claim.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-kind-node.blockkindnodeschema.provable" data-fa-state="extracted" data-fa-gloss="">
+BlockKindNodeSchema.provable <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether a label of this kind names an upstream provable, which an <code>algorithm</code> must cite.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-kind-node.ts"><code>cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.provable</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--block-qa.blockqareport.dollar-schema" data-fa-state="extracted" data-fa-gloss="">
 BlockQaReport.$schema <span class="fa-gloss-status">candidate, extracted</span>

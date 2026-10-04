@@ -14,6 +14,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`beans-merge-queue-entry.json`](beans-merge-queue-entry.json) | data |  |
 | [`beans-session-survey.json`](beans-session-survey.json) | data |  |
 | [`binary-release.json`](binary-release.json) | data |  |
+| [`block-kind-node.json`](block-kind-node.json) | data |  |
 | [`block-qa-report.json`](block-qa-report.json) | data |  |
 | [`block-summaries-sidecar.json`](block-summaries-sidecar.json) | data |  |
 | [`board-positions.json`](board-positions.json) | data |  |

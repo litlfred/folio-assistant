@@ -1,5 +1,15 @@
 classDiagram
   direction LR
+  namespace who_iris__who_iris_translations {
+    class who_iris_who_iris_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
   namespace who_iris__library {
     class who_iris_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
@@ -408,6 +418,7 @@ classDiagram
       superseded [0..1] object
     }
   }
+  cssClass "who_iris_who_iris_translations_TranslationConfig" fa_uml_kind_translation_sources
   who_iris_library_folio_withheld_v1_Path *-- "1..*" who_iris_library_folio_withheld_v1_Gate : gates
   who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library

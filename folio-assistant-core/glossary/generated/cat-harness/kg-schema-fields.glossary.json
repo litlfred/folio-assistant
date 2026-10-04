@@ -1267,6 +1267,90 @@
       "status": "candidate"
     },
     {
+      "id": "block-kind-node.blockkindnodeschema.adapter",
+      "prefLabel": "BlockKindNodeSchema.adapter",
+      "definition": "The content adapter whose vocabulary the kind is from.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.adapter",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.builder",
+      "prefLabel": "BlockKindNodeSchema.builder",
+      "definition": "The builder function a block manifest calls. Defaults to `kind`.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.builder",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.docotype",
+      "prefLabel": "BlockKindNodeSchema.docoType",
+      "definition": "A DoCO co-type, only where one is unambiguously right.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.docoType",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.foliotype",
+      "prefLabel": "BlockKindNodeSchema.folioType",
+      "definition": "The kind's own RDF class.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.folioType",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.heading",
+      "prefLabel": "BlockKindNodeSchema.heading",
+      "definition": "The English heading, singular — the translation graph's source string. Empty for a kind shown without one (`prose`).",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.heading",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.headingplural",
+      "prefLabel": "BlockKindNodeSchema.headingPlural",
+      "definition": "The English heading, plural, for an index that groups by kind.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.headingPlural",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.indexrank",
+      "prefLabel": "BlockKindNodeSchema.indexRank",
+      "definition": "Where the definition index lists this kind's section, lowest first; absent for a kind the index omits. A reading order (definitions before the theorems that use them), so it is authored, not sorted.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.indexRank",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.kind",
+      "prefLabel": "BlockKindNodeSchema.kind",
+      "definition": "The kind string a block's `kind` field carries.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.labelprefix",
+      "prefLabel": "BlockKindNodeSchema.labelPrefix",
+      "definition": "The label prefix, without its colon (`def`, not `def:`). Two kinds may share one (`fig`).",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.labelPrefix",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.prefixenforced",
+      "prefLabel": "BlockKindNodeSchema.prefixEnforced",
+      "definition": "Whether a block's label MUST start with the prefix. `false` only where the label rule never applied (`prose`), so moving the table onto nodes did not tighten validation of a corpus nobody re-checked.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.prefixEnforced",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.profile",
+      "prefLabel": "BlockKindNodeSchema.profile",
+      "definition": "The NARROWEST content profile that admits the kind. Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile",
+      "status": "candidate"
+    },
+    {
+      "id": "block-kind-node.blockkindnodeschema.provable",
+      "prefLabel": "BlockKindNodeSchema.provable",
+      "definition": "Whether a label of this kind names an upstream provable, which an `algorithm` must cite.",
+      "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.provable",
+      "status": "candidate"
+    },
+    {
       "id": "block-qa.blockqareport.criteria",
       "prefLabel": "BlockQaReport.criteria",
       "definition": "Per-criterion reviewer entries. Multiple reviewers (script + agent + human) may co-exist; they are NOT deduplicated.",

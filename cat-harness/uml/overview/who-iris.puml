@@ -8,6 +8,15 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "who-iris/who-iris-translations" as pkg_who_iris_who_iris_translations <<translation-sources>> {
+  class "TranslationConfig" as who_iris_who_iris_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
+    defaultLocale [0..1] : string
+    supportedLocales [0..*] : string[]
+    translationDir [0..1] : string
+    potGranularity [0..1] : block | chapter | folio
+    officialRequired [0..1] : boolean
+  }
+}
 package "who-iris/library" as pkg_who_iris_library <<library>> {
   class "folio-document-images/v1" as who_iris_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
     $schema [1] : 'folio-document-images/v1'
@@ -392,7 +401,8 @@ who_iris_voices_VoiceProfile *-- "1..*" who_iris_voices_Source : sources
 who_iris_voices_Rule *-- "0..*" who_iris_voices_Pattern : patterns
 who_iris_voices_Rule *-- "0..*" who_iris_voices_Terminology : terminology
 who_iris_voices_VoiceProfile *-- "1..*" who_iris_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_glossary pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_who_iris_sources pkg_who_iris_id_lookup pkg_who_iris_qa pkg_who_iris_voices
+' grid: portrait, 3 column(s) — pkg_who_iris_who_iris_translations pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_glossary pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_who_iris_sources pkg_who_iris_id_lookup pkg_who_iris_qa pkg_who_iris_voices
+pkg_who_iris_who_iris_translations -[hidden]down- pkg_who_iris_who_iris_catalogue
 pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_uploads
 pkg_who_iris_who_iris_site -[hidden]down- pkg_who_iris_who_iris_skills
 pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_glossary

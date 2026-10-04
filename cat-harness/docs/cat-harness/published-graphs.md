@@ -59,6 +59,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [Folio Assistant]({{ '/beans/' | relative_url }})
 
+### `block-kinds`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
+
 ### `cat-harness`
 
 2 of 2 published.
@@ -371,10 +379,15 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `translation-sources`
 
-1 of 1 published.
+1 of 6 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/translation-status/' | relative_url }})
+- FHIR IG Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
+- SMART Base — *declared, not published*
+- WHO IRIS — *declared, not published*
 
 ### `uml`
 

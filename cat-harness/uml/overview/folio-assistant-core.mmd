@@ -1,5 +1,34 @@
 classDiagram
   direction LR
+  namespace folio_assistant_core__folio_assistant_core_translations {
+    class folio_assistant_core_folio_assistant_core_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  namespace folio_assistant_core__folio_assistant_core_block_kinds {
+    class folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
+      <<json: BlockKindNodeSchema>>
+      $schema [1] 'folio-block-kind/v1'
+      kind [1] string
+      adapter [1] string
+      profile [1] document | paper
+      builder [0..1] string
+      labelPrefix [1] string
+      prefixEnforced [0..1] boolean
+      provable [0..1] boolean
+      folioType [1] string
+      docoType [0..1] string
+      heading [1] string
+      headingPlural [1] string
+      indexRank [0..1] integer
+      rationale [0..1] string
+    }
+  }
   namespace folio_assistant_core__folio_assistant_core_validators {
     class folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
       <<json: ValidatorNodeSchema>>
@@ -397,6 +426,8 @@ classDiagram
       superseded [0..1] object
     }
   }
+  cssClass "folio_assistant_core_folio_assistant_core_translations_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
   cssClass "folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cssClass "folio_assistant_core_folio_assistant_core_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds
   folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue : issues

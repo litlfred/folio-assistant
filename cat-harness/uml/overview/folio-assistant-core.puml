@@ -8,6 +8,33 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "folio-assistant-core/folio-assistant-core-translations" as pkg_folio_assistant_core_folio_assistant_core_translations <<translation-sources>> {
+  class "TranslationConfig" as folio_assistant_core_folio_assistant_core_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
+    defaultLocale [0..1] : string
+    supportedLocales [0..*] : string[]
+    translationDir [0..1] : string
+    potGranularity [0..1] : block | chapter | folio
+    officialRequired [0..1] : boolean
+  }
+}
+package "folio-assistant-core/folio-assistant-core-block-kinds" as pkg_folio_assistant_core_folio_assistant_core_block_kinds <<block-kinds>> {
+  class "folio-block-kind/v1" as folio_assistant_core_folio_assistant_core_block_kinds_folio_block_kind_v1_folio_block_kind_v1 <<json: BlockKindNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-block-kind/v1'
+    kind [1] : string
+    adapter [1] : string
+    profile [1] : document | paper
+    builder [0..1] : string
+    labelPrefix [1] : string
+    prefixEnforced [0..1] : boolean
+    provable [0..1] : boolean
+    folioType [1] : string
+    docoType [0..1] : string
+    heading [1] : string
+    headingPlural [1] : string
+    indexRank [0..1] : integer
+    rationale [0..1] : string
+  }
+}
 package "folio-assistant-core/folio-assistant-core-validators" as pkg_folio_assistant_core_folio_assistant_core_validators <<validators>> {
   class "folio-validator/v1" as folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1 <<json: ValidatorNodeSchema>> #f4f4f1 {
     $schema [1] : 'folio-validator/v1'
@@ -374,7 +401,9 @@ folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_validators pkg_folio_assistant_core_folio_assistant_core_kinds pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_folio_assistant_core_translations pkg_folio_assistant_core_folio_assistant_core_block_kinds pkg_folio_assistant_core_folio_assistant_core_validators pkg_folio_assistant_core_folio_assistant_core_kinds pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_adapters pkg_folio_assistant_core_core_src pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa pkg_folio_assistant_core_voices
+pkg_folio_assistant_core_folio_assistant_core_translations -[hidden]down- pkg_folio_assistant_core_folio_assistant_core_kinds
+pkg_folio_assistant_core_folio_assistant_core_block_kinds -[hidden]down- pkg_folio_assistant_core_core_schemas
 pkg_folio_assistant_core_folio_assistant_core_validators -[hidden]down- pkg_folio_assistant_core_folios
 pkg_folio_assistant_core_folio_assistant_core_kinds -[hidden]down- pkg_folio_assistant_core_glossary
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_core_tools

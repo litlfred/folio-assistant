@@ -1,5 +1,34 @@
 classDiagram
   direction LR
+  namespace folio_assistant_sci__folio_assistant_sci_translations {
+    class folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_block_kinds {
+    class folio_assistant_sci_folio_assistant_sci_block_kinds_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
+      <<json: BlockKindNodeSchema>>
+      $schema [1] 'folio-block-kind/v1'
+      kind [1] string
+      adapter [1] string
+      profile [1] document | paper
+      builder [0..1] string
+      labelPrefix [1] string
+      prefixEnforced [0..1] boolean
+      provable [0..1] boolean
+      folioType [1] string
+      docoType [0..1] string
+      heading [1] string
+      headingPlural [1] string
+      indexRank [0..1] integer
+      rationale [0..1] string
+    }
+  }
   namespace folio_assistant_sci__folio_assistant_sci_kinds {
     class folio_assistant_sci_folio_assistant_sci_kinds_folio_graph_kind_v1_folio_graph_kind_v1["folio-graph-kind/v1"] {
       <<json: GraphKindNodeSchema>>
@@ -286,6 +315,8 @@ classDiagram
       <<could not determine>>
     }
   }
+  cssClass "folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "folio_assistant_sci_folio_assistant_sci_block_kinds_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
   cssClass "folio_assistant_sci_folio_assistant_sci_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds
   cssClass "folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "folio_assistant_sci_library_folio_image_verdicts_v1" fa_uml_kind_library
