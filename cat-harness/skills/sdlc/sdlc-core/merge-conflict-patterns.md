@@ -30,7 +30,7 @@ copy, regenerate — and each cost an agent a round and the PR another CI run.
 Owner, 2026-10-01: *"1 + new skills/tools for each common churn/conflict
 pattern"*, and *"put in merge process bpmn"*.
 
-## The two rules that make it safe
+## The three rules that make it safe
 
 1. **All or nothing.** Every conflicted path is classified before anything is
    touched. One refusal ABORTS the merge and restores the tree. Resolving nine
@@ -42,8 +42,45 @@ pattern"*, and *"put in merge process bpmn"*.
    check: the gate set is derived from the workflow and cannot drift, a
    hand-kept list of check names can.
 
+3. **Classify with the BASE's patterns, not your tree's.** `pathClass` reads
+   `PATTERNS` from the checkout it is running in. A branch that forked before a
+   pattern was declared therefore classifies by the OLD declaration, and every
+   path in a newly-declared family reads `authored` — the one verdict that
+   routes work to a person.
+
 A path that **no** pattern names is refused. Adding automation is adding a
 pattern, deliberately, with its reason — never widening a glob on a hunch.
+
+### Why rule 3 is a rule and not a footnote
+
+Measured 2026-10-03, within minutes of #1943 declaring `skos-glossary-export`,
+`glossary-generated` and `skill-instructions`. The merge steward classified
+eight open PRs from a working tree that predated that merge:
+
+| PR | authored, stale patterns | authored, `main`'s patterns |
+|---|---|---|
+| #1888 | 9 | **2** |
+| #1892 | 3 | **1** |
+| #1764 | 3 | **2** |
+| #1935 · #1934 · #1816 · #1808 · #1804 | 0 | 0 |
+
+**Fifteen authored conflicts across the queue, against a true six.** Nine
+paths were reported as needing a person when the base already declared them
+mechanical, and the error is one-directional: a stale tree can only ever
+over-report, never under-report, because a pattern is added and an authored
+path is the fallback. A sibling session was about to start on #1888 believing
+its authored conflict was a bean definition; it is not in conflict at all.
+
+So before classifying anything, `git fetch` and read the patterns from the
+BASE — or do what the measurement did and classify against
+`git show origin/<base>:cat-harness/scripts/merge-conflict-patterns.ts`. The
+number that decides whether a human is needed must come from the declaration
+the merge will actually be resolved under.
+
+This is the same shape as `1xhc` one level out: a stale instrument and a
+correct one are indistinguishable from their output, and the stale one here
+reads as *more* work rather than less, so nothing about the result looks
+wrong.
 
 ## When one side deleted the file
 
@@ -413,8 +450,30 @@ that is behind `main`, one live run per PR (a newer run cancels an older one).
 - **It pushes only a proved merge**, as a fast-forward of the branch it checked
   out; if the author pushed meanwhile the push is rejected and nothing is
   overwritten.
-- **A refusal pushes nothing**, labels the PR `needs-merge-human`, and lists
-  the ✗ paths. Adding a pattern stays a person's change, made here.
+- **A refusal pushes nothing** and lists the ✗ paths in its comment. Adding a
+  pattern stays a person's change, made here. It does NOT label the PR: owner
+  ruling 2026-10-03, *"stop using `needs-merge-human`, it's confusing
+  things"*, and the measurement behind it is that **a label asserting "a
+  person is needed" outlives the condition that set it**. Measured the same
+  day: of ten PRs carrying it, **six were stale** — clean against `main` AND
+  pushable by the bot, because the workflow change that had blocked them was
+  already in their merge-base. A stale hold is indistinguishable from a live
+  one without re-deriving why the push failed, which is the
+  `merge-queue` skill's own §"A hold has an EXPIRY and a trigger, or it
+  outlives its reason" at the scale of a whole queue.
+  **The reason lives in the comment, which is dated and names the run; a
+  label is a claim with no timestamp.**
+- **A declared resolution that FAILS is a refusal too**, not an unexplained
+  red job. If taking the base or resolving a region throws, `merge-base`
+  prints `  ✗ <path>  [<pattern>: could not resolve] — <git's first error
+  line>` and aborts, so the bot's comment names the path and the error.
+  Measured 2026-10-03 on #1801: the branch ignores `cat-harness/test/results/`
+  while the files stay tracked, git exits 1 when staging an UNMERGED ignored
+  path (it stages it anyway), and merge-main went red on every push to main.
+  Staging a conflicted path uses `git add -f` in both resolvers, safe because
+  the path is one git listed as unmerged. `regen` reporting an unrepaired
+  check is still a red job: that is a defect for a person to read, not a
+  conflict.
 - **One comment per PR, edited in place** on every run — except a run that
   was **cancelled** (a newer push to `main` superseded it) or whose merge step
   reported no status, which leaves the comment untouched. Before #1854 such a

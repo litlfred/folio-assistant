@@ -308,6 +308,13 @@
       "status": "candidate"
     },
     {
+      "id": "assistant-types.actordefinition.systemundertest",
+      "prefLabel": "ActorDefinition.systemUnderTest",
+      "definition": "The system-under-test facet — present when this actor can be executed against a `test-plan/v1` (bean `3o5b`). `agent` and `system` actors only; reach is the actor's own {@link ActorDefinition.reach}, never restated. See `SystemUnderTestFacetSchema` in `skill-package.ts`.",
+      "source": "cat-harness/schemas/assistant-types.ts#ActorDefinition.systemUnderTest",
+      "status": "candidate"
+    },
+    {
       "id": "assistant-types.actordefinition.title",
       "prefLabel": "ActorDefinition.title",
       "definition": "Display text. `title`/`description`, like every KG node — see `schemas/kg-node.ts`.",
@@ -879,6 +886,69 @@
       "prefLabel": "BeanGraphSchema.name",
       "definition": "Display name — which instance's work plan this is.",
       "source": "cat-harness/schemas/bean-graph.ts#BeanGraphSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.coveredopen",
+      "prefLabel": "MilestonePlanSchema.coveredOpen",
+      "definition": "SUMMED from the closures, never `openTotal - orphanOpen`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.coveredOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.duplicateids",
+      "prefLabel": "MilestonePlanSchema.duplicateIds",
+      "definition": "Bean ids held by more than one file. A store defect, reported.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.duplicateIds",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.orphanopen",
+      "prefLabel": "MilestonePlanSchema.orphanOpen",
+      "definition": "Open beans with no milestone anywhere above them.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.orphanOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.epics",
+      "prefLabel": "MilestoneRollupSchema.epics",
+      "definition": "Direct children typed `epic`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.epics",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.file",
+      "prefLabel": "MilestoneRollupSchema.file",
+      "definition": "Repository-relative path of the milestone's bean file.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.share",
+      "prefLabel": "MilestoneRollupSchema.share",
+      "definition": "`closed / (closed + open)`; `null` when nothing is classified, which is NOT the same as 0 — see the module note on `milestone-rollup.ts`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.share",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.status",
+      "prefLabel": "MilestoneRollupSchema.status",
+      "definition": "The milestone's OWN status — not derived from its subtree.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.status",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.total",
+      "prefLabel": "MilestoneRollupSchema.total",
+      "definition": "Transitive descendants, excluding the milestone itself.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.total",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.unclassified",
+      "prefLabel": "MilestoneRollupSchema.unclassified",
+      "definition": "In neither status set — reported alone, folded into neither figure.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.unclassified",
       "status": "candidate"
     },
     {
@@ -2956,7 +3026,7 @@
     {
       "id": "cat-harness.visualisationschema.title",
       "prefLabel": "VisualisationSchema.title",
-      "definition": "What a tile calls it. Absent falls back to the directory's id.",
+      "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
       "status": "candidate"
     },
@@ -5761,6 +5831,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.title",
+      "prefLabel": "GraphKindDef.title",
+      "definition": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.validator",
       "prefLabel": "GraphKindDef.validator",
       "definition": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.",
@@ -7378,6 +7455,20 @@
       "status": "candidate"
     },
     {
+      "id": "qa-attestations.attestationkey.locale",
+      "prefLabel": "AttestationKey.locale",
+      "definition": "`translation-qa` only.",
+      "source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.locale",
+      "status": "candidate"
+    },
+    {
+      "id": "qa-attestations.attestationkey.subject",
+      "prefLabel": "AttestationKey.subject",
+      "definition": "The subject root relative to the instance root, POSIX, without extension.",
+      "source": "cat-harness/schemas/qa-attestations.ts#AttestationKey.subject",
+      "status": "candidate"
+    },
+    {
       "id": "qa-attestations.kgattestationtree.atthome",
       "prefLabel": "KgAttestationTree.attHome",
       "definition": "Absolute attestations home (the `<family>` directory goes under it).",
@@ -7980,6 +8071,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.loadedactor.systemundertest",
+      "prefLabel": "LoadedActor.systemUnderTest",
+      "definition": "The system-under-test facet (bean `3o5b`) — present when the actor can be executed against a `test-plan/v1`. Beside `reach` for the same reason: it is a fact about the participant, not something its lane knows.",
+      "source": "cat-harness/schemas/role-graph.ts#LoadedActor.systemUnderTest",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.permissiondef.includedin",
       "prefLabel": "PermissionDef.includedIn",
       "definition": "The broader actions this one is part of: another action here, or one of ODRL's common vocabulary (`schemas/odrl.ts#ODRL_ACTIONS`). This is what makes the vocabulary an ODRL profile (issue #1180): a permission to a broader action permits every action included in it. Required and non-empty, so every action has a way up to `odrl:use`.",
@@ -8435,6 +8533,13 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexschema.plan",
+      "prefLabel": "BeanIndexSchema.plan",
+      "definition": "The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because \"no plan in the projection\" is a state the renderer distinguishes from \"a plan with nothing done\".",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.libraryindexentryschema.extractedtitle",
       "prefLabel": "LibraryIndexEntrySchema.extractedTitle",
       "definition": "The manifest's extracted title, only when a catalogue title replaced it (bean `gnqa`).",
@@ -8484,10 +8589,31 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.qaindexschema.corpus",
+      "prefLabel": "QaIndexSchema.corpus",
+      "definition": "Whether the build that wrote this had the derived QA corpus (bean `4l4d`). `absent`: every badge on the page reads \"not available in this build\", and `badges` and `unswept` are empty because nothing was known. Optional only for an index written before that bean, which the painter reads as `present` with no `unswept` list — what it then meant.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.corpus",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.qaindexschema.page",
       "prefLabel": "QaIndexSchema.page",
       "definition": "The page's slug.",
       "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.unswept",
+      "prefLabel": "QaIndexSchema.unswept",
+      "definition": "Keys whose subject has NO sidecar — \"not swept\", painted inert. Decided here rather than in the committed page since bean `4l4d`.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.unswept",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qatranslationpagesschema.pages",
+      "prefLabel": "QaTranslationPagesSchema.pages",
+      "definition": "Page slugs (path, `/` → `-`). Empty with `corpus: \"absent\"`.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaTranslationPagesSchema.pages",
       "status": "candidate"
     },
     {
@@ -8523,6 +8649,13 @@
       "prefLabel": "ActorDefinitionSchema.roles",
       "definition": "Roles (BPMN swimlanes) this actor may take on.",
       "source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.roles",
+      "status": "candidate"
+    },
+    {
+      "id": "skill-package.actordefinitionschema.systemundertest",
+      "prefLabel": "ActorDefinitionSchema.systemUnderTest",
+      "definition": "The SYSTEM-UNDER-TEST facet (bean `3o5b`, arc `3fva`): present when this actor can be executed against a `test-plan/v1`. See {@link SystemUnderTestFacetSchema}.",
+      "source": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema.systemUnderTest",
       "status": "candidate"
     },
     {

@@ -13,9 +13,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |
 | [`processes.json`](processes.json) | data |  |
 | [`content/`](content/) | 4 files | |
-| [`kg/`](kg/) | 8 files | |
+| [`kg/`](kg/) | 9 files | |
 | [`library/`](library/) | 14 files | |
 | [`process/`](process/) | 12 files | |
-| [`sdlc/`](sdlc/) | 26 files | |
+| [`sdlc/`](sdlc/) | 29 files | |
 | [`ui/`](ui/) | 4 files | |
 <!-- kg:subgraph:end -->

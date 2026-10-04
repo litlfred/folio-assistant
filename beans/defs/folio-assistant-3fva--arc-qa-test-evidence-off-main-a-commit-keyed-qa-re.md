@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-01T07:59:35Z
-updated_at: 2026-10-01T08:52:12Z
+updated_at: 2026-10-01T17:03:22Z
 ---
 
 Issue #1763. Proposal, workplan, dispatch map and decisions D1–D5: `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`.
@@ -48,3 +48,9 @@ The owner also asked for an audit of every QA READER, with fixes queued. That is
 
 ## Owner ruling 2026-10-01 — the 26 baseline pair attestations count as JUDGEMENTS
 Asked with three options, recommended first. The owner chose "count as judgements". The 26 `baseline` pair attestations stay on main beside the 6 agent ones, under D2 (a). The kg-qa split therefore keeps all 32 `pair_attestations` files' attestation halves on main. Live-defect fixes `de9k` and `r7v6` start after `gurh` reports, so the two agents don't rewrite the same kg-qa files.
+
+
+## Merge policy and the stacked follow-up PR, 2026-10-01
+Owner MERGE POLICY: never merge to main ourselves. When a PR is green on every CI job: mark it Ready for review, add the label `ready-to-merge`, and comment `ready: <head sha>`. The Merge Steward session ("Separation") brings main in, regenerates and merges. If it reports red: fix, then re-label.
+
+PR #1764 was marked ready at `a4c54517`. The owner chose that later agent work (8wj1, id4s+0dav, oq1j, c8uq+tfqf, then cxcn) goes to a FOLLOW-UP PR on `claude/quirky-davinci-ixuymr-phase3`, stacked on #1764, so #1764 keeps its label and merges untouched. Once #1764 merges, the follow-up retargets to main.

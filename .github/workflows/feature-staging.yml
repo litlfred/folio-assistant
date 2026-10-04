@@ -247,6 +247,28 @@ jobs:
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "Staging slug: $SLUG"
 
+      # WHERE THIS PREVIEW'S QA EVIDENCE COMES FROM — the same step as
+      # `docs-site.yml`, keyed by the pull request (bean `tfqf`, F6). The
+      # entry is `pr/<n>/<head sha>`, written by `code-quality-gates.yml`'s
+      # `qa:publish`; the PR's newest entry is the labelled fallback, because
+      # this preview usually races the job that publishes it. A dispatch run
+      # has no PR number and so no store key: it reads the checkout, or says
+      # the evidence is unavailable. The checkout wins while `test/results/`
+      # is committed; see the module note in `qa-site-assets.ts`.
+      - name: Fetch this preview's QA evidence from qa-reports
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ -n "$PR" ] && [ -n "$HEAD_SHA" ]; then
+            set -- --ref "pr/$PR/$HEAD_SHA" --fallback "pr/$PR"
+          else
+            set -- --ref main
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts fetch "$@" \
+            --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
+
       - name: Regenerate generated docs
         run: |
           bun run cat-harness/scripts/gen-schema-docs.ts 2>&1 | tail -5 || true
@@ -1156,17 +1178,27 @@ jobs:
       # `assets/qa/witnesses/`. Mirrored in `feature-staging.yml`; a test
       # asserts both workflows carry it, because missing it in one publishes a
       # site whose evidence links are all dead.
+      #
+      # The copy is then JUDGED, as in `docs-site.yml` (bean `tfqf`, C10):
+      # a shortfall against what the source held fails the step, and
+      # `assets/qa/availability.json` names the source.
       - name: Publish the QA witnesses and results
         run: |
-          mkdir -p ./_site/assets
-          cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          mkdir -p ./_site/assets/qa
+          if [ -d cat-harness/test/results/witnesses ]; then
+            cp -rT cat-harness/test/results/witnesses ./_site/assets/qa
+          fi
           # The RESULTS beside them. `kg-export` writes this during the export
           # step above, so the copy picks up THIS run's findings rather than
           # whatever was last committed. Since bean `2634` the published graph
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
-          find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
-          echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
+          if [ -d cat-harness/test/results ]; then
+            find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          fi
+          bun run cat-harness/scripts/qa-site-assets.ts verify \
+            --site ./_site --results cat-harness/test/results \
+            --state "$RUNNER_TEMP/qa-site-assets.state.json"
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME

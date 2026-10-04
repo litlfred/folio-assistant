@@ -1078,7 +1078,14 @@ export type TileSurface = (typeof TILE_SURFACES)[number];
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
-  /** What a tile calls it. Absent falls back to the directory's id. */
+  /**
+   * What a tile calls it. Absent, the tile takes the display name of the
+   * directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`),
+   * which is what every other surface calls that page. Declare one only when
+   * the page is not simply "the kind's viewer". Never add the harness as a
+   * suffix ("Docs — cat-harness"): the qualifier is appended by the surface
+   * (bean `ob3m` finding 6, "One name everywhere").
+   */
   title: z.string().min(1).optional(),
   /**
    * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
@@ -1448,11 +1455,12 @@ export type Tile = z.infer<typeof TileSchema>;
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
  *
- * ## Not yet set on any declaration
+ * ## Set on every `qa` directory since bean `5hox`
  *
- * Flipping a real `qa` directory to `storage` is a later bean, after every
- * reader has migrated (proposal §4 Phase 3). Setting it earlier would tell the
- * presence checks to stop looking while the readers still read the checkout.
+ * It was flipped only after every reader had migrated (proposal §4 Phase 3):
+ * setting it earlier would have told the presence checks to stop looking while
+ * the readers still read the checkout. Each stored working copy is ignored by
+ * version control, and `directory-storage.test.ts` keeps the two equal.
  */
 export const DirectoryStorageSchema = z
   .object({

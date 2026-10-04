@@ -56,8 +56,9 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
      `git push --force-with-lease` — never a bare `--force` (it clobbers sibling
      pushes).
    **A conflict in a generated QA sidecar has a command** —
-   `bun run qa:resolve-conflicts`. See §"Conflicts in `test/results/`" below
-   before resolving one by hand.
+   `bun run qa:resolve-conflicts`. A conflict in `test/attestations/` is a
+   judgement and has none. See §"Conflicts in `test/results/` and
+   `test/attestations/`" below before resolving either by hand.
 
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
@@ -67,9 +68,25 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
      fast-forward: git fast-forwards without running a merge, so conflicts are
      impossible. This alone is sufficient.
    - Otherwise (base moved, not yet rebased) dry-run with the modern form and
-     trust its **exit code**: `git merge-tree --write-tree origin/<base> HEAD`
-     (exit 0 = clean; non-zero = conflicts; add `--name-only` to list the
-     conflicted paths). Do **not** grep the old three-arg output for
+     trust its **exit code AND its first line**: `git merge-tree --write-tree origin/<base> HEAD`
+     (exit 0 = clean; non-zero = not clean; add `--name-only` to list the
+     conflicted paths). Exit 1 means CONFLICT only when stdout opens with
+     the merged tree's id — git 2.43 also exits **1** for a ref it cannot
+     merge (unfetched, mistyped), printing no tree, and that is "could not
+     determine", never "conflicted with nothing in conflict" (bean `0s6w`).
+   - **Capture `$?` on the line after the command, before anything else
+     runs** — `git merge-tree … >/dev/null 2>&1; rc=$?`, or `cmd || rc=$?`.
+     `echo "base($(git rev-parse --short origin/main)) rc=$?"` reports the
+     SUBSTITUTION's status, always 0 when the ref exists, and a steward
+     announced a conflicted PR clean on exactly that line for a whole session
+     (2026-10-03). `if ! cmd; then rc=$?` is the same trap: inside that branch
+     `$?` is `! cmd`'s status, 0. `shell-exit-status.test.ts` fails on either
+     shape in a tracked script or workflow.
+   - **GitHub's HTTP 405 "Pull Request has merge conflicts" is a backstop, not
+     a check.** It refuses a conflicted merge whatever the client believed, so
+     a mis-read `rc` caused no bad merge on 2026-10-03 — but it is learned at
+     merge time, after the PR was announced clean, and nothing in that
+     sequence was the steward's own verification. Do **not** grep the old three-arg output for
      `<<<<<<<` / "changed in both" — that false-positives on files which
      legitimately contain those literals (docs about merge conflicts, test
      fixtures — this very skill tripped that check when it was first run).
@@ -291,6 +308,41 @@ still fails after its writer ran is a real defect, not staleness, and the
 command exits non-zero rather than claiming a repair it did not make. So is a
 check with **no writer**.
 
+### Submodules: check the pointers BEFORE you stage the merge (STRICT)
+
+**A base merge can roll a submodule back without a conflict, and `git add -A`
+is how.** Measured on PR #1968, 2026-10-03:
+
+1. Early in the session, `git submodule update --init bootstrap-tools` checked
+   out the submodule at the branch's pointer (`c5e5e254`).
+2. `git merge origin/main` brought in a NEWER pointer (`30464126`). Git updates
+   the gitlink in the index but **not the submodule's working checkout**, so
+   the checkout still sat at `c5e5e254`.
+3. During conflict resolution, `git add -A` staged that stale checkout as the
+   submodule's state, rolling **both** submodules back in the merge commit.
+4. `bun run regen` then ran against the old tools and "repaired" ~130
+   generated files to their pre-bump form, stripping the generator banners
+   `main` had just added. CI went red on a typecheck error
+   (`generatedBanner` is not exported) in code the PR never touched.
+
+Nothing in that sequence conflicted, and every local check that ran against
+the stale submodule passed. So, after any base merge and **before** staging:
+
+```sh
+git submodule update --init --recursive   # move each checkout to the merged pointer
+git diff --cached --submodule=short -- bootstrap bootstrap-tools   # must be empty unless YOU bumped it
+```
+
+Then regenerate. **Stage paths by name during a merge, never `git add -A`**,
+and before pushing confirm the merge carries only your change:
+
+```sh
+git diff --stat origin/<base> HEAD   # should list your files, not hundreds
+```
+
+A diff against the base far larger than your PR is the signal. On #1968 it was
+146 files for a 16-file change.
+
 **Why it is not `qa:resolve-conflicts`, and not bean `520m`.** That command
 only ever inspects UNMERGED paths, and here there were none; `520m` is about
 generated artefacts that *conflict*, which is noisy but git stops you. This is
@@ -304,7 +356,29 @@ lives — the workflow, not `package.json`, since 21 of this repository's
 damage: rewriting artefacts that were already correct leaves a diff that says
 nothing about what the merge broke.
 
-## Conflicts in `test/results/` — the command, and the 13 files it refuses
+## Conflicts in `test/results/` and `test/attestations/` — regenerate one, read the other
+
+**First, what each tree is now** (arc `3fva`, owner rulings D1 and D2 (a)):
+
+| tree | holds | durable home | on a conflict |
+|---|---|---|---|
+| `<instance>/test/results/**` | DERIVED verdicts — every `script` entry | the orphan `qa-reports` branch, `main/<sha>/` and `pr/<n>/<sha>/`, written by the CI job `qa-publish` | **regenerate**: `bun run qa:resolve-conflicts`, then `bun run regen` |
+| `<instance>/test/attestations/**` | JUDGEMENTS — every agent, human and baseline-pair attestation, `qa-attestations/v1` | `main`, as authored content | **a person reads both sides**; never regenerated, never "take ours" |
+
+The `test/results/` files are still committed on `main` until bean `5hox`
+removes them, so a base merge can still conflict there. Treat such a file as
+a working copy that has a right answer, not as a record: the record of a
+commit is its `qa-reports` entry, which no merge touches. **Do not
+hand-resolve one and do not regenerate one in order to "commit the result"** —
+regenerate it so the gates see the merged tree, and let `qa-publish` store it.
+
+A conflict in `test/attestations/` is different in kind: it is two
+judgements that disagree, and `qa:attestations:migrate` refuses that case for
+the same reason — reconciling them is a person's call. `qa:resolve-conflicts`
+leaves it untouched and unstaged, because it resolves only under the declared
+`qa` graph. Keep both sides' entries unless they are the same judgement; then
+run `bun run qa:attestations:migrate:check`, which exits 1 if a judgement is
+still only in a derived file.
 
 **Measured, not impressionistic.** Across one working session on PR #773 and
 its successor: **four base merges, four conflicts, every one in a committed
@@ -335,11 +409,18 @@ resolvable.
 > Regenerating blindly is right for 5,883 and would silently destroy 13 — two
 > of them in the family that churns most.
 
-The command refuses those files rather than resolving them, checks the same
-predicate again *after* regenerating, and leaves every conflict outside the
-declared `qa` graph untouched and unstaged. **Resolving one of these by hand is
-still fine — but check for a non-script `reviewer.kind` on both sides first**,
-which is the one thing a regeneration cannot recover.
+**Since bean `8wj1` the guard reads the attestation store.** Every block and
+translation writer now takes its non-script entries from `test/attestations/`
+rather than from the file it is rewriting, so a sidecar whose non-script
+entries are ALL held in the store, byte for byte, regenerates without losing
+one and is resolved. The command still refuses a file carrying a judgement
+the store does NOT hold, a store file that is itself conflicted, or a store
+that cannot be read — a corrupt store reads UNKNOWN, and unknown is never
+resolved as clean. It checks the same predicate again *after* regenerating,
+and leaves every conflict outside the declared `qa` graph untouched and
+unstaged. **If it refuses one, move the judgement into the store first**
+(`bun run qa:attestations:migrate`, or let a writer move it on its next save)
+and re-run — do not hand-edit the derived file.
 
 And the habit this guards: a conflict an agent resolves without reading teaches
 that conflicts in `test/results/` are safe to wave through, which is exactly
@@ -373,6 +454,13 @@ harness git instructions). Do not include the model identifier in the PR.
 
 - **Never push to the default branch** and **never merge a PR** without an
   explicit ask. Prepare-merge leaves the decision to the human.
+- **In folio-assistant an agent never merges to `main` at all** (owner,
+  2026-10-01). When CI is green on every job: mark the PR Ready for review,
+  add the label `ready-to-merge`, and comment `ready: <head sha>`. The Merge
+  Steward session ("Separation") brings `main` in, regenerates and merges. If
+  it reports red: fix, then re-label. The policy and why are in
+  [`continual-progress`](continual-progress.md) §"Green means handed to the
+  Merge Steward".
 - **`--force-with-lease`, never bare `--force`** when a rebase rewrote history.
 - **Honest green.** Pre-existing red is reported as pre-existing, with evidence;
   your-change red blocks the "ready" claim.

@@ -25,10 +25,6 @@ msgstr ""
 msgid "Publication workflow"
 msgstr "Flux de publication"
 
-#: docs/publication-workflow.md:16
-msgid "TR"
-msgstr "TR"
-
 #: docs/publication-workflow.md:18
 msgid "On this page"
 msgstr "Sur cette page"
@@ -37,10 +33,6 @@ msgstr "Sur cette page"
 msgid "This page is generated from  — each section below links to its own source."
 msgstr "Cette page est générée à partir de  — chaque section ci-dessous renvoie vers sa propre source."
 
-#: docs/publication-workflow.md:27
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
-
 #: docs/publication-workflow.md:29
 msgid "How a change gets from an editor had an idea to the folio is officially published — expressed as BPMN 2.0 swimlane diagrams, with the roles, the validation gate, the skills, and the shared work plan all named."
 msgstr "Comment une modification passe de un éditeur a eu une idée à le folio est officiellement publié — exprimé sous la forme de diagrammes BPMN 2.0 à couloirs, avec les rôles, la porte de validation, les compétences et le plan de travail partagé, tous explicitement nommés."
@@ -48,10 +40,6 @@ msgstr "Comment une modification passe de un éditeur a eu une idée à le folio
 #: docs/publication-workflow.md:35
 msgid "Every workflow in the repo"
 msgstr "Chaque flux de travail du dépôt"
-
-#: docs/publication-workflow.md:38
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
 
 #: docs/publication-workflow.md:40
 msgid "How many BPMN 2.0 files are there? This page no longer says, and that is the fix rather than an evasion."
@@ -457,10 +445,6 @@ msgstr "Ce que la compilation a produit est-il apte au déploiement ? L'ensemble
 msgid "Something after the publish button failed — one alert, the same for every step: an incomplete export, a verification failure, a failed deploy, a lost preview. A tracking issue labelled for the publication manager, commented on for each new failure and closed by the next clean publish; the publication manager triages it. Bean , owner 2026-09-23"
 msgstr "Un élément postérieur au déclenchement de la publication a échoué — une alerte unique, identique pour chaque étape : exportation incomplète, échec de vérification, échec de déploiement, prévisualisation perdue. Un ticket de suivi étiqueté pour le responsable de publication, commenté à chaque nouvel échec et fermé par la publication saine suivante ; le responsable de publication le prend en charge. Bean , responsable 2026-09-23"
 
-#: docs/publication-workflow.md:275
-msgid "Five independent jobs, and nothing in the YAML says so in one place. No job declares , so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one () is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on"
-msgstr "Cinq jobs indépendants, et rien dans le YAML ne l'indique en un lieu unique. Aucun job ne déclare de clause , de sorte que la durée d'exécution réelle du flux correspond au job le plus lent plutôt qu'à la somme — l'information la plus utile à connaître avant d'ajouter une porte de contrôle. Quatre sont stricts et un () est un simple avertissement, si bien que la passerelle après la jonction porte spécifiquement sur les contrôles STRICTS ; dessiner cinq boîtes équivalentes constituerait un mensonge sur lequel le lecteur s'appuierait"
-
 #: docs/publication-workflow.md:276
 msgid "Is CI actually working on ? Only  fails the job — a red  records the issue and this workflow stays green, which is invisible from the run list.  is not simply the exit code:  exits 1 on a crash too, so the REPORT FILE separates \"found something red\" from \"crashed\""
 msgstr "La CI fonctionne-t-elle réellement sur  ? Seul  met le job en échec — un statut rouge sur  enregistre le problème et ce flux reste vert, ce qui est invisible depuis la liste des exécutions.  ne se résume pas au simple code de sortie :  renvoie également un code 1 en cas de crash, de sorte que le FICHIER DE RAPPORT distingue « détection d'un élément rouge » de « crash »"
@@ -525,10 +509,6 @@ msgstr "Cette liste est vérifiée, non maintenue à la main.  échoue lorsqu'un
 msgid "They also run"
 msgstr "Ils s'exécutent également"
 
-#: docs/publication-workflow.md:322
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
-
 #: docs/publication-workflow.md:324
 msgid "Since bean  these files are not only pictures. The MCP server interprets them:  opens an instance for a subject,  reports what is enabled now — with the lane that performs it and the skill that implements it — and  refuses a step the process has not reached.  cannot be reported done before the editor's decision is recorded, because there is no token on it until then."
 msgstr "Depuis le bean , ces fichiers ne sont plus de simples images. Le serveur MCP les interprète :  ouvre une instance pour un sujet,  signale ce qui est actif à cet instant — avec le couloir qui l'exécute et la compétence qui l'implémente — et  refuse une étape que le processus n'a pas encore atteinte.  ne peut pas être déclaré terminé avant que la décision de l'éditeur ne soit enregistrée, car aucun jeton ne s'y trouve jusque-là."
@@ -540,10 +520,6 @@ msgstr "Il s'agit d'un ordonnancement, non d'un verrouillage strict : rien n'emp
 #: docs/publication-workflow.md:336
 msgid "Some decisions are computed, not judged"
 msgstr "Certaines décisions sont calculées, non arbitrées"
-
-#: docs/publication-workflow.md:339
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
 
 #: docs/publication-workflow.md:341
 msgid "Ten exclusive gateways sit across the six diagrams, and they are not all the same kind of question.  is the editor's call.  is arithmetic over  and ."
@@ -573,10 +549,6 @@ msgstr "« QC sans erreur ? » et « FHIR valide ? » sont tout aussi mécanique
 msgid "The base processes are strict"
 msgstr "Les processus de base sont stricts"
 
-#: docs/publication-workflow.md:364
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
-
 #: docs/publication-workflow.md:366
 msgid "The three content-agnostic diagrams — editing, draft-to-publication, lifecycle — carry .  refuses a step they have not reached. The three per-content-type diagrams are , because what counts as adequate review of a Lean proof and of a FHIR profile are different questions, and the package that knows the domain should answer them."
 msgstr "Les trois diagrammes indépendants du contenu — édition, brouillon vers publication, cycle de vie — portent .  refuse une étape qu'ils n'ont pas atteinte. Les trois diagrammes spécifiques au type de contenu sont de nature  (consultative), car ce qui constitue une relecture adéquate d'une preuve Lean ou d'un profil FHIR relève de questions distinctes, et c'est au paquet connaissant le domaine d'y répondre."
@@ -596,10 +568,6 @@ msgstr "La frontière du commit est le lieu où cette règle est appliquée plut
 #: docs/publication-workflow.md:396
 msgid "How to read them"
 msgstr "Comment les lire"
-
-#: docs/publication-workflow.md:399
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
 
 #: docs/publication-workflow.md:401
 msgid "A lane is a role. Every lane maps to an actor in  — see Who is who."
@@ -633,10 +601,6 @@ msgstr "Ouvrir la source BPMN{: .btn .btn-outline }"
 msgid "The one rule this diagram exists to state"
 msgstr "La règle unique que ce diagramme a pour vocation d'énoncer"
 
-#: docs/publication-workflow.md:433
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
-
 #: docs/publication-workflow.md:435
 msgid "Nothing reaches the corpus before the editor has seen the findings. The authoring agent produces a proposed change, not a commit. That proposal fans out through the HCI validation pipeline, the results are collated into one report, and the editor decides — accept, revise, or discard. The  activity sits after that decision, in its own lane, and is the only step that writes content."
 msgstr "Rien ne parvient au corpus avant que l'éditeur n'ait pris connaissance des conclusions. L'agent de rédaction produit une modification proposée, et non un commit. Cette proposition se diffuse à travers le pipeline de validation IHM, les résultats sont rassemblés dans un rapport unique, et l'éditeur tranche — accepter, réviser ou rejeter. L'activité  se situe après cette décision, dans son propre couloir, et constitue l'unique étape qui écrit du contenu."
@@ -644,10 +608,6 @@ msgstr "Rien ne parvient au corpus avant que l'éditeur n'ait pris connaissance 
 #: docs/publication-workflow.md:442
 msgid "Mechanical vs non-mechanical validation"
 msgstr "Validation mécanique vs validation non mécanique"
-
-#: docs/publication-workflow.md:445
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
 
 #: docs/publication-workflow.md:447
 msgid "The parallel gateway splits the pipeline in two, and the split is the point:"
@@ -668,10 +628,6 @@ msgstr "Les deux branches doivent rendre leur rapport avant la jonction. Une ex�
 #: docs/publication-workflow.md:464
 msgid "Activities and the skills that implement them"
 msgstr "Activités et compétences qui les implémentent"
-
-#: docs/publication-workflow.md:467
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
 
 #: docs/publication-workflow.md:469
 msgid "Activity"
@@ -905,10 +861,6 @@ msgstr "Il s'agit du même cycle de vie que le ruban linéaire planifier → ré
 msgid "The work plan — tasks as beans"
 msgstr "Le plan de travail — les tâches sous forme de beans"
 
-#: docs/publication-workflow.md:573
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
-
 #: docs/publication-workflow.md:575
 msgid "Every diagram has a Work plan lane, and it is not decoration. Editing work is tracked as beans (hmans/beans) in a committed  directory, which makes it the one place where a human and an agent see the same answer to what is done, and what is next."
 msgstr "Chaque diagramme dispose d'un couloir Plan de travail, et ce n'est pas un simple ornement. Le travail d'édition est suivi sous forme de beans (hmans/beans) dans un répertoire  versionné, ce qui en fait le seul endroit où un humain et un agent partagent la même réponse à la question qu'est-ce qui est fait, et qu'est-ce qui vient ensuite ?."
@@ -993,10 +945,6 @@ msgstr "Les beans ne sont pas des sidecars. Les files d'attente générées par 
 msgid "Who is who"
 msgstr "Qui est qui"
 
-#: docs/publication-workflow.md:608
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
-
 #: docs/publication-workflow.md:610
 msgid "The roles in the lanes, and the actor definition each one maps to. Roles inherit ( →  →  → ). What an actor may do is not a property of its role: it is an ODRL rule in , and before every task the BPMN executor checks that the actor is authenticated, eligible for the lane's role, permitted by policy and allowed to touch the content (, issue #1207)."
 msgstr "Les rôles dans les couloirs et la définition d'acteur à laquelle chacun correspond. Les rôles héritent les uns des autres ( →  →  → ). Ce qu'un acteur peut faire ne constitue pas une propriété de son rôle : c'est une règle ODRL dans , et avant chaque tâche, l'exécuteur BPMN vérifie que l'acteur est authentifié, éligible au rôle du couloir, autorisé par la politique et habilité à toucher au contenu (, ticket #1207)."
@@ -1004,10 +952,6 @@ msgstr "Les rôles dans les couloirs et la définition d'acteur à laquelle chac
 #: docs/publication-workflow.md:618
 msgid "People"
 msgstr "Personnes"
-
-#: docs/publication-workflow.md:621
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
 
 #: docs/publication-workflow.md:623
 msgid "In the diagrams"
@@ -1081,10 +1025,6 @@ msgstr "Rôles de rédaction métier qui apparaissent au sein de  plutôt que da
 msgid "Agents and system actors"
 msgstr "Agents et acteurs système"
 
-#: docs/publication-workflow.md:642
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
-
 #: docs/publication-workflow.md:644
 msgid "What it does — and what it cannot do"
 msgstr "Ce qu'il fait — et ce qu'il ne peut pas faire"
@@ -1121,10 +1061,6 @@ msgstr "Pour la liste complète des rôles, leurs capacités et la manière dont
 msgid "Changing these diagrams"
 msgstr "Modifier ces diagrammes"
 
-#: docs/publication-workflow.md:664
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
-
 #: docs/publication-workflow.md:666
 msgid "The  files are the source of truth."
 msgstr "Les fichiers  constituent la source de vérité."
@@ -1140,10 +1076,6 @@ msgstr "Lorsque vous ajoutez une activité, ajoutez son extension  (et  si elle 
 #: docs/publication-workflow.md:686
 msgid "Which diagrams are BPMN, and which are not"
 msgstr "Quels diagrammes sont en BPMN, et lesquels ne le sont pas"
-
-#: docs/publication-workflow.md:689
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
 
 #: docs/publication-workflow.md:691
 msgid "Every process in the docs is BPMN. The diagrams that remain Mermaid are not processes, and BPMN would be the wrong notation for them — a pool with lanes implies actors performing activities over time, which none of these have:"
@@ -1225,10 +1157,6 @@ msgstr "Si vous ajoutez un diagramme qui comporte effectivement des acteurs, des
 msgid "See also"
 msgstr "Voir aussi"
 
-#: docs/publication-workflow.md:713
-msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
-msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
-
 #: docs/publication-workflow.md:715
 msgid "Content types — the linear lifecycle and what each type produces"
 msgstr "Types de contenu — le cycle de vie linéaire et ce que chaque type produit"
@@ -1256,3 +1184,57 @@ msgstr "Intégration d'un agent — orientation pour un agent introduit dans un 
 
 #~ msgid "✎ Edit{: .fa-node-edit title=\"Edit processes/content-lifecycle.bpmn\" } QA… TR KG…"
 #~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit processes/content-lifecycle.bpmn\" } QA… TR KG…"
+
+#~ msgid "TR"
+#~ msgstr "TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
+
+#~ msgid "Five independent jobs, and nothing in the YAML says so in one place. No job declares , so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one () is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on"
+#~ msgstr "Cinq jobs indépendants, et rien dans le YAML ne l'indique en un lieu unique. Aucun job ne déclare de clause , de sorte que la durée d'exécution réelle du flux correspond au job le plus lent plutôt qu'à la somme — l'information la plus utile à connaître avant d'ajouter une porte de contrôle. Quatre sont stricts et un () est un simple avertissement, si bien que la passerelle après la jonction porte spécifiquement sur les contrôles STRICTS ; dessiner cinq boîtes équivalentes constituerait un mensonge sur lequel le lecteur s'appuierait"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/they-also-run.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/some-decisions-are-computed-not-judged.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-base-processes-are-strict.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/how-to-read-them.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-one-rule-this-diagram-exists-to-state.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/activities-and-the-skills-that-implement-them.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/the-work-plan-tasks-as-beans.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/who-is-who.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/people.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/agents-and-system-actors.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/which-diagrams-are-bpmn-and-which-are-not.md\" } QA… TR"
+
+#~ msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"
+#~ msgstr "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/see-also.md\" } QA… TR"

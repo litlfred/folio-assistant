@@ -84,7 +84,7 @@ const MODULE_FILE = /\.(?:ts|tsx|mts|cts|js|jsx|mjs|cjs)$/;
 /** Never walked: dependencies, VCS, and dot-prefixed segments (the directory conventions' guard). */
 const SKIP = new Set(["node_modules"]);
 
-interface Instance {
+export interface Instance {
   root: string;
   name: string;
   needs: string[] | undefined;
@@ -113,7 +113,7 @@ export interface ImportDirectionReport {
   variableSpecifiers: { file: string; count: number }[];
 }
 
-function readInstances(repoRoot: string): Instance[] {
+export function readInstances(repoRoot: string): Instance[] {
   return instanceRootsIn(repoRoot).flatMap((root) => {
     const decl = JSON.parse(readFileSync(join(root, findDeclarationFile(root)!), "utf-8")) as {
       name?: string;
@@ -125,7 +125,7 @@ function readInstances(repoRoot: string): Instance[] {
 }
 
 /** The INNERMOST declaring root containing `abs` — the root instance contains every other one. */
-function ownerOf(abs: string, all: readonly Instance[]): Instance | undefined {
+export function ownerOf(abs: string, all: readonly Instance[]): Instance | undefined {
   let best: Instance | undefined;
   for (const i of all) {
     if ((abs === i.root || abs.startsWith(i.root + sep)) && (best === undefined || i.root.length > best.root.length)) {
