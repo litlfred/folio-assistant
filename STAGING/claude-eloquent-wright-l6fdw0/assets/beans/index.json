@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 848,
+      "count": 849,
       "unit": "beans"
     }
   },
@@ -1068,6 +1068,20 @@
       "updatedAt": "2026-09-27T05:19:46Z",
       "preview": "Owner 2026-09-27: 'i want purple folio button, not on navbar but at top middle of display screen. not so tall'. Reverses 269z's navbar placement.\n\n## Summary of Changes\n\n- `docs-ui.js` `placeHandle`: the handle is appended to `body` again (fixed top centre) on every page, rail or theme sidebar alike.\n- `docs-ui.css`: pill 1.75rem tall (was 3.25rem), rounded bottom corners, 0.85rem label; `--in-nav",
       "file": "beans/defs/folio-assistant-2vne--folio-handle-back-to-top-centre-as-a-short-pill.md"
+    },
+    {
+      "id": "folio-assistant-2vpn",
+      "title": "who-iris's top LHS navbar mark is the letter 'W', not an icon — and every harness's top mark must come from one mechanism",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-yg29",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T18:34:12Z",
+      "updatedAt": "2026-10-04T18:34:12Z",
+      "preview": "Owner, 2026-10-04, in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi, on being asked to sign GOAL 3 off: *\"actually no, who-iris is missing top icon on LHS navbar. investigate why and if also try of other harnesses. all needs to be sconsisisten and consolidated\"* — with a screenshot of https://litlfred.github.io/folio-assistant/who-iris/ whose `.fa-nav-head` shows a slate tile wit",
+      "file": "beans/defs/folio-assistant-2vpn--who-iriss-top-lhs-navbar-mark-is-the-letter-w-not.md"
     },
     {
       "id": "folio-assistant-2yyh",
@@ -6845,14 +6859,14 @@
     {
       "id": "folio-assistant-kupb",
       "title": "IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-yg29",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:14Z",
-      "updatedAt": "2026-10-01T02:05:09Z",
+      "updatedAt": "2026-10-04T18:29:58Z",
       "preview": "Owner ask, 2026-09-20, three messages in one session.\n\nSOURCES, both uploaded to the repo root by the owner and both measured this session:\n- `549fb04` — a saved DSpace ITEM PAGE. The HTML declares `saved from url=https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec`; the sidecar zip carries `client-theme.css`, `styles.e55b0c9926626404.css`, `who_logo.svg`, `who_logo_white.svg`, `iris_l",
       "file": "beans/defs/folio-assistant-kupb--iris-catalogue-a-referenced-import-of-who-iris-int.md"
     },
@@ -7695,12 +7709,12 @@
       "title": "GOAL 5 / CONTENT: the content model and the ingest pipeline that feeds it",
       "status": "todo",
       "type": "milestone",
-      "priority": "",
+      "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:12:07Z",
-      "updatedAt": "2026-10-04T15:12:07Z",
+      "updatedAt": "2026-10-04T18:34:28Z",
       "preview": "**The owner's words, 2026-10-04**, chosen from options put to them in session\nhttps://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi when ruling on\n`rwmf`'s residual: *\"New GOAL 5: CONTENT\"*. That option was described as *\"a\nfifth milestone for the content model and the pipeline that feeds it — one\ncoherent subject none of the four goals pays for.\"* The title above is derived\nfrom those words and",
       "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md"
     },
@@ -8677,14 +8691,14 @@
     {
       "id": "folio-assistant-qsx4",
       "title": "who-style-guide folds INTO who-iris as a declared subgraph, docs included",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T00:02:14Z",
-      "updatedAt": "2026-10-02T22:18:46Z",
+      "updatedAt": "2026-10-04T18:29:58Z",
       "preview": "Owner ruling 2026-09-30, verbatim: \"who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.\" Issue #476.\n\nSupersedes the separate-instance arrangement of `w095` (and the \"own repo/dir\" half of the 2026-09-20 decision recorded in `kupb`/`r1lz`). The `z7ev` cross-instance citation was the price of the split; with the voices and the library they are",
       "file": "beans/defs/folio-assistant-qsx4--who-style-guide-folds-into-who-iris-as-a-declared.md"
     },
@@ -9150,7 +9164,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:26:45Z",
-      "updatedAt": "2026-10-04T15:11:54Z",
+      "updatedAt": "2026-10-04T18:34:28Z",
       "preview": "## There is no owner's quote on this bean, and that is deliberate\n\n`vuip`, `p5wm` and `yg29` each open with the owner's words kept verbatim.\n**This one has none.** The owner chose *\"a fourth milestone: PLATFORM\"* from a\nset of options put to them on 2026-10-03, and the title and scope below were\n**derived from the measurement in the next section** by\n`session_01SjvqTkDQsqa6SLLFjBwoD3` rather than ",
       "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md"
     },
@@ -11474,7 +11488,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:48:29Z",
-      "updatedAt": "2026-10-04T15:52:48Z",
+      "updatedAt": "2026-10-04T18:34:12Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> showing who-iris w/ existing materialized assets with themed harness.\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `kupb` | IRIS CATALOGUE — a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample i",
       "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md"
     },
@@ -12179,19 +12193,19 @@
         "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md",
         "status": "in-progress",
         "epics": 1,
-        "total": 10,
-        "closed": 8,
-        "open": 2,
-        "inProgress": 2,
-        "todo": 0,
+        "total": 11,
+        "closed": 10,
+        "open": 1,
+        "inProgress": 0,
+        "todo": 1,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.8
+        "share": 0.9090909090909091
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 503,
-    "coveredOpen": 498,
+    "openTotal": 502,
+    "coveredOpen": 497,
     "duplicateIds": 1
   }
 }
