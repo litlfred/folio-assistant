@@ -43,3 +43,12 @@ Landed since: #2076 (`d2432b1`) and #1581 (`df31bb2`).
 - Review: 26 open, 8 in the queue. Every open PR now has an entry with a `status` (#2096).
 - "Approve all 6": #2089, #2090, #2093, #2094, #2095, and #2082 re-approved WITH its new scope (it had grown from a bean close into an 11-file code change after the first approval).
 - On the 6 stale PRs (#1802, #1809, #1860, #1884, #1918, #1964), verbatim: "assume authors stalled out.  show detailed anayslis of what was supersceded.  anything salvagable?" Read-only analysis agents dispatched.
+
+## 2026-10-04 ~17:15Z — owner ruling: #2094 admitted to Train B on train CI
+
+Asked: #2094's head stays conflicted (main moves inside its ~8-min merge+regen),
+so GitHub runs no pull_request CI on it. Locally 235/235 gates green, signed,
+owner-approved via takeover. Admit to Train B with the train PR's CI standing
+as its CI?
+Owner: **"Admit on train CI (Recommended)"**. Train B = #1918 + #2093 + #2094;
+the substitution is recorded on the train PR.
