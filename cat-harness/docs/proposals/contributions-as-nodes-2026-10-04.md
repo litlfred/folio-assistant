@@ -79,3 +79,9 @@ Kinds, validators, block kinds and the rest all go through it. Reading the DATA 
 
 - Building anything before the owner answers the three choices.
 - The tables the audit lists that are not contributions (sod4 #2 to #13). Each has its own row on sod4.
+
+## Owner rulings, 2026-10-04: all three decided
+
+1. **One graph per contribution type** (option 1 of 3). Each harness declares `validators/`, `block-kinds/`, `checkers/`, `renderers/` and so on, each a graph kind with its own node schema, viewer, audit and coverage row, as `kinds/` and `tools/` are. Rejected: one `contributions/` graph, and validators apart with the rest together.
+2. **The validator names the family it validates** (option 1 of 2). A `folio-validator/v1` node says `validates: "<$schema tag>"`; a kind lists only its families; the registry joins them; two validators for one family are refused. The writer of the code declares what it checks, so a harness adds a validator without editing another harness's kind. Rejected: the kind naming a validator node id.
+3. **Locale headings live in the translation graph** (option 1 of 2). A block-kind node carries only its English heading, the source string; every other locale lives in the catalogues with every other string. Rejected: a `headings` map on the node.

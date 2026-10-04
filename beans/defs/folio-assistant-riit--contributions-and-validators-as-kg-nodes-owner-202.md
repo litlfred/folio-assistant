@@ -1,10 +1,11 @@
 ---
 # folio-assistant-riit
 title: CONTRIBUTIONS AND VALIDATORS AS KG NODES (owner 2026-10-04)
-status: todo
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T17:42:33Z
+updated_at: 2026-10-04T17:53:12Z
 parent: folio-assistant-fs43
 ---
 
@@ -18,10 +19,19 @@ Owner, 2026-10-04, on the audit's open question (should `*/contributions.ts` bec
 Every contribution is a node in the contributing harness's KG, declared like `kinds/`, and every FUNCTION it needs is a reference `<harness>:<path>#<export>`. A validator is a node too: what it validates (a `$schema` family), the reference to its Zod export, and its owner. A kind's `nodeSchemas` then names validator NODES rather than carrying path strings.
 
 ## Done when
-- [ ] the owner agrees the node shapes for a validator and for each contribution type (one proposal, with the open choices put to them)
+- [x] the owner agrees the node shapes for a validator and for each contribution type (one proposal, with the open choices put to them)
 - [ ] validators are nodes, and kinds name them
 - [ ] block kinds and adapters are nodes (sod4 #1 lands here: the paper block kinds first)
 - [ ] checkers, renderers, pipeline plugins and MCP tools are nodes referencing their code
 - [ ] `contributions.ts` modules are gone, or reduced to the code the nodes reference
 
 Raised by the audit, folio-assistant-sod4.
+
+## 2026-10-04: the proposal, and the owner's three rulings
+
+The proposal is `cat-harness/docs/proposals/contributions-as-nodes-2026-10-04.md`. The owner's rulings, each the recommended option:
+1. one graph per contribution type;
+2. a validator node names the `$schema` family it validates, and a kind lists only its families;
+3. locale headings live in the translation graph, so a block-kind node carries only its English heading.
+
+The order: validators, then block kinds and the adapter (sod4 #1), then checkers, renderers and pipeline plugins, then MCP tools, then delete the contributions.ts modules.
