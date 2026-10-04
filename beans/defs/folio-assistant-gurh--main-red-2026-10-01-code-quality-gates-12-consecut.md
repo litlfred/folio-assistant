@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: critical
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T08:52:00Z
+updated_at: 2026-10-04T07:33:35Z
 parent: folio-assistant-3fva
 ---
 
@@ -58,3 +58,18 @@ The watchdog (`kgho`) opened #1755 by itself at 07:24Z. That is the first produc
 - e2e (main): `library-viewer-scope.e2e.ts:91`, "fhir-harness declares 3 library entries on disk and the viewer data holds none". This is a stale viewer projection and is expected to clear with the regen. It was not verified.
 
 **Next, for #1769's owner:** run `bun run skill:register` / `bun run regen` to a fixed point after `4cded1db`, then `bun run gates`. Re-check who-iris `contentInstanceCode` and the fhir-harness library viewer data. Do not close #1755 by hand.
+
+
+## Still red 2026-10-04, and it is readme:subgraphs — measured from PR #2060
+
+`origin/main` at 679fc7c4c474, check-run 111386484919, annotation verbatim:
+
+    bun run readme:subgraphs:check
+      ✗ cat-harness/scripts/README.md is stale
+    115 directory README(s); 1 stale. Findings: 111 no title, 2 no description, 89 long description, 0 absent, 2 unmarked, 0 unresolved process.
+
+PR #2060's head (76e1199ff2fa) carries the IDENTICAL annotation — same gate, same one stale README, same finding counts — so a branch off main inherits it and cannot clear it. Everything else on #2060 is green: lint+types, all four bun-test shards, all three e2e shards, skill-registration chain, import hygiene.
+
+**COULD NOT DETERMINE why it is red in CI and green here, and that is the finding, not a gap in the report.** In this container `bun run readme:subgraphs:check` reports `115 directory README(s); 0 stale`, and running the writer produces NO diff against the committed README — so the generator and the committed file agree locally. Measured in support of that: 481 files tracked and 481 on disk directly in `cat-harness/scripts/` against the README's "480 files directly here" (the generator excludes README.md itself), and `tests/` reads 561 tracked / 561 on disk against the README's "568 files" (the generator counts that one recursively). Both self-consistent. So CI's checkout differs from this one in a way that moves the count by one, and I could not identify what from inside the container.
+
+Whoever picks this up: the cheap next step is to make CI print the generator's computed counts next to the committed ones, because the gate currently says WHICH file is stale but not which number moved — and that is why it has survived this long.
