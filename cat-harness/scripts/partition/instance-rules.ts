@@ -1320,6 +1320,15 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // WHICH declared executable artefacts can be reached at all (bean `dxqm`).
+      // Harness machinery for the same reason as the coverage report beside it:
+      // its subjects are the declared `.bpmn`/`.dmn` corpus, the engine's own
+      // resolver and the module graph — never a folio's vocabulary. A folio
+      // could not make it reach a different verdict, only give it more
+      // artefacts to ask about. Assigned in the same change that added the
+      // script, because `unassigned` is exactly what the partition's own report
+      // says must not be read as clean.
+      "scripts/audit-reachability.ts",
       // LSI over the declared prose graphs, and the epic-filing proposal it
       // drives (bean `ansc`). Harness for the same reason as the audit: its
       // subjects are the declarations and the work plan, and the engine it
