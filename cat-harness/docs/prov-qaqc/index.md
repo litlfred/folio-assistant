@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-12 instance(s), 125 step(s) checked, 125 `prov:Activity` emitted, 110 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+12 instance(s), 129 step(s) checked, 129 `prov:Activity` emitted, 113 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -32,7 +32,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
 | `source-moved` | 18 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
-| `unaddressed` | 6 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
+| `unaddressed` | 9 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
@@ -198,7 +198,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### mergetrain--merge-train-2026-10-04a
 
-8 step(s) checked, 8 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/mergetrain--merge-train-2026-10-04a.prov.jsonld' | relative_url }})
+12 step(s) checked, 12 `prov:Activity` emitted, 8 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/mergetrain--merge-train-2026-10-04a.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
@@ -207,6 +207,9 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `mergetrain--merge-train-2026-10-04a` | 6 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
 | `mergetrain--merge-train-2026-10-04a` | 7 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
 | `mergetrain--merge-train-2026-10-04a` | 8 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
+| `mergetrain--merge-train-2026-10-04a` | 10 | `#1898` | `unaddressed` | entity: no instance in this checkout catalogues "#1898" |
+| `mergetrain--merge-train-2026-10-04a` | 11 | `#1898` | `unaddressed` | entity: no instance in this checkout catalogues "#1898" |
+| `mergetrain--merge-train-2026-10-04a` | 12 | `#1898` | `unaddressed` | entity: no instance in this checkout catalogues "#1898" |
 
 ### sampleimport--xlg2-wpro-trial
 
