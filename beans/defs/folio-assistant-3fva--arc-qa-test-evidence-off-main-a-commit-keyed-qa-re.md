@@ -5,7 +5,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-01T07:59:35Z
-updated_at: 2026-10-01T17:03:22Z
+updated_at: 2026-10-04T15:13:14Z
+parent: folio-assistant-rwmf
 ---
 
 Issue #1763. Proposal, workplan, dispatch map and decisions D1–D5: `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`.
