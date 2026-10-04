@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.64 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
+| 1 | 46.65 | instance, kind, session, directory, harness, page, merge, graph | *(none)* |
 | 2 | 21.84 | prs, watcher, queue, sibling, commits, coordination, merge, backlog | harness, instance, declaration, node, directories, directory, iri, graph |
 | 3 | 18.83 | steward, session, head, conflict, merge, green, conflicted, bot | block, chapter, slot, project, formal, watcher, edges, proof |
 | 4 | 17.39 | page, tile, pdf, text, avatar, glass, card, images | subgraph, subdirectory, ledger, train, steward, sibling, sub, renderable |
 | 5 | 15.77 | tile, glass, avatar, card, board, sticky, tiles, theme | steward, rung, pdf, member, upload, manifest, arxiv, owed |
-| 6 | 15.36 | steward, head, tile, train, merge, preview, board, avatar | task, beans, cli, requirement, process, requirements, goal, methodology |
-| 7 | 15.05 | queue, withheld, rung, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, preview, requirements, feature |
-| 8 | 14.68 | preview, url, phase, staging, feature, feedback, language, pages | slot, tile, edges, glass, forward, edge, avatar, claim |
+| 6 | 15.35 | steward, head, tile, train, merge, preview, board, avatar | task, beans, cli, requirement, process, requirements, goal, methodology |
+| 7 | 15.05 | queue, rung, withheld, arm, backlog, library, bytes, slide | lane, actor, edge, forward, edges, requirements, preview, feature |
+| 8 | 14.68 | preview, url, phase, staging, feature, feedback, language, pages | slot, tile, glass, edges, forward, avatar, edge, claim |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

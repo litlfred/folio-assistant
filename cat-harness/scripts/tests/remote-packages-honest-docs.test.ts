@@ -30,6 +30,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { codeWithoutComments } from "../repo-files.js";
 import { fshGutsDirectory } from "../../schemas/fsh-guts.js";
+import { implementingRootFor } from "../../schemas/harness-config.js";
 
 const ROOT = join(import.meta.dir, "../..");
 /**
@@ -112,7 +113,9 @@ describe("the reason the page has to say that is still true", () => {
     // strings alone does not fix it either, because a markdown code span in a
     // comment is backticked and backticks quote strings in TypeScript.
     for (const f of ["src/tools/skill-fetch.ts", "scripts/generate-registry.ts"]) {
-      const code = codeWithoutComments(readFileSync(join(ROOT, f), "utf8"));
+      // Resolved through the implementing instance: `skill-fetch.ts` moved up
+      // with the server (bean `70lx`), and this layer names no path above it.
+      const code = codeWithoutComments(readFileSync(join(implementingRootFor(ROOT, f), f), "utf8"));
       expect(code).not.toContain("remote-packages");
     }
   });
