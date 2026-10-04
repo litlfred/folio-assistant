@@ -77,6 +77,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { fshGutsDirectories } from "../schemas/fsh-guts.ts";
+import { exitUnlessMounted } from "./branch-store.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -384,6 +385,7 @@ export function findings(files: QueueFile[]): QueueFile[] {
 }
 
 if (import.meta.main) {
+  exitUnlessMounted("fsh-guts", "check-uploads-retired", ROOT);
   // The denominator BEFORE the verdict. Every finding here is "this file's
   // hash is in the ingested set", so an empty ingested set makes every file
   // read as queued and the check pass over everything. That is not a
