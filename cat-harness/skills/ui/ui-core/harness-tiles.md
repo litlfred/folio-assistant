@@ -47,6 +47,41 @@ is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
 nowhere, because nothing of it is published here, and a snapshot that cannot
 be read is a finding on the tile rather than an empty one. Issue #1719.
 
+## Which harness `/` is: a flag, a default, and a hub (issue #1904)
+
+The site's landing page is one of the **instantiated** harnesses, the same set
+as the tiles. It is never the instance the generator happens to live in, and
+never the repository's name. The owner's ruling, 2026-10-02, verbatim:
+
+> Flag it, with a default (recommended). The chosen instance's own
+> `<name>.config.json` carries `"site": { "landing": true }`. If exactly one
+> harness is instantiated, it is the landing page and no flag is needed. That
+> covers smart-trust. If there are several and none is flagged, a gate fails.
+> If more than one is flagged, then neutral hub with listing of harnesses,
+> todos,
+
+| instantiated (`<name>.config.json` at the root) | flagged | `/` is |
+|---|---|---|
+| 0 | n/a | nothing to land on (`none`): a state of its own, not a default |
+| 1 | n/a | that harness's landing, with no flag needed |
+| several | exactly 1 | the flagged harness's landing |
+| several | 0 | **`check:landing-instance` fails**: never guess |
+| several | 2 or more | the **neutral hub**: the harness listing (`harness_details.html`, these tiles) and the todo panel (the landing sticky panel, not a second board) |
+
+`resolveLandingInstance(repoRoot)` in `schemas/harness-config.ts` is the
+**only** reader of the flag. `sync-docs-harness.ts` writes its answer to
+`_data/harness.json` as `landingInstance`, `landing.html` branches on its
+`kind`, and `library-graph.ts` / `schema-graph.ts` name an undeclared root
+through `rootInstanceName`, which uses the same answer. A config that cannot
+be read, or whose `site.landing` is not a boolean, makes the answer
+`ambiguous` too: its flag might decide the case.
+
+The flag is on the **config**, not the declaration, because the declaration
+travels with the harness into every checkout that uses it, and the landing is
+a fact about one checkout. A folio `folio_init` writes has one harness and
+needs no flag; the second harness instantiated beside it is the moment to add
+one. This repository flags `cat-harness` in `cat-harness.config.json`.
+
 ## "Harness" carries TWO senses, and only one of them is this rule
 
 **Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*

@@ -63,6 +63,15 @@ export const BeanIndexItemSchema = z
   })
   .strict();
 
+// Declared in `bean-graph.ts`, the HARNESS layer, and imported here. The
+// rollup is a bean-store concept, and `cat-harness` may not import
+// `folio-assistant-core` — core depends on harness, so the declaration has to
+// sit on the side that `scripts/milestone-rollup.ts` can reach. Measured by
+// `check:partition`, which refused the other direction outright.
+import { MilestonePlanSchema, MilestoneRollupSchema } from "./bean-graph.ts";
+
+export { MilestonePlanSchema, MilestoneRollupSchema };
+
 export const BeanIndexSchema = z
   .object({
     ...envelope("folio-bean-index/v1"),
@@ -78,6 +87,13 @@ export const BeanIndexSchema = z
         })
         .strict(),
     ),
+    /**
+     * The milestone rollup the board renders. OPTIONAL, because an index
+     * written before this field existed is still a valid index — and because
+     * "no plan in the projection" is a state the renderer distinguishes from
+     * "a plan with nothing done".
+     */
+    plan: MilestonePlanSchema.optional(),
   })
   .strict();
 
@@ -302,7 +318,19 @@ export const LibraryIndexSchema = z
     queues: z.array(
       z.object({ instance: z.string(), dir: z.string(), total: Count, ingested: Count, uningested: Count }).strict(),
     ),
-    refScan: z.object({ filesRead: Count, unreadable: StringList }).strict().optional(),
+    // NO `filesRead` here, deliberately — bean `65oe`. It counted the files the
+    // scan read ON DISK, so it was a property of the checkout rather than of the
+    // library, and committing it made this artefact disagree with itself across
+    // environments: CI wrote ~2555, a cloud container ~2663, and each side saw
+    // the other as stale for ever. `library:viz` is one of the two inputs
+    // `regen` names as UNGATED, so nothing ever went red and the churn was
+    // silent. The count still exists where a fact about a run belongs — the
+    // run's own console output.
+    //
+    // The PRESENCE of refScan is still the signal that the scan ran at all
+    // ("nobody looked" is a third answer, distinct from "nothing referenced
+    // it"), and `unreadable` is still what makes a zero provisional.
+    refScan: z.object({ unreadable: StringList }).strict().optional(),
   })
   .strict();
 

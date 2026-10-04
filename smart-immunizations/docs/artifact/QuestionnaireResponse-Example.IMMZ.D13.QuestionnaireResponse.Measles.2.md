@@ -37,3 +37,6 @@ Example QuestionnaireReponse for IMMZ.D13.Update client record. For patient rece
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="QuestionnaireResponse-Example.IMMZ.D13.QuestionnaireResponse.Measles.html" data-next="QuestionnaireResponse-Example.IMMZ.D17.QuestionnaireResponse.1.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
