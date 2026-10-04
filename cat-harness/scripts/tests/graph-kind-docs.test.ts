@@ -38,15 +38,15 @@
  * table is the machine-readable part, which is the argument for scoping there.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 
-import { BASE_GRAPH_KINDS, GRAPH_KIND_ALIASES, defaultGraphKinds } from "../../schemas/cat-harness.js";
-// The table reader lives in a module, not here: `kind:register` asks the same
-// question and two parsers over one hand-written table drift (bean `uoij`).
-import { KIND_TABLE_DOC as DOC, documentedKinds, validKinds } from "../kind-table.ts";
-
-const ROOT = join(import.meta.dir, "../..");
+import { defaultGraphKinds } from "../../schemas/cat-harness.js";
+// The table reader, its path and the set of names a row may carry all live in a
+// module rather than here: `kind:register` asks the same question, and two
+// parsers over one hand-written table drift the first time a column moves
+// (bean `uoij`). This file keeps the ASSERTIONS and owns none of the reading —
+// which is why `readFileSync`, `join`, `BASE_GRAPH_KINDS` and
+// `GRAPH_KIND_ALIASES` are gone from it, and so is the document path.
+import { documentedKinds, validKinds } from "../kind-table.ts";
 describe("the graph-kind table and the registry name the same kinds", () => {
   test("the table is found, and is not empty", () => {
     // Without this the two assertions below pass vacuously over `[]` — which is
