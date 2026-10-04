@@ -322,10 +322,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T16:48:48.602Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/71ab8f578c71cb446b55c59c21607e71f1831a8d",
-  "sourceCommitSha": "71ab8f578c71cb446b55c59c21607e71f1831a8d",
-  "sourceCommitAt": "2026-10-04T16:42:49Z",
+  "generatedAt": "2026-10-04T18:29:10.263Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/93854caee69792c29ac4e902897d9554eb059cb2",
+  "sourceCommitSha": "93854caee69792c29ac4e902897d9554eb059cb2",
+  "sourceCommitAt": "2026-10-04T18:23:10Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -336,7 +336,7 @@
     "Lane": 45,
     "ProcessNode": 181,
     "GraphKind": 12,
-    "Subgraph": 11,
+    "Subgraph": 12,
     "Asset": 2
   },
   "@graph": [
@@ -7150,6 +7150,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-adapters"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lucid-shannon-o8zop1-gz47-ruling/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "core-src",
+      "path": "src/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
+      ],
+      "description": "Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). Moved up from `cat-harness/src/routes/` when the server moved to `cat-harness-tools` (bean `70lx`, B1; owner, 2026-10-04: a content package's server half lives with its content). The server declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.",
+      "readmePath": "src/README.md",
+      "fileCount": 4,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-lucid-shannon-o8zop1-gz47-ruling/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-src"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lucid-shannon-o8zop1-gz47-ruling/folio-assistant-core/folio-assistant-core.jsonld#directory/core-scripts",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "core-scripts",
@@ -7283,8 +7301,8 @@
   ],
   "staging": {
     "branch": "claude/lucid-shannon-o8zop1-gz47-ruling",
-    "sha": "062fc3981852b4ebb615c415fa763229f7fe8541",
+    "sha": "b7d73a986a7119ee4b684c4eaf59665537b3295a",
     "pr": "2093/merge",
-    "run": "37217789730"
+    "run": "37224308739"
   }
 }
