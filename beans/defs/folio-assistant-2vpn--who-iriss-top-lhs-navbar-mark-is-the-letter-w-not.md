@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2vpn
 title: who-iris's top LHS navbar mark is the letter 'W', not an icon — and every harness's top mark must come from one mechanism
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-04T18:34:12Z
-updated_at: 2026-10-04T18:34:12Z
+updated_at: 2026-10-04T19:10:22Z
 parent: folio-assistant-yg29
 ---
 
@@ -17,7 +17,18 @@ Owner, 2026-10-04, in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWD
 
 ## Done when
 
-- [ ] the cause for who-iris is stated with file:line evidence — no declaration, a declaration that does not resolve across the mount, or a caller that never passes the mark
-- [ ] every harness instance's top mark is measured (avatar, glyph, or letter fallback), and the measurement is recorded here
+- [x] the cause for who-iris is stated with file:line evidence — no declaration, a declaration that does not resolve across the mount, or a caller that never passes the mark — **a caller that never passed it, twice**: `harness-tiles.ts` resolved no glyph mark, and `mount-instance-docs.ts` read `icon` not `mark` (#2121)
+- [x] every harness instance's top mark is measured (avatar, glyph, or letter fallback), and the measurement is recorded here — see "Measured 2026-10-04" below
 - [ ] one mechanism supplies the top mark for every harness; who-iris's top navbar shows a real mark on the published page
-- [ ] a gate fails when a harness's top mark falls back to its letter, so this cannot recur silently
+- [x] a gate fails when a harness's top mark falls back to its letter, so this cannot recur silently — `check-viewer-nav`'s `declared-mark` flag (#2121)
+
+
+## Measured 2026-10-04 — every harness's top mark
+
+Before #2121, the committed viewer pages drew an image only for cat-harness (its declared `icon`); every other harness drew its letter, who-iris included, although four of them already had a theme card avatar or a registry glyph.
+
+After #2121 (one resolver in `harness-tiles.ts`: theme avatar, then declared icon, then registry glyph; one reader, `lib/harness-mark.ts`): who-iris draws the WHO emblem (owner, 2026-10-04: restore it); smart-base its glyph; folio-assistant, folio-assistant-core, bootstrap, cat-harness and smart-trust their theme card avatars. The seven with no mark at all — smart-ig, smart-immunizations, folio-assistant-sci, fhir-harness, cat-openapi, cat-harness-tools, bootstrap-tools — get registry glyphs in the follow-up PR, by the owner's choice ("Glyphs I propose"). After it, `harness.json` has no harness without a mark.
+
+Open: box 3's "on the published page" is verified only from the committed pages and gates — github.io cannot be fetched from the measuring container, so the owner's own look at the deployed who-iris page is the last check. Also open, and the owner's: whether smart-trust should keep the generic operations card its theme gives it.
+
+Session: https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi
