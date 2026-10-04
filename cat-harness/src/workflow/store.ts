@@ -15,8 +15,9 @@
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
-import { graphReadPath } from "../../scripts/graph-read.js";
 import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
+// `src/` may import `scripts/`; the reverse is what the layering forbids.
+import { resolveBeanGraphNode } from "../../scripts/beans.ts";
 
 /**
  * The `workflow-state` node of the bean graph — `beans/workflows/`.
@@ -38,55 +39,48 @@ import { INSTANCE_SCHEMA, type InstanceState } from "./instance.js";
 // because the store is on the hot path of every workflow call.
 export const WORKFLOW_DIR = join("beans", "workflows");
 
-/** The segment of {@link WORKFLOW_DIR} that lies INSIDE the `beans` graph. */
-const WITHIN_GRAPH = "workflows";
-
 /**
- * Memoised per checkout root. {@link graphReadPath} spawns `git ls-files` and
- * reads the declarations, and this is the hot path the constant above exists
- * for: `workflow_next` resolves the directory on every call. The answer can
- * only change when the graph is mounted or unmounted, which does not happen
- * inside one process.
- */
-const resolved = new Map<string, string>();
-
-/**
- * WHERE the workflow instances are — the checkout, or the mount.
+ * WHERE the instances are, as opposed to {@link WORKFLOW_DIR}'s what-the-
+ * layout-says. Bean `9ofm` row D.
  *
- * Bean `9ofm`, the §4 `engine` row: *"resolve from the declaration, not a
- * constant"*. The constant is kept as the declared, repository-relative
- * default (`check:harness-dirs` still checks it against `beans/beans.json`),
- * and the DIRECTORY is resolved through the same `graphReadPath` every other
- * reader of `beans/` uses, so the cutover moves the instances without this
- * module changing again.
+ * `WORKFLOW_DIR` stays exactly as it was, and so does the gate that checks it
+ * (`check:harness-dirs` fails when it and `beans/beans.json` disagree). It is
+ * still the right thing for its own job: catching a LAYOUT disagreement, cheap
+ * and compiled in, on the hot path of every workflow call.
  *
- * It would "work" without this. A mount lands at the graph's declared path, so
- * `join(repoRoot, "beans/workflows")` finds the instances either way — and
- * that is exactly the trap: when the mount has NOT happened, the same join
- * yields a directory that is simply absent, {@link listInstances} returns `[]`,
- * and the session-start sweep reports **"no instance recorded"** — the finding
- * that the process you are in was never recorded, indistinguishable from the
- * truth that it was recorded somewhere this checkout cannot see. That is bean
- * `dh4f` over the one store whose whole purpose (bean `vlhk`) is to make a
- * turn's position auditable. So an unreachable graph THROWS, carrying the
- * remedy, rather than reading as an empty store.
+ * What it cannot do is follow the graph when `beans` is cut over to its branch
+ * — then the instances are in a mount, and `join(repoRoot, WORKFLOW_DIR)` is a
+ * directory that is not there. `listInstances` would return `[]` and
+ * `loadInstance` `undefined`: every running workflow would read as never
+ * started, and `saveInstance` would write where nothing looks.
+ *
+ * So the relocation is a separate function rather than a change to the
+ * constant, and it is **memoised per repository root** — the hot path was the
+ * stated reason for the constant, so this pays the resolution once rather than
+ * per call. The cache is keyed on `repoRoot` and lives for the process; a
+ * cutover does not happen inside one.
+ *
+ * Refuses rather than falling back: see {@link resolveBeanGraphNode}.
  */
+const dirCache = new Map<string, string>();
 export function workflowDir(repoRoot: string): string {
-  const hit = resolved.get(repoRoot);
+  const hit = dirCache.get(repoRoot);
   if (hit !== undefined) return hit;
-  const g = graphReadPath("beans", repoRoot);
-  // `undeclared` keeps the convention every other reader follows: a folio with
-  // no `beans` entry at all has no store, and the compiled-in default is the
-  // right answer for it.
-  if (g.state === "refused") {
-    throw new Error(
-      `cannot reach the workflow-state graph: ${g.reason} — until it is mounted, "no instance recorded" would be ` +
-        `reported for every running process, which is not the same answer as there being none`,
-    );
+  const r = resolveBeanGraphNode(repoRoot, "workflow-state");
+  if (r.unreachable) {
+    throw new Error(`cannot resolve the workflow instance directory: ${r.unreachable}`);
   }
-  const dir = g.state === "ok" ? join(g.at, WITHIN_GRAPH) : join(repoRoot, WORKFLOW_DIR);
-  resolved.set(repoRoot, dir);
+  // `null` is "the bean graph declares no `workflow-state` node", which for an
+  // instance store means the conventional layout — the same fallback
+  // `WORKFLOW_DIR` has always been.
+  const dir = r.dir ?? join(repoRoot, WORKFLOW_DIR);
+  dirCache.set(repoRoot, dir);
   return dir;
+}
+
+/** Drop the memo — for tests that move a graph under a root they reuse. */
+export function clearWorkflowDirCache(): void {
+  dirCache.clear();
 }
 
 const pathFor = (repoRoot: string, id: string): string =>

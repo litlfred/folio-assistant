@@ -827,6 +827,28 @@ an image the sidecar does not have — still fails, in either mode.
 
 Every narrative it writes lands as `draft`. Only a person confirms one.
 
+#### A role threshold is OPTIONAL, and its default is NONE
+
+Owner, 2026-10-03, verbatim: *"an optional one can be set, default none"*.
+That settles the second question bean `m4xy` held open: whether a coverage
+cutoff may sort images into roles (figure vs furniture).
+
+- **By default nothing is thresholded.** With no value supplied, every role
+  call comes from an inspection verdict as above, naming who looked.
+- **A caller may supply one.** An image whose role it decides must record
+  that basis: the value, and that the value was caller-supplied rather than
+  inspected. A thresholded role must never be readable as an inspected one,
+  for the same reason a silently placed image is the `d5f1` defect.
+- **Ship no number.** No config default, and no value in docs, tests or
+  examples presented as recommended. The evidence for that is measured, not
+  suspected (`m4xy`, `j820`, 29 documents in 5 libraries):
+  - per-image coverage does not separate the classes;
+  - the one empty stretch in the WHO corpus is specific to that corpus, so a
+    cutoff placed in it was fitted to these documents and says nothing about
+    others. `m4xy` records the figures.
+
+  A number chosen after seeing a corpus is a number chosen to fit the answer.
+
 #### Reading a figure: the text layer is not the figure
 
 Two findings from `xeg6`, both of which would have shipped as descriptions:
