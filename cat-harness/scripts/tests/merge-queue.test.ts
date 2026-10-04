@@ -130,9 +130,10 @@ describe("deriveFacts — overlapKind", () => {
  * Bean `uoob` — the table, evaluated. Until 2026-10-03 nothing here ran
  * `placeAll` at all, and it threw on every PR that reached
  * `Rule_HeadNotGreen`: the rule was written `not("green")`, which
- * `decision-table.ts` does not implement, and returned `ci-not-green`, which
- * `PriorityClassSchema` does not contain. These tests are what would have
- * caught it.
+ * `decision-table.ts` did not implement, and returned `ci-not-green`, which
+ * `PriorityClassSchema` did not contain. Main fixed both on 2026-10-04 (the
+ * evaluator now implements `not()`, and the class is in the enum;
+ * `merge-priority-table.test.ts`). These tests are what would have caught it.
  */
 describe("merge-priority.dmn — readiness and CI, evaluated", () => {
   const SESSION = "session_01Own";
@@ -174,7 +175,7 @@ describe("merge-priority.dmn — readiness and CI, evaluated", () => {
   for (const ci of ["red", "missing-required", "none", "unknown"] as const) {
     test(`ownCi \`${ci}\` is handed back by Rule_HeadNotGreen, without throwing`, async () => {
       const p = await place(done({ ownCi: ci }));
-      expect([p.route, p.class, p.rule]).toEqual(["hand back", "hand-back", "Rule_HeadNotGreen"]);
+      expect([p.route, p.class, p.rule]).toEqual(["hand back", "ci-not-green", "Rule_HeadNotGreen"]);
     });
   }
 

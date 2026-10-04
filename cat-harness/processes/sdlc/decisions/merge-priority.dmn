@@ -136,7 +136,7 @@
         <outputEntry id="OE_Rf_4"><text>"alone"</text></outputEntry>
       </rule>
       <rule id="Rule_HeadNotGreen">
-        <description>T2. The head does NOT carry every CI run owed for its event, so the train has no evidence about it. Handed back rather than admitted: a member admitted on an absence of red is a member nobody judged. `green` is the ONLY admitting value and the other four are kept apart on purpose -- `red` (an owed run failed), `missing-required` (it HAS runs, but not the owed ones), `none` (GitHub answered and nothing names this head) and `unknown` (could not ask: no network, rate limit, HTTP error). Measured 2026-10-02 on #1889's head 7ab6119405: 9 runs present and all 9 gating job NAMES matching, yet 3 runs `in_progress` with a null conclusion and 3 check SUITES completed as `action_required` having executed nothing -- so a filter for conclusion = failure finds zero. Counting the runs does not catch it; only asking which runs are OWED does, which is `check:head-has-run` (bean `3pqn`). `unknown` is handed back too, never admitted and never reported as red (bean `0qjq`): telling somebody their head is unverified when you merely could not look trains them to ignore the signal. The four non-admitting values are LISTED rather than written `not("green")`, because `decision-table.ts` implements no `not()` and threw on every PR that reached this rule (measured 2026-10-03, bean `uoob`); the class is `hand-back`, which is in PRIORITY_CLASSES, where `ci-not-green` was not and failed `placeAll`'s parse.</description>
+        <description>T2. The head does NOT carry every CI run owed for its event, so the train has no evidence about it. Handed back rather than admitted: a member admitted on an absence of red is a member nobody judged. `green` is the ONLY admitting value and the other four are kept apart on purpose -- `red` (an owed run failed), `missing-required` (it HAS runs, but not the owed ones), `none` (GitHub answered and nothing names this head) and `unknown` (could not ask: no network, rate limit, HTTP error). Measured 2026-10-02 on #1889's head 7ab6119405: 9 runs present and all 9 gating job NAMES matching, yet 3 runs `in_progress` with a null conclusion and 3 check SUITES completed as `action_required` having executed nothing -- so a filter for conclusion = failure finds zero. Counting the runs does not catch it; only asking which runs are OWED does, which is `check:head-has-run` (bean `3pqn`). `unknown` is handed back too, never admitted and never reported as red (bean `0qjq`): telling somebody their head is unverified when you merely could not look trains them to ignore the signal.</description>
         <inputEntry id="IE_Hng_1"><text>-</text></inputEntry>
         <inputEntry id="IE_Hng_2"><text>false</text></inputEntry>
         <inputEntry id="IE_Hng_3"><text>-</text></inputEntry>
@@ -144,10 +144,10 @@
         <inputEntry id="IE_Hng_5"><text>-</text></inputEntry>
         <inputEntry id="IE_Hng_6"><text>-</text></inputEntry>
         <inputEntry id="IE_Hng_7"><text>-</text></inputEntry>
-        <inputEntry id="IE_Hng_8"><text>"red","missing-required","none","unknown"</text></inputEntry>
+        <inputEntry id="IE_Hng_8"><text>not("green")</text></inputEntry>
         <inputEntry id="IE_Hng_9"><text>-</text></inputEntry>
         <outputEntry id="OE_Hng_1"><text>"hand back"</text></outputEntry>
-        <outputEntry id="OE_Hng_2"><text>"hand-back"</text></outputEntry>
+        <outputEntry id="OE_Hng_2"><text>"ci-not-green"</text></outputEntry>
         <outputEntry id="OE_Hng_3"><text>91</text></outputEntry>
         <outputEntry id="OE_Hng_4"><text>"alone"</text></outputEntry>
       </rule>
