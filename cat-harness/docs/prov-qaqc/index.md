@@ -18,21 +18,21 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-12 instance(s), 129 step(s) checked, 129 `prov:Activity` emitted, 113 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+12 instance(s), 136 step(s) checked, 136 `prov:Activity` emitted, 116 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
+| `undeclared-actor` | 2 | the actor is not declared in `cat-harness/scenarios/actors/` |
 | `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 79 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `unknown` | 80 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
 | `source-moved` | 18 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
-| `unaddressed` | 9 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
+| `unaddressed` | 10 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
@@ -198,10 +198,12 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### mergetrain--merge-train-2026-10-04a
 
-12 step(s) checked, 12 `prov:Activity` emitted, 8 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/mergetrain--merge-train-2026-10-04a.prov.jsonld' | relative_url }})
+19 step(s) checked, 19 `prov:Activity` emitted, 11 finding(s). Sources: `cat-harness/processes/sdlc/merge-train.bpmn`, `cat-harness/processes/sdlc/pr-checks-present.bpmn`, `cat-harness/processes/sdlc/merge-base.bpmn`. [PROV JSON-LD]({{ '/assets/prov/mergetrain--merge-train-2026-10-04a.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
+| `mergetrain--merge-train-2026-10-04a` | 14 | `Call_ChecksPresent` | `undeclared-actor` | "build-pipeline" is not a declared actor |
+| `mergetrain--merge-train-2026-10-04a` | 14 | `Call_ChecksPresent` | `unknown` | no policy grants perform-task for Process_MergeTrain/Call_ChecksPresent as build-pipeline |
 | `mergetrain--merge-train-2026-10-04a` | 3 | `#2043` | `unaddressed` | entity: no instance in this checkout catalogues "#2043" |
 | `mergetrain--merge-train-2026-10-04a` | 4 | `#2043` | `unaddressed` | entity: no instance in this checkout catalogues "#2043" |
 | `mergetrain--merge-train-2026-10-04a` | 6 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
@@ -210,6 +212,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `mergetrain--merge-train-2026-10-04a` | 10 | `#1898` | `unaddressed` | entity: no instance in this checkout catalogues "#1898" |
 | `mergetrain--merge-train-2026-10-04a` | 11 | `#1898` | `unaddressed` | entity: no instance in this checkout catalogues "#1898" |
 | `mergetrain--merge-train-2026-10-04a` | 12 | `#1898` | `unaddressed` | entity: no instance in this checkout catalogues "#1898" |
+| `mergetrain--merge-train-2026-10-04a` | 14 | `build-pipeline` | `unaddressed` | agent: no instance in this checkout declares actor "build-pipeline" |
 
 ### sampleimport--xlg2-wpro-trial
 
