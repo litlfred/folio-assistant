@@ -49,15 +49,16 @@ that `bun run subgraph:jsonld` frames from `kg-export` — by walking each
 instance's `processes` subgraph. Each row's text is the first sentence of that
 diagram's own `bpmn:documentation`, carried on its `Process` node as
 `summary`. To change what a row says, change the diagram. The
-[derived process index](cat-harness/docs-auto/index/processes/) lists this
+[derived process index](cat-harness/auto-docs/index/processes/) lists this
 instance's corpus of diagrams with their lanes and skills.
 
-**Bootstrap's diagrams are not in the table.** `bootstrap` and
-`bootstrap-tools` sit below this instance, and their processes are kept out of
-its graph on purpose: they publish through their own graph,
-`bootstrap/bootstrap.jsonld` (built by `bootstrap-tools` at deploy), which has
-no named subgraphs and carries no process documentation yet. Their diagrams are in their own
-`processes/` directories.
+**Bootstrap's diagrams are in the table, read from bootstrap's own graph.**
+`bootstrap` and `bootstrap-tools` sit below this instance, and their processes
+are kept out of its graph on purpose (`pve3`): they publish their own named
+subgraphs at their own sites, and the repository index here links each with
+`seeAlso`. The table follows those links, so a row for a bootstrap diagram is
+read from bootstrap's site — and if that site cannot be read, the page says so
+beside the table rather than drawing a shorter one.
 
 What the table cannot tell you is which of two neighbouring processes you are
 in, so that is the only thing said here:
@@ -102,7 +103,7 @@ in, so that is the only thing said here:
 <a href="subgraph/index.jsonld">named-subgraph JSON-LD</a>, which can be read
 directly: each instance's <code>processes/index.hydrated.jsonld</code> holds
 every one of its processes. The same diagrams are listed, without scripts, in the
-<a href="cat-harness/docs-auto/index/processes/">derived process index</a>, apart from
+<a href="cat-harness/auto-docs/index/processes/">derived process index</a>, apart from
 bootstrap's, which are in its own <code>processes/</code> directory.</p>
 </noscript>
 </div>

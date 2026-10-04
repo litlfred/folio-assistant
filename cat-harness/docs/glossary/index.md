@@ -418,8 +418,8 @@ voice
 <li><strong>Folio Assistant platform terms (cat-harness)</strong> (cat-harness, 14 terms) · <a href="{{ '/assets/glossary/cat-harness--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/cat-harness.glossary.json</code></li>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 1 term) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
 <li><strong>WHO house terms</strong> (who-iris, 1 term) · <a href="{{ '/assets/glossary/who-iris--who-terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>who-iris/glossary/who-iris.glossary.json</code></li>
-<li><strong>Swimlane roles</strong> (cat-harness, 53 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
-<li><strong>Swimlane roles</strong> (bootstrap, 7 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/bootstrap/glossary-ledger.json</code></li>
+<li><strong>Swimlane roles</strong> (cat-harness, 53 terms) · <a href="{{ '/cat-harness/auto-docs/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
+<li><strong>Swimlane roles</strong> (bootstrap, 7 terms) · <a href="{{ '/cat-harness/auto-docs/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/bootstrap/glossary-ledger.json</code></li>
 </ul>
 
 ### Extracted from knowledge-graph assets

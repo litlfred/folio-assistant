@@ -29,6 +29,11 @@
       "name": "attestations"
     },
     {
+      "@id": "cat-harness:graphKind/auto-docs",
+      "@type": "bootstrap:GraphKind",
+      "name": "auto-docs"
+    },
+    {
       "@id": "cat-harness:graphKind/cat-harness",
       "@type": "bootstrap:GraphKind",
       "name": "cat-harness"
@@ -47,11 +52,6 @@
       "@id": "cat-harness:graphKind/docs",
       "@type": "bootstrap:GraphKind",
       "name": "docs"
-    },
-    {
-      "@id": "cat-harness:graphKind/docs-auto",
-      "@type": "bootstrap:GraphKind",
-      "name": "docs-auto"
     },
     {
       "@id": "cat-harness:graphKind/external-schema",
@@ -1879,6 +1879,12 @@
       "title": "withheld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/auto-docs-viewer",
+      "@type": "cat-harness:Tool",
+      "name": "auto-docs-viewer",
+      "title": "Generated index pages"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/avatars-css",
       "@type": "cat-harness:Tool",
       "name": "avatars-css",
@@ -1967,12 +1973,6 @@
       "@type": "cat-harness:Tool",
       "name": "discuss",
       "title": "discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/docs-auto-viewer",
-      "@type": "cat-harness:Tool",
-      "name": "docs-auto-viewer",
-      "title": "Generated index pages"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/document-kinds-viewer",

@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/auto-docs-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Generated index pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory."
+        }
+      ],
+      "skos:notation": "auto-docs-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#auto-docs-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/avatars-css",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -311,26 +331,6 @@
       ],
       "skos:notation": "discuss",
       "dcterms:source": "cat-harness/tools/index.ts#discuss",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/docs-auto-viewer",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Generated index pages"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory."
-        }
-      ],
-      "skos:notation": "docs-auto-viewer",
-      "dcterms:source": "cat-harness/tools/viewers.ts#docs-auto-viewer",
       "skos:note": "candidate"
     },
     {

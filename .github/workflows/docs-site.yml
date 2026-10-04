@@ -146,6 +146,19 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      # The site READS the work plan at build time — `gen-docs-pages.ts` writes
+      # `assets/beans/index.json` from `beanDefsDir()`, and `state-visualizer`
+      # renders the store — so the graph has to be on disk before those steps
+      # run. After arc `fs43`'s cutover it is on `cat/cat-harness/beans` and
+      # this is what puts it there; inert while nothing is tip-keyed (bean
+      # `9ofm`, §4 `site` row).
+      #
+      # Deliberately NOT paired with a trigger on pushes to the bean branch.
+      # That needs more than a path: this job checks out `github.ref`, which
+      # for such a push is a branch carrying no code, and the concurrency group
+      # is keyed by the same ref. Bean `fwtz` carries it. Note what is and is
+      # not a regression: `beans/**` is not in this workflow's path filter
+      # today either, so a bean edit does not rebuild the site NOW.
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and

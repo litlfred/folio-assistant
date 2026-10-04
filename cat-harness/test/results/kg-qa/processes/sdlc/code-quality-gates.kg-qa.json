@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/sdlc/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:4955dddb784dbc1df466bc4d0b94ef2bf16101dff13f39c36f0a83e28466f6dd",
+  "source_hash": "sha256:f3c74e675e0b21ffec9051d233ca467efd77af8dc20b646068471fc01c0fbd20",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -105,13 +105,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/sdlc/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -119,8 +114,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 2,
+    "pass": 17,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

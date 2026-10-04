@@ -7,6 +7,14 @@
   "source": "Tools of cat-harness",
   "terms": [
     {
+      "id": "auto-docs-viewer",
+      "prefLabel": "Generated index pages",
+      "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
+      "notation": "auto-docs-viewer",
+      "source": "cat-harness/tools/viewers.ts#auto-docs-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "avatars-css",
       "prefLabel": "Avatar stylesheet",
       "definition": "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
@@ -124,14 +132,6 @@
       "definition": "Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds.",
       "notation": "discuss",
       "source": "cat-harness/tools/index.ts#discuss",
-      "status": "candidate"
-    },
-    {
-      "id": "docs-auto-viewer",
-      "prefLabel": "Generated index pages",
-      "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
-      "notation": "docs-auto-viewer",
-      "source": "cat-harness/tools/viewers.ts#docs-auto-viewer",
       "status": "candidate"
     },
     {

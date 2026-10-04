@@ -164,7 +164,7 @@ describe("check:wireframes", () => {
     expect(exitOf(judgeWireframes({ ...clean, declared: [], covered: [] }))).toBe(2);
   });
 
-  // This checkout carries real wireframe gaps today (three `docs-auto` skill
+  // This checkout carries real wireframe gaps today (three `auto-docs` skill
   // indexes renamed under the index that maps them), so the CLI half asserts
   // AGREEMENT with the in-process judgement and NO WRITE, not exit 0.
   test("CLI judge mode writes nothing and agrees with the in-process judgement", () => {

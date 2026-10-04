@@ -332,12 +332,12 @@ Generate an IG instance's reader-facing pages from its artefact index <span clas
 <p>Write <code>&lt;instance&gt;/docs/</code> — an index page, one page per artefact, a page per over-large category and per menu group — from <code>fhir-artifact-index/index.json</code> (and <code>menu.json</code> when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its <code>/smart-base/</code> landing page with <code>--summary</code>. For an IG whose SOURCE is at hand, <a href="#fhir-harness--kg-tools--build-ig-site"><code>build-ig-site</code></a> renders the IG's own pages instead; this is for an IG known only by what it published.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-pages</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--docs-auto-viewer" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-tools--auto-docs-viewer" data-fa-state="extracted" data-fa-gloss="">
 Generated index pages <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#docs-auto-viewer</code></a></p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#auto-docs-viewer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--github" data-fa-state="extracted" data-fa-gloss="">
 GitHub <span class="fa-gloss-status">candidate, extracted</span>

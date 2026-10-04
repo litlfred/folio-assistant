@@ -7,9 +7,9 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
       "@type": "cat-harness:SkillPackage",
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/auto-docs",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-windows",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/html-rendering-qc",
@@ -26,12 +26,31 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
       ],
-      "description": "Rendering and publication surfaces: the docs site and its generators (docs-auto, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
+      "description": "Rendering and publication surfaces: the docs site and its generators (auto-docs, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
       "name": "ui-core",
       "path": "skills/ui/ui-core",
       "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/auto-docs",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 152,
+      "instructionsPath": "skills/ui/ui-core/auto-docs.md",
+      "name": "auto-docs",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ca441f913e20dc3504eb6c388c991816756b6750f9c7b073a361becbbc6b0635",
+        "bytes": 7585,
+        "sha256": "ca441f913e20dc3504eb6c388c991816756b6750f9c7b073a361becbbc6b0635"
+      },
+      "title": "auto-docs — the index is generated, the meaning is authored"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange",
@@ -70,25 +89,6 @@
         "sha256": "b05e5dff29b3689b6ebcc6b41dc8edcbbd66f239c05d16fb06792598cb2e7e21"
       },
       "title": "Start in the avatar, open into a window"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
-      "@type": "bootstrap:Skill",
-      "ambiguous": false,
-      "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
-      "hasIOContract": false,
-      "hasInstructions": true,
-      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 152,
-      "instructionsPath": "skills/ui/ui-core/docs-auto.md",
-      "name": "docs-auto",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/efa842bf6ee02981323ab458313181f5ad25ba4d03a7fbb63b997d5bb16428e4",
-        "bytes": 7585,
-        "sha256": "efa842bf6ee02981323ab458313181f5ad25ba4d03a7fbb63b997d5bb16428e4"
-      },
-      "title": "docs-auto — the index is generated, the meaning is authored"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
@@ -197,9 +197,9 @@
       "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
       "name": "liquid-templates",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c77b4d8401dfaad4c110ed7c35dbc6ce3033b3045edca0e37aee33f6cca75c8f",
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d0dbcd7e15565130cd06826df36239d097b1d4afb52931312a10162a3758133",
         "bytes": 9315,
-        "sha256": "c77b4d8401dfaad4c110ed7c35dbc6ce3033b3045edca0e37aee33f6cca75c8f"
+        "sha256": "7d0dbcd7e15565130cd06826df36239d097b1d4afb52931312a10162a3758133"
       },
       "title": "Liquid templates — layout only, every fact from the graph"
     },

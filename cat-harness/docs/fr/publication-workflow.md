@@ -48,13 +48,13 @@ de ces affirmations comportait une erreur de **seize** lorsqu'elle a enfin été
 trente-neuf alors qu'il y en avait cinquante-cinq.
 
 Un décompte en prose est une affirmation ; un index dérivé est une preuve. Le nombre réside
-donc dans [l'index dérivé des processus](../cat-harness/docs-auto/index/processes/),
-qui est généré à partir de la déclaration par `bun run docs:auto`, contrôlé en CI,
+donc dans [l'index dérivé des processus](../cat-harness/auto-docs/index/processes/),
+qui est généré à partir de la déclaration par `bun run auto:docs`, contrôlé en CI,
 et ne peut pas diverger des diagrammes qu'il dénombre. **Le rôle de cette page est la moitié
 qui ne peut pas être générée** — à quoi *sert* chaque processus, dans quel cas vous vous y
 trouveriez, et quel processus voisin vous recherchez réellement.
 
-Cette séparation est la règle de la compétence `docs-auto`, et cette page en est l'exemple
+Cette séparation est la règle de la compétence `auto-docs`, et cette page en est l'exemple
 concret : l'index indique ce qui existe et ce que chaque diagramme déclare à propos de
 lui-même ; tout ce qui suit détaille ce que l'index ne peut structurellement pas exprimer.
 

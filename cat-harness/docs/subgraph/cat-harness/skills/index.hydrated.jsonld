@@ -10,7 +10,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
+      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "fileCount": 279,
       "holdsGraph": [
         "bootstrap:graphKind/skills"
@@ -1657,9 +1657,9 @@
               "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
               "name": "directory-conventions",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b7a469071c42957361d7fe374b34ba0f3f3caea3c11bf60965dcc47811cc3733",
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae5c7960543decd0b675976391b6dcba485124b21250395c84762af597737651",
                 "bytes": 111561,
-                "sha256": "b7a469071c42957361d7fe374b34ba0f3f3caea3c11bf60965dcc47811cc3733"
+                "sha256": "ae5c7960543decd0b675976391b6dcba485124b21250395c84762af597737651"
               },
               "title": "Directory conventions — what an instance declares it scans"
             },
@@ -1828,9 +1828,9 @@
               "instructionsPath": "skills/kg/kg-core/schema-management.md",
               "name": "schema-management",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d321dd1054015346202e3452f97747479a4332285dad1a8c485227dbf6d9537b",
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa54602fb8956b4ce8cf48827d2baf90bca5ec060b70fc23c02f7621e654b1c9",
                 "bytes": 22804,
-                "sha256": "d321dd1054015346202e3452f97747479a4332285dad1a8c485227dbf6d9537b"
+                "sha256": "fa54602fb8956b4ce8cf48827d2baf90bca5ec060b70fc23c02f7621e654b1c9"
               },
               "title": "Managing a schema — the graph, the viewer, and the three answers that are not \"fine\""
             },
@@ -1847,9 +1847,9 @@
               "instructionsPath": "skills/kg/kg-core/skill-registration.md",
               "name": "skill-registration",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b4a84b0d2dc03a3c59155c886d4b736669033a4255b2f6cc0851e91ebedb66ac",
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/19104094799f5127dab38b3549693353e6bffcf1e3a9d4ca6645f917eeb2010a",
                 "bytes": 6797,
-                "sha256": "b4a84b0d2dc03a3c59155c886d4b736669033a4255b2f6cc0851e91ebedb66ac"
+                "sha256": "19104094799f5127dab38b3549693353e6bffcf1e3a9d4ca6645f917eeb2010a"
               },
               "title": "Adding a skill"
             },
@@ -3492,9 +3492,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/coordinate.md",
               "name": "coordinate",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fbfbf041411acc56b869551d9f4a2d88c62d8dc87bda37c225f6a90859553c75",
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/03081acdab080d03565ea2d0c354aa29438c6fbb79db16cdfc212d6f1ee28ee3",
                 "bytes": 26472,
-                "sha256": "fbfbf041411acc56b869551d9f4a2d88c62d8dc87bda37c225f6a90859553c75"
+                "sha256": "03081acdab080d03565ea2d0c354aa29438c6fbb79db16cdfc212d6f1ee28ee3"
               },
               "title": "/coordinate — multi-agent / multi-PR coordination"
             },
@@ -3814,9 +3814,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
               "name": "merge-conflict-patterns",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c6501abb96f750e81e25ba6033e1ee5606e02a7c2d5dcd00704d04d06837dbfb",
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/217bfbb734fbc766b616dd3316422832ff3fa3d2f5b1aed1b3efa9228cc3ac4e",
                 "bytes": 33929,
-                "sha256": "c6501abb96f750e81e25ba6033e1ee5606e02a7c2d5dcd00704d04d06837dbfb"
+                "sha256": "217bfbb734fbc766b616dd3316422832ff3fa3d2f5b1aed1b3efa9228cc3ac4e"
               },
               "title": "Merge-conflict patterns — what a merge may resolve on its own"
             },
@@ -4666,9 +4666,9 @@
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
               "@type": "cat-harness:SkillPackage",
               "declaresSkill": [
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/auto-docs",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-windows",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/html-rendering-qc",
@@ -4685,12 +4685,31 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visualizer-loading",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
               ],
-              "description": "Rendering and publication surfaces: the docs site and its generators (docs-auto, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
+              "description": "Rendering and publication surfaces: the docs site and its generators (auto-docs, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
               "hasManifest": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
               "name": "ui-core",
               "path": "skills/ui/ui-core",
               "version": "0.1.0"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/auto-docs",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 152,
+              "instructionsPath": "skills/ui/ui-core/auto-docs.md",
+              "name": "auto-docs",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ca441f913e20dc3504eb6c388c991816756b6750f9c7b073a361becbbc6b0635",
+                "bytes": 7585,
+                "sha256": "ca441f913e20dc3504eb6c388c991816756b6750f9c7b073a361becbbc6b0635"
+              },
+              "title": "auto-docs — the index is generated, the meaning is authored"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange",
@@ -4729,25 +4748,6 @@
                 "sha256": "b05e5dff29b3689b6ebcc6b41dc8edcbbd66f239c05d16fb06792598cb2e7e21"
               },
               "title": "Start in the avatar, open into a window"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core",
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 152,
-              "instructionsPath": "skills/ui/ui-core/docs-auto.md",
-              "name": "docs-auto",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/efa842bf6ee02981323ab458313181f5ad25ba4d03a7fbb63b997d5bb16428e4",
-                "bytes": 7585,
-                "sha256": "efa842bf6ee02981323ab458313181f5ad25ba4d03a7fbb63b997d5bb16428e4"
-              },
-              "title": "docs-auto — the index is generated, the meaning is authored"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
@@ -4856,9 +4856,9 @@
               "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
               "name": "liquid-templates",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c77b4d8401dfaad4c110ed7c35dbc6ce3033b3045edca0e37aee33f6cca75c8f",
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d0dbcd7e15565130cd06826df36239d097b1d4afb52931312a10162a3758133",
                 "bytes": 9315,
-                "sha256": "c77b4d8401dfaad4c110ed7c35dbc6ce3033b3045edca0e37aee33f6cca75c8f"
+                "sha256": "7d0dbcd7e15565130cd06826df36239d097b1d4afb52931312a10162a3758133"
               },
               "title": "Liquid templates — layout only, every fact from the graph"
             },
