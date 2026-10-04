@@ -1213,6 +1213,12 @@ jobs:
           # that cannot show whether the railing worked, which is exactly how
           # this defect was found in the first place.
           bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+
+          # The root index (bean `4ak5` item 3), as the deploy builds it: LAST,
+          # over the exports written above. Here because `check:invocation-parity`
+          # requires it, and a preview without it cannot show whether the map
+          # is whole. `--base-url` so its `@id`s and `url`s name the preview.
+          bun run cat-harness/scripts/root-index.ts --site ./_site --base-url "$BASE"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
