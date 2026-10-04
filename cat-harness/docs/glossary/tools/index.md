@@ -1222,6 +1222,13 @@ Wireframe check at web and mobile viewports <span class="fa-gloss-status">candid
 <p>Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records <code>script</code> entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#wireframe-check</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--witness-conformance" data-fa-state="extracted" data-fa-gloss="">
+Witness conformance report <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Check every <code>*.witness.json</code> in the folio's declared <code>computation-witness</code> directories against the two schemas in <code>schemas/computation-witness.ts</code>: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#witness-conformance</code></a></p>
+</dd>
 </dl>
 
 <script>
