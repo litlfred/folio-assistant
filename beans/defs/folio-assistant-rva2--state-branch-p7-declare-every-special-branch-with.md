@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-03T00:12:57Z
+updated_at: 2026-10-04T16:20:19Z
 parent: folio-assistant-fs43
 ---
 
@@ -76,3 +76,7 @@ also fix the table's `name` fields to the slashed form in the same change. Leavi
 flat means a writer resolves `cat-state`, finds nothing, falls through to the legacy
 `state` which no longer exists, and creates a THIRD name for a branch that already has
 two.
+
+## 2026-10-04: route seeds are unmeasured by state-drift (from lehh)
+
+Both route-keyed seeds, cat/cat-harness/uml-overview and cat/fhir-harness/ig-docs, write `seededFrom` (a sha) and `directories[]` into their manifests, with no `source.ref` and no `graphs[]`. So state-drift reports neither (ig-docs has no row; a row would be the wrong direction under the 2026-10-03 ruling). When this bean moves the readers onto declarations, it should read a route seed as current with main by construction, compare `directories[].path`, and drop what the manifest's `excluded` globs name. A draft that did this over rows was written and dropped, unpushed, on the owner's correction. Measured by hand: ig-docs is in sync with main for all three IGs.
