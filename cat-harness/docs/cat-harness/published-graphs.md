@@ -61,11 +61,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `block-kinds`
 
-0 of 2 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
 - folio-assistant-core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
+- SMART Base — *declared, not published*
 
 ### `cat-harness`
 
@@ -254,6 +255,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - smart-trust — *declared, not published*
 
+### `pipeline-plugins`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- folio-assistant-sci — *declared, not published*
+
 ### `policies`
 
 0 of 1 published.
@@ -295,6 +303,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - smart-immunizations — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
+
+### `qa-checkers`
+
+0 of 2 published.
+{: .fa-hx-dim }
+
+- folio-assistant-sci — *declared, not published*
+- SMART Base — *declared, not published*
 
 ### `requirements`
 

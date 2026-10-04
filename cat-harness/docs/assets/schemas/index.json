@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 219,
+      "count": 220,
       "unit": "modules"
     }
   },
@@ -289,6 +289,14 @@
       "name": "content-types-base",
       "graphNode": "schema",
       "summary": "The content types this layer owns, registered at load time.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/contribution-nodes.ts",
+      "instance": "cat-harness",
+      "name": "contribution-nodes",
+      "graphNode": "undeclared",
+      "summary": "Contributions as KG nodes: a harness's QA checkers and pipeline-plugin",
       "isTest": false
     },
     {
@@ -11371,6 +11379,136 @@
       ],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/contribution-nodes.ts#OwnCodeRefSchema",
+      "name": "OwnCodeRefSchema",
+      "module": "cat-harness/schemas/contribution-nodes.ts",
+      "kind": "zod-scalar",
+      "doc": "`path#Export`, instance-relative, no `..`, no `instance:` prefix.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNode",
+      "name": "PipelinePluginNode",
+      "module": "cat-harness/schemas/contribution-nodes.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema",
+      "name": "PipelinePluginNodeSchema",
+      "module": "cat-harness/schemas/contribution-nodes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(PIPELINE_PLUGIN_NODE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "slot",
+          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The generic pipeline slot this fills (`content/pipeline/pipeline-plugins.ts`); the key into the table."
+        },
+        {
+          "name": "implementation",
+          "type": "OwnCodeRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The table of slot implementations, typed against the slots' contract."
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/contribution-nodes.ts#OwnCodeRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "PIPELINE_PLUGIN_NODE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNode",
+      "name": "QaCheckerNode",
+      "module": "cat-harness/schemas/contribution-nodes.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema",
+      "name": "QaCheckerNodeSchema",
+      "module": "cat-harness/schemas/contribution-nodes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(QA_CHECKER_NODE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "criterion",
+          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The QA criterion this checker answers; the key into the table `check` names."
+        },
+        {
+          "name": "check",
+          "type": "OwnCodeRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The dispatch table holding the checker. Its path is the `sourceFile` freshness is hashed over."
+        },
+        {
+          "name": "rationale",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/contribution-nodes.ts#OwnCodeRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "QA_CHECKER_NODE_SCHEMA",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -53913,6 +54051,22 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema",
+      "to": "cat-harness/schemas/contribution-nodes.ts#OwnCodeRefSchema",
+      "via": "implementation",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema",
+      "to": "cat-harness/schemas/contribution-nodes.ts#OwnCodeRefSchema",
+      "via": "check",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/contributions.ts#AdapterContribution",

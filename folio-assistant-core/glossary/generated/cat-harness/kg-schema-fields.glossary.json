@@ -1339,7 +1339,7 @@
     {
       "id": "block-kind-node.blockkindnodeschema.profile",
       "prefLabel": "BlockKindNodeSchema.profile",
-      "definition": "The NARROWEST content profile that admits the kind. Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim.",
+      "definition": "The NARROWEST content profile that admits the kind (paper-adapter kinds only; a contributed adapter's kind is in no profile). Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim.",
       "source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile",
       "status": "candidate"
     },
@@ -3399,6 +3399,34 @@
       "prefLabel": "RepositoryDescription.types",
       "definition": "Every type whose marker is present, in registration order.",
       "source": "cat-harness/schemas/content-type.ts#RepositoryDescription.types",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.pipelinepluginnodeschema.implementation",
+      "prefLabel": "PipelinePluginNodeSchema.implementation",
+      "definition": "The table of slot implementations, typed against the slots' contract.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.implementation",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.pipelinepluginnodeschema.slot",
+      "prefLabel": "PipelinePluginNodeSchema.slot",
+      "definition": "The generic pipeline slot this fills (`content/pipeline/pipeline-plugins.ts`); the key into the table.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.slot",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.qacheckernodeschema.check",
+      "prefLabel": "QaCheckerNodeSchema.check",
+      "definition": "The dispatch table holding the checker. Its path is the `sourceFile` freshness is hashed over.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.check",
+      "status": "candidate"
+    },
+    {
+      "id": "contribution-nodes.qacheckernodeschema.criterion",
+      "prefLabel": "QaCheckerNodeSchema.criterion",
+      "definition": "The QA criterion this checker answers; the key into the table `check` names.",
+      "source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.criterion",
       "status": "candidate"
     },
     {

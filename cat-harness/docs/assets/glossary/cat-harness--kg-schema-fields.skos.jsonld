@@ -3636,7 +3636,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The NARROWEST content profile that admits the kind. Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim."
+          "@value": "The NARROWEST content profile that admits the kind (paper-adapter kinds only; a contributed adapter's kind is in no profile). Profiles nest (`document` ⊂ `paper`), so `document` means both and `paper` means the paper profile only — a formal mathematical claim."
         }
       ],
       "dcterms:source": "cat-harness/schemas/block-kind-node.ts#BlockKindNodeSchema.profile",
@@ -9226,6 +9226,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/content-type.ts#RepositoryDescription.types",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contribution-nodes.pipelinepluginnodeschema.implementation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PipelinePluginNodeSchema.implementation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The table of slot implementations, typed against the slots' contract."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.implementation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contribution-nodes.pipelinepluginnodeschema.slot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PipelinePluginNodeSchema.slot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The generic pipeline slot this fills (`content/pipeline/pipeline-plugins.ts`); the key into the table."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#PipelinePluginNodeSchema.slot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contribution-nodes.qacheckernodeschema.check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaCheckerNodeSchema.check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The dispatch table holding the checker. Its path is the `sourceFile` freshness is hashed over."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/contribution-nodes.qacheckernodeschema.criterion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaCheckerNodeSchema.criterion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The QA criterion this checker answers; the key into the table `check` names."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/contribution-nodes.ts#QaCheckerNodeSchema.criterion",
       "skos:note": "candidate"
     },
     {

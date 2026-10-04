@@ -12,5 +12,4 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant
 |---|---|---|
 | [`catalogue.json`](catalogue.json) | Catalogue |  |
 | [`review-verdicts.json`](review-verdicts.json) | Review verdicts |  |
-| [`uploads.json`](uploads.json) | Uploads |  |
 <!-- kg:subgraph:end -->

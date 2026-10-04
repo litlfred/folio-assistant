@@ -1,5 +1,23 @@
 classDiagram
   direction LR
+  namespace folio_assistant_sci__folio_assistant_sci_qa_checkers {
+    class folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1["folio-qa-checker/v1"] {
+      <<json: QaCheckerNodeSchema>>
+      $schema [1] 'folio-qa-checker/v1'
+      criterion [1] string
+      check [1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_pipeline_plugins {
+    class folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1["folio-pipeline-plugin/v1"] {
+      <<json: PipelinePluginNodeSchema>>
+      $schema [1] 'folio-pipeline-plugin/v1'
+      slot [1] string
+      implementation [1] string
+      rationale [0..1] string
+    }
+  }
   namespace folio_assistant_sci__folio_assistant_sci_translations {
     class folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig["TranslationConfig"] {
       <<json: TranslationConfigSchema>>
@@ -16,15 +34,15 @@ classDiagram
       $schema [1] 'folio-block-kind/v1'
       kind [1] string
       adapter [1] string
-      profile [1] document | paper
+      profile [0..1] document | paper
       builder [0..1] string
       labelPrefix [1] string
       prefixEnforced [0..1] boolean
       provable [0..1] boolean
       folioType [1] string
       docoType [0..1] string
-      heading [1] string
-      headingPlural [1] string
+      heading [0..1] string
+      headingPlural [0..1] string
       indexRank [0..1] integer
       rationale [0..1] string
     }
@@ -315,6 +333,8 @@ classDiagram
       <<could not determine>>
     }
   }
+  cssClass "folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1" fa_uml_kind_qa_checkers
+  cssClass "folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" fa_uml_kind_pipeline_plugins
   cssClass "folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig" fa_uml_kind_translation_sources
   cssClass "folio_assistant_sci_folio_assistant_sci_block_kinds_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
   cssClass "folio_assistant_sci_folio_assistant_sci_kinds_folio_graph_kind_v1_folio_graph_kind_v1" fa_uml_kind_kinds

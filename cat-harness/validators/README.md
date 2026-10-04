@@ -43,7 +43,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`merge-queue-merge-queue-entry.json`](merge-queue-merge-queue-entry.json) | data |  |
 | [`odrl-policy.json`](odrl-policy.json) | data |  |
 | [`pinned-terminology.json`](pinned-terminology.json) | data |  |
+| [`pipeline-plugin-node.json`](pipeline-plugin-node.json) | data |  |
 | [`qa-attestations.json`](qa-attestations.json) | data |  |
+| [`qa-checker-node.json`](qa-checker-node.json) | data |  |
 | [`qa-index.json`](qa-index.json) | data |  |
 | [`qa-report.json`](qa-report.json) | data |  |
 | [`qa-translation-pages.json`](qa-translation-pages.json) | data |  |

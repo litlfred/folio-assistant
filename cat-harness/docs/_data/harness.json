@@ -300,7 +300,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 219,
+      "count": 220,
       "unit": "modules"
     },
     {
@@ -999,12 +999,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 14
+          "value": 16
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 13
+          "value": 15
         },
         {
           "id": "views",
@@ -1013,6 +1013,11 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "block-kinds",
+          "note": "no viewer yet",
+          "label": "Block kinds"
+        },
         {
           "kind": "docs",
           "path": "/cat-harness/auto-docs/index/docs/smart-base-docs/",
@@ -1062,6 +1067,11 @@
           "label": "QA"
         },
         {
+          "kind": "qa-checkers",
+          "note": "no viewer yet",
+          "label": "QA checkers"
+        },
+        {
           "kind": "themes",
           "note": "no viewer yet",
           "label": "Themes"
@@ -1083,6 +1093,22 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "smart-base-qa-checkers",
+          "kinds": [
+            "qa-checkers"
+          ],
+          "where": "local",
+          "path": "smart-base/qa-checkers/"
+        },
+        {
+          "id": "smart-base-block-kinds",
+          "kinds": [
+            "block-kinds"
+          ],
+          "where": "local",
+          "path": "smart-base/block-kinds/"
+        },
         {
           "id": "smart-base-translations",
           "kinds": [
@@ -1198,7 +1224,7 @@
         }
       ],
       "findings": [
-        "smart-base: declares 5 graph(s) with no published viewer — external-schema, qa, themes, tools, translation-sources. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 7 graph(s) with no published viewer — block-kinds, external-schema, qa, qa-checkers, themes, tools, translation-sources. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: a viewer is published at /cat-harness/schemas/smart-base/ for a \"schemas\" graph this instance does not declare. Declare it and the tile links it."
       ],
@@ -1488,12 +1514,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 14
+          "value": 16
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 12
+          "value": 14
         },
         {
           "id": "views",
@@ -1533,6 +1559,11 @@
           "label": "Methodologies"
         },
         {
+          "kind": "pipeline-plugins",
+          "note": "no viewer yet",
+          "label": "Pipeline plugins"
+        },
+        {
           "kind": "processes",
           "path": "/processes/",
           "label": "Processes"
@@ -1541,6 +1572,11 @@
           "kind": "qa",
           "note": "no viewer yet",
           "label": "QA"
+        },
+        {
+          "kind": "qa-checkers",
+          "note": "no viewer yet",
+          "label": "QA checkers"
         },
         {
           "kind": "schemas",
@@ -1565,6 +1601,22 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "folio-assistant-sci-qa-checkers",
+          "kinds": [
+            "qa-checkers"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/qa-checkers/"
+        },
+        {
+          "id": "folio-assistant-sci-pipeline-plugins",
+          "kinds": [
+            "pipeline-plugins"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/pipeline-plugins/"
+        },
         {
           "id": "folio-assistant-sci-translations",
           "kinds": [
@@ -1679,7 +1731,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 6 graph(s) with no published viewer — attestations, block-kinds, code, kinds, qa, translation-sources. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 8 graph(s) with no published viewer — attestations, block-kinds, code, kinds, pipeline-plugins, qa, qa-checkers, translation-sources. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -3380,6 +3432,11 @@
       "href": "/smart-base/",
       "folders": [
         {
+          "kind": "block-kinds",
+          "label": "Block kinds",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "docs",
           "label": "Docs",
           "path": "/cat-harness/auto-docs/index/docs/smart-base-docs/"
@@ -3412,6 +3469,11 @@
         {
           "kind": "qa",
           "label": "QA",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "qa-checkers",
+          "label": "QA checkers",
           "note": "no viewer yet"
         },
         {
@@ -4156,7 +4218,7 @@
           },
           {
             "key": "directories",
-            "summary": "13: smart-base-translations, library, methodologies, processes, smart-base-house-processes, s…"
+            "summary": "15: smart-base-qa-checkers, smart-base-block-kinds, smart-base-translations, library, methodo…"
           },
           {
             "key": "needs",
@@ -4260,7 +4322,7 @@
           },
           {
             "key": "directories",
-            "summary": "11: folio-assistant-sci-translations, folio-assistant-sci-block-kinds, folio-assistant-sci-ki…"
+            "summary": "13: folio-assistant-sci-qa-checkers, folio-assistant-sci-pipeline-plugins, folio-assistant-sc…"
           },
           {
             "key": "needs",

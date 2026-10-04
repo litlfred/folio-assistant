@@ -90,15 +90,15 @@ classDiagram
       $schema [1] 'folio-block-kind/v1'
       kind [1] string
       adapter [1] string
-      profile [1] document | paper
+      profile [0..1] document | paper
       builder [0..1] string
       labelPrefix [1] string
       prefixEnforced [0..1] boolean
       provable [0..1] boolean
       folioType [1] string
       docoType [0..1] string
-      heading [1] string
-      headingPlural [1] string
+      heading [0..1] string
+      headingPlural [0..1] string
       indexRank [0..1] integer
       rationale [0..1] string
     }

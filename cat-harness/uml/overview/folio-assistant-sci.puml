@@ -8,6 +8,22 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
+package "folio-assistant-sci/folio-assistant-sci-qa-checkers" as pkg_folio_assistant_sci_folio_assistant_sci_qa_checkers <<qa-checkers>> {
+  class "folio-qa-checker/v1" as folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1 <<json: QaCheckerNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-qa-checker/v1'
+    criterion [1] : string
+    check [1] : string
+    rationale [0..1] : string
+  }
+}
+package "folio-assistant-sci/folio-assistant-sci-pipeline-plugins" as pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins <<pipeline-plugins>> {
+  class "folio-pipeline-plugin/v1" as folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1 <<json: PipelinePluginNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-pipeline-plugin/v1'
+    slot [1] : string
+    implementation [1] : string
+    rationale [0..1] : string
+  }
+}
 package "folio-assistant-sci/folio-assistant-sci-translations" as pkg_folio_assistant_sci_folio_assistant_sci_translations <<translation-sources>> {
   class "TranslationConfig" as folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
     defaultLocale [0..1] : string
@@ -22,15 +38,15 @@ package "folio-assistant-sci/folio-assistant-sci-block-kinds" as pkg_folio_assis
     $schema [1] : 'folio-block-kind/v1'
     kind [1] : string
     adapter [1] : string
-    profile [1] : document | paper
+    profile [0..1] : document | paper
     builder [0..1] : string
     labelPrefix [1] : string
     prefixEnforced [0..1] : boolean
     provable [0..1] : boolean
     folioType [1] : string
     docoType [0..1] : string
-    heading [1] : string
-    headingPlural [1] : string
+    heading [0..1] : string
+    headingPlural [0..1] : string
     indexRank [0..1] : integer
     rationale [0..1] : string
   }
@@ -301,7 +317,9 @@ folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_So
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
 folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_sci_folio_assistant_sci_translations pkg_folio_assistant_sci_folio_assistant_sci_block_kinds pkg_folio_assistant_sci_folio_assistant_sci_kinds pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_skills pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_sci_sources pkg_folio_assistant_sci_sci_processes pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_attestations pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
+' grid: portrait, 3 column(s) — pkg_folio_assistant_sci_folio_assistant_sci_qa_checkers pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins pkg_folio_assistant_sci_folio_assistant_sci_translations pkg_folio_assistant_sci_folio_assistant_sci_block_kinds pkg_folio_assistant_sci_folio_assistant_sci_kinds pkg_folio_assistant_sci_library pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_skills pkg_folio_assistant_sci_sci_adapters pkg_folio_assistant_sci_sci_sources pkg_folio_assistant_sci_sci_processes pkg_folio_assistant_sci_qa pkg_folio_assistant_sci_attestations pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_lean_skills pkg_folio_assistant_sci_data_skills
+pkg_folio_assistant_sci_folio_assistant_sci_qa_checkers -[hidden]down- pkg_folio_assistant_sci_folio_assistant_sci_block_kinds
+pkg_folio_assistant_sci_folio_assistant_sci_pipeline_plugins -[hidden]down- pkg_folio_assistant_sci_folio_assistant_sci_kinds
 pkg_folio_assistant_sci_folio_assistant_sci_translations -[hidden]down- pkg_folio_assistant_sci_library
 pkg_folio_assistant_sci_folio_assistant_sci_block_kinds -[hidden]down- pkg_folio_assistant_sci_sci_methodologies
 pkg_folio_assistant_sci_folio_assistant_sci_kinds -[hidden]down- pkg_folio_assistant_sci_skills
