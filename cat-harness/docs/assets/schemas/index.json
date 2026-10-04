@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 216,
+      "count": 214,
       "unit": "modules"
     }
   },
@@ -13,7 +13,6 @@
     "folio-assistant-core/schemas",
     "folio-assistant-sci/schemas",
     "folio-assistant-sci/sources",
-    "schemas",
     "smart-base/schemas",
     "who-iris/sources"
   ],
@@ -677,14 +676,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/landing-instance.test.ts",
-      "instance": "cat-harness",
-      "name": "landing-instance.test",
-      "graphNode": "undeclared",
-      "summary": "`resolveLandingInstance` and `check:landing-instance` (issue #1904).",
-      "isTest": true
-    },
-    {
       "module": "cat-harness/schemas/landing-sticky.test.ts",
       "instance": "cat-harness",
       "name": "landing-sticky.test",
@@ -968,14 +959,6 @@
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/qa-attestations-criteria.test.ts",
-      "instance": "cat-harness",
-      "name": "qa-attestations-criteria.test",
-      "graphNode": "undeclared",
-      "summary": "The attestation store's block-qa and translation-qa families (bean `8wj1`,",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/qa-attestations.test.ts",
@@ -17687,6 +17670,32 @@
           "array": false
         },
         {
+          "name": "tileIcon",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The navbar tile icon (an icon name, as `graph-tiles.ts` spells it)."
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a directory of this kind holds: the kind table's `contents`, generated from here."
+        },
+        {
+          "name": "renderableNote",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "anyLayer",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "rationale",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -17879,6 +17888,34 @@
           "optional": true,
           "array": false,
           "doc": "The kind's mark, when the kind is DECLARED as a node (bean dmx1) rather"
+        },
+        {
+          "name": "tileIcon",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The navbar tile icon for a DECLARED kind (bean dmx1); cat-harness's own kinds keep theirs in graph-tiles.ts."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "What a directory of this kind HOLDS, as the kind table states it: the"
+        },
+        {
+          "name": "renderableNote",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A remark the table's `renderable` column carries beside yes/no (\"the plain just-the-docs pipeline\")."
+        },
+        {
+          "name": "anyLayer",
+          "type": "true",
+          "optional": true,
+          "array": false,
+          "doc": "A directory of this kind may be declared by ANY layer, not only the kind's owner (the table's \"and any layer\")."
         }
       ],
       "extendsNames": [],
@@ -32928,45 +32965,6 @@
       "refs": [
         "cat-harness/schemas/subgraph-source.ts#SubgraphSource"
       ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/subgraph-source.ts#SpecialBranchRow",
-      "name": "SpecialBranchRow",
-      "module": "cat-harness/schemas/subgraph-source.ts",
-      "kind": "interface",
-      "doc": "A row of `special-branches.json`, as far as a source needs it.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "shape",
-          "type": "\"branch\" | \"family\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "legacy",
-          "type": "string[]",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
