@@ -395,6 +395,18 @@ describe("take-base when one side deleted the file", () => {
     expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: d, encoding: "utf-8" })).toBe("");
   });
 
+  test("an already-resolved path (no stages) is left alone, never deleted — bean vsv7", () => {
+    expect(takeBaseAction(new Set())).toBe("resolved");
+    // Both sides changed the file; an earlier step resolved and staged it, as
+    // `qa:resolve-conflicts` does before the take-base loop runs.
+    const d = mk("theirs");
+    writeFileSync(join(d, "gen.html"), "resolved earlier\n");
+    execFileSync("git", ["add", "--", "gen.html"], { cwd: d });
+    expect(unmergedStages(d, "gen.html").size).toBe(0);
+    takeBase(d, "gen.html");
+    expect(readFileSync(join(d, "gen.html"), "utf-8")).toBe("resolved earlier\n");
+  });
+
   test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
 });
 

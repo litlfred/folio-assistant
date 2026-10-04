@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vsv7
 title: merge-base take-base can DELETE a generated file and still report proved
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-03T20:05:45Z
-updated_at: 2026-10-03T20:05:45Z
+updated_at: 2026-10-04T06:27:58Z
 parent: folio-assistant-hfag
 ---
 
@@ -17,3 +17,14 @@ Suspected cause: the resolver checks out stage 3 (or 2) for a path the earlier p
 - a failed take-base/take-head checkout aborts the merge (tree restored), never leaves the path deleted
 - the proof step fails when a path present on BOTH sides is absent from the result
 - a test reproduces the stage-0 case
+
+## Root cause (2026-10-04, session_01AxhsSvodhTgaioG1nUBWkh)
+
+`takeBaseAction` read an EMPTY stage set as "the base deleted it": `stages.has(3)` is false for both. `qa:resolve-conflicts` runs before the take-base loop and stages what it resolves, so by the loop those two qa-results paths held no stages and were `git rm`ed. The "not at stage 2/3" log lines are the symptom of the same thing: the path had already left the unmerged set.
+
+## Fixed on #1955
+- `takeBaseAction` returns `resolved` for an empty stage set and `takeBase` leaves the path alone.
+- `merge-base.test.ts`: 'an already-resolved path (no stages) is left alone, never deleted' — fails without the fix (30/1), passes with it (31/0).
+
+## Still open
+- Done-when item 2: the proof step does not yet fail when a path present on BOTH parents is absent from the result. Not done here.

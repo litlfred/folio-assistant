@@ -77,7 +77,13 @@ function syncSubmodules(root: string): void {
  * produced. The other direction (deleted on the branch, changed on the base)
  * has stage 3 and takes it, as before.
  */
-export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" {
+export function takeBaseAction(stages: ReadonlySet<number>): "theirs" | "delete" | "resolved" {
+  // No stages at all is NOT a deletion: the path was already resolved by an
+  // earlier step (`qa:resolve-conflicts` runs first and stages what it
+  // resolves). Reading "no stage 3" there as "the base deleted it" `git rm`ed
+  // two generated kg-export sidecars on #1955, 2026-10-03, while the run still
+  // reported proved (bean `vsv7`).
+  if (stages.size === 0) return "resolved";
   return stages.has(3) ? "theirs" : "delete";
 }
 
@@ -93,7 +99,9 @@ export function unmergedStages(root: string, path: string): Set<number> {
 
 /** Take the base's side of `path`, deletion included; stages the result. */
 export function takeBase(root: string, path: string): void {
-  if (takeBaseAction(unmergedStages(root, path)) === "delete") {
+  const action = takeBaseAction(unmergedStages(root, path));
+  if (action === "resolved") return;
+  if (action === "delete") {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
