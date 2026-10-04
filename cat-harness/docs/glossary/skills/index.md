@@ -84,6 +84,13 @@ archiving-web-pages <span class="fa-gloss-status">candidate, extracted</span>
 <p>Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/archiving-web-pages.md"><code>cat-harness/skills/library/library-core/archiving-web-pages.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--artefact-reachability" data-fa-state="extracted" data-fa-gloss="">
+artefact-reachability <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/artefact-reachability.md"><code>cat-harness/skills/kg/kg-core/artefact-reachability.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--asset-extraction" data-fa-state="extracted" data-fa-gloss="">
 asset-extraction <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

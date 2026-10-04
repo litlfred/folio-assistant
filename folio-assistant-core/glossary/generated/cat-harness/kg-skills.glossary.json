@@ -62,6 +62,14 @@
       "status": "candidate"
     },
     {
+      "id": "artefact-reachability",
+      "prefLabel": "artefact-reachability",
+      "definition": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.",
+      "notation": "artefact-reachability",
+      "source": "cat-harness/skills/kg/kg-core/artefact-reachability.md",
+      "status": "candidate"
+    },
+    {
       "id": "asset-extraction",
       "prefLabel": "asset-extraction",
       "definition": "Reading a container — a zip, a PDF, a saved web page — into the knowledge graph. What goes in by default (metadata), what does not (contents), the three timestamps that sit near each other and mean different things, and why a producer string is evidence.",
