@@ -14,7 +14,9 @@ import {
   NO_WRITER,
   UNGATED_INPUTS,
   WRITER_OVERRIDES,
+  regenPass,
   regenToFixpoint,
+  relabelForMissingBrowser,
   repairableGates,
   scriptOf,
   writerFor,
@@ -250,4 +252,82 @@ describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 
     const fx = await regenToFixpoint(pairs, runner);
     expect(fx.results.map((r) => r.outcome)).toEqual(["regenerated", "current"]);
   });
+});
+
+describe("a writer must WRITE — bean `i1q7`", () => {
+  test("translate-bpmn:bootstrap is the convention writer, and it extracts when run bare", () => {
+    // It printed "Nothing to do. Pass --extract…" and exited 2, so regen ran it,
+    // the check stayed red, and the verdict was "a real defect, not staleness".
+    expect(writerFor(SCRIPTS, "translate-bpmn:bootstrap:check")).toBe("translate-bpmn:bootstrap");
+    expect(SCRIPTS["translate-bpmn:bootstrap"]).toContain("--extract");
+  });
+
+  test("check:published-instance-exports is repaired by re-exporting the bootstrap instance", () => {
+    expect(writerFor(SCRIPTS, "check:published-instance-exports")).toBe("kg:export:bootstrap");
+    expect(SCRIPTS["kg:export:bootstrap"]).toMatch(/kg-export\.ts --instance \.\/bootstrap$/);
+  });
+
+  test("no pair regen uses runs its CHECK as its writer, or a writer that is itself a check", () => {
+    const pairs = [...UNGATED_INPUTS, ...repairableGates(loadGates(REPO, { all: true }), SCRIPTS)];
+    for (const p of pairs) {
+      if (p.writer === undefined) continue;
+      expect(p.writer, p.check).not.toBe(p.check);
+      expect(SCRIPTS[p.writer], `${p.check}'s writer ${p.writer}`).not.toMatch(/--check\b/);
+    }
+  });
+
+  test("a writer that exits non-zero is reported `writer-failed`, not as a defect in the tree", async () => {
+    const runner: Runner = (s) => (s === "x:check" ? false : s !== "x");
+    const { results } = await regenPass([{ check: "x:check", writer: "x" }], runner);
+    expect(results).toEqual([{ check: "x:check", writer: "x", outcome: "writer-failed" }]);
+  });
+
+  test("a writer that exits 0 and changes nothing stays `unrepaired`", async () => {
+    const runner: Runner = (s) => s !== "x:check";
+    expect((await regenPass([{ check: "x:check", writer: "x" }], runner)).results[0]!.outcome).toBe("unrepaired");
+  });
+});
+
+describe("the default asks the WHOLE gate set — bean `i1q7`, item 3", () => {
+  test("render:bpmn:check and bat:sync:check are pairs regen asks by default", () => {
+    // They are outside the fast set only because the e2e job installs a
+    // browser. regen never runs `playwright test`, so that boundary is not
+    // regen's, and render:bpmn was stale after every merge that changed a
+    // process while regen printed it as a footnote.
+    const pairs = repairableGates(loadGates(REPO, { all: true }), SCRIPTS);
+    expect(pairs.find((p) => p.check === "render:bpmn:check")?.writer).toBe("render:bpmn");
+    expect(pairs.find((p) => p.check === "bat:sync:check")?.writer).toBe("bat:sync");
+  });
+
+  test("without a browser, a browser-job failure is `no-browser`, and a fast-set failure keeps its verdict", () => {
+    const results = [
+      { check: "render:bpmn:check", writer: "render:bpmn", outcome: "unrepaired" as const },
+      { check: "voices:viz:check", writer: "voices:viz", outcome: "unrepaired" as const },
+      { check: "bat:sync:check", writer: "bat:sync", outcome: "regenerated" as const },
+    ];
+    const fast = new Set(["voices:viz:check"]);
+    expect(relabelForMissingBrowser(results, fast, false).map((r) => r.outcome)).toEqual([
+      "no-browser",
+      "unrepaired",
+      "regenerated",
+    ]);
+    expect(relabelForMissingBrowser(results, fast, true)).toEqual(results);
+  });
+});
+
+// Bean `wczm` item 1: regen-vs-CI parity for the two gates merge trains 2 and 3
+// found unrepairable (#1876, #1883). Each must reach regen from the REAL
+// workflow, with a writer that exists — or regen calls the tree current and CI
+// goes red on it.
+describe("regen can repair what trains 2 and 3 could not — bean wczm", () => {
+  const pairs = repairableGates(loadGates(REPO, {}), SCRIPTS);
+  for (const [check, writer] of [
+    ["check:l1-complete:check", "l1-complete:write"],
+    ["smart-base:smart-kg-l1:check", "smart-base:smart-kg-l1:all"],
+  ] as const) {
+    test(`${check} is a gate regen asks, and ${writer} is its writer`, () => {
+      expect(pairs.find((p) => p.check === check)).toEqual({ check, writer });
+      expect(SCRIPTS[writer]).toBeDefined();
+    });
+  }
 });

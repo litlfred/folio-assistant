@@ -31,7 +31,7 @@ its own product is an assertion, not evidence. So:
 
 - the criterion `skill-voice-review-current` (`minor`, gated by nothing) asks
   only whether a review exists for the skill and voice **as they are now**;
-- a rule you judge `fail` is recorded in the skill's kg-qa sidecar and printed —
+- a rule you judge `fail` is recorded in the skill's attestation file and printed —
   it is **not** a finding, and it must not be turned into one here.
 
 ## Reviewing one skill against one voice
@@ -74,7 +74,16 @@ its own product is an assertion, not evidence. So:
    The review pins the skill's content hash and the hash of the voice's skill
    rules, and replaces any earlier review of that skill against that voice.
 
-5. **Run `bun run kg:audit`** so the sidecar's criterion reads the new review.
+   **`--sidecar` names the subject, not where the review is written.** A voice
+   review is a judgement, so it is kept as `voice_reviews` in the skill's
+   attestation file, `<instance>/test/attestations/kg-qa/<skill path>.attestations.json`
+   (`qa-attestations/v1`), on `main` — not in the derived kg-qa sidecar, whose
+   record moves to the `qa-reports` branch (bean `2gst`, arc `3fva`). Commit
+   the attestation file. A store that cannot be read is UNKNOWN and the writer
+   refuses rather than overwriting it.
+
+5. **Run `bun run kg:audit`** so the sidecar's criterion reads the new review
+   from the store.
 
 ## When the criterion reports stale
 
