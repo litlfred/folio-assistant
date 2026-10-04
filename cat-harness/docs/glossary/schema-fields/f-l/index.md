@@ -921,6 +921,13 @@ HarnessConfig.interactivity <span class="fa-gloss-status">candidate, extracted</
 <p>Static, interactive, or undetermined — the FOURTH axis (issue #764, O1).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#HarnessConfig.interactivity</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--harness-config.harnessconfig.site" data-fa-state="extracted" data-fa-gloss="">
+HarnessConfig.site <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this instance asks of the published SITE — today only whether it is the landing page (issue #1904). See &#123;@link HarnessSiteSchema}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#HarnessConfig.site</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--harness-config.harnessconfig.subgraphsources" data-fa-state="extracted" data-fa-gloss="">
 HarnessConfig.subgraphSources <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
