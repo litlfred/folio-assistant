@@ -545,6 +545,23 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * one entry. New declarations use `source`.
    */
   storage?: DirectoryStorage;
+
+  /**
+   * What this directory's content is COMPUTED FROM: the declared directory ids
+   * of the graphs whose change can invalidate it, resolved across `needs`
+   * exactly as a document kind's `computedFrom` is (bean `nama`; design note
+   * `docs/proposals/derived-graph-dependencies-2026-10-04.md`).
+   *
+   * On the DERIVED side, by the owner's ruling (2026-10-04, option 1 of 3): the
+   * writer of a derived graph is what knows its inputs, and the edge points down
+   * the stack (an IG's pages name its artefact index, never the reverse). Data
+   * graphs only. A generator is code, and the staging cone (bean `4j86`) reaches
+   * it by its import closure, so code is not declared here a second time.
+   *
+   * Absent means "not declared", not "derived from nothing". `check:derived-from`
+   * says which directories in the `derived` layer still owe an answer.
+   */
+  derivedFrom?: string[];
 }
 
 /** An instance's root declaration. */
@@ -1659,6 +1676,28 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * See {@link DirectoryStorageSchema} — bean `16ei`, arc `3fva`.
    */
   storage: DirectoryStorageSchema.optional(),
+  /**
+   * What this directory's content is COMPUTED FROM: the declared directory ids
+   * of the graphs whose change can invalidate it, resolved across `needs`
+   * exactly as a document kind's `computedFrom` is (bean `nama`; design note
+   * `docs/proposals/derived-graph-dependencies-2026-10-04.md`).
+   *
+   * On the DERIVED side, by the owner's ruling (2026-10-04, option 1 of 3): the
+   * writer of a derived graph is what knows its inputs, and the edge points down
+   * the stack (an IG's pages name its artefact index, never the reverse). Data
+   * graphs only. A generator is code, and the staging cone (bean `4j86`) reaches
+   * it by its import closure, so code is not declared here a second time.
+   *
+   * Absent means "not declared", not "derived from nothing". `check:derived-from`
+   * says which directories in the `derived` layer still owe an answer.
+   * At least one id when present, each non-empty, and no id twice: an empty or
+   * duplicated list says nothing a reader can act on.
+   */
+  derivedFrom: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((ids) => new Set(ids).size === ids.length, { message: "derivedFrom names an id twice" })
+    .optional(),
   /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.

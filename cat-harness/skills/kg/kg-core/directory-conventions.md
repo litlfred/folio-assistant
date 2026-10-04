@@ -825,6 +825,43 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 graph could be mounted from a branch and stays read-only. See
 [`content-context-and-state-graphs`](content-context-and-state-graphs.md).
 
+## What a derived subgraph is computed FROM — `derivedFrom` (owner, 2026-10-04)
+
+`source` and `storage` say where a directory's content is **kept**. `derivedFrom` says
+what it is **computed from**: the declared directory ids of the graphs whose change can
+invalidate it.
+
+```jsonc
+{ "id": "smart-trust-docs", "path": "docs/", "graphKinds": ["docs"],
+  "derivedFrom": ["smart-trust-artifact-index"] }
+```
+
+The owner's three rulings (bean `nama`; design note
+`docs/proposals/derived-graph-dependencies-2026-10-04.md`):
+
+1. **The edge sits on the DERIVED side.** The writer of a derived graph is what knows its
+   inputs, so the edge points down the stack: an IG's pages name its artefact index, and
+   the index never lists the pages. A source-side `rendersTo` (proposal #1966) was
+   rejected because upstream graphs would have to name graphs above them.
+2. **Generated pages and ingested indexes are in the `derived` layer**, as `library/` is,
+   so a QA finding against them goes to their generator.
+3. **An edge across a missing `needs` path is a RATCHET, not an error.** Example: an IG's
+   pages are styled by smart-base's chrome, but the IG does not `need` smart-base. The
+   gate holds such an edge as a baselined layering gap with a reason. The dependency
+   stays declared and the gap stays visible.
+
+**Data graphs only.** A generator is code. The staging cone (bean `4j86`) reaches it
+through its import closure, so code is not declared a second time here.
+
+**Rendering order** is a topological order over `derivedFrom`. Until the gate computes
+it, the order in which directories are declared is the rendering order (the owner's
+interim rule), and a consumer declared before its source is flagged.
+
+**Absent means "not declared", not "derived from nothing".** A directory in the `derived`
+layer either names its sources or says why not: a `library/` is derived from an
+*external* publication, which is not a declared graph. Silence is not an answer. The
+gate is `check:derived-from` (bean `nama`, step 2).
+
 ### Publishing a subgraph's contents — the declared Subgraph node is the container (STRICT)
 
 Owner, 2026-10-03: *"todos = subgraph node + todo content nodes"*. A generator
