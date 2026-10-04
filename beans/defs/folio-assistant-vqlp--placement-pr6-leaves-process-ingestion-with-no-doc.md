@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vqlp
 title: 'Placement PR6 leaves Process_Ingestion with no docs page section, so the harness''s own basic flow has no KG witness'
-status: todo
+status: done
 type: task
 priority: normal
 created_at: 2026-10-04T09:08:33Z
-updated_at: 2026-10-04T09:08:33Z
+updated_at: 2026-10-04T09:46:54Z
 ---
 #1898 repoints `content/docs/document-ingestion/nodes/the-pipeline.jsonld`'s `sourceDocument` from `cat-harness/processes/library/document-ingestion.bpmn` to `folio-assistant-core/processes/library/l1-document-ingestion.bpmn`. That is deliberate and the prose was rewritten to match. The side effect is not: the harness's own basic flow, which the PR says STAYS in the harness, is then presented by no page section.
 
@@ -17,7 +17,7 @@ Measured on the branch head:
 NO NEW BPMN IS NEEDED. `cat-harness/processes/library/document-ingestion.bpmn` exists, defines `Process_Ingestion`, documents its lanes and roles, carries the "THE ID Process_Ingestion IS KEPT ON PURPOSE" note, and its SVG is already rendered at `assets/img/workflows/document-ingestion.svg`. What is missing is an authored Figure node that presents it.
 
 ## Done when
-- [ ] a Figure node in `cat-harness/content/docs/document-ingestion/` has `sourceDocument` = `cat-harness/processes/library/document-ingestion.bpmn`, ordered BEFORE `the-pipeline` so the page reads basic-flow-then-refinement
-- [ ] `docs/processes/document-ingestion.md` names a presenting section again
-- [ ] a witness bundle exists with subject `Process_Ingestion`
-- [ ] the unpresented-diagram count is back to 71
+- [x] a Figure node in `cat-harness/content/docs/document-ingestion/` has `sourceDocument` = `cat-harness/processes/library/document-ingestion.bpmn`, ordered BEFORE `the-pipeline` so the page reads basic-flow-then-refinement — done as an `asset` on the EXISTING `uploads-and-library-are-two-stages-of-one-pipeline` node rather than a new section, on the owner's ruling of 2026-10-04: a new heading drifts all five localised pages (`shapeOf` compares heading shape) and `KNOWN_DRIFT` is empty by design
+- [x] `docs/processes/document-ingestion.md` names a presenting section again
+- [x] a witness bundle exists with subject `Process_Ingestion` — `witnesses/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.kg.json`, and with it the real `role-carries-activity-skill` failure has somewhere to be recorded: `qa-witness/v1` `fail` goes 22 back to main's 23
+- [x] the unpresented-diagram count is back to 71
