@@ -1,0 +1,24 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2097,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_NotReady",
+    "class": "hand-back",
+    "rank": 92
+  },
+  "reason": "LANDED as 32b1fb6fdb through merge:guard --merge, with the owner's yes. Owner-approved 2026-10-04 ~14:35Z. Lands through merge:guard once the zmdo session signs it (label plus ready marker). ACK: new at 14:01Z (the zmdo session closing MVP beans out on evidence; beans only). Green and conflict-free, but not yet signed (merge:guard checks 3 and 4). Awaiting the owner's explicit approval, since it was opened after the 14:00Z approvals.",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T14:30:00Z",
+  "status": "landed",
+  "beans": [
+    "folio-assistant-tndo",
+    "folio-assistant-zmdo",
+    "folio-assistant-3p7c",
+    "folio-assistant-mer2",
+    "folio-assistant-smbc",
+    "folio-assistant-vuip"
+  ]
+}
