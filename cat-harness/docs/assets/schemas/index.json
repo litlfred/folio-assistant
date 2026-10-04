@@ -32634,13 +32634,19 @@
       "name": "SubgraphIndexSchema",
       "module": "cat-harness/schemas/subgraph-manifest.ts",
       "kind": "zod-object",
-      "doc": "`index.jsonld`.",
+      "doc": "`index.jsonld`. `seeAlso` is the REPOSITORY level's only (bean `t8c4`): the",
       "fields": [
         {
           "name": "@context",
           "type": "ContextUrl",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "seeAlso",
+          "type": "z.array(z.string().url()).optional()",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [
@@ -32652,7 +32658,9 @@
         "cat-harness/schemas/subgraph-manifest.ts#SubgraphIndexNodeSchema"
       ],
       "unresolved": [],
-      "external": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
