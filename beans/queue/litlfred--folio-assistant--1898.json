@@ -1,0 +1,21 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 1898,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_Refused",
+    "class": "hand-back",
+    "rank": 90
+  },
+  "reason": "The vqlp HOLD IS LIFTED. The owner chose 'Agent adds the section' (fix, then release). #1898's author fixed it in 03d645180 and closed bean vqlp at 12:19Z; the Merge Manager's agent verified its presenting section, the 'Presented on' link and the unpresented count of 71. Still blocked: (1) an authored placement conflict with #2009 (mlux): document-intake must stay in cat-harness library-core, with main's Task_Citeable kept. The rework is owned by #1898's own session (session_01EKB1gh), handed over by the owner. (2) It conflicts with main, so no gating CI has run on its head. (3) Per its own commit, check:wireframes fails locally with 8 undeclared refs, cause not yet found. (4) It has no ready marker.",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T14:05:00Z",
+  "status": "blocked",
+  "beans": [
+    "folio-assistant-apcg",
+    "folio-assistant-b8de",
+    "folio-assistant-zlmp"
+  ]
+}
