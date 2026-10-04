@@ -312,10 +312,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T10:33:08.008Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8274562ce1f244ec9d21249ab89b4b3e8faade6a",
-  "sourceCommitSha": "8274562ce1f244ec9d21249ab89b4b3e8faade6a",
-  "sourceCommitAt": "2026-10-04T12:27:07+02:00",
+  "generatedAt": "2026-10-04T12:51:06.310Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f8f329a3593432a6bf764941bb1be1f727769c5c",
+  "sourceCommitSha": "f8f329a3593432a6bf764941bb1be1f727769c5c",
+  "sourceCommitAt": "2026-10-04T14:45:03+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -3644,6 +3644,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/auto-docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "auto-docs",
+      "title": "auto-docs — the index is generated, the meaning is authored",
+      "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/auto-docs.md",
+      "instructionLines": 152,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "docs-generation",
@@ -3654,22 +3670,6 @@
       ],
       "instructionsPath": "skills/ui/ui-core/docs-generation.md",
       "instructionLines": 185,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "docs-auto",
-      "title": "docs-auto — the index is generated, the meaning is authored",
-      "description": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
-      ],
-      "instructionsPath": "skills/ui/ui-core/docs-auto.md",
-      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4152,7 +4152,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 165,
+      "instructionLines": 168,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -6746,13 +6746,13 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
       "name": "ui-core",
       "version": "0.1.0",
-      "description": "Rendering and publication surfaces: the docs site and its generators (docs-auto, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
+      "description": "Rendering and publication surfaces: the docs site and its generators (auto-docs, docs-generation, README sections), boards and windows, harness tiles, the KG viewer, render order and incremental rendering, rendering QC and logging, serving renderings, accessibility and wireframe design review. Moved out of folio-core into the ui topic (bean 9umr, owner ruling 2026-09-30); theming is its sibling in the same topic.",
       "path": "skills/ui/ui-core",
       "hasManifest": true,
       "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/auto-docs",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-diagram-interchange",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/board-windows",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-auto",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/html-rendering-qc",
@@ -45858,16 +45858,16 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/docs-auto-viewer",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/auto-docs-viewer",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "docs-auto-viewer",
+      "name": "auto-docs-viewer",
       "title": "Generated index pages",
       "description": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "bun run docs:auto"
+        "shell": "bun run auto:docs"
       },
       "io": {
         "inputs": [
@@ -49394,12 +49394,12 @@
       "validatorNotApplicable": "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a JSON node, so one here would be a category error. `check:requirements` extracts the front matter and parses it against the Requirement schema instead, and requires the id to match the file name."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs-auto",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/auto-docs",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "docs-auto",
+      "name": "auto-docs",
       "renderable": false,
-      "summary": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
-      "validatorNotApplicable": "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry validator would be a category error, as on `proposals`. What is checked mechanically is the derivation instead: `docs:auto:check` fails on a stale page, and refuses outright when a type collects nothing while its graph's directories hold files, which is a moved source rather than an empty graph (bean `06e3`)."
+      "summary": "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH that type reaches. A sub-graph of `docs`, written by `scripts/gen-auto-docs.ts` and never by hand. Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, an index is regenerated.",
+      "validatorNotApplicable": "its nodes are generated index PAGES — HTML and markdown with no fixed JSON shape — so a registry validator would be a category error, as on `proposals`. What is checked mechanically is the derivation instead: `auto:docs:check` fails on a stale page, and refuses outright when a type collects nothing while its graph's directories hold files, which is a moved source rather than an empty graph (bean `06e3`)."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/external-schema",
@@ -50728,7 +50728,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
       ],
-      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
+      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
       "fileCount": 279,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
@@ -50971,7 +50971,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1133,
+      "fileCount": 1140,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
