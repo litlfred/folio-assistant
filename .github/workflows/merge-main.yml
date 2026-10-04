@@ -476,9 +476,13 @@ jobs:
   #
   #   - a NEW or CHANGED failure on some PR (a signature the PR's own comment
   #     did not already report),
+  #   - a member that reported NO verdict, or one it could not classify,
   #   - a SYSTEMIC failure (every selected PR failed — that is the bot or main,
-  #     not fifteen people), and it is loud even when each member is a repeat,
-  #   - a member that reported NO verdict, or one it could not classify.
+  #     not fifteen people) — unless every one of those failures is itself a
+  #     repeat, because then each PR's comment already reports its own
+  #     condition and the run that made it true was already the loud one. A
+  #     persistent all-fail state would otherwise be ~100 emails a day under
+  #     this merge cadence, which is this change's own defect in a new hat.
   #
   # A repeat of an identical failure on an unchanged head is none of those, and
   # is the whole of what went quiet. It is still in that PR's comment, in that
@@ -489,6 +493,7 @@ jobs:
   # here as well would mean two emails for one condition. This job says so and
   # exits 0.
   notify:
+    # bpmn-node: Task_Report
     name: Notify once, and only if something is new
     needs: [select, merge]
     # `!cancelled()` rather than `always()`: a cancelled run is superseded by a

@@ -40,8 +40,9 @@
  *
  * So the member no longer decides the run's colour (`continue-on-error` on the
  * job) and {@link aggregateVerdicts} does, once per run, on three conditions:
- * a NEW or CHANGED failure, a SYSTEMIC one (every selected PR failed), and a
- * member that could not say what happened. {@link classifyVerdict} is the
+ * a NEW or CHANGED failure, a member that could not say what happened, and a
+ * SYSTEMIC one (every selected PR failed) that is not made up entirely of
+ * repeats. {@link classifyVerdict} is the
  * per-member half, and {@link signatureOf} is what makes "the same failure
  * again" answerable at all.
  *
@@ -360,8 +361,20 @@ export function aggregateVerdicts(i: {
   }
 
   // Every member failing is not news about fifteen PRs; it is news about the
-  // bot or about main, and it is loud even when each member is a repeat.
+  // bot or about main. It is loud — EXCEPT when every one of those failures is
+  // a repeat, because then each PR's own comment already reports its own
+  // condition and the systemic conclusion follows from reports the owner has
+  // already had. Under a 10-minute merge cadence a persistent all-fail state
+  // would otherwise be ~100 emails a day about nothing new, which is the
+  // defect this whole change exists to remove, wearing a different hat.
+  //
+  // In effect this makes the systemic rule subsumed by the new-failure rule —
+  // when main breaks and fifteen members start failing, each member's FIRST
+  // failure is new, so that run is loud and names all fifteen. The rule is
+  // still written out rather than deleted, because a reader has to be able to
+  // see that the case was decided rather than overlooked.
   const systemic = i.selected.length >= 2 && i.verdicts.length === i.selected.length && failures.length === i.verdicts.length;
+  const alreadyReported = failures.length > 0 && failures.every((v) => v.verdict === "repeat");
 
   const rows = [...i.verdicts]
     .sort((a, b) => Number(a.pr) - Number(b.pr))
@@ -376,7 +389,11 @@ export function aggregateVerdicts(i: {
     ...(rows.length ? rows : ["| — | nothing to merge | quiet | no opted-in PR was behind main |"]),
     "",
     ...missing.map((pr) => `- **#${pr} reported no verdict at all** — its job did not reach the step that writes one. Loud: a member that cannot say what happened is not a member that passed.`),
-    ...(systemic ? ["- **Every selected PR failed.** That is systemic — the bot's own tool, or main — so it is loud even though each member on its own is a repeat."] : []),
+    ...(systemic
+      ? [alreadyReported
+        ? "- **Every selected PR failed, and every one of those failures is a repeat.** That is systemic — the bot's own tool, or main — and each PR's comment already reports its own condition, so this run does not email it again. The run in which it became true was loud."
+        : "- **Every selected PR failed.** That is systemic — the bot's own tool, or main — not fifteen people each needing one."]
+      : []),
     "",
     failures.length === 0
       ? "No member failed."
@@ -385,8 +402,8 @@ export function aggregateVerdicts(i: {
 
   for (const pr of missing) lines.push(`#${pr}: no verdict was written`);
   for (const v of newOnes) lines.push(`#${v.pr}: ${v.verdict} — ${v.reason}`);
-  if (systemic) lines.push("every selected PR failed — systemic");
-  return { loud: missing.length > 0 || newOnes.length > 0 || systemic, summary, lines };
+  if (systemic) lines.push(`every selected PR failed — systemic${alreadyReported ? ", and every failure is one its PR's comment already reports" : ""}`);
+  return { loud: missing.length > 0 || newOnes.length > 0 || (systemic && !alreadyReported), summary, lines };
 }
 
 if (import.meta.main) {

@@ -4804,6 +4804,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report what the run found, once"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every member's verdict, in one table in the run's summary: merged, already up to date, refused, an expected race, a repeat of a failure already reported, something new, or a member that could not say. `cat-harness/scripts/merge-main-comment.ts --aggregate`."
+        }
+      ],
+      "skos:notation": "Task_Report",
+      "dcterms:source": "cat-harness/processes/sdlc/merge-base.bpmn#Task_Report",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_mergebase.task_resolve",
       "@type": "skos:Concept",
       "skos:inScheme": {

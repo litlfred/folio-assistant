@@ -1925,6 +1925,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_mergebase.task_report",
+      "prefLabel": "Report what the run found, once",
+      "definition": "Every member's verdict, in one table in the run's summary: merged, already up to date, refused, an expected race, a repeat of a failure already reported, something new, or a member that could not say. `cat-harness/scripts/merge-main-comment.ts --aggregate`.",
+      "notation": "Task_Report",
+      "source": "cat-harness/processes/sdlc/merge-base.bpmn#Task_Report",
+      "status": "candidate"
+    },
+    {
       "id": "process_mergebase.task_resolve",
       "prefLabel": "Resolve each by its declared strategy",
       "definition": "qa-sidecar paths first, through `qa:resolve-conflicts`; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction.",

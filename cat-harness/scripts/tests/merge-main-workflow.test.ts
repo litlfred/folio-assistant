@@ -456,10 +456,26 @@ describe("the run notifies once, or not at all", () => {
     expect(out.summary).toContain("#2 reported no verdict at all");
   });
 
-  test("every selected PR failing is systemic — loud even though each is a repeat", () => {
-    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "repeat", false)], selectResult: "success" });
+  test("every selected PR failing is systemic, and it is reported", () => {
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "new", true)], selectResult: "success" });
     expect(out.loud).toBe(true);
-    expect(out.summary).toContain("systemic");
+    expect(out.summary).toContain("Every selected PR failed");
+  });
+
+  test("...but a systemic state of pure REPEATS is not emailed again", () => {
+    // Under a 10-minute merge cadence a persistent all-fail state would be
+    // ~100 emails a day about conditions each PR's comment already reports —
+    // this change's own defect in a different hat. The run in which it became
+    // true was loud, because each member's first failure was new then.
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "repeat", false)], selectResult: "success" });
+    expect(out.loud).toBe(false);
+    expect(out.summary).toContain("every one of those failures is a repeat");
+    expect(out.summary).toContain("does not email it again");
+  });
+
+  test("a systemic state is still loud when a member could not classify itself", () => {
+    const out = aggregateVerdicts({ selected: ["1", "2"], verdicts: [v("1", "repeat", false), v("2", "undetermined", true)], selectResult: "success" });
+    expect(out.loud).toBe(true);
   });
 
   test("ONE PR failing a repeat is not systemic", () => {
