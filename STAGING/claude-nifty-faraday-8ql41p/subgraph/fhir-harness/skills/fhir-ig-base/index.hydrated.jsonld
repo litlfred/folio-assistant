@@ -1,0 +1,145 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/fhir-ig-base/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": true,
+      "name": "fhir-ig-base",
+      "path": "../fhir-harness/skills/fhir-ig-base"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-ast-delta",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 193,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-ast-delta.md",
+      "name": "ig-ast-delta",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f222f605064ad20c3fb2e7e1f8d5693d2e1ea58c31b7215e4edfbab8d9aa2b6d",
+        "bytes": 10253,
+        "sha256": "f222f605064ad20c3fb2e7e1f8d5693d2e1ea58c31b7215e4edfbab8d9aa2b6d"
+      },
+      "title": "ig-ast-delta"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-binary-artefacts",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Where the IG Publisher's binary outputs go — full-ig.zip, package.tgz and its R4/R4B variants, package.db, validator packs, and the definitions, examples and expansions zips — and why a pages branch is the wrong place for them. Measure a branch with ig-binary-audit before deciding anything. Read before configuring an IG's deploy or release step, before linking a download from a page, and before a pages branch grows past its size limit.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 104,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-binary-artefacts.md",
+      "name": "ig-binary-artefacts",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4f1e424c8bbe7c33b3a56c625047d2728cd7879544bb37fa1dd28632c070211f",
+        "bytes": 4855,
+        "sha256": "4f1e424c8bbe7c33b3a56c625047d2728cd7879544bb37fa1dd28632c070211f"
+      },
+      "title": "ig-binary-artefacts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-build-pipeline",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Read before adding anything to fhir-harness.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 133,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md",
+      "name": "ig-build-pipeline",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ea6ebcdec27197318486a8f297eb229d0c83f7cfabde08cef0890404b404298",
+        "bytes": 6415,
+        "sha256": "7ea6ebcdec27197318486a8f297eb229d0c83f7cfabde08cef0890404b404298"
+      },
+      "title": "ig-build-pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-fork",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria. Read before forking, and before reporting a fork's work complete.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 212,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md",
+      "name": "ig-publisher-fork",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f0ea3ce4b76fb485e13c9477d1ddf4254cf86a835a52f3a1dccddd63a0067c3",
+        "bytes": 10797,
+        "sha256": "1f0ea3ce4b76fb485e13c9477d1ddf4254cf86a835a52f3a1dccddd63a0067c3"
+      },
+      "title": "ig-publisher-fork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-publisher-reduction",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest. Read before starting any phase, and before claiming one is done.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 277,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
+      "name": "ig-publisher-reduction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/09fff39d04cd182b6bd039076cd2484fa6c9bdc225be0525d43ae6395625384b",
+        "bytes": 15221,
+        "sha256": "09fff39d04cd182b6bd039076cd2484fa6c9bdc225be0525d43ae6395625384b"
+      },
+      "title": "ig-publisher-reduction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-render-jekyll",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 107,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md",
+      "name": "ig-render-jekyll",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f7cd480b8a31dba5768e568bad739cfa6a4f67fc4b77f96223f9f3f04af0abc",
+        "bytes": 4896,
+        "sha256": "8f7cd480b8a31dba5768e568bad739cfa6a4f67fc4b77f96223f9f3f04af0abc"
+      },
+      "title": "ig-render-jekyll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ig-site-theme",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How an IG rendered through just-the-docs wears the theme its instance ALREADY declares: the one `webpage` theme becomes the IG site's colour scheme. Says which of the three theme paths applies to which surface, what is refused, and how to verify on the built CSS rather than on a log line. Read before theming an IG site, adding a theme to an IG instance, or concluding that a staged IG is unthemed.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base",
+      "instructionLines": 88,
+      "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-site-theme.md",
+      "name": "ig-site-theme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bb503e99e7dd7d2556b2612cfe58df1c05b9cfdeb578eefb69ba75629beb1a0b",
+        "bytes": 4462,
+        "sha256": "bb503e99e7dd7d2556b2612cfe58df1c05b9cfdeb578eefb69ba75629beb1a0b"
+      },
+      "title": "ig-site-theme"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphKind/skills"
+  ],
+  "name": "skills/fhir-ig-base",
+  "path": "skills/fhir-ig-base/"
+}
