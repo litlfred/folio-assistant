@@ -291,7 +291,9 @@
     "Process_CodeChangeReview": [
       "Process_MergeBase"
     ],
-    "Process_CodeQualityGates": [],
+    "Process_CodeQualityGates": [
+      "Process_QaPublish"
+    ],
     "Process_CriterionAdjudication": [
       "Process_Adjudication"
     ],
@@ -319,10 +321,14 @@
     "Process_PrChecksPresent": [],
     "Process_PublishAlert": [],
     "Process_PublishVerification": [],
+    "Process_QaPublish": [],
     "Process_QaReportSigning": [],
     "Process_RelatedWork": [],
     "Process_RepoHealth": [],
     "Process_StalledAgentTriage": [],
+    "Process_TestPlanExecution": [
+      "Process_QaReportSigning"
+    ],
     "Process_UpstreamPinWatch": [
       "Process_UpstreamAdoption"
     ],

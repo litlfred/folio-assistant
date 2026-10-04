@@ -256,6 +256,30 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "tip-only rewrite are covered by qa-store.test.ts in `bun test`",
   },
   {
+    // Bean `tfqf`. The site builds' QA evidence: `fetch` reads the
+    // `qa-reports` entry for THIS run's ref (`main/<sha>`, `pr/<n>/<sha>`)
+    // over the network and may materialise it into the checkout; `verify`
+    // judges the built `./_site/assets/qa/`, which only the deploy and
+    // staging jobs produce. Run locally with no ref and no site it has no
+    // verdict to give. Its decisions are pinned by qa-site-assets.test.ts in
+    // `bun test`, and `bun run preview:site` runs both halves on a real build.
+    match: "scripts/qa-site-assets.ts",
+    kind: "ci-only",
+    reason:
+      "a build step keyed by the run's own ref (network fetch) and the built ./_site; its source " +
+      "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
+  },
+  {
+    // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`
+    // entry for its PR before sweeping. A read keyed by a downstream PR
+    // number; the read path is pinned by qa-store.test.ts in `bun test`.
+    match: "qa-store.ts\" fetch",
+    kind: "ci-only",
+    reason:
+      "a network read of a downstream folio's qa-reports entry keyed by its PR number; the read " +
+      "path is covered by qa-store.test.ts in `bun test`",
+  },
+  {
     // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
     // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
     // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
@@ -361,6 +385,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "scripts/gen-docs-pages.ts",
     kind: "covered-by",
     reason: "`gen-docs-pages.ts --check` is in the gate set; the site build runs the writer",
+  },
+  {
+    // Bean `5hox` prep, owner ruling 2026-10-01: the /qa/ page is regenerated
+    // from the QA results the site build fetched, so it cannot freeze once QA
+    // leaves `main`.
+    match: "bun run state:visualizer",
+    kind: "covered-by",
+    reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
   },
   // The two projection writers are run by the SITE BUILD and by nothing else.
   //

@@ -32,6 +32,7 @@ import type {
 // anchors everything else to); `existingBlockQaPath` for reading (results
 // tree first, legacy `<block>.qa.json` sibling as fallback).
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockAttestationKey, composeCriteria, finalizeCriteria, refusalLine, resolvePrior } from "../../schemas/qa-attestations.ts";
 
 /**
  * Root of the CONTENT repo being swept.
@@ -495,6 +496,8 @@ async function main() {
   let written = 0;
   let skipped_fresh = 0;
   let skipped_no_lean = 0;
+  // Blocks NOT written because their attestations could not be read. Never a pass.
+  let refused = 0;
 
   for (const block of walkBlocks(rootPath)) {
     if (!block.lean || !existsSync(block.lean)) {
@@ -526,10 +529,19 @@ async function main() {
       lean: leanPath,
     });
 
-    // Check if fresh entry already exists
-    const existing = loadQaReport(qaReadPath);
-    if (existing && !args.force) {
-      const entries = existing.criteria[CRITERION_ID] ?? [];
+    // This sweep records its verdict as `reviewer.kind: "agent"`, so what it
+    // writes is an ATTESTATION and lives in the store (bean `8wj1`, D2). The
+    // prior report's own copy is never what is carried forward (C11).
+    const attested = resolvePrior(REPO_ROOT, blockAttestationKey(REPO_ROOT, block.root), loadQaReport(qaReadPath));
+    if (!attested.ok) {
+      console.error(refusalLine("proof-narrative-lean-equiv-sweep", pathRelative(REPO_ROOT, block.root), attested));
+      refused++;
+      continue;
+    }
+    const existing = attested.prior;
+    // Check if fresh entry already exists — in the report or, with none, the store.
+    if (!args.force) {
+      const entries = existing?.criteria[CRITERION_ID] ?? (attested.attestations[CRITERION_ID] as QaCriterionEntry[] | undefined) ?? [];
       if (entries.some((e) => entryIsFresh(e, currentHashes, ["md", "ts", "lean"]))) {
         skipped_fresh++;
         continue;
@@ -569,7 +581,7 @@ async function main() {
           ...(leanPath ? { lean: pathRelative(REPO_ROOT, leanPath) } : {}),
         },
         source_hashes: currentHashes,
-        criteria: {},
+        criteria: composeCriteria({}, attested.attestations) as Record<string, QaCriterionEntry[]>,
         updated_at: now,
       };
       if (!report.criteria[CRITERION_ID]) {
@@ -578,6 +590,17 @@ async function main() {
       report.criteria[CRITERION_ID].push(entry);
       report.source_hashes = currentHashes;
       report.updated_at = now;
+      try {
+        report.criteria = finalizeCriteria(attested, report.criteria, "attesting");
+      } catch (err) {
+        console.error(refusalLine("proof-narrative-lean-equiv-sweep", pathRelative(REPO_ROOT, block.root), {
+          state: "unknown",
+          path: attested.path,
+          reason: err instanceof Error ? err.message : String(err),
+        }));
+        refused++;
+        continue;
+      }
       // Unlike the legacy sibling location (which always existed, since it
       // shared the block's own directory), the mirrored results-tree
       // directory is not guaranteed to exist yet for a block that has never
@@ -624,6 +647,10 @@ async function main() {
         }
       }
     }
+  }
+  if (refused > 0) {
+    console.error(`proof-narrative-lean-equiv-sweep: UNKNOWN — ${refused} block(s) not written because their attestations could not be read`);
+    process.exit(4);
   }
 }
 

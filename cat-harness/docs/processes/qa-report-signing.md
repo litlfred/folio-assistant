@@ -9,7 +9,7 @@ nav_exclude: true
 {% raw %}
 # QA report signing
 
-`Process_QaReportSigning` · strict · 5 step(s)
+`Process_QaReportSigning` · strict · 6 step(s)
 
 Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.
 
@@ -21,7 +21,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Test-plan execution](test-plan-execution.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html)
@@ -36,7 +36,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
 
 ## Steps
 
-Every one of the 5 step(s) is documented.
+Every one of the 6 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -45,6 +45,7 @@ Every one of the 5 step(s) is documented.
 | **Sign over the API**<br>`Task_ApiSign` | Attestation service (API) | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | The attestation service signs the run hashes. Reached only from the one table row that has both egress and a configured endpoint. |
 | **Sign as release authority**<br>`Task_HumanSign` | Human signer | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: `fulfilmentKindsForBpmnType` will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route. |
 | **Record which route signed it**<br>`Task_RecordAttestation` | Validation and QA (mechanical + agents) | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | The attestation records the route, not only the signature. A reader who cannot tell an API signature from a human one cannot tell which trust assumption they are relying on. |
+| **Store the signed report on qa-reports**<br>`Task_StoreSigned` | Validation and QA (mechanical + agents) | [`qa-reports`](../reference/skill-instructions/qa-reports.html) | The signed report, its signature and the route that produced it are written TOGETHER into the `qa-reports` entry keyed by the commit the report judged (`main/<sha>/` or `pr/<n>/<sha>/`), through `scripts/qa-store.ts` — never committed to main and never pushed by hand (arc `3fva`, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside `test/attestations/` (ruling D5, default (a)); it is not written here. |
 
 ## Decisions
 

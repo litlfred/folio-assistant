@@ -51,6 +51,7 @@ import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
 import type { KgCriterionEntry, KgFinding, KgQaReport } from "../schemas/kg-qa.ts";
 import {
   kgAttestationFor,
+  priorKgJudgements,
   QA_ATTESTATIONS_SCHEMA,
   readAttestationFile,
   serialiseAttestations,
@@ -138,20 +139,28 @@ export function skillVoices(
 }
 
 /**
- * The recorded reviews, in the four states of `readAttestationFile`. As with
+ * The recorded reviews, in the states of `readAttestationFile`. As with
  * `readAttestations` in `prose-code-pairs.ts`, a `corrupt` or `unknown` read
  * carries NO list: it used to answer `[]`, which reads as "never reviewed"
- * (the `de9k` leftover).
+ * (the `de9k` leftover). On `miss` or `absent` the list is what a PRIOR
+ * sidecar still carries, which `kg-audit` moves into the store as it saves
+ * (owner ruling 2, 2026-10-01).
  */
 export type VoiceReviewsRead =
-  | { state: "hit" | "miss"; reviews: VoiceReview[] }
+  | { state: "hit"; reviews: VoiceReview[] }
+  | { state: "miss" | "absent"; reviews: VoiceReview[]; moved: number }
   | { state: "corrupt" | "unknown"; reason: string };
 
-/** Reviews recorded in the store file for one skill. */
-export function readVoiceReviews(storeFile: string, storeRoot: string): VoiceReviewsRead {
+/** Reviews recorded for one skill: the store file's, or — when it has none — the prior sidecar's. */
+export function readVoiceReviews(storeFile: string, storeRoot: string, priorSidecar?: string): VoiceReviewsRead {
   const r = readAttestationFile(storeFile, storeRoot);
   if (r.state === "hit") return { state: "hit", reviews: ((r.file as KgAttestations).voice_reviews ?? []) as VoiceReview[] };
-  if (r.state === "miss") return { state: "miss", reviews: [] };
+  if (r.state === "miss" || r.state === "absent") {
+    const prior = priorKgJudgements(priorSidecar);
+    if (prior.state === "unknown") return { state: "unknown", reason: prior.reason };
+    const list = prior.state === "found" ? (prior.voice_reviews as VoiceReview[]) : [];
+    return { state: r.state, reviews: list, moved: list.length };
+  }
   return { state: r.state, reason: r.reason };
 }
 
@@ -241,14 +250,23 @@ export function recordReview(
   storeRoot: string,
   subject: KgAttestations["subject"],
   review: VoiceReview,
+  priorSidecar?: string,
 ): void {
   const r = readAttestationFile(storeFile, storeRoot);
   let json: KgAttestations;
   if (r.state === "hit") json = r.file as KgAttestations;
-  else if (r.state === "miss" || (r.state === "unknown" && !existsSync(storeRoot))) {
-    // A missing family tree is `unknown` to a READER; a writer recording a
-    // NEW review creates it, because nothing it could overwrite is there.
+  else if (r.state === "miss" || r.state === "absent") {
+    // No store entry for this skill (or no store yet): a NEW file, seeded with
+    // whatever judgements the prior sidecar still carries, so this first save
+    // moves them too (owner ruling 2) rather than writing a file that would
+    // hide them from every later read.
     json = { $schema: QA_ATTESTATIONS_SCHEMA, family: "kg-qa", subject };
+    const prior = priorKgJudgements(priorSidecar);
+    if (prior.state === "unknown") throw new Error(`cannot record a review in ${storeFile}: ${prior.reason}`);
+    if (prior.state === "found") {
+      if (prior.pair_attestations.length) json.pair_attestations = prior.pair_attestations as KgAttestations["pair_attestations"];
+      if (prior.voice_reviews.length) json.voice_reviews = prior.voice_reviews as KgAttestations["voice_reviews"];
+    }
   } else throw new Error(`cannot record a review in ${storeFile}: ${r.state} (${r.reason})`);
   json.voice_reviews = [...(json.voice_reviews ?? []).filter((x) => x.voice !== review.voice), review].sort((a, b) =>
     a.voice.localeCompare(b.voice),
@@ -335,7 +353,7 @@ if (import.meta.main) {
     by,
     at: new Date().toISOString(),
     verdicts: [...verdicts].sort((a, b) => a.rule.localeCompare(b.rule)),
-  });
+  }, abs);
   const failed = verdicts.filter((x) => x.result === "fail");
   console.log(
     `recorded ${verdicts.length} verdict(s) for ${report.subject.path} against ${v.id}` +
