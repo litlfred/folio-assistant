@@ -1323,7 +1323,11 @@ if (existsSync(MENU)) {
 // artefact page in the order the index lists them — the Publisher's own
 // order through `artifacts.html`.
 {
-  const held = ix.package?.localPath ? packageEntries(join(INSTANCE, ix.package.localPath)) : undefined;
+  // Held means ON DISK: an index can name a package its checkout does not
+  // carry (a scratch copy, a sparse clone), and then the footer says less
+  // rather than the run failing.
+  const pkgPath = ix.package?.localPath ? join(INSTANCE, ix.package.localPath) : undefined;
+  const held = pkgPath && existsSync(pkgPath) ? packageEntries(pkgPath) : undefined;
   const json = (name: string | undefined) => (name && held?.has(name) ? (JSON.parse(held.get(name)!.toString("utf8")) as Record<string, unknown>) : undefined);
   const igEntry = held ? [...held.keys()].find((k) => /^package\/ImplementationGuide-[^/]+\.json$/.test(k)) : undefined;
   pages.set(IG_FOOTER_DATA, `${JSON.stringify(igFooterData(json("package/package.json"), json(igEntry), ix), null, 2)}\n`);
