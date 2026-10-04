@@ -12,7 +12,8 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
-import { plan, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { plan, resolutionFailure, takeBase, takeBaseAction, unmergedStages } from "../merge-base.js";
+import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
@@ -455,5 +456,69 @@ describe("qa sidecars of a NESTED instance are in scope", () => {
     const [o] = qaPlan("/nonexistent", dirs, ["unrelated/x.json"]);
     expect(o!.action).toBe("skip");
     expect(o!.reason).toContain("who-iris/test/results/");
+  });
+});
+
+/**
+ * #1801, 2026-10-03: the branch adds `results/` to `.gitignore` while the
+ * files there stay tracked on both sides. git checks an UNMERGED path against
+ * `.gitignore` as if it were new, so a plain `git add` refused, and merge-main
+ * went red on every push to main ("exited 1 without a refusal").
+ */
+function ignoredTrackedConflict(): string {
+  const dir = mkdtempSync(join(tmpdir(), "merge-base-ign-"));
+  const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
+  g("init", "-q", "-b", "branch");
+  g("config", "user.email", "t@example.invalid");
+  g("config", "user.name", "t");
+  mkdirSync(join(dir, "results"));
+  writeFileSync(join(dir, "results/x.json"), "{}\n");
+  g("add", ".");
+  g("commit", "-qm", "base");
+  g("checkout", "-q", "-b", "main");
+  writeFileSync(join(dir, "results/x.json"), "{\"main\":1}\n");
+  g("commit", "-qam", "main side");
+  g("checkout", "-q", "branch");
+  writeFileSync(join(dir, ".gitignore"), "results/\n");
+  writeFileSync(join(dir, "results/x.json"), "{\"branch\":1}\n");
+  g("add", ".gitignore");
+  g("commit", "-qam", "branch side: ignore results/, still tracked");
+  try { g("merge", "--no-commit", "main"); } catch { /* the conflict is the point */ }
+  return dir;
+}
+
+describe("a conflicted path the branch's .gitignore matches (#1801)", () => {
+  const dirs = [ignoredTrackedConflict(), ignoredTrackedConflict()];
+
+  test("the crash, reproduced: a plain `git add` exits 1 on the unmerged ignored path", () => {
+    // (git stages it all the same; only the exit status is the failure, and
+    // the resolver's git() helper throws on it.)
+    const dir = dirs[0]!;
+    expect([...unmergedStages(dir, "results/x.json")].sort()).toEqual([1, 2, 3]);
+    expect(() => execFileSync("git", ["add", "--", "results/x.json"], { cwd: dir, stdio: "pipe" })).toThrow();
+  });
+
+  test("takeBase stages the base's copy anyway, and nothing else", () => {
+    const dir = dirs[1]!;
+    expect([...unmergedStages(dir, "results/x.json")].sort()).toEqual([1, 2, 3]);
+    writeFileSync(join(dir, "results/untracked.json"), "{}\n");
+    takeBase(dir, "results/x.json");
+    expect(readFileSync(join(dir, "results/x.json"), "utf-8")).toBe("{\"main\":1}\n");
+    expect(execFileSync("git", ["diff", "--name-only", "--diff-filter=U"], { cwd: dir, encoding: "utf-8" })).toBe("");
+    // -f is scoped to the conflicted path: an ignored untracked neighbour stays out.
+    expect(execFileSync("git", ["ls-files", "--", "results/untracked.json"], { cwd: dir, encoding: "utf-8" })).toBe("");
+  });
+
+  test("cleanup", () => { for (const d of dirs) rmSync(d, { recursive: true, force: true }); });
+});
+
+describe("a resolution that fails is reported as a refusal, not an unexplained exit", () => {
+  test("the line has the refusal shape merge-main.yml and merge-main-comment read", () => {
+    const err = Object.assign(new Error("Command failed"), { stderr: "\nThe following paths are ignored by one of your .gitignore files:\nresults\n" });
+    const line = resolutionFailure("results/x.json", "derived-results", err);
+    expect(line).toBe("  ✗ results/x.json  [derived-results: could not resolve] — The following paths are ignored by one of your .gitignore files:");
+    // merge-main.yml: grep -qE '^  ✗ .*  \['
+    expect(/^ {2}✗ .* {2}\[/.test(line)).toBe(true);
+    expect(parseLog(`merge-base: 1 conflicted path(s)\n${line}\n`).refused).toContain("results/x.json");
   });
 });
