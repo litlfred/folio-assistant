@@ -45,6 +45,8 @@ import { MOUNT_MARKER_SCHEMA, markerPath } from "../branch-store.ts";
 import { ContentDirectorySchema, DirectoryStorageSchema, materialiseDirectories, resolveDirectories } from "../../schemas/cat-harness.js";
 import { censusDirectories } from "../audit-coverage.js";
 import { auditInstance } from "../check-declared-dirs.ts";
+import { graphReadPath } from "../graph-read.js";
+import { resolveSubgraphSource } from "../../schemas/subgraph-source.js";
 import { QaUsageError, resolveQaLocation } from "../qa-store.js";
 
 const made: string[] = [];
@@ -54,6 +56,7 @@ afterAll(() => {
 
 const STORED = { branch: "qa-reports", keyedBy: "commit" } as const;
 const TIP = { branch: "cat/cat-harness/beans", keyedBy: "tip" } as const;
+const ROUTE = { branch: "cat/cat-harness/uml-overview", keyedBy: "route" } as const;
 
 /** `instance()`, in a real (empty) git repository — what the tip cases need. */
 function gitInstance(dirs: Array<Record<string, unknown>>): string {
@@ -98,7 +101,7 @@ describe("the schema", () => {
   test.each([
     ["commit", { id: "qa", path: "test/results/", graphKinds: ["qa"] }],
     ["tip", { id: "beans-defs", path: "beans/defs/", graphKinds: ["bean-defs"] }],
-    ["route", { id: "docs-auto", path: "docs/cat-harness/docs-auto/", graphKinds: ["docs"] }],
+    ["route", { id: "auto-docs", path: "docs/cat-harness/auto-docs/", graphKinds: ["docs"] }],
   ])("accepts keyedBy %s (beans 2h76, 1j3q)", (keyedBy, dir) => {
     const storage = { branch: "cat/cat-harness/beans", keyedBy };
     expect(DirectoryStorageSchema.safeParse(storage).success).toBe(true);
@@ -125,6 +128,90 @@ describe("the schema", () => {
   ])("refuses %j — %s", (storage) => {
     expect(DirectoryStorageSchema.safeParse(storage).success).toBe(false);
     expect(ContentDirectorySchema.safeParse({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage }).success).toBe(false);
+  });
+});
+
+// `route` arrived in `DirectoryStorageSchema` with bean `1j3q` and did NOT arrive
+// in `subgraph-source.ts`'s `KeyedBySchema`, which is what every consumer parses
+// through. A declaration carrying it therefore parsed and then threw. These pin
+// both halves: that the value survives the resolver, and that each consumer has
+// DECIDED what to do with it rather than inheriting a `!== "tip"` arm.
+describe("a route-keyed directory is TWO-valued, and the missing third is deliberate", () => {
+  /** A route-keyed instance whose files are still tracked — the pre-cutover state. */
+  function notCutOver(): string {
+    const root = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    mkdirSync(join(root, "uml"));
+    writeFileSync(join(root, "uml", "a.html"), "x\n");
+    writeFileSync(join(root, "uml", "b.html"), "y\n");
+    git(root, "add", "uml/a.html", "uml/b.html");
+    return root;
+  }
+
+  test("the resolver ACCEPTS keyedBy route — it threw a ZodError until the two enums were made one", () => {
+    const root = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    // The symptom of the drift was a THROW out of `auditInstance`, surfacing as
+    // an `unmounted` finding carrying `Invalid option: expected one of
+    // "commit"|"tip"`. Not a crash, and not a pass: a wrong finding.
+    const f = auditInstance(root, root);
+    expect(JSON.stringify(f)).not.toContain("Invalid option");
+    expect(JSON.stringify(f)).not.toContain("ZodError");
+  });
+
+  test("not-cut-over: route gets the two-copies finding, because two copies is two copies", () => {
+    const root = notCutOver();
+    const f = auditInstance(root, root);
+    expect(f.map((x) => x.kind)).toEqual(["not-cut-over"]);
+    expect(f[0]!.detail).toContain("keyed by route");
+    expect(f[0]!.detail).toContain("still tracks 2 file(s)");
+    expect(f[0]!.detail).toContain("ONE change");
+  });
+
+  test("cut over: NO finding — there is no route-keyed mount for `unmounted` to be about", () => {
+    const root = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    // The discriminator against the tip case, which reports `unmounted` for the
+    // identical fixture. A finding here could never be cleared: nothing mounts a
+    // route store, so it would redden every run for ever.
+    expect(auditInstance(root, root)).toEqual([]);
+    const tip = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: TIP }]);
+    expect(auditInstance(tip, tip).map((x) => x.kind)).toEqual(["unmounted"]);
+  });
+
+  test("graph-read: not-cut-over reads the CHECKOUT and says so; cut over is REFUSED, never a path", () => {
+    const root = notCutOver();
+    const pre = graphReadPath("uml", root);
+    expect(pre.state).toBe("ok");
+    expect(pre.state === "ok" && pre.from).toBe("checkout");
+    expect(pre.state === "ok" && pre.notCutOver).toBe(true);
+
+    const after = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    const post = graphReadPath("uml", after);
+    expect(post.state).toBe("refused");
+    // Naming the reason, not just the state: "nothing moved" was the old answer
+    // and it returned `ok`, so a test asserting only `refused` would pass over a
+    // refusal invented for any other cause.
+    expect(post.state === "refused" && post.reason).toContain("has no mount");
+    expect(post.state === "refused" && post.reason).toContain("dh4f");
+  });
+
+  test("audit:coverage: `stored` only once it is TRUE — not-cut-over is undetermined", () => {
+    const root = notCutOver();
+    const pre = censusDirectories([{ id: "uml", absPath: join(root, "uml"), storage: ROUTE }], undefined, root);
+    expect({ stored: pre.stored, undetermined: pre.undetermined }).toEqual({ stored: 0, undetermined: 1 });
+
+    const after = gitInstance([{ id: "uml", path: "uml/", graphKinds: ["docs"], storage: ROUTE }]);
+    const post = censusDirectories([{ id: "uml", absPath: join(after, "uml"), storage: ROUTE }], undefined, after);
+    expect({ stored: post.stored, undetermined: post.undetermined }).toEqual({ stored: 1, undetermined: 0 });
+  });
+
+  test("a route-keyed `qa` subgraph is refused by the resolver too, not only by the schema", () => {
+    // `ContentDirectorySchema` already refuses it for a DECLARED entry. This is
+    // the hand-built-entry path `audit-coverage.ts` uses, where no schema runs —
+    // and the guard named `tip` alone until this change.
+    expect(() => resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: ROUTE })).toThrow(/keyed by commit/);
+    expect(() => resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: TIP })).toThrow(/keyed by commit/);
+    // And a commit-keyed one is NOT refused, so the guard is about the keying
+    // rather than about `qa`.
+    expect(resolveSubgraphSource({ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: STORED }).kind).toBe("branch");
   });
 });
 

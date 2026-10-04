@@ -521,6 +521,13 @@ export function buildContext(): Record<string, unknown> {
     // `kind`/`branch` scoped (bean `l4ay`; `schemas/subgraph-source.ts`).
     contentSource: contentSourceContext(),
     instructionLines: { "@id": termIri("instructionLines"), "@type": `${XSD}integer` },
+    // How many COMMITTED files a declared directory holds, at any depth. Bean
+    // `ba9e`: the directory READMEs printed this, and a count in a committed
+    // file changes on every commit that adds a file, so almost every merge
+    // conflicted on one of 54 READMEs. The export is built at publish time
+    // and committed nowhere, so here the number cannot conflict. Absent when
+    // git could not answer — never a zero standing in for "unknown".
+    fileCount: { "@id": termIri("fileCount"), "@type": `${XSD}integer` },
     hasInstructions: { "@id": termIri("hasInstructions"), "@type": `${XSD}boolean` },
     hasIOContract: { "@id": termIri("hasIOContract"), "@type": `${XSD}boolean` },
     ambiguous: { "@id": termIri("ambiguous"), "@type": `${XSD}boolean` },
@@ -2265,12 +2272,27 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
         ...(existsSync(join(root, x.path, "README.md"))
           ? { readmePath: join(x.path, "README.md").replace(/\\/g, "/") }
           : {}),
+        ...((n) => (n === undefined ? {} : { fileCount: n }))(committedFileCount(join(root, x.path))),
       };
     });
   } catch (e) {
     problems.push(`unparseable declaration: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
+}
+
+/**
+ * How many files git has committed or staged under `dir`, at any depth — the
+ * commit's answer, not the worktree's, so an untracked transient never moves
+ * it (bean `ba9e`). `undefined` when git cannot answer (not a work tree, or
+ * the directory is absent): the node then carries no `fileCount`, which a
+ * reader can tell apart from a counted zero.
+ */
+export function committedFileCount(dir: string): number | undefined {
+  if (!existsSync(dir)) return undefined;
+  const r = spawnSync("git", ["ls-files", "-z", "--cached", "--", "."], { cwd: dir, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  if (r.error !== undefined || r.status !== 0) return undefined;
+  return r.stdout.split("\0").filter(Boolean).length;
 }
 
 /** Every term in the context that is declared `{"@type": "@id"}`. */
