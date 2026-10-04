@@ -13,6 +13,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
 import { buildRootIndex } from "../root-index.ts";
+import { expandFindings, localLoader } from "../publish-verify.ts";
 import { exportIdentity } from "../kg-export.ts";
 import { subgraphOutDir } from "../gen-subgraph-jsonld.ts";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../../schemas/cat-harness.ts";
@@ -74,6 +75,14 @@ describe("the root index", () => {
     const by = new Map(entries.map((e) => [e.name, e]));
     expect(String(by.get("cat-harness")!.subgraph)).toMatch(/\/subgraph\/cat-harness\/$/);
     expect(String(by.get("bootstrap")!.subgraph)).toMatch(/\/bootstrap\/subgraph\/$/);
+  });
+  test("every key expands under the verifier the deploy runs — nothing is dropped as an undefined term", async () => {
+    // publish:verify's jsonld-expand refused the first staged index: 110
+    // `invalid property (id)`, one per declared directory, because a bare
+    // `id` is no term of the context. The deploy's own check, run here.
+    const dir = site();
+    const built = buildRootIndex(dir);
+    expect(await expandFindings(built.doc, localLoader(dir))).toEqual([]);
   });
   test("an instance with no export is a PROBLEM, never a shorter index", () => {
     const r = buildRootIndex(site(["who-iris"]));

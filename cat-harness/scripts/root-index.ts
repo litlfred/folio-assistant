@@ -72,7 +72,8 @@ export interface HarnessEntry {
   description?: string;
   version?: string;
   dependsOn?: string[];
-  directory: Array<{ id: string; path: string; graphKinds: string[] }>;
+  /** Each declared directory: its id as `name` — a term the context defines, unlike a bare `id`. */
+  directory: Array<{ name: string; path: string; graphKinds: string[] }>;
   subgraph?: string;
   nodes: number;
   bytes: number;
@@ -146,7 +147,7 @@ export function buildRootIndex(site: string, opts: { baseUrl?: string; repo?: st
       ...(decl.description ? { description: decl.description } : {}),
       ...(decl.version ? { version: decl.version } : {}),
       ...(decl.needs?.length ? { dependsOn: [...decl.needs] } : {}),
-      directory: (decl.directories ?? []).map((d) => ({ id: d.id, path: d.path, graphKinds: [...(d.graphKinds ?? [])] })),
+      directory: (decl.directories ?? []).map((d) => ({ name: d.id, path: d.path, graphKinds: [...(d.graphKinds ?? [])] })),
       ...(subgraph ? { subgraph } : {}),
       nodes,
       bytes: bytes.length,
