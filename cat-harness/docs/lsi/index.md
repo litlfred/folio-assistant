@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.74 | instance, kind, harness, directory, page, branch, session, graph | *(none)* |
-| 2 | 21.74 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, directories, directory, iri, asset |
-| 3 | 18.17 | chapter, slot, block, edges, project, formal, watcher, proof | session, conflict, epic, beans, branch, push, minutes, green |
-| 4 | 17.15 | page, tile, text, block, avatar, chapter, blocks, manifest | sibling, subgraph, ledger, subdirectory, sessions, session, plan, prs |
-| 5 | 15.52 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, zip, archived, ingest, pdf, withheld |
-| 6 | 15.15 | lane, actor, role, requirements, task, process, analysis, skills | sha, queue, tile, backlog, board, bytes, avatar, glass |
-| 7 | 14.77 | preview, staging, translation, locale, url, pages, merge, deploy | glass, tile, avatar, card, sticky, fit, slot, settings |
-| 8 | 14.58 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | pdf, feedback, post, user, requirement, actor, requirements, rung |
+| 1 | 45.78 | instance, kind, harness, directory, page, branch, session, graph | *(none)* |
+| 2 | 21.75 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, directories, directory, iri, asset |
+| 3 | 18.18 | chapter, slot, block, edges, project, formal, watcher, proof | session, conflict, epic, beans, branch, push, minutes, green |
+| 4 | 17.18 | page, tile, text, block, avatar, glass, card, chapter | sibling, subgraph, ledger, subdirectory, sessions, session, plan, prs |
+| 5 | 15.58 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, sniff, pdf, zip, ingest, archived, arxiv |
+| 6 | 15.17 | lane, actor, role, requirements, task, process, analysis, feature | queue, sha, backlog, withheld, bytes, tile, slide, library |
+| 7 | 14.81 | preview, staging, translation, locale, url, pages, deploy, translated | glass, tile, avatar, card, fit, sticky, slot, settings |
+| 8 | 14.58 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | pdf, feedback, user, post, actor, requirement, rung, requirements |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
