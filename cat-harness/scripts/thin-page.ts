@@ -23,12 +23,12 @@
  *
  * ## Why a module of its own
  *
- * The library's shell (`viewerHtml` in `gen-library-viz.ts`) is the first
- * instance of this, and it is library-specific: its toolbar, listing and
- * queue sit in the same template as the generic part. Issue #1908 is the
- * second instance (one page per todo), so the generic part is lifted HERE
- * rather than copied. `gen-library-viz.ts` is not switched over in the same
- * change, because #1804 is editing it; that is a recorded follow-up.
+ * The library's per-entry pages (#1899) were the first instance of this, and
+ * the todo pages (#1908) the second, so the generic part lives HERE rather
+ * than in either generator. Both families render through
+ * {@link thinPageHtml}: `entryPageHtml` in `gen-library-viz.ts` and
+ * `todoPageHtml` in `todo-page.ts` supply only their skeleton, their config
+ * and — where a page loads more than its asset — their own `<noscript>`.
  *
  * ## The rail is declined, and that is a declaration
  *
@@ -53,8 +53,12 @@ export function escHtml(value: string): string {
 export interface ThinPage {
   /** The document title, plain text. */
   title: string;
-  /** The asset this page renders — its published JSON-LD, relative to the page. */
-  jsonld: string;
+  /**
+   * The asset this page renders — its published JSON-LD, relative to the page.
+   * Absent only when the asset has no published serialisation yet: then no
+   * `alternate` is written, and the caller must say so in {@link noscript}.
+   */
+  jsonld?: string;
   /** The script that draws the page, relative to the page. */
   script: string;
   /** An optional stylesheet, relative to the page. */
@@ -74,6 +78,14 @@ export interface ThinPage {
   body: string;
   /** What a reader without JavaScript sees, as HTML, BEFORE the link to the asset. Defaults to "This page". */
   noscriptLead?: string;
+  /**
+   * The whole `<noscript>` content, as HTML, replacing the default sentence —
+   * for a page that loads more than its own asset and must name what else.
+   * The caller escapes anything interpolated into it.
+   */
+  noscript?: string;
+  /** HTML written after the page's script, before `</body>` — e.g. a mount fragment. Its own line, even when empty. */
+  tail?: string;
   /** `lang` of the document. */
   lang?: string;
   /** Keep the viewer rail. Off by default — see the module docs. */
@@ -98,6 +110,12 @@ function configJson(config: Record<string, unknown>): string {
 /** Render a thin page. Deterministic: the same input gives the same bytes. */
 export function thinPageHtml(p: ThinPage): string {
   const lead = p.noscriptLead ?? "This page";
+  if (p.noscript === undefined && p.jsonld === undefined) {
+    throw new Error(`thin page "${p.title}": no JSON-LD to name, so its <noscript> must be given`);
+  }
+  const noscript =
+    p.noscript ??
+    `<p>${lead} loads its content from <a href="${escHtml(p.jsonld!)}">its JSON-LD</a>; it needs JavaScript to draw it.</p>`;
   return `<!doctype html>
 <html lang="${escHtml(p.lang ?? "en")}">
 <head>
@@ -106,14 +124,13 @@ export function thinPageHtml(p: ThinPage): string {
 <title>${escHtml(p.title)}</title>
 <link rel="canonical" href="./">
 <link rel="icon" href="${escHtml(p.icon ?? DEFAULT_ICON)}">
-${p.navbar ? "" : `${NAVBAR_OPT_OUT}\n`}<link rel="alternate" type="application/ld+json" href="${escHtml(p.jsonld)}">
-${p.stylesheet ? `<link rel="stylesheet" href="${escHtml(p.stylesheet)}">\n` : ""}</head>
+${p.navbar ? "" : `${NAVBAR_OPT_OUT}\n`}${p.jsonld !== undefined ? `<link rel="alternate" type="application/ld+json" href="${escHtml(p.jsonld)}">\n` : ""}${p.stylesheet ? `<link rel="stylesheet" href="${escHtml(p.stylesheet)}">\n` : ""}</head>
 <body>
 ${p.body.trimEnd()}
-<noscript><p>${lead} loads its content from <a href="${escHtml(p.jsonld)}">its JSON-LD</a>; it needs JavaScript to draw it.</p></noscript>
+<noscript>${noscript}</noscript>
 <script type="application/json" id="${escHtml(p.configId)}">${configJson(p.config)}</script>
 <script src="${escHtml(p.script)}"></script>
-</body>
+${p.tail !== undefined ? `${p.tail}\n` : ""}</body>
 </html>
 `;
 }

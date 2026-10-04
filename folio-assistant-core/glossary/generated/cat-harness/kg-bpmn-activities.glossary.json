@@ -1607,6 +1607,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_kgseparation.task_drain",
+      "prefLabel": "Drain: land, close or re-target the open PRs",
+      "definition": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks.",
+      "notation": "Task_Drain",
+      "source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Drain",
+      "status": "candidate"
+    },
+    {
       "id": "process_kgseparation.task_hosted",
       "prefLabel": "5 · Move harness output about it to the host",
       "definition": "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty.",
