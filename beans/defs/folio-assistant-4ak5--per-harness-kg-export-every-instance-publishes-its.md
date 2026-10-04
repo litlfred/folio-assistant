@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T21:36:29Z
-updated_at: 2026-10-04T08:13:36Z
+updated_at: 2026-10-04T08:16:28Z
 parent: folio-assistant-whlc
 ---
 
@@ -77,3 +77,9 @@ Scope agreed with the owner: items 1 and 5. Items 2–4 (the split, the root ind
 
 - **Item 1:** `scripts/instance-exports.ts` exports every declared instance the site did not, derived from the declarations. Eleven new documents: bootstrap-tools, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, folio-assistant-sci, the four smart-*, who-iris. cat-harness, the checkout root and bootstrap keep their own publishers, named with why in PUBLISHED_ELSEWHERE.
 - **Item 5:** `check:published-instance-exports` now fails when the deploy does not run the derived publisher, when a workflow running it drops an exempt instance's own publisher, or when an exemption names no declared instance.
+
+
+
+## Owner ruling 2026-10-04 — the root index is built at publish time, not committed
+
+Asked: build the root index (item 3) only when the site publishes, with no committed copy at the repository root? The owner answered **"1"**, i.e. *"Yes, build it at publish time only."* So item 3's "plus a committed root copy" and the matching Done-when clause are dropped. Why: a committed generated file conflicts whenever two PRs change the set of harnesses, the churn measured across this session's merges. q8ar's slices already work this way. Item 3 stays with session_01AxhsSvodhTgaioG1nUBWkh.
