@@ -120,20 +120,24 @@ then append a note to its body saying what you intend and where you got to.
 The bean is the durable record a sibling reads; there is no separate session
 log to keep in step with it.
 
-**b. Beans CLI** — Create a parent session bean and child tasks.
+**b. Beans CLI** — new tasks, parented by SUBJECT. **No session bean.**
 
 > **Check before you create (STRICT).** `beans create` is not idempotent — it
 > mints a fresh ID every call and dedupes on nothing, so re-entering this step
 > duplicates the whole plan rather than no-op'ing. Run the existence check in
 > [`todo-manager.md` §Check before you create](todo-manager.md) before **every**
-> `beans create` below, the session milestone included. An unguarded re-run of
-> exactly this step produced 14,688 duplicate beans in one folio on 2026-08-04.
+> `beans create` below. An unguarded re-run of exactly this step produced
+> 14,688 duplicate beans in one folio on 2026-08-04.
 
-- Create a session-level milestone/epic: `beans create "Session: <Branch/Goal>" --type milestone`
-- For each task you pick up, create a child task and link it to the session bean:
-  `beans create "<Task>" --type task`
-  `beans update <child-id> --parent <session-id>`
-  `beans update <child-id> --status in-progress`
+- **Do not create a `Session: …` milestone or epic.** This step used to say
+  to, and in the `qou` folio 292 of 353 epics were the result (bean `8unf`):
+  a session is a LOG, and its log is the PR body (part c) plus a bean note on
+  each bean worked (`bun run beans:note <id>`, keyed by branch). Full
+  reasoning: [`todo-manager`](todo-manager.md) §"A session is a log, not a
+  parent".
+- For each NEW task you pick up, create it under the epic whose subject it is:
+  `beans create "<Task>" --type task --parent <subject-epic-id>`, then claim
+  it.
 If working on an existing bean, run `bun run beans:claim <id>` — not
 `beans update`, per the note above.
 
@@ -242,7 +246,7 @@ or partial result):
    handoff letter.
 2. Read the bean discussion/comments (`beans show <id>`) — that's the technical state.
 3. Read the partial PR (if open) — that's the code state.
-4. Declare your intent normally (create your session bean and append a comment to the existing bean).
+4. Declare your intent normally (claim the bean and add a note to it — `bun run beans:note <id>` — saying you picked it up and where you will start; no session bean).
 5. Re-run the collision review in `coordinate` §"Starting new work" before
    your first edit, and add the result to the bean.
 

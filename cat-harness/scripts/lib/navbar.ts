@@ -196,8 +196,9 @@ export interface NavbarModel {
   /** The instance this navbar belongs to, shown in the fixed top. */
   instance: string;
   /**
-   * The instance's MARK in the header — its avatar, or failing that its
-   * initial on its tone. Owner, 2026-10-01 (#1757): *"QA flag each page needs
+   * The instance's MARK in the header — its avatar image or its registry
+   * glyph, whichever `harness-tiles.ts` resolved (bean `2vpn`), or failing
+   * both its initial on its tone. Owner, 2026-10-01 (#1757): *"QA flag each page needs
    * avatar or atleast letter to be clickable"*.
    *
    * The header is the navbar's ONE open/close control. It was a bare `☰`
@@ -209,7 +210,7 @@ export interface NavbarModel {
    * Absent, the header still draws a LETTER: the instance's initial. It never
    * falls back to a glyph that names an action rather than the instance.
    */
-  mark?: Pick<NavItem, "avatar" | "tone" | "icon">;
+  mark?: Pick<NavItem, "avatar" | "glyphPath" | "tone" | "icon">;
   /**
    * Whether this surface renders the header at all — the FOURTH declared
    * difference between surfaces, beside {@link hrefs} and {@link openControl}.

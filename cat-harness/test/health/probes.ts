@@ -830,6 +830,7 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       doneWhen: doneWhenState(text),
       renderedDecision: hasRenderedDecision(text),
       parent: frontMatterValue(fm, "parent"),
+      type: frontMatterValue(fm, "type"),
     });
   }
   // An empty store is not a clean one. A walk that found nothing is how a

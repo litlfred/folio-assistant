@@ -131,7 +131,7 @@ describe("this instance's own kinds", () => {
   test("every declared validator resolves, and the count is not asserted", async () => {
     // Named states rather than a count: a number here reports a new graph
     // kind as a failure. What must hold is that nothing DECLARED is broken.
-    const { sweep } = await import("../../cat-harness/scripts/check-kind-validators");
+    const { sweep } = await import("../scripts/check-kind-validators");
     const r = await sweep(INSTANCE);
     expect(r.unresolvable).toEqual([]);
     expect(r.resolved.length + r.undeclared.length).toBeGreaterThan(0);

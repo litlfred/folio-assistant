@@ -106,7 +106,7 @@ La sonde `--check-deps` signale quelles capacités sont présentes et fournit un
 indication d'installation pour tout élément manquant :
 
 ```sh
-bun run cat-harness/src/index.ts --check-deps
+bun run cat-harness-tools/src/index.ts --check-deps
 # ou via le script npm
 bun run check-deps
 ```
@@ -117,13 +117,13 @@ folio-assistant est un serveur MCP. Il prend en charge deux modes de transport :
 
 ```sh
 # transport stdio — ce que les harnais LLM (Claude Code, etc.) lancent
-bun run cat-harness/src/index.ts --stdio
+bun run cat-harness-tools/src/index.ts --stdio
 
 # transport HTTP — pour une instance partagée de longue durée / l'interface web
-bun run cat-harness/src/index.ts --http
+bun run cat-harness-tools/src/index.ts --http
 
 # pointez-le vers le dépôt de contenu que vous rédigez (valeur par défaut : ../.. )
-bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 Des scripts pratiques sont disponibles dans `package.json` :
@@ -181,7 +181,7 @@ Ajoutez folio-assistant en tant que serveur MCP. La configuration propre au proj
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -190,7 +190,7 @@ Ajoutez folio-assistant en tant que serveur MCP. La configuration propre au proj
 Ou enregistrez-le depuis la ligne de commande (CLI) :
 
 ```sh
-claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/src/index.ts --stdio --repo .
+claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness-tools/src/index.ts --stdio --repo .
 ```
 
 Claude Code lit également nativement `AGENTS.md` / `CLAUDE.md` et respecte le
@@ -208,7 +208,7 @@ partagé avec Gemini CLI) :
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -229,7 +229,7 @@ ses paramètres et réutilisez le même script `SessionStart` :
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness-tools/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }

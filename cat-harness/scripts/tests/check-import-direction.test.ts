@@ -12,7 +12,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { analyse, type ImportDirectionReport } from "../check-import-direction.ts";
+import { analyse, readInstances, type ImportDirectionReport } from "../check-import-direction.ts";
 
 let tmp: string;
 let r: ImportDirectionReport;
@@ -101,5 +101,51 @@ describe("check:import-direction", () => {
     } finally {
       instance("low", []);
     }
+  });
+});
+
+/**
+ * The split's boundary (bean `pyds`, stage 0): `cat-harness` must not load
+ * `cat-harness-tools`, which is built on it. The fixture copies the REAL `needs`
+ * of the four instances involved, so the test goes red if either declaration
+ * drifts — and plants the import in a scratch tree, never in this checkout.
+ */
+describe("check:import-direction — the cat-harness / cat-harness-tools boundary", () => {
+  const REAL = ["bootstrap", "bootstrap-tools", "cat-harness", "cat-harness-tools"];
+  let split: string;
+  let report: ImportDirectionReport;
+
+  beforeAll(() => {
+    const repo = join(import.meta.dir, "..", "..", "..");
+    const needs = new Map(readInstances(repo).map((i) => [i.name, i.needs]));
+    split = mkdtempSync(join(tmpdir(), "import-direction-split-"));
+    for (const name of REAL) {
+      const p = join(split, name, `${name}.json`);
+      mkdirSync(dirname(p), { recursive: true });
+      writeFileSync(p, JSON.stringify({ name, needs: needs.get(name) }));
+    }
+    const plant = (rel: string, body: string) => {
+      mkdirSync(dirname(join(split, rel)), { recursive: true });
+      writeFileSync(join(split, rel), body);
+    };
+    plant("cat-harness/src/core.ts", "export const core = 1;\n");
+    plant("cat-harness-tools/src/server.ts", 'import { core } from "../../cat-harness/src/core.ts";\nexport { core };\n');
+    plant("cat-harness/src/planted.ts", 'import { core } from "../../cat-harness-tools/src/server.ts";\nexport { core };\n');
+    report = analyse(split);
+  });
+
+  afterAll(() => rmSync(split, { recursive: true, force: true }));
+
+  test("the real declarations carry needs for every instance involved", () => {
+    expect(report.undeclaredNeeds).toEqual([]);
+  });
+
+  test("a planted cat-harness → cat-harness-tools import is wrong-direction", () => {
+    const wrong = report.findings.filter((f) => f.verdict === "wrong-direction");
+    expect(wrong.map((f) => `${f.file} → ${f.toInstance}`)).toEqual(["cat-harness/src/planted.ts → cat-harness-tools"]);
+  });
+
+  test("cat-harness-tools → cat-harness, down the arrow, is allowed", () => {
+    expect(report.findings.some((f) => f.file === "cat-harness-tools/src/server.ts")).toBe(false);
   });
 });
