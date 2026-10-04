@@ -312,10 +312,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-04T19:25:01.102Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/84a36a8c7946552634428283b76be6d6e87126df",
-  "sourceCommitSha": "84a36a8c7946552634428283b76be6d6e87126df",
-  "sourceCommitAt": "2026-10-04T21:19:37+02:00",
+  "generatedAt": "2026-10-04T20:24:43.278Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
+  "sourceCommitSha": "2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
+  "sourceCommitAt": "2026-10-04T22:16:45+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1355,7 +1355,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 225,
+      "instructionLines": 283,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1658,7 +1658,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1464,
+      "instructionLines": 1472,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2635,7 +2635,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 838,
+      "instructionLines": 878,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3096,7 +3096,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 647,
+      "instructionLines": 726,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3812,7 +3812,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/board-windows.md",
-      "instructionLines": 342,
+      "instructionLines": 365,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4954,12 +4954,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "latex-build-cache",
       "title": "LaTeX build performance — findings + what's safe",
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool `tex-install`), quick changed-chapter feature builds with latexdiff (Tool `paper-feature-build`), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "../folio-assistant-sci/skills/content/folio-paper-adapter/latex-build-cache.md",
-      "instructionLines": 135,
+      "instructionLines": 173,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -50400,7 +50400,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 271,
+      "fileCount": 273,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -50505,7 +50505,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1030,
+      "fileCount": 1022,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
     {
@@ -50624,7 +50624,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 1954,
+      "fileCount": 1958,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -50658,7 +50658,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 1030,
+      "fileCount": 965,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -50709,7 +50709,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1146,
+      "fileCount": 1139,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {

@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T19:24:49.135Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/84a36a8c7946552634428283b76be6d6e87126df",
-  "sourceCommitSha": "84a36a8c7946552634428283b76be6d6e87126df",
-  "sourceCommitAt": "2026-10-04T21:19:37+02:00",
+  "generatedAt": "2026-10-04T20:24:26.924Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
+  "sourceCommitSha": "2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
+  "sourceCommitAt": "2026-10-04T22:16:45+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -331,8 +331,8 @@
     "SequenceFlow": 18,
     "Lane": 7,
     "ProcessNode": 18,
-    "GraphKind": 9,
-    "Subgraph": 8,
+    "GraphKind": 10,
+    "Subgraph": 9,
     "Asset": 2
   },
   "@graph": [
@@ -932,9 +932,9 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "latex-build-cache",
       "title": "LaTeX build performance — findings + what's safe",
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool `tex-install`), quick changed-chapter feature builds with latexdiff (Tool `paper-feature-build`), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "instructionsPath": "skills/content/folio-paper-adapter/latex-build-cache.md",
-      "instructionLines": 135,
+      "instructionLines": 173,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1649,6 +1649,13 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-processes"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "tools",
+      "renderable": false,
+      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
+    },
+    {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "skills",
@@ -1776,8 +1783,25 @@
       ],
       "description": "The PAPER content adapter — `PaperContentAdapter` and its Lean tool registrar. It arrived here 2026-09-30 (bean y5si, step 1 of 2 on the owner's Option A ruling on issue #1558), and the destination was not a judgement made at the time: `cat-harness/src/builtin-adapters.ts` already declared this adapter `layer: \"sci\"`, and `cat-harness/scripts/partition/instance-rules.ts` already listed the prefix `adapters/paper/` in its `repo: \"sci\"` block. Two existing machine-readable classifications that the DIRECTORY had simply never matched; the directory caught up with them. This is the first EXECUTABLE TypeScript this instance holds beyond `contributions.ts`, which is why `tsconfig.json`'s `include` gained `folio-assistant-sci/adapters/**/*.ts` in the same commit as the move — bean `lvoa` measured what happens when it does not: a file crossing an instance boundary leaves the typecheck program and no gate reports a shrinking one. `dependents: skip` because a dependent gets its adapter by DECLARING a `contentType`, resolved through `BUILTIN_ADAPTERS` by variable path, rather than by inheriting this directory to scan. `adapters/document/` is NOT here and is not coming in this change: it is step 2, and moving it alongside is what takes the instance-boundary import axis through 16 instead of leaving it at 2.",
       "readmePath": "adapters/README.md",
-      "fileCount": 4,
+      "fileCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-tools",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "sci-tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/tools"
+      ],
+      "description": "The science layer's Tool nodes. Declared 2026-10-04 with the first two, `paper-feature-build` and `tex-install`, the iterative paper-build loop (issue #2117). Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
+      "readmePath": "tools/README.md",
+      "fileCount": 2,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-tools"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-sources",
@@ -1871,8 +1895,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "84a36a8c7946552634428283b76be6d6e87126df",
+    "sha": "2899abf0bfa9b23660d500c42fb6cdcc2d571dcc",
     "pr": "main",
-    "run": "37227842132"
+    "run": "37231486823"
   }
 }
