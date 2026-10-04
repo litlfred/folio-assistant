@@ -5,7 +5,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-10-03T08:26:45Z
-updated_at: 2026-10-04T15:11:51Z
+updated_at: 2026-10-04T15:11:54Z
 ---
 
 ## There is no owner's quote on this bean, and that is deliberate
@@ -181,10 +181,10 @@ because a 7 % residual with no name is how the 62 % accumulated.
 
 ## Done when
 
-- [ ] the owner has ruled on the 17 rows above — approved as proposed, or amended
-- [ ] the approved re-parents are applied by each epic's owner, or by this lane on the owner's explicit go
-- [ ] `bun run check:bean-parents` and `check:bean-rollup` are green after the re-parents
-- [ ] the residual (`slw1`, `0lmb`) has a stated home — a fifth milestone, or a row in the table above
+- [x] the owner has ruled on the 17 rows above — approved as proposed, or amended
+- [x] the approved re-parents are applied by each epic's owner, or by this lane on the owner's explicit go
+- [x] `bun run check:bean-parents` and `check:bean-rollup` are green after the re-parents
+- [x] the residual (`slw1`, `0lmb`) has a stated home — a fifth milestone, or a row in the table above
 - [ ] this milestone's own scope sentence is replaced by the owner's words, or the derivation note above is confirmed as the record
 
 - **waits on:** the owner — approval of the 17-row table; nothing else in this bean can proceed without it
@@ -211,3 +211,30 @@ If the answer to (1) is no, this bean is `scrapped` with the reasons and the
 measurement is kept — the 62 % is a real finding whatever the remedy.
 
 _2026-10-04T15:11:51Z_ — Claimed by claude/goal4-reparent — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner ruling, 2026-10-04
+
+In session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi, after the
+table was re-checked against `main` (all 16 open orphan epics still had no
+parent; `d308` still under `zzmr`), the owner chose from options put to them:
+
+- the table: **"Approve all as proposed"** — every row, the four judgement
+  calls (`bzyu`, `zzmr`, `q4jm`, `8jt6`) included, applied by this lane;
+- the residual: **"New GOAL 5: CONTENT"** — created as `npuo`, holding `slw1`
+  and `0lmb`.
+
+Applied on branch `claude/goal4-reparent`. **One deviation, forced:** `9v5a`
+was proposed as `1swy` → PLATFORM, but the `beans` CLI refuses an epic whose
+parent is an epic (*"epic beans can only have milestone as parent"*), the same
+shape `d308` is baselined for. It hangs from PLATFORM directly; its subject
+still points at `1swy`.
+
+Box 5 (the scope sentence in the owner's words) was not asked and stays open.
+
+
+**Two further epics, same day.** Re-measuring after the 17 rows found 36 open
+beans still unplaced (8 %), under two epics the 2026-10-03 table did not
+list: `3fva` (QA & test evidence off main, 25 open — the qa-reports arc `fs43`
+generalises) and `0ipy` (agentic SE literature, 11 open — the research behind
+`nok9` and `9v5a`). Put to the owner; **"Both to PLATFORM"**. Measured after:
+0 open beans without an open milestone ancestor.

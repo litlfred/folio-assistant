@@ -3,8 +3,10 @@
 title: 'MEMORY & TODOS: notes an agent or a person carries, attached to the graph'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-10-04T15:12:16Z
+parent: folio-assistant-p5wm
 ---
 
 Notes that a participant carries, attached to a node of the graph.
