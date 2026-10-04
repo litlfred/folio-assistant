@@ -318,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T16:30:21.779Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/39772af57e295df915cd17eb890517ad4c47cd5c",
-  "sourceCommitSha": "39772af57e295df915cd17eb890517ad4c47cd5c",
-  "sourceCommitAt": "2026-10-04T16:25:53Z",
+  "generatedAt": "2026-10-04T16:48:02.640Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c58b295c1aa0a426518c3c42062818631acff48f",
+  "sourceCommitSha": "c58b295c1aa0a426518c3c42062818631acff48f",
+  "sourceCommitAt": "2026-10-04T16:42:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -434,7 +434,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/code"
       ],
-      "description": "The MCP and HTTP server — what `bun run start` and `.mcp.json` start, from `src/index.ts`: the composition roots (`server.ts`, `route-groups.ts`, `tool-groups.ts`), the plug-in contract `types.ts`, the MCP tool registrars (`tools/`), the harness's own routes (`routes/branches.ts`, `routes/chat.ts`), authentication (`auth/`, `core/github-auth.ts`), access control (`core/rbac.ts`), the MCP projection (`mcp/`) and the no-content adapter. Moved from `cat-harness/src/` in stage 1a's first batch (bean `70lx`, B1). The Tool nodes it serves stay DECLARED in `cat-harness/tools/` with their original `src/tools/*` paths, and the loader finds each module here through `needs` (owner ruling \"Trap 1\"); the content routes (feedback, glossary, relevance) went UP to `folio-assistant-core/src/routes/` instead (owner, 2026-10-04).",
+      "description": "The MCP and HTTP server — what `bun run start` and `.mcp.json` start, from `src/index.ts`: the composition roots (`server.ts`, `route-groups.ts`, `tool-groups.ts`), the plug-in contract `types.ts`, the MCP tool registrars (`tools/`), the harness's own routes (`routes/branches.ts`, `routes/chat.ts`), authentication (`auth/`, `core/github-auth.ts`), access control (`core/rbac.ts`), the MCP projection (`mcp/`) and the no-content adapter. Moved from `cat-harness/src/` in stage 1a's first batch (bean `70lx`, B1). The Tool nodes it serves stay DECLARED in `cat-harness/tools/` with their original `src/tools/*` paths, and the loader finds each module here through `needs` (owner ruling \"Trap 1\"); the content routes (feedback, glossary, relevance) went UP to the content layer that owns their content instead, and the route loader finds them the same way (owner, 2026-10-04).",
       "readmePath": "src/README.md",
       "fileCount": 35,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-src"
@@ -460,8 +460,8 @@
   ],
   "staging": {
     "branch": "claude/70lx-b1",
-    "sha": "3c9b71254bfbcf6e2b1bae04d719048df8af9a53",
+    "sha": "58d9a56b5d69b5931a1c5fcd2a71709d2aa6fc8c",
     "pr": "2112/merge",
-    "run": "37216748022"
+    "run": "37217790916"
   }
 }
