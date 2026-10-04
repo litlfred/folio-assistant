@@ -163,9 +163,9 @@
 </div>
 
 <ul class="subs">
-<li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">16</span></li>
+<li><a href="../core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">65</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -224,12 +224,28 @@
   <td>Materialized content is read-only.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reader (any actor) · Source graph — read-only · Copier's own folio/ · Verification</div><div class="f"><span class="k">skills</span> copy-out-materialized</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn"><code>Basic ingestion — an upload to an asset catalogued in library/</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn</span></td>
-  <td>folio-assistant — Basic ingestion — an upload to an asset catalogued in library/.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended)</div><div class="f"><span class="k">skills</span> asset-extraction, library-ingestion, upload-routes</div></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn"><code>Document ingestion — uploads/ to the L1 source knowledge graph</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn</span></td>
+  <td>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.<div class="f"><span class="k">activities</span> 12</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Work plan — beans (shared by humans and agents) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake, library-ingestion, theme-art-intake, todo-manager, upload-routes</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/human-translation-workflow.bpmn"><code>Human Translation Workflow</code></a><br><span class="p">cat-harness/processes/library/human-translation-workflow.bpmn</span></td>
   <td>The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.<div class="f"><span class="k">activities</span> 16</div><div class="f"><span class="k">lanes</span> Translation Coordinator · Human Translator · Subject-Matter Expert / Reviewer · Automated Pipeline</div><div class="f"><span class="k">skills</span> translation-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn"><code>Ingestion subprocess — build the L1 knowledge graph</code></a><br><span class="p">cat-harness/processes/library/ingest-build-l1-kg.bpmn</span></td>
+  <td>folio-assistant — Ingestion subprocess — build the L1 knowledge graph.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn"><code>Ingestion subprocess — derive content from the assets</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn</span></td>
+  <td>folio-assistant — Ingestion subprocess — derive content from the assets.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended)</div><div class="f"><span class="k">skills</span> document-intake</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn"><code>Ingestion subprocess — extract structure</code></a><br><span class="p">cat-harness/processes/library/ingest-extract-structure.bpmn</span></td>
+  <td>folio-assistant — Ingestion subprocess — extract structure.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended)</div><div class="f"><span class="k">skills</span> document-intake</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-l1-completeness-gate.bpmn"><code>Ingestion subprocess — the L1 completeness gate</code></a><br><span class="p">cat-harness/processes/library/ingest-l1-completeness-gate.bpmn</span></td>
+  <td>folio-assistant — Ingestion subprocess — the L1 completeness gate.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Reviewer (SME or editor)</div><div class="f"><span class="k">skills</span> adjudication, document-intake</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/materialize-remote.bpmn"><code>Materialize remote content — the shared subprocess</code></a><br><span class="p">cat-harness/processes/library/materialize-remote.bpmn</span></td>
@@ -345,7 +361,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn"><code>Merge the base branch in</code></a><br><span class="p">cat-harness/processes/sdlc/merge-base.bpmn</span></td>
-  <td>CALLED FROM <code>Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code>bun run merge:main</code> (cat-harness/scripts/merge-base.ts).<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> merge:main command · Authoring agent</div><div class="f"><span class="k">skills</span> continual-progress, merge-conflict-patterns, prepare-merge</div></td>
+  <td>CALLED FROM <code>Task_PrepareMerge</code> in code-change-review.bpmn, and executed by <code>bun run merge:main</code> (cat-harness/scripts/merge-base.ts).<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> merge:main command · Authoring agent</div><div class="f"><span class="k">skills</span> ci-health, continual-progress, merge-conflict-patterns, prepare-merge</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-refusal.bpmn"><code>A refused merge-train member</code></a><br><span class="p">cat-harness/processes/sdlc/merge-refusal.bpmn</span></td>

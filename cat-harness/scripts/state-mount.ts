@@ -4,6 +4,7 @@
  *
  * @module scripts/state-mount
  * @graphNode none — a session-start step over a declared `storage` directory
+ * @covers none — a setup step that mounts branch-kept subgraphs; it audits no graph
  *
  * Bean `2h76` part 4, arc `fs43`. The session-start hook calls this; it is also
  * `bun run state:mount` by hand.

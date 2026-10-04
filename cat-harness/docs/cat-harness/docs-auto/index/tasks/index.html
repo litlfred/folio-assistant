@@ -163,9 +163,9 @@
 </div>
 
 <ul class="subs">
-<li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">148</span></li>
+<li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">116</span></li>
 <li><a href="fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">27</span></li>
-<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">415</span></li>
+<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">444</span></li>
 <li><a href="sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">10</span></li>
 <li><a href="smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">10</span></li>
 <li><a href="smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">9</span></li>
@@ -483,20 +483,52 @@
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/copy-out-materialized.bpmn#Verify the ORIGINAL still hashes to its digest"><code>Verify the ORIGINAL still hashes to its digest</code></a><br><span class="p">cat-harness/processes/library/copy-out-materialized.bpmn#Verify the ORIGINAL still hashes to its digest</span></td>
   <td>serviceTask in copy-out-materialized</td>
 </tr>
-<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Extract-its-metadata-into-the-KG-asset-extraction-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Extract its metadata into the KG [asset-extraction]"><code>Extract its metadata into the KG [asset-extraction]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Extract its metadata into the KG [asset-extraction]</span></td>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Available-to-cite-as-an-L1-source">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Available to cite as an L1 source"><code>Available to cite as an L1 source</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Available to cite as an L1 source</span></td>
+  <td>task in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Build-the-L1-knowledge-graph-document-intake-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Build the L1 knowledge graph [document-intake]"><code>Build the L1 knowledge graph [document-intake]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Build the L1 knowledge graph [document-intake]</span></td>
+  <td>callActivity in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Derive-content-from-the-assets-document-intake-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Derive content from the assets [document-intake]"><code>Derive content from the assets [document-intake]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Derive content from the assets [document-intake]</span></td>
+  <td>callActivity in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Detect-media-type-and-mint-a-doc-id-document-intake-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Detect media type and mint a doc id [document-intake]"><code>Detect media type and mint a doc id [document-intake]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Detect media type and mint a doc id [document-intake]</span></td>
+  <td>serviceTask in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Establish-the-licence-from-the-upload-alone-document-intake-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Establish the licence from the upload alone [document-intake]"><code>Establish the licence from the upload alone [document-intake]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Establish the licence from the upload alone [document-intake]</span></td>
+  <td>serviceTask in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Extract-structure-document-intake-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Extract structure [document-intake]"><code>Extract structure [document-intake]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Extract structure [document-intake]</span></td>
+  <td>callActivity in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Ingest-the-theme-theme-art-intake-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Ingest the theme [theme-art-intake]"><code>Ingest the theme [theme-art-intake]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Ingest the theme [theme-art-intake]</span></td>
+  <td>callActivity in document-ingestion</td>
+</tr>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-L1-completeness-gate">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#L1 completeness gate"><code>L1 completeness gate</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#L1 completeness gate</span></td>
+  <td>callActivity in document-ingestion</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Move into library/&amp;lt;bib-slug&amp;gt;/"><code>Move into library/&amp;lt;bib-slug&amp;gt;/</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Move into library/&amp;lt;bib-slug&amp;gt;/</span></td>
   <td>serviceTask in document-ingestion</td>
 </tr>
 <tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Place-it-in-uploads-by-a-declared-route-upload-routes-">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Place it in uploads/ by a declared route [upload-routes]"><code>Place it in uploads/ by a declared route [upload-routes]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Place it in uploads/ by a declared route [upload-routes]</span></td>
   <td>task in document-ingestion</td>
 </tr>
-<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Place-the-asset-in-library-lt-slug-gt-library-ingestion-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Place the asset in library/&amp;lt;slug&amp;gt;/ [library-ingestion]"><code>Place the asset in library/&amp;lt;slug&amp;gt;/ [library-ingestion]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Place the asset in library/&amp;lt;slug&amp;gt;/ [library-ingestion]</span></td>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Prose-blocks-enter-the-summary-queue-library-ingestion-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Prose blocks enter the summary queue [library-ingestion]"><code>Prose blocks enter the summary queue [library-ingestion]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Prose blocks enter the summary queue [library-ingestion]</span></td>
   <td>serviceTask in document-ingestion</td>
 </tr>
-<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Record-it-in-library-as-referenced-library-ingestion-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Record it in library/ as referenced [library-ingestion]"><code>Record it in library/ as referenced [library-ingestion]</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Record it in library/ as referenced [library-ingestion]</span></td>
+<tr id="a-cat-harness-processes-library-document-ingestion-bpmn-Record-the-gap-as-a-bean">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/document-ingestion.bpmn#Record the gap as a bean"><code>Record the gap as a bean</code></a><br><span class="p">cat-harness/processes/library/document-ingestion.bpmn#Record the gap as a bean</span></td>
   <td>serviceTask in document-ingestion</td>
 </tr>
 <tr id="a-cat-harness-processes-library-human-translation-workflow-bpmn-Append-WHO-10-disclaimer-if-DAK-">
@@ -562,6 +594,86 @@
 <tr id="a-cat-harness-processes-library-human-translation-workflow-bpmn-Write-status-json-10-official-">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/human-translation-workflow.bpmn#Write status.json&amp;#10;(official)"><code>Write status.json&amp;#10;(official)</code></a><br><span class="p">cat-harness/processes/library/human-translation-workflow.bpmn#Write status.json&amp;#10;(official)</span></td>
   <td>serviceTask in human-translation-workflow</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-build-l1-kg-bpmn-Bind-the-folder-name-to-the-bibliography-slug">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn#Bind the folder name to the bibliography slug"><code>Bind the folder name to the bibliography slug</code></a><br><span class="p">cat-harness/processes/library/ingest-build-l1-kg.bpmn#Bind the folder name to the bibliography slug</span></td>
+  <td>serviceTask in ingest-build-l1-kg</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-build-l1-kg-bpmn-Link-L1-nodes-into-the-corpus-graph">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn#Link L1 nodes into the corpus graph"><code>Link L1 nodes into the corpus graph</code></a><br><span class="p">cat-harness/processes/library/ingest-build-l1-kg.bpmn#Link L1 nodes into the corpus graph</span></td>
+  <td>task in ingest-build-l1-kg</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-build-l1-kg-bpmn-Record-assets-local-path-or-remote-URL">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn#Record assets[] — local path or remote URL"><code>Record assets[] — local path or remote URL</code></a><br><span class="p">cat-harness/processes/library/ingest-build-l1-kg.bpmn#Record assets[] — local path or remote URL</span></td>
+  <td>serviceTask in ingest-build-l1-kg</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-build-l1-kg-bpmn-Write-dublin-core-jsonld-the-record-of-truth-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn#Write dublin-core.jsonld (the record of truth)"><code>Write dublin-core.jsonld (the record of truth)</code></a><br><span class="p">cat-harness/processes/library/ingest-build-l1-kg.bpmn#Write dublin-core.jsonld (the record of truth)</span></td>
+  <td>serviceTask in ingest-build-l1-kg</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-build-l1-kg-bpmn-Write-manifest-jsonld-referencing-it">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-build-l1-kg.bpmn#Write manifest.jsonld referencing it"><code>Write manifest.jsonld referencing it</code></a><br><span class="p">cat-harness/processes/library/ingest-build-l1-kg.bpmn#Write manifest.jsonld referencing it</span></td>
+  <td>serviceTask in ingest-build-l1-kg</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-derive-content-bpmn-Archive-greppable-contents-manifest">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn#Archive → greppable contents manifest"><code>Archive → greppable contents manifest</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn#Archive → greppable contents manifest</span></td>
+  <td>serviceTask in ingest-derive-content</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-derive-content-bpmn-Cite-the-author-of-every-narrative">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn#Cite the author of every narrative"><code>Cite the author of every narrative</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn#Cite the author of every narrative</span></td>
+  <td>serviceTask in ingest-derive-content</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-derive-content-bpmn-File-info-sizes-hashes-timestamps-mimetype">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn#File info, sizes, hashes, timestamps, mimetype"><code>File info, sizes, hashes, timestamps, mimetype</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn#File info, sizes, hashes, timestamps, mimetype</span></td>
+  <td>serviceTask in ingest-derive-content</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-derive-content-bpmn-Narrative-description-per-image-localized">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn#Narrative description per image, localized"><code>Narrative description per image, localized</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn#Narrative description per image, localized</span></td>
+  <td>serviceTask in ingest-derive-content</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-derive-content-bpmn-Sheet-names-headers-shape-narrative">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn#Sheet names, headers, shape, narrative"><code>Sheet names, headers, shape, narrative</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn#Sheet names, headers, shape, narrative</span></td>
+  <td>serviceTask in ingest-derive-content</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-derive-content-bpmn-Transcribe-and-translate-audio">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-derive-content.bpmn#Transcribe and translate audio"><code>Transcribe and translate audio</code></a><br><span class="p">cat-harness/processes/library/ingest-derive-content.bpmn#Transcribe and translate audio</span></td>
+  <td>serviceTask in ingest-derive-content</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-extract-structure-bpmn-Extract-claim-candidates">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn#Extract claim candidates"><code>Extract claim candidates</code></a><br><span class="p">cat-harness/processes/library/ingest-extract-structure.bpmn#Extract claim candidates</span></td>
+  <td>serviceTask in ingest-extract-structure</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-extract-structure-bpmn-Extract-the-text-layer">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn#Extract the text layer"><code>Extract the text layer</code></a><br><span class="p">cat-harness/processes/library/ingest-extract-structure.bpmn#Extract the text layer</span></td>
+  <td>serviceTask in ingest-extract-structure</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-extract-structure-bpmn-OCR-to-ocr-page--txt">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn#OCR to ocr/page-*.txt"><code>OCR to ocr/page-*.txt</code></a><br><span class="p">cat-harness/processes/library/ingest-extract-structure.bpmn#OCR to ocr/page-*.txt</span></td>
+  <td>serviceTask in ingest-extract-structure</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-extract-structure-bpmn-Split-into-sections-md-with-doc_brief-front-matter">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn#Split into sections/*.md with doc_brief front-matter"><code>Split into sections/*.md with doc_brief front-matter</code></a><br><span class="p">cat-harness/processes/library/ingest-extract-structure.bpmn#Split into sections/*.md with doc_brief front-matter</span></td>
+  <td>serviceTask in ingest-extract-structure</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-extract-structure-bpmn-Write-structure-json-TOC-page-ranges-metadata-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-extract-structure.bpmn#Write structure.json (TOC, page ranges, metadata)"><code>Write structure.json (TOC, page ranges, metadata)</code></a><br><span class="p">cat-harness/processes/library/ingest-extract-structure.bpmn#Write structure.json (TOC, page ranges, metadata)</span></td>
+  <td>serviceTask in ingest-extract-structure</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-l1-completeness-gate-bpmn-Adjudicate-the-flagged-passage">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Adjudicate the flagged passage"><code>Adjudicate the flagged passage</code></a><br><span class="p">cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Adjudicate the flagged passage</span></td>
+  <td>callActivity in ingest-l1-completeness-gate</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-l1-completeness-gate-bpmn-Is-every-derived-artefact-present-">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Is every derived artefact present?"><code>Is every derived artefact present?</code></a><br><span class="p">cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Is every derived artefact present?</span></td>
+  <td>serviceTask in ingest-l1-completeness-gate</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-l1-completeness-gate-bpmn-Record-the-L1-completeness-verdict">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Record the L1 completeness verdict"><code>Record the L1 completeness verdict</code></a><br><span class="p">cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Record the L1 completeness verdict</span></td>
+  <td>serviceTask in ingest-l1-completeness-gate</td>
+</tr>
+<tr id="a-cat-harness-processes-library-ingest-l1-completeness-gate-bpmn-Round-trip-translation-QA">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Round-trip translation QA"><code>Round-trip translation QA</code></a><br><span class="p">cat-harness/processes/library/ingest-l1-completeness-gate.bpmn#Round-trip translation QA</span></td>
+  <td>serviceTask in ingest-l1-completeness-gate</td>
 </tr>
 <tr id="a-cat-harness-processes-library-materialize-remote-bpmn-COPYRIGHT-per-bitstream-and-for-the-derived-work">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/materialize-remote.bpmn#COPYRIGHT per bitstream, and for the derived work"><code>COPYRIGHT per bitstream, and for the derived work</code></a><br><span class="p">cat-harness/processes/library/materialize-remote.bpmn#COPYRIGHT per bitstream, and for the derived work</span></td>
@@ -1333,6 +1445,10 @@
 </tr>
 <tr id="a-cat-harness-processes-sdlc-merge-base-bpmn-Regenerate-asking-10-every-CI-gate">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn#Regenerate, asking&amp;#10;every CI gate"><code>Regenerate, asking&amp;#10;every CI gate</code></a><br><span class="p">cat-harness/processes/sdlc/merge-base.bpmn#Regenerate, asking&amp;#10;every CI gate</span></td>
+  <td>task in merge-base</td>
+</tr>
+<tr id="a-cat-harness-processes-sdlc-merge-base-bpmn-Report-what-the-run-10-found-once">
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn#Report what the run&amp;#10;found, once"><code>Report what the run&amp;#10;found, once</code></a><br><span class="p">cat-harness/processes/sdlc/merge-base.bpmn#Report what the run&amp;#10;found, once</span></td>
   <td>task in merge-base</td>
 </tr>
 <tr id="a-cat-harness-processes-sdlc-merge-base-bpmn-Resolve-by-hand-10-then-regenerate">
@@ -2350,134 +2466,6 @@
 <tr id="a-folio-assistant-core-processes-library-deep-document-research-bpmn-Synthesise-cite-to-a-location-and-say-what-was-not-found">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/deep-document-research.bpmn#Synthesise, cite to a location, and say what was not found"><code>Synthesise, cite to a location, and say what was not found</code></a><br><span class="p">folio-assistant-core/processes/library/deep-document-research.bpmn#Synthesise, cite to a location, and say what was not found</span></td>
   <td>task in deep-document-research</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-build-l1-kg-bpmn-Bind-the-folder-name-to-the-bibliography-slug">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Bind the folder name to the bibliography slug"><code>Bind the folder name to the bibliography slug</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Bind the folder name to the bibliography slug</span></td>
-  <td>serviceTask in ingest-build-l1-kg</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-build-l1-kg-bpmn-Link-L1-nodes-into-the-corpus-graph">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Link L1 nodes into the corpus graph"><code>Link L1 nodes into the corpus graph</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Link L1 nodes into the corpus graph</span></td>
-  <td>task in ingest-build-l1-kg</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-build-l1-kg-bpmn-Record-assets-local-path-or-remote-URL">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Record assets[] — local path or remote URL"><code>Record assets[] — local path or remote URL</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Record assets[] — local path or remote URL</span></td>
-  <td>serviceTask in ingest-build-l1-kg</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-build-l1-kg-bpmn-Write-dublin-core-jsonld-the-record-of-truth-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Write dublin-core.jsonld (the record of truth)"><code>Write dublin-core.jsonld (the record of truth)</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Write dublin-core.jsonld (the record of truth)</span></td>
-  <td>serviceTask in ingest-build-l1-kg</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-build-l1-kg-bpmn-Write-manifest-jsonld-referencing-it">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Write manifest.jsonld referencing it"><code>Write manifest.jsonld referencing it</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Write manifest.jsonld referencing it</span></td>
-  <td>serviceTask in ingest-build-l1-kg</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-derive-content-bpmn-Archive-greppable-contents-manifest">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn#Archive → greppable contents manifest"><code>Archive → greppable contents manifest</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn#Archive → greppable contents manifest</span></td>
-  <td>serviceTask in ingest-derive-content</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-derive-content-bpmn-Cite-the-author-of-every-narrative">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn#Cite the author of every narrative"><code>Cite the author of every narrative</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn#Cite the author of every narrative</span></td>
-  <td>serviceTask in ingest-derive-content</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-derive-content-bpmn-File-info-sizes-hashes-timestamps-mimetype">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn#File info, sizes, hashes, timestamps, mimetype"><code>File info, sizes, hashes, timestamps, mimetype</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn#File info, sizes, hashes, timestamps, mimetype</span></td>
-  <td>serviceTask in ingest-derive-content</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-derive-content-bpmn-Narrative-description-per-image-localized">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn#Narrative description per image, localized"><code>Narrative description per image, localized</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn#Narrative description per image, localized</span></td>
-  <td>serviceTask in ingest-derive-content</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-derive-content-bpmn-Sheet-names-headers-shape-narrative">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn#Sheet names, headers, shape, narrative"><code>Sheet names, headers, shape, narrative</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn#Sheet names, headers, shape, narrative</span></td>
-  <td>serviceTask in ingest-derive-content</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-derive-content-bpmn-Transcribe-and-translate-audio">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn#Transcribe and translate audio"><code>Transcribe and translate audio</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn#Transcribe and translate audio</span></td>
-  <td>serviceTask in ingest-derive-content</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-extract-structure-bpmn-Extract-claim-candidates">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Extract claim candidates"><code>Extract claim candidates</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Extract claim candidates</span></td>
-  <td>serviceTask in ingest-extract-structure</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-extract-structure-bpmn-Extract-the-text-layer">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Extract the text layer"><code>Extract the text layer</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Extract the text layer</span></td>
-  <td>serviceTask in ingest-extract-structure</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-extract-structure-bpmn-OCR-to-ocr-page--txt">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn#OCR to ocr/page-*.txt"><code>OCR to ocr/page-*.txt</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-extract-structure.bpmn#OCR to ocr/page-*.txt</span></td>
-  <td>serviceTask in ingest-extract-structure</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-extract-structure-bpmn-Split-into-sections-md-with-doc_brief-front-matter">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Split into sections/*.md with doc_brief front-matter"><code>Split into sections/*.md with doc_brief front-matter</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Split into sections/*.md with doc_brief front-matter</span></td>
-  <td>serviceTask in ingest-extract-structure</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-extract-structure-bpmn-Write-structure-json-TOC-page-ranges-metadata-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Write structure.json (TOC, page ranges, metadata)"><code>Write structure.json (TOC, page ranges, metadata)</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Write structure.json (TOC, page ranges, metadata)</span></td>
-  <td>serviceTask in ingest-extract-structure</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-l1-completeness-gate-bpmn-Adjudicate-the-flagged-passage">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Adjudicate the flagged passage"><code>Adjudicate the flagged passage</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Adjudicate the flagged passage</span></td>
-  <td>callActivity in ingest-l1-completeness-gate</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-l1-completeness-gate-bpmn-Is-every-derived-artefact-present-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Is every derived artefact present?"><code>Is every derived artefact present?</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Is every derived artefact present?</span></td>
-  <td>serviceTask in ingest-l1-completeness-gate</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-l1-completeness-gate-bpmn-Record-the-L1-completeness-verdict">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Record the L1 completeness verdict"><code>Record the L1 completeness verdict</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Record the L1 completeness verdict</span></td>
-  <td>serviceTask in ingest-l1-completeness-gate</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-ingest-l1-completeness-gate-bpmn-Round-trip-translation-QA">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Round-trip translation QA"><code>Round-trip translation QA</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Round-trip translation QA</span></td>
-  <td>serviceTask in ingest-l1-completeness-gate</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Available-to-cite-as-an-L1-source">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Available to cite as an L1 source"><code>Available to cite as an L1 source</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Available to cite as an L1 source</span></td>
-  <td>task in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Basic-ingestion-harness-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Basic ingestion (harness)"><code>Basic ingestion (harness)</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Basic ingestion (harness)</span></td>
-  <td>callActivity in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Build-the-L1-knowledge-graph-document-intake-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Build the L1 knowledge graph [document-intake]"><code>Build the L1 knowledge graph [document-intake]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Build the L1 knowledge graph [document-intake]</span></td>
-  <td>callActivity in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Derive-content-from-the-assets-document-intake-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Derive content from the assets [document-intake]"><code>Derive content from the assets [document-intake]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Derive content from the assets [document-intake]</span></td>
-  <td>callActivity in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Detect-media-type-and-mint-a-doc-id-document-intake-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Detect media type and mint a doc id [document-intake]"><code>Detect media type and mint a doc id [document-intake]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Detect media type and mint a doc id [document-intake]</span></td>
-  <td>serviceTask in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Establish-the-licence-from-the-upload-alone-document-intake-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Establish the licence from the upload alone [document-intake]"><code>Establish the licence from the upload alone [document-intake]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Establish the licence from the upload alone [document-intake]</span></td>
-  <td>serviceTask in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Extract-structure-document-intake-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Extract structure [document-intake]"><code>Extract structure [document-intake]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Extract structure [document-intake]</span></td>
-  <td>callActivity in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Ingest-the-theme-theme-art-intake-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Ingest the theme [theme-art-intake]"><code>Ingest the theme [theme-art-intake]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Ingest the theme [theme-art-intake]</span></td>
-  <td>callActivity in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-L1-completeness-gate">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#L1 completeness gate"><code>L1 completeness gate</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#L1 completeness gate</span></td>
-  <td>callActivity in l1-document-ingestion</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Move into library/&amp;lt;bib-slug&amp;gt;/"><code>Move into library/&amp;lt;bib-slug&amp;gt;/</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Move into library/&amp;lt;bib-slug&amp;gt;/</span></td>
-  <td>serviceTask in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Prose-blocks-enter-the-summary-queue-l1-document-ingestion-">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Prose blocks enter the summary queue [l1-document-ingestion]"><code>Prose blocks enter the summary queue [l1-document-ingestion]</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Prose blocks enter the summary queue [l1-document-ingestion]</span></td>
-  <td>serviceTask in l1-document-ingestion</td>
-</tr>
-<tr id="a-folio-assistant-core-processes-library-l1-document-ingestion-bpmn-Record-the-gap-as-a-bean">
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Record the gap as a bean"><code>Record the gap as a bean</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Record the gap as a bean</span></td>
-  <td>serviceTask in l1-document-ingestion</td>
 </tr>
 <tr id="a-folio-assistant-core-processes-ui-board-open-close-bpmn-Close-the-window-back-to-its-avatar">
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-open-close.bpmn#Close the window back to its avatar"><code>Close the window back to its avatar</code></a><br><span class="p">folio-assistant-core/processes/ui/board-open-close.bpmn#Close the window back to its avatar</span></td>

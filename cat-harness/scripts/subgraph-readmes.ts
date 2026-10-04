@@ -49,6 +49,7 @@ import {
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
 
@@ -151,7 +152,12 @@ export function harnessInstances(repo: string): InstanceInput[] {
       // `.gitignore` lists every working copy and the writer lists only what
       // git would commit; `directory-storage.test.ts` keeps that list equal to
       // the declarations.
-      dirs: instanceDirectories(inst, decl).filter((d) => !isStored(d)).map((d) => {
+      //
+      // The same holds for a `source`-declared branch (bean `9c7h`: fsh-guts),
+      // which `isStored` does not see because it reads only `storage`:
+      // counting the files git tracks here would rewrite its README as "holds
+      // no files" — true of main, false of the subgraph.
+      dirs: instanceDirectories(inst, decl).filter((d) => !isStored(d) && !contentIsOffCheckout(d)).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
         const abs = resolve(base, d.path);
         // Absent declaration means the writer gets nothing and prints no
