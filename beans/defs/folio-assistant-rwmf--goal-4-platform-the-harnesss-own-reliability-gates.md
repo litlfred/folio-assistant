@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rwmf
 title: 'GOAL 4 / PLATFORM: the harness''s own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on'
-status: todo
+status: in-progress
 type: milestone
 priority: high
 created_at: 2026-10-03T08:26:45Z
-updated_at: 2026-10-03T08:26:45Z
+updated_at: 2026-10-04T15:11:51Z
 ---
 
 ## There is no owner's quote on this bean, and that is deliberate
@@ -209,3 +209,5 @@ question in three parts, in order of how much it matters:
 
 If the answer to (1) is no, this bean is `scrapped` with the reasons and the
 measurement is kept — the 62 % is a real finding whatever the remedy.
+
+_2026-10-04T15:11:51Z_ — Claimed by claude/goal4-reparent — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
