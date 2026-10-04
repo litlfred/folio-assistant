@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>106</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>219</b><span>declared uses</span></div>
+<div class="xs-stat"><b>223</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -132,6 +132,7 @@ a registry nobody prunes is one that stops describing the repository.
 | [`cat-harness/scripts/todo-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/todo-graph.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
+| `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
 | [`who-iris/skills/iris-dspace.md`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md) | `conformsTo:` front matter |
 
 **Operative terms (22).** The terms this repository acts on —
@@ -180,6 +181,7 @@ a subset of the edition rather than a transcription of it.
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/vocab-mapping-fhir.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping-fhir.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
 **Operative terms (1).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -449,6 +451,7 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | [`cat-harness/schemas/odrl.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts) | `@conformsTo` tag |
+| `policies graph` | through the module that types it ([`cat-harness/schemas/odrl.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts)) |
 
 **Operative terms (14).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -630,6 +633,7 @@ a subset of the edition rather than a transcription of it.
 | [`cat-harness/schemas/vocabulary.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocabulary.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/glossary-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/glossary-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
+| `vocab-mapping graph` | through the module that types it ([`cat-harness/schemas/vocab-mapping.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocab-mapping.ts)) |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
