@@ -44,6 +44,7 @@ import {
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -129,7 +130,11 @@ export function harnessInstances(repo: string): InstanceInput[] {
       // Own entries AND those declared from within (bean `cmsl`): the five
       // `voices/` READMEs dropped out of coverage when the entries moved into
       // `skills/skills.json` (75 → 70, measured 2026-09-30, bean `2j2r`).
-      dirs: instanceDirectories(inst, decl).map((d) => {
+      // A subgraph whose content is kept OFF the checkout (a branch source,
+      // bean `9c7h`: fsh-guts) is not this tree's to describe. Its README
+      // lives with its content, and counting the files git tracks here would
+      // rewrite it as "holds no files" — true of main, false of the subgraph.
+      dirs: instanceDirectories(inst, decl).filter((d) => !contentIsOffCheckout(d)).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
         const abs = resolve(base, d.path);
         // Absent declaration means the writer gets nothing and prints no
