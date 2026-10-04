@@ -18,7 +18,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-11 instance(s), 117 step(s) checked, 117 `prov:Activity` emitted, 105 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+12 instance(s), 125 step(s) checked, 125 `prov:Activity` emitted, 110 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
@@ -32,7 +32,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
 | `source-moved` | 18 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
-| `unaddressed` | 1 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
+| `unaddressed` | 6 | the agent, role or plan has no release address — its owning instance declares no `iriBase`, or no instance declares it — so the PROV-JSONLD record carries it as a literal, not a link (`linked-data` voice, `ld-link-is-the-node-release-address`) |
 
 ## By instance
 
@@ -195,6 +195,18 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `merge-train--train-6` | 10 | `GW_Green` | `unknown` | no policy grants perform-task for Process_MergeTrain/GW_Green as build-pipeline |
 | `merge-train--train-6` | 11 | `Task_Release` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Release as user |
 | `merge-train--train-6` | 12 | `Task_Land` | `unknown` | no policy grants perform-task for Process_MergeTrain/Task_Land as merge-steward |
+
+### mergetrain--merge-train-2026-10-04a
+
+8 step(s) checked, 8 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/sdlc/merge-train.bpmn`. [PROV JSON-LD]({{ '/assets/prov/mergetrain--merge-train-2026-10-04a.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `mergetrain--merge-train-2026-10-04a` | 3 | `#2043` | `unaddressed` | entity: no instance in this checkout catalogues "#2043" |
+| `mergetrain--merge-train-2026-10-04a` | 4 | `#2043` | `unaddressed` | entity: no instance in this checkout catalogues "#2043" |
+| `mergetrain--merge-train-2026-10-04a` | 6 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
+| `mergetrain--merge-train-2026-10-04a` | 7 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
+| `mergetrain--merge-train-2026-10-04a` | 8 | `#2100` | `unaddressed` | entity: no instance in this checkout catalogues "#2100" |
 
 ### sampleimport--xlg2-wpro-trial
 
