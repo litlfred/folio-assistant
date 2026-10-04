@@ -1424,6 +1424,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
@@ -1593,6 +1594,15 @@
       "source": "cat-harness/processes/sdlc/publish-verification.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs both paths as fixed programs. It decides nothing that needs judgement: whether a token can write is read from the event, whether a push was accepted is the push's exit code (never its stderr — spike `3ds9` measured a harmless \"push negotiation failed; proceeding anyway\"), and what retention removes is `planPrune`'s rule. A PR whose state cannot be read is KEPT: could-not-determine never deletes.",
+      "source": "cat-harness/processes/sdlc/qa-publish.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
@@ -1726,7 +1736,8 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation"
       ]
     },
     {
@@ -1746,6 +1757,15 @@
       "label": "Attestation service (API)",
       "scopeNote": "Reached only from the DMN table's one row where both egress and a configured endpoint are true — everything else in Gateway_SigningRoute's table routes around this lane entirely, so its presence in a trace is itself already the answer to whether egress existed. It carries exactly one task and no branch of its own, because the routing decision was already made before this lane was entered.",
       "source": "cat-harness/processes/sdlc/qa-report-signing.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/attestation-service",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "label": "Attestation service",
+      "scopeNote": "Signs the certification and files it. Reached only from `certified`: a refusal and an undetermined result are recorded by the certifier and signed by nobody. The signature itself is `qa-report-signing.bpmn`, called unchanged, whose own gateway chooses the API or a human release authority by the signer's reach.",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/work-plan",
@@ -2022,6 +2042,93 @@
       "notation": "compute-authoring-agent",
       "definition": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/test-requester",
+      "@type": "skos:Concept",
+      "prefLabel": "Test requester",
+      "title": "Test requester",
+      "notation": "test-requester",
+      "definition": "Asks for a system under test to be certified against a named `test-plan/v1` (plan id and version). It may BE the system under test, or speak for it, and that is exactly why it carries no lane after the request: the requester never tests, checks or certifies, so the system never writes a verdict about itself (`untainted-verification`; the `test-sut-not-self-judged` criterion). Lane `Lane_Requester` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "altLabel": [
+        "Requester / system under test"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/test-requester",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "label": "Requester / system under test",
+      "scopeNote": "The system under test, or whoever speaks for it, asking for certification against plan P at a named version. Its only task is the request, and that is the design rather than an omission: the system under test never writes a verdict about itself, so after this lane it is the SUBJECT of the process and never a performer in it.",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/tester",
+      "@type": "skos:Concept",
+      "prefLabel": "Tester",
+      "title": "Tester",
+      "notation": "tester",
+      "definition": "Runs a `test-plan/v1` against a system under test: resolves the plan, binds its test data (fixed and reviewed, or generated from template + params + seed, per `vm6m`), executes every case or skips it with a reason, and writes the `folio-test-run/v1` and the `test-report/v1`. UNTAINTED from the system under test — never the same actor — and it does not certify: the rollup it writes is what the certifier decides ON. Bean `3o5b`.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/tester",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "label": "Tester",
+      "scopeNote": "Runs the plan against the system: resolves it, binds its fixed or generated test data, executes every case or skips it with a reason, and writes the `folio-test-run/v1` and the `test-report/v1`. Untainted from the system under test — never the same actor — and it does not certify: what it writes is what the certifier decides on.",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/untainted-checker",
+      "@type": "skos:Concept",
+      "prefLabel": "Untainted checker",
+      "title": "Untainted checker",
+      "notation": "untainted-checker",
+      "definition": "Re-executes a SAMPLE of a plan's cases from the plan and the data alone — never the tester's verdicts — and reports whether it agrees. It rules on nothing: agreement is a fact the certification table reads, not a verdict the checker writes (`untainted-verification` rule 3: one party doing both halves is not this check). Lane `Lane_Checker` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/untainted-checker",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "label": "Untainted checker",
+      "scopeNote": "A second party re-executing a sample of the cases from the plan and the data alone, never from the tester's verdicts. It rules on nothing: whether it agrees is a fact the certification table reads. One party doing both halves is not this check — it would compare a run with its own paraphrase of itself.",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/certifier",
+      "@type": "skos:Concept",
+      "prefLabel": "Certifier",
+      "title": "Certifier",
+      "notation": "certifier",
+      "definition": "Takes the certification decision on ONE test report: applies the DMN the plan's `exitCriteria` names (computed from facts, never asserted) and records the decision as a judgement under the declared `attestations` graph, from which it is signed through `qa-report-signing.bpmn`. A specialisation of `stakeholder` — accountable sign-off — but NOT `judgementOnly`: the exit criteria are a table it applies, and only the decision on top of them is the judgement (owner ruling, 2026-10-01). Never the tester and never the system under test. Bean `3o5b`.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/certifier",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_TestPlanExecution",
+      "label": "Certifier",
+      "scopeNote": "The accountable party for the decision, a specialisation of the stakeholder. The gateway is computed from the plan's exit-criteria table; what the certifier adds, and what makes it a judgement, is recording the decision under their name. Never the tester and never the system under test.",
+      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
     }
   ]
 }
