@@ -15,7 +15,9 @@ import { join, extname, resolve } from "path";
 import type { ContentAdapter } from "./types.js";
 import { GitHelper } from "./core/git.js";
 import { log, logDebug } from "./core/logging.js";
-import { registerDeclaredToolGroups, type ToolGroupDeclaration } from "./tool-groups.js";
+import { registerDeclaredToolGroups, toolGroupsFromNodes, type ToolGroupDeclaration } from "./tool-groups.js";
+import { tools as declaredTools } from "../tools/index.js";
+import { registerSkillPrompts } from "./tools/skill-prompts.js";
 import {
   dispatchGet, dispatchPost, mountDeclaredRoutes,
   type MountedRoute, type RouteDeclaration,
@@ -25,18 +27,10 @@ import {
 const PLATFORM_ROOT = resolve(import.meta.dir, "..");
 
 /**
- * The tool groups the HTTP/stdio server serves.
- *
- * Three are the harness's own; `translation` is CORE's, and declaring it
- * rather than importing it is what keeps the harness able to build alone.
+ * The tool groups the HTTP/stdio server serves — READ from the Tool nodes this
+ * instance declares (`tools/`), not listed here. See `toolGroupsFromNodes`.
  */
-const SERVER_TOOL_GROUPS: readonly ToolGroupDeclaration[] = [
-  { id: "beans", module: "src/tools/beans-prime.ts", registrar: "registerBeansTools", layer: "harness" },
-  { id: "workflow", module: "src/tools/workflow.ts", registrar: "registerWorkflowTools", layer: "harness" },
-  { id: "stakeholder", module: "src/tools/stakeholder-map.ts", registrar: "registerStakeholderTools", layer: "harness" },
-  { id: "auth", module: "src/tools/auth.ts", registrar: "registerAuthTools", layer: "harness" },
-  { id: "translation", module: "src/tools/translation.ts", registrar: "registerTranslationTools", layer: "core" },
-];
+const SERVER_TOOL_GROUPS: readonly ToolGroupDeclaration[] = toolGroupsFromNodes(declaredTools());
 
 /**
  * The HTTP routes this server serves, IN DISPATCH ORDER.
@@ -176,6 +170,12 @@ export class FolioServer {
       this.registerToolGroups(config.repoRoot),
       this.mountRoutes(config.repoRoot),
     ]).then(() => undefined);
+
+    // The person-facing half of the skills: each `user_invocable` one as an
+    // MCP PROMPT. Not a Tool node — bean `j6t3`, the owner's "keep tools and
+    // skills separate!" — so it is registered here rather than read from the
+    // tools graph, and for every instance, content or none.
+    registerSkillPrompts(this.mcpServer);
 
     // Register adapter-specific MCP tools
     if (this.adapter.registerMcpTools) {
