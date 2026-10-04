@@ -449,7 +449,7 @@ the README shows — the owner kept the exact counts (#1707).
 
 ### `standalone-baseline` — take the base, regenerate NOTHING
 
-`cat-harness/scripts/standalone-baseline.json`, `check:standalone`'s list of
+`cat-harness-tools/scripts/standalone-baseline.json`, `check:standalone`'s list of
 accepted standalone failures (bean `ho66`, #1977). It is the one take-base
 pattern with **no** regeneration, because it is a ratchet. Re-measuring after a
 merge would write any new standalone failure into the list unreviewed, which

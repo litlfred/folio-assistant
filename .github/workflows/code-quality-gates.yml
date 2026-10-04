@@ -1443,7 +1443,7 @@ jobs:
       # its declared closure, laid out as sibling git repositories, `bun test`
       # run in cat-harness. 459 tests fail there today, most of them correct
       # tests in the wrong layer, so this is a RATCHET over the committed
-      # baseline `cat-harness/scripts/standalone-baseline.json`: a new
+      # baseline `cat-harness-tools/scripts/standalone-baseline.json`: a new
       # standalone failure is red; a listed one that now passes is printed with
       # `bun run standalone:baseline`, which lowers the list, and is not red
       # (an unstable listed test must not flip CI either way).

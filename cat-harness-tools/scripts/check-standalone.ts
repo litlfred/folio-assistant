@@ -42,7 +42,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { probeStandalone, readLayers, type Probe } from "./seed-ready.js";
 
 export const STANDALONE_EXIT = { held: 0, grew: 1, undetermined: 2 } as const;

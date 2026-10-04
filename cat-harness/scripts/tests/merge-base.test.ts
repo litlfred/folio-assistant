@@ -272,10 +272,10 @@ describe("classify", () => {
     // Fail-closed: the base's list, nothing regenerated (#1977). The neighbour
     // with the same shape, declared-path-baseline.json, is a different ratchet
     // nobody has measured a pattern for, so it stays refused.
-    expect(classify("cat-harness/scripts/standalone-baseline.json").pattern?.id).toBe("standalone-baseline");
-    expect(classify("cat-harness/scripts/standalone-baseline.json").strategy).toBe("take-base");
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").pattern?.id).toBe("standalone-baseline");
+    expect(classify("cat-harness-tools/scripts/standalone-baseline.json").strategy).toBe("take-base");
     expect(classify("cat-harness/scripts/declared-path-baseline.json").strategy).toBe("refuse");
-    expect(classify("cat-harness/scripts/check-standalone.ts").strategy).toBe("refuse");
+    expect(classify("cat-harness-tools/scripts/check-standalone.ts").strategy).toBe("refuse");
   });
 
   test("a path no pattern names is REFUSED, with no pattern attached", () => {
