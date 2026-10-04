@@ -50,7 +50,7 @@ attestation) does not go in it: that is `test/attestations/kg-qa/…`, on `main`
 because no writer can regenerate it.
 
 Then a cascade: the schema reference, the glossary and its SKOS export, the
-docs-auto index and the detangle measurements all read something that just
+auto-docs index and the detangle measurements all read something that just
 changed.
 
 **The reason this needs a skill at all is that the feedback arrives somewhere

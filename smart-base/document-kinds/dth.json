@@ -11,6 +11,9 @@
       "title": "Audience and how to use this handbook",
       "required": true,
       "description": "Target users/roles per chapter and the stepwise reading path through the handbook.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -38,7 +41,10 @@
       "id": "diig-and-smart-alignment",
       "title": "Position in the DIIG process and SMART Guidelines layers",
       "required": true,
-      "description": "Which phase of the DIIG's \"planning and implementing a digital health enterprise\" process the handbook supports, and its alignment to the SMART Guidelines layers. The seven phases have ONE source, DIIG §1.1 Fig. 1.1.1 (owner, 2026-10-03, #1984: \"use one DIIG seven phase figure as source\"); a DTH cites that figure for them, and the copies the handbooks print (PHC Fig. 6, SC Fig 5, PC Fig. 4) are reproductions of it, not further sources. The primary health care DTH places itself in Phase 5, determining health content requirements; the Reference Architecture's Figure 1, which adapts the DIIG figure, places the supply chain and product catalogue handbooks in Phase 7, and the Reference Architecture itself across Phases 1-4. The reproductions and the SVG rendering (bean 70zt) are listed on smart-base/findings/dth-terms.md.",
+      "description": "Which phase of the DIIG's \"planning and implementing a digital health enterprise\" process the handbook supports, and its alignment to the SMART Guidelines layers. The seven phases have ONE source, DIIG §1.1 Fig. 1.1.1 (owner, 2026-10-03, #1984: \"use one DIIG seven phase figure as source\"); a DTH cites that figure for them, and the copies the handbooks print (PHC Fig. 6, SC Fig 5, PC Fig. 4) are reproductions of it, not further sources. The primary health care DTH places itself in Phase 5, determining health content requirements; the Reference Architecture's Figure 1, which adapts the DIIG figure, places the supply chain and product catalogue handbooks in Phase 7, and the Reference Architecture itself across Phases 1-4. Its SVG rendering, drawn from the DIIG PDF's own vector layer with its provenance inside the file, is smart-base/library/9789240010567-eng/figures/vfig-p017.svg (bean 70zt); the reproductions are listed on smart-base/findings/dth-terms.md.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240010567-eng",
@@ -87,6 +93,9 @@
       "title": "Health programme and business context",
       "required": true,
       "description": "The health-system domain the handbook digitalises (point-of-service care, supply chain processes, product master data), its actors and why it matters to health outcomes.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -115,6 +124,9 @@
       "title": "Vision, strategic goals and objectives",
       "required": false,
       "description": "Vision and measurable strategic goals aligned to national health, digital health and sector strategies. PHC and PC treat this as a prerequisite rather than a chapter.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240101197-eng",
@@ -148,6 +160,9 @@
       "title": "Stakeholders, roles and governance",
       "required": false,
       "description": "Stakeholder identification and engagement, decision-making bodies (TWG, steering committee, data governance group), roles and responsibilities.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240101197-eng",
@@ -181,6 +196,9 @@
       "title": "Current-state assessment",
       "required": true,
       "description": "Inventory and maturity assessment of existing systems, data and regulations, as the baseline for the target state.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -209,6 +227,9 @@
       "title": "Personas, actors and roles",
       "required": false,
       "description": "Generic user personas (PHC) or operational roles (PC data owner/custodian/steward; Annex 2 roles). SC has only target user teams per chapter.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#persona"
       ],
@@ -235,6 +256,9 @@
       "title": "Use cases, user scenarios and user stories",
       "required": false,
       "description": "How each persona will interact with the system; user stories as the source of functional requirements.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#user-scenario"
       ],
@@ -261,6 +285,9 @@
       "title": "Business processes and workflows",
       "required": false,
       "description": "As-is/to-be process maps. A dedicated section only in PHC; SC and PC carry process overviews and the ANC DAK workflow figure in their introductions.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#business-process"
       ],
@@ -292,6 +319,9 @@
       "title": "Data elements, data dictionary and data model",
       "required": false,
       "description": "Data elements, definitions, coding schemes and mappings to standard terminologies and FHIR.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#data-element"
       ],
@@ -323,6 +353,9 @@
       "title": "Decision-support logic, schedules and indicators",
       "required": false,
       "description": "Clinical decision logic, service schedules and indicator calculations (PHC only; SC's KPIs are programme-performance indicators, see monitoring).",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#decision-support-logic",
         "sgkg-l2#scheduling-logic",
@@ -346,6 +379,9 @@
       "title": "Functional and non-functional requirements",
       "required": false,
       "description": "Prioritized functional and non-functional requirements. SC defers to SCISMM / TSS v2 rather than stating them.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#functional-requirement",
         "sgkg-l2#non-functional-requirement"
@@ -378,6 +414,9 @@
       "title": "Architecture: placement in the enterprise architecture, current and target",
       "required": true,
       "description": "Where the handbook's systems sit in the national digital health enterprise architecture and which shared components they rely on, cited against the DPI-H Reference Architecture: its layered view (Figure 3.2) and the layer each component belongs to. The three DTHs ingested so far predate the draft Reference Architecture and cite the 2020 DIIG architecture figure, OpenHIE or TOGAF instead; the owner's rule is that a DTH should reference it.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240101197-eng",
@@ -411,6 +450,9 @@
       "title": "Standards and interoperability",
       "required": true,
       "description": "Interoperability layer or dimensions, terminology/content/exchange standards (FHIR, ICD-11, SNOMED GPS, GS1, IDMP).",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -444,6 +486,9 @@
       "title": "Technology selection, design, build and deployment",
       "required": true,
       "description": "Choosing/sourcing software, design, build, testing and deployment of the system.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -477,6 +522,9 @@
       "title": "Roadmap, budget, scale-up and legacy phase-out",
       "required": false,
       "description": "Sequencing, costing, operational planning and scale-up. PC gives phased regulatory roll-out timelines but no roadmap or budget.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240101197-eng",
@@ -505,6 +553,9 @@
       "title": "Capacity building, training and change management",
       "required": true,
       "description": "Human resources, training, SOPs and change management for adoption.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -533,6 +584,9 @@
       "title": "Monitoring, evaluation and performance indicators",
       "required": false,
       "description": "M&E framework and KPIs with baselines. PC has only data-management monitoring inside its procedures.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l2#program-indicator"
       ],
@@ -564,6 +618,9 @@
       "title": "Country implementation examples",
       "required": false,
       "description": "Worked country experiences.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240101197-eng",
@@ -587,6 +644,9 @@
       "title": "Annexes: templates and worksheets",
       "required": true,
       "description": "Reusable templates (persona/user-story worksheets, process matrix, HSCIS listing, risk register, role descriptions).",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -610,6 +670,9 @@
       "title": "Abbreviations and glossary",
       "required": true,
       "description": "Abbreviations and defined terms.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",
@@ -630,6 +693,9 @@
       "title": "Annex: Principles for Digital Development",
       "required": true,
       "description": "All three DTHs carry the Principles for Digital Development as Annex 1.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "smart-base/library/9789240093362-eng",

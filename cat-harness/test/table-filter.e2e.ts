@@ -84,13 +84,13 @@ test.describe("table filter", () => {
 });
 
 /**
- * The docs-auto pages, which do not load docs-ui.js (bean 0fua, reopened
+ * The auto-docs pages, which do not load docs-ui.js (bean 0fua, reopened
  * 2026-09-30): the SHIPPED swimlane glossary page, read from the file the
  * generator committed, so a generator change that drops the filter fails here.
  */
-test.describe("table filter on a docs-auto page", () => {
+test.describe("table filter on a auto-docs page", () => {
   const GLOSSARY = readFileSync(
-    join(ROOT, SITE, "cat-harness/docs-auto/glossary/swimlane-glossary/index.html"),
+    join(ROOT, SITE, "cat-harness/auto-docs/glossary/swimlane-glossary/index.html"),
     "utf8",
   );
 

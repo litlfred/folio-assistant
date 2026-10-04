@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 792,
+      "count": 796,
       "unit": "beans"
     }
   },
@@ -21,6 +21,20 @@
       "updatedAt": "2026-09-24T17:45:58Z",
       "preview": "The Folio glass handle is fixed at the top and overlaps each page's heading, and at 390 px the glass's own first controls. Reserve space for it, or move it out of the reading flow.\n\nObserved on: `external-schemas`, `folio`, `library`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Done when\n\n- [x] No pag",
       "file": "beans/defs/folio-assistant-015u--the-fixed-folio-handle-covers-page-titles-and-cont.md"
+    },
+    {
+      "id": "folio-assistant-03nl",
+      "title": "MERGE-MAIN NOTIFICATION HYGIENE: one bad matrix member reds the whole run, and an unchanged failure re-notifies on every push to main",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T05:52:09Z",
+      "updatedAt": "2026-10-04T07:41:56Z",
+      "preview": "## Brief\n\n**What and why.** The owner is being emailed *\"Merge main into opted-in PRs /\nmerge:main into PR (1958) — Failed in 6 minutes and 18 seconds\"* many times a\nday. `merge-main.yml` fires on every push to `main` (many per hour) and runs one\nmatrix member per opted-in PR; a single member's failure makes the whole run\n`failure`, and GitHub emails the run. Run `37179860536` failed on exactly on",
+      "file": "beans/defs/folio-assistant-03nl--merge-main-notification-hygiene-one-bad-matrix-mem.md"
     },
     {
       "id": "folio-assistant-065p",
@@ -1777,6 +1791,20 @@
       "updatedAt": "2026-09-22T21:05:00Z",
       "preview": "Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),\n\"self-sovereign compute + test harness deployments\", at the owner's direction:\n\"bean up to may strwperson and create issue to review these\".\n\n## The claim this epic rests on\n\n#363 lists roughly ten deployment and utilization scenarios — local git only,\nprivate GitHub, sovereign cloud, self-sovereign, devel",
       "file": "beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md"
+    },
+    {
+      "id": "folio-assistant-5akx",
+      "title": "KeyedBySchema and DirectoryStorageSchema were two spellings of one enum — route parsed in one and threw in the other",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T08:35:58Z",
+      "updatedAt": "2026-10-04T08:48:28Z",
+      "preview": "## What was measured\n\n`main@12b916e9a5`, probe calling both schemas on one `storage` value:\n\n    A. DirectoryStorageSchema accepts keyedBy route? true\n    B. resolveSubgraphSource THREW: ZodError |\n       Invalid option: expected one of \"commit\"|\"tip\"\n\n`DirectoryStorageSchema.keyedBy` (`schemas/cat-harness.ts`) gained `\"route\"` with bean `1j3q`.\n`KeyedBySchema` (`schemas/subgraph-source.ts`), whic",
+      "file": "beans/defs/folio-assistant-5akx--keyedbyschema-and-directorystorageschema-were-two.md"
     },
     {
       "id": "folio-assistant-5blc",
@@ -5151,6 +5179,20 @@
       "file": "beans/defs/folio-assistant-g4oc--upstream-dak-post-processing-defects-view-page-tab.md"
     },
     {
+      "id": "folio-assistant-g5kt",
+      "title": "REGEN FIXPOINT CAP IS SILENT: a run that does not converge prints CAP REACHED and exits 0, and the 3-pass default is below the measured need",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T07:15:24Z",
+      "updatedAt": "2026-10-04T07:22:48Z",
+      "preview": "Follow-on to 14ve, which fixed 'one pass only'. Two defects remain in the same loop.\n\n1. SILENT NON-CONVERGENCE (the 1xhc shape). regen-after-merge.ts computes `settled` and prints '— CAP REACHED: the last pass still ran a writer, so the tree may not be settled', then exits on `unrepaired + no-writer` ONLY. `settled` is never consulted. So a run that genuinely could not reach a fixed point exits 0",
+      "file": "beans/defs/folio-assistant-g5kt--regen-fixpoint-cap-is-silent-a-run-that-does-not-c.md"
+    },
+    {
       "id": "folio-assistant-g5o5",
       "title": "kg-skills glossary stale on main since 2c295f8ac06 — and CI reads the MERGE, which is why no local probe saw it",
       "status": "completed",
@@ -5328,7 +5370,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-01T08:52:00Z",
+      "updatedAt": "2026-10-04T07:33:35Z",
       "preview": "Arc `3fva`, proposal `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md` §4 item 0.1. Measured 2026-10-01 at about 07:50Z, main `61b1e747`.\n\nThe last green Code-quality run was `27067b3fcb0` (#1725, 07:11Z). Since then main has failed 12 times in a row. The handover's \"red from #1743\" is out of date: #1725 turned it green, and it went red again from `a43d3b4e297` on.\n\nFai",
       "file": "beans/defs/folio-assistant-gurh--main-red-2026-10-01-code-quality-gates-12-consecut.md"
     },
@@ -6757,7 +6799,7 @@
     {
       "id": "folio-assistant-mer2",
       "title": "folio_init takes no layer argument, so the ruled MVP definition is not expressible",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
@@ -6766,7 +6808,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-30T21:47:07Z",
-      "updatedAt": "2026-10-01T06:51:19Z",
+      "updatedAt": "2026-10-04T09:52:31Z",
       "preview": "## The finding, and how it was measured\n\nThe owner ruled, 2026-09-30, that **MVP for a layer = `folio_init` creates a\nworking folio against that layer ALONE, in an empty repository** (`tndo`,\nchosen from four candidates). `zmdo` turned that into four checkboxes and named\nthe first thing to measure: *\"whether `folio_init` can target a single layer at\nall today. If it cannot, that is a defect agains",
       "file": "beans/defs/folio-assistant-mer2--folio-init-takes-no-layer-argument-so-the-ruled-mv.md"
     },
@@ -6850,7 +6892,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T10:38:18Z",
-      "updatedAt": "2026-10-03T15:01:36Z",
+      "updatedAt": "2026-10-04T07:12:12Z",
       "preview": "Owner, 2026-10-03: a process may bind only skills (and through them Tools) from its own instance or one it needs — \"general rule, not just fhir-harness\". `check:process-bindings` (cat-harness/scripts/, PR #1968) found 33 unique wrong-direction bindings (35 refs) in 9 diagrams on 2026-10-03, all baselined in cat-harness/scripts/process-bindings.baseline.ts. Each fix is EITHER move the process up to",
       "file": "beans/defs/folio-assistant-mlux--process-bindings-clear-the-34-wrong-direction-skil.md"
     },
@@ -7231,6 +7273,20 @@
       "updatedAt": "2026-10-01T18:55:06Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **At rest the strip is marks with no labels.** Changed by #1022: the four divider initials are gone, so the harnesses are **not reachable from the strip at all**",
       "file": "beans/defs/folio-assistant-ob3m--navbar-visualiser-12-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-obhe",
+      "title": "merge-main's notification rule has no skill home — ci-health.md carries the doctrine and names only one instance",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T06:09:01Z",
+      "updatedAt": "2026-10-04T06:09:01Z",
+      "preview": "Spun out of `03nl` (PR #2046) rather than widened into it.\n\n## What is already true\n\n`skills/sdlc/sdlc-core/ci-health.md` §\"A report is only read by someone in the\nroom\" ALREADY carries the doctrine this change is an instance of: one tracking\nissue **edited in place**, because *\"an edit does not notify, so a long outage\nstays one unread item rather than a stream\"*, and *\"it deliberately does not\ns",
+      "file": "beans/defs/folio-assistant-obhe--merge-mains-notification-rule-has-no-skill-home-ci.md"
     },
     {
       "id": "folio-assistant-oh78",
@@ -11242,8 +11298,8 @@
         "total": 142,
         "closed": 38,
         "open": 104,
-        "inProgress": 56,
-        "todo": 48,
+        "inProgress": 57,
+        "todo": 47,
         "draft": 0,
         "unclassified": 0,
         "share": 0.2676056338028169
@@ -11264,8 +11320,8 @@
         "share": 0.7
       }
     ],
-    "orphanOpen": 302,
-    "openTotal": 466,
+    "orphanOpen": 306,
+    "openTotal": 470,
     "coveredOpen": 160,
     "duplicateIds": 1
   }
