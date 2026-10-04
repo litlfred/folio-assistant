@@ -668,7 +668,10 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["process"],
     scope: "instance",
     severity: "critical",
-    summary: "An activity names a skill that does not exist, so an agent handed the step cannot open it.",
+    summary:
+      "An activity names a skill that does not exist, so an agent handed the step cannot open it. EXISTENCE ONLY: " +
+      "whether this process may bind that skill (its instance reaching the skill's, through `needs`) is " +
+      "`check:process-bindings`, and a pass here says nothing about direction (owner, 2026-10-04, bean mlux).",
   },
   {
     id: "decision-ref-resolves",
