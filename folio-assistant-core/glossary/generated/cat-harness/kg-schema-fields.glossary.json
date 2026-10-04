@@ -889,6 +889,69 @@
       "status": "candidate"
     },
     {
+      "id": "bean-graph.milestoneplanschema.coveredopen",
+      "prefLabel": "MilestonePlanSchema.coveredOpen",
+      "definition": "SUMMED from the closures, never `openTotal - orphanOpen`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.coveredOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.duplicateids",
+      "prefLabel": "MilestonePlanSchema.duplicateIds",
+      "definition": "Bean ids held by more than one file. A store defect, reported.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.duplicateIds",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestoneplanschema.orphanopen",
+      "prefLabel": "MilestonePlanSchema.orphanOpen",
+      "definition": "Open beans with no milestone anywhere above them.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestonePlanSchema.orphanOpen",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.epics",
+      "prefLabel": "MilestoneRollupSchema.epics",
+      "definition": "Direct children typed `epic`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.epics",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.file",
+      "prefLabel": "MilestoneRollupSchema.file",
+      "definition": "Repository-relative path of the milestone's bean file.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.share",
+      "prefLabel": "MilestoneRollupSchema.share",
+      "definition": "`closed / (closed + open)`; `null` when nothing is classified, which is NOT the same as 0 — see the module note on `milestone-rollup.ts`.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.share",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.status",
+      "prefLabel": "MilestoneRollupSchema.status",
+      "definition": "The milestone's OWN status — not derived from its subtree.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.status",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.total",
+      "prefLabel": "MilestoneRollupSchema.total",
+      "definition": "Transitive descendants, excluding the milestone itself.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.total",
+      "status": "candidate"
+    },
+    {
+      "id": "bean-graph.milestonerollupschema.unclassified",
+      "prefLabel": "MilestoneRollupSchema.unclassified",
+      "definition": "In neither status set — reported alone, folded into neither figure.",
+      "source": "cat-harness/schemas/bean-graph.ts#MilestoneRollupSchema.unclassified",
+      "status": "candidate"
+    },
+    {
       "id": "bean-note.beannotefrontmatterschema.bean",
       "prefLabel": "BeanNoteFrontMatterSchema.bean",
       "definition": "The bean this note adds to. It must exist in the bean store.",
@@ -2963,7 +3026,7 @@
     {
       "id": "cat-harness.visualisationschema.title",
       "prefLabel": "VisualisationSchema.title",
-      "definition": "What a tile calls it. Absent falls back to the directory's id.",
+      "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
       "status": "candidate"
     },
@@ -5768,6 +5831,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.title",
+      "prefLabel": "GraphKindDef.title",
+      "definition": "What every navigation surface CALLS a destination of this kind: the viewer rail, the Jekyll sidebar, FOLDERS, the landing's viewer list, the glass tiles and the Stickies row.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.title",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.validator",
       "prefLabel": "GraphKindDef.validator",
       "definition": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.",
@@ -8460,6 +8530,13 @@
       "prefLabel": "BeanIndexItemSchema.preview",
       "definition": "The body, trimmed to its first 400 characters.",
       "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexschema.plan",
+      "prefLabel": "BeanIndexSchema.plan",
+      "definition": "The milestone rollup the board renders. OPTIONAL, because an index written before this field existed is still a valid index — and because \"no plan in the projection\" is a state the renderer distinguishes from \"a plan with nothing done\".",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema.plan",
       "status": "candidate"
     },
     {

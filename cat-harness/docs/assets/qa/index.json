@@ -1,22 +1,22 @@
 {
   "tile": {
     "qa": {
-      "count": 1006,
+      "count": 991,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 1006,
+  "files": 991,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 508,
+      "files": 499,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2947,
-        "fail": 435,
-        "n/a": 1639,
-        "unknown": 22
+        "pass": 2875,
+        "fail": 432,
+        "n/a": 1587,
+        "unknown": 24
       }
     },
     {
@@ -38,7 +38,7 @@
     },
     {
       "schema": "qa-results/v1",
-      "files": 85,
+      "files": 86,
       "rollUpField": null
     },
     {
@@ -53,7 +53,7 @@
     },
     {
       "schema": "folio-qa-index/v1",
-      "files": 25,
+      "files": 19,
       "rollUpField": null
     },
     {
@@ -72,11 +72,6 @@
       "rollUpField": null
     },
     {
-      "schema": "folio-qa-translation-pages/v1",
-      "files": 1,
-      "rollUpField": null
-    },
-    {
       "schema": "folio-test-run/v1",
       "files": 1,
       "rollUpField": null
@@ -86,8 +81,8 @@
       "files": 1,
       "rollUpField": "totals",
       "buckets": {
-        "pages": 160,
-        "railed": 91,
+        "pages": 162,
+        "railed": 93,
         "declined": 69,
         "missing": 0,
         "flagged": 0

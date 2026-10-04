@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>3101</b><span>units indexed</span></div>
+<div class="lv-stat"><b>3099</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**229** units · **6038** terms · k = **100** · retains **77.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**227** units · **6053** terms · k = **100** · retains **78.4 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,20 +123,16 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.76 | instance, kind, harness, directory, page, session, graph, declaration | *(none)* |
-| 2 | 21.75 | watcher, sibling, queue, prs, slot, block, backlog, commits | harness, instance, declaration, directories, node, directory, subgraph, iri |
-| 3 | 18.07 | slot, chapter, block, edges, formal, project, watcher, proof | session, page, beans, epic, conflict, green, minutes, goals |
-| 4 | 17.20 | page, tile, block, text, chapter, avatar, blocks, manifest | sibling, session, ledger, sessions, plan, subgraph, subdirectory, coordination |
-| 5 | 15.57 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, pdf, sniff, ingest, archived, zip, arxiv |
-| 6 | 15.13 | lane, actor, role, requirements, task, feature, analysis, process | queue, sha, withheld, rung, backlog, slide, bytes, arm |
-| 7 | 14.76 | preview, staging, translation, locale, url, pages, page, translated | glass, tile, avatar, role, card, fit, sticky, actor |
-| 8 | 14.53 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | actor, lane, role, user, requirement, feedback, pdf, requirements |
+| 1 | 45.89 | instance, kind, harness, directory, page, branch, session, graph | *(none)* |
+| 2 | 21.75 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, directories, directory, iri, asset |
+| 3 | 18.18 | chapter, slot, block, edges, project, formal, watcher, proof | session, conflict, epic, beans, branch, push, minutes, green |
+| 4 | 17.21 | page, tile, text, block, avatar, glass, card, chapter | sibling, subgraph, ledger, subdirectory, sessions, session, plan, prs |
+| 5 | 15.61 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, sniff, zip, ingest, archived, pdf, arxiv |
+| 6 | 15.18 | lane, actor, requirements, role, task, analysis, process, feature | queue, sha, backlog, tile, withheld, board, bytes, slide |
+| 7 | 14.87 | preview, staging, translation, merge, locale, url, pages, deploy | glass, tile, role, avatar, card, fit, sticky, settings |
+| 8 | 14.60 | edges, forward, edge, logical, backward, cross-chapter, energy, storytelling | feedback, post, pdf, phase, user, requirements, language, pipeline |
 
-**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
-
-*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
-
-- 0.952 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
+**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
 ## smart-base / library
 

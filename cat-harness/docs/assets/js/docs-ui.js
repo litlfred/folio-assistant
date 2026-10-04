@@ -2828,17 +2828,29 @@
    * `1le7`'s, extended if it needs to be, never duplicated."* A second copy
    * would be two tiles that look alike until one of them is changed.
    */
-  function tileLink(glyph, label, href, hint) {
+  function tileLink(glyph, label, href, hint, qualifier, showQualifier) {
     // Every tile's href goes through the same check as every other link on
     // this page. A tile is the one place a declared value reaches an `href`
     // with no composition in between, so it is the one most worth checking.
+    //
+    // THE QUALIFIER IS APPENDED, never folded into the label — owner,
+    // 2026-10-01, bean `ob3m` finding 6, "One name everywhere": the base
+    // label is the destination's one name on every surface, and the harness
+    // it belongs to rides beside it ("Docs · C@T Harness"). Both arrive from
+    // `harness.json`; nothing here derives either.
+    var named = qualifier ? label + " \u00b7 " + qualifier : label;
     var a = el("a", {
       class: "fa-tile",
       href: safeHref(href),
-      "aria-label": label + " — " + hint,
+      "aria-label": named + " — " + hint,
     });
     a.innerHTML = glyph;
+    if (qualifier) a.setAttribute("title", named);
     a.appendChild(el("span", { class: "fa-tile-caption" }, label));
+    // SHOWN only where another tile carries the same name (`showQualifier`,
+    // decided by the generator over the whole set). Everywhere else it is in
+    // the accessible name and the tooltip: a square tile holds one line.
+    if (qualifier && showQualifier) a.appendChild(el("span", { class: "fa-tile-qualifier" }, qualifier));
     return a;
   }
 
@@ -3070,7 +3082,7 @@
       var badge = tileCountOf(t);
       if (badge) hint += ", " + badge.count + " " + badge.unit;
       if (frozen) hint += " — materialized content: readable, not editable here";
-      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href), hint);
+      var tile = tileLink(glyphFor(t.icon), t.title, withBase(t.href), hint, t.qualifier, t.showQualifier === true);
       if (frozen) tile.setAttribute("data-fa-readonly", "");
       if (badge) {
         // `aria-hidden` is belt and braces, not the mechanism: `tileLink` sets
@@ -7427,7 +7439,8 @@
     function labelOf(id) {
       if (chromeDefs[id]) return chromeDefs[id].label;
       var t = declaredById(id);
-      return (t && t.title) || id;
+      if (!t || !t.title) return id;
+      return t.qualifier ? t.title + " \u00b7 " + t.qualifier : t.title;
     }
 
     function renderStrip() {
@@ -11218,13 +11231,15 @@
        * drawn first so a child always finds its row; a child whose parent is
        * not listed stands on its own rather than disappearing. */
       var rowOf = {};
+      var nameOfKind = {};
+      graphs.forEach(function (x) { if (x && x.kind) nameOfKind[x.kind] = x.label || x.kind; });
       var nestOf = function (parentKind) {
         var row = rowOf[parentKind];
         if (!row) return null;
         var sub = row.querySelector(":scope > .fa-nav-folders__sub > ul");
         if (sub) return sub;
         var d = el("details", { class: "fa-nav-folders__sub" });
-        d.appendChild(el("summary", { class: "fa-nav-folders__sub-heading" }, "Sub-graphs of " + parentKind));
+        d.appendChild(el("summary", { class: "fa-nav-folders__sub-heading" }, "Sub-graphs of " + (nameOfKind[parentKind] || parentKind)));
         var ul = el("ul", { class: "fa-nav-folders__list fa-nav-folders__list--sub" });
         d.appendChild(ul);
         row.appendChild(d);
@@ -11232,6 +11247,12 @@
       };
       var ordered = graphs.filter(function (x) { return !(x && x.within); })
         .concat(graphs.filter(function (x) { return x && x.within; }));
+      /* ONE NAME PER DESTINATION — owner, 2026-10-01, bean `ob3m` finding 6.
+       * A row says the `label` `harness-tiles.ts` gave it, never the bare
+       * kind word, and is never composed here: a second implementation in
+       * this file would be a second answer free to disagree. The kind word
+       * is the fallback for data that predates the label. */
+      var nameOf = function (g) { return (g && (g.label || g.kind)) || "?"; };
       for (var j = 0; j < ordered.length; j++) {
         var g = ordered[j];
         var li = el("li", { class: "fa-nav-folders__item" });
@@ -11255,7 +11276,7 @@
            * KG" with a shorter and wronger list. `inertNote`'s own
            * `staging-only` wording says which case it is; until now that
            * bucket had no live case at all. */
-          li.appendChild(inert(g.kind, "staging only"));
+          li.appendChild(inert(nameOf(g), "staging only"));
         } else if (g && g.path) {
           // `safeHref` for the same reason as the icon row above, and applied
           // AFTER `withBase` so what is checked is the href that is actually
@@ -11263,17 +11284,17 @@
           // could still turn into something else.
           var at = safeHref(withBase(g.path));
           if (at) {
-            li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, g.kind));
+            li.appendChild(el("a", { class: "fa-nav-folders__link", href: at }, nameOf(g)));
           } else {
             // A DIFFERENT CASE from "no viewer declared", and it stays
             // different: the graph HAS a published path and this page refused
             // it. That is a defect in the declaration, not a gap in the
             // corpus, and `flh4` is about exactly this distinction surviving
             // to the last step.
-            li.appendChild(inert(g.kind, "path refused by this page"));
+            li.appendChild(inert(nameOf(g), "path refused by this page"));
           }
         } else {
-          li.appendChild(inert((g && g.kind) || "?", g && g.note));
+          li.appendChild(inert(nameOf(g), g && g.note));
         }
         var into = (g && g.within && nestOf(g.within)) || list;
         into.appendChild(li);
