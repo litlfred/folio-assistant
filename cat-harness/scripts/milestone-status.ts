@@ -129,7 +129,7 @@
  * not cleared the others).
  */
 import { spawnSync } from "node:child_process";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 import { readdirSync, readFileSync } from "node:fs";
 
 import { readBeans } from "./beans.ts";
@@ -137,6 +137,7 @@ import { milestoneRollup, type MilestoneReport } from "./milestone-rollup.ts";
 import { git } from "./merge-pipeline-git.ts";
 import { pathClass } from "./merge-pipeline-paths.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
+import { beanDefsDir } from "./beans.ts";
 
 const ROOT = repoRootFor(join(import.meta.dir, ".."));
 const REPO = "litlfred/folio-assistant";
@@ -218,9 +219,20 @@ function conflicts(base: string, sha: string): { authored: string[]; generated: 
   return { authored, generated };
 }
 
+/**
+ * The bean store, through its declaration rather than a spelled `beans/defs`
+ * (bean `gz47`). `undefined` when no bean-defs node is declared: every reader
+ * below then reports could-not-determine rather than an empty store.
+ */
+function defsDir(): string | undefined {
+  return beanDefsDir(ROOT) ?? undefined;
+}
+
 /** Bean files on `rev`, by id. */
 function beansOn(rev: string): Set<string> | undefined {
-  const r = git(ROOT, ["ls-tree", "--name-only", rev, "beans/defs/"]);
+  const dir = defsDir();
+  if (dir === undefined) return undefined;
+  const r = git(ROOT, ["ls-tree", "--name-only", rev, `${relative(ROOT, dir)}/`]);
   if (!r.ok) return undefined;
   const ids = new Set<string>();
   for (const line of r.out.split("\n")) {
@@ -399,10 +411,12 @@ function reportScopeGrowth(windowHours: number): Gate {
   let created = 0;
   let total = 0;
   try {
-    for (const f of readdirSync(join(ROOT, "beans", "defs"))) {
+    const dir = defsDir();
+    if (dir === undefined) throw new Error("no bean-defs node is declared");
+    for (const f of readdirSync(dir)) {
       if (!f.endsWith(".md")) continue;
       total++;
-      const head = readFileSync(join(ROOT, "beans", "defs", f), "utf-8").slice(0, 600);
+      const head = readFileSync(join(dir, f), "utf-8").slice(0, 600);
       const m = /^created_at:\s*(\S+)/m.exec(head);
       if (m && Date.parse(m[1]!) >= since) created++;
     }
@@ -425,9 +439,11 @@ function reportHolders(): Gate {
   let inProgress = 0;
   let held = 0;
   try {
-    for (const f of readdirSync(join(ROOT, "beans", "defs"))) {
+    const dir = defsDir();
+    if (dir === undefined) throw new Error("no bean-defs node is declared");
+    for (const f of readdirSync(dir)) {
       if (!f.endsWith(".md")) continue;
-      const body = readFileSync(join(ROOT, "beans", "defs", f), "utf-8");
+      const body = readFileSync(join(dir, f), "utf-8");
       if (!/^status:\s*in-progress\s*$/m.test(body)) continue;
       inProgress++;
       if (/Claimed by (\S+)/.test(body)) held++;

@@ -32,7 +32,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`mcp/`](mcp/) | 1 file | |
 | [`routes/`](routes/) | 5 files | |
 | [`sessions/`](sessions/) | 1 file | |
-| [`tools/`](tools/) | 20 files | |
+| [`tools/`](tools/) | 21 files | |
 | [`upstream/`](upstream/) | 2 files | |
 | [`workflow/`](workflow/) | 14 files | |
 <!-- kg:subgraph:end -->
