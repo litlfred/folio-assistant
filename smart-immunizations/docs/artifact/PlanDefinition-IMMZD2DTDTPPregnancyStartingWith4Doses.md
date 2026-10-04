@@ -37,3 +37,6 @@ IMMZ.D2.DT.DTP.Pregnancy starting with 4 doses Diphtheria and tetanus vaccinatio
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTDTPPregnancyStartingWith3Doses.html" data-next="PlanDefinition-IMMZD2DTHepatitisAInactivatedHAV1Dose.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

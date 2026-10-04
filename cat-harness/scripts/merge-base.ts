@@ -91,14 +91,101 @@ export function unmergedStages(root: string, path: string): Set<number> {
   return out;
 }
 
+/**
+ * Stage a path that was CONFLICTED. `-f` because git checks an unmerged path
+ * against `.gitignore` as if it were new: measured 2026-10-03 on #1801, which
+ * ignores `cat-harness/test/results/` while the files there stay tracked on
+ * both sides, and `git add` refused every conflicted sidecar under it ("The
+ * following paths are ignored"), crashing merge-main on each push to main.
+ * Only ever called with a path git itself listed as unmerged, so it was
+ * tracked on at least one side and `-f` cannot sweep in an untracked file.
+ */
+export function stageConflicted(root: string, path: string): void {
+  git(root, "add", "-f", "--", path);
+}
+
 /** Take the base's side of `path`, deletion included; stages the result. */
 export function takeBase(root: string, path: string): void {
   if (takeBaseAction(unmergedStages(root, path)) === "delete") {
     git(root, "rm", "-q", "--", path);
   } else {
     git(root, "checkout", "--theirs", "--", path);
-    git(root, "add", "--", path);
+    stageConflicted(root, path);
   }
+}
+
+/** The resolution of one conflicted submodule GITLINK — bean `wczm` item 2. */
+export type GitlinkResolution =
+  | { take: "ours" | "theirs"; pin: string; why: string }
+  | { refuse: string };
+
+/**
+ * A conflicted gitlink (mode 160000) is resolved by ANCESTRY, never by side.
+ *
+ * Train 1 (#1869): #1764's pins fast-forwarded main's, and taking main's side
+ * silently reverted them. Which side is "newer" is not a property of the
+ * branch or of main; it is whether one pin descends from the other, and only
+ * the submodule's own history can say. So: the descendant wins when one pin
+ * fast-forwards the other; DIVERGED pins are refused, since picking either
+ * drops the other's commits; and a pin the submodule does not have locally
+ * (a shallow checkout) is refused as could-not-determine, never guessed.
+ *
+ * Ours is the branch being updated (stage 2), theirs is the base merged in
+ * (stage 3) — the sides `takeBase` uses.
+ */
+export function resolveGitlink(root: string, path: string): GitlinkResolution | undefined {
+  const pins = new Map<number, string>();
+  for (const line of git(root, "ls-files", "-u", "-s", "--", path).split("\n").filter(Boolean)) {
+    const [mode, oid, stage] = line.split(/\s+/);
+    if (mode !== "160000") return undefined;
+    pins.set(Number(stage), oid!);
+  }
+  const ours = pins.get(2);
+  const theirs = pins.get(3);
+  if (!ours || !theirs) return pins.size ? { refuse: "one side removed the submodule" } : undefined;
+  const sub = join(root, path);
+  const has = (oid: string) => spawnSync("git", ["-C", sub, "cat-file", "-e", `${oid}^{commit}`]).status === 0;
+  for (const oid of [ours, theirs]) {
+    if (!has(oid)) spawnSync("git", ["-C", sub, "fetch", "-q", "origin", oid], { stdio: "ignore" });
+    if (!has(oid)) return { refuse: `could not determine: the submodule does not have ${oid.slice(0, 9)}` };
+  }
+  const ancestor = (a: string, b: string) => spawnSync("git", ["-C", sub, "merge-base", "--is-ancestor", a, b]).status === 0;
+  const shallow = () => spawnSync("git", ["-C", sub, "rev-parse", "--is-shallow-repository"], { encoding: "utf-8" }).stdout.trim() === "true";
+  const decide = (): GitlinkResolution | undefined => {
+    if (ancestor(theirs, ours)) return { take: "ours", pin: ours, why: "the branch's pin fast-forwards the base's" };
+    if (ancestor(ours, theirs)) return { take: "theirs", pin: theirs, why: "the base's pin fast-forwards the branch's" };
+    return undefined;
+  };
+  // This is the case that conflicts in the first place: git resolves a
+  // fast-forward pin itself when it can see the history, so a conflict here
+  // usually means a SHALLOW submodule (`--depth 1`, as CI and these checkouts
+  // are), where neither pin can be shown to descend from the other. Deepen
+  // before deciding; a history still cut short is could-not-determine, never
+  // "diverged", which would send every fast-forward to a person.
+  const first = decide();
+  if (first) return first;
+  if (shallow()) spawnSync("git", ["-C", sub, "fetch", "-q", "--unshallow", "origin"], { stdio: "ignore" });
+  const second = decide();
+  if (second) return second;
+  if (shallow()) return { refuse: `could not determine: the submodule's history is shallow and could not be deepened` };
+  return { refuse: `the pins diverged (${ours.slice(0, 9)} vs ${theirs.slice(0, 9)}); either side drops the other's commits` };
+}
+
+/** Stage a resolved gitlink pin. */
+export function stageGitlink(root: string, path: string, pin: string): void {
+  git(root, "update-index", "--cacheinfo", `160000,${pin},${path}`);
+}
+
+/**
+ * The refusal line for a path whose declared resolution FAILED. It has the
+ * shape of a planned refusal (`  ✗ <path>  [<pattern>: …]`), which is what
+ * merge-main.yml and merge-main-comment.ts read: the job stays green and the
+ * bot's comment names the path and why, instead of a red job with
+ * "exited 1 without a refusal". The error's first line is kept verbatim.
+ */
+export function resolutionFailure(path: string, patternId: string, err: unknown): string {
+  const first = String((err as { stderr?: unknown })?.stderr || (err as Error)?.message || err).split("\n").find((l) => l.trim()) ?? "unknown error";
+  return `  ✗ ${path}  [${patternId}: could not resolve] — ${first.trim()}`;
 }
 
 function describe(c: Classified): string {
@@ -145,8 +232,22 @@ if (import.meta.main) {
     }
   }
 
-  const p = plan(conflicted);
+  // Submodule pins first, by ancestry (bean `wczm` item 2). A resolved pin is
+  // staged and leaves the list; a refused one stays, so `plan` refuses it.
+  const gitlinks: string[] = [];
+  const gitlinkRefused = new Map<string, string>();
+  for (const path of conflicted) {
+    const r = resolveGitlink(root, path);
+    if (r === undefined) continue;
+    if ("refuse" in r) { gitlinkRefused.set(path, r.refuse); continue; }
+    stageGitlink(root, path, r.pin);
+    gitlinks.push(`  ✓ ${path}  [gitlink: ${r.take}] — ${r.why}`);
+  }
+  const resolvedLinks = new Set(gitlinks.map((l) => l.trim().slice(2).split("  ")[0]!));
+  const p = plan(conflicted.filter((c) => !resolvedLinks.has(c)));
   console.log(`merge-base: ${conflicted.length} conflicted path(s) merging ${base}`);
+  for (const l of gitlinks) console.log(l);
+  for (const [path, why] of gitlinkRefused) console.log(`    (gitlink ${path}: ${why})`);
   for (const c of p.resolvable) console.log(`  ✓ ${describe(c)}`);
   for (const c of p.refused) console.log(`  ✗ ${describe(c)}${c.pattern ? ` — ${c.pattern.why}` : ""}`);
 
@@ -190,22 +291,37 @@ if (import.meta.main) {
     const qa = spawnSync("bun", ["run", "qa:resolve-conflicts"], { cwd: root, stdio: "inherit" });
     const still = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
     const qaLeft = p.resolvable.filter((c) => c.strategy === "qa-sidecar" && still.includes(c.path));
-    if (qa.status !== 0 || qaLeft.length) abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
+    if (qa.status !== 0 || qaLeft.length) {
+      // Report as refusals (see resolutionFailure), so the bot's comment names them.
+      for (const c of qaLeft) console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      if (!qaLeft.length) console.log(`  ✗ qa:resolve-conflicts  [qa-sidecar: could not resolve] — exited ${qa.status} (see its output above)`);
+      abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
+    }
   }
   for (const c of p.resolvable) {
     // A README one side deleted has no hunks to resolve: it is a take-base
     // case whichever pattern named it.
     const oneSided = c.strategy === "generated-regions" && unmergedStages(root, c.path).size < 3;
-    if (c.strategy === "take-base" || oneSided) {
-      takeBase(root, c.path);
-      continue;
-    } else if (c.strategy === "generated-regions") {
-      const text = readFileSync(join(root, c.path), "utf-8");
-      const resolved = resolveGeneratedRegions(text);
-      if (resolved === undefined) abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
-      writeFileSync(join(root, c.path), resolved);
-    } else continue;
-    git(root, "add", "--", c.path);
+    let resolved: string | undefined;
+    try {
+      if (c.strategy === "take-base" || oneSided) {
+        takeBase(root, c.path);
+        continue;
+      } else if (c.strategy === "generated-regions") {
+        resolved = resolveGeneratedRegions(readFileSync(join(root, c.path), "utf-8"));
+        if (resolved !== undefined) {
+          writeFileSync(join(root, c.path), resolved);
+          stageConflicted(root, c.path);
+        }
+      }
+    } catch (err) {
+      console.log(resolutionFailure(c.path, c.pattern?.id ?? c.strategy, err));
+      abort(`${c.path}: its declared resolution failed (✗ above)`);
+    }
+    if (c.strategy === "generated-regions" && !oneSided && resolved === undefined) {
+      console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? c.strategy}: could not resolve] — a hunk lies outside a generated region`);
+      abort(`${c.path}: a hunk lies outside a generated region (authored text conflicts)`);
+    }
   }
 
   if (noRegen) {

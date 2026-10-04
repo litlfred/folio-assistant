@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:11:25Z
-updated_at: 2026-10-02T12:30:00Z
+updated_at: 2026-10-03T17:55:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -126,3 +126,13 @@ Maven Central is reachable from this environment, so `ast-export` builds and tes
 - **litlfred/fhir-ig-publisher#6** — `InputDigest` hashes only what git counts as the work tree, the same rule as `ig-ast.ts`. `mvn test` 23/23, including the golden vector (unchanged) and a new git-work-tree test. Compiled alone, the Java digest equals the TypeScript one on the golden vector, a clean smart-trust clone (`c1023d82…`) and a clean smart-base clone (`bd074bf9…`).
 - **litlfred/fhir-ig-publisher#7** — the blocker recorded above (*"`ast-export/pom.xml` needs `apache-poi` as explicit dependency"*): the Publisher's six OPTIONAL dependencies (POI ×3 at 5.4.1, commonmark ×2 at 0.21.0, txtmark 0.13) declared in `ast-export/pom.xml`. `mvn test` 22/22; `dependency:build-classpath` now carries all six.
 - **Still needed, on a machine with FHIR access:** with #6 (and #7) in, re-export and re-seed both caches (`fhir-ast/smart.who.int.trust`, `fhir-ast/smart.who.int.base`), so `ig-cache.sh verify` passes on a clean clone. Steps are on folio-assistant#1816.
+
+## 2026-10-03: re-seeded on a machine with FHIR access (bean `mac1`), verified `valid`
+
+Session https://claude.ai/code/session_01PricYFhYhFA5DuMJaWo3CE, on PR #1816. The re-seed asked for above was handed to a local agent as bean `mac1` (skill `agent-handoff`, #1884) and is closed (`0457ed35`).
+
+- **Both caches verify `valid` on an untouched fresh clone**: smart-trust `f254e5bb` (digest `c1023d82…`), smart-base `eb7bed83` (digest `bd074bf9…`) — the same digests the TypeScript and Java implementations computed above.
+- **It took a third fix in the exporter.** With #6 in, the second attempt still read `stale-inputs`: the digest was taken AFTER the build, which writes into the tree. `litlfred/fhir-ig-publisher` `84ee3c8` records the inputs BEFORE the build (`AstPublisher.recordInputs`, `AstExportCli.igRoot`), merged into fork PR #8.
+- **Branch names.** The caches now live at `cat/fhir-harness/fhir-ast/<package>` (#1913's scheme, owner-approved). `ig-cache.sh` and `stage-ast-sites.ts` resolve `cat/fhir-harness/fhir-ast/<pkg>` → `cat-fhir-ast/<pkg>` → `fhir-ast/<pkg>`, and a first seed writes the first.
+- **Still open from *Done when*:** smart-base re-ingested from a fresh `gh-pages` (the fork has none).
+

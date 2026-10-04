@@ -25,7 +25,7 @@
  *
  * ## What is NOT here, and must not drift in
  *
- * Nothing that knows about `dak.config.json`, the DAK API surface, or any
+ * Nothing that knows about `dak.config.json`, a DAK name or label, or any
  * `smart.who.int` canonical. `ig-build-pipeline` carries the full refusal
  * list. A WHO reference added here fails no gate; it just quietly makes the
  * layer unusable for the non-WHO IG it exists for.
@@ -574,6 +574,25 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Milliseconds per page.",
       },
       requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "ig-cache",
+      title: "FHIR AST cache",
+      description:
+        "Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try `restore` first: a full AST build via AstExportCli is expensive, a restore is fast.",
+      install: { none: true },
+      invoke: { shell: "fhir-harness/scripts/ig-cache.sh" },
+      io: {
+        inputs: [
+          { name: "action", schema: t("IgCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
+          { name: "igRoot", schema: t("RepoPath"), required: false, arg: { flag: "--ig-root" }, description: "The IG whose AST is acted on." },
+          { name: "package", schema: t("PackageName"), required: false, arg: { flag: "--package" } },
+          { name: "remote", schema: t("PackageName"), required: false, arg: { flag: "--remote" }, description: "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream (WHO) and the cache lives on a fork." },
+        ],
+        outputs: [{ name: "result", schema: t("Text"), description: "A real hit, a miss, or a diagnosis — never a miss that reads as a hit." }],
+      },
+      satisfies: ["compiled-artefact-cache", "ig-ast-delta"],
+      requires: { runtime: ["bash", "git"], network: true },
     }),
 
     defineTool({

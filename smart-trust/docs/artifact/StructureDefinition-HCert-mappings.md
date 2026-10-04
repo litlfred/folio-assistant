@@ -45,3 +45,6 @@ values are markdown-escaped by the generator; an empty section prints the Publis
 {% for r in m.rows %}| [{{ r.label }}]({{ r.href }}) | {{ r.value }} |
 {% endfor %}{% endfor %}
 [Documentation for this format]({{ page.mappings.legend }})
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

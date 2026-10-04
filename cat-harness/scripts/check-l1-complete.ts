@@ -1517,7 +1517,7 @@ if (import.meta.main) {
     if (stale.length) {
       console.error("Committed L1 verdicts are out of date:");
       for (const x of stale) console.error(`  ✗ ${x}`);
-      console.error("\nRun: bun run check:l1-complete -- --write");
+      console.error("\nRun: bun run l1-complete:write");
       process.exit(1);
     }
     console.log(`✓ ${reports.length} committed L1 verdict(s) current`);

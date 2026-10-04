@@ -189,6 +189,14 @@
       "status": "candidate"
     },
     {
+      "id": "compiled-artefact-cache",
+      "prefLabel": "compiled-artefact-cache",
+      "definition": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "notation": "compiled-artefact-cache",
+      "source": "cat-harness/skills/process/process-core/compiled-artefact-cache.md",
+      "status": "candidate"
+    },
+    {
       "id": "compute-integration-watcher",
       "prefLabel": "compute-integration-watcher",
       "definition": "Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one has been wired into the production compute chain. Complements `local/compute-audit` (which scans for performance/correctness antipatterns inside scripts). Runs in two modes: REACTIVE (watch new commits / PR events) and IDLE-SWEEP (walk all existing content blocks and audit wiring).",
@@ -902,7 +910,7 @@
     {
       "id": "merge-conflict-patterns",
       "prefLabel": "merge-conflict-patterns",
-      "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn.",
+      "definition": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.",
       "notation": "merge-conflict-patterns",
       "source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
       "status": "candidate"

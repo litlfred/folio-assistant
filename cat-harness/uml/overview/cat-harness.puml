@@ -807,6 +807,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     repoWeb [1] : string
     items [0..*] : Item[]
     findings [0..*] : Finding[]
+    plan [0..1] : object
   }
   class "Locale" as cat_harness_docs_folio_translation_status_v1_Locale <<json: TranslationStatusSchema>> #f4f4f1 {
     locale [1] : string
