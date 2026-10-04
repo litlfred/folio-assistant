@@ -49,13 +49,13 @@ of those was wrong by **sixteen** when it was finally checked: it claimed
 thirty-nine against fifty-five.
 
 A count in prose is a claim; a derived index is evidence. So the number lives
-in [the derived process index](cat-harness/docs-auto/index/processes/),
+in [the derived process index](cat-harness/auto-docs/index/processes/),
 which is generated from the declaration by `bun run docs:auto`, gated in CI,
 and cannot drift from the diagrams it counts. **This page's job is the half
 that cannot be generated** — what each process is *for*, when you would be in
 it, and which neighbouring one you actually want.
 
-That division is the `docs-auto` skill's rule, and this page is the worked
+That division is the `auto-docs` skill's rule, and this page is the worked
 example of it: the index says what exists and what each diagram declares about
 itself; everything below says what the index structurally cannot.
 

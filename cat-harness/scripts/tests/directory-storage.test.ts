@@ -98,7 +98,7 @@ describe("the schema", () => {
   test.each([
     ["commit", { id: "qa", path: "test/results/", graphKinds: ["qa"] }],
     ["tip", { id: "beans-defs", path: "beans/defs/", graphKinds: ["bean-defs"] }],
-    ["route", { id: "docs-auto", path: "docs/cat-harness/docs-auto/", graphKinds: ["docs"] }],
+    ["route", { id: "auto-docs", path: "docs/cat-harness/auto-docs/", graphKinds: ["docs"] }],
   ])("accepts keyedBy %s (beans 2h76, 1j3q)", (keyedBy, dir) => {
     const storage = { branch: "cat/cat-harness/beans", keyedBy };
     expect(DirectoryStorageSchema.safeParse(storage).success).toBe(true);

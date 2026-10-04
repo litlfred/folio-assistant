@@ -38,7 +38,7 @@ describe(".gitattributes exists and is read by git", () => {
     expect(existsSync(ATTRS)).toBe(true);
     for (const p of [
       "cat-harness/docs/glossary/index.md",
-      "cat-harness/docs/cat-harness/docs-auto/index/index.html",
+      "cat-harness/docs/cat-harness/auto-docs/index/index.html",
       "cat-harness/test/results/audit-coverage.qa-results.json",
       // Added 2026-10-01, bean `eqxp`. Producer `writeToolRun` composes the
       // body from its argument and reads the existing file only to skip a

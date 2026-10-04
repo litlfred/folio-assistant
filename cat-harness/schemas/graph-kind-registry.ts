@@ -860,7 +860,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +
       "at these statements by `req:<slug>#<key>`.",
   },
-  "docs-auto": {
+  "auto-docs": {
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind — the same
     // reason `proposals` and `requirements` are false above.
@@ -873,13 +873,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // `xsrv`.
     //
     // It is GENERATED, and that is load-bearing rather than incidental:
-    // `gen-docs-auto.ts` already holds the types in `TYPES`, whose `collect()`
+    // `gen-auto-docs.ts` already holds the types in `TYPES`, whose `collect()`
     // functions cannot live in JSON. A hand-kept copy would be a second answer
     // to "what auto-doc types exist", free to disagree the moment either
     // moves.
-    declarationFile: "docs-auto.json",
+    declarationFile: "auto-docs.json",
     // `derived`, by the three questions `content-context-and-state-graphs`
-    // asks. Does a process write it? YES — `gen-docs-auto.ts`, every build.
+    // asks. Does a process write it? YES — `gen-auto-docs.ts`, every build.
     // Does it stand on its own? NO — every page is an index OF another graph,
     // and detached from that graph it lists nothing. Regenerate or re-author?
     // REGENERATE, purely: there is no authored byte in any of these pages, and
@@ -900,7 +900,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "empty graph (bean `06e3`).",
     summary:
       "Derived indexes over the other graphs — one page per auto-doc TYPE crossed with each SUB-GRAPH " +
-      "that type reaches. A sub-graph of `docs`, written by `scripts/gen-docs-auto.ts` and never by hand. " +
+      "that type reaches. A sub-graph of `docs`, written by `scripts/gen-auto-docs.ts` and never by hand. " +
       "Distinct from `docs` itself by the one question that settles the layer: a docs page is re-authored, " +
       "an index is regenerated.",
   },

@@ -546,7 +546,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 212,
     reads: "a page with a folded corner — documentation about the graph itself",
   },
-  "docs-auto": {
+  "auto-docs": {
     // A page of BULLETED ENTRIES, not a page of prose. A sub-graph of `docs`
     // (bean `xsrv`), so it keeps that kind's folded-corner outline — the family
     // resemblance is the point, since these pages ARE docs pages — and then
