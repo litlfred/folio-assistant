@@ -7,7 +7,7 @@ import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
 
 import { judge, readTree, renderingOrder } from "../check-derived-from.ts";
-import { type Closure, cone, type ConeDir, importClosure } from "../staging-cone.ts";
+import { type Closure, cone, type ConeDir, importClosure, siteInCone } from "../staging-cone.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -84,3 +84,22 @@ describe("the Done-when measurements, on this checkout", () => {
     expect(igPages(["smart-base/themes/chrome.json"])).toHaveLength(3);
   });
 });
+
+describe("a BUILT site (IG Jekyll, AST): siteInCone", () => {
+  const base = {
+    root: "a",
+    cone: [{ node: "a/pages", path: "a/docs/", carry: false, why: "x" }],
+    writers: ["gen/site.ts"],
+    closureOf: (w: string) => (w === "gen/site.ts" ? { files: new Set(["gen/site.ts", "lib/s.ts"]) } : { files: new Set<string>() }),
+  };
+  const carry = (changed: string[] | undefined, over: Partial<typeof base> = {}) => siteInCone({ ...base, ...over, changed }).carry;
+  it("no file list carries", () => expect(carry(undefined)).toBe(true));
+  it("the build environment carries every site", () => expect(carry(["cat-harness/docs/Gemfile.lock"])).toBe(true));
+  it("a change under the instance carries it", () => expect(carry(["a/fhir-artifact-index/menu.json"])).toBe(true));
+  it("the cone reaching one of its directories carries it", () => {
+    expect(carry(["themes/x.json"], { cone: [{ ...base.cone[0]!, carry: true }] })).toBe(true);
+  });
+  it("a change in a writer's closure carries it", () => expect(carry(["lib/s.ts"])).toBe(true));
+  it("an unrelated change does not", () => expect(carry(["skills/x.md"])).toBe(false));
+});
+

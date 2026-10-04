@@ -214,6 +214,16 @@ Measured on 2026-10-04: a skill-only change carries no IG; a change to
 Before the cone, those last two changes dropped every IG from the preview that
 existed to review them. `staging-cone.test.ts` holds all three as tests.
 
+**Built sites follow the same rule.** An IG's own Jekyll site and its AST
+site are BUILT in the preview from an upstream repository pinned in the
+instance's own files, not composed from the checkout. `stage-ig-sites.ts` and
+`stage-ast-sites.ts` take `--changed-files` and stage only the instances
+`siteInCone` reaches. Its reasons, in order: no file list; a change to the
+build environment (`SITE_ENVIRONMENT`: the docs Gemfile and this workflow); a
+change under the instance; the cone reaching any of the instance's
+directories (a theme change arrives this way); or a change in the stager's
+closure. Each decision is printed with its reason.
+
 **When you add a generated directory, declare its `writer` and
 `derivedFrom`.** Without them the cone cannot reach it through code or data,
 and the prefix floor is all it gets.

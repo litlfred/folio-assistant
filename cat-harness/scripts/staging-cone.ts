@@ -216,3 +216,71 @@ export function coneForCheckout(changed: readonly string[] | undefined, repoRoot
   };
   return cone(changed, dirs, renderingOrder(tree, edges), edges, closureOf);
 }
+
+/**
+ * Changes that alter every site a preview BUILDS (as opposed to composes),
+ * whatever the instance: the build environment. The Gemfile pins the Jekyll and
+ * just-the-docs a per-IG site is built with, and the workflow is the build.
+ */
+export const SITE_ENVIRONMENT: readonly RegExp[] = [
+  /^cat-harness\/docs\/Gemfile(\.lock)?$/,
+  /^\.github\/workflows\/feature-staging\.yml$/,
+];
+
+/**
+ * Whether a per-instance BUILT site (an IG's own Jekyll site, its AST site) is
+ * in the cone (bean `4j86`, last Done-when). Such a site is built from an
+ * upstream repository pinned in the instance's own files, the instance's
+ * declared theme, the build environment, and the stager's code, so it is
+ * carried when the file list is unknown, when the environment changed, when
+ * the branch touches the instance's root (the floor, as `carriedInstances`
+ * keeps it), when the cone reaches any of the instance's directories (a theme
+ * change arrives that way, down `derivedFrom`), or when a changed file is in a
+ * writer's closure. Doubt carries, exactly as `cone` does.
+ */
+export function siteInCone(o: {
+  /** The instance's directory, repo-relative, no trailing slash. */
+  root: string;
+  changed: readonly string[] | undefined;
+  cone: readonly ConeDecision[];
+  writers: readonly string[];
+  closureOf: (writer: string) => Closure;
+}): { carry: boolean; why: string } {
+  if (o.changed === undefined) return { carry: true, why: "no readable file list for this branch — carrying everything" };
+  const files = o.changed.map((f) => f.replace(/^\.\//, ""));
+  const env = files.find((f) => SITE_ENVIRONMENT.some((r) => r.test(f)));
+  if (env) return { carry: true, why: `the branch changes ${env}, the build environment` };
+  const own = files.find((f) => f === o.root || f.startsWith(`${o.root}/`));
+  if (own) return { carry: true, why: `the branch touches ${own}` };
+  const reached = o.cone.find((c) => c.carry && c.path.startsWith(`${o.root}/`));
+  if (reached) return { carry: true, why: `the staging cone reaches ${reached.node}: ${reached.why}` };
+  for (const w of o.writers) {
+    const c = o.closureOf(w);
+    const hit = files.find((f) => c.files.has(f));
+    if (hit) return { carry: true, why: `the branch changes ${hit}, in the closure of ${w}` };
+    if (c.doubt) return { carry: true, why: `the closure of ${w} cannot be read (${c.doubt}) — carrying it` };
+    if (c.computed) {
+      const mod = files.find((f) => MODULE.test(f));
+      if (mod) return { carry: true, why: `the branch changes ${mod}, and ${c.computed} that ${w} may reach — carrying it` };
+    }
+  }
+  return { carry: false, why: "no changed file reaches it" };
+}
+
+/** A changed-files list written one path per line, or `undefined` when there is none to read. */
+export function readChangedFiles(path: string | undefined): string[] | undefined {
+  if (path === undefined || !existsSync(path)) return undefined;
+  const lines = readFileSync(path, "utf-8").split("\n").map((l) => l.trim()).filter(Boolean);
+  return lines;
+}
+
+/** The per-site filter both stagers call: one cone, one closure memo, a decision per instance. */
+export function siteFilter(repoRoot: string, changed: readonly string[] | undefined, writers: readonly string[]) {
+  const coneDecisions = changed === undefined ? [] : coneForCheckout(changed, repoRoot);
+  const memo = new Map<string, Closure>();
+  const closureOf = (w: string) => {
+    if (!memo.has(w)) memo.set(w, importClosure(w, repoRoot));
+    return memo.get(w)!;
+  };
+  return (root: string) => siteInCone({ root, changed, cone: coneDecisions, writers, closureOf });
+}
