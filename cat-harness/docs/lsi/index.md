@@ -123,13 +123,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.92 | instance, kind, harness, directory, page, branch, session, graph | *(none)* |
+| 1 | 45.91 | instance, kind, harness, directory, page, branch, session, graph | *(none)* |
 | 2 | 21.75 | watcher, sibling, queue, prs, commits, backlog, slot, block | harness, instance, declaration, node, directories, directory, iri, asset |
-| 3 | 18.20 | chapter, slot, block, edges, project, formal, watcher, proof | session, conflict, epic, beans, branch, push, green, minutes |
+| 3 | 18.20 | chapter, slot, block, edges, project, formal, watcher, proof | session, conflict, epic, beans, branch, push, minutes, green |
 | 4 | 17.21 | page, tile, text, block, avatar, glass, card, pdf | sibling, subgraph, ledger, subdirectory, sessions, session, plan, prs |
 | 5 | 15.61 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, sniff, zip, ingest, archived, pdf, arxiv |
-| 6 | 15.18 | lane, actor, requirements, role, task, analysis, process, impact | sha, queue, backlog, tile, withheld, board, bytes, slide |
-| 7 | 14.91 | preview, staging, merge, translation, locale, url, deploy, pages | glass, tile, role, avatar, card, fit, sticky, settings |
+| 6 | 15.19 | lane, actor, requirements, role, task, process, analysis, impact | sha, queue, backlog, tile, withheld, board, bytes, slide |
+| 7 | 14.90 | preview, staging, merge, translation, locale, pages, url, deploy | glass, tile, card, avatar, fit, role, sticky, backlog |
 | 8 | 14.61 | edges, forward, edge, logical, backward, cross-chapter, energy, storytelling | feedback, post, pdf, phase, language, user, requirements, url |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
