@@ -1301,6 +1301,10 @@ export const RULES: Rule[] = [
       // the harness's own declarations, and needs no folio.
       "src/tools/auth.ts",
       "src/tools/folio-init.ts",
+      // The adapter for an instance that holds no content (bean `zmdo`): the
+      // server's fallback when no content adapter is installed above the
+      // harness. Harness by definition — it exists for the harness alone.
+      "src/no-content-adapter.ts",
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
       "schemas/assistant-workflow.ts",
