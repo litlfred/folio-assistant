@@ -254,6 +254,16 @@ the same fact `bun run gates` exists around: **CI tests the merge**, and so
 does the preview, so a branch behind its base is previewing a tree nobody will
 have.
 
+### A stub where an instance should be is the cone, not a broken build
+
+A composed instance the branch cannot reach is replaced by a one-page stub
+pointing at the published copy. Which instances a preview carries is decided
+by the staging cone ([`feature-staging`](feature-staging.md) §7), and the
+build log prints each decision with its reason. Before reporting a missing IG
+as a defect, read that line. If the cone left out something your change does
+affect, the fix is a missing `writer` or `derivedFrom` on the directory's
+declaration, not a rule to always carry it.
+
 ## When to provide before/after URLs
 
 Provide before/after URLs in **every** interaction where:

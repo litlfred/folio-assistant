@@ -1719,7 +1719,7 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
 }
 
 /** Every dependency declaring a `contributes` module, with its resolved path. */
-function contributingDependencies(
+export function contributingDependencies(
   folioRoot: string,
 ): Array<{ dep: ResolvedDependency; modulePath: string }> {
   const out: Array<{ dep: ResolvedDependency; modulePath: string }> = [];

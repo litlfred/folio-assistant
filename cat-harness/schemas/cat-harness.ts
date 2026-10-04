@@ -562,6 +562,21 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * says which directories in the `derived` layer still owe an answer.
    */
   derivedFrom?: string[];
+
+  /**
+   * The GENERATOR that writes this directory: repo-relative script files, and
+   * directories ending in `/` for what a generator READS rather than imports
+   * (its templates). The other half of `derivedFrom`: that names the DATA a
+   * derived graph is computed from, this names the CODE (owner, 2026-10-04,
+   * bean `4j86`, option 1 of 3).
+   *
+   * The staging cone reads it: a changed file in a writer's import closure, or
+   * under a writer directory, puts this directory in the cone. Absent means the
+   * cone cannot reach this directory through code, so it falls back to the
+   * instance-prefix rule. `check:derived-from` refuses a writer path that does
+   * not exist, because a dangling writer would silently shrink the cone.
+   */
+  writer?: string[];
 }
 
 /** An instance's root declaration. */
@@ -1697,6 +1712,16 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
     .array(z.string().min(1))
     .min(1)
     .refine((ids) => new Set(ids).size === ids.length, { message: "derivedFrom names an id twice" })
+    .optional(),
+  /**
+   * The generator that writes this directory: repo-relative script files, and
+   * directories ending in `/` for what it reads rather than imports. See the
+   * interface field. At least one path, none twice.
+   */
+  writer: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((ps) => new Set(ps).size === ps.length, { message: "writer names a path twice" })
     .optional(),
   /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the

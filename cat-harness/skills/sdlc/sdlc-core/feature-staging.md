@@ -176,6 +176,48 @@ Two things to know when editing it:
   404 until the author pushes rather than lost work. Detail and the reviewer's
   remedy: [`staging-review`](staging-review.md) §"The cap".
 
+### 7. The cone — a preview rebuilds only what a changed file can reach
+
+**Owner ruling, 2026-10-04 (bean `4j86`):** *"staging rebuild only what is
+dependency cone of changes (general rule)"*, at FILE level, with each derived
+directory's generator declared as `writer`. A general rule across rendered
+kinds, not a fact about IGs.
+
+A rendered directory is **in the cone** when a changed file is
+
+1. under its own path (its pages, or its source data), or
+2. in the import closure of a `writer` it declares, or under a writer
+   directory (a path ending in `/`: what a generator reads, such as its
+   templates, rather than imports), or
+3. in a directory it is `derivedFrom`, transitively (`check:derived-from
+   --downstream <instance/id>` prints that half on its own).
+
+`cat-harness/scripts/staging-cone.ts` computes it; `compose-docs.ts`
+`carriedInstances` applies it to the composed instances. Three rules hold it
+honest:
+
+- **Any doubt carries.** No file list, a writer that does not exist, or an
+  import that does not resolve carries the directory, with the reason in the
+  build log. A preview missing the pages under review misleads a reviewer; an
+  oversized one costs bytes. Those are not symmetric.
+- **A computed `import()` is bounded, not ignored.** It can load only a
+  module, so it carries on a changed module file and never on a page. The two
+  such sites a generator reaches today (`harness-config.ts`'s `contributes`
+  loader and `block-module.ts`'s block loader) have DECLARED targets and are
+  walked exactly; `DECLARED_COMPUTED_IMPORTS` lists them.
+- **The old instance-prefix match is a floor.** The cone can only add to it.
+  Narrowing below it is a separate decision, made once the cone has been
+  measured in previews.
+
+Measured on 2026-10-04: a skill-only change carries no IG; a change to
+`gen-ig-pages.ts` or to `smart-base/themes/chrome.json` carries all three.
+Before the cone, those last two changes dropped every IG from the preview that
+existed to review them. `staging-cone.test.ts` holds all three as tests.
+
+**When you add a generated directory, declare its `writer` and
+`derivedFrom`.** Without them the cone cannot reach it through code or data,
+and the prefix floor is all it gets.
+
 ## Agent workflow
 
 When an author requests a content change:

@@ -72,6 +72,13 @@ provide narrative description of change"*).
 If any part is missing, say so in the preview. Never drop a missing part
 silently.
 
+**Build only the cone.** For any rendered kind, the "after" build need only
+cover what the change can reach: its own files, its generator's import closure,
+and what is derived from those. That is the general rule, written once in
+[`feature-staging`](feature-staging.md) §7. Anything the cone leaves out is
+identical to the "before" by construction, so leaving it out loses no
+comparison.
+
 ## 1. One build, one variable
 
 The only difference between the two pictures should be the change under

@@ -44,6 +44,10 @@
         "smart-trust-artifact-index",
         "smart-base-themes"
       ],
+      "writer": [
+        "fhir-harness/scripts/gen-ig-pages.ts",
+        "fhir-harness/scripts/templates/ig-pages/"
+      ],
       "composed": true,
       "_comment_composed": "Rendered THROUGH just-the-docs, not mounted after it. Owner, 2026-09-21: \"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\". These pages are markdown with front matter, generated from fhir-artifact-index by smart-trust:pages, so they compose into the Jekyll source at _docs/smart-trust/ and come out as ordinary folio pages -- sidebar, search, language bar. They were finished HTML copied into _site AFTER Jekyll, which is why they inherited none of it and why hw9g had to inject a nav rail. who-iris does NOT set this and must not: it is a replica of IRIS, and just-the-docs' layout would replace IRIS's chrome with folio-assistant's.",
       "tile": {

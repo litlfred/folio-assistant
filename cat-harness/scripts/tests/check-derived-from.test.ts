@@ -4,7 +4,7 @@
  */
 import { describe, expect, it } from "bun:test";
 
-import { analyse, type Inst, judge, ratchet } from "../check-derived-from.ts";
+import { analyse, downstreamOf, type Inst, judge, ratchet, readTree, renderingOrder } from "../check-derived-from.ts";
 
 const dir = (id: string, index: number, derivedFrom?: string[], derived = true) => ({
   id,
@@ -87,5 +87,60 @@ describe("this checkout", () => {
   it("reads every instance and finds nothing hard", () => {
     const j = analyse();
     expect(j.findings.filter((f) => f.kind !== "layering-gap")).toEqual([]);
+  });
+});
+
+describe("the rendering order, derived from the edges", () => {
+  it("puts a source before its consumer even when the consumer is declared first", () => {
+    // The interim rule would refuse this world; the derived order still answers.
+    const w = world([dir("pages", 0, ["ast"]), dir("ast", 1, undefined)]);
+    const order = renderingOrder(w, judge(w).edges);
+    expect(order.indexOf("top/ast")).toBeLessThan(order.indexOf("top/pages"));
+  });
+  it("agrees with the interim order when the gate passes", () => {
+    const w = world([dir("ast", 0, undefined), dir("pages", 1, ["ast", "chrome"])]);
+    const interim = w.flatMap((i) => i.dirs.map((d) => `${i.name}/${d.id}`));
+    expect(renderingOrder(w, judge(w).edges)).toEqual(interim);
+  });
+  it("leaves a cycle's members out", () => {
+    const w = world([dir("a", 0, ["b"]), dir("b", 1, ["a"])]);
+    const order = renderingOrder(w, judge(w).edges);
+    expect(order).not.toContain("top/a");
+    expect(order).not.toContain("top/b");
+  });
+});
+
+describe("downstream of a change", () => {
+  const w = world([dir("ast", 0, ["lib"]), dir("pages", 1, ["ast"]), dir("other", 2, undefined)]);
+  const { edges } = judge(w);
+  const order = renderingOrder(w, edges);
+  it("is transitive and in rendering order", () => {
+    expect(downstreamOf(["mid/lib"], order, edges)).toEqual(["mid/lib", "mid/index", "top/ast", "top/pages"]);
+  });
+  it("carries nothing a change cannot reach", () => {
+    expect(downstreamOf(["top/pages"], order, edges)).toEqual(["top/pages"]);
+  });
+});
+
+describe("this checkout's IG pages", () => {
+  it("re-render when smart-base's chrome changes", () => {
+    const tree = readTree();
+    const { edges } = judge(tree);
+    const down = downstreamOf(["smart-base/smart-base-themes"], renderingOrder(tree, edges), edges);
+    for (const ig of ["smart-base", "smart-trust", "smart-immunizations"]) expect(down).toContain(`${ig}/${ig}-docs`);
+  });
+});
+
+describe("writer", () => {
+  it("a writer path that does not exist is refused", () => {
+    const w = world([{ ...dir("pages", 0, undefined), writer: ["gen/missing.ts"] }]);
+    expect(judge(w, () => false).findings).toEqual([
+      { kind: "missing-writer", instance: "top", directory: "pages", writer: "gen/missing.ts" },
+    ]);
+  });
+  it("this checkout's IG page sets name gen-ig-pages as their writer", () => {
+    const pages = readTree().flatMap((i) => i.dirs.filter((d) => d.id === `${i.name}-docs` && d.writer).map((d) => d.writer));
+    expect(pages).toHaveLength(3);
+    for (const w of pages) expect(w).toContain("fhir-harness/scripts/gen-ig-pages.ts");
   });
 });
