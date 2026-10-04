@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T17:04:32Z
+updated_at: 2026-10-04T17:33:45Z
 parent: folio-assistant-fs43
 ---
 
@@ -122,3 +122,15 @@ _2026-10-04T17:01:12Z_ — Claimed by claude/gifted-fermi-t8k217 — pushed to m
 Owner, verbatim: *"i want to retire special-branches.json from being in infrastructure. it can be in health checks. there should not be a central registry for declaring mount tools and subgraph types"*.
 
 So the end state is **no reader resolves a branch name through a central file.** Declarations are the only source. Whatever survives belongs under `test/health/` and is OBSERVED, not declared: a check that lists the special branches on each remote (`git ls-remote`) and compares them with the declarations. It reports an undeclared branch, a declared one that is absent, and a legacy name still present. That check would have reported today's finding, `cat/cat-harness/merge-queue` (on the remote, declared nowhere), which no table did. Siblings: folio-assistant-dmx1 (graph kinds declared per harness) and folio-assistant-j9cs (mount tools declared on storage). The row-by-row plan above stands; step 4 becomes 'delete the table, and add the health check in its place'.
+
+## 2026-10-04: lake-cache's mount path, and step 2 done
+
+**Owner ruling (option 1 of 3): lake-cache mounts at a plain `lake-cache/`**, and lake-cache.sh links `.lake` to it, so Lake still finds `.lake/`. The dot-prefix guard stays absolute; the one dot path is a link the tool owns, not a declared graph. Rejected: excusing `.lake/` by name in the guard, and declaring no mount path. The shell change is step 3. It alters how every Lean folio restores its cache, so it has to be exercised in one (qou) before it lands.
+
+**Step 2 done (64f5b80).** No TypeScript reader resolves a branch through the table.
+- `state-drift` OBSERVES the remote (`git ls-remote` over `cat/**` plus gh-pages) and names each branch by the directory that declares it. Measured today, undeclared: `merge-queue` (an authoritative store) and `gh-pages`. Route seeds are measured for the first time: uml-overview is 29 files behind; ig-docs is in sync.
+- `state-seed --id` resolves by declared id, branch name, or last segment.
+- The resolver attaches no row.
+- `resolve-subgraph` no longer exits 2 for a declaration with no row. It did, which meant the table was gating the declarations.
+
+**Left:** step 3, the shell mirrors (lake-cache.sh, lake-cache-fetch*, lake-cache-produce.py, reseed-lean-cache.sh, rename-special-branch.sh, the restore action and its template) reading the prefix from the folio-assistant-sci declaration; then delete the table and its `special-branches.test.ts` mirror check, with `state-drift` as the health check.
