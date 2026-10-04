@@ -84,7 +84,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, join, relative } from "node:path";
 
 import { orphanSubjectPages, viewerPlacement } from "../../cat-harness/scripts/gen-schema-viz.ts";
-import { classify } from "../../cat-harness/scripts/check-docs-populated.ts";
+import { classify } from "./check-docs-populated.ts";
 import { isSkillMd, kgRoots, skillMdDirs, corpusScopeFor } from "../../cat-harness/scripts/known-skills.ts";
 import { readRoleGraph } from "../../cat-harness/schemas/role-graph.ts";
 import {
@@ -532,21 +532,31 @@ export const TYPES: AutoDocType[] = [
       return filesOfGraph("uml", (f) => f.endsWith(".puml"));
     },
   },
-  {
-    id: "lsi",
-    title: "LSI",
-    // `qa`, NOT the graph each index is ABOUT, and the distinction is the one
-    // `AutoDocType.graph` is documented for: this names where the artefacts
-    // LIVE. An `.lsi.json` is a QA result computed over some other graph, so
-    // its declared home is `test/results/` and its subject segment is that
-    // directory's id. Naming the indexed graph here would make the type walk
-    // `skills/` and find no `.lsi.json` at all.
-    graph: "qa",
-    extracts: "every LSI index a declared `qa` directory holds, named for the instance and graph it was computed over",
-    collect(): AutoDocItem[] {
-      return filesOfGraph("qa", (f) => f.endsWith(".lsi.json"));
-    },
-  },
+  // There was an `lsi` type here until 2026-10-04 (bean `tqjj`), listing every
+  // `.lsi.json` a declared `qa` directory held. It is GONE rather than fixed,
+  // and the guard below is what settled that:
+  //
+  // The LSI index sidecars are no longer committed — their record is the
+  // commit-keyed entry on the `qa-reports` branch — so `filesOfGraph`, which
+  // reads the COMMITTED tree by contract, collects nothing while the `qa`
+  // directories still hold 1,215 other files. The guard read that as "the
+  // reader is wrong, or its source moved" and refused, correctly by its own
+  // discrimination: files are there and the type cannot see them.
+  //
+  // The two repairs available were both worse than removal:
+  //
+  //   · read the FILESYSTEM instead of git — the index would then be listed
+  //     or not depending on whether this container happens to hold a working
+  //     copy, which is precisely bean `in5a`'s defect;
+  //   · narrow the guard so this type may report zero — that spends the one
+  //     check standing between an empty index and a vacuous `✓`.
+  //
+  // And the page it drew was already a second answer to a question that has
+  // one: `cat-harness/docs/lsi/index.md` IS the index of the indexes — its
+  // committed half lists every declared prose graph and whether it needs one,
+  // and the docs-site build adds each index's detail from the record on the
+  // branch. A docs-auto type over a family `main` does not carry can only ever
+  // report zero, and a docs-auto index is for the committed tree.
   {
     id: "index/roles",
     title: "Roles",

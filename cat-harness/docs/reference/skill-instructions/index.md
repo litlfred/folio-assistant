@@ -229,6 +229,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [/before-after-preview](before-after-preview.html) | `before-after-preview` | — | > Skill id: `before-after-preview` · Package: `sdlc-core` · Issue: #1710 · |
+| [Branch archaeology: what each branch holds that main does not](branch-archaeology.html) | `branch-archaeology` | — | The question sounds like `git branch -r --no-merged`, and that command answers |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
@@ -279,6 +280,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Visual diff](visual-diff.html) | `visual-diff` | — | > Skill id: `visual-diff` · Package: `sdlc-core` · Bean: `0rxe` · Epic: `q4jm` |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
+| [Restructuring a work plan](work-plan-restructure.html) | `work-plan-restructure` | — | [`lsi-indexing`](lsi-indexing.md) §"Epic filing" |
 
 ## Spec Kit spec-driven development (skills/sdlc/spec-kit)
 

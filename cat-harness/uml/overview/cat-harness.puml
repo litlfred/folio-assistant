@@ -574,37 +574,12 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     wrongDirection [1] : number
     undeterminedDirection [1] : number
   }
-  class "folio-lsi-index/v1" as cat_harness_qa_folio_lsi_index_v1 <<ts: LsiSidecar>> #f4e6e6 {
-    $schema [1] : 'folio-lsi-index/v1'
-    method [1] : string
-    instance [1] : string
-    graph [1] : string
-    path [1] : string
-    docs [1] : string[] | null
-    fingerprint [1] : string
-    options [1] : LsiOptions
-    units [1] : number
-    terms [1] : number
-    k [1] : number
-    retained [1] : number
-    dimensions [1] : Array<{ dim: number; sigma: number; positive: string[]; negative: string[] }>
-    findings [1] : { nearDuplicates: Array<{ a: string; b: string; cosine: number }>; narrowDimensions: Array<{ dim: number; units: string[] }>; }
-    neighbours [1] : Record<string, Array<[string, number]>>
-  }
-  class "folio-tool-run/v1" as cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1 <<json: ToolRunRecordSchema>> #f4e6e6 {
-    $schema [1] : 'folio-tool-run/v1'
-    tool [1] : string
-    target [1] : string
-    outcome [1] : succeeded | failed
-    inputFingerprint [1] : string
-    detail [0..1] : string
-  }
   class "Page" as cat_harness_qa_viewer_nav_qa_v1_Page <<json: ViewerNavQaSchema>> #f4e6e6 {
     path [1] : string
     source [1] : string
     verdict [1] : railed | declined | missing
     reason [0..1] : string
-    flags [0..*] : enum(7)[]
+    flags [0..*] : enum(8)[]
   }
   class "viewer-nav-qa/v1" as cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 <<json: ViewerNavQaSchema>> #f4e6e6 {
     $schema [1] : 'viewer-nav-qa/v1'
