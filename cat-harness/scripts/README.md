@@ -18,7 +18,7 @@ _484 files directly here, too many to list: 353 .ts, 46 .sh, 34 .bat, 32 .py, 16
 | [`git-hooks/`](git-hooks/) | 5 files | |
 | [`knot-plots/`](knot-plots/) | 10 files | |
 | [`lib/`](lib/) | 15 files | |
-| [`partition/`](partition/) | 4 files | |
+| [`partition/`](partition/) | 2 files | |
 | [`render-tex/`](render-tex/) | 2 files | |
 | [`templates/`](templates/) | 1 file | |
 | [`tests/`](tests/) | 572 files | |
