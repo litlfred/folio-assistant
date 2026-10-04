@@ -148,10 +148,14 @@ def check(pdf: Path | None, e: dict, target: Path, title: str) -> int:
         problems.append(f"region {meta.get('region')} ≠ vector-figures.json's {e['region']}")
     if meta.get("contentSha256") != content_sha(svg):
         problems.append("contentSha256 does not match the drawing — the SVG was edited after it was generated")
-    if pdf is not None and pdf.exists():
+    import importlib.util
+
+    have_pdf = pdf is not None and pdf.exists()
+    have_backend = importlib.util.find_spec("pymupdf") is not None
+    if have_pdf:
         if sha256_file(pdf) != meta.get("source", {}).get("sha256"):
             problems.append("the source PDF's sha256 differs from the one recorded — a different edition")
-        elif render(pdf, e, title) != svg:
+        elif have_backend and render(pdf, e, title) != svg:
             import pymupdf
 
             now = f"pymupdf {pymupdf.VersionBind}"
@@ -161,13 +165,19 @@ def check(pdf: Path | None, e: dict, target: Path, title: str) -> int:
         print(f"✗ {target}: {p}")
     if problems:
         return 1
-    if pdf is None or not pdf.exists():
-        print(
-            f"✓ {target}: provenance consistent with vector-figures.json and the drawing is unedited. "
-            "NOT regenerated: the source PDF is not in this checkout, so byte-identity was not checked."
-        )
-    else:
+    if have_pdf and have_backend:
         print(f"✓ {target}: regenerated from {pdf.name} p.{e['page']} byte for byte")
+        return 0
+    # Two degraded modes, each said in words; neither is reported as a full pass.
+    why = (
+        "the source PDF is not in this checkout"
+        if not have_pdf
+        else "pymupdf is not installed (the PDF is present and its sha256 matches the record)"
+    )
+    print(
+        f"✓ {target}: provenance consistent with vector-figures.json and the drawing is unedited. "
+        f"NOT regenerated: {why}, so byte-identity was not checked."
+    )
     return 0
 
 
