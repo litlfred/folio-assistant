@@ -37,7 +37,7 @@
  * - it named `gen-docs-pages`, `docs:harness`, `translation:index` and
  *   `state:visualizer`, **none of which adding a skill stales**. They had gone
  *   red in the same sessions for unrelated reasons and were attributed here.
- * - it omitted `glossary:page`, `docs:auto`, `kg:audit` and `kg:detangle`,
+ * - it omitted `glossary:page`, `auto:docs`, `kg:audit` and `kg:detangle`,
  *   **all four of which it does stale**. Two were already red on a red `main`,
  *   so they were filtered out as "not mine"; two were masked (below).
  *
@@ -81,7 +81,7 @@
  * | `skill:commands` | `skill:commands:check` — added 2026-09-30 (`j6t3`): red with 37 missing and one undeclared, green after |
  * | `skills:docs` | `skills:docs:check` |
  * | `glossary:page` | `check:glossary` |
- * | `docs:auto` | `docs:auto:check` |
+ * | `auto:docs` | `auto:docs:check` |
  * | `kg:audit` | `kg:audit:check` |
  * | `kg:detangle` | `kg:detangle:check` |
  * | `uml:overview` | `uml:overview:check` |
@@ -132,13 +132,13 @@
  *     declare a `qa` directory for a nested instance
  *       -> kg:audit writes its sidecars
  *       -> uml:overview renders the QA tree, adding pages
- *       -> docs:auto:check goes STALE, and docs:auto ran two steps earlier
+ *       -> auto:docs:check goes STALE, and auto:docs ran two steps earlier
  *
- * Measured by running the command: pass 1 left `docs:auto:check` red, pass 2
+ * Measured by running the command: pass 1 left `auto:docs:check` red, pass 2
  * exited 0. **One pass is not a fixed point**, and the order below is now
  * dependency-bearing whether or not it was designed to be.
  *
- * The order is deliberately NOT changed to fix it. Putting `docs:auto` last would
+ * The order is deliberately NOT changed to fix it. Putting `auto:docs` last would
  * close this pair and might open another, and the verification loop already
  * reports the truth: every check runs after the writes and the command exits
  * non-zero while any is red, so a stale artefact is named rather than shipped.
@@ -494,8 +494,8 @@ export const STEPS: readonly Step[] = [
     because: "the glossary page and its SKOS projection",
   },
   {
-    write: ["docs:auto"],
-    verify: ["docs:auto:check"],
+    write: ["auto:docs"],
+    verify: ["auto:docs:check"],
     because: "the generated docs index",
   },
   {
@@ -963,7 +963,7 @@ async function main(): Promise<number> {
         "    registering a probe skill and then deleting it.\n" +
         "  · the chain is not at a FIXED POINT yet. A later step can stale an\n" +
         "    earlier step's artefact: `uml:overview` renders the QA tree `kg:audit`\n" +
-        "    writes, and its new pages stale `docs:auto`, two steps earlier.\n" +
+        "    writes, and its new pages stale `auto:docs`, two steps earlier.\n" +
         "    Measured 2026-09-27: pass 1 red, pass 2 exit 0. If the red check is one\n" +
         "    an EARLIER step owns, run this command again before reading on.\n" +
         "  · the chain above is INCOMPLETE. Measure by running that ONE check against\n" +

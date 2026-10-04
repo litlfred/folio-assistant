@@ -74,7 +74,7 @@ describe("classify", () => {
   test("measured generated families resolve by their declared strategy", () => {
     expect(classify("cat-harness/test/results/skill-register.qa-results.json").pattern?.id).toBe("qa-results");
     expect(classify("cat-harness/test/results/lsi/cat-harness/skills.lsi.json").strategy).toBe("take-base");
-    expect(classify("cat-harness/docs/cat-harness/docs-auto/index/index.html").pattern?.id).toBe("docs-auto");
+    expect(classify("cat-harness/docs/cat-harness/auto-docs/index/index.html").pattern?.id).toBe("auto-docs");
     expect(classify("cat-harness/docs/glossary/index.md").pattern?.id).toBe("glossary");
     expect(classify("beans/README.md").strategy).toBe("generated-regions");
   });
@@ -346,7 +346,7 @@ describe("resolveGeneratedRegions", () => {
 /**
  * A modify/delete conflict: `ours` changes the file, `theirs` (the base being
  * merged in) deletes it — or the reverse. Measured 2026-10-02 on #1805, where
- * main deleted docs-auto pages the branch had touched and `checkout --theirs`
+ * main deleted auto-docs pages the branch had touched and `checkout --theirs`
  * threw "does not have their version".
  */
 function modifyDelete(deletedBy: "theirs" | "ours"): string {
@@ -402,7 +402,7 @@ describe("take-base when one side deleted the file", () => {
 describe("modify/delete on DECLARED paths: generated resolves, authored refuses (#1854)", () => {
   // Real pattern paths rather than a bare `gen.html`, so classification and
   // the stage handling are exercised together on what git actually reports.
-  const GEN = "cat-harness/docs/cat-harness/docs-auto/index/index.html";
+  const GEN = "cat-harness/docs/cat-harness/auto-docs/index/index.html";
   const BEAN = "beans/defs/folio-assistant-x--y.md";
   const mk = (): string => {
     const dir = mkdtempSync(join(tmpdir(), "merge-base-md2-"));
@@ -434,7 +434,7 @@ describe("modify/delete on DECLARED paths: generated resolves, authored refuses 
       expect(conflicted).toEqual([BEAN, GEN].sort());
       const p = plan(conflicted);
       expect(p.resolvable.map((c) => c.path)).toEqual([GEN]);
-      expect(p.resolvable[0]!.pattern?.id).toBe("docs-auto");
+      expect(p.resolvable[0]!.pattern?.id).toBe("auto-docs");
       expect(p.refused.map((c) => c.path)).toEqual([BEAN]);
       expect(p.refused[0]!.pattern?.id).toBe("beans");
       for (const c of p.resolvable) takeBase(d, c.path);
