@@ -551,7 +551,9 @@ block sweep's `*.qa.json` and the script sweep's `*.script-qa.json`.
 An instance that declares no `qa` directory does not receive sidecars inside
 its own tree: `kgQaHomeFor` (`schemas/cat-harness.ts`) puts them in the
 auditing harness's `qa` directory under the instance's stub —
-`cat-harness/test/results/bootstrap/` for bootstrap. A verdict ABOUT an
+`cat-harness/test/results/bootstrap/` for bootstrap (a working copy, stored
+on the `qa-reports` branch with the rest of that `qa` directory; a JUDGEMENT
+about it is hosted the same way, under `test/attestations/`). A verdict ABOUT an
 instance is the auditor's output, and bootstrap is the layer that must read
 cleanly with no harness present (owner, 2026-09-29, decision 2 of bean
 `r3gy`). The same holds once bootstrap is its own repository: the verdicts stay
@@ -678,7 +680,9 @@ uniquely was had no picture.
    A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
-4. `bun run kg:audit` and commit the sidecars.
+4. `bun run kg:audit`. The kg-qa sidecars it writes are derived results whose
+   record the CI job `qa-publish` stores on the `qa-reports` branch; they are
+   committed only until bean `5hox` takes them off `main`.
 
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.

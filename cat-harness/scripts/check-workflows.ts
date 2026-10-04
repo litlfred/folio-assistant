@@ -362,8 +362,9 @@ export function ghPagesWipesStaging(text: string, file: string): WorkflowFinding
   return out;
 }
 
-/** The branch the QA results are published to (owner ruling D1). */
-export const QA_REPORTS_BRANCH = "qa-reports";
+/** The branch the QA results are published to (owner ruling D1), and its earlier names (beans `32f6`, `tlk2`). */
+export const QA_REPORTS_BRANCH = "cat/cat-harness/qa-reports";
+export const QA_REPORTS_BRANCH_NAMES: readonly string[] = [QA_REPORTS_BRANCH, "cat-qa-reports", "qa-reports"];
 
 /**
  * Every write to `qa-reports` must go through `qa-store.ts` — bean `16ei`.
@@ -390,7 +391,7 @@ export const QA_REPORTS_BRANCH = "qa-reports";
 export function qaReportsUnretried(text: string, file: string): WorkflowFinding[] {
   const out: WorkflowFinding[] = [];
   const lines = text.split("\n");
-  const branch = new RegExp(`(^|[\\s:/'"])${QA_REPORTS_BRANCH}(?![\\w-])`);
+  const branch = new RegExp(`(^|[\\s:/'"])(${QA_REPORTS_BRANCH_NAMES.join("|")})(?![\\w-])`);
   for (let i = 0; i < lines.length; i++) {
     const l = lines[i]!;
     if (l.trimStart().startsWith("#")) continue;

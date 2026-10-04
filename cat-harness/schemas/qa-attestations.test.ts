@@ -1,7 +1,7 @@
 /**
  * The attestation store — bean `2gst`. The schema holds only judgements, the
- * path mirrors the derived family's tree, and a read answers in four states
- * where only `miss` may be read as "never attested".
+ * path mirrors the derived family's tree, and a read answers in five states
+ * where a miss or an absent store is "never attested" only once the prior derived file has been read.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
@@ -63,7 +63,7 @@ describe("qa-attestations/v1", () => {
     expect(QaAttestationsSchema.safeParse(file({ pair_attestations: [noHash as typeof pair] })).success).toBe(false);
   });
 
-  test("the family is one of the shared list; block-qa and translation-qa are reserved for bean 8wj1", () => {
+  test("the family is one of the shared list: kg-qa (bean 2gst), block-qa and translation-qa (bean 8wj1)", () => {
     expect([...ATTESTATION_FAMILIES]).toEqual(["kg-qa", "block-qa", "translation-qa"]);
     expect(QaAttestationsSchema.safeParse({ ...file(), family: "lsi" }).success).toBe(false);
   });
@@ -98,13 +98,19 @@ describe("where an attestation lives", () => {
   });
 });
 
-describe("reading — four states, and only a miss is 'never attested'", () => {
+describe("reading — five states, and a miss or an absent store is 'never attested' only after the prior is read", () => {
   const home = mkdtempSync(join(tmpdir(), "att-read-"));
   const tree = join(home, "kg-qa");
   const path = join(tree, "processes", "p.attestations.json");
 
-  test("no store at all is UNKNOWN — a deleted store must not read as first sight", () => {
-    expect(readAttestationFile(path, join(home, "absent")).state).toBe("unknown");
+  test("no store at all is ABSENT, not a miss — the writer then moves the prior's judgements (owner ruling 2)", () => {
+    expect(readAttestationFile(path, join(home, "absent")).state).toBe("absent");
+  });
+
+  test("a store path that is not a directory is UNKNOWN", () => {
+    const notDir = join(home, "a-file");
+    writeFileSync(notDir, "");
+    expect(readAttestationFile(path, notDir).state).toBe("unknown");
   });
 
   test("a store with no file for this subject is a miss — even with no family tree under it yet", () => {

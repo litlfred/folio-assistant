@@ -33,7 +33,9 @@ const MOVED: Record<string, { instance: string; dir: string }> = {
   "scientific-visualization": { instance: "folio-assistant-sci", dir: "skills/content/scientific-visualization" },
   "folio-document-adapter": { instance: "folio-assistant-core", dir: "skills/content/folio-document-adapter" },
   "content-lifecycle-ext": { instance: "folio-assistant-core", dir: "skills/content/content-lifecycle-ext" },
-  ingestion: { instance: "folio-assistant-core", dir: "skills/library/ingestion" },
+  // `ingestion` (document-intake) was here until bean mlux: the owner moved it
+  // back DOWN to cat-harness library-core on 2026-10-03, because ingestion is a
+  // harness capability and six cat-harness diagrams bind it.
   "authoring-who-smart-guidelines": { instance: "smart-base", dir: "skills/content/authoring-who-smart-guidelines" },
   "fhir-ig-authoring": { instance: "fhir-harness", dir: "skills/content/fhir-ig-authoring" },
 };
@@ -45,7 +47,6 @@ const SAMPLE: Record<string, string> = {
   "scientific-visualization": "scientific-visualization",
   "document-structure": "folio-document-adapter",
   "quality-control": "content-lifecycle-ext",
-  "document-intake": "ingestion",
   grade: "authoring-who-smart-guidelines",
   "fhir-validation": "fhir-ig-authoring",
 };

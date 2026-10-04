@@ -89,7 +89,7 @@ const lineOf = (src: string, at: number): number => src.slice(0, at).split("\n")
  * indirection, which is how `qa-badge.e2e.ts` and `qa-panel.e2e.ts` both
  * already spell it.
  */
-function corpusIdentifiers(src: string): Set<string> {
+function corpusIdentifiers(src: string, pattern: RegExp = CORPUS): Set<string> {
   const decls = [...src.matchAll(/\b(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*([\s\S]*?);/g)].map(
     (m) => ({ name: m[1]!, init: m[2]! }),
   );
@@ -98,7 +98,7 @@ function corpusIdentifiers(src: string): Set<string> {
     changed = false;
     for (const d of decls) {
       if (ids.has(d.name)) continue;
-      if (CORPUS.test(d.init) || [...ids].some((id) => new RegExp(`\\b${id}\\b`).test(d.init))) {
+      if (pattern.test(d.init) || [...ids].some((id) => new RegExp(`\\b${id}\\b`).test(d.init))) {
         ids.add(d.name);
         changed = true;
       }
@@ -107,8 +107,33 @@ function corpusIdentifiers(src: string): Set<string> {
   return ids;
 }
 
-function readsCorpus(args: string, ids: Set<string>): boolean {
-  return CORPUS.test(args) || [...ids].some((id) => new RegExp(`\\b${id}\\b`).test(args));
+function readsCorpus(args: string, ids: Set<string>, pattern: RegExp = CORPUS): boolean {
+  return pattern.test(args) || [...ids].some((id) => new RegExp(`\\b${id}\\b`).test(args));
+}
+
+/**
+ * The DERIVED results trees on disk. Narrower than {@link CORPUS}: it names
+ * where a file is, not what it is called.
+ */
+const DERIVED_TREE = /test\/results\/|test\/health\/results\//;
+
+/**
+ * Rule 3 (bean `cxcn`, reader audit R72/R73): no e2e spec reads a derived
+ * results tree AT ALL — not raw, and not through a helper either. Rules 1 and
+ * 2 are about inheriting a verdict; this one is about the tree being there.
+ * `test/results/` is derived and leaves `main` (bean `5hox`), so a spec that
+ * reads it at load fails on every checkout that does not carry it. A spec
+ * that needs a witness doc reads a committed copy under
+ * `test/support/fixtures/`. Returns the offending call texts.
+ */
+function derivedTreeReads(src: string): string[] {
+  const ids = corpusIdentifiers(src, DERIVED_TREE);
+  const out: string[] = [];
+  for (const m of src.matchAll(/\b(?:readFileSync|readFile|createReadStream|Bun\.file|sidecar|sidecarWithVerdicts|indexWithRows|badgeRunFor)\s*\(/g)) {
+    const args = argsAt(src, m.index! + m[0].length - 1);
+    if (readsCorpus(args, ids, DERIVED_TREE)) out.push(`${lineOf(src, m.index!)}: ${m[0]}${args})`);
+  }
+  return out;
 }
 
 /** Every coupling in one spec's source. Empty means clean. */
@@ -232,13 +257,29 @@ describe("the real e2e specs", () => {
     expect(specs.length).toBeGreaterThan(10);
   });
 
-  test("the known corpus readers are recognised as corpus readers", () => {
-    // If the path heuristic rots (the corpus moves, say), these stop being
-    // recognised and every other assertion here passes over nothing.
+  test("the known QA-doc readers are recognised as readers", () => {
+    // If the path heuristic rots (the files move, say), these stop being
+    // recognised and every other assertion here passes over nothing. Since
+    // bean `cxcn` both read committed fixtures, which still carry a QA-doc
+    // name through the helpers, so they are still found.
     const readers = specs.filter((s) => touchesCorpus(s.src)).map((s) => s.file);
-    expect(readers).toContain("qa-panel.e2e.ts");
     expect(readers).toContain("qa-badge.e2e.ts");
+    for (const f of ["qa-panel.e2e.ts", "qa-badge.e2e.ts"]) {
+      expect(specs.find((s) => s.file === f)!.src).toContain("test/support/fixtures/qa-e2e/");
+    }
   });
+
+  test("rule 3 fires on a helper fed a derived-tree path, and not on a fixture path", () => {
+    expect(derivedTreeReads(`const P = join(ROOT, "test/results/witnesses/a/b.block.json");\nconst J = sidecarWithVerdicts(P, []);`)).toHaveLength(1);
+    expect(derivedTreeReads(`const J = indexWithRows(join(ROOT, "test/results/witnesses/p/qa-index.json"), {});`)).toHaveLength(1);
+    expect(derivedTreeReads(`const J = sidecar(join(ROOT, "test/support/fixtures/qa-e2e/kg-witness.json"));`)).toEqual([]);
+  });
+
+  for (const { file, src } of specs) {
+    test(`${file} reads no derived results tree (rule 3)`, () => {
+      expect(derivedTreeReads(src)).toEqual([]);
+    });
+  }
 
   for (const { file, src } of specs) {
     test(`${file} takes no verdict from the live corpus`, () => {
