@@ -164,7 +164,7 @@ const CHIP =
  * convey was invisible to exactly the readers using the default theme.
  */
 const BANNER_STYLE =
-  "background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui";
+  "background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui";
 
 /**
  * The banner must PUSH THE FIXED SIDEBAR DOWN, not sit on top of it.
@@ -209,6 +209,28 @@ const BANNER_STYLE =
  *
  * Measured after, same page: banner `top: 0, left: 56, right: 1280` and
  * `.fa-nav` `top: 32` — pushed down by exactly the banner's height.
+ *
+ * ## Fixed, full width, since 2026-10-04 — it was still sticky inside body
+ *
+ * Owner, with three screenshots of a who-iris replica page: *"banner is wrong
+ * on page load, scrolls, and then is at top. should always be at top"* and
+ * *"upper left corner should be filled with green banner too"*. Both were the
+ * banner living in `body`'s flow:
+ *
+ * - **Not at the top on load.** The folio glass band (`docs-ui.css`, bean
+ *   `g9r2`) gives a replica's `body` `padding-top: 2.25rem`. A sticky banner
+ *   is laid out inside that padding, so it rendered at `top: 36` and only
+ *   reached 0 once the page scrolled. Measured on the served bytes:
+ *   `banner [56, 36]` at load, `[56, 0]` after a 300px scroll.
+ * - **The corner.** `body{padding-left:56px}` for the rail put the banner's
+ *   left edge at 56, and the rail itself is pushed DOWN by the offset, so the
+ *   56×(banner height) square above the rail was bare page.
+ *
+ * So the banner is `position: fixed; left: 0; right: 0` and the room it needs
+ * is reserved on `html`, which no page pads. It is above the rail's z-index so
+ * an expanded rail cannot paint over it. The `body{padding-left}` defect class
+ * — "a selector list is a list of the layouts somebody remembered" — cannot
+ * recur through padding any more, because nothing that pads `body` reaches it.
  */
 export const OFFSET_STYLE =
   "<style>:root{--fa-staging-offset:0px}" +
@@ -218,6 +240,12 @@ export const OFFSET_STYLE =
   // Every fixed top chrome this repository ships. `.side-bar` is
   // just-the-docs'; `.fa-nav` is the viewer rail.
   ".side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}" +
+  // The banner is FIXED (see below), so it takes no room in flow: reserve its
+  // measured height above the whole document instead. On `html`, not `body`,
+  // because pages pad `body` for their own chrome — the rail's
+  // `padding-left`, the folio glass band's `padding-top` — and the banner
+  // must sit outside all of it.
+  "html{padding-top:var(--fa-staging-offset,0px)}" +
   "</style>";
 
 /** Where the preview root is, given a page's pathname. Exported to be tested. */
@@ -286,6 +314,7 @@ function go(){
     .then(function(f){fill(d,f,r);})
     .catch(function(){d.textContent='\\u2014 build details unavailable';measure();});
 }
+measure();
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
 })();`;
