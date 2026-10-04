@@ -1817,6 +1817,42 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Authored by people and by agents on their behalf.",
   },
 
+  // BACK IN THE BASE LAYER, 2026-10-04 (bean riit). dmx1 moved this kind to
+  // folio-assistant-core's kinds/ graph the same day; that broke the invariant
+  // DEFAULT_DIRECTORIES states ("the harness cannot default a directory to a
+  // kind it does not know"), because the harness defaults `uploads/` beside
+  // `library/` — and the two are ONE pipeline, so they belong in one place.
+  // The two stages of the document-ingestion pipeline. They are declared as
+  // SEPARATE kinds rather than one `sources` kind because the whole point
+  // of the pair is that they are not interchangeable: the corpus-grep
+  // checklist searches `library/` and not `uploads/`, so a source still in
+  // `uploads/` makes a clean grep read as "nobody has done this" while the
+  // file sits on disk. Collapsing them into one kind would erase exactly
+  // the distinction `content/docs/document-ingestion/uploads-and-library-
+  // are-two-stages-of-one-pipeline.md` exists to state. A QUEUE, and a
+  // queue is a position in a pipeline. The declaration already says these
+  // files are NOT L1 and read as absent to every corpus consumer: the file
+  // is on disk and the content does not exist yet. Local since bean `tlat`
+  // moved the extraction contract down (placement PR5). The document
+  // adapter writes an upload's description beside its intake (bean `d4lb`),
+  // in the same family the IRIS catalogue records use. A queued source may
+  // itself BE a JSON Schema: the SPDX 3.1-RC1 schema held in
+  // uploads/spdx-3-1-rc1-machine-readable/ (bean `sd5v`) declares the meta-
+  // schema as its `$schema`. It conforms to a specification nobody here
+  // types, so it is `external`, as on `schemas` and `docs`.
+  uploads: {
+    description: "the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus.",
+    title: "Uploads",
+    perInstance: true,
+    layer: "core",
+    renderable: false,
+    holds: "state",
+    nodeSchemas: {"folio-extraction/v1": {}, "folio-intake/v1": {}, "folio-dublin-core/v1": {}, "https://json-schema.org/draft/2020-12/schema": {"external": "JSON Schema 2020-12"}},
+    recordsWork: false,
+    summary: "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer.",
+    avatar: {"glyph": "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14", "tone": 200, "reads": "an arrow onto a line — something arriving"},
+    tileIcon: "uploads",
+  },
   library: {
     description:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`.",

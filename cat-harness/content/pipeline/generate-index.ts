@@ -50,7 +50,7 @@ const INDEXED = BLOCK_KIND_NODES.filter((n) => n.indexRank !== undefined).sort(
   (a, b) => a.indexRank! - b.indexRank!,
 );
 const INDEXED_KINDS = new Set(INDEXED.map((n) => n.kind));
-const KIND_HEADINGS: Record<string, string> = Object.fromEntries(INDEXED.map((n) => [n.kind, n.headingPlural]));
+const KIND_HEADINGS: Record<string, string> = Object.fromEntries(INDEXED.map((n) => [n.kind, n.headingPlural ?? n.kind]));
 
 interface IndexEntry {
   kind: string;

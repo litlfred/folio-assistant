@@ -38,8 +38,7 @@
  */
 
 import type { CheckerPaths, CheckerResult, CompanionRole } from "../cat-harness/schemas/block-qa.js";
-import { DAK_ADAPTER, DAK_BLOCK_KINDS, DAK_KIND_BUILDERS, DAK_LABEL_PREFIXES } from "./schemas/dak-kinds.js";
-import { DAK_KIND_TO_DOCO_TYPE, DAK_KIND_TO_FOLIO_TYPE } from "./schemas/dak-jsonld.js";
+import { DAK_ADAPTER } from "./schemas/dak-kinds.js";
 import { DAK_AUTOMATED_CHECKERS } from "./content/pipeline/qa-checkers-dak.js";
 
 /** Where each contributed checker is defined, relative to this instance. */
@@ -54,14 +53,6 @@ export const DAK_COMPANION_ROLES: CompanionRole[] = ["md", "ts", "bpmn", "dmn", 
 export default function contribute(): {
   name: string;
   adapter: { name: string; module: string; companionRoles: CompanionRole[] };
-  blockKinds: Array<{
-    kind: string;
-    adapter: string;
-    builder: string;
-    labelPrefix: string;
-    folioType: string;
-    docoType?: string;
-  }>;
   qaCheckers: Array<{
     criterion: string;
     check: (paths: CheckerPaths) => CheckerResult;
@@ -80,14 +71,10 @@ export default function contribute(): {
       module: "./schemas/dak-blocks.ts",
       companionRoles: DAK_COMPANION_ROLES,
     },
-    blockKinds: DAK_BLOCK_KINDS.map((kind) => ({
-      kind,
-      adapter: DAK_ADAPTER,
-      builder: DAK_KIND_BUILDERS[kind],
-      labelPrefix: DAK_LABEL_PREFIXES[kind],
-      folioType: DAK_KIND_TO_FOLIO_TYPE[kind],
-      ...(DAK_KIND_TO_DOCO_TYPE[kind] ? { docoType: DAK_KIND_TO_DOCO_TYPE[kind] } : {}),
-    })),
+    // No `blockKinds`: since bean riit, step 3, the kinds are
+    // `folio-block-kind/v1` nodes in `smart-base/block-kinds/`, which
+    // `loadContributions` registers for every folio whose dependency tree
+    // includes smart-base — the same reach this array had.
     // Derived from the module's own dispatch table, as sci's are.
     qaCheckers: Object.entries(DAK_AUTOMATED_CHECKERS).map(([criterion, check]) => ({
       criterion,

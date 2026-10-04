@@ -243,14 +243,6 @@ export type DakBlock =
   | TestCaseBlock
   | ActorDefinitionBlock;
 
-/**
- * Compile-time proof that `DAK_BLOCK_KINDS` and `DakBlock["kind"]` cover each
- * other — the same guard `types.ts` puts on the paper union, for the same
- * reason: the drift it replaces produced no error anywhere.
- */
-type _MutuallyExhaustive<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
-const _dakKindsAreExhaustive: _MutuallyExhaustive<DakBlock["kind"], DakBlockKind> = true;
-void _dakKindsAreExhaustive;
 
 // ── Validation ───────────────────────────────────────────────────
 

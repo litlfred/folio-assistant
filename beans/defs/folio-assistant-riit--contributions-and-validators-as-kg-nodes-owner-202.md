@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-04T17:42:33Z
-updated_at: 2026-10-04T19:26:13Z
+updated_at: 2026-10-04T19:52:09Z
 parent: folio-assistant-fs43
 ---
 
@@ -88,3 +88,25 @@ Owner, the same day: *"move things to semanticaly approropaite plce"*. This answ
   - `bootstrap--terms`. bootstrap is a separate repository and declares no translation graph. Moving it needs a bootstrap PR, so it is not done from here.
   - `cat-harness--platform`, which is cat-harness's own.
 - **Not yet moved:** the BPMN process catalogues (`cat-harness/translations/<lang>/processes/`) cover diagrams owned by several instances. The same rule applies, and they are next.
+
+
+## 2026-10-04: step 3a — DAK kinds are nodes, scoped by the dependency tree
+
+The owner chose the scope: *"1. Dependency tree"*. A folio sees the nodes of the instances it depends on.
+
+- smart-base's 21 `dak` kinds are `folio-block-kind/v1` nodes in `smart-base/block-kinds/`.
+  - For non-paper adapters, `profile` and the two heading fields are optional; a refine requires all three for paper-adapter kinds.
+  - `dak-kinds.ts` and `dak-jsonld.ts` read their tables off the nodes.
+  - `DakBlockKind` is now `DakBlock["kind"]`.
+  - `contributions.ts` no longer returns `blockKinds`.
+- `loadContributions` and `loadContributionsSync` register each dependency's DECLARED kinds through the same `orderedDependencies` walk. So DAK kinds reach exactly the folios that depend on smart-base.
+  - Tested both ways: smart-ig gets all 21; folio-assistant-core gets none.
+  - The sink decides what counts as built-in (`acceptsDeclaredKind`), so the harness-layer loader imports no content vocabulary. check:partition is at 0.
+- Built-in paper and document kinds stay platform-wide. cat-harness's code types them, and the content profile governs which ones a folio may use. Scoping them by dependency too would need the schemas moved first (option 3 of the step-2 placement question, which the owner did not take).
+
+## 2026-10-04: `uploads` is back in cat-harness's BASE, beside `library`
+
+Owner, the same turn: *"uploads and library live in cat-harness as part of doc ingestion process"*.
+
+- dmx1 had moved `uploads` to core's `kinds/`. That broke DEFAULT_DIRECTORIES' invariant, which `cat-harness.test.ts` asserts: the harness defaults `uploads/` but no longer knew the kind.
+- The definition now sits in BASE again, with its avatar and tile icon. Its rationale is kept as a comment.

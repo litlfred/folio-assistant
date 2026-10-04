@@ -1341,6 +1341,7 @@ export const RULES: Rule[] = [
       "schemas/graph-kind-node.ts",
       "schemas/declared-nodes.ts",
       "schemas/validator-node.ts",
+      "schemas/block-kind-node.ts",
       // Roles, actors and the KG audit sidecar are harness-layer for the same
       // reason and on the same terms: `role-graph.ts` imports only
       // `namespaces.ts`, `kg-qa.ts` imports zod and `portable-path.ts` below.

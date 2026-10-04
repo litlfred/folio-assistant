@@ -12,6 +12,14 @@
   "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
   "directories": [
     {
+      "id": "smart-base-block-kinds",
+      "path": "block-kinds/",
+      "description": "The `dak` adapter's 21 block kinds, one folio-block-kind/v1 node per file (bean riit, step 3): kind, builder, label prefix and RDF types. Read off these nodes by smart-base/schemas/dak-kinds.ts and dak-jsonld.ts, and registered for a folio by loadContributions only when the folio's dependency tree includes smart-base (owner, 2026-10-04: a folio sees the nodes of the instances it depends on, option 1 of 3). They replace the blockKinds array contributions.ts returned.",
+      "graphKinds": [
+        "block-kinds"
+      ]
+    },
+    {
       "id": "smart-base-translations",
       "path": "translations/",
       "description": "The gettext side of smart-base's own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner's ruling of 2026-10-04, \"move things to semantically appropriate place\" (bean riit): a diagram's templates sit with the instance that draws it.",

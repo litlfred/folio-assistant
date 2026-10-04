@@ -30,7 +30,7 @@ describe("block kinds are discovered, not listed", () => {
     for (const n of BLOCK_KIND_NODES) {
       expect(BLOCK_KIND_TO_FOLIO_TYPE[n.kind as keyof typeof BLOCK_KIND_TO_FOLIO_TYPE]).toBe(n.folioType);
       expect(KNOWN_LABEL_PREFIXES).toContain(`${n.labelPrefix}:`);
-      expect(kindHeading(n.kind, "en")).toBe(n.heading);
+      expect(kindHeading(n.kind, "en")).toBe(n.heading!);
       expect(kindForBuilder(n.builder ?? n.kind)).toBe(n.kind);
       if (n.prefixEnforced) expect(LABEL_PREFIXES[n.kind]).toBe(`${n.labelPrefix}:`);
     }

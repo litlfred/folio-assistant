@@ -32,11 +32,12 @@ export const BlockKindNodeSchema = z
     /** The content adapter whose vocabulary the kind is from. */
     adapter: z.string().min(1),
     /**
-     * The NARROWEST content profile that admits the kind. Profiles nest
+     * The NARROWEST content profile that admits the kind (paper-adapter kinds
+     * only; a contributed adapter's kind is in no profile). Profiles nest
      * (`document` ⊂ `paper`), so `document` means both and `paper` means the
      * paper profile only — a formal mathematical claim.
      */
-    profile: z.enum(["document", "paper"]),
+    profile: z.enum(["document", "paper"]).optional(),
     /** The builder function a block manifest calls. Defaults to `kind`. */
     builder: z.string().regex(/^[A-Za-z][A-Za-z0-9]*$/).optional(),
     /** The label prefix, without its colon (`def`, not `def:`). Two kinds may share one (`fig`). */
@@ -54,9 +55,9 @@ export const BlockKindNodeSchema = z
     /** A DoCO co-type, only where one is unambiguously right. */
     docoType: z.string().regex(/^doco:[A-Z][A-Za-z]*$/).optional(),
     /** The English heading, singular — the translation graph's source string. Empty for a kind shown without one (`prose`). */
-    heading: z.string(),
+    heading: z.string().optional(),
     /** The English heading, plural, for an index that groups by kind. */
-    headingPlural: z.string().min(1),
+    headingPlural: z.string().min(1).optional(),
     /**
      * Where the definition index lists this kind's section, lowest first;
      * absent for a kind the index omits. A reading order (definitions before
@@ -65,7 +66,18 @@ export const BlockKindNodeSchema = z
     indexRank: z.number().int().positive().optional(),
     rationale: z.string().optional(),
   })
-  .strict();
+  .strict()
+  // The paper adapter's kinds are typed by cat-harness's code and nest into the
+  // two content profiles, so each must say which side it is on and how it is
+  // headed. A CONTRIBUTED adapter's kind (smart-base's `dak`) is in no profile
+  // — a different adapter, not a narrower paper — and is headed by its
+  // title-cased name unless its node says otherwise.
+  .superRefine((n, ctx) => {
+    if (n.adapter !== "paper") return;
+    for (const f of ["profile", "heading", "headingPlural"] as const) {
+      if (n[f] === undefined) ctx.addIssue({ code: "custom", path: [f], message: `a paper-adapter kind must declare \`${f}\`` });
+    }
+  });
 
 export type BlockKindNode = z.infer<typeof BlockKindNodeSchema>;
 

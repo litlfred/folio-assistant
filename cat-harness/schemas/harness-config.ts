@@ -381,6 +381,7 @@ export const HarnessConfigSchema = z.object({
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
+import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
 import {
   describeRepository,
   type ContentTypeDisagreement,
@@ -389,6 +390,7 @@ import {
 } from "./content-type";
 import {
   CONFIG_SUFFIX,
+  directoriesForGraph,
   ExactVersionSchema,
   instanceConfigFilename,
   findInstanceRoot,
@@ -1663,12 +1665,22 @@ export function resolveTranslationDirs(folioRoot: string): string[] {
  */
 export interface ContributionSink<C extends { name: string }> {
   register(contribution: C): void;
+  /**
+   * Whether a DECLARED block-kind node of `adapter` is a contribution to this
+   * sink (bean riit, step 3). `ContributionRegistry` answers no for a built-in
+   * adapter, whose kinds the platform's code types and reads for every folio.
+   * Asked here rather than decided by the loader, because the loader is
+   * harness-layer and the built-in vocabulary is the content layer's.
+   * Absent means every node is.
+   */
+  acceptsDeclaredKind?(adapter: string): boolean;
 }
 
 export async function loadContributions<C extends { name: string }, S extends ContributionSink<C>>(
   folioRoot: string,
   registry: S,
 ): Promise<S> {
+  registerDeclaredKinds<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     const fn = contributeFunction(dep, modulePath, await import(modulePath));
     registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
@@ -1702,6 +1714,7 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
   folioRoot: string,
   registry: S,
 ): S {
+  registerDeclaredKinds<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const fn = contributeFunction(dep, modulePath, require(modulePath));
@@ -1716,6 +1729,48 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
     registerPinned(registry, dep, contribution);
   }
   return registry;
+}
+
+/**
+ * The CONTRIBUTED block kinds each dependency declares as `folio-block-kind/v1`
+ * nodes in its `block-kinds/` graph (bean riit, step 3), registered as that
+ * dependency's contribution. Owner, 2026-10-04: a folio sees the nodes of the
+ * instances it depends on (option 1 of 3) — so this walks the SAME
+ * `orderedDependencies` the `contributes` modules are found by, and a kind
+ * reaches exactly the folios a `blockKinds` array returned from code used to.
+ *
+ * A built-in adapter's nodes (the paper adapter's, in core and sci) are
+ * skipped when the sink says so ({@link ContributionSink.acceptsDeclaredKind}):
+ * the platform's code types them and `block-kinds.ts` reads them for every
+ * folio, and registering them again would be refused as a redefinition.
+ */
+function registerDeclaredKinds<C extends { name: string }>(folioRoot: string, registry: ContributionSink<C>): void {
+  for (const dep of orderedDependencies(folioRoot)) {
+    const blockKinds: Record<string, unknown>[] = [];
+    for (const dir of directoriesForGraph(dep.rootPath, "block-kinds")) {
+      let files: string[];
+      try {
+        files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+      } catch {
+        continue; // a declared-but-absent directory is `check:declared-dirs`' finding
+      }
+      for (const f of files) {
+        const parsed = BlockKindNodeSchema.safeParse(JSON.parse(readFileSync(join(dir, f), "utf-8")));
+        if (!parsed.success) throw new Error(`${join(dir, f)} is not a folio-block-kind/v1 node: ${parsed.error.message}`);
+        const n = parsed.data;
+        if (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.adapter)) continue;
+        blockKinds.push({
+          kind: n.kind,
+          adapter: n.adapter,
+          builder: builderOf(n),
+          labelPrefix: n.labelPrefix,
+          folioType: n.folioType,
+          ...(n.docoType ? { docoType: n.docoType } : {}),
+        });
+      }
+    }
+    if (blockKinds.length > 0) registerPinned(registry, dep, { name: dep.dependency.name, blockKinds } as unknown as C);
+  }
 }
 
 /** Every dependency declaring a `contributes` module, with its resolved path. */

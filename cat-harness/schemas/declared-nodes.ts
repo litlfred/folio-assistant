@@ -16,22 +16,22 @@ import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
 
 /** Every directory declared with `graphKind`, across the instances of a checkout (absolute paths, declaration order). */
 export function declaredDirectories(repoRoot: string, graphKind: string): string[] {
-  const out: string[] = [];
-  for (const root of instanceRootsIn(repoRoot)) {
-    const declFile = findDeclarationFile(root);
-    if (declFile === undefined) continue;
-    let decl: { directories?: { path?: string; scope?: string; graphKinds?: string[] }[] };
-    try {
-      decl = JSON.parse(readFileSync(join(root, declFile), "utf-8")) as typeof decl;
-    } catch {
-      continue; // an unreadable declaration is `readDeclaration`'s finding, with its own message
-    }
-    for (const d of decl.directories ?? []) {
-      if (!d.path || !(d.graphKinds ?? []).includes(graphKind)) continue;
-      out.push(join(d.scope === "repository" ? resolve(repoRoot) : root, d.path));
-    }
+  return instanceRootsIn(repoRoot).flatMap((root) => ownDeclaredDirectories(root, graphKind, repoRoot));
+}
+
+/** The directories ONE instance declares with `graphKind` (absolute paths). `repository`-scoped paths resolve against `repoRoot`. */
+export function ownDeclaredDirectories(root: string, graphKind: string, repoRoot: string = root): string[] {
+  const declFile = findDeclarationFile(root);
+  if (declFile === undefined) return [];
+  let decl: { directories?: { path?: string; scope?: string; graphKinds?: string[] }[] };
+  try {
+    decl = JSON.parse(readFileSync(join(root, declFile), "utf-8")) as typeof decl;
+  } catch {
+    return []; // an unreadable declaration is `readDeclaration`'s finding, with its own message
   }
-  return out;
+  return (decl.directories ?? [])
+    .filter((d) => d.path && (d.graphKinds ?? []).includes(graphKind))
+    .map((d) => join(d.scope === "repository" ? resolve(repoRoot) : root, d.path!));
 }
 
 /** `{ file, raw }` for every `*.json` in every directory declared with `graphKind`, files sorted. */

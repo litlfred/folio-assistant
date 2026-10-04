@@ -11,7 +11,11 @@
  * `ContributionRegistry` rather than from a module constant. See
  * `cat-harness/docs/proposals/dak-kinds-contribution-2026-10-02.md`.
  *
- * A leaf module, importing nothing from the content model, for the same reason
+ * Since bean riit, step 3, the kinds and their builder, prefix and RDF types are
+ * `folio-block-kind/v1` nodes in `smart-base/block-kinds/`, read here, and
+ * `loadContributions` registers them for a folio whose dependency tree
+ * includes smart-base. A leaf module, importing only the node schema and the
+ * directory scan (and `dak-blocks.ts` for a TYPE), for the same reason
  * `block-kinds.ts` is one: `dak-blocks.ts` builds Zod schemas from these at
  * module initialisation, which is exactly when an import cycle bites.
  *
@@ -19,8 +23,18 @@
  * @graphNode schema
  */
 
+import { readdirSync, readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { BlockKindNodeSchema, builderOf, type BlockKindNode } from "../../cat-harness/schemas/block-kind-node";
+import { ownDeclaredDirectories } from "../../cat-harness/schemas/declared-nodes";
+import type { DakBlock } from "./dak-blocks";
+
 /** The content adapter these kinds belong to. Contributed, not built in. */
 export const DAK_ADAPTER = "dak";
+
+const SMART_BASE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /**
  * The `dak` adapter's block kinds — WHO SMART Guidelines L2 and L3.
@@ -43,108 +57,63 @@ export const DAK_ADAPTER = "dak";
  * that work lands — which is the honest state, rather than a kind that looks
  * supported and silently yields nothing.
  */
-export const DAK_BLOCK_KINDS = [
-  // L2 — Digital Adaptation Kit components.
-  "health-intervention",
-  "persona",
-  "user-scenario",
-  "business-process",
-  "data-element",
-  "decision-table",
-  "scheduling-logic",
-  "indicator",
-  "functional-requirement",
-  "non-functional-requirement",
-  "test-scenario",
-  // L3 — FHIR implementation-guide artefacts.
-  "logical-model",
-  "profile",
-  "value-set",
-  "questionnaire",
-  "cql-library",
-  "structure-map",
-  "plan-definition",
-  "measure",
-  "test-case",
-  "actor-definition",
-] as const;
-
-export type DakBlockKind = (typeof DAK_BLOCK_KINDS)[number];
+export const DAK_BLOCK_KIND_NODES: readonly BlockKindNode[] = readOwnKindNodes();
 
 /**
- * Builder function name for each DAK kind.
+ * The kinds, read off smart-base's own `block-kinds/` nodes (bean riit, step
+ * 3; owner, 2026-10-04: *"kinds need to be discoverable … not centrally
+ * managed"*). Sorted by kind. Adding a DAK kind is adding a node.
+ */
+export const DAK_BLOCK_KINDS = DAK_BLOCK_KIND_NODES.map((n) => n.kind) as unknown as readonly [
+  DakBlockKind,
+  ...DakBlockKind[],
+];
+
+/** A DAK kind: the TYPE the `DakBlock` union declares (a type-only import, erased at runtime). */
+export type DakBlockKind = DakBlock["kind"];
+
+/**
+ * Builder function name for each DAK kind, from each node's `builder`.
  *
- * Paper kinds are single lowercase words, so builder name and kind string are
- * the same token and `BLOCK_BUILDER_RE` can alternate over the kinds directly.
  * DAK kinds are multi-word (`decision-table`), and a hyphen is not a valid
- * identifier — so the two namespaces separate here for the first time: the
- * kind stays kebab-case because it is *data*, and the builder is camelCase
- * because it is an *identifier*.
- *
- * Anything scanning a `.ts` for `export default <builder>(` must alternate
- * over these values and map back through core's `kindForBuilder`, which learns
- * them from the contribution (`BlockKindContribution.builder`). Deriving one
- * from the other by string munging is what this map exists to prevent.
+ * identifier, so the kind stays kebab-case because it is *data* and the
+ * builder is camelCase because it is an *identifier*. Anything scanning a
+ * `.ts` for `export default <builder>(` maps back through core's
+ * `kindForBuilder`, which learns them from the registry; deriving one from the
+ * other by string munging is what the node's `builder` field prevents.
  */
-export const DAK_KIND_BUILDERS: Record<DakBlockKind, string> = {
-  "health-intervention": "healthIntervention",
-  persona: "persona",
-  "user-scenario": "userScenario",
-  "business-process": "businessProcess",
-  "data-element": "dataElement",
-  "decision-table": "decisionTable",
-  "scheduling-logic": "schedulingLogic",
-  indicator: "indicator",
-  "functional-requirement": "functionalRequirement",
-  "non-functional-requirement": "nonFunctionalRequirement",
-  "test-scenario": "testScenario",
-  "logical-model": "logicalModel",
-  profile: "profile",
-  "value-set": "valueSet",
-  questionnaire: "questionnaire",
-  "cql-library": "cqlLibrary",
-  "structure-map": "structureMap",
-  "plan-definition": "planDefinition",
-  measure: "measure",
-  "test-case": "testCase",
-  "actor-definition": "actorDefinition",
-};
+export const DAK_KIND_BUILDERS = Object.fromEntries(
+  DAK_BLOCK_KIND_NODES.map((n) => [n.kind, builderOf(n)]),
+) as Record<DakBlockKind, string>;
 
 /**
- * Label prefix for each DAK kind, without the colon.
+ * Label prefix for each DAK kind, without the colon, from each node.
  *
- * Contributed to core with each kind (`BlockKindContribution.labelPrefix`), so
- * a registry-aware reader learns a DAK prefix from here rather than from a
- * second hand-written copy in core's `KNOWN_LABEL_PREFIXES` or `KIND_PREFIXES`,
- * which list the BUILT-IN prefixes only.
- *
- * None collide with the paper and structural prefixes (`def`, `thm`, `lem`,
- * `prop`, `cor`, `rem`, `ex`, `conj`, `prf`, `sim`, `eq`, `fig`, `tbl`, `sec`,
- * `chap`, `app`, `bib`) — asserted by test.
+ * None collide with the paper and structural prefixes — asserted by test.
  */
-export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
-  "health-intervention": "hi",
-  persona: "pers",
-  "user-scenario": "scen",
-  "business-process": "bp",
-  "data-element": "de",
-  "decision-table": "dt",
-  "scheduling-logic": "sched",
-  indicator: "ind",
-  "functional-requirement": "freq",
-  "non-functional-requirement": "nfreq",
-  "test-scenario": "tscen",
-  "logical-model": "lm",
-  profile: "prof",
-  "value-set": "vs",
-  questionnaire: "quest",
-  "cql-library": "cql",
-  "structure-map": "sm",
-  "plan-definition": "pd",
-  measure: "meas",
-  "test-case": "tc",
-  "actor-definition": "actor",
-};
+export const DAK_LABEL_PREFIXES = Object.fromEntries(
+  DAK_BLOCK_KIND_NODES.map((n) => [n.kind, n.labelPrefix]),
+) as Record<DakBlockKind, string>;
+
+/** smart-base's `folio-block-kind/v1` nodes of the `dak` adapter, from the `block-kinds` graph its declaration names. */
+function readOwnKindNodes(): BlockKindNode[] {
+  const out: BlockKindNode[] = [];
+  for (const dir of ownDeclaredDirectories(SMART_BASE_ROOT, "block-kinds")) {
+    let files: string[];
+    try {
+      files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+    } catch {
+      continue;
+    }
+    for (const f of files) {
+      const parsed = BlockKindNodeSchema.safeParse(JSON.parse(readFileSync(join(dir, f), "utf-8")));
+      if (!parsed.success) throw new Error(`${join(dir, f)} is not a folio-block-kind/v1 node: ${parsed.error.message}`);
+      if (parsed.data.adapter === DAK_ADAPTER) out.push(parsed.data);
+    }
+  }
+  if (out.length === 0) throw new Error(`no ${DAK_ADAPTER} block kinds under ${SMART_BASE_ROOT}: its block-kinds graph is missing or empty`);
+  return out.sort((a, b) => a.kind.localeCompare(b.kind));
+}
 
 // ── WHO DAK components, and this repo's coverage of them ─────────
 

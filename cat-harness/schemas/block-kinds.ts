@@ -73,8 +73,28 @@ export function discoverBlockKinds(repoRoot: string = PLATFORM_ROOT): BlockKindN
 /** The platform checkout this module sits in — where its instances are scanned from. */
 const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
-/** Every discovered block-kind node, sorted by kind. */
-export const BLOCK_KIND_NODES: readonly BlockKindNode[] = discoverBlockKinds();
+/**
+ * The BUILT-IN content adapters. Declared here, ahead of discovery, because
+ * discovery is split by it: see {@link BLOCK_KIND_NODES}. Its full rationale
+ * is on the adapter-scoping section below.
+ */
+export const CONTENT_ADAPTERS = ["paper"] as const;
+export type ContentAdapter = (typeof CONTENT_ADAPTERS)[number];
+
+/** Every discovered block-kind node in the platform checkout, built-in or contributed, sorted by kind. */
+export const DISCOVERED_BLOCK_KIND_NODES: readonly BlockKindNode[] = discoverBlockKinds();
+
+/**
+ * The BUILT-IN kinds' nodes: those of an adapter the platform's code types
+ * ({@link CONTENT_ADAPTERS}). A contributed adapter's kinds (smart-base's
+ * `dak`) are discovered too, but reach a folio only through its dependency
+ * tree — owner, 2026-10-04: a folio sees the nodes of the instances it depends
+ * on (option 1 of 3) — so `loadContributions` registers them per folio, and
+ * nothing read off THIS list names them.
+ */
+export const BLOCK_KIND_NODES: readonly BlockKindNode[] = DISCOVERED_BLOCK_KIND_NODES.filter((n) =>
+  (CONTENT_ADAPTERS as readonly string[]).includes(n.adapter),
+);
 
 const NODE_OF: ReadonlyMap<string, BlockKindNode> = new Map(BLOCK_KIND_NODES.map((n) => [n.kind, n]));
 
@@ -125,8 +145,7 @@ export const BLOCK_KIND_ALT = BLOCK_KINDS.join("|");
  * a plain string (`QaCriterionDefinition.adapters`), because a content type is
  * data and not an import.
  */
-export const CONTENT_ADAPTERS = ["paper"] as const;
-export type ContentAdapter = (typeof CONTENT_ADAPTERS)[number];
+// `CONTENT_ADAPTERS` is declared above, before discovery reads it.
 
 /**
  * The `paper` adapter's block kinds — the fifteen above.
