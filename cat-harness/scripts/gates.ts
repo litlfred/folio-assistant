@@ -381,6 +381,24 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "covered-by",
     reason: "`state:visualizer:check` is in the gate set; the site build runs the writer over the results it fetched",
   },
+  {
+    // Bean `tqjj`: the LSI viewer page, the same shape as the step above and
+    // for a sharper version of the same reason. It is an aggregate over every
+    // index, so one sentence added to one of 229 skills restaged it — 319 of
+    // the last 400 commits on `main`.
+    //
+    // It must be the SITE BUILD's step and not a gate's. With no index
+    // sidecar in the checkout, `lsi:viz` reads `qa-reports` at `main`, which
+    // resolves to the latest published entry — a value that depends on when
+    // the run happened rather than on the tree (bean `in5a`). The site build
+    // is the only job that fetches, so it is the only one that can pin the
+    // entry to the commit being built.
+    match: "bun run lsi:viz",
+    kind: "covered-by",
+    reason:
+      "`lsi:viz:check` is in the gate set; the site build runs the writer over the indexes it fetched for its own sha, " +
+      "which is the only place the entry read is pinned to the commit rather than to whatever was published last",
+  },
   // The two projection writers are run by the SITE BUILD and by nothing else.
   //
   // Their `--check` twins are deliberately not in the gate set (owner,
