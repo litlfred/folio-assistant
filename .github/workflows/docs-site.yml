@@ -140,6 +140,12 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
       # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
       #
@@ -185,6 +191,24 @@ jobs:
       # frozen count. Owner ruling 2026-10-01: regenerate it in the build.
       - name: Regenerate the QA state page from this build's results
         run: bun run state:visualizer
+
+      # The LSI viewer page's PER-INDEX DETAIL (docs/lsi/index.md), on the same
+      # reasoning one step up. Bean `tqjj` splits that page by what each value
+      # is a function of: its front matter, prose and verdict table are a
+      # function of the tree and stay committed, while each index's size,
+      # retained share, dimension poles and findings are a function of the
+      # index's CONTENT — which a one-sentence edit to any of 229 skills moves,
+      # and which cost 319 of the last 400 commits on `main`. `--detail` adds
+      # that half here and nowhere else.
+      #
+      # It has to be THIS workflow's step. A gate job does not fetch, so
+      # `lsi:viz -- --detail` there would read `qa-reports` at `main`, which
+      # resolves to the LATEST published entry — a value that depends on when
+      # the run happened rather than on the tree, which is bean `in5a`'s loop.
+      # The fetch step above pins the entry to THIS build's sha, so the
+      # published page is about the commit it ships with.
+      - name: Add the LSI viewer page's per-index detail from this build's indexes
+        run: bun run lsi:viz -- --detail
 
       # The schema graph's projection and its viewer. Same reasoning as the
       # regenerations above: the committed copy is browsable on GitHub and the
@@ -476,6 +500,14 @@ jobs:
           mkdir -p "./_site/${ROOT_STUB}"
           bun run cat-harness/scripts/kg-export.ts --instance . --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
           cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
+
+          # EVERY OTHER declared instance's graph, one document each — bean
+          # `4ak5` item 1. The set is derived from the declarations by the
+          # script, never listed here; the three instances above keep their
+          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+          # `check:published-instance-exports` runs the same plan, and fails if
+          # any declared instance is published by neither.
+          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site
 
           bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
