@@ -834,7 +834,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // argument (bean `hqku`).
     holds: "derived",
     validatorNotApplicable:
-      "its nodes are Markdown pages written wholly by `fhir-harness/scripts/gen-ig-pages.ts`, and " +
+      "its nodes are `.md` pages written wholly by `fhir-harness/scripts/gen-ig-pages.ts`, and " +
       "`derived` besides, so a finding against one is a finding against the generator; " +
       "`<ig>:pages:check` grades their currency.",
     summary:
