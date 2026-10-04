@@ -1,6 +1,11 @@
 import { describe, expect, test } from "bun:test";
 
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
 import { MARKER, VIEWER_PATH, embed, isVendoredViewer, openShim, patchViewerHtml } from "../pdf-viewer.ts";
+import { run as stageBanner } from "../staging-banner.ts";
 
 /**
  * The inline PDF viewer's two halves. Bean `folio-assistant-5ea6`.
@@ -143,5 +148,23 @@ describe("install helpers", () => {
     expect(isVendoredViewer("assets/vendor/pdfjs/web/viewer.html")).toBe(true);
     expect(isVendoredViewer("who-iris/item-x.html")).toBe(false);
     expect(isVendoredViewer("assets/vendor/pdfjs-other/x.html")).toBe(false);
+  });
+});
+
+describe("the site's page-wide passes leave the framed viewer alone", () => {
+  test("the staging banner goes on our page and not inside the PDF frame", () => {
+    // Measured on the first staging preview, 2026-10-04: a second
+    // "FEATURE BRANCH" banner rendered inside the frame, above pdf.js's toolbar.
+    const site = mkdtempSync(join(tmpdir(), "pdfv-"));
+    const put = (rel: string) => {
+      mkdirSync(join(site, rel, ".."), { recursive: true });
+      writeFileSync(join(site, rel), "<!doctype html><html><head></head><body><p>x</p></body></html>");
+    };
+    put("who-iris/item.html");
+    put(VIEWER_PATH);
+    const r = stageBanner(site, {} as Parameters<typeof stageBanner>[1]);
+    expect(r.injected).toBe(1);
+    expect(readFileSync(join(site, "who-iris/item.html"), "utf8")).toContain("data-fa-staging-banner");
+    expect(readFileSync(join(site, VIEWER_PATH), "utf8")).not.toContain("data-fa-staging-banner");
   });
 });

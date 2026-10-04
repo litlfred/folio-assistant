@@ -96,6 +96,7 @@
  * markup if it is ever concatenated into HTML. The old bash banner
  * interpolated `$BRANCH` into a string; this one builds nodes.
  */
+import { isVendoredViewer } from "./pdf-viewer.ts";
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
 
@@ -303,12 +304,17 @@ export const FRAGMENT =
   OFFSET_STYLE +
   `<script>${CLIENT}</script>`;
 
-/** Every `*.html` under `dir`, as absolute paths. */
-function htmlFiles(dir: string, out: string[] = []): string[] {
+/**
+ * Every `*.html` under `dir`, as absolute paths — except the pinned pdf.js
+ * viewer's. That page is only ever seen inside a frame on one of ours, which
+ * already carries the banner; a second banner inside the PDF frame is noise,
+ * and it is Mozilla's markup besides (bean `folio-assistant-5ea6`).
+ */
+function htmlFiles(dir: string, out: string[] = [], root: string = dir): string[] {
   for (const name of readdirSync(dir)) {
     const full = join(dir, name);
-    if (statSync(full).isDirectory()) htmlFiles(full, out);
-    else if (name.endsWith(".html")) out.push(full);
+    if (statSync(full).isDirectory()) htmlFiles(full, out, root);
+    else if (name.endsWith(".html") && !isVendoredViewer(relative(root, full))) out.push(full);
   }
   return out;
 }
