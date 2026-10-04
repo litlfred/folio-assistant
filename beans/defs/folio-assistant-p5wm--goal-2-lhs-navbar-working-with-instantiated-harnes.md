@@ -5,7 +5,7 @@ status: in-progress
 type: milestone
 priority: high
 created_at: 2026-09-20T18:48:29Z
-updated_at: 2026-09-20T18:48:29Z
+updated_at: 2026-10-04T19:47:04Z
 ---
 
 The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:
@@ -25,16 +25,23 @@ Created on the owner's ruling for bean `wqht`: *"wqht - milesotne"*.
 
 ## The measurement that sets the starting point
 
-**The navbar does not exist.** `grep -rln navbar` over `cat-harness/schemas`,
+> **SUPERSEDED 2026-10-04** — this was true on 2026-09-20 and is not now. The
+> LHS navbar is built: `cat-harness/scripts/lib/navbar.ts` renders it for
+> Jekyll and mounted pages alike, `gen-navbar-include.ts` writes one section
+> per instantiated harness, and `check:viewer-nav` grades 162 viewer pages.
+> Kept below as the starting point it was; the current measurement is in
+> §"2026-10-04 — every box measured" at the end.
+
+**The navbar did not exist (2026-09-20).** `grep -rln navbar` over `cat-harness/schemas`,
 `src`, `ui`, `viewer` and `home_page` returns nothing. The left-hand nav today
 is just-the-docs' own `.site-nav`, and the only code touching it rewrites
 hrefs per locale. So "get the LHS navbar working" is a build, not a fix.
 
 ## Critical path, in dependency order — RE-VERIFIED 2026-09-22
 
-**`b5f0` → `603s` → `6lb8` → `supn`.**
+**`b5f0` → `6lb8` → `supn`.** (Updated 2026-10-04: `603s` was the second step and is completed, closed on evidence in #2125; the path below it is unchanged.)
 
-Four steps, not eight. Every id in it was checked against the store on
+Four steps, not eight — three now. Every id in it was checked against the store on
 2026-09-22, not carried forward, and re-checked after `hfkl` closed the same
 day. The withdrawal is recorded in the next section.
 
@@ -66,7 +73,7 @@ day. The withdrawal is recorded in the next section.
 
 ## RE-CHECKED 2026-09-25 — the path above HELD, and that is worth recording
 
-`b5f0` → `603s` → `6lb8` → `supn`, re-derived against the store three days on:
+The path as it then stood — `b5f0`, then `603s`, then `6lb8`, then `supn` — re-derived against the store three days on:
 `b5f0` **todo**, `603s` **in-progress**, `6lb8` **in-progress**, `supn`
 **todo**. All four still open; **nothing withdrawn, nothing added**.
 
@@ -280,9 +287,20 @@ a bug. Authoring them is a claim about the layer stack.
 
 ## Done when
 
-- [ ] The LHS navbar shows one themed section per instantiated instance,
+- [x] The LHS navbar shows one themed section per instantiated instance,
       scanned from the root, in dependency order, with bootstrap as the
       declared exception
-- [ ] A folio's stickies can be moved, and keep their theme when unpinned
-- [ ] The layout works for a two-instance folio and renders without error
+- [x] A folio's stickies can be moved, and keep their theme when unpinned
+- [x] The layout works for a two-instance folio and renders without error
       for a zero-instance one
+
+
+## 2026-10-04 — every box measured, and every box ticked; closing is the owner's
+
+Re-derived on `main` @ `84a36a8` in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi, each from a command run then, not from a note:
+
+- **Box 1 — one themed section per instantiated instance, in dependency order, bootstrap the declared exception.** `navbar:include:check`, `docs:harness:check` and `check:viewer-nav` exit 0. `_includes/generated/navbar-footer.html` holds six sections in dependency order — folio-assistant, smart-trust, smart-base, who-iris, cat-harness, bootstrap — each with its resolved mark (#2121, #2122: every harness now has one). Bootstrap's exception is declared data, `bootstrap/bootstrap.json` `renderExemption`. The published page itself was not fetched from the measuring container (github.io egress is blocked); the rendering rests on the generated include and its gates.
+- **Box 2 — stickies move, and keep their theme when unpinned.** `board-move-filter.e2e.ts` ("dragging the title bar moves the window") and `sticky-todos.e2e.ts:425` ("a themed sticky keeps its theme across pin AND unpin"), neither skipped; the End-to-end job is green on `main` @ `84a36a8`, all three shards.
+- **Box 3 — two-instance and zero-instance layouts.** Until today only hand-made `Harness` rows were tested. This change adds two tests to `gen-navbar-include.test.ts` that run the REAL pipeline — `harnessTiles` over a scanned temp root → JSON round trip → `render` — for a root with two instantiated harnesses and one declared-only (exactly two sections), and a root with no declaration (no tiles, renders, no empty Harnesses group). Falsified once by instantiating the third harness: it then appeared.
+
+**This milestone stays `in-progress`.** Its subtree still has open work, and whether GOAL 2 is met is the owner's sign-off, not a checker's — the same rule `yg29` followed.
