@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1819 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1783 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 148 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 585 terms and is 324 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 588 terms and is 326 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2071</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2071</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2056</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2056</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">585</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">588</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -107,6 +107,13 @@ Section.blocks <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Ordered list of block root names (resolved to .ts files in section/chapter dir).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#Section.blocks</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--types.section.lead" data-fa-state="extracted" data-fa-gloss="">
+Section.lead <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A chapter's LEAD: the text between the chapter heading and its first section (an executive summary has nothing else). It keeps a title, for outlines and the review page, but renders without a heading of its own, because the chapter heading directly above already says it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#Section.lead</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.section.subsections" data-fa-state="extracted" data-fa-gloss="">
 Section.subsections <span class="fa-gloss-status">candidate, extracted</span>
@@ -800,6 +807,34 @@ SourceProvenanceSchema.upstream <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not &quot;there is none&quot;.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.batch" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.batch <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The intake batch: a file name, a form export, a letter.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.batch</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.segment" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.segment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>For a narrative: which passage of the letter this comment is.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.sha256" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.sha256 <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>sha256 of the intake file, so a re-import is recognised.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.sha256</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.url" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.url <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>For a GitHub comment: its URL.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.url</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.stageskillbinding.skills" data-fa-state="extracted" data-fa-gloss="">
 StageSkillBinding.skills <span class="fa-gloss-status">candidate, extracted</span>
@@ -2646,6 +2681,20 @@ TopologyConflict.reason <span class="fa-gloss-status">candidate, extracted</span
 <p>Why the mechanism forbids it — an entailment, never a report.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TopologyConflict.reason</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.transitioninput.decision" data-fa-state="extracted" data-fa-gloss="">
+TransitionInput.decision <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>at</code> and <code>by</code> default to the transition's.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#TransitionInput.decision</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.transitioninput.recommendation" data-fa-state="extracted" data-fa-gloss="">
+TransitionInput.recommendation <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>at</code> defaults to the transition's.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.extensions" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.extensions <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3053,34 +3102,6 @@ UserStorySchema.want <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-V">V</h2>
 <dl class="fa-gloss">
-<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.id" data-fa-state="extracted" data-fa-gloss="">
-ValidatorNodeSchema.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>This validator's own name, as its file is named.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.rationale" data-fa-state="extracted" data-fa-gloss="">
-ValidatorNodeSchema.rationale <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Why this validator is the one, when that is not obvious from the code.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.rationale</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.schema" data-fa-state="extracted" data-fa-gloss="">
-ValidatorNodeSchema.schema <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The Zod export, <code>&lt;harness&gt;:&lt;path&gt;#&lt;Export&gt;</code> (or instance-relative <code>&lt;path&gt;#&lt;Export&gt;</code>).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.schema</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.validates" data-fa-state="extracted" data-fa-gloss="">
-ValidatorNodeSchema.validates <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>What it validates: a graph kind, and the <code>$schema</code> family within it when the kind has several.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--kind-validator.validatorref.exportname" data-fa-state="extracted" data-fa-gloss="">
 ValidatorRef.exportName <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

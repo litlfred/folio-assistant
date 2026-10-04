@@ -1123,6 +1123,13 @@ export function extractBlockLabel(block: Block): string | undefined {
 export interface Section {
   title: string;
   label?: string;
+  /**
+   * A chapter's LEAD: the text between the chapter heading and its first
+   * section (an executive summary has nothing else). It keeps a title, for
+   * outlines and the review page, but renders without a heading of its own,
+   * because the chapter heading directly above already says it.
+   */
+  lead?: boolean;
   /** Ordered list of block root names (resolved to .ts files in section/chapter dir). */
   blocks: string[];
   /** Subsections (inline or referenced). */
