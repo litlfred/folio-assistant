@@ -200,19 +200,24 @@ function openPrs(): Pr[] | undefined {
 /**
  * The conflicting paths of `sha` against the base, split by class.
  *
- * `git merge-tree --write-tree` exit codes are the whole contract: 0 clean,
- * 1 CONFLICT, and **>=2 an ERROR which is not clean** — an unfetched sha or an
- * orphan branch errors, and the error text contains no "CONFLICT", so reading
- * it as clean is the trap this repository has hit three separate ways.
+ * The exit code is NOT the whole contract, and this said it was. 0 is clean
+ * and 1 is CONFLICT — but `git merge-tree --write-tree` (git 2.43) also exits
+ * **1** for a ref it cannot merge, an unfetched sha or a typo, printing
+ * "not something we can merge" to stderr and NO tree on stdout. Read by code
+ * alone, that was "conflicted, with no conflicted paths": no authored
+ * contention, so an unfetched PR head counted as clean instead of
+ * undetermined (bean `0s6w`). A real result always opens with the merged
+ * tree's id, so that line decides; without it the answer is `undefined`.
  */
-function conflicts(base: string, sha: string): { authored: string[]; generated: number } | undefined {
-  const r = git(ROOT, ["merge-tree", "--write-tree", "--name-only", "--no-messages", base, sha]);
+export function conflicts(base: string, sha: string, root: string = ROOT): { authored: string[]; generated: number } | undefined {
+  const r = git(root, ["merge-tree", "--write-tree", "--name-only", "--no-messages", base, sha]);
+  if (r.code !== 0 && r.code !== 1) return undefined;
+  const lines = r.out.split("\n").filter(Boolean);
+  if (!/^[0-9a-f]{40,64}$/.test(lines[0] ?? "")) return undefined;
   if (r.code === 0) return { authored: [], generated: 0 };
-  if (r.code !== 1) return undefined;
-  const lines = r.out.split("\n").filter(Boolean).slice(1);
   const authored: string[] = [];
   let generated = 0;
-  for (const p of new Set(lines)) {
+  for (const p of new Set(lines.slice(1))) {
     if (pathClass(p).class === "authored") authored.push(p);
     else generated++;
   }
@@ -640,4 +645,5 @@ function main(): number {
   return blocked.length ? 1 : 0;
 }
 
-process.exit(main());
+// Guarded so a test can import `conflicts` (bean `0s6w`) without running the report.
+if (import.meta.main) process.exit(main());
