@@ -395,3 +395,16 @@
   {{ h.description | markdownify }}
 </div>
 {%- endif -%}
+{%- comment -%}
+  THE NEUTRAL HUB (issue #1904). Owner, 2026-10-02: *"If more than one is
+  flagged, then neutral hub with listing of harnesses, todos,"*. The todos are
+  the sticky panel above, which `docs-ui.js` already mounts the todo board
+  into, so the hub reuses it rather than building a second board. The harness
+  listing is `harness_details.html`, the tiles `harness-tiles.ts` generates
+  for the sidebar. `landingInstance` is written by `sync-docs-harness.ts` from
+  `resolveLandingInstance`; with one landing harness it is `instance` and this
+  renders nothing.
+{%- endcomment -%}
+{%- if h.landingInstance.kind == "hub" -%}
+{% include harness_details.html %}
+{%- endif -%}

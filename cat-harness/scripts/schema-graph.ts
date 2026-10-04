@@ -74,8 +74,8 @@ import { basename, join, relative } from "node:path";
 
 import ts from "typescript";
 
-import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.js";
-import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
+import { checkoutRootFor } from "../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-config.js";
 
 /**
  * EVERY declared `schemas` directory reachable from this root.
@@ -791,12 +791,18 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
   /** Module path → the directory it was read from, for scoped resolution. */
   const dirOfModule = new Map<string, string>();
 
-  const rootName = readDeclaration(repoRoot)?.name ?? basename(repoRoot);
+  // The root's DECLARED name, else the single landing harness (issue #1904),
+  // never the clone's folder name. Undefined only matters if a module sits at
+  // the root, and then it is a finding rather than a guess.
+  const rootName = rootInstanceName(repoRoot);
   for (const dir of dirs) {
     const dirRel = rel(dir);
     // The root's DECLARED name, not the clone's folder name (bean `t5dm`,
     // the sibling of `library-graph`'s `instanceOf`).
     const instance = dirRel.includes("/") ? dirRel.split("/")[0]! : rootName;
+    if (instance === undefined) {
+      throw new Error(`${dirRel} sits at the root of ${repoRoot}, which declares no instance and has no single landing harness (issue #1904)`);
+    }
     for (const f of readdirSync(dir).sort()) {
       if (!f.endsWith(".ts")) continue;
       const moduleRel = `${dirRel}/${f}`;
