@@ -67,9 +67,25 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
      fast-forward: git fast-forwards without running a merge, so conflicts are
      impossible. This alone is sufficient.
    - Otherwise (base moved, not yet rebased) dry-run with the modern form and
-     trust its **exit code**: `git merge-tree --write-tree origin/<base> HEAD`
-     (exit 0 = clean; non-zero = conflicts; add `--name-only` to list the
-     conflicted paths). Do **not** grep the old three-arg output for
+     trust its **exit code AND its first line**: `git merge-tree --write-tree origin/<base> HEAD`
+     (exit 0 = clean; non-zero = not clean; add `--name-only` to list the
+     conflicted paths). Exit 1 means CONFLICT only when stdout opens with
+     the merged tree's id — git 2.43 also exits **1** for a ref it cannot
+     merge (unfetched, mistyped), printing no tree, and that is "could not
+     determine", never "conflicted with nothing in conflict" (bean `0s6w`).
+   - **Capture `$?` on the line after the command, before anything else
+     runs** — `git merge-tree … >/dev/null 2>&1; rc=$?`, or `cmd || rc=$?`.
+     `echo "base($(git rev-parse --short origin/main)) rc=$?"` reports the
+     SUBSTITUTION's status, always 0 when the ref exists, and a steward
+     announced a conflicted PR clean on exactly that line for a whole session
+     (2026-10-03). `if ! cmd; then rc=$?` is the same trap: inside that branch
+     `$?` is `! cmd`'s status, 0. `shell-exit-status.test.ts` fails on either
+     shape in a tracked script or workflow.
+   - **GitHub's HTTP 405 "Pull Request has merge conflicts" is a backstop, not
+     a check.** It refuses a conflicted merge whatever the client believed, so
+     a mis-read `rc` caused no bad merge on 2026-10-03 — but it is learned at
+     merge time, after the PR was announced clean, and nothing in that
+     sequence was the steward's own verification. Do **not** grep the old three-arg output for
      `<<<<<<<` / "changed in both" — that false-positives on files which
      legitimately contain those literals (docs about merge conflicts, test
      fixtures — this very skill tripped that check when it was first run).
