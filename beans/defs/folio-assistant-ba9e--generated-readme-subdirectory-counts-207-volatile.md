@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T22:34:28Z
-updated_at: 2026-10-04T05:43:41Z
+updated_at: 2026-10-04T07:38:21Z
 parent: folio-assistant-hfag
 ---
 
@@ -99,3 +99,41 @@ have meant a submodule bump inside a process PR.
 - [ ] `y7b3` part 2 checked off, with this bean named as its answer
 
 _2026-10-04T05:43:41Z_ — Claimed by claude/zealous-thompson-y8dcf1-ba9e — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Corroboration, 2026-10-04: FIVE stalings in one day across FOUR branches
+
+Not a new finding — this bean's premise, measured again from the inside while doing
+unrelated work. Every one was `cat-harness/scripts/README.md`, and every one cost a
+commit, a push and a CI cycle:
+
+| # | branch | what moved | conflicted? |
+|---|---|---|---|
+| 1 | `claude/uoij-kind-register` | two files ADDED (`kind-register.ts`, `kind-table.ts`) | no |
+| 2 | `claude/xsrv-route-publish` | one file ADDED (`route-publish.test.ts`) | no |
+| 3 | `claude/uoij-kind-register` | `main` DELETED two `.json` files: 480 → 478 | **no** |
+| 4 | `claude/xsrv-route-reader` | `main` added two: regenerated during a merge | yes, `generated-regions` |
+| 5 | `claude/xsrv-route-reader` | `partition/` 4 → 2 files, minutes after #4 | no |
+
+### The two things the day added to what this bean already says
+
+**A count can go stale through a CLEAN merge, which no merge pattern can catch.**
+`readme-generated-regions` resolves this file when it *conflicts*. Cases 1, 2, 3 and 5
+did not conflict — the sides touched different lines, git merged them, and the surviving
+integer simply became false. There is no conflict to apply a pattern to. Only the owning
+`--check` notices, which means it is found by CI after a push rather than before one.
+
+**Case 5 is the sharpest.** It went stale **minutes after** I regenerated it inside the
+very merge of case 4, on the same branch. `main` merged 4 PRs in the hour; a regeneration's
+shelf life is shorter than the time between a push and its CI run. So "regenerate before
+pushing" is not a workaround for this class — it is a race the author loses.
+
+Both support this bean's own conclusion rather than qualifying it: banding lowers the
+frequency and would not have helped any of these five, and dropping the count loses what
+the owner asked for. The counts have to come off `main`.
+
+### One caution for whoever builds it
+
+The dynamic source must be reachable at RENDER time without a network hop, or the page
+degrades to no count where today it degrades to a wrong one — and a wrong count is at
+least visibly wrong to a gate, which is how all five of these were caught.

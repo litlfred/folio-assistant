@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 221 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 223 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 13 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 8 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 317 terms and is 239 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 319 terms and is 241 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>317</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>317</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>319</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>319</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">317</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">319</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -95,7 +95,7 @@ associate-harness <span class="fa-gloss-status">candidate, extracted</span>
 audit-coverage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.</p>
+<p>Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/audit-coverage.md"><code>cat-harness/skills/kg/kg-core/audit-coverage.md</code></a></p>
 </dd>
 </dl>
@@ -1663,11 +1663,18 @@ qa-report-signing <span class="fa-gloss-status">candidate, extracted</span>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md"><code>cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--qa-reports" data-fa-state="extracted" data-fa-gloss="">
+qa-reports <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where a QA result lives now. Derived verdicts go to the orphan <code>qa-reports</code> branch, keyed by commit, written by the CI job <code>qa-publish</code>. Judgements stay on main in the <code>attestations</code> graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under <code>test/results/</code> or <code>test/attestations/</code>.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/qa-reports.md"><code>cat-harness/skills/sdlc/sdlc-core/qa-reports.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--qa-witness" data-fa-state="extracted" data-fa-gloss="">
 qa-witness <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The QA projections under <code>test/results/witnesses/</code> — what a <code>qa-witness/v1</code> document says, which three families produce one, how to read a verdict and the witness behind it, and why &quot;could not determine&quot; is a third state everywhere in them.</p>
+<p>The QA projections written to <code>test/results/witnesses/</code> and stored on the <a href="#cat-harness--kg-skills--qa-reports"><code>qa-reports</code></a> branch — what a <code>qa-witness/v1</code> document says, which three families produce one, how to read a verdict and the witness behind it, and why &quot;could not determine&quot; is a third state everywhere in them.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/qa-witness.md"><code>cat-harness/skills/sdlc/sdlc-core/qa-witness.md</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-skills--quality-control" data-fa-state="extracted" data-fa-gloss="">
@@ -2080,6 +2087,13 @@ test-engineer <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/test-engineer.md"><code>cat-harness/skills/sdlc/sdlc-core/test-engineer.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--test-plan-execution" data-fa-state="extracted" data-fa-gloss="">
+test-plan-execution <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Run a <code>test-plan/v1</code> against a system under test and take it to a certification decision — the five lanes of <code>test-plan-execution.bpmn</code> (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md"><code>cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-art-intake" data-fa-state="extracted" data-fa-gloss="">
 theme-art-intake <span class="fa-gloss-status">candidate, extracted</span>

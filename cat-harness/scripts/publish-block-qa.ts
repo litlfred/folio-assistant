@@ -49,16 +49,26 @@
  * did. The legacy sibling beside each block is read by `existingBlockQaPath`
  * in both cases.
  *
+ * ## Whether there was a corpus at all (bean `tfqf`, R60)
+ *
+ * `unaudited` says nobody ruled on a block. It is NOT what an absent corpus
+ * means: once derived verdicts live on the folio's `qa-reports` branch, a
+ * preview whose fetch missed has no verdicts for ANY block, and reporting every
+ * one "unaudited" reads as "nobody checked" when somebody may have. So the file
+ * carries `corpus`: `present` when a results tree was there or any block had a
+ * verdict, `absent` otherwise — and the review page renders `absent` as "QA
+ * not available for this build" rather than as a column of unaudited blocks.
+ *
  * ## Output
  *
  * `folio-block-qa-summary/v1`: `{ blocks: { <label>: { state, fails, warns,
- * worst, staleCriteria } }, counts }`. Keyed by label, which is how the
+ * worst, staleCriteria } }, counts, corpus }`. Keyed by label, which is how the
  * review page and `blocks.json` key everything.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 
-import { existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths.js";
+import { BLOCK_QA_RESULTS_DIR, existingBlockQaPath, findContentRepoRoot } from "../content/pipeline/qa-paths.js";
 import { hashBlockFiles, loadQaReport, summariseFreshness, walkBlocks } from "../content/pipeline/qa-utils.js";
 import { usesGraphHash } from "../content/pipeline/uses-graph-hash.js";
 import { qaCriteriaByIdFor, qaCriteriaFor } from "../content/pipeline/qa-criteria-registry.js";
@@ -95,6 +105,12 @@ export interface BlockQaSummaryFile {
   counts: Record<BlockQaState, number>;
   /** Of the `passing` blocks, how many pass on script-checkable criteria only. */
   passingScriptsOnly: number;
+  /**
+   * Was there a verdict corpus to read? `absent` means no results tree and no
+   * verdict for any block: every `unaudited` above is then UNKNOWN, not "never
+   * swept" (bean `tfqf`). Optional so a summary written before it still reads.
+   */
+  corpus?: { state: "present" | "absent"; examined: number; trees: string[] };
 }
 
 /**
@@ -166,8 +182,10 @@ export function publishBlockQa(repoRoot: string, folioDir: string): BlockQaSumma
   const criteriaById = qaCriteriaByIdFor(repoRoot);
   const voices = readActiveVoices(repoRoot);
   let passingScriptsOnly = 0;
+  let examined = 0;
   for (const b of walkBlocks(folioDir, { verify: false, onLoadFailure: () => {} })) {
     const path = existingBlockQaPath(repoRoot, b.root) ?? existingBlockQaPath(folioDir, b.root);
+    if (path) examined++;
     const s = summariseBlock(
       path ? loadQaReport(path) : undefined,
       { ...hashBlockFiles(b.companions), graph },
@@ -178,7 +196,16 @@ export function publishBlockQa(repoRoot: string, folioDir: string): BlockQaSumma
     counts[s.state]++;
     if (s.state === "passing" && s.needsAgent > 0) passingScriptsOnly++;
   }
-  return { $schema: BLOCK_QA_SUMMARY_SCHEMA, blocks, counts, passingScriptsOnly };
+  // The same two homes the loop reads, so "absent" means absent from both.
+  const trees = [join(repoRoot, BLOCK_QA_RESULTS_DIR), join(folioDir, BLOCK_QA_RESULTS_DIR)];
+  const present = examined > 0 || trees.some((t) => existsSync(t));
+  return {
+    $schema: BLOCK_QA_SUMMARY_SCHEMA,
+    blocks,
+    counts,
+    passingScriptsOnly,
+    corpus: { state: present ? "present" : "absent", examined, trees },
+  };
 }
 
 if (import.meta.main) {
@@ -204,8 +231,17 @@ if (import.meta.main) {
   mkdirSync(dirname(resolve(opt("out")!)), { recursive: true });
   writeFileSync(opt("out")!, JSON.stringify(f) + "\n");
   const c = f.counts;
+  if (f.corpus?.state === "absent") {
+    // Said, not inferred: a preview whose QA fetch missed would otherwise
+    // report every block "unaudited" with a check mark.
+    console.error(
+      `? block QA: NO verdict corpus — no results tree (${f.corpus.trees.join(", ")}) and no verdict beside any ` +
+        `block. The ${c.unaudited} block(s) below are UNKNOWN, not unaudited; the review page says ` +
+        `"QA not available". Fetch the folio's qa-reports entry (qa:fetch) or run the sweep.`,
+    );
+  }
   console.error(
-    `✓ block QA: ${c.failing} failing, ${c.passing} passing (${f.passingScriptsOnly} on scripts only: ` +
+    `${f.corpus?.state === "absent" ? "?" : "✓"} block QA: ${c.failing} failing, ${c.passing} passing (${f.passingScriptsOnly} on scripts only: ` +
       `criteria that need an agent have no verdict), ${c.stale} stale, ${c.unaudited} unaudited → ${opt("out")}`,
   );
 }
