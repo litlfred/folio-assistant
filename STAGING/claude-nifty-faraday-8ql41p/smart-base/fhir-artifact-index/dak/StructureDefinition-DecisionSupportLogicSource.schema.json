@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-DecisionSupportLogicSource.schema.json",
+  "title": "Decision Support Logic Source",
+  "description": "Source reference for Decision Support Logic - exactly one of the following must be provided:\n- url (url data type): URL to retrieve DecisionSupportLogic definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the DecisionSupportLogic definition\n- instance: Inline DecisionSupportLogic instance data",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "DecisionSupportLogicSource",
+      "description": "Resource type identifier for DecisionSupportLogicSource logical model"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to retrieve DecisionSupportLogic definition from input/ or external source"
+    },
+    "canonical": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URI pointing to the DecisionSupportLogic definition"
+    },
+    "instance": {
+      "$ref": "http://smart.who.int/base/StructureDefinition-DecisionSupportLogic.schema.json",
+      "description": "Inline DecisionSupportLogic instance data"
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+}
