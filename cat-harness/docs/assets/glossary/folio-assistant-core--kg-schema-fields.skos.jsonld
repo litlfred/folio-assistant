@@ -1876,6 +1876,405 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.anchorschema.candidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AnchorSchema.candidates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Other plausible targets, for triage to choose between."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.candidates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.anchorschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AnchorSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why, in a sentence a triager can check."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.anchorschema.targetlabel",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AnchorSchema.targetLabel"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A block or section label in the folio; null when unplaced."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#AnchorSchema.targetLabel",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesetrefschema.before",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSetRefSchema.before"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before/after deep links to the comment's anchor."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.before",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.changesetrefschema.stagingurl",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ChangeSetRefSchema.stagingUrl"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The staging preview of the change set."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ChangeSetRefSchema.stagingUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.citationschema.caption",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CitationSchema.caption"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "\"Table 3.1\" / \"Figure 2.2\" as parsed from the line or comment."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#CitationSchema.caption",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.citationschema.raw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CitationSchema.raw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The cell or phrase exactly as given."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#CitationSchema.raw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.decisionschema.changeset",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionSchema.changeSet"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the change is made, for a decision that changes the document."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#DecisionSchema.changeSet",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.publicfieldsschema.discussion",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublicFieldsSchema.discussion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "GitHub issue holding this comment's discussion, once one is opened."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.discussion",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.publicfieldsschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublicFieldsSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "\"PC-0042\": the number a committee and a commenter refer to."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.publicfieldsschema.text",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PublicFieldsSchema.text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The comment as written."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.text",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.recommendationschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecommendationSchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "GitHub login of the committee member."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.recommendationschema.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecommendationSchema.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The issue or PR comment it was given in."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.reviewerschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewerSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable pseudonym: a hash of the normalised email or name."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.reviewerschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewerSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Only when `acknowledge` is true."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.batch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceSchema.batch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The intake batch: a file name, a form export, a letter."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.batch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.segment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceSchema.segment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For a narrative: which passage of the letter this comment is."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.sha256",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceSchema.sha256"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha256 of the intake file, so a re-import is recognised."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.sha256",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.sourceschema.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceSchema.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For a GitHub comment: its URL."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#SourceSchema.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.transitioninput.decision",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TransitionInput.decision"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`at` and `by` default to the transition's."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.decision",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/public-comment.transitioninput.recommendation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TransitionInput.recommendation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`at` defaults to the transition's."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-comment.blockanchor.section",
       "@type": "skos:Concept",
       "skos:inScheme": {

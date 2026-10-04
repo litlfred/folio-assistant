@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1785 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 131 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1783 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 148 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 508 terms and is 286 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 515 terms and is 290 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2044</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2044</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2056</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2056</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">508</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">515</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -1730,6 +1730,27 @@ Publication.state <span class="fa-gloss-status">candidate, extracted</span>
 <p>WHAT STATE this instance's publication is in. <code>draft</code>, always, today.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Publication.state</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.publicfieldsschema.discussion" data-fa-state="extracted" data-fa-gloss="">
+PublicFieldsSchema.discussion <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>GitHub issue holding this comment's discussion, once one is opened.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.discussion</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.publicfieldsschema.ref" data-fa-state="extracted" data-fa-gloss="">
+PublicFieldsSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>&quot;PC-0042&quot;: the number a committee and a commenter refer to.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.ref</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.publicfieldsschema.text" data-fa-state="extracted" data-fa-gloss="">
+PublicFieldsSchema.text <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The comment as written.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#PublicFieldsSchema.text</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--referenced-source.publishedsourceschema.read_from" data-fa-state="extracted" data-fa-gloss="">
 PublishedSourceSchema.read_from <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2290,6 +2311,20 @@ ReaderFilter.properties <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>Kind properties to keep, keyed by property name — the owner's *&quot;filter out by kind properties&quot;*. OR within a property's values, AND across properties.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reader-filter.ts"><code>cat-harness/schemas/reader-filter.ts#ReaderFilter.properties</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.recommendationschema.by" data-fa-state="extracted" data-fa-gloss="">
+RecommendationSchema.by <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>GitHub login of the committee member.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.by</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.recommendationschema.url" data-fa-state="extracted" data-fa-gloss="">
+RecommendationSchema.url <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The issue or PR comment it was given in.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#RecommendationSchema.url</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--refactor-strategy.refactorstrategy.caveat" data-fa-state="extracted" data-fa-gloss="">
 RefactorStrategy.caveat <span class="fa-gloss-status">candidate, extracted</span>
@@ -3277,6 +3312,20 @@ ReviewerRef.version <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Script revision or model id.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-review.ts"><code>cat-harness/schemas/qa-review.ts#ReviewerRef.version</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.reviewerschema.id" data-fa-state="extracted" data-fa-gloss="">
+ReviewerSchema.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Stable pseudonym: a hash of the normalised email or name.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.id</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.reviewerschema.name" data-fa-state="extracted" data-fa-gloss="">
+ReviewerSchema.name <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Only when <code>acknowledge</code> is true.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.name</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--review-comment.reviewfieldsschema.anchoredfrom" data-fa-state="extracted" data-fa-gloss="">
 ReviewFieldsSchema.anchoredFrom <span class="fa-gloss-status">candidate, extracted</span>

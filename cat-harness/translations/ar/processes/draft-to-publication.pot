@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: draft-to-publication\n"
-"POT-Creation-Date: 2026-10-04T12:26:41.702Z\n"
+"POT-Creation-Date: 2026-10-04T20:24:11.453Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,247 +14,267 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:124
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:130
 #. Diagram element documentation
 msgid "Answered by the publication QA gates. `no` returns to editing and HCI validation; `yes` circulates the draft."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:176
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:192
 #. Diagram label
 msgid "Approved?"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:177
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:193
 #. Diagram element documentation
 msgid "Asked once every reviewer has answered: is the draft approved? `no` opens beans for the change requests; `yes` goes to authorising the release."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:192
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:208
 #. Diagram label
 msgid "Authorise the release [content-publish]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:106
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:112
 #. Diagram label
 msgid "Build the draft publication [content-publish]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:47
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:48
 #. Diagram element documentation
 msgid "Carries the release's own state across the cycle: the release bean opened at the start says what is in the draft and who holds it, a rejected review becomes one change bean per finding before the loop back to editing, and only this lane's close marks a release actually done rather than merely built."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:142
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:148
 #. Diagram label
 msgid "Circulate the draft [content-review]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:163
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:178
 #. Diagram label
 msgid "Clinical / scientific sign-off [content-review]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:77
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:83
 #. Diagram label
 msgid "Clinical / scientific SMEs"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:213
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:229
 #. Diagram label
 msgid "Close the release beans [todo-manager]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:156
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:171
 #. Diagram element documentation
 msgid "Content reviewer, QC reviewer and technical officer review the draft as a whole — coherence, phase-gate criteria, breaking vs non-breaking change."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:53
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:54
 #. Diagram label
 msgid "Corpus + build pipeline (system)"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:88
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:94
 #. Diagram label
 msgid "Corpus updated"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:164
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:179
 #. Diagram element documentation
 msgid "Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:123
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:129
 #. Diagram label
 msgid "Draft QA green?"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:150
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:156
 #. Diagram label
 msgid "Draft under review"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:27
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:28
 #. Diagram label
 msgid "Draft, review and publish"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:183
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:199
 #. Diagram element documentation
 msgid "Each requested change becomes a bean, so the editors and agents picking the work up next see exactly what review asked for and what is still open."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:132
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:138
 #. Diagram label
 msgid "Editing and HCI validation [content-author]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:41
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:42
 #. Diagram label
 msgid "Editors + authoring agents"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:63
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:64
 #. Diagram element documentation
 msgid "Fans the QA-gated draft out to review and SME sign-off in parallel, then — once the programme manager authorises — is the only lane that actually presses publish, so both the review verdict and the release authority pass through this one hand before anything goes live."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:25
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:26
 #. Diagram label
 msgid "Folio publication — one release of the folio"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:28
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:29
 #. Diagram element documentation
-msgid "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
+msgid "folio-assistant — corpus to draft publication to officially published. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:230
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:246
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:89
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:95
 #. Diagram element documentation
 msgid "One or more content blocks have landed in the corpus through the editing process."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:182
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:198
 #. Diagram label
 msgid "Open beans for the change requests [todo-manager]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:92
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:98
 #. Diagram label
 msgid "Open or claim the release bean [todo-manager]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:54
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:55
 #. Diagram element documentation
 msgid "Owns the one gate that decides whether the draft is fit to be circulated: Task_BuildDraft turns the corpus into a draft and the DMN-backed Gateway_QaGreen decides whether Task_CirculateDraft ever runs, so a red result here is caught before Lane_ReviewTeam or Lane_Sme spend time on a draft that was never fit to review."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:72
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:73
 #. Diagram element documentation
 msgid "Owns the single approved/not-approved gateway the whole review rests on: it fires only after Lane_Sme's sign-off has also reached the join, but the call is this lane's alone, and a rejection here is what turns into the change beans Lane_WorkPlan opens next."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:82
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:88
 #. Diagram label
 msgid "Programme manager (release authority)"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:62
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:162
+#. Diagram label
+msgid "Public comment on the review version"
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:78
+#. Diagram label
+msgid "Public review (commenters, review committee, editor)"
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:63
 #. Diagram label
 msgid "Publication manager"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:193
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:209
 #. Diagram element documentation
 msgid "Publication requires authorisation by the programme manager or designated authority."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:115
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:121
 #. Diagram element documentation
 msgid "Publication-readiness QA across layers — QC reports, IG Publisher QA, proof status, broken links, build warnings."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:222
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:238
 #. Diagram label
 msgid "Published officially"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:107
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:113
 #. Diagram element documentation
 msgid "Render the corpus into the draft form of the folio: PDF, HTML site, or FHIR IG."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:71
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:72
 #. Diagram label
 msgid "Review team (content · QC · technical officer)"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:155
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:170
 #. Diagram label
 msgid "Review the draft publication [content-review]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:114
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:120
 #. Diagram label
 msgid "Run publication QA gates [content-test]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:78
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:84
 #. Diagram element documentation
 msgid "Runs in parallel with Lane_ReviewTeam, not after it — Gateway_ReviewJoin waits on both — but does not own the approve/reject gateway that follows: sign-off here is necessary for the join to complete and nothing more, which keeps a clinical judgement from also becoming the phase-gate call."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:83
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:79
+#. Diagram element documentation
+msgid "Runs in parallel with the review team and the SMEs when a draft goes out for PUBLIC comment: the circulated draft is the frozen, line-numbered review version, and every comment that comes back is placed, triaged, weighed and decided in Process_PublicComment. Like Lane_Sme it feeds the join and does not own the approve/reject gateway; an accepted comment reaches the document through its own change set, not through this gateway."
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:89
 #. Diagram element documentation
 msgid "Sits between review's approval and the actual publish — a second, distinct gate on an already-approved draft, because content being right and a release being authorised to ship are two different questions, and only this lane answers the second one."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:143
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:149
 #. Diagram element documentation
 msgid "The draft publication is circulated to the review team for formal review."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:133
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:139
 #. Diagram element documentation
 msgid "The editing sub-process. Every change to the corpus goes through its HCI validation gate — a red draft is fixed there, never by patching the built artifact."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:42
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:43
 #. Diagram element documentation
 msgid "The one call activity both rejection paths loop back to — a red QA gate directly, and a review rejection only once Lane_WorkPlan has turned each finding into a bean — so a fix here never needs to know which failure sent it back."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:93
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:99
 #. Diagram element documentation
 msgid "The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:202
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:218
 #. Diagram element documentation
 msgid "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:201
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:217
 #. Diagram label
 msgid "Version, tag and publish [content-publish]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:214
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:230
 #. Diagram element documentation
 msgid "What shipped is resolved; what slipped stays open and carries into the next cycle."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:46
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:163
+#. Diagram element documentation
+msgid "When the draft is released for public comment: comments returned on the frozen, line-numbered review version are placed, triaged, recommended on by the review committee and decided by the editor (public-comment.bpmn). Bean v26p, issue #197."
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:47
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:232
+#: ../folio-assistant-core/processes/content/draft-to-publication.bpmn:248
 #. Diagram label
 msgid "yes"
 msgstr ""

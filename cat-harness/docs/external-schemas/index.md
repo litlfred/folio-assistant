@@ -239,7 +239,7 @@ graph. That is a determined zero, not an unfilled field.
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
 | `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
-| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
@@ -299,7 +299,7 @@ a subset of the edition rather than a transcription of it.
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
-| `folio-assistant-core/processes/content/*.bpmn (6)` | `xmlns` binding |
+| `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
