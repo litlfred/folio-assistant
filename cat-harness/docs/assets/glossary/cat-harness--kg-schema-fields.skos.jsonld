@@ -6683,6 +6683,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this directory's content is COMPUTED FROM: the declared directory ids of the graphs whose change can invalidate it, resolved across `needs` exactly as a document kind's `computedFrom` is (bean `nama`; design note `docs/proposals/derived-graph-dependencies-2026-10-04.md`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.derivedFrom",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.heldentries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6832,6 +6851,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.composed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this directory's content is COMPUTED FROM: the declared directory ids of the graphs whose change can invalidate it, resolved across `needs` exactly as a document kind's `computedFrom` is (bean `nama`; design note `docs/proposals/derived-graph-dependencies-2026-10-04.md`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.derivedFrom",
       "skos:note": "candidate"
     },
     {

@@ -2464,6 +2464,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.derivedfrom",
+      "prefLabel": "ContentDirectory.derivedFrom",
+      "definition": "What this directory's content is COMPUTED FROM: the declared directory ids of the graphs whose change can invalidate it, resolved across `needs` exactly as a document kind's `computedFrom` is (bean `nama`; design note `docs/proposals/derived-graph-dependencies-2026-10-04.md`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.derivedFrom",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.heldentries",
       "prefLabel": "ContentDirectory.heldEntries",
       "definition": "Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`).",
@@ -2517,6 +2524,13 @@
       "prefLabel": "ContentDirectoryShape.composed",
       "definition": "This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the Jekyll source instead of mounting its built output.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.composed",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.derivedfrom",
+      "prefLabel": "ContentDirectoryShape.derivedFrom",
+      "definition": "What this directory's content is COMPUTED FROM: the declared directory ids of the graphs whose change can invalidate it, resolved across `needs` exactly as a document kind's `computedFrom` is (bean `nama`; design note `docs/proposals/derived-graph-dependencies-2026-10-04.md`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.derivedFrom",
       "status": "candidate"
     },
     {

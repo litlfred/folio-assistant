@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 212,
+      "count": 213,
       "unit": "modules"
     }
   },
@@ -331,6 +331,14 @@
       "graphNode": "schema",
       "summary": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/derived-from.test.ts",
+      "instance": "cat-harness",
+      "name": "derived-from.test",
+      "graphNode": "undeclared",
+      "summary": "`derivedFrom` on a directory declaration (bean `nama`): what a derived graph is",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/detangle-sidecar.test.ts",
@@ -7360,6 +7368,13 @@
           "optional": true,
           "array": false,
           "doc": "This directory's contents are STORED on a branch, keyed by commit or tip, and the"
+        },
+        {
+          "name": "derivedFrom",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "What this directory's content is COMPUTED FROM: the declared directory ids"
         }
       ],
       "extendsNames": [
@@ -7466,6 +7481,13 @@
           "optional": true,
           "array": false,
           "doc": "Where this directory's contents are KEPT, when that is not the checkout."
+        },
+        {
+          "name": "derivedFrom",
+          "type": "z .array(z.string().min(1)) .min(1) .refine((ids) => new Set(ids).size === ids.length, { message: \"derivedFrom names an…",
+          "optional": true,
+          "array": true,
+          "doc": "What this directory's content is COMPUTED FROM: the declared directory ids"
         },
         {
           "name": "composed",
