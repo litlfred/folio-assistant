@@ -10,13 +10,39 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 
 | file | what it is | used by |
 |---|---|---|
+| [`bean-notes.ts`](bean-notes.ts) | a file |  |
+| [`bean-rollover.ts`](bean-rollover.ts) | a file |  |
 | [`bench-id-lookup.ts`](bench-id-lookup.ts) | a file |  |
 | [`capture-mcp-tools.ts`](capture-mcp-tools.ts) | a file |  |
+| [`check-document-kind-sources.ts`](check-document-kind-sources.ts) | a file |  |
+| [`check-landing-instance.ts`](check-landing-instance.ts) | a file |  |
+| [`check-library-qa.ts`](check-library-qa.ts) | a file |  |
+| [`check-nav-names.ts`](check-nav-names.ts) | a file |  |
+| [`check-process-bindings.ts`](check-process-bindings.ts) | a file |  |
+| [`check-qa-corpus.ts`](check-qa-corpus.ts) | a file |  |
+| [`check-state-on-main.ts`](check-state-on-main.ts) | a file |  |
+| [`check-workflow-submodules.ts`](check-workflow-submodules.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
+| [`gen-auto-docs.ts`](gen-auto-docs.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
+| [`kind-register.ts`](kind-register.ts) | a file |  |
+| [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
+| [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
+| [`merge-train.ts`](merge-train.ts) | a file |  |
+| [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
+| [`milestone-status.ts`](milestone-status.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
+| [`qa-refresh.ts`](qa-refresh.ts) | a file |  |
+| [`resolve-subgraph.ts`](resolve-subgraph.ts) | a file |  |
+| [`seed-ready.ts`](seed-ready.ts) | a file |  |
 | [`split-baseline.json`](split-baseline.json) | data |  |
 | [`split-baseline.ts`](split-baseline.ts) | a file |  |
+| [`state-push.ts`](state-push.ts) | a file |  |
+| [`state-seed.ts`](state-seed.ts) | a file |  |
+| [`state-store.ts`](state-store.ts) | a file |  |
+| [`vocab-mappings.ts`](vocab-mappings.ts) | a file |  |
+| [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
+| [`translation/`](translation/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
