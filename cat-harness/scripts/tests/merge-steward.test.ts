@@ -14,7 +14,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { conflictPath } from "../merge-steward.ts";
+import { conflictPath, handBackBeanFor } from "../merge-steward.ts";
 
 describe("conflictPath", () => {
   test("the `Merge conflict in <path>` forms, whatever the kind in parentheses", () => {
@@ -49,5 +49,38 @@ describe("conflictPath", () => {
 
   test("a path with spaces survives, since the form is terminated by end-of-line", () => {
     expect(conflictPath("CONFLICT (content): Merge conflict in docs/a file.md")).toBe("docs/a file.md");
+  });
+});
+
+describe("handBackBeanFor", () => {
+  const bean = (id: string, title: string, status: string) =>
+    ({ id, file: `${id}.md`, archived: false, frontMatter: "", body: "", title, status, type: "bug", parent: "", tags: [] });
+  const store = {
+    state: "read" as const,
+    dir: "beans/defs",
+    skipped: [],
+    filesSeen: 3,
+    beans: [
+      bean("folio-assistant-aaaa", "Merge refused: #2078 merge:guard checks 3 and 5", "todo"),
+      bean("folio-assistant-bbbb", "Merge refused: #2043 owed CI not green", "completed"),
+      bean("folio-assistant-cccc", "Merge refused: #20780 a different PR", "todo"),
+    ],
+  };
+
+  test("finds the open hand-back bean by its prescribed title", () => {
+    expect(handBackBeanFor(store, 2078)).toBe("folio-assistant-aaaa");
+  });
+
+  test("a completed hand-back bean does not count, so the gap is reported again", () => {
+    expect(handBackBeanFor(store, 2043)).toBeNull();
+  });
+
+  test("the PR number is matched whole: #2078 is not #20780", () => {
+    expect(handBackBeanFor(store, 20780)).toBe("folio-assistant-cccc");
+    expect(handBackBeanFor(store, 207)).toBeNull();
+  });
+
+  test("an unreadable store is no bean, never a pass", () => {
+    expect(handBackBeanFor({ state: "absent", dir: null }, 2078)).toBeNull();
   });
 });
