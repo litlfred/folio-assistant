@@ -350,6 +350,13 @@ needs a `git config` step in every clone and CI runner, and the people hitting
 these conflicts are mostly agents in fresh containers — where a setup step
 nobody ran is a driver that is not there, failing open and silently.
 
+## Shipping is not merging — hand over on the PR itself
+
+When the branch is green and pushed, it reaches the Merge Steward only by its
+own state: label `ready-to-merge`, a signed `ready: <head sha>` comment, and no
+`needs-merge-human`. [`merge-queue`](merge-queue.md) §"Handing a PR to the
+queue" has the six points. Never post the handover anywhere but the PR.
+
 ## Opening the PR (only when asked)
 
 GitHub access here is via the **GitHub MCP server**, whose tools are
