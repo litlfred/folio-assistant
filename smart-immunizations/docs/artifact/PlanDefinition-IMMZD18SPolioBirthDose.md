@@ -37,3 +37,6 @@ IMMZ.D18.S.Polio.Birth dose schedule Birth dose schedule (in countries that are 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18SPneumococcal3Doses.html" data-next="PlanDefinition-IMMZD18SPolioBOPVPlusIPV.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

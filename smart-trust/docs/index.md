@@ -68,21 +68,6 @@ Grouped and ordered as the IG's own `artifacts.html` groups them, with each arte
 description. Its canonical URL, published representations and whether it is held here are on
 its own page.
 
-<nav class="ig-toc" aria-label="Contents" markdown="1">
-
-**Contents**
-
-- [Requirements: Actor Definitions](#cat-Requirements__Actor_Definitions) — 5
-- [Requirements: Formal Requirements](#cat-Requirements__Formal_Requirements) — 29
-- [Structures: Logical Models](#cat-Structures__Logical_Models) — 5
-- [Terminology: Value Sets](#cat-Terminology__Value_Sets) — 14
-- [Terminology: Code Systems](#cat-Terminology__Code_Systems) — 15
-- [Terminology: Concept Maps](#cat-Terminology__Concept_Maps) — 1
-- [Other](#cat-Other) — 608
-- [Uncategorised](#cat--uncategorised) — 1
-
-</nav>
-
 <details markdown="1" id="cat-Requirements__Actor_Definitions">
 <summary><strong>Requirements: Actor Definitions</strong> — 5</summary>
 
@@ -216,3 +201,6 @@ unreadable. Every one has its own page: **[browse all 608](./category/Other.html
 | [Trust](./artifact/ImplementationGuide-smart.who.int.trust.html)<br>`ImplementationGuide/smart.who.int.trust` |  |
 
 </details>
+
+<footer id="ig-footer" data-next="artifact/ActorDefinition-Holder.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>

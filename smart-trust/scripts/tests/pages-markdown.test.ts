@@ -451,3 +451,43 @@ describe("the DAK API section is on exactly the pages the Publisher puts it on",
     expect(carrying.length).toBeGreaterThan(0);
   });
 });
+
+// #1901, owner 2026-10-02: the IG's table of contents lives only in the
+// left-hand rail, and every page ends in the Publisher's footer, whose facts
+// come from the IG's own metadata.
+describe("the Publisher footer, and no in-page Contents box", () => {
+  it("the index carries no Contents box", () => {
+    expect(indexSrc).not.toContain('aria-label="Contents"');
+    expect(indexSrc).not.toContain("ig-toc");
+  });
+
+  it("the footer's data is the IG's own, written once", () => {
+    const d = JSON.parse(readFileSync(join(DOCS, "assets", "ig-footer.json"), "utf-8"));
+    expect(d.packageId).toBe(ix.packageId);
+    expect(d.version).toBe(ix.version);
+    expect(existsSync(join(DOCS, "assets", "ig-footer.js"))).toBe(true);
+  });
+
+  // The <prev | next> chain: index, then every artefact page in the order the
+  // index lists them. Followed from the index, it must visit every artefact
+  // page once and only resolve to pages that exist — a broken hop is a 404
+  // in a footer on every page.
+  it("prev/next walk index -> every artefact page once, each hop resolving", () => {
+    const attr = (src: string, name: string) => src.match(new RegExp(`<footer id="ig-footer"[^>]*\\b${name}="([^"]+)"`))?.[1];
+    const read = (rel: string) => readFileSync(join(DOCS, rel), "utf-8");
+    const seen: string[] = [];
+    let at = "index.md";
+    for (let next = attr(indexSrc, "data-next"); next !== undefined; ) {
+      const target = join(at === "index.md" ? "" : "artifact", next).replace(/\.html$/, ".md");
+      expect(existsSync(join(DOCS, target))).toBe(true);
+      const src = read(target);
+      const back = attr(src, "data-prev")!;
+      expect(join("artifact", back).replace(/\.html$/, ".md").replace(/^\.\/?$/, "index.md")).toBe(at === "index.md" ? "index.md" : at);
+      seen.push(target);
+      at = target;
+      next = attr(src, "data-next");
+    }
+    expect(seen.length).toBe(ix.artifacts.length);
+    expect(new Set(seen).size).toBe(seen.length);
+  });
+});

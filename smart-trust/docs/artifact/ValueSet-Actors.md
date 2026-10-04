@@ -58,3 +58,6 @@ artefact page, and a whitespace-stripping opening tag ate the blank line after t
 <div class="ig-api-openapi-host" data-ig-api-openapi-src="{{ page.ig_api_openapi.src }}"><p>Loading the API information…</p></div>
 <noscript><p>The API information needs JavaScript; the <a href="{{ page.ig_api_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
 <script src="{{ page.ig_api_openapi.script }}" defer></script>
+
+<footer id="ig-footer" data-prev="ValueSet-KeyUsage-UAT.html" data-next="ValueSet-ConnectionTypes.html" class="st-ig"></footer>
+<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
