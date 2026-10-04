@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-03T13:29:11Z
+updated_at: 2026-10-03T17:52:50Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -213,3 +213,72 @@ have nothing left to resolve. **Whether the patterns should then be retired is
 NOT this bean's call** — they would become harmless no-ops rather than wrong, and
 a pattern that fires on nothing is the `xom7` shape this arc keeps meeting. Worth
 asking the owner at cutover rather than deciding here.
+
+
+## INVENTORY CORRECTED 2026-10-03, before the seed was built — 666 files, not 126, and `uml/` is an OUTPUT
+
+Counted on `origin/main` before seeding, because a seed built from a wrong
+inventory verifies its own mistake. The table in §"Why docs/uml/ and not the other
+48" is wrong in both of its load-bearing rows.
+
+`gen-uml-overview.ts` declares **three** output roots — `gen-uml-overview.ts:70`,
+`:74`, `:76` — and its own run line says so: *"wrote 401 file(s) under
+`cat-harness/uml/overview` and `cat-harness/docs/uml/overview`"*.
+
+| root | const | files | a route? | declared? |
+|---|---|---|---|---|
+| `cat-harness/uml/overview` | `UML_ROOT` | 266 | no | yes — directory `uml`, kind `uml`, `cat-harness.json:583` |
+| `cat-harness/docs/uml/overview` | `DOCS_ROOT` | 134 | **yes** | no |
+| `cat-harness/docs/assets/img/uml/overview` | `SVG_ROOT` | 266 | **yes** | no |
+
+So: **"files | 126" → 666 across three roots**, and **"the source is `uml/`" → `uml/`
+is an OUTPUT of this same generator**, with a declared kind of its own. The real
+source is the declarations the generator reads.
+
+### What this does and does not change
+
+**The premise holds and is strengthened.** "One route, one writer" was the reason
+this family was chosen over the other 48; one writer owns all three roots, so the
+`1j3q` falsifier ("a family with two writers would be the premise failing") is
+further from being met, not closer.
+
+**The cutover is a different shape.** Done-when 1 is asking for the two
+**undeclared** roots, both of which are routes:
+
+- two sibling entries in `cat-harness/docs/docs.json` — `path: "uml/overview"` and
+  `path: "assets/img/uml/overview"` — reusing `graphKinds: ["docs-auto"]`, on the
+  shared-kind precedent already cited in #2022 (`beans.json`'s `defs` and `archive`
+  both declare `bean-defs`);
+- then `storage: { branch: …, keyedBy: "route" }` on each.
+
+**`cat-harness/uml/overview` stays on `main` — for a different reason than this
+bean gave.** Not because it is authored (it is not), but because **it is not a
+route**, which makes `keyedBy: "route"` wrong for it by definition: a route-keyed
+write refuses `expect` on the grounds that a rendered page has one writer, and
+`uml/` is a graph other generators read. If it is ever moved off `main` it is a
+`tip` question, under `9ofm`, not this bean.
+
+### Two things checked rather than assumed
+
+**`docs.json` paths are relative to the declaring directory.** `proposals` declares
+`path: "proposals"` and resolves to `cat-harness/docs/proposals` (38 files);
+`requirements` likewise (1). So #2022's `path: "cat-harness/docs-auto"` resolves to
+`cat-harness/docs/cat-harness/docs-auto`, which **exists and is populated** — as
+that entry's own description explains via `viewerPlacement`. I had briefly read it
+as repo-relative and so as absent, which would have been the `dh4f` defect. It is
+not one.
+
+**No `../` is needed, and none is available.** `GraphNodeDirectory.scope` carries
+the note *"why it is a field rather than a `../` in the path"*, and its enum is
+`instance | repository` — neither reaches a sibling of the declaring directory.
+Both uml routes are inside `docs/`, so `docs.json` is the right declaring file and
+both paths are plain.
+
+### Where Done-when 1 actually stands
+
+#2022 declared the `docs-auto` KIND and the `docs-auto` directory with its 11
+sub-sub-graphs — one per `gen-docs-auto.ts` TYPE. Measured: its `uml` sub-sub-graph
+holds **2 files**, the docs-auto index pages *about* the uml graph, which are not the
+134 pages this bean is about. So Done-when 1 is **half done**: the kind exists and
+is judged, the two route directories are still undeclared and carry no `storage`.
+Not ticked.

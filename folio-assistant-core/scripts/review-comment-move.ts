@@ -49,6 +49,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
+import { directoryForGraph, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { TODO_GRAPH_FILE, nodeOfKind, parseTodoGraph } from "../../cat-harness/schemas/todo-graph.js";
 import {
   REVIEW_COMMENT_STATUSES,
@@ -166,7 +167,12 @@ if (import.meta.main) {
   try {
     // Checked BEFORE the file is written, so a refused commit leaves nothing behind.
     const branch = args.includes("--commit") ? featureBranch(opt("base") ?? "main") : undefined;
-    const dir = feedbackDir(resolve(opt("todos") ?? "todos"));
+    // The DECLARED todos graph when --todos is not given, never a spelled
+    // `todos` relative to the cwd (bean `gz47`): run from any directory but the
+    // checkout root, the spelling named a directory that does not exist.
+    const todosRoot = opt("todos") ?? directoryForGraph(repoRootFor(process.cwd()), "todos");
+    if (todosRoot === undefined) throw new Error("no `todos` graph is declared in this checkout; pass --todos <dir>");
+    const dir = feedbackDir(resolve(todosRoot));
     const r = moveComment({ id, to: to as ReviewCommentStatus, process: proc, task, decision: opt("decision"), dir, published: opt("published") });
     const rel = relative(process.cwd(), r.path);
     console.error(`✓ ${id}: ${r.from} → ${r.to} by ${proc}#${task} → ${rel}`);

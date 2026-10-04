@@ -69,12 +69,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 8 published.
+0 of 10 published.
 {: .fa-hx-dim }
 
 - Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - C@T Harness Tools — *declared, not published*
+- C@T OpenAPI — *declared, not published*
+- FHIR IG Harness — *declared, not published*
 - Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
@@ -99,6 +101,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [smart-immunizations]({{ '/cat-harness/docs-auto/index/docs/smart-immunizations-docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
+
+### `docs-auto`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
 
 ### `document-kinds`
 
@@ -145,7 +154,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - [folio-assistant-core]({{ '/glossary/' | relative_url }})
-- who-style-guide — *declared, not published*
+- WHO IRIS — *declared, not published*
 
 ### `health`
 
@@ -204,6 +213,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Bootstrap — *declared, not published*
 
+### `openapi`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- smart-trust — *declared, not published*
+
 ### `policies`
 
 0 of 1 published.
@@ -233,7 +249,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 10 published.
+1 of 9 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
@@ -245,7 +261,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - smart-immunizations — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
-- who-style-guide — *declared, not published*
 
 ### `requirements`
 
@@ -265,12 +280,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-4 of 6 published.
+5 of 7 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
+- [C@T OpenAPI]({{ '/cat-harness/schemas/cat-openapi/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/schemas/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/schemas/' | relative_url }})
@@ -366,7 +382,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/voices/smart-base/' | relative_url }})
-- [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/voices/who-iris/' | relative_url }})
 
 ### `waiver`
 

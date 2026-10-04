@@ -508,7 +508,7 @@ if (import.meta.main) {
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     // The SUBJECT's graphs, not this handler's: the reader is looking at
-    // who-style-guide's voices and the rail should offer who-style-guide's
+    // who-iris's voices and the rail should offer who-iris's
     // library and docs. The generator holds the subject; nothing is parsed
     // back out of the path it just composed.
     emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
