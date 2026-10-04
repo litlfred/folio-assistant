@@ -34,6 +34,7 @@
 
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import type { ToolDefinition } from "../schemas/tool.js";
 
 /** Which repository layer a group will live in after the split. */
 export type ToolGroupLayer = "core" | "sci" | "harness";
@@ -43,8 +44,13 @@ export interface ToolGroupDeclaration {
   id: string;
   /** Repo-relative module. Resolved by VARIABLE path, so this file imports none. */
   module: string;
-  /** The exported registrar, called with the built server. */
-  registrar: string;
+  /**
+   * The exported registrar, called with the built server. Absent means "the
+   * module's ONE `register…` export" — a Tool node names its registrar only
+   * when the module has more than one (`inProcess.register`), and a module
+   * with zero or several is reported as `failed`, never guessed at.
+   */
+  registrar?: string;
   /**
    * The layer that owns it. Not consulted at runtime — a declaration is not a
    * gate — but it is what makes the boundary reviewable in one place instead
@@ -104,9 +110,24 @@ export async function registerDeclaredToolGroups(
       // VARIABLE specifier — the target comes from the declaration, so this
       // module names none of the tool groups and depends on none of them.
       const mod = (await import(abs)) as Record<string, unknown>;
-      const fn = mod[g.registrar];
+      let name = g.registrar;
+      if (name === undefined) {
+        const candidates = Object.keys(mod).filter((k) => /^register[A-Z]/.test(k) && typeof mod[k] === "function");
+        if (candidates.length !== 1) {
+          out.push({
+            id: g.id,
+            state: "failed",
+            detail:
+              `${g.module} exports ${candidates.length === 0 ? "no" : candidates.length} register…() function(s)` +
+              (candidates.length > 1 ? ` (${candidates.join(", ")}); its Tool node must name one in invoke.inProcess.register` : ""),
+          });
+          continue;
+        }
+        name = candidates[0];
+      }
+      const fn = mod[name];
       if (typeof fn !== "function") {
-        out.push({ id: g.id, state: "failed", detail: `${g.module} exports no ${g.registrar}()` });
+        out.push({ id: g.id, state: "failed", detail: `${g.module} exports no ${name}()` });
         continue;
       }
       (fn as (s: unknown, ...rest: unknown[]) => void)(server, ...extraArgs);
@@ -123,4 +144,37 @@ export async function registerDeclaredToolGroups(
   }
 
   return out;
+}
+
+/**
+ * The tool groups a server serves, DERIVED from the Tool nodes its instance
+ * declares — one group per (module, registrar) among the nodes served over MCP
+ * in-process.
+ *
+ * Bean `zmdo`, owner 2026-10-04: a tool is served because it is declared in
+ * the KG, not because a list in code names it. Until then the same fact was
+ * restated twice by hand — `SERVER_TOOL_GROUPS` in `server.ts` and the
+ * "generic tools" inline in the document adapter — and the second lived in
+ * `folio-assistant-core`, so with `cat-harness` alone no adapter was loaded,
+ * none of them was registered, and the server refused to start.
+ *
+ * `layer` is "harness" for every group: these are the harness's own Tool
+ * nodes. A module that is absent or fails is still REPORTED by
+ * {@link registerDeclaredToolGroups}, exactly as a hand-declared one was.
+ */
+export function toolGroupsFromNodes(nodes: readonly ToolDefinition[]): ToolGroupDeclaration[] {
+  const groups = new Map<string, ToolGroupDeclaration>();
+  for (const n of nodes) {
+    const inProcess = n.invoke?.inProcess;
+    if (!inProcess || !n.invoke?.mcp) continue;
+    const key = `${inProcess.module}#${inProcess.register ?? ""}`;
+    if (groups.has(key)) continue;
+    groups.set(key, {
+      id: inProcess.module.replace(/^.*\//, "").replace(/\.ts$/, ""),
+      module: inProcess.module,
+      ...(inProcess.register ? { registrar: inProcess.register } : {}),
+      layer: "harness",
+    });
+  }
+  return [...groups.values()];
 }

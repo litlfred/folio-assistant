@@ -39,6 +39,19 @@ package "folio-assistant/beans" as pkg_folio_assistant_beans <<beans>> {
     commits [1] : integer
     axes [1..*] : Axe[]
   }
+  class "folio-merge-queue-entry/v1" as folio_assistant_beans_folio_merge_queue_entry_v1_folio_merge_queue_entry_v1 <<json: MergeQueueEntrySchema>> #f6eedf {
+    $schema [1] : 'folio-merge-queue-entry/v1'
+    repository [1] : string
+    pr [1] : integer
+    placement [1] : object
+    reason [1] : string
+    decidedBy [1] : string
+    decidedAt [1] : string<date-time>
+    hold [0..1] : object
+    trainId [0..1] : string
+    ejection [0..1] : object
+    beans [0..*] : string[]
+  }
 }
 
 folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_beans_folio_session_survey_v1_Axe : axes

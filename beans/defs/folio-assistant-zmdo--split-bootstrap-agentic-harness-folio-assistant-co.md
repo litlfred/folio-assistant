@@ -209,3 +209,61 @@ Both points hold, checked against the store and GitHub that day:
 Still blocked on `mer2` (PR #2073) merging.
 
 _2026-10-04T12:12:34Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## MEASURED 2026-10-04 — first rehearsal, each layer alone (local sibling layout)
+
+Method: the TRACKED files of the layer and its `needs` closure copied into `platform/` as siblings (no aggregate declaration), the root `package.json`/`tsconfig.json`/`bunfig.toml` beside them, `node_modules` linked — the same layout `seed:ready --rehearse` uses. A fresh `git init` repository `probe/` beside it, then `init-folio --instance --link sibling --assistant ../platform` (and, for core, `--type document`).
+
+| condition (`tndo`) | `cat-harness` (+ bootstrap, bootstrap-tools) | `folio-assistant-core` (+ cat-harness, cat-harness-tools, bootstrap, bootstrap-tools) |
+|---|---|---|
+| 1. init exits 0 in an empty repo | ✅ instance, 15 files | ✅ instance; ✅ document folio, renders to Markdown |
+| 2. declared graphs resolve | ✅ declaration loads, every declared directory exists | ✅ |
+| 3. working — conventions readable, next step runnable | ❌ **MCP server refuses to start**: *"no built-in content adapter is installed … A server with no adapter can serve no content, so it does not start."* `beans list` ✅, session hook path ✅, skills ✅ (after the fix below) | ✅ MCP serves **45 tools**; `beans list` ✅; skills ✅ |
+| 4. `needs` closure satisfied by what is present | ✅ after the fix below — chain `bootstrap ← bootstrap-tools ← cat-harness ← (root)` | ✅ — `… ← cat-harness-tools ← folio-assistant-core ← (root)` for the folio |
+
+### Found and fixed on this branch — a scaffold did not say what it stands on
+
+Before the fix, BOTH scaffolds produced a config with no `dependencies`, so the new instance's declaration chain was **itself alone: 0 skill directories reachable** — for a contentless instance and for a document folio alike. That is every folio `folio_init` has scaffolded, not only the MVP probe. Hand-adding ONE `dependencies.folioAssistant` entry made the whole stack resolve, because the layers' own `needs` carry the rest. The scaffold now writes that entry, derived rather than asked for: a folio stands on its adapter's instance (`BUILTIN_ADAPTERS[].instance`), a contentless instance on `cat-harness`.
+
+### Open — needs the owner
+
+**`cat-harness` alone cannot start its MCP server**, by design of `resolveBuiltinAdapter`. Every adapter lives above the harness, so condition 3 cannot pass for that layer until the server is allowed to start with the generic tools only (`folio_init`, `skill_list`, `workflow_*`, …), or the MVP for that layer is restated without the server.
+
+### Not yet run
+
+- The real empty-repo run in `litlfred/cat-harness-test` / `litlfred/folio-test` (ruled 2026-10-04) — after the open question, since condition 3 would fail there for the same reason.
+- `seed:ready --rehearse` (the layer's own test suite standalone; `ho66` measured 472 failing for `cat-harness`) — that is the layer's health, a separate question from whether a NEW instance can stand on it.
+
+## RULED + DONE 2026-10-04 — the server serves what the KG declares
+
+Owner, choosing from three options: **start with the generic tools** when no adapter is installed. Then, on seeing the first shape (a hand-written `registerGenericTools` list): *"isn't it just presence in the KG?"* — and chose, from three options, **the server reads the Tool nodes**.
+
+Checked first: every in-process harness tool was ALREADY a Tool node in `cat-harness/tools/` (module + MCP name), and `ToolInvoke.inProcess.register` already existed for this purpose. The same fact was restated by hand twice — `SERVER_TOOL_GROUPS` in `server.ts` and the "generic tools" inline in `folio-assistant-core`'s document adapter — and the second copy was why `cat-harness` alone could not start: no adapter, no generic tools, refusal.
+
+Now: `toolGroupsFromNodes(tools())` derives the server's groups; a module with no single `register…` export is REPORTED as failed. The document adapter registers content tools only; `NoContentAdapter` (harness) registers none. `registerSkillPrompts` stays a direct server call, because prompts are not Tool nodes (`j6t3`).
+
+Measured:
+- Aggregate checkout, `main` vs this branch: **identical** tool set (45) and prompts (44).
+- `cat-harness` alone: MCP serves **23 tools** (was: refused to start). With that, all four `tndo` conditions hold locally for BOTH layers.
+- `tool-groups.test.ts`: each module registers exactly the MCP names its Tool nodes declare — so a tool can be neither declared-and-unserved nor served-and-undeclared.
+
+Next: the real empty-repo run in `litlfred/cat-harness-test` / `litlfred/folio-test`.
+
+## PROVEN 2026-10-04 — in real empty repositories on GitHub Actions, against folio-assistant@8ea9e47 (#2077 merged)
+
+The owner chose the method from three options: a CI workflow that sparse-checks-out ONLY the layer and its `needs` closure from `folio-assistant` — because the layer's own repository, `litlfred/cat-harness`, is **empty** (never seeded) — runs the init in a freshly `git init`ed repository beside it, and asserts the four `tndo` conditions with `zmdo-check.ts`. Nothing pre-existing was touched: `cat-harness-test` was empty, and `folio-test` got a new orphan branch `zmdo-proof` (its `main`, an 08-29 folio, is unchanged).
+
+| layer alone | repository | run | 1 init | 2 graphs | 3 working | 4 closure |
+|---|---|---|---|---|---|---|
+| `cat-harness` (+ bootstrap, bootstrap-tools) — instance | [`litlfred/cat-harness-test`](https://github.com/litlfred/cat-harness-test) `main` | [run 2](https://github.com/litlfred/cat-harness-test/actions/runs/37206112987) ✅ | ✅ | ✅ | ✅ 4 skill dirs, beans, MCP 23 tools | ✅ `bootstrap ← bootstrap-tools ← cat-harness ← (root)` |
+| `folio-assistant-core` (+ cat-harness, cat-harness-tools, bootstrap, bootstrap-tools) — document folio | [`litlfred/folio-test`](https://github.com/litlfred/folio-test/tree/zmdo-proof) `zmdo-proof` | [run 2](https://github.com/litlfred/folio-test/actions/runs/37206115053) ✅ | ✅ | ✅ | ✅ 5 skill dirs, beans, MCP 45 tools, renders | ✅ `… ← cat-harness-tools ← folio-assistant-core ← (root)` |
+
+Run 1 of each failed in `actions/checkout` before any check ran — persisted credentials made a sparse partial clone send its auth header twice fetching submodules (HTTP 400). Fixed with `persist-credentials: false` and submodules by plain git; the platform is public.
+
+**What this does and does not prove.** It proves a NEW instance can stand on each layer alone. It does not prove the layer's OWN suite is green standalone — that is `ho66` / `seed:ready --rehearse` (472 failing for `cat-harness`, measured 10-03) — and it does not seed `litlfred/cat-harness` or `litlfred/folio-assistant-core`, which stays `seed:ready`'s call.
+
+## Done when — status
+
+- [x] Per-layer MVP evaluated in an empty repository, for both layers — green.
+- [ ] The two layer repositories seeded (blocked on `seed:ready`, not this bean).
+- [ ] The proof re-pointed at the seeded layer repositories once they exist, instead of a sparse checkout of folio-assistant.

@@ -1,0 +1,143 @@
+# Merge guard — the `merge-guard` commit status on every open PR's head.
+#
+# Bean `uoob`, owner ruling 2026-10-03 (option 1). Three PRs were landed
+# unfinished by a steward calling the merge PUT directly (#1937, #1960, #1957;
+# the table is in `cat-harness/scripts/merge-guard.ts`). That script is now
+# the only way a steward lands a PR (`bun run merge:guard <pr> --merge`); this
+# workflow runs its EVALUATE mode on every event that can change a verdict and
+# posts the result as the `merge-guard` commit status on the head, so the
+# owner can make it a REQUIRED check and a merge that bypasses the script is
+# refused by GitHub as well.
+#
+# THIS WORKFLOW CHANGES NO SETTING. A required check is a ruleset the owner
+# adds by hand; the exact ruleset is in the PR that introduced this file.
+#
+# WHY A COMMIT STATUS AND NOT THE JOB'S OWN CHECK. The job runs on four
+# events, and only `pull_request` attaches its check run to the PR's head:
+# `issue_comment` and `workflow_run` runs attach to `main`. A status posted
+# to the head sha is the one signal all four can update. A ruleset can pin
+# the `merge-guard` context to the GitHub Actions app, so a status posted
+# with a person's token does not satisfy it.
+#
+# WHY FOUR EVENTS. A verdict reads labels, the draft flag, the body
+# (`pull_request`); the `ready:` marker and later questions (`issue_comment`);
+# and the head's CI, which FINISHES after the push that started it
+# (`workflow_run`). Without the last, a status computed while CI was still
+# running would stay red until somebody touched a label. Feature Staging is
+# NOT listed: it has no `push` trigger, and `workflow-triggers.test.ts`
+# refuses a `workflow_run` on such a workflow (#1725). Check 5 still judges
+# its run; a status computed before it finishes is refreshed by the next
+# label, comment or gating-workflow completion, or by a dispatch.
+#
+# THE SCRIPT COMES FROM MAIN, NOT FROM THE PR, as in `merge-main.yml`: a PR
+# that edits `merge-guard.ts` must not judge itself with its own copy. The
+# one exception is the bootstrap — until this lands, main has no guard — and
+# that run says so. It does not stop a PR from editing THIS file, which a
+# `pull_request` run takes from the PR's tree; the guard is against a careless
+# steward, not a hostile author, and the script's header says so.
+name: Merge guard
+
+on:
+  pull_request:
+    types: [labeled, unlabeled, ready_for_review, synchronize, edited]
+  issue_comment:
+    types: [created, edited]
+  workflow_run:
+    workflows: ["Code-quality gates", "JSON-LD generated-file drift"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "PR number to evaluate"
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  actions: read
+  statuses: write
+
+concurrency:
+  group: merge-guard-${{ github.event.pull_request.number || github.event.issue.number || inputs.pr || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  merge-guard:
+    name: merge-guard (evaluate)
+    if: github.event_name != 'issue_comment' || github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Which PRs this event is about
+        id: prs
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          WR_PRS: ${{ toJSON(github.event.workflow_run.pull_requests) }}
+          INPUT_PR: ${{ inputs.pr }}
+        run: |
+          set -euo pipefail
+          case "$EVENT" in
+            pull_request) list="$PR_NUMBER" ;;
+            issue_comment) list="$ISSUE_NUMBER" ;;
+            workflow_run) list="$(jq -r '.[]?.number' <<<"$WR_PRS" | tr '\n' ' ')" ;;
+            workflow_dispatch) list="$INPUT_PR" ;;
+            *) list="" ;;
+          esac
+          echo "list=$list" >> "$GITHUB_OUTPUT"
+          echo "PRs to evaluate: ${list:-none}"
+
+      - uses: actions/checkout@v7
+        if: steps.prs.outputs.list != ''
+        with:
+          ref: main
+          submodules: true
+
+      - name: Bootstrap — main has no guard yet, so use the PR's copy
+        if: steps.prs.outputs.list != '' && github.event_name == 'pull_request' && hashFiles('cat-harness/scripts/merge-guard.ts') == ''
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          echo "::notice::main carries no merge-guard.ts yet; evaluating with the PR's copy (bootstrap only)"
+          git fetch -q --depth=1 origin "$HEAD_SHA"
+          git checkout -q FETCH_HEAD
+          git submodule update --init
+
+      - uses: oven-sh/setup-bun@v2
+        if: steps.prs.outputs.list != ''
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        if: steps.prs.outputs.list != ''
+        run: bun install --frozen-lockfile
+
+      # Exit 1 (refused) is a VERDICT, carried by the status, not a failure of
+      # this job. Exit 2 is could-not-determine: the script posts `error`
+      # where it can, and the job warns. If even the status could not be
+      # posted, the required context is simply absent, which blocks a merge:
+      # the safe direction.
+      - name: Evaluate and post the merge-guard status
+        if: steps.prs.outputs.list != ''
+        env:
+          LIST: ${{ steps.prs.outputs.list }}
+        # `|| code=$?`, NOT a bare call followed by `code=$?`: Actions runs
+        # this with `bash -e`, so a refusal (exit 1) ended the step before
+        # `code` was read, and the job went red on every PR not yet ready —
+        # measured on #2000's run 37134160848.
+        run: |
+          set -uo pipefail
+          for pr in $LIST; do
+            code=0
+            bun run cat-harness/scripts/merge-guard.ts "$pr" --status --repo "$GITHUB_REPOSITORY" || code=$?
+            case "$code" in
+              0) echo "#$pr: pass" ;;
+              1) echo "#$pr: refused (status: pending or failure, by kind)" ;;
+              *) echo "::warning::#$pr: merge-guard could not determine (exit $code)" ;;
+            esac
+          done

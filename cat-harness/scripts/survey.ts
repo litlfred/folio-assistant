@@ -49,6 +49,7 @@ import {
   SessionSurveySchema,
   type SessionSurvey,
 } from "../schemas/session-survey.ts";
+import { ancestorOr, isAncestor } from "./git-ancestry.ts";
 
 export const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -114,24 +115,37 @@ export function owed(ref = "origin/main", root = ROOT): Owed {
   const surveys = readSurveys(root);
   if (surveys.length === 0) return { kind: "no-survey", tip: head };
 
-  const reachable = surveys.filter((s) => git(["merge-base", "--is-ancestor", s.to, head], root).ok);
+  // NOT `git(...).ok`. A non-zero exit is two facts, not one: on a shallow
+  // clone a missing commit exits 128, so a survey whose upper edge IS an
+  // ancestor reads as unreachable — and `owed` then reports the window
+  // unsurveyed. `isAncestor` deepens before answering and says so when it
+  // still cannot tell.
+  const judged = surveys.map((s) => ({ s, anc: isAncestor(root, s.to, head) }));
+  const reachable = judged.filter((j) => j.anc.known && j.anc.ancestor).map((j) => j.s);
+  const unknown = judged.filter((j) => !j.anc.known);
+
   if (reachable.length === 0) {
-    // Every published survey names an upper edge this branch cannot reach.
     const s = surveys[surveys.length - 1]!;
-    return {
-      kind: "unusable",
-      survey: s,
-      tip: head,
-      why:
-        `no published survey's upper edge is an ancestor of ${ref}. The history was ` +
-        `rewritten, or they were taken on another branch. Survey the whole window.`,
-    };
+    // The old `why` named two causes and guessed between them. A third was
+    // missing and is the common one here, so it is stated rather than implied —
+    // and only when it actually applies, because telling somebody their
+    // history was rewritten when the checkout was merely shallow sends them to
+    // the wrong place.
+    const why =
+      unknown.length > 0
+        ? `no published survey's upper edge could be shown to be an ancestor of ${ref}, and ` +
+          `${unknown.length} of ${surveys.length} could not be evaluated at all ` +
+          `(${unknown[0]!.anc.known === false ? unknown[0]!.anc.reason : ""}). ` +
+          `A shallow checkout cannot answer this; deepen it before concluding the surveys are unusable.`
+        : `no published survey's upper edge is an ancestor of ${ref}. The history was ` +
+          `rewritten, or they were taken on another branch. Survey the whole window.`;
+    return { kind: "unusable", survey: s, tip: head, why };
   }
 
   // Furthest along = the one every other reachable survey's `to` precedes.
-  const best = reachable.reduce((a, b) =>
-    git(["merge-base", "--is-ancestor", a.to, b.to], root).ok ? b : a,
-  );
+  // `unknown` keeps the incumbent: this is a tie-break among surveys already
+  // proven reachable, so an unanswerable comparison must not promote `b`.
+  const best = reachable.reduce((a, b) => (ancestorOr(isAncestor(root, a.to, b.to), false) ? b : a));
   if (best.to === head) return { kind: "covered", survey: best, tip: head };
 
   const count = git(["rev-list", "--count", `${best.to}..${head}`], root);

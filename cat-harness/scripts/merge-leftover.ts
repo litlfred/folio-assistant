@@ -42,6 +42,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.ts";
+import { isAncestor } from "./git-ancestry.ts";
 import { git, parseMemberSpec, resolveMember } from "./merge-pipeline-git.ts";
 import { differsOnlyInRegions, pathClass } from "./merge-pipeline-paths.ts";
 
@@ -106,7 +107,17 @@ function show(root: string, rev: string, path: string): string | undefined {
 /** Compare one PR head against a base, path by path. Pure git; no working tree is touched. */
 export function leftover(root: string, head: string, base: string): Omit<LeftoverReport, "$schema" | "member" | "base"> {
   const empty = { head, base_sha: base, merge_base: null, authored_different: [] as string[], paths: [] as LeftoverPath[] };
-  if (git(root, ["merge-base", "--is-ancestor", head, base]).ok) {
+  // NOT `git(...).ok`. That reads a non-zero exit as "the head is not
+  // contained", and on a shallow clone the exit is 128 (bad object) rather
+  // than 1 — so a head that HAS landed reads as unlanded, and this function
+  // then reports leftover paths for work already merged. `isAncestor` deepens
+  // first and says `unknown` instead of guessing; `could-not-determine` is
+  // already this report's third verdict, so the honest answer has a home.
+  const landed = isAncestor(root, head, base);
+  if (!landed.known) {
+    return { ...empty, verdict: "could-not-determine", reason: `could not tell whether the head has landed: ${landed.reason}` };
+  }
+  if (landed.ancestor) {
     return { ...empty, verdict: "landed", reason: "the head is contained in the base" };
   }
   const mb = git(root, ["merge-base", head, base]);
