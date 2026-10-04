@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T12:55:24Z
-updated_at: 2026-10-04T13:35:53Z
+updated_at: 2026-10-04T13:44:35Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-xsrv
@@ -31,6 +31,9 @@ Owner, 2026-10-04: *"auto-docs (e.g. fhir) should be in cat/cat-harness/auto-doc
 - [x] the branch exists, seeded and verified (owner, 2026-10-04: "make cat/fhir-harness/ig-docs"), with `main` still authoritative
 - [ ] the gen-ig-pages sub-sub-graph is declared under auto-docs with `storage` on cat/fhir-harness/ig-docs, keyed by route
 - [x] `<ig>:pages:check` reads through the branch store (route-authority, #2053); `could not determine` (exit 4) when the branch is unreachable, never clean. The WRITE half (publishing to the branch) is still to do
+- [ ] a MAIN workflow regenerates and publishes the route branches after each merge (owner, 2026-10-04)
+- [ ] the STAGING workflow rebuilds only the dependency cone of a PR's changes (general rule, in the skills)
+- [ ] the just-the-docs build pulls IG pages from cat/fhir-harness/ig-docs and QA results from qa-reports
 - [ ] the pages leave main for each IG still staged here
 - [x] each IG fork uses the same branch name for its own pages (litlfred/smart-trust#5 first: ee00983e)
 
@@ -54,3 +57,15 @@ litlfred/smart-trust now has its own `cat/fhir-harness/ig-docs` (ee00983e). It h
 - **With storage on a branch that doesn't exist:** "COULD NOT DETERMINE … not a pass", exit 4.
 
 Next: the write half (`<ig>:pages` publishes to the branch through branch-store's `publish --id`), then `storage` on the declarations, then removal from main on the owner's go.
+
+## Owner rulings, 2026-10-04 (asked: when is a route branch written, and what does a PR's check compare?)
+
+> *"need main and staging workflows. staging rebuild only what is dependency cone of changes (general rule. update skills)"*
+> *"also need to update justthedocs rendering pipeline to pull from cat/fhir-harness/ig-docs as well qa-reports"*
+
+So:
+- **A MAIN workflow:** after a merge, it regenerates and publishes to the route branches (`cat/fhir-harness/ig-docs`, and `xsrv`'s `cat/cat-harness/uml-overview`).
+- **A STAGING workflow** (per-PR preview): it rebuilds **only the dependency cone of what the PR changed**. This is a GENERAL rule, so it goes into the skills, not just this bean.
+- **The just-the-docs build** pulls IG pages from `cat/fhir-harness/ig-docs` and QA results from `cat/cat-harness/qa-reports`, rather than needing them committed on main.
+
+Mapping the existing pipeline (docs-site, feature-staging, compose-docs's existing "cut", qa:fetch, branch-store) before building.
