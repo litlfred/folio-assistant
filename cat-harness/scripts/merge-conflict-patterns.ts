@@ -80,7 +80,10 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "**/test/results/tool-runs/**",
     ],
     strategy: "take-base",
-    why: "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them.",
+    why:
+      "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them. " +
+      "The LSI half is UNTRACKED on `main` since bean `tqjj` and these globs are kept for the branches still carrying it: a branch that edited the sidecar meets a base that deleted it, and `take-base` is the right answer to that too. " +
+      "It is also the measured limit of what a declaration buys. These paths carried this entry all along and still conflicted on seven open pull requests each, because the strategy settles HOW a conflict is resolved and never whether one arises — `.gitattributes` says the same thing in its own words: \"Removing these conflicts, rather than tidying them, needs the files off `main` altogether.\"",
   },
   {
     id: "auto-docs",
@@ -113,7 +116,9 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "glossary",
     globs: ["cat-harness/docs/glossary/**", "cat-harness/docs/lsi/**"],
     strategy: "take-base",
-    why: "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide.",
+    why:
+      "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide. " +
+      "The LSI page still conflicts but much less often since bean `tqjj`: its per-index detail — the half a one-sentence skill edit moved — is added by the docs-site build rather than committed, and what is left is a function of the tree. The glossary page has no equivalent split: every number on it is a term count over the whole corpus, and there is no half that only the tree moves.",
   },
   {
     id: "translated-glossary",

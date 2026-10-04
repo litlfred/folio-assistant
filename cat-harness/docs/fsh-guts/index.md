@@ -25,7 +25,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**147 file(s)** across 5 group(s). Each links to the file itself —
+**180 file(s)** across 6 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -40,9 +40,9 @@ would make the format's limit and somebody's omission look the same.
 |---|---|---|
 | <span class="fg-tag fg-ok">declared</span> | 81 | carries the tag itself |
 | <span class="fg-tag fg-side">via sidecar</span> | 58 | a script, described by a tagged `.md` sibling |
-| <span class="fg-tag fg-gap">undeclared</span> | 8 | **neither** — a gap, not a format limit |
+| <span class="fg-tag fg-gap">undeclared</span> | 41 | **neither** — a gap, not a format limit |
 
-The 8 undeclared are listed below with the rest rather than in a
+The 41 undeclared are listed below with the rest rather than in a
 separate section: they are part of the corpus, and a gap hidden behind a
 summary count is the failure this table exists to avoid.
 
@@ -53,6 +53,46 @@ summary count is the failure this table exists to avoid.
 | file | what it is | declares itself |
 |---|---|---|
 | [README.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/README.md) | fsh-guts | <span class="fg-tag fg-ok">declared</span> |
+
+## logs
+
+33 file(s).
+
+| file | what it is | declares itself |
+|---|---|---|
+| [2026-10-04T15-51-24-152Z-rdk1y0.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-51-24-152Z-rdk1y0.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-51-28-802Z-5qq9b9.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-51-28-802Z-5qq9b9.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-51-33-343Z-qaqcs7.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-51-33-343Z-qaqcs7.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-51-48-204Z-wf3ff0.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-51-48-204Z-wf3ff0.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-52-02-588Z-r7sp2a.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-52-02-588Z-r7sp2a.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-52-41-746Z-4nsxh2.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-52-41-746Z-4nsxh2.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-52-46-135Z-slhq5e.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-52-46-135Z-slhq5e.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-52-50-623Z-n6n0ux.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-52-50-623Z-n6n0ux.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T15-52-57-244Z-jkae4k.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T15-52-57-244Z-jkae4k.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-20-43-375Z-qcdwke.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-20-43-375Z-qcdwke.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-20-46-991Z-wzr99p.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-20-46-991Z-wzr99p.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-20-51-417Z-lyqr0z.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-20-51-417Z-lyqr0z.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-20-58-086Z-n03p9m.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-20-58-086Z-n03p9m.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-22-49-790Z-eh83nf.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-22-49-790Z-eh83nf.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-22-53-865Z-so4qcl.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-22-53-865Z-so4qcl.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-22-57-620Z-71vq6s.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-22-57-620Z-71vq6s.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-23-01-418Z-okmv76.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-23-01-418Z-okmv76.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-23-04-502Z-xzmzdo.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-23-04-502Z-xzmzdo.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-23-07-989Z-qt9zf8.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-23-07-989Z-qt9zf8.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-20-230Z-kle8ce.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-20-230Z-kle8ce.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-24-092Z-l2do9z.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-24-092Z-l2do9z.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-27-886Z-4v2snj.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-27-886Z-4v2snj.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-31-666Z-5d8pnp.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-31-666Z-5d8pnp.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-35-458Z-kz9e73.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-35-458Z-kz9e73.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-39-135Z-vffq36.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-39-135Z-vffq36.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-42-790Z-8tmov1.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-42-790Z-8tmov1.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-46-144Z-p5pyos.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-46-144Z-p5pyos.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-40-51-172Z-jx1ann.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-40-51-172Z-jx1ann.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-41-04-696Z-riu9f1.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-41-04-696Z-riu9f1.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-41-08-302Z-zji9c9.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-41-08-302Z-zji9c9.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-41-19-426Z-3h4ui2.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-41-19-426Z-3h4ui2.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-42-26-939Z-vgm6dd.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-42-26-939Z-vgm6dd.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
+| [2026-10-04T16-44-25-895Z-ujy9hi.json](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/logs/2026-10-04T16-44-25-895Z-ujy9hi.json) | — | <span class="fg-tag fg-gap">undeclared</span> |
 
 ## retired
 
