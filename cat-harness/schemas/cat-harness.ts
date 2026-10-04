@@ -993,6 +993,39 @@ const GraphNodeDirectoryShape = z.object({
   absent: z
     .object({ reason: z.string().min(1, "an absent directory's reason cannot be empty") })
     .optional(),
+  /**
+   * This entry is an instance SUBGRAPH, not a part of its parent's graph.
+   *
+   * Bean `cmsl`: `resolveDirectories` lists a `"subgraph": true` entry exactly
+   * as if `<instance>.json` had declared it (`skills.json`'s `voices`,
+   * `beans.json`'s `queue`), while an entry without the marker — `beans.json`'s
+   * `defs`, `docs.json`'s `proposals` — is one graph's interior and stays out
+   * of the instance list.
+   *
+   * Declared here because `promoteFromWithin` has read it off the raw JSON
+   * since `cmsl` and this schema did not carry it, so every consumer going
+   * through `parseBeanGraph` lost it. `z.object` STRIPS an unknown key rather
+   * than refusing it, which is why the loss was silent.
+   */
+  subgraph: z.literal(true).optional(),
+  /**
+   * Where this entry's content comes from, when it is not the checkout.
+   *
+   * The same field `ContentDirectory` carries, for the same reason and read by
+   * the same resolver: a from-within entry can be kept on a branch too. Bean
+   * `najo` cut `beans/queue/` over to `cat/cat-harness/merge-queue`, and
+   * before this field existed here `parseBeanGraph` dropped the `source` —
+   * so `contentIsOffCheckout` answered `false` for a graph that is not in the
+   * checkout at all, and a reader of the parsed graph demanded a directory on
+   * disk that is deliberately absent.
+   *
+   * `storage` is the legacy spelling (#1764) and is accepted for the reason
+   * `resolveSubgraphSource` accepts it: a consumer must not get a different
+   * answer because of which field an author wrote. `z.lazy` because
+   * `DirectoryStorageSchema` is declared further down this module.
+   */
+  source: SubgraphSourceSchema.optional(),
+  storage: z.lazy(() => DirectoryStorageSchema).optional(),
   ...kgNodeLabelShape,
 });
 

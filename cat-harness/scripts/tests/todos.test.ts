@@ -14,6 +14,7 @@ import { join } from "node:path";
 
 import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { BEAN_GRAPH_FILE, parseBeanGraph } from "../../schemas/bean-graph.js";
+import { contentIsOffCheckout, resolveSubgraphSource } from "../../schemas/subgraph-source.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../../schemas/todo-graph.js";
 import { ROOT, TODO_ROOT, readTodos, todoDirs } from "../todos.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
@@ -71,11 +72,37 @@ describe("the declaration and the directory agree", () => {
     //
     // Asserted here rather than in a bean-graph test file so the two cannot
     // drift: the rule is about DECLARATIONS, not about todos.
+    // ...EXCEPT a node whose content is not in the checkout at all. Bean
+    // `najo` cut `queue` over to `cat/cat-harness/merge-queue`, so its
+    // directory is a MOUNT POINT: present in a session that ran
+    // `bun run state:mount`, absent in a fresh clone, and neither is a defect.
+    // Asserting presence there is the inverse of the error this test is for —
+    // it would demand a second copy of a graph that lives on a branch, which
+    // is the state `check:declared-dirs` reports as `not-cut-over`. That gate
+    // owns the off-checkout cases (unmounted, unmountable); this one keeps the
+    // original assertion for every node that really is here.
     const decl = join(repoRootFor(ROOT), "beans", BEAN_GRAPH_FILE);
     const g = parseBeanGraph(JSON.parse(readFileSync(decl, "utf8")));
-    for (const d of g.directories) {
+    const inCheckout = g.directories.filter((d) => !contentIsOffCheckout(d));
+    // The filter must not silently empty the list: `beans.json` has four such
+    // nodes and a day where it has none would make this test vacuous.
+    expect(inCheckout.length).toBeGreaterThan(1);
+    for (const d of inCheckout) {
       const dir = join(repoRootFor(ROOT), "beans", d.path);
       expect({ node: d.id, there: existsSync(dir) }).toEqual({ node: d.id, there: true });
+    }
+  });
+
+  test("a bean-graph node kept on a branch is NOT expected on disk, and is not silently dropped either", () => {
+    // The complement, so the filter above is a stated rule rather than a hole:
+    // every node the filter excludes must declare where its content is, and
+    // `contentIsOffCheckout` must agree with the declaration. Bean `najo`.
+    const decl = join(repoRootFor(ROOT), "beans", BEAN_GRAPH_FILE);
+    const g = parseBeanGraph(JSON.parse(readFileSync(decl, "utf8")));
+    const off = g.directories.filter((d) => contentIsOffCheckout(d));
+    for (const d of off) {
+      const src = resolveSubgraphSource(d as Parameters<typeof resolveSubgraphSource>[0]);
+      expect({ node: d.id, kind: src.kind }).toEqual({ node: d.id, kind: "branch" });
     }
   });
 });

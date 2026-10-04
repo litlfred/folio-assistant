@@ -270,6 +270,20 @@ describe("the real corpus", () => {
       const entry = decl?.directories?.find((d) => d.id === f.id);
       return entry !== undefined && mayLeaveMain(entry);
     };
-    expect(all.filter((f) => !offMain(f))).toEqual([]);
+    // And `unmounted` is not this test's question either, for the same reason
+    // one state over. Bean `najo`: `beans/queue/` is kept at a branch tip, so
+    // whether it is on disk depends on whether this RUNNER ran
+    // `bun run state:mount` — a session has, a `bun test` shard has not. A unit
+    // test whose verdict flips with the environment is worse than no test: it
+    // reads as a defect in the tree when the tree is fine, which is how a suite
+    // teaches people to re-run it until it passes.
+    //
+    // The question itself is kept, where it belongs: `check:declared-dirs` runs
+    // as a GATE in a job that mounts first, and fails there. Only `unmounted`
+    // is set aside — `not-cut-over` (two copies, nothing authoritative) and
+    // `unmountable` (a declaration no mount can reach) are defects in the
+    // declaration itself and stay failing here, whatever the environment.
+    const unmounted = (f: (typeof all)[number]): boolean => f.kind === "unmounted";
+    expect(all.filter((f) => !offMain(f) && !unmounted(f))).toEqual([]);
   });
 });
