@@ -5,8 +5,11 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-10-04T15:10:09Z
-updated_at: 2026-10-04T15:10:09Z
-parent: folio-assistant-3p7c
+updated_at: 2026-10-04T18:11:30Z
+parent: folio-assistant-vuip
 ---
 
 Recorded from the qou work-plan analysis, 2026-10-04 (session https://claude.ai/code/session_01NdDGeP1SyShmoUssLuRZ91). Not started: recorded so the gap has an owner. litlfred/folio-test was stood up by 58h0 as the folio_init dogfood; its main is behind the current template and pipeline, so it no longer proves what it was made to prove. Re-measure the delta before acting.
+
+
+Re-parented 2026-10-04 from folio-assistant-3p7c (completed) to its parent folio-assistant-vuip: check:bean-rollup refuses an open child under a completed container. The lag is GOAL-1 work, which vuip is.
