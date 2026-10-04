@@ -3,21 +3,21 @@ import { dayOf, fhirSpecUrl, igFooterData, licenseUrl } from "./ig-footer.ts";
 
 describe("igFooterData", () => {
   const pkg = {
-    name: "smart.who.int.trust",
+    name: "hl7.fhir.uv.example",
     version: "1.8.0",
     date: "20261001114021",
     license: "CC-BY-SA-3.0-IGO",
     fhirVersions: ["5.0.0"],
-    author: "WHO",
-    maintainers: [{ name: "WHO", url: "http://who.int" }],
+    author: "HL7",
+    maintainers: [{ name: "HL7", url: "http://hl7.org" }],
   };
-  const ig = { publisher: "World Health Organization", contact: [{ telecom: [{ system: "email", value: "x@y" }, { system: "url", value: "https://who.int" }] }], fhirVersion: ["5.0.0"], license: "CC-BY-4.0" };
+  const ig = { publisher: "HL7 International", contact: [{ telecom: [{ system: "email", value: "x@y" }, { system: "url", value: "https://hl7.org" }] }], fhirVersion: ["5.0.0"], license: "CC-BY-4.0" };
 
   it("reads every value from the package, preferring the ImplementationGuide resource", () => {
     expect(igFooterData(pkg, ig, {})).toEqual({
-      publisher: "World Health Organization",
-      publisherUrl: "https://who.int",
-      packageId: "smart.who.int.trust",
+      publisher: "HL7 International",
+      publisherUrl: "https://hl7.org",
+      packageId: "hl7.fhir.uv.example",
       version: "1.8.0",
       fhirVersion: "5.0.0",
       fhirUrl: "http://hl7.org/fhir/R5/",
@@ -28,7 +28,7 @@ describe("igFooterData", () => {
   });
 
   it("falls back to package.json, then to the index", () => {
-    expect(igFooterData(pkg, undefined, {}).publisherUrl).toBe("http://who.int");
+    expect(igFooterData(pkg, undefined, {}).publisherUrl).toBe("http://hl7.org");
     expect(igFooterData(undefined, undefined, { packageId: "p", version: "1", fhirVersion: ["4.0.1"], builtAt: "20260826120000" })).toEqual({
       packageId: "p",
       version: "1",
