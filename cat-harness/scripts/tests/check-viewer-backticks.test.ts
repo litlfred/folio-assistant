@@ -110,7 +110,7 @@ describe("the file set is derived, not listed", () => {
     expect(sources).toContain("cat-harness/scripts/gen-schema-viz.ts");
     // And the two the old array could not include, because the old detector
     // reported them falsely.
-    expect(sources).toContain("cat-harness/scripts/gen-auto-docs.ts");
+    expect(sources).toContain("cat-harness-tools/scripts/gen-auto-docs.ts");
     expect(sources).toContain("cat-harness/scripts/dak-pdf.ts");
   });
 
