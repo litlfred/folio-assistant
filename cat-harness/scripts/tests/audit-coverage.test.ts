@@ -275,7 +275,11 @@ describe("the report is a fixpoint", () => {
     // The exclusion is one file, not the family: every OTHER `.qa-results.json`
     // is still counted, or the row would stop measuring the thing it names.
     expect(qa!.sidecars).toBeGreaterThan(1);
-  });
+    // Two FULL coverage passes over the checkout: ~2.6 s each measured alone
+    // on 2026-10-04 (5.2 s on main, 5.9 s with the 9c7h mount steps), so
+    // Bun's 5 s default failed it in a loaded CI shard. Sized for the work,
+    // as claim-branch-store's was (6582859), not to hide a hang.
+  }, 30_000);
 
   test("census excludes only what it is told to", () => {
     const dir = mkdtempSync(join(tmpdir(), "audit-coverage-skip-"));
