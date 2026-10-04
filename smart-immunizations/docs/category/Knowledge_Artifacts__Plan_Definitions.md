@@ -162,3 +162,6 @@ index because a table this size makes the front page unreadable.
 | [IMMZ.D5.DT.Typhoid contraindications](../artifact/PlanDefinition-IMMZD5DTTyphoidContraindications.html)<br>`PlanDefinition/IMMZD5DTTyphoidContraindications` | IMMZ.D5.DT.Typhoid contraindications IMMZ.D5.DT.Typhoid contraindications |
 | [IMMZ.D5.DT.Varicella contraindications](../artifact/PlanDefinition-IMMZD5DTVaricellaContraindications.html)<br>`PlanDefinition/IMMZD5DTVaricellaContraindications` | IMMZ.D5.DT.Varicella contraindications IMMZ.D5.DT.Varicella contraindications |
 | [IMMZ.D5.DT.Yellow fever contraindications](../artifact/PlanDefinition-IMMZD5DTYellowFeverContraindications.html)<br>`PlanDefinition/IMMZD5DTYellowFeverContraindications` | IMMZ.D5.DT.Yellow fever contraindications IMMZ.D5.DT.Yellow fever contraindications |
+
+<footer id="ig-footer" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

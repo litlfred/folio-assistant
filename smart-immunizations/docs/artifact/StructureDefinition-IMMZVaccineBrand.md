@@ -37,3 +37,6 @@ The brand or trade name used to refer to the vaccine received
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="StructureDefinition-IMMZTypeOfDose.html" data-next="StructureDefinition-IMMZC4.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

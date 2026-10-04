@@ -37,3 +37,6 @@ Questionnaire for IMMZ.D2.Determine required vaccination(s)
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="Questionnaire-QIMMZD18.html" data-next="Questionnaire-QIMMZD20.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

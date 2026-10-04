@@ -43,3 +43,6 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCVaccinesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCVaccinesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SCholeraWCVaccinesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCVaccinesVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SCholeraWCVaccinesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SCholeraWCVaccinesVS.jsonld` · [view](ValueSet-IMMZD18SCholeraWCVaccinesVS.jsonld.html) |
+
+<footer id="ig-footer" data-prev="ValueSet-IMMZD18SCholeraWCRBSVaccine3DosesVS.html" data-next="ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
