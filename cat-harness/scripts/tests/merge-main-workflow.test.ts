@@ -235,3 +235,27 @@ describe("a cancelled or unfinished run is not an error (#1854)", () => {
     expect(fail.if).toContain("steps.merge.outcome == 'success'");
   });
 });
+
+describe("a clean run clears an earlier refusal's label — bean wczm item 3", () => {
+  const LOG = "  ✗ cat-harness/x.ts  [no declared pattern]";
+  const write = (p: ReturnType<typeof composeComment>) => {
+    if (p.action !== "write") throw new Error("expected a write");
+    return p;
+  };
+  test("merged and pushed, or already up to date: clear it", () => {
+    expect(write(composeComment({ ...BASE, status: "0", merged: "true", pushed: "success", sha: "0123456789abcdef" })).clearNeedsHuman).toBe(true);
+    expect(write(composeComment({ ...BASE, status: "0" })).clearNeedsHuman).toBe(true);
+  });
+  test("a refusal, an unproved merge, a blocked or failed push, or an error: leave it", () => {
+    expect(write(composeComment({ ...BASE, log: LOG })).clearNeedsHuman).toBe(false);
+    expect(write(composeComment({ ...BASE, log: "    ✗ check:x STILL fails" })).clearNeedsHuman).toBe(false);
+    expect(write(composeComment({ ...BASE, merged: "true", blocked: "workflows" })).clearNeedsHuman).toBe(false);
+    expect(write(composeComment({ ...BASE, merged: "true", rejected: "true" })).clearNeedsHuman).toBe(false);
+    expect(write(composeComment({ ...BASE, status: "2" })).clearNeedsHuman).toBe(false);
+  });
+  test("the workflow acts on it, and only when the label is there", () => {
+    const wf = readFileSync(WORKFLOW, "utf-8");
+    expect(wf).toContain("jq -r .clearNeedsHuman");
+    expect(wf).toMatch(/grep -qx needs-merge-human; then[\s\S]{0,120}--remove-label needs-merge-human/);
+  });
+});

@@ -349,6 +349,13 @@ jobs:
             gh label create needs-merge-human --color D93F0B --description "merge:main refused: an authored or undeclared conflict" --force >/dev/null
             gh pr edit "$PR" --repo "$REPO" --add-label needs-merge-human >/dev/null
           fi
+          # A clean run clears an earlier refusal's label (bean `wczm` item 3):
+          # it named a conflict this run has now merged, or found gone. Read
+          # first, so a PR that never carried the label is not edited.
+          if [ "$(jq -r .clearNeedsHuman <<<"$plan")" = true ] &&
+             gh pr view "$PR" --repo "$REPO" --json labels --jq '.labels[].name' | grep -qx needs-merge-human; then
+            gh pr edit "$PR" --repo "$REPO" --remove-label needs-merge-human >/dev/null
+          fi
           existing=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" --paginate \
             --jq ".[] | select(.body | startswith(\"$MARKER\")) | .id" | head -n1)
           if [ -n "$existing" ]; then

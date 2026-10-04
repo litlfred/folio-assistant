@@ -1,10 +1,11 @@
 ---
 # folio-assistant-wczm
 title: 'Regenerate gaps: no writer for check:l1-complete or smart-kg-l1 --entry; merge-base takes main''s side on a fast-forwardable gitlink; merge-main bot doesn''t clear needs-merge-human'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-10-02T17:19:31Z
-updated_at: 2026-10-02T17:19:31Z
+updated_at: 2026-10-04T06:10:08Z
 parent: folio-assistant-hfag
 ---
 
@@ -26,3 +27,9 @@ Owner, 2026-10-02, via the merge-pipeline coordinator: one bean under the merge-
 - [ ] (2) a gitlink conflict takes the descendant pin when one side fast-forwards the other, and refuses when the pins diverge; tested both ways
 - [ ] (3) a successful merge-main run removes `needs-merge-human`
 - [ ] reconciled with `u7be` once #1887 lands (one scrapped with a pointer, neither deleted)
+
+## Progress 2026-10-04
+- [x] (3) DONE on this branch: `composeComment` returns `clearNeedsHuman` (true after a merged-and-pushed or already-up-to-date run, false after a refusal, unproved merge, blocked or failed push, or error), and `merge-main.yml` removes `needs-merge-human` when it is set AND the label is present. Tested in `merge-main-workflow.test.ts`; mutation-checked.
+- [x] reconciled with `u7be`: its (1), (2), (4) point here; it keeps its own (3), no-CI heads in trains. Neither deleted.
+- [ ] (1) regen writers for check:l1-complete and smart-kg-l1 --entry — next
+- [x] (2) DONE on this branch: `merge-base.ts` resolves a conflicted gitlink (mode 160000) by ANCESTRY before the path patterns run — the descendant pin wins either way, diverged pins are refused, a pin the submodule lacks is could-not-determine. Found while testing: git resolves a fast-forward pin itself when it can see the history, so the conflict only arises in a SHALLOW submodule (`--depth 1`, as this repository's and CI's are), where `--is-ancestor` fails both ways; the resolver deepens (`--unshallow`) before deciding, else every fast-forward would read as "diverged". Tested on a real shallow submodule fixture both ways plus diverged; mutation-checked.

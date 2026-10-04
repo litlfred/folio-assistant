@@ -56,7 +56,18 @@ export interface CommentInput {
 
 export type CommentPlan =
   | { action: "leave"; reason: string }
-  | { action: "write"; body: string; labelNeedsHuman: boolean };
+  | {
+      action: "write";
+      body: string;
+      labelNeedsHuman: boolean;
+      /**
+       * The merge succeeded or there was nothing to merge, so an earlier
+       * refusal's `needs-merge-human` no longer describes the PR. Without this
+       * the label outlived the problem it named (bean `wczm` item 3): a later
+       * clean run fixed the branch and the PR still asked for a person.
+       */
+      clearNeedsHuman: boolean;
+    };
 
 /** The three lists the comment reports, read from merge-base's own output. */
 export function parseLog(log: string): { resolved: string; refused: string; unrepaired: string } {
@@ -115,6 +126,7 @@ export function composeComment(i: CommentInput): CommentPlan {
     action: "write",
     body: `${body.join("\n")}\n\n[Run](${i.runUrl}) · \`.github/workflows/merge-main.yml\` (bean \`d33q\`). Remove the \`merge-main\` label to stop.`,
     labelNeedsHuman,
+    clearNeedsHuman: !labelNeedsHuman && ((i.merged === "true" && i.pushed === "success") || (i.merged !== "true" && i.status === "0")),
   };
 }
 
