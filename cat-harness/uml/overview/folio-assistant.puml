@@ -196,6 +196,7 @@ package "folio-assistant/queue" as pkg_folio_assistant_queue <<merge-queue>> {
     hold [0..1] : object
     trainId [0..1] : string
     ejection [0..1] : object
+    status [0..1] : enum(7)
     beans [0..*] : string[]
   }
 }
