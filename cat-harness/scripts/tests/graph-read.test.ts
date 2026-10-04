@@ -391,3 +391,73 @@ describe("todos, issue-marks and the claim writer resolve by declared ID", () =>
     expect(r.reason ?? "").not.toContain("not mounted here");
   });
 });
+
+// ── Row D step 5: the whole bean graph relocates, not just `defs` ──────────
+describe("resolveBeanGraphNode and the workflow instance store", () => {
+  /** A repo whose bean graph declares `defs` AND `workflows`. */
+  function graphRepo(storage?: Record<string, unknown>): string {
+    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    mkdirSync(join(root, "beans", "workflows"), { recursive: true });
+    mkdirSync(join(root, "beans", "defs"), { recursive: true });
+    writeFileSync(
+      join(root, "beans", "beans.json"),
+      JSON.stringify({
+        name: "fixture",
+        directories: [
+          { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
+          { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
+        ],
+      }),
+    );
+    return root;
+  }
+
+  test("every node of the graph moves, not only `defs`", async () => {
+    const { resolveBeanGraphNode } = await import("../beans.ts");
+
+    const plain = graphRepo();
+    expect(resolveBeanGraphNode(plain, "workflow-state").dir).toBe(join(plain, "beans", "workflows"));
+
+    // Mounted: `workflows` follows the graph, exactly as `defs` does.
+    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const into = join(cut, "mount");
+    mkdirSync(join(into, "workflows"), { recursive: true });
+    writeFileSync(
+      join(into, "beans.json"),
+      JSON.stringify({ name: "f", directories: [{ id: "workflows", path: "workflows", graphKinds: ["workflow-state"] }] }),
+    );
+    mount(cut, "beans", into);
+    expect(resolveBeanGraphNode(cut, "workflow-state").dir).toBe(join(into, "workflows"));
+  });
+
+  test("unreachable is carried, not turned into a path that happens not to exist", async () => {
+    const { resolveBeanGraphNode } = await import("../beans.ts");
+    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const r = resolveBeanGraphNode(cut, "workflow-state");
+    expect(r.dir).toBeNull();
+    expect(r.declared).toBe(true);
+    expect(r.unreachable).toContain("state:mount");
+  });
+
+  test("`WORKFLOW_DIR` is UNCHANGED — the gate that compares it to the declaration still has its subject", async () => {
+    const { WORKFLOW_DIR } = await import("../../src/workflow/store.ts");
+    expect(WORKFLOW_DIR).toBe(join("beans", "workflows"));
+  });
+
+  test("`workflowDir` relocates, memoises, and throws rather than listing an absent directory", async () => {
+    const { workflowDir, clearWorkflowDirCache } = await import("../../src/workflow/store.ts");
+    clearWorkflowDirCache();
+
+    const plain = graphRepo();
+    expect(workflowDir(plain)).toBe(join(plain, "beans", "workflows"));
+    // Memoised: a second call is the same answer without re-resolving.
+    expect(workflowDir(plain)).toBe(join(plain, "beans", "workflows"));
+
+    clearWorkflowDirCache();
+    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    // `listInstances` would return [] and every running workflow would read as
+    // never started; `saveInstance` would write where nothing looks.
+    expect(() => workflowDir(cut)).toThrow(/cannot resolve the workflow instance directory/);
+    clearWorkflowDirCache();
+  });
+});
