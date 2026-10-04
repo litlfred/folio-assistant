@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 767,
+      "count": 768,
       "unit": "beans"
     }
   },
@@ -4607,6 +4607,20 @@
       "updatedAt": "2026-09-29T18:14:48Z",
       "preview": "Owner, 2026-09-20: 'as part of rendeing pipleine, can we tarball or so as binary archives the justthedocs search (and only aviaable on release, not refresh on staging?)'\n\nYES — BUT NOT FOR THE REASON A TARBALL USUALLY WINS, and the distinction decides the design.\n\n**Compression buys nothing on the wire.** GitHub Pages already serves text with `Content-Encoding: gzip`, so a plain `search-data.json`",
       "file": "beans/defs/folio-assistant-eof6--search-index-as-a-release-artifact-build-it-on-rel.md"
+    },
+    {
+      "id": "folio-assistant-eojz",
+      "title": "LANDING: the site's landing instance is resolved from a site.landing flag, not the generator's directory (#1904)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-02T22:49:23Z",
+      "updatedAt": "2026-10-02T22:49:36Z",
+      "preview": "Issue #1904. Owner ruling 2026-10-02, verbatim: \"Flag it, with a default (recommended). The chosen instance's own `<name>.config.json` carries `\"site\": { \"landing\": true }`. If exactly one harness is instantiated, it is the landing page and no flag is needed. That covers smart-trust. If there are several and none is flagged, a gate fails. If more than one is flagged, then neutral hub with listing ",
+      "file": "beans/defs/folio-assistant-eojz--landing-the-sites-landing-instance-is-resolved-fro.md"
     },
     {
       "id": "folio-assistant-eowd",
