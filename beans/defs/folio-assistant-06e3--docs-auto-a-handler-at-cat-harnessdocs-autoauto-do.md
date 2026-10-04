@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06e3
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-03T11:41:35Z
+updated_at: 2026-10-04T06:09:38Z
 parent: folio-assistant-0lmb
 ---
 
@@ -876,3 +876,5 @@ Two things that do follow from the measurement:
 shrug. The owner picked §4(b) of these three; §4(a) is done above because (b)
 grades it. §4(c) is reported with its premise measured so the next agent does
 not repeat the investigation.
+
+_2026-10-04T06:09:36Z_ — Claimed by claude/who-iris-docs-end-to-end-06e3 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
