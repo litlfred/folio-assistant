@@ -5,14 +5,14 @@
  * Calibrated: making `statusOf` skip the package comparison fails the
  * "another IG's identity" test.
  */
-import { describe, expect, it } from "bun:test";
-import { join, resolve } from "node:path";
+import { afterAll, describe, expect, it } from "bun:test";
+import { rmSync } from "node:fs";
+import { join } from "node:path";
 
 import { IG_IDENTITY_SCHEMA_TAG, IgIdentitySchema, readIgIdentity, statusOf, type IgIdentity } from "./ig-identity";
+import { IPA, IPS, IPS_IDENTITY, artifactIndex, scratchRepo } from "../test/support/ig-fixture";
 
-const ROOT = resolve(import.meta.dir, "..", "..");
-
-const trust: IgIdentity = {
+const one: IgIdentity = {
   $schema: IG_IDENTITY_SCHEMA_TAG,
   id: "example.ig.one",
   canonical: "http://example.org/one",
@@ -23,25 +23,35 @@ const trust: IgIdentity = {
 
 describe("statusOf", () => {
   it("states the status for the IG the identity names", () => {
-    expect(statusOf(trust, "example.ig.one")).toBe("draft");
+    expect(statusOf(one, "example.ig.one")).toBe("draft");
   });
   it("refuses another IG's identity — a mis-filed copy paints no watermark", () => {
-    expect(statusOf(trust, "example.ig.two")).toBeUndefined();
+    expect(statusOf(one, "example.ig.two")).toBeUndefined();
   });
   it("no identity, or no package to compare, states nothing", () => {
     expect(statusOf(undefined, "example.ig.one")).toBeUndefined();
-    expect(statusOf(trust, undefined)).toBeUndefined();
+    expect(statusOf(one, undefined)).toBeUndefined();
   });
 });
 
-describe("the committed identities", () => {
-  it("smart-trust's validates and names its own package", () => {
-    const id = readIgIdentity(join(ROOT, "smart-trust", "fhir-artifact-index"));
+/**
+ * Read from disk, as the page generator and `site.data.fhir` read it. The
+ * committed WHO identities are checked in `smart-base/scripts/ig-pages-committed.test.ts`.
+ */
+describe("identities read from an instance", () => {
+  const repo = scratchRepo({
+    ips: { index: artifactIndex(IPS, "ips"), identity: IPS_IDENTITY },
+    ipa: { index: artifactIndex(IPA, "ipa") },
+  });
+  afterAll(() => rmSync(repo, { recursive: true, force: true }));
+
+  it("an IG's own identity validates and names its own package", () => {
+    const id = readIgIdentity(join(repo, "ips", "fhir-artifact-index"));
     expect(id).toBeDefined();
     expect(IgIdentitySchema.safeParse(id).success).toBe(true);
-    expect(id!.id).toBe("smart.who.int.trust");
+    expect(id!.id).toBe(IPS.packageId);
   });
-  it("smart-base has none, so it states no status (the third state)", () => {
-    expect(readIgIdentity(join(ROOT, "smart-base", "fhir-artifact-index"))).toBeUndefined();
+  it("an IG with none states no status (the third state)", () => {
+    expect(readIgIdentity(join(repo, "ipa", "fhir-artifact-index"))).toBeUndefined();
   });
 });

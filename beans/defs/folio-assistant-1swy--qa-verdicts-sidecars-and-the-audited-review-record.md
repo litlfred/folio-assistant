@@ -3,8 +3,10 @@
 title: 'QA: verdicts, sidecars and the audited review record'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:43:44Z
+updated_at: 2026-10-04T15:12:14Z
+parent: folio-assistant-rwmf
 ---
 
 Where a verdict lives, what shape it has, and who is allowed to change it.

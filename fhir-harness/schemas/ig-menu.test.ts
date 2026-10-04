@@ -11,7 +11,7 @@ describe("groupsFromSushiMenu — both shapes, in file order", () => {
   test("a nested map becomes a group with its children, in the config's order", () => {
     const groups = groupsFromSushiMenu({
       Home: { Summary: "index.html", Dependencies: "dependencies.html" },
-      Indices: { "Artifact Index": "artifacts.html", "DAK API": "dak-api.html" },
+      Indices: { "Artifact Index": "artifacts.html", Downloads: "downloads.html" },
     });
     expect(groups.map((g) => g.label)).toEqual(["Home", "Indices"]);
     expect(groups[0]!.items).toEqual([
@@ -51,10 +51,10 @@ describe("groupsFromSushiMenu — both shapes, in file order", () => {
 });
 
 describe("menuHref — the join is written once", () => {
-  const menu = { canonical: "http://smart.who.int/trust" };
+  const menu = { canonical: "http://hl7.org/fhir/uv/ips" };
   test("joins a relative href to the canonical base", () => {
-    expect(menuHref(menu, { href: "system-actors.html" })).toBe(
-      "http://smart.who.int/trust/system-actors.html",
+    expect(menuHref(menu, { href: "ips-overview.html" })).toBe(
+      "http://hl7.org/fhir/uv/ips/ips-overview.html",
     );
   });
   test("does not double a slash, from either side", () => {
@@ -68,12 +68,12 @@ describe("menuHref — the join is written once", () => {
 describe("the schema refuses a menu with no provenance", () => {
   const valid = {
     $schema: IG_MENU_SCHEMA_TAG,
-    id: "smart.who.int.trust",
-    canonical: "http://smart.who.int/trust",
+    id: "hl7.fhir.uv.ips",
+    canonical: "http://hl7.org/fhir/uv/ips",
     source: {
       kind: "sushi-config" as const,
-      of: "https://github.com/WorldHealthOrganization/smart-trust",
-      ref: "26635f7b05b647bb4f15a526bac79d23cff57056",
+      of: "https://github.com/HL7/fhir-ips",
+      ref: "0000000000000000000000000000000000000000",
       path: "sushi-config.yaml",
       readAt: "2026-09-23",
     },
