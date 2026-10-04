@@ -4,7 +4,12 @@
  *
  * @module scripts/state-mount
  * @graphNode none — a session-start step over a declared `storage` directory
- * @covers none — a setup step that mounts branch-kept subgraphs; it audits no graph
+ * @covers none — it MAKES graphs readable and judges none of them. It became a
+ * gate in `code-quality-gates.yml` (bean `9ofm`), where it runs before the
+ * bean gates, and `audit:coverage` correctly asked what it covers. The honest
+ * answer is nothing: a mount that reported coverage of `beans` would let the
+ * nine gates that actually judge the store be removed without the census
+ * noticing — coverage by the step that merely fetched it.
  *
  * Bean `2h76` part 4, arc `fs43`. The session-start hook calls this; it is also
  * `bun run state:mount` by hand.

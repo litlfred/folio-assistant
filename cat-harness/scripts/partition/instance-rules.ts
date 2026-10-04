@@ -462,6 +462,13 @@ export const RULES: Rule[] = [
       // folio's subject matter cannot add a row to it or change what a tree
       // comparison concludes.
       "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
+      // `state-drift`'s remedy, performed: refresh a seeded state branch from
+      // the ref its own manifest names, and verify by re-reading the pushed
+      // tip. Harness-level for its neighbour's reason exactly — the row it is
+      // keyed by comes from `scripts/special-branches.json`, the harness's
+      // table, and no folio's subject matter decides which ref a seed is
+      // refreshed from or whether a tree comparison agrees.
+      "scripts/state-seed.ts",                // refresh a seeded state branch, and the cutover's `--authoritative` half
       // What every reader of a moved graph needs, written once (bean `9ofm`
       // row D): given a declared directory id, which directory to actually
       // read — the checkout, the mount, or a refusal. Harness-level for the
@@ -479,6 +486,7 @@ export const RULES: Rule[] = [
       // it classifies conflicted PATHS against declared patterns and proves
       // the result through `regen`. A folio could not make it resolve
       // differently, only give it more generated files (bean `d33q`).
+      "scripts/git-ancestry.ts",             // is A an ancestor of B — with "cannot tell" as its own answer, deepened before it says no
       "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
       "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/merge-main-comment.ts",       // the merge-main bot's PR comment, composed and tested (#1854)
@@ -936,7 +944,7 @@ export const RULES: Rule[] = [
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
-      "scripts/gen-docs-auto.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
+      "scripts/gen-auto-docs.ts",            // declared sub-graphs → derived indexes (bean `06e3`)
       "scripts/declared-dirs.ts",            // graph kind → declared directories; CORE because it registers the folio kind, which is the whole reason the harness layer spawns it rather than importing it (bean `9c34`)
       "scripts/headless-render-qc.ts",       // viewer/HTML render QC
       "scripts/section-story-audit.ts",      // section + chapter narrative

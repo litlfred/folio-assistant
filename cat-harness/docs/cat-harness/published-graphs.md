@@ -45,6 +45,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [C@T Harness]({{ '/attestations/' | relative_url }})
 - folio-assistant-sci — *declared, not published*
 
+### `auto-docs`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `beans`
 
 1 of 1 published.
@@ -95,19 +102,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 6 of 6 published.
 {: .fa-hx-dim }
 
-- [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
-- [Folio Assistant]({{ '/cat-harness/docs-auto/index/docs/root-docs/' | relative_url }})
-- [SMART Base]({{ '/cat-harness/docs-auto/index/docs/smart-base-docs/' | relative_url }})
-- [smart-immunizations]({{ '/cat-harness/docs-auto/index/docs/smart-immunizations-docs/' | relative_url }})
-- [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
-- [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
-
-### `docs-auto`
-
-0 of 1 published.
-{: .fa-hx-dim }
-
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/cat-harness/auto-docs/index/docs/docs/' | relative_url }})
+- [Folio Assistant]({{ '/cat-harness/auto-docs/index/docs/root-docs/' | relative_url }})
+- [SMART Base]({{ '/cat-harness/auto-docs/index/docs/smart-base-docs/' | relative_url }})
+- [smart-immunizations]({{ '/cat-harness/auto-docs/index/docs/smart-immunizations-docs/' | relative_url }})
+- [smart-trust]({{ '/cat-harness/auto-docs/index/docs/smart-trust-docs/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/auto-docs/index/docs/who-iris-site/' | relative_url }})
 
 ### `document-kinds`
 
@@ -298,11 +298,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Bootstrap — *declared, not published*
 - Bootstrap tools — *declared, not published*
-- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
-- [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
-- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/core-skills/' | relative_url }})
+- [C@T Harness]({{ '/cat-harness/auto-docs/index/skills/skills/' | relative_url }})
+- [FHIR IG Harness]({{ '/cat-harness/auto-docs/index/skills/fhir-ig-skills/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/auto-docs/index/skills/core-skills/' | relative_url }})
 - folio-assistant-sci — *declared, not published*
-- [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/auto-docs/index/skills/who-iris-skills/' | relative_url }})
 
 ### `substrate-snapshot`
 
