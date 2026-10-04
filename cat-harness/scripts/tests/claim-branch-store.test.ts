@@ -7,7 +7,7 @@
  *
  * @module scripts/tests/claim-branch-store
  */
-import { afterAll, describe, expect, test } from "bun:test";
+import { afterAll, describe, expect, setDefaultTimeout, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -16,6 +16,13 @@ import { join } from "node:path";
 import { BranchStore } from "../branch-store.ts";
 import { appendNoteToText, setFieldInText } from "../beans-fallback.ts";
 import { claimOnBranchStore } from "../claim-bean.ts";
+
+// Every test here builds a bare remote, clones it, and pushes through a real
+// `git` — about twenty subprocesses, the race test two stores' worth. That is
+// the point (the conflict must be git's, not a mock's), and it does not fit
+// bun's 5 s default on a shared runner: the race test took 6.1 s on main's
+// own run for #2061 and 6.8 s on #1801's, red both times for nobody's defect.
+setDefaultTimeout(30_000);
 
 const made: string[] = [];
 afterAll(() => {
