@@ -120,10 +120,17 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
   );
   if (r.error !== undefined || r.status !== 0) return undefined;
   const subs = submodulesUnder(dir);
+  // `--cached` lists a TRACKED file the working tree no longer holds — a
+  // deletion not yet staged, or the derived QA corpus moved aside (bean
+  // `cxcn`: with `test/results/` absent, a markdown scan threw on the first
+  // listed README it could not read and reported COULD NOT DETERMINE over the
+  // whole repository). A file that is not on disk is not part of the tree
+  // under test, so it is not part of the corpus.
   const own = r.stdout
     .split("\0")
     .filter((p) => p.length > 0 && !subs.includes(p))
-    .map((p) => join(dir, p));
+    .map((p) => join(dir, p))
+    .filter((abs) => existsSync(abs));
   // A submodule's files are listed by ITS repository, and `--recurse-submodules`
   // refuses `--others`, so each is asked on its own and prefixed. Since
   // 2026-09-30 `bootstrap/` and `bootstrap-tools/` are submodules (bean `xsqm`),

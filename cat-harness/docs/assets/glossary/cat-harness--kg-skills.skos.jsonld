@@ -141,7 +141,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census."
+          "@value": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census."
         }
       ],
       "skos:notation": "audit-coverage",
@@ -2669,6 +2669,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/qa-reports",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "qa-reports"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a QA result lives now. Derived verdicts go to the orphan `qa-reports` branch, keyed by commit, written by the CI job `qa-publish`. Judgements stay on main in the `attestations` graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under `test/results/` or `test/attestations/`."
+        }
+      ],
+      "skos:notation": "qa-reports",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/qa-reports.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/qa-witness",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2681,7 +2701,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them."
+          "@value": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them."
         }
       ],
       "skos:notation": "qa-witness",
@@ -3456,6 +3476,26 @@
       ],
       "skos:notation": "test-engineer",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/test-engineer.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/test-plan-execution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "test-plan-execution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result."
+        }
+      ],
+      "skos:notation": "test-plan-execution",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/test-plan-execution.md",
       "skos:note": "candidate"
     },
     {

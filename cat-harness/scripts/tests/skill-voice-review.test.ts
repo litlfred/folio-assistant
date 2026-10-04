@@ -3,7 +3,7 @@
  * current review exists; a rule judged `fail` is recorded, never a finding.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
@@ -108,17 +108,27 @@ describe("reviews in the attestation store", () => {
     verdicts: [{ rule: "r1", result: "pass" }],
   });
 
-  test("an absent store is unknown and records nothing; a corrupt file is refused, not overwritten", () => {
+  test("an absent store takes the prior sidecar's reviews (ruling 2); a corrupt file is refused, not overwritten", () => {
     const dir = mkdtempSync(join(tmpdir(), "voice-store-"));
     const skill = join(dir, "a.md");
     writeFileSync(skill, "# a\n");
     const tree = join(dir, "att", "kg-qa");
     const store = join(tree, "a.attestations.json");
-    const read = readVoiceReviews(store, tree);
-    expect(read.state).toBe("unknown");
+    const sidecar = join(dir, "a.kg-qa.json");
+    writeFileSync(sidecar, JSON.stringify({ $schema: "kg-qa/v1", subject, criteria: {}, totals: {}, voice_reviews: [reviewOf(skill)] }));
+    const read = readVoiceReviews(store, tree, sidecar);
+    expect(read.state).toBe("absent");
     const r = evaluateVoiceReviewsFrom(skill, read, [voice]);
-    expect(r.entry.result).toBe("unknown");
-    expect(r.reviews).toBeUndefined();
+    expect(r.entry.result).toBe("pass");
+    expect(r.reviews).toEqual([reviewOf(skill)]);
+
+    // Recording a NEW review on the first save moves the prior's judgements too.
+    const other = { ...reviewOf(skill), voice: "w" };
+    recordReview(store, tree, subject, other, sidecar);
+    const back = readVoiceReviews(store, tree);
+    expect(back.state).toBe("hit");
+    if (back.state === "hit") expect(back.reviews.map((x) => x.voice)).toEqual(["v", "w"]);
+    rmSync(store);
 
     mkdirSync(tree, { recursive: true });
     writeFileSync(store, "<<<<<<< ours\n");

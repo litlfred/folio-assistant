@@ -163,9 +163,9 @@
 </div>
 
 <ul class="subs">
-<li><strong>core-processes</strong> <span class="p">folio-assistant-core/processes</span> <span class="n">16</span></li>
+<li><strong>core-processes</strong> <span class="p">folio-assistant-core/processes</span> <span class="n">11</span></li>
 <li><a href="../fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">2</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">59</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">65</span></li>
 <li><a href="../sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="../smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -206,26 +206,6 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/deep-document-research.bpmn"><code>Deep document research</code></a><br><span class="p">folio-assistant-core/processes/library/deep-document-research.bpmn</span></td>
   <td>Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping on a stated condition.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Deep researcher</div><div class="f"><span class="k">skills</span> deep-document-research</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn"><code>Ingestion subprocess — build the L1 knowledge graph</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn</span></td>
-  <td>folio-assistant — Ingestion subprocess — build the L1 knowledge graph.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-derive-content.bpmn"><code>Ingestion subprocess — derive content from the assets</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-derive-content.bpmn</span></td>
-  <td>folio-assistant — Ingestion subprocess — derive content from the assets.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended)</div><div class="f"><span class="k">skills</span> document-intake</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-extract-structure.bpmn"><code>Ingestion subprocess — extract structure</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-extract-structure.bpmn</span></td>
-  <td>folio-assistant — Ingestion subprocess — extract structure.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended)</div><div class="f"><span class="k">skills</span> document-intake</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn"><code>Ingestion subprocess — the L1 completeness gate</code></a><br><span class="p">folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn</span></td>
-  <td>folio-assistant — Ingestion subprocess — the L1 completeness gate.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Reviewer (SME or editor)</div><div class="f"><span class="k">skills</span> adjudication, document-intake</div></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn"><code>L1 document ingestion — a document to the L1 source knowledge graph</code></a><br><span class="p">folio-assistant-core/processes/library/l1-document-ingestion.bpmn</span></td>
-  <td>folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph.<div class="f"><span class="k">activities</span> 12</div><div class="f"><span class="k">lanes</span> Ingestion Engine (agent, runs unattended) · Work plan — beans (shared by humans and agents) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake, l1-document-ingestion, library-ingestion, theme-art-intake, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/ui/board-open-close.bpmn"><code>Board: open and close content</code></a><br><span class="p">folio-assistant-core/processes/ui/board-open-close.bpmn</span></td>

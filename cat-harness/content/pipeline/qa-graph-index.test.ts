@@ -14,6 +14,8 @@ import { tmpdir } from "node:os";
 
 import {
   readQaGraph,
+  projectQaGraph,
+  isQaGraphUnknown,
   accumulate,
   rollUpFieldOf,
   jsonFilesIn,
@@ -248,6 +250,29 @@ describe("jsonFilesIn", () => {
       "a.json",
       "deep/b/c.json",
     ]);
+    cleanup();
+  });
+});
+
+describe("an absent corpus is UNKNOWN, never a count of what the build wrote (bean `tfqf`, C9)", () => {
+  it("publishes no count, no families and no tile field when the corpus was not there", () => {
+    // Measured before the fix: 965 documents became 2 — the two witnesses the
+    // generator had just written into the empty tree — and the tile said 2.
+    const { dir, cleanup } = graph({ "witnesses/p/a.json": { $schema: "qa-witness/v1", counts: { pass: 1 } } });
+    const ix = projectQaGraph(dir, false);
+    expect(isQaGraphUnknown(ix)).toBe(true);
+    expect(Object.keys(ix).sort()).toEqual(["$schema", "availability", "reason"]);
+    expect(ix).not.toHaveProperty("files");
+    expect(ix).not.toHaveProperty("tile");
+    expect((ix as { reason: string }).reason).toContain("qa-reports");
+    cleanup();
+  });
+
+  it("a present corpus is the census, unchanged", () => {
+    const { dir, cleanup } = graph({ "a.json": { $schema: "kg-qa/v1", totals: { pass: 1 } } });
+    const ix = projectQaGraph(dir, true);
+    expect(isQaGraphUnknown(ix)).toBe(false);
+    expect(ix).toEqual(readQaGraph(dir));
     cleanup();
   });
 });

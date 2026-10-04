@@ -72,7 +72,7 @@ import { fileURLToPath } from "node:url";
 
 import { siteDirFor } from "../schemas/cat-harness.js";
 import { normaliseDestination } from "./lib/nav-label.ts";
-import { buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResult } from "./qa-results.ts";
+import { againstOrUsage, buildQaResult, judgeQaResult, writeQaResult, type QaResult, type QaVerdict } from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = resolve(INSTANCE_ROOT, "..");
@@ -385,15 +385,20 @@ if (import.meta.main) {
   }
 
   const result = navNamesQaResult(r);
-  let stale = false;
+  let verdict: QaVerdict | undefined;
   if (check) {
-    const state = qaResultState(qaResultPath(INSTANCE_ROOT, STEM), result);
-    if (state !== "current") {
-      stale = true;
-      console.error(
-        `test/results/${STEM}.qa-results.json is ${state}. Run \`bun run check:nav-names\` and commit the result.`,
-      );
-    }
+    // COMPUTE AND JUDGE (beans `0dav`, `oqe3`), as every gate moved off a
+    // committed record does: the results directory declares `storage`, so the
+    // working copy is not the record and comparing against it reads UNKNOWN.
+    // Both families fail; a missing baseline is reported, not gated.
+    const { against, exit: badRef } = againstOrUsage("check:nav-names:check");
+    if (badRef !== undefined) process.exit(badRef);
+    verdict = judgeQaResult({
+      gate: "check:nav-names:check",
+      fresh: result,
+      failOn: ["two-names-for-one-destination", "template-prints-kind-word"],
+      baseline: { root: INSTANCE_ROOT, stem: STEM, writer: "check:nav-names", against },
+    });
   } else {
     writeQaResult(INSTANCE_ROOT, STEM, result);
   }
@@ -420,5 +425,6 @@ if (import.meta.main) {
         "on a surface.",
     );
   }
-  if (r.conflicts.length > 0 || r.templates.length > 0 || stale) process.exit(1);
+  if (verdict !== undefined) process.exit(verdict.exit);
+  if (r.conflicts.length > 0 || r.templates.length > 0) process.exit(1);
 }
