@@ -288,8 +288,15 @@ export function chromeFileFor(
     join: (...parts: string[]) => string;
   },
 ): string | undefined {
-  for (const root of deps.instanceRootsIn(repoRoot)) {
-    if (deps.declarationNameOf(root) !== instanceName) continue;
+  // A PATH names the owning instance's root directly, relative to the repository
+  // root (n3ni stage E). In a fork the platform is a submodule, so smart-base sits
+  // at `folio-assistant/smart-base`: two levels down, where `instanceRootsIn`
+  // (one level, by design) cannot see it. Naming it by path keeps the choice
+  // explicit, as above, rather than widening a walk until something matches.
+  const roots = instanceName.includes("/")
+    ? [deps.join(repoRoot, instanceName)].filter((r) => deps.declarationNameOf(r) !== undefined)
+    : deps.instanceRootsIn(repoRoot).filter((r) => deps.declarationNameOf(r) === instanceName);
+  for (const root of roots) {
     // The chrome is the TEMPLATE's styling, so it ships with the harness that
     // carries the template's theme (plan Q4; rehearsed on litlfred/smart-base,
     // bean `rbz3`): a `themes` directory first, then, for an instance that

@@ -174,4 +174,22 @@ describe("chromeFileFor", () => {
     );
     expect(found).toBeUndefined();
   });
+
+  test("a PATH reaches an instance the one-level scan cannot: the platform as a submodule in a fork (n3ni stage E)", () => {
+    // In litlfred/smart-trust, smart-base lives at folio-assistant/smart-base, two levels down.
+    const d = deps(
+      ["/fork/folio-assistant", "/fork/smart-base"],
+      { "/fork/folio-assistant": "folio-assistant", "/fork/smart-base": "smart-trust", "/fork/folio-assistant/smart-base": "smart-base" },
+      { "/fork/folio-assistant/smart-base": ["/fork/folio-assistant/smart-base/themes"] },
+      ["/fork/folio-assistant/smart-base/themes/chrome.json"],
+    );
+    expect(chromeFileFor("/fork", "smart-base", d)).toBeUndefined();
+    expect(chromeFileFor("/fork", "folio-assistant/smart-base", d)).toBe("/fork/folio-assistant/smart-base/themes/chrome.json");
+  });
+
+  test("a path to a directory that declares no instance yields undefined, never a guess", () => {
+    const d = deps([], {}, {}, ["/fork/nowhere/themes/chrome.json"]);
+    expect(chromeFileFor("/fork", "nowhere", d)).toBeUndefined();
+    expect(chromeFileFor("/fork", "x/nowhere", d)).toBeUndefined();
+  });
 });
