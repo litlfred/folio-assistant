@@ -26,7 +26,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { absentResultDirs, isTestFile, scanDeclaredPaths, underAbsentResults, witnessesOf } from "../check-declared-paths.js";
+import { absentResultDirs, isTestFile, newWitnesses, scanDeclaredPaths, underAbsentResults, witnessesOf } from "../check-declared-paths.js";
 
 const root = resolve(import.meta.dir, "../..");
 const scan = scanDeclaredPaths(root);
@@ -106,6 +106,25 @@ describe("declared-path literals", () => {
       return !unverifiable(w.slice(0, at), w.slice(at + 2));
     });
     expect(lost, "an artefact moved and the code naming it was not updated").toEqual([]);
+  });
+
+  /**
+   * Bean `gz47`, owner ruling 2026-10-04: an existing file is not a stable
+   * one, because a declared subgraph's source may move. The witness list only
+   * shrinks, so a literal naming an existing file that the list does not
+   * record is refused. Four had passed in silence before this ran.
+   */
+  test("no literal names an existing file the witness list does not record", () => {
+    const added = newWitnesses([...recordedWitnesses], witnessesOf(scan));
+    expect(added, "read the declaration, or mark the line `declared-path-literal: <reason>`").toEqual([]);
+  });
+
+  test("newWitnesses names exactly the unrecorded ones, in order", () => {
+    const recorded = ["a.ts::nowhere/one.md", "b.ts::nowhere/two.md"];
+    expect(newWitnesses(recorded, recorded)).toEqual([]);
+    expect(newWitnesses(recorded, ["a.ts::nowhere/one.md", "c.ts::nowhere/three.md"])).toEqual(["c.ts::nowhere/three.md"]);
+    // A witness that went is `lost`'s business, not this one's.
+    expect(newWitnesses(recorded, ["b.ts::nowhere/two.md"])).toEqual([]);
   });
 
   /**
