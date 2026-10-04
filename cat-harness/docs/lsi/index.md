@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.67 | instance, kind, harness, directory, page, session, branch, graph | *(none)* |
-| 2 | 21.77 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, subgraph, iri |
-| 3 | 18.10 | slot, chapter, block, edges, formal, project, watcher, proof | session, beans, epic, page, conflict, branch, goals, minutes |
-| 4 | 17.18 | page, block, text, tile, chapter, manifest, blocks, avatar | sibling, ledger, session, subgraph, sessions, subdirectory, plan, coordination |
-| 5 | 15.55 | tile, glass, avatar, card, board, theme, sticky, tiles | rung, archive, sniff, ingest, zip, archived, arm, withheld |
-| 6 | 15.15 | lane, actor, requirements, role, task, analysis, edge, process | queue, sha, backlog, tile, withheld, board, bytes, slide |
-| 7 | 14.79 | preview, staging, translation, locale, url, pages, translated, page | tile, glass, avatar, card, sticky, role, fit, slot |
-| 8 | 14.55 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | actor, lane, role, requirements, user, feedback, requirement, post |
+| 1 | 45.71 | instance, harness, kind, page, directory, session, graph, branch | *(none)* |
+| 2 | 21.78 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, subgraph, iri |
+| 3 | 18.11 | slot, chapter, block, edges, formal, project, watcher, proof | session, beans, page, epic, conflict, branch, goals, minutes |
+| 4 | 17.20 | page, block, tile, text, chapter, avatar, blocks, manifest | sibling, session, ledger, sessions, subgraph, subdirectory, plan, coordination |
+| 5 | 15.61 | tile, glass, avatar, board, card, tiles, sticky, theme | rung, archive, sniff, ingest, zip, archived, pdf, arxiv |
+| 6 | 15.17 | lane, actor, requirements, analysis, feature, role, task, edge | queue, sha, backlog, withheld, rung, arm, bytes, slide |
+| 7 | 14.82 | preview, staging, translation, locale, url, pages, translated, page | tile, glass, role, avatar, card, actor, fit, sticky |
+| 8 | 14.55 | edges, forward, edge, backward, logical, cross-chapter, energy, storytelling | actor, lane, role, user, requirements, feedback, requirement, task |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
