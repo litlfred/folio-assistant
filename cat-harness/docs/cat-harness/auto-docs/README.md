@@ -14,6 +14,6 @@ Part of [C@T Harness](../../../README.md) 0.1.0, declared as `auto-docs`, holdin
 | [`index.html`](index.html) | a file |  |
 | [`glossary/`](glossary/README.md) | Glossary — every term this instance's swimlanes define — the role's title and description, the lane names that bind it, and whether the term has been retired. Indexes the `swimlane-glossary` graph. | |
 | [`index/`](index/) | _nothing declares what this holds_ | |
-| [`lsi/`](lsi/README.md) | LSI — every LSI index a declared `qa` directory holds, named for the instance and graph it was computed over. Indexes the `qa` graph. | |
+| [`lsi/`](lsi/README.md) | described in its own README | |
 | [`uml/`](uml/) | UML — every UML model a declared `uml` directory holds, one row per model rather than per notation. Indexes the `uml` graph. | |
 <!-- kg:subgraph:end -->
