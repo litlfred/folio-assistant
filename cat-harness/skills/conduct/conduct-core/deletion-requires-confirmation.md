@@ -143,9 +143,14 @@ the scope is ambiguous, the answer is another question, not an inference.
 **A standing confirmation for a class is possible, and it is the owner's to
 give — never an inference.** The worked case is the staging preview cap. Owner
 ruling, 2026-10-02 (issue #1868): *"cap the maximum number of previews (<= 10)
-and rotate old ones off."* That one sentence confirms, in advance, every
+and rotate old ones off."* That one sentence confirmed, in advance, every
 removal of the least recently updated preview beyond ten, so the `stage` job
-removes them without asking per preview. What the ruling does NOT waive is the
+removes them without asking per preview. On 2026-10-04 the owner RE-SCOPED it —
+*"Cap by size, not count"*, budget *"3gb"* — and the class changed with it: the
+standing confirmation now covers the oldest previews beyond 3 GB in total, and
+no longer the eleventh. A class confirmation covers the class as the owner last
+stated it; changing the rule is theirs, and an agent that changes the code
+without that is inferring a confirmation. What the ruling does NOT waive is the
 record: each rotation still names the artefact, its age and its size — in the
 commit message, the job log and a `removed` render-log entry — and retires its
 `staging-preview.json` into `STAGING/_retired/` rather than deleting it. And it
