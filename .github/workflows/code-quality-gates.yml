@@ -2175,6 +2175,10 @@ jobs:
           # smart-base's DAK document kind, generated from DAK_COMPONENTS
           # (stage D5, #1767): stale the moment a component is added.
           bun run smart-base:document-kinds:check
+          # A section's computedFrom names a graph its instance declares or
+          # inherits (bean qvxh): "computable from these assets" is a claim,
+          # and a claim nothing checks is prose.
+          bun run check:document-kind-sources
           # smart-kg L1 documents kept beside library entries (bean 8pzh):
           # stale the moment a section text or structure.json they read changes.
           bun run smart-base:smart-kg-l1:check
@@ -2182,6 +2186,11 @@ jobs:
           # candidate list or the authored alternatives change, and red when a
           # quote no longer matches the section it cites.
           bun run smart-base:dth-terms:check
+          # DIIG Fig. 1.1.1 as SVG (bean 70zt), the one rendering the DTHs point at.
+          # CI has no source PDF, so this checks what it can without one: the
+          # crop still matches vector-figures.json and the drawing is unedited.
+          # Byte-identical regeneration runs wherever the PDF is present.
+          bun run smart-base:diig-figure:check
           bun run document-kinds:viz:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated
