@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ba9e
 title: 'Generated README subdirectory counts: 207 volatile integers across 54 READMEs — move them to the _data layer'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T22:34:28Z
-updated_at: 2026-10-02T23:05:21Z
+updated_at: 2026-10-04T05:43:44Z
 parent: folio-assistant-hfag
 ---
 
@@ -97,3 +97,5 @@ have meant a submodule bump inside a process PR.
 - [ ] `readme:subgraphs:check` green with a transient file present in the tree
       — the regression test for the Train 6 failure
 - [ ] `y7b3` part 2 checked off, with this bean named as its answer
+
+_2026-10-04T05:43:41Z_ — Claimed by claude/zealous-thompson-y8dcf1-ba9e — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

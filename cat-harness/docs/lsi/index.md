@@ -123,7 +123,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.62 | instance, harness, kind, page, directory, graph, session, branch | *(none)* |
+| 1 | 45.61 | instance, harness, kind, page, directory, graph, session, branch | *(none)* |
 | 2 | 21.77 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, subgraph, iri |
 | 3 | 18.10 | slot, chapter, block, edges, formal, project, watcher, proof | session, beans, page, epic, conflict, branch, goals, minutes |
 | 4 | 17.17 | page, tile, block, text, chapter, avatar, blocks, manifest | sibling, session, ledger, sessions, subgraph, subdirectory, plan, coordination |

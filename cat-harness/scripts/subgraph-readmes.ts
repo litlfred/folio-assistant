@@ -217,6 +217,13 @@ if (import.meta.main) {
   } else {
     writeQaResult(ROOT, "subgraph-readmes", result);
   }
+  // PRINTED, never recorded (bean `ba9e`). The sidecar above is committed and
+  // compared by `--check`, so a finding that depends on the worktree would
+  // make the committed file depend on it too — the defect counting the
+  // committed tree exists to remove.
+  for (const u of p.findings["untracked-not-counted"]) {
+    console.warn(`  ! untracked, so not counted or listed in ${u.directory}'s README until staged: ${u.path}`);
+  }
   const f = p.findings;
   console.log(
     `${p.writes.size} directory README(s); ${check ? `${stale} stale` : `${wrote} written`}. ` +
