@@ -63,5 +63,5 @@ When `schemas:published` is not done, the site steps are how it gets done.
 The site is not the goal: a site that answers while one schema address does
 not has not finished initializing the harness.
 
-Where bootstrap-tools is available, `site.ts --check` lists every address
+Where a toolset is available, its site check (`site.ts --check`) lists every address
 and what is staged at it, and `init.ts` reports both steps first.

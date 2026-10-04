@@ -218,6 +218,10 @@
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#instructionLines",
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
     },
+    "fileCount": {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#fileCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
     "hasInstructions": {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasInstructions",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
@@ -314,10 +318,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-04T08:36:23.177Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/67acd9020217e41824a03a375c491c6688727348",
-  "sourceCommitSha": "67acd9020217e41824a03a375c491c6688727348",
-  "sourceCommitAt": "2026-10-04T10:30:05+02:00",
+  "generatedAt": "2026-10-04T08:52:35.529Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bcc8df4ab568cdd234ff9c8876020cf43b3661ba",
+  "sourceCommitSha": "bcc8df4ab568cdd234ff9c8876020cf43b3661ba",
+  "sourceCommitAt": "2026-10-04T10:44:40+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -466,6 +470,7 @@
       ],
       "description": "The incoming queue of the document-ingestion pipeline for THIS checkout — raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
       "readmePath": "uploads/README.md",
+      "fileCount": 48,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/uploads"
     },
     {
@@ -482,6 +487,7 @@
       ],
       "description": "The Tool-node barrel. `index.ts` merges every instance's `<stub>/tools/*.ts` into the one import five consumers use -- `check-tools`, `kg-export`, `harness-schema-export`, `tool-coverage` and the MCP projection -- so adding an instance is one line here rather than a path baked into five call sites. Declared by the ROOT rather than by `cat-harness` with repository scope: it is the checkout's own barrel over every instance, and repository-scoped entries from `cat-harness` are what put 15 paths under two declarations each.",
       "readmePath": "tools/README.md",
+      "fileCount": 2,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/root-tools"
     },
     {
@@ -498,6 +504,7 @@
       ],
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "readmePath": "beans/README.md",
+      "fileCount": 1467,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/beans"
     },
     {
@@ -514,6 +521,7 @@
       ],
       "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "readmePath": "todos/README.md",
+      "fileCount": 11,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/todos"
     },
     {
@@ -531,6 +539,7 @@
       ],
       "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too.",
       "readmePath": "memory/README.md",
+      "fileCount": 47,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/memory"
     },
     {
@@ -547,6 +556,7 @@
       ],
       "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
       "readmePath": "interaction/README.md",
+      "fileCount": 2,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/interaction"
     },
     {
@@ -563,6 +573,7 @@
       ],
       "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
       "readmePath": "issue-marks/README.md",
+      "fileCount": 3,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/issue-marks"
     },
     {
@@ -579,6 +590,7 @@
       ],
       "description": "THE REPOSITORY ROOT'S DOCUMENTATION OVERLAY, managed by this instance. Owner's ruling, 2026-09-21, answering whether the root declares its own docs: \"harness can have docs/ which then get listed under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed by cat-harness. other harness augment or overlay ontop of that (content and behviors)\". SEPARATE FROM THE `docs` ENTRY ABOVE, AND IT HAS TO BE. That one is instance-scoped and `reproduce`, which is what makes a DEPENDENT materialise its own docs/ (bean n0nf slice 1). This one is `scope: \"repository\"`, and a repository-scoped entry is filtered out for dependencies -- cat-harness.ts:3261 and :3507 both skip it unless `link.own`. Re-scoping the existing entry instead of adding this one would therefore have UNDONE slice 1 silently: a dependent would simply stop getting a docs/ and nothing would fail. Two directories answering two questions, so two entries, with distinct ids -- the convention `who-iris-docs` already follows. `dependents` is `skip` for the same reason every other cross-instance repository-scoped entry here is: a dependent never reaches this one at all, and claiming it reproduces would be a promise the resolver does not keep. WHAT MAKES IT NOT `dh4f`: a declared directory that nothing reads is this repository's most-paid-for defect, and an empty overlay is exactly that shape. It is consumed by the site build, which composes it OVER cat-harness/docs/ -- so what it contributes today is nothing VERIFIABLY, pinned by a test asserting an empty overlay produces a byte-identical site, rather than nothing unnoticed.",
       "readmePath": "docs/README.md",
+      "fileCount": 2,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/root-docs"
     },
     {
@@ -602,8 +614,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "67acd9020217e41824a03a375c491c6688727348",
+    "sha": "bcc8df4ab568cdd234ff9c8876020cf43b3661ba",
     "pr": "main",
-    "run": "37189122935"
+    "run": "37189911833"
   }
 }
