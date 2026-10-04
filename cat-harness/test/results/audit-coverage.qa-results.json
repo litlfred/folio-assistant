@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "31f86e8a18be"
+    "script_hash": "489518fcb63f"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 226 gate(s), 73 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 226 gate(s), 77 criteria.",
       "count": 58,
       "entries": [
         {
@@ -23,7 +23,8 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run kg:audit:check"
+            "bun run kg:audit:check",
+            "bun run qa:attestations:migrate:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -152,9 +153,13 @@
             "skill-has-entry-point",
             "skill-in-role-or-process",
             "story-role-resolves",
+            "test-case-executed-or-skipped",
+            "test-data-hash-present",
+            "test-plan-resolves",
             "test-run-checkable",
             "test-run-conforms",
-            "test-run-skill-resolves"
+            "test-run-skill-resolves",
+            "test-sut-not-self-judged"
           ],
           "subjectKinds": [
             "graph"
@@ -189,7 +194,6 @@
             "bun run check:version-bump",
             "bun run check:wireframes:check",
             "bun run harness:dirs:check",
-            "bun run iri:sync:check",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
@@ -336,7 +340,6 @@
             "bun run readme:audit",
             "bun run readme:audit:root",
             "bun run readme:sync:all:check",
-            "bun run readme:sync:bootstrap:check",
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
@@ -718,7 +721,7 @@
         },
         {
           "kind": "qa",
-          "state": "covered",
+          "state": "stored",
           "directories": [
             "cat-harness/test/results",
             "fhir-harness/test/results",
@@ -740,10 +743,11 @@
             "bun run kg:export:judge",
             "bun run lsi:viz:check",
             "bun run p2:refusals:check",
+            "bun run qa:attestations:migrate:check",
             "bun run translation:block-qa:check"
           ],
           "typed": true,
-          "hasFiles": true
+          "hasFiles": false
         },
         {
           "kind": "qa-report",
@@ -1342,6 +1346,11 @@
     },
     "kinds-unaudited": {
       "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 226 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "count": 0,
+      "entries": []
+    },
+    "kinds-unknown": {
+      "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
       "count": 0,
       "entries": []
     }
