@@ -640,26 +640,6 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # Every declared tip-keyed state graph on disk BEFORE any gate reads one.
-      # `beans/queue/` is cut over to `cat/cat-harness/merge-queue` (bean
-      # `najo`), so the checkout carries none of it and a gate joining the path
-      # would judge an absent directory — `1xhc`, a step that did not fire
-      # looking exactly like one that passed. `check:declared-dirs`, below,
-      # reports a cut-over graph nothing mounted as `unmounted` and fails, which
-      # is the finding working as intended: this step is the remedy it names.
-      #
-      # A failed mount fails the job, and must: `state-mount.ts` keeps "could
-      # not determine" apart from "determined absent" and exits non-zero for
-      # either. Inert for any graph still tracked here.
-      #
-      # #2052 (bean `9ofm`) adds the same step to this job, to `gates-unrun` and
-      # to `typescript-test`, as its gates row for the beans cutover — along
-      # with a `check:workflows` rule that fails a job running a bean gate with
-      # no mount. Whichever of the two lands second drops its duplicate; the
-      # step is idempotent, so a doubled one costs a fetch and nothing else.
-      - name: state graphs on disk, or the run stops
-        run: bun run state:mount
-
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
       # relaxable="false". This fails when a relaxation names something that no
@@ -1866,16 +1846,6 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
-
-      # The same mount as the `gates` job, for the same reason: this job runs
-      # `check:kind-validators:require-all` and `check:harness-dirs`, both of
-      # which reason about declared state graphs, and `beans/queue/` is cut over
-      # to `cat/cat-harness/merge-queue` (bean `najo`). Unmounted,
-      # `check:kind-validators` reports the queue as COULD NOT DETERMINE rather
-      # than as empty — correct, and not the same thing as having read it.
-      # See the `gates` job's copy for the #2052 overlap.
-      - name: state graphs on disk, or the run stops
-        run: bun run state:mount
 
       - name: gates that were registered and never run
         run: |
