@@ -17,6 +17,8 @@ import {
   verdictOf,
   type TrainReport,
 } from "../merge-train.ts";
+import { git as runGit } from "../merge-pipeline-git.ts";
+import { conflicts } from "../mvp-status.ts";
 import { makeRepo, type Repo } from "./merge-pipeline-fixture.ts";
 
 const GEN = "cat-harness/docs/glossary/index.md";
@@ -124,5 +126,60 @@ describe("simulate — the dry run on a real history", () => {
     const r = simulate(repo.dir, base, [{ label: "one", spec: "one", sha: one }], { ref: "main", sha: main });
     expect(r.main.status).toBe("would-merge");
     expect(r.main.conflicted?.[0]?.path).toBe(GEN);
+  });
+});
+
+// Bean `0s6w`. The NEGATIVE CONTROL for mergeability: a pair KNOWN to conflict
+// must read 1, a ref that does not exist must read as an error (>=2), never as
+// clean. On 2026-10-03 a steward read `rc=0` for a conflicted PR for a whole
+// session — the forge's HTTP 405 at merge time was the only thing that caught
+// it — because `$?` was read after a command substitution on the same line.
+// A future change to how rc is reported must not be able to make these read 0.
+describe("merge-tree exit status — the negative control (bean 0s6w)", () => {
+  let repo: Repo | undefined;
+  afterEach(() => { repo?.cleanup(); repo = undefined; });
+
+  const conflictedPair = () => {
+    repo = makeRepo();
+    const base = repo.commit({ "a.ts": "a\n" });
+    const ours = repo.commit({ "a.ts": "ours\n" });
+    repo.git("checkout", "-q", "-b", "theirs", base);
+    const theirs = repo.commit({ "a.ts": "theirs\n" });
+    return { ours, theirs };
+  };
+
+  test("a known-conflicted pair reads 1, with the conflicted path", () => {
+    const { ours, theirs } = conflictedPair();
+    const r = runGit(repo!.dir, ["merge-tree", "--write-tree", "--name-only", "--no-messages", ours, theirs]);
+    expect(r.code).toBe(1);
+    expect(parseMergeTree(r)?.conflicted).toEqual(["a.ts"]);
+  });
+
+  test("a ref it cannot merge is NOT clean and NOT a conflict list — and its exit code alone cannot say so", () => {
+    // Measured with git 2.43: an unfetched or mistyped ref exits 1, the same
+    // code as a real conflict, printing "not something we can merge" to stderr
+    // and no tree on stdout. So the code is not the whole contract; the tree
+    // line is. `parseMergeTree` requires it, and `mvp-status` now does too.
+    const { ours } = conflictedPair();
+    const r = runGit(repo!.dir, ["merge-tree", "--write-tree", "--name-only", "--no-messages", ours, "0".repeat(40)]);
+    expect(r.code).not.toBe(0);
+    expect(parseMergeTree(r)).toBeUndefined();
+    expect(conflicts(ours, "0".repeat(40), repo!.dir)).toBeUndefined();
+  });
+
+  test("mvp-status still reads a real conflict, and a clean pair, from the same repo", () => {
+    const { ours, theirs } = conflictedPair();
+    expect(conflicts(ours, theirs, repo!.dir)).toEqual({ authored: ["a.ts"], generated: 0 });
+    expect(conflicts(ours, ours, repo!.dir)).toEqual({ authored: [], generated: 0 });
+  });
+
+  test("the shell trap itself: $? read after a command substitution reports the SUBSTITUTION's status", () => {
+    // Kept as a test so the reason for the rule cannot be argued away: the
+    // wrong form prints rc=0 on the same conflicted pair the right form reads 1.
+    const { ours, theirs } = conflictedPair();
+    const sh = (line: string) =>
+      Bun.spawnSync(["bash", "-c", `git merge-tree --write-tree ${ours} ${theirs} >/dev/null 2>&1\n${line}`], { cwd: repo!.dir }).stdout.toString().trim();
+    expect(sh('echo "rc=$?"')).toBe("rc=1");
+    expect(sh('echo "base($(git rev-parse --short HEAD)) rc=$?"')).toMatch(/ rc=0$/);
   });
 });
