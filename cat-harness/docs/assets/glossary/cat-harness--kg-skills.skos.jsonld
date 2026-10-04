@@ -2406,7 +2406,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
+          "@value": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size."
         }
       ],
       "skos:notation": "merge-queue",

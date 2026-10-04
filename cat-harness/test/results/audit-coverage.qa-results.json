@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 229 gate(s), 77 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 58 of 58 declared kind(s), 230 gate(s), 77 criteria.",
       "count": 58,
       "entries": [
         {
@@ -200,6 +200,7 @@
             "bun run check:published-refs",
             "bun run check:read-only-graphs",
             "bun run check:rendered-labels:check",
+            "bun run check:state-on-main",
             "bun run check:subgraph-coverage",
             "bun run check:subgraphs",
             "bun run check:undeclared-files:check",
@@ -436,7 +437,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "empty",
+          "state": "undetermined",
           "directories": [
             "fsh-guts"
           ],
@@ -1207,15 +1208,8 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 1,
-      "entries": [
-        {
-          "kind": "fsh-guts",
-          "directories": [
-            "fsh-guts"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1353,7 +1347,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 229 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 230 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -1363,5 +1357,5 @@
       "entries": []
     }
   },
-  "total": 79
+  "total": 78
 }
