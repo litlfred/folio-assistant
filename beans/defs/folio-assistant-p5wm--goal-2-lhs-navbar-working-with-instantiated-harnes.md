@@ -39,9 +39,9 @@ hrefs per locale. So "get the LHS navbar working" is a build, not a fix.
 
 ## Critical path, in dependency order — RE-VERIFIED 2026-09-22
 
-**`b5f0` → `603s` → `6lb8` → `supn`.**
+**`b5f0` → `6lb8` → `supn`.** (Updated 2026-10-04: `603s` was the second step and is completed, closed on evidence in #2125; the path below it is unchanged.)
 
-Four steps, not eight. Every id in it was checked against the store on
+Four steps, not eight — three now. Every id in it was checked against the store on
 2026-09-22, not carried forward, and re-checked after `hfkl` closed the same
 day. The withdrawal is recorded in the next section.
 
@@ -73,7 +73,7 @@ day. The withdrawal is recorded in the next section.
 
 ## RE-CHECKED 2026-09-25 — the path above HELD, and that is worth recording
 
-`b5f0` → `603s` → `6lb8` → `supn`, re-derived against the store three days on:
+The path as it then stood — `b5f0`, then `603s`, then `6lb8`, then `supn` — re-derived against the store three days on:
 `b5f0` **todo**, `603s` **in-progress**, `6lb8` **in-progress**, `supn`
 **todo**. All four still open; **nothing withdrawn, nothing added**.
 
