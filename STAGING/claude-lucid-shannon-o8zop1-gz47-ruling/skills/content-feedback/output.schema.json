@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lucid-shannon-o8zop1-gz47-ruling/skills/content-feedback/output.schema.json",
+  "title": "Content Feedback Output",
+  "description": "Output schema for triaged feedback.",
+  "type": "object",
+  "required": [
+    "triagedItems"
+  ],
+  "properties": {
+    "triagedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "priority",
+          "disposition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "backlog",
+              "next-sprint",
+              "wont-fix",
+              "duplicate",
+              "needs-info"
+            ]
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "linkedIssue": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "critical": {
+          "type": "integer"
+        },
+        "major": {
+          "type": "integer"
+        },
+        "minor": {
+          "type": "integer"
+        },
+        "enhancement": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/lucid-shannon-o8zop1-gz47-ruling",
+    "sha": "062fc3981852b4ebb615c415fa763229f7fe8541",
+    "pr": "2093/merge",
+    "run": "37217789730"
+  }
+}
