@@ -8,5 +8,9 @@ The graph kinds folio-assistant-core owns, one folio-graph-kind/v1 node per file
 
 Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-kinds`, holding `kinds`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`catalogue.json`](catalogue.json) | Catalogue |  |
+| [`review-verdicts.json`](review-verdicts.json) | Review verdicts |  |
+| [`uploads.json`](uploads.json) | Uploads |  |
 <!-- kg:subgraph:end -->

@@ -8,5 +8,7 @@ The graph kinds cat-openapi owns, one folio-graph-kind/v1 node per file (bean dm
 
 Part of [C@T OpenAPI](../README.md) 0.1.0, declared as `cat-openapi-kinds`, holding `kinds`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`openapi.json`](openapi.json) | OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (the cat-openapi ha… |  |
 <!-- kg:subgraph:end -->
