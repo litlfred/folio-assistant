@@ -290,13 +290,8 @@
       ]
     },
     "downstream-tool-declared": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "test/results/tool-runs",
-          "detail": "run records not examined: no test/results/tool-runs/ in the checkout: never written here, or not fetched from the qa-reports branch (`bun run qa:fetch`). An absent directory cannot be told from an empty one, so no record was examined."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "manifest-skill-exists": {
       "result": "pass",
@@ -482,9 +477,9 @@
     }
   },
   "totals": {
-    "pass": 16,
+    "pass": 17,
     "fail": 4,
     "n/a": 5,
-    "unknown": 1
+    "unknown": 0
   }
 }
