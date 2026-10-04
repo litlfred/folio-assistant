@@ -37,3 +37,6 @@ IMMZ.D18.S.Hepatitis A.Live attenuated HAV 1-dose schedule Live attenuated hepat
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18SHepatitisAInactivatedHAV2Doses.html" data-next="PlanDefinition-IMMZD18SHepatitisB3Doses.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>

@@ -74,8 +74,9 @@
  * word of it being typed here.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, join, posix, resolve } from "node:path";
 import { IG_API_HUB_SCRIPT, IG_API_HUB_TEMPLATE, IG_API_VIEW_SCRIPT, igApiHubData, igApiHubFragment, igApiServed, igApiViewData, igApiViews } from "./ig-api-views.ts";
+import { igFooterData } from "./ig-footer.ts";
 import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mappingsPage, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
@@ -167,6 +168,13 @@ const OUT = OUT_ARG ? resolve(process.cwd(), OUT_ARG) : join(INSTANCE, "docs");
 /** The pages' shared stylesheets, under the docs root (one copy each, linked from every page). */
 const PAGES_CSS = "assets/ig-pages.css";
 const CHROME_CSS = "assets/ig-chrome.css";
+/**
+ * The Publisher-style footer (#1901): one loader and one data file per IG,
+ * linked from every page that wears the fixture, never copied into each.
+ */
+const IG_FOOTER_SCRIPT = "assets/ig-footer.js";
+const IG_FOOTER_DATA = "assets/ig-footer.json";
+const IG_FOOTER_LOADER = join(import.meta.dir, "templates", "ig-pages", "ig-footer.js");
 const igApiServable = () => igApiServed(INSTANCE);
 
 /** The IG API view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
@@ -385,7 +393,7 @@ function pageName(a: FhirArtifact): string {
 }
 
 /**
- * What the uncategorised bucket is called — on its section, its Contents row
+ * What the uncategorised bucket is called — on its section
  * and, if it ever outgrows the index, its page. Never "Other": the IG HAS a
  * literal "Other" category (`byCategory`), and a coined second one put two
  * sections named "Other" on smart-trust's index, the second holding the IG's
@@ -406,33 +414,17 @@ function categoryName(label: string | undefined): string {
 }
 
 /**
- * The index's in-page anchor for a category, which the Contents box links to.
+ * The index's in-page anchor for a category: a stable fragment a link or the
+ * rail's "On this page" can point at. (The in-page Contents box that once
+ * linked here is gone — owner, 2026-10-02, #1901: the TOC lives only in the
+ * left-hand rail.)
  *
  * The uncategorised bucket gets its own id rather than `Other`'s: the IG HAS a
  * literal "Other" category (see `byCategory`), and two sections answering to
- * one fragment would send the Contents link to whichever came first.
+ * one fragment would send a link to whichever came first.
  */
 function categoryAnchor(label: string | undefined): string {
   return label === undefined ? "cat--uncategorised" : `cat-${categoryName(label)}`;
-}
-
-/**
- * The "Contents" box the Publisher puts at the top of `artifacts.html` (#1901):
- * one row per category, in the same order as the sections below it, each
- * linking to its section. A category listed off the index links to the
- * section too, whose summary names the count and points on to its own page —
- * one target per row, so the box and the sections cannot disagree.
- */
-function contentsBox(ordered: [string | undefined, FhirArtifact[]][]): string {
-  return [
-    `<nav class="ig-toc" aria-label="Contents" markdown="1">`,
-    ``,
-    `**Contents**`,
-    ``,
-    ...ordered.map(([label, list]) => `- [${mdText(label ?? UNCATEGORISED)}](#${categoryAnchor(label)}) — ${list.length}`),
-    ``,
-    `</nav>`,
-  ].join("\n");
 }
 
 /**
@@ -486,14 +478,14 @@ const CSS = `
 .st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .st-stat b{display:block;font-size:1.25rem;line-height:1.2}
 .st-stat span{font-size:.75rem;opacity:.75}
-.ig-toc{border:2px solid var(--toc-box-border,rgba(128,128,128,.35));background:var(--toc-box-bg-color,transparent);padding:.5rem 1rem;margin:1rem 0;display:inline-block}
-.ig-toc ul{margin:.25rem 0 0}
+#ig-footer{margin-top:2.5rem;font-size:.85rem}
+#ig-footer p{margin:.4rem 0}
+#ig-footer .ig-footer-band{background:var(--footer-bg-color,transparent);color:var(--footer-text-color,inherit);padding:.5rem 1rem;border-top:1px solid rgba(128,128,128,.35)}
+#ig-footer .ig-footer-band a{color:var(--footer-hyperlink-text-color,inherit)}
 `;
-// `.ig-toc` reads the mirrored chrome's `--toc-box-*` tokens, the Publisher's
-// own Contents-box colours, and WHO's `2px solid` reading of the border token
-// (see `ig-chrome.ts` on its shape conflict). Without an ingested chrome the
-// fallbacks give a neutral box, never a hand-typed palette.
-
+// The footer's band reads the mirrored chrome's `--footer-*` tokens, the
+// Publisher's own footer colours; without an ingested chrome it falls back to
+// the theme's, never to a hand-typed palette.
 /**
  * A page for the JUST-THE-DOCS pipeline: front matter, then the body.
  *
@@ -592,6 +584,9 @@ function navFrontMatter(nav: NavRole): string[] {
  */
 type ChromeChoice = "fixture" | "removed";
 
+/** The footer's opening tag, up to where a page's prev/next attributes go. */
+const FOOTER_TAG = `<footer id="ig-footer"`;
+
 function shell(
   title: string,
   description: string,
@@ -624,7 +619,20 @@ function shell(
   const link = (file: string) => `<link rel="stylesheet" href="{{ '/${INSTANCE_NAME}/${file}' | relative_url }}">`;
   const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
-  return `${fm}${links}\n\n${banner}${body.trim()}\n`;
+  // The footer is drawn by its loader from the IG's own metadata; the page
+  // carries an empty <footer> and, set later for the pages in reading order,
+  // its previous and next pages (`FOOTER_TAG`). The data file and the index
+  // are found from the loader's own URL, so ~3,200 pages do not each repeat
+  // two more URLs. On every fixture page, chrome
+  // or not: it is the IG's facts, not the mirrored styling.
+  const footer =
+    chrome === "fixture"
+      ? // In the chrome's scope when the page wears it, which is where the
+        // mirrored `--footer-*` tokens are defined.
+        `\n\n${FOOTER_TAG}${wearsChrome ? ` class="${CHROME_SCOPE.slice(1)}"` : ""}></footer>\n` +
+        `<script src="{{ '/${INSTANCE_NAME}/${IG_FOOTER_SCRIPT}' | relative_url }}" defer></script>`
+      : "";
+  return `${fm}${links}\n\n${banner}${body.trim()}${footer}\n`;
 }
 
 /**
@@ -793,8 +801,6 @@ function indexPage(ix: FhirArtifactIndex): string {
     `Grouped and ordered as the IG's own \`artifacts.html\` groups them, with each artefact's name and`,
     `description. Its canonical URL, published representations and whether it is held here are on`,
     `its own page.`,
-    ``,
-    contentsBox(ordered),
     ``,
     sections,
     ``,
@@ -1309,6 +1315,35 @@ if (existsSync(MENU)) {
     sectionOrder += 1;
     pages.set(join("menu", `${menuName(group.label)}.md`), menuGroupPage(menu, group, sectionOrder));
   }
+}
+
+// THE FOOTER'S DATA, once per IG, from the IG's own package when it is held
+// (`ig-footer.ts` says which field comes from where), and the footer's
+// <prev | next> through the index's reading order: the index, then every
+// artefact page in the order the index lists them — the Publisher's own
+// order through `artifacts.html`.
+{
+  const held = ix.package?.localPath ? packageEntries(join(INSTANCE, ix.package.localPath)) : undefined;
+  const json = (name: string | undefined) => (name && held?.has(name) ? (JSON.parse(held.get(name)!.toString("utf8")) as Record<string, unknown>) : undefined);
+  const igEntry = held ? [...held.keys()].find((k) => /^package\/ImplementationGuide-[^/]+\.json$/.test(k)) : undefined;
+  pages.set(IG_FOOTER_DATA, `${JSON.stringify(igFooterData(json("package/package.json"), json(igEntry), ix), null, 2)}\n`);
+  pages.set(IG_FOOTER_SCRIPT, readFileSync(IG_FOOTER_LOADER, "utf8"));
+
+  const order = ["index.md", ...[...byCategory(ix.artifacts).values()].flat().map((a) => join("artifact", `${pageName(a)}.md`))];
+  const href = (from: string, to: string): string => {
+    // `index.md` is served as its directory, so a link to it ends in `/`.
+    const rel = posix.relative(posix.dirname(from), to.replace(/\.md$/, ".html"));
+    return to === "index.md" ? rel.replace(/index\.html$/, "") || "./" : rel;
+  };
+  order.forEach((page, i) => {
+    const text = pages.get(page);
+    if (text === undefined) return;
+    const attrs = [
+      i > 0 ? ` data-prev="${esc(href(page, order[i - 1]!))}"` : "",
+      i < order.length - 1 ? ` data-next="${esc(href(page, order[i + 1]!))}"` : "",
+    ].join("");
+    pages.set(page, text.replace(FOOTER_TAG, `${FOOTER_TAG}${attrs}`));
+  });
 }
 
 for (const [label, list] of byCategory(ix.artifacts)) {

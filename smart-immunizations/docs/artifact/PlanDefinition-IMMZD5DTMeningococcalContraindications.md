@@ -37,3 +37,6 @@ IMMZ.D5.DT.Meningococcal contraindications IMMZ.D5.DT.Meningococcal contraindica
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
+
+<footer id="ig-footer" data-prev="PlanDefinition-IMMZD5DTMeaslesContraindications.html" data-next="PlanDefinition-IMMZD5DTMumpsContraindications.html" class="st-ig"></footer>
+<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
