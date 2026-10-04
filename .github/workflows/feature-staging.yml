@@ -196,6 +196,12 @@ jobs:
       - name: Install deps
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
       - name: Determine staging slug
         id: slug
         # `head.ref` is ATTACKER-CONTROLLED on a fork PR: a branch may be named
@@ -1042,6 +1048,14 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance . --base-url "$BASE" --out "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld"
           cp "./_site/${ROOT_STUB}/${ROOT_STUB}.jsonld" "./_site/${ROOT_STUB}/${ROOT_STUB}.json"
 
+          # EVERY OTHER declared instance's graph, one document each — bean
+          # `4ak5` item 1. The set is derived from the declarations by the
+          # script, never listed here; the three instances above keep their
+          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+          # `check:published-instance-exports` runs the same plan, and fails if
+          # any declared instance is published by neither.
+          bun run cat-harness/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+
           # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
           #
           # Staging published NONE of these while the live site published all
@@ -1593,6 +1607,13 @@ jobs:
         working-directory: source
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        working-directory: source
+        run: bun run state:mount
+
       - name: Check out the publish branch
         uses: actions/checkout@v7
         with:
@@ -1949,6 +1970,13 @@ jobs:
       - name: Install deps
         working-directory: source
         run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        working-directory: source
+        run: bun run state:mount
 
       - name: Refuse to remove a preview that is still in use
         working-directory: source

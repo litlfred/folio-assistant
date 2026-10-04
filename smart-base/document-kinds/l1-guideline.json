@@ -11,6 +11,9 @@
       "title": "Executive summary",
       "required": true,
       "description": "A stand-alone summary that states the key recommendations, each with its strength and the certainty of its evidence.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -29,6 +32,9 @@
       "title": "Table of contents",
       "required": true,
       "description": "Navigational listing of the main-body sections.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -42,6 +48,9 @@
       "title": "Target audience and persons affected",
       "required": false,
       "description": "Who will apply the recommendations (end-users), distinguished from the people who receive the interventions.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -65,6 +74,9 @@
       "title": "Declarations of interest and their management",
       "required": true,
       "description": "Lists every participant with role and affiliation, and summarises how declarations of interest were collected, assessed and managed (stating explicitly if none were disclosed); acknowledges peer reviewers.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -98,6 +110,9 @@
       "title": "Funding sources",
       "required": true,
       "description": "Names every funder of the guideline and, where not evident, the type of entity.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -115,7 +130,7 @@
       "id": "key-questions",
       "title": "Key questions (PICO) and outcomes",
       "required": false,
-      "description": "The foreground questions in population-intervention-comparator-outcome form, the outcomes rated important or critical, and optionally an analytic framework.",
+      "description": "The foreground questions in population-intervention-comparator-outcome form, the outcomes rated important or critical, and optionally an analytic framework. The PICO question sets themselves come from the guideline development group's scoping and the systematic reviews behind it, which smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.",
       "modelledBy": [
         "sgkg-l1#population",
         "sgkg-l1#intervention",
@@ -144,7 +159,7 @@
       "id": "evidence-retrieval-and-synthesis",
       "title": "Evidence retrieval and synthesis",
       "required": false,
-      "description": "Search strategy, study selection and synthesis of the systematic reviews informing each key question; full reviews may sit in annexes.",
+      "description": "Search strategy, study selection and synthesis of the systematic reviews informing each key question; full reviews may sit in annexes. The systematic reviews it summarises (for WHO guidelines, typically Cochrane or WHO-commissioned reviews) are external evidence that smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.",
       "modelledBy": [
         "sgkg-l1#evidence"
       ],
@@ -165,7 +180,7 @@
       "id": "certainty-of-evidence",
       "title": "Certainty of the evidence (GRADE)",
       "required": false,
-      "description": "GRADE assessment of the body of evidence per outcome and key question, summarised in evidence profiles.",
+      "description": "GRADE assessment of the body of evidence per outcome and key question, summarised in evidence profiles. The GRADE evidence profiles it summarises are built from external systematic reviews (typically Cochrane) that smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.",
       "modelledBy": [
         "sgkg-l1#evidence"
       ],
@@ -186,7 +201,7 @@
       "id": "evidence-to-decision",
       "title": "Evidence to decision",
       "required": false,
-      "description": "Records the judgements on benefits and harms, values and preferences, resources, equity, acceptability and feasibility that shaped each recommendation's direction and strength.",
+      "description": "Records the judgements on benefits and harms, values and preferences, resources, equity, acceptability and feasibility that shaped each recommendation's direction and strength. Its judgements rest on the GRADE evidence profiles and the systematic reviews behind them, which smart-base has not ingested. So this section names no `computedFrom`: computing it needs an evidence graph that does not exist yet (owner, 2026-10-04, bean qvxh, option 1). Ingesting that evidence is bean folio-assistant-0lde.",
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -205,6 +220,9 @@
       "title": "Recommendations",
       "required": true,
       "description": "Each recommendation stated actionably, with its direction, strength, certainty of evidence, justification and remarks on applicability, linked to its evidence. For SMART use, each is uniquely identified so digital systems can cite it, and data recommendations may be included.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l1#recommendation"
       ],
@@ -246,6 +264,9 @@
       "title": "Implementation and adaptation considerations",
       "required": false,
       "description": "Conditions, context, acceptability concerns and adaptation points relevant to applying the recommendations in a setting.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l1#remark"
       ],
@@ -277,6 +298,9 @@
       "title": "Equity, human rights and gender considerations",
       "required": false,
       "description": "How the recommendations bear on equity, human rights, gender and social determinants, and how their equity impact should be evaluated.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -295,6 +319,9 @@
       "title": "Monitoring and evaluation",
       "required": true,
       "description": "Outcome or performance measures that can be monitored for the main recommendations.",
+      "computedFrom": [
+        "library"
+      ],
       "modelledBy": [
         "sgkg-l1#indicator"
       ],
@@ -316,6 +343,9 @@
       "title": "Research gaps and future research",
       "required": false,
       "description": "Knowledge gaps that leave the balance of benefits and harms uncertain, with suggested questions (ideally in PICO form) and methods to close them.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -339,6 +369,9 @@
       "title": "Conclusions",
       "required": true,
       "description": "Closing summary of the main body.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",
@@ -352,6 +385,9 @@
       "title": "Validity and updating",
       "required": true,
       "description": "The review-by date and how the recommendations will be kept current; under SMART, recommendations are versioned as living guidance.",
+      "computedFrom": [
+        "library"
+      ],
       "sources": [
         {
           "ref": "who-iris/library/9789241548960-eng",

@@ -227,6 +227,7 @@ export const RULES: Rule[] = [
       // it reads declarations, BPMN extension elements and skill file names,
       // consumes the same `layer-direction.ts`, and no folio content.
       "scripts/check-process-bindings.ts",
+      "scripts/check-document-kind-sources.ts",
       "scripts/process-bindings.baseline.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -289,6 +290,10 @@ export const RULES: Rule[] = [
       // It builds an instance's KG the way `kg-export` (already harness,
       // below) does, one instance at a time (issue #720).
       "scripts/check-published-instance-exports.ts",
+      // HARNESS with the gate above, which imports it: it runs `kg-export`
+      // once per declared instance for this repository's deploy, and reads
+      // only the declarations (bean `4ak5`).
+      "scripts/instance-exports.ts",
       // HARNESS on the same argument: its subject is this repository's own
       // workflows -- which generators each invokes -- and it reads no folio
       // content at all (issue #777, bean `qgpo`).
@@ -1665,6 +1670,7 @@ export const RULES: Rule[] = [
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/kind-register.ts",           // the same job for a graph KIND (bean `uoij`): runs the five generators a new kind stales and reports the two artefacts a person authors. Harness by `skill-register.ts`'s argument one line down — it invokes the repo's own tooling and knows nothing about any content type. Its own first gates run is the argument for its existence, one level over: adding it staled five derived artefacts that no hand-picked check named
       "scripts/kind-table.ts",              // the reader over the graph-kind TABLE in `directory-conventions.md`, which `kind-register` and `graph-kind-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
+      "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
