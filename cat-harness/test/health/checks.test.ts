@@ -23,6 +23,7 @@ import { describe, expect, it } from "bun:test";
 
 import { HealthReportSchema, healthVerdict } from "../../schemas/health-report.ts";
 import { hasRenderedDecision } from "./probes.ts";
+import { MAX_PREVIEW_BYTES } from "../../scripts/staging-rotate.ts";
 import {
   BEAN_OPEN_LIMIT,
   BEAN_RESOLVED_INLINE_LIMIT,
@@ -80,7 +81,25 @@ function metrics(r: { findings: { metric?: string }[] }): (string | undefined)[]
 }
 
 describe("staging-preview-size", () => {
-  it("fires at `major` on the owner's 500 MB threshold", () => {
+  it("fires at `major` over the owner's 3 GB budget — the rotation's own constant", () => {
+    // NINE previews at 350 MiB, the size they had reached by 2026-10-04: 3.08 GB.
+    // The budget was 500 MB until the owner replaced the #1868 count cap with a
+    // size budget ("Cap by size, not count", "3gb"); this check now reads the
+    // same constant the deploy rotation enforces.
+    const r = stagingSizeCheck(healthyContext({
+      staging: { state: "ok", value: { branch: "present", previews: previews(9, 350 * MB), command: "fixture" } },
+    }));
+    expect(r.state).toBe("finding");
+    expect(metrics(r)).toEqual(["staging-total-bytes"]);
+    expect(r.findings[0].severity).toBe("major");
+    expect(r.findings[0].summary).toContain("3.08 GB");
+    expect(r.findings[0].summary).toContain("3.00 GB");
+    expect(r.thresholds.find((t) => t.metric === "staging-total-bytes")?.value).toBe(MAX_PREVIEW_BYTES);
+    // The action never removes anything — it asks.
+    expect(r.findings[0].action).toContain("staging:cleanup");
+  });
+
+  it("history: 500 MB of ~37 MB previews is no longer a finding", () => {
     // FOURTEEN previews at the size measured on gh-pages (36.7–37.6 MB each).
     //
     // It was three, against a 100 MB threshold. The owner raised it to 500 MB
@@ -90,15 +109,20 @@ describe("staging-preview-size", () => {
     // once and stayed breached; now the store drains and what remains is
     // bounded by concurrent reviews. 500 MB is about thirteen of them, so
     // fourteen is the first breach.
+    // (The fourteen-preview case the 500 MB budget was calibrated on, kept to
+    // pin that the old number is gone rather than merely raised in prose.)
     const r = stagingSizeCheck(healthyContext({
       staging: { state: "ok", value: { branch: "present", previews: previews(14, 37 * MB), command: "fixture" } },
     }));
-    expect(r.state).toBe("finding");
-    expect(metrics(r)).toEqual(["staging-total-bytes"]);
-    expect(r.findings[0].severity).toBe("major");
-    expect(r.findings[0].summary).toContain("518.0 MB");
-    // The action never removes anything — it asks.
-    expect(r.findings[0].action).toContain("staging:cleanup");
+    expect(r.state).toBe("ok");
+  });
+
+  it("just under the budget is not a finding", () => {
+    // Eight at 350 MiB is 2.73 GB.
+    const r = stagingSizeCheck(healthyContext({
+      staging: { state: "ok", value: { branch: "present", previews: previews(8, 350 * MB), command: "fixture" } },
+    }));
+    expect(r.state).toBe("ok");
   });
 
   it("thirteen concurrent reviews is UNDER the threshold — the number means a concurrency", () => {
@@ -122,9 +146,9 @@ describe("staging-preview-size", () => {
     // ~777 MB, but 100 of them is 3.7 GB and still must not manufacture a
     // `critical`. A test at 777 MB alone would pass against a check that
     // escalated at some higher number nobody had noticed.
-    for (const n of [21, 100]) {
+    for (const n of [9, 100]) {
       const r = stagingSizeCheck(healthyContext({
-        staging: { state: "ok", value: { branch: "present", previews: previews(n, 37 * MB), command: "fixture" } },
+        staging: { state: "ok", value: { branch: "present", previews: previews(n, 350 * MB), command: "fixture" } },
       }));
       expect(r.state).toBe("finding");
       // ONE breach, not one per threshold: the count must track what is wrong,
@@ -156,7 +180,7 @@ describe("staging-preview-size", () => {
         state: "ok",
         value: {
           branch: "present",
-          previews: [{ slug: "a", bytes: 777 * 1024 * 1024, files: 1 }],
+          previews: [{ slug: "a", bytes: 3500 * 1024 * 1024, files: 1 }],
           command: "fixture",
         },
       },
@@ -185,7 +209,7 @@ describe("staging-preview-size", () => {
     // What it says now is the owner's budget, which is all this check owns after
     // the split — the serving language moved to `pages-publish-health`, and the
     // test for it lives with that check rather than here.
-    expect(f.summary).toContain("warning point");
+    expect(f.summary).toContain("budget the deploy rotation enforces");
     expect(f.action).toContain("staging:cleanup");
     expect(t?.basis).toBeDefined();
   });

@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**227** units · **6017** terms · k = **100** · retains **78.3 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**227** units · **6018** terms · k = **100** · retains **78.3 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 45.62 | instance, harness, kind, page, directory, graph, session, branch | *(none)* |
+| 1 | 45.63 | instance, harness, kind, page, directory, session, graph, branch | *(none)* |
 | 2 | 21.77 | watcher, sibling, queue, prs, slot, backlog, commits, block | harness, instance, declaration, node, directories, directory, subgraph, iri |
-| 3 | 18.10 | slot, chapter, block, edges, formal, project, watcher, proof | session, beans, page, epic, conflict, branch, goals, minutes |
-| 4 | 17.17 | page, tile, block, text, chapter, avatar, blocks, manifest | sibling, session, ledger, sessions, subgraph, subdirectory, plan, coordination |
-| 5 | 15.58 | tile, glass, avatar, board, card, sticky, tiles, theme | rung, archive, pdf, sniff, ingest, zip, archived, arxiv |
-| 6 | 15.15 | lane, actor, role, requirements, task, analysis, feature, process | queue, sha, withheld, backlog, rung, bytes, slide, arm |
-| 7 | 14.79 | preview, staging, translation, locale, url, pages, translated, page | tile, glass, avatar, card, fit, sticky, slot, role |
-| 8 | 14.53 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, requirements, task, backlog |
+| 3 | 18.11 | slot, chapter, block, edges, formal, project, watcher, proof | session, page, beans, epic, conflict, branch, minutes, goals |
+| 4 | 17.17 | page, tile, block, text, chapter, avatar, blocks, manifest | sibling, session, ledger, sessions, subgraph, plan, subdirectory, coordination |
+| 5 | 15.59 | tile, glass, board, avatar, card, tiles, sticky, theme | rung, archive, pdf, sniff, ingest, archived, zip, arxiv |
+| 6 | 15.15 | lane, actor, role, requirements, task, analysis, feature, process | queue, sha, withheld, rung, backlog, bytes, slide, arm |
+| 7 | 14.81 | preview, staging, translation, url, locale, pages, previews, translated | tile, glass, avatar, card, sticky, role, slot, settings |
+| 8 | 14.53 | edges, forward, edge, backward, cross-chapter, logical, energy, storytelling | actor, lane, role, requirement, user, requirements, pipeline, task |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

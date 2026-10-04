@@ -157,10 +157,11 @@ describe("the issue body", () => {
           // merged PR's preview go away, so the total drains and the number
           // now expresses a concurrency rather than a cumulative ceiling.
           // Two previews keeps the orphan case below intact; only the bytes
-          // change.
+          // change. 2 x 1600 MiB since 2026-10-04, when the budget became the
+          // deploy rotation's 3 GB.
           previews: [
-            { slug: "claude-one", bytes: 300 * MB, files: 700 },
-            { slug: "claude-two", bytes: 300 * MB, files: 700 },
+            { slug: "claude-one", bytes: 1600 * MB, files: 700 },
+            { slug: "claude-two", bytes: 1600 * MB, files: 700 },
           ],
           command: "fixture",
         },
@@ -198,7 +199,7 @@ describe("the issue body", () => {
   it("names every finding and what a person should do about it", () => {
     const md = render(report);
     expect(md).toContain("staging-preview-size");
-    expect(md).toContain("600.0 MB");
+    expect(md).toContain("3.13 GB");
     expect(md).toContain("STAGING/claude-two");
     expect(md).toContain("staging:cleanup");
     // The preview whose PR is open is not proposed for anything.
