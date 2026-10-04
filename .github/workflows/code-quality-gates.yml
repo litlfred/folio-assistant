@@ -2161,6 +2161,11 @@ jobs:
           # candidate list or the authored alternatives change, and red when a
           # quote no longer matches the section it cites.
           bun run smart-base:dth-terms:check
+          # DIIG Fig. 1.1.1 as SVG (bean 70zt), the one rendering the DTHs point at.
+          # CI has no source PDF, so this checks what it can without one: the
+          # crop still matches vector-figures.json and the drawing is unedited.
+          # Byte-identical regeneration runs wherever the PDF is present.
+          bun run smart-base:diig-figure:check
           bun run document-kinds:viz:check
           # P2's refusal record (bean ntyj): every published XML/Turtle
           # representation this pipeline does not render, per IG, generated

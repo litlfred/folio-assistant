@@ -25,7 +25,7 @@ Sources: **PHC** is the DTH for primary health care (9789240093362), **SC** the 
 
 ## One phase figure: DIIG Fig. 1.1.1
 
-The seven phases of "planning and implementing a digital health enterprise" have ONE source, the DIIG's own figure. The handbooks that print it are reproductions of it and cite it; they are not separate sources for it. An SVG rendering from the DIIG's vector layer is bean `folio-assistant-70zt`.
+The seven phases of "planning and implementing a digital health enterprise" have ONE source, the DIIG's own figure. The handbooks that print it are reproductions of it and cite it; they are not separate sources for it. Its SVG rendering is [`vfig-p017.svg`](../library/9789240010567-eng/figures/vfig-p017.svg) (bean `folio-assistant-70zt`). It is drawn from the DIIG PDF's own vector layer, never by hand, and records its source (the PDF's sha256, the page and the crop) in its `<metadata>`; `bun run smart-base:diig-figure:check` fails if the drawing is edited or the crop drifts.
 
 > "The process of planning and implementing an appropriate digital health enterprise within the broader ecosystem includes several phases:"<br>— DIIG §1.1, PDF p.16 (printed p.4) (`9789240010567-eng/page-016`)
 

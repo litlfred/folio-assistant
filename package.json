@@ -420,6 +420,8 @@
     "smart-base:smart-kg-l1": "bun run smart-base/scripts/extract-smart-kg-l1.ts",
     "smart-base:smart-kg-l1:all": "bun run smart-base/scripts/extract-smart-kg-l1.ts --all",
     "smart-base:smart-kg-l1:check": "bun run smart-base/scripts/extract-smart-kg-l1.ts --check",
+    "smart-base:diig-figure": "python3 cat-harness/scripts/pdf-vector-svg.py smart-base/library/9789240010567-eng vfig-p017 --pdf fsh-guts/uploads/9789240010567-eng.pdf --title \"DIIG Fig. 1.1.1. Planning and implementing a digital health enterprise: phases, steps and resources\"",
+    "smart-base:diig-figure:check": "python3 cat-harness/scripts/pdf-vector-svg.py smart-base/library/9789240010567-eng vfig-p017 --pdf fsh-guts/uploads/9789240010567-eng.pdf --title \"DIIG Fig. 1.1.1. Planning and implementing a digital health enterprise: phases, steps and resources\" --check",
     "smart-base:dth-terms": "bun run smart-base/scripts/gen-dth-term-findings.ts",
     "smart-base:dth-terms:check": "bun run smart-base/scripts/gen-dth-term-findings.ts --check",
     "smart-base:pages:check": "bun run fhir-harness/scripts/gen-ig-pages.ts --instance smart-base --publish-note \"This page mirrors a published WHO Implementation Guide.\" --sidecar-label \"DAK API\" --label \"WHO SMART Base\" --chrome-owner smart-base --summary --check",
