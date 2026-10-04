@@ -1,0 +1,17 @@
+{
+  "$schema": "folio-merge-queue-entry/v1",
+  "repository": "litlfred/folio-assistant",
+  "pr": 2105,
+  "placement": {
+    "kind": "computed",
+    "decision": "cat-harness/processes/sdlc/decisions/merge-priority.dmn#Decision_MergePriority",
+    "rule": "Rule_NotReady",
+    "class": "hand-back",
+    "rank": 92
+  },
+  "reason": "ACK: the salvage of #1884 (the agent-handoff skill that main already cites), opened by the Merge Manager's agent under the owner's 'Do all six'. #1884 is closed as superseded by it. CI pending. Needs the owner's approval to land, and the owner should read the skill (bean pgct's last box, asked in issue #1882).",
+  "decidedBy": "https://claude.ai/code/session_019gRX6w8kzAX6wpHbgdyu3s",
+  "decidedAt": "2026-10-04T15:25:00Z",
+  "status": "active",
+  "beans": []
+}
