@@ -308,7 +308,12 @@ describe("every branch-shaped entry declares how it is keyed", () => {
       // `gh-pages` was the one entry stating no keying, while beans, todos and
       // fsh-guts each said `keyedBy: tip` in prose. It is route-keyed, and
       // nothing said so (bean `xp5j`).
-      expect(["commit", "tip", "route"]).toContain((entry as unknown as { keyedBy?: string }).keyedBy);
+      // The list mirrors `DirectoryStorageSchema`'s enum, which gained a
+      // fourth value (`route-family`) with bean `xp5j`. `?? ""` rather than a
+      // non-null assertion: an ABSENT keying must fail this test by not being
+      // in the list, not crash it.
+      const keyedBy = (entry as unknown as { keyedBy?: string }).keyedBy ?? "";
+      expect(["commit", "tip", "route", "route-family"]).toContain(keyedBy);
       expect(((entry as unknown as { keyedByWhy?: string }).keyedByWhy ?? "").length).toBeGreaterThan(20);
     });
   }

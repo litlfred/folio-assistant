@@ -1419,7 +1419,7 @@ export type Tile = z.infer<typeof TileSchema>;
  *   and `audit:coverage` reports the kind as `stored` rather than counting a
  *   working copy whose size depends on whether somebody ran `qa:fetch`.
  *
- * ## `keyedBy` — three keyings, and a fourth is a schema change
+ * ## `keyedBy` — four keyings, and a fifth is a schema change
  *
  * - `commit` — one entry per commit (`main/<sha>/`, `pr/<n>/<sha>/`), read
  *   against a baseline. The QA branch (`scripts/qa-store.ts`).
@@ -1450,7 +1450,35 @@ export type Tile = z.infer<typeof TileSchema>;
  *   `docs/proposals/state-branch-2026-10-02.md` draws is **regenerability**,
  *   and it is exactly what separates these two keyings.
  *
- * The field is an enum, not a string, so a fourth keying is a schema change
+ * - `route-family` — one entry per MEMBER of a family under the directory's
+ *   path, the member supplied at publish time rather than declared. The
+ *   `STAGING/<slug>/` previews on `gh-pages`, one per open branch. Bean
+ *   `xp5j`, owner 2026-10-04.
+ *
+ *   **It is a fourth keying rather than a flag on `route` precisely because
+ *   this docblock forbids the alternative**: `route` must not carry two write
+ *   contracts, for the same reason it is not a synonym for `tip`. Three things
+ *   differ, and each is a decision rather than a detail:
+ *
+ *   1. **The member key is UNTRUSTED.** It derives from a branch name, and
+ *      `.github/workflows/feature-staging.yml` states that a branch name is
+ *      attacker-controlled on a fork PR. {@link RouteMemberSchema} is the
+ *      validation, and it tests EVERY segment for a dot prefix rather than
+ *      only the first (`kg/kg-core/directory-conventions`).
+ *   2. **Source and destination differ.** A declared `route` is published FROM
+ *      the declared path; a family member is built into a local directory and
+ *      published to a route named at publish time, so the two cannot be one
+ *      field.
+ *   3. **A member can be REMOVED.** `route`'s contract has no case for it — "a
+ *      generator that stops emitting a page must stop publishing it" — but a
+ *      member's branch can be deleted, and `feature-staging.yml` already
+ *      deletes `STAGING/<slug>` on PR close.
+ *
+ *   Like `route` and for the same reason, a `route-family` write carries NO
+ *   `expect`: a member is a rendering, authored by nobody, so the newer
+ *   generation wins and a lost write costs a rerun.
+ *
+ * The field is an enum, not a string, so a FIFTH keying is a schema change
  * somebody has to make rather than a reinterpretation of an existing value.
  * Not every named subgraph gets a branch — semi-static KG content (skills,
  * schemas, processes) stays on `main` (owner, 2026-10-02).
@@ -1477,10 +1505,38 @@ export const DirectoryStorageSchema = z
      * {@link DirectoryStorageSchema}'s docblock for why `route` is not a
      * synonym for `tip`.
      */
-    keyedBy: z.enum(["commit", "tip", "route"]),
+    keyedBy: z.enum(["commit", "tip", "route", "route-family"]),
   })
   .strict();
 export type DirectoryStorage = z.infer<typeof DirectoryStorageSchema>;
+
+/**
+ * A `route-family` MEMBER key — one path segment, from untrusted input.
+ *
+ * The member derives from a branch name, and
+ * `.github/workflows/feature-staging.yml` says what that means: *"the branch
+ * name is ATTACKER-CONTROLLED on a fork PR"*. So this is input validation, not
+ * tidiness, and it refuses rather than sanitises: a key that had to be cleaned
+ * up is a key whose author meant something else.
+ *
+ * ONE SEGMENT. A member is a leaf under the family's prefix, so a `/` is
+ * refused outright — which disposes of `..`, `//`, absolute paths and deep
+ * traversal in a single rule rather than as four patterns somebody has to keep
+ * complete.
+ *
+ * NO DOT PREFIX. `kg/kg-core/directory-conventions` requires the dot-prefix
+ * guard to test EVERY segment, not just the first; with one segment those
+ * coincide, and the rule is written to stay correct if that ever stops being
+ * true.
+ */
+export const RouteMemberSchema = z
+  .string()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, "one path segment: alphanumerics, dot, dash, underscore, not starting with a dot or dash")
+  .refine((m) => !m.split("/").some((seg) => seg.startsWith(".")), "no dot-prefixed segment")
+  .refine((m) => m !== "." && m !== ".." && !m.includes(".."), "not a traversal");
+export type RouteMember = z.infer<typeof RouteMemberSchema>;
 
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   coverage: SubgraphCoverageSchema.optional(),
@@ -1776,12 +1832,12 @@ export const ContentDirectorySchema = z.preprocess(
   ContentDirectoryShape.refine(
     (d) =>
       !(
-        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route") &&
+        (d.storage?.keyedBy === "tip" || d.storage?.keyedBy === "route" || d.storage?.keyedBy === "route-family") &&
         (d.graphKinds as readonly string[] | undefined)?.includes("qa")
       ),
     {
       message:
-        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos) and `keyedBy: "route"` for regenerable rendered pages',
+        'a `qa` directory is keyed by commit; `keyedBy: "tip"` is for one-live-copy state (beans, todos), `keyedBy: "route"` for regenerable rendered pages, and `keyedBy: "route-family"` for a family of them named at publish time',
       path: ["storage", "keyedBy"],
     },
   ),
