@@ -54,8 +54,39 @@ describe("the FEEL subset", () => {
     // `false` looks exactly like a rule that legitimately did not apply, and
     // the table then answers on the rules that are left.
     expect(() => unaryTest("[1..5]", 3)).toThrow(UnsupportedDmn);
-    expect(() => unaryTest("not(0)", 3)).toThrow(UnsupportedDmn);
     expect(() => unaryTest("date(x)", 3)).toThrow(UnsupportedDmn);
+  });
+
+  test("`not(...)` negates a unary-test list, because a shipped table uses it", () => {
+    // `not(0)` was in the list above until 2026-10-04, and the throw was not
+    // theoretical: `merge-priority.dmn` has used `not("green")` since it was
+    // drawn, so the merge queue's priority table could not be evaluated by ANY
+    // caller. The throw is what made that findable — an evaluator returning
+    // false for what it cannot read would have handed the table a plausible
+    // wrong answer instead. So the fix is to implement the construct, not to
+    // soften the throw.
+    expect(unaryTest('not("green")', "red")).toBe(true);
+    expect(unaryTest('not("green")', "green")).toBe(false);
+    expect(unaryTest("not(0)", 3)).toBe(true);
+    expect(unaryTest("not(0)", 0)).toBe(false);
+
+    // A list inside it, and the negation is of the WHOLE list.
+    expect(unaryTest('not("red","green")', "amber")).toBe(true);
+    expect(unaryTest('not("red","green")', "green")).toBe(false);
+
+    // A comparison inside it.
+    expect(unaryTest("not(> 5)", 3)).toBe(true);
+    expect(unaryTest("not(> 5)", 9)).toBe(false);
+
+    // Spacing is FEEL's, not ours.
+    expect(unaryTest('not ("green")', "red")).toBe(true);
+
+    // Still refused: an empty negation says nothing, so it is an error rather
+    // than a vacuous true.
+    expect(() => unaryTest("not()", 3)).toThrow(DecisionError);
+
+    // And what is inside it is still held to the same subset.
+    expect(() => unaryTest("not([1..5])", 3)).toThrow(UnsupportedDmn);
   });
 
   test("comparing a number test against a non-number is an error, not false", () => {
