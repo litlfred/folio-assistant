@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T10:38:18Z
-updated_at: 2026-10-03T15:01:36Z
+updated_at: 2026-10-04T07:12:12Z
 parent: folio-assistant-vke6
 ---
 
@@ -44,3 +44,8 @@ Worked by session https://claude.ai/code/session_01Vmo3FY8yc8ouQ8qiWsEAfw on bra
 - D and the minor fix are done.
 - Measured with #1968's checker in a scratch copy (not committed): `--shrink` drops 32 entries, and only veiu's `l3-fhir-pipeline → l2-dak-authoring` remains.
 - Still open: the kg-audit `skill-ref-resolves` follow-up (an owner question), and the `--shrink` commit once #1968 merges.
+
+
+## 2026-10-04: baseline shrunk (PR #2027)
+
+After #1968 merged, `check:process-bindings --shrink` dropped 32 entries. The baseline now holds only veiu's `l3-fhir-pipeline → l2-dak-authoring`, which veiu clears in #1964. When #2027 merges, the bean has two items left: "BASELINE is []" (waits on veiu) and the kg-audit `skill-ref-resolves` follow-up (an owner question).
